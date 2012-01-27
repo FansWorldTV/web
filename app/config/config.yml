@@ -58,7 +58,7 @@ swiftmailer:
 jms_security_extra:
     secure_controllers:  true
     secure_all_services: false
-
+    
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
@@ -113,3 +113,23 @@ sonata_admin:
     title:      Fansworld
     security:
         handler: sonata.admin.security.handler.role
+        
+services:
+    dodici.fansworld.adminbundle.admin.country:
+        class: Dodici\Fansworld\AdminBundle\Admin\CountryAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: country }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Country, DodiciFansworldAdminBundle:CountryAdmin]
+    dodici.fansworld.adminbundle.admin.city:
+        class: Dodici\Fansworld\AdminBundle\Admin\CityAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: city }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\City, DodiciFansworldAdminBundle:CityAdmin]
+    appstate:
+      class: Dodici\Fansworld\WebBundle\Extensions\AppState
+      arguments: [@session, @doctrine.orm.entity_manager]
+    twig.extension.appstate:
+      class: Dodici\Fansworld\WebBundle\Extensions\AppStateExtension
+      arguments: [@appstate]
+      tags:
+          - { name: twig.extension }

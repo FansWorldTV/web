@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="http://www.facebook.com/2008/fbml">
+	<head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <title>{% block title %}Fansworld{% endblock %}</title>
+            
+            {% block metatags %}
+	            <meta property="og:image" content="{% block metafbimage %}http://{{ app.request.host ~ asset('bundles/dodicifansworldweb/images/logo.png') }}{% endblock %}"/>
+				<meta property="og:url" content="http://{{ app.request.host ~ app.request.requesturi }}"/>
+				<meta property="og:title" content="{{ block('title') }}"/>
+				<meta property="og:description" content="{{ block('metadescription') }}"/>
+				<meta property="og:site_name" content="Fansworld"/>
+				<meta property="og:type" content="{%block metafbtype %}article{% endblock %}"/>
+	            
+	            <meta name="keywords" content="{% block metakeywords %}{% endblock %}"/>
+	            <meta name="description" content="{% block metadescription %}{% endblock %}"/>
+            {% endblock %}
+            
+            {% block stylesheets %}
+                <!-- jQuery code -->
+                <link rel="stylesheet" href="{{ asset('bundles/sonatajquery/themes/flick/jquery-ui-1.8.6.custom.css') }}" type="text/css" media="all" />
+                <!-- base application asset -->
+                <link rel="stylesheet" href="{{ asset('bundles/dodicifansworldweb/css/layout.css') }}" type="text/css" media="all">
+            {% endblock %}
+                
+            {% block javascripts %}
+                <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+                <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+                <script src="{{ asset('bundles/sonatajquery/jquery.js') }}" type="text/javascript"></script>
+                <script src="{{ asset('bundles/sonatajquery/jquery-ui-1.8.6.custom.js') }}" type="text/javascript"></script>
+                <script src="{{ asset('bundles/sonatajquery/jquery-ui-i18n.js') }}" type="text/javascript"></script>
+                <script src="{{ asset('bundles/dodicifansworldweb/js/base.js') }}" type="text/javascript"></script>
+            {% endblock %}
+            
+            {% block flashmessage %}
+            	{% if app.session.hasFlash('success') %}
+				    <script type="text/javascript">
+				        $(function(){
+				        	success("{{ app.session.flash('success') }}");
+				        });
+				    </script>
+				{% endif %}
+            {% endblock %}
+	</head>
+	<body>
+		{% block body %}{% endblock %}
+	</body>
+</html>

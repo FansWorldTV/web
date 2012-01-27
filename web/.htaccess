@@ -1,5 +1,15 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    
+    RewriteCond %{HTTP_COOKIE} !^forcenomobile=1$
+    RewriteCond %{HTTP_HOST} !^m\..*$
+	RewriteCond %{HTTP_USER_AGENT} "android|blackberry|ipad|iphone|ipod|iemobile|opera mobile|palmos|webos|googlebot-mobile" [NC]
+	RewriteRule ^(.*)$ http://m.%{HTTP_HOST}/$1 [L,R=301]
+	
+	RewriteCond %{HTTP_COOKIE} forceyesmobile=1
+    RewriteCond %{HTTP_HOST} !^m\..*$
+	RewriteRule ^(.*)$ http://m.%{HTTP_HOST}/$1 [L,R=301]
+	
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^(.*)$ app.php [QSA,L]
 </IfModule>

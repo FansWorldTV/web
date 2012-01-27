@@ -32,6 +32,7 @@ class AppKernel extends Kernel
             new Sonata\MediaBundle\SonataMediaBundle(),
             new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
             new Dodici\Fansworld\WebBundle\DodiciFansworldWebBundle(),
+            new Dodici\Fansworld\AdminBundle\DodiciFansworldAdminBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

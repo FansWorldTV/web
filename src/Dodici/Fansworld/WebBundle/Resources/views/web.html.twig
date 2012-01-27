@@ -1,0 +1,20 @@
+{% extends "DodiciFansworldWebBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('bundles/dodicifansworldweb/css/web.css') }}" type="text/css" media="all">
+{% endblock %}
+
+{% block body %}
+	<div id="wrap">
+		<div id="header">
+			{% block header %}{% endblock %}
+		</div>
+		<div id="content">
+			{% block content %}{% endblock %}
+		</div>
+		<div id="footer">
+			{% block footer %}{% endblock %}
+		</div>
+	</div>
+{% endblock %}
