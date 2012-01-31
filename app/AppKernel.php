@@ -33,6 +33,7 @@ class AppKernel extends Kernel
             new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
             new Dodici\Fansworld\WebBundle\DodiciFansworldWebBundle(),
             new Dodici\Fansworld\AdminBundle\DodiciFansworldAdminBundle(),
+            new Flumotion\APIBundle\FlumotionAPIBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
