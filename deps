@@ -121,7 +121,7 @@
 [KnpGaufrette]
     git=git://github.com/knplabs/Gaufrette.git
     target=gaufrette
-********************************************************    
+
 [SonataMediaBundle]
     git=git://github.com/sonata-project/SonataMediaBundle.git
     target=bundles/Sonata/MediaBundle
@@ -129,3 +129,10 @@
 [SonataDoctrineORMAdminBundle]
     git=http://github.com/sonata-project/SonataDoctrineORMAdminBundle.git
     target=bundles/Sonata/DoctrineORMAdminBundle
+
+[doctrine-fixtures]
+    git=http://github.com/doctrine/data-fixtures.git
+
+[DoctrineFixturesBundle]
+    git=http://github.com/symfony/DoctrineFixturesBundle.git
+    target=/bundles/Symfony/Bundle/DoctrineFixturesBundle

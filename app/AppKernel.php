@@ -34,6 +34,7 @@ class AppKernel extends Kernel
             new Dodici\Fansworld\WebBundle\DodiciFansworldWebBundle(),
             new Dodici\Fansworld\AdminBundle\DodiciFansworldAdminBundle(),
             new Flumotion\APIBundle\FlumotionAPIBundle(),
+            new Symfony\Bundle\DoctrineFixturesBundle\DoctrineFixturesBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

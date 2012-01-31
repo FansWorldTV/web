@@ -1,0 +1,12 @@
+-
+  name: Argentina
+  cities:
+      - Buenos Aires
+      - La Plata
+-
+  name: {es: Estados Unidos, en: United States of America}
+  cities:
+      - Washington
+      - {es: Nueva York, en: New York}
+-
+  name: Uruguay
