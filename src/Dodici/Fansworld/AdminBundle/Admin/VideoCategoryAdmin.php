@@ -22,8 +22,6 @@ class VideoCategoryAdmin extends Admin
     {
         $formMapper
             ->add('title', NULL, array (), array ())
-            ->add('slug', NULL, array (), array ())
-            ->add('videos', NULL, array (), array ())
         ;
     }
 
@@ -31,8 +29,6 @@ class VideoCategoryAdmin extends Admin
     {
         $listMapper
             ->add('title', 'text', array ())
-            ->add('slug', 'text', array ())
-            ->add('videos', 'orm_one_to_many', array ())
         ;
     }
 
@@ -40,8 +36,6 @@ class VideoCategoryAdmin extends Admin
     {
         $datagridMapper
             ->add('title', 'doctrine_orm_string', array (  'field_type' => 'text',  'field_options' =>   array (  ),  'options' =>   array (  ),  'field_name' => 'title',))
-            ->add('slug', 'doctrine_orm_string', array (  'field_type' => 'text',  'field_options' =>   array (  ),  'options' =>   array (  ),  'field_name' => 'slug',))
-            ->add('videos', 'doctrine_orm_model', array (  'field_type' => 'entity',  'field_options' =>   array (    'class' => 'Dodici\\Fansworld\\WebBundle\\Entity\\Video',  ),  'options' =>   array (  ),  'operator_type' => 'sonata_type_boolean',  'operator_options' =>   array (  ),  'field_name' => 'videos',  'mapping_type' => 4,))
         ;
     }
 }

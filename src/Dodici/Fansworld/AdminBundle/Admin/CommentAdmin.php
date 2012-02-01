@@ -27,23 +27,23 @@ class CommentAdmin extends Admin
     {
         $formMapper
             ->add('content', NULL, array (), array ())
-            ->add('createdAt', NULL, array (), array ())
-            ->add('active', NULL, array (), array ())
-            ->add('privacy', NULL, array (), array ())
+            ->add('createdAt', 'date', array ('attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy HH:mm'), array ())
+            ->add('active', NULL, array ('required' => false), array ())
+            ->add('privacy', 'choice', array ('choices' => \Dodici\Fansworld\WebBundle\Entity\Privacy::getOptions()), array ())
             ->add('author', NULL, array (), array ())
-            ->add('newspost', NULL, array (), array ())
-            ->add('target', NULL, array (), array ())
-            ->add('video', NULL, array (), array ())
+            ->add('newspost', NULL, array ('required' => false), array ())
+            ->add('target', NULL, array ('required' => false), array ())
+            ->add('video', NULL, array ('required' => false), array ())
         ;
     }
 
     public function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('content', 'textarea', array ())
+            ->addIdentifier('slimContent', 'textarea', array ())
             ->add('createdAt', 'datetime', array ())
             ->add('active', 'boolean', array ())
-            ->add('privacy', 'integer', array ())
             ->add('author', 'orm_many_to_one', array ())
             ->add('newspost', 'orm_many_to_one', array ())
             ->add('target', 'orm_many_to_one', array ())
