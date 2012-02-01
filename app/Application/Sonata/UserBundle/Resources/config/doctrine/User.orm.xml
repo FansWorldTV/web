@@ -9,6 +9,42 @@
         <id name="id" column="id" type="integer">
             <generator strategy="AUTO" />
         </id>
+        
+        <field name="address" column="address" type="string" length="250" nullable="true" />
+        <field name="firstname" column="firstname" type="string" length="250" nullable="true" />
+        <field name="lastname" column="lastname" type="string" length="250" nullable="true" />
+        <field name="phone" column="phone" type="string" length="250" nullable="true" />
+        <field name="mobile" column="mobile" type="string" length="250" nullable="true" />
+        <field name="privacy" column="privacy" type="array" />
+        
+        <many-to-one
+            field="country"
+            target-entity="Dodici\Fansworld\WebBundle\Entity\Country"
+            >
+        </many-to-one>
+        
+        <many-to-one
+            field="city"
+            target-entity="Dodici\Fansworld\WebBundle\Entity\City"
+            >
+        </many-to-one>
+        
+        <many-to-one
+            field="image"
+            target-entity="Application\Sonata\MediaBundle\Entity\Media"
+            >
+        </many-to-one>
+        
+        <one-to-many
+                field="friendships"
+                target-entity="Dodici\Fansworld\WebBundle\Entity\Friendship"
+                mapped-by="author"
+                orphan-removal="true"
+                >
+
+                <orphan-removal>true</orphan-removal>
+
+        </one-to-many>
 
     </entity>
 

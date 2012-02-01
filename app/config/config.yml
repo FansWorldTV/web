@@ -111,8 +111,14 @@ sonata_media:
             
 sonata_admin:
     title:      Fansworld
+    title_logo: /bundles/dodicifansworldadmin/images/logo_title.png
+    templates:
+        layout:  DodiciFansworldAdminBundle::standard_layout.html.twig
     security:
         handler: sonata.admin.security.handler.role
+
+parameters:
+    sonata.user.admin.user.class: Application\Sonata\UserBundle\Admin\Entity\UserAdmin
         
 services:
     dodici.fansworld.adminbundle.admin.country:
@@ -125,6 +131,31 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: city }
         arguments: [null, Dodici\Fansworld\WebBundle\Entity\City, DodiciFansworldAdminBundle:CityAdmin]
+    dodici.fansworld.adminbundle.admin.friendship:
+        class: Dodici\Fansworld\AdminBundle\Admin\FriendshipAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: friendship }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Friendship, DodiciFansworldAdminBundle:FriendshipAdmin]
+    dodici.fansworld.adminbundle.admin.newscategory:
+        class: Dodici\Fansworld\AdminBundle\Admin\NewsCategoryAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: newscategory }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\NewsCategory, DodiciFansworldAdminBundle:NewsCategoryAdmin]
+    dodici.fansworld.adminbundle.admin.newspost:
+        class: Dodici\Fansworld\AdminBundle\Admin\NewsPostAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: newspost }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\NewsPost, DodiciFansworldAdminBundle:NewsPostAdmin]
+    dodici.fansworld.adminbundle.admin.video:
+        class: Dodici\Fansworld\AdminBundle\Admin\VideoAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: video }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Video, DodiciFansworldAdminBundle:VideoAdmin]
+    dodici.fansworld.adminbundle.admin.comment:
+        class: Dodici\Fansworld\AdminBundle\Admin\CommentAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: comment }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Comment, DodiciFansworldAdminBundle:CommentAdmin]
     appstate:
       class: Dodici\Fansworld\WebBundle\Extensions\AppState
       arguments: [@session, @doctrine.orm.entity_manager]
