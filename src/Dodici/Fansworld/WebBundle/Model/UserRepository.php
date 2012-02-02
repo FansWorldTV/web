@@ -78,6 +78,63 @@ class UserRepository extends EntityRepository
     	return $query->getResult();
     }
     
+	/**
+     * Count the user's friends with optional search term
+     * @param \Application\Sonata\UserBundle\Entity\User $user
+     * @param string $filtername
+     */
+	public function CountFriendUsers(\Application\Sonata\UserBundle\Entity\User $user, $filtername=null) 
+    {
+    	$rsm = new ResultSetMapping;
+    	$rsm->addScalarResult('countfriends', 'count');
+
+        $query = $this->_em->createNativeQuery('
+    	SELECT (
+        (SELECT
+		COUNT(u.id)
+		FROM friendship fs
+		INNER JOIN fos_user_user u ON u.id = fs.target_id
+		'.($filtername ? 'LEFT JOIN country ON country.id = u.country_id LEFT JOIN city ON city.id = u.city_id' : '').'
+		WHERE
+		fs.author_id = :userid
+		AND fs.active AND u.enabled
+		'.($filtername ? '
+			AND (
+			country.title LIKE :filtername OR 
+			city.title LIKE :filtername OR 
+			u.firstname LIKE :filtername OR 
+			u.lastname LIKE :filtername
+		)' : '').')
+		
+		+
+		
+		(SELECT
+		COUNT(u.id)
+		FROM friendship fs
+		INNER JOIN fos_user_user u ON u.id = fs.author_id
+		'.($filtername ? 'LEFT JOIN country ON country.id = u.country_id LEFT JOIN city ON city.id = u.city_id' : '').'
+		WHERE
+		fs.target_id = :userid
+		AND fs.active AND u.enabled
+		'.($filtername ? '
+			AND (
+			country.title LIKE :filtername OR 
+			city.title LIKE :filtername OR 
+			u.firstname LIKE :filtername OR 
+			u.lastname LIKE :filtername
+		)' : '').')
+    	) as countfriends
+    	'
+    	, $rsm)
+    		->setParameter('userid', $user->getId(), Type::BIGINT);
+    		
+    	if ($filtername)
+    		$query = $query->setParameter('filtername', '%'.$filtername.'%');
+    	
+    	$res = $query->getResult();
+    	return intval($res[0]['count']);
+    }
+    
     /**
      * 
      * Search for users with optional search term and pagination
@@ -149,4 +206,48 @@ class UserRepository extends EntityRepository
     	return $query->getResult();
     }
     
+	/**
+     * 
+     * Count searched users with optional search term
+     * @param \Application\Sonata\UserBundle\Entity\User $user
+     * @param boolean $isfriend (null|true|false)
+     * @param string $filtername
+     */
+	public function CountSearchFront(\Application\Sonata\UserBundle\Entity\User $user, $filtername=null, $isfriend=null) 
+    {
+    	$rsm = new ResultSetMapping;
+    	$rsm->addScalarResult('countusers', 'count');
+
+        $query = $this->_em->createNativeQuery('
+    	SELECT
+		COUNT(u.id) as countusers
+		FROM fos_user_user u
+		'.($filtername ? 'LEFT JOIN country ON country.id = u.country_id LEFT JOIN city ON city.id = u.city_id' : '').'
+		WHERE
+		u.enabled AND u.id <> :userid
+		'.($filtername ? '
+			AND (
+			country.title LIKE :filtername OR 
+			city.title LIKE :filtername OR 
+			u.firstname LIKE :filtername OR 
+			u.lastname LIKE :filtername
+		)' : '').'
+		
+		AND
+		(:isfriend IS NULL OR (
+			(:isfriend=true AND (u.id IN ((SELECT author_id FROM friendship WHERE active AND target_id = :userid UNION SELECT target_id FROM friendship WHERE active AND author_id = :userid))))
+			OR
+			(:isfriend=false AND (u.id NOT IN ((SELECT author_id FROM friendship WHERE active AND target_id = :userid UNION SELECT target_id FROM friendship WHERE active AND author_id = :userid))))
+		))
+		'
+    	, $rsm)
+    		->setParameter('userid', $user->getId(), Type::BIGINT)
+    		->setParameter('isfriend', $isfriend, Type::BOOLEAN);
+    		
+    	if ($filtername)
+    		$query = $query->setParameter('filtername', '%'.$filtername.'%');
+    	
+    	$res = $query->getResult();
+    	return intval($res[0]['count']);
+    }
 }

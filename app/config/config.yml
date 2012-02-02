@@ -67,7 +67,7 @@ fos_user:
         group_class: Application\Sonata\UserBundle\Entity\Group
     
 fos_js_routing:
-    routes_to_expose: [ .* ]
+    routes_to_expose: [ ^((?!_admin_).)*$ ]
     
 sonata_user:
     security_acl: true

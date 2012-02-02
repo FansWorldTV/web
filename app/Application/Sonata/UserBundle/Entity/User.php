@@ -93,9 +93,9 @@ class User extends BaseUser
     public function __toString()
     {
     	if ($this->getFirstname() || $this->getLastname()) {
-    		echo join(' ', array($this->getFirstname(), $this->getLastname()));
+    		return join(' ', array($this->getFirstname(), $this->getLastname()));
     	} else {
-    		echo $this->getUsername() ?: $this->getEmail();
+    		return $this->getUsername() ?: $this->getEmail();
     	}
     }
     
