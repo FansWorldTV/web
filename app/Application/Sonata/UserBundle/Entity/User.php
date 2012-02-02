@@ -90,6 +90,15 @@ class User extends BaseUser
         $this->privacy = array();
     }
     
+    public function __toString()
+    {
+    	if ($this->getFirstname() || $this->getLastname()) {
+    		echo join(' ', array($this->getFirstname(), $this->getLastname()));
+    	} else {
+    		echo $this->getUsername() ?: $this->getEmail();
+    	}
+    }
+    
     /**
      * Get id
      *
