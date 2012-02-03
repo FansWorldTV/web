@@ -2,4 +2,313 @@
 
 {% block title %}{{ parent() }} - Home{% endblock %}
 
-{% block content %}Hola{% endblock %}
+{% block content %}
+
+<div class="top">
+    <div class="wrap">
+        <div class="users">Ya somos <strong>25.352</strong> miembros <a class="btn" href="registro.php">Sumate</a></div>
+        <div class="social">
+            <ul>
+                <li><a href="#1">Espa&ntilde;ol</a>
+                    <ul>
+                        <li><a href="#1">Ingles</a></li>
+                        <li><a href="#1">Portugues</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="redes">
+                <a href="#1" title="Facebook"><img src="{{ asset('bundles/dodicifansworldweb/images/ui/ico_facebook.png' )}}"></a><a href="#1" title="Twitter"><img src="{{ asset('bundles/dodicifansworldweb/images/ui/ico_twitter.png' )}}"></a><a href="#1" title="Feed Rss"><img src="{{ asset('bundles/dodicifansworldweb/images/ui/ico_rss.png' )}}"></a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrap">
+    <div class="header">
+        <div class="logo"><a href="index.php"><img src="{{ asset('bundles/dodicifansworldweb/images/fansworld.png' )}}" alt="Fansworld" /></a></div>
+        <div class="search">
+            <input type="text" value="Buscar" />
+            <ul>
+                <li><a href="search.php">Todo</a>
+                    <ul>
+                        <li><a href="search.php">Idolos</a></li>
+                        <li><a href="search.php">Fans</a></li>
+                        <li><a href="search.php">Noticias</a></li>
+                        <li><a href="search.php">Videos</a></li>
+                        <li><a href="search.php">Fotos</a></li>
+                        <li><a href="search.php">Foros</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <input class="btn_search" name="" type="button" />
+        </div>
+    </div>
+    <div class="navy">
+        <ul>
+            <li><a class="current" href="index.php"><img src="{{ asset('bundles/dodicifansworldweb/images/ui/ico_home.png' )}}" /></a></li>
+            <li><a href="idols.php">Idolos</a></li>
+            <li><a href="fans.php">Fans</a></li>
+            <li><a href="tv.php">TV</a></li>
+            <li><a href="photos.php">Fotos</a></li>
+            <li><a href="contests.php">Concursos</a></li>
+            <li><a href="philanthropy.php">Filantropia</a></li>
+            <li class="alerts_user"><a href="#1"><span>13</span></a>
+                <ul>
+                    <li class="clearfix">
+                        <div class="avatar"><img src="{{ asset('bundles/dodicifansworldweb/demo/user8.jpg' )}}" width="40" height="40" /></div>
+                        <div class="info"><a href="user_profile.php">Rodrigo Ramirez</a> <span>Te quiere agregar como amigo<br />
+                                <a href="#1">rechazar</a></span></div>
+                        <div class="button"><a href="#1">Aceptar</a></div>
+                    </li>
+                    <li class="clearfix">
+                        <div class="avatar"><img src="{{ asset('bundles/dodicifansworldweb/demo/user.jpg' )}}" width="40" height="40" /></div>
+                        <div class="info"><a href="user_profile.php">Rodrigo Ramirez</a> <span>Te quiere agregar como amigo<br />
+                                <a href="#1">rechazar</a></span></div>
+                        <div class="button"><a href="#1">Aceptar</a></div>
+                    </li>
+                    <li class="clearfix">
+                        <div class="avatar"><img src="{{ asset('bundles/dodicifansworldweb/demo/user3.jpg' )}}" width="40" height="40" /></div>
+                        <div class="info"><a href="user_profile.php">Rodrigo Ramirez</a> <span>Te quiere agregar como amigo<br />
+                                <a href="#1">rechazar</a></span></div>
+                        <div class="button"><a href="#1">Aceptar</a></div>
+                    </li>
+                    <li class="more"><a href="#1">15 notificaciones mas</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="container">
+        <div class="content clearfix">
+            <div class="col_160 left margin">
+                <div class="cont clearfix">
+                    <h2>Login</h2>
+                    <form class="login">
+                        <label> <span>Email</span>
+                            <input name="" type="text" />
+                        </label>
+                        <label> <span>Password</span>
+                            <input name="" type="password" />
+                        </label>
+                        <label>
+                            <div class="recordar">
+                                <input name="" type="checkbox" value="" />
+                                Recordarme</div>
+                        </label>
+                        <a class="btn" href="index_usuario.php">Ingresar</a>
+                    </form>
+                    <div class="login_error"> <span>Error de ingreso </span> <a href="recovery.php">Recuperar mis datos</a> </div>
+                </div>
+                <div class="access"><a href="registro.php" title="Registrate, es gratis"><img src="{{ asset('bundles/dodicifansworldweb/images/registro.gif' )}}"/></a></div>
+                <div class="ad">
+                    <div class="banner_demo" style="height:600px"></div>
+                </div>
+            </div>
+            <div class="col_468 left margin">
+                <div class="cont clearfix">
+                    <div class="video_destacado"> <a href="video.php">
+                            <div class="video">
+                                <div class="play"></div>
+                                <div class="info">
+                                    <h1>Las Mejores Jugadas 2012</h1>
+                                    <span class="user">Javier Pastore</span><span class="date">15 de diciembre</span></div>
+                            </div>
+                            <img src="{{ asset('bundles/dodicifansworldweb/demo/foto01.jpg' )}}" width="468" height="320"/> </a> </div>
+                </div>
+                <div class="cont clearfix">
+                    <h2>Videos <a class="more" href="#1">ver todos</a></h2>
+                    <div class="ticket"> <a class="btn_prev" href="#1">anterior</a><a class="btn_next" href="#1">siguiente</a>
+                        <div class="video_ticket">
+                            <div class="video"> <a href="video.php">
+                                    <div class="play"></div>
+                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/thumb01.jpg' )}}"/> </a>
+                                <div class="info">
+                                    <h1>Maecenas aliquet,<br />
+                                        dui non vehicula vehicula</h1>
+                                    <span class="date">15 de diciembre</span><span class="comments"><a href="#1">15 comentarios</a></span></div>
+                            </div>
+                            <div class="video"> <a href="video.php">
+                                    <div class="play"></div>
+                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/thumb02.jpg' )}}"/> </a>
+                                <div class="info">
+                                    <h1>Maecenas aliquet,<br />
+                                        dui non vehicula vehicula</h1>
+                                    <span class="date">15 de diciembre</span><span class="comments"><a href="#1">15 comentarios</a></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cont clearfix">
+                    <h2>Ultimos temas <a class="more" href="#1">ver todos</a></h2>
+                    <ul class="foro clearfix">
+                        <li><a class="clearfix" href="topic.php">
+                                <div class="messages"> 325 <span>Replies</span> </div>
+                                <div class="post">
+                                    <h3>Donec eu tortor sit amet nisi luctus placerat lacinia vitae lorem</h3>
+                                    <span class="user">Carlos Aguilar</span><span class="date">hace 25 minutos</span></div>
+                            </a></li><li><a class="clearfix" href="topic.php">
+                                <div class="messages"> 325 <span>Replies</span> </div>
+                                <div class="post">
+                                    <h3>Donec eu tortor sit amet nisi luctus placerat lacinia vitae lorem</h3>
+                                    <span class="user">Carlos Aguilar</span><span class="date">hace 25 minutos</span></div>
+                            </a></li><li><a class="clearfix" href="topic.php">
+                                <div class="messages"> 325 <span>Replies</span> </div>
+                                <div class="post">
+                                    <h3>Donec eu tortor sit amet nisi luctus placerat lacinia vitae lorem</h3>
+                                    <span class="user">Carlos Aguilar</span><span class="date">hace 25 minutos</span></div>
+                            </a></li><li><a class="clearfix" href="topic.php">
+                                <div class="messages"> 325 <span>Replies</span> </div>
+                                <div class="post">
+                                    <h3>Donec eu tortor sit amet nisi luctus placerat lacinia vitae lorem</h3>
+                                    <span class="user">Carlos Aguilar</span><span class="date">hace 25 minutos</span></div>
+                            </a></li><li><a class="clearfix" href="topic.php">
+                                <div class="messages"> 325 <span>Replies</span> </div>
+                                <div class="post">
+                                    <h3>Donec eu tortor sit amet nisi luctus placerat lacinia vitae lorem</h3>
+                                    <span class="user">Carlos Aguilar</span><span class="date">hace 25 minutos</span></div>
+                            </a></li><li><a class="clearfix" href="topic.php">
+                                <div class="messages"> 325 <span>Replies</span> </div>
+                                <div class="post">
+                                    <h3>Donec eu tortor sit amet nisi luctus placerat lacinia vitae lorem</h3>
+                                    <span class="user">Carlos Aguilar</span><span class="date">hace 25 minutos</span></div>
+                            </a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col_300 left">
+                <div class="cont clearfix">
+                    <h2>Top idolos <a class="more" href="#1">ver todos</a></h2>
+                    <div class="grid_users">
+                        <ul class="users">
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user1.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user2.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user3.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user4.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user5.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user6.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user5.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user4.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user3.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user2.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user1.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user5.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user.jpg' )}}" /></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="access"><a href="#1" title="Encuentra a tus idolos"><img src="{{ asset('bundles/dodicifansworldweb/images/encuentra.gif' )}}"/></a></div>
+                <div class="ad">
+                    <div class="banner_demo" style="height:250px"></div>
+                </div>
+                <div class="cont clearfix">
+                    <h2>Top Fans <a class="more" href="#1">ver todos</a></h2>
+                    <div class="grid_users">
+                        <ul class="users">
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user1.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user2.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user3.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user4.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user5.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user6.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user5.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user4.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user3.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user2.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user1.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user5.jpg' )}}" /></a></li>
+                            <li class="user"><a href="user_profile.php"><span>
+                                        <div>Javier Pastore</div>
+                                        1523 fans</span><img src="{{ asset('bundles/dodicifansworldweb/demo/user.jpg' )}}" /></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="ad">
+                    <div class="banner_demo" style="height:120px"></div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="loguito"><img src="{{ asset('bundles/dodicifansworldweb/images/loguito.png' )}}" /></div>
+            <ul>
+                <li>Sobre FansWorld</li>
+                <li><a href="page.php">Quienes Somos</a></li>
+                <li><a href="page.php">Como funciona</a></li>
+                <li><a href="page.php">Registro</a></li>
+            </ul>
+            <ul>
+                <li>Terminos</li>
+                <li><a href="page.php">Quienes Somos</a></li>
+                <li><a href="page.php">Como funciona</a></li>
+                <li><a href="page.php">Registro</a></li>
+            </ul>
+            <ul>
+                <li>Publicidad</li>
+                <li><a href="page.php">Quienes Somos</a></li>
+                <li><a href="page.php">Como funciona</a></li>
+                <li><a href="page.php">Registro</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
