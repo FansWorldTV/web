@@ -21,11 +21,13 @@ class UserController extends SiteController
         $query = $request->get('query');
         $page = $request->get('page');
         $offset = ($page - 1) * self::LIMIT_SEARCH;
+        
+        $userRepo = $this->getRepository('User');
 
         if ($query) {
             $user = $this->get('security.context')->getToken()->getUser();
             $response = array();
-            $search = $this->getRepository('User')->SearchFront($user, $query, false, self::LIMIT_SEARCH, $offset);
+            $search = $userRepo->SearchFront($user, $query, false, self::LIMIT_SEARCH, $offset);
 
             if (count($search) > 0) {
                 foreach ($search as $element) {
@@ -36,8 +38,10 @@ class UserController extends SiteController
                 }
 
 
-                $search = $this->getRepository('User')->SearchFront($user, $query, false, null, $offset);
-                if (count($search) > self::LIMIT_SEARCH) {
+                $search = $userRepo->SearchFront($user, $query, false, null, $offset);
+                $countSearch = $userRepo->CountSearchFront($user, $query, false, null, $offset);
+                
+                if ($countSearch > self::LIMIT_SEARCH) {
                     $response['gotMore'] = true;
                 } else {
                     $response['gotMore'] = false;
@@ -67,8 +71,10 @@ class UserController extends SiteController
         if ($query) {
             $response = array();
             $search = $userRepo->FriendUsers($user, $query, false, self::LIMIT_SEARCH, $offset);
+            
+            $countFriendUsers = $userRepo->CountFriendUsers($user, $query, false, self::LIMIT_SEARCH, $offset);
 
-            if (count($search) > 0) {
+            if ($countFriendUsers > 0) {
                 foreach ($search as $element) {
                     $response[$element->getId()]['id'] = $element->getId();
                     $response[$element->getId()]['name'] = (string) $element;
@@ -77,7 +83,7 @@ class UserController extends SiteController
                 }
 
                 $search = $userRepo->SearchFront($user, $query, false, null, $offset);
-                if (count($search) > self::LIMIT_SEARCH) {
+                if ($countFriendUsers > self::LIMIT_SEARCH) {
                     $response['gotMore'] = true;
                 } else {
                     $response['gotMore'] = false;
