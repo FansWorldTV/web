@@ -1,0 +1,19 @@
+{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+
+{% block title %}{{ parent() }} - Detalle{% endblock %}
+
+{% block content %}
+
+    <div>
+        <img src="{{ user.image }}" alt="" />
+        <h3>{{ user.firstname }} {{ user.lastname }}</h3>
+    </div>
+    <ul>
+        <li>Pais: {{ user.country }}</li>
+        <li>Ciudad: {{ user.city }}</li>
+        <li>Direccion: {{ user.address }}</li>
+        <li>Telefono: {{ user.phone }}</li>
+        <li>Celular: {{ user.mobile }}</li>
+    </ul>
+
+{% endblock %}

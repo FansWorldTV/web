@@ -1,0 +1,31 @@
+{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+
+{% block title %}{{ parent() }} - Búsqueda{% endblock %}
+
+{% block content %}
+
+    <form method="post" action="" >
+        <input type="text" name="query" value="" id="query"/>
+        <input type="button" value="Buscar" name="submit" id="search"/>
+    </form>
+
+    <div class="listMosaic">
+        
+    </div>
+    <a href="#" id="addMore" class="hidden">Add More</a>
+
+    <div class="templates hidden">
+        <div class="listMosaic">
+            <div class="element">
+                <img src="" class="avatar"/>
+                <span class="name">Nombre</span>
+                <span class="commonFriends">Tiene n amigos en común</span>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var appLocale = '{{ app.request.locale }}';
+    </script>
+
+{% endblock %}
