@@ -23,7 +23,7 @@ class UserController extends SiteController
         $offset = ($page - 1) * self::LIMIT_SEARCH;
 
         if ($query) {
-            $user = "";
+            $user = $this->get('security.context')->getToken()->getUser();
             $response = array();
             $search = $this->getRepository('User')->SearchFront($user, $query, false, self::LIMIT_SEARCH, $offset);
 
@@ -61,7 +61,7 @@ class UserController extends SiteController
         $query = $request->get('query');
         $page = $request->get('page');
         $userRepo = $this->getRepository('User');
-        $user = "";
+        $user = $this->get('security.context')->getToken()->getUser();
         
 
         if ($query) {
