@@ -62,8 +62,8 @@ class UserRepository extends EntityRepository
 		)' : '').'
     	
     	'.
-        (($limit !== null) ? 'LIMIT :limit' : '').
-        (($offset !== null) ? 'OFFSET :offset' : '')
+        (($limit !== null) ? ' LIMIT :limit ' : '').
+        (($offset !== null) ? ' OFFSET :offset ' : '')
     	, $rsm)
     		->setParameter('userid', $user->getId(), Type::BIGINT);
     		
@@ -189,8 +189,8 @@ class UserRepository extends EntityRepository
 		ORDER BY commonfriends DESC, u.lastname ASC, u.firstname ASC, u.username ASC
 		
     	'.
-        (($limit !== null) ? 'LIMIT :limit' : '').
-        (($offset !== null) ? 'OFFSET :offset' : '')
+        (($limit !== null) ? ' LIMIT :limit ' : '').
+        (($offset !== null) ? ' OFFSET :offset ' : '')
     	, $rsm)
     		->setParameter('userid', $user->getId(), Type::BIGINT)
     		->setParameter('isfriend', $isfriend, Type::BOOLEAN);
