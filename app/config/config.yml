@@ -156,6 +156,16 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: comment }
         arguments: [null, Dodici\Fansworld\WebBundle\Entity\Comment, DodiciFansworldAdminBundle:CommentAdmin]
+    dodici.fansworld.adminbundle.admin.photo:
+        class: Dodici\Fansworld\AdminBundle\Admin\PhotoAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: photo }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Photo, DodiciFansworldAdminBundle:PhotoAdmin]
+    dodici.fansworld.adminbundle.admin.album:
+        class: Dodici\Fansworld\AdminBundle\Admin\AlbumAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: album }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Album, DodiciFansworldAdminBundle:AlbumAdmin]
     appstate:
       class: Dodici\Fansworld\WebBundle\Extensions\AppState
       arguments: [@session, @doctrine.orm.entity_manager]

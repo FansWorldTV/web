@@ -53,7 +53,7 @@ class VideoCategory implements Translatable
 
 
 	/**
-     * @ORM\OneToMany(targetEntity="Video", mappedBy="videocategory")
+     * @ORM\OneToMany(targetEntity="Video", mappedBy="videocategory", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $videos;
 

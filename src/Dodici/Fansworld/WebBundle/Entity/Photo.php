@@ -5,15 +5,14 @@ namespace Dodici\Fansworld\WebBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Translatable\Translatable;
 
 /**
- * Dodici\Fansworld\WebBundle\Entity\Video
+ * Dodici\Fansworld\WebBundle\Entity\Photo
  *
- * @ORM\Table(name="video")
- * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\VideoRepository")
+ * @ORM\Table(name="photo")
+ * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\PhotoRepository")
  */
-class Video implements Translatable
+class Photo
 {
     /**
      * @var bigint $id
@@ -26,7 +25,6 @@ class Video implements Translatable
 
     /**
      * @var string $title
-     * @Gedmo\Translatable
      *
      * @ORM\Column(name="title", type="string", length=250, nullable=false)
      */
@@ -44,7 +42,6 @@ class Video implements Translatable
 
     /**
      * @var text $content
-     * @Gedmo\Translatable
      *
      * @ORM\Column(name="content", type="text", nullable=true)
      */
@@ -63,28 +60,7 @@ class Video implements Translatable
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
     private $active;
-    
-    /**
-     * @var integer $duration
-     *
-     * @ORM\Column(name="duration", type="integer", nullable=true)
-     */
-    private $duration;
-    
-    /**
-     * @var integer $stream
-     *
-     * @ORM\Column(name="stream", type="integer", nullable=true)
-     */
-    private $stream;
-    
-    /**
-     * @var string $youtube
-     *
-     * @ORM\Column(name="youtube", type="string", length=250, nullable=true)
-     */
-    private $youtube;
-    
+        
     /**
      * @var integer $privacy
      * Privacy::EVERYONE|Privacy::FRIENDS_ONLY
@@ -95,20 +71,19 @@ class Video implements Translatable
     
     /**
      * @Gedmo\Slug(fields={"title"}, unique=false)
-     * @Gedmo\Translatable
      * @ORM\Column(length=250)
      */
     private $slug;
     
     /**
-     * @var VideoCategory
+     * @var Album
      *
-     * @ORM\ManyToOne(targetEntity="VideoCategory")
+     * @ORM\ManyToOne(targetEntity="Album")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="videocategory_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="album_id", referencedColumnName="id")
      * })
      */
-    private $videocategory;
+    private $album;
     
     /**
      * @var Application\Sonata\MediaBundle\Entity\Media
@@ -118,60 +93,18 @@ class Video implements Translatable
     private $image;
     
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="video")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="photo", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $comments;
-    
-	/**
-	 * @Gedmo\Locale
-	 * Used locale to override Translation listener`s locale
-	 * this is not a mapped field of entity metadata, just a simple property
-	 */
-	private $locale;
-	
-	public function setTranslatableLocale($locale)
-	{
-	    $this->locale = $locale;
-	}
-    
-    public function __toString()
-    {
-    	return $this->getTitle();
-    }
-    
-	/**
-     * Add comments
-     *
-     * @param Dodici\Fansworld\WebBundle\Entity\Comment $comments
-     */
-    public function addComment(\Dodici\Fansworld\WebBundle\Entity\Comment $comments)
-    {
-        $this->comments[] = $comments;
-    }
-    
-	public function addComments(\Dodici\Fansworld\WebBundle\Entity\Comment $comments)
-    {
-        $this->comments[] = $comments;
-    }
-
-    /**
-     * Get comments
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getComments()
-    {
-        return $this->comments;
-    }
-    
-	public function setComments($comments)
-    {
-        $this->comments = $comments;
-    }
     
     public function __construct()
     {
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+	public function __toString()
+    {
+        return $this->getTitle();
     }
     
     /**
@@ -265,66 +198,6 @@ class Video implements Translatable
     }
 
     /**
-     * Set duration
-     *
-     * @param integer $duration
-     */
-    public function setDuration($duration)
-    {
-        $this->duration = $duration;
-    }
-
-    /**
-     * Get duration
-     *
-     * @return integer 
-     */
-    public function getDuration()
-    {
-        return $this->duration;
-    }
-
-    /**
-     * Set stream
-     *
-     * @param integer $stream
-     */
-    public function setStream($stream)
-    {
-        $this->stream = $stream;
-    }
-
-    /**
-     * Get stream
-     *
-     * @return integer 
-     */
-    public function getStream()
-    {
-        return $this->stream;
-    }
-
-    /**
-     * Set youtube
-     *
-     * @param string $youtube
-     */
-    public function setYoutube($youtube)
-    {
-        $this->youtube = $youtube;
-    }
-
-    /**
-     * Get youtube
-     *
-     * @return string 
-     */
-    public function getYoutube()
-    {
-        return $this->youtube;
-    }
-
-    /**
      * Set privacy
      *
      * @param integer $privacy
@@ -365,23 +238,43 @@ class Video implements Translatable
     }
 
     /**
-     * Set videocategory
+     * Set author
      *
-     * @param Dodici\Fansworld\WebBundle\Entity\VideoCategory $videocategory
+     * @param Application\Sonata\UserBundle\Entity\User $author
      */
-    public function setVideocategory(\Dodici\Fansworld\WebBundle\Entity\VideoCategory $videocategory)
+    public function setAuthor(\Application\Sonata\UserBundle\Entity\User $author)
     {
-        $this->videocategory = $videocategory;
+        $this->author = $author;
     }
 
     /**
-     * Get videocategory
+     * Get author
      *
-     * @return Dodici\Fansworld\WebBundle\Entity\VideoCategory 
+     * @return Application\Sonata\UserBundle\Entity\User 
      */
-    public function getVideocategory()
+    public function getAuthor()
     {
-        return $this->videocategory;
+        return $this->author;
+    }
+
+    /**
+     * Set album
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Album $album
+     */
+    public function setAlbum(\Dodici\Fansworld\WebBundle\Entity\Album $album)
+    {
+        $this->album = $album;
+    }
+
+    /**
+     * Get album
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Album 
+     */
+    public function getAlbum()
+    {
+        return $this->album;
     }
 
     /**
@@ -405,22 +298,32 @@ class Video implements Translatable
     }
 
     /**
-     * Set author
+     * Add comments
      *
-     * @param Application\Sonata\UserBundle\Entity\User $author
+     * @param Dodici\Fansworld\WebBundle\Entity\Comment $comments
      */
-    public function setAuthor(\Application\Sonata\UserBundle\Entity\User $author)
+    public function addComment(\Dodici\Fansworld\WebBundle\Entity\Comment $comments)
     {
-        $this->author = $author;
+        $this->comments[] = $comments;
+    }
+	public function addComments(\Dodici\Fansworld\WebBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
     }
 
     /**
-     * Get author
+     * Get comments
      *
-     * @return Application\Sonata\UserBundle\Entity\User 
+     * @return Doctrine\Common\Collections\Collection 
      */
-    public function getAuthor()
+    public function getComments()
     {
-        return $this->author;
+        return $this->comments;
     }
+    
+	public function setComments($comments)
+    {
+        $this->comments = $comments;
+    }
+    
 }

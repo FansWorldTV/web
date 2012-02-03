@@ -24,7 +24,7 @@ class FriendshipAdmin extends Admin
         $formMapper
             ->add('createdAt', 'date', array ('attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy HH:mm'), array ())
-            ->add('active', NULL, array (), array ())
+            ->add('active', NULL, array ('required' => false), array ())
             ->add('author', NULL, array (), array ())
             ->add('target', NULL, array (), array ())
         ;

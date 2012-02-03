@@ -204,13 +204,13 @@
 -
   name: Argentina
   cities:
+      - Capital Federal
       - Buenos Aires
       - Catamarca
       - Chaco
       - Chubut
       - Cordoba
       - Corrientes
-      - Distrito Federal
       - Entre Rios
       - Formosa
       - Jujuy
@@ -1684,7 +1684,7 @@
 -
   name: French Polynesia
   cities:
-      - Polynesie Fran?aise Territoire
+      - Polynesie Française Territoire
 -
   name: French Southern Territories
   cities:
@@ -2259,7 +2259,7 @@
 -
   name: Islas Feroe
   cities:
-      - F?r?erne
+      - Færøerne
 -
   name: Islas Malvinas
   cities:
@@ -4886,13 +4886,13 @@
       - Hau Giang
       - Ho Chi Minh
       - Hoa Binh
-      - Hung Y?n Province
-      - H? Nam Province
-      - H?i Duong Province
-      - H? Chi Minh Municipality
+      - Hung Yen Province
+      - Ho Nam Province
+      - Hui Duong Province
+      - Ho Chi Minh Municipality
       - Khanh Hoa
       - Kien Giang
-      - Ki?n Giang Province
+      - Kien Giang Province
       - Kon Tum
       - Lai Chau
       - Lam Dong
@@ -4900,7 +4900,7 @@
       - Lao Cai
       - Long An
       - Minh Hai
-      - Minh H?i T?nh
+      - Minh Hoi Tonh
       - Nam Ha
       - Nghe An
       - Nghe Tinh
@@ -4914,7 +4914,7 @@
       - Quang Ngai
       - Quang Ninh
       - Quang Tri
-      - Qu?ng Nam Province
+      - Quang Nam Province
       - Soc Trang
       - Son La
       - Song Be
@@ -4922,15 +4922,15 @@
       - Thai Binh
       - Thanh Hoa
       - Thua Thien
-      - Thai Nguy?n Province
+      - Thai Nguyen Province
       - Tien Giang
       - Tra Vinh
       - Tuyen Quang
       - Vinh Long
       - Vinh Phu
-      - Vinh Phu T?nh
+      - Vinh Phu Tonh
       - Yen Bai
-      - ??ng Thap Province
+      - Ying Thap Province
 -
   name: Virgin Islands British
   cities:

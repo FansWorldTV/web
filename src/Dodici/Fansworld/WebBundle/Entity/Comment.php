@@ -90,6 +90,26 @@ class Comment
      * })
      */
     private $video;
+    
+    /**
+     * @var Photo
+     *
+     * @ORM\ManyToOne(targetEntity="Photo")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
+     * })
+     */
+    private $photo;
+    
+    /**
+     * @var Album
+     *
+     * @ORM\ManyToOne(targetEntity="Album")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="album_id", referencedColumnName="id")
+     * })
+     */
+    private $album;
 
 
     public function __toString()
@@ -290,5 +310,45 @@ class Comment
     public function getVideo()
     {
         return $this->video;
+    }
+
+    /**
+     * Set photo
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Photo $photo
+     */
+    public function setPhoto(\Dodici\Fansworld\WebBundle\Entity\Photo $photo)
+    {
+        $this->photo = $photo;
+    }
+
+    /**
+     * Get photo
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Photo 
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * Set album
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Album $album
+     */
+    public function setAlbum(\Dodici\Fansworld\WebBundle\Entity\Album $album)
+    {
+        $this->album = $album;
+    }
+
+    /**
+     * Get album
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Album 
+     */
+    public function getAlbum()
+    {
+        return $this->album;
     }
 }
