@@ -55,6 +55,7 @@ class UserAdmin extends Admin
                 ->add('plainPassword', 'text', array('required' => false))
             ->end()
             ->with('Personal')
+            	->add('sex','choice',array('label'=>'Sexo','required'=>false, 'choices' => array('m' => 'Hombre', 'f' => 'Mujer')))	
             	->add('address',null,array('label'=>'Dirección','required'=>false))
 				->add('firstname',null,array('label'=>'Nombre','required'=>false))
 				->add('lastname',null,array('label'=>'Apellido','required'=>false))

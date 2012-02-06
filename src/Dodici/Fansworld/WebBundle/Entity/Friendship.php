@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Dodici\Fansworld\WebBundle\Entity\Friendship
  *
  * @ORM\Table(name="friendship")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\FriendshipRepository")
  */
 class Friendship
 {

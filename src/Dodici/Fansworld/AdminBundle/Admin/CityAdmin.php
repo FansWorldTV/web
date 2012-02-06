@@ -28,7 +28,7 @@ class CityAdmin extends Admin
     public function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('title', 'text', array ())
+            ->addIdentifier('title', 'text', array ())
             ->add('country', 'orm_many_to_one', array ())
         ;
     }

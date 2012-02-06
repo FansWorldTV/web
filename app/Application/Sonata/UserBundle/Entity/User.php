@@ -23,7 +23,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class User extends BaseUser
 {
-
+	const SEX_MALE = 'm';
+	const SEX_FEMALE = 'f';
+	
     /**
      * @var integer $id
      */
@@ -53,6 +55,11 @@ class User extends BaseUser
      * @var string $mobile
      */
     private $mobile;
+    
+    /**
+     * @var string $sex
+     */
+    private $sex;
     
     /**
      * @var Dodici\Fansworld\WebBundle\Entity\Country
@@ -207,6 +214,26 @@ class User extends BaseUser
     public function getMobile()
     {
         return $this->mobile;
+    }
+    
+	/**
+     * Set sex
+     *
+     * @param string $sex
+     */
+    public function setSex($sex)
+    {
+        $this->sex = $sex;
+    }
+
+    /**
+     * Get sex
+     *
+     * @return string 
+     */
+    public function getSex()
+    {
+        return $this->sex;
     }
 
     /**

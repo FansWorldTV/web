@@ -26,7 +26,7 @@ class CountryAdmin extends Admin
     public function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('title', 'text', array ())
+            ->addIdentifier('title', 'text', array ())
         ;
     }
 
