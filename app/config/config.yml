@@ -114,6 +114,7 @@ sonata_admin:
     title_logo: /bundles/dodicifansworldadmin/images/logo_title.png
     templates:
         layout:  DodiciFansworldAdminBundle::standard_layout.html.twig
+        user_block: DodiciFansworldAdminBundle:Core:user_block.html.twig
     security:
         handler: sonata.admin.security.handler.role
 
@@ -121,6 +122,7 @@ parameters:
     sonata.user.admin.user.class: Application\Sonata\UserBundle\Admin\Entity\UserAdmin
         
 services:
+    ### BEGIN ADMIN SERVICES ###
     dodici.fansworld.adminbundle.admin.country:
         class: Dodici\Fansworld\AdminBundle\Admin\CountryAdmin
         tags:
@@ -166,6 +168,27 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: album }
         arguments: [null, Dodici\Fansworld\WebBundle\Entity\Album, DodiciFansworldAdminBundle:AlbumAdmin]
+    dodici.fansworld.adminbundle.admin.interestcategory:
+        class: Dodici\Fansworld\AdminBundle\Admin\InterestCategoryAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: interestcategory }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\InterestCategory, DodiciFansworldAdminBundle:InterestCategoryAdmin]
+    dodici.fansworld.adminbundle.admin.interest:
+        class: Dodici\Fansworld\AdminBundle\Admin\InterestAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: interest }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Interest, DodiciFansworldAdminBundle:InterestAdmin]
+    dodici.fansworld.adminbundle.admin.contest:
+        class: Dodici\Fansworld\AdminBundle\Admin\ContestAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: contest }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Contest, DodiciFansworldAdminBundle:ContestAdmin]
+    dodici.fansworld.adminbundle.admin.contestparticipant:
+        class: Dodici\Fansworld\AdminBundle\Admin\ContestParticipantAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: contestparticipant }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\ContestParticipant, DodiciFansworldAdminBundle:ContestParticipantAdmin]
+    ### END ADMIN SERVICES ###
     appstate:
       class: Dodici\Fansworld\WebBundle\Extensions\AppState
       arguments: [@session, @doctrine.orm.entity_manager]

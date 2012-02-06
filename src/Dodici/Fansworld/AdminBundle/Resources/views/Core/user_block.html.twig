@@ -1,0 +1,11 @@
+{% extends 'SonataUserBundle:Admin/Core:user_block.html.twig' %}
+{% block user_block %}
+	{{ parent() }}
+	{% for loc in ['en', 'es'] %}
+	{% spaceless %}
+	<span class="label">
+		<a href="{{ url('sonata_admin_dashboard', {'_locale' : loc}) }}" style="text-decoration: none; color: black">{{ loc|upper }}</a>
+	</span>
+	{% endspaceless %}
+	{% endfor %}
+{% endblock %}

@@ -110,7 +110,27 @@ class Comment
      * })
      */
     private $album;
-
+    
+    /**
+     * @var Interest
+     *
+     * @ORM\ManyToOne(targetEntity="Interest")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="interest_id", referencedColumnName="id")
+     * })
+     */
+    private $interest;
+	
+	/**
+     * @var Contest
+     *
+     * @ORM\ManyToOne(targetEntity="Contest")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="contest_id", referencedColumnName="id")
+     * })
+     */
+    private $contest;
+    
 
     public function __toString()
     {
@@ -350,5 +370,45 @@ class Comment
     public function getAlbum()
     {
         return $this->album;
+    }
+
+    /**
+     * Set interest
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Interest $interest
+     */
+    public function setInterest(\Dodici\Fansworld\WebBundle\Entity\Interest $interest)
+    {
+        $this->interest = $interest;
+    }
+
+    /**
+     * Get interest
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Interest 
+     */
+    public function getInterest()
+    {
+        return $this->interest;
+    }
+
+    /**
+     * Set contest
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Contest $contest
+     */
+    public function setContest(\Dodici\Fansworld\WebBundle\Entity\Contest $contest)
+    {
+        $this->contest = $contest;
+    }
+
+    /**
+     * Get contest
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Contest 
+     */
+    public function getContest()
+    {
+        return $this->contest;
     }
 }
