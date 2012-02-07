@@ -97,10 +97,9 @@
                     <h2>Login</h2>
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                                         <span>
-                                            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+                                            {{ 'layout.logged_in_as'|trans({'%username%': app.user}, 'FOSUserBundle') }}
                                         </span>
                                         <a class="buttonlink" href="{{ path('fos_user_security_logout') }}">SALIR</a>
-                                        <a class="buttonlink contact sharebutton" href="#">COMPARTIR</a>
                                         <a class="buttonlink" href="{{ path('fos_user_profile_edit') }}">MI CUENTA</a>
 				{% else %}
 					<form action="{{ path("fos_user_security_check") }}" method="post">
@@ -115,14 +114,15 @@
 					
 					    <input class="login" type="submit" id="_submit" name="_submit" value="ENTRAR" />
 					</form>
-					<a class="buttonlink contact sharebutton" href="#">COMPARTIR</a>
-					<a class="buttonlink register" href="{{ path('fos_user_registration_register') }}">REGISTRATE</a>
+					{{ facebook_login_button({'autologoutlink': false}) }}
+					
+					<a href="{{ path('fos_user_registration_register') }}" title="Registrate, es gratis"><img src="{{ asset('bundles/dodicifansworldweb/images/registro.gif' )}}"/></a>
 				{% endif %}
                     
-                    {{ facebook_login_button({'autologoutlink': true}) }}
+                    
                     
                 </div>
-                <div class="access"><a href="registro.php" title="Registrate, es gratis"><img src="{{ asset('bundles/dodicifansworldweb/images/registro.gif' )}}"/></a></div>
+                
                 <div class="ad">
                     <div class="banner_demo" style="height:600px"></div>
                 </div>

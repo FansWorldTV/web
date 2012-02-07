@@ -39,7 +39,9 @@ class UserRepository extends EntityRepository
 		'.($filtername ? '
 			AND (
 			country.title LIKE :filtername OR 
-			city.title LIKE :filtername OR 
+			city.title LIKE :filtername OR
+			u.username LIKE :filtername OR
+			u.email LIKE :filtername OR  
 			u.firstname LIKE :filtername OR 
 			u.lastname LIKE :filtername
 		)' : '').'
@@ -57,6 +59,8 @@ class UserRepository extends EntityRepository
 			AND (
 			country.title LIKE :filtername OR 
 			city.title LIKE :filtername OR 
+			u.username LIKE :filtername OR
+			u.email LIKE :filtername OR
 			u.firstname LIKE :filtername OR 
 			u.lastname LIKE :filtername
 		)' : '').'
@@ -102,6 +106,8 @@ class UserRepository extends EntityRepository
 			AND (
 			country.title LIKE :filtername OR 
 			city.title LIKE :filtername OR 
+			u.username LIKE :filtername OR
+			u.email LIKE :filtername OR
 			u.firstname LIKE :filtername OR 
 			u.lastname LIKE :filtername
 		)' : '').')
@@ -120,6 +126,8 @@ class UserRepository extends EntityRepository
 			AND (
 			country.title LIKE :filtername OR 
 			city.title LIKE :filtername OR 
+			u.username LIKE :filtername OR
+			u.email LIKE :filtername OR
 			u.firstname LIKE :filtername OR 
 			u.lastname LIKE :filtername
 		)' : '').')
@@ -175,6 +183,8 @@ class UserRepository extends EntityRepository
 			AND (
 			country.title LIKE :filtername OR 
 			city.title LIKE :filtername OR 
+			u.username LIKE :filtername OR
+			u.email LIKE :filtername OR
 			u.firstname LIKE :filtername OR 
 			u.lastname LIKE :filtername
 		)' : '').'
@@ -229,6 +239,8 @@ class UserRepository extends EntityRepository
 			AND (
 			country.title LIKE :filtername OR 
 			city.title LIKE :filtername OR 
+			u.username LIKE :filtername OR
+			u.email LIKE :filtername OR
 			u.firstname LIKE :filtername OR 
 			u.lastname LIKE :filtername
 		)' : '').'
