@@ -2,6 +2,7 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -20,35 +21,41 @@ class UserController extends SiteController
         $request = $this->getRequest();
         $query = $request->get('query');
         $page = $request->get('page');
-        $offset = ($page - 1) * self::LIMIT_SEARCH;
+
+        $offset = $page;
+        if ($page > 0) {
+            $offset = ($page - 1) * self::LIMIT_SEARCH;
+        }
 
         $userRepo = $this->getRepository('User');
 
         if ($query) {
             $user = $this->get('security.context')->getToken()->getUser();
-            $response = array();
-            $search = $userRepo->SearchFront($user, $query, false, self::LIMIT_SEARCH, $offset);
+            if ($user !== "anon.") {
+                $response = array();
+                $search = $userRepo->SearchFront($user, $query, false, self::LIMIT_SEARCH, $offset);
 
-            if (count($search) > 0) {
-                foreach ($search as $element) {
-                    $response[$element->getId()]['id'] = $element->getId();
-                    $response[$element->getId()]['name'] = (string) $element;
-                    $response[$element->getId()]['image'] = $element->getImage();
-                    $response[$element->getId()]['commonFriends'] = $element->commonfriends;
-                }
+                if (count($search) > 0) {
+                    foreach ($search as $element) {
+                        $response[$element[0]->getId()]['id'] = $element[0]->getId();
+                        $response[$element[0]->getId()]['name'] = (string) $element[0];
+                        $response[$element[0]->getId()]['image'] = $element[0]->getImage();
+                        $response[$element[0]->getId()]['commonFriends'] = $element['commonfriends'];
+                    }
 
 
-                $search = $userRepo->SearchFront($user, $query, false, null, $offset);
-                $countSearch = $userRepo->CountSearchFront($user, $query, false, null, $offset);
+                    $search = $userRepo->SearchFront($user, $query, false, null, $offset);
+                    $countSearch = $userRepo->CountSearchFront($user, $query, false, null, $offset);
 
-                if ($countSearch > self::LIMIT_SEARCH) {
-                    $response['gotMore'] = true;
+                    if ($countSearch > self::LIMIT_SEARCH) {
+                        $response['gotMore'] = true;
+                    } else {
+                        $response['gotMore'] = false;
+                    }
+                    return new Response(json_encode($response));
                 } else {
-                    $response['gotMore'] = false;
+                    return new Response(json_encode(false));
                 }
-                return new Response($this->encodeStructure($response));
-            } else {
-                return new Response($this->encodeStructure(false));
             }
         }
 
@@ -67,8 +74,7 @@ class UserController extends SiteController
         $userRepo = $this->getRepository('User');
         $user = $this->get('security.context')->getToken()->getUser();
 
-
-        if ($query) {
+        if ($query && $user !== "anon.") {
             $response = array();
             $search = $userRepo->FriendUsers($user, $query, false, self::LIMIT_SEARCH, $offset);
 
@@ -76,10 +82,10 @@ class UserController extends SiteController
 
             if ($countFriendUsers > 0) {
                 foreach ($search as $element) {
-                    $response[$element->getId()]['id'] = $element->getId();
-                    $response[$element->getId()]['name'] = (string) $element;
-                    $response[$element->getId()]['image'] = $element->getImage();
-                    $response[$element->getId()]['commonFriends'] = $element->commonfriends;
+                    $response[$element[0]->getId()]['id'] = $element[0]->getId();
+                    $response[$element[0]->getId()]['name'] = (string) $element[0];
+                    $response[$element[0]->getId()]['image'] = $element[0]->getImage();
+                    $response[$element[0]->getId()]['commonFriends'] = $element['commonfriends'];
                 }
 
                 $search = $userRepo->SearchFront($user, $query, false, null, $offset);
@@ -88,9 +94,9 @@ class UserController extends SiteController
                 } else {
                     $response['gotMore'] = false;
                 }
-                return new Response($this->encodeStructure($response));
+                return new Response(json_encode($response));
             } else {
-                return new Response($this->encodeStructure(false));
+                return new Response(json_encode(false));
             }
         }
 
