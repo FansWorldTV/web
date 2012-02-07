@@ -25,4 +25,14 @@ class AppState
         return (strpos($this->request->getHost(), 'm.') === 0);
     }
 
+    public function getCulture($locale)
+    {
+    	switch ($locale) {
+    		case 'es':
+    			return 'es_LA'; break;
+    		case 'en':
+    		default:
+    			return 'en_US'; break;
+    	}
+    }
 }

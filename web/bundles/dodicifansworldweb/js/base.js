@@ -44,3 +44,19 @@ $(document).ready(function(){
         $(this).attr("novalidate", "true"); 
     });
 }); 
+
+function goLogIn(){
+    window.location.href = Routing.generate('_security_check');
+}
+
+function onFbInit() {
+    if (typeof(FB) != 'undefined' && FB != null ) {
+        FB.Event.subscribe('auth.statusChange', function(response) {
+            if (response.session || response.authResponse) {
+                setTimeout(goLogIn, 500);
+            } else {
+                window.location.href = Routing.generate('_security_logout');
+            }
+        });
+    }
+}
