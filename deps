@@ -136,3 +136,13 @@
 [DoctrineFixturesBundle]
     git=http://github.com/symfony/DoctrineFixturesBundle.git
     target=/bundles/Symfony/Bundle/DoctrineFixturesBundle
+    
+[FOSFacebookBundle]
+    git=git://github.com/FriendsOfSymfony/FOSFacebookBundle.git
+    target=/bundles/FOS/FacebookBundle
+    version=origin/master
+    version=1.0.0
+
+[FacebookSDK]
+    git=git://github.com/facebook/php-sdk.git
+    target=/facebook

@@ -19,6 +19,13 @@ DodiciFansworldWebBundle:
     resource: "@DodiciFansworldWebBundle/Controller/"
     type:     annotation
     prefix:   /
+    
+_security_check:
+    pattern:  /facebook_login_check
+    defaults: { _controller: FOSUserBundle:Security:check }
+_security_logout:
+    pattern:  /facebook_logout
+    defaults: { _controller: FOSUserBundle:Security:logout }
 
 # Internal routing configuration to handle ESI
 #_internal:

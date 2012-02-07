@@ -7,10 +7,14 @@ security:
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
         ROLE_IDOL:        ROLE_USER
-
+        ROLE_FACEBOOK:    ROLE_USER
+    factories:
+        - "%kernel.root_dir%/../vendor/bundles/FOS/FacebookBundle/Resources/config/security_factories.xml"
     providers:
         fos_userbundle:
             id: fos_user.user_manager
+        my_fos_facebook_provider:
+            id: my.facebook.user
 
     firewalls:
         admin:
@@ -29,7 +33,20 @@ security:
                 target:         /admin/login
 
             anonymous:    true
-
+        facebook:
+            switch_user:        true
+            context:            user
+            pattern:            /facebook.*
+            fos_facebook:
+                app_url: "http://apps.facebook.com/fansworld/"
+                server_url: "http://localhost/facebookApp/"
+                login_path: /facebook_login
+                check_path: /facebook_login_check
+                default_target_path: /
+                provider: my_fos_facebook_provider
+            logout:
+                handlers: ["fos_facebook.logout_handler"]
+            anonymous:          true
         main:
             switch_user:        true
             context:            user

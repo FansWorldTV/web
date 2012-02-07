@@ -117,6 +117,14 @@ sonata_admin:
         user_block: DodiciFansworldAdminBundle:Core:user_block.html.twig
     security:
         handler: sonata.admin.security.handler.role
+        
+fos_facebook:
+    file:   %kernel.root_dir%/../vendor/facebook/src/base_facebook.php
+    alias:  facebook
+    app_id: %facebook.app_id%
+    secret: %facebook.app_secret%
+    cookie: true
+    permissions: [email, user_birthday, user_location]
 
 parameters:
     sonata.user.admin.user.class: Application\Sonata\UserBundle\Admin\Entity\UserAdmin
@@ -188,6 +196,13 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: contestparticipant }
         arguments: [null, Dodici\Fansworld\WebBundle\Entity\ContestParticipant, DodiciFansworldAdminBundle:ContestParticipantAdmin]
+    my.facebook.user:
+        class: Dodici\Fansworld\WebBundle\Security\FacebookProvider
+        arguments:
+            facebook: "@fos_facebook.api"
+            userManager: "@fos_user.user_manager"
+            validator: "@validator"
+            container: "@service_container"
     ### END ADMIN SERVICES ###
     appstate:
       class: Dodici\Fansworld\WebBundle\Extensions\AppState

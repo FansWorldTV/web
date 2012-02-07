@@ -3,7 +3,6 @@
 {% block title %}{{ parent() }} - Home{% endblock %}
 
 {% block content %}
-
 <div class="top">
     <div class="wrap">
         <div class="users">Ya somos <strong>25.352</strong> miembros <a class="btn" href="registro.php">Sumate</a></div>
@@ -96,21 +95,32 @@
             <div class="col_160 left margin">
                 <div class="cont clearfix">
                     <h2>Login</h2>
-                    <form class="login">
-                        <label> <span>Email</span>
-                            <input name="" type="text" />
-                        </label>
-                        <label> <span>Password</span>
-                            <input name="" type="password" />
-                        </label>
-                        <label>
-                            <div class="recordar">
-                                <input name="" type="checkbox" value="" />
-                                Recordarme</div>
-                        </label>
-                        <a class="btn" href="index_usuario.php">Ingresar</a>
-                    </form>
-                    <div class="login_error"> <span>Error de ingreso </span> <a href="recovery.php">Recuperar mis datos</a> </div>
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                        <span>
+                                            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+                                        </span>
+                                        <a class="buttonlink" href="{{ path('fos_user_security_logout') }}">SALIR</a>
+                                        <a class="buttonlink contact sharebutton" href="#">COMPARTIR</a>
+                                        <a class="buttonlink" href="{{ path('fos_user_profile_edit') }}">MI CUENTA</a>
+				{% else %}
+					<form action="{{ path("fos_user_security_check") }}" method="post">
+					    <label for="username">EMAIL:</label>
+					    <input type="text" id="username" name="_username" />
+					
+					    <label for="password">CLAVE:</label>
+					    <input type="password" id="password" name="_password" />
+					
+					    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+					    <label for="remember_me">RECORDAR</label>
+					
+					    <input class="login" type="submit" id="_submit" name="_submit" value="ENTRAR" />
+					</form>
+					<a class="buttonlink contact sharebutton" href="#">COMPARTIR</a>
+					<a class="buttonlink register" href="{{ path('fos_user_registration_register') }}">REGISTRATE</a>
+				{% endif %}
+                    
+                    {{ facebook_login_button({'autologoutlink': true}) }}
+                    
                 </div>
                 <div class="access"><a href="registro.php" title="Registrate, es gratis"><img src="{{ asset('bundles/dodicifansworldweb/images/registro.gif' )}}"/></a></div>
                 <div class="ad">
