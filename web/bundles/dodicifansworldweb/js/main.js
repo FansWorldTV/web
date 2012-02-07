@@ -2,7 +2,7 @@ $(document).ready(function(){
     ajax.init();
     
     var page = 0;
-    $("form input#search, #addMore").click(function(){
+    $("#addMore").click(function(){
         var query = this.parent().find('input#query').val();
         
         ajax.searchAction( query, page, function(response){

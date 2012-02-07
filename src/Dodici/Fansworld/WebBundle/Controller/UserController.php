@@ -21,7 +21,7 @@ class UserController extends SiteController
         $query = $request->get('query');
         $page = $request->get('page');
         $offset = ($page - 1) * self::LIMIT_SEARCH;
-        
+
         $userRepo = $this->getRepository('User');
 
         if ($query) {
@@ -40,7 +40,7 @@ class UserController extends SiteController
 
                 $search = $userRepo->SearchFront($user, $query, false, null, $offset);
                 $countSearch = $userRepo->CountSearchFront($user, $query, false, null, $offset);
-                
+
                 if ($countSearch > self::LIMIT_SEARCH) {
                     $response['gotMore'] = true;
                 } else {
@@ -66,12 +66,12 @@ class UserController extends SiteController
         $page = $request->get('page');
         $userRepo = $this->getRepository('User');
         $user = $this->get('security.context')->getToken()->getUser();
-        
+
 
         if ($query) {
             $response = array();
             $search = $userRepo->FriendUsers($user, $query, false, self::LIMIT_SEARCH, $offset);
-            
+
             $countFriendUsers = $userRepo->CountFriendUsers($user, $query, false, self::LIMIT_SEARCH, $offset);
 
             if ($countFriendUsers > 0) {
@@ -95,9 +95,9 @@ class UserController extends SiteController
         }
 
         $friends = $userRepo->FriendUsers($user, null, self::LIMIT_SEARCH, null);
-        
+
         $canAddMore = false;
-        if($userRepo->CountFriendUsers($user)>self::LIMIT_SEARCH){
+        if ($userRepo->CountFriendUsers($user) > self::LIMIT_SEARCH) {
             $canAddMore = true;
         }
         return array('friends' => $friends, 'canAddMore' => $canAddMore);
@@ -109,14 +109,23 @@ class UserController extends SiteController
      */
     public function detailAction($id)
     {
-        if($id == "none"){
-            echo "No existe el usuario";exit;
+        if ($id == "none") {
+            echo "No existe el usuario";
+            exit;
         }
-        
+
         $user = $this->getRepository('User')->findBy(array('id' => $id));
-        
+
         return array('user' => $user);
-        
+    }
+
+    /**
+     * @Route("/register/", name="user_register")
+     * @Template
+     */
+    public function registerAction()
+    {
+        return array();
     }
 
 }

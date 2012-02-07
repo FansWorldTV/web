@@ -18,17 +18,17 @@ var ajax = {
             ajax.active = true;
             
             $.ajax({
-               url: Routing.generate( appLocale + '_user_search'),
-               data: { 
-                   'query': query,
-                   'page': page
-               },
-               success: function(response){
-                   ajax.active = false;
-                   if( typeof(callback) !== 'undefined' ){
-                       callback(response);
-                   }
-               }
+                url: Routing.generate( appLocale + '_user_search'),
+                data: { 
+                    'query': query,
+                    'page': page
+                },
+                success: function(response){
+                    ajax.active = false;
+                    if( typeof(callback) !== 'undefined' ){
+                        callback(response);
+                    }
+                }
             });
         }
     }
@@ -41,6 +41,6 @@ function trim (myString) {
 
 $(document).ready(function(){
     $("form").each(function(){
-       $(this).attr("novalidate", "true"); 
+        $(this).attr("novalidate", "true"); 
     });
 }); 
