@@ -8,7 +8,7 @@ var ajax = {
   
     init: function(){
         $.ajaxSetup({
-            type: 'POST',
+            type: 'post',
             dataType: 'json'
         });
     },
@@ -18,7 +18,7 @@ var ajax = {
             ajax.active = true;
             
             $.ajax({
-                url: Routing.generate( appLocale + '_user_search'),
+                url: 'http://'+ location.host + Routing.generate( appLocale + '_user_search'),
                 data: { 
                     'query': query,
                     'page': page

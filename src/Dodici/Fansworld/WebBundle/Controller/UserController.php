@@ -31,40 +31,37 @@ class UserController extends SiteController
 
         if ($query) {
             $user = $this->get('security.context')->getToken()->getUser();
+            
             if ($user !== "anon.") {
                 $response = array();
+                
                 $search = $userRepo->SearchFront($user, $query, false, self::LIMIT_SEARCH, $offset);
-
-                if (count($search) > 0) {
-                    foreach ($search as $element) {
-                        $response[$element[0]->getId()]['id'] = $element[0]->getId();
-                        $response[$element[0]->getId()]['name'] = (string) $element[0];
-                        $response[$element[0]->getId()]['image'] = $element[0]->getImage();
-                        $response[$element[0]->getId()]['commonFriends'] = $element['commonfriends'];
-                    }
-
-
-                    $search = $userRepo->SearchFront($user, $query, false, null, $offset);
-                    $countSearch = $userRepo->CountSearchFront($user, $query, false, null, $offset);
-
-                    if ($countSearch > self::LIMIT_SEARCH) {
-                        $response['gotMore'] = true;
-                    } else {
-                        $response['gotMore'] = false;
-                    }
-                    return new Response(json_encode($response));
-                } else {
-                    return new Response(json_encode(false));
+                
+                foreach ($search as $element) {
+                    $response[$element[0]->getId()]['id'] = $element[0]->getId();
+                    $response[$element[0]->getId()]['name'] = (string) $element[0];
+                    $response[$element[0]->getId()]['image'] = $element[0]->getImage();
+                    $response[$element[0]->getId()]['commonFriends'] = $element['commonfriends'];
                 }
+
+
+                $countSearch = $userRepo->CountSearchFront($user, $query, false, null, $offset);
+
+                if ($countSearch > self::LIMIT_SEARCH) {
+                    $response['gotMore'] = true;
+                } else {
+                    $response['gotMore'] = false;
+                }
+                
+                die(json_encode($response));
             }
         }
-
         return array();
     }
 
     /**
      * @Route("/friends/", name="user_friends")
-     * @Template 
+     * @Template a 
      */
     public function friendsAction()
     {

@@ -24,4 +24,16 @@ $(document).ready(function(){
             }
         });
     });
+    
+    $("#formSearch").submit(function(event){
+        var query = $('#query').val();
+        
+        
+        ajax.searchAction(query, 0, function(r){
+            console.log(r);
+        });
+        
+        event.preventDefault();        
+        return false;
+    });
 });

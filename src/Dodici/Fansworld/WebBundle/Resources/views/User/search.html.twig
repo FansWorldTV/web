@@ -34,7 +34,7 @@
         <div class="logo"><a href="index.php"><img src="{{ asset('bundles/dodicifansworldweb/images/fansworld.png' )}}" alt="Fansworld" /></a></div>
         <div class="search">
             <form method="post" action="" >
-                <input type="text" name="query" value="" id="query"/>
+                <input type="text" name="query" value="" />
                 <input type="button" value="Buscar" name="submit" class="hidden"/>
             </form>
             <ul>
@@ -130,7 +130,7 @@
                     <h2>Búsqueda</h2>
                     <div class="user_list">
                         <div class="search">
-                            <form method="post" action="" >
+                            <form id="formSearch" method="post" action="" >
                                 <input type="text" name="query" value="" id="query"/>
                                 <input type="button" value="Buscar" name="submit" id="search" class="hidden"/>
                             </form>
