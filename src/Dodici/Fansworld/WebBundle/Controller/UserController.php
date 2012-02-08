@@ -18,30 +18,38 @@ class UserController extends SiteController
      */
     public function searchAction()
     {
+        return array();
+    }
+    
+    /**
+     *  @Route("/ajax/search/", name = "user_ajaxsearch")
+     *  
+     */
+    public function ajaxSearchAction(){
         $request = $this->getRequest();
         $query = $request->get('query');
         $page = $request->get('page');
 
-        $offset = $page;
+        $offset = (int) $page;
         if ($page > 0) {
             $offset = ($page - 1) * self::LIMIT_SEARCH;
         }
 
         $userRepo = $this->getRepository('User');
 
+        $response = false;
         if ($query) {
+            $response = array();
             $user = $this->get('security.context')->getToken()->getUser();
             
             if ($user !== "anon.") {
-                $response = array();
-                
                 $search = $userRepo->SearchFront($user, $query, false, self::LIMIT_SEARCH, $offset);
                 
                 foreach ($search as $element) {
-                    $response[$element[0]->getId()]['id'] = $element[0]->getId();
-                    $response[$element[0]->getId()]['name'] = (string) $element[0];
-                    $response[$element[0]->getId()]['image'] = $element[0]->getImage();
-                    $response[$element[0]->getId()]['commonFriends'] = $element['commonfriends'];
+                    $response['search'][$element[0]->getId()]['id'] = $element[0]->getId();
+                    $response['search'][$element[0]->getId()]['name'] = (string) $element[0];
+                    $response['search'][$element[0]->getId()]['image'] = $element[0]->getImage();
+                    $response['search'][$element[0]->getId()]['commonFriends'] = $element['commonfriends'];
                 }
 
 
@@ -52,11 +60,10 @@ class UserController extends SiteController
                 } else {
                     $response['gotMore'] = false;
                 }
-                
-                die(json_encode($response));
             }
         }
-        return array();
+        
+        die(json_encode($response));
     }
 
     /**

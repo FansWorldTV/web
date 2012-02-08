@@ -27,10 +27,21 @@ $(document).ready(function(){
     
     $("#formSearch").submit(function(event){
         var query = $('#query').val();
+        $(".listMosaic").html('');
         
-        
-        ajax.searchAction(query, 0, function(r){
-            console.log(r);
+        ajax.searchAction(query, 0, function(response){
+            if(response){
+                var elements = response.search;
+                for(var i in elements){
+                    var element = elements[i];
+                    var template = $(".templates .listMosaicTemp .element").clone();
+                    template.find('.name').html(element.name);
+                    template.find('.commonFriends').html(element.commonFriends);
+                    template.find('.avatar img').attr('src', element.image);
+                    $(".listMosaic").append(template);
+                    console.log(element);
+                }
+            }
         });
         
         event.preventDefault();        

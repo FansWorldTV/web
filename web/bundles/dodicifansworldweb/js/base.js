@@ -18,7 +18,7 @@ var ajax = {
             ajax.active = true;
             
             $.ajax({
-                url: 'http://'+ location.host + Routing.generate( appLocale + '_user_search'),
+                url: 'http://'+ location.host + Routing.generate( appLocale + '_user_ajaxsearch'),
                 data: { 
                     'query': query,
                     'page': page
