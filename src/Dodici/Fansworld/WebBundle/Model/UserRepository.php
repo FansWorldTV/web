@@ -75,9 +75,9 @@ class UserRepository extends EntityRepository
     		$query = $query->setParameter('filtername', '%'.$filtername.'%');
     	
     	if ($limit !== null)
-            $query = $query->setParameter('limit', $limit, Type::INTEGER);
+            $query = $query->setParameter('limit', (int)$limit, Type::INTEGER);
         if ($offset !== null)
-            $query = $query->setParameter('offset', $offset, Type::INTEGER);
+            $query = $query->setParameter('offset', (int)$offset, Type::INTEGER);
     	
     	return $query->getResult();
     }
@@ -209,9 +209,9 @@ class UserRepository extends EntityRepository
     		$query = $query->setParameter('filtername', '%'.$filtername.'%');
     	
     	if ($limit !== null)
-            $query = $query->setParameter('limit', $limit, Type::INTEGER);
+            $query = $query->setParameter('limit', (int)$limit, Type::INTEGER);
         if ($offset !== null)
-            $query = $query->setParameter('offset', $offset, Type::INTEGER);
+            $query = $query->setParameter('offset', (int)$offset, Type::INTEGER);
     	
     	return $query->getResult();
     }

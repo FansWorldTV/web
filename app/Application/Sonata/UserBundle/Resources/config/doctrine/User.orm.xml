@@ -19,6 +19,8 @@
         <field name="sex" column="sex" type="string" length="10" nullable="true" />
         <field name="privacy" column="privacy" type="array" />
         <field name="facebookId" column="facebookid" type="string" length="255" nullable="true" />
+        <field name="type" column="type" type="integer" nullable="false" />
+        <field name="birthday" column="birthday" type="datetime" nullable="true" />
         
         <many-to-one
             field="country"
@@ -48,7 +50,18 @@
                 <orphan-removal>true</orphan-removal>
 
         </one-to-many>
-
+        
+        <many-to-many field="idols" target-entity="Application\Sonata\UserBundle\Entity\User">
+            <join-table name="user_idols">
+                <join-columns>
+                    <join-column id="user_id" referenced-column-name="id" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column id="idol_id" referenced-column-name="id" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+        
     </entity>
 
 </doctrine-mapping>

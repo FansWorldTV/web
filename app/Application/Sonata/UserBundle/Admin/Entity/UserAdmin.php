@@ -18,6 +18,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 
 use FOS\UserBundle\Model\UserManagerInterface;
+use Application\Sonata\UserBundle\Entity\User;
 
 class UserAdmin extends Admin
 {
@@ -53,9 +54,12 @@ class UserAdmin extends Admin
                 ->add('username')
                 ->add('email')
                 ->add('plainPassword', 'text', array('required' => false))
+                ->add('type', 'choice', array ('choices' => array(User::TYPE_FAN => 'Fan', User::TYPE_IDOL => 'Idolo', User::TYPE_STAFF => 'Staff')), array ())
             ->end()
             ->with('Personal')
-            	->add('sex','choice',array('label'=>'Sexo','required'=>false, 'choices' => array('m' => 'Hombre', 'f' => 'Mujer')))	
+            	->add('sex','choice',array('label'=>'Sexo','required'=>false, 'choices' => array(User::SEX_MALE => 'Hombre', User::SEX_FEMALE => 'Mujer')))
+            	->add('birthday', 'date', array ('attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',
+                	'format' => 'dd/MM/yyyy HH:mm'), array ())	
             	->add('address',null,array('label'=>'Dirección','required'=>false))
 				->add('firstname',null,array('label'=>'Nombre','required'=>false))
 				->add('lastname',null,array('label'=>'Apellido','required'=>false))
@@ -70,6 +74,11 @@ class UserAdmin extends Admin
             	array(
                       'edit' => 'inline',
                 	  'inline' => 'table', 
+                    )
+            	)
+            	->add('idols', null, array ('label'=>'Ídolos', 'required' => false), 
+            	array(
+                      
                     )
             	)
             ->end()
