@@ -20,12 +20,13 @@ class UserController extends SiteController
     {
         return array();
     }
-    
+
     /**
      *  @Route("/ajax/search/", name = "user_ajaxsearch")
      *  
      */
-    public function ajaxSearchAction(){
+    public function ajaxSearchAction()
+    {
         $request = $this->getRequest();
         $query = $request->get('query');
         $page = $request->get('page');
@@ -41,10 +42,10 @@ class UserController extends SiteController
         if ($query) {
             $response = array();
             $user = $this->get('security.context')->getToken()->getUser();
-            
+
             if ($user !== "anon.") {
                 $search = $userRepo->SearchFront($user, $query, false, self::LIMIT_SEARCH, $offset);
-                
+
                 foreach ($search as $element) {
                     $response['search'][$element[0]->getId()]['id'] = $element[0]->getId();
                     $response['search'][$element[0]->getId()]['name'] = (string) $element[0];
@@ -62,7 +63,7 @@ class UserController extends SiteController
                 }
             }
         }
-        
+
         die(json_encode($response));
     }
 
@@ -72,37 +73,8 @@ class UserController extends SiteController
      */
     public function friendsAction()
     {
-        $request = $this->getRequest();
-        $query = $request->get('query');
-        $page = $request->get('page');
         $userRepo = $this->getRepository('User');
         $user = $this->get('security.context')->getToken()->getUser();
-
-        if ($query && $user !== "anon.") {
-            $response = array();
-            $search = $userRepo->FriendUsers($user, $query, false, self::LIMIT_SEARCH, $offset);
-
-            $countFriendUsers = $userRepo->CountFriendUsers($user, $query, false, self::LIMIT_SEARCH, $offset);
-
-            if ($countFriendUsers > 0) {
-                foreach ($search as $element) {
-                    $response[$element[0]->getId()]['id'] = $element[0]->getId();
-                    $response[$element[0]->getId()]['name'] = (string) $element[0];
-                    $response[$element[0]->getId()]['image'] = $element[0]->getImage();
-                    $response[$element[0]->getId()]['commonFriends'] = $element['commonfriends'];
-                }
-
-                $search = $userRepo->SearchFront($user, $query, false, null, $offset);
-                if ($countFriendUsers > self::LIMIT_SEARCH) {
-                    $response['gotMore'] = true;
-                } else {
-                    $response['gotMore'] = false;
-                }
-                return new Response(json_encode($response));
-            } else {
-                return new Response(json_encode(false));
-            }
-        }
 
         $friends = $userRepo->FriendUsers($user, null, self::LIMIT_SEARCH, null);
 
@@ -111,6 +83,50 @@ class UserController extends SiteController
             $canAddMore = true;
         }
         return array('friends' => $friends, 'canAddMore' => $canAddMore);
+    }
+
+    /**
+     *  @Route("/ajax/friends/", name="user_ajaxfriends") 
+     */
+    public function ajaxFriendsAction()
+    {
+        $request = $this->getRequest();
+        $query = $request->get('query');
+        $page = $request->get('page');
+        $userRepo = $this->getRepository('User');
+        $user = $this->get('security.context')->getToken()->getUser();
+        
+        $offset = (int) $page;
+        if ($page > 0) {
+            $offset = ($page - 1) * self::LIMIT_SEARCH;
+        }
+
+        $response = false;
+        
+        if ($query && $user !== "anon.") {
+            $response = array();
+            $search = $userRepo->FriendUsers($user, $query, false, self::LIMIT_SEARCH, $offset);
+
+            $countFriendUsers = $userRepo->CountFriendUsers($user, $query, false, self::LIMIT_SEARCH, $offset);
+
+            if ($countFriendUsers > 0) {
+                foreach ($search as $element) {
+                    $response['search'][$element[0]->getId()]['id'] = $element[0]->getId();
+                    $response['search'][$element[0]->getId()]['name'] = (string) $element[0];
+                    $response['search'][$element[0]->getId()]['image'] = $element[0]->getImage();
+                    $response['search'][$element[0]->getId()]['commonFriends'] = $element['commonfriends'];
+                }
+
+                $search = $userRepo->SearchFront($user, $query, false, null, $offset);
+                if ($countFriendUsers > self::LIMIT_SEARCH) {
+                    $response['gotMore'] = true;
+                } else {
+                    $response['gotMore'] = false;
+                }
+            }
+        }
+        
+        die(json_encode($response));
     }
 
     /**

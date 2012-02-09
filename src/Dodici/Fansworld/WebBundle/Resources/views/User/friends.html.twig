@@ -31,10 +31,10 @@
     </div>
 </div><div class="wrap">
     <div class="header">
-        <div class="logo"><a href="index.php"><img src="{{ asset('bundles/dodicifansworldweb/images/ui/fansworld.png' )}}" alt="Fansworld" /></a></div>
+        <div class="logo"><a href="index.php"><img src="{{ asset('bundles/dodicifansworldweb/images/fansworld.png' )}}" alt="Fansworld" /></a></div>
         <div class="search">
             <form method="post" action="" >
-                <input type="text" name="query" value="" id="query"/>
+                <input type="text" name="query" value="" />
                 <input type="button" value="Buscar" name="submit" class="hidden"/>
             </form>
             <ul>
@@ -127,28 +127,33 @@
             </div>
             <div class="col_468 left margin">
                 <div class="cont clearfix">
-                    <h2>Top Fans</h2>
+                    <h2>Búsqueda</h2>
                     <div class="user_list">
                         <div class="search">
-                            <form method="post" action="" >
+                            <form id="formSearch" method="post" action="" class="friends">
                                 <input type="text" name="query" value="" id="query"/>
                                 <input type="button" value="Buscar" name="submit" id="search" class="hidden"/>
                             </form>
                         </div>
                         <div class="mask">
-                            <ul class="listMosaic"> 
-                                <li>
-                                    <a href="user_profile.php">
-                                        <div class="avatar"><img src="{{ asset('bundles/dodicifansworldweb/demo/user6.jpg' )}}" width="50" height="50" /></div>
-                                        <div class="info">
-                                            <h3>Carlos Aguilar</h3>
-                                            <span>
-                                                <strong>235</strong> fans<br />
-                                                <strong>235</strong> idolos 
-                                            </span> 
-                                        </div>
-                                    </a>
-                                </li>
+                            <ul class="friends listMosaic"> 
+                                {% for friend in friends %}
+                                    <li>
+                                        <a href="user_profile.php">
+                                            <div class="avatar">
+                                                <img src="{{ friend.image }}" width="50" height="50" />
+                                            </div>
+                                            <div class="info">
+                                                <h3 class="name">{{ friend.name }}</h3>
+                                                <span>
+                                                    <strong class="commonFriends">{{ friend.commonFriends }}</strong> fans en comun
+                                                    <!--strong class="">235</strong> fans<br /-->
+                                                    <!--strong>235</strong> idolos -->
+                                                </span> 
+                                            </div>
+                                        </a>
+                                    </li>
+                                {% endfor %}
                             </ul>
                         </div>
                     </div>
@@ -191,8 +196,8 @@
     </div>
 </div>
 
-<div class="templates hidden">
-    <ul class="listMosaic">
+<div class="friends templates hidden">
+    <ul class="listMosaicTemp">
         <li class="element">
             <a href="user_profile.php">
                 <div class="avatar">
@@ -201,8 +206,9 @@
                 <div class="info">
                     <h3 class="name">Carlos Aguilar</h3>
                     <span>
-                        <strong class="">235</strong> fans<br />
-                        <strong>235</strong> idolos 
+                        <strong class="commonFriends"></strong> fans en comun
+                        <!--strong class="">235</strong> fans<br /-->
+                        <!--strong>235</strong> idolos -->
                     </span> 
                 </div>
             </a>

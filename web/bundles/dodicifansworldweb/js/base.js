@@ -31,6 +31,26 @@ var ajax = {
                 }
             });
         }
+    },
+    
+    friendsAction: function(query, page, callback) {
+        if(!ajax.active) {
+            ajax.active = true;
+            
+            $.ajax({
+                url: 'http://'+ location.host + Routing.generate( appLocale + '_user_ajaxfriends'),
+                data: { 
+                    'query': query,
+                    'page': page
+                },
+                success: function(response){
+                    ajax.active = false;
+                    if( typeof(callback) !== 'undefined' ){
+                        callback(response);
+                    }
+                }
+            });
+        }
     }
   
 };
