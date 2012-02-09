@@ -8,15 +8,38 @@
 {% block body %}
 	{{ facebook_initialize({'xfbml': true, 'fbAsyncInit': 'onFbInit();', 'culture': appstate.culture(app.request.locale) }) }}
 
-	<div id="wrap">
-		<div id="header">
-			{% block header %}{% endblock %}
-		</div>
-		<div id="content">
-			{% block content %}{% endblock %}
-		</div>
-		<div id="footer">
-			{% block footer %}{% endblock %}
-		</div>
-	</div>
+	{% block top %}
+		{% render "DodiciFansworldWebBundle:Default:top" %}
+	{% endblock %}
+	
+	<div class="wrap">
+	{% block header %}
+		{% include "DodiciFansworldWebBundle:Default:searchbar.web.html.twig" %}
+		{% include "DodiciFansworldWebBundle:Default:menubar.web.html.twig" %}
+	{% endblock %}
+	
+	{% block main %}
+		<div class="container">
+        	<div class="content clearfix">
+        		{% block leftbar %}
+        			{% render "DodiciFansworldWebBundle:Default:leftbar" %}
+        		{% endblock %}
+        		{% block centercolumn %}
+        		<div class="col_468 left margin">
+        			{% block content %}{% endblock %}
+        		</div>
+        		{% endblock %}
+        		{% block rightbar %}
+        			{% render "DodiciFansworldWebBundle:Default:rightbar" %}
+        		{% endblock %}
+        	</div>
+        	{% block footer %}
+        		{% include "DodiciFansworldWebBundle:Default:footer.web.html.twig" %}
+        	{% endblock %}
+        </div>
+	{% endblock %}
+	
+		
+	
+	</div>	
 {% endblock %}
