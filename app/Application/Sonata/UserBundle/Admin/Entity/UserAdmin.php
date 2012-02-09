@@ -58,7 +58,7 @@ class UserAdmin extends Admin
             ->end()
             ->with('Personal')
             	->add('sex','choice',array('label'=>'Sexo','required'=>false, 'choices' => array(User::SEX_MALE => 'Hombre', User::SEX_FEMALE => 'Mujer')))
-            	->add('birthday', 'date', array ('attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',
+            	->add('birthday', 'date', array ('required' => false, 'attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',
                 	'format' => 'dd/MM/yyyy HH:mm'), array ())	
             	->add('address',null,array('label'=>'Dirección','required'=>false))
 				->add('firstname',null,array('label'=>'Nombre','required'=>false))
@@ -69,6 +69,8 @@ class UserAdmin extends Admin
             ->with('Social')
             	->add('country',null,array('label'=>'País','required'=>false))
 				->add('city',null,array('label'=>'Ciudad','required'=>false))
+				->add('score',null,array('label'=>'Puntaje','required'=>false))
+				->add('level',null,array('label'=>'Nivel','required'=>false))
 				->add('image', 'sonata_type_model', array(), array('edit' => 'list', 'link_parameters' => array('context' => 'default', 'provider' => 'sonata.media.provider.image')))
 				->add('friendships', 'sonata_type_collection', array ('label'=>'Amistades', 'required' => false), 
             	array(
@@ -76,9 +78,10 @@ class UserAdmin extends Admin
                 	  'inline' => 'table', 
                     )
             	)
-            	->add('idols', null, array ('label'=>'Ídolos', 'required' => false), 
+            	->add('idolships', 'sonata_type_collection', array ('label'=>'Ídolos', 'required' => false), 
             	array(
-                      
+                      'edit' => 'inline',
+                	  'inline' => 'table', 
                     )
             	)
             ->end()
@@ -99,6 +102,12 @@ class UserAdmin extends Admin
     {
         $this->getUserManager()->updateCanonicalFields($user);
         $this->getUserManager()->updatePassword($user);
+        foreach ($user->getIdolships() as $qo) {
+        	$qo->setAuthor($user);
+        }
+    	foreach ($user->getFriendships() as $qo) {
+        	$qo->setAuthor($user);
+        }
     }
 
     public function setUserManager(UserManagerInterface $userManager)
@@ -110,4 +119,13 @@ class UserAdmin extends Admin
     {
         return $this->userManager;
     }
+    	
+	public function prePersist($user) {
+		foreach ($user->getIdolships() as $qo) {
+        	$qo->setAuthor($user);
+        }
+		foreach ($user->getFriendships() as $qo) {
+        	$qo->setAuthor($user);
+        }
+	}
 }

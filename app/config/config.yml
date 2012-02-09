@@ -196,6 +196,17 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: contestparticipant }
         arguments: [null, Dodici\Fansworld\WebBundle\Entity\ContestParticipant, DodiciFansworldAdminBundle:ContestParticipantAdmin]
+    dodici.fansworld.adminbundle.admin.idolship:
+        class: Dodici\Fansworld\AdminBundle\Admin\IdolshipAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: idolship }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Idolship, DodiciFansworldAdminBundle:IdolshipAdmin]
+    dodici.fansworld.adminbundle.admin.level:
+        class: Dodici\Fansworld\AdminBundle\Admin\LevelAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: level }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Level, DodiciFansworldAdminBundle:LevelAdmin]
+    ### END ADMIN SERVICES ###
     my.facebook.user:
         class: Dodici\Fansworld\WebBundle\Security\FacebookProvider
         arguments:
@@ -203,7 +214,6 @@ services:
             userManager: "@fos_user.user_manager"
             validator: "@validator"
             container: "@service_container"
-    ### END ADMIN SERVICES ###
     appstate:
       class: Dodici\Fansworld\WebBundle\Extensions\AppState
       arguments: [@session, @doctrine.orm.entity_manager]

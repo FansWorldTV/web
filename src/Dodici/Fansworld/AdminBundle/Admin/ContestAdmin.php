@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Dodici\Fansworld\WebBundle\Entity\Contest;
 
 class ContestAdmin extends Admin
 {
@@ -26,6 +27,12 @@ public function configureShowFields(ShowMapper $showMapper)
     {
         $formMapper
             ->add('title', NULL, array (), array ())
+            ->add('type', 'choice', array ('choices' => array(
+            	Contest::TYPE_PARTICIPATE => 'Sólo Participación',
+            	Contest::TYPE_TEXT => 'Sube Texto',
+            	Contest::TYPE_PHOTO => 'Sube Foto',
+            	Contest::TYPE_VIDEO => 'Sube Vídeo',
+            	)), array ())
             ->add('image', 'sonata_type_model', array(), array('edit' => 'list', 'link_parameters' => array('context' => 'default', 'provider' => 'sonata.media.provider.image')))
             ->add('content', NULL, array ('attr' => array('class' => 'tinymce')), array ())
             ->add('data', NULL, array ('attr' => array('class' => 'tinymce')), array ())

@@ -11,6 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="album")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\AlbumRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Album
 {
@@ -93,6 +94,16 @@ class Album
 	public function __toString()
     {
         return $this->getTitle();
+    }
+    
+	/**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        if (null === $this->createdAt) {
+            $this->setCreatedAt(new \DateTime());
+        }
     }
     
     /**

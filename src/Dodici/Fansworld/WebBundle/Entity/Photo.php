@@ -11,6 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="photo")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\PhotoRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Photo
 {
@@ -105,6 +106,16 @@ class Photo
 	public function __toString()
     {
         return $this->getTitle();
+    }
+	
+	/**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        if (null === $this->createdAt) {
+            $this->setCreatedAt(new \DateTime());
+        }
     }
     
     /**

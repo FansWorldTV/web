@@ -15,6 +15,11 @@ use Gedmo\Translatable\Translatable;
  */
 class Contest implements Translatable
 {
+    const TYPE_PARTICIPATE = 1;
+    const TYPE_TEXT = 2;
+    const TYPE_PHOTO = 3;
+    const TYPE_VIDEO = 4;
+    
     /**
      * @var bigint $id
      *
@@ -75,6 +80,13 @@ class Contest implements Translatable
      * @ORM\Column(name="end_date", type="datetime", nullable=true)
      */
     private $endDate;
+    
+    /**
+     * @var integer $type
+     *
+     * @ORM\Column(name="type", type="integer", nullable=false)
+     */
+    private $type;
     
     /**
      * @Gedmo\Slug(fields={"title"}, unique=false)
@@ -346,5 +358,25 @@ class Contest implements Translatable
 	public function setComments($comments)
     {
         $this->comments = $comments;
+    }
+
+    /**
+     * Set type
+     *
+     * @param integer $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

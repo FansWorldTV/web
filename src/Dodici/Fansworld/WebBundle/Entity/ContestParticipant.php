@@ -54,6 +54,33 @@ class ContestParticipant
      * })
      */
     private $author;
+    
+    /**
+     * @var Photo
+     *
+     * @ORM\ManyToOne(targetEntity="Photo")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
+     * })
+     */
+    private $photo;
+    
+    /**
+     * @var Video
+     *
+     * @ORM\ManyToOne(targetEntity="Video")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="video_id", referencedColumnName="id")
+     * })
+     */
+    private $video;
+    
+    /**
+     * @var text $text
+     *
+     * @ORM\Column(name="text", type="text", nullable=true)
+     */
+    private $text;
 
     /**
      * Get id
@@ -143,5 +170,65 @@ class ContestParticipant
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * Set text
+     *
+     * @param text $text
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+    }
+
+    /**
+     * Get text
+     *
+     * @return text 
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * Set photo
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Photo $photo
+     */
+    public function setPhoto(\Dodici\Fansworld\WebBundle\Entity\Photo $photo)
+    {
+        $this->photo = $photo;
+    }
+
+    /**
+     * Get photo
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Photo 
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * Set video
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Video $video
+     */
+    public function setVideo(\Dodici\Fansworld\WebBundle\Entity\Video $video)
+    {
+        $this->video = $video;
+    }
+
+    /**
+     * Get video
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Video 
+     */
+    public function getVideo()
+    {
+        return $this->video;
     }
 }

@@ -61,6 +61,11 @@ class User extends BaseUser
     private $sex;
     
     /**
+     * @var integer $score
+     */
+    private $score;
+    
+    /**
      * @var string
      */
     protected $facebookId;
@@ -86,6 +91,11 @@ class User extends BaseUser
     private $city;
     
     /**
+     * @var Dodici\Fansworld\WebBundle\Entity\Level
+     */
+    private $level;
+    
+    /**
      * @var Application\Sonata\MediaBundle\Entity\Media
      */
     private $image;
@@ -105,15 +115,15 @@ class User extends BaseUser
     protected $friendships;
     
     /**
-     * @var ArrayCollection $idols
+     * @var ArrayCollection $idolships
      */
-    protected $idols;
+    protected $idolships;
     
     public function __construct()
     {
         parent::__construct();
     	$this->friendships = new ArrayCollection();
-    	$this->idols = new ArrayCollection();
+    	$this->idolships = new ArrayCollection();
         $this->privacy = array();
     }
     
@@ -315,6 +325,26 @@ class User extends BaseUser
     }
     
 	/**
+     * Set score
+     *
+     * @param integer $score
+     */
+    public function setScore($score)
+    {
+        $this->score = $score;
+    }
+
+    /**
+     * Get score
+     *
+     * @return integer 
+     */
+    public function getScore()
+    {
+        return $this->score;
+    }
+    
+	/**
      * Set type
      *
      * @param integer $type
@@ -413,6 +443,16 @@ class User extends BaseUser
     {
         return $this->city;
     }
+    
+	/**
+     * Get level
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Level 
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
 
     /**
      * Set image
@@ -469,37 +509,37 @@ class User extends BaseUser
     }
     
 	/**
-     * Add idols
+     * Add idolships
      *
-     * @param Application\Sonata\UserBundle\Entity\User $idols
+     * @param \Dodici\Fansworld\WebBundle\Entity\Idolship $idolships
      */
-    public function addIdol(\Application\Sonata\UserBundle\Entity\User $idols)
+    public function addIdolship(\Dodici\Fansworld\WebBundle\Entity\Idolship $idolships)
     {
-        $this->idols[] = $idols;
+        $this->idolships[] = $idolships;
     }
-	public function addIdols(\Application\Sonata\UserBundle\Entity\User $idols)
+	public function addIdolships(\Dodici\Fansworld\WebBundle\Entity\Idolship $idolships)
     {
-        $this->addIdol($idols);
+        $this->addIdolship($idolships);
     }
 
     /**
-     * Get idols
+     * Get idolships
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getIdols()
+    public function getIdolships()
     {
-        return $this->idols;
+        return $this->idolships;
     }
     
 	/**
-     * Set idols
+     * Set idolships
      *
-     * @param Doctrine\Common\Collections\Collection $idols
+     * @param Doctrine\Common\Collections\Collection $idolships
      */
-    public function setIdols($idols)
+    public function setIdolships($idolships)
     {
-        $this->idols = $idols;
+        $this->idolships = $idolships;
     }
 
 }

@@ -27,6 +27,9 @@ public function configureShowFields(ShowMapper $showMapper)
             ->add('winner', NULL, array ('required' => false), array ())
             ->add('contest', NULL, array (), array ())
             ->add('author', NULL, array (), array ())
+            ->add('photo', NULL, array ('required' => false), array ())
+            ->add('video', NULL, array ('required' => false), array ())
+            ->add('text', NULL, array (), array ())
         ;
     }
 

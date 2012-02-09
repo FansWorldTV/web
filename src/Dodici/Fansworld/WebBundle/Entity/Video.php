@@ -12,6 +12,7 @@ use Gedmo\Translatable\Translatable;
  *
  * @ORM\Table(name="video")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\VideoRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Video implements Translatable
 {
@@ -137,6 +138,16 @@ class Video implements Translatable
     public function __toString()
     {
     	return $this->getTitle();
+    }
+    
+	/**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        if (null === $this->createdAt) {
+            $this->setCreatedAt(new \DateTime());
+        }
     }
     
 	/**
