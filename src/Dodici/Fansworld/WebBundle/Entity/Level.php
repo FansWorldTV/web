@@ -73,6 +73,9 @@ class Level implements Translatable
 	    $this->locale = $locale;
 	}
 
+	public function __toString() {
+		return $this->getTitle();
+	}
 
     /**
      * Get id

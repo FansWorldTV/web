@@ -12,6 +12,7 @@ use Gedmo\Translatable\Translatable;
  *
  * @ORM\Table(name="contest")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\ContestRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Contest implements Translatable
 {
@@ -89,6 +90,13 @@ class Contest implements Translatable
     private $type;
     
     /**
+     * @var integer $likeCount
+     *
+     * @ORM\Column(name="likecount", type="integer", nullable=false)
+     */
+    private $likeCount;
+    
+    /**
      * @Gedmo\Slug(fields={"title"}, unique=false)
      * @Gedmo\Translatable
      * @ORM\Column(length=128)
@@ -117,6 +125,11 @@ class Contest implements Translatable
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="contest")
      */
     protected $comments;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Liking", mappedBy="contest")
+     */
+    protected $likings;
 
     public function __construct()
     {
@@ -129,7 +142,30 @@ class Contest implements Translatable
     	return $this->getTitle();
     }
     
+	/**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        if (null === $this->createdAt) {
+            $this->setCreatedAt(new \DateTime());
+        }
+        if (null === $this->likeCount) {
+        	$this->setLikeCount(0);
+        }
+    }
 
+	public function likeUp()
+    {
+    	$this->setLikeCount($this->getLikeCount() + 1);
+    }
+    public function likeDown()
+    {
+    	if ($this->getLikeCount() > 0) {
+    		$this->setLikeCount($this->getLikeCount() - 1);
+    	}
+    }
+    
     /**
      * Get id
      *
@@ -378,5 +414,45 @@ class Contest implements Translatable
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Add likings
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Liking $likings
+     */
+    public function addLiking(\Dodici\Fansworld\WebBundle\Entity\Liking $likings)
+    {
+        $this->likings[] = $likings;
+    }
+
+    /**
+     * Get likings
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getLikings()
+    {
+        return $this->likings;
+    }
+
+    /**
+     * Set likeCount
+     *
+     * @param integer $likeCount
+     */
+    public function setLikeCount($likeCount)
+    {
+        $this->likeCount = $likeCount;
+    }
+
+    /**
+     * Get likeCount
+     *
+     * @return integer 
+     */
+    public function getLikeCount()
+    {
+        return $this->likeCount;
     }
 }

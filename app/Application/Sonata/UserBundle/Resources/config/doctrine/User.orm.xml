@@ -16,6 +16,11 @@
         <field name="lastname" column="lastname" type="string" length="250" nullable="true" />
         <field name="phone" column="phone" type="string" length="250" nullable="true" />
         <field name="mobile" column="mobile" type="string" length="250" nullable="true" />
+        <field name="skype" column="skype" type="string" length="250" nullable="true" />
+        <field name="msn" column="msn" type="string" length="250" nullable="true" />
+        <field name="twitter" column="twitter" type="string" length="250" nullable="true" />
+        <field name="yahoo" column="yahoo" type="string" length="250" nullable="true" />
+        <field name="gmail" column="gmail" type="string" length="250" nullable="true" />
         <field name="sex" column="sex" type="string" length="10" nullable="true" />
         <field name="privacy" column="privacy" type="array" />
         <field name="facebookId" column="facebookid" type="string" length="255" nullable="true" />
@@ -65,6 +70,20 @@
         <one-to-many
                 field="idolships"
                 target-entity="Dodici\Fansworld\WebBundle\Entity\Idolship"
+                mapped-by="author"
+                orphan-removal="true"
+                >
+				<cascade>
+                	<cascade-remove/>
+                	<cascade-persist/>
+            	</cascade>
+                <orphan-removal>true</orphan-removal>
+
+        </one-to-many>
+        
+        <one-to-many
+                field="friendgroups"
+                target-entity="Dodici\Fansworld\WebBundle\Entity\FriendGroup"
                 mapped-by="author"
                 orphan-removal="true"
                 >

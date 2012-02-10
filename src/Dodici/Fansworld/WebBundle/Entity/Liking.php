@@ -2,16 +2,18 @@
 
 namespace Dodici\Fansworld\WebBundle\Entity;
 
+use Doctrine\ORM\Event\LifecycleEventArgs;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Dodici\Fansworld\WebBundle\Entity\Comment
+ * Dodici\Fansworld\WebBundle\Entity\Liking
  *
- * @ORM\Table(name="comment")
- * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\CommentRepository")
+ * @ORM\Table(name="liking")
+ * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\LikingRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Comment
+class Liking
 {
     /**
      * @var bigint $id
@@ -33,41 +35,12 @@ class Comment
     private $author;
 
     /**
-     * @var text $content
-     *
-     * @ORM\Column(name="content", type="text", nullable=false)
-     */
-    private $content;
-
-    /**
      * @var datetime $createdAt
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     private $createdAt;
-        
-    /**
-     * @var boolean $active
-     *
-     * @ORM\Column(name="active", type="boolean", nullable=false)
-     */
-    private $active;
-    
-    /**
-     * @var integer $privacy
-     * Privacy::EVERYONE|Privacy::FRIENDS_ONLY
-     *
-     * @ORM\Column(name="privacy", type="integer", nullable=false)
-     */
-    private $privacy;
-    
-    /**
-     * @var integer $likeCount
-     *
-     * @ORM\Column(name="likecount", type="integer", nullable=false)
-     */
-    private $likeCount;
-    
+                
     /**
      * @var NewsPost
      *
@@ -77,17 +50,7 @@ class Comment
      * })
      */
     private $newspost;
-    
-    /**
-     * @var Application\Sonata\UserBundle\Entity\User
-     *
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="target_id", referencedColumnName="id")
-     * })
-     */
-    private $target;
-    
+        
     /**
      * @var Video
      *
@@ -117,17 +80,7 @@ class Comment
      * })
      */
     private $album;
-    
-    /**
-     * @var Interest
-     *
-     * @ORM\ManyToOne(targetEntity="Interest")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="interest_id", referencedColumnName="id")
-     * })
-     */
-    private $interest;
-	
+    	
 	/**
      * @var Contest
      *
@@ -143,27 +96,11 @@ class Comment
      *
      * @ORM\ManyToOne(targetEntity="Comment")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="comment_id", referencedColumnName="id")
      * })
      */
     private $comment;
     
-    /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="comment")
-     */
-    protected $comments;
-    
-    /**
-     * @ORM\OneToMany(targetEntity="Liking", mappedBy="comment")
-     */
-    protected $likings;
-    
-
-    public function __toString()
-    {
-    	return $this->getContent();
-    }
-
 	/**
      * @ORM\PrePersist()
      */
@@ -172,37 +109,8 @@ class Comment
         if (null === $this->createdAt) {
             $this->setCreatedAt(new \DateTime());
         }
-        if (null === $this->likeCount) {
-        	$this->setLikeCount(0);
-        }
-    }
-	
-    public function likeUp()
-    {
-    	$this->setLikeCount($this->getLikeCount() + 1);
-    }
-    public function likeDown()
-    {
-    	if ($this->getLikeCount() > 0) {
-    		$this->setLikeCount($this->getLikeCount() - 1);
-    	}
     }
     
-	/**
-     * Get content, truncated to length
-     *
-     * @return text
-     */
-    public function getSlimContent($length = 30)
-    {
-        $cont = $this->content;
-        if (mb_strlen($cont) > $length) {
-        	$cont = substr($cont, 0, $length) . '...';
-        }
-        return $cont;
-    }
-
-
     /**
      * Get id
      *
@@ -211,26 +119,6 @@ class Comment
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set content
-     *
-     * @param text $content
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
-    }
-
-    /**
-     * Get content
-     *
-     * @return text 
-     */
-    public function getContent()
-    {
-        return $this->content;
     }
 
     /**
@@ -251,46 +139,6 @@ class Comment
     public function getCreatedAt()
     {
         return $this->createdAt;
-    }
-
-    /**
-     * Set active
-     *
-     * @param boolean $active
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
-    }
-
-    /**
-     * Get active
-     *
-     * @return boolean 
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * Set privacy
-     *
-     * @param integer $privacy
-     */
-    public function setPrivacy($privacy)
-    {
-        $this->privacy = $privacy;
-    }
-
-    /**
-     * Get privacy
-     *
-     * @return integer 
-     */
-    public function getPrivacy()
-    {
-        return $this->privacy;
     }
 
     /**
@@ -331,26 +179,6 @@ class Comment
     public function getNewspost()
     {
         return $this->newspost;
-    }
-
-    /**
-     * Set target
-     *
-     * @param Application\Sonata\UserBundle\Entity\User $target
-     */
-    public function setTarget(\Application\Sonata\UserBundle\Entity\User $target)
-    {
-        $this->target = $target;
-    }
-
-    /**
-     * Get target
-     *
-     * @return Application\Sonata\UserBundle\Entity\User 
-     */
-    public function getTarget()
-    {
-        return $this->target;
     }
 
     /**
@@ -414,26 +242,6 @@ class Comment
     }
 
     /**
-     * Set interest
-     *
-     * @param Dodici\Fansworld\WebBundle\Entity\Interest $interest
-     */
-    public function setInterest(\Dodici\Fansworld\WebBundle\Entity\Interest $interest)
-    {
-        $this->interest = $interest;
-    }
-
-    /**
-     * Get interest
-     *
-     * @return Dodici\Fansworld\WebBundle\Entity\Interest 
-     */
-    public function getInterest()
-    {
-        return $this->interest;
-    }
-
-    /**
      * Set contest
      *
      * @param Dodici\Fansworld\WebBundle\Entity\Contest $contest
@@ -452,12 +260,7 @@ class Comment
     {
         return $this->contest;
     }
-    public function __construct()
-    {
-        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->likings = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
+
     /**
      * Set comment
      *
@@ -476,65 +279,5 @@ class Comment
     public function getComment()
     {
         return $this->comment;
-    }
-
-    /**
-     * Add comments
-     *
-     * @param Dodici\Fansworld\WebBundle\Entity\Comment $comments
-     */
-    public function addComment(\Dodici\Fansworld\WebBundle\Entity\Comment $comments)
-    {
-        $this->comments[] = $comments;
-    }
-
-    /**
-     * Get comments
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getComments()
-    {
-        return $this->comments;
-    }
-
-    /**
-     * Add likings
-     *
-     * @param Dodici\Fansworld\WebBundle\Entity\Liking $likings
-     */
-    public function addLiking(\Dodici\Fansworld\WebBundle\Entity\Liking $likings)
-    {
-        $this->likings[] = $likings;
-    }
-
-    /**
-     * Get likings
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getLikings()
-    {
-        return $this->likings;
-    }
-
-    /**
-     * Set likeCount
-     *
-     * @param integer $likeCount
-     */
-    public function setLikeCount($likeCount)
-    {
-        $this->likeCount = $likeCount;
-    }
-
-    /**
-     * Get likeCount
-     *
-     * @return integer 
-     */
-    public function getLikeCount()
-    {
-        return $this->likeCount;
     }
 }

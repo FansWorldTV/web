@@ -206,7 +206,20 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: level }
         arguments: [null, Dodici\Fansworld\WebBundle\Entity\Level, DodiciFansworldAdminBundle:LevelAdmin]
+    dodici.fansworld.adminbundle.admin.friendgroup:
+        class: Dodici\Fansworld\AdminBundle\Admin\FriendGroupAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: friendgroup }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\FriendGroup, DodiciFansworldAdminBundle:FriendGroupAdmin]
     ### END ADMIN SERVICES ###
+    liking.listener.persist:
+        class: Dodici\Fansworld\WebBundle\Listener\LikingCountUpdater
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+    liking.listener.remove:
+        class: Dodici\Fansworld\WebBundle\Listener\LikingCountUpdater
+        tags:
+            - { name: doctrine.event_listener, event: postRemove }
     my.facebook.user:
         class: Dodici\Fansworld\WebBundle\Security\FacebookProvider
         arguments:

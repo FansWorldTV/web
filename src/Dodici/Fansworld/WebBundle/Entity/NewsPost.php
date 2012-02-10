@@ -56,6 +56,13 @@ class NewsPost implements Translatable
     private $active;
     
     /**
+     * @var integer $likeCount
+     *
+     * @ORM\Column(name="likecount", type="integer", nullable=false)
+     */
+    private $likeCount;
+    
+    /**
      * @var NewsCategory
      *
      * @ORM\ManyToOne(targetEntity="NewsCategory")
@@ -64,6 +71,11 @@ class NewsPost implements Translatable
      * })
      */
     private $newscategory;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Liking", mappedBy="newspost")
+     */
+    protected $likings;
     
     /**
      * @var Application\Sonata\MediaBundle\Entity\Media
@@ -106,6 +118,29 @@ class NewsPost implements Translatable
     	return $this->getTitle();
     }
     
+	/**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        if (null === $this->createdAt) {
+            $this->setCreatedAt(new \DateTime());
+        }
+        if (null === $this->likeCount) {
+        	$this->setLikeCount(0);
+        }
+    }
+    
+	public function likeUp()
+    {
+    	$this->setLikeCount($this->getLikeCount() + 1);
+    }
+    public function likeDown()
+    {
+    	if ($this->getLikeCount() > 0) {
+    		$this->setLikeCount($this->getLikeCount() - 1);
+    	}
+    }
 
     /**
      * Add comments
@@ -286,5 +321,45 @@ class NewsPost implements Translatable
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Add likings
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Liking $likings
+     */
+    public function addLiking(\Dodici\Fansworld\WebBundle\Entity\Liking $likings)
+    {
+        $this->likings[] = $likings;
+    }
+
+    /**
+     * Get likings
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getLikings()
+    {
+        return $this->likings;
+    }
+
+    /**
+     * Set likeCount
+     *
+     * @param integer $likeCount
+     */
+    public function setLikeCount($likeCount)
+    {
+        $this->likeCount = $likeCount;
+    }
+
+    /**
+     * Get likeCount
+     *
+     * @return integer 
+     */
+    public function getLikeCount()
+    {
+        return $this->likeCount;
     }
 }

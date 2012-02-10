@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="friendship")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\FriendshipRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Friendship
 {
@@ -54,6 +55,33 @@ class Friendship
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
     private $active;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="FriendGroup")
+     * @ORM\JoinTable(name="friendship_friendgroup",
+     *      joinColumns={@ORM\JoinColumn(name="friendship_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="friendgroup_id", referencedColumnName="id")}
+     *      )
+     */
+    protected $friendgroups;
+    
+	public function __construct()
+    {
+        $this->friendgroups = new ArrayCollection();
+    }
+    
+	/**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        if (null === $this->createdAt) {
+            $this->setCreatedAt(new \DateTime());
+        }
+        if (null === $this->active) {
+        	$this->setActive(false);
+        }
+    }
 
     /**
      * Get id
@@ -143,5 +171,25 @@ class Friendship
     public function getTarget()
     {
         return $this->target;
+    }
+
+    /**
+     * Add friendgroups
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\FriendGroup $friendgroups
+     */
+    public function addFriendGroup(\Dodici\Fansworld\WebBundle\Entity\FriendGroup $friendgroups)
+    {
+        $this->friendgroups[] = $friendgroups;
+    }
+
+    /**
+     * Get friendgroups
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getFriendgroups()
+    {
+        return $this->friendgroups;
     }
 }

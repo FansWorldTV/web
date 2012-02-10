@@ -35,4 +35,32 @@ class AppState
     			return 'en_US'; break;
     	}
     }
+    
+    public function canLike(\Application\Sonata\UserBundle\Entity\User $user, $entity) 
+    {
+    	$rep = $this->em->getRepository('DodiciFansworldWebBundle:Liking');
+    	$liking = $rep->byUserAndEntity($user, $entity);
+    	
+    	if (count($liking) >= 1) return false;
+    	
+    	if (method_exists($entity, 'getPrivacy')) {
+    		if ($entity->getPrivacy() == \Dodici\Fansworld\WebBundle\Entity\Privacy::FRIENDS_ONLY) {
+    			if (method_exists($entity, 'getAuthor')) {
+	    			$frep = $this->em->getRepository('DodiciFansworldWebBundle:Friendship');
+	    			if (!$frep->UsersAreFriends($user, $entity->getAuthor())) return false;
+    			}
+    		}
+    	}
+    	
+    	return true;
+    }
+    
+	public function canDislike(\Application\Sonata\UserBundle\Entity\User $user, $entity) 
+    {
+    	$rep = $this->em->getRepository('DodiciFansworldWebBundle:Liking');
+    	$liking = $rep->byUserAndEntity($user, $entity);
+    	
+    	if (count($liking) >= 1) return true;
+    	else return false;
+    }
 }

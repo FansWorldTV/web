@@ -51,6 +51,31 @@ class User extends BaseUser
     private $phone;
     
     /**
+     * @var string $skype
+     */
+    private $skype;
+    
+    /**
+     * @var string $msn
+     */
+    private $msn;
+    
+    /**
+     * @var string $twitter
+     */
+    private $twitter;
+    
+    /**
+     * @var string $yahoo
+     */
+    private $yahoo;
+    
+    /**
+     * @var string $gmail
+     */
+    private $gmail;
+    
+    /**
      * @var string $mobile
      */
     private $mobile;
@@ -115,6 +140,11 @@ class User extends BaseUser
     protected $friendships;
     
     /**
+     * @var ArrayCollection $friendgroups
+     */
+    protected $friendgroups;
+    
+    /**
      * @var ArrayCollection $idolships
      */
     protected $idolships;
@@ -123,6 +153,7 @@ class User extends BaseUser
     {
         parent::__construct();
     	$this->friendships = new ArrayCollection();
+    	$this->friendgroups = new ArrayCollection();
     	$this->idolships = new ArrayCollection();
         $this->privacy = array();
     }
@@ -152,6 +183,15 @@ class User extends BaseUser
         parent::prePersist();
     	if (null === $this->type) {
             $this->setType(self::TYPE_FAN);
+        }
+        if (count($this->getFriendgroups()) <= 0) {
+        	$defaultgroups = array('Amigos', 'Familia');
+        	foreach ($defaultgroups as $dg) {
+        		$group = new \Dodici\Fansworld\WebBundle\Entity\FriendGroup();
+        		$group->setTitle($dg);
+        		$group->setAuthor($this);
+        		$this->addFriendgroup($group);
+        	}
         }
     }
     
@@ -302,6 +342,106 @@ class User extends BaseUser
     public function getMobile()
     {
         return $this->mobile;
+    }
+    
+	/**
+     * Set skype
+     *
+     * @param string $skype
+     */
+    public function setSkype($skype)
+    {
+        $this->skype = $skype;
+    }
+
+    /**
+     * Get skype
+     *
+     * @return string 
+     */
+    public function getSkype()
+    {
+        return $this->skype;
+    }
+    
+	/**
+     * Set msn
+     *
+     * @param string $msn
+     */
+    public function setMsn($msn)
+    {
+        $this->msn = $msn;
+    }
+
+    /**
+     * Get msn
+     *
+     * @return string 
+     */
+    public function getMsn()
+    {
+        return $this->msn;
+    }
+    
+	/**
+     * Set twitter
+     *
+     * @param string $twitter
+     */
+    public function setTwitter($twitter)
+    {
+        $this->twitter = $twitter;
+    }
+
+    /**
+     * Get twitter
+     *
+     * @return string 
+     */
+    public function getTwitter()
+    {
+        return $this->twitter;
+    }
+    
+	/**
+     * Set yahoo
+     *
+     * @param string $yahoo
+     */
+    public function setYahoo($yahoo)
+    {
+        $this->yahoo = $yahoo;
+    }
+
+    /**
+     * Get yahoo
+     *
+     * @return string 
+     */
+    public function getYahoo()
+    {
+        return $this->yahoo;
+    }
+    
+	/**
+     * Set gmail
+     *
+     * @param string $gmail
+     */
+    public function setGmail($gmail)
+    {
+        $this->gmail = $gmail;
+    }
+
+    /**
+     * Get gmail
+     *
+     * @return string 
+     */
+    public function getGmail()
+    {
+        return $this->gmail;
     }
     
 	/**
@@ -540,6 +680,40 @@ class User extends BaseUser
     public function setIdolships($idolships)
     {
         $this->idolships = $idolships;
+    }
+    
+	/**
+     * Add friendgroups
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\FriendGroup $friendgroups
+     */
+    public function addFriendgroup(\Dodici\Fansworld\WebBundle\Entity\FriendGroup $friendgroups)
+    {
+        $this->friendgroups[] = $friendgroups;
+    }
+	public function addFriendgroups(\Dodici\Fansworld\WebBundle\Entity\FriendGroup $friendgroups)
+    {
+        $this->addFriendgroup($friendgroups);
+    }
+
+    /**
+     * Get friendgroups
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getFriendgroups()
+    {
+        return $this->friendgroups;
+    }
+    
+	/**
+     * Set friendgroups
+     *
+     * @param Doctrine\Common\Collections\Collection $friendgroups
+     */
+    public function setFriendgroups($friendgroups)
+    {
+        $this->friendgroups = $friendgroups;
     }
 
 }

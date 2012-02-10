@@ -71,6 +71,13 @@ class Album
     private $privacy;
     
     /**
+     * @var integer $likeCount
+     *
+     * @ORM\Column(name="likecount", type="integer", nullable=false)
+     */
+    private $likeCount;
+    
+    /**
      * @Gedmo\Slug(fields={"title"}, unique=false)
      * @ORM\Column(length=250)
      */
@@ -85,6 +92,12 @@ class Album
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="album", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $comments;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Liking", mappedBy="album")
+     */
+    protected $likings;
+    
     public function __construct()
     {
         $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
@@ -104,6 +117,20 @@ class Album
         if (null === $this->createdAt) {
             $this->setCreatedAt(new \DateTime());
         }
+        if (null === $this->likeCount) {
+        	$this->setLikeCount(0);
+        }
+    }
+    
+    public function likeUp()
+    {
+    	$this->setLikeCount($this->getLikeCount() + 1);
+    }
+    public function likeDown()
+    {
+    	if ($this->getLikeCount() > 0) {
+    		$this->setLikeCount($this->getLikeCount() - 1);
+    	}
     }
     
     /**
@@ -313,5 +340,45 @@ class Album
 	public function setComments($comments)
     {
         $this->comments = $comments;
+    }
+
+    /**
+     * Add likings
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Liking $likings
+     */
+    public function addLiking(\Dodici\Fansworld\WebBundle\Entity\Liking $likings)
+    {
+        $this->likings[] = $likings;
+    }
+
+    /**
+     * Get likings
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getLikings()
+    {
+        return $this->likings;
+    }
+
+    /**
+     * Set likeCount
+     *
+     * @param integer $likeCount
+     */
+    public function setLikeCount($likeCount)
+    {
+        $this->likeCount = $likeCount;
+    }
+
+    /**
+     * Get likeCount
+     *
+     * @return integer 
+     */
+    public function getLikeCount()
+    {
+        return $this->likeCount;
     }
 }
