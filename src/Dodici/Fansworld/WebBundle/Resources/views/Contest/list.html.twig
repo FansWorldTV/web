@@ -1,0 +1,31 @@
+{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+
+{% block title %}{{ parent() }} - Detalle{% endblock %}
+
+{% block content %}
+<div class="col_468 left margin contests">
+    <div class="cont clearfix">
+        <h1>Concursos
+            <ul>
+                <li><a href="#1">Tipo de Concurso</a>
+                    <ul>
+                        <li><a href="#1">En Facebook</a></li>
+                        <li><a href="#1">Video concurso</a></li>
+                        <li><a href="#1">Foto concurso</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </h1>
+        {% for contest in contests  %}
+            <div class="nota clearfix">
+                <h2><a href="{{ path('contest_show', {'id':contest.id}) }}">{{ contest.title }}</a></h2>
+                <div class="media"><a href="{{ path('contest_show', {'id':contest.id}) }}">{% thumbnail contest.image, 'small' %}</a></div>
+                <div class="contenido">
+                    <p> {{ contest.content }} </p>
+                    <div class="options"><a class="btn_action2" href="#" onclick="ajax.contest.participate({{ contest.id }});">Participar</a></div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

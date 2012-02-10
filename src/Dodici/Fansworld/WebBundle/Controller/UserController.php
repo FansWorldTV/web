@@ -49,7 +49,7 @@ class UserController extends SiteController
                 foreach ($search as $element) {
                     $response['search'][$element[0]->getId()]['id'] = $element[0]->getId();
                     $response['search'][$element[0]->getId()]['name'] = (string) $element[0];
-                    $response['search'][$element[0]->getId()]['image'] = $element[0]->getImage();
+                    $response['search'][$element[0]->getId()]['image'] = $this->getImageUrl($element[0]->getImage());
                     $response['search'][$element[0]->getId()]['commonFriends'] = $element['commonfriends'];
                 }
 
@@ -69,7 +69,7 @@ class UserController extends SiteController
 
     /**
      * @Route("/friends/", name="user_friends")
-     * @Template a 
+     * @Template
      */
     public function friendsAction()
     {
@@ -113,7 +113,7 @@ class UserController extends SiteController
                 foreach ($search as $element) {
                     $response['search'][$element[0]->getId()]['id'] = $element[0]->getId();
                     $response['search'][$element[0]->getId()]['name'] = (string) $element[0];
-                    $response['search'][$element[0]->getId()]['image'] = $element[0]->getImage();
+                    $response['search'][$element[0]->getId()]['image'] = $this->getImageUrl($element[0]->getImage());
                     $response['search'][$element[0]->getId()]['commonFriends'] = $element['commonfriends'];
                 }
 
