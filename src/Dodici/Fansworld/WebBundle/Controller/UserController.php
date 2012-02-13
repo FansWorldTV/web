@@ -64,7 +64,9 @@ class UserController extends SiteController
             }
         }
 
-        die(json_encode($response));
+        $response = new Response(json_encode($response));
+		$response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     /**
@@ -126,21 +128,24 @@ class UserController extends SiteController
             }
         }
         
-        die(json_encode($response));
+        $response = new Response(json_encode($response));
+		$response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     /**
-     * @Route("/detail/{id}", name="user_detail", defaults = { "id" = "none" })
+     * @Route("/user/{id}", name="user_detail", requirements={"id"="\d+"})
      * @Template
      */
     public function detailAction($id)
     {
-        if ($id == "none") {
+        
+
+        $user = $this->getRepository('User')->find($id);
+    	if (!$user) {
             echo "No existe el usuario";
             exit;
         }
-
-        $user = $this->getRepository('User')->findBy(array('id' => $id));
 
         return array('user' => $user);
     }
