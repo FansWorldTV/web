@@ -220,6 +220,14 @@ services:
         class: Dodici\Fansworld\WebBundle\Listener\LikingCountUpdater
         tags:
             - { name: doctrine.event_listener, event: postRemove }
+    tag.listener.persist:
+        class: Dodici\Fansworld\WebBundle\Listener\TagUpdater
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+    tag.listener.remove:
+        class: Dodici\Fansworld\WebBundle\Listener\TagUpdater
+        tags:
+            - { name: doctrine.event_listener, event: postRemove }
     my.facebook.user:
         class: Dodici\Fansworld\WebBundle\Security\FacebookProvider
         arguments:
@@ -230,6 +238,9 @@ services:
     appstate:
       class: Dodici\Fansworld\WebBundle\Extensions\AppState
       arguments: [@session, @doctrine.orm.entity_manager]
+    tagger:
+      class: Dodici\Fansworld\WebBundle\Extensions\Tagger
+      arguments: [@doctrine.orm.entity_manager]
     twig.extension.appstate:
       class: Dodici\Fansworld\WebBundle\Extensions\AppStateExtension
       arguments: [@appstate]

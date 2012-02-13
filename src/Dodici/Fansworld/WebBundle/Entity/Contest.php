@@ -122,14 +122,24 @@ class Contest implements Translatable
     protected $participants;
     
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="contest")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="contest", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $comments;
     
     /**
-     * @ORM\OneToMany(targetEntity="Liking", mappedBy="contest")
+     * @ORM\OneToMany(targetEntity="Liking", mappedBy="contest", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $likings;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="HasTag", mappedBy="contest", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $hastags;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="HasUser", mappedBy="contest", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $hasusers;
 
     public function __construct()
     {
@@ -454,5 +464,45 @@ class Contest implements Translatable
     public function getLikeCount()
     {
         return $this->likeCount;
+    }
+
+    /**
+     * Add hastags
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\HasTag $hastags
+     */
+    public function addHasTag(\Dodici\Fansworld\WebBundle\Entity\HasTag $hastags)
+    {
+        $this->hastags[] = $hastags;
+    }
+
+    /**
+     * Get hastags
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getHastags()
+    {
+        return $this->hastags;
+    }
+
+    /**
+     * Add hasusers
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\HasUser $hasusers
+     */
+    public function addHasUser(\Dodici\Fansworld\WebBundle\Entity\HasUser $hasusers)
+    {
+        $this->hasusers[] = $hasusers;
+    }
+
+    /**
+     * Get hasusers
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getHasusers()
+    {
+        return $this->hasusers;
     }
 }

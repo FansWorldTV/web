@@ -101,9 +101,19 @@ class Photo
     private $image;
     
     /**
-     * @ORM\OneToMany(targetEntity="Liking", mappedBy="photo")
+     * @ORM\OneToMany(targetEntity="Liking", mappedBy="photo", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $likings;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="HasTag", mappedBy="photo", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $hastags;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="HasUser", mappedBy="photo", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $hasusers;
     
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="photo", cascade={"remove", "persist"}, orphanRemoval="true")
@@ -402,5 +412,45 @@ class Photo
     public function getLikeCount()
     {
         return $this->likeCount;
+    }
+
+    /**
+     * Add hastags
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\HasTag $hastags
+     */
+    public function addHasTag(\Dodici\Fansworld\WebBundle\Entity\HasTag $hastags)
+    {
+        $this->hastags[] = $hastags;
+    }
+
+    /**
+     * Get hastags
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getHastags()
+    {
+        return $this->hastags;
+    }
+
+    /**
+     * Add hasusers
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\HasUser $hasusers
+     */
+    public function addHasUser(\Dodici\Fansworld\WebBundle\Entity\HasUser $hasusers)
+    {
+        $this->hasusers[] = $hasusers;
+    }
+
+    /**
+     * Get hasusers
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getHasusers()
+    {
+        return $this->hasusers;
     }
 }
