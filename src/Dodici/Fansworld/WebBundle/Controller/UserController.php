@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Application\Sonata\UserBundle\Entity\User;
+
 class UserController extends SiteController
 {
 
@@ -43,7 +45,7 @@ class UserController extends SiteController
             $response = array();
             $user = $this->get('security.context')->getToken()->getUser();
 
-            if ($user !== "anon.") {
+            if ($user instanceof User) {
                 $search = $userRepo->SearchFront($user, $query, false, self::LIMIT_SEARCH, $offset);
 
                 foreach ($search as $element) {
@@ -105,7 +107,7 @@ class UserController extends SiteController
 
         $response = false;
         
-        if ($query && $user !== "anon.") {
+        if ($query && $user instanceof User) {
             $response = array();
             $search = $userRepo->FriendUsers($user, $query, false, self::LIMIT_SEARCH, $offset);
 
@@ -159,4 +161,70 @@ class UserController extends SiteController
         return array();
     }
 
+	/**
+     *  @Route("/ajax/pending-friends/", name = "user_ajaxpendingfriends")
+     *  
+     */
+    public function ajaxPendingFriendsAction()
+    {
+        $request = $this->getRequest();
+        $limit = $request->get('limit', self::LIMIT_SEARCH);
+        $page = $request->get('page', 1);
+
+        $offset = (int) $page;
+        if ($page > 0) {
+            $offset = ($page - 1) * self::LIMIT_SEARCH;
+        }
+
+        $friendRepo = $this->getRepository('Friendship');
+
+        $response = false;
+        
+        $user = $this->get('security.context')->getToken()->getUser();
+        if ($user instanceof User) {
+            $response = array();
+        	$pending = $friendRepo->Pending($user, $limit, $offset);
+        	$countTotal = $friendRepo->CountPending($user);
+        	$mediaservice = $this->get('sonata.media.pool');
+        	
+        	$response['total'] = $countTotal;
+            
+            if ($countTotal > ($page * $limit)) {
+                $response['gotMore'] = true;
+            } else {
+                $response['gotMore'] = false;
+            }
+            
+            foreach ($pending as $element) {
+                $imageurl = null;
+                
+                $media = $element->getAuthor()->getImage();
+	            if ($media) {
+	            	$provider = $mediaservice
+		            ->getProvider($media->getProviderName());
+			        $format = $provider->getFormatName($media, 'small');
+			        $imageurl = $provider->generatePublicUrl($media, $format);
+	            }
+            	
+            	$response['friendships'][] = array(
+                	'friendship' => array (
+                		'id' => $element->getId(),
+                		'ts' => $element->getCreatedat()->format('U') 
+                	),
+                	'user' => array(
+	                	'id' => $element->getAuthor()->getId(),
+                		'name' => (string)$element->getAuthor(),
+                		'image' => $imageurl,
+                		'url' => $this->generateUrl('user_detail', array('id' => $element->getAuthor()->getId()))
+                	)
+                );
+            }
+
+			
+        }
+
+        $response = new Response(json_encode($response));
+		$response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
 }

@@ -37,16 +37,40 @@ class FriendshipRepository extends CountBaseRepository
 	/**
      * Get pending friendship requests for user
      */
-    public function Pending(\Application\Sonata\UserBundle\Entity\User $user)
+    public function Pending(\Application\Sonata\UserBundle\Entity\User $user, $limit = null, $offset = null)
     {
-    	return $this->_em->createQuery('
-    	SELECT fs
+    	$query = $this->_em->createQuery('
+    	SELECT fs, a
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Friendship fs
+    	JOIN fs.author a
+    	WHERE
+    	fs.target = :userid AND fs.active=false
+    	')
+    		->setParameter('userid', $user->getId(), Type::BIGINT);
+    		
+    	if ($limit !== null)
+    	$query = $query->setMaxResults($limit);
+    	
+    	if ($offset !== null)
+    	$query = $query->setFirstResult($offset);
+    		
+    	return $query->getResult();
+    }
+    
+	/**
+     * Count pending friendships for user
+     */
+    public function CountPending(\Application\Sonata\UserBundle\Entity\User $user)
+    {
+    	$query = $this->_em->createQuery('
+    	SELECT COUNT(fs.id)
     	FROM \Dodici\Fansworld\WebBundle\Entity\Friendship fs
     	WHERE
     	fs.target = :userid AND fs.active=false
     	')
-    		->setParameter('userid', $user->getId(), Type::BIGINT)
-    		->getResult();
+    		->setParameter('userid', $user->getId(), Type::BIGINT);
+    		
+    	return (int)$query->getSingleScalarResult();
     }
     
 	/**
