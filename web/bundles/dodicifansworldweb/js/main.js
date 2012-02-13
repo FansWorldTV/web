@@ -5,14 +5,14 @@ $(document).ready(function(){
 });
 
 var searchFront = {
-    'page': 0,
-    'init': function(){
+    page: 0,
+    init: function(){
         if($(".searchFront").size()>0){
             searchFront.addMore();
             searchFront.search();
         }
     },
-    'addMore': function(){
+    addMore: function(){
         $("#addMore.searchFront").click(function(){
             var query = this.parent().find('input#query').val();
         
@@ -38,7 +38,7 @@ var searchFront = {
             });
         });
     },
-    'search': function(){
+    search: function(){
         $("#formSearch.searchFront").submit(function(event){
             var query = $('#query').val();
             $(".searchFront.listMosaic").html('');
@@ -64,15 +64,16 @@ var searchFront = {
         });
     }
 };
+
 var friendsSearch = {
-    'page': 0,
-    'init': function(){
+    page: 1,
+    init: function(){
         if($(".friends").size()>0){
             friendsSearch.addMore();
             friendsSearch.search();
         }
     },
-    'addMore': function(){
+    addMore: function(){
         $("#addMore.friends").click(function(){
             var query = this.parent().find('input#query').val();
         
@@ -98,7 +99,7 @@ var friendsSearch = {
             });
         });
     },
-    'search': function(){
+    search: function(){
         $("#formSearch.friends").submit(function(event){
             var query = $('#query').val();
             $(".friends.listMosaic").html('');
@@ -121,6 +122,49 @@ var friendsSearch = {
         
             event.preventDefault();        
             return false;
+        });
+    }
+};
+
+var contest = {
+    page: 1,
+    searchType: null,
+    
+    init: function(){
+        contest.changeType();
+        
+        $("#addMore.contests").click(function(){
+          contest.listAddMore();
+        });
+    },
+    
+    listAddMore: function(){
+        ajax.contestsListAction(contest.page, contest.searchType, function(r){
+            if(r){
+                for(var i in r.contests){
+                    var element = r.contests[i];
+                    var template = $("#templates.contests .nota").clone();
+                    var contestShowUrl = Routing.generate( appLocale + '_contest_show', {
+                        'id': element.id
+                        });
+                        
+                    template.find("h2 a").html(element.title);
+                    template.find("h2 a").attr('href', contestShowUrl);
+                    template.find("div.media a").attr("href", contestShowUrl );
+                    template.find("div.media a").html('<img src="' + element.image + '" alt="" />');
+                    template.find("div.contenido p").html(element.content);
+                }
+                contest.page++;
+            }
+        });
+    },
+    
+    changeType: function(){
+        $('ul.contestType a').click(function(){
+            var type = $(this).parent().attr('class');
+            contest.searchType = type;
+            contest.page = 1;
+            contest.listAddMore();
         });
     }
 };

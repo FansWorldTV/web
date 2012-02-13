@@ -51,6 +51,30 @@ var ajax = {
                 }
             });
         }
+    },
+    
+    contestsListAction: function(page, filter, callback) {
+        if(!ajax.active) {
+            ajax.active = true;
+            
+            if(!filter || typeof(filter) == 'undefined'){
+                filter = null;
+            }
+            
+            $.ajax({
+                url: 'http://' + location.host + Routing.generate( appLocale + '_contest_ajaxlist'),
+                data: {
+                    'filter': filter,
+                    'page': page
+                },
+                success: function(response){
+                    ajax.active = false;
+                    if(typeof(callback) !== 'undefined'){
+                        callback(response);
+                    }
+                }
+            });
+        }
     }
   
 };

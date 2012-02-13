@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dodici\Fansworld\WebBundle\Controller\SiteController;
 use Dodici\Fansworld\WebBundle\Entity\Comment;
+use Dodici\Fansworld\WebBundle\Entity\Contest;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -100,8 +101,20 @@ class ContestController extends SiteController
      * @Template
      */
     public function listAction(){
-        $contests = $this->getRepository('Contest')->findBy(array(), array('createdAt' => 'desc'), self::contestLimit);
-        return array('contests' => $contests);
+        $contests = $this->getRepository('Contest')->findBy(array('active' => true), array('createdAt' => 'desc'), self::contestLimit);
+        
+        $countContests = $this->getRepository('Contest')->countBy(array('active' => true));
+        $addMore = $countContests > self::contestLimit ? true : false;
+        
+        
+        $filterType = array(
+            'TYPE_PARTICIPATE' => 1,
+            'TYPE_TEXT' => 2,
+            'TYPE_PHOTO' => 3,
+            'TYPE_VIDEO' => 4
+        );
+        
+        return array('contests' => $contests, 'addMore' => $addMore, 'filterType' => $filterType);
     }
     
     /**
@@ -115,7 +128,11 @@ class ContestController extends SiteController
         $page--;
         $offset = $page * self::contestLimit;
         
-        $contests = $this->getRepository('Contest')->findBy(array('type' => $filter), array('createdAt' => 'desc'), self::contestLimit, $offset);
+        $contests = $this->getRepository('Contest')->findBy(array('active' => true, 'type' => $filter), array('createdAt' => 'desc'), self::contestLimit, $offset);
+        $contestsCount = $this->getRepository('Contest')->countBy(array('active' => true, 'type' => $filter));
+        
+        $contestsCount = $contestsCount / self::contestLimit;
+        $addMore = $contestsCount > $page ? true : false;
         
         $response = array();
         foreach($contests as $contest){
@@ -130,7 +147,7 @@ class ContestController extends SiteController
             $response[$contest->getId()]['slug'] = $contest->getSlug();
         }
         
-        die(json_encode($response));
+        die(json_encode(array('contests' => $response, 'addMore' => $addMore)));
     }
     
     /**

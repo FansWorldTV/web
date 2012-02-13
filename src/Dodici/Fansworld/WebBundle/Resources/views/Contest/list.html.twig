@@ -8,24 +8,40 @@
         <h1>Concursos
             <ul>
                 <li><a href="#1">Tipo de Concurso</a>
-                    <ul>
-                        <li><a href="#1">En Facebook</a></li>
-                        <li><a href="#1">Video concurso</a></li>
-                        <li><a href="#1">Foto concurso</a></li>
+                    <ul class="contestType">
+                        <li class="2"><a href="#1">Texto concurso</a></li>
+                        <li class="3"><a href="#1">Foto concurso</a></li>
+                        <li class="4"><a href="#1">Video concurso</a></li>
                     </ul>
                 </li>
             </ul>
         </h1>
         {% for contest in contests  %}
-            <div class="nota clearfix">
-                <h2><a href="{{ path('contest_show', {'id':contest.id}) }}">{{ contest.title }}</a></h2>
-                <div class="media"><a href="{{ path('contest_show', {'id':contest.id}) }}">{% thumbnail contest.image, 'small' %}</a></div>
-                <div class="contenido">
-                    <p> {{ contest.content }} </p>
-                    <div class="options"><a class="btn_action2" href="#" onclick="ajax.contest.participate({{ contest.id }});">Participar</a></div>
-                </div>
+        <div class="nota clearfix">
+            <h2><a href="{{ path('contest_show', {'id':contest.id}) }}">{{ contest.title }}</a></h2>
+            <div class="media"><a href="{{ path('contest_show', {'id':contest.id}) }}">{% thumbnail contest.image, 'small' %}</a></div>
+            <div class="contenido">
+                <p> {{ contest.content }} </p>
+                <div class="options"><a class="btn_action2" href="#" onclick="ajax.contest.participate({{ contest.id }});">Participar</a></div>
             </div>
+        </div>
         {% endfor %}
+        {% if addMore %}
+            <a href="#" id="addMore" class="contests">Agregar Más</a>
+        {% endif %}
     </div>
 </div>
+<div id="templates" class="contests hidden">
+    <div class="nota clearfix">
+        <h2><a href=""></a></h2>
+        <div class="media"><a href=""></a></div>
+        <div class="contenido">
+            <p></p>
+            <div class="options"><a class="btn_action2" href="#" onclick="">Participar</a></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    contest.init();
+</script>
 {% endblock %}
