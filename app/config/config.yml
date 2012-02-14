@@ -97,8 +97,9 @@ sonata_media:
                 - sonata.media.provider.file
 
             formats:
+                avatar: { width: 50 , height: 50 , quality: 70}
                 small: { width: 100 , quality: 70}
-                big:   { width: 500 , quality: 70}
+                big:   { width: 500 , quality: 85}
 
     cdn:
         server:

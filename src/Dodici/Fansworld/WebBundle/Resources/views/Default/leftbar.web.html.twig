@@ -5,7 +5,7 @@
 
                         <div class="user clearfix">
                             {% if user.image %}
-                            <div class="avatar">{% thumbnail user.image, 'small' %}</div>
+                            <div class="avatar">{% thumbnail user.image, 'avatar' %}</div>
                             {% endif %}
                             <div class="name">{{ user.firstname }} {{ user.lastname }} <a href="{{ path("fos_user_security_logout") }}">Salir</a></div>
                         </div>
