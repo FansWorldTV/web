@@ -2,8 +2,12 @@
 
 namespace Dodici\Fansworld\WebBundle\Listener;
 
+use Dodici\Fansworld\WebBundle\Entity\Comment;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Dodici\Fansworld\WebBundle\Entity\Liking;
+use Dodici\Fansworld\WebBundle\Entity\Share;
+use Dodici\Fansworld\WebBundle\Entity\Privacy;
 
 class LikingCountUpdater
 {
@@ -45,6 +49,8 @@ class LikingCountUpdater
 				$newspost->likeUp();
 				$em->persist($newspost);
 			}
+			
+			$this->createLikesComment($em, $entity);
 			
 			$em->flush();
 		}
@@ -90,5 +96,27 @@ class LikingCountUpdater
 			
 			$em->flush();
 		}
+    }
+    
+    private function createLikesComment(EntityManager $em, Liking $entity)
+    {
+    	// wall: a ... le gusta ...
+		$comment = new Comment();
+		$comment->setType(Comment::TYPE_LIKES);
+		$comment->setAuthor($entity->getAuthor());
+		$comment->setTarget($entity->getAuthor());
+		$comment->setPrivacy(Privacy::FRIENDS_ONLY);
+		
+		$share = new Share();
+    	if ($entity->getComment()) $share->setComment($entity->getComment());
+    	if ($entity->getAlbum()) $share->setAlbum($entity->getAlbum());
+    	if ($entity->getPhoto()) $share->setPhoto($entity->getPhoto());
+    	if ($entity->getVideo()) $share->setVideo($entity->getVideo());
+    	if ($entity->getContest()) $share->setContest($entity->getContest());
+    	if ($entity->getNewspost()) $share->setNewspost($entity->getNewspost());
+    		
+    	$comment->setShare($share);
+			
+    	$em->persist($comment);
     }
 }

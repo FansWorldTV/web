@@ -13,6 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Comment
 {
+    const TYPE_COMMENT = 1;
+    const TYPE_NEW_FRIEND = 2;
+    const TYPE_LABELLED = 3;
+    const TYPE_SHARE = 4;
+    const TYPE_LIKES = 5;
+    
     /**
      * @var bigint $id
      *
@@ -35,7 +41,7 @@ class Comment
     /**
      * @var text $content
      *
-     * @ORM\Column(name="content", type="text", nullable=false)
+     * @ORM\Column(name="content", type="text", nullable=true)
      */
     private $content;
 
@@ -62,6 +68,13 @@ class Comment
     private $privacy;
     
     /**
+     * @var integer $type
+     *
+     * @ORM\Column(name="type", type="integer", nullable=false)
+     */
+    private $type;
+    
+    /**
      * @var integer $likeCount
      *
      * @ORM\Column(name="likecount", type="integer", nullable=false)
@@ -69,7 +82,7 @@ class Comment
     private $likeCount;
     
     /**
-	 * @ORM\OneToOne(targetEntity="Share")
+	 * @ORM\OneToOne(targetEntity="Share", cascade={"remove", "persist"}, orphanRemoval="true")
 	 * @ORM\JoinColumn(name="share_id", referencedColumnName="id")
 	 */
     private $share;
@@ -189,6 +202,12 @@ class Comment
         }
         if (null === $this->likeCount) {
         	$this->setLikeCount(0);
+        }
+        if (null === $this->type) {
+        	$this->setType(self::TYPE_COMMENT);
+        }
+        if (null === $this->active) {
+        	$this->setActive(true);
         }
     }
 	
@@ -611,5 +630,25 @@ class Comment
     public function getShare()
     {
         return $this->share;
+    }
+
+    /**
+     * Set type
+     *
+     * @param integer $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }
