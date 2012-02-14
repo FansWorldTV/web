@@ -12,6 +12,7 @@ use Dodici\Fansworld\WebBundle\Controller\SiteController;
 use Dodici\Fansworld\WebBundle\Entity\Comment;
 use Dodici\Fansworld\WebBundle\Entity\Contest;
 use Dodici\Fansworld\WebBundle\Entity\ContestParticipant;
+use Dodici\Fansworld\WebBundle\Entity\Privacy;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -51,7 +52,9 @@ class ContestController extends SiteController
 
         $chunked = array_chunk($contestComments, self::commentsLimit);
 
-        die(json_encode($chunked[$page]));
+        $response = new Response(json_encode($chunked[$page]));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     /**
@@ -72,17 +75,30 @@ class ContestController extends SiteController
             $newComment->setAuthor($user);
             $newComment->setContent($content);
             $newComment->setContest($contest);
+            $newComment->setActive(true);
+            $newComment->setPrivacy(Privacy::EVERYONE);
 
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($newComment);
             $em->flush();
 
-            $response = array('saved' => true);
+            $response = array(
+                    'saved' => true,
+                    'comment' => array(
+                        'id' => $newComment->getId(),
+                        'name' => $user,
+                        'content' => $content,
+                        'avatar' => $this->getImageUrl($user->getImage()),
+                        'createdAt' => $newComment->getCreatedAt()
+                    )
+                );
         } catch (Exception $exc) {
             $response = array('saved' => false, 'exception' => $exc->getMessage());
         }
 
-        die(json_encode($response));
+        $response = new Response(json_encode($response));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     /**
@@ -101,6 +117,7 @@ class ContestController extends SiteController
             $contest = $this->getRepository('Contest')->findOneBy(array('id' => $contest));
             
             $newParticipant->setContest($contest);
+            $newParticipant->setWinner(false);
 
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($newParticipant);
@@ -111,7 +128,9 @@ class ContestController extends SiteController
             $response = false;
         }
         
-        die(json_encode($response));
+        $response = new Response(json_encode($response));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     /**
@@ -167,7 +186,9 @@ class ContestController extends SiteController
             $response[$contest->getId()]['slug'] = $contest->getSlug();
         }
 
-        die(json_encode(array('contests' => $response, 'addMore' => $addMore)));
+        $response = new Response(json_encode(array('contests' => $response, 'addMore' => $addMore)));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     /**

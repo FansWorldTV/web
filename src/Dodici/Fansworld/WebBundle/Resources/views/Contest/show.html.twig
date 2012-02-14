@@ -25,7 +25,13 @@
             {% for comment in contest.comments %}
                     <div class="comment clearfix">
                         <div class="avatar"> <a href="#1"> <img src="{{ asset('bundles/dodicifansworldweb/demo/rodri.jpg' ) }}" width="50" height="50" /></a> </div>
-                        <div class="user_comment"> <span class="action_user" ><a href="{{ path('user_detail', {'id':comment.author.id}) }}">{{ comment.author.name }}</a>{{ comment.createdAt|date('c') }}</span> {{ comment.content|raw() }} </div>
+                        <div class="user_comment">
+                            <span class="action_user" >
+                                <a href="{{ path('user_detail', {'id':comment.author.id}) }}">{{ comment.author }}</a>
+                                <span>{{ comment.createdAt|date('c') }}</span>
+                            </span>
+                            {{ comment.content|raw() }}
+                        </div>
                     </div>
             {% endfor %}
                 </div>
@@ -35,15 +41,30 @@
             <div class="add_comment">
                 <form>
                     <textarea cols="" rows="4"></textarea>
+                    <input type="hidden" class="contestId" value="{{ contest.id }}" />
                     <a class="btn" href="#1">Comentar</a>
                 </form>
             </div>
         </div>
         <script type="text/javascript">
                 $(document).ready(function(){
-                    $("div.comments div.comment span.action_user").timeago();
                     contest.init();
                 });
         </script>
+    </div>
+    <div id="templates" class="contest hidden">
+        <div class="comment clearfix">
+            <div class="avatar">
+                <a href="#1">
+                    <img src="" width="50" height="50" />
+                </a>
+            </div>
+            <div class="user_comment">
+                <span class="action_user" >
+                    <a href=""></a>
+                    <span></span>
+                </span>
+            </div>
+        </div>
     </div>
 {% endblock %}

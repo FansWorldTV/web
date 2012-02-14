@@ -134,10 +134,12 @@ var contest = {
         contest.changeType();
         
         $("#addMore.contests").click(function(){
-          contest.listAddMore();
+            contest.listAddMore();
         });
         
         contest.participate();
+        contest.addComment();
+        contest.commentTimeago();
     },
     
     listAddMore: function(){
@@ -148,7 +150,7 @@ var contest = {
                     var template = $("#templates.contests .nota").clone();
                     var contestShowUrl = Routing.generate( appLocale + '_contest_show', {
                         'id': element.id
-                        });
+                    });
                         
                     template.find("h2 a").html(element.title);
                     template.find("h2 a").attr('href', contestShowUrl);
@@ -178,7 +180,36 @@ var contest = {
                     console.log('participando!');
                 }
             });
-           return false; 
+            return false; 
+        });
+    },
+    
+    addComment: function(){
+        var content = $("div.add_comment form textarea").val();
+        var contestId = $("div.add_comment form input.contestId").val();
+        
+        $("div.add_comment form a.btn").click(function(){
+            ajax.contestAddCommentAction(content, contestId, function(r){
+                var template = $("#templates.contest div.comment").clone();
+                template.find('div.avatar a').attr('href', Routing.generate(appLocale + '_user_detail', {
+                    'id': r.comment.id
+                    }));
+                template.find('div.avatar img').attr('src', r.comment.avatar);
+                template.find('div.user_comment span.action_user a').attr('href', Routing.generate(appLocale + '_user_detail', {
+                    'id': r.comment.id
+                    }));
+                template.find('div.user_comment span.action_user a').html(r.comment.name);
+                template.find('div.user_comment span.action_user span').html(jQuery.timeago(r.comment.createdAt));
+                
+                $("div.comments").append(template);
+            });
+        });
+    },
+    
+    commentTimeago: function(element){
+        var commentTime = $("div.comments div.comment span.action_user span");
+        commentTime.each(function(index, value){
+            $(value).html(jQuery.timeago($(value).html()));
         });
     }
 };

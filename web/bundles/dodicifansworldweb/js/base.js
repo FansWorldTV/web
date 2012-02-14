@@ -82,16 +82,36 @@ var ajax = {
             ajax.active = true;
             
             $.ajax({
-               url: 'http://' + location.host + Routing.generate( appLocale + '_contest_ajaxparticipate'),
-               data: {
-                   'contestId' : contest
-               },
-               success: function(r){
-                   if(typeof(r) !== 'undefined'){
-                       r();
-                   }
-                   ajax.active=false;
-               }
+                url: 'http://' + location.host + Routing.generate( appLocale + '_contest_ajaxparticipate'),
+                data: {
+                    'contestId' : contest
+                },
+                success: function(r){
+                    if(typeof(callback) !== 'undefined'){
+                        callback(r);
+                    }
+                    ajax.active=false;
+                }
+            });
+        }
+    },
+    
+    contestAddCommentAction: function(content, contestId, callback){
+        if(!ajax.active){
+            ajax.active = true;
+            
+            $.ajax({
+                url: 'http://' + location.host + Routing.generate( appLocale + '_contest_ajaxaddcomment'),
+                data: {
+                    'content' : content,
+                    'contestId' : contestId
+                },
+                success: function(r){
+                    if(typeof(callback) !== 'undefined'){
+                        callback(r);
+                    }
+                    ajax.active = false;
+                }
             });
         }
     }
