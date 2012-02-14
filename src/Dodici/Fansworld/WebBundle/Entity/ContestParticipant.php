@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="contest_participant")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\ContestParticipantRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class ContestParticipant
 {
@@ -82,6 +83,16 @@ class ContestParticipant
      */
     private $text;
 
+	/**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        if (null === $this->createdAt) {
+            $this->setCreatedAt(new \DateTime());
+        }
+    }
+    
     /**
      * Get id
      *

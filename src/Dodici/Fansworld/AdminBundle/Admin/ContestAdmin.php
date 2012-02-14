@@ -80,10 +80,16 @@ public function configureShowFields(ShowMapper $showMapper)
 	    foreach($contest->getParticipants() as $qo) {
 	        $qo->setContest($contest);
 	    }
+		foreach($contest->getComments() as $qo) {
+	        $qo->setContest($contest);
+	    }
 	}
 	
 	public function prePersist($contest) {
 		foreach($contest->getParticipants() as $qo) {
+	        $qo->setContest($contest);
+	    }
+		foreach($contest->getComments() as $qo) {
 	        $qo->setContest($contest);
 	    }
 	}

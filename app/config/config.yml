@@ -228,6 +228,14 @@ services:
         class: Dodici\Fansworld\WebBundle\Listener\TagUpdater
         tags:
             - { name: doctrine.event_listener, event: postRemove }
+    notificator.listener.persist:
+        class: Dodici\Fansworld\WebBundle\Listener\Notificator
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+    notificator.listener.update:
+        class: Dodici\Fansworld\WebBundle\Listener\Notificator
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
     my.facebook.user:
         class: Dodici\Fansworld\WebBundle\Security\FacebookProvider
         arguments:
