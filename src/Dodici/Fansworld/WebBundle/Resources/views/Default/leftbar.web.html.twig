@@ -1,10 +1,13 @@
 <div class="col_160 left margin">
                 <div class="cont clearfix">
+                	{% if is_granted("IS_AUTHENTICATED_FULLY") %}
                     <div class="user_menu">
 
                         <div class="user clearfix">
-                            <div class="avatar"><img src="{{ asset('bundles/dodicifansworldweb/demo/user6.jpg' )}}" width="50" height="50" /></div>
-                            <div class="name">{{ user.firstname }} {{ user.lastname }} <a href="index.php">Salir</a></div>
+                            {% if user.image %}
+                            <div class="avatar">{% thumbnail user.image, 'small' %}</div>
+                            {% endif %}
+                            <div class="name">{{ user.firstname }} {{ user.lastname }} <a href="{{ path("fos_user_security_logout") }}">Salir</a></div>
                         </div>
                         <ul>
                             <li class="active"><a class="user_n1" href="user_profile.php">Mi perfil</a></li>
@@ -15,6 +18,26 @@
                             <li><a class="user_n6" href="user_philanthropy.php">Mis causas</a></li>
                         </ul>
                     </div>
+                    {% else %}
+                    <h2>Login</h2>
+                    <form class="login clearfix" action="{{ path("fos_user_security_check") }}" method="post">
+					    <label for="username">Email:</label>
+					    <input type="text" id="username" name="_username" />
+					
+					    <label for="password">Clave:</label>
+					    <input type="password" id="password" name="_password" />
+					
+						<div class="recordar">
+						    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+						    <label for="remember_me">Recordarme</label>
+					    </div>
+					
+					    <input class="btn" type="submit" id="_submit" name="_submit" value="ENTRAR" />
+					</form>
+					{{ facebook_login_button({'autologoutlink': false}) }}
+					
+					<a class="banner-register" href="{{ path('fos_user_registration_register') }}" title="Registrate, es gratis"><img src="{{ asset('bundles/dodicifansworldweb/images/registro.gif' )}}"/></a>
+                    {% endif %}
                 </div>
                 <div class="ad">
                     <div class="banner_demo" style="height:600px"></div>

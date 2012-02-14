@@ -25,7 +25,7 @@ body {
 .top .social ul li ul { display:none; background:#f5f5f5; margin-top:0; border-bottom:solid 1px #999}
 .top .social ul li:hover ul { display:block; border-bottom:solid 1px #f1f1f1;}
 .top .social ul li:hover ul li a { background:none; padding-left:20px; line-height:24px;}
-.top .social .redes { float:right; padding-top:12px;}
+.top .social .redes { float:right; position: relative; top: 4px;}
 .top .social .redes a { margin-left:8px;}
 
 
@@ -606,3 +606,14 @@ form.invite .invite textarea { display:block; padding:5px; width:97%; background
 
 .overlay .modal .modal_cont .options_share { background:#e8f2f6; padding:5px 3px; display:block; color:#8b9396; border-top:solid 1px #d3e0e4;}
 .overlay .modal .modal_cont .options_share a.btn_update { line-height:24px; height:24px; background:url(../images/ui/btn_option.gif) repeat-x top; display:block; float:left; padding:0 10px; border:solid 1px #cccccc;color:#444; text-shadow:0 1px 0 #fff; float:right; margin:0 20px 0 0}
+
+/* Fixes */
+.banner-register { display:block; margin-top: 10px; }
+form.login { height: auto; margin-bottom: 10px;}
+form.login .btn { cursor: pointer; background: url(../images/ui/btn.gif) repeat-x;border: solid 1px #008ABB;border-radius: 3px;color: white;float: right;margin: 0;padding: 6px 10px 6px 10px;text-shadow: 0 -1px 0 #00658B;height: 26px; width: auto; font-size: 11px; }
+form.login .btn:hover { background:url(../images/ui/btn_h.gif) repeat-x; text-decoration:none;}
+form.login div.recordar { float: left;padding-top: 6px;}
+form.login div.recordar label { display: initial; margin: 0; color: #999; font-weight: normal; font-size: 11px;}
+form.login div.recordar input { width: auto; float: left; margin-right: 5px; margin-bottom: 0;}
+form.login label { margin-bottom: 4px; font-size: 12px; font-weight: bold;}
+form.login input { margin-bottom: 10px; }
