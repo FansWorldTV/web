@@ -75,6 +75,25 @@ var ajax = {
                 }
             });
         }
+    },
+    
+    contestParticipateAction: function(contest, callback){
+        if(!ajax.active){
+            ajax.active = true;
+            
+            $.ajax({
+               url: 'http://' + location.host + Routing.generate( appLocale + '_contest_ajaxparticipate'),
+               data: {
+                   'contestId' : contest
+               },
+               success: function(r){
+                   if(typeof(r) !== 'undefined'){
+                       r();
+                   }
+                   ajax.active=false;
+               }
+            });
+        }
     }
   
 };

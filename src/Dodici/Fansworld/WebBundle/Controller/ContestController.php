@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dodici\Fansworld\WebBundle\Controller\SiteController;
 use Dodici\Fansworld\WebBundle\Entity\Comment;
 use Dodici\Fansworld\WebBundle\Entity\Contest;
+use Dodici\Fansworld\WebBundle\Entity\ContestParticipant;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -29,7 +30,6 @@ class ContestController extends SiteController
      */
     public function indexAction()
     {
-
         return array(
         );
     }
@@ -54,7 +54,6 @@ class ContestController extends SiteController
         die(json_encode($chunked[$page]));
     }
 
-    
     /**
      * @Route("/ajax/contest/add_comment/", name = "contest_ajaxaddcomment") 
      */
@@ -77,46 +76,67 @@ class ContestController extends SiteController
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($newComment);
             $em->flush();
-            
+
             $response = array('saved' => true);
         } catch (Exception $exc) {
             $response = array('saved' => false, 'exception' => $exc->getMessage());
+        }
+
+        die(json_encode($response));
+    }
+
+    /**
+     * @Route("/ajax/contest/participate", name="contest_ajaxparticipate")
+     */
+    public function ajaxParticipateAction()
+    {
+        $request = $this->getRequest();
+        $contest = $request->get('contestId');
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        try {
+            $newParticipant = new ContestParticipant();
+            $newParticipant->setAuthor($user);
+            
+            $contest = $this->getRepository('Contest')->findOneBy(array('id' => $contest));
+            
+            $newParticipant->setContest($contest);
+
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($newParticipant);
+            $em->flush();
+            
+            $response = true;
+        } catch (Exception $exc) {
+            $response = false;
         }
         
         die(json_encode($response));
     }
 
     /**
-     * 
-     */
-    public function ajaxParticipateAction()
-    {
-        $request = $this->getRequest();
-        $contest = $request->get('contestId');
-    }
-    
-    /**
      * @Route("/contests/", name="contest_list")
      * 
      * @Template
      */
-    public function listAction(){
+    public function listAction()
+    {
         $contests = $this->getRepository('Contest')->findBy(array('active' => true), array('createdAt' => 'desc'), self::contestLimit);
-        
+
         $countContests = $this->getRepository('Contest')->countBy(array('active' => true));
         $addMore = $countContests > self::contestLimit ? true : false;
-        
-        
+
+
         $filterType = array(
             'TYPE_PARTICIPATE' => 1,
             'TYPE_TEXT' => 2,
             'TYPE_PHOTO' => 3,
             'TYPE_VIDEO' => 4
         );
-        
+
         return array('contests' => $contests, 'addMore' => $addMore, 'filterType' => $filterType);
     }
-    
+
     /**
      * @Route("/ajax/contest/list", name="contest_ajaxlist")
      */
@@ -127,15 +147,15 @@ class ContestController extends SiteController
         $page = $request->get('page', 0);
         $page--;
         $offset = $page * self::contestLimit;
-        
+
         $contests = $this->getRepository('Contest')->findBy(array('active' => true, 'type' => $filter), array('createdAt' => 'desc'), self::contestLimit, $offset);
         $contestsCount = $this->getRepository('Contest')->countBy(array('active' => true, 'type' => $filter));
-        
+
         $contestsCount = $contestsCount / self::contestLimit;
         $addMore = $contestsCount > $page ? true : false;
-        
+
         $response = array();
-        foreach($contests as $contest){
+        foreach ($contests as $contest) {
             $response[$contest->getId()]['id'] = $contest->getId();
             $response[$contest->getId()]['title'] = $contest->getTitle();
             $response[$contest->getId()]['active'] = $contest->getActive();
@@ -146,23 +166,24 @@ class ContestController extends SiteController
             $response[$contest->getId()]['type'] = $contest->getType();
             $response[$contest->getId()]['slug'] = $contest->getSlug();
         }
-        
+
         die(json_encode(array('contests' => $response, 'addMore' => $addMore)));
     }
-    
+
     /**
      * @Route("/contest/show/{id}", name= "contest_show", defaults = {"id" = 0})
      * @Template
      */
     public function showAction($id)
     {
-        if($id>0){
+        if ($id > 0) {
             $contest = $this->getRepository('Contest')->findOneBy(array('id' => $id));
-        }else{
+        } else {
             $contest = false;
         }
-        
-        
+
+
         return array('contest' => $contest);
     }
+
 }

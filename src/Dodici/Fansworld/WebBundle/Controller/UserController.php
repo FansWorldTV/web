@@ -56,9 +56,9 @@ class UserController extends SiteController
                 }
 
 
-                $countSearch = $userRepo->CountSearchFront($user, $query, false, null, $offset);
+                $countSearch = $userRepo->CountSearchFront($user, $query);
 
-                if ($countSearch > self::LIMIT_SEARCH) {
+                if ($countSearch > $offset) {
                     $response['gotMore'] = true;
                 } else {
                     $response['gotMore'] = false;
@@ -67,7 +67,7 @@ class UserController extends SiteController
         }
 
         $response = new Response(json_encode($response));
-		$response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
 
@@ -99,19 +99,19 @@ class UserController extends SiteController
         $page = $request->get('page');
         $userRepo = $this->getRepository('User');
         $user = $this->get('security.context')->getToken()->getUser();
-        
+
         $offset = (int) $page;
         if ($page > 0) {
             $offset = ($page - 1) * self::LIMIT_SEARCH;
         }
 
         $response = false;
-        
+
         if ($query && $user instanceof User) {
             $response = array();
             $search = $userRepo->FriendUsers($user, $query, false, self::LIMIT_SEARCH, $offset);
 
-            $countFriendUsers = $userRepo->CountFriendUsers($user, $query, false, self::LIMIT_SEARCH, $offset);
+            $countFriendUsers = $userRepo->CountFriendUsers($user, $query);
 
             if ($countFriendUsers > 0) {
                 foreach ($search as $element) {
@@ -122,16 +122,16 @@ class UserController extends SiteController
                 }
 
                 $search = $userRepo->SearchFront($user, $query, false, null, $offset);
-                if ($countFriendUsers > self::LIMIT_SEARCH) {
+                if ($countFriendUsers > $offset) {
                     $response['gotMore'] = true;
                 } else {
                     $response['gotMore'] = false;
                 }
             }
         }
-        
+
         $response = new Response(json_encode($response));
-		$response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
 
@@ -141,10 +141,10 @@ class UserController extends SiteController
      */
     public function detailAction($id)
     {
-        
+
 
         $user = $this->getRepository('User')->find($id);
-    	if (!$user) {
+        if (!$user) {
             echo "No existe el usuario";
             exit;
         }

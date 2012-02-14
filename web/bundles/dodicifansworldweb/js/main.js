@@ -136,6 +136,8 @@ var contest = {
         $("#addMore.contests").click(function(){
           contest.listAddMore();
         });
+        
+        contest.participate();
     },
     
     listAddMore: function(){
@@ -165,6 +167,18 @@ var contest = {
             contest.searchType = type;
             contest.page = 1;
             contest.listAddMore();
+        });
+    },
+    
+    participate: function(){
+        $("a.contestParticipate").click(function(){
+            var contestId = $(this).attr('contestId');
+            ajax.contestParticipateAction(contestId, function(r){
+                if(r){
+                    console.log('participando!');
+                }
+            });
+           return false; 
         });
     }
 };
