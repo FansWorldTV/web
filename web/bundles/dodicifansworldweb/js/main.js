@@ -41,7 +41,8 @@ var searchFront = {
     search: function(){
         $("#formSearch.searchFront").submit(function(event){
             var query = $('#query').val();
-            $(".searchFront.listMosaic").html('');
+            $(".searchFront.listMosaic").html('').hide();
+            $("div.ajax-loader").removeClass('hidden');
         
             ajax.searchAction(query, 0, function(response){
                 if(response){
@@ -57,6 +58,9 @@ var searchFront = {
                         $(".searchFront.listMosaic").append(template);
                     }
                 }
+                
+                $(".searchFront.listMosaic").show();
+                $("div.ajax-loader").addClass('hidden');
             });
         
             event.preventDefault();        
@@ -102,7 +106,8 @@ var friendsSearch = {
     search: function(){
         $("#formSearch.friends").submit(function(event){
             var query = $('#query').val();
-            $(".friends.listMosaic").html('');
+            $(".friends.listMosaic").html('').hide();
+            $("div.ajax-loader").removeClass('hidden');
         
             ajax.friendsAction(query, 0, function(response){
                 if(response){
@@ -118,6 +123,9 @@ var friendsSearch = {
                         $(".friends.listMosaic").append(template);
                     }
                 }
+                
+                $(".friends.listMosaic").show();
+                $("div.ajax-loader").addClass('hidden');
             });
         
             event.preventDefault();        
