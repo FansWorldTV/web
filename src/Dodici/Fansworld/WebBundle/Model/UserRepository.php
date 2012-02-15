@@ -262,4 +262,48 @@ class UserRepository extends EntityRepository
     	$res = $query->getResult();
     	return intval($res[0]['count']);
     }
+    
+	/**
+     * Get all users who have one or more of the given idols
+     * @param array_of_users|user $idols
+     */
+    public function byIdols($idols)
+    {
+        if (!is_array($idols)) $idols = array($idols);
+        $idarr = array();
+        foreach ($idols as $idol) $idarr[] = $idol->getId();
+        
+    	return $this->_em->createQuery('
+    	SELECT DISTINCT u
+    	FROM \Application\Sonata\UserBundle\Entity\User u
+    	INNER JOIN u.idolships iss
+    	WHERE u.enabled = true
+    	AND iss.target IN ('.join(',',$idarr).')
+    	')
+        	->getResult();
+    }
+    
+	/**
+     * Get all users who have posted in the thread
+     * @param \Dodici\Fansworld\WebBundle\Entity\ForumThread $thread
+     * @param User::TYPE_* $user_type
+     */
+    public function byThread($thread, $user_type = \Application\Sonata\UserBundle\Entity\User::TYPE_FAN)
+    {
+        $result = $this->_em->createQuery('
+    	SELECT fp, u
+    	FROM \Dodici\Fansworld\WebBundle\Entity\ForumPost fp
+    	INNER JOIN fp.author u
+    	WHERE u.enabled = true
+    	AND fp.forumthread = :threadid
+    	AND u.type = :type
+    	')
+        	->setParameter('threadid', $thread->getId())
+        	->setParameter('type', $user_type)
+        	->getResult();
+        	
+        $arr = array();
+        foreach ($result as $r) $arr[] = $r->getAuthor();
+        return $arr;
+    }
 }

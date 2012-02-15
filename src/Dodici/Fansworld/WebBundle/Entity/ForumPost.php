@@ -6,13 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Dodici\Fansworld\WebBundle\Entity\Friendship
+ * Dodici\Fansworld\WebBundle\Entity\ForumPost
  *
- * @ORM\Table(name="friendship")
- * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\FriendshipRepository")
+ * @ORM\Table(name="forumpost")
+ * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\ForumPostRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Friendship
+class ForumPost
 {
     /**
      * @var bigint $id
@@ -28,20 +28,17 @@ class Friendship
      *
      * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="author_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
      */
     private $author;
     
     /**
-     * @var Application\Sonata\UserBundle\Entity\User
+     * @var text $content
      *
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="target_id", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="content", type="text", nullable=true)
      */
-    private $target;
+    private $content;
     
     /**
      * @var datetime $createdAt
@@ -49,7 +46,7 @@ class Friendship
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     private $createdAt;
-    
+        
     /**
      * @var boolean $active
      *
@@ -58,19 +55,20 @@ class Friendship
     private $active;
     
     /**
-     * @ORM\ManyToMany(targetEntity="FriendGroup")
-     * @ORM\JoinTable(name="friendship_friendgroup",
-     *      joinColumns={@ORM\JoinColumn(name="friendship_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="friendgroup_id", referencedColumnName="id")}
-     *      )
+     * @var ForumThread
+     *
+     * @ORM\ManyToOne(targetEntity="ForumThread")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="forumthread_id", referencedColumnName="id")
+     * })
      */
-    protected $friendgroups;
+    private $forumthread;
     
-	public function __construct()
+    public function __toString()
     {
-        $this->friendgroups = new ArrayCollection();
+    	return $this->getContent();
     }
-    
+
 	/**
      * @ORM\PrePersist()
      */
@@ -80,9 +78,10 @@ class Friendship
             $this->setCreatedAt(new \DateTime());
         }
         if (null === $this->active) {
-        	$this->setActive(false);
+        	$this->setActive(true);
         }
     }
+	
 
     /**
      * Get id
@@ -92,6 +91,26 @@ class Friendship
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set content
+     *
+     * @param text $content
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * Get content
+     *
+     * @return text 
+     */
+    public function getContent()
+    {
+        return $this->content;
     }
 
     /**
@@ -155,42 +174,22 @@ class Friendship
     }
 
     /**
-     * Set target
+     * Set forumthread
      *
-     * @param Application\Sonata\UserBundle\Entity\User $target
+     * @param Dodici\Fansworld\WebBundle\Entity\ForumThread $forumthread
      */
-    public function setTarget(\Application\Sonata\UserBundle\Entity\User $target)
+    public function setForumthread(\Dodici\Fansworld\WebBundle\Entity\ForumThread $forumthread)
     {
-        $this->target = $target;
+        $this->forumthread = $forumthread;
     }
 
     /**
-     * Get target
+     * Get forumthread
      *
-     * @return Application\Sonata\UserBundle\Entity\User 
+     * @return Dodici\Fansworld\WebBundle\Entity\ForumThread 
      */
-    public function getTarget()
+    public function getForumthread()
     {
-        return $this->target;
-    }
-
-    /**
-     * Add friendgroups
-     *
-     * @param Dodici\Fansworld\WebBundle\Entity\FriendGroup $friendgroups
-     */
-    public function addFriendGroup(\Dodici\Fansworld\WebBundle\Entity\FriendGroup $friendgroups)
-    {
-        $this->friendgroups[] = $friendgroups;
-    }
-
-    /**
-     * Get friendgroups
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getFriendgroups()
-    {
-        return $this->friendgroups;
+        return $this->forumthread;
     }
 }

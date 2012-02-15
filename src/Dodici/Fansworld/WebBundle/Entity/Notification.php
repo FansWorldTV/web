@@ -15,6 +15,8 @@ class Notification
     const TYPE_FRIENDSHIP_ACCEPTED = 1;
     const TYPE_USER_TAGGED = 2;
     const TYPE_COMMENT_ANSWERED = 3;
+    const TYPE_FORUM_CREATED = 4;
+    const TYPE_FORUM_ANSWERED = 5;
     
     /**
      * @var bigint $id
@@ -132,6 +134,16 @@ class Notification
      * })
      */
     private $comment;
+    
+    /**
+     * @var ForumThread
+     *
+     * @ORM\ManyToOne(targetEntity="ForumThread")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="forumthread_id", referencedColumnName="id")
+     * })
+     */
+    private $forumthread;
     
     public function __construct() {
     	$this->createdAt = new \DateTime();
@@ -387,5 +399,25 @@ class Notification
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set forumthread
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\ForumThread $forumthread
+     */
+    public function setForumthread(\Dodici\Fansworld\WebBundle\Entity\ForumThread $forumthread)
+    {
+        $this->forumthread = $forumthread;
+    }
+
+    /**
+     * Get forumthread
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\ForumThread 
+     */
+    public function getForumthread()
+    {
+        return $this->forumthread;
     }
 }
