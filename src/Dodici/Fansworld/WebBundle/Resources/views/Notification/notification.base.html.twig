@@ -1,0 +1,18 @@
+{% block notification %}
+	{% block avatar %}
+		{% if image is defined and image is not null %}
+		<div class="avatar">
+			{% thumbnail image, 'avatar' %}
+		</div>
+		{% endif %}
+	{% endblock %}
+	{% block info %}
+	<div class="info">
+		{% block text %}
+		<a href="user_profile.php">Rodrigo Ramirez</a> 
+		<span>Te quiere agregar como <a href="http://www.google.com">amigo Te</a> quiere agregar como amigo<br>
+		<a href="#1">rechazar</a></span>
+	 	{% endblock %}
+	</div>
+	{% endblock %}
+{% endblock %}

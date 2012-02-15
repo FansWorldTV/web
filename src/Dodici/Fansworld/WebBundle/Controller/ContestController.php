@@ -202,7 +202,7 @@ class ContestController extends SiteController
     }
 
     /**
-     * @Route("/contest/show/{id}", name= "contest_show", defaults = {"id" = 0})
+     * @Route("/contest/show/{id}/{slug}", name= "contest_show", defaults = {"id" = 0})
      * @Template
      */
     public function showAction($id)

@@ -21,7 +21,7 @@ class Notificator
 		$entity = $eventArgs->getEntity();
 		$em = $eventArgs->getEntityManager();
 		
-		if ($entity instanceof HasUser) {
+		if ($entity instanceof HasUser && ($entity->getAuthor()->getId() != $entity->getTarget()->getId())) {
 			// notif: has sido etiquetado en ...
 			$notification = new Notification();
     		$notification->setType(Notification::TYPE_USER_TAGGED);

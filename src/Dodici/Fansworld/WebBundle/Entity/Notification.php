@@ -130,7 +130,7 @@ class Notification
      *
      * @ORM\ManyToOne(targetEntity="Comment")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="comment_id", referencedColumnName="id")
      * })
      */
     private $comment;

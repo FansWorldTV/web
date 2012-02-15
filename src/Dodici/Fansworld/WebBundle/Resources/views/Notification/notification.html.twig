@@ -1,0 +1,10 @@
+{%
+	set type_templates = {
+		(constant('Dodici\\Fansworld\\WebBundle\\Entity\\Notification::TYPE_COMMENT_ANSWERED')) : 'comment_answered',
+		(constant('Dodici\\Fansworld\\WebBundle\\Entity\\Notification::TYPE_FORUM_ANSWERED')) : 'forum_answered',
+		(constant('Dodici\\Fansworld\\WebBundle\\Entity\\Notification::TYPE_FORUM_CREATED')) : 'forum_created',
+		(constant('Dodici\\Fansworld\\WebBundle\\Entity\\Notification::TYPE_FRIENDSHIP_ACCEPTED')) : 'friendship_accepted',
+		(constant('Dodici\\Fansworld\\WebBundle\\Entity\\Notification::TYPE_USER_TAGGED')) : 'user_tagged'
+	}
+%}
+{% include "DodiciFansworldWebBundle:Notification:notification." ~ type_templates[notification.type] ~ ".html.twig" %}

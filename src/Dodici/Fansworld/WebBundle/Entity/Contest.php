@@ -329,9 +329,9 @@ class Contest implements Translatable
     /**
      * Add participants
      *
-     * @param Dodici\WebBundle\Entity\ContestParticipant $participants
+     * @param Dodici\Fansworld\WebBundle\Entity\ContestParticipant $participants
      */
-    public function addContestParticipant(\Dodici\WebBundle\Entity\ContestParticipant $participants)
+    public function addContestParticipant(\Dodici\Fansworld\WebBundle\Entity\ContestParticipant $participants)
     {
         $this->participants[] = $participants;
     }

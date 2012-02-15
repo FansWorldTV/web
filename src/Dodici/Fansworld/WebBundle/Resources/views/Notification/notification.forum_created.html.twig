@@ -1,0 +1,11 @@
+{% extends 'DodiciFansworldWebBundle:Notification:notification.base.html.twig' %}
+
+{% block avatar %}
+	{% set image = notification.author.image %}
+	{{ parent() }}
+{% endblock %}
+
+{% block text %}
+	<a class="notice-link" href="{{ path('user_detail', {'id': notification.author.id }) }}">{{ notification.author }}</a> 
+	<span class="notice-text">creó el foro <a href="{{ path('forum_thread', {'id': notification.forumthread.id, 'slug': notification.forumthread.slug}) }}">{{ notification.forumthread }}</a></span>
+{% endblock %}

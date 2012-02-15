@@ -1,0 +1,11 @@
+{% extends 'DodiciFansworldWebBundle:Notification:notification.base.html.twig' %}
+
+{% block avatar %}
+	{% set image = notification.author.image %}
+	{{ parent() }}
+{% endblock %}
+
+{% block text %}
+	<a class="notice-link" href="{{ path('user_detail', {'id': notification.author.id }) }}">{{ notification.author }}</a> 
+	<span class="notice-text">respondió en <a href="{{ path('comment_show', {'id': notification.comment.id }) }}">{{ notification.comment|truncate(15) }}</a></span>
+{% endblock %}

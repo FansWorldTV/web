@@ -16,7 +16,7 @@ class ContestRepository extends CountBaseRepository
         $intwoweeks = new \DateTime('-2 weeks');
         return $this->_em->createQuery('
     	SELECT c
-    	FROM \Dodici\WebBundle\Entity\Contest c
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Contest c
     	WHERE c.active = true
     	AND
     	(c.endDate IS NULL OR (c.endDate > :intwoweeks))
@@ -33,7 +33,7 @@ class ContestRepository extends CountBaseRepository
     {
         return $this->_em->createQuery("
                 SELECT c
-                FROM \Dodici\WebBundle\Entity\Contest c
+                FROM \Dodici\Fansworld\WebBundle\Entity\Contest c
                 WHERE c.active = true AND (c.title LIKE :query OR c.content LIKE :query)
             ")
                         ->setParameter('query', '%' . $query . '%')
