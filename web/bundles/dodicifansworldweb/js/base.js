@@ -77,14 +77,27 @@ var ajax = {
         }
     },
     
-    contestParticipateAction: function(contest, callback){
+    contestParticipateAction: function(contest, text, photo, video, callback){
         if(!ajax.active){
             ajax.active = true;
+            
+            if(!isset(text)){
+                text = false;
+            }
+            if(!isset(photo)){
+                photo = false;
+            }
+            if(!isset(video)){
+                video = false;
+            }
             
             $.ajax({
                 url: 'http://' + location.host + Routing.generate( appLocale + '_contest_ajaxparticipate'),
                 data: {
-                    'contestId' : contest
+                    'contestId' : contest,
+                    'text' : text,
+                    'photo' : photo,
+                    'video' : video
                 },
                 success: function(r){
                     if(typeof(callback) !== 'undefined'){
@@ -142,4 +155,12 @@ function onFbInit() {
             }
         });
     }
+}
+
+function isset(foo) {
+    if(typeof(foo) == 'undefined'){
+        return false;
+    }
+    
+    return true;
 }

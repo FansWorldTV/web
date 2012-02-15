@@ -174,12 +174,39 @@ var contest = {
     
     participate: function(){
         $("a.contestParticipate").click(function(){
-            var contestId = $(this).attr('contestId');
-            ajax.contestParticipateAction(contestId, function(r){
-                if(r){
-                    console.log('participando!');
+            var contestType = $(this).attr("contestType");
+            var text = false;
+            var photo = false;
+            var video = false;
+            
+            if(contestType != 1){
+                $.colorbox({
+                    inline: true, 
+                    href: "#participateSplash ."+contestType
+                });
+                
+                switch(contestType) {
+                    case 2:
+                        text = $("#cboxLoadedContent").val();
+                        break;
                 }
-            });
+                $("#cboxLoadedContent input[type='button']").click(function(){
+                    var contestId = $(this).attr('contestId');
+                    ajax.contestParticipateAction(contestId, text, photo, video, function(r){
+                        if(r){
+                            console.log('participando!');
+                        }
+                    });
+                });
+            }else{
+                var contestId = $(this).attr('contestId');
+                ajax.contestParticipateAction(contestId, text, photo, video, function(r){
+                    if(r){
+                        console.log('participando!');
+                    }
+                });
+            }
+            
             return false; 
         });
     },
@@ -193,11 +220,11 @@ var contest = {
                 var template = $("#templates.contest div.comment").clone();
                 template.find('div.avatar a').attr('href', Routing.generate(appLocale + '_user_detail', {
                     'id': r.comment.id
-                    }));
+                }));
                 template.find('div.avatar img').attr('src', r.comment.avatar);
                 template.find('div.user_comment span.action_user a').attr('href', Routing.generate(appLocale + '_user_detail', {
                     'id': r.comment.id
-                    }));
+                }));
                 template.find('div.user_comment span.action_user a').html(r.comment.name);
                 template.find('div.user_comment span.action_user span').html(jQuery.timeago(r.comment.createdAt));
                 

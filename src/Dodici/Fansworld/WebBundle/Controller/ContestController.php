@@ -83,15 +83,15 @@ class ContestController extends SiteController
             $em->flush();
 
             $response = array(
-                    'saved' => true,
-                    'comment' => array(
-                        'id' => $newComment->getId(),
-                        'name' => $user,
-                        'content' => $content,
-                        'avatar' => $this->getImageUrl($user->getImage()),
-                        'createdAt' => $newComment->getCreatedAt()
-                    )
-                );
+                'saved' => true,
+                'comment' => array(
+                    'id' => $newComment->getId(),
+                    'name' => $user,
+                    'content' => $content,
+                    'avatar' => $this->getImageUrl($user->getImage()),
+                    'createdAt' => $newComment->getCreatedAt()
+                )
+            );
         } catch (Exception $exc) {
             $response = array('saved' => false, 'exception' => $exc->getMessage());
         }
@@ -109,25 +109,35 @@ class ContestController extends SiteController
         $request = $this->getRequest();
         $contest = $request->get('contestId');
         $user = $this->get('security.context')->getToken()->getUser();
+        $contest = $this->getRepository('Contest')->findOneBy(array('id' => $contest));
 
-        try {
-            $newParticipant = new ContestParticipant();
-            $newParticipant->setAuthor($user);
-            
-            $contest = $this->getRepository('Contest')->findOneBy(array('id' => $contest));
-            
-            $newParticipant->setContest($contest);
-            $newParticipant->setWinner(false);
+        $isParticipant = $this->getRepository('ContestParticipant')->findOneBy(array('author' => $user, 'contest' => $contest));
 
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($newParticipant);
-            $em->flush();
-            
-            $response = true;
-        } catch (Exception $exc) {
+        if (!$isParticipant) {
+            try {
+                $newParticipant = new ContestParticipant();
+                $newParticipant->setAuthor($user);
+
+                if ($contest->getType() == 2) {
+                    $newParticipant->setText($request->get('text'));
+                }
+
+                $newParticipant->setContest($contest);
+                $newParticipant->setWinner(false);
+
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($newParticipant);
+                $em->flush();
+
+                $response = true;
+            } catch (Exception $exc) {
+                $response = false;
+            }
+        }else{
             $response = false;
         }
-        
+
+
         $response = new Response(json_encode($response));
         $response->headers->set('Content-Type', 'application/json');
         return $response;
