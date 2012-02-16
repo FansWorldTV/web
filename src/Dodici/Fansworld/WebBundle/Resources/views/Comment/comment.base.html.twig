@@ -1,0 +1,24 @@
+{% block notification %}
+	{% block avatar %}
+		{% if image is defined and image is not null %}
+		<div class="avatar">
+			{% thumbnail image, 'avatar' %}
+		</div>
+		{% endif %}
+	{% endblock %}
+	{% block info %}
+	<div class="status">
+		{% block text %}
+			{% block action %}<span class="action_user"></span>{% endblock %}
+			{% block title %}<span class="title"></span>{% endblock %}
+			{% block description %}<p></p>{% endblock %}
+			{% block date %}
+				<div class="info">
+					{% include 'DodiciFansworldWebBundle:Comment:date.html.twig' with {date: comment.createdAt} %}
+					<span class="comments">{{ comment.comments|length }} comentarios</span>
+				</div>
+			{% endblock %}
+	 	{% endblock %}
+	</div>
+	{% endblock %}
+{% endblock %}

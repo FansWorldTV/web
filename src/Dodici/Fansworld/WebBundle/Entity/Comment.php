@@ -19,7 +19,7 @@ class Comment
     const TYPE_SHARE = 4;
     const TYPE_LIKES = 5;
     const TYPE_NEW_THREAD = 6;
-    const TYPE_THREAD_ANSWERED = 6;
+    const TYPE_THREAD_ANSWERED = 7;
     
     /**
      * @var bigint $id

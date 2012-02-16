@@ -1,0 +1,19 @@
+{% extends 'DodiciFansworldWebBundle:Comment:comment.base.html.twig' %}
+
+{% block avatar %}
+	<div class="ico">
+		<img src="{{ asset('bundles/dodicifansworldweb/images/ico/user_add.png' )}}" alt="icon" />
+	</div>
+{% endblock %}
+
+{% block action %}
+	<span class="action_user">
+		<a href="{{ path('user_detail', {'id': comment.target.id }) }}">{{ comment.target }}</a> 
+		y 
+		<a href="{{ path('user_detail', {'id': comment.author.id }) }}">{{ comment.author }}</a> 
+		ahora son amigos
+	</span>
+{% endblock %}
+
+{% block title %}{% endblock %}
+{% block description %}{% endblock %}

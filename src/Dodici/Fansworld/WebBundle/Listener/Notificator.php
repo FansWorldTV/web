@@ -150,6 +150,14 @@ class Notificator
 				$comment->setAuthor($entity->getTarget());
 				$comment->setTarget($entity->getAuthor());
 				$comment->setPrivacy(Privacy::FRIENDS_ONLY);
+				$em->persist($comment);
+				// wall: inverso
+				$comment = new Comment();
+				$comment->setType(Comment::TYPE_NEW_FRIEND);
+				$comment->setAuthor($entity->getAuthor());
+				$comment->setTarget($entity->getTarget());
+				$comment->setPrivacy(Privacy::FRIENDS_ONLY);
+				$em->persist($comment);
 				
 				$em->flush();
             }

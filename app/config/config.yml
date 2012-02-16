@@ -99,7 +99,9 @@ sonata_media:
             formats:
                 avatar: { width: 50 , height: 50 , quality: 70}
                 small: { width: 100 , quality: 70}
+                wall: { width: 150 , quality: 75}
                 big:   { width: 500 , quality: 85}
+                huge:   { width: 800 , quality: 90}
 
     cdn:
         server:
@@ -249,6 +251,9 @@ services:
       arguments: [@session, @doctrine.orm.entity_manager]
     tagger:
       class: Dodici\Fansworld\WebBundle\Extensions\Tagger
+      arguments: [@doctrine.orm.entity_manager]
+    sharer:
+      class: Dodici\Fansworld\WebBundle\Extensions\Sharer
       arguments: [@doctrine.orm.entity_manager]
     twig.extension.appstate:
       class: Dodici\Fansworld\WebBundle\Extensions\AppStateExtension

@@ -1,0 +1,20 @@
+{% extends 'DodiciFansworldWebBundle:Comment:comment.base.html.twig' %}
+
+{% block avatar %}
+	{% set image = comment.author.image %}
+	{{ parent() }}
+{% endblock %}
+
+{% block action %}
+	<span class="action_user">
+		<a href="{{ path('user_detail', {'id': comment.target.id }) }}">{{ comment.author }}</a> 
+		{{ 'says'|trans }}:
+	</span>
+{% endblock %}
+
+{% block title %}{% endblock %}
+{% block description %}
+<p>
+	{{ comment.content|nl2br }}
+</p>
+{% endblock %}

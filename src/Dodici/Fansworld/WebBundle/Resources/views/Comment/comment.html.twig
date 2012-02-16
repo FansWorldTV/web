@@ -1,0 +1,17 @@
+{%
+	set type_templates = {
+		(constant('Dodici\\Fansworld\\WebBundle\\Entity\\Comment::TYPE_COMMENT')) : 'comment',
+		(constant('Dodici\\Fansworld\\WebBundle\\Entity\\Comment::TYPE_NEW_FRIEND')) : 'new_friend',
+		(constant('Dodici\\Fansworld\\WebBundle\\Entity\\Comment::TYPE_LABELLED')) : 'user_tagged',
+		(constant('Dodici\\Fansworld\\WebBundle\\Entity\\Comment::TYPE_SHARE')) : 'share',
+		(constant('Dodici\\Fansworld\\WebBundle\\Entity\\Comment::TYPE_LIKES')) : 'likes',
+		(constant('Dodici\\Fansworld\\WebBundle\\Entity\\Comment::TYPE_NEW_THREAD')) : 'forum_created',
+		(constant('Dodici\\Fansworld\\WebBundle\\Entity\\Comment::TYPE_THREAD_ANSWERED')) : 'forum_answered'
+	}
+%}
+{% if comment.comment is not null %}
+	{% set type_template = 'subcomment' %}
+{% else %}
+	{% set type_template = type_templates[comment.type] %}
+{% endif %}
+{% include "DodiciFansworldWebBundle:Comment:comment." ~ type_template ~ ".html.twig" %}

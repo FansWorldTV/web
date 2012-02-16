@@ -1,0 +1,38 @@
+{% extends 'DodiciFansworldWebBundle:Comment:comment.base.html.twig' %}
+
+{% if comment.share.comment is not null %}
+	{% set tag_item = comment.share.comment %}
+	{% set tag_item_url = path("comment_show", {'id': tag_item.id }) %}	
+{% elseif comment.share.album is not null %}
+	{% set tag_item = comment.share.album %}
+	{% set tag_item_url = path("album_show", {'id': tag_item.id, 'slug': tag_item.slug }) %}	
+{% elseif comment.share.photo is not null %}
+	{% set tag_item = comment.share.photo %} 
+	{% set tag_item_url = path("photo_show", {'id': tag_item.id, 'slug': tag_item.slug }) %}	
+{% elseif comment.share.video is not null %}
+	{% set tag_item = comment.share.video %} 
+	{% set tag_item_url = path("video_show", {'id': tag_item.id, 'slug': tag_item.slug }) %}	
+{% elseif comment.share.contest is not null %}
+	{% set tag_item = comment.share.contest %} 
+	{% set tag_item_url = path("contest_show", {'id': tag_item.id, 'slug': tag_item.slug })%}	
+{% elseif comment.share.newspost is not null %}
+	{% set tag_item = comment.share.newspost %} 
+	{% set tag_item_url = path("newspost_show", {'id': tag_item.id, 'slug': tag_item.slug }) %}	
+{% endif %}
+
+{% block avatar %}
+	<div class="ico">
+		<img src="{{ asset('bundles/dodicifansworldweb/images/ico/like.gif' )}}" alt="icon" />
+	</div>
+{% endblock %}
+
+{% block action %}
+	<span class="action_user">
+		<a href="{{ path('user_detail', {'id': comment.author.id }) }}">{{ comment.author }}</a> 
+		le gusta 
+		<a href="{{ tag_item_url }}">{{ tag_item }}</a>
+	</span>
+{% endblock %}
+
+{% block title %}{% endblock %}
+{% block description %}{% endblock %}
