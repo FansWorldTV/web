@@ -255,6 +255,9 @@ services:
     sharer:
       class: Dodici\Fansworld\WebBundle\Extensions\Sharer
       arguments: [@doctrine.orm.entity_manager]
+    commenter:
+      class: Dodici\Fansworld\WebBundle\Extensions\Commenter
+      arguments: [@doctrine.orm.entity_manager]
     twig.extension.appstate:
       class: Dodici\Fansworld\WebBundle\Extensions\AppStateExtension
       arguments: [@appstate]
