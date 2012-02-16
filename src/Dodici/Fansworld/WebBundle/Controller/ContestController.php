@@ -92,7 +92,7 @@ class ContestController extends SiteController
                     'createdAt' => $newComment->getCreatedAt()
                 )
             );
-        } catch (Exception $exc) {
+        } catch (\Exception $exc) {
             $response = array('saved' => false, 'exception' => $exc->getMessage());
         }
 
@@ -130,7 +130,7 @@ class ContestController extends SiteController
                 $em->flush();
 
                 $response = true;
-            } catch (Exception $exc) {
+            } catch (\Exception $exc) {
                 $response = false;
             }
         }else{

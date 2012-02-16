@@ -2,6 +2,10 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Cookie;
+
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

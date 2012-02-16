@@ -9,22 +9,22 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dodici\Fansworld\WebBundle\Controller\SiteController;
-use Dodici\Fansworld\WebBundle\Entity\Comment;
+use Dodici\Fansworld\WebBundle\Entity\Album;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Comment controller.
- * @Route("/comment")
+ * Album controller.
+ * @Route("/album")
  */
-class CommentController extends SiteController
+class AlbumController extends SiteController
 {
     
     /**
-     * @Route("/show/{id}", name= "comment_show", requirements = {"id" = "\d+"})
+     * @Route("/show/{id}/{slug}", name= "album_show", requirements = {"id" = "\d+"})
      */
     public function showAction($id)
     {
-        // TODO: comment show action, list all responses (nested comments), allow answering root comment
+        // TODO: album show action, list album photos + comments (masonry)
     	return new Response('ok');
     }
 

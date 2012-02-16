@@ -24,7 +24,8 @@ class ForumController extends SiteController
      */
     public function indexAction()
     {
-        return new Response('ok');
+        // TODO: list all (latest, most popular) threads
+    	return new Response('ok');
     }
 
     /**
@@ -32,7 +33,8 @@ class ForumController extends SiteController
      */
     public function threadAction($id)
     {
-        return new Response('ok');
+        // TODO: show thread, list all posts
+    	return new Response('ok');
     }
 
 }
