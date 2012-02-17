@@ -230,6 +230,11 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: friendgroup }
         arguments: [null, Dodici\Fansworld\WebBundle\Entity\FriendGroup, DodiciFansworldAdminBundle:FriendGroupAdmin]
+    dodici.fansworld.adminbundle.admin.complaint:
+        class: Dodici\Fansworld\AdminBundle\Admin\ComplaintAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: complaint }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Complaint, DodiciFansworldAdminBundle:ComplaintAdmin]
     ### END ADMIN SERVICES ###
     liking.listener.persist:
         class: Dodici\Fansworld\WebBundle\Listener\LikingCountUpdater
@@ -273,6 +278,9 @@ services:
       arguments: [@doctrine.orm.entity_manager]
     commenter:
       class: Dodici\Fansworld\WebBundle\Extensions\Commenter
+      arguments: [@doctrine.orm.entity_manager]
+    complainer:
+      class: Dodici\Fansworld\WebBundle\Extensions\Complainer
       arguments: [@doctrine.orm.entity_manager]
     contact.importer:
       class: Dodici\Fansworld\WebBundle\Extensions\ContactImporter
