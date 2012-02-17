@@ -81,13 +81,13 @@ var ajax = {
         if(!ajax.active){
             ajax.active = true;
             
-            if(!isset(text)){
+            if(typeof(text) == 'undefined'){
                 text = false;
             }
-            if(!isset(photo)){
+            if(typeof(photo) == 'undefined'){
                 photo = false;
             }
-            if(!isset(video)){
+            if(typeof(video) == 'undefined'){
                 video = false;
             }
             
@@ -127,6 +127,33 @@ var ajax = {
                 }
             });
         }
+    },
+    
+    pendingFriendsAction: function(page, limit, callback){
+        $.ajax({
+            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxpendingfriends' ),
+            data: {
+                'page' : page,
+                'limit' : limit
+            },
+            success: function(r){
+                if(typeof(callback) !== 'undefined'){
+                    callback(r);
+                }
+            }
+        });
+    },
+    
+    
+    numberPendingRequests: function(callback){
+        $.ajax({
+            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxnumberofpendingrequests' ),
+            success: function(response){
+                if(typeof(callback) !== 'undefined'){
+                   callback(response);
+                }
+            }
+        });
     }
   
 };
@@ -155,12 +182,4 @@ function onFbInit() {
             }
         });
     }
-}
-
-function isset(foo) {
-    if(typeof(foo) == 'undefined'){
-        return false;
-    }
-    
-    return true;
 }

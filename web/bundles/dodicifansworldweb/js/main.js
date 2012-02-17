@@ -1,8 +1,54 @@
 $(document).ready(function(){
+    site.init();
     ajax.init();
     searchFront.init();
     friendsSearch.init();
 });
+
+var site = {
+    timerPendingFriends : null,
+    
+    init: function(){
+        site.timerPendingFriends = setTimeout('site.listenPendingRequests()', 10000);
+    },
+    listenPendingRequests: function(){
+        ajax.numberPendingRequests(function(response){
+            if(response){
+                if(response.number > 0){
+                    $("li.alerts_user a span").html(response.number).parent().removeClass('hidden');
+                }
+            }
+        });
+    },
+    getPendingFriends: function(){
+        $("li.alerts_user a").click(function(){
+           ajax.pendingFriendsAction(1, 5, function(response){
+              if(response){
+                  var numberLeftRequests = response.total - 5;
+                  $("li.alerts_user ul li.clearfix").remove();
+                  
+                  for(var i in response.friendships){
+                      var element = response.friendships[i];
+                      var template = $("#templatePendingFriends ul li").clone();
+                      template.find("img.avatar").attr('src', element.user.image);
+                      template.find("span.info a").attr('href', element.user.url).html(element.user.name);
+                      
+                      $("li.alerts_user ul").append(template);
+                  }
+                  
+                  if(numberLeftRequests>0){
+                      $("li.alerts_user ul.more a").html(numberLeftRequests + ' notificaciones mas').parent().removeClass('hidden');
+                  }else{
+                      $("li.alerts_user ul.more").addClass('hidden');
+                  }
+              } 
+           });
+        });
+    },
+    acceptFriendRequest: function(){
+        
+    }
+}
 
 var searchFront = {
     page: 0,

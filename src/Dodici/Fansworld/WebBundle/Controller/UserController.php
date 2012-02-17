@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 use Application\Sonata\UserBundle\Entity\User;
 
 class UserController extends SiteController
@@ -161,7 +160,28 @@ class UserController extends SiteController
         return array();
     }
 
-	/**
+    /**
+     *  @Route("/ajax/number-friend-requests/", name="user_ajaxnumberofpendingrequests") 
+     */
+    public function ajaxNumberOfPendingRequests()
+    {
+        $friendRepo = $this->getRepository('Friendship');
+
+        $response = false;
+
+        $user = $this->get('security.context')->getToken()->getUser();
+        if ($user instanceof User) {
+            $countTotal = $friendRepo->CountPending($user);
+            
+            $response = array('number' => $countTotal);
+        }
+
+        $response = new Response(json_encode($response));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+    
+    /**
      *  @Route("/ajax/pending-friends/", name = "user_ajaxpendingfriends")
      *  
      */
@@ -179,52 +199,42 @@ class UserController extends SiteController
         $friendRepo = $this->getRepository('Friendship');
 
         $response = false;
-        
+
         $user = $this->get('security.context')->getToken()->getUser();
         if ($user instanceof User) {
             $response = array();
-        	$pending = $friendRepo->Pending($user, $limit, $offset);
-        	$countTotal = $friendRepo->CountPending($user);
-        	$mediaservice = $this->get('sonata.media.pool');
-        	
-        	$response['total'] = $countTotal;
-            
+            $pending = $friendRepo->Pending($user, $limit, $offset);
+            $countTotal = $friendRepo->CountPending($user);
+            $mediaservice = $this->get('sonata.media.pool');
+
+            $response['total'] = $countTotal;
+
             if ($countTotal > ($page * $limit)) {
                 $response['gotMore'] = true;
             } else {
                 $response['gotMore'] = false;
             }
-            
+
             foreach ($pending as $element) {
-                $imageurl = null;
-                
                 $media = $element->getAuthor()->getImage();
-	            if ($media) {
-	            	$provider = $mediaservice
-		            ->getProvider($media->getProviderName());
-			        $format = $provider->getFormatName($media, 'small');
-			        $imageurl = $provider->generatePublicUrl($media, $format);
-	            }
-            	
-            	$response['friendships'][] = array(
-                	'friendship' => array (
-                		'id' => $element->getId(),
-                		'ts' => $element->getCreatedat()->format('U') 
-                	),
-                	'user' => array(
-	                	'id' => $element->getAuthor()->getId(),
-                		'name' => (string)$element->getAuthor(),
-                		'image' => $imageurl,
-                		'url' => $this->generateUrl('user_detail', array('id' => $element->getAuthor()->getId()))
-                	)
+                $response['friendships'][] = array(
+                    'friendship' => array(
+                        'id' => $element->getId(),
+                        'ts' => $element->getCreatedat()->format('U')
+                    ),
+                    'user' => array(
+                        'id' => $element->getAuthor()->getId(),
+                        'name' => (string) $element->getAuthor(),
+                        'image' => $this->getImageUrl($media),
+                        'url' => $this->generateUrl('user_detail', array('id' => $element->getAuthor()->getId()))
+                    )
                 );
             }
-
-			
         }
 
         $response = new Response(json_encode($response));
-		$response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
+
 }
