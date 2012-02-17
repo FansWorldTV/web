@@ -36,6 +36,7 @@ class AppKernel extends Kernel
             new Flumotion\APIBundle\FlumotionAPIBundle(),
             new Symfony\Bundle\DoctrineFixturesBundle\DoctrineFixturesBundle(),
             new FOS\FacebookBundle\FOSFacebookBundle(),
+            new Artseld\OpeninviterBundle\ArtseldOpeninviterBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

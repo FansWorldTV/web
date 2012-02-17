@@ -28,6 +28,7 @@ $loader->registerNamespaces(array(
 	'Dodici'   		   => __DIR__.'/../src',
 	'Flumotion'   	   => __DIR__.'/../src',
 	'BaseFacebook'     => __DIR__.'/../vendor/facebook/src',
+	'Artseld' => __DIR__.'/../vendor/bundles',
 ));
 $loader->registerPrefixes(array(
     'Twig_Extensions_' => __DIR__.'/../vendor/twig-extensions/lib',

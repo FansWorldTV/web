@@ -128,6 +128,22 @@ fos_facebook:
     secret: %facebook.app_secret%
     cookie: true
     permissions: [email, user_birthday, user_location]
+    
+artseld_openinviter:
+    username: "fansworld"
+    private_key: "6c0b090b7bf71fa484ab40de80beb21a"
+    plugins_cache_time: "1800"
+    plugins_cache_file: "oi_plugins.php"
+    cookie_path: "../web/uploads"
+    local_debug: "on_error"
+    remote_debug: ""
+    hosted: ""
+    proxies: []
+    stats: ""
+    stats_user: ""
+    stats_password: ""
+    update_files: "1"
+    transport: "curl"
 
 parameters:
     sonata.user.admin.user.class: Application\Sonata\UserBundle\Admin\Entity\UserAdmin
@@ -258,6 +274,9 @@ services:
     commenter:
       class: Dodici\Fansworld\WebBundle\Extensions\Commenter
       arguments: [@doctrine.orm.entity_manager]
+    contact.importer:
+      class: Dodici\Fansworld\WebBundle\Extensions\ContactImporter
+      arguments: [@service_container]
     twig.extension.appstate:
       class: Dodici\Fansworld\WebBundle\Extensions\AppStateExtension
       arguments: [@appstate]
