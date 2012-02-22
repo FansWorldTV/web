@@ -159,7 +159,7 @@ class Notificator
 				$comment->setPrivacy(Privacy::FRIENDS_ONLY);
 				$em->persist($comment);
 				
-				$em->flush();
+				//$em->flush();
             }
         }
     }

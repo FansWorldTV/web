@@ -253,6 +253,10 @@ class UserController extends SiteController
                 $friendship = $friendshipRepo->findOneBy(array('id' => $friendshipId));
                 $friendship->setActive(true);
                 
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($friendship);
+                $em->flush();
+                
                 $error = false;
             } catch (Exception $exc) {
                 $error = $exc->getMessage();

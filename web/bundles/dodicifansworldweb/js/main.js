@@ -53,11 +53,16 @@ var site = {
     },
     acceptFriendRequest: function(){
         $("li.alerts_user ul li div.button a.accept").click(function(){
+           var liElement = $(this).parent().parent();
            var friendshipId = $(this).attr('id');
            ajax.acceptRequestAction(friendshipId, function(response){
-               consonle.log(response);
-               if(!response.error){
-                   $(this).parent().parent().remove();
+               if(response.error == false){
+                   liElement.remove();
+                   var cant = $("li.alerts_user a span").html();
+                   cant--;
+                   if(cant<=0){
+                       $("li.alerts_user a span").parent().addClass('hidden');
+                   }
                }
            });
         });
