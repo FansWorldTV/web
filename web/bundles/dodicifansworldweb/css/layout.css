@@ -620,3 +620,7 @@ form.login div.recordar label { display: initial; margin: 0; color: #999; font-w
 form.login div.recordar input { width: auto; float: left; margin-right: 5px; margin-bottom: 0;}
 form.login label { margin-bottom: 4px; font-size: 12px; font-weight: bold;}
 form.login input { margin-bottom: 10px; }
+
+.share_content .internal_buttons { float:right; }
+.share_content .internal_buttons a { border-left:solid 1px #ccc; line-height:22px; height:22px; background:url(../images/ui/btn_option.gif) repeat-x top; display:block; float:left; padding:0 10px; border:solid 1px #cccccc; color:#444; text-shadow:0 1px 0 #fff; cursor: pointer; margin-right: 0; margin-left: 6px;}
+.share_content .internal_buttons a:hover { text-decoration:none; color:#111; }

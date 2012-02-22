@@ -1,5 +1,8 @@
 by: "de"
 says: "dice"
+like: "Me gusta"
+unlike: "Ya no me gusta"
+share: "Compartir"
 shared_comment: "compartió este comentario"
 shared_album: "compartió este album"
 shared_photo: "compartió esta foto"

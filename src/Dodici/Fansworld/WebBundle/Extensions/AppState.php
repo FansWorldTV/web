@@ -63,4 +63,11 @@ class AppState
     	if (count($liking) >= 1) return true;
     	else return false;
     }
+    
+    public function getType($entity)
+    {
+    	$exp = explode('\\', get_class($entity));
+    	$classname = end($exp);
+    	return strtolower($classname);
+    }
 }
