@@ -9,6 +9,9 @@ var site = {
     timerPendingFriends : null,
     
     init: function(){
+        site.getPendingFriends();
+        site.listenPendingRequests();
+        site.acceptFriendRequest();
         site.timerPendingFriends = setTimeout('site.listenPendingRequests()', 10000);
     },
     listenPendingRequests: function(){
@@ -32,8 +35,11 @@ var site = {
                       var template = $("#templatePendingFriends ul li").clone();
                       template.find("img.avatar").attr('src', element.user.image);
                       template.find("span.info a").attr('href', element.user.url).html(element.user.name);
+                      template.find("div.button a.accept").attr('id', element.friendship.id);
                       
                       $("li.alerts_user ul").append(template);
+                      
+                      site.acceptFriendRequest();
                   }
                   
                   if(numberLeftRequests>0){
@@ -46,7 +52,15 @@ var site = {
         });
     },
     acceptFriendRequest: function(){
-        
+        $("li.alerts_user ul li div.button a.accept").click(function(){
+           var friendshipId = $(this).attr('id');
+           ajax.acceptRequestAction(friendshipId, function(response){
+               consonle.log(response);
+               if(!response.error){
+                   $(this).parent().parent().remove();
+               }
+           });
+        });
     }
 }
 

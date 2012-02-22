@@ -172,7 +172,7 @@ class UserController extends SiteController
         $user = $this->get('security.context')->getToken()->getUser();
         if ($user instanceof User) {
             $countTotal = $friendRepo->CountPending($user);
-            
+
             $response = array('number' => $countTotal);
         }
 
@@ -180,7 +180,7 @@ class UserController extends SiteController
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
-    
+
     /**
      *  @Route("/ajax/pending-friends/", name = "user_ajaxpendingfriends")
      *  
@@ -233,6 +233,33 @@ class UserController extends SiteController
         }
 
         $response = new Response(json_encode($response));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+    
+    /**
+     * @Route("/ajax/accept-request/", name = "user_ajaxacceptrequest")
+     */
+    public function acceptRequestAction()
+    {
+        $request = $this->getRequest();
+        $friendshipId = $request->get('id', false);
+
+        $error = true;
+        
+        if ($friendshipId) {
+            try {
+                $friendshipRepo = $this->getRepository('Friendship');
+                $friendship = $friendshipRepo->findOneBy(array('id' => $friendshipId));
+                $friendship->setActive(true);
+                
+                $error = false;
+            } catch (Exception $exc) {
+                $error = $exc->getMessage();
+            }
+        }
+        
+        $response = new Response(json_encode(array('error' => $error)));
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }

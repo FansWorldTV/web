@@ -154,6 +154,20 @@ var ajax = {
                 }
             }
         });
+    },
+    
+    acceptRequestAction: function(friendshipId, callback){
+        $.ajax({
+           url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxacceptrequest'),
+           data: {
+               'id' : friendshipId
+           },
+           success: function(response){
+               if(typeof(callback) !== 'undefined'){
+                   callback(response);
+               }
+           }
+        });
     }
   
 };
