@@ -259,7 +259,15 @@ services:
     notificator.listener.update:
         class: Dodici\Fansworld\WebBundle\Listener\Notificator
         tags:
-            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postUpdate }
+    score.listener.persist:
+        class: Dodici\Fansworld\WebBundle\Listener\ScoreHandler
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+    score.listener.update:
+        class: Dodici\Fansworld\WebBundle\Listener\ScoreHandler
+        tags:
+            - { name: doctrine.event_listener, event: postUpdate }
     my.facebook.user:
         class: Dodici\Fansworld\WebBundle\Security\FacebookProvider
         arguments:

@@ -585,6 +585,16 @@ class User extends BaseUser
     }
     
 	/**
+     * Set level
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Level $level
+     */
+    public function setLevel(\Dodici\Fansworld\WebBundle\Entity\Level $level)
+    {
+        $this->level = $level;
+    }
+    
+	/**
      * Get level
      *
      * @return Dodici\Fansworld\WebBundle\Entity\Level 

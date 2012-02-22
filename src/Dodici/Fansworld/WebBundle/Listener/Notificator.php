@@ -131,13 +131,13 @@ class Notificator
 		}
     }
     
-	public function preUpdate(LifecycleEventArgs $eventArgs)
+	public function postUpdate(LifecycleEventArgs $eventArgs)
     {
 		$entity = $eventArgs->getEntity();
 		$em = $eventArgs->getEntityManager();
 		
     	if ($entity instanceof Friendship) {
-            if ($eventArgs->hasChangedField('active') && $eventArgs->getNewValue('active') == true) {
+            if ($entity->getActive() == true) {
                 // notif: carlitos aceptó tu solicitud de amistad...
                 $notification = new Notification();
 	    		$notification->setType(Notification::TYPE_FRIENDSHIP_ACCEPTED);
@@ -159,7 +159,7 @@ class Notificator
 				$comment->setPrivacy(Privacy::FRIENDS_ONLY);
 				$em->persist($comment);
 				
-				//$em->flush();
+				$em->flush();
             }
         }
     }
