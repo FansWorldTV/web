@@ -52,6 +52,15 @@ var site = {
         });
     },
     acceptFriendRequest: function(){
+        $("ul.friends li a span strong.accept").click(function(){
+            var friendshipId = $(this).parent().attr('id');
+            var liElement = $(this).parents('li');
+            ajax.acceptRequestAction(friendshipId, function(response){
+               if(response.error == false){
+                   liElement.remove();
+               }
+           });
+        });
         $("li.alerts_user ul li div.button a.accept").click(function(){
            var liElement = $(this).parent().parent();
            var friendshipId = $(this).attr('id');

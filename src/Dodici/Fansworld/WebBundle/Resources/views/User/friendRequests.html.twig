@@ -1,0 +1,33 @@
+{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+
+{% block title %}{{ parent() }} - Solicitudes{% endblock %}
+
+{% block content %}
+<div class="cont clearfix">
+    <h2>Solicitudes pendientes</h2>
+    <div class="user_list">
+        <div class="mask">
+            <ul class="friends listMosaic"> 
+                {% for request in requests %}
+                    <li>
+                        <a href="#" onclick="return false;">
+                            <div class="avatar">
+                                <img src="{{ request['user']['image'] }}" width="50" height="50" />
+                            </div>
+                            <div class="info">
+                                <h3 class="name">{{ request['user']['name'] }}</h3>
+                                <span id="{{ request['friendship']['id'] }}">
+                                    <strong class="accept">Aceptar</strong>
+                                    <br/>
+                                    <strong class="deny">Rechazar</strong>
+                                </span>
+                            </div>
+                        </a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

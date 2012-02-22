@@ -236,36 +236,67 @@ class UserController extends SiteController
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
-    
+
     /**
      * @Route("/ajax/accept-request/", name = "user_ajaxacceptrequest")
      */
-    public function acceptRequestAction()
+    public function ajaxAcceptRequestAction()
     {
         $request = $this->getRequest();
         $friendshipId = $request->get('id', false);
 
         $error = true;
-        
+
         if ($friendshipId) {
             try {
                 $friendshipRepo = $this->getRepository('Friendship');
                 $friendship = $friendshipRepo->findOneBy(array('id' => $friendshipId));
                 $friendship->setActive(true);
-                
+
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($friendship);
                 $em->flush();
-                
+
                 $error = false;
             } catch (Exception $exc) {
                 $error = $exc->getMessage();
             }
         }
-        
+
         $response = new Response(json_encode(array('error' => $error)));
         $response->headers->set('Content-Type', 'application/json');
         return $response;
+    }
+
+    /**
+     * @Route("/user/requests", name="user_friendrequests")
+     * @Template
+     */
+    public function friendRequestsAction()
+    {
+        $user = $this->get('security.context')->getToken()->getUser();
+        
+        $friendsRequest = false;
+        if( $user instanceof User){
+            $pending = $this->getRepository('Friendship')->Pending($user);
+            foreach ($pending as $element) {
+                $media = $element->getAuthor()->getImage();
+                $friendsRequest[] = array(
+                    'friendship' => array(
+                        'id' => $element->getId(),
+                        'ts' => $element->getCreatedat()->format('U')
+                    ),
+                    'user' => array(
+                        'id' => $element->getAuthor()->getId(),
+                        'name' => (string) $element->getAuthor(),
+                        'image' => $this->getImageUrl($media),
+                        'url' => $this->generateUrl('user_detail', array('id' => $element->getAuthor()->getId()))
+                    )
+                );
+            }
+        }
+        
+        return array('requests' => $friendsRequest);
     }
 
 }
