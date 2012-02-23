@@ -60,7 +60,7 @@ class ScoreHandler
 			$likedthing = $likedthing ?: $entity->getVideo();
 			$likedthing = $likedthing ?: $entity->getPhoto();
 			
-			if ($likedthing->getAuthor() && $likedthing->getAuthor() != $entity->getAuthor()) {
+			if ($likedthing && $likedthing->getAuthor() && $likedthing->getAuthor() != $entity->getAuthor()) {
 				$this->addScore($likedthing->getAuthor(), self::SCORE_GET_LIKED);
 			}
 		}
@@ -94,7 +94,7 @@ class ScoreHandler
 			$likedthing = $likedthing ?: $entity->getVideo();
 			$likedthing = $likedthing ?: $entity->getPhoto();
 			
-			if ($likedthing->getAuthor() && $likedthing->getAuthor() != $entity->getAuthor()) {
+			if ($likedthing && $likedthing->getAuthor() && $likedthing->getAuthor() != $entity->getAuthor()) {
 				$this->addScore($likedthing->getAuthor(), -self::SCORE_GET_LIKED);
 			}
         }

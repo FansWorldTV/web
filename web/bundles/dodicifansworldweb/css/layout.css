@@ -650,3 +650,6 @@ form.login input { margin-bottom: 10px; }
 .disabled { opacity: 0.5; cursor: default !important;}
 
 .wrap .navy ul li.alerts_user ul .loading { background: url(../images/ajax-loader-small.gif) center center no-repeat !important; }
+
+.nota_ampliada h2.noimage { margin: 0 0 15px; clear: both; float: none; position: initial; }
+.nota_ampliada .media img.articleimg { width: 468px; margin-bottom: 15px; }

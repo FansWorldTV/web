@@ -7,7 +7,13 @@
     <div class="cont clearfix">
         <div class="nota_ampliada">
 
-            <div class="media"><h2>{{ contest.title }}</h2><img src="{{ asset('bundles/dodicifansworldweb/demo/foto01.jpg' ) }}" /></div>
+            <div class="media">
+            	<h2{% if contest.image is null %} class="noimage"{% endif %}>{{ contest.title }}</h2>
+            	{% if contest.image %}
+            		{% thumbnail contest.image, 'big' with {'class': 'articleimg'} %}
+            	{% endif %}
+            	{% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: contest} %}
+            </div>
             <div class="contenido">
                 {{ contest.content|raw() }}
                     <div class="options"><a class="btn_action2 contestParticipate" contestId="{{ contest.id }}" contestType="{{ contest.type }}" href="#1">Participar</a></div>
