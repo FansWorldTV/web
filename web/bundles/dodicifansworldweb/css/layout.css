@@ -627,3 +627,5 @@ form.login input { margin-bottom: 10px; }
 .likecount { float: left; margin-left: 3px; border: 1px solid #ccc; padding: 5px 4px 6px; height: 11px; border-radius: 3px;}
 .loading { background: url(../images/ajax-loader-small.gif) center center no-repeat !important; text-indent: -9999px !important; cursor: default !important;}
 .disabled { opacity: 0.5; cursor: default !important;}
+
+.wrap .navy ul li.alerts_user ul .loading { background: url(../images/ajax-loader-small.gif) center center no-repeat !important; }
