@@ -75,6 +75,24 @@ class AppState
     	else return false;
     }
     
+	public function canShare($entity) 
+    {
+    	if (!($this->user instanceof User)) return false;
+    	$user = $this->user;
+    	
+    	if (method_exists($entity, 'getPrivacy')) {
+    		if ($entity->getPrivacy() == \Dodici\Fansworld\WebBundle\Entity\Privacy::FRIENDS_ONLY) {
+    			if (method_exists($entity, 'getAuthor')) {
+	    			if ($user == $entity->getAuthor()) return false;
+    				$frep = $this->em->getRepository('DodiciFansworldWebBundle:Friendship');
+	    			if (!$frep->UsersAreFriends($user, $entity->getAuthor())) return false;
+    			}
+    		}
+    	}
+    	
+    	return true;
+    }
+    
     public function getType($entity)
     {
     	$exp = explode('\\', get_class($entity));

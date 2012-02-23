@@ -3,11 +3,6 @@ $(document).ready(function(){
     ajax.init();
     searchFront.init();
     friendsSearch.init();
-    
-    $('.sharebutton:not(.loading)').live('click',function(e){
-    	e.preventDefault();
-    	alert('hi');
-    });
 });
 
 var site = {
@@ -18,6 +13,7 @@ var site = {
         site.listenPendingRequests();
         site.acceptFriendRequest();
         site.likeButtons();
+        site.shareButtons();
         site.timerPendingFriends = setTimeout('site.listenPendingRequests()', 10000);
     },
     listenPendingRequests: function(){
@@ -95,6 +91,27 @@ var site = {
         		el.removeClass('loading');
                 el.text(response.buttontext);
                 el.siblings('.likecount:first').text(response.likecount);
+                success(response.message);
+        	},
+        	function(responsetext){
+        		el.removeClass('loading');
+        		error(responsetext);
+        	});
+        	
+        });
+    },
+    shareButtons: function(){
+    	$('.sharebutton:not(.loading,.disabled)').live('click',function(e){
+        	e.preventDefault();
+        	var el = $(this);
+        	var type = el.attr('data-type');
+        	var id = el.attr('data-id');
+        	el.addClass('loading');
+        	
+        	ajax.shareAction(type, id,
+        	function(response){
+        		el.removeClass('loading');
+        		el.addClass('disabled');
                 success(response.message);
         	},
         	function(responsetext){

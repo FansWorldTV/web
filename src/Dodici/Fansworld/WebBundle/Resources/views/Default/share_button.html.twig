@@ -1,0 +1,6 @@
+{% if appstate.canshare(entity) %}
+{% set type = appstate.type(entity) %}
+<a class="sharebutton{% if extraclasses is defined %} {{ extraclasses|join(' ') }}{% endif %}" data-id="{{ entity.id }}" data-type="{{ type }}">
+	{{ 'share'|trans }}
+</a>
+{% endif %}

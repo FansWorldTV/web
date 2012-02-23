@@ -188,6 +188,26 @@ var ajax = {
                }
 	       }
         });
+    },
+    
+    shareAction: function(type, id, callback, errorcallback){
+        $.ajax({
+           url: 'http://' + location.host + Routing.generate( appLocale + '_share_ajax'),
+           data: {
+               'id' : id,
+               'type' : type
+           },
+           success: function(response){
+               if(typeof(callback) !== 'undefined'){
+                   callback(response);
+               }
+           },
+           error:function (xhr, ajaxOptions, thrownError){
+        	   if(typeof(errorcallback) !== 'undefined'){
+                   errorcallback(xhr.responseText);
+               }
+	       }
+        });
     }
   
 };
