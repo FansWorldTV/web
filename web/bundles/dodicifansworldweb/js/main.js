@@ -51,6 +51,16 @@ var site = {
            });
         });
     },
+    readedNotification: function(){
+        $("li.notifications_user ul li").hover(function(){
+            var notificationId = null;
+            ajax.deleteNotification(notificationId, function(response){
+                if(response){
+                    $(this).remove();
+                }
+            });
+        });
+    },
     getPendingFriends: function(){
         $("li.alerts_user a").click(function(){
            ajax.pendingFriendsAction(1, 5, function(response){

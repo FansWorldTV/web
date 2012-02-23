@@ -191,6 +191,9 @@ class UserController extends SiteController
         return $this->jsonResponse($response);
     }
 
+    /**
+     *  @Route("/ajax/read-notification/", name="user_ajaxdeletenotification")
+     */
     public function ajaxDeleteNotification()
     {
         $request = $this->getRequest();

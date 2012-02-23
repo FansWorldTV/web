@@ -206,43 +206,57 @@ var ajax = {
         });
     },
     
+    deleteNotification: function(id, callback){
+        $.ajax({
+            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxdeletenotification'),
+            data: {
+                'id' : id
+            },
+            success: function(response){
+                if(typeof(callback) !== 'undefined'){
+                    callback(response);
+                }
+            }
+        });
+    },
+    
     likeToggleAction: function(type, id, callback, errorcallback){
         $.ajax({
-           url: 'http://' + location.host + Routing.generate( appLocale + '_like_ajaxtoggle'),
-           data: {
-               'id' : id,
-               'type' : type
-           },
-           success: function(response){
-               if(typeof(callback) !== 'undefined'){
-                   callback(response);
-               }
-           },
-           error:function (xhr, ajaxOptions, thrownError){
-        	   if(typeof(errorcallback) !== 'undefined'){
-                   errorcallback(xhr.responseText);
-               }
-	       }
+            url: 'http://' + location.host + Routing.generate( appLocale + '_like_ajaxtoggle'),
+            data: {
+                'id' : id,
+                'type' : type
+            },
+            success: function(response){
+                if(typeof(callback) !== 'undefined'){
+                    callback(response);
+                }
+            },
+            error:function (xhr, ajaxOptions, thrownError){
+                if(typeof(errorcallback) !== 'undefined'){
+                    errorcallback(xhr.responseText);
+                }
+            }
         });
     },
     
     shareAction: function(type, id, callback, errorcallback){
         $.ajax({
-           url: 'http://' + location.host + Routing.generate( appLocale + '_share_ajax'),
-           data: {
-               'id' : id,
-               'type' : type
-           },
-           success: function(response){
-               if(typeof(callback) !== 'undefined'){
-                   callback(response);
-               }
-           },
-           error:function (xhr, ajaxOptions, thrownError){
-        	   if(typeof(errorcallback) !== 'undefined'){
-                   errorcallback(xhr.responseText);
-               }
-	       }
+            url: 'http://' + location.host + Routing.generate( appLocale + '_share_ajax'),
+            data: {
+                'id' : id,
+                'type' : type
+            },
+            success: function(response){
+                if(typeof(callback) !== 'undefined'){
+                    callback(response);
+                }
+            },
+            error:function (xhr, ajaxOptions, thrownError){
+                if(typeof(errorcallback) !== 'undefined'){
+                    errorcallback(xhr.responseText);
+                }
+            }
         });
     }
   
