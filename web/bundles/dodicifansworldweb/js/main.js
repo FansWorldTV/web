@@ -1,8 +1,13 @@
 $(document).ready(function(){
-    site.init();
+	site.init();
     ajax.init();
     searchFront.init();
     friendsSearch.init();
+    
+    $('.sharebutton:not(.loading)').live('click',function(e){
+    	e.preventDefault();
+    	alert('hi');
+    });
 });
 
 var site = {
@@ -12,6 +17,7 @@ var site = {
         site.getPendingFriends();
         site.listenPendingRequests();
         site.acceptFriendRequest();
+        site.likeButtons();
         site.timerPendingFriends = setTimeout('site.listenPendingRequests()', 10000);
     },
     listenPendingRequests: function(){
@@ -74,6 +80,28 @@ var site = {
                    }
                }
            });
+        });
+    },
+    likeButtons: function(){
+    	$('.likebutton:not(.loading)').live('click',function(e){
+        	e.preventDefault();
+        	var el = $(this);
+        	var type = el.attr('data-type');
+        	var id = el.attr('data-id');
+        	el.addClass('loading');
+        	
+        	ajax.likeToggleAction(type, id,
+        	function(response){
+        		el.removeClass('loading');
+                el.text(response.buttontext);
+                el.siblings('.likecount:first').text(response.likecount);
+                success(response.message);
+        	},
+        	function(responsetext){
+        		el.removeClass('loading');
+        		error(responsetext);
+        	});
+        	
         });
     }
 }
@@ -322,3 +350,4 @@ var contest = {
         });
     }
 };
+

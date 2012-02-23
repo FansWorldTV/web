@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Extensions;
 
+use Application\Sonata\UserBundle\Entity\User;
+use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
@@ -9,15 +11,17 @@ use Doctrine\ORM\EntityManager;
 class AppState
 {
 
-    protected $session;
+    protected $security_context;
     protected $request;
     protected $em;
+    protected $user;
 
-    function __construct(Session $session, EntityManager $em)
+    function __construct(SecurityContext $security_context, EntityManager $em)
     {
-        $this->session = $session;
+        $this->security_context = $security_context;
         $this->request = Request::createFromGlobals();
         $this->em = $em;
+        $this->user = $security_context->getToken()->getUser();
     }
 
     public function getMobile()
@@ -36,8 +40,11 @@ class AppState
     	}
     }
     
-    public function canLike(\Application\Sonata\UserBundle\Entity\User $user, $entity) 
+    public function canLike($entity) 
     {
+    	if (!($this->user instanceof User)) return false;
+    	$user = $this->user;
+    	
     	$rep = $this->em->getRepository('DodiciFansworldWebBundle:Liking');
     	$liking = $rep->byUserAndEntity($user, $entity);
     	
@@ -46,7 +53,8 @@ class AppState
     	if (method_exists($entity, 'getPrivacy')) {
     		if ($entity->getPrivacy() == \Dodici\Fansworld\WebBundle\Entity\Privacy::FRIENDS_ONLY) {
     			if (method_exists($entity, 'getAuthor')) {
-	    			$frep = $this->em->getRepository('DodiciFansworldWebBundle:Friendship');
+	    			if ($user == $entity->getAuthor()) return true;
+    				$frep = $this->em->getRepository('DodiciFansworldWebBundle:Friendship');
 	    			if (!$frep->UsersAreFriends($user, $entity->getAuthor())) return false;
     			}
     		}
@@ -55,8 +63,11 @@ class AppState
     	return true;
     }
     
-	public function canDislike(\Application\Sonata\UserBundle\Entity\User $user, $entity) 
+	public function canDislike($entity) 
     {
+    	if (!($this->user instanceof User)) return false;
+    	$user = $this->user;
+    	
     	$rep = $this->em->getRepository('DodiciFansworldWebBundle:Liking');
     	$liking = $rep->byUserAndEntity($user, $entity);
     	

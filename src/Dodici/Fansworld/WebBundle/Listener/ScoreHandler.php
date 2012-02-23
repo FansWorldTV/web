@@ -60,7 +60,7 @@ class ScoreHandler
 			$likedthing = $likedthing ?: $entity->getVideo();
 			$likedthing = $likedthing ?: $entity->getPhoto();
 			
-			if ($likedthing->getAuthor()) {
+			if ($likedthing->getAuthor() && $likedthing->getAuthor() != $entity->getAuthor()) {
 				$this->addScore($likedthing->getAuthor(), self::SCORE_GET_LIKED);
 			}
 		}
@@ -81,9 +81,30 @@ class ScoreHandler
         
     }
     
+	public function postRemove(LifecycleEventArgs $eventArgs)
+    {
+		$entity = $eventArgs->getEntity();
+		$em = $eventArgs->getEntityManager();
+		$this->em = $em;
+		
+    	if ($entity instanceof Liking) {
+    		$likedthing = null;
+    		$likedthing = $likedthing ?: $entity->getComment();
+			$likedthing = $likedthing ?: $entity->getAlbum();
+			$likedthing = $likedthing ?: $entity->getVideo();
+			$likedthing = $likedthing ?: $entity->getPhoto();
+			
+			if ($likedthing->getAuthor() && $likedthing->getAuthor() != $entity->getAuthor()) {
+				$this->addScore($likedthing->getAuthor(), -self::SCORE_GET_LIKED);
+			}
+        }
+        
+    }
+    
     private function addScore(User $user, $score)
     {
     	$user->setScore($user->getScore() + $score);
+    	if ($user->getScore() < 0) $user->setScore(0);
     	
     	$level = $this->em->getRepository('DodiciFansworldWebBundle:Level')->byScore($user->getScore());
         

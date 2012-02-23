@@ -268,6 +268,10 @@ services:
         class: Dodici\Fansworld\WebBundle\Listener\ScoreHandler
         tags:
             - { name: doctrine.event_listener, event: postUpdate }
+    score.listener.remove:
+        class: Dodici\Fansworld\WebBundle\Listener\ScoreHandler
+        tags:
+            - { name: doctrine.event_listener, event: postRemove }
     my.facebook.user:
         class: Dodici\Fansworld\WebBundle\Security\FacebookProvider
         arguments:
@@ -277,7 +281,7 @@ services:
             container: "@service_container"
     appstate:
       class: Dodici\Fansworld\WebBundle\Extensions\AppState
-      arguments: [@session, @doctrine.orm.entity_manager]
+      arguments: [@security.context, @doctrine.orm.entity_manager]
     tagger:
       class: Dodici\Fansworld\WebBundle\Extensions\Tagger
       arguments: [@doctrine.orm.entity_manager]

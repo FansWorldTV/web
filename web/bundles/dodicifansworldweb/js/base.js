@@ -168,6 +168,26 @@ var ajax = {
                }
            }
         });
+    },
+    
+    likeToggleAction: function(type, id, callback, errorcallback){
+        $.ajax({
+           url: 'http://' + location.host + Routing.generate( appLocale + '_like_ajaxtoggle'),
+           data: {
+               'id' : id,
+               'type' : type
+           },
+           success: function(response){
+               if(typeof(callback) !== 'undefined'){
+                   callback(response);
+               }
+           },
+           error:function (xhr, ajaxOptions, thrownError){
+        	   if(typeof(errorcallback) !== 'undefined'){
+                   errorcallback(xhr.responseText);
+               }
+	       }
+        });
     }
   
 };
@@ -196,4 +216,23 @@ function onFbInit() {
             }
         });
     }
+}
+
+
+/* Wrapper functions for Toast messages */
+function notice (message) {
+    $().toastmessage('showNoticeToast', message);
+}
+function warning (message) {
+    $().toastmessage('showWarningToast', message);
+}
+function error (message) {
+    $().toastmessage('showToast', {
+        text     : message,
+        sticky   : true,
+        type     : 'error'
+    });
+}
+function success (message) {
+    $().toastmessage('showSuccessToast', message);
 }

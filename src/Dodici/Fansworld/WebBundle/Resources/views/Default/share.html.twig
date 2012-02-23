@@ -6,7 +6,7 @@
 	<g:plusone annotation="none"></g:plusone>
 	
 	<div class="internal_buttons">
-		<a class="likebutton" data-id="{{ entity.id }}" data-type="{{ type }}">{{ 'like'|trans }}</a>
+		{% include 'DodiciFansworldWebBundle:Default:like.html.twig' with {entity: entity} %}
 		<a class="sharebutton" data-id="{{ entity.id }}" data-type="{{ type }}">{{ 'share'|trans }}</a>
 	</div>
 </div>
