@@ -43,5 +43,12 @@ class SiteController extends Controller
         
         return false;
     }
+    
+    public function jsonResponse($response)
+    {
+        $response = new Response(json_encode($response));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
 
 }

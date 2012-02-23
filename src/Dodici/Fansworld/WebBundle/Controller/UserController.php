@@ -7,11 +7,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Sonata\UserBundle\Entity\User;
+use Application\Sonata\UserBundle\Entity\Notification;
 
 class UserController extends SiteController
 {
 
     const LIMIT_SEARCH = 20;
+    const LIMIT_NOTIFICATIONS = 5;
 
     /**
      * @Route("/search/", name = "user_search")
@@ -161,6 +163,61 @@ class UserController extends SiteController
     }
 
     /**
+     *  @Route("/ajax/notification-number/", name="user_ajaxnotificationnumber") 
+     */
+    public function ajaxNotificationNumber()
+    {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $notiRepo = $this->getRepository('Notification');
+        $number = $notiRepo->countLatest($user);
+
+        return $this->jsonResponse(array('number' => $number));
+    }
+
+    /**
+     *  @Route("/ajax/get-notifications/", name="user_ajaxnotifications")
+     */
+    public function ajaxNotifications()
+    {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $notiRepo = $this->getRepository('Notification');
+        $notifications = $notiRepo->latest($user, false, self::LIMIT_NOTIFICATIONS);
+
+        $response = array();
+        foreach ($notifications as $notification) {
+            $response[] = $this->renderView('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $notification));
+        }
+
+        return $this->jsonResponse($response);
+    }
+
+    public function ajaxDeleteNotification()
+    {
+        $request = $this->getRequest();
+        $notificationId = $request->get('id', false);
+
+        $response = false;
+
+        if ($notificationId) {
+            try {
+                $notification = $this->getRepository('Notification')->find($notificationId);
+
+                $notification->setReaded(true);
+
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($notification);
+                $em->flush();
+                
+                $response = true;
+            } catch (Exception $exc) {
+                $response = $exc->getMessage();
+            }
+        }
+
+        return $this->jsonResponse($response);
+    }
+
+    /**
      *  @Route("/ajax/number-friend-requests/", name="user_ajaxnumberofpendingrequests") 
      */
     public function ajaxNumberOfPendingRequests()
@@ -269,15 +326,45 @@ class UserController extends SiteController
     }
 
     /**
+     * @Route("/ajax/deny-request/", name = "user_ajaxdenyrequest")
+     */
+    public function ajaxDenyRequestAction()
+    {
+        $request = $this->getRequest();
+        $friendshipId = $request->get('id', false);
+
+        $error = true;
+
+        if ($friendshipId) {
+            try {
+                $friendshipRepo = $this->getRepository('Friendship');
+                $friendship = $friendshipRepo->find($friendshipId);
+
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->remove($friendship);
+                $em->flush();
+
+                $error = false;
+            } catch (Exception $exc) {
+                $error = $exc->getMessage();
+            }
+        }
+
+        $response = new Response(json_encode(array('error' => $error)));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+    /**
      * @Route("/user/requests", name="user_friendrequests")
      * @Template
      */
     public function friendRequestsAction()
     {
         $user = $this->get('security.context')->getToken()->getUser();
-        
+
         $friendsRequest = false;
-        if( $user instanceof User){
+        if ($user instanceof User) {
             $pending = $this->getRepository('Friendship')->Pending($user);
             foreach ($pending as $element) {
                 $media = $element->getAuthor()->getImage();
@@ -295,7 +382,7 @@ class UserController extends SiteController
                 );
             }
         }
-        
+
         return array('requests' => $friendsRequest);
     }
 

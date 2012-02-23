@@ -7,6 +7,12 @@
         <li><a href="photos.php">Fotos</a></li>
         <li><a href="{{ path('contest_list') }}">Concursos</a></li>
         <li><a href="philanthropy.php">Filantropia</a></li>
+        <li class="notifications_user">
+            <a href="#1" class="hidden"><span></span></a>
+            <ul>
+                <li class="more hidden"><a href="#1">15 notificaciones mas</a></li>
+            </ul>
+        </li>
         <li class="alerts_user">
             <a href="#1" class="hidden"><span></span></a>
             <ul>
@@ -19,10 +25,10 @@
             <li class="clearfix">
                 <img class="avatar" src="{{ asset('bundles/dodicifansworldweb/demo/user8.jpg' )}}" width="40" height="40" />
                 <span class="info">
-                    <a href="user_profile.php">Rodrigo Ramirez</a> 
+                    <a class="name" href="user_profile.php">Rodrigo Ramirez</a> 
                     <span>
                         Te quiere agregar como amigo<br />
-                        <a href="#1">rechazar</a>
+                        <a href="#" class="deny">rechazar</a>
                     </span>
                 </span>
                 <div class="button">

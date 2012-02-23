@@ -150,7 +150,7 @@ var ajax = {
             url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxnumberofpendingrequests' ),
             success: function(response){
                 if(typeof(callback) !== 'undefined'){
-                   callback(response);
+                    callback(response);
                 }
             }
         });
@@ -158,15 +158,51 @@ var ajax = {
     
     acceptRequestAction: function(friendshipId, callback){
         $.ajax({
-           url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxacceptrequest'),
-           data: {
-               'id' : friendshipId
-           },
-           success: function(response){
-               if(typeof(callback) !== 'undefined'){
-                   callback(response);
-               }
-           }
+            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxacceptrequest'),
+            data: {
+                'id' : friendshipId
+            },
+            success: function(response){
+                if(typeof(callback) !== 'undefined'){
+                    callback(response);
+                }
+            }
+        });
+    },
+    
+    denyRequestAction: function(id, callback){
+        $.ajax({
+            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxdenyrequest'),
+            data: {
+                'id' : id
+            },
+            success: function(response){
+                if(typeof(callback) !== 'undefined'){
+                    callback(response);
+                }
+            }
+        });
+    },
+    
+    notificationNumberAction: function(callback){
+        $.ajax({
+            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxnotificationnumber' ),
+            success: function(response){
+                if(typeof(callback) !== 'undefined'){
+                    callback(response);
+                }
+            }
+        });
+    },
+    
+    getNotifications: function(callback){
+        $.ajax({
+            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxnotifications' ),
+            success: function(response){
+                if(typeof(callback) !== 'undefined'){
+                    callback(response);
+                }
+            }
         });
     },
     

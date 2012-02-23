@@ -7,14 +7,19 @@ $(document).ready(function(){
 
 var site = {
     timerPendingFriends : null,
+    timerNotifications: null,
     
     init: function(){
-        site.getPendingFriends();
         site.listenPendingRequests();
-        site.acceptFriendRequest();
+        site.getPendingFriends();
+        site.getNotifications();
+        
+        
         site.likeButtons();
         site.shareButtons();
         site.timerPendingFriends = setTimeout('site.listenPendingRequests()', 10000);
+        site.timerNotifications = setTimeout('site.listenNotifications()', 10000);
+        
     },
     listenPendingRequests: function(){
         ajax.numberPendingRequests(function(response){
@@ -23,6 +28,27 @@ var site = {
                     $("li.alerts_user a span").html(response.number).parent().removeClass('hidden');
                 }
             }
+        });
+    },
+    listenNotifications: function(){
+        ajax.notificationNumberAction(function(response){
+            if(response){
+                if(response.number > 0){
+                    $("li.notifications_user a span").html(response.number).parent().removeClass('hidden');
+                }
+            }
+        });
+    },
+    getNotifications: function(){
+        $("li.notifications_user a").click(function(){
+           ajax.getNotifications(function(response){
+              if(response){
+                  for(var i in response){
+                      var element = response[i];
+                      $("li.notifications_user ul").append(element);
+                  }
+              } 
+           });
         });
     },
     getPendingFriends: function(){
@@ -36,12 +62,14 @@ var site = {
                       var element = response.friendships[i];
                       var template = $("#templatePendingFriends ul li").clone();
                       template.find("img.avatar").attr('src', element.user.image);
-                      template.find("span.info a").attr('href', element.user.url).html(element.user.name);
+                      template.find("span.info a.name").attr('href', element.user.url).html(element.user.name);
+                      template.find("a.deny").attr('id', element.friendship.id);
                       template.find("div.button a.accept").attr('id', element.friendship.id);
                       
                       $("li.alerts_user ul").append(template);
                       
                       site.acceptFriendRequest();
+                      site.denyFriendRequest();
                   }
                   
                   if(numberLeftRequests>0){
@@ -77,6 +105,29 @@ var site = {
                }
            });
         });
+    },
+    denyFriendRequest: function(){
+        $("ul.friends li a span strong.deny").click(function(){
+            var friendshipId = $(this).parent().attr('id');
+            var liElement = $(this).parents('li');
+            
+            ajax.denyRequestAction(friendshipId, function(response){
+               if(response.error == false){
+                   liElement.remove();
+               }
+           });
+        });
+        $("a.deny").click(function(){
+            var friendshipId = $(this).attr('id');
+            var liElement = $(this).parents('li');
+            
+            ajax.denyRequestAction(friendshipId, function(response){
+               if(response.error == false){
+                   liElement.remove();
+               }
+           });
+           return false;
+        }); 
     },
     likeButtons: function(){
     	$('.likebutton:not(.loading)').live('click',function(e){
