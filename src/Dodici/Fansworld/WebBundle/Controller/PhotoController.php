@@ -26,7 +26,7 @@ class PhotoController extends SiteController
 {
     
     /**
-     * @Route("/show/{id}/{slug}", name= "photo_show", requirements = {"id" = "\d+"})
+     * @Route("/{id}/{slug}", name= "photo_show", requirements = {"id" = "\d+"})
      * @Secure(roles="ROLE_USER")
      */
     public function showAction($id)

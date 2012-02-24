@@ -20,7 +20,7 @@ class AlbumController extends SiteController
 {
     
     /**
-     * @Route("/show/{id}/{slug}", name= "album_show", requirements = {"id" = "\d+"})
+     * @Route("/{id}/{slug}", name= "album_show", requirements = {"id" = "\d+"})
      */
     public function showAction($id)
     {

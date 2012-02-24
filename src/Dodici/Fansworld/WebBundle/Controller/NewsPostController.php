@@ -20,7 +20,7 @@ class NewsPostController extends SiteController
 {
     
     /**
-     * @Route("/show/{id}/{slug}", name= "newspost_show", requirements = {"id" = "\d+"})
+     * @Route("/{id}/{slug}", name= "newspost_show", requirements = {"id" = "\d+"})
      */
     public function showAction($id)
     {

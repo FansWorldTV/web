@@ -20,7 +20,7 @@ class VideoController extends SiteController
 {
     
     /**
-     * @Route("/show/{id}/{slug}", name= "video_show", requirements = {"id" = "\d+"})
+     * @Route("/{id}/{slug}", name= "video_show", requirements = {"id" = "\d+"})
      */
     public function showAction($id)
     {
