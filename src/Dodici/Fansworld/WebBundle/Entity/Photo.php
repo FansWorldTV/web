@@ -123,6 +123,8 @@ class Photo
     public function __construct()
     {
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->setActive(true);
+        $this->setPrivacy(\Dodici\Fansworld\WebBundle\Entity\Privacy::FRIENDS_ONLY);
     }
     
 	public function __toString()
