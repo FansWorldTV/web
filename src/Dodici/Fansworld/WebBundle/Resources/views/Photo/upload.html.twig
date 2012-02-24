@@ -1,4 +1,8 @@
-<form action="{{ path('photo_upload') }}" method="post" enctype="multipart/form-data">
-	{{ form_widget(form) }}
-	<input type="submit" name="submit" value="ENVIAR" />
-</form>
+{% if photo %}
+	{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}
+{% else %}
+	<form action="{{ path('photo_upload') }}" method="post" enctype="multipart/form-data">
+		{{ form_widget(form) }}
+		<input type="submit" name="submit" value="ENVIAR" />
+	</form>
+{% endif %}

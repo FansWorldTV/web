@@ -27,10 +27,13 @@ class PhotoController extends SiteController
     
     /**
      * @Route("/show/{id}/{slug}", name= "photo_show", requirements = {"id" = "\d+"})
+     * @Secure(roles="ROLE_USER")
      */
     public function showAction($id)
     {
         // TODO: photo show action, show photo + comments, allow commenting + answering root comments
+        $photo = $this->getRepository('Photo')->findOneBy(array('id' => $id, 'active' => true));
+    	
     	return new Response('ok');
     }
 
@@ -45,7 +48,7 @@ class PhotoController extends SiteController
     	$user = $this->get('security.context')->getToken()->getUser();
     	$em = $this->getDoctrine()->getEntityManager();
 
-        $sent = false;
+        $photo = null;
 
         $defaultData = array();
 
@@ -63,7 +66,7 @@ class PhotoController extends SiteController
 
 
         if ($request->getMethod() == 'POST') {
-            //try {
+            try {
                 $form->bindRequest($request);
                 $data = $form->getData();
                 
@@ -86,11 +89,11 @@ class PhotoController extends SiteController
 				    $em->flush();
 				    
                 }
-           // } catch (\Exception $e) {
-            //    $form->addError(new FormError('Error subiendo foto'));
-           // }
+            } catch (\Exception $e) {
+                $form->addError(new FormError('Error subiendo foto'));
+            }
         }
 
-        return array('sent' => $sent, 'form' => $form->createView());
+        return array('photo' => $photo, 'form' => $form->createView());
     }
 }
