@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	site.init();
+    site.init();
     ajax.init();
     searchFront.init();
     friendsSearch.init();
@@ -41,54 +41,62 @@ var site = {
     },
     getNotifications: function(){
         $("li.notifications_user a").click(function(){
-           ajax.getNotifications(function(response){
-              if(response){
-                  for(var i in response){
-                      var element = response[i];
-                      $("li.notifications_user ul").append(element);
-                  }
-              } 
-           });
+            $("li.notifications_user ul").append("<li class='clearfix loading'></li>");
+            ajax.getNotifications(function(response){
+                if(response){
+                    $("li.notifications_user ul li").remove();
+                    
+                    for(var i in response){
+                        var element = response[i];
+                        $("li.notifications_user ul").append(element);
+                    }
+                } 
+            });
         });
     },
     readedNotification: function(){
         $("li.notifications_user ul li").hover(function(){
             var notificationId = null;
             ajax.deleteNotification(notificationId, function(response){
-                if(response){
+                if(response === true){
                     $(this).remove();
+                }else{
+                    console.log(response);
                 }
             });
         });
     },
     getPendingFriends: function(){
         $("li.alerts_user a").click(function(){
-           ajax.pendingFriendsAction(1, 5, function(response){
-              if(response){
-                  var numberLeftRequests = response.total - 5;
-                  $("li.alerts_user ul li.clearfix").remove();
+            $("li.alerts_user ul").append("<li class='clearfix loading'></li>");
+            ajax.pendingFriendsAction(1, 5, function(response){
+                if(response){
+                    var numberLeftRequests = response.total - 5;
+                    $("li.alerts_user ul li.clearfix").remove();
                   
-                  for(var i in response.friendships){
-                      var element = response.friendships[i];
-                      var template = $("#templatePendingFriends ul li").clone();
-                      template.find("img.avatar").attr('src', element.user.image);
-                      template.find("span.info a.name").attr('href', element.user.url).html(element.user.name);
-                      template.find("a.deny").attr('id', element.friendship.id);
-                      template.find("div.button a.accept").attr('id', element.friendship.id);
+                    for(var i in response.friendships){
+                        var element = response.friendships[i];
+                        var template = $("#templatePendingFriends ul li").clone();
+                        if(element.user.image){
+                            template.find("img.avatar").attr('src', element.user.image);
+                        }
+                        template.find("span.info a.name").attr('href', element.user.url).html(element.user.name);
+                        template.find("a.deny").attr('id', element.friendship.id);
+                        template.find("div.button a.accept").attr('id', element.friendship.id);
                       
-                      $("li.alerts_user ul").append(template);
+                        $("li.alerts_user ul").append(template);
                       
-                      site.acceptFriendRequest();
-                      site.denyFriendRequest();
-                  }
+                        site.acceptFriendRequest();
+                        site.denyFriendRequest();
+                    }
                   
-                  if(numberLeftRequests>0){
-                      $("li.alerts_user ul.more a").html(numberLeftRequests + ' notificaciones mas').parent().removeClass('hidden');
-                  }else{
-                      $("li.alerts_user ul.more").addClass('hidden');
-                  }
-              } 
-           });
+                    if(numberLeftRequests>0){
+                        $("li.alerts_user ul.more a").html(numberLeftRequests + ' notificaciones mas').parent().removeClass('hidden');
+                    }else{
+                        $("li.alerts_user ul.more").addClass('hidden');
+                    }
+                } 
+            });
         });
     },
     acceptFriendRequest: function(){
@@ -96,24 +104,27 @@ var site = {
             var friendshipId = $(this).parent().attr('id');
             var liElement = $(this).parents('li');
             ajax.acceptRequestAction(friendshipId, function(response){
-               if(response.error == false){
-                   liElement.remove();
-               }
-           });
+                if(response.error == false){
+                    liElement.remove();
+                }
+            });
         });
         $("li.alerts_user ul li div.button a.accept").click(function(){
-           var liElement = $(this).parent().parent();
-           var friendshipId = $(this).attr('id');
-           ajax.acceptRequestAction(friendshipId, function(response){
-               if(response.error == false){
-                   liElement.remove();
-                   var cant = $("li.alerts_user a span").html();
-                   cant--;
-                   if(cant<=0){
-                       $("li.alerts_user a span").parent().addClass('hidden');
-                   }
-               }
-           });
+            var liElement = $(this).parent().parent();
+            var friendshipId = $(this).attr('id');
+            ajax.acceptRequestAction(friendshipId, function(response){
+                if(response.error == false){
+                    liElement.remove();
+                    var cant = $("li.alerts_user a span").html();
+                    cant--;
+                    if(cant<=0){
+                        $("li.alerts_user a span").parent().addClass('hidden');
+                    }
+                    success('El usuario ha sido agregado como amigo');
+                }else{
+                    error('Se ha producido un error');
+                }
+            });
         });
     },
     denyFriendRequest: function(){
@@ -122,63 +133,66 @@ var site = {
             var liElement = $(this).parents('li');
             
             ajax.denyRequestAction(friendshipId, function(response){
-               if(response.error == false){
-                   liElement.remove();
-               }
-           });
+                if(response.error == false){
+                    liElement.remove();
+                }
+            });
         });
         $("a.deny").click(function(){
             var friendshipId = $(this).attr('id');
             var liElement = $(this).parents('li');
             
             ajax.denyRequestAction(friendshipId, function(response){
-               if(response.error == false){
-                   liElement.remove();
-               }
-           });
-           return false;
+                if(response.error == false){
+                    liElement.remove();
+                    success('Se ha rechazado la amistad');
+                }else{
+                    error('Se ha producido un error');
+                }
+            });
+            return false;
         }); 
     },
     likeButtons: function(){
-    	$('.likebutton:not(.loading)').live('click',function(e){
-        	e.preventDefault();
-        	var el = $(this);
-        	var type = el.attr('data-type');
-        	var id = el.attr('data-id');
-        	el.addClass('loading');
+        $('.likebutton:not(.loading)').live('click',function(e){
+            e.preventDefault();
+            var el = $(this);
+            var type = el.attr('data-type');
+            var id = el.attr('data-id');
+            el.addClass('loading');
         	
-        	ajax.likeToggleAction(type, id,
-        	function(response){
-        		el.removeClass('loading');
-                el.text(response.buttontext);
-                el.siblings('.likecount:first').text(response.likecount);
-                success(response.message);
-        	},
-        	function(responsetext){
-        		el.removeClass('loading');
-        		error(responsetext);
-        	});
+            ajax.likeToggleAction(type, id,
+                function(response){
+                    el.removeClass('loading');
+                    el.text(response.buttontext);
+                    el.siblings('.likecount:first').text(response.likecount);
+                    success(response.message);
+                },
+                function(responsetext){
+                    el.removeClass('loading');
+                    error(responsetext);
+                });
         	
         });
     },
     shareButtons: function(){
-    	$('.sharebutton:not(.loading,.disabled)').live('click',function(e){
-        	e.preventDefault();
-        	var el = $(this);
-        	var type = el.attr('data-type');
-        	var id = el.attr('data-id');
-        	el.addClass('loading');
+        $('.sharebutton:not(.loading,.disabled)').live('click',function(e){
+            e.preventDefault();
+            var el = $(this);
+            var type = el.attr('data-type');
+            var id = el.attr('data-id');
+            el.addClass('loading');
         	
-        	ajax.shareAction(type, id,
-        	function(response){
-        		el.removeClass('loading');
-        		el.addClass('disabled');
-                success(response.message);
-        	},
-        	function(responsetext){
-        		el.removeClass('loading');
-        		error(responsetext);
-        	});
+            ajax.shareAction(type, id,
+                function(response){
+                    el.removeClass('loading');
+                    el.addClass('disabled');
+                    success(response.message);
+                },
+                function(responsetext){
+                    el.removeClass('loading');
+                    error(responsetext);
+                });
         	
         });
     }
