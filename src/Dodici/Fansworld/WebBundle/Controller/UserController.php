@@ -154,7 +154,6 @@ class UserController extends SiteController
     }
 
     /**
-     * @Route("/register/", name="user_register")
      * @Template
      */
     public function registerAction()

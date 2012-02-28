@@ -1,0 +1,13 @@
+fos_user_profile_form_user_firstname: "Nombre:"
+fos_user_profile_form_user_lastname: "Apellido:"
+fos_user_profile_form_user_address: "Dirección:"
+fos_user_profile_form_user_phone: "Teléfono:"
+fos_user_profile_form_user_mobile: "Móvil:"
+fos_user_registration_form_firstname: "Nombre:"
+fos_user_registration_form_lastname: "Apellido:"
+fos_user_registration_form_address: "Dirección:"
+fos_user_registration_form_phone: "Teléfono:"
+fos_user_registration_form_mobile: "Móvil:"
+'Bad credentials': 'Usuario y/o contraseña incorrectos'
+'The presented password is invalid.': 'Contraseña incorrecta'
+'The presented password cannot be empty.': 'Debe ingresar una contraseña'

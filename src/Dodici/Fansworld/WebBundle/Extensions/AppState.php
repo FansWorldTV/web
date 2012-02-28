@@ -21,7 +21,7 @@ class AppState
         $this->security_context = $security_context;
         $this->request = Request::createFromGlobals();
         $this->em = $em;
-        $this->user = $security_context->getToken()->getUser();
+        $this->user = $security_context->getToken() ? $security_context->getToken()->getUser() : null;
     }
 
     public function getMobile()

@@ -65,6 +65,14 @@ fos_user:
     user_class: Application\Sonata\UserBundle\Entity\User
     group:
         group_class: Application\Sonata\UserBundle\Entity\Group
+    registration:
+        form:
+            type: app_user_registration
+        confirmation:
+            enabled:    false
+    profile:
+        form:
+            type: app_user_profile
     
 fos_js_routing:
     routes_to_expose: [ ^((?!_admin_).)*$ ]
@@ -320,3 +328,13 @@ services:
       class: Twig_Extensions_Extension_Text
       tags:
           - { name: twig.extension }
+    app_user.registration.form.type:
+        class: Application\Sonata\UserBundle\Form\Type\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: app_user_registration }
+    app_user.profile.form.type:
+        class: Application\Sonata\UserBundle\Form\Type\ProfileFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: app_user_profile }
