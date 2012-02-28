@@ -173,6 +173,18 @@ class Video implements Translatable
         if (null === $this->likeCount) {
         	$this->setLikeCount(0);
         }
+        
+    	if ($this->getYoutube()) {
+			$youtube = $this->getYoutube();
+			$youtube = str_replace(
+			array('http://','www.youtube.com/watch?v=','youtu.be/','www.youtube.com/v/'), 
+			array('','','',''), 
+			$youtube);
+			if (strpos($youtube, '&') !== false) {
+				$youtube = substr($youtube, 0, strpos($youtube, '&'));
+			}
+			$this->setYoutube($youtube);
+		}
     }
     
 	public function likeUp()
