@@ -130,6 +130,9 @@ class Album
         if (null === $this->likeCount) {
         	$this->setLikeCount(0);
         }
+        if (null === $this->active) {
+        	$this->setActive(true);
+        }
     }
     
     public function likeUp()

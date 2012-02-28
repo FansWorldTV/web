@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dodici\Fansworld\WebBundle\Controller\SiteController;
 use Dodici\Fansworld\WebBundle\Entity\Photo;
+use Dodici\Fansworld\WebBundle\Entity\Privacy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -47,6 +48,11 @@ class PhotoController extends SiteController
     	$request = $this->getRequest();
     	$user = $this->get('security.context')->getToken()->getUser();
     	$em = $this->getDoctrine()->getEntityManager();
+    	$privacies = Privacy::getOptions();
+    	
+    	$albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true));
+    	$albumchoices = array();
+    	foreach ($albums as $ab) $albumchoices[$ab->getId()] = $ab->getTitle();
 
         $photo = null;
 
@@ -54,14 +60,18 @@ class PhotoController extends SiteController
 
         $collectionConstraint = new Collection(array(
                     'title' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
-        			'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250)),
+        			'album' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($albumchoices))),
+        			'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
+        			'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
                     'file' => new \Symfony\Component\Validator\Constraints\File()
                 ));
 
         $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
                 ->add('title', 'text', array('required' => true, 'label' => 'Título'))
+                ->add('album', 'choice', array('required' => false, 'choices' => $albumchoices, 'label' => 'Album'))
                 ->add('content', 'textarea', array('required' => false, 'label' => 'Descripción'))
                 ->add('file', 'file', array('required' => true, 'label' => 'Archivo'))
+                ->add('privacy', 'choice', array('required' => true, 'choices' => $privacies, 'label' => 'Privacidad'))
                 ->getForm();
 
 
@@ -71,7 +81,13 @@ class PhotoController extends SiteController
                 $data = $form->getData();
                 
                 if ($form->isValid()) {
-                    $mediaManager = $this->get("sonata.media.manager.media");
+                    $album = null;
+                	if ($data['album']) {
+                		$album = $this->getRepository('Album')->find($data['album']);
+                		if (!$album || ($album && $album->getAuthor() != $user)) throw new \Exception('Invalid Album');
+                	}
+                	
+                	$mediaManager = $this->get("sonata.media.manager.media");
 					
 					$media = new Media();
 				    $media->setBinaryContent($data['file']);
@@ -82,9 +98,11 @@ class PhotoController extends SiteController
 				    
 				    $photo = new Photo();
 				    $photo->setAuthor($user);
+				    $photo->setAlbum($album);
 				    $photo->setTitle($data['title']);
 				    $photo->setContent($data['content']);
 				    $photo->setImage($media);
+				    $photo->setPrivacy($data['privacy']);
 				    $em->persist($photo);
 				    $em->flush();
 				    
