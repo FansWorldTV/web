@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
+use Symfony\Component\HttpKernel\Exception\HttpException;
+
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,11 +23,32 @@ class VideoController extends SiteController
     
     /**
      * @Route("/{id}/{slug}", name= "video_show", requirements = {"id" = "\d+"})
+     * @Template
      */
     public function showAction($id)
     {
         // TODO: video show action, show video + comments, allow commenting + answering root comments
-    	return new Response('ok');
+        
+    	$video = $this->getRepository('Video')->find($id);
+    	if (!$video) throw new HttpException(404, 'Video not found');
+    	
+    	return array('video' => $video);
     }
 
+	/**
+     * video list
+     * 
+     * @Route("/list", name="video_list")
+     * @Template
+     */
+    public function listAction()
+    {
+       // TODO: everything
+	   
+       $videos = $this->getRepository("Video")->findBy(array("active" => true), array("createdAt" => "DESC"));
+       
+       return array(
+            'videos' => $videos
+            );
+    }
 }

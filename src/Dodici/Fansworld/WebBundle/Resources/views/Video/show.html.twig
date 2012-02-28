@@ -1,0 +1,9 @@
+{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ video }}{% endblock %}
+
+{% block content %}
+
+<iframe src="{{ flumotiontwig.videoplayerurl(video) }}" style="width: 468px; height: 340px;"></iframe>
+
+{% endblock %}

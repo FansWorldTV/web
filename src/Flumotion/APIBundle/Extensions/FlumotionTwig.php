@@ -4,8 +4,7 @@ namespace Flumotion\APIBundle\Extensions;
 use Symfony\Component\HttpFoundation\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
-use Dodici\WebBundle\Entity\Podcast;
-use Dodici\WebBundle\Entity\Video;
+use Dodici\Fansworld\WebBundle\Entity\Video;
 
 class FlumotionTwig
 {
@@ -26,11 +25,6 @@ class FlumotionTwig
         $this->api = $api;
         $this->playerbaseurl = $playerbaseurl;
         $this->videoplayerbaseurl = $videoplayerbaseurl;
-    }
-
-    public function getPlayerUrl(Podcast $podcast)
-    {
-    	return sprintf($this->playerbaseurl, $podcast->getStream());
     }
     
 	public function getVideoPlayerUrl(Video $video)
