@@ -1,0 +1,7 @@
+.upload_image .current {
+	float: left;
+	margin-right: 10px;
+}
+.upload_image .form {
+	float: left;
+}

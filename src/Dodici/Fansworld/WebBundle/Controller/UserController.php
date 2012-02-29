@@ -2,6 +2,14 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
+use JMS\SecurityExtraBundle\Annotation\Secure;
+
+use Symfony\Component\Form\FormError;
+
+use Application\Sonata\MediaBundle\Entity\Media;
+
+use Symfony\Component\Validator\Constraints\Collection;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -395,5 +403,56 @@ class UserController extends SiteController
     public function inviteAction()
     {
         return array();
+    }
+    
+	/**
+     * @Route("/user/change_image", name="user_change_image")
+     * @Secure(roles="ROLE_USER")
+     * @Template
+     */
+    public function changeImageAction()
+    {
+    	$request = $this->getRequest();
+    	$user = $this->get('security.context')->getToken()->getUser();
+    	$em = $this->getDoctrine()->getEntityManager();
+    	
+        $media = $user->getImage();
+
+        $defaultData = array();
+
+        $collectionConstraint = new Collection(array(
+                    'file' => new \Symfony\Component\Validator\Constraints\File()
+                ));
+
+        $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
+                ->add('file', 'file', array('required' => true, 'label' => 'Archivo'))
+                ->getForm();
+
+
+        if ($request->getMethod() == 'POST') {
+            try {
+                $form->bindRequest($request);
+                $data = $form->getData();
+                
+                if ($form->isValid()) {
+                    $mediaManager = $this->get("sonata.media.manager.media");
+					
+					$media = new Media();
+				    $media->setBinaryContent($data['file']);
+				    $media->setContext('default');
+				    $media->setProviderName('sonata.media.provider.image');
+				
+				    $mediaManager->save($media);
+				    
+				    $user->setImage($media);
+				    $em->persist($user);
+				    $em->flush();
+                }
+            } catch (\Exception $e) {
+                $form->addError(new FormError('Error subiendo foto'));
+            }
+        }
+
+        return array('media' => $media, 'form' => $form->createView());
     }
 }

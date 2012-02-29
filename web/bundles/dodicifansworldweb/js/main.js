@@ -3,6 +3,8 @@ $(document).ready(function(){
     ajax.init();
     searchFront.init();
     friendsSearch.init();
+    
+    $('.change_image').colorbox({iframe: true, innerWidth: 640, innerHeight: 320});
 });
 
 var site = {

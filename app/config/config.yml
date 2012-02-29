@@ -108,6 +108,7 @@ sonata_media:
                 avatar: { width: 50 , height: 50 , quality: 70}
                 small: { width: 100 , quality: 70}
                 wall: { width: 150 , quality: 75}
+                medium: { width: 250 , quality: 80}
                 big:   { width: 500 , quality: 85}
                 huge:   { width: 1024 , quality: 90}
 

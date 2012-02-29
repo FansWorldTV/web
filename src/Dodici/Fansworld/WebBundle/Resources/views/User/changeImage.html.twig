@@ -1,0 +1,19 @@
+{% extends "DodiciFansworldWebBundle::popup.html.twig" %}
+
+{% block content %}
+<div class="upload_image clearfix">
+	<div class="current">
+		{% if media %}
+			{% thumbnail media, 'medium' %}
+		{% else %}
+			<img src="{{ asset('bundles/dodicifansworldweb/images/user_pic.jpg') }}" alt="" />
+		{% endif %}
+	</div>
+	<div class="form">
+		<form action="{{ path('user_change_image') }}" method="post" enctype="multipart/form-data">
+			{{ form_widget(form) }}
+			<input type="submit" name="submit" value="ENVIAR" />
+		</form>
+	</div>
+</div>
+{% endblock %}
