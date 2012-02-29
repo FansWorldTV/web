@@ -18,13 +18,13 @@
         </h1>
         {% for contest in contests  %}
         <div class="nota clearfix">
-            <h2><a href="{{ path('contest_show', {'id':contest.id, slug: contest.slug}) }}">{{ contest.title }}</a></h2>
+            <h2><a href="{{ path('contest_show', {'id':contest.id, 'slug': contest.slug}) }}">{{ contest.title }}</a></h2>
             {% if contest.image %}
             	<div class="media"><a href="{{ path('contest_show', {'id':contest.id, slug: contest.slug}) }}">{% thumbnail contest.image, 'small' %}</a></div>
             {% endif %}
             <div class="contenido">
                 <div> {{ contest.content|raw }} </div>
-                <div class="options"><a class="btn_action2" href="#" onclick="ajax.contest.participate({{ contest.id }});">Participar</a></div>
+                <div class="options"><a class="btn_action2" href="{{ path('contest_show', {'id':contest.id, 'slug': contest.slug}) }}" >Participar</a></div>
             </div>
         </div>
         {% endfor %}

@@ -86,10 +86,14 @@ class ContestController extends SiteController
                 'saved' => true,
                 'comment' => array(
                     'id' => $newComment->getId(),
-                    'name' => $user,
+                    'name' => (string) $user,
                     'content' => $content,
                     'avatar' => $this->getImageUrl($user->getImage()),
-                    'createdAt' => $newComment->getCreatedAt()
+                    'createdAt' => $newComment->getCreatedAt(),
+                    'like' => $this->renderView('DodiciFansworldWebBundle:Default:like_button.html.twig', array(
+                        'showcount' => false,
+                        'entity' => $newComment
+                    ))
                 )
             );
         } catch (\Exception $exc) {
@@ -133,7 +137,7 @@ class ContestController extends SiteController
             } catch (\Exception $exc) {
                 $response = false;
             }
-        }else{
+        } else {
             $response = false;
         }
 
@@ -157,10 +161,10 @@ class ContestController extends SiteController
 
 
         $filterType = array(
-            'TYPE_PARTICIPATE' => 1,
-            'TYPE_TEXT' => 2,
-            'TYPE_PHOTO' => 3,
-            'TYPE_VIDEO' => 4
+            'TYPE_PARTICIPATE' => Contest::TYPE_PARTICIPATE,
+            'TYPE_TEXT' => Contest::TYPE_TEXT,
+            'TYPE_PHOTO' => Contest::TYPE_PHOTO,
+            'TYPE_VIDEO' => Contest::TYPE_VIDEO
         );
 
         return array('contests' => $contests, 'addMore' => $addMore, 'filterType' => $filterType);
@@ -213,8 +217,10 @@ class ContestController extends SiteController
             $contest = false;
         }
 
+        $user = $this->get('security.context')->getToken()->getUser();
+        $isParticipant = $this->getRepository('ContestParticipant')->findOneBy(array('contest' => $contest->getId(), 'author' => $user->getId()));
 
-        return array('contest' => $contest);
+        return array('contest' => $contest, 'isParticipant' => $isParticipant);
     }
 
 }

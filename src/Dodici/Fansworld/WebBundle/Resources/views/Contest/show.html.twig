@@ -16,7 +16,11 @@
             </div>
             <div class="contenido">
                 {{ contest.content|raw() }}
+                {% if isParticipant %}
+                    <div class="options">Ya estas participando</div>
+                {% else %}
                     <div class="options"><a class="btn_action2 contestParticipate" contestId="{{ contest.id }}" contestType="{{ contest.type }}" href="#1">Participar</a></div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -31,7 +35,7 @@
         <div class="comments clearfix">
         {% for comment in contest.comments %}
                 <div class="comment clearfix">
-                    <div class="avatar"> <a href="#1"> <img src="{{ asset('bundles/dodicifansworldweb/demo/rodri.jpg' ) }}" width="50" height="50" /></a> </div>
+                    <div class="avatar"> <a href="#1"> <img src="{{ asset('bundles/dodicifansworldweb/images/user_pic.jpg' )}}" width="50" height="50" /></a> </div>
                     <div class="user_comment">
                         <span class="action_user" >
                             <a href="{{ path('user_detail', {'id':comment.author.id}) }}">{{ comment.author }}</a>
@@ -39,6 +43,7 @@
                         </span>
                         {{ comment.content|raw() }}
                     </div>
+                    {% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {'showcount':false, 'entity': comment} %}
                 </div>
         {% endfor %}
             </div>
@@ -63,7 +68,7 @@
     <div class="comment clearfix">
         <div class="avatar">
             <a href="#1">
-                <img src="" width="50" height="50" />
+                <img src="{{ asset('bundles/dodicifansworldweb/images/user_pic.jpg' )}}" width="50" height="50" />
             </a>
         </div>
         <div class="user_comment">

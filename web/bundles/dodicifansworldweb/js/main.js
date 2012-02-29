@@ -10,6 +10,9 @@ var site = {
     timerNotifications: null,
     
     init: function(){
+        $(".navy ul li.alerts_user ul").hide();
+        $(".navy ul li.notifications_user ul").hide();
+        
         site.listenPendingRequests();
         site.getPendingFriends();
         site.getNotifications();
@@ -41,10 +44,13 @@ var site = {
     },
     getNotifications: function(){
         $("li.notifications_user a").click(function(){
-            $("li.notifications_user ul").append("<li class='clearfix loading'></li>");
+            $("li.alerts_user ul").hide();
+            $("li.notifications_user ul div.info").remove();
+            $("li.notifications_user ul").toggle().append("<li class='clearfix loading'></li>");
             ajax.getNotifications(function(response){
                 if(response){
-                    $("li.notifications_user ul li").remove();
+                    $("li.notifications_user ul li.loading").remove();
+                    $("li.notifications_user ul div.info").remove();
                     
                     for(var i in response){
                         var element = response[i];
@@ -68,7 +74,9 @@ var site = {
     },
     getPendingFriends: function(){
         $("li.alerts_user a").click(function(){
-            $("li.alerts_user ul").append("<li class='clearfix loading'></li>");
+            $("li.notifications_user ul").hide();
+            $("li.alerts_user ul li.clearfix").remove();
+            $("li.alerts_user ul").toggle().append("<li class='clearfix loading'></li>");
             ajax.pendingFriendsAction(1, 5, function(response){
                 if(response){
                     var numberLeftRequests = response.total - 5;
@@ -344,6 +352,13 @@ var contest = {
         contest.commentTimeago();
     },
     
+    search: function(filter){
+        $("div.nota").remove();
+        contest.page = 1;
+        contest.searchType = filter;
+        contest.listAddMore();
+    },
+    
     listAddMore: function(){
         ajax.contestsListAction(contest.page, contest.searchType, function(r){
             if(r){
@@ -359,6 +374,8 @@ var contest = {
                     template.find("div.media a").attr("href", contestShowUrl );
                     template.find("div.media a").html('<img src="' + element.image + '" alt="" />');
                     template.find("div.contenido p").html(element.content);
+                    
+                    $("div.cont").append(template);
                 }
                 contest.page++;
             }
@@ -368,9 +385,7 @@ var contest = {
     changeType: function(){
         $('ul.contestType a').click(function(){
             var type = $(this).parent().attr('class');
-            contest.searchType = type;
-            contest.page = 1;
-            contest.listAddMore();
+            contest.search(type);
         });
     },
     
@@ -396,7 +411,8 @@ var contest = {
                     var contestId = $(this).attr('contestId');
                     ajax.contestParticipateAction(contestId, text, photo, video, function(r){
                         if(r){
-                            console.log('participando!');
+                            
+                            $("a.contestParticipate").parent().html('Ya estas participando');
                         }
                     });
                 });
@@ -404,7 +420,7 @@ var contest = {
                 var contestId = $(this).attr('contestId');
                 ajax.contestParticipateAction(contestId, text, photo, video, function(r){
                     if(r){
-                        console.log('participando!');
+                        $("a.contestParticipate").parent().html('Ya estas participando');
                     }
                 });
             }
@@ -414,21 +430,28 @@ var contest = {
     },
     
     addComment: function(){
-        var content = $("div.add_comment form textarea").val();
-        var contestId = $("div.add_comment form input.contestId").val();
-        
         $("div.add_comment form a.btn").click(function(){
+            var content = $("div.add_comment textarea").val();
+            var contestId = $("div.add_comment form input.contestId").val();
+            
             ajax.contestAddCommentAction(content, contestId, function(r){
+                console.log(r);
                 var template = $("#templates.contest div.comment").clone();
                 template.find('div.avatar a').attr('href', Routing.generate(appLocale + '_user_detail', {
                     'id': r.comment.id
                 }));
-                template.find('div.avatar img').attr('src', r.comment.avatar);
+                
+                if(r.comment.avatar){
+                    template.find('div.avatar img').attr('src', r.comment.avatar);
+                }
+                
                 template.find('div.user_comment span.action_user a').attr('href', Routing.generate(appLocale + '_user_detail', {
                     'id': r.comment.id
                 }));
                 template.find('div.user_comment span.action_user a').html(r.comment.name);
-                template.find('div.user_comment span.action_user span').html(jQuery.timeago(r.comment.createdAt));
+                template.find('div.user_comment span.action_user span').html(jQuery.timeago(r.comment.createdAt.date));
+                template.find('div.user_comment').append(r.comment.content);
+                template.append(r.comment.like);
                 
                 $("div.comments").append(template);
             });

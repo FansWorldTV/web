@@ -112,7 +112,6 @@ var ajax = {
     contestAddCommentAction: function(content, contestId, callback){
         if(!ajax.active){
             ajax.active = true;
-            
             $.ajax({
                 url: 'http://' + location.host + Routing.generate( appLocale + '_contest_ajaxaddcomment'),
                 data: {
