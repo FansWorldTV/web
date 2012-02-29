@@ -388,4 +388,12 @@ class UserController extends SiteController
         return array('requests' => $friendsRequest);
     }
 
+	/**
+     * @Route("/invite_users/", name = "user_invite")
+     * @Template
+     */
+    public function inviteAction()
+    {
+        return array();
+    }
 }

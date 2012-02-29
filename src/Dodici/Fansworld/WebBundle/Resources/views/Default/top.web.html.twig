@@ -1,6 +1,13 @@
 <div class="top">
     <div class="wrap">
-        <div class="users">Ya somos <strong>25.352</strong> miembros <a class="btn" href="registro.php">Sumate</a></div>
+        <div class="users">
+        	Ya somos <strong>{{ usercount }}</strong> miembros 
+        	{% if is_granted("IS_AUTHENTICATED_FULLY") %}
+        		<a class="btn" href="{{ path('user_invite') }}">Invitá a tus amigos</a>
+        	{% else %}
+        		<a class="btn" href="{{ path('fos_user_registration_register') }}">Sumate</a>
+        	{% endif %}
+        </div>
         <div class="social">
             <ul>
                 <li><a href="#1">Espa&ntilde;ol</a>

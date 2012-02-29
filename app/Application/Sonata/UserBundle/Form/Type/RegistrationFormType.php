@@ -22,11 +22,11 @@ class RegistrationFormType extends BaseType
 
         // add your custom field
         $builder
-			->add('address',null,array('label'=>'Dirección','required'=>false))
-			->add('firstname',null,array('label'=>'Nombre','required'=>false))
-			->add('lastname',null,array('label'=>'Apellido','required'=>false))
-			->add('phone',null,array('label'=>'Teléfono','required'=>false))
-			->add('mobile',null,array('label'=>'Móvil','required'=>false))
+			//->add('address',null,array('label'=>'Dirección','required'=>false))
+			->add('firstname',null,array('label'=>'Nombre','required'=>true))
+			->add('lastname',null,array('label'=>'Apellido','required'=>true))
+			//->add('phone',null,array('label'=>'Teléfono','required'=>false))
+			//->add('mobile',null,array('label'=>'Móvil','required'=>false))
         ;
     }
 

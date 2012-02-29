@@ -4,6 +4,8 @@
 
 {% block content %}
 
-<iframe src="{{ flumotiontwig.videoplayerurl(video) }}" style="width: 468px; height: 340px;"></iframe>
+<iframe src="{{ flumotiontwig.videoplayerurl(video) }}" style="width: 468px; height: 340px; margin-bottom: 15px;"></iframe>
+
+{% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video} %}
 
 {% endblock %}

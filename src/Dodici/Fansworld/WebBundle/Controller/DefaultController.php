@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class DefaultController extends Controller
+class DefaultController extends SiteController
 {
     /**
      * @Route("/hello/{name}")
@@ -56,7 +56,8 @@ class DefaultController extends Controller
      */
     public function topAction()
     {
-    	return array();
+    	$usercount = $this->getRepository('User')->countBy(array('enabled' => true));
+    	return array('usercount' => $usercount);
     }
     
 	/**

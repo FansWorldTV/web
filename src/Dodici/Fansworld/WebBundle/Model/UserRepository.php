@@ -5,7 +5,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\DBAL\Types\Type;
 
-class UserRepository extends EntityRepository
+class UserRepository extends CountBaseRepository
 {
     /**
      * Get the user's friends with optional search term and pagination
