@@ -149,6 +149,21 @@ class User extends BaseUser
      */
     protected $idolships;
     
+    /**
+     * @var integer $friendCount
+     */
+    private $friendCount;
+    
+    /**
+     * @var integer $idolCount
+     */
+    private $idolCount;
+    
+    /**
+     * @var integer $fanCount
+     */
+    private $fanCount;
+    
     public function __construct()
     {
         parent::__construct();
@@ -156,6 +171,9 @@ class User extends BaseUser
     	$this->friendgroups = new ArrayCollection();
     	$this->idolships = new ArrayCollection();
         $this->privacy = array();
+        $this->idolCount = 0;
+        $this->friendCount = 0;
+        $this->fanCount = 0;
     }
     
     public function __toString()
@@ -726,4 +744,66 @@ class User extends BaseUser
         $this->friendgroups = $friendgroups;
     }
 
+	/**
+     * Set friendCount
+     *
+     * @param integer $friendCount
+     */
+    public function setFriendCount($friendCount)
+    {
+        if ($friendCount < 0) $friendCount = 0;
+    	$this->friendCount = $friendCount;
+    }
+
+    /**
+     * Get friendCount
+     *
+     * @return integer 
+     */
+    public function getFriendCount()
+    {
+        return $this->friendCount;
+    }
+    
+	/**
+     * Set idolCount
+     *
+     * @param integer $idolCount
+     */
+    public function setIdolCount($idolCount)
+    {
+        if ($idolCount < 0) $idolCount = 0;
+    	$this->idolCount = $idolCount;
+    }
+
+    /**
+     * Get idolCount
+     *
+     * @return integer 
+     */
+    public function getIdolCount()
+    {
+        return $this->idolCount;
+    }
+    
+	/**
+     * Set fanCount
+     *
+     * @param integer $fanCount
+     */
+    public function setFanCount($fanCount)
+    {
+        if ($fanCount < 0) $fanCount = 0;
+    	$this->fanCount = $fanCount;
+    }
+
+    /**
+     * Get fanCount
+     *
+     * @return integer 
+     */
+    public function getFanCount()
+    {
+        return $this->fanCount;
+    }
 }

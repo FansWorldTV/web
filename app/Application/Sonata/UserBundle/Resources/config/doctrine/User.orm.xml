@@ -27,6 +27,9 @@
         <field name="type" column="type" type="integer" nullable="false" />
         <field name="birthday" column="birthday" type="datetime" nullable="true" />
         <field name="score" column="score" type="integer" nullable="true" />
+        <field name="friendCount" column="friendCount" type="integer" nullable="false" />
+        <field name="idolCount" column="idolCount" type="integer" nullable="false" />
+        <field name="fanCount" column="fanCount" type="integer" nullable="false" />
         
         <many-to-one
             field="country"

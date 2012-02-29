@@ -33,6 +33,14 @@ class ScoreHandler
 		
 		if ($entity instanceof Idolship) {
 			$this->addScore($entity->getAuthor(), self::SCORE_ADD_IDOL);
+			
+        	$author = $entity->getAuthor();
+            $target = $entity->getTarget(); 
+            $author->setIdolCount($author->getIdolCount() + 1);
+            $target->setFanCount($target->getFanCount() + 1);
+            $em->persist($author);
+            $em->persist($target);
+            $em->flush();
 		}
 		
     	if ($entity instanceof Photo) {
@@ -76,6 +84,14 @@ class ScoreHandler
             if ($entity->getActive() == true) {
                 $this->addScore($entity->getAuthor(), self::SCORE_NEW_FRIENDSHIP);
                 $this->addScore($entity->getTarget(), self::SCORE_NEW_FRIENDSHIP);
+                
+                $author = $entity->getAuthor();
+                $target = $entity->getTarget(); 
+                $author->setFriendCount($author->getFriendCount() + 1);
+                $target->setFriendCount($target->getFriendCount() + 1);
+                $em->persist($author);
+                $em->persist($target);
+                $em->flush();
             }
         }
         
@@ -99,6 +115,32 @@ class ScoreHandler
 			}
         }
         
+        if ($entity instanceof Friendship) {
+        	if ($entity->getActive() == true) {
+        		$this->addScore($entity->getAuthor(), -self::SCORE_NEW_FRIENDSHIP);
+                $this->addScore($entity->getTarget(), -self::SCORE_NEW_FRIENDSHIP);
+        		
+        		$author = $entity->getAuthor();
+                $target = $entity->getTarget(); 
+                $author->setFriendCount($author->getFriendCount() - 1);
+                $target->setFriendCount($target->getFriendCount() - 1);
+                $em->persist($author);
+                $em->persist($target);
+                $em->flush();
+        	}
+        }
+        
+        if ($entity instanceof Idolship) {
+        	$this->addScore($entity->getAuthor(), -self::SCORE_ADD_IDOL);
+        	
+        	$author = $entity->getAuthor();
+            $target = $entity->getTarget(); 
+            $author->setIdolCount($author->getIdolCount() - 1);
+            $target->setFanCount($target->getFanCount() - 1);
+            $em->persist($author);
+            $em->persist($target);
+            $em->flush();
+        }
     }
     
     private function addScore(User $user, $score)
