@@ -1,7 +1,8 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
-    <div class="clearfix">
+    <div class="clearfix confirm">
+    	<h1>{{ 'felicidades'|trans }}</h1>
         <p>{{ 'registration.confirmed'|trans({'%username%': user.username}, 'FOSUserBundle') }}</p>
         {% if app.session is not empty %}
             {% set targetUrl = app.session.get('_security.target_path') %}

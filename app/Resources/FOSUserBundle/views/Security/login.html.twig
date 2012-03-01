@@ -1,42 +1,47 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
-    <div class="clearfix">
-        {% if error %}
+<div class="loginformbig">
+	<h1>Ingreso</h1>
+	<div class="greybox">
+	<form action="{{ path("fos_user_security_check") }}" method="post" class="bigform" >
+		{% if error %}
             <div class="errors">
                 <span class="bold">Error: </span>{{ error|trans({}, 'FOSUserBundle') }}
+                
+                <a class="link-reset" href="{{ path('fos_user_resetting_request') }}">¿Olvidaste tu contraseña? Hacé click aquí</a>
             </div>
         {% endif %}
-
-        <form id="form" action="{{ path("fos_user_security_check") }}" method="post" >
-            <div>
-                <label for="username" class="width100">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
-                <input type="text" id="username" name="_username" value="{{ last_username }}" class="width100"/>
-            </div>
-            
-            <div class="clearBoth marginBottom15"></div>
-            
-            <div>
-                <label for="password" class="width100">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
-                <input type="password" id="password" name="_password" class="width100"/>
-            </div>
-            
-            <div class="clearBoth marginBottom15"></div>
-            
-            <div>
-                <label class="width25" for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
-                <input type="checkbox" id="remember_me" name="_remember_me" value="on" class="checkboxRemember"/>
-            </div>
-            
-            <div class="clearBoth marginBottom15"></div>
-            
-            <div>
-                <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" class="squaredButton"/>
-                {{ facebook_login_button({'autologoutlink': false}) }}
-                <a href="{{ path('fos_user_resetting_request') }}" id="recoverPass" >Recuperar Contraseña</a>
-            </div>
-        </form>
+    	<div class="form-login fieldcontainer">
+			<ul class="fields">
+        		<li class="clearfix">
+	                <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+	                <input type="text" id="username" name="_username" value="{{ last_username }}" />
+	            </li>
+	            
+	            <li class="clearfix">
+	                <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+	                <input type="password" id="password" name="_password" />
+	            </li>
+	            
+	            <li class="clearfix">
+	                <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
+	                <div class="rememberfield">
+	                	<input type="checkbox" id="remember_me" name="_remember_me" value="on" class="checkboxRemember prettycheckbox"/>
+	                </div>
+	            </li>
+        	</ul>
+		</div>
+		
+        <div class="actions clearfix">
+        	{{ facebook_login_button({'autologoutlink': false}) }}
+            <input type="submit" name="submit" value="Ingresar" class="btn_action" />
+        </div>
         
-        <a class="link-register" href="{{ path('fos_user_registration_register') }}">¿No tenés cuenta? ¡Registrate, es gratis!</a>
+        <div class="registerlink">
+        	<a class="link-register" href="{{ path('fos_user_registration_register') }}">¿No tenés cuenta? ¡Registrate, es gratis!</a>
+        </div>
+    </form>
     </div>
+</div>
 {% endblock fos_user_content %}

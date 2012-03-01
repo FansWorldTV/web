@@ -23,6 +23,7 @@
                 <link rel="stylesheet" href="{{ asset('bundles/sonatajquery/themes/flick/jquery-ui-1.8.16.custom.css') }}" type="text/css" media="all" />
                 <!-- base application asset -->
                 <link rel="stylesheet" href="{{ asset('bundles/dodicifansworldweb/css/layout.css') }}" type="text/css" media="all">
+                <link rel="stylesheet" href="{{ asset('bundles/dodicifansworldweb/js/jquery-checkbox/jquery.checkbox.css') }}" type="text/css" media="all">
                 <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700&subset=latin,cyrillic-ext,greek-ext,greek,latin-ext' rel='stylesheet' type='text/css'>
                 <!-- Toast -->
                 <link rel="stylesheet" href="{{ asset('bundles/dodicifansworldweb/js/toastmessage/css/jquery.toastmessage.css') }}" type="text/css" media="all">
@@ -36,12 +37,14 @@
                 <script src="{{ asset('bundles/sonatajquery/jquery-ui-i18n.js') }}" type="text/javascript"></script>
                 <script src="{{ asset('bundles/dodicifansworldweb/js/timeago.jquery.js') }}" type="text/javascript"></script>
                 <script src="{{ asset('bundles/dodicifansworldweb/js/jquery.colorbox-min.js') }}" type="text/javascript"></script>
+                <script src="{{ asset('bundles/dodicifansworldweb/js/jquery-checkbox/jquery.checkbox.min.js') }}" type="text/javascript"></script>
                 <script src="{{ asset('bundles/dodicifansworldweb/js/toastmessage/jquery.toastmessage.js') }}" type="text/javascript"></script>
                 <script src="https://apis.google.com/js/plusone.js"></script>
                 <script src="{{ asset('bundles/dodicifansworldweb/js/base.js') }}" type="text/javascript"></script>
                 <script src="{{ asset('bundles/dodicifansworldweb/js/main.js') }}" type="text/javascript"></script>
                 <script type="text/javascript">
                     var appLocale = '{{ app.request.locale }}';
+                    var emptyCheckboxImg = '{{ asset('bundles/dodicifansworldweb/js/jquery-checkbox/empty.png') }}';
                 </script>
             {% endblock %}
             

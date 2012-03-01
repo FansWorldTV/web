@@ -1,20 +1,28 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
-    <div class="leftcolumn">
-        <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
-            <div>
-                {% if invalid_username is defined %}
-                    <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
-                {% endif %}
-                <label for="username" class="width100">{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}</label>
-                <div class="clearBoth marginBottom15"></div>
-                <input type="text" id="username" name="username" class="width100"/>
-            </div>
-            <div>
-                <input id="submit" type="submit" value="Enviar" />
-            </div>
-        </form>
+<div class="resetpassword">
+	<h1>Restablecer Contraseña</h1>
+	<div class="greybox">
+	{% if invalid_username is defined %}
+        <div class="errors">
+            {{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}
+        </div>
+    {% endif %}
+	<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request bigform">
+    	<div class="form-resetpassword fieldcontainer">
+			<ul class="fields">
+        		<li class="clearfix">
+        			<label for="username">{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}</label>
+	                <input type="text" id="username" name="username" />
+        		</li>
+        	</ul>
+		</div>
+		
+        <div class="actions clearfix">
+            <input type="submit" name="submit" value="Restablecer" class="btn_action" />
+        </div>
+    </form>
     </div>
-    <div class="clear"></div>
+</div>
 {% endblock fos_user_content %}

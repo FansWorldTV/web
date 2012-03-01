@@ -15,3 +15,7 @@ Please enter a name: "Ingrese un nombre"
 The name is too short: "El nombre es muy corto"
 The name is too long: "El nombre es muy largo"
 The entered password is invalid.: "La contraseña ingresada es incorrecta"
+fos_user.firstname.blank: Ingrese un nombre
+fos_user.firstname.long: El nombre es muy largo
+fos_user.lastname.blank: Ingrese un apellido
+fos_user.lastname.long: El apellido es muy largo

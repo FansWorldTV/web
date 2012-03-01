@@ -1,13 +1,32 @@
+fos_user_profile_form_user_username: "Usuario:"
 fos_user_profile_form_user_firstname: "Nombre:"
 fos_user_profile_form_user_lastname: "Apellido:"
 fos_user_profile_form_user_address: "Dirección:"
 fos_user_profile_form_user_phone: "Teléfono:"
 fos_user_profile_form_user_mobile: "Móvil:"
+fos_user_registration_form_username: "Usuario:"
 fos_user_registration_form_firstname: "Nombre:"
 fos_user_registration_form_lastname: "Apellido:"
 fos_user_registration_form_address: "Dirección:"
 fos_user_registration_form_phone: "Teléfono:"
 fos_user_registration_form_mobile: "Móvil:"
+fos_user_profile_form_user_skype: "Skype" 
+fos_user_profile_form_user_msn: "MSN"
+fos_user_profile_form_user_twitter: "Twitter"
+fos_user_profile_form_user_yahoo: "Yahoo"
+fos_user_profile_form_user_gmail: "Gmail"
+fos_user_profile_form_user_country: "País"
+fos_user_profile_form_user_city: "Ciudad"
 'Bad credentials': 'Usuario y/o contraseña incorrectos'
 'The presented password is invalid.': 'Contraseña incorrecta'
 'The presented password cannot be empty.': 'Debe ingresar una contraseña'
+fos_user.firstname.blank: Ingrese un nombre
+fos_user.firstname.long: El nombre es muy largo
+fos_user.lastname.blank: Ingrese un apellido
+fos_user.lastname.long: El apellido es muy largo
+security:
+    login:
+        username: "Usuario:"
+resetting:
+    request:
+        username: "Usuario:"

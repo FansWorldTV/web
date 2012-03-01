@@ -119,8 +119,8 @@ hr { display:block; height:2px; background:#f0f0f0; border:none; clear:both; mar
 a.btn { background:url(../images/ui/btn.gif) repeat-x; padding:5px 10px; border:solid 1px #008abb; border-radius:3px; color:#fff; margin:0 5px; text-shadow:0 -1px 0 #00658b }
 a.btn:hover { background:url(../images/ui/btn_h.gif) repeat-x; text-decoration:none;}
 
-a.btn_action { background:url(../images/ui/btn_action.gif) repeat-x; padding:9px 17px; border:solid 1px #008abb; border-radius:3px; color:#fff; text-shadow:0 -1px 0 #00658b; font-size:13px; float: right }
-a.btn_action:hover { background:url(../images/ui/btn_action_h.gif) repeat-x; text-decoration:none;}
+a.btn_action, input.btn_action { background:url(../images/ui/btn_action.gif) repeat-x; padding:9px 17px; border:solid 1px #008abb; border-radius:3px; color:#fff; text-shadow:0 -1px 0 #00658b; font-size:13px; float: right }
+a.btn_action:hover, input.btn_action:hover { background:url(../images/ui/btn_action_h.gif) repeat-x; text-decoration:none;}
 
 a.more { font-size:11px; padding:3px 5px 7px 5px; background:#d9d9d9; color:#fff; border-radius:3px; float:right; margin-top:2px;}
 h2:hover a.more { background:#bfbfbf}
@@ -653,3 +653,20 @@ form.login input { margin-bottom: 10px; }
 
 .nota_ampliada h2.noimage { margin: 0 0 15px; clear: both; float: none; position: initial; }
 .nota_ampliada .media img.articleimg { width: 468px; margin-bottom: 15px; }
+
+/* Registro */
+.greybox { background: #F6F6F6; border: solid 1px white; box-shadow: 0 1px 1px #888; padding: 30px; border-radius: 5px;}
+.register, .profileedit { font-size: 12px; color: #333; }
+.bigform .fieldcontainer { margin-bottom: 15px; border-top: 1px solid rgba(34, 25, 25, 0.1); }
+.register .fbconnect { padding-bottom: 15px; border-bottom: solid 3px #0093C9; margin-bottom: 30px; font-size: 16px;}
+.register .fbconnect p { margin: 0 0 10px; }
+.bigform .fieldcontainer ul.fields { padding: 0; margin: 0; }
+.bigform .fieldcontainer ul.fields li { clear: both; margin: 0; padding: 10px 0; text-shadow: 0 1px rgba(255, 255, 255, 0.9); border-top: 1px solid rgba(255, 255, 255, 0.7); border-bottom: 1px solid rgba(34, 25, 25, 0.1); }
+.bigform .fieldcontainer ul.fields li label { display: inline-block; float: left; width: 150px; font-weight: bold; line-height: 1.4em;font-size: 18px; padding-top: 7px;}
+.bigform .fieldcontainer ul.fields li .field { float: right; }
+.bigform .fieldcontainer input[type="text"], .bigform .fieldcontainer input[type="password"], .bigform .fieldcontainer input[type="email"], .bigform .fieldcontainer textarea, .bigform .fieldcontainer select { display: inline-block;box-sizing: border-box;-moz-box-sizing: border-box;-ms-box-sizing: border-box;-webkit-box-sizing: border-box;padding: 6px 12px;font-size: 18px;font-weight: 300;line-height: 1.4;color: #221919;background: white;border: 1px solid #A4A2A2;border-radius: 6px;-moz-border-radius: 6px;-webkit-border-radius: 6px;box-shadow: inset 0 1px rgba(34,25,25,0.15), 0 1px rgba(255,255,255,0.8);-moz-box-shadow: inset 0 1px rgba(34,25,25,0.15), 0 1px rgba(255,255,255,0.8);-webkit-box-shadow: inset 0 1px rgba(34,25,25,0.15), 0 1px rgba(255,255,255,0.8);-moz-transition: all 0.08s ease-in-out;-webkit-transition: all 0.08s ease-in-out; width: 250px; }
+.bigform .fieldcontainer ul.errors li { border: 0; color: #C33; }
+.confirm p { font-size: 16px; }
+.greybox .errors { font-size: 16px;color: #C33;margin-bottom: 10px;}
+.loginformbig .rememberfield { margin-top: 6px;float: left;margin-bottom: 6px;}
+.link-reset {display:block; margin-top: 10px;}

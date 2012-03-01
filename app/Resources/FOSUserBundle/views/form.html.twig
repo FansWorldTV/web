@@ -9,3 +9,34 @@
     </label>
 {% endspaceless %}
 {% endblock field_label %}
+
+{% block field_errors %}
+	{% spaceless %}
+	    {% if errors|length > 0 %}
+	    <ul class="errors">
+	        {% for error in errors %}
+	            <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
+	        {% endfor %}
+	    </ul>
+	    {% endif %}
+	{% endspaceless %}
+{% endblock %}
+
+{% block field_row %}
+{% spaceless %}
+	{% if form.haschildren %}
+	<div class="unit">
+		{{ form_label(form) }}
+		{{ form_widget(form) }}
+	</div>
+	{% else %}
+    <li class="clearfix">
+    	{{ form_label(form) }}
+        <div class="field">
+	        {{ form_widget(form) }}
+	        {{ form_errors(form) }}
+        </div>
+    </li>
+    {% endif %}
+{% endspaceless %}
+{% endblock field_row %}
