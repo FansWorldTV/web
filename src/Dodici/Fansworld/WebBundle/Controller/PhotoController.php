@@ -25,7 +25,9 @@ use Symfony\Component\Validator\Constraints\Collection;
  */
 class PhotoController extends SiteController
 {
-    
+
+    const LIMIT_PHOTOS = 8;
+
     /**
      * @Route("/{id}/{slug}", name= "photo_show", requirements = {"id" = "\d+"})
      * @Secure(roles="ROLE_USER")
@@ -34,8 +36,8 @@ class PhotoController extends SiteController
     {
         // TODO: photo show action, show photo + comments, allow commenting + answering root comments
         $photo = $this->getRepository('Photo')->findOneBy(array('id' => $id, 'active' => true));
-    	
-    	return new Response('ok');
+
+        return new Response('ok');
     }
 
     /**
@@ -45,14 +47,15 @@ class PhotoController extends SiteController
      */
     public function uploadAction()
     {
-    	$request = $this->getRequest();
-    	$user = $this->get('security.context')->getToken()->getUser();
-    	$em = $this->getDoctrine()->getEntityManager();
-    	$privacies = Privacy::getOptions();
-    	
-    	$albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true));
-    	$albumchoices = array();
-    	foreach ($albums as $ab) $albumchoices[$ab->getId()] = $ab->getTitle();
+        $request = $this->getRequest();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getEntityManager();
+        $privacies = Privacy::getOptions();
+
+        $albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true));
+        $albumchoices = array();
+        foreach ($albums as $ab)
+            $albumchoices[$ab->getId()] = $ab->getTitle();
 
         $photo = null;
 
@@ -60,9 +63,9 @@ class PhotoController extends SiteController
 
         $collectionConstraint = new Collection(array(
                     'title' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
-        			'album' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($albumchoices))),
-        			'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
-        			'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
+                    'album' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($albumchoices))),
+                    'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
+                    'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
                     'file' => new \Symfony\Component\Validator\Constraints\File()
                 ));
 
@@ -79,33 +82,33 @@ class PhotoController extends SiteController
             try {
                 $form->bindRequest($request);
                 $data = $form->getData();
-                
+
                 if ($form->isValid()) {
                     $album = null;
-                	if ($data['album']) {
-                		$album = $this->getRepository('Album')->find($data['album']);
-                		if (!$album || ($album && $album->getAuthor() != $user)) throw new \Exception('Invalid Album');
-                	}
-                	
-                	$mediaManager = $this->get("sonata.media.manager.media");
-					
-					$media = new Media();
-				    $media->setBinaryContent($data['file']);
-				    $media->setContext('default'); // video related to the user
-				    $media->setProviderName('sonata.media.provider.image');
-				
-				    $mediaManager->save($media);
-				    
-				    $photo = new Photo();
-				    $photo->setAuthor($user);
-				    $photo->setAlbum($album);
-				    $photo->setTitle($data['title']);
-				    $photo->setContent($data['content']);
-				    $photo->setImage($media);
-				    $photo->setPrivacy($data['privacy']);
-				    $em->persist($photo);
-				    $em->flush();
-				    
+                    if ($data['album']) {
+                        $album = $this->getRepository('Album')->find($data['album']);
+                        if (!$album || ($album && $album->getAuthor() != $user))
+                            throw new \Exception('Invalid Album');
+                    }
+
+                    $mediaManager = $this->get("sonata.media.manager.media");
+
+                    $media = new Media();
+                    $media->setBinaryContent($data['file']);
+                    $media->setContext('default'); // video related to the user
+                    $media->setProviderName('sonata.media.provider.image');
+
+                    $mediaManager->save($media);
+
+                    $photo = new Photo();
+                    $photo->setAuthor($user);
+                    $photo->setAlbum($album);
+                    $photo->setTitle($data['title']);
+                    $photo->setContent($data['content']);
+                    $photo->setImage($media);
+                    $photo->setPrivacy($data['privacy']);
+                    $em->persist($photo);
+                    $em->flush();
                 }
             } catch (\Exception $e) {
                 $form->addError(new FormError('Error subiendo foto'));
@@ -113,5 +116,30 @@ class PhotoController extends SiteController
         }
 
         return array('photo' => $photo, 'form' => $form->createView());
+    }
+
+    /**
+     *  @Route("/ajax/get", name = "photo_get") 
+     */
+    public function ajaxGetPhotos()
+    {
+        $request = $this->getRequest();
+        $userId = $request->get('userId');
+        $page = (int) $request->get('page');
+
+        $page--;
+        $offset = $page * self::LIMIT_PHOTOS;
+
+        $photos = $this->getRepository('Photo')->findBy(array('author' => $userId), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS, $offset);
+
+        $response = array();
+        foreach ($photos as $photo) {
+            $response[] = array(
+                'id' => $photo->getId(),
+                'image' => $this->getImageUrl($photo->getImage())
+            );
+        }
+        
+        $this->jsonResponse($response);
     }
 }

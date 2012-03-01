@@ -24,6 +24,7 @@ use Symfony\Component\Form\FormError;
  */
 class AlbumController extends SiteController
 {
+    const LIMIT_ALBUMS = 8;
     
     /**
      * @Route("/{id}/{slug}", name= "album_show", requirements = {"id" = "\d+"})
@@ -83,5 +84,33 @@ class AlbumController extends SiteController
         }
 
         return array('album' => $album, 'form' => $form->createView());
+    }
+    
+    /**
+     *  @Route("/ajax/get", name = "album_get") 
+     */
+    public function ajaxGetAlbums()
+    {
+        $request = $this->getRequest();
+        $userId = $request->get('userId');
+        $page = (int) $request->get('page');
+
+        $page--;
+        $offset = $page * self::LIMIT_PHOTOS;
+
+        $albums = $this->getRepository('Album')->findBy(array('author' => $userId), array('createdAt' => 'DESC'), self::LIMIT_ALBUMS, $offset);
+
+        $response = array();
+        foreach ($albums as $album) {
+            $response[] = array(
+                'image' => $this->getImageUrl($album->getImage()),
+                'id' => $album->getId(),
+                'title' => $album->getTitle(),
+                'countImages' => count($album->getPhotos()),
+                'comments' => count($album->getComments())
+            );
+        }
+        
+        $this->jsonResponse($response);
     }
 }

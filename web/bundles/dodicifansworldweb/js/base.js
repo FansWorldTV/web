@@ -257,6 +257,36 @@ var ajax = {
                 }
             }
         });
+    },
+    
+    getPhotosAction: function(userid, page, callback){
+        $.ajax({
+            url: 'http://' + location.host + Routing.generate( appLocale + '_photo_get'),
+            data: {
+                'userId' : userid,
+                'page' : page
+            },
+            success: function(response){
+                if(typeof(callback) !== 'undefined'){
+                    callback(response);
+                }
+            }
+        });
+    },
+    
+    getAlbumsAction: function(userid, page, callback){
+        $.ajax({
+            url: 'http://' + location.host + Routing.generate( appLocale + '_album_get'),
+            data: {
+                'userId' : userid,
+                'page' : page
+            },
+            success: function(response){
+                if(typeof(callback) !== 'undefined'){
+                    callback(response);
+                }
+            }
+        });
     }
   
 };

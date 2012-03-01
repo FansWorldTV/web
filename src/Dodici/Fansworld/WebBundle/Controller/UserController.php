@@ -3,13 +3,9 @@
 namespace Dodici\Fansworld\WebBundle\Controller;
 
 use JMS\SecurityExtraBundle\Annotation\Secure;
-
 use Symfony\Component\Form\FormError;
-
 use Application\Sonata\MediaBundle\Entity\Media;
-
 use Symfony\Component\Validator\Constraints\Collection;
-
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -22,6 +18,7 @@ class UserController extends SiteController
 
     const LIMIT_SEARCH = 20;
     const LIMIT_NOTIFICATIONS = 5;
+    const LIMIT_PHOTOS = 8;
 
     /**
      * @Route("/search/", name = "user_search")
@@ -217,7 +214,7 @@ class UserController extends SiteController
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($notification);
                 $em->flush();
-                
+
                 $response = true;
             } catch (Exception $exc) {
                 $response = $exc->getMessage();
@@ -396,7 +393,56 @@ class UserController extends SiteController
         return array('requests' => $friendsRequest);
     }
 
-	/**
+    /**
+     * @Route("/user/{id}/photos", name="user_photos")
+     * @Template
+     */
+    public function photosAction($id)
+    {
+        $user = $this->getRepository('User')->find($id);
+        $loggedUser = $this->get('security.context')->getToken()->getUser();
+        $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
+
+        $photosRepo = $this->getRepository('Photo')->findBy(array('author' => $user->getId()), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
+        $albumsRepo = $this->getRepository('Album')->findBy(array('author' => $user->getId()), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
+
+        $photosTotalCount = $this->getRepository('Photo')->countBy(array('author' => $user->getId()));
+        $albumsTotalCount = $this->getRepository('Album')->countBy(array('author' => $user->getId()));
+
+        $viewMorePhotos = $photosTotalCount > self::LIMIT_PHOTOS ? true : false;
+        $viewMoreAlbums = $albumsTotalCount > self::LIMIT_PHOTOS ? true : false;
+
+        $photos = array();
+        foreach ($photosRepo as $photo) {
+            $photos[] = array(
+                'id' => $photo->getId(),
+                'image' => $this->getImageUrl($photo->getImage())
+            );
+        }
+
+        $albums = array();
+        foreach ($albumsRepo as $album) {
+            $image = $this->getRepository('Photo')->findOneBy(array('album'=>$album->getId()));
+            $albums[] = array(
+                'image' => $this->getImageUrl($image),
+                'id' => $album->getId(),
+                'title' => $album->getTitle(),
+                'countImages' => count($album->getPhotos()),
+                'comments' => count($album->getComments())
+            );
+        }
+
+        return array(
+            'user' => $user,
+            'isLoggedUser' => $isLoggedUser,
+            'photos' => $photos,
+            'albums' => $albums,
+            'viewMorePhotos' => $viewMorePhotos,
+            'viewMoreAlbums' => $viewMoreAlbums
+        );
+    }
+
+    /**
      * @Route("/invite_users/", name = "user_invite")
      * @Template
      */
@@ -404,18 +450,18 @@ class UserController extends SiteController
     {
         return array();
     }
-    
-	/**
+
+    /**
      * @Route("/user/change_image", name="user_change_image")
      * @Secure(roles="ROLE_USER")
      * @Template
      */
     public function changeImageAction()
     {
-    	$request = $this->getRequest();
-    	$user = $this->get('security.context')->getToken()->getUser();
-    	$em = $this->getDoctrine()->getEntityManager();
-    	
+        $request = $this->getRequest();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getEntityManager();
+
         $media = $user->getImage();
 
         $defaultData = array();
@@ -433,20 +479,20 @@ class UserController extends SiteController
             try {
                 $form->bindRequest($request);
                 $data = $form->getData();
-                
+
                 if ($form->isValid()) {
                     $mediaManager = $this->get("sonata.media.manager.media");
-					
-					$media = new Media();
-				    $media->setBinaryContent($data['file']);
-				    $media->setContext('default');
-				    $media->setProviderName('sonata.media.provider.image');
-				
-				    $mediaManager->save($media);
-				    
-				    $user->setImage($media);
-				    $em->persist($user);
-				    $em->flush();
+
+                    $media = new Media();
+                    $media->setBinaryContent($data['file']);
+                    $media->setContext('default');
+                    $media->setProviderName('sonata.media.provider.image');
+
+                    $mediaManager->save($media);
+
+                    $user->setImage($media);
+                    $em->persist($user);
+                    $em->flush();
                 }
             } catch (\Exception $e) {
                 $form->addError(new FormError('Error subiendo foto'));
@@ -455,4 +501,5 @@ class UserController extends SiteController
 
         return array('media' => $media, 'form' => $form->createView());
     }
+
 }
