@@ -78,6 +78,13 @@ class Photo
     private $likeCount;
     
     /**
+     * @var integer $commentCount
+     *
+     * @ORM\Column(name="commentcount", type="integer", nullable=false)
+     */
+    private $commentCount;
+    
+    /**
      * @Gedmo\Slug(fields={"title"}, unique=false)
      * @ORM\Column(length=250)
      */
@@ -142,6 +149,9 @@ class Photo
         }
         if (null === $this->likeCount) {
         	$this->setLikeCount(0);
+        }
+        if (null === $this->commentCount) {
+        	$this->setCommentCount(0);
         }
     }
     
@@ -454,5 +464,25 @@ class Photo
     public function getHasusers()
     {
         return $this->hasusers;
+    }
+
+    /**
+     * Set commentCount
+     *
+     * @param integer $commentCount
+     */
+    public function setCommentCount($commentCount)
+    {
+        $this->commentCount = $commentCount;
+    }
+
+    /**
+     * Get commentCount
+     *
+     * @return integer 
+     */
+    public function getCommentCount()
+    {
+        return $this->commentCount;
     }
 }

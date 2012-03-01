@@ -95,6 +95,13 @@ class Contest implements Translatable
      * @ORM\Column(name="likecount", type="integer", nullable=false)
      */
     private $likeCount;
+        
+    /**
+     * @var integer $commentCount
+     *
+     * @ORM\Column(name="commentcount", type="integer", nullable=false)
+     */
+    private $commentCount;
     
     /**
      * @Gedmo\Slug(fields={"title"}, unique=false)
@@ -162,6 +169,9 @@ class Contest implements Translatable
         }
         if (null === $this->likeCount) {
         	$this->setLikeCount(0);
+        }
+        if (null === $this->commentCount) {
+        	$this->setCommentCount(0);
         }
     }
 
@@ -504,5 +514,25 @@ class Contest implements Translatable
     public function getHasusers()
     {
         return $this->hasusers;
+    }
+
+    /**
+     * Set commentCount
+     *
+     * @param integer $commentCount
+     */
+    public function setCommentCount($commentCount)
+    {
+        $this->commentCount = $commentCount;
+    }
+
+    /**
+     * Get commentCount
+     *
+     * @return integer 
+     */
+    public function getCommentCount()
+    {
+        return $this->commentCount;
     }
 }

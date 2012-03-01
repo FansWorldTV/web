@@ -84,6 +84,13 @@ class Comment
     private $likeCount;
     
     /**
+     * @var integer $commentCount
+     *
+     * @ORM\Column(name="commentcount", type="integer", nullable=false)
+     */
+    private $commentCount;
+    
+    /**
 	 * @ORM\OneToOne(targetEntity="Share", cascade={"remove", "persist"}, orphanRemoval="true")
 	 * @ORM\JoinColumn(name="share_id", referencedColumnName="id")
 	 */
@@ -204,6 +211,9 @@ class Comment
         }
         if (null === $this->likeCount) {
         	$this->setLikeCount(0);
+        }
+        if (null === $this->commentCount) {
+        	$this->setCommentCount(0);
         }
         if (null === $this->type) {
         	$this->setType(self::TYPE_COMMENT);
@@ -652,5 +662,25 @@ class Comment
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set commentCount
+     *
+     * @param integer $commentCount
+     */
+    public function setCommentCount($commentCount)
+    {
+        $this->commentCount = $commentCount;
+    }
+
+    /**
+     * Get commentCount
+     *
+     * @return integer 
+     */
+    public function getCommentCount()
+    {
+        return $this->commentCount;
     }
 }
