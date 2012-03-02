@@ -3,6 +3,16 @@ $(document).ready(function(){
     ajax.init();
     searchFront.init();
     friendsSearch.init();
+    albums.init();
+    
+    $('.change_image').colorbox({
+        iframe: true, 
+        innerWidth: 640, 
+        innerHeight: 320
+    });
+    $('input:checkbox.prettycheckbox').checkbox({
+        empty: emptyCheckboxImg
+    });
 });
 
 var site = {
@@ -13,6 +23,11 @@ var site = {
         $(".navy ul li.alerts_user ul").hide();
         $(".navy ul li.notifications_user ul").hide();
         
+        $("a.btn_picture").colorbox({
+            'iframe': true,
+            'innerWidth': 350,
+            'innerHeight': 200
+        });
         $('input:checkbox.prettycheckbox').checkbox({empty: emptyCheckboxImg});
         
         $('.change_image').colorbox({iframe: true, innerWidth: 700, innerHeight: 220});
@@ -472,37 +487,74 @@ var contest = {
 };
 
 var photos = {
-    pager : 1,
+    pager : 2,
+    
+    init: function(){
+        
+    },
     
     get : function(){
-        var userid = $("#userid").val();
-        ajax.getPhotosAction(userid, photos.pager, function(r){
-            
+        $("a.loadmore.pictures").click(function(){
+            $("a.loadmore.pictures").addClass('loading');
+            var userid = $("#userid").val();
+            ajax.getPhotosAction(userid, photos.pager, function(r){
+                if(r){
+                    for(var i in r['images']){
+                        var ele = r['images'][i];
+                        var template = $("#templates .pic").clone();
+                        template.find('a').attr('href', Routing.generate('photo_show', {
+                            'id': ele.id
+                        }));
+                        template.find('a img').attr('src', ele.image);
+                    
+                        $("div.user_album div.mask").append(template);
+                    }
+                    if(!r['gotMore']){
+                        $("a.loadmore.pictures").hide();
+                    }
+                    photos.pager++;
+                    $("a.loadmore.pictures").removeClass('loading');
+                }
+            });
         });
     }
 };
 
 var albums = {
-    pager: 1,
+    pager: 2,
+    
+    init: function(){
+        albums.get();  
+    },
     
     get: function(){
-        var userid = $("#userid").val();
-        ajax.getAlbumsAction(userid, albums.pager, function(r){
-            if(r){
-                for(var i in r){
-                    var ele = r[i];
-                    var template = $("div#templates div.album_cover").clone();
-                    var href = Routing.generate('user_album', {'id':ele.id});
-                    template.find(".image").attr("href", href);
-                    template.find(".image img").attr("src", ele.image);
-                    template.find(".title").attr("href", href).html(ele.title);
-                    template.find("span").html(ele.countImages + " imágenes - " + ele.comments + " comentarios");
+        $("a.loadmore.albums").click(function(){
+            $(this).addClass('loading');
+            var userid = $("#userid").val();
+            ajax.getAlbumsAction(userid, albums.pager, function(r){
+                if(r){
+                    for(var i in r['albums']){
+                        var ele = r['albums'][i];
+                        var template = $("div#templates div.album_cover").clone();
+                        var href = Routing.generate(appLocale + '_album_show', {
+                            'id':ele.id
+                        });
+                        template.find(".image").attr("href", href);
+                        template.find(".image img").attr("src", ele.image);
+                        template.find(".title").attr("href", href).html(ele.title);
+                        template.find("span").html(ele.countImages + " imágenes - <a href='" + Routing.generate(appLocale + '_album_show', {
+                            'id':ele.id
+                        }) + "'>" + ele.comments + " comentarios</a>");
                     
-                    $("div.album_covers div.mask").append(template);
+                        $("div.album_covers div.mask").append(template);
+                    }
+                    if(!r['gotMore']){
+                        $("a.loadmore.albums").hide();
+                    }
+                    albums.pager++;
+                    $("a.loadmore.albums").removeClass('loading');
                 }
-                
-                albums.pager++;
-            }
+            });
         });
     }
 }

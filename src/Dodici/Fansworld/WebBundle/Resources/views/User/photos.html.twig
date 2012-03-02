@@ -30,7 +30,7 @@
         </div>
     </div>
     {% if viewMorePhotos %}
-        <a class="loadmore" href="#1">ver todas las imagenes</a>
+        <a class="loadmore" href="{{ path('user_listphotos', {'id': user.id}) }}">ver todas las imagenes</a>
     {% endif %}
     
     <div class="cont clearfix">
@@ -48,14 +48,19 @@
         </div>
     </div>
     {% if viewMoreAlbums %}
-        <a class="loadmore" href="#1">ver más</a> 
+        <a class="loadmore albums" href="#1">ver más</a> 
     {% endif %}
 <input type="hidden" value="{{user.id}}" id="userid"/>
-<div id="templates">
+<div id="templates" class="hidden">
     <div class="album_cover"> 
         <a class="image" href=""><img src=""></a>
         <a class="title" href=""></a>
         <span></span>
+    </div>
+    <div class="pic">
+        <a href="photo.php">
+            <img src="" alt="picture" />
+        </a>
     </div>
 </div>
 {% endblock %}

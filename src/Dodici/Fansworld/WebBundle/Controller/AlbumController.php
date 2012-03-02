@@ -24,37 +24,47 @@ use Symfony\Component\Form\FormError;
  */
 class AlbumController extends SiteController
 {
+
     const LIMIT_ALBUMS = 8;
-    
+
     /**
      * @Route("/{id}/{slug}", name= "album_show", requirements = {"id" = "\d+"})
      */
     public function showAction($id)
     {
         // TODO: album show action, list album photos + comments (masonry)
-    	return new Response('ok');
+        return new Response('ok');
     }
 
-	/**
+    /**
+     * @Route("/{id}", name= "album_comments", requirements = {"id" = "\d+"})
+     */
+    public function commentsAction($id)
+    {
+        // TODO
+        return new Response('ok');
+    }
+
+    /**
      * @Route("/create", name="album_create")
      * @Secure(roles="ROLE_USER")
      * @Template
      */
     public function createAction()
     {
-    	$request = $this->getRequest();
-    	$user = $this->get('security.context')->getToken()->getUser();
-    	$em = $this->getDoctrine()->getEntityManager();
-    	$privacies = Privacy::getOptions();
-    	
+        $request = $this->getRequest();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getEntityManager();
+        $privacies = Privacy::getOptions();
+
         $defaultData = array();
-        
+
         $album = null;
 
         $collectionConstraint = new Collection(array(
                     'title' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
-        			'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
-        			'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
+                    'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
+                    'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
                 ));
 
         $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
@@ -68,15 +78,15 @@ class AlbumController extends SiteController
             try {
                 $form->bindRequest($request);
                 $data = $form->getData();
-                
+
                 if ($form->isValid()) {
                     $album = new Album();
-				    $album->setAuthor($user);
-				    $album->setTitle($data['title']);
-				    $album->setContent($data['content']);
-				    $album->setPrivacy($data['privacy']);
-				    $em->persist($album);
-				    $em->flush();
+                    $album->setAuthor($user);
+                    $album->setTitle($data['title']);
+                    $album->setContent($data['content']);
+                    $album->setPrivacy($data['privacy']);
+                    $em->persist($album);
+                    $em->flush();
                 }
             } catch (\Exception $e) {
                 $form->addError(new FormError('Error creando album'));
@@ -85,7 +95,7 @@ class AlbumController extends SiteController
 
         return array('album' => $album, 'form' => $form->createView());
     }
-    
+
     /**
      *  @Route("/ajax/get", name = "album_get") 
      */
@@ -96,14 +106,14 @@ class AlbumController extends SiteController
         $page = (int) $request->get('page');
 
         $page--;
-        $offset = $page * self::LIMIT_PHOTOS;
+        $offset = $page * self::LIMIT_ALBUMS;
 
         $albums = $this->getRepository('Album')->findBy(array('author' => $userId), array('createdAt' => 'DESC'), self::LIMIT_ALBUMS, $offset);
 
         $response = array();
         foreach ($albums as $album) {
             $firstimage = $album->getPhotos();
-        	$response[] = array(
+            $response['albums'][] = array(
                 'image' => $this->getImageUrl($firstimage[0]->getImage()),
                 'id' => $album->getId(),
                 'title' => $album->getTitle(),
@@ -111,7 +121,15 @@ class AlbumController extends SiteController
                 'comments' => count($album->getComments())
             );
         }
-        
-        $this->jsonResponse($response);
+
+        $countTotal = $this->getRepository('Album')->countBy(array('author' => $userId));
+        if ($countTotal > (($page+1) * self::LIMIT_ALBUMS)) {
+            $response['gotMore'] = true;
+        } else {
+            $response['gotMore'] = false;
+        }
+
+        return $this->jsonResponse($response);
     }
+
 }

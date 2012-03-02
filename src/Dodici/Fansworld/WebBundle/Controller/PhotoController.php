@@ -134,12 +134,19 @@ class PhotoController extends SiteController
 
         $response = array();
         foreach ($photos as $photo) {
-            $response[] = array(
+            $response['images'][] = array(
                 'id' => $photo->getId(),
                 'image' => $this->getImageUrl($photo->getImage())
             );
         }
         
-        $this->jsonResponse($response);
+        $countTotal = $this->getRepository('Photo')->countBy(array('author' => $userId));
+        if ($countTotal > (($page+1) * self::LIMIT_PHOTOS)) {
+            $response['gotMore'] = true;
+        } else {
+            $response['gotMore'] = false;
+        }
+        
+        return $this->jsonResponse($response);
     }
 }

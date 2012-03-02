@@ -462,6 +462,24 @@ class UserController extends SiteController
     }
 
     /**
+     * @Route("/user/{id}/photos/list", name="user_listphotos")
+     * @Template
+     */
+    public function listPhotosAction($id)
+    {
+        $user = $this->getRepository('User')->find($id);
+        $loggedUser = $this->get('security.context')->getToken()->getUser();
+        $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
+        $photos = $this->getRepository('Photo')->findBy(array('author' => $id), array('createdAt' => 'DESC'));
+
+        return array(
+            'user' => $user,
+            'photos' => $photos,
+            'isLoggedUser' => $isLoggedUser,
+        );
+    }
+
+    /**
      * @Route("/invite_users/", name = "user_invite")
      * @Secure(roles="ROLE_USER")
      * @Template
