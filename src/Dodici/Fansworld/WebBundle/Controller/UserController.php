@@ -439,14 +439,16 @@ class UserController extends SiteController
 
         $albums = array();
         foreach ($albumsRepo as $album) {
-            $image = $this->getRepository('Photo')->findOneBy(array('album'=>$album->getId()));
-            $albums[] = array(
-                'image' => $this->getImageUrl($image),
-                'id' => $album->getId(),
-                'title' => $album->getTitle(),
-                'countImages' => count($album->getPhotos()),
-                'comments' => count($album->getComments())
-            );
+            $photo = $this->getRepository('Photo')->findOneBy(array('album'=>$album->getId()));
+            if ($photo) {
+	            $albums[] = array(
+	                'image' => $this->getImageUrl($photo->getImage()),
+	                'id' => $album->getId(),
+	                'title' => $album->getTitle(),
+	                'countImages' => count($album->getPhotos()),
+	                'comments' => count($album->getComments())
+	            );
+            }
         }
 
         return array(

@@ -1,0 +1,56 @@
+{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ user }}{% endblock %}
+
+{% block content %}
+                <div class="user_profile_head clearfix">
+                	{% block profile_head %}
+                    <div class="avatar">
+                    	{% if user == app.user %}
+                        <a href="{{ path('user_change_image') }}">Cambiar</a>
+                        {% endif %}
+                        {% if user.image %}
+                        	{% thumbnail user.image, 'small_square' %}
+                        {% else %}
+                        	<img src="{{ asset('bundles/dodicifansworldweb/images/user_pic.jpg' )}}" />
+                        {% endif %}
+                    </div>
+                    <div class="user_info"> 
+                    {% block profile_info %}
+	                    {% if appstate.canfriend(user) %}
+	                    <a class="btn btn_friendship" href="registro.php">Agregar</a>
+	                    {% else %}
+	                    	{% set fship = appstate.friendshipwith(user) %}
+	                    	{% if fship %}
+	                    		{% if fship.active %}
+	                    			<a class="btn btn_friendship" href="registro.php">Quitar</a>
+	                    		{% else %}
+	                    			<a class="btn btn_friendship" href="registro.php">Solicitud Pendiente</a>
+	                    		{% endif %}
+	                    	{% endif %}
+	                    {% endif %}
+                    
+                        <h1>{{ user }}</h1>
+                        {% block profile_tabs %}
+                        {% if active_tab is not defined %}
+                        	{% set active_tab = '' %}
+                        {% endif %}
+                        <div class="tabs clearfix">
+                            {% if user == app.user %}<a class="btn_edit_info" href="{{ path('fos_user_profile_edit') }}" title="Editar informacion">Editar informacion</a>{% endif %}
+                            <ul>
+                                <li><a {% if active_tab == 'wall' %}class="active"{% endif %} href="user_profile.php">Muro</a></li>
+                                <li><a {% if active_tab == 'photos' %}class="active"{% endif %} href="{{ path('user_photos', {'id': user.id}) }}">Fotos</a></li>
+                                <li><a {% if active_tab == 'videos' %}class="active"{% endif %} href="user_videos.php">Videos</a></li>
+                                <li><a {% if active_tab == 'detail' %}class="active"{% endif %} href="{{ path('user_detail', {id: user.id}) }}">Informacion</a></li>
+                            </ul>
+                        </div>
+                        {% endblock %}
+                    {% endblock %}
+                    </div>
+                    {% endblock %}
+                </div>
+                <div class="user_profile_body">
+                {% block inner_content %}
+                {% endblock %}
+                </div>
+{% endblock %}

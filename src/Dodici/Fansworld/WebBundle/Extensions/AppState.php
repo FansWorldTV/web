@@ -115,6 +115,29 @@ class AppState
     	return true;
     }
     
+	public function canFriend(User $target) 
+    {
+    	if (!($this->user instanceof User)) return false;
+    	$user = $this->user;
+    	
+    	if ($user == $target) return false;
+    	$frep = $this->em->getRepository('DodiciFansworldWebBundle:Friendship');
+	    if ($frep->UsersAreFriends($user, $target)) return false;
+    	
+    	return true;
+    }
+    
+	public function friendshipWith(User $target) 
+    {
+    	if (!($this->user instanceof User)) return false;
+    	$user = $this->user;
+    	
+    	if ($user == $target) return false;
+    	$frep = $this->em->getRepository('DodiciFansworldWebBundle:Friendship');
+	    return $frep->BetweenUsers($user, $target);
+	    
+    }
+    
     public function getType($entity)
     {
     	$exp = explode('\\', get_class($entity));

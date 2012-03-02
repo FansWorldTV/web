@@ -1,28 +1,15 @@
-{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+{% extends "DodiciFansworldWebBundle:User:profile_base.html.twig" %}
 
-{% block title %}{{ parent() }} - Detalle{% endblock %}
+{% block title %}{{ parent() }} - Información{% endblock %}
 
-{% block content %}
-                <div class="user_profile_head clearfix">
-                    <div class="avatar">
-                        <a href="user_info_edit.php">Cambiar</a>
-                        <img src="{{ asset('bundles/dodicifansworldweb/images/user_pic.jpg' )}}" width="114" height="114" /></div>
-                    <div class="user_info"> <a class="btn" href="registro.php">Agregar</a>
-                        <h1>{{ user.firstname }} {{ user.lastname }}</h1>
-                        <div class="tabs clearfix">
-                            <a class="btn_edit_info" href="user_info_edit.php" title="Editar informacion">Editar informacion</a>
-                            <ul>
-                                <li><a href="user_profile.php">Muro</a></li>
-                                <li><a href="user_albums.php">Fotos</a></li>
-                                <li><a href="user_videos.php">Videos</a></li>
-                                <li><a href="user_topics.php">Foro</a></li>
-                                <li><a class="active" href="user_info.php">Informacion</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="cont clearfix">
-                    <h2>Información <a class="more" href="user_info_edit.php">editar</a></h2>
+{% block profile_tabs %}
+	{% set active_tab = 'detail' %}
+	{{ parent() }}
+{% endblock %}
+
+{% block inner_content %}
+				<div class="cont clearfix">
+                    <h2>Información{% if (user == app.user) %} <a class="more" href="{{ path('fos_user_profile_edit') }}">editar</a>{% endif %}</h2>
                     <div class="user_info">
                         <h5>Informacion personal</h5>
                         <table>
@@ -54,9 +41,6 @@
                                 <td> Vestibulum quis erat id sem auctor ullamcorper id vitae est. Nam justo mauris, scelerisque vel rhoncus ut, malesuada eu arcu. Nullam a tincidunt erat. Suspendisse nec tortor in sapien aliquet eleifend. Maecenas id eros libero, ac condimentum enim. Fusce dapibus eros quis nisl vulputate tincidunt. Mauris faucibus iaculis nisl in elementum. Sed pharetra blandit lacinia. </td>
                             </tr>
                         </table>
-
-
-
                     </div>
                 </div>
 {% endblock %}

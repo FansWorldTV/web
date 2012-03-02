@@ -24,14 +24,14 @@ class FriendshipRepository extends CountBaseRepository
     	FROM \Dodici\Fansworld\WebBundle\Entity\Friendship fs
     	WHERE
     	(
-    	  (fs.target = :userone AND fs.author = :usertwo)
+    	  ((fs.target = :userone) AND (fs.author = :usertwo))
     	  OR
-    	  (fs.author = :userone AND fs.target = :userone)
+    	  ((fs.author = :userone) AND (fs.target = :usertwo))
     	)
     	')
     		->setParameter('userone', $userone->getId(), Type::BIGINT)
     		->setParameter('usertwo', $usertwo->getId(), Type::BIGINT)
-    		->getResult();
+    		->getOneOrNullResult();
     }
     
 	/**

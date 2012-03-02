@@ -333,7 +333,7 @@ a.btn_delete_post { display:none;}
 .user_profile_head .avatar { width:94px; height:94px; position:relative; float:left; margin-right:30px;}
 .user_profile_head .avatar a { display:none}
 .user_profile_head .avatar:hover a { position:absolute; float:left; display:block; padding:3px 8px 4px 8px; background:url(../images/ui/avatar_change.png); color:#fff; margin:2px 0 0 2px}
-.user_profile_head .avatar images { border:solid 2px #fff; box-shadow:0 1px 1px #999; width:90px; height:90px;}
+.user_profile_head .avatar img { border:solid 2px #fff; box-shadow:0 1px 1px #999; width:90px; height:90px;}
 .user_profile_head .user_info { position:relative; float:left; width:340px;}
 .user_profile_head .user_info h1 { font-size:22px; color:#000; margin-bottom:37px; font-weight:bold;}
 .user_profile_head .user_info a.btn { float:right; margin:3px -2px 0 0}

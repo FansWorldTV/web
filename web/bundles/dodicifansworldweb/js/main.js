@@ -3,9 +3,6 @@ $(document).ready(function(){
     ajax.init();
     searchFront.init();
     friendsSearch.init();
-    
-    $('.change_image').colorbox({iframe: true, innerWidth: 700, innerHeight: 220});
-    $('input:checkbox.prettycheckbox').checkbox({empty: emptyCheckboxImg});
 });
 
 var site = {
@@ -16,11 +13,10 @@ var site = {
         $(".navy ul li.alerts_user ul").hide();
         $(".navy ul li.notifications_user ul").hide();
         
-        $("a.btn_picture").colorbox({
-           'iframe': true,
-           'innerWidth': 350,
-           'innerHeight': 200
-        });
+        $('input:checkbox.prettycheckbox').checkbox({empty: emptyCheckboxImg});
+        
+        $('.change_image').colorbox({iframe: true, innerWidth: 700, innerHeight: 220});
+        $(".btn_upload_photo").colorbox({iframe: true, innerWidth: 700, innerHeight: 455});
         
         site.listenPendingRequests();
         site.getPendingFriends();
