@@ -202,12 +202,16 @@ class UserController extends SiteController
     {
         $request = $this->getRequest();
         $notificationId = $request->get('id', false);
+        $user = $this->get('security.context')->getToken()->getUser();
 
         $response = false;
 
         if ($notificationId) {
             try {
                 $notification = $this->getRepository('Notification')->find($notificationId);
+                
+                if (!$user instanceof User) throw new \Exception('Must be logged in');
+                if ($notification->getTarget() != $user) throw new \Exception('Wrong user');
 
                 $notification->setReaded(true);
 
@@ -216,7 +220,7 @@ class UserController extends SiteController
                 $em->flush();
 
                 $response = true;
-            } catch (Exception $exc) {
+            } catch (\Exception $exc) {
                 $response = $exc->getMessage();
             }
         }
@@ -308,13 +312,19 @@ class UserController extends SiteController
     {
         $request = $this->getRequest();
         $friendshipId = $request->get('id', false);
+        $user = $this->get('security.context')->getToken()->getUser();
 
         $error = true;
 
         if ($friendshipId) {
             try {
+                if (!$user instanceof User) throw new \Exception('Must be logged in');
                 $friendshipRepo = $this->getRepository('Friendship');
                 $friendship = $friendshipRepo->findOneBy(array('id' => $friendshipId));
+                
+                if ($friendship->getActive()) throw new \Exception('Already accepted');
+                if ($friendship->getTarget() != $user) throw new \Exception('Wrong user');
+                
                 $friendship->setActive(true);
 
                 $em = $this->getDoctrine()->getEntityManager();
@@ -322,7 +332,7 @@ class UserController extends SiteController
                 $em->flush();
 
                 $error = false;
-            } catch (Exception $exc) {
+            } catch (\Exception $exc) {
                 $error = $exc->getMessage();
             }
         }
@@ -339,20 +349,26 @@ class UserController extends SiteController
     {
         $request = $this->getRequest();
         $friendshipId = $request->get('id', false);
+        $user = $this->get('security.context')->getToken()->getUser();
+        
+        
 
         $error = true;
 
         if ($friendshipId) {
             try {
-                $friendshipRepo = $this->getRepository('Friendship');
+                if (!$user instanceof User) throw new \Exception('Must be logged in');
+            	$friendshipRepo = $this->getRepository('Friendship');
                 $friendship = $friendshipRepo->find($friendshipId);
+                
+                if ($friendship->getTarget() != $user) throw new \Exception('Wrong user');
 
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->remove($friendship);
                 $em->flush();
 
                 $error = false;
-            } catch (Exception $exc) {
+            } catch (\Exception $exc) {
                 $error = $exc->getMessage();
             }
         }
@@ -364,6 +380,7 @@ class UserController extends SiteController
 
     /**
      * @Route("/user/requests", name="user_friendrequests")
+     * @Secure(roles="ROLE_USER")
      * @Template
      */
     public function friendRequestsAction()
@@ -444,6 +461,7 @@ class UserController extends SiteController
 
     /**
      * @Route("/invite_users/", name = "user_invite")
+     * @Secure(roles="ROLE_USER")
      * @Template
      */
     public function inviteAction()

@@ -4,7 +4,7 @@ $(document).ready(function(){
     searchFront.init();
     friendsSearch.init();
     
-    $('.change_image').colorbox({iframe: true, innerWidth: 640, innerHeight: 320});
+    $('.change_image').colorbox({iframe: true, innerWidth: 700, innerHeight: 220});
     $('input:checkbox.prettycheckbox').checkbox({empty: emptyCheckboxImg});
 });
 

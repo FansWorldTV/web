@@ -1,4 +1,5 @@
 <div class="col_160 left margin">
+				{% if not hide_login %}
                 <div class="cont clearfix">
                 	{% if is_granted("IS_AUTHENTICATED_FULLY") %}
                     <div class="user_menu">
@@ -38,12 +39,15 @@
 					
 					    <input class="btn" type="submit" id="_submit" name="_submit" value="ENTRAR" />
 					</form>
-					{{ facebook_login_button({'autologoutlink': false}) }}
+					{{ facebook_login_button({'autologoutlink': false, label: 'facebook_login_short'|trans}) }}
 					
 					<a class="banner-register" href="{{ path('fos_user_registration_register') }}" title="Registrate, es gratis"><img src="{{ asset('bundles/dodicifansworldweb/images/registro.gif' )}}"/></a>
                     {% endif %}
                 </div>
+                {% endif %}
+                {% if not hide_ad %}
                 <div class="ad">
                     <div class="banner_demo" style="height:600px"></div>
                 </div>
+                {% endif %}
             </div>

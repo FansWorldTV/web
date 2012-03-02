@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
+use Application\Sonata\UserBundle\Entity\User;
+
 use Symfony\Component\HttpFoundation\Cookie;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -37,7 +39,14 @@ class DefaultController extends SiteController
     public function leftbarAction()
     {
     	$user = $this->get('security.context')->getToken()->getUser();
-    	return array('user' => $user);
+    	$request = $this->getRequest();
+    	$hide_login = $request->get('hide_login', false);
+    	$hide_ad = $request->get('hide_ad', false);
+    	return array(
+    		'user' => $user,
+    		'hide_login' => $hide_login,
+    		'hide_ad' => $hide_ad
+    	);
     }
     
 	/**
@@ -47,7 +56,12 @@ class DefaultController extends SiteController
     public function rightbarAction()
     {
     	$user = $this->get('security.context')->getToken()->getUser();
-    	return array('user' => $user);
+    	
+    	$repo = $this->getRepository('User');
+    	$topfans = $repo->findBy(array('enabled' => true, 'type' => User::TYPE_FAN), array('score' => 'DESC', 'friendCount' => 'DESC'), 15);
+    	$topidols = $repo->findBy(array('enabled' => true, 'type' => User::TYPE_IDOL), array('fanCount' => 'DESC'), 15);
+    	
+    	return array('user' => $user, 'topfans' => $topfans, 'topidols' => $topidols);
     }
     
 	/**

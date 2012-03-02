@@ -1,5 +1,9 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
+{% block leftbar %}
+	{% render "DodiciFansworldWebBundle:Default:leftbar" with {hide_login: true} %}
+{% endblock %}
+
 {% block fos_user_content %}
 <div class="loginformbig">
 	<h1>Ingreso</h1>
@@ -34,7 +38,7 @@
 		</div>
 		
         <div class="actions clearfix">
-        	{{ facebook_login_button({'autologoutlink': false}) }}
+        	{{ facebook_login_button({'autologoutlink': false, label: 'facebook_login_long'|trans }) }}
             <input type="submit" name="submit" value="Ingresar" class="btn_action" />
         </div>
         

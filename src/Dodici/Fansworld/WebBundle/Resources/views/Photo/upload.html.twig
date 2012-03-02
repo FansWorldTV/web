@@ -1,12 +1,23 @@
 {% extends "DodiciFansworldWebBundle::popup.html.twig" %}
 
+{% form_theme form 'DodiciFansworldWebBundle::form.html.twig' %}
+
 {% block content %}
 	{% if photo %}
 		{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}
 	{% else %}
-		<form action="{{ path('photo_upload') }}" method="post" enctype="multipart/form-data">
-			{{ form_widget(form) }}
-			<input type="submit" name="submit" value="ENVIAR" />
+	<div class="greybox">
+		<form action="{{ path('photo_upload') }}" method="post" enctype="multipart/form-data" class="bigform upload-photo">
+			<div class="form-upload fieldcontainer">
+				<ul class="fields">
+	        		{{ form_widget(form) }}
+	        	</ul>
+			</div>
+			
+	        <div class="actions clearfix">
+	            <input type="submit" name="submit" value="Subir" class="btn_action" />
+	        </div>
 		</form>
+	</div>	
 	{% endif %}
 {% endblock %}

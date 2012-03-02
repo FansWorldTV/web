@@ -1,19 +1,30 @@
 {% extends "DodiciFansworldWebBundle::popup.html.twig" %}
 
+{% form_theme form 'DodiciFansworldWebBundle::form.html.twig' %}
+
 {% block content %}
 <div class="upload_image clearfix">
 	<div class="current">
 		{% if media %}
-			{% thumbnail media, 'medium' %}
+			{% thumbnail media, 'medium' with { class: 'roundedimg'} %}
 		{% else %}
-			<img src="{{ asset('bundles/dodicifansworldweb/images/user_pic.jpg') }}" alt="" />
+			<img class="roundedimg" src="{{ asset('bundles/dodicifansworldweb/images/user_pic.jpg') }}" alt="" />
 		{% endif %}
 	</div>
 	<div class="form">
-		<form action="{{ path('user_change_image') }}" method="post" enctype="multipart/form-data">
-			{{ form_widget(form) }}
-			<input type="submit" name="submit" value="ENVIAR" />
-		</form>
+		<div class="greybox">
+			<form action="{{ path('user_change_image') }}" method="post" enctype="multipart/form-data" class="bigform change-image">
+				<div class="form-changeimage fieldcontainer">
+					<ul class="fields">
+		        		{{ form_widget(form) }}
+		        	</ul>
+				</div>
+				
+		        <div class="actions clearfix">
+		            <input type="submit" name="submit" value="Subir" class="btn_action" />
+		        </div>
+			</form>
+		</div>
 	</div>
 </div>
 {% endblock %}

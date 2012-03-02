@@ -30,9 +30,9 @@ body {
 .top .social .redes a { margin-left:8px;}
 
 
-.header { height:145px;}
-.header .logo { float:left; margin-top:52px}
-.header .search { float:right; margin-top:50px; background:url(../images/ui/search.png) no-repeat; width:357px; height:32px; padding:10px 0 0 10px}
+.header { height:85px;}
+.header .logo { float:left; margin-top:22px}
+.header .search { float:right; margin-top:20px; background:url(../images/ui/search.png) no-repeat; width:357px; height:32px; padding:10px 0 0 10px}
 .header .search input { width:210px; position:relative; float:left; height:24px; border:none; margin-right:10px;font-family: 'Ubuntu', sans-serif;;}
 .header .search ul { width:95px; position:relative; float:left; background:#fff;font-family: 'Ubuntu', sans-serif;}
 .header .search ul li a { display:block; line-height:24px; border-left:solid 1px #f1f1f1; padding-left:20px; background:url(../images/ui/ul_search.png) no-repeat 9% 50%; font-size:11px; color:#666666}
@@ -91,7 +91,7 @@ body {
 
 
 .container  { background:#fff url(../images/body/bg_container.gif) repeat-x bottom; box-shadow:0 1px 1px #999; padding:11px; margin-bottom:60px;}
-.content { display:block; clear:both; margin-bottom:60px; padding-top:40px;}
+.content { display:block; clear:both; margin-bottom:60px; padding-top:0px;}
 
 .footer { display:block; clear:both; height:110px; padding-left:20px;}
 .footer .loguito { float: right; padding:30px 40px 0 0;}
@@ -234,7 +234,7 @@ form.register table tr.error td label select{ border:solid 1px #333; background:
 .user_menu ul li.active a { color:#111; font-weight:bold;}
 
 
-.grid_users { width:305px; height:179px; z-index:1;}
+.grid_users { width:305px; z-index:1;}
 .grid_users ul .users { width:305px;}
 .grid_users ul.users li a{ display:block; width:54px; height:54px; background:#f1f1f1; border:solid 1px #fff; box-shadow:0 1px 1px #999; position:relative; float:left; margin:0 5px 5px 0;}
 .grid_users ul.users li a images { width:54px;}
@@ -550,7 +550,7 @@ ul.post_privacidad li:hover ul li a { background:none; padding-left:20px; line-h
 .contests ul.paginador li.active a { color:#c73400; font-weight:bold;}
 
 
-.share_content { border-bottom:solid 2px #0093c9; padding-bottom:10px; margin-top:-6px; margin-bottom:20px;}
+.share_content { border-bottom:solid 2px #0093c9; padding-bottom:10px; margin-top:0px; margin-bottom:20px;}
 .share_content a { margin-right:4px;}
 .share_content input { float:right; height:24px; font-size:11px; padding:0 0 0 3px !important; width:250px; background:#f8f6e8; border-top:solid 1px #c2c0b5; border-left:solid 1px #c2c0b5; border-right:solid 1px #ebebeb; border-bottom:solid 1px #ebebeb; color:#5d5a48;}
 .share_content input:focus { color:#fff; background: #06C; border: solid 1px #10436e;}
@@ -652,7 +652,7 @@ form.login input { margin-bottom: 10px; }
 .wrap .navy ul li.alerts_user ul .loading { background: url(../images/ajax-loader-small.gif) center center no-repeat !important; }
 
 .nota_ampliada h2.noimage { margin: 0 0 15px; clear: both; float: none; position: initial; }
-.nota_ampliada .media img.articleimg { width: 468px; margin-bottom: 15px; }
+.nota_ampliada .media img.articleimg { width: 468px; margin-bottom: 10px; }
 
 /* Registro */
 .greybox { background: #F6F6F6; border: solid 1px white; box-shadow: 0 1px 1px #888; padding: 30px; border-radius: 5px;}
@@ -670,3 +670,6 @@ form.login input { margin-bottom: 10px; }
 .greybox div.errors { font-size: 16px;color: #C33;margin-bottom: 10px;}
 .loginformbig .rememberfield { margin-top: 6px;float: left;margin-bottom: 6px;}
 .link-reset {display:block; margin-top: 10px;}
+a.homelink img { position: relative; top: 4px;}
+
+.roundedimg { padding: 0; -moz-border-radius: 7px; -webkit-border-radius: 7px; border-radius: 7px; }

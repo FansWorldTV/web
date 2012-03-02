@@ -1,8 +1,7 @@
-
 {% block field_label %}
 {% spaceless %}
     <label for="{{ id }}">
-    	{{ id|trans([], 'FOSUserBundle') }}
+    	{{ label|trans }}
     	{% if required %}
     		<span class="required" title="Campo requerido">*</span>
     	{% endif %}

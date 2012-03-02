@@ -1,292 +1,52 @@
 <div class="col_300 left">
                 <div class="cont clearfix">
-                    <h2>Idolos de  <a class="more" href="user_idols.php">ver todos</a></h2>
+                    <h2>Idolos top <a class="more" href="#">ver todos</a></h2>
                     <div class="grid_users">
                         <ul class="users">
+                        	{% for idol in topidols %}
                             <li class="user">
-                                <a href="user_profile.php">
+                                <a href="{{ path('user_detail', {id: idol.id}) }}">
                                     <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
+                                        <h3 class="name">{{ idol }}</h3>
+                                        <span class="fans">{{ idol.fanCount }} fans</span>
                                     </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
+                                    {% if idol.image %}
+                                    	{% thumbnail idol.image, 'avatar' %}
+                                    {% else %}
+                                    	<img src="{{ asset('bundles/dodicifansworldweb/images/user_pic.jpg' )}}" width="50" height="50" />
+                                    {% endif %}
                                 </a>
                             </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
+                <div class="ad">
+                    <div class="banner_demo" style="height:120px"></div>
+                </div>
                 <div class="cont clearfix">
-                    <h2> Fans <a class="more" href="user_fans.php">ver todos</a>de </h2>
+                    <h2>Fans top <a class="more" href="#">ver todos</a></h2>
                     <div class="grid_users">
                         <ul class="users">
+                        	{% for fan in topfans %}
                             <li class="user">
-                                <a href="user_profile.php">
+                                <a href="{{ path('user_detail', {id: fan.id}) }}">
                                     <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
+                                        <h3 class="name">{{ fan }}</h3>
+                                        <span class="fans">{{ fan.score }} puntos</span>
                                     </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
+                                    {% if fan.image %}
+                                    	{% thumbnail fan.image, 'avatar' %}
+                                    {% else %}
+                                    	<img src="{{ asset('bundles/dodicifansworldweb/images/user_pic.jpg' )}}" width="50" height="50" />
+                                    {% endif %}
                                 </a>
                             </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
-                            <li class="user">
-                                <a href="user_profile.php">
-                                    <span class="tooltip">
-                                        <h3 class="name">Javier Pastore</h3>
-                                        <span class="fans">1523 fans</span>
-                                    </span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/demo/user7.jpg' )}}" />
-                                </a>
-                            </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
                 <div class="ad">
                     <div class="banner_demo" style="height:250px"></div>
-                </div>
-                <div class="ad">
-                    <div class="banner_demo" style="height:120px"></div>
                 </div>
             </div>
