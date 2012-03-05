@@ -3,6 +3,7 @@ $(document).ready(function(){
     ajax.init();
     searchFront.init();
     friendsSearch.init();
+    photos.init();
     albums.init();
     
     $('.change_image').colorbox({
@@ -490,7 +491,7 @@ var photos = {
     pager : 2,
     
     init: function(){
-        
+      photos.get();  
     },
     
     get : function(){
@@ -501,13 +502,18 @@ var photos = {
                 if(r){
                     for(var i in r['images']){
                         var ele = r['images'][i];
-                        var template = $("#templates .pic").clone();
-                        template.find('a').attr('href', Routing.generate('photo_show', {
-                            'id': ele.id
-                        }));
+                        var template = $("#templates .album_cover").clone();
+                        var href = Routing.generate(appLocale + '_photo_show', {
+                            'id': ele.id,
+                            'slug': ele.slug
+                        });
+                        template.find(".image").attr("href", href);
+                        template.find(".image img").attr("src", ele.image);
+                        template.find(".title").attr("href", href).html(ele.title);
+                        template.find("span").html("<a href='" + href+ "'>" + ele.comments + " comentarios</a>");
                         template.find('a img').attr('src', ele.image);
                     
-                        $("div.user_album div.mask").append(template);
+                        $("div.album_covers div.mask").append(template);
                     }
                     if(!r['gotMore']){
                         $("a.loadmore.pictures").hide();

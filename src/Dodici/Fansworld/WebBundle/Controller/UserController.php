@@ -209,9 +209,11 @@ class UserController extends SiteController
         if ($notificationId) {
             try {
                 $notification = $this->getRepository('Notification')->find($notificationId);
-                
-                if (!$user instanceof User) throw new \Exception('Must be logged in');
-                if ($notification->getTarget() != $user) throw new \Exception('Wrong user');
+
+                if (!$user instanceof User)
+                    throw new \Exception('Must be logged in');
+                if ($notification->getTarget() != $user)
+                    throw new \Exception('Wrong user');
 
                 $notification->setReaded(true);
 
@@ -318,13 +320,16 @@ class UserController extends SiteController
 
         if ($friendshipId) {
             try {
-                if (!$user instanceof User) throw new \Exception('Must be logged in');
+                if (!$user instanceof User)
+                    throw new \Exception('Must be logged in');
                 $friendshipRepo = $this->getRepository('Friendship');
                 $friendship = $friendshipRepo->findOneBy(array('id' => $friendshipId));
-                
-                if ($friendship->getActive()) throw new \Exception('Already accepted');
-                if ($friendship->getTarget() != $user) throw new \Exception('Wrong user');
-                
+
+                if ($friendship->getActive())
+                    throw new \Exception('Already accepted');
+                if ($friendship->getTarget() != $user)
+                    throw new \Exception('Wrong user');
+
                 $friendship->setActive(true);
 
                 $em = $this->getDoctrine()->getEntityManager();
@@ -350,18 +355,20 @@ class UserController extends SiteController
         $request = $this->getRequest();
         $friendshipId = $request->get('id', false);
         $user = $this->get('security.context')->getToken()->getUser();
-        
-        
+
+
 
         $error = true;
 
         if ($friendshipId) {
             try {
-                if (!$user instanceof User) throw new \Exception('Must be logged in');
-            	$friendshipRepo = $this->getRepository('Friendship');
+                if (!$user instanceof User)
+                    throw new \Exception('Must be logged in');
+                $friendshipRepo = $this->getRepository('Friendship');
                 $friendship = $friendshipRepo->find($friendshipId);
-                
-                if ($friendship->getTarget() != $user) throw new \Exception('Wrong user');
+
+                if ($friendship->getTarget() != $user)
+                    throw new \Exception('Wrong user');
 
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->remove($friendship);
@@ -433,24 +440,26 @@ class UserController extends SiteController
         foreach ($photosRepo as $photo) {
             $photos[] = array(
                 'id' => $photo->getId(),
-                'image' => $this->getImageUrl($photo->getImage())
+                'image' => $this->getImageUrl($photo->getImage()),
+                'slug' => $photo->getSlug()
             );
         }
 
         $albums = array();
         foreach ($albumsRepo as $album) {
-            $photo = $this->getRepository('Photo')->findOneBy(array('album'=>$album->getId()));
+            $photo = $this->getRepository('Photo')->findOneBy(array('album' => $album->getId()));
             if ($photo) {
-	            $albums[] = array(
-	                'image' => $this->getImageUrl($photo->getImage()),
-	                'id' => $album->getId(),
-	                'title' => $album->getTitle(),
-	                'countImages' => count($album->getPhotos()),
-	                'comments' => count($album->getComments())
-	            );
+                $albums[] = array(
+                    'image' => $this->getImageUrl($photo->getImage()),
+                    'id' => $album->getId(),
+                    'title' => $album->getTitle(),
+                    'countImages' => count($album->getPhotos()),
+                    'comments' => count($album->getComments()),
+                    'slug' => $album->getSlug()
+                );
             }
         }
-
+        
         return array(
             'user' => $user,
             'isLoggedUser' => $isLoggedUser,
@@ -470,12 +479,14 @@ class UserController extends SiteController
         $user = $this->getRepository('User')->find($id);
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
-        $photos = $this->getRepository('Photo')->findBy(array('author' => $id), array('createdAt' => 'DESC'));
+        $photos = $this->getRepository('Photo')->findBy(array('author' => $id), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
+        $totalCount = $this->getRepository('Photo')->countBy(array('author' => $id));
 
         return array(
             'user' => $user,
             'photos' => $photos,
             'isLoggedUser' => $isLoggedUser,
+            'gotMore' => $totalCount > self::LIMIT_PHOTOS ? true : false
         );
     }
 

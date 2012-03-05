@@ -113,8 +113,13 @@ class AlbumController extends SiteController
         $response = array();
         foreach ($albums as $album) {
             $firstimage = $album->getPhotos();
+            if($firstimage[0]){
+                $image = $this->getImageUrl($firstimage[0]->getImage());
+            }else{
+                $image = false;
+            }
             $response['albums'][] = array(
-                'image' => $this->getImageUrl($firstimage[0]->getImage()),
+                'image' => $image,
                 'id' => $album->getId(),
                 'title' => $album->getTitle(),
                 'countImages' => count($album->getPhotos()),

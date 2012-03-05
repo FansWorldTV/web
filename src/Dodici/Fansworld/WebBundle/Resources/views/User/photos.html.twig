@@ -24,13 +24,13 @@
         <div class="user_album">
             <div class="mask">
                 {% for photo in photos %}
-                    <div class="pic"><a href="photo.php"><img src="{{ photo.image }}"></a></div>
+                    <div class="pic"><a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}"><img src="{{ photo.image }}"></a></div>
                 {% endfor %}
             </div>
         </div>
     </div>
     {% if viewMorePhotos %}
-        <a class="loadmore" href="{{ path('user_listphotos', {'id': user.id}) }}">ver todas las imagenes</a>
+        <a class="loadmore" href="{{ path('user_listphotos', {'id': user.id}) }}">ver todas las imágenes</a>
     {% endif %}
     
     <div class="cont clearfix">
@@ -39,9 +39,9 @@
             <div class="mask"> 
                 {% for album in albums %}
                     <div class="album_cover"> 
-                        <a href=""><img src="{{ album.image }}"></a>
-                        <a href="">{{ album.title }}</a>
-                        <span>{{ album.countImages }} imagenes - <a href="user_album.php">{{ album.comments }} comentarios</a></span>
+                        <a href="{{ path('album_show', { 'id': album.id, 'slug': album.slug } ) }}"><img src="{{ album.image }}"></a>
+                        <a href="{{ path('album_show', { 'id': album.id, 'slug': album.slug } ) }}">{{ album.title }}</a>
+                        <span>{{ album.countImages }} imagenes - <a href="{{ path('album_show', { 'id': album.id, 'slug': album.slug } ) }}">{{ album.comments }} comentarios</a></span>
                     </div>
                 {% endfor %}
             </div>

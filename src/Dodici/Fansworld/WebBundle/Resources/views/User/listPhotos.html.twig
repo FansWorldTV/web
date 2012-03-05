@@ -48,27 +48,24 @@
                     <div class="album_cover"> 
                         <a href=""><img src="{{ photo.image }}"></a>
                         <a href="">{{ photo.title }}</a>
-                        <span><a href="user_album.php">{{ photo.comments }} comentarios</a></span>
+                        <span><a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">{{ photo.commentCount }} comentarios</a></span>
                     </div>
                 {% endfor %}
             </div>
         </div>
     </div>
-    {% if viewMoreAlbums %}
+    {% if gotMore %}
         <a class="loadmore pictures" href="#1">ver más</a> 
     {% endif %}
 </div>
 <input type="hidden" value="{{user.id}}" id="userid"/>
 <div id="templates" class="hidden">
-    <div class="album_cover"> 
-        <a class="image" href=""><img src=""></a>
+    <div class="album_cover">
+        <a class="image" href="">
+            <img src="">
+        </a>
         <a class="title" href=""></a>
         <span></span>
-    </div>
-    <div class="pic">
-        <a href="photo.php">
-            <img src="" alt="picture" />
-        </a>
     </div>
 </div>
 {% endblock %}

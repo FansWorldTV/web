@@ -136,7 +136,10 @@ class PhotoController extends SiteController
         foreach ($photos as $photo) {
             $response['images'][] = array(
                 'id' => $photo->getId(),
-                'image' => $this->getImageUrl($photo->getImage())
+                'image' => $this->getImageUrl($photo->getImage()),
+                'slug' => $photo->getSlug(),
+                'title' => $photo->getTitle(),
+                'comments' => $photo->getCommentCount()
             );
         }
         
