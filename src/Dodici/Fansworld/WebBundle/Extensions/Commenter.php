@@ -48,5 +48,7 @@ class Commenter
     	$this->em->persist($comment);
 			
 		$this->em->flush();
+		
+		return $comment;
     }    
 }

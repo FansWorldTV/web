@@ -1,0 +1,12 @@
+{% if comments is not defined %}
+	{% set comments = appstate.comments(entity) %}
+{% endif %}
+<div class="actualizaciones clearfix">
+	{% if appstate.cancomment(entity) %}
+		{% include 'DodiciFansworldWebBundle:Comment:comment_form.html.twig' with {entity: entity} %}
+	{% endif %}
+	
+	{% for comment in comments %}
+		{% include 'DodiciFansworldWebBundle:Comment:comment.html.twig' with {comment: comment} %}
+	{% endfor %}
+</div>

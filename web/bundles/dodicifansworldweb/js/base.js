@@ -259,6 +259,29 @@ var ajax = {
         });
     },
     
+    globalCommentAction: function(type, id, content, privacy, callback, errorcallback){
+        $.ajax({
+            url: 'http://' + location.host + Routing.generate( appLocale + '_comment_ajaxpost'),
+            type: 'POST',
+            data: {
+                'id' : id,
+                'type' : type,
+                'content' : content,
+                'privacy' : privacy
+            },
+            success: function(response){
+                if(typeof(callback) !== 'undefined'){
+                    callback(response);
+                }
+            },
+            error:function (xhr, ajaxOptions, thrownError){
+                if(typeof(errorcallback) !== 'undefined'){
+                    errorcallback(xhr.responseText);
+                }
+            }
+        });
+    },
+    
     getPhotosAction: function(userid, page, callback){
         $.ajax({
             url: 'http://' + location.host + Routing.generate( appLocale + '_photo_get'),

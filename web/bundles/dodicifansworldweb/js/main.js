@@ -34,6 +34,10 @@ var site = {
         $('.change_image').colorbox({iframe: true, innerWidth: 700, innerHeight: 220});
         $(".btn_upload_photo").colorbox({iframe: true, innerWidth: 700, innerHeight: 455});
         
+        $('.timeago').each(function(){
+        	$(this).html($.timeago($(this).attr('data-time')));
+        });
+        
         site.listenPendingRequests();
         site.getPendingFriends();
         site.getNotifications();
@@ -41,6 +45,7 @@ var site = {
         
         site.likeButtons();
         site.shareButtons();
+        site.globalCommentButtons();
         site.timerPendingFriends = setTimeout('site.listenPendingRequests()', 10000);
         site.timerNotifications = setTimeout('site.listenNotifications()', 10000);
         
@@ -217,6 +222,32 @@ var site = {
                     el.removeClass('loading');
                     el.addClass('disabled');
                     success(response.message);
+                },
+                function(responsetext){
+                    el.removeClass('loading');
+                    error(responsetext);
+                });
+        	
+        });
+    },
+    globalCommentButtons: function(){
+        $('.comment_button:not(.loading)').live('click',function(e){
+            e.preventDefault();
+            var el = $(this);
+            var type = el.attr('data-type');
+            var id = el.attr('data-id');
+            var content = el.parents('.commentform').find('.comment_message').val();
+            var privacy = el.parents('.commentform').find('.post_privacidad').val();
+            el.addClass('loading');
+        	
+            ajax.globalCommentAction(type, id, content, privacy,
+                function(response){
+                    el.removeClass('loading');
+                    success(response.message);
+                    el.parents('.commentform').after(response.commenthtml);
+                    $('.timeago').each(function(){
+                    	$(this).html($.timeago($(this).attr('data-time')));
+                    });
                 },
                 function(responsetext){
                     el.removeClass('loading');

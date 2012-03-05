@@ -1,0 +1,29 @@
+{% if shortform is not defined %}
+	{% set shortform = false %}
+{% endif %}
+{% if shortform %}
+<div class="status_comment commentform clearfix">
+	<div class="shortcommentform">
+		<textarea class="comment_message" cols="" rows="2"></textarea>
+		{% if entity.privacy is defined %}
+		<input class="post_privacidad" type="hidden" value="{{ entity.privacy }}" />
+		{% endif %}
+		<a class="btn comment_button" href="#" data-type="{{ appstate.type(entity) }}" data-id="{{ entity.id }}">comentar</a>
+	</div> 
+</div>
+{% else %}
+<div class="update commentform clearfix"> <span class="deco"></span>
+            <div class="upd">
+              <textarea cols="" rows="3" class="comment_message"></textarea>
+            </div>
+            <div class="bottom clearfix">
+              <div class="info">Quedan <span class="charsleft">500</span> caracteres</div>
+              <a class="btn_update comment_button" href="#" data-type="{{ appstate.type(entity) }}" data-id="{{ entity.id }}">Comentar</a>
+              <select class="post_privacidad">
+              	  {% for key, privacy in appstate.privacies %}
+	                <option value="{{ key }}">{{ privacy }}</option>
+	              {% endfor %}
+              </select>
+            </div>
+</div>
+{% endif %}

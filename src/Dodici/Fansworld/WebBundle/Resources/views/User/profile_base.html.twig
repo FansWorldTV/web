@@ -38,7 +38,7 @@
                         <div class="tabs clearfix">
                             {% if user == app.user %}<a class="btn_edit_info" href="{{ path('fos_user_profile_edit') }}" title="Editar informacion">Editar informacion</a>{% endif %}
                             <ul>
-                                <li><a {% if active_tab == 'wall' %}class="active"{% endif %} href="user_profile.php">Muro</a></li>
+                                <li><a {% if active_tab == 'wall' %}class="active"{% endif %} href="{{ path('user_wall', {'id': user.id}) }}">Muro</a></li>
                                 <li><a {% if active_tab == 'photos' %}class="active"{% endif %} href="{{ path('user_photos', {'id': user.id}) }}">Fotos</a></li>
                                 <li><a {% if active_tab == 'videos' %}class="active"{% endif %} href="user_videos.php">Videos</a></li>
                                 <li><a {% if active_tab == 'detail' %}class="active"{% endif %} href="{{ path('user_detail', {id: user.id}) }}">Informacion</a></li>

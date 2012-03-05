@@ -1,4 +1,6 @@
-{% block notification %}
+{% block comment %}
+<div class="{% block comment_block_class %}actualizacion clearfix comment_unit{% endblock %}">
+{% block comment_content %}
 	{% block avatar %}
 		{% if image is defined and image is not null %}
 		<div class="avatar">
@@ -7,18 +9,31 @@
 		{% endif %}
 	{% endblock %}
 	{% block info %}
-	<div class="status">
-		{% block text %}
+	<div class="{% block info_block_class %}status{% endblock %}">
+		{% block info_text %}
 			{% block action %}<span class="action_user"></span>{% endblock %}
 			{% block title %}<span class="title"></span>{% endblock %}
 			{% block description %}<p></p>{% endblock %}
 			{% block date %}
 				<div class="info">
 					{% include 'DodiciFansworldWebBundle:Comment:date.html.twig' with {date: comment.createdAt} %}
-					<span class="comments">{{ comment.comments|length }} comentarios</span>
+					<span class="comments">{{ comment.commentCount }} comentarios</span>
 				</div>
+			{% endblock %}
+			{% block subcomments %}
+				{% if comment.comment is null %}
+					<div class="comments">
+					  {% include 'DodiciFansworldWebBundle:Comment:comment_form.html.twig' with {shortform: true, entity: comment} %}
+	                  
+	                  {% for subcomment in comment.comments %}
+	                  	{% include 'DodiciFansworldWebBundle:Comment:comment.html.twig' with {comment: subcomment} %}
+	                  {% endfor %}
+	                </div>
+				{% endif %}
 			{% endblock %}
 	 	{% endblock %}
 	</div>
 	{% endblock %}
+{% endblock %}
+</div>
 {% endblock %}

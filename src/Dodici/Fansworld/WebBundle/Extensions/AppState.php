@@ -2,6 +2,10 @@
 
 namespace Dodici\Fansworld\WebBundle\Extensions;
 
+use Dodici\Fansworld\WebBundle\Entity\Comment;
+
+use Dodici\Fansworld\WebBundle\Entity\Privacy;
+
 use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Session;
@@ -10,7 +14,8 @@ use Doctrine\ORM\EntityManager;
 
 class AppState
 {
-
+	const LIMIT_WALL = 10;
+	
     protected $security_context;
     protected $request;
     protected $em;
@@ -115,6 +120,26 @@ class AppState
     	return true;
     }
     
+	public function canComment($entity) 
+    {
+    	if (!($this->user instanceof User)) return false;
+    	$user = $this->user;
+    	
+    	if ($entity instanceof User) {
+    		if ($user == $entity) return true;
+    		
+    		$frep = $this->em->getRepository('DodiciFansworldWebBundle:Friendship');
+	    	if (!$frep->UsersAreFriends($user, $entity)) return false;
+    	} else {
+    		if ($entity instanceof Comment) {
+    			if ($entity->getComment() !== null) return false;
+    		}
+    		return $this->canView($entity);
+    	}
+    	
+    	return true;
+    }
+    
 	public function canFriend(User $target) 
     {
     	if (!($this->user instanceof User)) return false;
@@ -143,5 +168,19 @@ class AppState
     	$exp = explode('\\', get_class($entity));
     	$classname = end($exp);
     	return strtolower($classname);
+    }
+    
+    public function getComments($entity)
+    {
+    	$comments = $this->em->getRepository('DodiciFansworldWebBundle:Comment')->wallEntity($entity, self::LIMIT_WALL, 0);
+    	return $comments;
+    }
+    
+    public function getPrivacies()
+    {
+    	if (!($this->user instanceof User)) return false;
+    	$user = $this->user;
+    	
+    	return Privacy::getOptions();
     }
 }

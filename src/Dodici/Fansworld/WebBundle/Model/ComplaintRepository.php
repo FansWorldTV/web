@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Model;
 
+use Doctrine\DBAL\Types\Type;
+
 use Doctrine\ORM\EntityRepository;
 
 /**

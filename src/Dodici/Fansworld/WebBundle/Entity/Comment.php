@@ -198,7 +198,7 @@ class Comment
 
     public function __toString()
     {
-    	return $this->getContent();
+    	return (string)$this->getContent();
     }
 
 	/**

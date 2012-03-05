@@ -15,8 +15,8 @@ class SiteController extends Controller
 
     public function getRepository($entity, $environment = "FansworldWeb")
     {
-        if ($entity == 'User') {
-            return $this->getDoctrine()->getRepository("ApplicationSonataUserBundle:" . $entity);
+        if (strtolower($entity) == 'user') {
+            return $this->getDoctrine()->getRepository("ApplicationSonataUserBundle:User");
         } else {
             return $this->getDoctrine()->getRepository("Dodici" . $environment . "Bundle:" . $entity);
         }

@@ -1,1 +1,1 @@
-<span class="date">{{ date|date('U') }}</span>
+<abbr class="date timeago" data-time="{{ date|date('c') }}" title="{{ date|date('Y-m-d H:i:s') }}">{{ date|date('c') }}</abbr>

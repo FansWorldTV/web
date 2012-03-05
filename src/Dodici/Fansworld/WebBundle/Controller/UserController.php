@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
+use Symfony\Component\HttpKernel\Exception\HttpException;
+
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\Form\FormError;
 use Application\Sonata\MediaBundle\Entity\Media;
@@ -141,9 +143,27 @@ class UserController extends SiteController
         return $response;
     }
 
-    /**
-     * @Route("/user/{id}", name="user_detail", requirements={"id"="\d+"})
+	/**
+     * @Route("/user/{id}", name="user_wall", requirements={"id"="\d+"})
      * @Template
+     * @Secure(roles="ROLE_USER")
+     */
+    public function wallAction($id)
+    {
+
+
+        $user = $this->getRepository('User')->find($id);
+        if (!$user) {
+            throw new HttpException(404, "No existe el usuario");
+        }
+        
+        return array('user' => $user);
+    }
+    
+    /**
+     * @Route("/user/{id}/info", name="user_detail", requirements={"id"="\d+"})
+     * @Template
+     * @Secure(roles="ROLE_USER")
      */
     public function detailAction($id)
     {

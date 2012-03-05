@@ -31,11 +31,11 @@ class ContestRepository extends CountBaseRepository
      */
     public function searchBy($query)
     {
-        return $this->_em->createQuery("
+        return $this->_em->createQuery('
                 SELECT c
                 FROM \Dodici\Fansworld\WebBundle\Entity\Contest c
                 WHERE c.active = true AND (c.title LIKE :query OR c.content LIKE :query)
-            ")
+            ')
                         ->setParameter('query', '%' . $query . '%')
                         ->getResult();
     }

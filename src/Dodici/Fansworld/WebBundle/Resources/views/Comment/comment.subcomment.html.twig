@@ -1,5 +1,9 @@
 {% extends 'DodiciFansworldWebBundle:Comment:comment.base.html.twig' %}
 
+{% block comment_block_class %}status_comment clearfix{% endblock %}
+
+{% block info_block_class %}status_comment_user{% endblock %}
+
 {% block avatar %}
 	{% set image = comment.author.image %}
 	{{ parent() }}

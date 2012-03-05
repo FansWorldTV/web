@@ -47,7 +47,7 @@ body {
 .navy ul li { display:inline; font-family: 'Ubuntu', sans-serif; font-size:11px;}
 .navy ul li a { background:url(../images/ui/navy.gif) repeat-x top right;line-height:45px; position:relative; float:left; padding:0 20px; text-transform:uppercase; color:#848f93;height:45px;}
 .navy ul li a:hover , .navy ul li a.current  { background:url(../images/ui/navy.gif) repeat-x bottom right; color:#fff; text-decoration:none; text-shadow:0 1px 3px #000}
-.navy ul li a images { margin-top:15px;}
+.navy ul li a img { margin-top:15px;}
 
 .navy ul li.alerts_user a { background:url(../images/ui/user_alert.gif) no-repeat !important; width:51px; height:45px; float: right; padding:0; font-family:Arial, Helvetica, sans-serif; font-size:11px; z-index:1}
 .navy ul li.alerts_user a span { position:absolute; float:left; background:#ff4b0c; margin:-11px 0 0 15px; line-height:14px; color:#fff; font-weight:bold; padding:1px 5px; text-shadow:0 1px 0 #d21e03; border-radius:3px;}
@@ -56,7 +56,7 @@ body {
 
 .navy ul li.alerts_user ul li { display:block; border-bottom:solid 1px #e9e9e9; padding:10px; font-family:Arial, Helvetica, sans-serif; background:none;margin:none;}
 .navy ul li.alerts_user ul li .avatar { width:44px; height:44px; float:left; margin-right:10px;}
-.navy ul li.alerts_user ul li .avatar images { border:solid 2px #fff; box-shadow:0 1px 1px #999;}
+.navy ul li.alerts_user ul li .avatar img { border:solid 2px #fff; box-shadow:0 1px 1px #999;}
 .navy ul li.alerts_user ul li .info { width:150px; float:left; position:relative;}
 .navy ul li.alerts_user ul li .info a { display:block !important; float:left; width:auto !important; text-transform:none; color:#008abd; font-size:12px; font-family:Arial, Helvetica, sans-serif; font-weight:bold; margin-bottom:2px;}
 .navy ul li.alerts_user ul li .info a:hover { text-shadow:none; text-decoration:underline;}
@@ -75,7 +75,7 @@ body {
 .navy ul li.notifications_user ul{ width:310px; background:#fff url(../images/ui/bg_pop.gif) repeat-x top; display:block; position:absolute; z-index:1500; float:right; margin:45px 0 0 680px; box-shadow:-1px 1px 1px #999; font-family:Arial, Helvetica, sans-serif 	!important;}
 .navy ul li.notifications_user ul li { display:block; border-bottom:solid 1px #e9e9e9; padding:10px; font-family:Arial, Helvetica, sans-serif; background:none;margin:none;}
 .navy ul li.notifications_user ul li .avatar { width:44px; height:44px; float:left; margin-right:10px;}
-.navy ul li.notifications_user ul li .avatar images { border:solid 2px #fff; box-shadow:0 1px 1px #999;}
+.navy ul li.notifications_user ul li .avatar img { border:solid 2px #fff; box-shadow:0 1px 1px #999;}
 .navy ul li.notifications_user ul li .info { width:150px; float:left; position:relative;}
 .navy ul li.notifications_user ul li .info a { display:block !important; float:left; width:auto !important; text-transform:none; color:#008abd; font-size:12px; font-family:Arial, Helvetica, sans-serif; font-weight:bold; margin-bottom:2px;}
 .navy ul li.notifications_user ul li .info a:hover { text-shadow:none; text-decoration:underline;}
@@ -237,7 +237,7 @@ form.register table tr.error td label select{ border:solid 1px #333; background:
 .grid_users { width:305px; z-index:1;}
 .grid_users ul .users { width:305px;}
 .grid_users ul.users li a{ display:block; width:54px; height:54px; background:#f1f1f1; border:solid 1px #fff; box-shadow:0 1px 1px #999; position:relative; float:left; margin:0 5px 5px 0;}
-.grid_users ul.users li a images { width:54px;}
+.grid_users ul.users li a img { width:54px;}
 .grid_users ul.users li a span.tooltip { display:none; text-shadow:0 1px 0 #fff;}
 .grid_users ul.users li a:hover {text-decoration:none;}
 .grid_users ul.users li a:hover span.tooltip { background:url(../images/ui/tooltip.png) no-repeat; width:151px; height:56px; position:absolute; float:left; z-index:100;  display:block; margin:-46px 0 0 -50px; text-align:center; font-size:10px; color:#666; }
@@ -256,7 +256,7 @@ form.register table tr.error td label select{ border:solid 1px #333; background:
 .ticket {width:468px; height:230px; overflow:hidden}
 .video_ticket { width:1000px; }
 .video_ticket .video { width:232px; display:block; position:relative; float:left; margin-right:3px;}
-.video_ticket .video a images { width:100%}
+.video_ticket .video a img { width:100%}
 .video_ticket .video a .play { background:url(../images/ui/play_video_small.png) no-repeat; width:46px; height:46px; display:block; position:absolute; float:left; margin:75px 0 0 95px; }
 .video_ticket .video .info { background:#000; padding:7px 10px 10px 10px;}
 .video_ticket .video .info h1 { color:#fff; font-size:16px; font-weight:500; margin-bottom:5px;}
@@ -271,7 +271,7 @@ form.register table tr.error td label select{ border:solid 1px #333; background:
 .videos .mask { width:500px;}
 .videos .video { width:140px; height:165px; position:relative; float:left; margin: 0 24px 0 0}
 .videos .video .play { background:url(../images/ui/play_video_small.png) no-repeat; width:47px; height:47px; position:absolute; float:left; margin:30px 0 0 47px}
-.videos .video images { width:140px; margin-bottom:5px;}
+.videos .video img { width:140px; margin-bottom:5px;}
 .videos .video a .info { line-height:16px;}
 .videos .video a .info h1 { font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:bold; color:#000}
 .videos .video a .info span { color:#666;}
@@ -294,7 +294,8 @@ ul.foro li a:hover h3 { color:#087faa}
 .actualizaciones .actualizacion a.btn_delete_post:hover { background-position:bottom;}
 .actualizaciones .actualizacion { display:block; clear:both; padding:20px 0; border-bottom:solid 1px #f0f0f0;}
 .actualizaciones .actualizacion .avatar {  position:relative;float:left; width:52px; margin-right:20px;}
-.actualizaciones .actualizacion .avatar images { border:solid 1px #fff; box-shadow:0 1px 1px #999}
+.actualizaciones .actualizacion .avatar img { border:solid 1px #fff; box-shadow:0 1px 1px #999}
+.actualizaciones .actualizacion .share-image img { border:solid 1px #fff; box-shadow:0 1px 1px #999}
 .actualizaciones .actualizacion .ico {  position:relative;float:left; width:16px; margin-right:10px; margin-top:-2px;}
 .actualizaciones .actualizacion .status { width:393px; position:relative; float:left;}
 .actualizaciones .actualizacion .status span.action_user  { display:block; font-size:13px; margin-bottom:15px;}
@@ -303,7 +304,7 @@ ul.foro li a:hover h3 { color:#087faa}
 .actualizaciones .actualizacion .status .info { display:block; margin:10px 0 0 0; font-size:11px; color:#999;}
 .actualizaciones .actualizacion .status .info span.date { margin-right:10px;}
 .actualizaciones .actualizacion .status p  { font-size:12px; line-height:15px; color:#666;}
-.actualizaciones .actualizacion .status .album images { margin-right:1px; }
+.actualizaciones .actualizacion .status .album img { margin-right:1px; }
 .actualizaciones .actualizacion .status .video span { background:url(../images/ui/play_video_small.png) no-repeat; width:47px; height:47px; display:block; position:absolute; float:left; margin:33px 0 0 50px;}
 a.btn_delete_post { display:none;}
 .actualizaciones .actualizacion:hover a.btn_delete_post { display:block; float: right; position:absolute; background:url(../images/ui/delete_post.gif) no-repeat top; width:11px; height:11px; text-indent:-9999px;
@@ -311,7 +312,7 @@ a.btn_delete_post { display:none;}
 .actualizaciones .actualizacion:hover a.btn_delete_post:hover { background-position:bottom;}
 .actualizaciones .actualizacion .status .users {}
 .actualizaciones .actualizacion .status .users li a{ display:block; width:45px; height:45px; background:#f1f1f1; border:solid 1px #fff; box-shadow:0 1px 1px #999; position:relative; float:left; margin:0 3px 3px 0;}
-.actualizaciones .actualizacion .status .users li a images { width:45px;}
+.actualizaciones .actualizacion .status .users li a img { width:45px;}
 .actualizaciones .actualizacion .status .users li a span { display:none; text-shadow:0 1px 0 #fff;}
 .actualizaciones .actualizacion .status .users li a:hover {text-decoration:none;}
 .actualizaciones .actualizacion .status .users li a:hover span { background:url(../images/ui/tooltip.png) no-repeat; width:151px; height:56px; position:absolute; float:left; z-index:100;  display:block; margin:-46px 0 0 -50px; text-align:center; font-size:10px; color:#666; }
@@ -321,7 +322,7 @@ a.btn_delete_post { display:none;}
 .actualizaciones .actualizacion .status .comments { padding-top:10px;}
 .actualizaciones .actualizacion .status .status_comment { display:block; padding:7px; background:#e8f1f4; border-bottom:solid 1px #fff;}
 .actualizaciones .actualizacion .status .status_comment .avatar { width:30px; height:30px; float:left; margin:0}
-.actualizaciones .actualizacion .status .status_comment .avatar images { width:27px; height:27px;}
+.actualizaciones .actualizacion .status .status_comment .avatar img { width:27px; height:27px;}
 .actualizaciones .actualizacion .status .status_comment_user { float:right; width:340px; font-size:11px;}
 .actualizaciones .actualizacion .status .status_comment_user span {margin-bottom:3px; display:block; color:#999;}
 .actualizaciones .actualizacion .status .status_comment_user span a { font-weight:bold; }
@@ -378,7 +379,7 @@ a.btn_delete_post { display:none;}
 .media .media_user { float:left; width:250px; font-size:13px; font-weight:bold; margin-bottom:10px;}
 .media .media_user a { font-weight:bold;}
 .media .media_user .avatar { float:left; width:32px; height:32px; margin-right:10px;}
-.media .media_user .avatar images { width:30px; height:30px; border:solid 2px #fff; box-shadow:0 1px 1px #999;}
+.media .media_user .avatar img { width:30px; height:30px; border:solid 2px #fff; box-shadow:0 1px 1px #999;}
 .media .media_user span { clear:both; font-size:11px; color:#999; line-height:20px;}
 
 
@@ -388,7 +389,7 @@ a.btn_delete_post { display:none;}
 .comments .comment a.btn_delete_post:hover { background-position:bottom;}
 .comments .comment { display:block; clear:both; padding:10px 0; border-bottom:solid 1px #f0f0f0;}
 .comments .comment .avatar {  position:relative;float:left; width:52px; margin-right:20px;}
-.comments .comment .avatar images { border:solid 1px #fff; box-shadow:0 1px 1px #999}
+.comments .comment .avatar img { border:solid 1px #fff; box-shadow:0 1px 1px #999}
 .comments .comment .user_comment { width:393px; position:relative; float:left; font-size:11px; line-height:14px;}
 .comments .comment .user_comment span.action_user  { display:block; font-size:11px; margin-bottom:5px; color:#999}
 .comments .comment .user_comment span.action_user a { font-weight:bold; font-size:12px}
@@ -408,17 +409,17 @@ a.btn_delete_post { display:none;}
 .user_list ul li { position:relative; float:left;}
 .user_list ul li a { display:block; width:220px; margin:0 5px 5px 0; padding:6px;height:55px; border:solid 1px #fff}
 .user_list ul li a .avatar { width:56px; float:left;}
-.user_list ul li a .avatar images { border:3px solid #fff; box-shadow:0 1px 1px #999;}
+.user_list ul li a .avatar img { border:3px solid #fff; box-shadow:0 1px 1px #999;}
 .user_list ul li a .info { width:155px;float: right;}
 .user_list ul li a .info h3 { border:none!important; padding:none!important; font-size:14px; color:#222; font-weight:400; margin:0 !important;}
 .user_list ul li a .info span { font-size:10px; color:#fff; line-height:14px; font-family:Tahoma, Geneva, sans-serif}
 .user_list ul li a:hover { background:#f1f3f4; border-left:solid 1px #b7b9ba; border-top:solid 1px #b7b9ba; border-bottom:solid 1px #ebebeb; border-right:solid 1px #ebebeb; text-decoration:none;}
 .user_list ul li a:hover h3 { color:#0f6d90; text-shadow:0 1px 0 #fff;}
-.user_list ul li a:hover .avatar images { border:3px solid #fff; box-shadow:0 1px 1px #666;}
+.user_list ul li a:hover .avatar img { border:3px solid #fff; box-shadow:0 1px 1px #666;}
 .user_list ul li a:hover span { color:#666;}
 
 .update { clear:both; display:block; border: solid 1px #d3e0e4}
-.update span { display:block; background:url(../images/ui/span_upd.png) no-repeat; width:10px; height:8px; position:absolute; float:left; margin:-8px 0 0 40px}
+.update span.deco { display:block; background:url(../images/ui/span_upd.png) no-repeat; width:10px; height:8px; position:absolute; float:left; margin:-8px 0 0 40px}
 .update .bottom { background:#e8f2f6; padding:3px; display:block; color:#8b9396; border-top:solid 1px #d3e0e4;}
 .update .bottom .info { float:left; padding:5px 0 0 5px}
 .update .bottom .info .charge { width:250px; height:2px; background:#fff; margin-top:5px;}
@@ -456,7 +457,7 @@ ul.post_privacidad li:hover ul li a { background:none; padding-left:20px; line-h
 .nota h2 { border:none; padding:none; font-size:18px; color:#111; margin-bottom:10px;}
 .nota h2 a { color:#111; font-weight:500;}
 .nota .media { float:left; width:140px;}
-.nota .media images { width:140px;}
+.nota .media img { width:140px;}
 .nota .contenido { width:305px; float:left; margin-left:20px;}
 .nota .contenido p { font-size:12px; line-height:15px; padding-bottom:15px; color:#666}
 .nota .contenido .options { padding-top:10px;}
@@ -467,7 +468,7 @@ ul.post_privacidad li:hover ul li a { background:none; padding-left:20px; line-h
 
 .nota_ampliada h2 { position:absolute; float:left; margin:200px 20px 0 0; border:none; padding:10px; color:#fff; background:#0093c9; font-size:30px;}
 .nota_ampliada .media { float:left; width:468px; margin-bottom:20px;}
-.nota_ampliada .media images { width:100%;}
+.nota_ampliada .media img { width:100%;}
 .nota_ampliada .contenido {}
 .nota_ampliada .contenido p { font-size:12px; line-height:16px; padding-bottom:15px; color:#333}
 .nota_ampliada .contenido .options { padding-top:10px;}
@@ -487,7 +488,7 @@ ul.post_privacidad li:hover ul li a { background:none; padding-left:20px; line-h
 .philanthropy .nota h2 { border:none; padding:none; font-size:18px; color:#111; margin-bottom:10px;}
 .philanthropy .nota h2 a { color:#111; font-weight:500;}
 .philanthropy .nota .media { float:left; width:140px;}
-.philanthropy .nota .media images { width:140px;}
+.philanthropy .nota .media img { width:140px;}
 .philanthropy .nota .contenido { width:305px; float:left; margin-left:20px;}
 .philanthropy .nota .contenido p { font-size:12px; line-height:15px; padding-bottom:15px; color:#666}
 .philanthropy .nota .contenido .options { padding-top:10px;}
@@ -499,7 +500,7 @@ ul.post_privacidad li:hover ul li a { background:none; padding-left:20px; line-h
 .philanthropy .nota_ampliada { border-top:solid 2px #80b02e}
 .philanthropy .nota_ampliada h2 { position:absolute; float:left; margin:200px 20px 0 0; border:none; padding:10px; color:#fff; background:#80b02e; font-size:30px;}
 .philanthropy .nota_ampliada .media { float:left; width:468px; margin-bottom:20px;}
-.philanthropy .nota_ampliada .media images { width:100%;}
+.philanthropy .nota_ampliada .media img { width:100%;}
 .philanthropy .nota_ampliada .contenido {}
 .philanthropy .nota_ampliada .contenido p { font-size:12px; line-height:16px; padding-bottom:15px; color:#333}
 .philanthropy .nota_ampliada .contenido .options { padding-top:10px;}
@@ -524,7 +525,7 @@ ul.post_privacidad li:hover ul li a { background:none; padding-left:20px; line-h
 .contests .nota h2 { border:none; padding:none; font-size:18px; color:#111; margin-bottom:10px;}
 .contests .nota h2 a { color:#111; font-weight:500;}
 .contests .nota .media { float:left; width:140px;}
-.contests .nota .media images { width:140px;}
+.contests .nota .media img { width:140px;}
 .contests .nota .contenido { width:305px; float:left; margin-left:20px;}
 .contests .nota .contenido p { font-size:12px; line-height:15px; padding-bottom:15px; color:#666}
 .contests .nota .contenido .options { padding-top:10px;}
@@ -536,7 +537,7 @@ ul.post_privacidad li:hover ul li a { background:none; padding-left:20px; line-h
 .contests .nota_ampliada { border-top:solid 2px #ff9b00}
 .contests .nota_ampliada h2 { position:absolute; float:left; margin:200px 20px 0 0; border:none; padding:10px; color:#fff; background:#ff9b00; font-size:30px;}
 .contests .nota_ampliada .media { float:left; width:468px; margin-bottom:20px;}
-.contests .nota_ampliada .media images { width:100%;}
+.contests .nota_ampliada .media img { width:100%;}
 .contests .nota_ampliada .contenido {}
 .contests .nota_ampliada .contenido p { font-size:12px; line-height:16px; padding-bottom:15px; color:#333}
 .contests .nota_ampliada .contenido .options { padding-top:10px;}
@@ -568,7 +569,7 @@ ul.post_privacidad li:hover ul li a { background:none; padding-left:20px; line-h
 .album_cover a { font-size:12px; font-weight:bold; color:#333;}
 .album_cover span { color:#888; display:block; padding-top:5px;}
 .album_cover span a { font-size:11px; color:#0093c9; font-weight:normal}
-.album_cover images { width:100%;background:#fff; padding:4px; box-shadow:0 1px 1px #999; margin-bottom:10px;}
+.album_cover img { width:100%;background:#fff; padding:4px; box-shadow:0 1px 1px #999; margin-bottom:10px;}
 
 form.invite { background:#f6f6f6; border:solid 1px #fff; box-shadow:0 1px 1px #888; padding:30px;}
 form.invite .invite { background:#fff; padding:20px; box-shadow:0 1px 1px #999; border-radius:3px;}
@@ -578,7 +579,7 @@ form.invite .invite p { font-size:12px; color:#626262; line-height:16px; padding
 form.invite .invite .servicios { background:#f1f9fb; border:solid 1px #d8eef6; border-radius:3px;}
 form.invite .invite .servicios a { width:46%; display:block; position:relative; float:left; background:#fff; padding:3px; margin:4px; border-radius:3px; box-shadow:0 1px 1px #999; line-height:24px; font-size:12px; font-weight:bold; color:#666;}
 form.invite .invite .servicios a:hover { color:#111;}
-form.invite .invite .servicios a images { float:left; margin-right:7px;}
+form.invite .invite .servicios a img { float:left; margin-right:7px;}
 form.invite .invite .servicios a , form.invite .invite .servicios a:hover { text-decoration:none}
 form.invite .invite .login {}
 form.invite .invite .login label { display:block; margin-bottom:10px;}
@@ -620,7 +621,7 @@ form.invite .invite textarea { display:block; padding:5px; width:97%; background
 .overlay .modal .modal_cont label textarea { width:98%; padding:4px; font-family:Arial, Helvetica, sans-serif; border:solid 1px #ccc;}
 .overlay .modal .modal_cont .share { display:block; margin-bottom:15px;}
 .overlay .modal .modal_cont .share .media { width:25%; float:left;}
-.overlay .modal .modal_cont .share .media images { width:100% }
+.overlay .modal .modal_cont .share .media img { width:100% }
 .overlay .modal .modal_cont .share .info {width:70%; float:right; font-size:12px;}
 .overlay .modal .modal_cont .share .info a { color:#222; font-weight:bold; font-size:13px; display:block; margin-bottom:5px;}
 .overlay .modal .modal_cont .share .info p { line-height:16px;}
@@ -673,3 +674,6 @@ form.login input { margin-bottom: 10px; }
 a.homelink img { position: relative; top: 4px;}
 
 .roundedimg { padding: 0; -moz-border-radius: 7px; -webkit-border-radius: 7px; border-radius: 7px; }
+
+
+select.post_privacidad { float: right; margin-right: 10px;}
