@@ -4,6 +4,10 @@
 
 {% block info_block_class %}status_comment_user{% endblock %}
 
+{% block comment_social %}{% endblock %}
+
+{% block subcomments %}{% endblock %}
+
 {% block avatar %}
 	{% set image = comment.author.image %}
 	{{ parent() }}
@@ -18,6 +22,7 @@
 
 {% block title %}{% endblock %}
 {% block date %}{% endblock %}
+
 
 {% block description %}
 <p>

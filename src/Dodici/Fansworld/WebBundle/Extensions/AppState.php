@@ -20,6 +20,7 @@ class AppState
     protected $request;
     protected $em;
     protected $user;
+    protected $repos;
 
     function __construct(SecurityContext $security_context, EntityManager $em)
     {
@@ -27,6 +28,7 @@ class AppState
         $this->request = Request::createFromGlobals();
         $this->em = $em;
         $this->user = $security_context->getToken() ? $security_context->getToken()->getUser() : null;
+        $this->repos = array();
     }
 
     public function getMobile()
@@ -50,7 +52,7 @@ class AppState
     	if (!($this->user instanceof User)) return false;
     	$user = $this->user;
     	
-    	$rep = $this->em->getRepository('DodiciFansworldWebBundle:Liking');
+    	$rep = $this->getRepository('DodiciFansworldWebBundle:Liking');
     	$liking = $rep->byUserAndEntity($user, $entity);
     	
     	if (count($liking) >= 1) return false;
@@ -59,7 +61,7 @@ class AppState
     		if ($entity->getPrivacy() == \Dodici\Fansworld\WebBundle\Entity\Privacy::FRIENDS_ONLY) {
     			if (method_exists($entity, 'getAuthor')) {
 	    			if ($user == $entity->getAuthor()) return true;
-    				$frep = $this->em->getRepository('DodiciFansworldWebBundle:Friendship');
+    				$frep = $this->getRepository('DodiciFansworldWebBundle:Friendship');
 	    			if (!$frep->UsersAreFriends($user, $entity->getAuthor())) return false;
     			}
     		}
@@ -73,7 +75,7 @@ class AppState
     	if (!($this->user instanceof User)) return false;
     	$user = $this->user;
     	
-    	$rep = $this->em->getRepository('DodiciFansworldWebBundle:Liking');
+    	$rep = $this->getRepository('DodiciFansworldWebBundle:Liking');
     	$liking = $rep->byUserAndEntity($user, $entity);
     	
     	if (count($liking) >= 1) return true;
@@ -85,17 +87,17 @@ class AppState
     	if (!($this->user instanceof User)) return false;
     	$user = $this->user;
     	
+    	if (method_exists($entity, 'getAuthor')) {
+    		if ($user == $entity->getAuthor()) return false;
+    	}
+    	
     	if (method_exists($entity, 'getPrivacy')) {
     		if ($entity->getPrivacy() == \Dodici\Fansworld\WebBundle\Entity\Privacy::FRIENDS_ONLY) {
     			if (method_exists($entity, 'getAuthor')) {
 	    			if ($user == $entity->getAuthor()) return false;
-    				$frep = $this->em->getRepository('DodiciFansworldWebBundle:Friendship');
+    				$frep = $this->getRepository('DodiciFansworldWebBundle:Friendship');
 	    			if (!$frep->UsersAreFriends($user, $entity->getAuthor())) return false;
     			}
-    		}
-    	} else {
-    		if (method_exists($entity, 'getAuthor')) {
-    			if ($user == $entity->getAuthor()) return false;
     		}
     	}
     	
@@ -111,7 +113,7 @@ class AppState
     		if ($entity->getPrivacy() == \Dodici\Fansworld\WebBundle\Entity\Privacy::FRIENDS_ONLY) {
     			if (method_exists($entity, 'getAuthor')) {
 	    			if ($user == $entity->getAuthor()) return true;
-    				$frep = $this->em->getRepository('DodiciFansworldWebBundle:Friendship');
+    				$frep = $this->getRepository('DodiciFansworldWebBundle:Friendship');
 	    			if (!$frep->UsersAreFriends($user, $entity->getAuthor())) return false;
     			}
     		}
@@ -128,7 +130,7 @@ class AppState
     	if ($entity instanceof User) {
     		if ($user == $entity) return true;
     		
-    		$frep = $this->em->getRepository('DodiciFansworldWebBundle:Friendship');
+    		$frep = $this->getRepository('DodiciFansworldWebBundle:Friendship');
 	    	if (!$frep->UsersAreFriends($user, $entity)) return false;
     	} else {
     		if ($entity instanceof Comment) {
@@ -146,7 +148,7 @@ class AppState
     	$user = $this->user;
     	
     	if ($user == $target) return false;
-    	$frep = $this->em->getRepository('DodiciFansworldWebBundle:Friendship');
+    	$frep = $this->getRepository('DodiciFansworldWebBundle:Friendship');
 	    if ($frep->UsersAreFriends($user, $target)) return false;
     	
     	return true;
@@ -158,7 +160,7 @@ class AppState
     	$user = $this->user;
     	
     	if ($user == $target) return false;
-    	$frep = $this->em->getRepository('DodiciFansworldWebBundle:Friendship');
+    	$frep = $this->getRepository('DodiciFansworldWebBundle:Friendship');
 	    return $frep->BetweenUsers($user, $target);
 	    
     }
@@ -172,7 +174,7 @@ class AppState
     
     public function getComments($entity)
     {
-    	$comments = $this->em->getRepository('DodiciFansworldWebBundle:Comment')->wallEntity($entity, self::LIMIT_WALL, 0);
+    	$comments = $this->getRepository('DodiciFansworldWebBundle:Comment')->wallEntity($entity, self::LIMIT_WALL, 0);
     	return $comments;
     }
     
@@ -182,5 +184,13 @@ class AppState
     	$user = $this->user;
     	
     	return Privacy::getOptions();
+    }
+    
+    private function getRepository($repname)
+    {
+    	if (!isset($this->repos[$repname])) {
+    		$this->repos[$repname] = $this->em->getRepository($repname);
+    	}
+    	return $this->repos[$repname];
     }
 }

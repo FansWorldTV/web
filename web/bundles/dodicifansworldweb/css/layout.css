@@ -301,8 +301,11 @@ ul.foro li a:hover h3 { color:#087faa}
 .actualizaciones .actualizacion .status span.action_user  { display:block; font-size:13px; margin-bottom:15px;}
 .actualizaciones .actualizacion .status span.action_user a { font-weight:bold;}
 .actualizaciones .actualizacion .status span.title a { display:block; font-size:13px; font-weight:bold; color:#333; margin-bottom:5px;}
-.actualizaciones .actualizacion .status .info { display:block; margin:10px 0 0 0; font-size:11px; color:#999;}
+.actualizaciones .actualizacion .status .info { display:block; margin:10px 0 0 0; font-size:11px; color:#999; float: left; }
 .actualizaciones .actualizacion .status .info span.date { margin-right:10px;}
+.actualizaciones .actualizacion .status .social { float: right; margin-top: 8px; }
+.actualizaciones .actualizacion .status .social a {margin-left: 10px;margin-top: 2px; float: left;}
+.actualizaciones .actualizacion .status .social .likecount { padding: 2px; }
 .actualizaciones .actualizacion .status p  { font-size:12px; line-height:15px; color:#666;}
 .actualizaciones .actualizacion .status .album img { margin-right:1px; }
 .actualizaciones .actualizacion .status .video span { background:url(../images/ui/play_video_small.png) no-repeat; width:47px; height:47px; display:block; position:absolute; float:left; margin:33px 0 0 50px;}
@@ -468,7 +471,6 @@ ul.post_privacidad li:hover ul li a { background:none; padding-left:20px; line-h
 
 .nota_ampliada h2 { position:absolute; float:left; margin:200px 20px 0 0; border:none; padding:10px; color:#fff; background:#0093c9; font-size:30px;}
 .nota_ampliada .media { float:left; width:468px; margin-bottom:20px;}
-.nota_ampliada .media img { width:100%;}
 .nota_ampliada .contenido {}
 .nota_ampliada .contenido p { font-size:12px; line-height:16px; padding-bottom:15px; color:#333}
 .nota_ampliada .contenido .options { padding-top:10px;}
@@ -537,7 +539,6 @@ ul.post_privacidad li:hover ul li a { background:none; padding-left:20px; line-h
 .contests .nota_ampliada { border-top:solid 2px #ff9b00}
 .contests .nota_ampliada h2 { position:absolute; float:left; margin:200px 20px 0 0; border:none; padding:10px; color:#fff; background:#ff9b00; font-size:30px;}
 .contests .nota_ampliada .media { float:left; width:468px; margin-bottom:20px;}
-.contests .nota_ampliada .media img { width:100%;}
 .contests .nota_ampliada .contenido {}
 .contests .nota_ampliada .contenido p { font-size:12px; line-height:16px; padding-bottom:15px; color:#333}
 .contests .nota_ampliada .contenido .options { padding-top:10px;}

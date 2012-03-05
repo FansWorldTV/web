@@ -20,6 +20,12 @@
 					<span class="comments">{{ comment.commentCount }} comentarios</span>
 				</div>
 			{% endblock %}
+			{% block comment_social %}
+				<div class="social">
+					{% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {entity: comment, showcount: true} %}
+					{% block share_button %}{% include 'DodiciFansworldWebBundle:Default:share_button.html.twig' with {entity: comment} %}{% endblock %}
+				</div>
+			{% endblock %}
 			{% block subcomments %}
 				{% if comment.comment is null %}
 					<div class="comments">

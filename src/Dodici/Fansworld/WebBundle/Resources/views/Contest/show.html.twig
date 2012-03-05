@@ -32,21 +32,8 @@
     </div>
     <div class="cont clearfix">
         <h3>Comentarios</h3>
-        <div class="comments clearfix">
-        {% for comment in contest.comments %}
-                <div class="comment clearfix">
-                    <div class="avatar"> <a href="#1"> <img src="{{ asset('bundles/dodicifansworldweb/images/user_pic.jpg' )}}" width="50" height="50" /></a> </div>
-                    <div class="user_comment">
-                        <span class="action_user" >
-                            <a href="{{ path('user_detail', {'id':comment.author.id}) }}">{{ comment.author }}</a>
-                            <span>{{ comment.createdAt|date('c') }}</span>
-                        </span>
-                        {{ comment.content|raw() }}
-                    </div>
-                    {% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {'showcount':false, 'entity': comment} %}
-                </div>
-        {% endfor %}
-            </div>
+        
+		{% include 'DodiciFansworldWebBundle:Comment:comment_block.html.twig' with {entity: contest} %}
     </div>
     <div class="cont clearfix">
         <h3>Agregar comentario</h3>
