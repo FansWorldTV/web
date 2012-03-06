@@ -5,15 +5,6 @@ $(document).ready(function(){
     friendsSearch.init();
     photos.init();
     albums.init();
-    
-    $('.change_image').colorbox({
-        iframe: true, 
-        innerWidth: 697, 
-        innerHeight: 320
-    });
-    $('input:checkbox.prettycheckbox').checkbox({
-        empty: emptyCheckboxImg
-    });
 });
 
 var site = {
