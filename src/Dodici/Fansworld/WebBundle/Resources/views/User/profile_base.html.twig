@@ -7,7 +7,7 @@
                 	{% block profile_head %}
                     <div class="avatar">
                     	{% if user == app.user %}
-                        <a href="{{ path('user_change_image') }}">Cambiar</a>
+                        <a class="change_image" href="{{ path('user_change_image') }}">Cambiar</a>
                         {% endif %}
                         {% if user.image %}
                         	{% thumbnail user.image, 'small_square' %}
