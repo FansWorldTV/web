@@ -66,7 +66,7 @@ class PhotoController extends SiteController
                     'album' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($albumchoices))),
                     'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
                     'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
-                    'file' => new \Symfony\Component\Validator\Constraints\File()
+                    'file' => new \Symfony\Component\Validator\Constraints\Image()
                 ));
 
         $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))

@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use Dodici\Fansworld\WebBundle\Controller\SiteController;
 use Dodici\Fansworld\WebBundle\Entity\Comment;
 use Dodici\Fansworld\WebBundle\Entity\Contest;
@@ -208,6 +209,7 @@ class ContestController extends SiteController
     /**
      * @Route("/contest/{id}/{slug}", name= "contest_show", defaults = {"id" = 0}, requirements={"id"="\d+"})
      * @Template
+     * @Secure(roles="ROLE_USER")
      */
     public function showAction($id)
     {

@@ -8,7 +8,7 @@ $(document).ready(function(){
     
     $('.change_image').colorbox({
         iframe: true, 
-        innerWidth: 640, 
+        innerWidth: 697, 
         innerHeight: 320
     });
     $('input:checkbox.prettycheckbox').checkbox({

@@ -290,6 +290,14 @@ services:
         class: Dodici\Fansworld\WebBundle\Listener\CommentCountUpdater
         tags:
             - { name: doctrine.event_listener, event: postRemove }
+    album.listener.persist:
+        class: Dodici\Fansworld\WebBundle\Listener\AlbumImageSetter
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+    album.listener.remove:
+        class: Dodici\Fansworld\WebBundle\Listener\AlbumImageSetter
+        tags:
+            - { name: doctrine.event_listener, event: postRemove }
     my.facebook.user:
         class: Dodici\Fansworld\WebBundle\Security\FacebookProvider
         arguments:

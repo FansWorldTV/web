@@ -85,10 +85,24 @@ class Album
     private $commentCount;
     
     /**
+     * @var integer $photoCount
+     *
+     * @ORM\Column(name="photocount", type="integer", nullable=false)
+     */
+    private $photoCount;
+    
+    /**
      * @Gedmo\Slug(fields={"title"}, unique=false)
      * @ORM\Column(length=250)
      */
     private $slug;
+    
+    /**
+     * @var Application\Sonata\MediaBundle\Entity\Media
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="image", referencedColumnName="id")
+     */
+    private $image;
     
     /**
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="album", cascade={"remove", "persist"}, orphanRemoval="true")
@@ -139,6 +153,9 @@ class Album
         }
         if (null === $this->commentCount) {
         	$this->setCommentCount(0);
+        }
+    	if (null === $this->photoCount) {
+        	$this->setPhotoCount(0);
         }
         if (null === $this->active) {
         	$this->setActive(true);
@@ -463,5 +480,45 @@ class Album
     public function getCommentCount()
     {
         return $this->commentCount;
+    }
+
+    /**
+     * Set photoCount
+     *
+     * @param integer $photoCount
+     */
+    public function setPhotoCount($photoCount)
+    {
+        $this->photoCount = $photoCount;
+    }
+
+    /**
+     * Get photoCount
+     *
+     * @return integer 
+     */
+    public function getPhotoCount()
+    {
+        return $this->photoCount;
+    }
+
+    /**
+     * Set image
+     *
+     * @param Application\Sonata\MediaBundle\Entity\Media $image
+     */
+    public function setImage(\Application\Sonata\MediaBundle\Entity\Media $image)
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * Get image
+     *
+     * @return Application\Sonata\MediaBundle\Entity\Media 
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

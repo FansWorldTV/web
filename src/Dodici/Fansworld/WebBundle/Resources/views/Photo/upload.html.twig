@@ -4,7 +4,9 @@
 
 {% block content %}
 	{% if photo %}
-		{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}
+		<script type="text/javascript">
+			window.top.location.href = "{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}";
+		</script>
 	{% else %}
 	<div class="greybox">
 		<form action="{{ path('photo_upload') }}" method="post" enctype="multipart/form-data" class="bigform upload-photo">

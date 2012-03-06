@@ -536,7 +536,7 @@ class UserController extends SiteController
         $defaultData = array();
 
         $collectionConstraint = new Collection(array(
-                    'file' => new \Symfony\Component\Validator\Constraints\File()
+                    'file' => new \Symfony\Component\Validator\Constraints\Image()
                 ));
 
         $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
