@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
+use Dodici\Fansworld\WebBundle\Entity\Album;
+
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\Form\FormError;
 use Application\Sonata\MediaBundle\Entity\Media;
@@ -56,6 +58,8 @@ class PhotoController extends SiteController
         $albumchoices = array();
         foreach ($albums as $ab)
             $albumchoices[$ab->getId()] = $ab->getTitle();
+            
+        $albumchoices['NEW'] = '+ (NUEVO)';
 
         $photo = null;
 
@@ -71,7 +75,7 @@ class PhotoController extends SiteController
 
         $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
                 ->add('title', 'text', array('required' => true, 'label' => 'Título'))
-                ->add('album', 'choice', array('required' => false, 'choices' => $albumchoices, 'label' => 'Album'))
+                ->add('album', 'choice', array('required' => true, 'choices' => $albumchoices, 'label' => 'Album'))
                 ->add('content', 'textarea', array('required' => false, 'label' => 'Descripción'))
                 ->add('file', 'file', array('required' => true, 'label' => 'Archivo'))
                 ->add('privacy', 'choice', array('required' => true, 'choices' => $privacies, 'label' => 'Privacidad'))
@@ -86,9 +90,19 @@ class PhotoController extends SiteController
                 if ($form->isValid()) {
                     $album = null;
                     if ($data['album']) {
-                        $album = $this->getRepository('Album')->find($data['album']);
-                        if (!$album || ($album && $album->getAuthor() != $user))
-                            throw new \Exception('Invalid Album');
+                        if ($data['album'] == 'NEW') {
+                        	$albumtitle = $request->get('album_new_name');
+                        	if (!$albumtitle) throw new \Exception('Enter an Album Title');
+                        	$album = new Album();
+                        	$album->setTitle($albumtitle);
+                        	$album->setAuthor($user);
+                        	$album->setPrivacy($data['privacy']);
+                        	$em->persist($album);
+                        } else {
+	                    	$album = $this->getRepository('Album')->find($data['album']);
+	                        if (!$album || ($album && $album->getAuthor() != $user))
+	                            throw new \Exception('Invalid Album');
+                        }
                     }
 
                     $mediaManager = $this->get("sonata.media.manager.media");

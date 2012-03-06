@@ -24,3 +24,5 @@ a.btn_action, input.btn_action { background:url(../images/ui/btn_action.gif) rep
 .upload_image .form { margin-top: 3px; }
 
 .roundedimg { padding: 0; -moz-border-radius: 7px; -webkit-border-radius: 7px; border-radius: 7px; }
+
+.hidden { display: none; }

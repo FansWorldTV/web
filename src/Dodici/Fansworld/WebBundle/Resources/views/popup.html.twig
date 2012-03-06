@@ -1,7 +1,27 @@
+{% extends "DodiciFansworldWebBundle::layout.html.twig" %}
+
 {% block stylesheets %}
-	<link rel="stylesheet" href="{{ asset('bundles/dodicifansworldweb/css/popup.css') }}" type="text/css" media="all">
+	<link rel="stylesheet" href="{{ asset('bundles/sonatajquery/themes/flick/jquery-ui-1.8.16.custom.css') }}" type="text/css" media="all" />
+	<link rel="stylesheet" href="{{ asset('bundles/dodicifansworldweb/js/jquery-checkbox/jquery.checkbox.css') }}" type="text/css" media="all">
+	<link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700&subset=latin,cyrillic-ext,greek-ext,greek,latin-ext' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{{ asset('bundles/dodicifansworldweb/css/popup.css') }}" type="text/css" media="all">
 {% endblock %}
 
+{% block javascripts %}
+	<script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+	<script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+	<script src="{{ asset('bundles/sonatajquery/jquery-1.7.1.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/sonatajquery/jquery-ui-1.8.17.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/sonatajquery/jquery-ui-i18n.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/dodicifansworldweb/js/timeago.jquery.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/dodicifansworldweb/js/jquery-checkbox/jquery.checkbox.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/dodicifansworldweb/js/popup.js') }}" type="text/javascript"></script>
+	<script type="text/javascript">
+		var appLocale = '{{ app.request.locale }}';
+		var emptyCheckboxImg = '{{ asset('bundles/dodicifansworldweb/js/jquery-checkbox/empty.png') }}';
+	</script>
+{% endblock %}
+		
 {% block body %}
 	<div class="popup-wrap">
 		<div class="popup-content">

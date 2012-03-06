@@ -596,3 +596,6 @@ var albums = {
     }
 }
 
+function resizeColorbox(options) {
+	$.colorbox.resize(options);
+}
