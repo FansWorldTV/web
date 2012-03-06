@@ -1,52 +1,32 @@
-{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+{% extends "DodiciFansworldWebBundle:User:profile_base.html.twig" %}
 
 {% block title %}{{ parent() }} - Fotos{% endblock %}
 
-{% block content %}
-<div class="col_468 left margin">
-    <div class="user_profile_head clearfix">
-        <div class="avatar"> 
-            {% if isLoggedUser %}
-                <a href="user_info_edit.php">Cambiar</a> 
-            {% endif %}
-            <img src="{{ asset('bundles/dodicifansworldweb/images/user_pic.jpg' )}}" width="114" height="114">
-        </div>
-        <div class="user_info"> 
-            {% if isLoggedUser %}
-                <a class="btn" href="registro.php">Agregar</a>
-            {% endif %}
-            <h1>{{ user }}</h1>
-            <div class="tabs clearfix"> 
-                {% if isLoggedUser %}
-                    <a class="btn_edit_info" href="user_info_edit.php" title="Editar informacion">Editar informacion</a>
-                {% endif %}
-                <ul>
-                    <li><a href="user_profile.php">Muro</a></li>
-                    <li><a class="active" href="user_albums.php">Fotos</a></li>
-                    <li><a href="user_videos.php">Videos</a></li>
-                    <li><a href="user_topics.php">Foro</a></li>
-                    <li><a href="user_info.php">Informacion</a></li>
-                </ul>
-            </div>
-        </div>
-        {% if isLoggedUser %}
+{% block profile_tabs %}
+	{% set active_tab = 'photos' %}
+	{{ parent() }}
+{% endblock %}
+
+{% block profile_head %}
+	{{ parent() }}
+	{% if (user == app.user) %}
         <div class="update clearfix"> 
             <span></span> 
             <div class="upd_option clearfix"> 
-                <a class="btn_picture" href="{{ path('photo_upload') }}">cargar imagen</a> 
-                <a class="btn_picture" href="{{ path('album_create') }}">cargar album</a> 
+                <a class="btn_picture btn_upload_photo" href="{{ path('photo_upload') }}">cargar imagen</a> 
             </div>    
         </div>
-        {% endif %}
-    </div>
-    
+    {% endif %}
+{% endblock %}
+
+{% block inner_content %}
     <div class="cont clearfix">
         <h2>Fotos</h2>
         <div class="album_covers">
             <div class="mask"> 
                 {% for photo in photos %}
                     <div class="album_cover"> 
-                        <a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}"><img src="{{ photo.image }}"></a>
+                        <a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">{% thumbnail photo.image, 'medium' %}</a>
                         <a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">{{ photo.title }}</a>
                         <span><a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">{{ photo.commentCount }} comentarios</a></span>
                     </div>
@@ -57,7 +37,7 @@
     {% if gotMore %}
         <a class="loadmore pictures" href="#1">ver más</a> 
     {% endif %}
-</div>
+    
 <input type="hidden" value="{{user.id}}" id="userid"/>
 <div id="templates" class="hidden">
     <div class="album_cover">

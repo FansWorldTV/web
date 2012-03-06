@@ -20,7 +20,7 @@ body { font-family: Arial, Helvetica, sans-serif; color: #333;}
 a.btn_action, input.btn_action { background:url(../images/ui/btn_action.gif) repeat-x; padding:9px 17px; border:solid 1px #008abb; border-radius:3px; color:#fff; text-shadow:0 -1px 0 #00658b; font-size:13px; float: right }
 
 .upload_image .bigform .fieldcontainer input[type="file"] { width: 200px; }
-.upload_image { padding-top: 15px; padding-left: 12px;}
+.upload_image { }
 .upload_image .form { margin-top: 3px; }
 
 .roundedimg { padding: 0; -moz-border-radius: 7px; -webkit-border-radius: 7px; border-radius: 7px; }

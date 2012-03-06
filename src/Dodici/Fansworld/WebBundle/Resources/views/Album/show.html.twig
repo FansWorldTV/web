@@ -31,7 +31,7 @@
             {% endfor %}
         </div>
     </div>
-    {% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {'showcount' : true, 'entity': album} %}
+    {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: album} %}
 </div>
 {% include 'DodiciFansworldWebBundle:Comment:comment_block.html.twig' with {entity: album} %}
 {% endblock %}

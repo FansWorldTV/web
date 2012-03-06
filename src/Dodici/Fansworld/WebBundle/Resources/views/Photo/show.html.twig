@@ -6,17 +6,11 @@
 <div class="cont clearfix">
     <div class="media">
         <div class="media_content">
-            <a href="{{ imageurl }}">{% thumbnail photo.image, 'big' %}</a>
+            <a class="media_img" href="{{ imageurl }}">{% thumbnail photo.image, 'big' %}</a>
         </div>
-        <div class="share_content"> 
-            <a href="#1"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/facebook.png' )}}" alt="facebook"></a>
-            <a href="#1"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/twitter.png' )}}" alt="twitter"></a>
-            <a href="#1"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/googleplus.png' )}}" alt="google +"></a>
-            <a href="#1"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/tumblr.png' )}}" alt="tumblr"></a>
-            <a href="#1"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/linkedin.png' )}}" alt="linkedin"></a>
-            <a href="#1"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/tuenti.png' )}}" alt="tuenti"></a>
-            <input type="text" value="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">
-        </div>
+        
+		{% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: photo} %}
+
         <div class="media_info">
             <div>
                 <strong>{{ photo.title }}<br></strong>
@@ -24,8 +18,6 @@
                 <span>del album <a href="{{ path('album_show', {'id': photo.album.id, 'slug': photo.album.slug}) }}">{{ photo.album.title }}</a></span>
             </div>
             <p></p>
-        </div>
-        {% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {'showcount' : true, 'entity': photo} %}
         </div>
     </div>
 </div>

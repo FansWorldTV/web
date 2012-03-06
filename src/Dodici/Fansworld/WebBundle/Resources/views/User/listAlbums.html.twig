@@ -1,15 +1,32 @@
-{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+{% extends "DodiciFansworldWebBundle:User:profile_base.html.twig" %}
 
-{% block title %}{{ parent() }} - Álbums{% endblock %}
+{% block title %}{{ parent() }} - Álbumes{% endblock %}
 
-{% block content %}
+{% block profile_tabs %}
+	{% set active_tab = 'photos' %}
+	{{ parent() }}
+{% endblock %}
+
+{% block profile_head %}
+	{{ parent() }}
+	{% if (user == app.user) %}
+        <div class="update clearfix"> 
+            <span></span> 
+            <div class="upd_option clearfix"> 
+                <a class="btn_picture btn_upload_photo" href="{{ path('photo_upload') }}">cargar imagen</a> 
+            </div>    
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block inner_content %}
     <div class="cont clearfix">
-        <h2>Álbumes de usuario</h2>
+        <h2>Álbumes de {{ user }}</h2>
         <div class="album_covers">
             <div class="mask"> 
                 {% for album in albums %}
                     <div class="album_cover">
-                        <a href="{{ path('album_show', {'id': album.id, 'slug': album.slug}) }}">{% thumbnail album.image,'big' %}</a>
+                        <a href="{{ path('album_show', {'id': album.id, 'slug': album.slug}) }}">{% thumbnail album.image,'medium' %}</a>
                         <a href="{{ path('album_show', {'id': album.id, 'slug': album.slug}) }}">{{ album.title }}</a>
                         <span>{{ album.photoCount }} imagenes - <a href="{{ path('album_show', {'id': album.id, 'slug': album.slug}) }}">{{ album.commentCount }} comentarios</a></span>
                     </div>

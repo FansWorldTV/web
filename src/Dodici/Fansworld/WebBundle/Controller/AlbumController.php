@@ -34,11 +34,10 @@ class AlbumController extends SiteController
     public function showAction($id)
     {
         $album = $this->getRepository('Album')->find($id);
-        $user = $this->getRepository('User')->find($album->getAuthor()->getId());
         
         return array(
             'album' => $album,
-            'user' => $user
+            'user' => $album->getAuthor()
         );
     }
 
@@ -118,18 +117,12 @@ class AlbumController extends SiteController
 
         $response = array();
         foreach ($albums as $album) {
-            $firstimage = $album->getPhotos();
-            if($firstimage[0]){
-                $image = $this->getImageUrl($firstimage[0]->getImage());
-            }else{
-                $image = false;
-            }
             $response['albums'][] = array(
-                'image' => $image,
+                'image' => $this->getImageUrl($album->getImage(), 'medium'),
                 'id' => $album->getId(),
                 'title' => $album->getTitle(),
-                'countImages' => count($album->getPhotos()),
-                'comments' => count($album->getComments())
+                'countImages' => $album->getPhotoCount(),
+                'comments' => $album->getCommentCount()
             );
         }
 

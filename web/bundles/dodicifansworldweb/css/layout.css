@@ -680,3 +680,5 @@ a.homelink img { position: relative; top: 4px;}
 select.post_privacidad { float: right; margin-right: 10px;}
 
 .form-changeimage ul.errors { width: 200px;}
+
+.media_img { width: 100%;}

@@ -447,38 +447,14 @@ class UserController extends SiteController
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
 
-        $photosRepo = $this->getRepository('Photo')->findBy(array('author' => $user->getId()), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
-        $albumsRepo = $this->getRepository('Album')->findBy(array('author' => $user->getId()), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
+        $photos = $this->getRepository('Photo')->findBy(array('author' => $user->getId()), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
+        $albums = $this->getRepository('Album')->findBy(array('author' => $user->getId()), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
 
         $photosTotalCount = $this->getRepository('Photo')->countBy(array('author' => $user->getId()));
         $albumsTotalCount = $this->getRepository('Album')->countBy(array('author' => $user->getId()));
 
         $viewMorePhotos = $photosTotalCount > self::LIMIT_PHOTOS ? true : false;
         $viewMoreAlbums = $albumsTotalCount > self::LIMIT_PHOTOS ? true : false;
-
-        $photos = array();
-        foreach ($photosRepo as $photo) {
-            $photos[] = array(
-                'id' => $photo->getId(),
-                'image' => $this->getImageUrl($photo->getImage()),
-                'slug' => $photo->getSlug()
-            );
-        }
-
-        $albums = array();
-        foreach ($albumsRepo as $album) {
-            $photo = $this->getRepository('Photo')->findOneBy(array('album' => $album->getId()));
-            if ($photo) {
-                $albums[] = array(
-                    'image' => $this->getImageUrl($photo->getImage()),
-                    'id' => $album->getId(),
-                    'title' => $album->getTitle(),
-                    'countImages' => count($album->getPhotos()),
-                    'comments' => count($album->getComments()),
-                    'slug' => $album->getSlug()
-                );
-            }
-        }
         
         return array(
             'user' => $user,
@@ -505,7 +481,6 @@ class UserController extends SiteController
         return array(
             'user' => $user,
             'photos' => $photos,
-            'isLoggedUser' => $isLoggedUser,
             'gotMore' => $totalCount > self::LIMIT_PHOTOS ? true : false
         );
     }
@@ -524,7 +499,6 @@ class UserController extends SiteController
         return array(
             'user' => $user,
             'albums' => $albums,
-            'isLoggedUser' => $isLoggedUser,
             'gotMore' => $totalCount > self::LIMIT_PHOTOS ? true : false
         );
     }
