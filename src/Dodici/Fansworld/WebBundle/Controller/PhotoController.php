@@ -42,7 +42,8 @@ class PhotoController extends SiteController
         
         return array(
             'photo' => $photo, 
-            'author' => (string) $author,
+            'author' => $author,
+            'authorName' => (string) $author,
             'imageurl' => $this->getImageUrl($photo->getImage())
             );
     }
