@@ -33,13 +33,18 @@ class PhotoController extends SiteController
     /**
      * @Route("/{id}/{slug}", name= "photo_show", requirements = {"id" = "\d+"})
      * @Secure(roles="ROLE_USER")
+     * @Template()
      */
     public function showAction($id)
     {
-        // TODO: photo show action, show photo + comments, allow commenting + answering root comments
         $photo = $this->getRepository('Photo')->findOneBy(array('id' => $id, 'active' => true));
-
-        return new Response('ok');
+        $author = $this->getRepository('User')->find($photo->getAuthor()->getId());
+        
+        return array(
+            'photo' => $photo, 
+            'author' => (string) $author,
+            'imageurl' => $this->getImageUrl($photo->getImage())
+            );
     }
 
     /**
@@ -156,14 +161,15 @@ class PhotoController extends SiteController
                 'comments' => $photo->getCommentCount()
             );
         }
-        
+
         $countTotal = $this->getRepository('Photo')->countBy(array('author' => $userId));
-        if ($countTotal > (($page+1) * self::LIMIT_PHOTOS)) {
+        if ($countTotal > (($page + 1) * self::LIMIT_PHOTOS)) {
             $response['gotMore'] = true;
         } else {
             $response['gotMore'] = false;
         }
-        
+
         return $this->jsonResponse($response);
     }
+
 }

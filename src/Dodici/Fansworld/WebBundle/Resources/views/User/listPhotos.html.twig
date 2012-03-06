@@ -46,8 +46,8 @@
             <div class="mask"> 
                 {% for photo in photos %}
                     <div class="album_cover"> 
-                        <a href=""><img src="{{ photo.image }}"></a>
-                        <a href="">{{ photo.title }}</a>
+                        <a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}"><img src="{{ photo.image }}"></a>
+                        <a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">{{ photo.title }}</a>
                         <span><a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">{{ photo.commentCount }} comentarios</a></span>
                     </div>
                 {% endfor %}

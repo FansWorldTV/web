@@ -509,6 +509,25 @@ class UserController extends SiteController
             'gotMore' => $totalCount > self::LIMIT_PHOTOS ? true : false
         );
     }
+    
+    /**
+     * @Route("/user/{id}/albums", name="user_listalbums")
+     * @Template
+     */
+    public function listAlbumsAction($id){
+        $user = $this->getRepository('User')->find($id);
+        $loggedUser = $this->get('security.context')->getToken()->getUser();
+        $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
+        $albums = $this->getRepository('Album')->findBy(array('author' => $id), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
+        $totalCount = $this->getRepository('Album')->countBy(array('author' => $id));
+
+        return array(
+            'user' => $user,
+            'albums' => $albums,
+            'isLoggedUser' => $isLoggedUser,
+            'gotMore' => $totalCount > self::LIMIT_PHOTOS ? true : false
+        );
+    }
 
     /**
      * @Route("/invite_users/", name = "user_invite")

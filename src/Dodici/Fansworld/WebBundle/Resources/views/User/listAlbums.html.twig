@@ -1,0 +1,20 @@
+{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+
+{% block title %}{{ parent() }} - Álbums{% endblock %}
+
+{% block content %}
+    <div class="cont clearfix">
+        <h2>Álbumes de usuario</h2>
+        <div class="album_covers">
+            <div class="mask"> 
+                {% for album in albums %}
+                    <div class="album_cover">
+                        <a href="{{ path('album_show', {'id': album.id, 'slug': album.slug}) }}">{% thumbnail album.image,'big' %}</a>
+                        <a href="{{ path('album_show', {'id': album.id, 'slug': album.slug}) }}">{{ album.title }}</a>
+                        <span>{{ album.photoCount }} imagenes - <a href="{{ path('album_show', {'id': album.id, 'slug': album.slug}) }}">{{ album.commentCount }} comentarios</a></span>
+                    </div>
+                {% endfor %}
+            </div>       
+        </div>
+    </div>
+{% endblock %}

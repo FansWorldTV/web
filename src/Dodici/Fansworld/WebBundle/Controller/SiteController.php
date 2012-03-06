@@ -27,8 +27,7 @@ class SiteController extends Controller
         $imageUrl = null;
         $request = $this->getRequest();
 
-        $siteHost = explode("\n", $request->getHost());
-        $host = 'http://' . $siteHost;
+        $host = 'http://' . $request->getHost();
 
         if ($media) {
             $mediaService = $this->get('sonata.media.pool');

@@ -1,0 +1,37 @@
+{% extends "DodiciFansworldWebBundle:User:profile_base.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ album.title }}{% endblock %}
+
+{% block profile_tabs %}
+	{% set active_tab = 'photos' %}
+	{{ parent() }}
+{% endblock %}
+
+{% block profile_head %}
+	{{ parent() }}
+	{% if (user == app.user) %}
+            <div class="update clearfix"> 
+                <span></span> 
+                <div class="upd_option clearfix"> 
+                    <a class="btn_picture btn_upload_photo" href="{{ path('photo_upload') }}">cargar imagen</a> 
+                </div>    
+            </div>
+        {% endif %} 
+{% endblock %}
+
+{% block inner_content %}
+<div class="cont clearfix">
+    <h2>{{ album.title }}<a class="more" href="{{ path('user_listalbums', {'id': user.id}) }}">ver todos los álbumes</a></h2>
+    <div class="user_album">
+        <div class="mask">
+            {% for photo in album.photos %}
+                <div class="pic">
+                    <a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">{% thumbnail photo.image, 'big' %}</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {'showcount' : true, 'entity': album} %}
+</div>
+{% include 'DodiciFansworldWebBundle:Comment:comment_block.html.twig' with {entity: album} %}
+{% endblock %}

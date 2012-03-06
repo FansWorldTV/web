@@ -29,11 +29,17 @@ class AlbumController extends SiteController
 
     /**
      * @Route("/{id}/{slug}", name= "album_show", requirements = {"id" = "\d+"})
+     * @Template()
      */
     public function showAction($id)
     {
-        // TODO: album show action, list album photos + comments (masonry)
-        return new Response('ok');
+        $album = $this->getRepository('Album')->find($id);
+        $user = $this->getRepository('User')->find($album->getAuthor()->getId());
+        
+        return array(
+            'album' => $album,
+            'user' => $user
+        );
     }
 
     /**

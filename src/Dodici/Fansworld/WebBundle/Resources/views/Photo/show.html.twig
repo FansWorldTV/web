@@ -1,0 +1,47 @@
+{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+
+{% block title %}{{ parent() }} - Foto{% endblock %}
+
+{% block content %}
+<div class="cont clearfix">
+    <div class="media">
+        <div class="media_content">
+            <a href="{{ imageurl }}">{% thumbnail photo.image, 'big' %}</a>
+        </div>
+        <div class="share_content"> 
+            <a href="#1"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/facebook.png' )}}" alt="facebook"></a>
+            <a href="#1"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/twitter.png' )}}" alt="twitter"></a>
+            <a href="#1"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/googleplus.png' )}}" alt="google +"></a>
+            <a href="#1"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/tumblr.png' )}}" alt="tumblr"></a>
+            <a href="#1"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/linkedin.png' )}}" alt="linkedin"></a>
+            <a href="#1"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/tuenti.png' )}}" alt="tuenti"></a>
+            <input type="text" value="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">
+        </div>
+        <div class="media_info">
+            <div>
+                <strong>{{ photo.title }}<br></strong>
+                <span>por <a href="user_profile.php">{{ author }}</a></span>
+                <span>del album <a href="user_album.php">{{ photo.album.title }}</a></span>
+            </div>
+            <p></p>
+        </div>
+        {% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {'showcount' : true, 'entity': photo} %}
+        </div>
+    </div>
+</div>
+<div class="cont clearfix">
+    <div class="comments clearfix">
+        {% for comment in photo.comments %}
+        <div class="comment clearfix">
+            <div class="avatar"> <a href="#1"> <img src="demo/rodri.jpg" width="50" height="50"></a> </div>
+            <div class="user_comment"> <span class="action_user"><a href="user_profile.php">Rodrigo Ramirez</a> hace 5 minutos</span> Donec quis justo arcu, eu elementum orci. Vivamus in porttitor elit. Proin mollis porttitor urna, porttitor sollicitudin dolor fermentum quis. Quisque purus risus, blandit at scelerisque at, mattis non magna. </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% include 'DodiciFansworldWebBundle:Comment:comment_block.html.twig' with {entity: photo} %}
+</div>
+<script type="text/javascript">
+    $("div.media_content a").colorbox();
+</script>
+{% endblock %}
