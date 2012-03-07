@@ -71,7 +71,9 @@ var site = {
                     
                     for(var i in response){
                         var element = response[i];
-                        $("li.notifications_user ul").append(element);
+                        var newli = $('<li>').addClass('clearfix notification');
+                        newli.html(element);
+                        $("li.notifications_user ul").append(newli);
                     }
                 } 
             });
