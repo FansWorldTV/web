@@ -12,17 +12,14 @@ var ajax = {
             dataType: 'json'
         });
     },
-  
-    searchAction: function(query, page, callback) {
+    
+    search: function(method, params, callback){
         if(!ajax.active) {
             ajax.active = true;
             
             $.ajax({
-                url: 'http://'+ location.host + Routing.generate( appLocale + '_user_ajaxsearch'),
-                data: { 
-                    'query': query,
-                    'page': page
-                },
+                url: 'http://'+ location.host + Routing.generate( appLocale + '_' + method),
+                data: params,
                 success: function(response){
                     ajax.active = false;
                     if( typeof(callback) !== 'undefined' ){
@@ -32,25 +29,17 @@ var ajax = {
             });
         }
     },
+  
+    searchAction: function(query, page, callback) {
+        ajax.search('search_ajaxsearch', {'query': query, 'page': page}, callback);
+    },
     
     friendsAction: function(query, page, callback) {
-        if(!ajax.active) {
-            ajax.active = true;
-            
-            $.ajax({
-                url: 'http://'+ location.host + Routing.generate( appLocale + '_user_ajaxfriends'),
-                data: { 
-                    'query': query,
-                    'page': page
-                },
-                success: function(response){
-                    ajax.active = false;
-                    if( typeof(callback) !== 'undefined' ){
-                        callback(response);
-                    }
-                }
-            });
-        }
+        ajax.search('search_ajaxfriends', {'query': query, 'page': page}, callback);
+    },
+    
+    searchIdolsAction: function(query, page, isIdol, callback){
+        ajax.search('search_ajaxidols', {'query': query, 'page': page, 'isIdol': isIdol}, callback);
     },
     
     contestsListAction: function(page, filter, callback) {

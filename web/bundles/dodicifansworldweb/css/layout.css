@@ -405,6 +405,7 @@ a.btn_delete_post { display:none;}
 .user_album { width:468px;overflow: hidden;}
 .user_album .mask { width:480px;}
 .user_album .pic{ position:relative; float:left; margin:0 4px 4px 0;}
+.user_album .pic img { width: 114px !important; height: 78px !important;}
 
 .user_list { width:468px; overflow:hidden;border-top:solid 2px #0093c9}
 .user_list .search { margin-bottom:20px; padding:6px; background:#e5f3f6;}

@@ -2,6 +2,7 @@ $(document).ready(function(){
     site.init();
     ajax.init();
     searchFront.init();
+    searchIdols.init();
     friendsSearch.init();
     photos.init();
     albums.init();
@@ -307,6 +308,71 @@ var searchFront = {
                 }
                 
                 $(".searchFront.listMosaic").show();
+                $("div.ajax-loader").addClass('hidden');
+            });
+        
+            event.preventDefault();        
+            return false;
+        });
+    }
+};
+
+var searchIdols = {
+    page: 0,
+    init: function(){
+        if($(".searchIdol").size()>0){
+            searchIdols.addMore();
+            searchIdols.search();
+        }
+    },
+    addMore: function(){
+        $("#addMore.searchIdol").click(function(){
+            var query = this.parent().find('input#query').val();
+        
+            ajax.searchIdolsAction( query, searchIdols.page, true, function(response){
+                if(response){
+                    for(var i in response){
+                        var elementTmp = $("div.templates.searchIdol div.listMosaic div.element").clone();
+                    
+                        elementTmp.find('.name').html(response[i].name);
+                        elementTmp.find('.avatar').attr('src', response[i].image);
+                        elementTmp.find('.commonFriends').html(response[i].commonFriends);
+                   
+                        $(".searchIdol.listMosaic").append(template);
+                    }
+                
+                    if(response.gotMore){
+                        $("#addMore").removeClass('hidden');
+                        searchIdols.page++;
+                    }else{
+                        $("#addMore").addClass('hidden');
+                    }
+                }
+            });
+        });
+    },
+    search: function(){
+        $("#formSearch.searchIdol").submit(function(event){
+            var query = $('#query').val();
+            $(".searchIdol.listMosaic").html('').hide();
+            $("div.ajax-loader").removeClass('hidden');
+        
+            ajax.searchIdolsAction(query, 0, true, function(response){
+                if(response){
+                    var elements = response.search;
+                    for(var i in elements){
+                        var element = elements[i];
+                        var template = $(".searchIdol.templates .listMosaicTemp .element").clone();
+                    
+                        template.find('.name').html(element.name);
+                        template.find('.commonFriends').html(element.commonFriends);
+                        template.find('.avatar img').attr('src', element.image);
+                    
+                        $(".searchIdol.listMosaic").append(template);
+                    }
+                }
+                
+                $(".searchIdol.listMosaic").show();
                 $("div.ajax-loader").addClass('hidden');
             });
         
