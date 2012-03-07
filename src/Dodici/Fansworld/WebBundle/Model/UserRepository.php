@@ -199,7 +199,7 @@ class UserRepository extends CountBaseRepository
 			:isfriend = (SELECT (SELECT COUNT(id) FROM friendship WHERE active AND ((author_id = :userid AND target_id = u.id) OR (author_id = u.id AND target_id = :userid)) >= 1))
 		))
 		
-		ORDER BY commonfriends DESC, u.lastname ASC, u.firstname ASC, u.username ASC
+		ORDER BY isfriend DESC, commonfriends DESC, u.lastname ASC, u.firstname ASC, u.username ASC
 		
     	'.
         (($limit !== null) ? ' LIMIT :limit ' : '').
@@ -332,7 +332,9 @@ class UserRepository extends CountBaseRepository
 		$rsm->addMetaResult('u', 'image_id', 'image_id');
 		$rsm->addMetaResult('u', 'country_id', 'country_id');
 		$rsm->addMetaResult('u', 'city_id', 'city_id');
+		// Amount of user's friends that also have the idol
 		$rsm->addScalarResult('commonfriends', 'commonfriends');
+		// Whether the user already has the idol or not
 		$rsm->addScalarResult('isidol', 'isidol');
 
         $query = $this->_em->createNativeQuery('
@@ -362,7 +364,7 @@ class UserRepository extends CountBaseRepository
 			:isidol = (SELECT (SELECT COUNT(id) FROM idolship WHERE author_id = :userid AND target_id = u.id) >= 1)
 		))
 		
-		ORDER BY commonfriends DESC, u.lastname ASC, u.firstname ASC, u.username ASC
+		ORDER BY isidol DESC, commonfriends DESC, u.lastname ASC, u.firstname ASC, u.username ASC
 		
     	'.
         (($limit !== null) ? ' LIMIT :limit ' : '').
