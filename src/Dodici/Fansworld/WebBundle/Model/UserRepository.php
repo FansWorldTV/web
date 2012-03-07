@@ -1,6 +1,8 @@
 <?php
 namespace Dodici\Fansworld\WebBundle\Model;
 
+use Application\Sonata\UserBundle\Entity\User;
+
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\DBAL\Types\Type;
@@ -165,6 +167,7 @@ class UserRepository extends CountBaseRepository
 		$rsm->addMetaResult('u', 'country_id', 'country_id');
 		$rsm->addMetaResult('u', 'city_id', 'city_id');
 		$rsm->addScalarResult('commonfriends', 'commonfriends');
+		$rsm->addScalarResult('isfriend', 'isfriend');
 
         $query = $this->_em->createNativeQuery('
     	SELECT
@@ -174,10 +177,12 @@ class UserRepository extends CountBaseRepository
 			OR
 			(target_id = u.id AND author_id IN (SELECT author_id FROM friendship WHERE active AND target_id = :userid UNION SELECT target_id FROM friendship WHERE active AND author_id = :userid)))
 			AND active
-		) as commonfriends
+		) as commonfriends,
+		(SELECT (SELECT COUNT(id) FROM friendship WHERE active AND ((author_id = :userid AND target_id = u.id) OR (author_id = u.id AND target_id = :userid)) >= 1)) AS isfriend
 		FROM fos_user_user u
 		'.($filtername ? 'LEFT JOIN country ON country.id = u.country_id LEFT JOIN city ON city.id = u.city_id' : '').'
 		WHERE
+		u.type = :fantype AND
 		u.enabled AND u.id <> :userid
 		'.($filtername ? '
 			AND (
@@ -191,9 +196,7 @@ class UserRepository extends CountBaseRepository
 		
 		AND
 		(:isfriend IS NULL OR (
-			(:isfriend=true AND (u.id IN ((SELECT author_id FROM friendship WHERE active AND target_id = :userid UNION SELECT target_id FROM friendship WHERE active AND author_id = :userid))))
-			OR
-			(:isfriend=false AND (u.id NOT IN ((SELECT author_id FROM friendship WHERE active AND target_id = :userid UNION SELECT target_id FROM friendship WHERE active AND author_id = :userid))))
+			:isfriend = (SELECT (SELECT COUNT(id) FROM friendship WHERE active AND ((author_id = :userid AND target_id = u.id) OR (author_id = u.id AND target_id = :userid)) >= 1))
 		))
 		
 		ORDER BY commonfriends DESC, u.lastname ASC, u.firstname ASC, u.username ASC
@@ -203,6 +206,7 @@ class UserRepository extends CountBaseRepository
         (($offset !== null) ? ' OFFSET :offset ' : '')
     	, $rsm)
     		->setParameter('userid', $user->getId(), Type::BIGINT)
+    		->setParameter('fantype', User::TYPE_FAN, Type::INTEGER)
     		->setParameter('isfriend', $isfriend, Type::BOOLEAN);
     		
     	if ($filtername)
@@ -234,6 +238,7 @@ class UserRepository extends CountBaseRepository
 		FROM fos_user_user u
 		'.($filtername ? 'LEFT JOIN country ON country.id = u.country_id LEFT JOIN city ON city.id = u.city_id' : '').'
 		WHERE
+		u.type = :fantype AND
 		u.enabled AND u.id <> :userid
 		'.($filtername ? '
 			AND (
@@ -247,13 +252,12 @@ class UserRepository extends CountBaseRepository
 		
 		AND
 		(:isfriend IS NULL OR (
-			(:isfriend=true AND (u.id IN ((SELECT author_id FROM friendship WHERE active AND target_id = :userid UNION SELECT target_id FROM friendship WHERE active AND author_id = :userid))))
-			OR
-			(:isfriend=false AND (u.id NOT IN ((SELECT author_id FROM friendship WHERE active AND target_id = :userid UNION SELECT target_id FROM friendship WHERE active AND author_id = :userid))))
+			:isfriend = (SELECT (SELECT COUNT(id) FROM friendship WHERE active AND ((author_id = :userid AND target_id = u.id) OR (author_id = u.id AND target_id = :userid)) >= 1))
 		))
 		'
     	, $rsm)
     		->setParameter('userid', $user->getId(), Type::BIGINT)
+    		->setParameter('fantype', User::TYPE_FAN, Type::INTEGER)
     		->setParameter('isfriend', $isfriend, Type::BOOLEAN);
     		
     	if ($filtername)
@@ -305,5 +309,124 @@ class UserRepository extends CountBaseRepository
         $arr = array();
         foreach ($result as $r) $arr[] = $r->getAuthor();
         return $arr;
+    }
+    
+	/**
+     * 
+     * Search for idol type users with optional search term and pagination
+     * @param \Application\Sonata\UserBundle\Entity\User $user
+     * @param boolean $isidol (null|true|false)
+     * @param string $filtername
+     * @param int $limit
+     * @param int $offset
+     */
+	public function SearchIdolFront(\Application\Sonata\UserBundle\Entity\User $user, $filtername=null, $isidol=null, $limit=null, $offset=null) 
+    {
+    	$rsm = new ResultSetMapping;
+    	$rsm->addEntityResult('Application\Sonata\UserBundle\Entity\User', 'u');
+		$rsm->addFieldResult('u', 'id', 'id');
+    	$rsm->addFieldResult('u', 'username', 'username');
+		$rsm->addFieldResult('u', 'email', 'email');
+		$rsm->addFieldResult('u', 'firstname', 'firstname');
+		$rsm->addFieldResult('u', 'lastname', 'lastname');
+		$rsm->addMetaResult('u', 'image_id', 'image_id');
+		$rsm->addMetaResult('u', 'country_id', 'country_id');
+		$rsm->addMetaResult('u', 'city_id', 'city_id');
+		$rsm->addScalarResult('commonfriends', 'commonfriends');
+		$rsm->addScalarResult('isidol', 'isidol');
+
+        $query = $this->_em->createNativeQuery('
+    	SELECT
+		u.*,
+		(SELECT COUNT(id) FROM idolship WHERE
+			(target_id = u.id AND author_id IN (SELECT author_id FROM friendship WHERE active AND target_id = :userid UNION SELECT target_id FROM friendship WHERE active AND author_id = :userid)))
+		as commonfriends,
+		(SELECT (SELECT COUNT(id) FROM idolship WHERE author_id = :userid AND target_id = u.id) >= 1) AS isidol
+		FROM fos_user_user u
+		'.($filtername ? 'LEFT JOIN country ON country.id = u.country_id LEFT JOIN city ON city.id = u.city_id' : '').'
+		WHERE
+		u.type = :idoltype AND
+		u.enabled AND u.id <> :userid
+		'.($filtername ? '
+			AND (
+			country.title LIKE :filtername OR 
+			city.title LIKE :filtername OR 
+			u.username LIKE :filtername OR
+			u.email LIKE :filtername OR
+			u.firstname LIKE :filtername OR 
+			u.lastname LIKE :filtername
+		)' : '').'
+		
+		AND
+		(:isidol IS NULL OR (
+			:isidol = (SELECT (SELECT COUNT(id) FROM idolship WHERE author_id = :userid AND target_id = u.id) >= 1)
+		))
+		
+		ORDER BY commonfriends DESC, u.lastname ASC, u.firstname ASC, u.username ASC
+		
+    	'.
+        (($limit !== null) ? ' LIMIT :limit ' : '').
+        (($offset !== null) ? ' OFFSET :offset ' : '')
+    	, $rsm)
+    		->setParameter('userid', $user->getId(), Type::BIGINT)
+    		->setParameter('idoltype', User::TYPE_IDOL, Type::INTEGER)
+    		->setParameter('isidol', $isidol, Type::BOOLEAN);
+    		
+    	if ($filtername)
+    		$query = $query->setParameter('filtername', '%'.$filtername.'%');
+    	
+    	if ($limit !== null)
+            $query = $query->setParameter('limit', (int)$limit, Type::INTEGER);
+        if ($offset !== null)
+            $query = $query->setParameter('offset', (int)$offset, Type::INTEGER);
+    	
+    	return $query->getResult();
+    }
+    
+	/**
+     * 
+     * Count searched users with optional search term
+     * @param \Application\Sonata\UserBundle\Entity\User $user
+     * @param boolean $isfriend (null|true|false)
+     * @param string $filtername
+     */
+	public function CountSearchIdolFront(\Application\Sonata\UserBundle\Entity\User $user, $filtername=null, $isidol=null) 
+    {
+    	$rsm = new ResultSetMapping;
+    	$rsm->addScalarResult('countusers', 'count');
+
+        $query = $this->_em->createNativeQuery('
+    	SELECT
+		COUNT(u.id) as countusers
+		FROM fos_user_user u
+		'.($filtername ? 'LEFT JOIN country ON country.id = u.country_id LEFT JOIN city ON city.id = u.city_id' : '').'
+		WHERE
+		u.type = :idoltype AND
+		u.enabled AND u.id <> :userid
+		'.($filtername ? '
+			AND (
+			country.title LIKE :filtername OR 
+			city.title LIKE :filtername OR 
+			u.username LIKE :filtername OR
+			u.email LIKE :filtername OR
+			u.firstname LIKE :filtername OR 
+			u.lastname LIKE :filtername
+		)' : '').'
+		
+		AND
+		(:isidol IS NULL OR (
+			:isidol = (SELECT (SELECT COUNT(id) FROM idolship WHERE author_id = :userid AND target_id = u.id) >= 1)
+		))
+		'
+    	, $rsm)
+    		->setParameter('userid', $user->getId(), Type::BIGINT)
+    		->setParameter('idoltype', User::TYPE_IDOL, Type::INTEGER)
+    		->setParameter('isidol', $isidol, Type::BOOLEAN);
+    		
+    	if ($filtername)
+    		$query = $query->setParameter('filtername', '%'.$filtername.'%');
+    	
+    	$res = $query->getResult();
+    	return intval($res[0]['count']);
     }
 }
