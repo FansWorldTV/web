@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Security;
 
+use Application\Sonata\MediaBundle\Entity\Media;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -17,12 +19,14 @@ class FacebookProvider implements UserProviderInterface
     protected $facebook;
     protected $userManager;
     protected $validator;
+    protected $container;
 
-    public function __construct(BaseFacebook $facebook, $userManager, $validator)
+    public function __construct(BaseFacebook $facebook, $userManager, $validator, $container)
     {
         $this->facebook = $facebook;
         $this->userManager = $userManager;
         $this->validator = $validator;
+        $this->container = $container;
     }
 
     public function supportsClass($class)
@@ -50,6 +54,26 @@ class FacebookProvider implements UserProviderInterface
                 $user = $this->userManager->createUser();
                 $user->setEnabled(true);
                 $user->setPassword('');
+                
+                // Set FB image
+		        $imagecontent = file_get_contents(sprintf('https://graph.facebook.com/%1$s/picture', $fbdata['id']));
+				if ($imagecontent) {
+					$tmpfile = tempnam('/tmp', 'IFB');
+					file_put_contents($tmpfile, $imagecontent);
+					$mediaManager = $this->container->get("sonata.media.manager.media");
+			        $media = new Media();
+			        $media->setBinaryContent($tmpfile);
+			        $media->setContext('default');
+			        $media->setProviderName('sonata.media.provider.image');
+			        $mediaManager->save($media);
+			        $user->setImage($media); 
+				}
+				
+				if ($fbdata['location']) {
+					$location = $this->container->get('user.location')->parseLocation($fbdata['location']);
+					$user->setCountry($location['country']);
+					$user->setCity($location['city']);
+				}
             }
 
             // TODO use http://developers.facebook.com/docs/api/realtime

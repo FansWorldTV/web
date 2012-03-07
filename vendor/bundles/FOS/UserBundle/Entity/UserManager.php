@@ -95,6 +95,12 @@ class UserManager extends BaseUserManager
     {
         $this->updateCanonicalFields($user);
         $this->updatePassword($user);
+        
+        if (!$user->getLevel()) {
+        	$score = $user->getScore() ?: 0;
+        	$level = $this->em->getRepository('DodiciFansworldWebBundle:Level')->byScore($score);
+        	$user->setLevel($level);
+        }
 
         $this->em->persist($user);
         if ($andFlush) {

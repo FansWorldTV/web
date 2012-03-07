@@ -30,6 +30,25 @@ var site = {
         	$(this).html($.timeago($(this).attr('data-time')));
         });
         
+        $.datepicker.setDefaults($.datepicker.regional[appLocale]);
+        $('.datepicker').datepicker({
+    		dateFormat: 'dd/mm/yy',
+    		changeMonth: true,
+			changeYear: true,
+			yearRange: '-80'
+    	});
+        
+    	$('.datetimepicker').datetimepicker({
+    		dateFormat: 'dd/mm/yy',
+    		timeFormat: 'hh:mm'
+    	});
+    	
+    	$('.timepicker').datetimepicker({
+    		timeFormat: 'hhmm',
+    		timeOnly: true,
+    		stepMinute: 5
+    	});
+        
         site.listenPendingRequests();
         site.getPendingFriends();
         site.getNotifications();

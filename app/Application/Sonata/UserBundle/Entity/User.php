@@ -211,6 +211,9 @@ class User extends BaseUser
         		$this->addFriendgroup($group);
         	}
         }
+        if (null === $this->score) {
+        	$this->setScore(0);
+        }
     }
     
 	/**
@@ -249,6 +252,13 @@ class User extends BaseUser
         }
         if (isset($fbdata['email'])) {
             $this->setEmail($fbdata['email']);
+        }
+        if (isset($fbdata['gender'])) {
+        	if ($fbdata['gender'] == 'male') $this->setSex(self::SEX_MALE);
+        	if ($fbdata['gender'] == 'female') $this->setSex(self::SEX_FEMALE);
+        }
+    	if (isset($fbdata['birthday'])) {
+            $this->setBirthday(new \DateTime($fbdata['birthday']));
         }
     }
     

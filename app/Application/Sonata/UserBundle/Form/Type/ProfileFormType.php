@@ -11,6 +11,8 @@
 
 namespace Application\Sonata\UserBundle\Form\Type;
 
+use Application\Sonata\UserBundle\Entity\User;
+
 use Symfony\Component\Form\FormBuilder;
 use FOS\UserBundle\Form\Type\ProfileFormType as BaseType;
 
@@ -38,6 +40,9 @@ class ProfileFormType extends BaseType
             
 			->add('country',null,array('label'=>'País','required'=>false))
 			->add('city',null,array('label'=>'Ciudad','required'=>false))
+			->add('sex','choice',array('label'=>'Sexo','required'=>false, 'choices' => array(User::SEX_MALE => 'Hombre', User::SEX_FEMALE => 'Mujer')))
+            ->add('birthday', 'date', array ('required' => false, 'attr' => array('class' => 'datepicker'), 'widget' => 'single_text',
+               	'format' => 'dd/MM/yyyy'), array ())	
         ;
         
         $builder->setAttribute('label', 'Modificar mis datos:');
