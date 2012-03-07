@@ -1,0 +1,48 @@
+{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+
+{% block title %}{{ parent() }} - Búsqueda{% endblock %}
+
+{% block content %}
+
+<div class="cont clearfix">
+    <h2>Búsqueda</h2>
+    <div class="user_list">
+        <div class="search">
+            <form id="formSearch" method="post" action="" class="searchFront">
+                <input type="text" name="query" value="" id="query"/>
+                <input type="button" value="Buscar" name="submit" id="search" class="hidden"/>
+            </form>
+        </div>
+        <div class="mask">
+            <div class="ajax-loader hidden">
+                <img src="{{ asset('bundles/dodicifansworldweb/images/ajax-loader.gif') }}" alt="" />
+            </div>
+            <ul class="searchFront listMosaic"> 
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="paginador">
+    <a href="#" id="addMore" class="searchFront hidden">Agregar más</a>
+</div>
+
+<div class="searchFront templates hidden">
+    <ul class="listMosaicTemp">
+        <li class="element">
+            <a href="user_profile.php">
+                <div class="avatar">
+                    <img src="demo/user6.jpg" width="50" height="50" />
+                </div>
+                <div class="info">
+                    <h3 class="name">Carlos Aguilar</h3>
+                    <span>
+                        <strong class="commonFriends"></strong> fans en comun
+                        <!--strong class="">235</strong> fans<br /-->
+                        <!--strong>235</strong> idolos -->
+                    </span> 
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>
+{% endblock %}
