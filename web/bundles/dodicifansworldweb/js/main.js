@@ -329,7 +329,7 @@ var searchIdols = {
         $("#addMore.searchIdol").click(function(){
             var query = this.parent().find('input#query').val();
         
-            ajax.searchIdolsAction( query, searchIdols.page, true, function(response){
+            ajax.searchIdolsAction( query, searchIdols.page, null, function(response){
                 if(response){
                     for(var i in response){
                         var elementTmp = $("div.templates.searchIdol div.listMosaic div.element").clone();
@@ -357,7 +357,7 @@ var searchIdols = {
             $(".searchIdol.listMosaic").html('').hide();
             $("div.ajax-loader").removeClass('hidden');
         
-            ajax.searchIdolsAction(query, 0, true, function(response){
+            ajax.searchIdolsAction(query, 0, null, function(response){
                 if(response){
                     var elements = response.search;
                     for(var i in elements){
@@ -367,6 +367,10 @@ var searchIdols = {
                         template.find('.name').html(element.name);
                         template.find('.commonFriends').html(element.commonFriends);
                         template.find('.avatar img').attr('src', element.image);
+                    
+                        if(element.isidol){
+                            template.addClass('isidol');
+                        }
                     
                         $(".searchIdol.listMosaic").append(template);
                     }

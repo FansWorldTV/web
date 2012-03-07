@@ -684,3 +684,6 @@ select.post_privacidad { float: right; margin-right: 10px;}
 .form-changeimage ul.errors { width: 200px;}
 
 .media_img { width: 100%;}
+
+
+.element .isidol { background: url(../images/ui/ico_user_2.gif) top right no-repeat; }

@@ -206,7 +206,8 @@ class SearchController extends SiteController
                             'id' => $idol[0]->getId(),
                             'name' => (string) $idol[0],
                             'image' => $this->getImageUrl($idol[0]->getImage()),
-                            'commonFriends' => $idol['commonfriends']
+                            'commonFriends' => $idol['commonfriends'],
+                            'isidol' => $idol['isidol']
                         );
                     }
                 }
