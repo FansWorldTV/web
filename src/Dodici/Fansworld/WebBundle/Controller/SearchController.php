@@ -175,7 +175,7 @@ class SearchController extends SiteController
         $response = false;
 
         $query = $request->get('query', false);
-        $isIdol = $request->get('isidol', true);
+        $isIdol = null;
         $page = (int) $request->get('page', false);
 
         if ($query && !$page) {
@@ -192,14 +192,12 @@ class SearchController extends SiteController
         $user = $this->get('security.context')->getToken()->getUser();
         if ($user instanceof User) {
             if ($query) {
-
                 $response = array();
                 $searchIdol = $this->getRepository('User')->SearchIdolFront($user, $query, $isIdol, self::LIMIT_SEARCH, $offset);
                 $countTotal = $this->getRepository('User')->CountSearchIdolFront($user, $query, $isIdol);
 
-
                 if ($countTotal > 0) {
-                    $response['gotMore'] = $countTotal > $offset ? true : false;
+                    $response['gotMore'] = $countTotal * $page > $offset ? true : false;
 
                     foreach ($searchIdol as $idol) {
                         $response['idols'][] = array(

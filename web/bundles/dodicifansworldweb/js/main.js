@@ -378,7 +378,7 @@ var searchIdols = {
         
             ajax.searchIdolsAction(query, 0, null, function(response){
                 if(response){
-                    var elements = response.search;
+                    var elements = response.idols;
                     for(var i in elements){
                         var element = elements[i];
                         var template = $(".searchIdol.templates .listMosaicTemp .element").clone();
