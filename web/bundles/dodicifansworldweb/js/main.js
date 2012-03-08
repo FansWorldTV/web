@@ -322,6 +322,10 @@ var searchFront = {
                         template.find('.commonFriends').html(element.commonFriends);
                         template.find('.avatar img').attr('src', element.image);
                     
+                        if(element.isFriend){
+                            template.addClass('isfriend');
+                        }
+                    
                         $(".searchFront.listMosaic").append(template);
                     }
                 }

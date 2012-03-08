@@ -31,7 +31,7 @@ class SearchController extends SiteController
     }
 
     /**
-     * @Route("/search/", name = "search_search")
+     * @Route("/search/fans", name = "search_search")
      * @Template
      */
     public function searchAction()
@@ -71,7 +71,8 @@ class SearchController extends SiteController
                             'id' => $element[0]->getId(),
                             'name' => (string) $element[0],
                             'image' => $this->getImageUrl($element[0]->getImage()),
-                            'commonFriends' => $element['commonfriends']
+                            'commonFriends' => $element['commonfriends'],
+                            'isFriend' => $element['isfriend']
                         );
                     }
 
