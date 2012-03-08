@@ -25,6 +25,9 @@ class ComplaintRepository extends CountBaseRepository
     	
     	$exp = explode('\\', get_class($entity));
     	$classname = strtolower(end($exp));
+    	if (strpos($classname, 'proxy') !== false) {
+    		$classname = str_replace(array('dodicifansworldwebbundleentity','proxy'), array('',''), $classname);
+    	}
     	
     	return $this->_em->createQuery('
     	SELECT ct

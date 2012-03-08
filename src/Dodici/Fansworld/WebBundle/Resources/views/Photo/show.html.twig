@@ -6,7 +6,7 @@
 <div class="cont clearfix">
     <div class="media">
         <div class="media_content">
-            <a class="media_img" href="{{ imageurl }}">{% thumbnail photo.image, 'big' %}</a>
+            <a class="media_img" href="{% path photo.image, 'huge' %}">{% thumbnail photo.image, 'big' %}</a>
         </div>
         
 		{% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: photo} %}
@@ -22,15 +22,6 @@
     </div>
 </div>
 <div class="cont clearfix">
-    <div class="comments clearfix">
-        {% for comment in photo.comments %}
-        <div class="comment clearfix">
-            <div class="avatar"> <a href="#1"> <img src="demo/rodri.jpg" width="50" height="50"></a> </div>
-            <div class="user_comment"> <span class="action_user"><a href="user_profile.php">Rodrigo Ramirez</a> hace 5 minutos</span> Donec quis justo arcu, eu elementum orci. Vivamus in porttitor elit. Proin mollis porttitor urna, porttitor sollicitudin dolor fermentum quis. Quisque purus risus, blandit at scelerisque at, mattis non magna. </div>
-        </div>
-        {% endfor %}
-    </div>
-
     {% include 'DodiciFansworldWebBundle:Comment:comment_block.html.twig' with {entity: photo} %}
 </div>
 <script type="text/javascript">

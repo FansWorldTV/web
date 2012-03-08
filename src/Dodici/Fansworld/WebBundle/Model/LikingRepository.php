@@ -16,6 +16,9 @@ class LikingRepository extends CountBaseRepository
 	public function byUserAndEntity(\Application\Sonata\UserBundle\Entity\User $user, $entity) {
 		$exp = explode('\\', get_class($entity));
 		$relation = strtolower(end($exp));
+		if (strpos($relation, 'proxy') !== false) {
+    		$relation = str_replace(array('dodicifansworldwebbundleentity','proxy'), array('',''), $relation);
+    	}
 		return $this->_em->createQuery('
     	SELECT lk
     	FROM \Dodici\Fansworld\WebBundle\Entity\Liking lk

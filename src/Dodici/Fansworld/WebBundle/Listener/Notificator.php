@@ -10,6 +10,8 @@ use Dodici\Fansworld\WebBundle\Entity\HasUser;
 use Dodici\Fansworld\WebBundle\Entity\Notification;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
 use Dodici\Fansworld\WebBundle\Entity\Share;
+use Dodici\Fansworld\WebBundle\Entity\Photo;
+use Dodici\Fansworld\WebBundle\Entity\Video;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Application\Sonata\UserBundle\Entity\User;
 
@@ -128,6 +130,34 @@ class Notificator
 				
 				$em->flush();
 			}
+		}
+		
+		if ($entity instanceof Photo && $entity->getAuthor()) {
+			$comment = new Comment();
+			$comment->setType(Comment::TYPE_NEW_PHOTO);
+			$comment->setAuthor($entity->getAuthor());
+			$comment->setTarget($entity->getAuthor());
+			$comment->setPrivacy($entity->getPrivacy());
+			
+			$share = new Share();
+			$share->setPhoto($entity);
+    		$comment->setShare($share);
+			$em->persist($comment);
+			$em->flush();
+		}
+		
+    	if ($entity instanceof Video && $entity->getAuthor()) {
+			$comment = new Comment();
+			$comment->setType(Comment::TYPE_NEW_VIDEO);
+			$comment->setAuthor($entity->getAuthor());
+			$comment->setTarget($entity->getAuthor());
+			$comment->setPrivacy($entity->getPrivacy());
+			
+			$share = new Share();
+			$share->setVideo($entity);
+    		$comment->setShare($share);
+			$em->persist($comment);
+			$em->flush();
 		}
     }
     

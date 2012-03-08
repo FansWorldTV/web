@@ -129,6 +129,8 @@ class PhotoController extends SiteController
                     $photo->setPrivacy($data['privacy']);
                     $em->persist($photo);
                     $em->flush();
+                    
+                    $this->get('session')->setFlash('success', '¡Has subido una foto con éxito!');
                 }
             } catch (\Exception $e) {
                 $form->addError(new FormError('Error subiendo foto'));

@@ -1,7 +1,9 @@
+{% if type is not defined %}
+	{% set type = appstate.type(entity) %}
+{% endif %}
 {% set canlike = appstate.canlike(entity) %}
 {% set candislike = appstate.candislike(entity) %}
 {% if canlike or candislike %}
-	{% set type = appstate.type(entity) %}
 	{% if showcount is not defined %}
 		{% set showcount = true %}
 	{% endif %}

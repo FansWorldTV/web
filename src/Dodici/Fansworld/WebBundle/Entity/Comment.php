@@ -20,6 +20,8 @@ class Comment
     const TYPE_LIKES = 5;
     const TYPE_NEW_THREAD = 6;
     const TYPE_THREAD_ANSWERED = 7;
+    const TYPE_NEW_PHOTO = 8;
+    const TYPE_NEW_VIDEO = 9;
     
     /**
      * @var bigint $id

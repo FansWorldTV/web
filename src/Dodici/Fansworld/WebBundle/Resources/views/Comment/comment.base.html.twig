@@ -17,7 +17,9 @@
 			{% block date %}
 				<div class="info">
 					{% include 'DodiciFansworldWebBundle:Comment:date.html.twig' with {date: comment.createdAt} %}
+					{% block commentcount %}
 					<span class="comments">{{ comment.commentCount }} comentarios</span>
+					{% endblock %}
 				</div>
 			{% endblock %}
 			{% block comment_social %}

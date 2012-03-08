@@ -59,8 +59,12 @@ class CommentController extends SiteController
 	        $em = $this->getDoctrine()->getEntityManager();
 	        
 	        $comment = $this->get('commenter')->comment($user, $entity, $content, $privacy);
-	                	
-        	$message = $translator->trans('You have commented on') . ' ' . (string)$entity;
+	        
+	        if ($entity instanceof Comment) {
+	        	$message = $translator->trans('You have replied to a comment');
+	        } else {
+        		$message = $translator->trans('You have commented on') . ' ' . (string)$entity;
+	        }
 	
 	        $response = new Response(json_encode(array(
 	        	'commenthtml' => $this->renderView('DodiciFansworldWebBundle:Comment:comment.html.twig', array('comment' => $comment)),
