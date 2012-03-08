@@ -36,7 +36,26 @@ class SearchController extends SiteController
      */
     public function searchAction()
     {
-        return array();
+        $request = $this->getRequest();
+        $query = $request->get('query');
+        $user = $this->get('security.context')->getToken()->getUser();
+        $response = array();
+
+        if ($query && $user instanceof User) {
+            $search = $this->getRepository('User')->searchFront($user, $query, null, self::LIMIT_SEARCH);
+
+            foreach ($search as $element) {
+                $response['search'][] = array(
+                    'id' => $element[0]->getId(),
+                    'name' => (string) $element[0],
+                    'image' => $this->getImageUrl($element[0]->getImage()),
+                    'commonFriends' => $element['commonfriends'],
+                    'isFriend' => $element['isfriend']
+                );
+            }
+        }
+
+        return array($response);
     }
 
     /**
