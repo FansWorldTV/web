@@ -29,7 +29,7 @@ class PhotoController extends SiteController
 {
 
     const LIMIT_PHOTOS = 8;
-    const LIMIT_PHOTOS_PIN = 9;
+    const LIMIT_PHOTOS_PIN = 2;
 
     /**
      * @Route("/{id}/{slug}", name= "photo_show", requirements = {"id" = "\d+"})

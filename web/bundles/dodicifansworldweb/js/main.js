@@ -49,16 +49,6 @@ var site = {
     		stepMinute: 5
     	});
     	
-    	if ($('.masonbricks .brick').length) {
-    		$('.masonbricks').imagesLoaded(function(){
-	    		$('.masonbricks').masonry({
-	    		      itemSelector: '.brick',
-	    		      columnWidth: 256,
-	    		      gutterWidth: 10
-	    		    });
-    		});
-    	}
-        
         site.listenPendingRequests();
         site.getPendingFriends();
         site.getNotifications();

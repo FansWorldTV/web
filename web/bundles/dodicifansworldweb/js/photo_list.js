@@ -1,4 +1,11 @@
 $(function(){
+	$('.photomason').isotope({
+	  layoutMode: 'masonry',
+	  masonry: {
+		  itemSelector: '.brick',
+	      columnWidth: 260
+	  }
+	});
 	photopins.init();
 });
 
@@ -32,14 +39,13 @@ var photopins = {
                     
                     var $items = $( items.join('') );
                     $items.imagesLoaded(function(){
-                      $('.photomason').masonry()
-                        .append( $items ).masonry( 'appended', $items, true )
-                        .masonry().resize();
-                      if(!r['gotMore']){
-	                      $("a.loadmore.pictures").hide();
-	                  }
-                      photopins.pager++;
-	                  $("a.loadmore.pictures").removeClass('loading');
+                      $('.photomason').isotope( 'insert', $items, function(){
+                    	  if(!r['gotMore']){
+    	                      $("a.loadmore.pictures").hide();
+    	                  }
+                          photopins.pager++;
+    	                  $("a.loadmore.pictures").removeClass('loading');
+                      });
                     });
                 }
             },
