@@ -19,16 +19,7 @@ class LikingRepository extends CountBaseRepository
 		if (strpos($relation, 'proxy') !== false) {
     		$relation = str_replace(array('dodicifansworldwebbundleentity','proxy'), array('',''), $relation);
     	}
-		return $this->_em->createQuery('
-    	SELECT lk
-    	FROM \Dodici\Fansworld\WebBundle\Entity\Liking lk
-    	WHERE
-    	lk.author = :user
-    	AND
-    	lk.'.$relation.' = :entity
-    	')
-    		->setParameter('user', $user->getId())
-    		->setParameter('entity', $entity->getId())
-    		->getResult();
+    	
+    	return $this->findBy(array('author' => $user->getId(), $relation => $entity->getId()));
 	}
 }

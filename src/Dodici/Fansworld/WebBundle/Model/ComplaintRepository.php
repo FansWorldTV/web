@@ -29,16 +29,6 @@ class ComplaintRepository extends CountBaseRepository
     		$classname = str_replace(array('dodicifansworldwebbundleentity','proxy'), array('',''), $classname);
     	}
     	
-    	return $this->_em->createQuery('
-    	SELECT ct
-    	FROM \Dodici\Fansworld\WebBundle\Entity\Complaint ct
-    	WHERE
-    	ct.author = :user
-    	AND
-    	ct.'.$classname.' = :entity
-    	')
-    		->setParameter('user', $user->getId(), Type::BIGINT)
-    		->setParameter('entity', $entity->getId(), Type::BIGINT)
-    		->getResult();
+    	return $this->findBy(array('author' => $user->getId(), $classname => $entity->getId()));
     }
 }

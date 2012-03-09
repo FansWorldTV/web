@@ -40,7 +40,7 @@ class CommentController extends SiteController
 	        $type = $request->get('type');
 	        $privacy = $request->get('privacy', null);
 	        $content = $request->get('content', null);
-	        $ispin = $request->get('ispin', false);
+	        $ispin = $request->get('ispin') == 'true';
 	        $translator = $this->get('translator');
 	        $appstate = $this->get('appstate');
 	        
