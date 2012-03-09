@@ -74,7 +74,7 @@ class SearchController extends SiteController
         }
 
         $userRepo = $this->getRepository('User');
-
+        
         $response = false;
         if ($query) {
             $response = array();

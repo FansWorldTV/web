@@ -71,7 +71,7 @@ class UserController extends SiteController
     {
         $user = $this->get('security.context')->getToken()->getUser();
         $notiRepo = $this->getRepository('Notification');
-        $number = $notiRepo->countLatest($user);
+        $number = $notiRepo->countLatest($user, false);
 
         return $this->jsonResponse(array('number' => $number));
     }

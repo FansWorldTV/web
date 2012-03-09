@@ -7,25 +7,21 @@
     <h2>Solicitudes pendientes</h2>
     <div class="user_list">
         <div class="mask">
-            <ul class="friends listMosaic"> 
                 {% for request in requests %}
-                    <li>
-                        <a href="#" onclick="return false;">
-                            <div class="avatar">
-                                <img src="{{ request['user']['image'] }}" width="50" height="50" />
-                            </div>
-                            <div class="info">
-                                <h3 class="name">{{ request['user']['name'] }}</h3>
-                                <span id="{{ request['friendship']['id'] }}">
-                                    <strong class="accept">Aceptar</strong>
-                                    <br/>
-                                    <strong class="deny">Rechazar</strong>
-                                </span>
-                            </div>
-                        </a>
-                    </li>
+                    <div class="listElement">
+                        <div class="avatar">
+                            <img src="{{ request['user']['image'] }}" width="50" height="50" />
+                        </div>
+                        <div class="info">
+                            <h3 class="name">{{ request['user']['name'] }}</h3>
+                            <span>
+                                <a href="#" class="accept" id="{{ request['friendship']['id'] }}"><strong>Aceptar</strong></a>
+                                <br/>
+                                <a href="#" class="deny" id="{{ request['friendship']['id'] }}"><strong class="deny">Rechazar</strong></a>
+                            </span>
+                        </div>
+                    </div>
                 {% endfor %}
-                </ul>
             </div>
         </div>
     </div>
