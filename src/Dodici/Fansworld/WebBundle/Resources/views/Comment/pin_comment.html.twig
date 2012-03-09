@@ -1,0 +1,11 @@
+<div class="comment clearfix">
+	{% if comment.author.image %}
+	<div class="avatar">
+		<a href="{{ path('user_detail', {id: comment.author.id}) }}">{% thumbnail comment.author.image, 'avatar' %}</a>
+	</div>
+	{% endif %}
+	<div class="message">
+		<a href="{{ path('user_detail', {id: comment.author.id}) }}">{{ comment.author }}</a> 
+		{{ comment.content|truncate(200) }}
+	</div>
+</div>

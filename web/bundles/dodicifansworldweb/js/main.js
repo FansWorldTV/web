@@ -48,6 +48,16 @@ var site = {
     		timeOnly: true,
     		stepMinute: 5
     	});
+    	
+    	if ($('.masonbricks .brick').length) {
+    		$('.masonbricks').imagesLoaded(function(){
+	    		$('.masonbricks').masonry({
+	    		      itemSelector: '.brick',
+	    		      columnWidth: 256,
+	    		      gutterWidth: 10
+	    		    });
+    		});
+    	}
         
         site.listenPendingRequests();
         site.getPendingFriends();
@@ -249,11 +259,12 @@ var site = {
             var el = $(this);
             var type = el.attr('data-type');
             var id = el.attr('data-id');
+            var ispin = (el.attr('data-pin') == 'true');
             var content = el.parents('.commentform').find('.comment_message').val();
             var privacy = el.parents('.commentform').find('.post_privacidad').val();
             el.addClass('loading');
         	
-            ajax.globalCommentAction(type, id, content, privacy,
+            ajax.globalCommentAction(type, id, content, privacy, ispin,
                 function(response){
                     el.removeClass('loading');
                     success(response.message);
@@ -261,6 +272,9 @@ var site = {
                     $('.timeago').each(function(){
                     	$(this).html($.timeago($(this).attr('data-time')));
                     });
+                    if (ispin) {
+                    	$('.masonbricks').masonry().resize();
+                    }
                 },
                 function(responsetext){
                     el.removeClass('loading');
@@ -615,7 +629,7 @@ var photos = {
         $("a.loadmore.pictures").click(function(){
             $("a.loadmore.pictures").addClass('loading');
             var userid = $("#userid").val();
-            ajax.getPhotosAction(userid, photos.pager, function(r){
+            ajax.getPhotosAction(userid, photos.pager, false, function(r){
                 if(r){
                     for(var i in r['images']){
                         var ele = r['images'][i];

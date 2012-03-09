@@ -60,7 +60,7 @@ class Notificator
 		
     	if ($entity instanceof Comment) {
 			$parent = $entity->getComment();
-    		if ($parent) {
+    		if ($parent && ($entity->getAuthor() != $parent->getAuthor())) {
     			// notif: ha respondido tu comentario...
     			$notification = new Notification();
     			$notification->setType(Notification::TYPE_COMMENT_ANSWERED);

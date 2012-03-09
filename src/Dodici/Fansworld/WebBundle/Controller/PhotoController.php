@@ -29,6 +29,7 @@ class PhotoController extends SiteController
 {
 
     const LIMIT_PHOTOS = 8;
+    const LIMIT_PHOTOS_PIN = 9;
 
     /**
      * @Route("/{id}/{slug}", name= "photo_show", requirements = {"id" = "\d+"})
@@ -43,8 +44,19 @@ class PhotoController extends SiteController
         return array(
             'photo' => $photo, 
             'author' => $author,
-            'authorName' => (string) $author,
-            'imageurl' => $this->getImageUrl($photo->getImage())
+            'authorName' => (string) $author
+            );
+    }
+    
+    /**
+     * @Route("/", name= "photo_list")
+     * @Secure(roles="ROLE_USER")
+     * @Template()
+     */
+    public function listAction()
+    {
+        return array(
+            
             );
     }
 
@@ -147,26 +159,40 @@ class PhotoController extends SiteController
     {
         $request = $this->getRequest();
         $userId = $request->get('userId');
+        if ($userId == 'null') $userId = null;
         $page = (int) $request->get('page');
+        $renderpin = $request->get('renderpin', false);
+        
+        $limit = $renderpin ? self::LIMIT_PHOTOS_PIN : self::LIMIT_PHOTOS;
 
         $page--;
-        $offset = $page * self::LIMIT_PHOTOS;
+        $offset = $page * $limit;
+        
+        $params = array();
+        if ($userId) $params['author'] = $userId;
+        $params['active'] = true;
 
-        $photos = $this->getRepository('Photo')->findBy(array('author' => $userId), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS, $offset);
+        $photos = $this->getRepository('Photo')->findBy($params, array('createdAt' => 'DESC'), $limit, $offset);
 
         $response = array();
         foreach ($photos as $photo) {
-            $response['images'][] = array(
-                'id' => $photo->getId(),
-                'image' => $this->getImageUrl($photo->getImage()),
-                'slug' => $photo->getSlug(),
-                'title' => $photo->getTitle(),
-                'comments' => $photo->getCommentCount()
-            );
+            if ($renderpin) {
+            	$response['images'][] = array(
+            		'htmlpin' => $this->renderView('DodiciFansworldWebBundle:Default:pin.html.twig', array('entity' => $photo))
+            	);
+            } else {
+	        	$response['images'][] = array(
+	                'id' => $photo->getId(),
+	                'image' => $this->getImageUrl($photo->getImage()),
+	                'slug' => $photo->getSlug(),
+	                'title' => $photo->getTitle(),
+	                'comments' => $photo->getCommentCount()
+	            );
+            }
         }
 
-        $countTotal = $this->getRepository('Photo')->countBy(array('author' => $userId));
-        if ($countTotal > (($page + 1) * self::LIMIT_PHOTOS)) {
+        $countTotal = $this->getRepository('Photo')->countBy($params);
+        if ($countTotal > (($page + 1) * $limit)) {
             $response['gotMore'] = true;
         } else {
             $response['gotMore'] = false;

@@ -248,7 +248,7 @@ var ajax = {
         });
     },
     
-    globalCommentAction: function(type, id, content, privacy, callback, errorcallback){
+    globalCommentAction: function(type, id, content, privacy, ispin, callback, errorcallback){
         $.ajax({
             url: 'http://' + location.host + Routing.generate( appLocale + '_comment_ajaxpost'),
             type: 'POST',
@@ -256,7 +256,8 @@ var ajax = {
                 'id' : id,
                 'type' : type,
                 'content' : content,
-                'privacy' : privacy
+                'privacy' : privacy,
+                'ispin' : ispin
             },
             success: function(response){
                 if(typeof(callback) !== 'undefined'){
@@ -271,16 +272,22 @@ var ajax = {
         });
     },
     
-    getPhotosAction: function(userid, page, callback){
+    getPhotosAction: function(userid, page, renderpin, callback, errorcallback){
         $.ajax({
             url: 'http://' + location.host + Routing.generate( appLocale + '_photo_get'),
             data: {
                 'userId' : userid,
-                'page' : page
+                'page' : page,
+                'renderpin' : renderpin
             },
             success: function(response){
                 if(typeof(callback) !== 'undefined'){
                     callback(response);
+                }
+            },
+            error:function (xhr, ajaxOptions, thrownError){
+                if(typeof(errorcallback) !== 'undefined'){
+                    errorcallback(xhr.responseText);
                 }
             }
         });

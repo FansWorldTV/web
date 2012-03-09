@@ -1,6 +1,6 @@
 <div class="col_300 left">
                 <div class="cont clearfix">
-                    <h2>Idolos top <a class="more" href="#">ver todos</a></h2>
+                    <h2>Idolos top <a class="more" href="{{ path('search_idols') }}">ver todos</a></h2>
                     <div class="grid_users">
                         <ul class="users">
                         	{% for idol in topidols %}
@@ -25,7 +25,7 @@
                     <div class="banner_demo" style="height:120px"></div>
                 </div>
                 <div class="cont clearfix">
-                    <h2>Fans top <a class="more" href="#">ver todos</a></h2>
+                    <h2>Fans top <a class="more" href="{{ path('search_search') }}">ver todos</a></h2>
                     <div class="grid_users">
                         <ul class="users">
                         	{% for fan in topfans %}

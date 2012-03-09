@@ -1,0 +1,18 @@
+{% if comments is not defined %}
+	{% set comments = appstate.comments(entity) %}
+{% endif %}
+<div class="pincomments">
+	{% if appstate.cancomment(entity) %}
+		{% include 'DodiciFansworldWebBundle:Comment:pin_comment_form.html.twig' with {entity: entity} %}
+	{% endif %}
+	
+	{% for comment in comments %}
+		{% if loop.index <= 5 %}
+			{% include 'DodiciFansworldWebBundle:Comment:pin_comment.html.twig' with {comment: comment} %}
+		{% endif %}
+	{% endfor %}
+	
+	{% if comments|length > 0 %}
+		<a class="allcomments" href="{{ path(appstate.type(entity) ~ '_show', {id:entity.id, slug:entity.slug}) }}">Ver los {{entity.commentcount}} comentarios</a>
+	{% endif %}
+</div>

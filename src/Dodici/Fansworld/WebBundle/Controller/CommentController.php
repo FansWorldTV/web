@@ -40,6 +40,7 @@ class CommentController extends SiteController
 	        $type = $request->get('type');
 	        $privacy = $request->get('privacy', null);
 	        $content = $request->get('content', null);
+	        $ispin = $request->get('ispin', false);
 	        $translator = $this->get('translator');
 	        $appstate = $this->get('appstate');
 	        
@@ -66,8 +67,10 @@ class CommentController extends SiteController
         		$message = $translator->trans('You have commented on') . ' ' . (string)$entity;
 	        }
 	
+	        $templatename = ($ispin ? 'pin_comment.html.twig' : 'comment.html.twig');
+	        
 	        $response = new Response(json_encode(array(
-	        	'commenthtml' => $this->renderView('DodiciFansworldWebBundle:Comment:comment.html.twig', array('comment' => $comment)),
+	        	'commenthtml' => $this->renderView('DodiciFansworldWebBundle:Comment:'.$templatename, array('comment' => $comment)),
 	        	'message' => $message
 	        )));
 	        $response->headers->set('Content-Type', 'application/json');
