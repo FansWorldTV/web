@@ -124,6 +124,7 @@ var site = {
                 
                 site.isClosedNotificationess = false;
             }else{
+                $("li.notifications_user ul li.more").addClass('hidden');
                 $("li.notifications_user ul li.loading").remove();
                 $("li.notifications_user ul div.info").remove();
                 $("li.notifications_user ul li.clearfix.notification").remove();
