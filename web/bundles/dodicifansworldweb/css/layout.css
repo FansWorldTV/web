@@ -424,6 +424,18 @@ a.btn_delete_post { display:none;}
 .user_list ul li a:hover .avatar img { border:3px solid #fff; box-shadow:0 1px 1px #666;}
 .user_list ul li a:hover span { color:#666;}
 
+.user_list div.listElement { position:relative; float:left;}
+.user_list div.listElement  { display:block; width:220px; margin:0 5px 5px 0; padding:6px;height:55px; border:solid 1px #fff}
+.user_list div.listElement .avatar { width:56px; float:left;}
+.user_list div.listElement .avatar img { border:3px solid #fff; box-shadow:0 1px 1px #999;}
+.user_list div.listElement .info { width:155px;float: right;}
+.user_list div.listElement .info h3 { border:none!important; padding:none!important; font-size:14px; color:#222; font-weight:400; margin:0 !important;}
+.user_list div.listElement .info span { font-size:10px; color:#fff; line-height:14px; font-family:Tahoma, Geneva, sans-serif}
+.user_list div.listElement:hover { background:#f1f3f4; border-left:solid 1px #b7b9ba; border-top:solid 1px #b7b9ba; border-bottom:solid 1px #ebebeb; border-right:solid 1px #ebebeb; text-decoration:none;}
+.user_list div.listElement:hover h3 { color:#0f6d90; text-shadow:0 1px 0 #fff;}
+.user_list div.listElement:hover .avatar img { border:3px solid #fff; box-shadow:0 1px 1px #666;}
+.user_list div.listElement:hover span { color:#666;}
+
 .update { clear:both; display:block; border: solid 1px #d3e0e4}
 .update span.deco { display:block; background:url(../images/ui/span_upd.png) no-repeat; width:10px; height:8px; position:absolute; float:left; margin:-8px 0 0 40px}
 .update .bottom { background:#e8f2f6; padding:3px; display:block; color:#8b9396; border-top:solid 1px #d3e0e4;}

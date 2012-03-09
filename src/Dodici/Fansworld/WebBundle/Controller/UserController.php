@@ -316,6 +316,23 @@ class UserController extends SiteController
     }
 
     /**
+     * @Route("/user/notifications", name="user_notifications")
+     * @Secure(roles="ROLE_USER")
+     * @Template
+     */
+    public function notificationsAction()
+    {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $notiRepo = $this->getRepository('Notification');
+        $notifications = $notiRepo->findBy(array('target'=>$user->getId()), array('createdAt' => 'DESC'));
+        $response = array();
+        foreach ($notifications as $notification) {
+            $response[] = $this->renderView('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $notification));
+        }
+        return array('notifications' => $response, 'user' => $user);
+    }
+
+    /**
      * @Route("/user/{id}/photos", name="user_photos")
      * @Template
      */

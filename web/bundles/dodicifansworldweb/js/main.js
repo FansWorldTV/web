@@ -11,6 +11,8 @@ $(document).ready(function(){
 var site = {
     timerPendingFriends : null,
     timerNotifications: null,
+    isClosedNotificationess: true,
+    isClosedRequests: true,
     
     init: function(){
         $(".navy ul li.alerts_user ul").hide();
@@ -21,39 +23,50 @@ var site = {
             'innerWidth': 350,
             'innerHeight': 200
         });
-        $('input:checkbox.prettycheckbox').checkbox({empty: emptyCheckboxImg});
+        $('input:checkbox.prettycheckbox').checkbox({
+            empty: emptyCheckboxImg
+        });
         
-        $('.change_image').colorbox({iframe: true, innerWidth: 700, innerHeight: 220});
-        $(".btn_upload_photo").colorbox({iframe: true, innerWidth: 700, innerHeight: 455});
+        $('.change_image').colorbox({
+            iframe: true, 
+            innerWidth: 700, 
+            innerHeight: 220
+        });
+        $(".btn_upload_photo").colorbox({
+            iframe: true, 
+            innerWidth: 700, 
+            innerHeight: 455
+        });
         
         $('.timeago').each(function(){
-        	$(this).html($.timeago($(this).attr('data-time')));
+            $(this).html($.timeago($(this).attr('data-time')));
         });
         
         $.datepicker.setDefaults($.datepicker.regional[appLocale]);
         $('.datepicker').datepicker({
-    		dateFormat: 'dd/mm/yy',
-    		changeMonth: true,
-			changeYear: true,
-			yearRange: '-80'
-    	});
+            dateFormat: 'dd/mm/yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '-80'
+        });
         
-    	$('.datetimepicker').datetimepicker({
-    		dateFormat: 'dd/mm/yy',
-    		timeFormat: 'hh:mm'
-    	});
+        $('.datetimepicker').datetimepicker({
+            dateFormat: 'dd/mm/yy',
+            timeFormat: 'hh:mm'
+        });
     	
-    	$('.timepicker').datetimepicker({
-    		timeFormat: 'hhmm',
-    		timeOnly: true,
-    		stepMinute: 5
-    	});
+        $('.timepicker').datetimepicker({
+            timeFormat: 'hhmm',
+            timeOnly: true,
+            stepMinute: 5
+        });
     	
         site.listenPendingRequests();
+        site.denyFriendRequest();
+        site.acceptFriendRequest();
         site.getPendingFriends();
         site.getNotifications();
-        
-        
+        site.readedNotification()
         site.likeButtons();
         site.shareButtons();
         site.globalCommentButtons();
@@ -81,30 +94,60 @@ var site = {
     },
     getNotifications: function(){
         $("li.notifications_user a").click(function(){
-            $("li.alerts_user ul").hide();
+            $("li.notifications_user ul").hide();
             $("li.notifications_user ul div.info").remove();
             $("li.notifications_user ul").toggle().append("<li class='clearfix loading'></li>");
-            ajax.getNotifications(function(response){
-                if(response){
-                    $("li.notifications_user ul li.loading").remove();
-                    $("li.notifications_user ul div.info").remove();
+            
+            if(site.isClosedNotificationess){
+                ajax.getNotifications(function(response){
+                    if(response){
+                        $("li.notifications_user ul li.loading").remove();
+                        $("li.notifications_user ul div.info").remove();
                     
-                    for(var i in response){
-                        var element = response[i];
-                        var newli = $('<li>').addClass('clearfix notification');
-                        newli.html(element);
-                        $("li.notifications_user ul").append(newli);
-                    }
-                } 
-            });
+                        for(var i in response){
+                            var element = response[i];
+                            var newli = $('<li>').addClass('clearfix notification');
+                            newli.html(element);
+                            $("li.notifications_user ul li.more").before(newli);
+                        }
+                        
+                        site.readedNotification();
+                        var cant = $(".notifications_user a span").html();
+                        parseInt(cant);
+                        if(cant>5){
+                            $("li.notifications_user ul li.more a").attr('href', Routing.generate(appLocale + '_user_notifications')).html(cant-5 + ' notificaciones mas').parent().removeClass('hidden');
+                        }else{
+                            $("li.notifications_user ul li.more").addClass('hidden');
+                        }
+                    } 
+                });
+                
+                site.isClosedNotificationess = false;
+            }else{
+                $("li.notifications_user ul li.loading").remove();
+                $("li.notifications_user ul div.info").remove();
+                $("li.notifications_user ul li.clearfix.notification").remove();
+                
+                site.isClosedNotificationess = true;
+            }
         });
     },
     readedNotification: function(){
-        $("li.notifications_user ul li").hover(function(){
-            var notificationId = null;
+        $("li.notifications_user div.info").hover(function(){
+            var el = $(this);
+            var notificationId = el.attr('notificationId');
             ajax.deleteNotification(notificationId, function(response){
                 if(response === true){
-                    $(this).remove();
+                    var cant = $("li.notifications_user a span").html();
+                    parseInt(cant);
+                    cant--;
+                    if(cant>0){
+                        $(".notifications_user a span").html(cant);
+                    }else{
+                        $(".notifications_user a span").hide();
+                    }
+                    
+                    el.remove();
                 }else{
                     console.log(response);
                 }
@@ -113,57 +156,77 @@ var site = {
     },
     getPendingFriends: function(){
         $("li.alerts_user a").click(function(){
-            $("li.notifications_user ul").hide();
+            $("li.alerts_user ul").hide();
             $("li.alerts_user ul li.clearfix").remove();
             $("li.alerts_user ul").toggle().append("<li class='clearfix loading'></li>");
-            ajax.pendingFriendsAction(1, 5, function(response){
-                if(response){
-                    var numberLeftRequests = response.total - 5;
-                    $("li.alerts_user ul li.clearfix").remove();
+            
+            if(site.isClosedRequests){
+                ajax.pendingFriendsAction(1, 5, function(response){
+                    if(response){
+                        var cant = $("li.alerts_user a span").html();
+                        parseInt(cant);
+                        $("li.alerts_user ul li.clearfix").remove();
                   
-                    for(var i in response.friendships){
-                        var element = response.friendships[i];
-                        var template = $("#templatePendingFriends ul li").clone();
-                        if(element.user.image){
-                            template.find("img.avatar").attr('src', element.user.image);
+                        for(var i in response.friendships){
+                            var element = response.friendships[i];
+                            var template = $("#templatePendingFriends ul li").clone();
+                            if(element.user.image){
+                                template.find("img.avatar").attr('src', element.user.image);
+                            }
+                            template.find("span.info a.name").attr('href', element.user.url).html(element.user.name);
+                            template.find("a.deny").attr('id', element.friendship.id);
+                            template.find("div.button a.accept").attr('id', element.friendship.id);
+                      
+                            $("li.alerts_user ul li.more").before(template);
                         }
-                        template.find("span.info a.name").attr('href', element.user.url).html(element.user.name);
-                        template.find("a.deny").attr('id', element.friendship.id);
-                        template.find("div.button a.accept").attr('id', element.friendship.id);
-                      
-                        $("li.alerts_user ul").append(template);
-                      
+                        
                         site.acceptFriendRequest();
                         site.denyFriendRequest();
-                    }
                   
-                    if(numberLeftRequests>0){
-                        $("li.alerts_user ul.more a").html(numberLeftRequests + ' notificaciones mas').parent().removeClass('hidden');
-                    }else{
-                        $("li.alerts_user ul.more").addClass('hidden');
-                    }
-                } 
-            });
+                        if(cant>5){
+                            $("li.alerts_user ul li.more a").html(cant-5 + ' notificaciones mas').parent().removeClass('hidden');
+                        }else{
+                            $("li.alerts_user ul li.more").addClass('hidden');
+                        }
+                    } 
+                });
+                site.isClosedRequests = false;
+            }else{
+                $("li.alerts_user ul li.clearfix").remove();
+                site.isClosedRequests = true;
+            }
         });
     },
     acceptFriendRequest: function(){
-        $("ul.friends li a span strong.accept").click(function(){
-            var friendshipId = $(this).parent().attr('id');
-            var liElement = $(this).parents('li');
-            ajax.acceptRequestAction(friendshipId, function(response){
-                if(response.error == false){
-                    liElement.remove();
-                }
-            });
-        });
-        $("li.alerts_user ul li div.button a.accept").click(function(){
+        $("div.button a.accept").click(function(){
             var liElement = $(this).parent().parent();
             var friendshipId = $(this).attr('id');
             ajax.acceptRequestAction(friendshipId, function(response){
                 if(response.error == false){
                     liElement.remove();
                     var cant = $("li.alerts_user a span").html();
+                    parseInt(cant);
                     cant--;
+                    $("li.alerts_user a span").html(cant);
+                    if(cant<=0){
+                        $("li.alerts_user a span").parent().addClass('hidden');
+                    }
+                    success('El usuario ha sido agregado como amigo');
+                }else{
+                    error('Se ha producido un error');
+                }
+            });
+        });
+        $("div.listElement a.accept").click(function(){
+            var friendshipId = $(this).attr('id');
+            var liElement = $(this).closest('div.listElement');
+            ajax.acceptRequestAction(friendshipId, function(response){
+                if(response.error == false){
+                    liElement.remove();
+                    var cant = $("li.alerts_user a span").html();
+                    parseInt(cant);
+                    cant--;
+                    $("li.alerts_user a span").html(cant);
                     if(cant<=0){
                         $("li.alerts_user a span").parent().addClass('hidden');
                     }
@@ -175,23 +238,39 @@ var site = {
         });
     },
     denyFriendRequest: function(){
-        $("ul.friends li a span strong.deny").click(function(){
-            var friendshipId = $(this).parent().attr('id');
-            var liElement = $(this).parents('li');
-            
+        $("div.listElement a.deny").click(function(){
+            var friendshipId = $(this).attr('id');
+            var liElement = $(this).closest('div.listElement');
             ajax.denyRequestAction(friendshipId, function(response){
                 if(response.error == false){
                     liElement.remove();
+                    var cant = $("li.alerts_user a span").html();
+                    parseInt(cant);
+                    cant--;
+                    $("li.alerts_user a span").html(cant);
+                    if(cant<=0){
+                        $("li.alerts_user a span").parent().addClass('hidden');
+                    }
+                    success('Se ha rechazado la amistad');
+                }else{
+                    error('Se ha producido un error');
                 }
             });
+            return false;
         });
-        $("a.deny").click(function(){
+        $("span.info a.deny").click(function(){
             var friendshipId = $(this).attr('id');
-            var liElement = $(this).parents('li');
-            
+            var liElement = $(this).closest('li.clearfix');
             ajax.denyRequestAction(friendshipId, function(response){
                 if(response.error == false){
                     liElement.remove();
+                    var cant = $("li.alerts_user a span").html();
+                    parseInt(cant);
+                    cant--;
+                    $("li.alerts_user a span").html(cant);
+                    if(cant<=0){
+                        $("li.alerts_user a span").parent().addClass('hidden');
+                    }
                     success('Se ha rechazado la amistad');
                 }else{
                     error('Se ha producido un error');
@@ -260,7 +339,7 @@ var site = {
                     success(response.message);
                     el.parents('.commentform').after(response.commenthtml);
                     $('.timeago').each(function(){
-                    	$(this).html($.timeago($(this).attr('data-time')));
+                        $(this).html($.timeago($(this).attr('data-time')));
                     });
                     if (ispin) {
                     	$('.masonbricks').masonry().resize();
@@ -274,6 +353,18 @@ var site = {
         });
     }
 }
+
+var searchBox = {
+    query: null,
+    searchType: null,
+    init: function(){
+        $("div.search input").change(function(){
+            searchBox.query = $(this).val();
+        });
+      
+    }
+    
+};
 
 var searchFront = {
     page: 0,
@@ -612,7 +703,7 @@ var photos = {
     pager : 2,
     
     init: function(){
-      photos.get();  
+        photos.get();  
     },
     
     get : function(){
@@ -687,5 +778,5 @@ var albums = {
 }
 
 function resizeColorbox(options) {
-	$.colorbox.resize(options);
+    $.colorbox.resize(options);
 }
