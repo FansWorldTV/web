@@ -39,5 +39,21 @@ class ContestRepository extends CountBaseRepository
                         ->setParameter('query', '%' . $query . '%')
                         ->getResult();
     }
-
+    
+    /**
+     * Get contests in which the user is or has participated
+     */
+	public function userParticipating(\Application\Sonata\Userbundle\Entity\User $user)
+    {
+        return $this->_em->createQuery('
+                SELECT cp, c
+                FROM \Dodici\Fansworld\WebBundle\Entity\ContestParticipant cp
+                JOIN cp.contest c
+                WHERE c.active = true AND
+                cp.author = :user
+                ORDER BY c.createdAt DESC
+            ')
+                        ->setParameter('user', $user->getId())
+                        ->getResult();
+    }
 }
