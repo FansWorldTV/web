@@ -121,6 +121,11 @@ class User extends BaseUser
     private $level;
     
     /**
+     * @var text $content
+     */
+    private $content;
+    
+    /**
      * @var Application\Sonata\MediaBundle\Entity\Media
      */
     private $image;
@@ -150,6 +155,11 @@ class User extends BaseUser
     protected $idolships;
     
     /**
+     * @var ArrayCollection $hasinterests
+     */
+    protected $hasinterests;
+    
+    /**
      * @var integer $friendCount
      */
     private $friendCount;
@@ -170,6 +180,7 @@ class User extends BaseUser
     	$this->friendships = new ArrayCollection();
     	$this->friendgroups = new ArrayCollection();
     	$this->idolships = new ArrayCollection();
+    	$this->hasinterests = new ArrayCollection();
         $this->privacy = array();
         $this->idolCount = 0;
         $this->friendCount = 0;
@@ -513,6 +524,26 @@ class User extends BaseUser
     }
     
 	/**
+     * Set content
+     *
+     * @param text $content
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * Get content
+     *
+     * @return text 
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+    
+	/**
      * Set type
      *
      * @param integer $type
@@ -752,6 +783,40 @@ class User extends BaseUser
     public function setFriendgroups($friendgroups)
     {
         $this->friendgroups = $friendgroups;
+    }
+    
+	/**
+     * Add hasinterests
+     *
+     * @param \Dodici\Fansworld\WebBundle\Entity\HasInterest $hasinterests
+     */
+    public function addHasinterest(\Dodici\Fansworld\WebBundle\Entity\HasInterest $hasinterests)
+    {
+        $this->hasinterests[] = $hasinterests;
+    }
+	public function addHasinterests(\Dodici\Fansworld\WebBundle\Entity\HasInterest $hasinterests)
+    {
+        $this->addHasinterest($hasinterests);
+    }
+
+    /**
+     * Get hasinterests
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getHasinterests()
+    {
+        return $this->hasinterests;
+    }
+    
+	/**
+     * Set hasinterests
+     *
+     * @param Doctrine\Common\Collections\Collection $hasinterests
+     */
+    public function setHasinterests($hasinterests)
+    {
+        $this->hasinterests = $hasinterests;
     }
 
 	/**

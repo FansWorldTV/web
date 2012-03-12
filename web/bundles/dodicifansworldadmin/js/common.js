@@ -1,15 +1,10 @@
 
 $(function(){
 	$.datepicker.setDefaults($.datepicker.regional['es']);
-	$('.datetimepicker').datetimepicker({
-		dateFormat: 'dd/mm/yy',
-		timeFormat: 'hh:mm'
-	});
+	makeDatepickers();
 	
-	$('.timepicker').datetimepicker({
-		timeFormat: 'hhmm',
-		timeOnly: true,
-		stepMinute: 5
+	$('.datepicker:not(.hasDatepicker),.datetimepicker:not(.hasDatepicker),.timepicker:not(.hasDatepicker)').live('mouseenter',function(){
+		makeDatepickers();
 	});
 	
 	tinyMCE.init({
@@ -33,3 +28,23 @@ $(function(){
 
 	});
 });
+
+function makeDatepickers()
+{
+	$('.datepicker').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '-80'
+    });
+	$('.datetimepicker').datetimepicker({
+		dateFormat: 'dd/mm/yy',
+		timeFormat: 'hh:mm'
+	});
+	
+	$('.timepicker').datetimepicker({
+		timeFormat: 'hhmm',
+		timeOnly: true,
+		stepMinute: 5
+	});
+}

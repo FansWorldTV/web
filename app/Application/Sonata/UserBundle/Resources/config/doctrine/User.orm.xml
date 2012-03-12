@@ -27,6 +27,7 @@
         <field name="type" column="type" type="integer" nullable="false" />
         <field name="birthday" column="birthday" type="datetime" nullable="true" />
         <field name="score" column="score" type="integer" nullable="true" />
+        <field name="content" column="content" type="text" nullable="true" />
         <field name="friendCount" column="friendCount" type="integer" nullable="false" />
         <field name="idolCount" column="idolCount" type="integer" nullable="false" />
         <field name="fanCount" column="fanCount" type="integer" nullable="false" />
@@ -87,6 +88,20 @@
         <one-to-many
                 field="friendgroups"
                 target-entity="Dodici\Fansworld\WebBundle\Entity\FriendGroup"
+                mapped-by="author"
+                orphan-removal="true"
+                >
+				<cascade>
+                	<cascade-remove/>
+                	<cascade-persist/>
+            	</cascade>
+                <orphan-removal>true</orphan-removal>
+
+        </one-to-many>
+        
+        <one-to-many
+                field="hasinterests"
+                target-entity="Dodici\Fansworld\WebBundle\Entity\HasInterest"
                 mapped-by="author"
                 orphan-removal="true"
                 >

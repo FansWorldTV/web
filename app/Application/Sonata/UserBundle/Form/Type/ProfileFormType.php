@@ -27,6 +27,11 @@ class ProfileFormType extends BaseType
 			->add('address',null,array('label'=>'Dirección','required'=>false))
 			->add('firstname',null,array('label'=>'Nombre','required'=>true))
 			->add('lastname',null,array('label'=>'Apellido','required'=>true))
+			->add('sex','choice',array('label'=>'Sexo','required'=>false, 'choices' => array(User::SEX_MALE => 'Hombre', User::SEX_FEMALE => 'Mujer')))
+            ->add('birthday', 'date', array ('required' => false, 'attr' => array('class' => 'datepicker'), 'widget' => 'single_text',
+               	'format' => 'dd/MM/yyyy'), array ())
+            ->add('country',null,array('label'=>'País','required'=>false))
+			->add('city',null,array('label'=>'Ciudad','required'=>false))
 			->add('phone',null,array('label'=>'Teléfono','required'=>false))
 			
 			/*
@@ -38,11 +43,7 @@ class ProfileFormType extends BaseType
 			->add('gmail',null,array('label'=>'Gmail','required'=>false))
 			*/
             
-			->add('country',null,array('label'=>'País','required'=>false))
-			->add('city',null,array('label'=>'Ciudad','required'=>false))
-			->add('sex','choice',array('label'=>'Sexo','required'=>false, 'choices' => array(User::SEX_MALE => 'Hombre', User::SEX_FEMALE => 'Mujer')))
-            ->add('birthday', 'date', array ('required' => false, 'attr' => array('class' => 'datepicker'), 'widget' => 'single_text',
-               	'format' => 'dd/MM/yyyy'), array ())	
+			->add('content',null,array('label'=>'Sobre Mí','required'=>false))	
         ;
         
         $builder->setAttribute('label', 'Modificar mis datos:');

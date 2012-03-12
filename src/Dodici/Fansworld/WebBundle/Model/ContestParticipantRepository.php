@@ -40,7 +40,7 @@ class ContestParticipantRepository extends CountBaseRepository
                 JOIN cp.contest c
                 WHERE c.active = true AND
                 cp.author = :user
-                ORDER BY c.createdAt DESC
+                ORDER BY cp.createdAt DESC
             ')
                         ->setParameter('user', $user->getId())
                         ->getResult();
