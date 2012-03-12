@@ -35,6 +35,29 @@ class ContestController extends SiteController
         return array(
         );
     }
+    
+    /**
+     * My Contests Controller
+     * 
+     * @Route("/my-contests", name="contest_mycontests")
+     * @Template
+     */
+    public function myContestsAction()
+    {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $participating = $this->getRepository('ContestParticipant')->userParticipating($user);
+        $contests = array();
+        
+        foreach($participating as $item){
+            $contest = $this->getRepository('Contest')->find($item->getContest()->getId());
+            $contests[] = $contest;
+        }
+        
+        return array(
+            'user' => $user,
+            'contests' => $contests
+        );
+    }
 
     /**
      * 

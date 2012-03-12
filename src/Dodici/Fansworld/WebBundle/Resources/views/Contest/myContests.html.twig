@@ -1,0 +1,28 @@
+{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+
+{% block title %}{{ parent() }} - Mis concursos{% endblock %}
+
+{% block content %}
+<div class="contests">
+    <div class="cont clearfix">
+        <h1>Mis Concursos</h1>
+        <div class="listContests">
+            {% if contests|length>0  %}
+                {% for contest in contests  %}
+                    <div class="nota clearfix">
+                        <h2><a href="{{ path('contest_show', {'id':contest.id, 'slug': contest.slug}) }}">{{ contest.title }}</a></h2>
+                        {% if contest.image %}
+                        <div class="media"><a href="{{ path('contest_show', {'id':contest.id, slug: contest.slug}) }}">{% thumbnail contest.image, 'small' %}</a></div>
+                        {% endif %}
+                        <div class="contenido">
+                            <div> {{ contest.content|raw }} </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}    
+                <div class="nota"><h2>No hay resultados</h2></div>
+            {% endif %}
+        </div>    
+    </div>
+</div>
+{% endblock %}
