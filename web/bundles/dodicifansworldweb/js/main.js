@@ -343,7 +343,7 @@ var site = {
                         $(this).html($.timeago($(this).attr('data-time')));
                     });
                     if (ispin) {
-                    	$('.masonbricks').masonry().resize();
+                        $('.masonbricks').masonry().resize();
                     }
                 },
                 function(responsetext){
@@ -587,7 +587,7 @@ var contest = {
     },
     
     search: function(filter){
-        $("div.nota").remove();
+        $("div.nota:not('.template')").remove();
         contest.page = 1;
         contest.searchType = filter;
         contest.listAddMore();
@@ -596,21 +596,30 @@ var contest = {
     listAddMore: function(){
         ajax.contestsListAction(contest.page, contest.searchType, function(r){
             if(r){
-                for(var i in r.contests){
-                    var element = r.contests[i];
-                    var template = $("#templates.contests .nota").clone();
-                    var contestShowUrl = Routing.generate( appLocale + '_contest_show', {
-                        'id': element.id
-                    });
+                if(r.contests.length>0) {
+                    for(var i in r.contests){
+                        var element = r.contests[i];
+                        var template = $("#templates .nota").clone();
+                        var contestShowUrl = Routing.generate( appLocale + '_contest_show', {
+                            'id': element.id
+                        });
                         
-                    template.find("h2 a").html(element.title);
-                    template.find("h2 a").attr('href', contestShowUrl);
-                    template.find("div.media a").attr("href", contestShowUrl );
-                    template.find("div.media a").html('<img src="' + element.image + '" alt="" />');
-                    template.find("div.contenido p").html(element.content);
-                    
-                    $("div.cont").append(template);
+                        template.find("h2 a").html(element.title);
+                        template.find("h2 a").attr('href', contestShowUrl);
+                        template.find("div.media a").attr("href", contestShowUrl );
+                        if(element.image){
+                            template.find("div.media a").html('<img src="' + element.image + '" alt="" />');
+                        }else{
+                            template.find("div.media").remove();
+                        }
+                        template.find("div.contenido p").html(element.content);
+                        $("div.contests div.cont").append(template);
+                    }
+                }else if(contest.page == 1){
+                    $("div.contests div.cont").append('<div class="nota"><h2>No hay resultados</h2></div>');
                 }
+                
+                
                 contest.page++;
             }
         });
@@ -618,7 +627,9 @@ var contest = {
     
     changeType: function(){
         $('ul.contestType a').click(function(){
+            var name = $(this).html();
             var type = $(this).parent().attr('class');
+            $(".titleContestType").html(name);
             contest.search(type);
         });
     },

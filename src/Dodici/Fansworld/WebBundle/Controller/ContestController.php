@@ -177,28 +177,41 @@ class ContestController extends SiteController
     public function ajaxListAction()
     {
         $request = $this->getRequest();
-        $filter = $request->get('filter');
+        $filter = $request->get('filter', false);
         $page = $request->get('page', 0);
         $page--;
         $offset = $page * self::contestLimit;
 
-        $contests = $this->getRepository('Contest')->findBy(array('active' => true, 'type' => $filter), array('createdAt' => 'desc'), self::contestLimit, $offset);
-        $contestsCount = $this->getRepository('Contest')->countBy(array('active' => true, 'type' => $filter));
+        if ($filter && $filter !== 'null') {
+            $criteria = array(
+                'active' => true,
+                'type' => $filter
+            );
+        } else {
+            $criteria = array(
+                'active' => true
+            );
+        }
+        
+        $contests = $this->getRepository('Contest')->findBy($criteria, array('createdAt' => 'desc'), self::contestLimit, $offset);
+        $contestsCount = $this->getRepository('Contest')->countBy($criteria);
 
         $contestsCount = $contestsCount / self::contestLimit;
         $addMore = $contestsCount > $page ? true : false;
 
         $response = array();
         foreach ($contests as $contest) {
-            $response[$contest->getId()]['id'] = $contest->getId();
-            $response[$contest->getId()]['title'] = $contest->getTitle();
-            $response[$contest->getId()]['active'] = $contest->getActive();
-            $response[$contest->getId()]['content'] = $contest->getContent();
-            $response[$contest->getId()]['image'] = $this->getImageUrl($contest->getImage());
-            $response[$contest->getId()]['createdAt'] = $contest->getCreatedAt();
-            $response[$contest->getId()]['endDate'] = $contest->getEndDate();
-            $response[$contest->getId()]['type'] = $contest->getType();
-            $response[$contest->getId()]['slug'] = $contest->getSlug();
+            $response[] = array(
+                'id' => $contest->getId(),
+                'title' => $contest->getTitle(),
+                'active' => $contest->getActive(),
+                'content' => $contest->getContent(),
+                'image' => $this->getImageUrl($contest->getImage()),
+                'createdAt' => $contest->getCreatedAt(),
+                'endDate' => $contest->getEndDate(),
+                'type' => $contest->getType(),
+                'slug' => $contest->getSlug()
+            );
         }
 
         $response = new Response(json_encode(array('contests' => $response, 'addMore' => $addMore)));

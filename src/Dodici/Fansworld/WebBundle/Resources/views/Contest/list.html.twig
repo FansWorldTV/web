@@ -3,15 +3,17 @@
 {% block title %}{{ parent() }} - Detalle{% endblock %}
 
 {% block content %}
-<div class="col_468 left margin contests">
+<div class="contests">
     <div class="cont clearfix">
         <h1>Concursos
             <ul>
-                <li><a href="#1">Tipo de Concurso</a>
+                <li><a href="#1" class="titleContestType">Tipo de Concurso</a>
                     <ul class="contestType">
-                        <li class="2"><a href="#1">Texto concurso</a></li>
-                        <li class="3"><a href="#1">Foto concurso</a></li>
-                        <li class="4"><a href="#1">Video concurso</a></li>
+                        <li><a href="#">Todos</a></li>
+                        <li class="1"><a href="#">Participación Simple</a></li>
+                        <li class="2"><a href="#">Texto concurso</a></li>
+                        <li class="3"><a href="#">Foto concurso</a></li>
+                        <li class="4"><a href="#">Video concurso</a></li>
                     </ul>
                 </li>
             </ul>
@@ -20,7 +22,7 @@
         <div class="nota clearfix">
             <h2><a href="{{ path('contest_show', {'id':contest.id, 'slug': contest.slug}) }}">{{ contest.title }}</a></h2>
             {% if contest.image %}
-            	<div class="media"><a href="{{ path('contest_show', {'id':contest.id, slug: contest.slug}) }}">{% thumbnail contest.image, 'small' %}</a></div>
+            <div class="media"><a href="{{ path('contest_show', {'id':contest.id, slug: contest.slug}) }}">{% thumbnail contest.image, 'small' %}</a></div>
             {% endif %}
             <div class="contenido">
                 <div> {{ contest.content|raw }} </div>
@@ -29,21 +31,21 @@
         </div>
         {% endfor %}
         {% if addMore %}
-            <a href="#" id="addMore" class="contests">Agregar Más</a>
+        <a href="#" id="addMore" class="contests">Agregar Más</a>
         {% endif %}
     </div>
-</div>
-<div id="templates" class="contests hidden">
-    <div class="nota clearfix">
-        <h2><a href=""></a></h2>
-        <div class="media"><a href=""></a></div>
-        <div class="contenido">
-            <p></p>
-            <div class="options"><a class="btn_action2" href="#" onclick="">Participar</a></div>
+    <div id="templates" class="contests hidden">
+        <div class="nota clearfix template">
+            <h2><a href=""></a></h2>
+            <div class="media"><a href=""></a></div>
+            <div class="contenido">
+                <p></p>
+                <div class="options"><a class="btn_action2" href="#" onclick="">Participar</a></div>
+            </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
     contest.init();
-</script>
+    </script>
 {% endblock %}
