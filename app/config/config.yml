@@ -190,6 +190,11 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: video }
         arguments: [null, Dodici\Fansworld\WebBundle\Entity\Video, DodiciFansworldAdminBundle:VideoAdmin]
+    dodici.fansworld.adminbundle.admin.videocategory:
+        class: Dodici\Fansworld\AdminBundle\Admin\VideoCategoryAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: videocategory }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\VideoCategory, DodiciFansworldAdminBundle:VideoCategoryAdmin]
     dodici.fansworld.adminbundle.admin.comment:
         class: Dodici\Fansworld\AdminBundle\Admin\CommentAdmin
         tags:
