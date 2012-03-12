@@ -575,6 +575,7 @@ var contest = {
     searchType: null,
     
     init: function(){
+        $(".nota.loading").hide();
         contest.changeType();
         
         $("#addMore.contests").click(function(){
@@ -587,15 +588,17 @@ var contest = {
     },
     
     search: function(filter){
-        $("div.nota:not('.template')").remove();
+        $("div.nota:not('.template'):not('.loading'), #addMore").remove();
         contest.page = 1;
         contest.searchType = filter;
         contest.listAddMore();
     },
     
     listAddMore: function(){
+        $(".nota.loading").show();
         ajax.contestsListAction(contest.page, contest.searchType, function(r){
             if(r){
+                $(".nota.loading").hide();
                 if(r.contests.length>0) {
                     for(var i in r.contests){
                         var element = r.contests[i];
@@ -613,6 +616,7 @@ var contest = {
                             template.find("div.media").remove();
                         }
                         template.find("div.contenido p").html(element.content);
+                        template.removeClass('template');
                         $("div.contests div.cont").append(template);
                     }
                 }else if(contest.page == 1){
