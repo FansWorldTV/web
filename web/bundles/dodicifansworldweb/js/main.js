@@ -604,11 +604,13 @@ var contest = {
                         var element = r.contests[i];
                         var template = $("#templates .nota").clone();
                         var contestShowUrl = Routing.generate( appLocale + '_contest_show', {
-                            'id': element.id
+                            'id': element.id,
+                            'slug': element.slug
                         });
                         
                         template.find("h2 a").html(element.title);
                         template.find("h2 a").attr('href', contestShowUrl);
+                        template.find(".contenido .options a").attr('href', contestShowUrl);
                         template.find("div.media a").attr("href", contestShowUrl );
                         if(element.image){
                             template.find("div.media a").html('<img src="' + element.image + '" alt="" />');
