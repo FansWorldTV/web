@@ -1,0 +1,14 @@
+{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+
+{% block title %}{{ parent() }} - Notificaciones{% endblock %}
+
+{% block content %}
+<div class="cont clearfix">
+    <h2>Notificaciones</h2>
+    <div class="mask">
+        {% for notification in notifications %}
+            {{ notification|raw }}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

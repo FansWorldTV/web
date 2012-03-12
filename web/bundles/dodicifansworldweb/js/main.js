@@ -134,8 +134,8 @@ var site = {
         });
     },
     readedNotification: function(){
-        $("li.notifications_user div.info").hover(function(){
-            var el = $(this);
+        $("li.notifications_user li.notification").hover(function(){
+            var el = $(this).find('div.info');
             var notificationId = el.attr('notificationId');
             ajax.deleteNotification(notificationId, function(response){
                 if(response === true){
@@ -148,7 +148,7 @@ var site = {
                         $(".notifications_user a span").hide();
                     }
                     
-                    el.remove();
+                    el.parent().css('background', '#f4f3b8');
                 }else{
                     console.log(response);
                 }
