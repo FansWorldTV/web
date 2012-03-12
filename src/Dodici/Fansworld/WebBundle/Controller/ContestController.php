@@ -37,7 +37,7 @@ class ContestController extends SiteController
     }
     
     /**
-     * My Contests Controller
+     * My Contests
      * 
      * @Route("/my-contests", name="contest_mycontests")
      * @Template
