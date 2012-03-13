@@ -28,7 +28,7 @@ class FriendGroupAdmin extends Admin
     public function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('title', 'text', array ())
+            ->addIdentifier('title', 'text', array ())
             ->add('author', 'orm_many_to_one', array ())
         ;
     }

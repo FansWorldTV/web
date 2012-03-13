@@ -51,6 +51,24 @@ class VideoController extends SiteController
             'videos' => $videos
         );
     }
+    
+	/**
+     * video category page
+     * 
+     * @Route("/category/{id}/{slug}", name="video_category", requirements = {"id" = "\d+"})
+     * @Template
+     */
+    public function categoryAction($id)
+    {
+       // TODO: everything
+	   $category = $this->getRepository('VideoCategory')->find($id);
+	   if (!$category) throw new HttpException(404, 'Categoría no encontrada');
+       $videos = $this->getRepository("Video")->findBy(array("active" => true, "videocategory" => $category->getId()), array("createdAt" => "DESC"));
+       
+       return array(
+            'videos' => $videos
+            );
+    }
 
     /**
      * my videos

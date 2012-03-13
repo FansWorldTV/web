@@ -1,0 +1,28 @@
+{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+
+{% block title %}{{ parent() }} - TV{% endblock %}
+
+{% block content %}
+<script type="text/javascript">
+	// TEMPORARY, FOR TESTING ONLY
+	$(function(){
+		$('.videoplayer').colorbox({iframe: true, innerWidth: 640, innerHeight: 480});
+	});
+</script>
+	{% if videos|length>0 %}
+        <ul class="videos">
+                {% for video in videos %}
+                        <li>
+                                <h2><a href="{{ path('video_show', {id: video.id, slug: video.slug}) }}">{{ video.title }}</a></h2>
+                                {% if video.image %}
+                                        <a class="videoplayer" href="{{ flumotiontwig.videoplayerurl(video) }}">
+                                                {% thumbnail video.image, 'video' with {'class': 'wall'} %}
+                                        </a>
+                                {% endif %}
+                        </li>
+                {% endfor %}
+        </ul>
+    {% else %}
+        <span class="noMore">No se encontraron videos.</span>
+    {% endif %}
+{% endblock %}

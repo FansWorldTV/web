@@ -367,7 +367,7 @@ a.btn_delete_post { display:none;}
 .user_info form label.option a.btn { margin:0; font-size:11px;}
 
 .media {}
-.media .media_content { display:block; margin-bottom:20px;}
+.media .media_content { display:block; margin-bottom:20px; text-align: center;}
 .media .media_content a.btn_prev { background:url(../images/ui/paginador.png) no-repeat bottom left; display:block; width:21px; height:50px; position:absolute; float:left; text-indent:-9999px; z-index:50; margin:135px 0 0 0;}
 .media .media_content a.btn_prev:hover { background-position:top left}
 .media .media_content a.btn_next { background:url(../images/ui/paginador.png) no-repeat bottom right; display:block; width:21px; height:50px; position:absolute; float:left; text-indent:-9999px; z-index:50; margin:135px 0 0 447px;}
@@ -806,4 +806,7 @@ ul.friendgroupsList li {
 
 ul.friendgroupsList li:hover {
     border-color: black;
+}
+.videoframe {
+	width: 468px; height: 340px;
 }

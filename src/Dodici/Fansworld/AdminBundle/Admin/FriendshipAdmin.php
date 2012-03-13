@@ -27,7 +27,7 @@ class FriendshipAdmin extends Admin
             ->add('active', NULL, array ('required' => false), array ())
             ->add('author', NULL, array (), array ())
             ->add('target', NULL, array (), array ())
-            ->add('friendgroups', NULL, array(), array())
+            ->add('friendgroups', NULL, array('required' => false), array())
         ;
     }
 

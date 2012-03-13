@@ -31,7 +31,7 @@ class VideoAdmin extends Admin
     {
         $formMapper
             ->add('title', NULL, array (), array ())
-            ->add('author', NULL, array (), array ())
+            ->add('author', NULL, array ('required' => false), array ())
             ->add('content', NULL, array (), array ())
             ->add('createdAt', 'date', array ('attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy HH:mm'), array ())
@@ -40,7 +40,7 @@ class VideoAdmin extends Admin
             ->add('stream', NULL, array (), array ())
             ->add('youtube', NULL, array (), array ())
             ->add('privacy', 'choice', array ('choices' => \Dodici\Fansworld\WebBundle\Entity\Privacy::getOptions()), array ())
-            ->add('videocategory', NULL, array (), array ())
+            ->add('videocategory', NULL, array ('required' => false), array ())
             ->add('image', 'sonata_type_model', array(), array('edit' => 'list', 'link_parameters' => array('context' => 'default', 'provider' => 'sonata.media.provider.image')))
             ->add('comments', 'sonata_type_collection', array ('required' => false), 
             	array(
