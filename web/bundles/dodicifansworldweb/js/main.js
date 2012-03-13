@@ -373,7 +373,10 @@ var friendship = {
     },
     
     add: function(){
-        $(".btn_friendship.add").click(function(){
+        $(".btn_friendship.add:not('.loading')").live('click', function(){
+            var self = $(this);
+            self.addClass('loading');
+            
             var targetId = $(this).closest('div.addFriend').attr('targetId');
             var friendgroups = [];
             
@@ -388,12 +391,15 @@ var friendship = {
                 }else{
                     error(response.error);
                 }
+                self.removeClass('loading');
             });
         });
     },
     
     cancel: function(){
-        $(".btn_friendship.remove").click(function(){
+        $(".btn_friendship.remove:not('.loading')").live('click', function(){
+            var self = $(this);
+            self.addClass('loading');
             var friendshipId = $(this).attr('friendshipId');
             ajax.cancelFriendAction(friendshipId, function(response){
                if(!response.error) {
@@ -401,6 +407,7 @@ var friendship = {
                }else{
                    error(response.error);
                }
+               self.removeClass('loading');
             });
         });
     }
