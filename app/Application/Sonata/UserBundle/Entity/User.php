@@ -138,6 +138,15 @@ class User extends BaseUser
      * )
      */
     private $privacy;
+    
+    /**
+     * @var array $notifyprefs
+     * array (
+     * Notification::TYPE_*,
+     * ...
+     * )
+     */
+    private $notifyprefs;
 
 	/**
      * @var ArrayCollection $friendships
@@ -182,6 +191,7 @@ class User extends BaseUser
     	$this->idolships = new ArrayCollection();
     	$this->hasinterests = new ArrayCollection();
         $this->privacy = array();
+        $this->notifyprefs = array();
         $this->idolCount = 0;
         $this->friendCount = 0;
         $this->fanCount = 0;
@@ -601,6 +611,26 @@ class User extends BaseUser
     public function getPrivacy()
     {
         return $this->privacy;
+    }
+    
+	/**
+     * Set notifyprefs
+     *
+     * @param array $notifyprefs
+     */
+    public function setNotifyprefs($notifyprefs)
+    {
+        $this->notifyprefs = $notifyprefs;
+    }
+
+    /**
+     * Get notifyprefs
+     *
+     * @return array 
+     */
+    public function getNotifyprefs()
+    {
+        return $this->notifyprefs;
     }
 
     /**

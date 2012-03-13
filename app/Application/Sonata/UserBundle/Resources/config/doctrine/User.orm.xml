@@ -23,6 +23,7 @@
         <field name="gmail" column="gmail" type="string" length="250" nullable="true" />
         <field name="sex" column="sex" type="string" length="10" nullable="true" />
         <field name="privacy" column="privacy" type="array" />
+        <field name="notifyprefs" column="notifyprefs" type="array" />
         <field name="facebookId" column="facebookid" type="string" length="255" nullable="true" />
         <field name="type" column="type" type="integer" nullable="false" />
         <field name="birthday" column="birthday" type="datetime" nullable="true" />

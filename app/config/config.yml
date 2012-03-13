@@ -310,6 +310,12 @@ services:
         class: Dodici\Fansworld\WebBundle\Listener\AlbumImageSetter
         tags:
             - { name: doctrine.event_listener, event: postRemove }
+    notification.listener.mailer:
+        class: Dodici\Fansworld\WebBundle\Listener\NotificationMailer
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+        arguments:
+            - "@service_container"
     my.facebook.user:
         class: Dodici\Fansworld\WebBundle\Security\FacebookProvider
         arguments:

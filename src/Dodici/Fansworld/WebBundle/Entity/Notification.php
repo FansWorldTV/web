@@ -145,6 +145,16 @@ class Notification
      */
     private $forumthread;
     
+    public static function getTypeList() {
+    	return array(
+    		self::TYPE_COMMENT_ANSWERED => 'Respuesta a Comentario',
+    		self::TYPE_FORUM_ANSWERED => 'Respuesta de ídolo en Foro',
+    		self::TYPE_FORUM_CREATED => 'Un ídolo creó un foro',
+    		self::TYPE_FRIENDSHIP_ACCEPTED => 'Solicitud de amistad aceptada',
+    		self::TYPE_USER_TAGGED => 'Usuario etiquetado',
+    	);
+    }
+    
     public function __construct() {
     	$this->createdAt = new \DateTime();
     	$this->active = true;

@@ -10,6 +10,12 @@
 		</div>
 		
         <div class="actions clearfix">
+        	<a href="{{ path('fos_user_change_password') }}">
+        		<img src="{{ asset('bundles/dodicifansworldweb/images/ui/change-password-icon.png' ) }}" alt="Cambiar Contraseña" title="Cambiar Contraseña" class="change-password-icon" />
+        	</a>
+        	<a href="{{ path('notification_preferences') }}">
+        		<img src="{{ asset('bundles/dodicifansworldweb/images/ui/notification-email.png' ) }}" alt="Preferencias de Envío de Mails de Notificaciones" title="Preferencias de Envío de Mails de Notificaciones" class="notification-mail-prefs-icon" />
+        	</a>
             <input type="submit" name="submit" value="Guardar" class="btn_action" />
         </div>
     </form>

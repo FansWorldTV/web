@@ -815,3 +815,9 @@ p.systemmessage {
 	text-align: center;
 	line-height: 24px;
 }
+.change-password-icon {
+	cursor: pointer;
+}
+.form-notifyprefs #form_prefs li label {
+	width: 300px;
+}
