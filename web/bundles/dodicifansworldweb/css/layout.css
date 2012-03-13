@@ -810,3 +810,8 @@ ul.friendgroupsList li:hover {
 .videoframe {
 	width: 468px; height: 340px;
 }
+p.systemmessage {
+	font-size: 18px;
+	text-align: center;
+	line-height: 24px;
+}

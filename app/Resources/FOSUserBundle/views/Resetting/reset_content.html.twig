@@ -1,0 +1,17 @@
+{% form_theme form theme %}
+<div class="resetnew-password">
+	<h1>Restablecer Contraseña</h1>
+	<div class="greybox">
+    <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset bigform">
+        <div class="form-resetnew-password fieldcontainer">
+			<ul class="fields">
+        		{{ form_widget(form) }}
+        	</ul>
+		</div>
+		
+        <div class="actions clearfix">
+            <input type="submit" name="submit" value="Restablecer" class="btn_action" />
+        </div>
+    </form>
+    </div>
+</div>
