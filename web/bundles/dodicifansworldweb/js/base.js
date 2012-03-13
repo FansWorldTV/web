@@ -13,6 +13,21 @@ var ajax = {
         });
     },
     
+    setCallback: function(callback, errorcallback){
+        $.ajaxSetup({
+            success: function(response){
+                if(typeof(callback) !== 'undefined'){
+                    callback(response);
+                }
+            },
+            error:function (xhr, ajaxOptions, thrownError){
+                if(typeof(errorcallback) !== 'undefined'){
+                    errorcallback(xhr.responseText);
+                }
+            }  
+        });
+    },
+    
     search: function(method, params, callback){
         if(!ajax.active) {
             ajax.active = true;
@@ -118,137 +133,92 @@ var ajax = {
     },
     
     pendingFriendsAction: function(page, limit, callback){
+        ajax.setCallback(callback);
         $.ajax({
             url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxpendingfriends' ),
             data: {
                 'page' : page,
                 'limit' : limit
-            },
-            success: function(r){
-                if(typeof(callback) !== 'undefined'){
-                    callback(r);
-                }
             }
         });
     },
     
     
     numberPendingRequests: function(callback){
+        ajax.setCallback(callback);
         $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxnumberofpendingrequests' ),
-            success: function(response){
-                if(typeof(callback) !== 'undefined'){
-                    callback(response);
-                }
-            }
+            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxnumberofpendingrequests' )
         });
     },
     
     acceptRequestAction: function(friendshipId, callback){
+        ajax.setCallback(callback);
         $.ajax({
             url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxacceptrequest'),
             data: {
                 'id' : friendshipId
-            },
-            success: function(response){
-                if(typeof(callback) !== 'undefined'){
-                    callback(response);
-                }
             }
         });
     },
     
     denyRequestAction: function(id, callback){
+        ajax.setCallback(callback);
         $.ajax({
             url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxdenyrequest'),
             data: {
                 'id' : id
-            },
-            success: function(response){
-                if(typeof(callback) !== 'undefined'){
-                    callback(response);
-                }
             }
         });
     },
     
     notificationNumberAction: function(callback){
+        ajax.setCallback(callback);
         $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxnotificationnumber' ),
-            success: function(response){
-                if(typeof(callback) !== 'undefined'){
-                    callback(response);
-                }
-            }
+            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxnotificationnumber' )
         });
     },
     
     getNotifications: function(callback){
+        ajax.setCallback(callback);
         $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxnotifications' ),
-            success: function(response){
-                if(typeof(callback) !== 'undefined'){
-                    callback(response);
-                }
-            }
+            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxnotifications' )
         });
     },
     
     deleteNotification: function(id, callback){
+        ajax.setCallback(callback);
         $.ajax({
             url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxdeletenotification'),
             data: {
                 'id' : id
-            },
-            success: function(response){
-                if(typeof(callback) !== 'undefined'){
-                    callback(response);
-                }
             }
         });
     },
     
     likeToggleAction: function(type, id, callback, errorcallback){
+        ajax.setCallback(callback, errorcallback);
         $.ajax({
             url: 'http://' + location.host + Routing.generate( appLocale + '_like_ajaxtoggle'),
             data: {
                 'id' : id,
                 'type' : type
-            },
-            success: function(response){
-                if(typeof(callback) !== 'undefined'){
-                    callback(response);
-                }
-            },
-            error:function (xhr, ajaxOptions, thrownError){
-                if(typeof(errorcallback) !== 'undefined'){
-                    errorcallback(xhr.responseText);
-                }
             }
         });
     },
     
     shareAction: function(type, id, callback, errorcallback){
+        ajax.setCallback(callback, errorcallback);
         $.ajax({
             url: 'http://' + location.host + Routing.generate( appLocale + '_share_ajax'),
             data: {
                 'id' : id,
                 'type' : type
-            },
-            success: function(response){
-                if(typeof(callback) !== 'undefined'){
-                    callback(response);
-                }
-            },
-            error:function (xhr, ajaxOptions, thrownError){
-                if(typeof(errorcallback) !== 'undefined'){
-                    errorcallback(xhr.responseText);
-                }
             }
         });
     },
     
     globalCommentAction: function(type, id, content, privacy, ispin, callback, errorcallback){
+        ajax.setCallback(callback, errorcallback);
         $.ajax({
             url: 'http://' + location.host + Routing.generate( appLocale + '_comment_ajaxpost'),
             type: 'POST',
@@ -258,53 +228,41 @@ var ajax = {
                 'content' : content,
                 'privacy' : privacy,
                 'ispin' : ispin
-            },
-            success: function(response){
-                if(typeof(callback) !== 'undefined'){
-                    callback(response);
-                }
-            },
-            error:function (xhr, ajaxOptions, thrownError){
-                if(typeof(errorcallback) !== 'undefined'){
-                    errorcallback(xhr.responseText);
-                }
             }
         });
     },
     
     getPhotosAction: function(userid, page, renderpin, callback, errorcallback){
+        ajax.setCallback(callback, errorcallback);
         $.ajax({
             url: 'http://' + location.host + Routing.generate( appLocale + '_photo_get'),
             data: {
                 'userId' : userid,
                 'page' : page,
                 'renderpin' : renderpin
-            },
-            success: function(response){
-                if(typeof(callback) !== 'undefined'){
-                    callback(response);
-                }
-            },
-            error:function (xhr, ajaxOptions, thrownError){
-                if(typeof(errorcallback) !== 'undefined'){
-                    errorcallback(xhr.responseText);
-                }
             }
         });
     },
     
     getAlbumsAction: function(userid, page, callback){
+        ajax.setCallback(callback);
         $.ajax({
             url: 'http://' + location.host + Routing.generate( appLocale + '_album_get'),
             data: {
                 'userId' : userid,
                 'page' : page
-            },
-            success: function(response){
-                if(typeof(callback) !== 'undefined'){
-                    callback(response);
-                }
             }
+        });
+    },
+    
+    addFriendAction: function(targetId, friendGroupId, callback){
+        ajax.setCallback(callback);
+        $.ajax({
+           url: 'http://'  + location.host + Routing.generate( appLocale + '_friendship_ajaxaddfriend'),
+           data: {
+               'target': targetId,
+               'friendgroup': friendGroupId
+           }
         });
     }
   

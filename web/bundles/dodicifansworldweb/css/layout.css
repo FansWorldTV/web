@@ -703,83 +703,107 @@ select.post_privacidad { float: right; margin-right: 10px;}
 .element .isfriend { background: url(../images/ui/ico_user_1.gif) top right no-repeat; }
 
 .masonbricks .brick {
-width: 230px;
-float: left;
-padding: 10px;
-background: #F8F5F2;
--webkit-border-radius: 5px;
--moz-border-radius: 5px;
-border-radius: 5px;
-box-shadow: 0 1px 3px rgba(34,25,25,0.4);
--moz-box-shadow: 0 1px 2px rgba(34,25,25,0.4);
--webkit-box-shadow: 0 1px 3px rgba(34,25,25,0.4);
-position: relative;
-margin-bottom: 10px;
+    width: 230px;
+    float: left;
+    padding: 10px;
+    background: #F8F5F2;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(34,25,25,0.4);
+    -moz-box-shadow: 0 1px 2px rgba(34,25,25,0.4);
+    -webkit-box-shadow: 0 1px 3px rgba(34,25,25,0.4);
+    position: relative;
+    margin-bottom: 10px;
 }
 .masonbricks .brick h2 {
-	border: none;
+    border: none;
 }
 .masonbricks .brick .image a {
-	display: block;
+    display: block;
 }
 .masonbricks .brick .image img {
-	display: block;
-	width: 100%;
+    display: block;
+    width: 100%;
 }
 .masonbricks .brick .description {
-	margin: 10px 0 5px;
+    margin: 10px 0 5px;
 }
 .masonbricks .brick .social .likebutton {
-	float: left;
+    float: left;
 }
 .masonbricks .brick .social .likecount {
-	padding: 0 2px;
+    padding: 0 2px;
 }
 .masonbricks .brick .social .sharebutton {
-	float: right;
+    float: right;
 }
 .pincomments .commentform {
-	margin: 5px 0;
-	padding: 5px 0;
-	border-top: 1px solid #DDD;
-	border-bottom: 1px solid #DDD;
+    margin: 5px 0;
+    padding: 5px 0;
+    border-top: 1px solid #DDD;
+    border-bottom: 1px solid #DDD;
 }
 .pincomments .avatar {
-	float: left;
-	margin-right: 5px;
+    float: left;
+    margin-right: 5px;
 }
 .pincomments .avatar img {
-	float: left;
-	width: 25px;
-	height: 25px;
-	border:solid 2px #fff;
-	box-shadow:0 1px 1px #999;
+    float: left;
+    width: 25px;
+    height: 25px;
+    border:solid 2px #fff;
+    box-shadow:0 1px 1px #999;
 }
 .pincomments .commentform textarea {
-	float: right;
-	width: 190px;
-	font-size: 11px;
+    float: right;
+    width: 190px;
+    font-size: 11px;
 }
 .pincomments .commentform .buttondiv {
-	margin-top: 10px;
+    margin-top: 10px;
 }
 .pincomments .commentform .buttondiv a.btn {
-	float: right;
-	margin: 0;
+    float: right;
+    margin: 0;
 }
 .pincomments .comment {
-	margin-bottom: 5px;
-	padding-bottom: 5px;
-	border-bottom: 1px solid #DDD;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #DDD;
 }
 .pincomments .comment .message {
-	float: right;
-	width: 190px;
+    float: right;
+    width: 190px;
 }
 .pincomments .comment .message a {
-	font-weight: bold;
+    font-weight: bold;
 }
 .pincomments a.allcomments {
-	float: right;
-	margin-top: 5px;
+    float: right;
+    margin-top: 5px;
+}
+
+ul.friendgroupsList {
+    position: absolute;
+    top: 25px;
+    left: 264px;
+    background: white url(../images/ui/bg_pop.gif) repeat-x top;
+    width: 74px;
+    height: auto;
+    z-index: 100;
+    padding: 10px;
+    border: solid 1px #E9E9E9;
+}
+
+ul.friendgroupsList li {
+    margin-top: 5px;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: solid 1px #E9E9E9;
+    text-align: center;
+}
+
+ul.friendgroupsList li:hover {
+    border-color: black;
 }

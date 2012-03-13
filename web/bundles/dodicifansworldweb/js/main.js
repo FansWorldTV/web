@@ -4,6 +4,7 @@ $(document).ready(function(){
     searchFront.init();
     searchIdols.init();
     friendsSearch.init();
+    friendship.init();
     photos.init();
     albums.init();
 });
@@ -15,6 +16,7 @@ var site = {
     isClosedRequests: true,
     
     init: function(){
+        $("ul.friendgroupsList").hide();
         $(".navy ul li.alerts_user ul").hide();
         $(".navy ul li.notifications_user ul").hide();
         
@@ -354,6 +356,28 @@ var site = {
         });
     }
 }
+
+var friendship = {
+    init: function(){
+        $(".btn_friendship.add").click(function(){
+            var targetId = $(this).closest('div.addFriend').attr('targetId');
+           ajax.addFriendAction();
+        });
+        $("ul.friendgroupsList li").click(function(){
+           var friendGroupId = $(this).attr('id');
+           var targetId = $(this).closest('div.addFriend').attr('targetId');
+           ajax.addFriendAction();
+        });
+        $("div.addFriend").hover(
+            function(){
+                friendGroupList = $("ul.friendgroupsList").slideDown('normal');
+            },
+            function(){
+                friendGroupList = $("ul.friendgroupsList").slideUp('normal');
+            }
+        );
+    }  
+};
 
 var searchBox = {
     query: null,
