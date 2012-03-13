@@ -54,6 +54,7 @@ swiftmailer:
     host:      %mailer_host%
     username:  %mailer_user%
     password:  %mailer_password%
+    port:      %mailer_port%
 
 jms_security_extra:
     secure_controllers:  true
@@ -69,7 +70,7 @@ fos_user:
         form:
             type: app_user_registration
         confirmation:
-            enabled:    false
+            enabled:    true
     profile:
         form:
             type: app_user_profile

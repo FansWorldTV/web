@@ -33,3 +33,5 @@ security:
 resetting:
     request:
         username: "Usuario:"
+    email:
+        subject: "Restablecer contraseña"
