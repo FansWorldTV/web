@@ -64,6 +64,7 @@ var site = {
         });
     	
         site.listenPendingRequests();
+        site.listenNotifications();
         site.denyFriendRequest();
         site.acceptFriendRequest();
         site.getPendingFriends();
@@ -72,16 +73,22 @@ var site = {
         site.likeButtons();
         site.shareButtons();
         site.globalCommentButtons();
-        site.timerPendingFriends = setTimeout('site.listenPendingRequests()', 10000);
-        site.timerNotifications = setTimeout('site.listenNotifications()', 10000);
-        
     },
     listenPendingRequests: function(){
         ajax.numberPendingRequests(function(response){
             if(response){
                 if(response.number > 0){
+                    var actualNumber = $("li.alerts_user a span").html();
+                    parseInt(actualNumber);
+                    
                     $("li.alerts_user a span").html(response.number).parent().removeClass('hidden');
+                    
+                    if(actualNumber < response.number){
+                        $(".alerts_user a:first span").effect("highlight",{},3000);
+                        $(".alerts_user a:first").effect("bounce",{times:1},300);
+                    }
                 }
+                site.timerPendingFriends = setTimeout('site.listenPendingRequests()', 10000);
             }
         });
     },
@@ -89,8 +96,17 @@ var site = {
         ajax.notificationNumberAction(function(response){
             if(response){
                 if(response.number > 0){
+                    var actualNumber = $("li.notifications_user a span").html();
+                    parseInt(actualNumber);
+                    
                     $("li.notifications_user a span").html(response.number).parent().removeClass('hidden');
+                    
+                    if(actualNumber < response.number){
+                        $(".notifications_user a:first span").effect("highlight",{},3000);
+                        $(".notifications_user a:first").effect("bounce",{times:1},300);
+                    }
                 }
+                site.timerNotifications = setTimeout('site.listenNotifications()', 10000);
             }
         });
     },
