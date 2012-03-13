@@ -359,15 +359,6 @@ var site = {
 
 var friendship = {
     init: function(){
-        $(".btn_friendship.add").click(function(){
-            var targetId = $(this).closest('div.addFriend').attr('targetId');
-           ajax.addFriendAction();
-        });
-        $("ul.friendgroupsList li").click(function(){
-           var friendGroupId = $(this).attr('id');
-           var targetId = $(this).closest('div.addFriend').attr('targetId');
-           ajax.addFriendAction();
-        });
         $("div.addFriend").hover(
             function(){
                 friendGroupList = $("ul.friendgroupsList").slideDown('normal');
@@ -376,7 +367,42 @@ var friendship = {
                 friendGroupList = $("ul.friendgroupsList").slideUp('normal');
             }
         );
-    }  
+            
+        friendship.add();
+        friendship.cancel();
+    },
+    
+    add: function(){
+        $(".btn_friendship.add").click(function(){
+            var targetId = $(this).closest('div.addFriend').attr('targetId');
+            var friendgroups = [];
+            
+            $("ul.friendgroupsList li input:checkbox:checked").each(function(k, el){
+                friendgroups[k] = $(el).val();
+            });
+            
+            ajax.addFriendAction(targetId, friendgroups, function(response){
+                if(!response.error){
+                    $("div.addFriend").after('<a class="btn btn_friendship remove" alt="Cancelar" href="#">Cancelar</a>').remove();
+                }else{
+                    error(response.error);
+                }
+            });
+        });
+    },
+    
+    cancel: function(){
+        $(".btn_friendship.remove").click(function(){
+            var friendshipId = $(this).attr('friendshipId');
+            ajax.cancelFriendAction(friendshipId, function(response){
+               if(!response.error) {
+                   location.reload();
+               }else{
+                   error(response.error);
+               }
+            });
+        });
+    }
 };
 
 var searchBox = {

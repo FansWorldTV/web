@@ -17,15 +17,25 @@
                     </div>
                     <div class="user_info"> 
                     {% block profile_info %}
-	                    {% if appstate.canfriend(user) %}
-	                    <a class="btn btn_friendship" href="registro.php">Agregar</a>
+                            {% set fship = appstate.friendshipwith(user) %}
+	                    {% if appstate.canfriend(user) and fship is null %}
+                                <div class="addFriend" targetId="{{ user.id }}">
+                                    <a class="btn btn_friendship add" href="#" alt="Agregar">Agregar</a>
+                                    <ul class="friendgroupsList">
+                                        {% for friendgroup in friendgroups %}
+                                            <li id="{{ friendgroup.id }}">
+                                                <input type="checkbox" id="friendgroup[{{ friendgroup.id }}]" name="friendgroup[{{ friendgroup.id }}]" value="{{ friendgroup.id }}"/>
+                                                <label for="friendgroup[{{ friendgroup.id }}]">{{ friendgroup.title }}</label>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
 	                    {% else %}
-	                    	{% set fship = appstate.friendshipwith(user) %}
 	                    	{% if fship %}
 	                    		{% if fship.active %}
-	                    			<a class="btn btn_friendship" href="registro.php">Quitar</a>
+	                    			<a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Dejar de ser Fan</a>
 	                    		{% else %}
-	                    			<a class="btn btn_friendship" href="registro.php">Solicitud Pendiente</a>
+	                    			<a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Solicitud Pendiente</a>
 	                    		{% endif %}
 	                    	{% endif %}
 	                    {% endif %}

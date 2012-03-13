@@ -35,7 +35,10 @@ class UserController extends SiteController
             throw new HttpException(404, "No existe el usuario");
         }
 
-        return array('user' => $user);
+        $loggedUser = $this->get('security.context')->getToken()->getUser();
+        $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
+        
+        return array('user' => $user, 'friendgroups' => $friendGroups);
     }
 
     /**
@@ -53,7 +56,10 @@ class UserController extends SiteController
             exit;
         }
 
-        return array('user' => $user);
+        $loggedUser = $this->get('security.context')->getToken()->getUser();
+        $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
+        
+        return array('user' => $user, 'friendgroups' => $friendGroups);
     }
 
     /**
@@ -351,13 +357,17 @@ class UserController extends SiteController
         $viewMorePhotos = $photosTotalCount > self::LIMIT_PHOTOS ? true : false;
         $viewMoreAlbums = $albumsTotalCount > self::LIMIT_PHOTOS ? true : false;
 
+        $loggedUser = $this->get('security.context')->getToken()->getUser();
+        $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
+        
         return array(
             'user' => $user,
             'isLoggedUser' => $isLoggedUser,
             'photos' => $photos,
             'albums' => $albums,
             'viewMorePhotos' => $viewMorePhotos,
-            'viewMoreAlbums' => $viewMoreAlbums
+            'viewMoreAlbums' => $viewMoreAlbums,
+            'friendgroups' => $friendGroups
         );
     }
 

@@ -255,13 +255,23 @@ var ajax = {
         });
     },
     
-    addFriendAction: function(targetId, friendGroupId, callback){
+    addFriendAction: function(targetId, friendGroups, callback){
         ajax.setCallback(callback);
         $.ajax({
            url: 'http://'  + location.host + Routing.generate( appLocale + '_friendship_ajaxaddfriend'),
            data: {
                'target': targetId,
-               'friendgroup': friendGroupId
+               'friendgroups': friendGroups
+           }
+        });
+    },
+    
+    cancelFriendAction: function(friendshipId, callback){
+        ajax.setCallback(callback);
+        $.ajax({
+           url: 'http://' + location.host + Routing.generate( appLocale + '_friendship_ajaxcancelfriend'),
+           data: {
+               'friendship': friendshipId
            }
         });
     }
