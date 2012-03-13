@@ -21,14 +21,16 @@
 	                    {% if appstate.canfriend(user) and fship is null %}
                                 <div class="addFriend" targetId="{{ user.id }}">
                                     <a class="btn btn_friendship add" href="#" alt="Agregar">Agregar</a>
-                                    <ul class="friendgroupsList">
-                                        {% for friendgroup in friendgroups %}
-                                            <li id="{{ friendgroup.id }}">
-                                                <input type="checkbox" id="friendgroup[{{ friendgroup.id }}]" name="friendgroup[{{ friendgroup.id }}]" value="{{ friendgroup.id }}"/>
-                                                <label for="friendgroup[{{ friendgroup.id }}]">{{ friendgroup.title }}</label>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
+                                    {% if friendgroups|length > 0 %}
+                                        <ul class="friendgroupsList">
+                                            {% for friendgroup in friendgroups %}
+                                                <li id="{{ friendgroup.id }}">
+                                                    <input type="checkbox" id="friendgroup[{{ friendgroup.id }}]" name="friendgroup[{{ friendgroup.id }}]" value="{{ friendgroup.id }}"/>
+                                                    <label for="friendgroup[{{ friendgroup.id }}]">{{ friendgroup.title }}</label>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
                                 </div>
 	                    {% else %}
 	                    	{% if fship %}
