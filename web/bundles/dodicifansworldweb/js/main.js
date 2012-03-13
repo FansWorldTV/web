@@ -383,7 +383,8 @@ var friendship = {
             
             ajax.addFriendAction(targetId, friendgroups, function(response){
                 if(!response.error){
-                    $("div.addFriend").after('<a class="btn btn_friendship remove" alt="Cancelar" href="#">Cancelar</a>').remove();
+                    $("div.addFriend").after('<a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="' + response.friendship + '">Cancelar solicitud</a>').remove();
+                    friendship.cancel();
                 }else{
                     error(response.error);
                 }
