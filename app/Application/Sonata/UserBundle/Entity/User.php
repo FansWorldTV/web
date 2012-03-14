@@ -638,7 +638,7 @@ class User extends BaseUser
      *
      * @param Dodici\Fansworld\WebBundle\Entity\Country $country
      */
-    public function setCountry(\Dodici\Fansworld\WebBundle\Entity\Country $country)
+    public function setCountry($country)
     {
         $this->country = $country;
     }
@@ -658,7 +658,7 @@ class User extends BaseUser
      *
      * @param Dodici\Fansworld\WebBundle\Entity\City $city
      */
-    public function setCity(\Dodici\Fansworld\WebBundle\Entity\City $city)
+    public function setCity($city)
     {
         $this->city = $city;
     }
@@ -678,7 +678,7 @@ class User extends BaseUser
      *
      * @param Dodici\Fansworld\WebBundle\Entity\Level $level
      */
-    public function setLevel(\Dodici\Fansworld\WebBundle\Entity\Level $level)
+    public function setLevel($level)
     {
         $this->level = $level;
     }

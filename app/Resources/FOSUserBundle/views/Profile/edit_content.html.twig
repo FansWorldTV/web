@@ -4,6 +4,7 @@
 	<div class="greybox">
 	<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register bigform">
     	<div class="form-profile fieldcontainer">
+    		{{ form_errors(form) }}
 			<ul class="fields">
 				{% for key, val in form %}
 					{% if key == 'user' %}
