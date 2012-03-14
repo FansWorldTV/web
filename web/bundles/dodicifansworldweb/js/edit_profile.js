@@ -8,6 +8,7 @@ $(function(){
 		filterCityField();
 		$('#fos_user_profile_form_user_city option').removeAttr('selected');
 		$('#fos_user_profile_form_user_city option[value=""]').attr('selected','');
+		$('label[for="fos_user_profile_form_user_city"]').closest('li').effect("highlight",{},1000);
 	});
 });
 
