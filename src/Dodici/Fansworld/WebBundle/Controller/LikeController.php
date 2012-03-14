@@ -52,7 +52,7 @@ class LikeController extends SiteController
 	        	} 
 	        	$em->flush();
 	        	
-	        	$message = $translator->trans('You no longer like') . ' ' . (string)$entity;
+	        	$message = $translator->trans('You no longer like') . ' "' . (string)$entity.'"';
 	        	$buttontext = $translator->trans('like');
 	        } elseif ($appstate->canLike($entity)) {
 	        	$exp = explode('\\', get_class($entity));
@@ -65,7 +65,7 @@ class LikeController extends SiteController
 	        	$em->flush();
 	        	$likecount++;
 	        	
-	        	$message = $translator->trans('You now like') . ' ' . (string)$entity;
+	        	$message = $translator->trans('You now like') . ' "' . (string)$entity.'"';
 	        	$buttontext = $translator->trans('unlike');
 	        } else {
 	        	if (!($user instanceof User)) {
