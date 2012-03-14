@@ -46,7 +46,7 @@ class VideoRepository extends CountBaseRepository
     		(v.privacy = :everyone)
     		OR
 	    	(v.privacy = :friendsonly AND (:user IS NOT NULL) AND (
-	    		(SELECT f.active FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = v.author AND f.target = :user) OR (f.target = v.author AND f.author = :user)) = true
+	    		(SELECT COUNT(f.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = v.author AND f.target = :user) OR (f.target = v.author AND f.author = :user) AND f.active=true) >= 1
 	    	))
     	)
     	ORDER BY v.createdAt DESC
@@ -89,7 +89,7 @@ class VideoRepository extends CountBaseRepository
     		(v.privacy = :everyone)
     		OR
 	    	(v.privacy = :friendsonly AND (:user IS NOT NULL) AND (
-	    		(SELECT f.active FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = v.author AND f.target = :user) OR (f.target = v.author AND f.author = :user)) = true
+	    		(SELECT COUNT(f.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = v.author AND f.target = :user) OR (f.target = v.author AND f.author = :user) AND f.active=true) >= 1
 	    	))
     	)
     	ORDER BY v.createdAt DESC
@@ -132,7 +132,7 @@ class VideoRepository extends CountBaseRepository
     		(v.privacy = :everyone)
     		OR
 	    	(v.privacy = :friendsonly AND (:user IS NOT NULL) AND (
-	    		(SELECT f.active FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = v.author AND f.target = :user) OR (f.target = v.author AND f.author = :user)) = true
+	    		(SELECT COUNT(f.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = v.author AND f.target = :user) OR (f.target = v.author AND f.author = :user) AND f.active=true) >= 1
 	    	))
     	)
     	')
@@ -166,7 +166,7 @@ class VideoRepository extends CountBaseRepository
     		(v.privacy = :everyone)
     		OR
 	    	(v.privacy = :friendsonly AND (:user IS NOT NULL) AND (
-	    		(SELECT f.active FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = v.author AND f.target = :user) OR (f.target = v.author AND f.author = :user)) = true
+	    		(SELECT COUNT(f.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = v.author AND f.target = :user) OR (f.target = v.author AND f.author = :user) AND f.active=true) >= 1
 	    	))
     	)
     	')
