@@ -2,6 +2,9 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
+use Application\Sonata\UserBundle\Entity\User;
+use Dodici\Fansworld\WebBundle\Entity\Privacy;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,9 +31,9 @@ class VideoController extends SiteController
     {
         // TODO: video show action, show video + comments, allow commenting + answering root comments
 
-        $video = $this->getRepository('Video')->find($id);
-        if (!$video)
-            throw new HttpException(404, 'Video not found');
+        $video = $this->getRepository('Video')->findOneBy(array('id' => $id, 'active' => true));
+        
+        $this->securityCheck($video);
 
         return array('video' => $video);
     }

@@ -2,8 +2,12 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
-use Dodici\Fansworld\WebBundle\Entity\Album;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
+use Application\Sonata\UserBundle\Entity\User;
+
+use Dodici\Fansworld\WebBundle\Entity\Album;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\Form\FormError;
 use Application\Sonata\MediaBundle\Entity\Media;
@@ -33,18 +37,16 @@ class PhotoController extends SiteController
 
     /**
      * @Route("/{id}/{slug}", name= "photo_show", requirements = {"id" = "\d+"})
-     * @Secure(roles="ROLE_USER")
      * @Template()
      */
     public function showAction($id)
     {
         $photo = $this->getRepository('Photo')->findOneBy(array('id' => $id, 'active' => true));
-        $author = $this->getRepository('User')->find($photo->getAuthor()->getId());
+        
+        $this->securityCheck($photo);
         
         return array(
-            'photo' => $photo, 
-            'author' => $author,
-            'authorName' => (string) $author
+            'photo' => $photo
             );
     }
     

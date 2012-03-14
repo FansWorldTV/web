@@ -2,6 +2,14 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+use Application\Sonata\UserBundle\Entity\User;
+
+use Dodici\Fansworld\WebBundle\Entity\Privacy;
+
+use Symfony\Component\HttpKernel\Exception\HttpException;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
@@ -52,4 +60,21 @@ class SiteController extends Controller
         return $response;
     }
 
+    public function securityCheck($entity)
+    {
+    	$user = $this->get('security.context')->getToken()->getUser();
+    	
+    	if (!$entity)
+            throw new HttpException(404, 'Contenido no encontrado');
+            
+    	if ($entity->getPrivacy() != Privacy::EVERYONE) {
+        	if ($user instanceof User) {
+        		if (!$this->get('appstate')->canView($entity)) {
+        			throw new AccessDeniedException('Acceso denegado');
+        		}
+        	} else {
+        		throw new AccessDeniedException('Debe iniciar sesión');
+        	}
+        }
+    }
 }

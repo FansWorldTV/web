@@ -109,6 +109,8 @@ class AppState
     	if (!($this->user instanceof User)) return false;
     	$user = $this->user;
     	
+    	if ($this->security_context->isGranted('ROLE_ADMIN')) return true;
+    	
     	if (method_exists($entity, 'getPrivacy')) {
     		if ($entity->getPrivacy() == \Dodici\Fansworld\WebBundle\Entity\Privacy::FRIENDS_ONLY) {
     			if (method_exists($entity, 'getAuthor')) {
