@@ -5,7 +5,33 @@
 	<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register bigform">
     	<div class="form-profile fieldcontainer">
 			<ul class="fields">
-        		{{ form_widget(form) }}
+				{% for key, val in form %}
+					{% if key == 'user' %}
+						{% for k,row in val %}
+							{% if k == 'city' %}
+								<li class="clearfix">
+							    	{{ form_label(row) }}
+							        <div class="field">
+								        <select id="fos_user_profile_form_user_city" name="fos_user_profile_form[user][city]">
+								        	<option value=""></option>
+								        	{% for city in appstate.cities %}
+								        		<option value="{{ city.id }}"{% if app.user.city == city %} selected="selected"{% endif %} data-country="{{city.country.id}}">{{ city }}</option>
+								        	{% endfor %}
+								        </select>
+								        {{ form_errors(row) }}
+							        </div>
+							    </li>
+							{% else %}
+								{{ form_row(row) }}
+							{% endif %}
+						{% endfor %}
+					{% elseif key == 'current' %}
+						{{ form_row(val) }}
+					{% else %}
+						{{ form_widget(val) }}
+					{% endif %}
+				{% endfor %}
+				{{ form_rest(form) }}
         	</ul>
 		</div>
 		

@@ -10,7 +10,7 @@ use Gedmo\Translatable\Translatable;
  * Dodici\Fansworld\WebBundle\Entity\City
  *
  * @ORM\Table(name="city")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\CityRepository")
  */
 class City
 {

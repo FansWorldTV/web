@@ -191,6 +191,11 @@ class AppState
     	return Privacy::getOptions();
     }
     
+    public function getCities()
+    {
+    	return $this->getRepository('DodiciFansworldWebBundle:City')->formChoices();
+    }
+    
     private function getRepository($repname)
     {
     	if (!isset($this->repos[$repname])) {
