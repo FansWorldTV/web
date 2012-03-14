@@ -320,7 +320,7 @@ services:
         class: Dodici\Fansworld\WebBundle\Security\FacebookProvider
         arguments:
             facebook: "@fos_facebook.api"
-            userManager: "@fos_user.user_manager"
+            userManager: "@app_user.user_manager"
             validator: "@validator"
             container: "@service_container"
     appstate:
@@ -377,3 +377,7 @@ services:
         arguments: [%fos_user.model.user.class%]
         tags:
             - { name: form.type, alias: app_user_profile }
+    app_user.user_manager:
+        class: Application\Sonata\UserBundle\Entity\UserManager
+        public: false
+        arguments: [@security.encoder_factory, @fos_user.util.username_canonicalizer, @fos_user.util.email_canonicalizer, @fos_user.entity_manager, %fos_user.model.user.class%]

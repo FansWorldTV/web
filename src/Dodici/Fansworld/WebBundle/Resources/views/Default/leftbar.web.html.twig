@@ -1,7 +1,7 @@
 <div class="col_160 left margin">
     {% if not hide_login %}
         <div class="cont clearfix">
-                {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <div class="user_menu">
 
                 <div class="user clearfix">
