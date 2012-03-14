@@ -7,6 +7,7 @@ $(document).ready(function(){
     friendship.init();
     photos.init();
     albums.init();
+    videos.init();
 });
 
 var site = {
@@ -85,7 +86,9 @@ var site = {
                     
                     if(actualNumber < response.number){
                         $(".alerts_user a:first span").effect("highlight",{},3000);
-                        $(".alerts_user a:first").effect("bounce",{times:1},300);
+                        $(".alerts_user a:first").effect("bounce",{
+                            times:1
+                        },300);
                     }
                 }
                 site.timerPendingFriends = setTimeout('site.listenPendingRequests()', 10000);
@@ -103,7 +106,9 @@ var site = {
                     
                     if(actualNumber < response.number){
                         $(".notifications_user a:first span").effect("highlight",{},3000);
-                        $(".notifications_user a:first").effect("bounce",{times:1},300);
+                        $(".notifications_user a:first").effect("bounce",{
+                            times:1
+                        },300);
                     }
                 }
                 site.timerNotifications = setTimeout('site.listenNotifications()', 10000);
@@ -382,7 +387,7 @@ var friendship = {
             function(){
                 friendGroupList = $("ul.friendgroupsList").slideUp('normal');
             }
-        );
+            );
             
         friendship.add();
         friendship.cancel();
@@ -418,12 +423,12 @@ var friendship = {
             self.addClass('loading');
             var friendshipId = $(this).attr('friendshipId');
             ajax.cancelFriendAction(friendshipId, function(response){
-               if(!response.error) {
-                   location.reload();
-               }else{
-                   error(response.error);
-               }
-               self.removeClass('loading');
+                if(!response.error) {
+                    location.reload();
+                }else{
+                    error(response.error);
+                }
+                self.removeClass('loading');
             });
         });
     }
@@ -826,6 +831,87 @@ var photos = {
                     $("a.loadmore.pictures").removeClass('loading');
                 }
             });
+        });
+    }
+};
+
+var videos = {
+    pager: 1,
+    
+    init: function(){
+        videos.search();
+        videos.addMore();
+    },
+    
+    addMore: function(){
+        $("#addMore.videos:not('.loading')").live('click', function(){
+            var self = $(this);
+            self.addClass('loading');
+            
+            ajax.videosSearchAction({
+                'page': videos.pager
+            }, function(response){
+                console.log(response);
+                if(response){
+                    if(!response.addMore){
+                        self.remove();
+                    }
+                    for(var i in response.videos){
+                        var video = response.videos[i];
+                        var template = $("#templates ul.videos li").clone();
+                        template.find('h2 a').attr('href', Routing.generate(appLocale + '_video_show', {
+                            'id':video.id, 
+                            'slug': video.slug
+                        }));
+                        template.find('h2 a').html(video.title);
+                        template.find('a.videoplayer').attr('href', video.videoplayerurl).find('img').attr('src', video.image);
+                        $("div.cont ul.videos").append(template);
+                    }
+                    videos.pager++;
+                }
+                self.removeClass('loading');
+            }, function(text){
+                error(text);
+                self.removeClass('loading');
+            });
+        });
+    },
+    
+    search: function(){
+        $("#formSearch:not('.loading')").live('submit', function(){
+            $("div.cont ul.videos li").remove();
+            var query = $("#query").val();
+            var self = $(this);
+            
+            self.addClass('loading');
+            videos.pager = 1;
+            console.log(query);
+            ajax.videosSearchAction({
+                'query': query, 
+                'page': 1
+            }, function(response){
+                if(response){
+                    if(response.addMore){
+                       $("div.cont").append('<a href="#" id="addMore" class="loadmore  videos">Agregar Más</a>');
+                    }
+                    for(var i in response.videos){
+                        var video = response.videos[i];
+                        var template = $("#templates ul.videos li").clone();
+                        template.find('h2 a').attr('href', Routing.generate(appLocale + '_video_show', {
+                            'id':video.id, 
+                            'slug': video.slug
+                        }));
+                        template.find('h2 a').html(video.title);
+                        template.find('a.videoplayer').attr('href', video.videoplayerurl);
+                        template.find('a.videoplayer img').attr('src', video.image);
+                        $("div.cont ul.videos").append(template);
+                    }
+                    videos.pager++;
+                }
+                self.removeClass('loading');
+            }, function(){});
+            
+            return false;
         });
     }
 };

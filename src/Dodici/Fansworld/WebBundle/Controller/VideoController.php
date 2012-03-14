@@ -23,16 +23,16 @@ use Symfony\Component\HttpFoundation\Request;
 class VideoController extends SiteController
 {
 
+    const cantVideos = 10;
+
     /**
      * @Route("/{id}/{slug}", name= "video_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
      * @Template
      */
     public function showAction($id)
     {
-        // TODO: video show action, show video + comments, allow commenting + answering root comments
-
         $video = $this->getRepository('Video')->findOneBy(array('id' => $id, 'active' => true));
-        
+
         $this->securityCheck($video);
 
         return array('video' => $video);
@@ -46,16 +46,58 @@ class VideoController extends SiteController
      */
     public function listAction()
     {
-        // TODO: everything
-
-        $videos = $this->getRepository("Video")->findBy(array("active" => true), array("createdAt" => "DESC"));
+        $videos = $this->getRepository("Video")->findBy(array("active" => true), array("createdAt" => "DESC"), self::cantVideos);
+        $countAll = $this->getRepository('Video')->countBy(array('active' => true));
+        $addMore = $countAll > self::cantVideos ? true : false;
 
         return array(
-            'videos' => $videos
+            'videos' => $videos,
+            'addMore' => $addMore
         );
     }
-    
-	/**
+
+    /**
+     * @Route("/ajax/search", name="video_ajaxsearch") 
+     */
+    public function ajaxSearchAction()
+    {
+        $request = $this->getRequest();
+
+        $page = $request->get('page');
+        $query = $request->get('query', false);
+
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        $page = (int) $page;
+        $offset = ($page - 1) * self::cantVideos;
+
+        $response = array();
+
+        if (!$query) {
+            $videos = $this->getRepository('Video')->findBy(array('active' => true), array('createdAt' => 'DESC'), self::cantVideos, $offset);
+            $countAll = $this->getRepository('Video')->countBy(array('active' => true));
+        } else {
+            $videos = $this->getRepository('Video')->searchText($query, $user, self::cantVideos, $offset);
+            $countAll = $this->getRepository('Video')->countSearchText($query, $user);
+        }
+
+        $response['addMore'] = $countAll > (($page) * self::cantVideos) ? true : false;
+
+        foreach ($videos as $video) {
+            $response['videos'][] = array(
+                'id' => $video->getId(),
+                'title' => $video->getTitle(),
+                'image' => $this->getImageUrl($video->getImage()),
+                'author' => (string) $video->getAuthor(),
+                'slug' => $video->getSlug(),
+                'videoplayerurl' => $this->get('flumotiontwig')->getVideoPlayerUrl($video)
+            );
+        }
+
+        return $this->jsonResponse($response);
+    }
+
+    /**
      * video category page
      * 
      * @Route("/category/{id}/{slug}", name="video_category", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
@@ -63,14 +105,15 @@ class VideoController extends SiteController
      */
     public function categoryAction($id)
     {
-       // TODO: everything
-	   $category = $this->getRepository('VideoCategory')->find($id);
-	   if (!$category) throw new HttpException(404, 'Categoría no encontrada');
-       $videos = $this->getRepository("Video")->findBy(array("active" => true, "videocategory" => $category->getId()), array("createdAt" => "DESC"));
-       
-       return array(
+        // TODO: everything
+        $category = $this->getRepository('VideoCategory')->find($id);
+        if (!$category)
+            throw new HttpException(404, 'Categoría no encontrada');
+        $videos = $this->getRepository("Video")->findBy(array("active" => true, "videocategory" => $category->getId()), array("createdAt" => "DESC"));
+
+        return array(
             'videos' => $videos
-            );
+        );
     }
 
     /**
@@ -83,7 +126,7 @@ class VideoController extends SiteController
     {
         $user = $this->get('security.context')->getToken()->getUser();
         $videos = $this->getRepository('Video')->findBy(array('author' => $user->getId()), array('createdAt' => 'desc'));
-        
+
         return array(
             'videos' => $videos
         );
