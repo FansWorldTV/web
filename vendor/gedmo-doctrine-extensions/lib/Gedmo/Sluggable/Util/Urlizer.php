@@ -416,6 +416,8 @@ class Urlizer
                            preg_replace('/([a-z\d])([A-Z])/', '\1_\2',
                            preg_replace('/([A-Z]+)([A-Z][a-z])/', '\1_\2',
                            preg_replace('/::/', '/', $text)))));
+                           
+		if (strpos($text, '?') === 0) $text = $separator . $text;
 
         return trim($text, $separator);
     }

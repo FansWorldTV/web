@@ -79,8 +79,8 @@ class VideoRepository extends CountBaseRepository
     	SELECT v, va
     	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
     	LEFT JOIN v.author va
-    	LEFT JOIN v.hastags vht
-    	LEFT JOIN vht.tag vhtag
+    	INNER JOIN v.hastags vht
+    	INNER JOIN vht.tag vhtag
     	WHERE v.active = true
     	AND
     	(:tag = vhtag)
@@ -105,5 +105,76 @@ class VideoRepository extends CountBaseRepository
             $query = $query->setFirstResult((int)$offset);
         
         return $query->getResult();
+	}
+	
+	/**
+	 * Count videos by text, visible to the user
+	 * @param User $user
+	 * @param string $searchterm
+	 */
+	public function countSearchText($searchterm=null, $user=null)
+	{
+		
+		$query = $this->_em->createQuery('
+    	SELECT COUNT(v.id)
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
+    	WHERE v.active = true
+    	AND
+    	(:searchterm IS NULL OR (
+    		(v.title LIKE :searchlike)
+    		OR
+    		(v.content LIKE :searchlike)
+    		OR
+    		(v.id IN (SELECT vhtv.id FROM \Dodici\Fansworld\WebBundle\Entity\HasTag vht INNER JOIN vht.video vhtv INNER JOIN vht.tag vhtt WITH vhtt.title = :searchterm))
+    	))
+    	AND
+    	(
+    		(v.privacy = :everyone)
+    		OR
+	    	(v.privacy = :friendsonly AND (:user IS NOT NULL) AND (
+	    		(SELECT f.active FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = v.author AND f.target = :user) OR (f.target = v.author AND f.author = :user)) = true
+	    	))
+    	)
+    	')
+        	->setParameter('searchterm', $searchterm)
+        	->setParameter('searchlike', '%'.$searchterm.'%')
+        	->setParameter('everyone', Privacy::EVERYONE)
+        	->setParameter('friendsonly', Privacy::FRIENDS_ONLY)
+        	->setParameter('user', ($user instanceof User) ? $user->getId() : null);
+        
+        return $query->getSingleScalarResult();
+	}
+	
+	/**
+	 * Count videos by tag, visible to the user
+	 * @param User $user
+	 * @param Tag $tag
+	 */
+	public function countByTag(Tag $tag, $user=null)
+	{
+		
+		$query = $this->_em->createQuery('
+    	SELECT COUNT(v.id)
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
+    	INNER JOIN v.hastags vht
+    	INNER JOIN vht.tag vhtag
+    	WHERE v.active = true
+    	AND
+    	(:tag = vhtag)
+    	AND
+    	(
+    		(v.privacy = :everyone)
+    		OR
+	    	(v.privacy = :friendsonly AND (:user IS NOT NULL) AND (
+	    		(SELECT f.active FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = v.author AND f.target = :user) OR (f.target = v.author AND f.author = :user)) = true
+	    	))
+    	)
+    	')
+        	->setParameter('tag', $tag->getId())
+        	->setParameter('everyone', Privacy::EVERYONE)
+        	->setParameter('friendsonly', Privacy::FRIENDS_ONLY)
+        	->setParameter('user', ($user instanceof User) ? $user->getId() : null);
+        
+        return $query->getSingleScalarResult();
 	}
 }
