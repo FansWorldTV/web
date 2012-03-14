@@ -24,7 +24,7 @@ class VideoController extends SiteController
 {
 
     /**
-     * @Route("/{id}/{slug}", name= "video_show", requirements = {"id" = "\d+"})
+     * @Route("/{id}/{slug}", name= "video_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
      * @Template
      */
     public function showAction($id)
@@ -58,7 +58,7 @@ class VideoController extends SiteController
 	/**
      * video category page
      * 
-     * @Route("/category/{id}/{slug}", name="video_category", requirements = {"id" = "\d+"})
+     * @Route("/category/{id}/{slug}", name="video_category", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
      * @Template
      */
     public function categoryAction($id)

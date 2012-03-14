@@ -29,7 +29,7 @@ class ForumController extends SiteController
     }
 
     /**
-     * @Route("/thread/{id}/{slug}", name= "forum_thread", requirements = {"id" = "\d+"})
+     * @Route("/thread/{id}/{slug}", name= "forum_thread", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
      */
     public function threadAction($id)
     {

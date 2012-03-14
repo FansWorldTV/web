@@ -28,7 +28,7 @@ class AlbumController extends SiteController
     const LIMIT_ALBUMS = 8;
 
     /**
-     * @Route("/{id}/{slug}", name= "album_show", requirements = {"id" = "\d+"})
+     * @Route("/{id}/{slug}", name= "album_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
      * @Template()
      */
     public function showAction($id)
