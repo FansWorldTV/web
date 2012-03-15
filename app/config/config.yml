@@ -74,6 +74,11 @@ fos_user:
     profile:
         form:
             type: app_user_profile
+    from_email:
+        address:        info@fansworld.tv
+        sender_name:    Fansworld
+    service:
+        mailer:         fos_user.mailer.twig_swift
     
 fos_js_routing:
     routes_to_expose: [ ^((?!_admin_).)*$ ]

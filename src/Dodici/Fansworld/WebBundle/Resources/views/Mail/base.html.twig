@@ -1,0 +1,39 @@
+<style type="text/css">
+{% block styles %}
+	.box {
+		background-color: #F6F6F6; border: solid 1px white; box-shadow: 0 1px 1px #888; padding: 30px; border-radius: 5px; margin: 15px;
+		font-family: arial;	
+	}
+	.header {
+		padding-bottom: 15px;
+		margin-bottom: 15px;
+		border-bottom: 1px solid #DDD;	
+	}
+	.footer {
+		margin-top: 30px;
+		padding-top: 15px;
+		border-top: 1px solid #DDD;
+		font-size: 12px;
+	}
+	.clear {
+		clear: both;
+	}
+{% endblock %}
+</style>
+<div class="box">
+	<div class="header">
+		<a href="{{ url('homepage') }}">
+			<img src="{% render 'DodiciFansworldWebBundle:Default:host' %}{{ asset('/bundles/dodicifansworldweb/images/fansworld.png') }}" alt="logo" />
+		</a>
+	</div>
+	<div class="text">
+		{% block text %}
+			{% if content is defined %}
+				{{ content|raw }}
+			{% endif %}
+		{% endblock %}
+	</div>
+	<div class="footer">
+		Copyright 2012, todos los derechos reservados
+	</div>
+</div>

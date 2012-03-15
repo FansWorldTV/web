@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Application\Sonata\UserBundle\Entity\User;
 
 use Symfony\Component\HttpFoundation\Cookie;
@@ -103,5 +105,18 @@ class DefaultController extends SiteController
 			$response->headers->setCookie($cookie);
 		}
 		return $response;
+    }
+    
+    /**
+     * force mobile
+     * 
+     * @Route("/gethost", name="gethost")
+     */
+    public function hostAction()
+    {
+    	$request = $this->getRequest();
+        $host = $request->getHost();
+        $schema = $request->getScheme();
+        return new Response($schema.'://'.$host);
     }
 }

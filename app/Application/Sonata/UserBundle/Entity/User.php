@@ -10,6 +10,8 @@
 
 namespace Application\Sonata\UserBundle\Entity;
 
+use Dodici\Fansworld\WebBundle\Entity\Notification;
+
 use Sonata\UserBundle\Entity\BaseUser as BaseUser;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -191,7 +193,7 @@ class User extends BaseUser
     	$this->idolships = new ArrayCollection();
     	$this->hasinterests = new ArrayCollection();
         $this->privacy = array();
-        $this->notifyprefs = array();
+        $this->notifyprefs = array_keys(Notification::getTypeList());
         $this->idolCount = 0;
         $this->friendCount = 0;
         $this->fanCount = 0;

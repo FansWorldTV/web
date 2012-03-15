@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Listener;
 
+use Symfony\Component\HttpFoundation\Request;
+
 use Dodici\Fansworld\WebBundle\Entity\Notification;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Application\Sonata\UserBundle\Entity\User;
@@ -9,10 +11,12 @@ use Application\Sonata\UserBundle\Entity\User;
 class NotificationMailer
 {
     protected $container;
+    protected $request;
     
 	function __construct($container)
     {
         $this->container = $container;
+        $this->request = Request::createFromGlobals();
     }
     
 	public function postPersist(LifecycleEventArgs $eventArgs)
@@ -25,13 +29,27 @@ class NotificationMailer
 			$allowed = $user->getNotifyprefs();
 			if (in_array($entity->getType(), $allowed)) {
 				$mailer = $this->container->get('mailer');
+				$html = $this->container->get('templating')->render('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $entity));
+		
+				$subject = substr(trim(strip_tags($html)), 0, 75);
+				
+				$html = str_replace(
+					array('href="/','src="/'),
+					array(
+						'href="http://'.$this->request->getHost().'/',
+						'src="http://'.$this->request->getHost().'/',
+					), $html);
+					
+				$html = $this->container->get('templating')->render('DodiciFansworldWebBundle:Mail:new_notification.html.twig', array('content' => $html));
+				
 				$message = \Swift_Message::newInstance()
                         ->setSubject('[FANSWORLD] Nueva notificación')
                         ->setFrom('info@fansworld.tv')
                         ->setTo($user->getEmail())
-                        ->setBody('(TODO)');
-                        //->setBody($this->container->get('templating')->render('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $entity)));
+                        ->setBody(trim(strip_tags($html)))
+                        ->addPart($html, 'text/html');
                 $sent = $mailer->send($message);
+				
 			}
 		}
 		
