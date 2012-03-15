@@ -13,12 +13,7 @@
 								<li class="clearfix">
 							    	{{ form_label(row) }}
 							        <div class="field">
-								        <select id="fos_user_profile_form_user_city" name="fos_user_profile_form[user][city]">
-								        	<option value=""></option>
-								        	{% for city in appstate.cities %}
-								        		<option value="{{ city.id }}"{% if app.user.city == city %} selected="selected"{% endif %} data-country="{{city.country.id}}">{{ city }}</option>
-								        	{% endfor %}
-								        </select>
+								        <select id="fos_user_profile_form_user_city" name="fos_user_profile_form[user][city]"></select>
 								        {{ form_errors(row) }}
 							        </div>
 							    </li>

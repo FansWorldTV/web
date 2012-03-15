@@ -3,16 +3,38 @@ $(function(){
         empty: emptyCheckboxImg
     });
 	
-	filterCityField();
+	filterCityField(function(){
+		$('#fos_user_profile_form_user_city').val(selectedCity);
+	});
+	
 	$('#fos_user_profile_form_user_country').change(function(){
-		filterCityField();
-		$('#fos_user_profile_form_user_city option').removeAttr('selected');
-		$('#fos_user_profile_form_user_city option[value=""]').attr('selected','');
-		$('label[for="fos_user_profile_form_user_city"]').closest('li').effect("highlight",{},1000);
+		$('label[for="fos_user_profile_form_user_city"]').addClass('loading');
+		filterCityField(function(){
+			$('label[for="fos_user_profile_form_user_city"]').removeClass('loading');
+			$('label[for="fos_user_profile_form_user_city"]').closest('li').effect("highlight",{},1000);
+		});
 	});
 });
 
-function filterCityField() {
-	$('#fos_user_profile_form_user_city option[value!=""]').hide();
-	$('#fos_user_profile_form_user_city option[data-country="'+$('#fos_user_profile_form_user_country').val()+'"]').show();
+function filterCityField(callback) {
+	if ($('#fos_user_profile_form_user_country').val()) {
+		$('#fos_user_profile_form_user_city').html($('<option>').val(''));
+		ajax.genericAction('cities_ajax', {country: $('#fos_user_profile_form_user_country').val() }, 
+		function(response){
+	        if(response.cities){
+	            $.each(response.cities, function(){
+	            	var city = this;
+	            	$('#fos_user_profile_form_user_city').append($('<option>').val(city.id).text(city.title));
+	            });
+	            
+	            if (typeof callback == 'function') callback();
+	        }
+		},
+	    function(errortxt) {
+	        error(errortxt);
+	    }
+	    );
+	} else {
+		$('#fos_user_profile_form_user_city').html($('<option>').val(''));
+	}
 }

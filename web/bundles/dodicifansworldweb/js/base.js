@@ -282,8 +282,15 @@ var ajax = {
            url: 'http://' + location.host + Routing.generate( appLocale + '_video_ajaxsearch'),
            data: params
         });
-    }
+    },
   
+    genericAction: function(route, params, callback, errorCallback){
+        ajax.setCallback(callback, errorCallback);
+        $.ajax({
+           url: 'http://' + location.host + Routing.generate( appLocale + '_' + route),
+           data: params
+        });
+    }
 };
 
 function trim (myString) {

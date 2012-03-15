@@ -191,9 +191,9 @@ class AppState
     	return Privacy::getOptions();
     }
     
-    public function getCities()
+    public function getCities($country=null)
     {
-    	return $this->getRepository('DodiciFansworldWebBundle:City')->formChoices();
+    	return $this->getRepository('DodiciFansworldWebBundle:City')->formChoices($country);
     }
     
     private function getRepository($repname)

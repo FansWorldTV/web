@@ -30,10 +30,11 @@ class ProfileController extends BaseController
 
             return new RedirectResponse($this->container->get('router')->generate('fos_user_profile_edit'));
         }
-
+		
+        $data = $form->getData();
         return $this->container->get('templating')->renderResponse(
             'FOSUserBundle:Profile:edit.html.'.$this->container->getParameter('fos_user.template.engine'),
-            array('form' => $form->createView(), 'theme' => $this->container->getParameter('fos_user.template.theme'))
+            array('form' => $form->createView(), 'theme' => $this->container->getParameter('fos_user.template.theme'), 'selectedcity' => $data->user->getCity())
         );
     }
 
