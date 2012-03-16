@@ -408,7 +408,6 @@ var friendship = {
             ajax.addFriendAction(targetId, friendgroups, function(response){
                 if(!response.error){
                     $("div.addFriend").after('<a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="' + response.friendship + '">Cancelar solicitud</a>').remove();
-                    friendship.cancel();
                 }else{
                     error(response.error);
                 }
@@ -419,10 +418,11 @@ var friendship = {
     
     cancel: function(){
         $(".btn_friendship.remove:not('.loading')").live('click', function(){
+            console.log(1);
+            var self = $(this);
+            var friendshipId = $(this).attr('friendshipId');
+            self.addClass('loading');
             if(confirm('Estas seguro de dejar de ser amigo')){
-                var self = $(this);
-                self.addClass('loading');
-                var friendshipId = $(this).attr('friendshipId');
                 ajax.cancelFriendAction(friendshipId, function(response){
                     if(!response.error) {
                         window.location.reload();  
