@@ -43,7 +43,7 @@ class NotificationMailer
 				$html = $this->container->get('templating')->render('DodiciFansworldWebBundle:Mail:new_notification.html.twig', array('content' => $html));
 				
 				$message = \Swift_Message::newInstance()
-                        ->setSubject('[FANSWORLD] Nueva notificación')
+                        ->setSubject($subject)
                         ->setFrom('info@fansworld.tv')
                         ->setTo($user->getEmail())
                         ->setBody(trim(strip_tags($html)))

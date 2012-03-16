@@ -54,6 +54,11 @@ class InterestCategory implements Translatable
         $this->interests = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
+	public function __toString()
+    {
+    	return $this->getTitle();
+    }
+    
     /**
      * Get id
      *

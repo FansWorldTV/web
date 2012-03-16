@@ -1,5 +1,5 @@
 {% set user = app.user %}
-{% extends "DodiciFansworldWebBundle:User:profile_base.html.twig" %}
+{% extends "DodiciFansworldWebBundle:User:profile_edit.html.twig" %}
 
 {% form_theme form 'DodiciFansworldWebBundle::form.html.twig' %}
 
@@ -8,6 +8,11 @@
 {% block javascripts %}
 	{{ parent() }}
 	<script src="{{ asset('bundles/dodicifansworldweb/js/edit_profile.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block user_edit_toolbar %}
+	{% set current_edit_toolbar = 'notifications' %}
+	{{ parent() }}
 {% endblock %}
 
 {% block profile_tabs %}
@@ -26,10 +31,7 @@
 			</div>
 			
 	        <div class="actions clearfix">
-	        	<a href="{{ path('fos_user_profile_edit') }}">
-	        		<img src="{{ asset('bundles/dodicifansworldweb/images/ui/id-card.png' ) }}" alt="Modificar Perfil" title="Modificar Perfil" class="edit-profile-icon" />
-	        	</a>
-	            <input type="submit" name="submit" value="Guardar" class="btn_action" />
+	        	<input type="submit" name="submit" value="Guardar" class="btn_action" />
 	        </div>
 		</form>
 	</div>

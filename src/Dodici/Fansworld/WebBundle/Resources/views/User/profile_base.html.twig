@@ -61,8 +61,10 @@
                     </div>
                     {% endblock %}
                 </div>
-                <div class="user_profile_body">
-                {% block inner_content %}
+                {% block user_profile_body %}
+	                <div class="user_profile_body">
+	                {% block inner_content %}
+	                {% endblock %}
+	                </div>
                 {% endblock %}
-                </div>
 {% endblock %}

@@ -822,3 +822,34 @@ p.systemmessage {
 .form-notifyprefs #form_prefs li label {
 	width: 300px;
 }
+.profile_edit_toolbar {
+	float: right;
+}
+.profile_edit_toolbar a {
+	text-decoration: none;
+	display: block;
+	float: left;
+	margin-left: 10px;
+	padding: 1px;
+}
+.profile_edit_toolbar .current {
+	background-color: #DDD;
+	border: 1px solid #CCC;
+}
+.ui-autocomplete {
+	max-height: 100px;
+	overflow-y: auto;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
+	/* add padding to account for vertical scrollbar */
+	padding-right: 20px;
+}
+.ui-autocomplete-loading { background: white url('../images/ajax-loader-small.gif') right center no-repeat !important; }
+.ui-autocomplete li a span.name { vertical-align: top; }
+ul.currentinterests { clear: both; padding-top: 10px;}
+.interest-edit ul.categories li.interestcategory ul.currentinterests li { float: left; width: 200px; height: 25px;border: 0; padding: 2px;}
+ul.currentinterests li { text-decoration: none; }
+ul.currentinterests li span {vertical-align: top;display: block;float: left;width: 150px;}
+ul.currentinterests li img { width: 25px; height: 25px; float: left; margin-right: 5px;}
+ul.currentinterests li a.deleteinterest { cursor: pointer; margin-left: 5px;height: 14px;width: 14px;display: block;float: right;background: url('../images/ui/closealert.png') top left no-repeat;}
+ul.currentinterests li a.deleteinterest:hover { background-position: bottom left;}
