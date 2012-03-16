@@ -366,7 +366,7 @@ var site = {
                         $(this).html($.timeago($(this).attr('data-time')));
                     });
                     if (ispin) {
-                        $('.masonbricks').masonry().resize();
+                        $('.masonbricks').isotope().resize();
                     }
                 },
                 function(responsetext){

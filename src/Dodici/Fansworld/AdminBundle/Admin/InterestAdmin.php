@@ -32,7 +32,7 @@ class InterestAdmin extends Admin
             ->add('createdAt', 'date', array ('attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy HH:mm'), array ())
             ->add('active', NULL, array ('required' => false), array ())
-            ->add('author', NULL, array (), array ())
+            ->add('author', NULL, array ('required' => false), array ())
             ->add('interestcategory', NULL, array (), array ())
             ->add('image', 'sonata_type_model', array(), array('edit' => 'list', 'link_parameters' => array('context' => 'default', 'provider' => 'sonata.media.provider.image')))
             ->add('comments', 'sonata_type_collection', array ('required' => false), 
