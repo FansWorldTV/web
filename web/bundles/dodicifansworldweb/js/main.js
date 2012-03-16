@@ -419,17 +419,19 @@ var friendship = {
     
     cancel: function(){
         $(".btn_friendship.remove:not('.loading')").live('click', function(){
-            var self = $(this);
-            self.addClass('loading');
-            var friendshipId = $(this).attr('friendshipId');
-            ajax.cancelFriendAction(friendshipId, function(response){
-                if(!response.error) {
-                    location.reload();
-                }else{
-                    error(response.error);
-                }
-                self.removeClass('loading');
-            });
+            if(confirm('Estas seguro de dejar de ser amigo')){
+                var self = $(this);
+                self.addClass('loading');
+                var friendshipId = $(this).attr('friendshipId');
+                ajax.cancelFriendAction(friendshipId, function(response){
+                    if(!response.error) {
+                        window.location.reload();  
+                    }else{
+                        error(response.error);
+                    }
+                    self.removeClass('loading');
+                });
+            }
         });
     }
 };
@@ -864,7 +866,18 @@ var videos = {
                             'slug': video.slug
                         }));
                         template.find('h2 a').html(video.title);
-                        template.find('a.videoplayer').attr('href', video.videoplayerurl).find('img').attr('src', video.image);
+                        template.find('a.videoplayer').attr('href', video.videoplayerurl);
+                        template.find('a.videoplayer img').attr('src', video.image);
+
+                        if(video.tags.length>0){
+                            for(var j in video.tags){
+                                var tag = video.tags[j];
+                                template.find('.tags').append("<li>" + tag + "</li>");
+                            }
+                        }else{
+                            template.find('.hasTags').hide();
+                        }
+                        
                         $("div.cont ul.videos").append(template);
                     }
                     videos.pager++;
@@ -885,14 +898,13 @@ var videos = {
             
             self.addClass('loading');
             videos.pager = 1;
-            console.log(query);
             ajax.videosSearchAction({
                 'query': query, 
                 'page': 1
             }, function(response){
                 if(response){
                     if(response.addMore){
-                       $("div.cont").append('<a href="#" id="addMore" class="loadmore  videos">Agregar Más</a>');
+                        $("div.cont").append('<a href="#" id="addMore" class="loadmore  videos">Agregar Más</a>');
                     }
                     for(var i in response.videos){
                         var video = response.videos[i];
@@ -904,6 +916,16 @@ var videos = {
                         template.find('h2 a').html(video.title);
                         template.find('a.videoplayer').attr('href', video.videoplayerurl);
                         template.find('a.videoplayer img').attr('src', video.image);
+
+                        if(video.tags.length>0){
+                            for(var j in video.tags){
+                                var tag = video.tags[j];
+                                template.find('.tags').append("<li>" + tag + "</li>");
+                            }
+                        }else{
+                            template.find('.hasTags').hide();
+                        }
+                        
                         $("div.cont ul.videos").append(template);
                     }
                     videos.pager++;
