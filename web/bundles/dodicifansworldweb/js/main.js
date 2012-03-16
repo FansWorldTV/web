@@ -429,7 +429,6 @@ var friendship = {
                     }else{
                         error(response.error);
                     }
-                    self.removeClass('loading');
                 });
             }
         });
