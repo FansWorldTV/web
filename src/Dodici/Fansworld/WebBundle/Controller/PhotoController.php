@@ -41,12 +41,18 @@ class PhotoController extends SiteController
      */
     public function showAction($id)
     {
-        $photo = $this->getRepository('Photo')->findOneBy(array('id' => $id, 'active' => true));
+        $repo = $this->getRepository('Photo');
+        $photo = $repo->findOneBy(array('id' => $id, 'active' => true));
+
+        $next = $repo->getNextActive($id);
+        $prev = $repo->getPrevActive($id);
         
         $this->securityCheck($photo);
         
         return array(
-            'photo' => $photo
+            'photo' => $photo,
+            'prev' => $prev,
+            'next' => $next
             );
     }
     

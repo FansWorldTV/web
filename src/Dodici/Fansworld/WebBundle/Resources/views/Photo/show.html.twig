@@ -6,10 +6,16 @@
 <div class="cont clearfix">
     <div class="media">
         <div class="media_content">
-            <a class="media_img" href="{% path photo.image, 'huge' %}">{% thumbnail photo.image, 'big' %}</a>
+            {% if prev %}
+            <a class="btn_prev" href="{{ path('photo_show', {'id': prev.id}) }}" title="anterior">anterior</a>
+            {% endif %}
+            {% if next %}
+            <a class="btn_next" href="{{ path('photo_show', {'id': next.id}) }}" title="siguiente">siguiente</a>
+            {% endif %}
+            <a class="media_img colorbox" href="{% path photo.image, 'huge' %}">{% thumbnail photo.image, 'big' %}</a>
         </div>
-        
-		{% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: photo} %}
+            
+        {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: photo} %}
 
         <div class="media_info">
             <div>
@@ -24,6 +30,6 @@
     {% include 'DodiciFansworldWebBundle:Comment:comment_block.html.twig' with {entity: photo} %}
 </div>
 <script type="text/javascript">
-    $("div.media_content a").colorbox();
+    $("div.media_content a.colorbox").colorbox();
 </script>
 {% endblock %}

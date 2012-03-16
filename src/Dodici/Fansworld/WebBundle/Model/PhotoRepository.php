@@ -12,4 +12,37 @@ use Doctrine\ORM\EntityRepository;
  */
 class PhotoRepository extends CountBaseRepository
 {
+
+    public function getNextActive($id)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        
+        $qb
+        ->add('select', 'p')
+        ->add('from', $this->_entityName . ' p')
+        ->add('where', 'p.id > ?1 AND p.active=1')
+        ->setMaxResults(1)
+        ->setParameter(1, $id);
+        
+        $query = $qb->getQuery();
+
+        return $query->getSingleResult();
+    }
+
+    public function getPrevActive($id)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        
+        $qb
+        ->add('select', 'p')
+        ->add('from', $this->_entityName . ' p')
+        ->add('where', 'p.id < ?1 AND p.active=1')
+        ->add('orderBy', 'p.id DESC')
+        ->setMaxResults(1)
+        ->setParameter(1, $id);
+        
+        $query = $qb->getQuery();
+
+        return $query->getSingleResult();
+    }
 }
