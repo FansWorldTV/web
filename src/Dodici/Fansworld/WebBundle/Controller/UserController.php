@@ -35,10 +35,12 @@ class UserController extends SiteController
             throw new HttpException(404, "No existe el usuario");
         }
 
+        $hasComments = $this->getRepository('Comment')->countBy(array('target' => $user->getId()));
+        $hasComments = $hasComments > 0 ? true : false;
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
-        
-        return array('user' => $user, 'friendgroups' => $friendGroups);
+
+        return array('user' => $user, 'friendgroups' => $friendGroups, 'hasComments' => $hasComments);
     }
 
     /**
@@ -58,7 +60,7 @@ class UserController extends SiteController
 
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
-        
+
         return array('user' => $user, 'friendgroups' => $friendGroups);
     }
 
@@ -330,7 +332,7 @@ class UserController extends SiteController
     {
         $user = $this->get('security.context')->getToken()->getUser();
         $notiRepo = $this->getRepository('Notification');
-        $notifications = $notiRepo->findBy(array('target'=>$user->getId()), array('createdAt' => 'DESC'));
+        $notifications = $notiRepo->findBy(array('target' => $user->getId()), array('createdAt' => 'DESC'));
         $response = array();
         foreach ($notifications as $notification) {
             $response[] = $this->renderView('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $notification));
@@ -359,7 +361,7 @@ class UserController extends SiteController
 
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
-        
+
         return array(
             'user' => $user,
             'isLoggedUser' => $isLoggedUser,

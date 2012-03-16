@@ -29,14 +29,21 @@
 				</div>
 			{% endblock %}
 			{% block subcomments %}
-				{% if comment.comment is null %}
-					<div class="comments">
-					  {% include 'DodiciFansworldWebBundle:Comment:comment_form.html.twig' with {shortform: true, entity: comment} %}
+                                {% if comment.comment is null %}
+                                    <div class="comments">
+                                        {% if comment.comments|length > 0 %}
+                                        <div class="form">
+                                        {% else %}
+                                        <a href="#" class="showCommentForm">Comentar</a>
+                                        <div class="form hidden">
+                                        {% endif %}
+                                            {% include 'DodiciFansworldWebBundle:Comment:comment_form.html.twig' with {shortform: true, entity: comment} %}
+                                        </div>
 	                  
-	                  {% for subcomment in comment.comments %}
-	                  	{% include 'DodiciFansworldWebBundle:Comment:comment.html.twig' with {comment: subcomment} %}
-	                  {% endfor %}
-	                </div>
+                                        {% for subcomment in comment.comments %}
+                                                {% include 'DodiciFansworldWebBundle:Comment:comment.html.twig' with {comment: subcomment} %}
+                                        {% endfor %}
+                                    </div>
 				{% endif %}
 			{% endblock %}
 	 	{% endblock %}

@@ -74,7 +74,16 @@ var site = {
         site.likeButtons();
         site.shareButtons();
         site.globalCommentButtons();
+        site.showCommentForm();
     },
+    
+    showCommentForm: function(){
+        $(".showCommentForm").click(function(){
+           $(this).parent().find('div.form').toggleClass('hidden');
+           return false;
+        });
+    },
+    
     listenPendingRequests: function(){
         ajax.numberPendingRequests(function(response){
             if(response){
