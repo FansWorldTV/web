@@ -74,6 +74,7 @@ var site = {
         site.likeButtons();
         site.shareButtons();
         site.globalCommentButtons();
+        site.expander();
         site.showCommentForm();
     },
     
@@ -377,6 +378,7 @@ var site = {
                     if (ispin) {
                         $('.masonbricks').isotope().resize();
                     }
+                    site.expander();
                 },
                 function(responsetext){
                     el.removeClass('loading');
@@ -384,6 +386,18 @@ var site = {
                 });
         	
         });
+    },
+    
+    expander: function() {
+    	$('.actualizacion .comments .status_comment .status_comment_user p, ' +
+    	'.actualizacion .status p, ' +
+    	'.pincomments .comment .message')
+    	.not(':has(.read-more)')
+    	.expander({
+    	slicePoint: 100,
+    	expandText: '[+]',
+    	userCollapseText: '[-]'
+    	});
     }
 }
 

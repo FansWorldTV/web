@@ -38,6 +38,14 @@ var photopins = {
                     }
                     
                     var $items = $( items.join('') );
+                    $items.find('.pincomments .comment .message').expander({
+                    	slicePoint: 100,
+                    	expandText: '[+]',
+                    	userCollapse: false,
+                    	afterExpand: function() {
+                    		$('.photomason').isotope().resize();
+                	    }
+                    	});
                     $items.imagesLoaded(function(){
                       $('.photomason').isotope( 'insert', $items, function(){
                     	  if(!r['gotMore']){

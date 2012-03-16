@@ -745,6 +745,12 @@ select.post_privacidad { float: right; margin-right: 10px;}
     border-top: 1px solid #DDD;
     border-bottom: 1px solid #DDD;
 }
+textarea.comment_message {
+	resize: vertical;
+}
+.pincomments .commentform textarea {
+	resize: none;
+}
 .pincomments .avatar {
     float: left;
     margin-right: 5px;
