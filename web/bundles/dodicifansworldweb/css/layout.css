@@ -279,6 +279,7 @@ form.register table tr.error td label select{ border:solid 1px #333; background:
 .videos .video a .info span { color:#666;}
 .videos .video a:hover { text-decoration:none;}
 .videos .video a:hover h1 {color:#008abd}
+.videos .tags li { float:left; margin-right: 10px; background-color: #DDD; border: 1px solid black; border-radius: 3px; color: black; font-weight: bold; padding: 3px;}
 
 ul.foro { background:#f4f5f6; border:solid 1px #e2e2e2; border-bottom:none;}
 ul.foro li a { display:block;padding:17px 14px; border-bottom:solid 1px #e2e2e2;}

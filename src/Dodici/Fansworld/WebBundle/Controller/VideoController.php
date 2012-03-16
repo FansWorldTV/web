@@ -82,15 +82,20 @@ class VideoController extends SiteController
         }
 
         $response['addMore'] = $countAll > (($page) * self::cantVideos) ? true : false;
-
         foreach ($videos as $video) {
+            $tags = array();
+            foreach ($video->getHastags() as $tag) {
+                array_push($tags, $tag->getTag()->getTitle());
+            }
+
             $response['videos'][] = array(
                 'id' => $video->getId(),
                 'title' => $video->getTitle(),
                 'image' => $this->getImageUrl($video->getImage()),
                 'author' => (string) $video->getAuthor(),
                 'slug' => $video->getSlug(),
-                'videoplayerurl' => $this->get('flumotiontwig')->getVideoPlayerUrl($video)
+                'videoplayerurl' => $this->get('flumotiontwig')->getVideoPlayerUrl($video),
+                'tags' => $tags
             );
         }
 
@@ -130,6 +135,49 @@ class VideoController extends SiteController
         return array(
             'videos' => $videos
         );
+    }
+
+    /**
+     * Show by tag
+     * 
+     * @Route("/tag/{slug}", name = "video_tags")
+     * @Template()
+     */
+    public function tagsAction($slug)
+    {
+        $response = array('videos' => false);
+        if ($slug) {
+            $user = $this->get('security.context')->getToken()->getUser();
+            $tags = $this->getRepository('Tag')->findBy(array('title' => $slug));
+
+            foreach ($tags as $tag) {
+                $videos = $this->getRepository('Video')->byTag($tag, $user, self::cantVideos);
+                foreach ($videos as $video) {
+                    /**
+                    $tags = array();
+                    foreach ($video->getHastags() as $tag) {
+                        array_push($tags, $tag->getTag()->getTitle());
+                    }
+                    $response['videos'][] = array(
+                        'id' => $video->getId(),
+                        'title' => $video->getTitle(),
+                        'image' => $this->getImageUrl($video->getImage()),
+                        'author' => (string) $video->getAuthor(),
+                        'slug' => $video->getSlug(),
+                        'videoplayerurl' => $this->get('flumotiontwig')->getVideoPlayerUrl($video),
+                        'tags' => $tags
+                    );
+                     * 
+                     */
+                    $response['videos'][] = $video;
+                }
+            }
+        }
+        
+        $countAll = $this->getRepository('Video')->countByTag($tag, $user);
+        $response['addMore'] = $countAll > self::cantVideos ? true : false;
+
+        return $response;
     }
 
 }

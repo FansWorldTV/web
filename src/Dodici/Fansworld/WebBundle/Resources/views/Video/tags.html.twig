@@ -1,0 +1,66 @@
+{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+
+{% block title %}{{ parent() }} - TV{% endblock %}
+
+{% block content %}
+    <script type="text/javascript">
+            // TEMPORARY, FOR TESTING ONLY
+            $(function(){
+                    $('.videoplayer').colorbox({iframe: true, innerWidth: 640, innerHeight: 480});
+            });
+    </script>
+    <div class="cont clearfix">
+        <h2>Búsqueda</h2>
+        <div class="user_list">
+            <div class="search">
+                <form id="formSearch" method="post" action="">
+                    <input type="text" name="query" id="query"/>
+                    <input type="button" value="Buscar" name="submit" id="search" class="hidden"/>
+                </form>
+            </div>
+        </div>
+        {% if videos|length>0 %}
+            <ul class="videos">
+                    {% for video in videos %}
+                            <li>
+                                    <h2><a href="{{ path('video_show', {id: video.id, slug: video.slug}) }}">{{ video.title }}</a></h2>
+                                    {% if video.image %}
+                                            <a class="videoplayer" href="{{ flumotiontwig.videoplayerurl(video) }}">
+                                                    {% thumbnail video.image, 'video' with {'class': 'wall'} %}
+                                            </a>
+                                    {% endif %}
+                                    {% if video.hasTags %}
+                                        <div class="clearBoth"></div>
+                                        <span>Tags: </span>
+                                        <ul class="tags">
+                                            {% for tag in video.hasTags %}
+                                                <li><a href="{{ path('video_tags', {'slug': tag.tag.slug}) }}">{{ tag.tag.title }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                            </li>
+                    {% endfor %}
+            </ul>
+        {% else %}
+            <h2>No se encontraron videos.</h2>
+        {% endif %}
+        {% if addMore %}
+            <a href="#" id="addMore" class="loadmore  videos">Agregar Más</a>
+        {% endif %}
+    </div>
+    <div id="templates" class="hidden">
+        <ul class="videos hidden">
+            <li>
+                <h2><a href="">a</a></h2>
+                <a class="videoplayer" href=""><img src="a"/></a>
+                <div class="hasTags">
+                    <div class="clearBoth"></div>
+                    <span>Tags: </span>
+                    <ul class="tags">
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+{% block rightbar %}{% endblock %}
