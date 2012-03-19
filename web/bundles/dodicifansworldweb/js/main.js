@@ -468,11 +468,10 @@ var friendship = {
     
     cancel: function(){
         $(".btn_friendship.remove:not('.loading')").live('click', function(){
-            console.log(1);
             var self = $(this);
             var friendshipId = $(this).attr('friendshipId');
-            self.addClass('loading');
             if(confirm('Estas seguro de dejar de ser amigo')){
+                self.addClass('loading');
                 ajax.cancelFriendAction(friendshipId, function(response){
                     if(!response.error) {
                         window.location.reload();  
@@ -816,7 +815,6 @@ var contest = {
             var contestId = $("div.add_comment form input.contestId").val();
             
             ajax.contestAddCommentAction(content, contestId, function(r){
-                console.log(r);
                 var template = $("#templates.contest div.comment").clone();
                 template.find('div.avatar a').attr('href', Routing.generate(appLocale + '_user_detail', {
                     'id': r.comment.id
