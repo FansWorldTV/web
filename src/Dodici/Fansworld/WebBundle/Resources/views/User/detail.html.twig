@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block inner_content %}
-				<div class="cont clearfix">
+                <div class="cont clearfix">
                     <h2>Información{% if (user == app.user) %} <a class="more" href="{{ path('fos_user_profile_edit') }}">editar</a>{% endif %}</h2>
                     <div class="user_info">
                         <h5>Informacion personal</h5>
@@ -19,7 +19,7 @@
                             </tr>
                             <tr>
                                 <td class="dato">Sexo</td>
-                                <td>{{ user.sex }}</td>
+                                <td>{{ ('sex_' ~ user.sex)|trans }}</td>
                             </tr>
                             <tr>
                                 <td class="dato">Pais</td>
@@ -29,17 +29,39 @@
                                 <td class="dato">Provincia</td>
                                 <td>{{ user.city }}</td>
                             </tr>
+                            <tr>
+                                <td class="dato">Fecha de nacimiento</td>
+                                <td>{{ user.birthday|date('Y-m-d H:i:s') }}</td>
+                            </tr>
+                            <tr>
+                                <td class="dato">Puntos</td>
+                                <td>{{ user.score }}</td>
+                            </tr>
                         </table>
-                        <h5>Perfil</h5>
+                        <h5>Biografía</h5>
                         <table>
                             <tr>
-                                <td class="dato">Intereses</td>
-                                <td> Vestibulum quis erat id sem auctor ullamcorper id vitae est. Nam justo mauris, scelerisque vel rhoncus ut, malesuada eu arcu. Nullam a tincidunt erat. Suspendisse nec tortor in sapien aliquet eleifend. Maecenas id eros libero, ac condimentum enim. Fusce dapibus eros quis nisl vulputate tincidunt. Mauris faucibus iaculis nisl in elementum. Sed pharetra blandit lacinia. </td>
+                                <td class="dato">Descripción</td>
+                                <td>{{ user.content }}</td>
                             </tr>
-                            <tr>
-                                <td class="dato">Biografia</td>
-                                <td> Vestibulum quis erat id sem auctor ullamcorper id vitae est. Nam justo mauris, scelerisque vel rhoncus ut, malesuada eu arcu. Nullam a tincidunt erat. Suspendisse nec tortor in sapien aliquet eleifend. Maecenas id eros libero, ac condimentum enim. Fusce dapibus eros quis nisl vulputate tincidunt. Mauris faucibus iaculis nisl in elementum. Sed pharetra blandit lacinia. </td>
-                            </tr>
+                        </table>
+                        <h5>Intereses</h5>
+                        <table>
+                            {% for interest in interests %}
+                                <tr>
+                                    <td class="dato">{{ interest.category }}</td>
+                                        <td>
+                                            <ul class="currentinterests clearfix">
+                                                {% for ele in interest.interest %}
+                                                    <li data-idinterest="1">
+                                                        <img alt="" src="{{ele.image}}"> 
+                                                        <span class="name">{{ele.title}}</span>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </td>
+                                </tr>
+                            {% endfor %}
                         </table>
                     </div>
                 </div>

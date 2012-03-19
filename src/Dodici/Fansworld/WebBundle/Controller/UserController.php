@@ -60,8 +60,23 @@ class UserController extends SiteController
 
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
-
-        return array('user' => $user, 'friendgroups' => $friendGroups);
+        
+        $categories = $this->getRepository('InterestCategory')->findBy(array(), array('title' => 'ASC'));
+        
+        $interests = array();
+        foreach($categories as $category){
+            $interestsRepo = $this->getRepository('Interest')->matching($category->getId(), null, $user->getId());
+            
+            $interests[$category->getId()]['category'] = $category->getTitle();
+            foreach($interestsRepo as $element){
+                $interests[$category->getId()]['interest'][] = array(
+                    'title' => $element->getTitle(),
+                    'image' => $this->getImageUrl($element->getImage())
+                );
+            }
+        }
+        
+        return array('user' => $user, 'friendgroups' => $friendGroups, 'interests' => $interests);
     }
 
     /**

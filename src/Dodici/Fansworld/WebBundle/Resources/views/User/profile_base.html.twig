@@ -42,7 +42,10 @@
 	                    	{% endif %}
 	                    {% endif %}
                     
-                        <h1>{{ user }}</h1>
+                        <h1>
+                            {{ user }}
+                            {% thumbnail user.level.image, 'small_square' with {class:'userAvatar', title: user.level.title, alt: user.level.title} %}
+                        </h1>
                         {% block profile_tabs %}
                         {% if active_tab is not defined %}
                         	{% set active_tab = '' %}
