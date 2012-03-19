@@ -46,8 +46,10 @@
                             </tr>
                         </table>
                         <h5>Intereses</h5>
+                        
                         <table>
                             {% for interest in interests %}
+                                {% if interest.interest is defined %}
                                 <tr>
                                     <td class="dato">{{ interest.category }}</td>
                                         <td>
@@ -61,6 +63,7 @@
                                             </ul>
                                         </td>
                                 </tr>
+                                {% endif %}
                             {% endfor %}
                         </table>
                     </div>
