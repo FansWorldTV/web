@@ -31,6 +31,7 @@ class ShareController extends SiteController
         try {
 	    	$request = $this->getRequest();
 	    	$id = intval($request->get('id'));
+	    	$content = $request->get('text');
 	        $type = $request->get('type');
 	        $translator = $this->get('translator');
 	        $appstate = $this->get('appstate');
@@ -45,7 +46,7 @@ class ShareController extends SiteController
 	        $em = $this->getDoctrine()->getEntityManager();
 	        
 	        if ($appstate->canShare($entity)) {
-	        	$this->get('sharer')->share($user, $entity);
+	        	$this->get('sharer')->share($user, $entity, $content);
 	        	
 	        	$message = $translator->trans('You have shared') . ' ' . (string)$entity;
 	        } else {

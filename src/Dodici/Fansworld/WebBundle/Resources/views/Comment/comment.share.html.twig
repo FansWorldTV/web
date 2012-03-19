@@ -59,6 +59,11 @@
 			</div>
 		{% endif %}
 	{% endif %}
+	{% if comment.content %}
+		<div class="share-desc">
+			<p>{{ comment.content }}</p>
+		</div>
+	{% endif %}
 {% endblock %}
 
 {% block comment_social %}

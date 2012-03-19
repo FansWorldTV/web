@@ -206,13 +206,14 @@ var ajax = {
         });
     },
     
-    shareAction: function(type, id, callback, errorcallback){
+    shareAction: function(type, id, text, callback, errorcallback){
         ajax.setCallback(callback, errorcallback);
         $.ajax({
             url: 'http://' + location.host + Routing.generate( appLocale + '_share_ajax'),
             data: {
                 'id' : id,
-                'type' : type
+                'type' : type,
+                'text' : text
             }
         });
     },

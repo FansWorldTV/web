@@ -340,21 +340,24 @@ var site = {
         $('.sharebutton:not(.loading,.disabled)').live('click',function(e){
             e.preventDefault();
             var el = $(this);
-            var type = el.attr('data-type');
-            var id = el.attr('data-id');
-            el.addClass('loading');
-        	
-            ajax.shareAction(type, id,
-                function(response){
-                    el.removeClass('loading');
-                    el.addClass('disabled');
-                    success(response.message);
-                },
-                function(responsetext){
-                    el.removeClass('loading');
-                    error(responsetext);
-                });
-        	
+            
+            askText(function(text){
+            	var type = el.attr('data-type');
+                var id = el.attr('data-id');
+                el.addClass('loading');
+            	
+                ajax.shareAction(type, id, text,
+                    function(response){
+                        el.removeClass('loading');
+                        el.addClass('disabled');
+                        success(response.message);
+                    },
+                    function(responsetext){
+                        el.removeClass('loading');
+                        error(responsetext);
+                    });
+            });
+            
         });
     },
     globalCommentButtons: function(){
@@ -1025,4 +1028,17 @@ var albums = {
 
 function resizeColorbox(options) {
     $.colorbox.resize(options);
+}
+
+function askText(callback) {
+	$.colorbox({
+		href: Routing.generate(appLocale + '_popup_asktext'),
+		onComplete: function(){ 
+			$('#colorbox').find('.submit').click(function(){
+				var content = $('#colorbox').find('textarea').val();
+				$.colorbox.close();
+				callback(content);
+			}); 
+		}
+	});
 }

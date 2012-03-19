@@ -35,6 +35,16 @@ class DefaultController extends SiteController
     }
     
 	/**
+     * Popup asks text
+     * @Route("/popup/asktext", name="popup_asktext")
+     * @Template
+     */
+    public function askTextAction()
+    {
+    	return array();
+    }
+    
+	/**
      * Leftbar controller action
      * @Template
      */

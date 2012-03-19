@@ -26,7 +26,7 @@ class Sharer
      * @param User $user
      * @param $entity
      */
-    public function share(User $user, $entity)
+    public function share(User $user, $entity, $content=null)
     {
     	$exp = explode('\\', get_class($entity));
     	$classname = end($exp);
@@ -35,6 +35,7 @@ class Sharer
 		$comment->setType(Comment::TYPE_SHARE);
 		$comment->setAuthor($user);
 		$comment->setTarget($user);
+		$comment->setContent($content);
 		$comment->setPrivacy(Privacy::FRIENDS_ONLY);
 		
 		$share = new Share();
