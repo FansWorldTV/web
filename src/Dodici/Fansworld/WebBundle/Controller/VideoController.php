@@ -130,7 +130,7 @@ class VideoController extends SiteController
     public function myVideosAction()
     {
         $user = $this->get('security.context')->getToken()->getUser();
-        $videos = $this->getRepository('Video')->findBy(array('author' => $user->getId()), array('createdAt' => 'desc'));
+        $videos = $this->getRepository('Video')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'desc'));
 
         return array(
             'videos' => $videos

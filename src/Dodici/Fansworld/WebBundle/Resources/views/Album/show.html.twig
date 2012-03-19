@@ -25,9 +25,11 @@
     <div class="user_album">
         <div class="mask">
             {% for photo in album.photos %}
-                <div class="pic">
-                    <a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">{% thumbnail photo.image, 'big' %}</a>
-                </div>
+	            {% if appstate.canview(photo) %}
+	                <div class="pic">
+	                    <a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">{% thumbnail photo.image, 'big' %}</a>
+	                </div>
+	            {% endif %}
             {% endfor %}
         </div>
     </div>

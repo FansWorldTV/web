@@ -1,0 +1,8 @@
+{% if type is not defined %}
+	{% set type = appstate.type(entity) %}
+{% endif %}
+{% if appstate.candelete(entity) %}
+	<a class="deletebutton{% if extraclasses is defined %} {{ extraclasses|join(' ') }}{% endif %}" data-id="{{ entity.id }}" data-type="{{ type }}">
+		Eliminar
+	</a> 
+{% endif %}

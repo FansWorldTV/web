@@ -232,6 +232,18 @@ var ajax = {
         });
     },
     
+    globalDeleteAction: function(type, id, callback, errorcallback){
+        ajax.setCallback(callback, errorcallback);
+        $.ajax({
+            url: 'http://' + location.host + Routing.generate( appLocale + '_delete_ajax'),
+            type: 'POST',
+            data: {
+                'id' : id,
+                'type' : type
+            }
+        });
+    },
+    
     getPhotosAction: function(userid, page, renderpin, callback, errorcallback){
         ajax.setCallback(callback, errorcallback);
         $.ajax({

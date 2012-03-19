@@ -35,16 +35,44 @@ class AlbumImageSetter
 		if ($entity instanceof Photo) {
 			$album = $entity->getAlbum();
 			if ($album) {
-				$photos = $album->getPhotos();
-				if ($photos) {
-					$album->setImage(end($photos)->getImage());
-				}
+				$this->setAlbumImage($album);
 				if ($album->getPhotoCount() > 1) {
 					$album->setPhotoCount($album->getPhotoCount()-1);
 				}
 				$em->persist($album);
 				$em->flush();
 			}
+		}
+    }
+    
+	public function postUpdate(LifecycleEventArgs $eventArgs)
+    {
+		$entity = $eventArgs->getEntity();
+		$em = $eventArgs->getEntityManager();
+		
+		if ($entity instanceof Photo && $entity->getActive() == false) {
+			$album = $entity->getAlbum();
+			if ($album) {
+				$this->setAlbumImage($album);
+				if ($album->getPhotoCount() > 1) {
+					$album->setPhotoCount($album->getPhotoCount()-1);
+				}
+				$em->persist($album);
+				$em->flush();
+			}
+		}
+    }
+    
+    private function setAlbumImage($album) {
+    	$photos = $album->getPhotos();
+		$lastphoto = null;
+		foreach ($photos as $ph) {
+			if ($ph->getActive()) {
+				$lastphoto = $ph;
+			}
+		}
+		if ($lastphoto) {
+			$album->setImage($lastphoto->getImage());
 		}
     }
     

@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Extensions;
 
+use Dodici\Fansworld\WebBundle\Entity\Photo;
+
 use Dodici\Fansworld\WebBundle\Entity\Comment;
 
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
@@ -52,6 +54,10 @@ class AppState
     	if (!($this->user instanceof User)) return false;
     	$user = $this->user;
     	
+    	if (method_exists($entity, 'getActive')) {
+    		if (!$entity->getActive()) return false;
+    	}
+    	
     	$rep = $this->getRepository('DodiciFansworldWebBundle:Liking');
     	$liking = $rep->byUserAndEntity($user, $entity);
     	
@@ -75,6 +81,10 @@ class AppState
     	if (!($this->user instanceof User)) return false;
     	$user = $this->user;
     	
+    	if (method_exists($entity, 'getActive')) {
+    		if (!$entity->getActive()) return false;
+    	}
+    	
     	$rep = $this->getRepository('DodiciFansworldWebBundle:Liking');
     	$liking = $rep->byUserAndEntity($user, $entity);
     	
@@ -89,6 +99,10 @@ class AppState
     	
     	if (method_exists($entity, 'getAuthor')) {
     		if ($user == $entity->getAuthor()) return false;
+    	}
+    	
+    	if (method_exists($entity, 'getActive')) {
+    		if (!$entity->getActive()) return false;
     	}
     	
     	if (method_exists($entity, 'getPrivacy')) {
@@ -111,6 +125,14 @@ class AppState
     	
     	if ($this->security_context->isGranted('ROLE_ADMIN')) return true;
     	
+    	if (method_exists($entity, 'getActive')) {
+    		if (!$entity->getActive()) return false;
+    	}
+    	if ($entity instanceof Photo) {
+    		$album = $entity->getAlbum();
+    		if ($album && !$album->getActive()) return false;
+    	}
+    	
     	if (method_exists($entity, 'getPrivacy')) {
     		if ($entity->getPrivacy() == \Dodici\Fansworld\WebBundle\Entity\Privacy::FRIENDS_ONLY) {
     			if (method_exists($entity, 'getAuthor')) {
@@ -124,10 +146,42 @@ class AppState
     	return true;
     }
     
+	public function canDelete($entity) 
+    {
+    	if (!($this->user instanceof User)) return false;
+    	$user = $this->user;
+    	
+    	if ($this->security_context->isGranted('ROLE_ADMIN')) return true;
+    	
+    	if (method_exists($entity, 'getAuthor')) {
+    		if ($user != $entity->getAuthor()) return false;
+    	} else {
+    		return false;
+    	}
+    	
+    	if ($entity instanceof Comment) {
+    		if ($entity->getComment()) {
+    			return true;
+    		} else {
+    			if ($entity->getTarget() == $user) {
+    				return true;
+    			}
+    		}
+    	} else {
+    		return true;
+    	}
+    	
+    	return false;
+    }
+    
 	public function canComment($entity) 
     {
     	if (!($this->user instanceof User)) return false;
     	$user = $this->user;
+    	
+    	if (method_exists($entity, 'getActive')) {
+    		if (!$entity->getActive()) return false;
+    	}
     	
     	if ($entity instanceof User) {
     		if ($user == $entity) return true;

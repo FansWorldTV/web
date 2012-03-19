@@ -315,6 +315,10 @@ services:
         class: Dodici\Fansworld\WebBundle\Listener\AlbumImageSetter
         tags:
             - { name: doctrine.event_listener, event: postRemove }
+    album.listener.update:
+        class: Dodici\Fansworld\WebBundle\Listener\AlbumImageSetter
+        tags:
+            - { name: doctrine.event_listener, event: postUpdate }
     notification.listener.mailer:
         class: Dodici\Fansworld\WebBundle\Listener\NotificationMailer
         tags:

@@ -33,7 +33,9 @@ class AlbumController extends SiteController
      */
     public function showAction($id)
     {
-        $album = $this->getRepository('Album')->find($id);
+        $album = $this->getRepository('Album')->findOneBy(array('id' => $id, 'active' => true));
+        
+        $this->securityCheck($album);
         
         return array(
             'album' => $album,
@@ -113,7 +115,7 @@ class AlbumController extends SiteController
         $page--;
         $offset = $page * self::LIMIT_ALBUMS;
 
-        $albums = $this->getRepository('Album')->findBy(array('author' => $userId), array('createdAt' => 'DESC'), self::LIMIT_ALBUMS, $offset);
+        $albums = $this->getRepository('Album')->findBy(array('author' => $userId, 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_ALBUMS, $offset);
 
         $response = array();
         foreach ($albums as $album) {

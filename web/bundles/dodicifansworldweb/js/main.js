@@ -74,6 +74,7 @@ var site = {
         site.likeButtons();
         site.shareButtons();
         site.globalCommentButtons();
+        site.globalDeleteButtons();
         site.expander();
         site.showCommentForm();
     },
@@ -385,6 +386,29 @@ var site = {
                     error(responsetext);
                 });
         	
+        });
+    },
+    
+    globalDeleteButtons: function(){
+        $('.deletebutton:not(.loading)').live('click',function(e){
+            e.preventDefault();
+            
+            var el = $(this);
+            if (confirm('¿Seguro desea eliminar?')) {
+	            var type = el.attr('data-type');
+	            var id = el.attr('data-id');
+	            el.addClass('loading');
+	        	
+	            ajax.globalDeleteAction(type, id,
+	                function(response){
+	                    el.removeClass('loading');
+	                    success(response.message);
+	                },
+	                function(responsetext){
+	                    el.removeClass('loading');
+	                    error(responsetext);
+	                });
+            }
         });
     },
     

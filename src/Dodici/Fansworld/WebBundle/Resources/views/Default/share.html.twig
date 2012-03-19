@@ -6,6 +6,9 @@
 	<g:plusone annotation="none"></g:plusone>
 	
 	<div class="internal_buttons">
+		{% if (type == 'photo' or type == 'video' or type == 'album') and entity.author == app.user %}
+			{% include 'DodiciFansworldWebBundle:Default:delete_button.html.twig' with {entity: entity, type: type} %}
+		{% endif %} 
 		{% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {entity: entity} %}
 		{% include 'DodiciFansworldWebBundle:Default:share_button.html.twig' with {entity: entity} %}
 	</div>
