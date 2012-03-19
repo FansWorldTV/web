@@ -58,8 +58,8 @@ class UserAdmin extends Admin
             ->end()
             ->with('Personal')
             	->add('sex','choice',array('label'=>'Sexo','required'=>false, 'choices' => array(User::SEX_MALE => 'Hombre', User::SEX_FEMALE => 'Mujer')))
-            	->add('birthday', 'date', array ('required' => false, 'attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',
-                	'format' => 'dd/MM/yyyy HH:mm'), array ())	
+            	->add('birthday', 'date', array ('required' => false, 'attr' => array('class' => 'datepicker'), 'widget' => 'single_text',
+                	'format' => 'dd/MM/yyyy'), array ())	
             	->add('address',null,array('label'=>'Dirección','required'=>false))
 				->add('firstname',null,array('label'=>'Nombre','required'=>false))
 				->add('lastname',null,array('label'=>'Apellido','required'=>false))

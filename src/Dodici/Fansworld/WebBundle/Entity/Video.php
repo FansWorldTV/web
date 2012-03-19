@@ -177,6 +177,9 @@ class Video implements Translatable
         if (null === $this->createdAt) {
             $this->setCreatedAt(new \DateTime());
         }
+    	if (null === $this->active) {
+            $this->setActive(true);
+        }
         if (null === $this->likeCount) {
         	$this->setLikeCount(0);
         }

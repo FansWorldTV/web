@@ -2,6 +2,16 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
+use Application\Sonata\MediaBundle\Entity\Media;
+
+use JMS\SecurityExtraBundle\Annotation\Secure;
+
+use Symfony\Component\Validator\Constraints\NotBlank;
+
+use Symfony\Component\Validator\Constraints\Collection;
+
+use Symfony\Component\Form\FormError;
+
 use Application\Sonata\UserBundle\Entity\User;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -178,6 +188,87 @@ class VideoController extends SiteController
         $response['addMore'] = $countAll > self::cantVideos ? true : false;
 
         return $response;
+    }
+    
+	/**
+     * @Route("/upload", name="video_upload")
+     * @Secure(roles="ROLE_USER")
+     * @Template
+     */
+    public function uploadAction()
+    {
+        $request = $this->getRequest();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getEntityManager();
+        $privacies = Privacy::getOptions();
+        
+        $video = null;
+
+        $defaultData = array();
+
+        $collectionConstraint = new Collection(array(
+                    'title' => array(new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
+                    'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
+                    'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
+                    'youtube' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250)))
+                ));
+
+        $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
+                ->add('title', 'text', array('required' => false, 'label' => 'Título'))
+                ->add('content', 'textarea', array('required' => false, 'label' => 'Descripción'))
+                ->add('youtube', 'text', array('required' => true, 'label' => 'URL Youtube'))
+                ->add('privacy', 'choice', array('required' => true, 'choices' => $privacies, 'label' => 'Privacidad'))
+                ->getForm();
+
+
+        if ($request->getMethod() == 'POST') {
+            try {
+                $form->bindRequest($request);
+                $data = $form->getData();
+                
+                if ($form->isValid()) {
+                    try {
+	                    $flutwig = $this->get('flumotiontwig');
+                    	$idyoutube = $flutwig->getYoutubeId($data['youtube']);
+                    	if (!$idyoutube) throw new \Exception('URL inválida');
+                    	
+                    	$metadata = $flutwig->getYoutubeMetadata($idyoutube);
+	                    if (!$metadata) throw new \Exception('No se encontró metadata youtube');
+	                    	                    
+	                    $image = null;
+	                    $imagecontent = @file_get_contents($metadata['thumbnail_url']);
+						if ($imagecontent) {
+							$tmpfile = tempnam('/tmp', 'IYT');
+							file_put_contents($tmpfile, $imagecontent);
+							$mediaManager = $this->get("sonata.media.manager.media");
+					        $image = new Media();
+					        $image->setBinaryContent($tmpfile);
+					        $image->setContext('default');
+					        $image->setProviderName('sonata.media.provider.image');
+					        $mediaManager->save($image); 
+						}
+                    	
+                    	$video = new Video();
+	                    $video->setAuthor($user);
+	                    $video->setTitle($data['title'] ?: $metadata['title']);
+	                    $video->setContent($data['content']);
+	                    $video->setYoutube($idyoutube);
+	                    $video->setImage($image);
+                    	$video->setPrivacy($data['privacy']);
+	                    $em->persist($video);
+	                    $em->flush();
+	                    $this->get('session')->setFlash('success', '¡Has subido un video con éxito!');
+                    } catch(\Exception $e) {
+                    	$form->addError(new FormError($e->getMessage()));
+                    	$video = null;
+                    }
+                }
+            } catch (\Exception $e) {
+                $form->addError(new FormError('Error subiendo video'));
+            }
+        }
+
+        return array('video' => $video, 'form' => $form->createView());
     }
 
 }

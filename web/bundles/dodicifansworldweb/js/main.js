@@ -35,7 +35,7 @@ var site = {
             innerWidth: 700, 
             innerHeight: 220
         });
-        $(".btn_upload_photo").colorbox({
+        $(".btn_upload_photo,.btn_upload_video").colorbox({
             iframe: true, 
             innerWidth: 700, 
             innerHeight: 455

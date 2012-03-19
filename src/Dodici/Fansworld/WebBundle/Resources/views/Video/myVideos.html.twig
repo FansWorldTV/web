@@ -1,8 +1,26 @@
-{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+{% set user = app.user %}
+{% extends "DodiciFansworldWebBundle:User:profile_base.html.twig" %}
 
 {% block title %}{{ parent() }} - Mis Videos{% endblock %}
 
-{% block content %}
+{% block profile_tabs %}
+	{% set active_tab = 'wall' %}
+	{{ parent() }}
+{% endblock %}
+
+{% block profile_head %}
+	{{ parent() }}
+	{% if (user == app.user) %}
+        <div class="update clearfix"> 
+            <span></span> 
+            <div class="upd_option clearfix"> 
+                <a class="btn_picture btn_upload_video" href="{{ path('video_upload') }}">cargar video</a> 
+            </div>    
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block inner_content %}
 <script type="text/javascript">
 	// TEMPORARY, FOR TESTING ONLY
 	$(function(){

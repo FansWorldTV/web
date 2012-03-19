@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Model;
 
+use Dodici\Fansworld\WebBundle\Entity\VideoCategory;
+
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
 
 use Dodici\Fansworld\WebBundle\Entity\Tag;
@@ -25,7 +27,7 @@ class VideoRepository extends CountBaseRepository
 	 * @param int $limit
 	 * @param int $offset
 	 */
-	public function searchText($searchterm=null, $user=null, $limit=null, $offset=null)
+	public function searchText($searchterm=null, $user=null, $limit=null, $offset=null, $category=null)
 	{
 		
 		$query = $this->_em->createQuery('
@@ -49,13 +51,24 @@ class VideoRepository extends CountBaseRepository
 	    		(SELECT COUNT(f.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = v.author AND f.target = :user) OR (f.target = v.author AND f.author = :user) AND f.active=true) >= 1
 	    	))
     	)
+    	AND
+    	(
+    		(:category IS NULL OR
+    			(
+    				(:category = false AND v.videocategory IS NULL)
+    				OR
+    				(:category <> false AND v.videocategory = :category)
+    			)
+    		)
+    	)
     	ORDER BY v.createdAt DESC
     	')
         	->setParameter('searchterm', $searchterm)
         	->setParameter('searchlike', '%'.$searchterm.'%')
         	->setParameter('everyone', Privacy::EVERYONE)
         	->setParameter('friendsonly', Privacy::FRIENDS_ONLY)
-        	->setParameter('user', ($user instanceof User) ? $user->getId() : null);
+        	->setParameter('user', ($user instanceof User) ? $user->getId() : null)
+        	->setParameter('category', ($category instanceof VideoCategory) ? $category->getId() : $category);
         
         if ($limit !== null)
             $query = $query->setMaxResults((int)$limit);
@@ -72,7 +85,7 @@ class VideoRepository extends CountBaseRepository
 	 * @param int $limit
 	 * @param int $offset
 	 */
-	public function byTag(Tag $tag, $user=null, $limit=null, $offset=null)
+	public function byTag(Tag $tag, $user=null, $limit=null, $offset=null, $category=null)
 	{
 		
 		$query = $this->_em->createQuery('
@@ -92,12 +105,23 @@ class VideoRepository extends CountBaseRepository
 	    		(SELECT COUNT(f.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = v.author AND f.target = :user) OR (f.target = v.author AND f.author = :user) AND f.active=true) >= 1
 	    	))
     	)
+    	AND
+    	(
+    		(:category IS NULL OR
+    			(
+    				(:category = false AND v.videocategory IS NULL)
+    				OR
+    				(:category <> false AND v.videocategory = :category)
+    			)
+    		)
+    	)
     	ORDER BY v.createdAt DESC
     	')
         	->setParameter('tag', $tag->getId())
         	->setParameter('everyone', Privacy::EVERYONE)
         	->setParameter('friendsonly', Privacy::FRIENDS_ONLY)
-        	->setParameter('user', ($user instanceof User) ? $user->getId() : null);
+        	->setParameter('user', ($user instanceof User) ? $user->getId() : null)
+        	->setParameter('category', ($category instanceof VideoCategory) ? $category->getId() : $category);
         
         if ($limit !== null)
             $query = $query->setMaxResults((int)$limit);
@@ -112,7 +136,7 @@ class VideoRepository extends CountBaseRepository
 	 * @param User $user
 	 * @param string $searchterm
 	 */
-	public function countSearchText($searchterm=null, $user=null)
+	public function countSearchText($searchterm=null, $user=null, $category=null)
 	{
 		
 		$query = $this->_em->createQuery('
@@ -135,12 +159,23 @@ class VideoRepository extends CountBaseRepository
 	    		(SELECT COUNT(f.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = v.author AND f.target = :user) OR (f.target = v.author AND f.author = :user) AND f.active=true) >= 1
 	    	))
     	)
+    	AND
+    	(
+    		(:category IS NULL OR
+    			(
+    				(:category = false AND v.videocategory IS NULL)
+    				OR
+    				(:category <> false AND v.videocategory = :category)
+    			)
+    		)
+    	)
     	')
         	->setParameter('searchterm', $searchterm)
         	->setParameter('searchlike', '%'.$searchterm.'%')
         	->setParameter('everyone', Privacy::EVERYONE)
         	->setParameter('friendsonly', Privacy::FRIENDS_ONLY)
-        	->setParameter('user', ($user instanceof User) ? $user->getId() : null);
+        	->setParameter('user', ($user instanceof User) ? $user->getId() : null)
+        	->setParameter('category', ($category instanceof VideoCategory) ? $category->getId() : $category);
         
         return $query->getSingleScalarResult();
 	}
@@ -150,7 +185,7 @@ class VideoRepository extends CountBaseRepository
 	 * @param User $user
 	 * @param Tag $tag
 	 */
-	public function countByTag(Tag $tag, $user=null)
+	public function countByTag(Tag $tag, $user=null, $category=null)
 	{
 		
 		$query = $this->_em->createQuery('
@@ -169,11 +204,22 @@ class VideoRepository extends CountBaseRepository
 	    		(SELECT COUNT(f.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = v.author AND f.target = :user) OR (f.target = v.author AND f.author = :user) AND f.active=true) >= 1
 	    	))
     	)
+    	AND
+    	(
+    		(:category IS NULL OR
+    			(
+    				(:category = false AND v.videocategory IS NULL)
+    				OR
+    				(:category <> false AND v.videocategory = :category)
+    			)
+    		)
+    	)
     	')
         	->setParameter('tag', $tag->getId())
         	->setParameter('everyone', Privacy::EVERYONE)
         	->setParameter('friendsonly', Privacy::FRIENDS_ONLY)
-        	->setParameter('user', ($user instanceof User) ? $user->getId() : null);
+        	->setParameter('user', ($user instanceof User) ? $user->getId() : null)
+        	->setParameter('category', ($category instanceof VideoCategory) ? $category->getId() : $category);
         
         return $query->getSingleScalarResult();
 	}
