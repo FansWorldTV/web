@@ -3,15 +3,10 @@
 namespace Dodici\Fansworld\WebBundle\Controller;
 
 use Application\Sonata\MediaBundle\Entity\Media;
-
 use JMS\SecurityExtraBundle\Annotation\Secure;
-
 use Symfony\Component\Validator\Constraints\NotBlank;
-
 use Symfony\Component\Validator\Constraints\Collection;
-
 use Symfony\Component\Form\FormError;
-
 use Application\Sonata\UserBundle\Entity\User;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -59,13 +54,17 @@ class VideoController extends SiteController
         $videos = $this->getRepository("Video")->findBy(array("active" => true), array("createdAt" => "DESC"), self::cantVideos);
         $countAll = $this->getRepository('Video')->countBy(array('active' => true));
         $addMore = $countAll > self::cantVideos ? true : false;
+        $categories = $this->getRepository('VideoCategory')->findBy(array());
+        $popularTags = $this->getRepository('Tag')->findBy(array(), array('useCount' => 'DESC'), 10);
 
         return array(
             'videos' => $videos,
-            'addMore' => $addMore
+            'addMore' => $addMore,
+            'categories' => $categories,
+            'popularTags' => $popularTags
         );
     }
-
+    
     /**
      * @Route("/ajax/search", name="video_ajaxsearch") 
      */
@@ -75,6 +74,7 @@ class VideoController extends SiteController
 
         $page = $request->get('page');
         $query = $request->get('query', false);
+        $categoryId = $request->get('category', null);
 
         $user = $this->get('security.context')->getToken()->getUser();
 
@@ -84,27 +84,35 @@ class VideoController extends SiteController
         $response = array();
 
         if (!$query) {
-            $videos = $this->getRepository('Video')->findBy(array('active' => true), array('createdAt' => 'DESC'), self::cantVideos, $offset);
-            $countAll = $this->getRepository('Video')->countBy(array('active' => true));
+            $videos = $this->getRepository('Video')->findBy(array('active' => true, 'videocategory' => $categoryId), array('createdAt' => 'DESC'), self::cantVideos, $offset);
+            $countAll = $this->getRepository('Video')->countBy(array('active' => true, 'videocategory' => $categoryId));
         } else {
-            $videos = $this->getRepository('Video')->searchText($query, $user, self::cantVideos, $offset);
-            $countAll = $this->getRepository('Video')->countSearchText($query, $user);
+            $videos = $this->getRepository('Video')->searchText($query, $user, self::cantVideos, $offset, $categoryId);
+            $countAll = $this->getRepository('Video')->countSearchText($query, $user, $categoryId);
         }
 
         $response['addMore'] = $countAll > (($page) * self::cantVideos) ? true : false;
         foreach ($videos as $video) {
             $tags = array();
             foreach ($video->getHastags() as $tag) {
-                array_push($tags, $tag->getTag()->getTitle());
+                array_push($tags, array(
+                    'title' => $tag->getTag()->getTitle(),
+                    'slug' => $tag->getTag()->getSlug()
+                        )
+                );
             }
 
             $response['videos'][] = array(
                 'id' => $video->getId(),
                 'title' => $video->getTitle(),
                 'image' => $this->getImageUrl($video->getImage()),
-                'author' => (string) $video->getAuthor(),
+                'author' => array(
+                    'name' => (string) $video->getAuthor(),
+                    'id' => $video->getAuthor()->getId()
+                ),
+                'date' => $video->getCreatedAt()->format('c'),
+                'content' => substr($video->getContent(), 0, 100),
                 'slug' => $video->getSlug(),
-                'videoplayerurl' => $this->get('flumotiontwig')->getVideoPlayerUrl($video),
                 'tags' => $tags
             );
         }
@@ -120,14 +128,23 @@ class VideoController extends SiteController
      */
     public function categoryAction($id)
     {
-        // TODO: everything
         $category = $this->getRepository('VideoCategory')->find($id);
         if (!$category)
             throw new HttpException(404, 'Categoría no encontrada');
-        $videos = $this->getRepository("Video")->findBy(array("active" => true, "videocategory" => $category->getId()), array("createdAt" => "DESC"));
+        $videos = $this->getRepository("Video")->findBy(array("active" => true, "videocategory" => $category->getId()), array("createdAt" => "DESC"), self::cantVideos);
+        $countAll = $this->getRepository('Video')->countBy(array('active' => true,"videocategory" => $category->getId()));
+        
+        $addMore = $countAll > self::cantVideos ? true : false;
+
+        $categories = $this->getRepository('VideoCategory')->findBy(array());
+        $popularTags = $this->getRepository('Tag')->findBy(array(), array('useCount' => 'DESC'), 10);
 
         return array(
-            'videos' => $videos
+            'videos' => $videos,
+            'addMore' => $addMore,
+            'categories' => $categories,
+            'popularTags' => $popularTags,
+            'selected' => $id
         );
     }
 
@@ -155,42 +172,53 @@ class VideoController extends SiteController
      */
     public function tagsAction($slug)
     {
-        $response = array('videos' => false);
+        $videos = $this->getRepository("Video")->findBy(array("active" => true), array("createdAt" => "DESC"), self::cantVideos);
+        $countAll = $this->getRepository('Video')->countBy(array('active' => true));
+        $addMore = $countAll > self::cantVideos ? true : false;
+        $categories = $this->getRepository('VideoCategory')->findBy(array());
+        $popularTags = $this->getRepository('Tag')->findBy(array(), array('useCount' => 'DESC'), 10);
+
+        $videos = array();
         if ($slug) {
             $user = $this->get('security.context')->getToken()->getUser();
-            $tags = $this->getRepository('Tag')->findBy(array('title' => $slug));
+            $tag = $this->getRepository('Tag')->findOneBy(array('title' => $slug));
 
-            foreach ($tags as $tag) {
-                $videos = $this->getRepository('Video')->byTag($tag, $user, self::cantVideos);
-                foreach ($videos as $video) {
-                    /**
-                    $tags = array();
-                    foreach ($video->getHastags() as $tag) {
-                        array_push($tags, $tag->getTag()->getTitle());
-                    }
-                    $response['videos'][] = array(
-                        'id' => $video->getId(),
-                        'title' => $video->getTitle(),
-                        'image' => $this->getImageUrl($video->getImage()),
-                        'author' => (string) $video->getAuthor(),
-                        'slug' => $video->getSlug(),
-                        'videoplayerurl' => $this->get('flumotiontwig')->getVideoPlayerUrl($video),
-                        'tags' => $tags
-                    );
-                     * 
-                     */
-                    $response['videos'][] = $video;
-                }
+            $videosRepo = $this->getRepository('Video')->byTag($tag, $user, self::cantVideos);
+            foreach ($videosRepo as $video) {
+                $videos[] = $video;
             }
-        }
-        
-        $countAll = $this->getRepository('Video')->countByTag($tag, $user);
-        $response['addMore'] = $countAll > self::cantVideos ? true : false;
 
-        return $response;
+            $id = $tag->getId();
+        }
+
+        $countAll = $this->getRepository('Video')->countByTag($tag, $user);
+        $addMore = $countAll > self::cantVideos ? true : false;
+
+        
+        return array(
+            'videos' => $videos,
+            'addMore' => $addMore,
+            'categories' => $categories,
+            'popularTags' => $popularTags,
+            'selected' => $id
+        );
     }
     
-	/**
+    /**
+     * search videos by tag
+     * 
+     * @Route("/ajax/search-by-tag", name="video_ajaxsearchbytag") 
+     */
+    public function ajaxSearchByTagAction()
+    {
+        $request = $this->getRequest();
+        $query = $request->get( 'query', false );
+        $tagId = $request->get( 'tag', false );
+        $page = (int) $request->get( 'page', 1);
+        
+    }
+
+    /**
      * @Route("/upload", name="video_upload")
      * @Secure(roles="ROLE_USER")
      * @Template
@@ -201,7 +229,7 @@ class VideoController extends SiteController
         $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getEntityManager();
         $privacies = Privacy::getOptions();
-        
+
         $video = null;
 
         $defaultData = array();
@@ -225,42 +253,44 @@ class VideoController extends SiteController
             try {
                 $form->bindRequest($request);
                 $data = $form->getData();
-                
+
                 if ($form->isValid()) {
                     try {
-	                    $flutwig = $this->get('flumotiontwig');
-                    	$idyoutube = $flutwig->getYoutubeId($data['youtube']);
-                    	if (!$idyoutube) throw new \Exception('URL inválida');
-                    	
-                    	$metadata = $flutwig->getYoutubeMetadata($idyoutube);
-	                    if (!$metadata) throw new \Exception('No se encontró metadata youtube');
-	                    	                    
-	                    $image = null;
-	                    $imagecontent = @file_get_contents($metadata['thumbnail_url']);
-						if ($imagecontent) {
-							$tmpfile = tempnam('/tmp', 'IYT');
-							file_put_contents($tmpfile, $imagecontent);
-							$mediaManager = $this->get("sonata.media.manager.media");
-					        $image = new Media();
-					        $image->setBinaryContent($tmpfile);
-					        $image->setContext('default');
-					        $image->setProviderName('sonata.media.provider.image');
-					        $mediaManager->save($image); 
-						}
-                    	
-                    	$video = new Video();
-	                    $video->setAuthor($user);
-	                    $video->setTitle($data['title'] ?: $metadata['title']);
-	                    $video->setContent($data['content']);
-	                    $video->setYoutube($idyoutube);
-	                    $video->setImage($image);
-                    	$video->setPrivacy($data['privacy']);
-	                    $em->persist($video);
-	                    $em->flush();
-	                    $this->get('session')->setFlash('success', '¡Has subido un video con éxito!');
-                    } catch(\Exception $e) {
-                    	$form->addError(new FormError($e->getMessage()));
-                    	$video = null;
+                        $flutwig = $this->get('flumotiontwig');
+                        $idyoutube = $flutwig->getYoutubeId($data['youtube']);
+                        if (!$idyoutube)
+                            throw new \Exception('URL inválida');
+
+                        $metadata = $flutwig->getYoutubeMetadata($idyoutube);
+                        if (!$metadata)
+                            throw new \Exception('No se encontró metadata youtube');
+
+                        $image = null;
+                        $imagecontent = @file_get_contents($metadata['thumbnail_url']);
+                        if ($imagecontent) {
+                            $tmpfile = tempnam('/tmp', 'IYT');
+                            file_put_contents($tmpfile, $imagecontent);
+                            $mediaManager = $this->get("sonata.media.manager.media");
+                            $image = new Media();
+                            $image->setBinaryContent($tmpfile);
+                            $image->setContext('default');
+                            $image->setProviderName('sonata.media.provider.image');
+                            $mediaManager->save($image);
+                        }
+
+                        $video = new Video();
+                        $video->setAuthor($user);
+                        $video->setTitle($data['title'] ? : $metadata['title']);
+                        $video->setContent($data['content']);
+                        $video->setYoutube($idyoutube);
+                        $video->setImage($image);
+                        $video->setPrivacy($data['privacy']);
+                        $em->persist($video);
+                        $em->flush();
+                        $this->get('session')->setFlash('success', '¡Has subido un video con éxito!');
+                    } catch (\Exception $e) {
+                        $form->addError(new FormError($e->getMessage()));
+                        $video = null;
                     }
                 }
             } catch (\Exception $e) {

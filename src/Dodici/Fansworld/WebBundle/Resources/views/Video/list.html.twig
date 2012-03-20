@@ -1,66 +1,99 @@
 {% extends "DodiciFansworldWebBundle::web.html.twig" %}
 
 {% block title %}{{ parent() }} - TV{% endblock %}
+{% block centercolumn %}
+    <div class="col_599 left margin">
+            <div class="cont clearfix withOutRightBar">
+                <h2>Búsqueda</h2>
+                <div class="user_list">
+                    <div class="search videos">
+                        <form id="formSearch" method="post" action="">
+                            <input type="text" name="query" id="query"/>
+                            <input type="button" value="Buscar" name="submit" id="search" class="hidden"/>
+                        </form>
+                    </div>
+                </div>
+                {% if videos|length>0 %}
+                    <ul class="videos">
+                            {% for video in videos %}
+                                    <li class="marginTop10">
+                                            <h2><a href="{{ path('video_show', {id: video.id, slug: video.slug}) }}">{{ video.title }}</a></h2>
+                                            {% if video.image %}
+                                                    <a href="{{ path('video_show', {id: video.id, slug: video.slug}) }}">
+                                                            {% thumbnail video.image, 'video' with {'class': 'wall'} %}
+                                                    </a>
+                                            {% endif %}
+                                            <span>
+                                                {{ video.content|truncate(100) }}
+                                            </span>
 
-{% block content %}
-    <script type="text/javascript">
-            // TEMPORARY, FOR TESTING ONLY
-            $(function(){
-                    $('.videoplayer').colorbox({iframe: true, innerWidth: 640, innerHeight: 480});
-            });
-    </script>
-    <div class="cont clearfix">
-        <h2>Búsqueda</h2>
-        <div class="user_list">
-            <div class="search">
-                <form id="formSearch" method="post" action="">
-                    <input type="text" name="query" id="query"/>
-                    <input type="button" value="Buscar" name="submit" id="search" class="hidden"/>
-                </form>
+                                            <div class="clearBoth marginTop10"></div>
+
+                                            <span>de <a href="{{ path('user_detail', {"id":video.author.id}) }}">{% thumbnail video.author.image, "small_square"%} {{ video.author }}</a> | </span>
+                                            <span class="timeago" data-time="{{ video.createdAt|date('c')}}">{{ video.createdAt|date('c')}}</span>
+
+                                            <div class="clearBoth marginTop10"></div>
+                                            {% if video.hasTags %}
+                                                <ul class="tags">
+                                                    {% for tag in video.hasTags %}
+                                                        <li><a href="{{ path('video_tags', {'slug': tag.tag.slug}) }}">{{ tag.tag.title }}</a></li>
+                                                    {% endfor %}
+                                                </ul>
+                                            <div class="clearBoth"></div>
+                                            {% endif %}
+                                    </li>
+                            {% endfor %}
+                    </ul>
+                {% else %}
+                    <h2>No se encontraron videos.</h2>
+                {% endif %}
+                {% if addMore %}
+                    <a href="#" id="addMore" class="loadmore videos marginTop10">Agregar Más</a>
+                {% endif %}
             </div>
-        </div>
-        {% if videos|length>0 %}
-            <ul class="videos">
-                    {% for video in videos %}
-                            <li>
-                                    <h2><a href="{{ path('video_show', {id: video.id, slug: video.slug}) }}">{{ video.title }}</a></h2>
-                                    {% if video.image %}
-                                            <a class="videoplayer" href="{{ flumotiontwig.videoplayerurl(video) }}">
-                                                    {% thumbnail video.image, 'video' with {'class': 'wall'} %}
-                                            </a>
-                                    {% endif %}
-                                    {% if video.hasTags %}
-                                        <div class="clearBoth"></div>
-                                        <span>Tags: </span>
-                                        <ul class="tags">
-                                            {% for tag in video.hasTags %}
-                                                <li><a href="{{ path('video_tags', {'slug': tag.tag.slug}) }}">{{ tag.tag.title }}</a></li>
-                                            {% endfor %}
-                                        </ul>
-                                    {% endif %}
-                            </li>
-                    {% endfor %}
-            </ul>
-        {% else %}
-            <h2>No se encontraron videos.</h2>
-        {% endif %}
-        {% if addMore %}
-            <a href="#" id="addMore" class="loadmore  videos">Agregar Más</a>
-        {% endif %}
     </div>
     <div id="templates" class="hidden">
         <ul class="videos hidden">
-            <li>
-                <h2><a href="">a</a></h2>
-                <a class="videoplayer" href=""><img src="a"/></a>
-                <div class="hasTags">
-                    <div class="clearBoth"></div>
-                    <span>Tags: </span>
+            <li class="marginTop10">
+                    <h2><a href="">title</a></h2>
+                    <a class="tmpVideo" href="videoShowIDSLUG">
+                            <img src="image" alt="image" title="image"/>
+                    </a>
+                    <span class="tmpContent">
+                        content
+                    </span>
+
+                    <div class="clearBoth marginTop10"></div>
+
+                    <span>de <a href="" class="user">author</a> | </span>
+                    <span class="timeago" data-time="createdAt">createdAt</span>
+
+                    <div class="clearBoth marginTop10"></div>
                     <ul class="tags">
                     </ul>
-                </div>
+                    <div class="clearBoth"></div>
             </li>
         </ul>
     </div>
 {% endblock %}
-{% block rightbar %}{% endblock %}
+
+{% block rightbar %}
+    <div class="col_169 floatLeft">
+        <h2>Categorías</h2>
+        <div class="navy">
+            <ul>
+                {% for category in categories %}
+                    <li><a href="{{ path('video_category', { id: category.id, slug: category.slug } ) }}">{{ category.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <h2>Tags Populares</h2>
+        <div class="navy">
+            <ul>
+                {% for tag in popularTags %}
+                    <li><a href="{{ path('video_tags', {'slug': tag.slug}) }}" >{{ tag.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

@@ -41,10 +41,6 @@ var site = {
             innerHeight: 455
         });
         
-        $('.timeago').each(function(){
-            $(this).html($.timeago($(this).attr('data-time')));
-        });
-        
         $.datepicker.setDefaults($.datepicker.regional[appLocale]);
         $('.datepicker').datepicker({
             dateFormat: 'dd/mm/yy',
@@ -64,6 +60,7 @@ var site = {
             stepMinute: 5
         });
     	
+        site.parseTimes();
         site.listenPendingRequests();
         site.listenNotifications();
         site.denyFriendRequest();
@@ -79,10 +76,16 @@ var site = {
         site.showCommentForm();
     },
     
+    parseTimes: function(){
+        $('.timeago').each(function(){
+            $(this).html($.timeago($(this).attr('data-time')));
+        });
+    },
+    
     showCommentForm: function(){
         $(".showCommentForm").click(function(){
-           $(this).parent().find('div.form').toggleClass('hidden');
-           return false;
+            $(this).parent().find('div.form').toggleClass('hidden');
+            return false;
         });
     },
     
@@ -342,7 +345,7 @@ var site = {
             var el = $(this);
             
             askText(function(text){
-            	var type = el.attr('data-type');
+                var type = el.attr('data-type');
                 var id = el.attr('data-id');
                 el.addClass('loading');
             	
@@ -398,33 +401,33 @@ var site = {
             
             var el = $(this);
             if (confirm('¿Seguro desea eliminar?')) {
-	            var type = el.attr('data-type');
-	            var id = el.attr('data-id');
-	            el.addClass('loading');
+                var type = el.attr('data-type');
+                var id = el.attr('data-id');
+                el.addClass('loading');
 	        	
-	            ajax.globalDeleteAction(type, id,
-	                function(response){
-	                    el.removeClass('loading');
-	                    success(response.message);
-	                },
-	                function(responsetext){
-	                    el.removeClass('loading');
-	                    error(responsetext);
-	                });
+                ajax.globalDeleteAction(type, id,
+                    function(response){
+                        el.removeClass('loading');
+                        success(response.message);
+                    },
+                    function(responsetext){
+                        el.removeClass('loading');
+                        error(responsetext);
+                    });
             }
         });
     },
     
     expander: function() {
-    	$('.actualizacion .comments .status_comment .status_comment_user p, ' +
-    	'.actualizacion .status p, ' +
-    	'.pincomments .comment .message')
-    	.not(':has(.read-more)')
-    	.expander({
-    	slicePoint: 100,
-    	expandText: '[+]',
-    	userCollapseText: '[-]'
-    	});
+        $('.actualizacion .comments .status_comment .status_comment_user p, ' +
+            '.actualizacion .status p, ' +
+            '.pincomments .comment .message')
+        .not(':has(.read-more)')
+        .expander({
+            slicePoint: 100,
+            expandText: '[+]',
+            userCollapseText: '[-]'
+        });
     }
 }
 
@@ -890,17 +893,56 @@ var videos = {
     init: function(){
         videos.search();
         videos.addMore();
+        videos.searchByCategory.search();
+        videos.searchByCategory.addMore();
+        videos.searchByTags.search();
+        videos.searchByTags.addMore();
+    },
+    
+    addSearchContent: function(template, video, videoUrl){
+        template.find('h2 a').attr('href', videoUrl);
+        template.find('h2 a').html(video.title);
+                        
+        if(video.image){
+            template.find('a.tmpVideo').attr('href', videoUrl);
+            template.find('a.tmpVideo img').attr('src', video.image).attr('alt', video.title).attr('title', video.title);
+        }
+                        
+        template.find('.tmpContent').html(video.content + "...");
+        template.find('span a.user').attr('href', Routing.generate(appLocale + '_user_detail', {
+            'id': video.author.id
+        }));
+        template.find('span a.user').html(video.author.name);
+        template.find('span.timeago').attr('data-time', video.date).html(video.date);
+
+        if(video.tags.length>0){
+            for(var j in video.tags){
+                var tag = video.tags[j];
+                template.find('.tags').append("<li><a href='" + Routing.generate(appLocale + '_video_tags', {
+                    'slug':tag.slug
+                }) + "'>" + tag.title + "</a></li>");
+            }
+        }else{
+            template.find('.hasTags').hide();
+        }
+                        
+        $("div.cont ul.videos").append(template);
+                        
+        site.parseTimes();
     },
     
     addMore: function(){
         $("#addMore.videos:not('.loading')").live('click', function(){
+            if(videos.pager==1){
+                videos.pager++;
+            }
+            
             var self = $(this);
             self.addClass('loading');
             
             ajax.videosSearchAction({
                 'page': videos.pager
             }, function(response){
-                console.log(response);
                 if(response){
                     if(!response.addMore){
                         self.remove();
@@ -908,24 +950,11 @@ var videos = {
                     for(var i in response.videos){
                         var video = response.videos[i];
                         var template = $("#templates ul.videos li").clone();
-                        template.find('h2 a').attr('href', Routing.generate(appLocale + '_video_show', {
+                        var videoUrl = Routing.generate(appLocale + '_video_show', {
                             'id':video.id, 
                             'slug': video.slug
-                        }));
-                        template.find('h2 a').html(video.title);
-                        template.find('a.videoplayer').attr('href', video.videoplayerurl);
-                        template.find('a.videoplayer img').attr('src', video.image);
-
-                        if(video.tags.length>0){
-                            for(var j in video.tags){
-                                var tag = video.tags[j];
-                                template.find('.tags').append("<li>" + tag + "</li>");
-                            }
-                        }else{
-                            template.find('.hasTags').hide();
-                        }
-                        
-                        $("div.cont ul.videos").append(template);
+                        });
+                        videos.addSearchContent(template, video, videoUrl);
                     }
                     videos.pager++;
                 }
@@ -938,7 +967,7 @@ var videos = {
     },
     
     search: function(){
-        $("#formSearch:not('.loading')").live('submit', function(){
+        $(".search.videos #formSearch:not('.loading')").live('submit', function(){
             $("div.cont ul.videos li").remove();
             var query = $("#query").val();
             var self = $(this);
@@ -951,29 +980,16 @@ var videos = {
             }, function(response){
                 if(response){
                     if(response.addMore){
-                        $("div.cont").append('<a href="#" id="addMore" class="loadmore  videos">Agregar Más</a>');
+                        $("div.cont").append('<a href="#" id="addMore" class="loadmore videos marginTop10">Agregar Más</a>');
                     }
                     for(var i in response.videos){
                         var video = response.videos[i];
                         var template = $("#templates ul.videos li").clone();
-                        template.find('h2 a').attr('href', Routing.generate(appLocale + '_video_show', {
+                        var videoUrl = Routing.generate(appLocale + '_video_show', {
                             'id':video.id, 
                             'slug': video.slug
-                        }));
-                        template.find('h2 a').html(video.title);
-                        template.find('a.videoplayer').attr('href', video.videoplayerurl);
-                        template.find('a.videoplayer img').attr('src', video.image);
-
-                        if(video.tags.length>0){
-                            for(var j in video.tags){
-                                var tag = video.tags[j];
-                                template.find('.tags').append("<li>" + tag + "</li>");
-                            }
-                        }else{
-                            template.find('.hasTags').hide();
-                        }
-                        
-                        $("div.cont ul.videos").append(template);
+                        });
+                        videos.addSearchContent(template, video, videoUrl);
                     }
                     videos.pager++;
                 }
@@ -982,7 +998,89 @@ var videos = {
             
             return false;
         });
+    },
+    
+    searchByCategory: {
+        addMore: function(){
+            $("#addMore.videosByCategory:not('.loading')").live('click', function(){
+                if(videos.pager==1){
+                    videos.pager++;
+                }
+                var self = $(this);
+                self.addClass('loading');
+            
+                ajax.videosSearchAction({
+                    'page': videos.pager,
+                    'category': $("div.navy ul li a.current").attr('categoryId')
+                }, function(response){
+                    if(response){
+                        if(!response.addMore){
+                            self.remove();
+                        }
+                        for(var i in response.videos){
+                            var video = response.videos[i];
+                            var template = $("#templates ul.videos li").clone();
+                            var videoUrl = Routing.generate(appLocale + '_video_show', {
+                                'id':video.id, 
+                                'slug': video.slug
+                            });
+                            videos.addSearchContent(template, video, videoUrl);
+                        }
+                        videos.pager++;
+                    }
+                    self.removeClass('loading');
+                }, function(text){
+                    error(text);
+                    self.removeClass('loading');
+                });
+                return false;
+            });
+        },
+        search: function(){
+            $(".search.videosByCategory #formSearch:not('.loading')").live('submit', function(){
+                $("div.cont ul.videos li").remove();
+                var query = $("#query").val();
+                var self = $(this);
+            
+                self.addClass('loading');
+                videos.pager = 1;
+                ajax.videosSearchAction({
+                    'query': query, 
+                    'page': 1,
+                    'category': $("div.navy ul li a.current").attr('categoryId')
+                }, function(response){
+                    if(response){
+                        if(response.addMore){
+                            $("div.cont").append('<a href="#" id="addMore" class="loadmore videos marginTop10">Agregar Más</a>');
+                        }
+                        for(var i in response.videos){
+                            var video = response.videos[i];
+                            var template = $("#templates ul.videos li").clone();
+                            var videoUrl = Routing.generate(appLocale + '_video_show', {
+                                'id':video.id, 
+                                'slug': video.slug
+                            });
+                            videos.addSearchContent(template, video, videoUrl);
+                        }
+                        videos.pager++;
+                    }
+                    self.removeClass('loading');
+                }, function(){});
+            
+                return false;
+            });
+        }
+    },
+    
+    searchByTags: {
+        addMore: function(){
+            
+        },
+        search: function(){
+            
+        }
     }
+    
 };
 
 var albums = {
@@ -1029,14 +1127,14 @@ function resizeColorbox(options) {
 }
 
 function askText(callback) {
-	$.colorbox({
-		href: Routing.generate(appLocale + '_popup_asktext'),
-		onComplete: function(){ 
-			$('#colorbox').find('.submit').click(function(){
-				var content = $('#colorbox').find('textarea').val();
-				$.colorbox.close();
-				callback(content);
-			}); 
-		}
-	});
+    $.colorbox({
+        href: Routing.generate(appLocale + '_popup_asktext'),
+        onComplete: function(){ 
+            $('#colorbox').find('.submit').click(function(){
+                var content = $('#colorbox').find('textarea').val();
+                $.colorbox.close();
+                callback(content);
+            }); 
+        }
+    });
 }

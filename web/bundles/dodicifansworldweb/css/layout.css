@@ -141,6 +141,24 @@ a.more:hover , h2:hover a.more:hover { background:#111; text-decoration:none;}
 .col_468 { width:468px; position:relative;}
 .col_788 { width:788px; position:relative;}
 .col_300 { width:300px; position:relative;}
+.col_599 { width:599px; position: relative; }
+.col_169 { width:169px; position: relative; }
+
+.col_169 div.navy { height: 35px; }
+.col_169 div.navy ul li a{
+    background: url(../images/ui/navy.gif) repeat-x top right;
+    line-height: 35px;
+    position: relative;
+    float: left;
+    padding: 0 20px;
+    text-transform: uppercase;
+    color: #848F93;
+    height: 35px;
+    width: 130px;
+    text-align: center;
+}
+
+.col_169 div.navy ul li a:hover , .col_169 div.navy ul li a.current  { background:url(../images/ui/navy.gif) repeat-x bottom right; color:#fff; text-decoration:none; text-shadow:0 1px 3px #000}
 
 .cont { margin-bottom:40px; clear:both}
 .col_160 .access { margin-bottom:40px; }
@@ -858,6 +876,13 @@ ul.currentinterests li { text-decoration: none; }
 ul.currentinterests li span {vertical-align: top;display: block;float: left;width: 150px;}
 ul.currentinterests li img { width: 25px; height: 25px; float: left; margin-right: 5px;}
 ul.currentinterests li a.deleteinterest { cursor: pointer; margin-left: 5px;height: 14px;width: 14px;display: block;float: right;background: url('../images/ui/closealert.png') top left no-repeat;}
+ul.currentinterests li a.deleteinterest:hover { background-position: bottom left;}
+
+
+.cont.withOutRightBar { width: 599px !important; }
+.cont.withOutRightBar div.user_list { width: 599px; }
+.cont.withOutRightBar div.user_list div.search{ width: 587px; }
+.cont.withOutRightBar ul.videos { width: 599px; }
 ul.currentinterests li a.deleteinterest:hover { background-position: bottom left;}
 
 /* Perfil idolo */
