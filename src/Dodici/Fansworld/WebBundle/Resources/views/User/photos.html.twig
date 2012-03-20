@@ -2,6 +2,13 @@
 
 {% block title %}{{ parent() }} - Fotos{% endblock %}
 
+{% block javascripts %}
+	{{ parent() }}
+	{% if appstate.idol(user) %}
+		<script src="{{ asset('bundles/dodicifansworldweb/js/idol_photos.js') }}" type="text/javascript"></script>
+	{% endif %}
+{% endblock %}
+
 {% block profile_tabs %}
 	{% set active_tab = 'photos' %}
 	{{ parent() }}
@@ -20,47 +27,57 @@
 {% endblock %}
 
 {% block inner_content %}
-    <div class="cont clearfix">
-        <div class="user_album">
-            <div class="mask">
-                {% for photo in photos %}
-                    <div class="pic"><a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">{% thumbnail photo.image, 'small' %}</a></div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    {% if viewMorePhotos %}
-        <a class="loadmore" href="{{ path('user_listphotos', {'id': user.id}) }}">ver todas las imágenes</a>
-    {% endif %}
-    
-    <div class="cont clearfix">
-        <h2>Álbumes de usuario</h2>
-        <div class="album_covers">
-            <div class="mask"> 
-                {% for album in albums %}
-                    <div class="album_cover"> 
-                        <a href="{{ path('album_show', { 'id': album.id, 'slug': album.slug } ) }}">{% thumbnail album.image, 'medium' %}</a>
-                        <a href="{{ path('album_show', { 'id': album.id, 'slug': album.slug } ) }}">{{ album.title }}</a>
-                        <span>{{ album.photoCount }} imagenes - <a href="{{ path('album_show', { 'id': album.id, 'slug': album.slug } ) }}">{{ album.commentCount }} comentarios</a></span>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    {% if viewMoreAlbums %}
-        <a class="loadmore albums" href="#1">ver más</a> 
-    {% endif %}
-<input type="hidden" value="{{user.id}}" id="userid"/>
-<div id="templates" class="hidden">
-    <div class="album_cover"> 
-        <a class="image" href=""><img src=""></a>
-        <a class="title" href=""></a>
-        <span></span>
-    </div>
-    <div class="pic">
-        <a href="photo.php">
-            <img src="" alt="picture" />
-        </a>
-    </div>
-</div>
+	{% if appstate.idol(user) %}
+	<div class="cont clearfix">
+		<input type="hidden" id="user_id" value="{{user.id}}" />
+		<div class="masonbricks photomason">
+	    	
+	    </div>
+	    <a href="#" class="loadmore pictures">Ver más</a>
+	</div>
+	{% else %}
+	    <div class="cont clearfix">
+	        <div class="user_album">
+	            <div class="mask">
+	                {% for photo in photos %}
+	                    <div class="pic"><a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">{% thumbnail photo.image, 'small' %}</a></div>
+	                {% endfor %}
+	            </div>
+	        </div>
+	    </div>
+	    {% if viewMorePhotos %}
+	        <a class="loadmore" href="{{ path('user_listphotos', {'id': user.id}) }}">ver todas las imágenes</a>
+	    {% endif %}
+	    
+	    <div class="cont clearfix">
+	        <h2>Álbumes de usuario</h2>
+	        <div class="album_covers">
+	            <div class="mask"> 
+	                {% for album in albums %}
+	                    <div class="album_cover"> 
+	                        <a href="{{ path('album_show', { 'id': album.id, 'slug': album.slug } ) }}">{% thumbnail album.image, 'medium' %}</a>
+	                        <a href="{{ path('album_show', { 'id': album.id, 'slug': album.slug } ) }}">{{ album.title }}</a>
+	                        <span>{{ album.photoCount }} imagenes - <a href="{{ path('album_show', { 'id': album.id, 'slug': album.slug } ) }}">{{ album.commentCount }} comentarios</a></span>
+	                    </div>
+	                {% endfor %}
+	            </div>
+	        </div>
+	    </div>
+	    {% if viewMoreAlbums %}
+	        <a class="loadmore albums" href="#1">ver más</a> 
+	    {% endif %}
+	<input type="hidden" value="{{user.id}}" id="userid"/>
+	<div id="templates" class="hidden">
+	    <div class="album_cover"> 
+	        <a class="image" href=""><img src=""></a>
+	        <a class="title" href=""></a>
+	        <span></span>
+	    </div>
+	    <div class="pic">
+	        <a href="photo.php">
+	            <img src="" alt="picture" />
+	        </a>
+	    </div>
+	</div>
+	{% endif %}
 {% endblock %}

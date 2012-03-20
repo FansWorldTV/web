@@ -2,50 +2,125 @@
 
 {% block title %}{{ parent() }} - {{ user }}{% endblock %}
 
+{% block javascripts %}
+	{{ parent() }}
+	{% if appstate.idol(user) %}
+		<script src="{{ asset('bundles/dodicifansworldweb/js/idol_profile.js') }}" type="text/javascript"></script>
+	{% endif %}
+{% endblock %}
+
 {% block content %}
-                <div class="user_profile_head clearfix">
+                <div class="{% if appstate.idol(user) %}idol{% else %}user{% endif %}_profile_head profile_head clearfix">
                 	{% block profile_head %}
-                    <div class="avatar">
-                    	{% if user == app.user %}
-                        <a class="change_image" href="{{ path('user_change_image') }}">Cambiar</a>
-                        {% endif %}
-                        {% if user.image %}
-                        	{% thumbnail user.image, 'small_square' %}
-                        {% else %}
-                        	<img src="{{ asset('bundles/dodicifansworldweb/images/user_pic.jpg' )}}" />
-                        {% endif %}
-                    </div>
+                	{% block avatar_container %}
+                		{% if not appstate.idol(user) %}
+		                    <div class="avatar">
+		                    	{% block avatar_content %}
+		                    		{% if appstate.idol(user) %}
+		                    			{% set avatar_format = 'medium' %}
+		                    		{% else %}
+		                    			{% set avatar_format = 'small_square' %}
+		                    		{% endif %}
+			                    	{% if user == app.user %}
+			                        <a class="change_image" href="{{ path('user_change_image') }}">Cambiar</a>
+			                        {% endif %}
+			                        {% if user.image %}
+			                        	{% thumbnail user.image, avatar_format %}
+			                        {% else %}
+			                        	<img src="{{ asset('bundles/dodicifansworldweb/images/user_pic.jpg' )}}" />
+			                        {% endif %}
+		                        {% endblock %}
+		                    </div>
+	                    {% else %}
+		                    <div class="idol_specs greybox clearfix">
+								<div class="avatar">
+									{{ block('avatar_content') }}
+									<img class="idol-star" src="{{ asset('bundles/dodicifansworldweb/images/ui/idol-star.png' )}}" alt="idol" />
+								</div>
+								<div class="specs greybox">
+									<div class="idolname clearfix">
+										<h1>{{ user }}</h1>
+										{% if (app.user != user) %}
+											{% set fship = appstate.idolshipwith(user) %}
+											{% if fship %}
+												<a class="btn btn_idolship remove" href="#" data-iduser="{{user.id}}">Dejar de ser Fan</a>
+											{% else %}
+												<a class="btn btn_idolship add" href="#" data-iduser="{{user.id}}">Ser Fan</a>
+											{% endif %}
+										{% endif %}
+									</div>
+									<ul>
+										{% if user.country or user.city %}
+											{% if user.city and user.country %}{% set titles = [user.city,user.country] %}
+											{% elseif user.city %}{% set titles = [user.city] %}
+											{% else %}{% set titles = [user.country] %}{% endif %}
+											<li>{{titles|join(', ')}}</li>
+										{% endif %}
+										{% set currentcareer = appstate.currentcareer(user) %}
+										{% if currentcareer %}
+										<li>
+											{% if currentcareer.interest.image %}
+												{% thumbnail currentcareer.interest.image, 'avatar' with {class: 'interest-icon'} %}
+											{% endif %}
+											<span class="interest-text">
+												{{currentcareer.interest}}
+												{% if currentcareer.position %}
+													- {{currentcareer.position}}
+												{% endif %}
+												{% if currentcareer.datefrom %}
+													desde {{currentcareer.datefrom|date('d/m/Y')}}
+												{% endif %}
+												{% if currentcareer.dateto %}
+													hasta {{currentcareer.dateto|date('d/m/Y')}}
+												{% endif %}
+											</span>
+										</li>
+										{% endif %}
+										{% if user.birthday %}
+											<li>Fecha de Nacimiento: {{user.birthday|date('d/m/Y')}}</li>
+										{% endif %}
+									</ul>
+								</div>
+							</div>
+	                    {% endif %}
+                    {% endblock %}
                     <div class="user_info"> 
                     {% block profile_info %}
-                            {% set fship = appstate.friendshipwith(user) %}
-	                    {% if appstate.canfriend(user) and fship is null %}
-                                <div class="addFriend" targetId="{{ user.id }}">
-                                    <a class="btn btn_friendship add" href="#" alt="Agregar">Agregar</a>
-                                    {% if friendgroups|length > 0 %}
-                                        <ul class="friendgroupsList">
-                                            {% for friendgroup in friendgroups %}
-                                                <li id="{{ friendgroup.id }}">
-                                                    <input type="checkbox" id="friendgroup[{{ friendgroup.id }}]" name="friendgroup[{{ friendgroup.id }}]" value="{{ friendgroup.id }}"/>
-                                                    <label for="friendgroup[{{ friendgroup.id }}]">{{ friendgroup.title }}</label>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    {% endif %}
-                                </div>
-	                    {% else %}
-	                    	{% if fship %}
-	                    		{% if fship.active %}
-	                    			<a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Dejar de ser Fan</a>
-	                    		{% else %}
-	                    			<a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Solicitud Pendiente</a>
-	                    		{% endif %}
-	                    	{% endif %}
-	                    {% endif %}
                     
-                        <h1>
-                            {{ user }}
-                            {% thumbnail user.level.image, 'small_square' with {class:'userAvatar', title: user.level.title, alt: user.level.title} %}
-                        </h1>
+                    	{% if appstate.idol(user) %}
+                    		
+                    	{% else %}
+	                        {% set fship = appstate.friendshipwith(user) %}
+		                    {% if appstate.canfriend(user) and fship is null %}
+	                                <div class="addFriend" targetId="{{ user.id }}">
+	                                    <a class="btn btn_friendship add" href="#" alt="Agregar">Agregar</a>
+	                                    {% if friendgroups|length > 0 %}
+	                                        <ul class="friendgroupsList">
+	                                            {% for friendgroup in friendgroups %}
+	                                                <li id="{{ friendgroup.id }}">
+	                                                    <input type="checkbox" id="friendgroup[{{ friendgroup.id }}]" name="friendgroup[{{ friendgroup.id }}]" value="{{ friendgroup.id }}"/>
+	                                                    <label for="friendgroup[{{ friendgroup.id }}]">{{ friendgroup.title }}</label>
+	                                                </li>
+	                                            {% endfor %}
+	                                        </ul>
+	                                    {% endif %}
+	                                </div>
+		                    {% else %}
+		                    	{% if fship %}
+		                    		{% if fship.active %}
+		                    			<a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Dejar de ser Fan</a>
+		                    		{% else %}
+		                    			<a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Solicitud Pendiente</a>
+		                    		{% endif %}
+		                    	{% endif %}
+		                    {% endif %}
+	                    
+	                        <h1>
+	                            {{ user }}
+	                            {% thumbnail user.level.image, 'small_square' with {class:'userAvatar', title: user.level.title, alt: user.level.title} %}
+	                        </h1>
+                        {% endif %}
+                        
                         {% block profile_tabs %}
                         {% if active_tab is not defined %}
                         	{% set active_tab = '' %}
@@ -71,3 +146,12 @@
 	                </div>
                 {% endblock %}
 {% endblock %}
+
+{% block centercolumn %}
+	{% if not appstate.idol(user) %}{{ parent() }}{% else %}
+	<div class="col_788 left">
+		{{ block('content') }}
+	</div>
+	{% endif %}
+{% endblock %}
+{% block rightbar %}{% if not appstate.idol(user) %}{{ parent() }}{% else %}{% endif %}{% endblock %}

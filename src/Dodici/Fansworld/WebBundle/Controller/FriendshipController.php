@@ -26,25 +26,30 @@ class FriendshipController extends SiteController
      */
     public function ajaxAddFriendAction()
     {
-        $response = null;
-        $request = $this->getRequest();
-        $author = $this->get('security.context')->getToken()->getUser();
+    	try {
+	    	$response = null;
+	        $request = $this->getRequest();
+	        $author = $this->get('security.context')->getToken()->getUser();
+	
+	        if (!($author instanceof User)) throw new \Exception('Debe iniciar sesión');
+	        
+	        $targetId = $request->get('target');
+	        $friendgroups = $request->get('friendgroups', array());
+	
+	        $target = $this->getRepository('User')->find($targetId);
+	        
+	        if (!$this->get('appstate')->canFriend($target)) throw new \Exception('No puede agregar a esta persona');
+	
+	        $friendship = new Friendship;
+	        $friendship->setAuthor($author);
+	        $friendship->setTarget($target);
+	
+	        foreach ($friendgroups as $id) {
+	            $friendgroup = $this->getRepository('FriendGroup')->find($id);
+	            $friendship->addFriendGroup($friendgroup);
+	        }
 
-        $targetId = $request->get('target');
-        $friendgroups = $request->get('friendgroups', array());
-
-        $target = $this->getRepository('User')->find($targetId);
-
-        $friendship = new Friendship;
-        $friendship->setAuthor($author);
-        $friendship->setTarget($target);
-
-        foreach ($friendgroups as $id) {
-            $friendgroup = $this->getRepository('FriendGroup')->find($id);
-            $friendship->addFriendGroup($friendgroup);
-        }
-
-        try {
+        
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($friendship);
             $em->flush();
@@ -52,7 +57,7 @@ class FriendshipController extends SiteController
                 'error' => false,
                 'friendship' => $friendship->getId()
             );
-        } catch (Exception $exc) {
+        } catch (\Exception $exc) {
             $response = array(
                 'error' => $exc->getMessage()
             );
@@ -81,7 +86,7 @@ class FriendshipController extends SiteController
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->remove($friendship);
                 $em->flush();
-            } catch (Exception $exc) {
+            } catch (\Exception $exc) {
                 $response['error'] = $exc->getMessage();
             }
         } else {

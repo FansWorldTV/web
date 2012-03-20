@@ -117,8 +117,8 @@ h4{font-family: 'Ubuntu', sans-serif; font-weight:500; color:#0093c9; font-size:
 
 hr { display:block; height:2px; background:#f0f0f0; border:none; clear:both; margin:20px 0;}
 
-a.btn { background:url(../images/ui/btn.gif) repeat-x; padding:5px 10px; border:solid 1px #008abb; border-radius:3px; color:#fff; margin:0 5px; text-shadow:0 -1px 0 #00658b }
-a.btn:hover { background:url(../images/ui/btn_h.gif) repeat-x; text-decoration:none;}
+a.btn { background:url(../images/ui/btn.gif) repeat-x; padding:5px 10px; border:solid 1px #008abb; border-radius:3px; color:#fff; margin:0 5px; text-shadow:0 -1px 0 #00658b; background-color: #008ABB; }
+a.btn:hover { background:url(../images/ui/btn_h.gif) repeat-x; text-decoration:none; background-color: #009ACB;}
 
 a.btn_action, input.btn_action { background:url(../images/ui/btn_action.gif) repeat-x; padding:9px 17px; border:solid 1px #008abb; border-radius:3px; color:#fff; text-shadow:0 -1px 0 #00658b; font-size:13px; float: right }
 a.btn_action:hover, input.btn_action:hover { background:url(../images/ui/btn_action_h.gif) repeat-x; text-decoration:none;}
@@ -338,15 +338,15 @@ a.btn_delete_post { display:none;}
 
 .user_profile_head { display:block; margin-bottom:20px; padding-bottom:10px;}
 .user_profile_head .avatar { width:94px; height:94px; position:relative; float:left; margin-right:30px;}
-.user_profile_head .avatar a { display:none}
-.user_profile_head .avatar:hover a { position:absolute; float:left; display:block; padding:3px 8px 4px 8px; background:url(../images/ui/avatar_change.png); color:#fff; margin:2px 0 0 2px}
+.profile_head .avatar a.change_image { display:none}
+.profile_head .avatar:hover a.change_image { position:absolute; float:left; display:block; padding:3px 8px 4px 8px; background:url(../images/ui/avatar_change.png); color:#fff; margin:2px 0 0 2px}
 .user_profile_head .avatar img { border:solid 2px #fff; box-shadow:0 1px 1px #999; width:90px; height:90px;}
 .user_profile_head .user_info { position:relative; float:left; width:340px;}
 .user_profile_head .user_info h1 { font-size:22px; color:#000; margin-bottom:37px; font-weight:bold;}
 .user_profile_head .user_info a.btn { float:right; margin:3px -2px 0 0}
 
 .user_profile_head .user_info .tabs { display:block;border-top:none; background:url(../images/ui/tab.gif) repeat-x bottom; }
-.user_profile_head .user_info .tabs a.btn_edit_info { background:url(../images/ui/edit_profile.png) no-repeat top; width:17px; height:17px; display:block; position:absolute; float:left; text-indent:-9999px; margin:8px 0 0 310px;}
+.user_info .tabs a.btn_edit_info { background:url(../images/ui/edit_profile.png) no-repeat top; width:17px; height:17px; display:block; position:absolute; float:left; text-indent:-9999px; margin:8px 0 0 310px;}
 .user_profile_head .user_info .tabs a.btn_edit_info:hover { background-position:bottom;}
 .user_profile_head .user_info .tabs ul li { display:inline; }
 .user_profile_head .user_info .tabs ul li a { padding:10px 10px; border-right:solid 1px #f0f0f0; display:block; position:relative; float:left; font-size:12px; color:#888; font-weight:bold; font-family:Arial, Helvetica, sans-serif}
@@ -859,3 +859,18 @@ ul.currentinterests li span {vertical-align: top;display: block;float: left;widt
 ul.currentinterests li img { width: 25px; height: 25px; float: left; margin-right: 5px;}
 ul.currentinterests li a.deleteinterest { cursor: pointer; margin-left: 5px;height: 14px;width: 14px;display: block;float: right;background: url('../images/ui/closealert.png') top left no-repeat;}
 ul.currentinterests li a.deleteinterest:hover { background-position: bottom left;}
+
+/* Perfil idolo */
+.idol_profile_head .avatar { float: left; margin-right: 10px;}
+.idol_profile_head .avatar img { border:solid 2px #fff; box-shadow:0 1px 1px #999;}
+.idol_profile_head .avatar .idol-star { position: absolute;border: 0;box-shadow: none;top: 2px;left: 240px;}
+.idol_profile_head .specs { float: left; border: 1px solid #ccc; padding: 10px; width: 480px; border: 1px solid #ccc; }
+.idol_profile_head .specs h1 { font-size: 32px; float: left; margin-bottom: 0;}
+.idol_profile_head .specs .idolname .btn { float: right; margin: 0; }
+.idol_profile_head .specs ul { margin-top: 15px;}
+.idol_profile_head .specs ul li { font-size: 14px; margin-top: 5px;padding-top: 5px;border-top: 1px solid #E0E0E0;}
+.idol_profile_head .specs ul li .interest-icon { width: 32px; height: 32px; }
+.idol_profile_head .specs ul li .interest-text { vertical-align: top; }
+.idol_profile_head .idol_specs { margin-bottom: 10px; border: 1px solid #ccc; padding: 10px; }
+.idol_profile_head .user_info .tabs a.btn_edit_info { float: right; margin: 12px 10px 0 0px; position: initial;}
+.idol_profile_head .update { margin-bottom: 10px; }

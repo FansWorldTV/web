@@ -1,0 +1,72 @@
+<?php
+
+namespace Dodici\Fansworld\WebBundle\Controller;
+
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Application\Sonata\MediaBundle\Entity\Media;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Application\Sonata\UserBundle\Entity\User;
+use Dodici\Fansworld\WebBundle\Entity\Idolship;
+
+/**
+ *  Idolship controller
+ *  @Route("/idolship")
+ */
+class IdolshipController extends SiteController
+{
+
+    /**
+     * Toggle idolship
+     * 
+     *  @Route("/ajax/toggle", name="idolship_ajaxtoggle")
+     */
+    public function ajaxToggleAction()
+    {
+    	try {
+	    	$request = $this->getRequest();
+	    	$ididol = intval($request->get('iduser'));
+	    	$user = $this->get('security.context')->getToken()->getUser();
+	    	
+	    	if (!$user instanceof User) throw new \Exception('Debe iniciar sesión');
+	    	
+	    	$idol = $this->getRepository('User')->find($ididol);
+	    	if (!$idol) throw new \Exception('Idolo no encontrado');
+	    	if ($idol->getType() != User::TYPE_IDOL) throw new \Exception('Usuario no es ídolo');;
+	    	
+	        $translator = $this->get('translator');
+	        $appstate = $this->get('appstate');
+	        
+	        $idolship = $appstate->idolshipWith($idol);
+	        $em = $this->getDoctrine()->getEntityManager();
+	        if ($idolship) {
+	        	$em->remove($idolship);
+	        	$em->flush();
+	        	
+	        	$message = $translator->trans('You are no longer a fan of') . ' "' . (string)$idol.'"';
+	        	$buttontext = $translator->trans('add_idol');
+	        } else {
+	        	$idolship = new Idolship();
+	        	$idolship->setAuthor($user);
+	        	$idolship->setTarget($idol);
+	        	$em->persist($idolship);
+	        	$em->flush();
+	        	
+	        	$message = $translator->trans('You are now a fan of') . ' "' . (string)$idol.'"';
+	        	$buttontext = $translator->trans('remove_idol');
+	        }
+	
+	        $response = new Response(json_encode(array(
+	        	'buttontext' => $buttontext,
+	        	'message' => $message
+	        )));
+	        $response->headers->set('Content-Type', 'application/json');
+	        return $response;
+        } catch (\Exception $e) {
+        	return new Response($e->getMessage(), 400);
+        }
+    }
+
+}

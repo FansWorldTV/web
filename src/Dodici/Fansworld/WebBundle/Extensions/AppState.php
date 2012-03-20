@@ -221,6 +221,24 @@ class AppState
 	    
     }
     
+    public function idolshipWith(User $target) 
+    {
+    	if (!($this->user instanceof User)) return false;
+    	$user = $this->user;
+    	
+    	if ($user == $target) return false;
+    	
+    	if ($target->getType() != User::TYPE_IDOL) return false;
+    	
+    	$frep = $this->getRepository('DodiciFansworldWebBundle:Idolship');
+	    return $frep->findOneBy(array('author' => $user->getId(), 'target' => $target->getId()));    
+    }
+    
+    public function isIdol(User $user)
+    {
+    	return $user->getType() == User::TYPE_IDOL;
+    }
+    
     public function getType($entity)
     {
     	$exp = explode('\\', get_class($entity));
@@ -248,6 +266,14 @@ class AppState
     public function getCities($country=null)
     {
     	return $this->getRepository('DodiciFansworldWebBundle:City')->formChoices($country);
+    }
+    
+	public function currentCareer(User $user) 
+    {
+    	$rep = $this->getRepository('DodiciFansworldWebBundle:HasInterest');
+	    $return = $rep->findBy(array('career' => true, 'author' => $user->getId()), array('dateFrom' => 'DESC'), 1);
+	    if ($return) return $return[0];
+	    return null;
     }
     
     private function getRepository($repname)
