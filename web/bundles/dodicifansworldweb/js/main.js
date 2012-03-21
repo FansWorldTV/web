@@ -422,21 +422,21 @@ var site = {
             
             var el = $(this);
             if (confirm('¿Seguro desea eliminar el comentario?')) {
-	            var type = 'comment';
-	            var id = el.attr('data-id');
-	            el.addClass('loading');
+                var type = 'comment';
+                var id = el.attr('data-id');
+                el.addClass('loading');
 	        	
-	            ajax.globalDeleteAction(type, id,
-	                function(response){
-	                    success(response.message);
-	                    el.parent().slideUp('fast',function(){
-	                    	$(this).remove();
-	                    });
-	                },
-	                function(responsetext){
-	                    el.removeClass('loading');
-	                    error(responsetext);
-	                });
+                ajax.globalDeleteAction(type, id,
+                    function(response){
+                        success(response.message);
+                        el.parent().slideUp('fast',function(){
+                            $(this).remove();
+                        });
+                    },
+                    function(responsetext){
+                        el.removeClass('loading');
+                        error(responsetext);
+                    });
             }
         });
     },
@@ -919,6 +919,7 @@ var videos = {
         videos.searchByCategory.search();
         videos.searchByCategory.addMore();
         videos.searchByTags.addMore();
+        videos.searchMyVideos.addMore();
     },
     
     addSearchContent: function(template, video, videoUrl){
@@ -1105,6 +1106,42 @@ var videos = {
                 self.addClass('loading');
             
                 ajax.searchByTagAction(tagId, videos.pager, function(response){
+                    if(response){
+                        if(!response.addMore){
+                            self.remove();
+                        }
+                        for(var i in response.videos){
+                            var video = response.videos[i];
+                            var template = $("#templates ul.videos li").clone();
+                            var videoUrl = Routing.generate(appLocale + '_video_show', {
+                                'id':video.id, 
+                                'slug': video.slug
+                            });
+                            videos.addSearchContent(template, video, videoUrl);
+                        }
+                        videos.pager++;
+                    }
+                    self.removeClass('loading');
+                }, function(text){
+                    error(text);
+                    self.removeClass('loading');
+                });
+                return false;
+            });
+        }
+    },
+    
+    searchMyVideos: {
+        addMore: function(){
+            $("#addMore.myVideos:not('.loading')").live('click', function(){
+                if(videos.pager==1){
+                    videos.pager++;
+                }
+                var self = $(this);
+                var userid = $("#userId").val();
+                self.addClass('loading');
+            
+                ajax.searchMyVideos(userid, videos.pager, function(response){
                     if(response){
                         if(!response.addMore){
                             self.remove();

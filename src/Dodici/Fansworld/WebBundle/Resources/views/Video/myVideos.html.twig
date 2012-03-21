@@ -21,26 +21,67 @@
 {% endblock %}
 
 {% block inner_content %}
-<script type="text/javascript">
-	// TEMPORARY, FOR TESTING ONLY
-	$(function(){
-		$('.videoplayer').colorbox({iframe: true, innerWidth: 640, innerHeight: 480});
-	});
-</script>
-	{% if videos|length>0 %}
-        <ul class="videos">
-                {% for video in videos %}
-                        <li>
-                                <h2><a href="{{ path('video_show', {id: video.id, slug: video.slug}) }}">{{ video.title }}</a></h2>
-                                {% if video.image %}
-                                        <a class="videoplayer" href="{{ flumotiontwig.videoplayerurl(video) }}">
-                                                {% thumbnail video.image, 'video' with {'class': 'wall'} %}
-                                        </a>
-                                {% endif %}
-                        </li>
-                {% endfor %}
+    <div class="cont">
+        {% if videos|length>0 %}
+            <ul class="videos">
+                    {% for video in videos %}
+                            <li class="marginTop10">
+                                    <h2><a href="{{ path('video_show', {id: video.id, slug: video.slug}) }}">{{ video.title }}</a></h2>
+                                    {% if video.image %}
+                                            <a href="{{ path('video_show', {id: video.id, slug: video.slug}) }}">
+                                                    {% thumbnail video.image, 'video' with {'class': 'wall'} %}
+                                            </a>
+                                    {% endif %}
+                                    <span>
+                                        {{ video.content|truncate(100) }}
+                                    </span>
+
+                                    <div class="clearBoth marginTop10"></div>
+
+                                    <span>de <a href="{{ path('user_detail', {"id":video.author.id}) }}">{% thumbnail video.author.image, "small_square"%} {{ video.author }}</a> | </span>
+                                    <span class="timeago" data-time="{{ video.createdAt|date('c')}}">{{ video.createdAt|date('c')}}</span>
+
+                                    <div class="clearBoth marginTop10"></div>
+                                    {% if video.hasTags %}
+                                        <ul class="tags">
+                                            {% for tag in video.hasTags %}
+                                                <li><a href="{{ path('video_tags', {'slug': tag.tag.slug}) }}">{{ tag.tag.title }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    <div class="clearBoth"></div>
+                                    {% endif %}
+                            </li>
+                    {% endfor %}
+            </ul>
+        {% else %}
+            <h2>No se encontraron videos.</h2>
+        {% endif %}
+        {% if addMore %}
+            <a href="#" id="addMore" class="loadmore myVideos marginTop10">Agregar Más</a>
+        {% endif %}
+        <input type="hidden" id="userId" value="{{ user.id }}"/>
+    </div>
+    <div id="templates" class="hidden">
+        <ul class="videos hidden">
+            <li class="marginTop10">
+                    <h2><a href="">title</a></h2>
+                    <a class="tmpVideo" href="videoShowIDSLUG">
+                            <img src="image" alt="image" title="image"/>
+                    </a>
+                    <span class="tmpContent">
+                        content
+                    </span>
+
+                    <div class="clearBoth marginTop10"></div>
+
+                    <span>de <a href="" class="user">author</a> | </span>
+                    <span class="timeago" data-time="createdAt">createdAt</span>
+
+                    <div class="clearBoth marginTop10"></div>
+                    <ul class="tags">
+                    </ul>
+                    <div class="clearBoth"></div>
+            </li>
         </ul>
-    {% else %}
-        <h2>No se encontraron videos.</h2>
-    {% endif %}
+    </div>
 {% endblock %}

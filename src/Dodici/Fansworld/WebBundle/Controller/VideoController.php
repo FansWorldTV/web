@@ -151,17 +151,69 @@ class VideoController extends SiteController
     /**
      * my videos
      * 
-     * @Route("/my-videos", name="video_myvideos") 
+     * @Route("/my-videos/{userid}", name="video_myvideos") 
      * @Template
      */
-    public function myVideosAction()
+    public function myVideosAction($userid)
     {
-        $user = $this->get('security.context')->getToken()->getUser();
-        $videos = $this->getRepository('Video')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'desc'));
+        $user = $this->getRepository('User')->find($userid);
+        $videos = $this->getRepository('Video')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'desc'), self::cantVideos);
+        $countAll = $this->getRepository('Video')->countBy(array('author' => $user->getId()));
+        $addMore = $countAll > self::cantVideos ? true : false;
 
         return array(
-            'videos' => $videos
+            'videos' => $videos,
+            'addMore' => $addMore
         );
+    }
+    
+    /**
+     * @Route("/ajax/myVideos", name="video_ajaxmyvideos") 
+     */
+    public function ajaxMyVideos()
+    {
+        $request = $this->getRequest();
+
+        $page = $request->get('page');
+        $userid = $request->get('userid', false);
+
+        $user = $this->getRepository('User')->find($userid);
+
+        $page = (int) $page;
+        $offset = ($page - 1) * self::cantVideos;
+
+        $response = array();
+
+        $videos = $this->getRepository('Video')->findBy(array('active' => true, 'author' => $userid), array('createdAt' => 'DESC'), self::cantVideos, $offset);
+        $countAll = $this->getRepository('Video')->countBy(array('active' => true, 'author' => $userid));
+
+        $response['addMore'] = $countAll > (($page) * self::cantVideos) ? true : false;
+        foreach ($videos as $video) {
+            $tags = array();
+            foreach ($video->getHastags() as $tag) {
+                array_push($tags, array(
+                    'title' => $tag->getTag()->getTitle(),
+                    'slug' => $tag->getTag()->getSlug()
+                        )
+                );
+            }
+
+            $response['videos'][] = array(
+                'id' => $video->getId(),
+                'title' => $video->getTitle(),
+                'image' => $this->getImageUrl($video->getImage()),
+                'author' => array(
+                    'name' => (string) $video->getAuthor(),
+                    'id' => $video->getAuthor()->getId()
+                ),
+                'date' => $video->getCreatedAt()->format('c'),
+                'content' => substr($video->getContent(), 0, 100),
+                'slug' => $video->getSlug(),
+                'tags' => $tags
+            );
+        }
+
+        return $this->jsonResponse($response);
     }
 
     /**

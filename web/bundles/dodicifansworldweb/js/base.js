@@ -44,6 +44,10 @@ var ajax = {
             });
         }
     },
+    
+    searchMyVideos: function(userid, page, callback){
+        ajax.search('video_ajaxmyvideos', {'userid': userid, 'page': page}, callback);
+    },
   
     searchAction: function(query, page, callback) {
         ajax.search('search_ajaxsearch', {'query': query, 'page': page}, callback);
