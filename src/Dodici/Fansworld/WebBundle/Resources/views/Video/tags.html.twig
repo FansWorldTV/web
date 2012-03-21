@@ -4,15 +4,6 @@
 {% block centercolumn %}
     <div class="col_599 left margin">
             <div class="cont clearfix withOutRightBar">
-                <h2>Búsqueda</h2>
-                <div class="user_list">
-                    <div class="search videosByTag">
-                        <form id="formSearch" method="post" action="">
-                            <input type="text" name="query" id="query"/>
-                            <input type="button" value="Buscar" name="submit" id="search" class="hidden"/>
-                        </form>
-                    </div>
-                </div>
                 {% if videos|length>0 %}
                     <ul class="videos">
                             {% for video in videos %}

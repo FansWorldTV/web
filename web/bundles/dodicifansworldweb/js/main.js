@@ -1097,10 +1097,36 @@ var videos = {
     
     searchByTags: {
         addMore: function(){
+            $("#addMore.videosByTag:not('.loading')").live('click', function(){
+                if(videos.pager==1){
+                    videos.pager++;
+                }
+                var self = $(this);
+                self.addClass('loading');
             
-        },
-        search: function(){
-            
+                ajax.searchByTagAction(videos.pager, function(response){
+                    if(response){
+                        if(!response.addMore){
+                            self.remove();
+                        }
+                        for(var i in response.videos){
+                            var video = response.videos[i];
+                            var template = $("#templates ul.videos li").clone();
+                            var videoUrl = Routing.generate(appLocale + '_video_show', {
+                                'id':video.id, 
+                                'slug': video.slug
+                            });
+                            videos.addSearchContent(template, video, videoUrl);
+                        }
+                        videos.pager++;
+                    }
+                    self.removeClass('loading');
+                }, function(text){
+                    error(text);
+                    self.removeClass('loading');
+                });
+                return false;
+            });
         }
     }
     

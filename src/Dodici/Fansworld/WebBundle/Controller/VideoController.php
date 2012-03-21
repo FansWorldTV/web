@@ -64,7 +64,7 @@ class VideoController extends SiteController
             'popularTags' => $popularTags
         );
     }
-    
+
     /**
      * @Route("/ajax/search", name="video_ajaxsearch") 
      */
@@ -132,8 +132,8 @@ class VideoController extends SiteController
         if (!$category)
             throw new HttpException(404, 'Categoría no encontrada');
         $videos = $this->getRepository("Video")->findBy(array("active" => true, "videocategory" => $category->getId()), array("createdAt" => "DESC"), self::cantVideos);
-        $countAll = $this->getRepository('Video')->countBy(array('active' => true,"videocategory" => $category->getId()));
-        
+        $countAll = $this->getRepository('Video')->countBy(array('active' => true, "videocategory" => $category->getId()));
+
         $addMore = $countAll > self::cantVideos ? true : false;
 
         $categories = $this->getRepository('VideoCategory')->findBy(array());
@@ -172,9 +172,6 @@ class VideoController extends SiteController
      */
     public function tagsAction($slug)
     {
-        $videos = $this->getRepository("Video")->findBy(array("active" => true), array("createdAt" => "DESC"), self::cantVideos);
-        $countAll = $this->getRepository('Video')->countBy(array('active' => true));
-        $addMore = $countAll > self::cantVideos ? true : false;
         $categories = $this->getRepository('VideoCategory')->findBy(array());
         $popularTags = $this->getRepository('Tag')->findBy(array(), array('useCount' => 'DESC'), 10);
 
@@ -194,7 +191,7 @@ class VideoController extends SiteController
         $countAll = $this->getRepository('Video')->countByTag($tag, $user);
         $addMore = $countAll > self::cantVideos ? true : false;
 
-        
+
         return array(
             'videos' => $videos,
             'addMore' => $addMore,
@@ -203,7 +200,7 @@ class VideoController extends SiteController
             'selected' => $id
         );
     }
-    
+
     /**
      * search videos by tag
      * 
@@ -212,10 +209,36 @@ class VideoController extends SiteController
     public function ajaxSearchByTagAction()
     {
         $request = $this->getRequest();
-        $query = $request->get( 'query', false );
-        $tagId = $request->get( 'tag', false );
-        $page = (int) $request->get( 'page', 1);
-        
+        $page = (int) $request->get('page', 1);
+        $offset = ($page - 1) * self::cantVideos;
+
+        $categories = $this->getRepository('VideoCategory')->findBy(array());
+        $popularTags = $this->getRepository('Tag')->findBy(array(), array('useCount' => 'DESC'), 10);
+
+        $videos = array();
+        if ($slug) {
+            $user = $this->get('security.context')->getToken()->getUser();
+            $tag = $this->getRepository('Tag')->findOneBy(array('title' => $slug));
+
+            $videosRepo = $this->getRepository('Video')->byTag($tag, $user, self::cantVideos, $offset);
+            foreach ($videosRepo as $video) {
+                $videos[] = $video;
+            }
+
+            $id = $tag->getId();
+        }
+
+        $countAll = $this->getRepository('Video')->countByTag($tag, $user);
+        $addMore = $countAll > (($page) * self::cantVideos) ? true : false;
+
+
+        return array(
+            'videos' => $videos,
+            'addMore' => $addMore,
+            'categories' => $categories,
+            'popularTags' => $popularTags,
+            'selected' => $id
+        );
     }
 
     /**

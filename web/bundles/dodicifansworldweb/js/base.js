@@ -57,6 +57,10 @@ var ajax = {
         ajax.search('search_ajaxidols', {'query': query, 'page': page, 'isIdol': isIdol}, callback);
     },
     
+    searchByTagAction: function(page, callback){
+        ajax.search('video_ajaxsearchbytag', {'page': page}, callback);
+    },
+    
     contestsListAction: function(page, filter, callback) {
         if(!ajax.active) {
             ajax.active = true;
