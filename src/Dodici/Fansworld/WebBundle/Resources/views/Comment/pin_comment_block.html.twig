@@ -8,7 +8,9 @@
 	
 	{% for comment in comments %}
 		{% if loop.index <= 5 %}
-			{% include 'DodiciFansworldWebBundle:Comment:pin_comment.html.twig' with {comment: comment} %}
+			{% if appstate.canview(comment) %}
+				{% include 'DodiciFansworldWebBundle:Comment:pin_comment.html.twig' with {comment: comment} %}
+			{% endif %}
 		{% endif %}
 	{% endfor %}
 	

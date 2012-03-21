@@ -50,7 +50,7 @@ class DeleteController extends SiteController
 	        	$em->persist($entity);
 	        	$em->flush();
 	        	
-	        	$message = $translator->trans('You have deleted') . ' "' . (string)$entity.'"';
+	        	$message = $translator->trans('You have deleted') . ' ' . (((string)$entity) ? ('"' . (string)$entity.'"') : $translator->trans('the item'));
 	        } else {
 	        	if (!($user instanceof User)) {
 	        		throw new \Exception('User not logged in');

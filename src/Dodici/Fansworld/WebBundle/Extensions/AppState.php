@@ -120,7 +120,6 @@ class AppState
     
 	public function canView($entity) 
     {
-    	if (!($this->user instanceof User)) return false;
     	$user = $this->user;
     	
     	if ($this->security_context->isGranted('ROLE_ADMIN')) return true;
@@ -133,8 +132,13 @@ class AppState
     		if ($album && !$album->getActive()) return false;
     	}
     	
+    	if (method_exists($entity, 'getAuthor')) {
+    		if ($user == $entity->getAuthor()) return true;
+    	}
+    	
     	if (method_exists($entity, 'getPrivacy')) {
     		if ($entity->getPrivacy() == \Dodici\Fansworld\WebBundle\Entity\Privacy::FRIENDS_ONLY) {
+    			if (!($this->user instanceof User)) return false;
     			if (method_exists($entity, 'getAuthor')) {
 	    			if ($user == $entity->getAuthor()) return true;
     				$frep = $this->getRepository('DodiciFansworldWebBundle:Friendship');
@@ -145,7 +149,7 @@ class AppState
     	
     	return true;
     }
-    
+        
 	public function canDelete($entity) 
     {
     	if (!($this->user instanceof User)) return false;

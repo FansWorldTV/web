@@ -117,7 +117,9 @@
 	                    
 	                        <h1>
 	                            {{ user }}
-	                            {% thumbnail user.level.image, 'small_square' with {class:'userAvatar', title: user.level.title, alt: user.level.title} %}
+	                            {% if user.level %}
+	                            	{% thumbnail user.level.image, 'small_square' with {class:'userAvatar', title: user.level.title, alt: user.level.title} %}
+	                            {% endif %}
 	                        </h1>
                         {% endif %}
                         

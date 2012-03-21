@@ -416,6 +416,29 @@ var site = {
                     });
             }
         });
+        
+        $('.deletecomment:not(.loading)').live('click',function(e){
+            e.preventDefault();
+            
+            var el = $(this);
+            if (confirm('¿Seguro desea eliminar el comentario?')) {
+	            var type = 'comment';
+	            var id = el.attr('data-id');
+	            el.addClass('loading');
+	        	
+	            ajax.globalDeleteAction(type, id,
+	                function(response){
+	                    success(response.message);
+	                    el.parent().slideUp('fast',function(){
+	                    	$(this).remove();
+	                    });
+	                },
+	                function(responsetext){
+	                    el.removeClass('loading');
+	                    error(responsetext);
+	                });
+            }
+        });
     },
     
     expander: function() {

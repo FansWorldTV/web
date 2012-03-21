@@ -49,6 +49,11 @@
 	 	{% endblock %}
 	</div>
 	{% endblock %}
+	{% block deleter %}
+		{% if appstate.candelete(comment) %}
+			<a class="deletecomment" data-id="{{comment.id}}"></a>
+		{% endif %}
+	{% endblock %}
 {% endblock %}
 </div>
 {% endblock %}

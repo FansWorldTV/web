@@ -899,3 +899,5 @@ ul.currentinterests li a.deleteinterest:hover { background-position: bottom left
 .idol_profile_head .idol_specs { margin-bottom: 10px; border: 1px solid #ccc; padding: 10px; }
 .idol_profile_head .user_info .tabs a.btn_edit_info { float: right; margin: 12px 10px 0 0px; position: initial;}
 .idol_profile_head .update { margin-bottom: 10px; }
+.deletecomment { cursor: pointer; position: absolute; height: 14px; width: 14px; display:block; background: url('../images/ui/closealert.png') top left no-repeat; right: 5px;}
+.deletecomment:hover { background-position: bottom left;}
