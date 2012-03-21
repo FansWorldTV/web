@@ -882,7 +882,11 @@ ul.currentinterests li a.deleteinterest:hover { background-position: bottom left
 .cont.withOutRightBar { width: 599px !important; }
 .cont.withOutRightBar div.user_list { width: 599px; }
 .cont.withOutRightBar div.user_list div.search{ width: 587px; }
-.cont.withOutRightBar ul.videos { width: 599px; }
+.cont.withOutRightBar ul.videos { width: 599px; height: auto; padding-bottom: 10px;}
+ul.videos li.greybox { margin-top: 10px; clear: both; border-top: 1px solid #ccc; border-left: 1px solid #ccc; border-right: 1px solid #ccc; padding: 10px;}
+ul.videos img { height: 100px; width: 100px; float: left; margin-right: 10px;}
+ul.videos h2 { font-size: 15px; border:0; font-weight: bold;}
+ul.videos h2 a { font-weight: inherit;}
 ul.currentinterests li a.deleteinterest:hover { background-position: bottom left;}
 
 /* Perfil idolo */

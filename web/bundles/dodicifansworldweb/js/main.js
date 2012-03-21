@@ -925,10 +925,12 @@ var videos = {
     addSearchContent: function(template, video, videoUrl){
         template.find('h2 a').attr('href', videoUrl);
         template.find('h2 a').html(video.title);
-                        
+                      
         if(video.image){
             template.find('a.tmpVideo').attr('href', videoUrl);
             template.find('a.tmpVideo img').attr('src', video.image).attr('alt', video.title).attr('title', video.title);
+        }else{
+            template.find('a.tmpVideo').remove();
         }
                         
         template.find('.tmpContent').html(video.content + "...");

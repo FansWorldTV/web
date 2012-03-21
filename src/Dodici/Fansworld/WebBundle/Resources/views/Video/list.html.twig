@@ -16,30 +16,30 @@
                 {% if videos|length>0 %}
                     <ul class="videos">
                             {% for video in videos %}
-                                    <li class="marginTop10">
-                                            <h2><a href="{{ path('video_show', {id: video.id, slug: video.slug}) }}">{{ video.title }}</a></h2>
+                                    <li class="greybox">
                                             {% if video.image %}
-                                                    <a href="{{ path('video_show', {id: video.id, slug: video.slug}) }}">
+                                                <a href="{{ path('video_show', {id: video.id, slug: video.slug}) }}">
                                                             {% thumbnail video.image, 'video' with {'class': 'wall'} %}
-                                                    </a>
+                                                </a>
                                             {% endif %}
-                                            <span>
-                                                {{ video.content|truncate(100) }}
-                                            </span>
+                                            <div>
+                                                <h2><a href="{{ path('video_show', {id: video.id, slug: video.slug}) }}">{{ video.title }}</a></h2>
+                                                <span>
+                                                    {{ video.content|truncate(100) }}
+                                                </span>
+                                            </div>
+                                            
+                                            <div class="marginTop10 clearfix">
+                                                <span class="marginTop10">de <a href="{{ path('user_detail', {"id":video.author.id}) }}">{% thumbnail video.author.image, "small_square"%} {{ video.author }}</a> | </span>
+                                                <span class="timeago" data-time="{{ video.createdAt|date('c')}}">{{ video.createdAt|date('c')}}</span>
+                                            </div>
 
-                                            <div class="clearBoth marginTop10"></div>
-
-                                            <span>de <a href="{{ path('user_detail', {"id":video.author.id}) }}">{% thumbnail video.author.image, "small_square"%} {{ video.author }}</a> | </span>
-                                            <span class="timeago" data-time="{{ video.createdAt|date('c')}}">{{ video.createdAt|date('c')}}</span>
-
-                                            <div class="clearBoth marginTop10"></div>
                                             {% if video.hasTags %}
-                                                <ul class="tags">
+                                                <ul class="tags marginTop10 clearfix">
                                                     {% for tag in video.hasTags %}
                                                         <li><a href="{{ path('video_tags', {'slug': tag.tag.slug}) }}">{{ tag.tag.title }}</a></li>
                                                     {% endfor %}
                                                 </ul>
-                                            <div class="clearBoth"></div>
                                             {% endif %}
                                     </li>
                             {% endfor %}
@@ -54,24 +54,24 @@
     </div>
     <div id="templates" class="hidden">
         <ul class="videos hidden">
-            <li class="marginTop10">
-                    <h2><a href="">title</a></h2>
+            <li class="greybox">
                     <a class="tmpVideo" href="videoShowIDSLUG">
                             <img src="image" alt="image" title="image"/>
                     </a>
-                    <span class="tmpContent">
-                        content
-                    </span>
+                    <div>
+                        <h2><a href="">title</a></h2>
+                        <span class="tmpContent">
+                            content
+                        </span>
+                    </div>
 
-                    <div class="clearBoth marginTop10"></div>
+                    <div class="marginTop10 clearfix">
+                        <span class="marginTop10">de <a href="" class="user">author</a> | </span>
+                        <span class="timeago" data-time="createdAt">createdAt</span>
+                    </div>
 
-                    <span>de <a href="" class="user">author</a> | </span>
-                    <span class="timeago" data-time="createdAt">createdAt</span>
-
-                    <div class="clearBoth marginTop10"></div>
-                    <ul class="tags">
+                    <ul class="tags marginTop10 clearfix">
                     </ul>
-                    <div class="clearBoth"></div>
             </li>
         </ul>
     </div>
