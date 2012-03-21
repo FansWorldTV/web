@@ -197,7 +197,8 @@ class VideoController extends SiteController
             'addMore' => $addMore,
             'categories' => $categories,
             'popularTags' => $popularTags,
-            'selected' => $id
+            'selected' => $id,
+            'slug' => $slug
         );
     }
 
@@ -210,35 +211,49 @@ class VideoController extends SiteController
     {
         $request = $this->getRequest();
         $page = (int) $request->get('page', 1);
+        $id = $request->get('id', false);
         $offset = ($page - 1) * self::cantVideos;
-
-        $categories = $this->getRepository('VideoCategory')->findBy(array());
-        $popularTags = $this->getRepository('Tag')->findBy(array(), array('useCount' => 'DESC'), 10);
+        $user = $this->get('security.context')->getToken()->getUser();
+        $tag = $this->getRepository('Tag')->find($id);
 
         $videos = array();
-        if ($slug) {
-            $user = $this->get('security.context')->getToken()->getUser();
-            $tag = $this->getRepository('Tag')->findOneBy(array('title' => $slug));
-
+        if ($id) {
             $videosRepo = $this->getRepository('Video')->byTag($tag, $user, self::cantVideos, $offset);
             foreach ($videosRepo as $video) {
-                $videos[] = $video;
-            }
+                $tags = array();
+                foreach ($video->getHastags() as $tag) {
+                    array_push($tags, array(
+                        'title' => $tag->getTag()->getTitle(),
+                        'slug' => $tag->getTag()->getSlug()
+                            )
+                    );
+                }
 
-            $id = $tag->getId();
+                $videos[] = array(
+                    'id' => $video->getId(),
+                    'title' => $video->getTitle(),
+                    'image' => $this->getImageUrl($video->getImage()),
+                    'author' => array(
+                        'name' => (string) $video->getAuthor(),
+                        'id' => $video->getAuthor()->getId()
+                    ),
+                    'date' => $video->getCreatedAt()->format('c'),
+                    'content' => substr($video->getContent(), 0, 100),
+                    'slug' => $video->getSlug(),
+                    'tags' => $tags
+                );
+            }
         }
 
+        $tag = $this->getRepository('Tag')->find($id);
         $countAll = $this->getRepository('Video')->countByTag($tag, $user);
         $addMore = $countAll > (($page) * self::cantVideos) ? true : false;
 
 
-        return array(
+        return $this->jsonResponse(array(
             'videos' => $videos,
-            'addMore' => $addMore,
-            'categories' => $categories,
-            'popularTags' => $popularTags,
-            'selected' => $id
-        );
+            'addMore' => $addMore
+        ));
     }
 
     /**

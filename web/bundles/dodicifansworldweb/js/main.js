@@ -918,7 +918,6 @@ var videos = {
         videos.addMore();
         videos.searchByCategory.search();
         videos.searchByCategory.addMore();
-        videos.searchByTags.search();
         videos.searchByTags.addMore();
     },
     
@@ -1102,9 +1101,10 @@ var videos = {
                     videos.pager++;
                 }
                 var self = $(this);
+                var tagId = $("a.current").attr('tagId');
                 self.addClass('loading');
             
-                ajax.searchByTagAction(videos.pager, function(response){
+                ajax.searchByTagAction(tagId, videos.pager, function(response){
                     if(response){
                         if(!response.addMore){
                             self.remove();
