@@ -53,6 +53,18 @@ public function configureShowFields(ShowMapper $showMapper)
                 	  'inline' => 'table', 
                     )
             )
+            ->add('hastags', 'sonata_type_collection', array ('required' => false), 
+            	array(
+                      'edit' => 'inline',
+                	  'inline' => 'table', 
+                    )
+            )
+            ->add('hasusers', 'sonata_type_collection', array ('required' => false), 
+            	array(
+                      'edit' => 'inline',
+                	  'inline' => 'table', 
+                    )
+            )
         ;
     }
 
@@ -83,6 +95,12 @@ public function configureShowFields(ShowMapper $showMapper)
 		foreach($contest->getComments() as $qo) {
 	        $qo->setContest($contest);
 	    }
+		foreach($contest->getHastags() as $qo) {
+	    	$qo->setContest($contest);
+	    }
+	    foreach($contest->getHasusers() as $qo) {
+	    	$qo->setContest($contest);
+	    }
 	}
 	
 	public function prePersist($contest) {
@@ -91,6 +109,12 @@ public function configureShowFields(ShowMapper $showMapper)
 	    }
 		foreach($contest->getComments() as $qo) {
 	        $qo->setContest($contest);
+	    }
+		foreach($contest->getHastags() as $qo) {
+	    	$qo->setContest($contest);
+	    }
+	    foreach($$contest->getHasusers() as $qo) {
+	    	$qo->setContest($contest);
 	    }
 	}
 }

@@ -43,6 +43,18 @@ class PhotoAdmin extends Admin
                 	  'inline' => 'table', 
                     )
             )
+            ->add('hastags', 'sonata_type_collection', array ('required' => false), 
+            	array(
+                      'edit' => 'inline',
+                	  'inline' => 'table', 
+                    )
+            )
+            ->add('hasusers', 'sonata_type_collection', array ('required' => false), 
+            	array(
+                      'edit' => 'inline',
+                	  'inline' => 'table', 
+                    )
+            )
         ;
     }
 
@@ -67,4 +79,22 @@ class PhotoAdmin extends Admin
             ->add('album', 'doctrine_orm_model', array (  'field_type' => 'entity',  'field_options' =>   array (    'class' => 'Dodici\\Fansworld\\WebBundle\\Entity\\Album',  ),  'options' =>   array (  ),  'operator_type' => 'sonata_type_boolean',  'operator_options' =>   array (  ),  'field_name' => 'album',  'mapping_type' => 2,))
         ;
     }
+
+	public function preUpdate($photo) {
+	    foreach($photo->getHastags() as $qo) {
+	    	$qo->setPhoto($photo);
+	    }
+	    foreach($photo->getHasusers() as $qo) {
+	    	$qo->setPhoto($photo);
+	    }
+	}
+	
+	public function prePersist($photo) {
+	    foreach($photo->getHastags() as $qo) {
+	    	$qo->setPhoto($photo);
+	    }
+	    foreach($photo->getHasusers() as $qo) {
+	    	$qo->setPhoto($photo);
+	    }
+	}
 }

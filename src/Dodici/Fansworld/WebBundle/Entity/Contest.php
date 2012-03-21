@@ -515,6 +515,27 @@ class Contest implements Translatable
     {
         return $this->hasusers;
     }
+    
+	/**
+     * Admin methods
+     */
+    public function setHastags($hastags)
+    {
+        $this->hastags = $hastags;
+    }
+	public function addHastags($hastags)
+    {
+        $this->addHasTag($hastags);
+    }
+    
+	public function setHasusers($hasusers)
+    {
+        $this->hasusers = $hasusers;
+    }
+	public function addHasusers($hasusers)
+    {
+        $this->addHasUser($hasusers);
+    }
 
     /**
      * Set commentCount

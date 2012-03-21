@@ -46,6 +46,18 @@ class AlbumAdmin extends Admin
                 	  'inline' => 'table', 
                     )
             )
+            ->add('hastags', 'sonata_type_collection', array ('required' => false), 
+            	array(
+                      'edit' => 'inline',
+                	  'inline' => 'table', 
+                    )
+            )
+            ->add('hasusers', 'sonata_type_collection', array ('required' => false), 
+            	array(
+                      'edit' => 'inline',
+                	  'inline' => 'table', 
+                    )
+            )
         ;
     }
 
@@ -73,11 +85,23 @@ class AlbumAdmin extends Admin
 	    foreach($album->getPhotos() as $qo) {
 	        $qo->setAlbum($album);
 	    }
+	    foreach($album->getHastags() as $qo) {
+	    	$qo->setAlbum($album);
+	    }
+	    foreach($album->getHasusers() as $qo) {
+	    	$qo->setAlbum($album);
+	    }
 	}
 	
 	public function prePersist($album) {
 	    foreach($album->getPhotos() as $qo) {
 	        $qo->setAlbum($album);
+	    }
+	    foreach($album->getHastags() as $qo) {
+	    	$qo->setAlbum($album);
+	    }
+	    foreach($album->getHasusers() as $qo) {
+	    	$qo->setAlbum($album);
 	    }
 	}
 }

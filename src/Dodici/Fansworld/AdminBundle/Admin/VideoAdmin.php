@@ -48,6 +48,18 @@ class VideoAdmin extends Admin
                 	  'inline' => 'table', 
                     )
             )
+            ->add('hastags', 'sonata_type_collection', array ('required' => false), 
+            	array(
+                      'edit' => 'inline',
+                	  'inline' => 'table', 
+                    )
+            )
+            ->add('hasusers', 'sonata_type_collection', array ('required' => false), 
+            	array(
+                      'edit' => 'inline',
+                	  'inline' => 'table', 
+                    )
+            )
         ;
     }
 
@@ -72,4 +84,22 @@ class VideoAdmin extends Admin
             ->add('videocategory', 'doctrine_orm_model', array (  'field_type' => 'entity',  'field_options' =>   array (    'class' => 'Dodici\\Fansworld\\WebBundle\\Entity\\VideoCategory',  ),  'options' =>   array (  ),  'operator_type' => 'sonata_type_boolean',  'operator_options' =>   array (  ),  'field_name' => 'videocategory',  'mapping_type' => 2,))
         ;
     }
+
+	public function preUpdate($video) {
+	    foreach($video->getHastags() as $qo) {
+	    	$qo->setVideo($video);
+	    }
+	    foreach($video->getHasusers() as $qo) {
+	    	$qo->setVideo($video);
+	    }
+	}
+	
+	public function prePersist($video) {
+	    foreach($video->getHastags() as $qo) {
+	    	$qo->setVideo($video);
+	    }
+	    foreach($video->getHasusers() as $qo) {
+	    	$qo->setVideo($video);
+	    }
+	}
 }

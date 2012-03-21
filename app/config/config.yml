@@ -263,6 +263,21 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: hasinterest }
         arguments: [null, Dodici\Fansworld\WebBundle\Entity\HasInterest, DodiciFansworldAdminBundle:HasInterestAdmin]
+    dodici.fansworld.adminbundle.admin.tag:
+        class: Dodici\Fansworld\AdminBundle\Admin\TagAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: tag }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Tag, DodiciFansworldAdminBundle:TagAdmin]
+    dodici.fansworld.adminbundle.admin.hastag:
+        class: Dodici\Fansworld\AdminBundle\Admin\HasTagAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: hastag }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\HasTag, DodiciFansworldAdminBundle:HasTagAdmin]
+    dodici.fansworld.adminbundle.admin.hasuser:
+        class: Dodici\Fansworld\AdminBundle\Admin\HasUserAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: hasuser }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\HasUser, DodiciFansworldAdminBundle:HasUserAdmin]
     ### END ADMIN SERVICES ###
     liking.listener.persist:
         class: Dodici\Fansworld\WebBundle\Listener\LikingCountUpdater

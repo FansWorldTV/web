@@ -39,6 +39,18 @@ class NewsPostAdmin extends Admin
                 	  'inline' => 'table', 
                     )
             )
+            ->add('hastags', 'sonata_type_collection', array ('required' => false), 
+            	array(
+                      'edit' => 'inline',
+                	  'inline' => 'table', 
+                    )
+            )
+            ->add('hasusers', 'sonata_type_collection', array ('required' => false), 
+            	array(
+                      'edit' => 'inline',
+                	  'inline' => 'table', 
+                    )
+            )
         ;
     }
 
@@ -61,4 +73,22 @@ class NewsPostAdmin extends Admin
             ->add('newscategory', 'doctrine_orm_model', array (  'field_type' => 'entity',  'field_options' =>   array (    'class' => 'Dodici\\Fansworld\\WebBundle\\Entity\\NewsCategory',  ),  'options' =>   array (  ),  'operator_type' => 'sonata_type_boolean',  'operator_options' =>   array (  ),  'field_name' => 'newscategory',  'mapping_type' => 2,))
         ;
     }
+    
+	public function preUpdate($newspost) {
+	    foreach($newspost->getHastags() as $qo) {
+	    	$qo->setNewspost($newspost);
+	    }
+	    foreach($newspost->getHasusers() as $qo) {
+	    	$qo->setNewspost($newspost);
+	    }
+	}
+	
+	public function prePersist($newspost) {
+	    foreach($newspost->getHastags() as $qo) {
+	    	$qo->setNewspost($newspost);
+	    }
+	    foreach($newspost->getHasusers() as $qo) {
+	    	$qo->setNewspost($newspost);
+	    }
+	}
 }
