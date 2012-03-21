@@ -887,6 +887,7 @@ ul.videos li.greybox { margin-top: 10px; clear: both; border-top: 1px solid #ccc
 ul.videos img { height: 100px; width: 100px; float: left; margin-right: 10px;}
 ul.videos h2 { font-size: 15px; border:0; font-weight: bold;}
 ul.videos h2 a { font-weight: inherit;}
+ul.videos img.avatar{width:20px; height: 20px;}
 ul.currentinterests li a.deleteinterest:hover { background-position: bottom left;}
 
 /* Perfil idolo */

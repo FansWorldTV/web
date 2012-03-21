@@ -937,7 +937,11 @@ var videos = {
         template.find('span a.user').attr('href', Routing.generate(appLocale + '_user_detail', {
             'id': video.author.id
         }));
-        template.find('span a.user').html(video.author.name);
+        if(video.author.avatar){
+            template.find('span a.user').html('<img src="'+video.author.avatar+'" />'+video.author.name);
+        }else{
+            template.find('span a.user').html(video.author.name);
+        }
         template.find('span.timeago').attr('data-time', video.date).html(video.date);
 
         if(video.tags.length>0){

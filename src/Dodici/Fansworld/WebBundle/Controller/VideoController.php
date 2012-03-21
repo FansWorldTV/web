@@ -108,7 +108,8 @@ class VideoController extends SiteController
                 'image' => $this->getImageUrl($video->getImage()),
                 'author' => array(
                     'name' => (string) $video->getAuthor(),
-                    'id' => $video->getAuthor()->getId()
+                    'id' => $video->getAuthor()->getId(),
+                    'avatar' => $this->getImageUrl($video->getAuthor()->getImage())
                 ),
                 'date' => $video->getCreatedAt()->format('c'),
                 'content' => substr($video->getContent(), 0, 100),
@@ -166,7 +167,7 @@ class VideoController extends SiteController
             'addMore' => $addMore
         );
     }
-    
+
     /**
      * @Route("/ajax/myVideos", name="video_ajaxmyvideos") 
      */
@@ -204,7 +205,8 @@ class VideoController extends SiteController
                 'image' => $this->getImageUrl($video->getImage()),
                 'author' => array(
                     'name' => (string) $video->getAuthor(),
-                    'id' => $video->getAuthor()->getId()
+                    'id' => $video->getAuthor()->getId(),
+                    'avatar' => $this->getImageUrl($video->getAuthor()->getImage())
                 ),
                 'date' => $video->getCreatedAt()->format('c'),
                 'content' => substr($video->getContent(), 0, 100),
@@ -287,7 +289,8 @@ class VideoController extends SiteController
                     'image' => $this->getImageUrl($video->getImage()),
                     'author' => array(
                         'name' => (string) $video->getAuthor(),
-                        'id' => $video->getAuthor()->getId()
+                        'id' => $video->getAuthor()->getId(),
+                        'avatar' => $this->getImageUrl($video->getAuthor()->getImage())
                     ),
                     'date' => $video->getCreatedAt()->format('c'),
                     'content' => substr($video->getContent(), 0, 100),
@@ -303,9 +306,9 @@ class VideoController extends SiteController
 
 
         return $this->jsonResponse(array(
-            'videos' => $videos,
-            'addMore' => $addMore
-        ));
+                    'videos' => $videos,
+                    'addMore' => $addMore
+                ));
     }
 
     /**
