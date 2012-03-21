@@ -232,7 +232,7 @@ class VideoController extends SiteController
         $videos = array();
         if ($slug) {
             $user = $this->get('security.context')->getToken()->getUser();
-            $tag = $this->getRepository('Tag')->findOneBy(array('title' => $slug));
+            $tag = $this->getRepository('Tag')->findOneBy(array('slug' => $slug));
 
             $videosRepo = $this->getRepository('Video')->byTag($tag, $user, self::cantVideos);
             foreach ($videosRepo as $video) {
