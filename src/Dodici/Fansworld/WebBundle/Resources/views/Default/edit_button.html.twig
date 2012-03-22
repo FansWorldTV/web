@@ -1,0 +1,8 @@
+{% if type is not defined %}
+	{% set type = appstate.type(entity) %}
+{% endif %}
+{% if appstate.canedit(entity) %}
+	<a class="editbutton{% if extraclasses is defined %} {{ extraclasses|join(' ') }}{% endif %}" href="{{ path('edit_popup',{id:entity.id, type:type}) }}">
+		Modificar
+	</a> 
+{% endif %}

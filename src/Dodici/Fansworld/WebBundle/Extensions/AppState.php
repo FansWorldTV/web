@@ -150,6 +150,11 @@ class AppState
     	return true;
     }
         
+    public function canEdit($entity)
+    {
+    	return $this->canDelete($entity);
+    }
+    
 	public function canDelete($entity) 
     {
     	if (!($this->user instanceof User)) return false;
