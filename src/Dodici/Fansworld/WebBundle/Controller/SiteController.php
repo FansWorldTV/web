@@ -65,7 +65,7 @@ class SiteController extends Controller
     {
     	$user = $this->get('security.context')->getToken()->getUser();
     	
-    	if (!$entity)
+    	if (!$entity || (property_exists($entity, 'active') && !$entity->getActive()))
             throw new HttpException(404, 'Contenido no encontrado');
             
     	if ($entity->getPrivacy() != Privacy::EVERYONE) {

@@ -257,7 +257,7 @@ form.register table tr.error td label select{ border:solid 1px #333; background:
 .grid_users { width:305px; z-index:1;}
 .grid_users ul .users { width:305px;}
 .grid_users ul.users li a{ display:block; width:54px; height:54px; background:#f1f1f1; border:solid 1px #fff; box-shadow:0 1px 1px #999; position:relative; float:left; margin:0 5px 5px 0;}
-.grid_users ul.users li a img { width:54px;}
+.grid_users ul.users li a img { width:54px; height: 54px;}
 .grid_users ul.users li a span.tooltip { display:none; text-shadow:0 1px 0 #fff;}
 .grid_users ul.users li a:hover {text-decoration:none;}
 .grid_users ul.users li a:hover span.tooltip { background:url(../images/ui/tooltip.png) no-repeat; width:151px; height:56px; position:absolute; float:left; z-index:100;  display:block; margin:-46px 0 0 -50px; text-align:center; font-size:10px; color:#666; }

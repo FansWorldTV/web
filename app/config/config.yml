@@ -165,6 +165,7 @@ artseld_openinviter:
 parameters:
     sonata.user.admin.user.class: Application\Sonata\UserBundle\Admin\Entity\UserAdmin
     sonata.media.resizer.simple.class: Application\Sonata\MediaBundle\Media\SimpleResizer
+    sonata.media.thumbnail.format: Application\Sonata\MediaBundle\Thumbnail\FormatThumbnail
         
 services:
     ### BEGIN ADMIN SERVICES ###
