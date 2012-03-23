@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
+use Symfony\Component\HttpKernel\Exception\HttpException;
+
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,11 +23,18 @@ class CommentController extends SiteController
     
     /**
      * @Route("/show/{id}", name= "comment_show", requirements = {"id" = "\d+"})
+     * @Template
      */
     public function showAction($id)
     {
         // TODO: comment show action, list all responses (nested comments), allow answering root comment
-    	return new Response('ok');
+        $comment = $this->getRepository('Comment')->find($id);
+        $this->securityCheck($comment);
+        if ($comment->getComment()) throw new HttpException(400, 'Comentario es subcomentario');
+    	
+    	return array(
+    		'comment' => $comment
+    	);
     }
     
 	/**

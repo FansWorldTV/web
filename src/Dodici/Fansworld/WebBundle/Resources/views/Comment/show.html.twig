@@ -1,0 +1,11 @@
+{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+
+{% block title %}{{ parent() }} - Comentario{% endblock %}
+
+{% block content %}
+<div class="cont clearfix">
+	<div class="actualizaciones clearfix">
+    	{% include 'DodiciFansworldWebBundle:Comment:comment.html.twig' with {entity: comment} %}
+    </div>
+</div>
+{% endblock %}
