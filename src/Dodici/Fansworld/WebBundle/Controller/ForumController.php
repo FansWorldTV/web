@@ -23,6 +23,7 @@ class ForumController extends SiteController
 {
 
     const threadPerPage = 10;
+    const postsPerPage = 5;
 
     /**
      * @Route("/", name="forum_index")
@@ -31,16 +32,6 @@ class ForumController extends SiteController
      */
     public function indexAction()
     {
-//        $user = $this->get('security.context')->getToken()->getUser();
-//        $em = $this->getDoctrine()->getEntityManager();
-//        $thread = new ForumThread();
-//        $thread->setAuthor($user);
-//        $thread->setTitle('asd');
-//        $thread->setContent('asd');
-//        $thread->setPostCount(10);
-//        $em->persist($thread);
-//        $em->flush();
-
         $threads = $this->getRepository('ForumThread')->findBy(array(), array('postCount' => 'desc'), self::threadPerPage);
         $countAll = $this->getRepository('ForumThread')->countBy(array());
         return array(
@@ -55,10 +46,86 @@ class ForumController extends SiteController
      */
     public function threadAction($id)
     {
+
         $thread = $this->getRepository('ForumThread')->find($id);
+        $posts = $this->getRepository('ForumPost')->findBy(array('forumthread' => $thread->getId()), array('createdAt' => 'desc'), self::postsPerPage);
+        $countAllPosts = $this->getRepository('ForumPost')->countBy(array('forumthread' => $thread->getId()));
+        $addMore = $countAllPosts > self::postsPerPage ? true : false;
         return array(
-            'thread' => $thread
+            'thread' => $thread,
+            'addMore' => $addMore,
+            'posts' => $posts
         );
+    }
+
+    /**
+     * @Route("/ajax/thread/posts", name= "forum_ajaxposts")
+     */
+    public function ajaxThreadPostsAction()
+    {
+        $request = $this->getRequest();
+        $threadId = $request->get('thread', false);
+        $page = $request->get('page', 0);
+        $offset = ($page - 1) * self::postsPerPage;
+
+        $response = array(
+            'posts' => array(),
+            'addMore' => false
+        );
+
+        $posts = $this->getRepository('ForumPost')->findBy(array('forumthread' => $threadId), array('createdAt' => 'desc'), self::postsPerPage, $offset);
+        foreach ($posts as $post) {
+            $response['posts'][] = array(
+                'id' => $post->getId(),
+                'content' => $post->getContent(),
+                'createdAt' => $post->getCreatedAt()->format('c'),
+                'author' => array(
+                    'id' => $post->getAuthor()->getId(),
+                    'name' => (string) $post->getAuthor(),
+                    'image' => $this->getImageUrl($post->getAuthor()->getImage())
+                )
+            );
+        }
+
+        return $this->jsonResponse($response);
+    }
+
+    /**
+     * @Route("/ajax/thread/comment", name="forum_ajaxcomment") 
+     */
+    public function ajaxThreadComment()
+    {
+        $request = $this->getRequest();
+        $threadId = $request->get('thread', false);
+        $comment = $request->get('comment', false);
+        $user = $this->get('security.context')->getToken()->getUser();
+        
+        $thread = $this->getRepository('ForumThread')->find($threadId);
+
+        $response = array();
+        try {
+            $em = $this->getDoctrine()->getEntityManager();
+            $post = new ForumPost();
+            $post->setAuthor($user);
+            $post->setContent($comment);
+            $post->setForumThread($thread);
+            $em->persist($post);
+            $em->flush();
+            $response['error'] = false;
+            $response['data'] = array(
+                'content' => $comment,
+                'createdAt' => $post->getCreatedAt()->format('c'),
+                'author' => array(
+                    'name' => (string) $post->getAuthor(),
+                    'avatar' => $this->getImageUrl($post->getAuthor()->getImage()),
+                    'id' => $post->getAuthor()->getId()
+                )
+            );
+        } catch (Exception $exc) {
+            $response['error'] = $exc->getMessage();
+        }
+        
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -67,18 +134,6 @@ class ForumController extends SiteController
      */
     public function userThreadsAction($id)
     {
-//        for ($i = 0; $i <= 10; $i++) {
-//            $user = $this->getRepository('User')->find($id);
-//            $em = $this->getDoctrine()->getEntityManager();
-//            $thread = new ForumThread();
-//            $thread->setAuthor($user);
-//            $thread->setTitle('asd' + $i);
-//            $thread->setContent('asdsdaf asd fasd fasdfasd asd fasdfas da sdasdf asdfasd asdf asdfa sd fasd fasdf asd a');
-//            $thread->setPostCount(10);
-//            $em->persist($thread);
-//            $em->flush();
-//        }
-
         $user = $this->getRepository('User')->find($id);
         if (!$user instanceof User)
             throw new HttpException(404, 'Usuario no encontrado');
@@ -103,10 +158,10 @@ class ForumController extends SiteController
         $request = $this->getRequest();
         $page = (int) $request->get('page', 1);
         $byUser = $request->get('userId', false);
-        
-        if($byUser !== 'false' && $byUser){
-            $criteria = array('author'=>$byUser);
-        }else{
+
+        if ($byUser !== 'false' && $byUser) {
+            $criteria = array('author' => $byUser);
+        } else {
             $criteria = array();
         }
 

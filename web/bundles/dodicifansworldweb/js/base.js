@@ -52,6 +52,13 @@ var ajax = {
         }, callback);
     },
     
+    searchThreadPosts: function(thread, page, callback){
+        ajax.search('forum_ajaxposts',{
+            'thread': thread,
+            'page': page
+        }, callback);
+    },
+    
     searchMyVideos: function(userid, page, callback){
         ajax.search('video_ajaxmyvideos', {
             'userid': userid, 
@@ -107,6 +114,26 @@ var ajax = {
                     if(typeof(callback) !== 'undefined'){
                         callback(response);
                     }
+                }
+            });
+        }
+    },
+    
+    threadCommentAction: function(thread, comment, callback){
+        if(!ajax.active){
+            ajax.active = true;
+            
+            $.ajax({
+                url: 'http://' + location.host + Routing.generate(appLocale + '_forum_ajaxcomment'),
+                data: {
+                    'thread': thread,
+                    'comment': comment
+                },
+                success: function(r){
+                    if(typeof(callback) !== 'undefined'){
+                        callback(r);
+                    }
+                    ajax.active=false;
                 }
             });
         }

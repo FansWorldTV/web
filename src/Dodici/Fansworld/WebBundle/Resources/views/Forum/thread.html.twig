@@ -18,4 +18,50 @@
             </div>
         </div>
     </div>
+    <div class="cont clearfix">
+        <h3>Respuestas</h3>
+        <div class="comments clearfix">
+            {% for post in posts%}
+                <div class="comment clearfix">
+                    <div class="avatar"> 
+                        <a href="{{ path('user_detail', {'id': post.author.id}) }}">
+                            <img src="demo/rodri.jpg" width="50" height="50">
+                        </a> 
+                    </div>
+                    <div class="user_comment"> 
+                        <span class="action_user"><a href="{{ path('user_detail', {'id': post.author.id}) }}">{{ post.author }}</a> <span class="timeago" data-time="{{ post.createdAt|date('c') }}">{{ post.createdAt|date('c') }}</span></span>
+                        {{ post.content }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% if addMore %}
+            <a id="addMore" class="loadmore posts" href="#1">ver mas respuestas</a> 
+        {% endif %}
+    </div>
+    <div class="cont clearfix">
+        <h3>Agregar respuesta</h3>
+        <div class="add_comment">
+            <form>
+                <textarea cols="" rows="4"></textarea>
+                <a class="btn comment" href="#1">Comentar</a>
+            </form>
+        </div>
+    </div>
+    <input type="hidden" id="threadId" value="{{ thread.id }}" />
+    <div id="templates" class="hidden">
+        <div class="comment clearfix">
+            <div class="avatar"> 
+                <a href="url">
+                    <img src="demo/rodri.jpg" width="50" height="50">
+                </a> 
+            </div>
+            <div class="user_comment"> 
+                <span class="action_user">
+                    <a href="url">author</a> 
+                    <span class="timeago" data-time="date">date</span>
+                </span>
+            </div>
+        </div>
+    </div>
 {% endblock %}
