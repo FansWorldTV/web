@@ -1,3 +1,9 @@
+{% if likebutton is not defined %}
+	{% set likebutton = true %}
+{% endif %}
+{% if sharebutton is not defined %}
+	{% set sharebutton = true %}
+{% endif %}
 {% set type = appstate.type(entity) %}
 {% set share_url = url(type ~ "_show", {'id': entity.id, 'slug': entity.slug }) %}
 <div class="share_content clearfix">
@@ -10,7 +16,11 @@
 			{% include 'DodiciFansworldWebBundle:Default:edit_button.html.twig' with {entity: entity, type: type} %}
 			{% include 'DodiciFansworldWebBundle:Default:delete_button.html.twig' with {entity: entity, type: type} %}
 		{% endif %} 
-		{% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {entity: entity} %}
-		{% include 'DodiciFansworldWebBundle:Default:share_button.html.twig' with {entity: entity} %}
+		{% if likebutton %}
+			{% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {entity: entity} %}
+		{% endif %}
+		{% if sharebutton %}
+			{% include 'DodiciFansworldWebBundle:Default:share_button.html.twig' with {entity: entity} %}
+		{% endif %}
 	</div>
 </div>
