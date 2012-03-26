@@ -27,6 +27,7 @@ class ForumController extends SiteController
 
     /**
      * @Route("/", name="forum_index")
+     * @Route("/", name="forumthread_show")
      * 
      * @Template
      */

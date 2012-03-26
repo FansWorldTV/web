@@ -16,6 +16,7 @@
                 <h1>{{ thread.title }}</h1>
                 {{ thread.content }}
             </div>
+            {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: thread, likebutton: false} %}
         </div>
     </div>
     <div class="cont clearfix">
