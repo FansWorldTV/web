@@ -1,0 +1,21 @@
+{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+
+{% block title %}{{ parent() }} - Foto{% endblock %}
+
+{% block content %}
+    <div class="cont clearfix">
+        <div class="media">
+            <div class="media_user">
+                <div class="avatar">
+                    {% thumbnail thread.author.image, 'avatar' %}
+                </div>
+                <a href="{{ path('user_detail', {'id': thread.author.id}) }}">{{ thread.author }}</a> <br>
+                <span class="timeago" data-time="{{ thread.createdAt|date('c') }}">{{ thread.createdAt|date('c') }}</span>
+            </div>
+            <div class="topic">
+                <h1>{{ thread.title }}</h1>
+                {{ thread.content }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

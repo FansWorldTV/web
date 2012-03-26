@@ -1241,11 +1241,13 @@ var forum = {
                         template.find('a').attr('href', href);
                         template.find('a div.messages').prepend(thread.postCount + " ");
                         template.find('a div.post h3').html(thread.title);
+                        template.find('a div.post span.contentTruncated').html(thread.content);
                         template.find('a div.post span.user').html(thread.author.name);
                         template.find('a div.post span.date').attr('data-time', thread.createdAt).html(thread.createdAt);
                         
                         $("ul.foro").append(template);
                     }
+                    site.parseTimes();
                     forum.page++;
                 }
                 self.removeClass('loading');

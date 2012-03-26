@@ -305,6 +305,7 @@ ul.foro li a .messages {float:left;width:58px; height:56px;background: url(../im
 ul.foro li a .messages span.replies { font-size:10px; line-height:15px; font-family:Tahoma, Geneva, sans-serif; position: relative; top: -14px;}
 ul.foro li a .post { float:right; width:320px; padding-right:40px;}
 ul.foro li a .post h3 { font-weight:bold; color:#000; font-size:13px; font-family:Arial, Helvetica, sans-serif; margin-bottom:7px; border:none; padding:0; line-height:16px}
+ul.foro li a .post span.contentTruncated {clear: both !important;color: gray;margin-bottom: 5px;}
 ul.foro li a .post span.user { color:#afafb0; text-decoration:underline;}
 ul.foro li a .post span.date { color:#afafb0; margin-left:5px;}
 ul.foro li a:hover { background:#fafafb url(../images/ui/foro_h.gif) no-repeat top right; text-decoration:none;}
