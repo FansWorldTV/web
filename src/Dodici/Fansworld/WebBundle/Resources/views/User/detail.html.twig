@@ -15,24 +15,30 @@
                         <table>
                             <tr>
                                 <td class="dato">Nombre</td>
-                                <td>{{ user.firstname }} {{ user.lastname }}</td>
+                                <td>{{ user }}</td>
                             </tr>
                             <tr>
                                 <td class="dato">Sexo</td>
                                 <td>{{ ('sex_' ~ user.sex)|trans }}</td>
                             </tr>
+                            {% if user.country %}
                             <tr>
                                 <td class="dato">Pais</td>
                                 <td>{{ user.country }}</td>
                             </tr>
+                            {% endif %}
+                            {% if user.city %}
                             <tr>
                                 <td class="dato">Provincia</td>
                                 <td>{{ user.city }}</td>
                             </tr>
+                            {% endif %}
+                            {% if user.birthday %}
                             <tr>
                                 <td class="dato">Fecha de nacimiento</td>
-                                <td>{{ user.birthday|date('Y-m-d H:i:s') }}</td>
+                                <td>{{ user.birthday|date('d/m/Y') }}</td>
                             </tr>
+                            {% endif %}
                             <tr>
                                 <td class="dato">Puntos</td>
                                 <td>{{ user.score }}</td>
@@ -41,7 +47,6 @@
                         <h5>Biografía</h5>
                         <table>
                             <tr>
-                                <td class="dato">Descripción</td>
                                 <td>{{ user.content }}</td>
                             </tr>
                         </table>
