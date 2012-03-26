@@ -45,24 +45,47 @@ var ajax = {
         }
     },
     
+    searchForumThreads: function(page, userid, callback){
+        ajax.search('forum_ajaxsearchthreads', {
+            'page': page,
+            'userId': userid
+        }, callback);
+    },
+    
     searchMyVideos: function(userid, page, callback){
-        ajax.search('video_ajaxmyvideos', {'userid': userid, 'page': page}, callback);
+        ajax.search('video_ajaxmyvideos', {
+            'userid': userid, 
+            'page': page
+        }, callback);
     },
   
     searchAction: function(query, page, callback) {
-        ajax.search('search_ajaxsearch', {'query': query, 'page': page}, callback);
+        ajax.search('search_ajaxsearch', {
+            'query': query, 
+            'page': page
+        }, callback);
     },
     
     friendsAction: function(query, page, callback) {
-        ajax.search('search_ajaxfriends', {'query': query, 'page': page}, callback);
+        ajax.search('search_ajaxfriends', {
+            'query': query, 
+            'page': page
+        }, callback);
     },
     
     searchIdolsAction: function(query, page, isIdol, callback){
-        ajax.search('search_ajaxidols', {'query': query, 'page': page, 'isIdol': isIdol}, callback);
+        ajax.search('search_ajaxidols', {
+            'query': query, 
+            'page': page, 
+            'isIdol': isIdol
+        }, callback);
     },
     
     searchByTagAction: function(id, page, callback){
-        ajax.search('video_ajaxsearchbytag', {'page': page, 'id': id}, callback);
+        ajax.search('video_ajaxsearchbytag', {
+            'page': page, 
+            'id': id
+        }, callback);
     },
     
     contestsListAction: function(page, filter, callback) {
@@ -279,37 +302,37 @@ var ajax = {
     addFriendAction: function(targetId, friendGroups, callback){
         ajax.setCallback(callback);
         $.ajax({
-           url: 'http://'  + location.host + Routing.generate( appLocale + '_friendship_ajaxaddfriend'),
-           data: {
-               'target': targetId,
-               'friendgroups': friendGroups
-           }
+            url: 'http://'  + location.host + Routing.generate( appLocale + '_friendship_ajaxaddfriend'),
+            data: {
+                'target': targetId,
+                'friendgroups': friendGroups
+            }
         });
     },
     
     cancelFriendAction: function(friendshipId, callback){
         ajax.setCallback(callback);
         $.ajax({
-           url: 'http://' + location.host + Routing.generate( appLocale + '_friendship_ajaxcancelfriend'),
-           data: {
-               'friendship': friendshipId
-           }
+            url: 'http://' + location.host + Routing.generate( appLocale + '_friendship_ajaxcancelfriend'),
+            data: {
+                'friendship': friendshipId
+            }
         });
     },
     
     videosSearchAction: function(params, callback, errorCallback){
         ajax.setCallback(callback, errorCallback);
         $.ajax({
-           url: 'http://' + location.host + Routing.generate( appLocale + '_video_ajaxsearch'),
-           data: params
+            url: 'http://' + location.host + Routing.generate( appLocale + '_video_ajaxsearch'),
+            data: params
         });
     },
   
     genericAction: function(route, params, callback, errorCallback){
         ajax.setCallback(callback, errorCallback);
         $.ajax({
-           url: 'http://' + location.host + Routing.generate( appLocale + '_' + route),
-           data: params
+            url: 'http://' + location.host + Routing.generate( appLocale + '_' + route),
+            data: params
         });
     }
 };

@@ -8,6 +8,7 @@ $(document).ready(function(){
     photos.init();
     albums.init();
     videos.init();
+    forum.init();
 });
 
 var site = {
@@ -1212,7 +1213,48 @@ var albums = {
             });
         });
     }
-}
+};
+
+var forum = {
+    page: 2,
+    
+    init: function(){
+        forum.addMoreThreads();
+    },
+    addMoreThreads: function(){
+        $("#addMore.threads").live('click', function(){
+            var userId = $("#userId").val() == "" ? false : $("#userId").val();
+            var self = $(this);
+            self.addClass('loading');
+            ajax.searchForumThreads(forum.page, userId, function(response){
+                if(response){
+                    if(!response.addMore){
+                        self.remove();
+                    }
+                    for(var i in response.threads){
+                        var thread = response.threads[i];
+                        var template = $("#templates.threads li").clone();
+                        var href = Routing.generate(appLocale + '_forum_thread', {
+                            'id': thread.id, 
+                            'slug': thread.slug
+                        });
+                        template.find('a').attr('href', href);
+                        template.find('a div.messages').prepend(thread.postCount + " ");
+                        template.find('a div.post h3').html(thread.title);
+                        template.find('a div.post span.user').html(thread.author.name);
+                        template.find('a div.post span.date').attr('data-time', thread.createdAt).html(thread.createdAt);
+                        
+                        $("ul.foro").append(template);
+                    }
+                    forum.page++;
+                }
+                self.removeClass('loading');
+            });
+            return false;
+        });
+    }
+    
+};
 
 function resizeColorbox(options) {
     $.colorbox.resize(options);
