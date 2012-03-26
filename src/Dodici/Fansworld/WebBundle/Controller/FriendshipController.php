@@ -81,7 +81,7 @@ class FriendshipController extends SiteController
 
         $friendship = $this->getRepository('Friendship')->find($friendshipId);
 
-        if ($author->getId() == $friendship->getAuthor()->getId()) {
+        if ($author->getId() == $friendship->getAuthor()->getId() || $author->getId() == $friendship->getTarget()->getId()) {
             try {
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->remove($friendship);
