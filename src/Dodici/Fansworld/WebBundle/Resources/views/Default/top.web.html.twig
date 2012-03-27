@@ -1,7 +1,7 @@
 <div class="top">
     <div class="wrap">
         <div class="users">
-        	Ya somos <strong>{{ usercount }}</strong> miembros 
+        	Ya somos <strong>{{ usercount }}</strong> fans 
         	{% if is_granted("IS_AUTHENTICATED_FULLY") %}
         		<a class="btn" href="{{ path('user_invite') }}">Invitá a tus amigos</a>
         	{% else %}
