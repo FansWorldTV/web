@@ -16,7 +16,7 @@
                 </div>
                 <ul>
                     <li class="active"><a class="user_n1" href="{{ path('user_detail', {'id': user.id}) }}">Mi perfil</a></li>
-                    <li><a class="user_n2" href="user_fans.php">Fans</a></li>
+                    <li><a class="user_n2" href="{{ path('search_friends') }}">Fans</a></li>
                     <li><a class="user_n3" href="{{ path('user_photos', {'id': user.id}) }}">Fotos</a></li>
                     <li><a class="user_n4" href="{{ path('video_myvideos', {'userid': user.id}) }}">Videos</a></li>
                     <li><a class="user_n5" href="{{ path('contest_mycontests') }}">Mis concursos</a></li>

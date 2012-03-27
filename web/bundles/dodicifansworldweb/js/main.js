@@ -672,7 +672,7 @@ var searchIdols = {
 var friendsSearch = {
     page: 1,
     init: function(){
-        if($(".friends").lenght>0){
+        if($(".friends").length>0){
             friendsSearch.addMore();
             friendsSearch.search();
             $("#formSearch.friends").submit(function(event){
@@ -690,7 +690,9 @@ var friendsSearch = {
                 if(response){
                     for(var i in response){
                         var elementTmp = $("div.templates.friends div.listMosaic div.element").clone();
+                        var usrLink = Routing.generate('user_detail', {'id':sponse[i].id});
                     
+                        elementTmp.attr('src', usrLink);
                         elementTmp.find('.name').html(response[i].name);
                         elementTmp.find('.avatar').attr('src', response[i].image);
                         elementTmp.find('.commonFriends').html(response[i].commonFriends);
@@ -719,9 +721,10 @@ var friendsSearch = {
                 for(var i in elements){
                     var element = elements[i];
                     var template = $(".friends.templates .listMosaicTemp .element").clone();
+                    var usrLink = Routing.generate(appLocale +'_user_detail', {'id':element.id});
                     
+                    template.find('a').attr('href', usrLink);
                     template.find('.name').html(element.name);
-                    template.find('.commonFriends').html(element.commonFriends);
                     template.find('.avatar img').attr('src', element.image);
                     
                     $(".friends.listMosaic").append(template);
