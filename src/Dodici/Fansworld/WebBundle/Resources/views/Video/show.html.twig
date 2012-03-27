@@ -24,6 +24,11 @@
                 <span>en <a href="{{ path('video_category', {'id': video.videocategory.id, 'slug': video.videocategory.slug}) }}">{{ video.videocategory }}</a></span>
                 {% endif %}
             </div>
+            {% if video.content %}
+            	<div class="description">
+            		{{ video.content }}
+            	</div>
+            {% endif %}
         </div>
     </div>
 </div>

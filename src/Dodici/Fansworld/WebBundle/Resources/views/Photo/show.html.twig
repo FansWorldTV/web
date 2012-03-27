@@ -23,6 +23,11 @@
                 <span>por <a href="{{ path('user_detail', {'id': photo.author.id}) }}">{{ photo.author }}</a></span>
                 <span>del album <a href="{{ path('album_show', {'id': photo.album.id, 'slug': photo.album.slug}) }}">{{ photo.album.title }}</a></span>
             </div>
+            {% if photo.content %}
+            	<div class="description">
+            		{{ photo.content }}
+            	</div>
+            {% endif %}
         </div>
     </div>
 </div>

@@ -392,8 +392,9 @@ a.btn_delete_post { display:none;}
 .media .media_content a.btn_prev:hover { background-position:top left}
 .media .media_content a.btn_next { background:url(../images/ui/paginador.png) no-repeat bottom right; display:block; width:21px; height:50px; position:absolute; float:left; text-indent:-9999px; z-index:50; margin:135px 0 0 447px;}
 .media .media_content a.btn_next:hover { background-position:top right}
-.media .media_info { font-size:12px; width:300px; float:left;}
+.media .media_info { font-size:12px; width:100%; float:left;}
 .media .media_info div { margin-bottom:10px; line-height:16px; color:#222;}
+.media .media_info .description { color: #666; font-size: 10px;}
 .media .media_info span { font-size:11px; color:#888; padding-right:5px;}
 .media .media_info p { line-height:15px;}
 .media .media_options { float:right; border-left:solid 1px #ccc;}
