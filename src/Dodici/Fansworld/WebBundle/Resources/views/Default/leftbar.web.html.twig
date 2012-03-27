@@ -7,7 +7,7 @@
                 <div class="user clearfix">
                     {% if user.image %}
                     <div class="avatar">
-                        <a class="change_image" href="{{ path('user_change_image') }}">
+                        <a href="{{ path('user_detail', {'id': user.id}) }}">
                                 {% thumbnail user.image, 'avatar' %}
                         </a>
                     </div>
