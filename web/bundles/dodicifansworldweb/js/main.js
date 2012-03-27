@@ -537,6 +537,11 @@ var searchFront = {
         if($(".searchFront").size()>0){
             searchFront.addMore();
             searchFront.search();
+            $("#formSearch.searchFront").submit(function(event){
+                event.preventDefault();     
+                searchFront.search();
+                return false;
+            });
         }
     },
     addMore: function(){
@@ -566,36 +571,31 @@ var searchFront = {
         });
     },
     search: function(){
-        $("#formSearch.searchFront").submit(function(event){
-            var query = $('#query').val();
-            $(".searchFront.listMosaic").html('').hide();
-            $("div.ajax-loader").removeClass('hidden');
+        var query = $('#query').val();
+        $(".searchFront.listMosaic").html('').hide();
+        $("div.ajax-loader").removeClass('hidden');
         
-            ajax.searchAction(query, 0, function(response){
-                if(response){
-                    var elements = response.search;
-                    for(var i in elements){
-                        var element = elements[i];
-                        var template = $(".searchFront.templates .listMosaicTemp .element").clone();
+        ajax.searchAction(query, 0, function(response){
+            if(response){
+                var elements = response.search;
+                for(var i in elements){
+                    var element = elements[i];
+                    var template = $(".searchFront.templates .listMosaicTemp .element").clone();
                     
-                        template.find('.name').html(element.name);
-                        template.find('.commonFriends').html(element.commonFriends);
-                        template.find('.avatar img').attr('src', element.image);
+                    template.find('.name').html(element.name);
+                    template.find('.commonFriends').html(element.commonFriends);
+                    template.find('.avatar img').attr('src', element.image);
                     
-                        if(element.isFriend){
-                            template.addClass('isfriend');
-                        }
-                    
-                        $(".searchFront.listMosaic").append(template);
+                    if(element.isFriend){
+                        template.addClass('isfriend');
                     }
+                    
+                    $(".searchFront.listMosaic").append(template);
                 }
+            }
                 
-                $(".searchFront.listMosaic").show();
-                $("div.ajax-loader").addClass('hidden');
-            });
-        
-            event.preventDefault();        
-            return false;
+            $(".searchFront.listMosaic").show();
+            $("div.ajax-loader").addClass('hidden');
         });
     }
 };
@@ -603,9 +603,14 @@ var searchFront = {
 var searchIdols = {
     page: 0,
     init: function(){
-        if($(".searchIdol").size()>0){
+        if($(".searchIdol").length>0){
             searchIdols.addMore();
             searchIdols.search();
+            $("#formSearch.searchIdol").submit(function(event){
+                event.preventDefault();
+                searchIdols.search();
+                return false;
+            });
         }
     },
     addMore: function(){
@@ -635,36 +640,31 @@ var searchIdols = {
         });
     },
     search: function(){
-        $("#formSearch.searchIdol").submit(function(event){
-            var query = $('#query').val();
-            $(".searchIdol.listMosaic").html('').hide();
-            $("div.ajax-loader").removeClass('hidden');
+        var query = $('#query').val();
+        $(".searchIdol.listMosaic").html('').hide();
+        $("div.ajax-loader").removeClass('hidden');
         
-            ajax.searchIdolsAction(query, 0, null, function(response){
-                if(response){
-                    var elements = response.idols;
-                    for(var i in elements){
-                        var element = elements[i];
-                        var template = $(".searchIdol.templates .listMosaicTemp .element").clone();
+        ajax.searchIdolsAction(query, 0, null, function(response){
+            if(response){
+                var elements = response.idols;
+                for(var i in elements){
+                    var element = elements[i];
+                    var template = $(".searchIdol.templates .listMosaicTemp .element").clone();
                     
-                        template.find('.name').html(element.name);
-                        template.find('.commonFriends').html(element.commonFriends);
-                        template.find('.avatar img').attr('src', element.image);
+                    template.find('.name').html(element.name);
+                    template.find('.commonFriends').html(element.commonFriends);
+                    template.find('.avatar img').attr('src', element.image);
                     
-                        if(element.isidol){
-                            template.addClass('isidol');
-                        }
-                    
-                        $(".searchIdol.listMosaic").append(template);
+                    if(element.isidol){
+                        template.addClass('isidol');
                     }
+                    
+                    $(".searchIdol.listMosaic").append(template);
                 }
+            }
                 
-                $(".searchIdol.listMosaic").show();
-                $("div.ajax-loader").addClass('hidden');
-            });
-        
-            event.preventDefault();        
-            return false;
+            $(".searchIdol.listMosaic").show();
+            $("div.ajax-loader").addClass('hidden');
         });
     }
 };
@@ -672,9 +672,14 @@ var searchIdols = {
 var friendsSearch = {
     page: 1,
     init: function(){
-        if($(".friends").size()>0){
+        if($(".friends").lenght>0){
             friendsSearch.addMore();
             friendsSearch.search();
+            $("#formSearch.friends").submit(function(event){
+                event.preventDefault();
+                friendsSearch.search();
+                return false;
+            });
         }
     },
     addMore: function(){
@@ -704,32 +709,27 @@ var friendsSearch = {
         });
     },
     search: function(){
-        $("#formSearch.friends").submit(function(event){
-            var query = $('#query').val();
-            $(".friends.listMosaic").html('').hide();
-            $("div.ajax-loader").removeClass('hidden');
+        var query = $('#query').val();
+        $(".friends.listMosaic").html('').hide();
+        $("div.ajax-loader").removeClass('hidden');
         
-            ajax.friendsAction(query, 0, function(response){
-                if(response){
-                    var elements = response.search;
-                    for(var i in elements){
-                        var element = elements[i];
-                        var template = $(".friends.templates .listMosaicTemp .element").clone();
+        ajax.friendsAction(query, 0, function(response){
+            if(response){
+                var elements = response.search;
+                for(var i in elements){
+                    var element = elements[i];
+                    var template = $(".friends.templates .listMosaicTemp .element").clone();
                     
-                        template.find('.name').html(element.name);
-                        template.find('.commonFriends').html(element.commonFriends);
-                        template.find('.avatar img').attr('src', element.image);
+                    template.find('.name').html(element.name);
+                    template.find('.commonFriends').html(element.commonFriends);
+                    template.find('.avatar img').attr('src', element.image);
                     
-                        $(".friends.listMosaic").append(template);
-                    }
+                    $(".friends.listMosaic").append(template);
                 }
+            }
                 
-                $(".friends.listMosaic").show();
-                $("div.ajax-loader").addClass('hidden');
-            });
-        
-            event.preventDefault();        
-            return false;
+            $(".friends.listMosaic").show();
+            $("div.ajax-loader").addClass('hidden');
         });
     }
 };

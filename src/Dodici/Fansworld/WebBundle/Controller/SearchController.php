@@ -66,7 +66,7 @@ class SearchController extends SiteController
     {
         $request = $this->getRequest();
         $query = $request->get('query');
-        $page = $request->get('page');
+        $page = $request->get('page', 0);
 
         $offset = (int) $page;
         if ($page > 0) {
@@ -74,34 +74,34 @@ class SearchController extends SiteController
         }
 
         $userRepo = $this->getRepository('User');
-        
+
         $response = false;
-        if ($query) {
-            $response = array();
-            $user = $this->get('security.context')->getToken()->getUser();
+        $response = array();
+        $user = $this->get('security.context')->getToken()->getUser();
 
-            if ($user instanceof User) {
-                $search = $userRepo->SearchFront($user, $query, null, self::LIMIT_SEARCH, $offset);
-                $countSearch = $userRepo->CountSearchFront($user, $query, null);
+        $query = $query == '' ? null : $query;
+        
+        if ($user instanceof User) {
+            $search = $userRepo->SearchFront($user, $query, null, self::LIMIT_SEARCH, $offset);
+            $countSearch = $userRepo->CountSearchFront($user, $query, null);
 
-                if ($countSearch > 0) {
-                    foreach ($search as $element) {
-                        $response['search'][] = array(
-                            'id' => $element[0]->getId(),
-                            'name' => (string) $element[0],
-                            'image' => $this->getImageUrl($element[0]->getImage()),
-                            'commonFriends' => $element['commonfriends'],
-                            'isFriend' => $element['isfriend']
-                        );
-                    }
+            if ($countSearch > 0) {
+                foreach ($search as $element) {
+                    $response['search'][] = array(
+                        'id' => $element[0]->getId(),
+                        'name' => (string) $element[0],
+                        'image' => $this->getImageUrl($element[0]->getImage()),
+                        'commonFriends' => $element['commonfriends'],
+                        'isFriend' => $element['isfriend']
+                    );
+                }
 
 
 
-                    if ($countSearch > $offset) {
-                        $response['gotMore'] = true;
-                    } else {
-                        $response['gotMore'] = false;
-                    }
+                if ($countSearch > $offset) {
+                    $response['gotMore'] = true;
+                } else {
+                    $response['gotMore'] = false;
                 }
             }
         }
@@ -145,9 +145,11 @@ class SearchController extends SiteController
             $offset = ($page - 1) * self::LIMIT_SEARCH;
         }
 
+        $query = $query == '' ? null : $query;
+
         $response = false;
 
-        if ($query && $user instanceof User) {
+        if ($user instanceof User) {
             $response = array();
             $search = $userRepo->FriendUsers($user, $query, self::LIMIT_SEARCH, $offset);
             $countFriendUsers = $userRepo->CountFriendUsers($user, $query);
@@ -194,11 +196,14 @@ class SearchController extends SiteController
         $request = $this->getRequest();
         $response = false;
 
-        $query = $request->get('query', false);
+        $query = $request->get('query', null);
         $isIdol = null;
         $page = (int) $request->get('page', false);
 
-        if ($query && !$page) {
+        if ($query == "") {
+            $query = null;
+        }
+        if (!$page) {
             $page = 0;
         } else {
             $page--;
@@ -211,23 +216,21 @@ class SearchController extends SiteController
 
         $user = $this->get('security.context')->getToken()->getUser();
         if ($user instanceof User) {
-            if ($query) {
-                $response = array();
-                $searchIdol = $this->getRepository('User')->SearchIdolFront($user, $query, $isIdol, self::LIMIT_SEARCH, $offset);
-                $countTotal = $this->getRepository('User')->CountSearchIdolFront($user, $query, $isIdol);
+            $response = array();
+            $searchIdol = $this->getRepository('User')->SearchIdolFront($user, $query, $isIdol, self::LIMIT_SEARCH, $offset);
+            $countTotal = $this->getRepository('User')->CountSearchIdolFront($user, $query, $isIdol);
 
-                if ($countTotal > 0) {
-                    $response['gotMore'] = $countTotal * $page > $offset ? true : false;
+            if ($countTotal > 0) {
+                $response['gotMore'] = $countTotal * $page > $offset ? true : false;
 
-                    foreach ($searchIdol as $idol) {
-                        $response['idols'][] = array(
-                            'id' => $idol[0]->getId(),
-                            'name' => (string) $idol[0],
-                            'image' => $this->getImageUrl($idol[0]->getImage()),
-                            'commonFriends' => $idol['commonfriends'],
-                            'isidol' => $idol['isidol']
-                        );
-                    }
+                foreach ($searchIdol as $idol) {
+                    $response['idols'][] = array(
+                        'id' => $idol[0]->getId(),
+                        'name' => (string) $idol[0],
+                        'image' => $this->getImageUrl($idol[0]->getImage()),
+                        'commonFriends' => $idol['commonfriends'],
+                        'isidol' => $idol['isidol']
+                    );
                 }
             }
         }
