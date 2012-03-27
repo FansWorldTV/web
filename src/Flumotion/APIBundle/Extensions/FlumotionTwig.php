@@ -30,7 +30,7 @@ class FlumotionTwig
 	public function getVideoPlayerUrl(Video $video)
     {
     	if ($video->getYoutube()) {
-    		return sprintf('http://www.youtube.com/v/%1$s?autoplay=1', $video->getYoutube());
+    		return sprintf('http://www.youtube.com/embed/%1$s?autoplay=1&wmode=transparent', $video->getYoutube());
     	} else {
     		return sprintf($this->videoplayerbaseurl, $video->getStream());
     	}
