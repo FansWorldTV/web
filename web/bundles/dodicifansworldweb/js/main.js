@@ -365,7 +365,7 @@ var site = {
         });
     },
     globalCommentButtons: function(){
-        $('.comment_button:not(.loading)').live('click',function(e){
+    	$('.comment_button:not(.loading)').live('click',function(e){
             e.preventDefault();
             var el = $(this);
             var type = el.attr('data-type');
@@ -377,7 +377,8 @@ var site = {
         	
             ajax.globalCommentAction(type, id, content, privacy, ispin,
                 function(response){
-                    el.removeClass('loading');
+                    el.closest('.commentform').find('textarea.comment_message').val('');
+            		el.removeClass('loading');
                     success(response.message);
                     el.parents('.commentform').after(response.commenthtml);
                     $('.timeago').each(function(){
@@ -394,6 +395,13 @@ var site = {
                 });
         	
         });
+    	
+    	$('textarea.comment_message').live('keydown', function (e) {
+     	   if ( e.keyCode == 13 ){
+     		   $(this).closest('.commentform').find('.comment_button').click();
+     		   return false;
+     	   }
+     	});
     },
     
     globalDeleteButtons: function(){
