@@ -158,13 +158,14 @@ class VideoController extends SiteController
     public function myVideosAction($userid)
     {
         $user = $this->getRepository('User')->find($userid);
-        $videos = $this->getRepository('Video')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'desc'), self::cantVideos);
+        $videos = $this->getRepository('Video')->findBy(array('author' => $userid, 'active' => true), array('createdAt' => 'desc'), self::cantVideos);
         $countAll = $this->getRepository('Video')->countBy(array('author' => $user->getId()));
         $addMore = $countAll > self::cantVideos ? true : false;
 
         return array(
             'videos' => $videos,
-            'addMore' => $addMore
+            'addMore' => $addMore,
+            'user' => $user
         );
     }
 
