@@ -22,19 +22,23 @@
     <div class="cont clearfix">
         <h3>Respuestas</h3>
         <div class="comments clearfix">
-            {% for post in posts%}
-                <div class="comment clearfix">
-                    <div class="avatar"> 
-                        <a href="{{ path('user_detail', {'id': post.author.id}) }}">
-                            <img src="demo/rodri.jpg" width="50" height="50">
-                        </a> 
+            {% if posts|length>0 %}
+                {% for post in posts%}
+                    <div class="comment clearfix">
+                        <div class="avatar"> 
+                            <a href="{{ path('user_detail', {'id': post.author.id}) }}">
+                                <img src="demo/rodri.jpg" width="50" height="50">
+                            </a> 
+                        </div>
+                        <div class="user_comment"> 
+                            <span class="action_user"><a href="{{ path('user_detail', {'id': post.author.id}) }}">{{ post.author }}</a> <span class="timeago" data-time="{{ post.createdAt|date('c') }}">{{ post.createdAt|date('c') }}</span></span>
+                            {{ post.content }}
+                        </div>
                     </div>
-                    <div class="user_comment"> 
-                        <span class="action_user"><a href="{{ path('user_detail', {'id': post.author.id}) }}">{{ post.author }}</a> <span class="timeago" data-time="{{ post.createdAt|date('c') }}">{{ post.createdAt|date('c') }}</span></span>
-                        {{ post.content }}
-                    </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            {% else %}
+                No hay respuestas
+            {% endif %}
         </div>
         {% if addMore %}
             <a id="addMore" class="loadmore posts" href="#1">ver mas respuestas</a> 

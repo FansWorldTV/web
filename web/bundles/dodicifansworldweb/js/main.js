@@ -1300,6 +1300,10 @@ var forum = {
             
             self.addClass('loading');
             
+            if($("div.comments").has('div.comment').length == 0){
+                $("div.comments").html('');
+            }
+            
             ajax.threadCommentAction(threadId, text, function(response){
                 if(!response.error){
                     var template = $("#templates div.comment").clone();

@@ -5,20 +5,24 @@
 {% block content %}
 <div class="cont clearfix">
     <h2>Temas creados</h2>
-    <ul class="foro clearfix">
-        {% for thread in threads%}
-            <li>
-                <a class="clearfix" href="{{ path('forum_thread', {'id': thread.id, 'slug': thread.slug}) }}">
-                    <div class="messages">{{ thread.postCount }} <span class="replies">Replies</span></div>
-                    <div class="post">
-                        <h3>{{ thread.title }}</h3>
-                        <span class="contentTruncated" >{{ thread.content | truncate(100) }}</span><br/>
-                        <span class="user">{{ thread.author }}</span><span class="date timeago" data-time="{{ thread.createdAt|date('c') }}">{{ thread.createdAt|date('c') }}</span>
-                    </div>
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
+    {% if threads|length > 0 %}
+        <ul class="foro clearfix">
+            {% for thread in threads%}
+                <li>
+                    <a class="clearfix" href="{{ path('forum_thread', {'id': thread.id, 'slug': thread.slug}) }}">
+                        <div class="messages">{{ thread.postCount }} <span class="replies">Replies</span></div>
+                        <div class="post">
+                            <h3>{{ thread.title }}</h3>
+                            <span class="contentTruncated" >{{ thread.content | truncate(100) }}</span><br/>
+                            <span class="user">{{ thread.author }}</span><span class="date timeago" data-time="{{ thread.createdAt|date('c') }}">{{ thread.createdAt|date('c') }}</span>
+                        </div>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        No hay temas creados
+    {% endif %}
     {% if addMore %}
         <a href="#" id="addMore" class="loadmore threads marginTop10">Agregar Más</a>
     {% endif %}
