@@ -418,6 +418,9 @@ var site = {
                     function(response){
                         el.removeClass('loading');
                         success(response.message);
+                        if (response.redirect) {
+                        	window.location.href = response.redirect;
+                        }
                     },
                     function(responsetext){
                         el.removeClass('loading');

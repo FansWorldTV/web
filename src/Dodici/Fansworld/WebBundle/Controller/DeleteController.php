@@ -42,6 +42,7 @@ class DeleteController extends SiteController
 	        $entity = $repo->find($id);
 	        $user = $this->get('security.context')->getToken()->getUser();
 	        $em = $this->getDoctrine()->getEntityManager();
+	        $redirect = null;
 	        
 	        if (!$entity->getActive()) throw new \Exception('Entity already deleted'); 
 	        
@@ -51,6 +52,13 @@ class DeleteController extends SiteController
 	        	$em->flush();
 	        	
 	        	$message = $translator->trans('You have deleted') . ' ' . (((string)$entity) ? ('"' . (string)$entity.'"') : $translator->trans('the item'));
+	        	
+	        	switch ($type) {
+	        		case 'photo': $redirect = $this->generateUrl('album_show', array('id' => $entity->getAlbum()->getId(), 'slug' => $entity->getAlbum()->getId())); break;
+	        		case 'video': $redirect = $this->generateUrl('video_myvideos', array('userid' => $user->getId())); break;
+	        		case 'album': $redirect = $this->generateUrl('user_listalbums', array('id' => $user->getId())); break;
+	        	}
+	        	
 	        } else {
 	        	if (!($user instanceof User)) {
 	        		throw new \Exception('User not logged in');
@@ -60,7 +68,8 @@ class DeleteController extends SiteController
 	        }
 	
 	        $response = new Response(json_encode(array(
-	        	'message' => $message
+	        	'message' => $message,
+	        	'redirect' => $redirect
 	        )));
 	        $response->headers->set('Content-Type', 'application/json');
 	        return $response;

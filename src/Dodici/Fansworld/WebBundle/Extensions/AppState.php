@@ -122,15 +122,16 @@ class AppState
     {
     	$user = $this->user;
     	
-    	if ($this->security_context->isGranted('ROLE_ADMIN')) return true;
-    	
     	if (method_exists($entity, 'getActive')) {
     		if (!$entity->getActive()) return false;
     	}
+    	
     	if ($entity instanceof Photo) {
     		$album = $entity->getAlbum();
     		if ($album && !$album->getActive()) return false;
     	}
+    	
+    	if ($this->security_context->isGranted('ROLE_ADMIN')) return true;
     	
     	if (method_exists($entity, 'getAuthor')) {
     		if ($user == $entity->getAuthor()) return true;
