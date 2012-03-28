@@ -369,11 +369,11 @@ class UserController extends SiteController
 	        $loggedUser = $this->get('security.context')->getToken()->getUser();
 	        $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
 	
-	        $photos = $this->getRepository('Photo')->findBy(array('author' => $user->getId()), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
-	        $albums = $this->getRepository('Album')->findBy(array('author' => $user->getId()), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
+	        $photos = $this->getRepository('Photo')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
+	        $albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
 	
-	        $photosTotalCount = $this->getRepository('Photo')->countBy(array('author' => $user->getId()));
-	        $albumsTotalCount = $this->getRepository('Album')->countBy(array('author' => $user->getId()));
+	        $photosTotalCount = $this->getRepository('Photo')->countBy(array('author' => $user->getId(), 'active' => true));
+	        $albumsTotalCount = $this->getRepository('Album')->countBy(array('author' => $user->getId(), 'active' => true));
 	
 	        $viewMorePhotos = $photosTotalCount > self::LIMIT_PHOTOS ? true : false;
 	        $viewMoreAlbums = $albumsTotalCount > self::LIMIT_PHOTOS ? true : false;
@@ -402,8 +402,8 @@ class UserController extends SiteController
         $user = $this->getRepository('User')->find($id);
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
-        $photos = $this->getRepository('Photo')->findBy(array('author' => $id), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
-        $totalCount = $this->getRepository('Photo')->countBy(array('author' => $id));
+        $photos = $this->getRepository('Photo')->findBy(array('author' => $id, 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
+        $totalCount = $this->getRepository('Photo')->countBy(array('author' => $id, 'active' => true));
 
         return array(
             'user' => $user,
@@ -421,8 +421,8 @@ class UserController extends SiteController
         $user = $this->getRepository('User')->find($id);
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
-        $albums = $this->getRepository('Album')->findBy(array('author' => $id), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
-        $totalCount = $this->getRepository('Album')->countBy(array('author' => $id));
+        $albums = $this->getRepository('Album')->findBy(array('author' => $id, 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
+        $totalCount = $this->getRepository('Album')->countBy(array('author' => $id, 'active' => true));
 
         return array(
             'user' => $user,
