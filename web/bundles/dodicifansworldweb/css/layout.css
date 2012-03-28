@@ -908,3 +908,8 @@ ul.currentinterests li a.deleteinterest:hover { background-position: bottom left
 .idol_profile_head .update { margin-bottom: 10px; }
 .deletecomment { cursor: pointer; position: absolute; height: 14px; width: 14px; display:block; background: url('../images/ui/closealert.png') top left no-repeat; right: 5px;}
 .deletecomment:hover { background-position: bottom left;}
+
+.loginhead {font-size: 16px; margin-top: 10px;}
+.leftbar .fb_button { width: 100%; }
+.leftbar .fb_button .fb_button_text { font-size: 14px; }
+.leftbar .banner-register {padding: 10px; border: 1px solid #ddd; line-height: 14px;}

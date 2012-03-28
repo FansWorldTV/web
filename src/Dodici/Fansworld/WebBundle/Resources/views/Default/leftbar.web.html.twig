@@ -1,6 +1,6 @@
 <div class="col_160 left margin">
     {% if not hide_login %}
-        <div class="cont clearfix">
+        <div class="cont clearfix leftbar">
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <div class="user_menu">
 
@@ -24,7 +24,8 @@
                 </ul>
             </div>
             {% else %}
-            <h2>Login</h2>
+            {{ facebook_login_button({'autologoutlink': false, label: 'facebook_login_short'|trans, size: 'large'}) }}
+            <h2 class="loginhead">Login</h2>
             <form class="login clearfix" action="{{ path("fos_user_security_check") }}" method="post">
                                     <label for="username">Email:</label>
                                     <input type="text" id="username" name="_username" />
@@ -39,9 +40,11 @@
 
                                     <input class="btn" type="submit" id="_submit" name="_submit" value="ENTRAR" />
                                 </form>
-                                {{ facebook_login_button({'autologoutlink': false, label: 'facebook_login_short'|trans}) }}
-
-                                <a class="banner-register" href="{{ path('fos_user_registration_register') }}" title="Registrate, es gratis"><img src="{{ asset('bundles/dodicifansworldweb/images/registro.gif' )}}"/></a>
+                                
+			<div class="greybox banner-register clearfix">
+				<a href="{{ path('fos_user_registration_register') }}">Registrate aquí</a> 
+				si aún no lo has hecho
+			</div>
             {% endif %}
         </div>
     {% endif %}
