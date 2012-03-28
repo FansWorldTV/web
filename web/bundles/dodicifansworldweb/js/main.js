@@ -365,7 +365,7 @@ var site = {
         });
     },
     globalCommentButtons: function(){
-    	$('.comment_button:not(.loading)').live('click',function(e){
+        $('.comment_button:not(.loading)').live('click',function(e){
             e.preventDefault();
             var el = $(this);
             var type = el.attr('data-type');
@@ -378,7 +378,7 @@ var site = {
             ajax.globalCommentAction(type, id, content, privacy, ispin,
                 function(response){
                     el.closest('.commentform').find('textarea.comment_message').val('');
-            		el.removeClass('loading');
+                    el.removeClass('loading');
                     success(response.message);
                     el.parents('.commentform').after(response.commenthtml);
                     $('.timeago').each(function(){
@@ -396,12 +396,12 @@ var site = {
         	
         });
     	
-    	$('textarea.comment_message').live('keydown', function (e) {
-     	   if ( e.keyCode == 13 ){
-     		   $(this).closest('.commentform').find('.comment_button').click();
-     		   return false;
-     	   }
-     	});
+        $('textarea.comment_message').live('keydown', function (e) {
+            if ( e.keyCode == 13 ){
+                $(this).closest('.commentform').find('.comment_button').click();
+                return false;
+            }
+        });
     },
     
     globalDeleteButtons: function(){
@@ -419,7 +419,7 @@ var site = {
                         el.removeClass('loading');
                         success(response.message);
                         if (response.redirect) {
-                        	window.location.href = response.redirect;
+                            window.location.href = response.redirect;
                         }
                     },
                     function(responsetext){
@@ -535,7 +535,7 @@ var searchBox = {
 };
 
 var searchFront = {
-    page: 0,
+    page: 1,
     init: function(){
         if($(".searchFront").size()>0){
             searchFront.addMore();
@@ -553,16 +553,31 @@ var searchFront = {
         
             ajax.searchAction( query, searchFront.page, function(response){
                 if(response){
-                    for(var i in response){
-                        var elementTmp = $("div.templates.searchFront div.listMosaic div.element").clone();
+                    var elements = response.search;
+                    for(var i in elements){
+                        var element = elements[i];
+                        var template = $(".searchFront.templates .listMosaicTemp .element").clone();
+                        var usrLink = Routing.generate(appLocale + '_user_detail', {
+                            'id':element.id
+                        });
                     
-                        elementTmp.find('.name').html(response[i].name);
-                        elementTmp.find('.avatar').attr('src', response[i].image);
-                        elementTmp.find('.commonFriends').html(response[i].commonFriends);
-                   
+                        template.find('a').attr('href', usrLink);
+                        template.find('.name').html(element.name);
+                        template.find('.commonFriends').html(element.commonFriends);
+                    
+                        template.find('.avatar').attr('href', usrLink);
+                        if(element.image){
+                            template.find('.avatar img').attr('src', element.image);
+                        }else{
+                            template.find('.avatar img').attr('src', '/fansworld/web/bundles/dodicifansworldweb/images/user_pic.jpg');
+                        }
+                    
+                        if(element.isFriend){
+                            template.addClass('isfriend');
+                        }
+                    
                         $(".searchFront.listMosaic").append(template);
                     }
-                
                     if(response.gotMore){
                         $("#addMore").removeClass('hidden');
                         searchFront.page++;
@@ -570,6 +585,9 @@ var searchFront = {
                         $("#addMore").addClass('hidden');
                     }
                 }
+                
+                $(".searchFront.listMosaic").show();
+                $("div.ajax-loader").addClass('hidden');
             });
         });
     },
@@ -578,22 +596,39 @@ var searchFront = {
         $(".searchFront.listMosaic").html('').hide();
         $("div.ajax-loader").removeClass('hidden');
         
-        ajax.searchAction(query, 0, function(response){
+        searchFront.page = 1;
+        ajax.searchAction(query, searchFront.page, function(response){
             if(response){
                 var elements = response.search;
                 for(var i in elements){
                     var element = elements[i];
                     var template = $(".searchFront.templates .listMosaicTemp .element").clone();
+                    var usrLink = Routing.generate(appLocale + '_user_detail', {
+                        'id':element.id
+                    });
                     
+                    template.find('a').attr('href', usrLink);
                     template.find('.name').html(element.name);
                     template.find('.commonFriends').html(element.commonFriends);
-                    template.find('.avatar img').attr('src', element.image);
+                    
+                    template.find('.avatar').attr('href', usrLink);
+                    if(element.image){
+                        template.find('.avatar img').attr('src', element.image);
+                    }else{
+                        template.find('.avatar img').attr('src', '/fansworld/web/bundles/dodicifansworldweb/images/user_pic.jpg');
+                    }
                     
                     if(element.isFriend){
                         template.addClass('isfriend');
                     }
                     
                     $(".searchFront.listMosaic").append(template);
+                }
+                if(response.gotMore){
+                    $("#addMore").removeClass('hidden');
+                    searchFront.page++;
+                }else{
+                    $("#addMore").addClass('hidden');
                 }
             }
                 
@@ -604,7 +639,7 @@ var searchFront = {
 };
 
 var searchIdols = {
-    page: 0,
+    page: 1,
     init: function(){
         if($(".searchIdol").length>0){
             searchIdols.addMore();
@@ -622,16 +657,31 @@ var searchIdols = {
         
             ajax.searchIdolsAction( query, searchIdols.page, null, function(response){
                 if(response){
-                    for(var i in response){
-                        var elementTmp = $("div.templates.searchIdol div.listMosaic div.element").clone();
+                    var elements = response.search;
+                    for(var i in elements){
+                        var element = elements[i];
+                        var template = $(".searchFront.templates .listMosaicTemp .element").clone();
+                        var usrLink = Routing.generate(appLocale + '_user_detail', {
+                            'id':element.id
+                        });
                     
-                        elementTmp.find('.name').html(response[i].name);
-                        elementTmp.find('.avatar').attr('src', response[i].image);
-                        elementTmp.find('.commonFriends').html(response[i].commonFriends);
-                   
-                        $(".searchIdol.listMosaic").append(template);
+                        template.find('a').attr('href', usrLink);
+                        template.find('.name').html(element.name);
+                        template.find('.commonFriends').html(element.commonFriends);
+                    
+                        template.find('.avatar').attr('href', usrLink);
+                        if(element.image){
+                            template.find('.avatar img').attr('src', element.image);
+                        }else{
+                            template.find('.avatar img').attr('src', '/fansworld/web/bundles/dodicifansworldweb/images/user_pic.jpg');
+                        }
+                    
+                        if(element.isFriend){
+                            template.addClass('isfriend');
+                        }
+                    
+                        $(".searchFront.listMosaic").append(template);
                     }
-                
                     if(response.gotMore){
                         $("#addMore").removeClass('hidden');
                         searchIdols.page++;
@@ -647,7 +697,8 @@ var searchIdols = {
         $(".searchIdol.listMosaic").html('').hide();
         $("div.ajax-loader").removeClass('hidden');
         
-        ajax.searchIdolsAction(query, 0, null, function(response){
+        searchIdols.page = 1;
+        ajax.searchIdolsAction(query, searchIdols.page, null, function(response){
             if(response){
                 var elements = response.idols;
                 for(var i in elements){
@@ -656,13 +707,24 @@ var searchIdols = {
                     
                     template.find('.name').html(element.name);
                     template.find('.commonFriends').html(element.commonFriends);
-                    template.find('.avatar img').attr('src', element.image);
+                    
+                    if(element.image){
+                        template.find('.avatar img').attr('src', element.image);
+                    }else{
+                        
+                    }
                     
                     if(element.isidol){
                         template.addClass('isidol');
                     }
                     
                     $(".searchIdol.listMosaic").append(template);
+                }
+                if(response.gotMore){
+                    $("#addMore").removeClass('hidden');
+                    searchIdols.page++;
+                }else{
+                    $("#addMore").addClass('hidden');
                 }
             }
                 
@@ -691,15 +753,23 @@ var friendsSearch = {
         
             ajax.friendsAction( query, friendsSearch.page, function(response){
                 if(response){
-                    for(var i in response){
-                        var elementTmp = $("div.templates.friends div.listMosaic div.element").clone();
-                        var usrLink = Routing.generate('user_detail', {'id':sponse[i].id});
+                    var elements = response.search;
+                    for(var i in elements){
+                        var element = elements[i];
+                        var template = $(".friends.templates .listMosaicTemp .element").clone();
+                        var usrLink = Routing.generate(appLocale +'_user_detail', {
+                            'id':element.id
+                        });
                     
-                        elementTmp.attr('src', usrLink);
-                        elementTmp.find('.name').html(response[i].name);
-                        elementTmp.find('.avatar').attr('src', response[i].image);
-                        elementTmp.find('.commonFriends').html(response[i].commonFriends);
-                   
+                        template.find('a').attr('href', usrLink);
+                        template.find('.name').html(element.name);
+                    
+                        if(element.image){
+                            template.find('.avatar img').attr('src', element.image);
+                        }else{
+                            template.find('.avatar img').attr('src', '/fansworld/web/bundles/dodicifansworldweb/images/user_pic.jpg');
+                        }
+                    
                         $(".friends.listMosaic").append(template);
                     }
                 
@@ -718,22 +788,36 @@ var friendsSearch = {
         $(".friends.listMosaic").html('').hide();
         $("div.ajax-loader").removeClass('hidden');
         
-        ajax.friendsAction(query, 0, function(response){
+        friendsSearch.page = 1;
+        
+        ajax.friendsAction(query, 1, function(response){
             if(response){
                 var elements = response.search;
                 for(var i in elements){
                     var element = elements[i];
                     var template = $(".friends.templates .listMosaicTemp .element").clone();
-                    var usrLink = Routing.generate(appLocale +'_user_detail', {'id':element.id});
+                    var usrLink = Routing.generate(appLocale +'_user_detail', {
+                        'id':element.id
+                    });
                     
                     template.find('a').attr('href', usrLink);
                     template.find('.name').html(element.name);
-                    template.find('.avatar img').attr('src', element.image);
+                    
+                    if(element.image){
+                        template.find('.avatar img').attr('src', element.image);
+                    }else{
+                        template.find('.avatar img').attr('src', '/fansworld/web/bundles/dodicifansworldweb/images/user_pic.jpg');
+                    }
                     
                     $(".friends.listMosaic").append(template);
                 }
             }
-                
+            if(response.gotMore){
+                $("#addMore").removeClass('hidden');
+                friendsSearch.page++;
+            }else{
+                $("#addMore").addClass('hidden');
+            }
             $(".friends.listMosaic").show();
             $("div.ajax-loader").addClass('hidden');
         });

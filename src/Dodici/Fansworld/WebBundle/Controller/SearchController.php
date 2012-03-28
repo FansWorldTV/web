@@ -66,9 +66,9 @@ class SearchController extends SiteController
     {
         $request = $this->getRequest();
         $query = $request->get('query');
-        $page = $request->get('page', 0);
+        $page = $request->get('page', 1);
 
-        $offset = (int) $page;
+        $page = (int) $page;
         if ($page > 0) {
             $offset = ($page - 1) * self::LIMIT_SEARCH;
         }
@@ -80,7 +80,7 @@ class SearchController extends SiteController
         $user = $this->get('security.context')->getToken()->getUser();
 
         $query = $query == '' ? null : $query;
-        
+
         if ($user instanceof User) {
             $search = $userRepo->SearchFront($user, $query, null, self::LIMIT_SEARCH, $offset);
             $countSearch = $userRepo->CountSearchFront($user, $query, null);
@@ -97,8 +97,7 @@ class SearchController extends SiteController
                 }
 
 
-
-                if ($countSearch > $offset) {
+                if (($countSearch / self::LIMIT_SEARCH) > $page) {
                     $response['gotMore'] = true;
                 } else {
                     $response['gotMore'] = false;
@@ -136,13 +135,16 @@ class SearchController extends SiteController
     {
         $request = $this->getRequest();
         $query = $request->get('query');
-        $page = $request->get('page');
+        $page = $request->get('page', 1);
         $userRepo = $this->getRepository('User');
         $user = $this->get('security.context')->getToken()->getUser();
 
-        $offset = 0;
-        if ($page > 0) {
+        $page = (int) $page;
+
+        if ($page > 1) {
             $offset = ($page - 1) * self::LIMIT_SEARCH;
+        } else {
+            $offset = 0;
         }
 
         $query = $query == '' ? null : $query;
@@ -162,8 +164,7 @@ class SearchController extends SiteController
                         'image' => $this->getImageUrl($element->getImage())
                     );
                 }
-
-                if ($countFriendUsers > $offset) {
+                if (($countFriendUsers / self::LIMIT_SEARCH) > $page) {
                     $response['gotMore'] = true;
                 } else {
                     $response['gotMore'] = false;
@@ -198,20 +199,16 @@ class SearchController extends SiteController
 
         $query = $request->get('query', null);
         $isIdol = null;
-        $page = (int) $request->get('page', false);
+        $page = (int) $request->get('page', 1);
 
         if ($query == "") {
             $query = null;
         }
-        if (!$page) {
-            $page = 0;
-        } else {
-            $page--;
-        }
 
-        $offset = $page;
-        if ($page > 0) {
-            $offset = $page * self::LIMIT_SEARCH;
+        if ($page > 1) {
+            $offset = ($page - 1) * self::LIMIT_SEARCH;
+        } else {
+            $offset = 0;
         }
 
         $user = $this->get('security.context')->getToken()->getUser();
@@ -221,7 +218,7 @@ class SearchController extends SiteController
             $countTotal = $this->getRepository('User')->CountSearchIdolFront($user, $query, $isIdol);
 
             if ($countTotal > 0) {
-                $response['gotMore'] = $countTotal * $page > $offset ? true : false;
+                $response['gotMore'] = ($countTotal / self::LIMIT_SEARCH) > $page ? true : false;
 
                 foreach ($searchIdol as $idol) {
                     $response['idols'][] = array(
