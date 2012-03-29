@@ -18,9 +18,9 @@ var site = {
     isClosedRequests: true,
     
     init: function(){
-        $("ul.friendgroupsList").hide();
-        $(".navy ul li.alerts_user ul").hide();
-        $(".navy ul li.notifications_user ul").hide();
+        $("ul.friendgroupsList").show();
+        $("li.alerts_user a span").hide().parent().removeClass('hidden');
+        $("li.notifications_user a span").hide().parent().removeClass('hidden');
         
         $("a.btn_picture").colorbox({
             'iframe': true,
@@ -115,9 +115,18 @@ var site = {
             if(response){
                 if(response.number > 0){
                     var actualNumber = $("li.notifications_user a span").html();
-                    parseInt(actualNumber);
+                    if(actualNumber == ''){
+                        actualNumber = 0;
+                    }else{
+                        parseInt(actualNumber);
+                    }
                     
-                    $("li.notifications_user a span").html(response.number).parent().removeClass('hidden');
+                    if(actualNumber > 0){
+                        $("li.notifications_user a span").html(response.number).show();
+                    }else{
+                        $("li.notifications_user a span").hide();
+                    }
+                    
                     
                     if(actualNumber < response.number){
                         $(".notifications_user a:first span").effect("highlight",{},3000);
@@ -142,20 +151,19 @@ var site = {
                         $("li.notifications_user ul li.loading").remove();
                         $("li.notifications_user ul div.info").remove();
                     
-                        for(var i in response){
-                            var element = response[i];
+                        for(var i in response.notifications){
+                            var element = response.notifications[i];
                             var newli = $('<li>').addClass('clearfix notification');
-                            newli.html(element);
+                            if(element.readed){
+                                newli.addClass('readed').css('background', '#f4f3b8');
+                            }
+                            newli.html(element.view);
                             $("li.notifications_user ul li.more").before(newli);
                         }
                         
                         site.readedNotification();
-                        var cant = $(".notifications_user a span").html();
-                        parseInt(cant);
-                        if(cant>5){
-                            $("li.notifications_user ul li.more a").attr('href', Routing.generate(appLocale + '_user_notifications')).html(cant-5 + ' notificaciones mas').parent().removeClass('hidden');
-                        }else{
-                            $("li.notifications_user ul li.more").addClass('hidden');
+                        if(response.countAll > 5){
+                            $("li.notifications_user ul li.more a").attr('href', Routing.generate(appLocale + '_user_notifications')).html( ' ver más').parent().removeClass('hidden');
                         }
                     } 
                 });
@@ -172,7 +180,7 @@ var site = {
         });
     },
     readedNotification: function(){
-        $("li.notifications_user li.notification").hover(function(){
+        $("li.notifications_user li.notification:not('.readed')").hover(function(){
             var el = $(this).find('div.info');
             var notificationId = el.attr('notificationId');
             ajax.deleteNotification(notificationId, function(response){

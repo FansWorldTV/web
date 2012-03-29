@@ -3,9 +3,7 @@
 namespace Dodici\Fansworld\WebBundle\Controller;
 
 use Symfony\Component\Form\FormError;
-
 use Symfony\Component\Validator\Constraints\Collection;
-
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +21,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class NotificationController extends SiteController
 {
-	/**
+
+    /**
      * @Route("/preferences", name="notification_preferences")
      * @Secure(roles="ROLE_USER")
      * @Template
@@ -35,9 +34,9 @@ class NotificationController extends SiteController
         $em = $this->getDoctrine()->getEntityManager();
         $preferences = $user->getNotifyprefs();
         $preflist = Notification::getTypeList();
-        
+
         $defaultData = array('prefs' => $preferences);
-        
+
         $collectionConstraint = new Collection(array(
                     'prefs' => array(new \Symfony\Component\Validator\Constraints\Choice(array('choices' => array_keys($preflist), 'multiple' => true))),
                 ));
@@ -65,4 +64,5 @@ class NotificationController extends SiteController
 
         return array('form' => $form->createView());
     }
+
 }

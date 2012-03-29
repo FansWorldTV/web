@@ -28,8 +28,6 @@ class UserController extends SiteController
      */
     public function wallAction($id)
     {
-
-
         $user = $this->getRepository('User')->find($id);
         if (!$user) {
             throw new HttpException(404, "No existe el usuario");
@@ -60,22 +58,22 @@ class UserController extends SiteController
 
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
-        
+
         $categories = $this->getRepository('InterestCategory')->findBy(array(), array('title' => 'ASC'));
-        
+
         $interests = array();
-        foreach($categories as $category){
+        foreach ($categories as $category) {
             $interestsRepo = $this->getRepository('Interest')->matching($category->getId(), null, $user->getId());
-            
+
             $interests[$category->getId()]['category'] = $category->getTitle();
-            foreach($interestsRepo as $element){
+            foreach ($interestsRepo as $element) {
                 $interests[$category->getId()]['interest'][] = array(
                     'title' => $element->getTitle(),
                     'image' => $this->getImageUrl($element->getImage())
                 );
             }
         }
-        
+
         return array('user' => $user, 'friendgroups' => $friendGroups, 'interests' => $interests);
     }
 
@@ -106,13 +104,18 @@ class UserController extends SiteController
     {
         $user = $this->get('security.context')->getToken()->getUser();
         $notiRepo = $this->getRepository('Notification');
-        $notifications = $notiRepo->latest($user, false, self::LIMIT_NOTIFICATIONS);
+        $notifications = $notiRepo->latest($user, null, self::LIMIT_NOTIFICATIONS);
+        $countAll = $notiRepo->countBy(array('author' => $user->getId()));
 
         $response = array();
         foreach ($notifications as $notification) {
-            $response[] = $this->renderView('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $notification));
+            $response['notifications'][] = array(
+                'readed' => $notification->getReaded(),
+                'view' => $this->renderView('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $notification))
+            );
         }
 
+        $response['countAll'] = $countAll;
         return $this->jsonResponse($response);
     }
 
@@ -362,34 +365,34 @@ class UserController extends SiteController
     public function photosAction($id)
     {
         $user = $this->getRepository('User')->find($id);
-        
+
         if ($user->getType() == User::TYPE_IDOL) {
-        	return array('user' => $user);
+            return array('user' => $user);
         } else {
-	        $loggedUser = $this->get('security.context')->getToken()->getUser();
-	        $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
-	
-	        $photos = $this->getRepository('Photo')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
-	        $albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
-	
-	        $photosTotalCount = $this->getRepository('Photo')->countBy(array('author' => $user->getId(), 'active' => true));
-	        $albumsTotalCount = $this->getRepository('Album')->countBy(array('author' => $user->getId(), 'active' => true));
-	
-	        $viewMorePhotos = $photosTotalCount > self::LIMIT_PHOTOS ? true : false;
-	        $viewMoreAlbums = $albumsTotalCount > self::LIMIT_PHOTOS ? true : false;
-	
-	        $loggedUser = $this->get('security.context')->getToken()->getUser();
-	        $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
-	
-	        return array(
-	            'user' => $user,
-	            'isLoggedUser' => $isLoggedUser,
-	            'photos' => $photos,
-	            'albums' => $albums,
-	            'viewMorePhotos' => $viewMorePhotos,
-	            'viewMoreAlbums' => $viewMoreAlbums,
-	            'friendgroups' => $friendGroups
-	        );
+            $loggedUser = $this->get('security.context')->getToken()->getUser();
+            $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
+
+            $photos = $this->getRepository('Photo')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
+            $albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
+
+            $photosTotalCount = $this->getRepository('Photo')->countBy(array('author' => $user->getId(), 'active' => true));
+            $albumsTotalCount = $this->getRepository('Album')->countBy(array('author' => $user->getId(), 'active' => true));
+
+            $viewMorePhotos = $photosTotalCount > self::LIMIT_PHOTOS ? true : false;
+            $viewMoreAlbums = $albumsTotalCount > self::LIMIT_PHOTOS ? true : false;
+
+            $loggedUser = $this->get('security.context')->getToken()->getUser();
+            $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
+
+            return array(
+                'user' => $user,
+                'isLoggedUser' => $isLoggedUser,
+                'photos' => $photos,
+                'albums' => $albums,
+                'viewMorePhotos' => $viewMorePhotos,
+                'viewMoreAlbums' => $viewMoreAlbums,
+                'friendgroups' => $friendGroups
+            );
         }
     }
 
