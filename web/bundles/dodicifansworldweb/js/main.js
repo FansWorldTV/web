@@ -121,7 +121,7 @@ var site = {
                         parseInt(actualNumber);
                     }
                     
-                    if(actualNumber > 0){
+                    if(response.number > 0){
                         $("li.notifications_user a span").html(response.number).show();
                     }else{
                         $("li.notifications_user a span").hide();

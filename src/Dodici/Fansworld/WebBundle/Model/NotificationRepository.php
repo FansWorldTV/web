@@ -27,7 +27,7 @@ class NotificationRepository extends CountBaseRepository
     	'
     	. ($readed !== null ? ' AND n.readed = :readed ' : '') .
     	'
-    	ORDER BY n.readed DESC, n.createdAt DESC
+    	ORDER BY  n.createdAt DESC
     	'
     	)
     		->setParameter('userid', $user->getId(), Type::BIGINT);
