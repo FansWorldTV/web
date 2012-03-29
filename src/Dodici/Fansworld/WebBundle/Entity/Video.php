@@ -59,6 +59,13 @@ class Video implements Translatable
     private $createdAt;
     
     /**
+     * @var datetime $createdAtWeek
+     *
+     * @ORM\Column(name="created_at_week", type="bigint", nullable=false)
+     */
+    private $createdAtWeek;
+    
+    /**
      * @var boolean $active
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
@@ -95,6 +102,13 @@ class Video implements Translatable
     private $privacy;
     
     /**
+     * @var boolean $highlight
+     *
+     * @ORM\Column(name="highlight", type="boolean", nullable=false)
+     */
+    private $highlight;
+    
+    /**
      * @var integer $likeCount
      *
      * @ORM\Column(name="likecount", type="integer", nullable=false)
@@ -107,6 +121,13 @@ class Video implements Translatable
      * @ORM\Column(name="commentcount", type="integer", nullable=false)
      */
     private $commentCount;
+    
+    /**
+     * @var integer $viewCount
+     *
+     * @ORM\Column(name="viewcount", type="integer", nullable=false)
+     */
+    private $viewCount;
     
     /**
      * @Gedmo\Slug(fields={"title"}, unique=false)
@@ -185,6 +206,12 @@ class Video implements Translatable
         }
         if (null === $this->commentCount) {
         	$this->setCommentCount(0);
+        }
+        if (null === $this->viewCount) {
+        	$this->setViewCount(0);
+        }
+    	if (null === $this->highlight) {
+        	$this->setHighlight(false);
         }
         
     	if ($this->getYoutube()) {
@@ -304,6 +331,7 @@ class Video implements Translatable
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+        $this->setCreatedAtWeek($createdAt->format('U'));
     }
 
     /**
@@ -314,6 +342,26 @@ class Video implements Translatable
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+    
+	/**
+     * Set createdAtWeek
+     *
+     * @param bigint $createdAtWeek
+     */
+    public function setCreatedAtWeek($createdAtWeek)
+    {
+        $this->createdAtWeek = $createdAtWeek;
+    }
+
+    /**
+     * Get createdAtWeek
+     *
+     * @return bigint
+     */
+    public function getCreatedAtWeek()
+    {
+        return $this->createdAtWeek;
     }
 
     /**
@@ -414,6 +462,26 @@ class Video implements Translatable
     public function getPrivacy()
     {
         return $this->privacy;
+    }
+    
+	/**
+     * Set highlight
+     *
+     * @param boolean $highlight
+     */
+    public function setHighlight($highlight)
+    {
+        $this->highlight = $highlight;
+    }
+
+    /**
+     * Get highlight
+     *
+     * @return boolean 
+     */
+    public function getHighlight()
+    {
+        return $this->highlight;
     }
 
     /**
@@ -534,6 +602,26 @@ class Video implements Translatable
     public function getLikeCount()
     {
         return $this->likeCount;
+    }
+    
+    /**
+     * Set viewCount
+     *
+     * @param integer $viewCount
+     */
+    public function setViewCount($viewCount)
+    {
+        $this->viewCount = $viewCount;
+    }
+
+    /**
+     * Get viewCount
+     *
+     * @return integer 
+     */
+    public function getViewCount()
+    {
+        return $this->viewCount;
     }
 
     /**

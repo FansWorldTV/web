@@ -51,7 +51,7 @@ class VideoController extends SiteController
      */
     public function listAction()
     {
-        $videos = $this->getRepository("Video")->findBy(array("active" => true), array("createdAt" => "DESC"), self::cantVideos);
+        /*$videos = $this->getRepository("Video")->findBy(array("active" => true), array("createdAt" => "DESC"), self::cantVideos);
         $countAll = $this->getRepository('Video')->countBy(array('active' => true));
         $addMore = $countAll > self::cantVideos ? true : false;
         $categories = $this->getRepository('VideoCategory')->findBy(array());
@@ -62,7 +62,34 @@ class VideoController extends SiteController
             'addMore' => $addMore,
             'categories' => $categories,
             'popularTags' => $popularTags
-        );
+        );*/
+    	
+    	$user = $this->get('security.context')->getToken()->getUser();
+    	$vidrepo = $this->getRepository("Video");
+    	$videosbycat = array();
+    	$highlight = null;
+    	$highlights = $vidrepo->findBy(array("active" => true, "highlight" => true), array("createdAt" => "DESC"), 1);
+    	if (count($highlights)) $highlight = $highlights[0];
+    	$categories = $this->getRepository('VideoCategory')->findBy(array(), array('title' => 'ASC'));
+    	    	
+    	foreach ($categories as $category) {
+    		$catvids = $vidrepo->searchText(null, $user, 2, null, $category, false);
+    		$videosbycat[] = array('category' => $category, 'videos' => $catvids);
+    	}
+    	
+    	$uservideos = $vidrepo->searchText(null, $user, 12, null, null, true);
+    	
+    	$mostviewed = $vidrepo->searchText(null, $user, 3, null, null, null, 'views');
+    	
+    	$mostliked = $vidrepo->searchText(null, $user, 3, null, null, null, 'likes');
+    	
+    	return array(
+    		'highlight' => $highlight,
+    		'videosbycategory' => $videosbycat,
+    		'uservideos' => $uservideos,
+    		'mostviewed' => $mostviewed,
+    		'mostliked' => $mostliked
+    	);
     }
 
     /**
@@ -147,6 +174,18 @@ class VideoController extends SiteController
             'popularTags' => $popularTags,
             'selected' => $id
         );
+    }
+    
+	/**
+     * user videos page
+     * 
+     * @Route("/users", name="video_users")
+     * @Template
+     */
+    public function userVideosAction($id)
+    {
+        // TODO: everything
+    	return new Response('todo');
     }
 
     /**

@@ -60,6 +60,27 @@ var site = {
             timeOnly: true,
             stepMinute: 5
         });
+        
+        $('input[data-default-text]').each(function(){
+	        $(this).val($(this).attr('data-default-text'))
+	        .addClass('graytext')
+	        .focus(
+	        	function(e){
+	    	    	if ($(this).val() == $(this).attr('data-default-text')) {
+	    	    		$(this).val('');
+	    	    		$(this).removeClass('graytext');
+	    	    	}
+	        	}
+	        )
+	        .blur(
+	        	function(e){
+	        		if ($(this).val() == '') {
+	        			$(this).addClass('graytext');
+	        			$(this).val($(this).attr('data-default-text'));
+	    	    	}
+	        	}
+	        );
+        });
     	
         site.parseTimes();
         site.listenPendingRequests();

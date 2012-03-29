@@ -27,8 +27,13 @@ class VideoRepository extends CountBaseRepository
 	 * @param int $limit
 	 * @param int $offset
 	 */
-	public function searchText($searchterm=null, $user=null, $limit=null, $offset=null, $category=null)
+	public function searchText($searchterm=null, $user=null, $limit=null, $offset=null, $category=null, $isfromuser=null, $sortcriteria='default')
 	{
+		$sortcriterias = array(
+			'default' => 'v.highlight DESC, v.viewCount DESC',
+			'views' => 'v.viewCount DESC',
+			'likes' => 'v.likeCount DESC'
+		);
 		
 		$query = $this->_em->createQuery('
     	SELECT v, va
@@ -61,14 +66,26 @@ class VideoRepository extends CountBaseRepository
     			)
     		)
     	)
-    	ORDER BY v.createdAt DESC
+    	AND
+    	(
+    		(:isfromuser IS NULL OR
+    			(:isfromuser = true AND v.author IS NOT NULL)
+    			OR
+    			(:isfromuser = false AND v.author IS NULL)
+    		)
+    	)
+    	ORDER BY v.createdAtWeek DESC,
+    	
+    	'.$sortcriterias[$sortcriteria].'
+    	
     	')
         	->setParameter('searchterm', $searchterm)
         	->setParameter('searchlike', '%'.$searchterm.'%')
         	->setParameter('everyone', Privacy::EVERYONE)
         	->setParameter('friendsonly', Privacy::FRIENDS_ONLY)
         	->setParameter('user', ($user instanceof User) ? $user->getId() : null)
-        	->setParameter('category', ($category instanceof VideoCategory) ? $category->getId() : $category);
+        	->setParameter('category', ($category instanceof VideoCategory) ? $category->getId() : $category)
+        	->setParameter('isfromuser', $isfromuser);
         
         if ($limit !== null)
             $query = $query->setMaxResults((int)$limit);
@@ -85,8 +102,13 @@ class VideoRepository extends CountBaseRepository
 	 * @param int $limit
 	 * @param int $offset
 	 */
-	public function byTag(Tag $tag, $user=null, $limit=null, $offset=null, $category=null)
+	public function byTag(Tag $tag, $user=null, $limit=null, $offset=null, $category=null, $isfromuser=null, $sortcriteria='default')
 	{
+		$sortcriterias = array(
+			'default' => 'v.highlight DESC, v.viewCount DESC',
+			'views' => 'v.viewCount DESC',
+			'likes' => 'v.likeCount DESC'
+		);
 		
 		$query = $this->_em->createQuery('
     	SELECT v, va
@@ -115,13 +137,23 @@ class VideoRepository extends CountBaseRepository
     			)
     		)
     	)
-    	ORDER BY v.createdAt DESC
+    	AND
+    	(
+    		(:isfromuser IS NULL OR
+    			(:isfromuser = true AND v.author IS NOT NULL)
+    			OR
+    			(:isfromuser = false AND v.author IS NULL)
+    		)
+    	)
+    	ORDER BY v.createdAtWeek DESC,
+    	'.$sortcriterias[$sortcriteria].'
     	')
         	->setParameter('tag', $tag->getId())
         	->setParameter('everyone', Privacy::EVERYONE)
         	->setParameter('friendsonly', Privacy::FRIENDS_ONLY)
         	->setParameter('user', ($user instanceof User) ? $user->getId() : null)
-        	->setParameter('category', ($category instanceof VideoCategory) ? $category->getId() : $category);
+        	->setParameter('category', ($category instanceof VideoCategory) ? $category->getId() : $category)
+        	->setParameter('isfromuser', $isfromuser);
         
         if ($limit !== null)
             $query = $query->setMaxResults((int)$limit);
@@ -136,7 +168,7 @@ class VideoRepository extends CountBaseRepository
 	 * @param User $user
 	 * @param string $searchterm
 	 */
-	public function countSearchText($searchterm=null, $user=null, $category=null)
+	public function countSearchText($searchterm=null, $user=null, $category=null, $isfromuser=null)
 	{
 		
 		$query = $this->_em->createQuery('
@@ -169,13 +201,22 @@ class VideoRepository extends CountBaseRepository
     			)
     		)
     	)
+    	AND
+    	(
+    		(:isfromuser IS NULL OR
+    			(:isfromuser = true AND v.author IS NOT NULL)
+    			OR
+    			(:isfromuser = false AND v.author IS NULL)
+    		)
+    	)
     	')
         	->setParameter('searchterm', $searchterm)
         	->setParameter('searchlike', '%'.$searchterm.'%')
         	->setParameter('everyone', Privacy::EVERYONE)
         	->setParameter('friendsonly', Privacy::FRIENDS_ONLY)
         	->setParameter('user', ($user instanceof User) ? $user->getId() : null)
-        	->setParameter('category', ($category instanceof VideoCategory) ? $category->getId() : $category);
+        	->setParameter('category', ($category instanceof VideoCategory) ? $category->getId() : $category)
+        	->setParameter('isfromuser', $isfromuser);
         
         return $query->getSingleScalarResult();
 	}
@@ -185,7 +226,7 @@ class VideoRepository extends CountBaseRepository
 	 * @param User $user
 	 * @param Tag $tag
 	 */
-	public function countByTag(Tag $tag, $user=null, $category=null)
+	public function countByTag(Tag $tag, $user=null, $category=null, $isfromuser=null)
 	{
 		
 		$query = $this->_em->createQuery('
@@ -214,12 +255,21 @@ class VideoRepository extends CountBaseRepository
     			)
     		)
     	)
+    	AND
+    	(
+    		(:isfromuser IS NULL OR
+    			(:isfromuser = true AND v.author IS NOT NULL)
+    			OR
+    			(:isfromuser = false AND v.author IS NULL)
+    		)
+    	)
     	')
         	->setParameter('tag', $tag->getId())
         	->setParameter('everyone', Privacy::EVERYONE)
         	->setParameter('friendsonly', Privacy::FRIENDS_ONLY)
         	->setParameter('user', ($user instanceof User) ? $user->getId() : null)
-        	->setParameter('category', ($category instanceof VideoCategory) ? $category->getId() : $category);
+        	->setParameter('category', ($category instanceof VideoCategory) ? $category->getId() : $category)
+        	->setParameter('isfromuser', $isfromuser);
         
         return $query->getSingleScalarResult();
 	}

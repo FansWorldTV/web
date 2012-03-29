@@ -36,6 +36,7 @@ class VideoAdmin extends Admin
             ->add('createdAt', 'date', array ('attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy HH:mm'), array ())
             ->add('active', NULL, array ('required' => false), array ())
+            ->add('highlight', NULL, array ('required' => false), array ())
             ->add('duration', NULL, array (), array ())
             ->add('stream', NULL, array (), array ())
             ->add('youtube', NULL, array (), array ())
@@ -70,6 +71,7 @@ class VideoAdmin extends Admin
             ->add('author', 'orm_many_to_one', array ())
             ->add('createdAt', 'datetime', array ())
             ->add('active', 'boolean', array ())
+            ->add('highlight', 'boolean', array ())
             ->add('videocategory', 'orm_many_to_one', array ())
         ;
     }
@@ -81,6 +83,7 @@ class VideoAdmin extends Admin
             ->add('author', 'doctrine_orm_model', array (  'field_type' => 'entity',  'field_options' =>   array (    'class' => 'Application\\Sonata\\UserBundle\\Entity\\User',  ),  'options' =>   array (  ),  'operator_type' => 'sonata_type_boolean',  'operator_options' =>   array (  ),  'field_name' => 'author',  'mapping_type' => 2,))
             ->add('content', 'doctrine_orm_string', array (  'field_type' => 'text',  'field_options' =>   array (  ),  'options' =>   array (  ),  'field_name' => 'content',))
             ->add('active', 'doctrine_orm_boolean', array (  'field_type' => 'sonata_type_boolean',  'field_options' =>   array (  ),  'options' =>   array (  ),  'field_name' => 'active',))
+            ->add('highlight', 'doctrine_orm_boolean', array (  'field_type' => 'sonata_type_boolean',  'field_options' =>   array (  ),  'options' =>   array (  ),  'field_name' => 'highlight',))
             ->add('videocategory', 'doctrine_orm_model', array (  'field_type' => 'entity',  'field_options' =>   array (    'class' => 'Dodici\\Fansworld\\WebBundle\\Entity\\VideoCategory',  ),  'options' =>   array (  ),  'operator_type' => 'sonata_type_boolean',  'operator_options' =>   array (  ),  'field_name' => 'videocategory',  'mapping_type' => 2,))
         ;
     }

@@ -1,0 +1,44 @@
+{% if showtitle is not defined %}
+	{% set showtitle = true %}
+{% endif %}
+{% if showdate is not defined %}
+	{% set showdate = true %}
+{% endif %}
+{% if showviews is not defined %}
+	{% set showviews = true %}
+{% endif %}
+{% if showlikes is not defined %}
+	{% set showlikes = true %}
+{% endif %}
+{% if extraclasses is not defined %}
+	{% set extraclasses = [] %}
+{% endif %}
+<li class="greybox clearfix {{ extraclasses|join(' ') }}">
+    <div class="thumb">
+    	<a href="{{path('video_show',{id:video.id, slug:video.slug})}}">
+			{% thumbnail video.image, 'video' %}
+		</a>
+	</div>
+	<div class="data">
+		{% if showtitle %}
+		<div class="title">
+			{{video}}
+		</div>
+		{% endif %}
+		{% if showdate %}
+		<div class="date">
+			Fecha: {{video.createdAt|date('d/m/Y')}}
+		</div>
+		{% endif %}
+		{% if showviews or showlikes %}
+		<div class="stats">
+			{% if showviews %}
+			<div class="views">{{video.viewCount}}</div>
+			{% endif %}
+			{% if showlikes %}
+			<div class="likes">{{video.likeCount}}</div>
+			{% endif %}
+		</div>
+		{% endif %}
+	</div>
+</li>
