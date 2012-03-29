@@ -62,7 +62,7 @@
         <h2>Videos más vistos</h2>
         <ul class="mostviewed videorowblock">
         {% for video in mostviewed %}
-        	{% include 'DodiciFansworldWebBundle:Video:list_video_item.html.twig' with {video: video, showdate: false} %}
+        	{% include 'DodiciFansworldWebBundle:Video:list_video_item.html.twig' with {video: video, showdate: false, longtitle: true} %}
         {% endfor %}
         </ul>
         
@@ -73,7 +73,7 @@
         <h2>Videos más votados</h2>
         <ul class="mostliked videorowblock">
         {% for video in mostliked %}
-        	{% include 'DodiciFansworldWebBundle:Video:list_video_item.html.twig' with {video: video, showdate: false} %}
+        	{% include 'DodiciFansworldWebBundle:Video:list_video_item.html.twig' with {video: video, showdate: false, longtitle: true} %}
         {% endfor %}
         </ul>
         

@@ -13,6 +13,9 @@
 {% if extraclasses is not defined %}
 	{% set extraclasses = [] %}
 {% endif %}
+{% if longtitle is not defined %}
+	{% set longtitle = false %}
+{% endif %}
 <li class="greybox clearfix {{ extraclasses|join(' ') }}">
     <div class="thumb">
     	<a href="{{path('video_show',{id:video.id, slug:video.slug})}}">
@@ -22,7 +25,11 @@
 	<div class="data">
 		{% if showtitle %}
 		<div class="title">
+		{% if longtitle or video.title|length < 25 %}
 			{{video}}
+		{% else %}
+			<abbr title="{{video}}">{{video|truncate(25)}}</abbr>
+		{% endif %}
 		</div>
 		{% endif %}
 		{% if showdate %}
