@@ -62,24 +62,24 @@ var site = {
         });
         
         $('input[data-default-text]').each(function(){
-	        $(this).val($(this).attr('data-default-text'))
-	        .addClass('graytext')
-	        .focus(
-	        	function(e){
-	    	    	if ($(this).val() == $(this).attr('data-default-text')) {
-	    	    		$(this).val('');
-	    	    		$(this).removeClass('graytext');
-	    	    	}
-	        	}
-	        )
-	        .blur(
-	        	function(e){
-	        		if ($(this).val() == '') {
-	        			$(this).addClass('graytext');
-	        			$(this).val($(this).attr('data-default-text'));
-	    	    	}
-	        	}
-	        );
+            $(this).val($(this).attr('data-default-text'))
+            .addClass('graytext')
+            .focus(
+                function(e){
+                    if ($(this).val() == $(this).attr('data-default-text')) {
+                        $(this).val('');
+                        $(this).removeClass('graytext');
+                    }
+                }
+                )
+            .blur(
+                function(e){
+                    if ($(this).val() == '') {
+                        $(this).addClass('graytext');
+                        $(this).val($(this).attr('data-default-text'));
+                    }
+                }
+                );
         });
     	
         site.parseTimes();
@@ -235,17 +235,21 @@ var site = {
                         parseInt(cant);
                         $("li.alerts_user ul li.clearfix").remove();
                   
-                        for(var i in response.friendships){
-                            var element = response.friendships[i];
-                            var template = $("#templatePendingFriends ul li").clone();
-                            if(element.user.image){
-                                template.find("img.avatar").attr('src', element.user.image);
-                            }
-                            template.find("span.info a.name").attr('href', element.user.url).html(element.user.name);
-                            template.find("a.deny").attr('id', element.friendship.id);
-                            template.find("div.button a.accept").attr('id', element.friendship.id);
+                        if(response.total > 0){
+                            for(var i in response.friendships){
+                                var element = response.friendships[i];
+                                var template = $("#templatePendingFriends ul li").clone();
+                                if(element.user.image){
+                                    template.find("img.avatar").attr('src', element.user.image);
+                                }
+                                template.find("span.info a.name").attr('href', element.user.url).html(element.user.name);
+                                template.find("a.deny").attr('id', element.friendship.id);
+                                template.find("div.button a.accept").attr('id', element.friendship.id);
                       
-                            $("li.alerts_user ul li.more").before(template);
+                                $("li.alerts_user ul li.more").before(template);
+                            }
+                        }else{
+                            $("li.alerts_user ul li.more").before('<li class="clearfix">No hay solicitudes pendientes</li>');
                         }
                         
                         site.acceptFriendRequest();
