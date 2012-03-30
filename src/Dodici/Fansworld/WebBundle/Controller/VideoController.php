@@ -42,6 +42,23 @@ class VideoController extends SiteController
 
         return array('video' => $video);
     }
+    
+    /**
+     * rightbar
+     * @Template
+     */
+    public function rightbarAction()
+    {
+    	$user = $this->get('security.context')->getToken()->getUser();
+    	$vidrepo = $this->getRepository("Video");
+    	$mostviewed = $vidrepo->searchText(null, $user, 3, null, null, null, 'views');
+    	$mostliked = $vidrepo->searchText(null, $user, 3, null, null, null, 'likes');
+    	
+    	return array(
+    		'mostviewed' => $mostviewed,
+    		'mostliked' => $mostliked
+    	);
+    }
 
     /**
      * video list
@@ -79,16 +96,12 @@ class VideoController extends SiteController
     	
     	$uservideos = $vidrepo->searchText(null, $user, 12, null, null, true);
     	
-    	$mostviewed = $vidrepo->searchText(null, $user, 3, null, null, null, 'views');
     	
-    	$mostliked = $vidrepo->searchText(null, $user, 3, null, null, null, 'likes');
     	
     	return array(
     		'highlight' => $highlight,
     		'videosbycategory' => $videosbycat,
-    		'uservideos' => $uservideos,
-    		'mostviewed' => $mostviewed,
-    		'mostliked' => $mostliked
+    		'uservideos' => $uservideos
     	);
     }
 
@@ -362,6 +375,10 @@ class VideoController extends SiteController
         $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getEntityManager();
         $privacies = Privacy::getOptions();
+        
+        $categories = $this->getRepository('VideoCategory')->findBy(array(),array('title' => 'ASC'));
+        $choicecat = array();
+        foreach ($categories as $cat) $choicecat[$cat->getId()] = $cat;
 
         $video = null;
 
@@ -370,6 +387,7 @@ class VideoController extends SiteController
         $collectionConstraint = new Collection(array(
                     'title' => array(new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
                     'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
+        			'videocategory' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\Choice(array_keys($choicecat))),
                     'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
                     'youtube' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250)))
                 ));
@@ -377,6 +395,7 @@ class VideoController extends SiteController
         $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
                 ->add('title', 'text', array('required' => false, 'label' => 'Título'))
                 ->add('content', 'textarea', array('required' => false, 'label' => 'Descripción'))
+                ->add('videocategory', 'choice', array('required' => true, 'choices' => $choicecat, 'label' => 'Categoría'))
                 ->add('youtube', 'text', array('required' => true, 'label' => 'URL Youtube'))
                 ->add('privacy', 'choice', array('required' => true, 'choices' => $privacies, 'label' => 'Privacidad'))
                 ->getForm();
@@ -411,6 +430,8 @@ class VideoController extends SiteController
                             $mediaManager->save($image);
                         }
 
+                        $videocategory = $this->getRepository('VideoCategory')->find($data['videocategory']);
+                        
                         $video = new Video();
                         $video->setAuthor($user);
                         $video->setTitle($data['title'] ? : $metadata['title']);
@@ -418,6 +439,7 @@ class VideoController extends SiteController
                         $video->setYoutube($idyoutube);
                         $video->setImage($image);
                         $video->setPrivacy($data['privacy']);
+                        $video->setVideocategory($videocategory);
                         $em->persist($video);
                         $em->flush();
                         $this->get('session')->setFlash('success', '¡Has subido un video con éxito!');

@@ -56,29 +56,5 @@
 {% endblock %}
 
 {% block rightbar %}
-    <div class="col_300 left video-rightbar">
-        <input type="text" class="video-search-input" data-default-text="Buscar videos..." />
-        
-        <h2>Videos más vistos</h2>
-        <ul class="mostviewed videorowblock">
-        {% for video in mostviewed %}
-        	{% include 'DodiciFansworldWebBundle:Video:list_video_item.html.twig' with {video: video, showdate: false, longtitle: true} %}
-        {% endfor %}
-        </ul>
-        
-        <div class="ad">
-            <div class="banner_demo" style="height:120px"></div>
-        </div>
-        
-        <h2>Videos más votados</h2>
-        <ul class="mostliked videorowblock">
-        {% for video in mostliked %}
-        	{% include 'DodiciFansworldWebBundle:Video:list_video_item.html.twig' with {video: video, showdate: false, longtitle: true} %}
-        {% endfor %}
-        </ul>
-        
-        <div class="ad">
-            <div class="banner_demo" style="height:250px"></div>
-        </div>
-    </div>
+    {% render 'DodiciFansworldWebBundle:Video:rightbar' %}
 {% endblock %}
