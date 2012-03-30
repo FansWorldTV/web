@@ -549,7 +549,7 @@ class Video implements Translatable
      *
      * @param Application\Sonata\UserBundle\Entity\User $author
      */
-    public function setAuthor(\Application\Sonata\UserBundle\Entity\User $author)
+    public function setAuthor($author)
     {
         $this->author = $author;
     }
