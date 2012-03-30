@@ -213,6 +213,9 @@ class Video implements Translatable
     	if (null === $this->highlight) {
         	$this->setHighlight(false);
         }
+        if (null === $this->author) {
+        	$this->setPrivacy(Privacy::EVERYONE);
+        }
         
     	if ($this->getYoutube()) {
 			$youtube = $this->getYoutube();
