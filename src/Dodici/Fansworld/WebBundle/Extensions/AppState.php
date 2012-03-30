@@ -65,7 +65,7 @@ class AppState
     	
     	if (method_exists($entity, 'getPrivacy')) {
     		if ($entity->getPrivacy() == \Dodici\Fansworld\WebBundle\Entity\Privacy::FRIENDS_ONLY) {
-    			if (method_exists($entity, 'getAuthor')) {
+    			if (method_exists($entity, 'getAuthor') && $entity->getAuthor()) {
 	    			if ($user == $entity->getAuthor()) return true;
     				$frep = $this->getRepository('DodiciFansworldWebBundle:Friendship');
 	    			if (!$frep->UsersAreFriends($user, $entity->getAuthor())) return false;
@@ -140,7 +140,7 @@ class AppState
     	if (method_exists($entity, 'getPrivacy')) {
     		if ($entity->getPrivacy() == \Dodici\Fansworld\WebBundle\Entity\Privacy::FRIENDS_ONLY) {
     			if (!($this->user instanceof User)) return false;
-    			if (method_exists($entity, 'getAuthor')) {
+    			if (method_exists($entity, 'getAuthor') && $entity->getAuthor()) {
 	    			if ($user == $entity->getAuthor()) return true;
     				$frep = $this->getRepository('DodiciFansworldWebBundle:Friendship');
 	    			if (!$frep->UsersAreFriends($user, $entity->getAuthor())) return false;
