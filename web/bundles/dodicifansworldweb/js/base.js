@@ -354,6 +354,14 @@ var ajax = {
             data: params
         });
     },
+    
+    videoCategoryAction: function(params, callback, errorCallback){
+        ajax.setCallback(callback, errorCallback);
+        $.ajax({
+            url: 'http://' + location.host + Routing.generate( appLocale + '_video_ajaxcategory'),
+            data: params
+        });
+    },
   
     genericAction: function(route, params, callback, errorCallback){
         ajax.setCallback(callback, errorCallback);

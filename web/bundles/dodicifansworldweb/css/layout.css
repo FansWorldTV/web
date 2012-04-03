@@ -933,7 +933,7 @@ ul.currentinterests li a.deleteinterest:hover { background-position: bottom left
 .video-list-global ul.categories li.category h3 { border-top: 0; border-bottom: 2px dotted #bbb; text-align: center; margin: 0 15px;}
 .video-list-global .morelink { text-align: center; margin-top: 10px; }
 .video-list-global .morelink a {font-size: 12px; font-weight: bold; }
-ul.videos-small li { float: left; width: 100px; height: 136px; margin-left: 6px; margin-top: 6px; padding: 5px; font-weight: bold; font-size: 10px; border: 1px solid #ddd;}
+ul.videos-small li { float: left; width: 100px; height: 136px; margin-left: 5px; margin-top: 6px; padding: 5px; font-weight: bold; font-size: 10px; border: 1px solid #ddd;}
 ul.videos-small li.first { margin-left: 0px;}
 ul.videos-small li .title { height: 20px; }
 ul.videos-small li .title, ul.videos-small li .date, ul.videos-small li .stats { margin-top: 3px;padding-top: 3px;border-top: 1px dotted #aaa; font-weight: bold;}

@@ -168,7 +168,7 @@ class VideoRepository extends CountBaseRepository
 	 * @param User $user
 	 * @param string $searchterm
 	 */
-	public function countSearchText($searchterm=null, $user=null, $category=null, $isfromuser=null)
+	public function countSearchText($searchterm = null, $user = null, $category = null, $isfromuser = null)
 	{
 		
 		$query = $this->_em->createQuery('

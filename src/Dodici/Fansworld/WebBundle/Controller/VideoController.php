@@ -42,22 +42,22 @@ class VideoController extends SiteController
 
         return array('video' => $video);
     }
-    
+
     /**
      * rightbar
      * @Template
      */
     public function rightbarAction()
     {
-    	$user = $this->get('security.context')->getToken()->getUser();
-    	$vidrepo = $this->getRepository("Video");
-    	$mostviewed = $vidrepo->searchText(null, $user, 3, null, null, null, 'views');
-    	$mostliked = $vidrepo->searchText(null, $user, 3, null, null, null, 'likes');
-    	
-    	return array(
-    		'mostviewed' => $mostviewed,
-    		'mostliked' => $mostliked
-    	);
+        $user = $this->get('security.context')->getToken()->getUser();
+        $vidrepo = $this->getRepository("Video");
+        $mostviewed = $vidrepo->searchText(null, $user, 3, null, null, null, 'views');
+        $mostliked = $vidrepo->searchText(null, $user, 3, null, null, null, 'likes');
+
+        return array(
+            'mostviewed' => $mostviewed,
+            'mostliked' => $mostliked
+        );
     }
 
     /**
@@ -68,41 +68,42 @@ class VideoController extends SiteController
      */
     public function listAction()
     {
-        /*$videos = $this->getRepository("Video")->findBy(array("active" => true), array("createdAt" => "DESC"), self::cantVideos);
-        $countAll = $this->getRepository('Video')->countBy(array('active' => true));
-        $addMore = $countAll > self::cantVideos ? true : false;
-        $categories = $this->getRepository('VideoCategory')->findBy(array());
-        $popularTags = $this->getRepository('Tag')->findBy(array(), array('useCount' => 'DESC'), 10);
+        /* $videos = $this->getRepository("Video")->findBy(array("active" => true), array("createdAt" => "DESC"), self::cantVideos);
+          $countAll = $this->getRepository('Video')->countBy(array('active' => true));
+          $addMore = $countAll > self::cantVideos ? true : false;
+          $categories = $this->getRepository('VideoCategory')->findBy(array());
+          $popularTags = $this->getRepository('Tag')->findBy(array(), array('useCount' => 'DESC'), 10);
+
+          return array(
+          'videos' => $videos,
+          'addMore' => $addMore,
+          'categories' => $categories,
+          'popularTags' => $popularTags
+          ); */
+
+        $user = $this->get('security.context')->getToken()->getUser();
+        $vidrepo = $this->getRepository("Video");
+        $videosbycat = array();
+        $highlight = null;
+        $highlights = $vidrepo->findBy(array("active" => true, "highlight" => true), array("createdAt" => "DESC"), 1);
+        if (count($highlights))
+            $highlight = $highlights[0];
+        $categories = $this->getRepository('VideoCategory')->findBy(array(), array('title' => 'ASC'));
+
+        foreach ($categories as $category) {
+            $catvids = $vidrepo->searchText(null, $user, 2, null, $category, false);
+            $videosbycat[] = array('category' => $category, 'videos' => $catvids);
+        }
+
+        $uservideos = $vidrepo->searchText(null, $user, 12, null, null, true);
+
+
 
         return array(
-            'videos' => $videos,
-            'addMore' => $addMore,
-            'categories' => $categories,
-            'popularTags' => $popularTags
-        );*/
-    	
-    	$user = $this->get('security.context')->getToken()->getUser();
-    	$vidrepo = $this->getRepository("Video");
-    	$videosbycat = array();
-    	$highlight = null;
-    	$highlights = $vidrepo->findBy(array("active" => true, "highlight" => true), array("createdAt" => "DESC"), 1);
-    	if (count($highlights)) $highlight = $highlights[0];
-    	$categories = $this->getRepository('VideoCategory')->findBy(array(), array('title' => 'ASC'));
-    	    	
-    	foreach ($categories as $category) {
-    		$catvids = $vidrepo->searchText(null, $user, 2, null, $category, false);
-    		$videosbycat[] = array('category' => $category, 'videos' => $catvids);
-    	}
-    	
-    	$uservideos = $vidrepo->searchText(null, $user, 12, null, null, true);
-    	
-    	
-    	
-    	return array(
-    		'highlight' => $highlight,
-    		'videosbycategory' => $videosbycat,
-    		'uservideos' => $uservideos
-    	);
+            'highlight' => $highlight,
+            'videosbycategory' => $videosbycat,
+            'uservideos' => $uservideos
+        );
     }
 
     /**
@@ -172,24 +173,75 @@ class VideoController extends SiteController
         $category = $this->getRepository('VideoCategory')->find($id);
         if (!$category)
             throw new HttpException(404, 'Categoría no encontrada');
-        $videos = $this->getRepository("Video")->findBy(array("active" => true, "videocategory" => $category->getId()), array("createdAt" => "DESC"), self::cantVideos);
-        $countAll = $this->getRepository('Video')->countBy(array('active' => true, "videocategory" => $category->getId()));
 
-        $addMore = $countAll > self::cantVideos ? true : false;
+        $user = $this->get("security.context")->getToken()->getUser();
+
+        $vidRepo = $this->getRepository('Video');
 
         $categories = $this->getRepository('VideoCategory')->findBy(array());
         $popularTags = $this->getRepository('Tag')->findBy(array(), array('useCount' => 'DESC'), 10);
 
+
+        $highlight = null;
+        $highlights = $vidRepo->findBy(array("active" => true, "highlight" => true, "videocategory" => $category->getId()), array("createdAt" => "DESC"), 1);
+        if (count($highlights))
+            $highlight = $highlights[0];
+
+        $categoryVids = $vidRepo->searchText(null, $user, 12, null, $category);
+        $countAll = $vidRepo->countSearchText(null, $user, $category);
+        $addMore = $countAll > 12 ? true : false;
+
         return array(
-            'videos' => $videos,
             'addMore' => $addMore,
             'categories' => $categories,
             'popularTags' => $popularTags,
-            'selected' => $id
+            'selected' => $id,
+            'categoryVids' => $categoryVids,
+            'highlight' => $highlight
         );
     }
-    
-	/**
+
+    /**
+     * get category videos
+     *  @Route("/ajax/category", name="video_ajaxcategory") 
+     */
+    public function ajaxCategoryVidsAction()
+    {
+        $request = $this->getRequest();
+        $categoryId = $request->get('id');
+        $page = (int) $request->get('page');
+        $query = $request->get('query', null);
+        
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        if ($page > 1) {
+            $offset = ($page - 1) * 12;
+        } else {
+            $offset = 0;
+        }
+        $vidRepo = $this->getRepository('Video');
+        $response = array();
+
+        $categoryVids = $vidRepo->searchText($query, $user, 12, $offset, $categoryId);
+        $countAll = $vidRepo->countSearchText($query, $user, $categoryId);
+        
+
+        if (($countAll / 12) > $page) {
+            $response['gotMore'] = true;
+        } else {
+            $response['gotMore'] = false;
+        }
+
+        foreach ($categoryVids as $vid) {
+            $response['vids'][] = array(
+                'view' => $this->renderView('DodiciFansworldWebBundle:Video:list_video_item.html.twig', array('video' => $vid))
+            );
+        }
+
+        return $this->jsonResponse($response);
+    }
+
+    /**
      * user videos page
      * 
      * @Route("/users", name="video_users")
@@ -198,7 +250,7 @@ class VideoController extends SiteController
     public function userVideosAction($id)
     {
         // TODO: everything
-    	return new Response('todo');
+        return new Response('todo');
     }
 
     /**
@@ -375,10 +427,11 @@ class VideoController extends SiteController
         $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getEntityManager();
         $privacies = Privacy::getOptions();
-        
-        $categories = $this->getRepository('VideoCategory')->findBy(array(),array('title' => 'ASC'));
+
+        $categories = $this->getRepository('VideoCategory')->findBy(array(), array('title' => 'ASC'));
         $choicecat = array();
-        foreach ($categories as $cat) $choicecat[$cat->getId()] = $cat;
+        foreach ($categories as $cat)
+            $choicecat[$cat->getId()] = $cat;
 
         $video = null;
 
@@ -387,7 +440,7 @@ class VideoController extends SiteController
         $collectionConstraint = new Collection(array(
                     'title' => array(new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
                     'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
-        			'videocategory' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\Choice(array_keys($choicecat))),
+                    'videocategory' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\Choice(array_keys($choicecat))),
                     'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
                     'youtube' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250)))
                 ));
@@ -431,7 +484,7 @@ class VideoController extends SiteController
                         }
 
                         $videocategory = $this->getRepository('VideoCategory')->find($data['videocategory']);
-                        
+
                         $video = new Video();
                         $video->setAuthor($user);
                         $video->setTitle($data['title'] ? : $metadata['title']);

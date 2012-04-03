@@ -2,102 +2,36 @@
 
 {% block title %}{{ parent() }} - TV{% endblock %}
 {% block centercolumn %}
-    <div class="col_599 left margin">
-            <div class="cont clearfix withOutRightBar">
-                <h2>Búsqueda</h2>
-                <div class="user_list">
-                    <div class="search videosByCategory">
-                        <form id="formSearch" method="post" action="">
-                            <input type="text" name="query" id="query"/>
-                            <input type="button" value="Buscar" name="submit" id="search" class="hidden"/>
-                        </form>
-                    </div>
+    <div class="col_468 left margin">
+        <div class="cont clearfix video-list-global">
+        {% if highlight %}
+            <div class="highlight-video">
+                <h2><a href="{{path('video_show', {id:highlight.id, slug:highlight.slug})}}">{{highlight}}</a></h2>
+
+                <div class="media_content">
+                    <iframe class="videoframe" src="{{ flumotiontwig.videoplayerurl(highlight) }}"></iframe>
                 </div>
-                {% if videos|length>0 %}
-                    <ul class="videos">
-                            {% for video in videos %}
-                                <li class="greybox">
-                                        {% if video.image %}
-                                            <a href="{{ path('video_show', {id: video.id, slug: video.slug}) }}">
-                                                        {% thumbnail video.image, 'video' with {'class': 'wall'} %}
-                                            </a>
-                                        {% endif %}
-                                        <div>
-                                            <h2><a href="{{ path('video_show', {id: video.id, slug: video.slug}) }}">{{ video.title }}</a></h2>
-                                            <span>
-                                                {{ video.content|truncate(100) }}
-                                            </span>
-                                        </div>
 
-                                        <div class="marginTop10 clearfix">
-                                            <span class="marginTop10">de <a href="{{ path('user_detail', {"id":video.author.id}) }}">{% thumbnail video.author.image, "avatar" with {'class':'avatar'} %} {{ video.author }}</a> | </span>
-                                            <span class="timeago" data-time="{{ video.createdAt|date('c')}}">{{ video.createdAt|date('c')}}</span>
-                                        </div>
-
-                                        {% if video.hasTags %}
-                                            <ul class="tags marginTop10 clearfix">
-                                                {% for tag in video.hasTags %}
-                                                    <li><a href="{{ path('video_tags', {'slug': tag.tag.slug}) }}">{{ tag.tag.title }}</a></li>
-                                                {% endfor %}
-                                            </ul>
-                                        {% endif %}
-                                </li>
-                            {% endfor %}
-                    </ul>
-                {% else %}
-                    <h2>No se encontraron videos.</h2>
-                {% endif %}
-                {% if addMore %}
-                    <a href="#" id="addMore" class="loadmore videosByCategory marginTop10">Agregar Más</a>
-                {% endif %}
+                {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: highlight} %}
             </div>
-    </div>
-    <div id="templates" class="hidden">
-        <ul class="videos hidden">
-            <li class="greybox">
-                    <a class="tmpVideo" href="videoShowIDSLUG">
-                            <img src="image" alt="image" title="image"/>
-                    </a>
-                    <div>
-                        <h2><a href="">title</a></h2>
-                        <span class="tmpContent">
-                            content
-                        </span>
-                    </div>
+        {% endif %}
 
-                    <div class="marginTop10 clearfix">
-                        <span class="marginTop10">de <a href="" class="user">author</a> | </span>
-                        <span class="timeago" data-time="createdAt">createdAt</span>
-                    </div>
-
-                    <ul class="tags marginTop10 clearfix">
-                    </ul>
-            </li>
+        <h3>Videos</h3>
+        <ul class="user-videos videos-small clearfix">
+                {% for video in categoryVids %}
+                    {% include 'DodiciFansworldWebBundle:Video:list_video_item.html.twig' with {video: video, showlikes: false} %}
+                {% endfor %}
         </ul>
+        {% if addMore%}
+            <div class="morelink">
+                <a id="addMore" class="videosByCategory" href="">Ver más</a>
+            </div>
+        {% endif %}
     </div>
+</div>
+<input type="hidden" id="categoryId" value="{{ selected }}" />
 {% endblock %}
 
 {% block rightbar %}
-    <div class="col_169 floatLeft">
-        <h2>Categorías</h2>
-        <div class="navy">
-            <ul>
-                {% for category in categories %}
-                    {% if category.id == selected%}
-                        <li><a class="current" categoryId = "{{ category.id }}" href="{{ path('video_category', { id: category.id, slug: category.slug } ) }}">{{ category.title }}</a></li>
-                    {% else %}
-                        <li><a href="{{ path('video_category', { id: category.id, slug: category.slug } ) }}">{{ category.title }}</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </div>
-        <h2>Tags Populares</h2>
-        <div class="navy">
-            <ul>
-                {% for tag in popularTags %}
-                    <li><a href="{{ path('video_tags', {'slug': tag.slug}) }}" >{{ tag.title }}</a></li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
+    {% render 'DodiciFansworldWebBundle:Video:rightbar' %}
 {% endblock %}

@@ -1170,64 +1170,67 @@ var videos = {
                 var self = $(this);
                 self.addClass('loading');
             
-                ajax.videosSearchAction({
+                ajax.videoCategoryAction({
+                    'category': $("#categoryId").val(),
                     'page': videos.pager,
-                    'category': $("div.navy ul li a.current").attr('categoryId')
-                }, function(response){
+                    'query': $("input.video-search-input").val() == "" ? null: $("input.video-search-input").val()
+                }, 
+                function(response){
                     if(response){
                         if(!response.addMore){
                             self.remove();
                         }
-                        for(var i in response.videos){
-                            var video = response.videos[i];
-                            var template = $("#templates ul.videos li").clone();
-                            var videoUrl = Routing.generate(appLocale + '_video_show', {
-                                'id':video.id, 
-                                'slug': video.slug
-                            });
-                            videos.addSearchContent(template, video, videoUrl);
+                        for(var i in response.vids){
+                            var vid = response.vids[i];
+                            $("ul.user-videos").append(vid.view);
                         }
                         videos.pager++;
                     }
                     self.removeClass('loading');
-                }, function(text){
-                    error(text);
+                }, 
+                function(response){
+                    console.error(response);
                     self.removeClass('loading');
                 });
+                
                 return false;
-            });
+            })
         },
         search: function(){
-            $(".search.videosByCategory #formSearch:not('.loading')").live('submit', function(){
-                $("div.cont ul.videos li").remove();
-                var query = $("#query").val();
+            $("#video-search-form:not('.loading')").live('submit', function(){
+                $("div.cont ul.user-videos li").remove();
+                var query = $("input.video-search-input").val() == "" ? null: $("input.video-search-input").val();
                 var self = $(this);
             
                 self.addClass('loading');
                 videos.pager = 1;
-                ajax.videosSearchAction({
-                    'query': query, 
-                    'page': 1,
-                    'category': $("div.navy ul li a.current").attr('categoryId')
-                }, function(response){
+                
+                ajax.videoCategoryAction({
+                    'category': $("#categoryId").val(),
+                    'page': videos.pager,
+                    'query': query
+                }, 
+                function(response){
                     if(response){
                         if(response.addMore){
-                            $("div.cont").append('<a href="#" id="addMore" class="loadmore videos marginTop10">Agregar Más</a>');
+                            $("div.cont").append('<div class="morelink"><a id="addMore" class="videosByCategory" href="">Ver más</a></div>');
+                        }else{
+                            $("#addMore").remove();
                         }
-                        for(var i in response.videos){
-                            var video = response.videos[i];
-                            var template = $("#templates ul.videos li").clone();
-                            var videoUrl = Routing.generate(appLocale + '_video_show', {
-                                'id':video.id, 
-                                'slug': video.slug
-                            });
-                            videos.addSearchContent(template, video, videoUrl);
+                        
+                        for(var i in response.vids){
+                            var vid = response.vids[i];
+                            $("ul.user-videos").append(vid.view);
                         }
                         videos.pager++;
                     }
                     self.removeClass('loading');
-                }, function(){});
-            
+                }, 
+                function(response){
+                    console.error(response);
+                    self.removeClass('loading');
+                });
+                
                 return false;
             });
         }
