@@ -1052,6 +1052,7 @@ var videos = {
         videos.searchByCategory.addMore();
         videos.searchByTags.addMore();
         videos.searchMyVideos.addMore();
+        videos.usersVideos.addMore();
     },
     
     addSearchContent: function(template, video, videoUrl){
@@ -1159,6 +1160,29 @@ var videos = {
             
             return false;
         });
+    },
+    
+    usersVideos: {
+        addMore: function(){
+            $("#addMore.userVideos").live('click', function(){
+                var self = $(this);
+                ajax.usersVideosAction({'page': videos.pager}, function(response){
+                    if(response){
+                        if(!response.addMore){
+                            self.remove();
+                        }
+                        for(var i in response.videos){
+                            var video = response.videos[i];
+                            $("ul.user-videos").append(video);
+                        }
+                        videos.pager++;
+                    }
+                }, function(error){
+                        console.error(error);
+                });
+                return false;
+            });
+        }
     },
     
     searchByCategory: {

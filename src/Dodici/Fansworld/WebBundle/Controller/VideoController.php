@@ -252,16 +252,64 @@ class VideoController extends SiteController
     {
         $videosRepo = $this->getRepository('Video');
         $videosRepo instanceof VideoRepository;
-        
+
         $user = $this->get('security.context')->getToken()->getUser();
-        
-        $videos = $videosRepo->searchText(null, $user, null, null, null, true);
+
+        $videos = $videosRepo->searchText(null, $user, 16, null, null, true);
         $countAll = $videosRepo->countSearchText(null, $user, null, true);
-        
+
+        $firstToBeHighlighted = false;
+        $usersVideos = false;
+
+        $firstElement = true;
+        foreach ($videos as $video) {
+            if ($firstElement) {
+                $firstElement = false;
+                $firstToBeHighlighted = $video;
+            } else {
+                array_push($usersVideos, $video);
+            }
+        }
+
         return array(
-            'videos' => $videos,
-            'addMore' => $countAll >16 ? true : false
+            'usersVideos' => $usersVideos,
+            'highlight' => $firstToBeHighlighted,
+            'addMore' => $countAll > 16 ? true : false
         );
+    }
+
+    /**
+     * user videos page ajax
+     * @Route("/ajax/users", name="video_ajaxusers")
+     */
+    public function ajaxUserVideosAction()
+    {
+        $request = $this->getRequest();
+        $page = (int) $request->get('page', 0);
+
+        $offset = $page > 0 ? ($page - 1 ) * 16 : 0;
+
+
+        $videosRepo = $this->getRepository('Video');
+        $videosRepo instanceof VideoRepository;
+
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        $videos = $videosRepo->searchText(null, $user, 16, $offset, null, true);
+        $countAll = $videosRepo->countSearchText(null, $user, null, true);
+
+        $usersVideos = false;
+
+        foreach ($videos as $video) {
+            array_push($usersVideos, $this->renderView('DodiciFansworldWebBundle:Video:list_video_item.html.twig', array('video' => $video)));
+        }
+
+        $addMore = (( $countAll / 16 ) > $page) ? true : false;
+
+        return $this->jsonResponse(array(
+                    'addMore' => $addMore,
+                    'videos' => $usersVideos
+                ));
     }
 
     /**
