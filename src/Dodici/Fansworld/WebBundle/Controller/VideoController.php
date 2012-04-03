@@ -20,6 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dodici\Fansworld\WebBundle\Controller\SiteController;
 use Dodici\Fansworld\WebBundle\Entity\Video;
 use Symfony\Component\HttpFoundation\Request;
+use Dodici\Fansworld\WebBundle\Model\VideoRepository;
 
 /**
  * Video controller.
@@ -211,7 +212,7 @@ class VideoController extends SiteController
         $categoryId = $request->get('id');
         $page = (int) $request->get('page');
         $query = $request->get('query', null);
-        
+
         $user = $this->get('security.context')->getToken()->getUser();
 
         if ($page > 1) {
@@ -224,7 +225,7 @@ class VideoController extends SiteController
 
         $categoryVids = $vidRepo->searchText($query, $user, 12, $offset, $categoryId);
         $countAll = $vidRepo->countSearchText($query, $user, $categoryId);
-        
+
 
         if (($countAll / 12) > $page) {
             $response['gotMore'] = true;
@@ -247,10 +248,20 @@ class VideoController extends SiteController
      * @Route("/users", name="video_users")
      * @Template
      */
-    public function userVideosAction($id)
+    public function userVideosAction()
     {
-        // TODO: everything
-        return new Response('todo');
+        $videosRepo = $this->getRepository('Video');
+        $videosRepo instanceof VideoRepository;
+        
+        $user = $this->get('security.context')->getToken()->getUser();
+        
+        $videos = $videosRepo->searchText(null, $user, null, null, null, true);
+        $countAll = $videosRepo->countSearchText(null, $user, null, true);
+        
+        return array(
+            'videos' => $videos,
+            'addMore' => $countAll >16 ? true : false
+        );
     }
 
     /**
