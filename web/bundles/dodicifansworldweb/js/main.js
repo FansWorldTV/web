@@ -1169,7 +1169,10 @@ var videos = {
         addMore: function(){
             $("#addMore.userVideos").live('click', function(){
                 var self = $(this);
+                var query = $("input.video-search-input").val();
+                query = query == "" ? null : query;
                 ajax.usersVideosAction({
+                    'query': query,
                     'page': videos.pager
                 }, function(response){
                     if(response){

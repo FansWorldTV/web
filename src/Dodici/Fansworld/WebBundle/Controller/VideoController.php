@@ -295,6 +295,7 @@ class VideoController extends SiteController
     {
         $request = $this->getRequest();
         $page = (int) $request->get('page', 0);
+        $query = $request->get('query', null);
 
         $offset = $page > 0 ? ($page - 1 ) * 16 : 0;
 
@@ -304,8 +305,8 @@ class VideoController extends SiteController
 
         $user = $this->get('security.context')->getToken()->getUser();
 
-        $videos = $videosRepo->searchText(null, $user, 16, $offset, null, true);
-        $countAll = $videosRepo->countSearchText(null, $user, null, true);
+        $videos = $videosRepo->searchText($query, $user, 16, $offset, null, true);
+        $countAll = $videosRepo->countSearchText($query, $user, null, true);
 
         $usersVideos = false;
 
