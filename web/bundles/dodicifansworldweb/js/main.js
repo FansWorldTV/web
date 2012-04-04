@@ -18,6 +18,9 @@ var site = {
     isClosedRequests: true,
     
     init: function(){
+        $("#video-search-form").live('submit', function(){
+            $(this).addClass('loading');
+        });
         $("ul.friendgroupsList").show();
         $("li.alerts_user a span").hide().parent().removeClass('hidden');
         $("li.notifications_user a span").hide().parent().removeClass('hidden');
@@ -1166,7 +1169,9 @@ var videos = {
         addMore: function(){
             $("#addMore.userVideos").live('click', function(){
                 var self = $(this);
-                ajax.usersVideosAction({'page': videos.pager}, function(response){
+                ajax.usersVideosAction({
+                    'page': videos.pager
+                }, function(response){
                     if(response){
                         if(!response.addMore){
                             self.remove();
@@ -1178,7 +1183,7 @@ var videos = {
                         videos.pager++;
                     }
                 }, function(error){
-                        console.error(error);
+                    console.error(error);
                 });
                 return false;
             });
@@ -1187,76 +1192,81 @@ var videos = {
     
     searchByCategory: {
         addMore: function(){
-            $("#addMore.videosByCategory:not('.loading')").live('click', function(){
-                if(videos.pager==1){
-                    videos.pager++;
-                }
-                var self = $(this);
-                self.addClass('loading');
-            
-                ajax.videoCategoryAction({
-                    'category': $("#categoryId").val(),
-                    'page': videos.pager,
-                    'query': $("input.video-search-input").val() == "" ? null: $("input.video-search-input").val()
-                }, 
-                function(response){
-                    if(response){
-                        if(!response.addMore){
-                            self.remove();
-                        }
-                        for(var i in response.vids){
-                            var vid = response.vids[i];
-                            $("ul.user-videos").append(vid.view);
-                        }
+            if($("#categoryId").length > 0){
+                $("#addMore.videosByCategory:not('.loading')").live('click', function(){
+                    if(videos.pager==1){
                         videos.pager++;
                     }
-                    self.removeClass('loading');
-                }, 
-                function(response){
-                    console.error(response);
-                    self.removeClass('loading');
-                });
+                    var self = $(this);
+                    self.addClass('loading');
+            
+                    ajax.videoCategoryAction({
+                        'category': $("#categoryId").val(),
+                        'page': videos.pager,
+                        'query': $("input.video-search-input").val() == "" ? null: $("input.video-search-input").val()
+                    }, 
+                    function(response){
+                        if(response){
+                            if(!response.addMore){
+                                self.remove();
+                            }
+                            for(var i in response.vids){
+                                var vid = response.vids[i];
+                                $("ul.user-videos").append(vid.view);
+                            }
+                            videos.pager++;
+                        }
+                        self.removeClass('loading');
+                    }, 
+                    function(response){
+                        console.error(response);
+                        self.removeClass('loading');
+                    });
                 
-                return false;
-            })
+                    return false;
+                })
+            }
         },
         search: function(){
-            $("#video-search-form:not('.loading')").live('submit', function(){
-                $("div.cont ul.user-videos li").remove();
-                var query = $("input.video-search-input").val() == "" ? null: $("input.video-search-input").val();
-                var self = $(this);
+            if($("#categoryId").length > 0){
+                $("#video-search-form:not('.loading')").live('submit', function(){
+                    $("div.cont ul.user-videos li").remove();
+                    var query = $("input.video-search-input").val() == "" ? null: $("input.video-search-input").val();
+                    var self = $(this);
             
-                self.addClass('loading');
-                videos.pager = 1;
+                    self.addClass('loading');
+                    videos.pager = 1;
                 
-                ajax.videoCategoryAction({
-                    'category': $("#categoryId").val(),
-                    'page': videos.pager,
-                    'query': query
-                }, 
-                function(response){
-                    if(response){
-                        if(response.addMore){
-                            $("div.cont").append('<div class="morelink"><a id="addMore" class="videosByCategory" href="">Ver más</a></div>');
-                        }else{
-                            $("#addMore").remove();
+                    ajax.videoCategoryAction({
+                        'category': $("#categoryId").val(),
+                        'page': videos.pager,
+                        'query': query
+                    }, 
+                    function(response){
+                        if(response){
+                            if(response.addMore){
+                                $("div.cont").append('<div class="morelink"><a id="addMore" class="videosByCategory" href="">Ver más</a></div>');
+                            }else{
+                                $("#addMore").remove();
+                            }
+                            if(response.vids){
+                                for(var i in response.vids){
+                                    var vid = response.vids[i];
+                                    $("ul.user-videos").append(vid.view);
+                                }
+                                videos.pager++;
+                            }
                         }
-                        
-                        for(var i in response.vids){
-                            var vid = response.vids[i];
-                            $("ul.user-videos").append(vid.view);
-                        }
-                        videos.pager++;
-                    }
-                    self.removeClass('loading');
-                }, 
-                function(response){
-                    console.error(response);
-                    self.removeClass('loading');
+                        self.removeClass('loading');
+                    }, 
+                    function(response){
+                        console.error(response);
+                        self.removeClass('loading');
+                    });
+                
+                    return false;
                 });
-                
-                return false;
-            });
+            }
         }
     },
     

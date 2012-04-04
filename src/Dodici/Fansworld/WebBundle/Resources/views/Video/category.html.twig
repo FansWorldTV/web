@@ -18,16 +18,16 @@
 
         <h3>Videos</h3>
         {% if categoryVids %}
-        <ul class="user-videos videos-small clearfix">
-                {% for video in categoryVids %}
-                    {% include 'DodiciFansworldWebBundle:Video:list_video_item.html.twig' with {video: video, showlikes: false} %}
-                {% endfor %}
-        </ul>
-        {% if addMore%}
-            <div class="morelink">
-                <a id="addMore" class="videosByCategory" href="">Ver más</a>
-            </div>
-        {% endif %}
+            <ul class="user-videos videos-small clearfix">
+                    {% for video in categoryVids %}
+                        {% include 'DodiciFansworldWebBundle:Video:list_video_item.html.twig' with {video: video, showlikes: false} %}
+                    {% endfor %}
+            </ul>
+            {% if addMore%}
+                <div class="morelink">
+                    <a id="addMore" class="videosByCategory" href="">Ver más</a>
+                </div>
+            {% endif %}
         {% else %}
             <span>No se encontraron videos.</span>
         {% endif %}

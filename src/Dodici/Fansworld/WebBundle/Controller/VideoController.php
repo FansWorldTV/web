@@ -82,13 +82,17 @@ class VideoController extends SiteController
           'popularTags' => $popularTags
           ); */
 
+        $request = $this->getRequest();
+        $query = $request->get('query', null);
         $user = $this->get('security.context')->getToken()->getUser();
         $vidrepo = $this->getRepository("Video");
         $videosbycat = array();
         $highlight = null;
+        
         $highlights = $vidrepo->findBy(array("active" => true, "highlight" => true), array("createdAt" => "DESC"), 1);
         if (count($highlights))
             $highlight = $highlights[0];
+        
         $categories = $this->getRepository('VideoCategory')->findBy(array(), array('title' => 'ASC'));
 
         foreach ($categories as $category) {
@@ -96,7 +100,7 @@ class VideoController extends SiteController
             $videosbycat[] = array('category' => $category, 'videos' => $catvids);
         }
 
-        $uservideos = $vidrepo->searchText(null, $user, 12, null, null, true);
+        $uservideos = $vidrepo->searchText($query, $user, 12, null, null, true);
 
 
 
@@ -212,6 +216,8 @@ class VideoController extends SiteController
         $categoryId = $request->get('id');
         $page = (int) $request->get('page');
         $query = $request->get('query', null);
+        
+        $query = $query == "null" ? null : $query;
 
         $user = $this->get('security.context')->getToken()->getUser();
 
@@ -221,7 +227,7 @@ class VideoController extends SiteController
             $offset = 0;
         }
         $vidRepo = $this->getRepository('Video');
-        $response = array();
+        $response = array('gotMore' => false, 'vids' => null);
 
         $categoryVids = $vidRepo->searchText($query, $user, 12, $offset, $categoryId);
         $countAll = $vidRepo->countSearchText($query, $user, $categoryId);
@@ -229,8 +235,6 @@ class VideoController extends SiteController
 
         if (($countAll / 12) > $page) {
             $response['gotMore'] = true;
-        } else {
-            $response['gotMore'] = false;
         }
 
         foreach ($categoryVids as $vid) {
@@ -250,13 +254,18 @@ class VideoController extends SiteController
      */
     public function userVideosAction()
     {
+        $request = $this->getRequest();
+        
+        $query = $request->get('query', null);
+        $query = $query == "null" ? null : $query;
+        
         $videosRepo = $this->getRepository('Video');
         $videosRepo instanceof VideoRepository;
 
         $user = $this->get('security.context')->getToken()->getUser();
 
-        $videos = $videosRepo->searchText(null, $user, 16, null, null, true);
-        $countAll = $videosRepo->countSearchText(null, $user, null, true);
+        $videos = $videosRepo->searchText($query, $user, 16, null, null, true);
+        $countAll = $videosRepo->countSearchText($query, $user, null, true);
 
         $firstToBeHighlighted = false;
         $usersVideos = false;
