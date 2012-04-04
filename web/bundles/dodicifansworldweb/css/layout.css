@@ -287,7 +287,7 @@ form.register table tr.error td label select{ border:solid 1px #333; background:
 .ticket a.btn_next { background:url(../images/ui/paginador.png) no-repeat bottom right; display:block; width:21px; height:50px; position:absolute; float:left; text-indent:-9999px; z-index:50; margin:70px 0 0 447px;}
 .ticket a.btn_next:hover { background-position:top right}
 
-.videos { width:468px; overflow:hidden;}
+.videos { width:468px; overflow:hidden; height: 900px;}
 .videos .mask { width:500px;}
 .videos .video { width:140px; height:165px; position:relative; float:left; margin: 0 24px 0 0}
 .videos .video .play { background:url(../images/ui/play_video_small.png) no-repeat; width:47px; height:47px; position:absolute; float:left; margin:30px 0 0 47px}

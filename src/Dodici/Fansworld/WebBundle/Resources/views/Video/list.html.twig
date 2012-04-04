@@ -16,6 +16,7 @@
                 </div>
                 {% endif %}
                 
+                {% if videosbycategory %}
                 <ul class="categories clearfix">
                 	{% for vc in videosbycategory %}
                 		<li class="category">
@@ -36,8 +37,12 @@
                 		</li>
                 	{% endfor %}
                 </ul>
+                {% else %}
+                    <span>No hay categorias</span>
+                {% endif %}
                 
                 <h3>Videos de usuario</h3>
+                {% if uservideos %}
                 <ul class="user-videos videos-small clearfix">
                 	{% for video in uservideos %}
                 		{% if loop.index0 % 4 == 0 %}
@@ -51,6 +56,9 @@
                 <div class="morelink">
                 	<a href="{{ path('video_users') }}">Ver más</a>
                 </div>
+                {% else %}
+                    No hay videos de usuarios.
+                {% endif %}
             </div>
     </div>
 {% endblock %}
