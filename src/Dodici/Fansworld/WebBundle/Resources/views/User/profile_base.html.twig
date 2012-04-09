@@ -31,57 +31,6 @@
 			                        {% endif %}
 		                        {% endblock %}
 		                    </div>
-	                    {% else %}
-		                    <div class="idol_specs greybox clearfix">
-								<div class="avatar">
-									{{ block('avatar_content') }}
-									<img class="idol-star" src="{{ asset('bundles/dodicifansworldweb/images/ui/idol-star.png' )}}" alt="idol" />
-								</div>
-								<div class="specs greybox">
-									<div class="idolname clearfix">
-										<h1>{{ user }}</h1>
-										{% if (app.user != user) %}
-											{% set fship = appstate.idolshipwith(user) %}
-											{% if fship %}
-												<a class="btn btn_idolship remove" href="#" data-iduser="{{user.id}}">Dejar de ser Fan</a>
-											{% else %}
-												<a class="btn btn_idolship add" href="#" data-iduser="{{user.id}}">Ser Fan</a>
-											{% endif %}
-										{% endif %}
-									</div>
-									<ul>
-										{% if user.country or user.city %}
-											{% if user.city and user.country %}{% set titles = [user.city,user.country] %}
-											{% elseif user.city %}{% set titles = [user.city] %}
-											{% else %}{% set titles = [user.country] %}{% endif %}
-											<li>{{titles|join(', ')}}</li>
-										{% endif %}
-										{% set currentcareer = appstate.currentcareer(user) %}
-										{% if currentcareer %}
-										<li>
-											{% if currentcareer.interest.image %}
-												{% thumbnail currentcareer.interest.image, 'avatar' with {class: 'interest-icon'} %}
-											{% endif %}
-											<span class="interest-text">
-												{{currentcareer.interest}}
-												{% if currentcareer.position %}
-													- {{currentcareer.position}}
-												{% endif %}
-												{% if currentcareer.datefrom %}
-													desde {{currentcareer.datefrom|date('d/m/Y')}}
-												{% endif %}
-												{% if currentcareer.dateto %}
-													hasta {{currentcareer.dateto|date('d/m/Y')}}
-												{% endif %}
-											</span>
-										</li>
-										{% endif %}
-										{% if user.birthday %}
-											<li>Fecha de Nacimiento: {{user.birthday|date('d/m/Y')}}</li>
-										{% endif %}
-									</ul>
-								</div>
-							</div>
 	                    {% endif %}
                     {% endblock %}
                     <div class="user_info"> 
@@ -154,9 +103,72 @@
 
 {% block centercolumn %}
 	{% if not appstate.idol(user) %}{{ parent() }}{% else %}
-	<div class="col_788 left">
+	<div class="col_599 left">
 		{{ block('content') }}
 	</div>
 	{% endif %}
 {% endblock %}
-{% block rightbar %}{% if not appstate.idol(user) %}{{ parent() }}{% else %}{% endif %}{% endblock %}
+{% block rightbar %}
+    {% if not appstate.idol(user) %}
+        {{ parent() }}
+    {% else %}
+                <div class="col_169 right">
+                    <div class="idol_specs greybox">
+                            <div class="avatar">
+                                    {{ block('avatar_content') }}
+                                    {% if (app.user != user) %}
+                                            {% set fship = appstate.idolshipwith(user) %}
+                                            {% if fship %}
+                                                    <a class="btn btn_idolship remove" href="#" data-iduser="{{user.id}}">Dejar de ser Fan</a>
+                                            {% else %}
+                                                    <a class="btn btn_idolship add" href="#" data-iduser="{{user.id}}">Ser Fan</a>
+                                            {% endif %}
+                                    {% endif %}
+                            </div>
+                            <div class="specs greybox">
+                                    <div class="idolname clearfix">
+                                            <h1>{{ user }}</h1>
+                                    </div>
+                                    <ul>
+                                            {% if user.sex %}
+                                                <li>Sexo: {% if user.sex == 'm' %}Masculino{% else %}Femenino{% endif %}</li>
+                                            {% endif %}
+                                        
+                                            {% if user.country %}
+                                                <li>País: {{ user.country }}</li>
+                                            {% endif %}
+                                                
+                                            {% if user.city %}   
+                                                <li>Ciudad: {{ user.city }}</li>
+                                            {% endif %}
+                                                    
+                                            {% set currentcareer = appstate.currentcareer(user) %}
+                                            {% if currentcareer %}
+                                                <li>
+                                                        {% if currentcareer.interest.image %}
+                                                                {% thumbnail currentcareer.interest.image, 'avatar' with {class: 'interest-icon'} %}
+                                                        {% endif %}
+                                                        <span class="interest-text">
+                                                                {{currentcareer.interest}}
+                                                                {% if currentcareer.position %}
+                                                                        - {{currentcareer.position}}
+                                                                {% endif %}
+                                                                {% if currentcareer.datefrom %}
+                                                                        desde {{currentcareer.datefrom|date('d/m/Y')}}
+                                                                {% endif %}
+                                                                {% if currentcareer.dateto %}
+                                                                        hasta {{currentcareer.dateto|date('d/m/Y')}}
+                                                                {% endif %}
+                                                        </span>
+                                                </li>
+                                            {% endif %}
+                                                
+                                            {% if user.birthday %}
+                                                    <li>Fecha de Nacimiento: {{user.birthday|date('d/m/Y')}}</li>
+                                            {% endif %}
+                                    </ul>
+                            </div>
+                    </div>
+                </div>
+    {% endif %}
+{% endblock %}

@@ -264,6 +264,11 @@ form.register table tr.error td label select{ border:solid 1px #333; background:
 .grid_users ul.users li a h3.name { font-family: 'Ubuntu', sans-serif; font-weight:500;font-size:14px; color:#0093c9; line-height:30px;}
 .grid_users ul.users li a span.fans {top: -14px;position: relative;}
 
+div.idolVideos { width: 468px; margin: 0 auto; display: block;}
+div.idolVideos .videos { margin-top: 10px;}
+div.idolVideos .videos li { margin-right: 24px; margin-bottom: 10px; width: 140px; display: block; }
+div.idolVideos .videos li.last { margin-right: 0;}
+
 .video_destacado {}
 .video_destacado a:hover { text-decoration:none;}
 .video_destacado a .video { width:468px; height:320px; position:absolute; float:left; background:url(../images/ui/pattern.png) no-repeat}
@@ -893,6 +898,12 @@ ul.videos img.avatar{width:20px; height: 20px;}
 ul.currentinterests li a.deleteinterest:hover { background-position: bottom left;}
 
 /* Perfil idolo */
+.idol_specs.greybox, .idol_specs .greybox { padding: 8px !important;  }
+.idol_specs .specs h1{ font-size: 20px; }
+.idol_specs .avatar img { width: 152px; }
+.idol_specs .avatar .btn_idolship { top: -140px; position: relative; right: -39px; }
+.idol_specs .specs ul li{  margin-bottom: 5px; }
+
 .idol_profile_head .avatar { float: left; margin-right: 10px;}
 .idol_profile_head .avatar img { border:solid 2px #fff; box-shadow:0 1px 1px #999;}
 .idol_profile_head .avatar .idol-star { position: absolute;border: 0;box-shadow: none;top: 2px;left: 240px;}

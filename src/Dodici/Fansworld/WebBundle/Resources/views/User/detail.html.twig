@@ -11,45 +11,52 @@
                 <div class="cont clearfix">
                     <h2>Información{% if (user == app.user) %} <a class="more" href="{{ path('fos_user_profile_edit') }}">editar</a>{% endif %}</h2>
                     <div class="user_info">
-                        <h5>Informacion personal</h5>
-                        <table>
-                            <tr>
-                                <td class="dato">Nombre</td>
-                                <td>{{ user }}</td>
-                            </tr>
-                            <tr>
-                                <td class="dato">Sexo</td>
-                                <td>{{ ('sex_' ~ user.sex)|trans }}</td>
-                            </tr>
-                            {% if user.country %}
-                            <tr>
-                                <td class="dato">Pais</td>
-                                <td>{{ user.country }}</td>
-                            </tr>
-                            {% endif %}
-                            {% if user.city %}
-                            <tr>
-                                <td class="dato">Provincia</td>
-                                <td>{{ user.city }}</td>
-                            </tr>
-                            {% endif %}
-                            {% if user.birthday %}
-                            <tr>
-                                <td class="dato">Fecha de nacimiento</td>
-                                <td>{{ user.birthday|date('d/m/Y') }}</td>
-                            </tr>
-                            {% endif %}
-                            <tr>
-                                <td class="dato">Puntos</td>
-                                <td>{{ user.score }}</td>
-                            </tr>
-                        </table>
+                        {% if not appstate.idol(user) %}
+                            <h5>Informacion personal</h5>
+                            <table>
+                                <tr>
+                                    <td class="dato">Nombre</td>
+                                    <td>{{ user }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="dato">Sexo</td>
+                                    <td>{{ ('sex_' ~ user.sex)|trans }}</td>
+                                </tr>
+                                {% if user.country %}
+                                <tr>
+                                    <td class="dato">Pais</td>
+                                    <td>{{ user.country }}</td>
+                                </tr>
+                                {% endif %}
+                                {% if user.city %}
+                                <tr>
+                                    <td class="dato">Provincia</td>
+                                    <td>{{ user.city }}</td>
+                                </tr>
+                                {% endif %}
+                                {% if user.birthday %}
+                                <tr>
+                                    <td class="dato">Fecha de nacimiento</td>
+                                    <td>{{ user.birthday|date('d/m/Y') }}</td>
+                                </tr>
+                                {% endif %}
+                                {% if user.score and not appstate.idol(user) %}
+                                    <tr>
+                                        <td class="dato">Puntos</td>
+                                        <td>{{ user.score }}</td>
+                                    </tr>
+                                {% endif %}
+                            </table>
+                        {% endif %}    
+                            
                         <h5>Biografía</h5>
                         <table>
                             <tr>
                                 <td>{{ user.content }}</td>
                             </tr>
                         </table>
+                        
+                        
                         <h5>Intereses</h5>
                         
                         <table>
