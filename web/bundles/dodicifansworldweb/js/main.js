@@ -716,7 +716,7 @@ var searchIdols = {
                             template.addClass('isfriend');
                         }
                     
-                        $(".searchFront.listMosaic").append(template);
+                        $(".listMosaic").append(template);
                     }
                     if(response.gotMore){
                         $("#addMore").removeClass('hidden');
