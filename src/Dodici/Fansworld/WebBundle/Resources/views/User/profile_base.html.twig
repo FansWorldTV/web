@@ -133,6 +133,10 @@
                                             <h1>{{ user }}</h1>
                                     </div>
                                     <ul>
+                                            {% if user.nicknames %}   
+                                                <li>Apodos: {{ user.nicknames|nl2br }}</li>
+                                            {% endif %}
+                                            
                                             {% if user.sex %}
                                                 <li>Sexo: {% if user.sex == 'm' %}Masculino{% else %}Femenino{% endif %}</li>
                                             {% endif %}
@@ -143,6 +147,10 @@
                                                 
                                             {% if user.city %}   
                                                 <li>Ciudad: {{ user.city }}</li>
+                                            {% endif %}
+                                            
+                                            {% if user.origin %}   
+                                                <li>Origen: {{ user.origin }}</li>
                                             {% endif %}
                                                     
                                             {% set currentcareer = appstate.currentcareer(user) %}

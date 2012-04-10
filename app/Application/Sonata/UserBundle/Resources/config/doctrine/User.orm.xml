@@ -21,6 +21,7 @@
         <field name="twitter" column="twitter" type="string" length="250" nullable="true" />
         <field name="yahoo" column="yahoo" type="string" length="250" nullable="true" />
         <field name="gmail" column="gmail" type="string" length="250" nullable="true" />
+        <field name="origin" column="origin" type="string" length="250" nullable="true" />
         <field name="sex" column="sex" type="string" length="10" nullable="true" />
         <field name="privacy" column="privacy" type="array" />
         <field name="notifyprefs" column="notifyprefs" type="array" />
@@ -29,6 +30,7 @@
         <field name="birthday" column="birthday" type="datetime" nullable="true" />
         <field name="score" column="score" type="integer" nullable="true" />
         <field name="content" column="content" type="text" nullable="true" />
+        <field name="nicknames" column="nicknames" type="text" nullable="true" />
         <field name="friendCount" column="friendCount" type="integer" nullable="false" />
         <field name="idolCount" column="idolCount" type="integer" nullable="false" />
         <field name="fanCount" column="fanCount" type="integer" nullable="false" />

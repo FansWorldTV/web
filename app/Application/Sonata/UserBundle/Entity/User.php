@@ -128,6 +128,16 @@ class User extends BaseUser
     private $content;
     
     /**
+     * @var string
+     */
+    private $origin;
+    
+    /**
+     * @var text $nicknames
+     */
+    private $nicknames;
+    
+    /**
      * @var Application\Sonata\MediaBundle\Entity\Media
      */
     private $image;
@@ -516,6 +526,26 @@ class User extends BaseUser
     }
     
 	/**
+     * Set origin
+     *
+     * @param string $origin
+     */
+    public function setOrigin($origin)
+    {
+        $this->origin = $origin;
+    }
+
+    /**
+     * Get origin
+     *
+     * @return string 
+     */
+    public function getOrigin()
+    {
+        return $this->origin;
+    }
+    
+	/**
      * Set score
      *
      * @param integer $score
@@ -553,6 +583,26 @@ class User extends BaseUser
     public function getContent()
     {
         return $this->content;
+    }
+    
+	/**
+     * Set nicknames
+     *
+     * @param text $nicknames
+     */
+    public function setNicknames($nicknames)
+    {
+        $this->nicknames = $nicknames;
+    }
+
+    /**
+     * Get nicknames
+     *
+     * @return text 
+     */
+    public function getNicknames()
+    {
+        return $this->nicknames;
     }
     
 	/**

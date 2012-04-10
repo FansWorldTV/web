@@ -76,6 +76,8 @@ class UserAdmin extends Admin
             ->with('Social')
             	->add('country',null,array('label'=>'País','required'=>false))
 				->add('city',null,array('label'=>'Ciudad','required'=>false))
+				->add('origin',null,array('label'=>'Lugar de origen','required'=>false))
+				->add('nicknames',null,array('label'=>'Apodos','required'=>false))
 				->add('score',null,array('label'=>'Puntaje','required'=>false))
 				->add('level',null,array('label'=>'Nivel','required'=>false))
 				->add('image', 'sonata_type_model', array(), array('edit' => 'list', 'link_parameters' => array('context' => 'default', 'provider' => 'sonata.media.provider.image')))
