@@ -696,7 +696,7 @@ var searchIdols = {
                     var elements = response.search;
                     for(var i in elements){
                         var element = elements[i];
-                        var template = $(".searchFront.templates .listMosaicTemp .element").clone();
+                        var template = $(".templates .listMosaicTemp .element").clone();
                         var usrLink = Routing.generate(appLocale + '_user_detail', {
                             'id':element.id
                         });
