@@ -3,5 +3,8 @@
 {% block title %}{{ parent() }} - Error{% endblock %}
 
 {% block content %}
-	<p class="error">No se ha encontrado el recurso. Verifique si la URL es correcta.</p>
+	<div class="htmlerror">
+		<h1>No encontrado:</h1>
+		<h2>{{ status_text }}</h2>
+	</div>
 {% endblock %}

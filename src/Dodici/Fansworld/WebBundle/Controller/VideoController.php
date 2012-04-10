@@ -332,6 +332,9 @@ class VideoController extends SiteController
     {
         $videoRepo = $this->getRepository('Video');
         $user = $this->getRepository('User')->find($userid);
+        if (!$user)
+            throw new HttpException(404, 'Usuario no encontrado');
+        
         $videos = $videoRepo->findBy(array('author' => $userid, 'active' => true), array('createdAt' => 'desc'), self::cantVideos);
         $countAll = $videoRepo->countBy(array('author' => $user->getId()));
         $addMore = $countAll > self::cantVideos ? true : false;
