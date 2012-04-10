@@ -689,7 +689,7 @@ var searchIdols = {
     },
     addMore: function(){
         $("#addMore.searchIdol").click(function(){
-            var query = this.parent().find('input#query').val();
+            var query = $(this).parent().find('input#query').val();
         
             ajax.searchIdolsAction( query, searchIdols.page, null, function(response){
                 if(response){
