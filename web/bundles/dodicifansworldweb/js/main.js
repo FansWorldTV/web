@@ -726,6 +726,8 @@ var searchIdols = {
                     }
                 }
             });
+            
+            return false;
         });
     },
     search: function(){
