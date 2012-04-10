@@ -60,9 +60,11 @@
             {% endif %}
         {% else %}
                 <div class="idolVideos">
+                	{% if highlightVideo %}
                     <div class="highLightedVideo">
                         <iframe class="videoframe" src="{{ flumotiontwig.videoplayerurl(highlightVideo) }}"></iframe>
                     </div>
+                    {% endif %}
                     <ul class="videos">
                         {% for video in videos %}
                             <li class="video{% if ((loop.index0 + 1)  % 3)==0  %} last{% endif %}" >
