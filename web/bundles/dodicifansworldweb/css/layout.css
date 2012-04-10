@@ -901,7 +901,7 @@ ul.currentinterests li a.deleteinterest:hover { background-position: bottom left
 .idol_specs.greybox, .idol_specs .greybox { padding: 8px !important;  }
 .idol_specs .specs h1{ font-size: 20px; }
 .idol_specs .avatar img { width: 152px; }
-.idol_specs .avatar .btn_idolship { top: -140px; position: relative; right: -39px; }
+.idol_specs .avatar .btn_idolship { position: absolute; top: 17px; right: 7px; }
 .idol_specs .specs ul li{  margin-bottom: 5px; }
 
 .idol_profile_head .avatar { float: left; margin-right: 10px;}
