@@ -86,6 +86,9 @@
                                	<li><a {% if active_tab == 'forum' %}class="active"{% endif %} href="{{ path('forum_user', {id: user.id}) }}">Foro</a></li>
                                 {% endif %}
                                 <li><a {% if active_tab == 'detail' %}class="active"{% endif %} href="{{ path('user_detail', {id: user.id}) }}">Informacion</a></li>
+                                {% if appstate.idol(user) %}
+                               	<li><a {% if active_tab == 'fans' %}class="active"{% endif %} href="">Fans</a></li>
+                                {% endif %}
                             </ul>
                         </div>
                         {% endblock %}
