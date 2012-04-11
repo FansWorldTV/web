@@ -26,30 +26,32 @@ class FriendshipController extends SiteController
      */
     public function ajaxAddFriendAction()
     {
-    	try {
-	    	$response = null;
-	        $request = $this->getRequest();
-	        $author = $this->get('security.context')->getToken()->getUser();
-	
-	        if (!($author instanceof User)) throw new \Exception('Debe iniciar sesión');
-	        
-	        $targetId = $request->get('target');
-	        $friendgroups = $request->get('friendgroups', array());
-	
-	        $target = $this->getRepository('User')->find($targetId);
-	        
-	        if (!$this->get('appstate')->canFriend($target)) throw new \Exception('No puede agregar a esta persona');
-	
-	        $friendship = new Friendship;
-	        $friendship->setAuthor($author);
-	        $friendship->setTarget($target);
-	
-	        foreach ($friendgroups as $id) {
-	            $friendgroup = $this->getRepository('FriendGroup')->find($id);
-	            $friendship->addFriendGroup($friendgroup);
-	        }
+        try {
+            $response = null;
+            $request = $this->getRequest();
+            $author = $this->get('security.context')->getToken()->getUser();
 
-        
+            if (!($author instanceof User))
+                throw new \Exception('Debe iniciar sesión');
+
+            $targetId = $request->get('target');
+            $friendgroups = $request->get('friendgroups', array());
+
+            $target = $this->getRepository('User')->find($targetId);
+
+            if (!$this->get('appstate')->canFriend($target))
+                throw new \Exception('No puede agregar a esta persona');
+
+            $friendship = new Friendship;
+            $friendship->setAuthor($author);
+            $friendship->setTarget($target);
+
+            foreach ($friendgroups as $id) {
+                $friendgroup = $this->getRepository('FriendGroup')->find($id);
+                $friendship->addFriendGroup($friendgroup);
+            }
+
+
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($friendship);
             $em->flush();
@@ -92,8 +94,36 @@ class FriendshipController extends SiteController
         } else {
             $response['error'] = 'User is not the author';
         }
-        
+
         return $this->jsonResponse($response);
+    }
+
+    /**
+     *  User friendships
+     * 
+     *  @Route("/friendships/user/{id} ", name="friendship_user")
+     *  @Template
+     */
+    public function userFriendshipsAction($id)
+    {
+        $userRepo = $this->getRepository('User');
+        $user = $userRepo->find($id);
+
+        if (!($user instanceof User))
+            throw new \Exception('El usuario no existe.');
+
+        $friends = $userRepo->FriendUsers($user, null, SearchController::LIMIT_SEARCH, null);
+
+        $canAddMore = false;
+        if ($userRepo->CountFriendUsers($user) > SearchController::LIMIT_SEARCH) {
+            $canAddMore = true;
+        }
+
+        return array(
+            'user' => $user,
+            'friends' => $friends,
+            'canAddMore' => $canAddMore
+        );
     }
 
 }

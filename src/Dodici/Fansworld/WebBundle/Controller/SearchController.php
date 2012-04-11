@@ -137,8 +137,14 @@ class SearchController extends SiteController
         $query = $request->get('query');
         $page = $request->get('page', 1);
         $userRepo = $this->getRepository('User');
-        $user = $this->get('security.context')->getToken()->getUser();
-
+        
+        $userId = $request->get('userid', false);
+        if($userId){
+            $user = $userRepo->find($userId);
+        }else{
+            $user = $this->get('security.context')->getToken()->getUser();
+        }
+        
         $page = (int) $page;
 
         if ($page > 1) {

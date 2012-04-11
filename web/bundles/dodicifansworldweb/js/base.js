@@ -73,10 +73,11 @@ var ajax = {
         }, callback);
     },
     
-    friendsAction: function(query, page, callback) {
+    friendsAction: function(query, userId, page, callback) {
         ajax.search('search_ajaxfriends', {
             'query': query, 
-            'page': page
+            'page': page,
+            'userId': userId
         }, callback);
     },
     

@@ -788,8 +788,13 @@ var friendsSearch = {
     addMore: function(){
         $("#addMore.friends").click(function(){
             var query = this.parent().find('input#query').val();
+            var userId = $('#userid').val();
         
-            ajax.friendsAction( query, friendsSearch.page, function(response){
+            if(typeof(userId) == 'undefined'){
+                userId = false;
+            }
+        
+            ajax.friendsAction( query, userId, friendsSearch.page, function(response){
                 if(response){
                     var elements = response.search;
                     for(var i in elements){
@@ -823,12 +828,18 @@ var friendsSearch = {
     },
     search: function(){
         var query = $('#query').val();
+        var userId = $('#userid').val();
+        
+        if(typeof(userId) == 'undefined'){
+            userId = false;
+        }
+        
         $(".friends.listMosaic").html('').hide();
         $("div.ajax-loader").removeClass('hidden');
         
         friendsSearch.page = 1;
         
-        ajax.friendsAction(query, 1, function(response){
+        ajax.friendsAction(query, userId, 1, function(response){
             if(response){
                 var elements = response.search;
                 for(var i in elements){
