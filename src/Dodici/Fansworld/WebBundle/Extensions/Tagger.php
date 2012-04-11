@@ -56,26 +56,28 @@ class Tagger
 	    		}
     		} else {
     			$slugt = GedmoUrlizer::urlize($t);
-	    		$tagent = $tagrepo->findOneBy(array('slug' => $slugt));
-	    		
-	    		if (!$tagent) {
-	    			$tagent = new Tag();
-	    			$tagent->setTitle($t);
-	    			$this->em->persist($tagent);
-	    		}
-	    		
-	    		$exists = $hasrepo->findOneBy(array('tag' => $tagent->getId(), 'author' => $user->getId(), strtolower($classname) => $entity->getId()));
-	    		
-	    		if (!$exists) {
-		    		$hastag = new HasTag();
-		    		$hastag->setAuthor($user);
-		    		$hastag->setTag($tagent);
-		    		$methodname = 'set'.$classname;
-		    		$hastag->$methodname($entity);
+    			if ($slugt) {
+		    		$tagent = $tagrepo->findOneBy(array('slug' => $slugt));
 		    		
-		    		$entity->addHasTag($hastag);
-		    		$this->em->persist($entity);
-	    		}
+		    		if (!$tagent) {
+		    			$tagent = new Tag();
+		    			$tagent->setTitle($t);
+		    			$this->em->persist($tagent);
+		    		}
+		    		
+		    		$exists = $hasrepo->findOneBy(array('tag' => $tagent->getId(), 'author' => $user->getId(), strtolower($classname) => $entity->getId()));
+		    		
+		    		if (!$exists) {
+			    		$hastag = new HasTag();
+			    		$hastag->setAuthor($user);
+			    		$hastag->setTag($tagent);
+			    		$methodname = 'set'.$classname;
+			    		$hastag->$methodname($entity);
+			    		
+			    		$entity->addHasTag($hastag);
+			    		$this->em->persist($entity);
+		    		}
+    			}
     		}
     	}
     	

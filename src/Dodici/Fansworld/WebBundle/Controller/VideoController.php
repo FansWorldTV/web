@@ -524,7 +524,9 @@ class VideoController extends SiteController
                     'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
                     'videocategory' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\Choice(array_keys($choicecat))),
                     'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
-                    'youtube' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250)))
+                    'youtube' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
+        			'tagtext' => array(),
+        			'taguser' => array()
                 ));
 
         $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
@@ -533,6 +535,8 @@ class VideoController extends SiteController
                 ->add('videocategory', 'choice', array('required' => true, 'choices' => $choicecat, 'label' => 'Categoría'))
                 ->add('youtube', 'text', array('required' => true, 'label' => 'URL Youtube'))
                 ->add('privacy', 'choice', array('required' => true, 'choices' => $privacies, 'label' => 'Privacidad'))
+                ->add('tagtext', 'hidden', array('required' => false))
+                ->add('taguser', 'hidden', array('required' => false))
                 ->getForm();
 
 
@@ -577,6 +581,22 @@ class VideoController extends SiteController
                         $video->setVideocategory($videocategory);
                         $em->persist($video);
                         $em->flush();
+                        
+                        
+	                    $tagtexts = explode(',', $data['tagtext']);
+	                    $tagusers = explode(',', $data['taguser']);
+	                    $userrepo = $this->getRepository('User');
+	                    
+	                    foreach ($tagtexts as $tt) {
+	                    	if (trim($tt)) $tagitems[] = $tt;
+	                    }
+	                    foreach ($tagusers as $tu) {
+	                    	$tuser = $userrepo->find($tu);
+	                    	if ($tuser) $tagitems[] = $tuser;
+	                    }
+	                    
+	                    $this->get('tagger')->tag($user, $video, $tagitems);
+                        
                         $this->get('session')->setFlash('success', '¡Has subido un video con éxito!');
                     } catch (\Exception $e) {
                         $form->addError(new FormError($e->getMessage()));

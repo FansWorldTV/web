@@ -26,3 +26,6 @@ a.btn_action, input.btn_action { background:url(../images/ui/btn_action.gif) rep
 .roundedimg { padding: 0; -moz-border-radius: 7px; -webkit-border-radius: 7px; border-radius: 7px; }
 
 .hidden { display: none; }
+
+ul.selectedtags li a.deletetag { cursor: pointer; margin-left: 5px;height: 14px;width: 14px;display: block;float: right;background: url('../images/ui/closealert.png') top left no-repeat;}
+ul.selectedtags li a.deletetag:hover { background-position: bottom left;}

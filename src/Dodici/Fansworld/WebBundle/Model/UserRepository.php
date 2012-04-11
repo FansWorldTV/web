@@ -431,4 +431,100 @@ class UserRepository extends CountBaseRepository
     	$res = $query->getResult();
     	return intval($res[0]['count']);
     }
+    
+	/**
+     * Get matching friends/idols with optional search term and pagination
+     * @param \Application\Sonata\UserBundle\Entity\User $user
+     * @param string $filtername
+     * @param int $limit
+     * @param int $offset
+     */
+	public function matching(\Application\Sonata\UserBundle\Entity\User $user, $filtername=null, $limit=null, $offset=null) 
+    {
+    	$rsm = new ResultSetMapping;
+    	$rsm->addEntityResult('Application\Sonata\UserBundle\Entity\User', 'u');
+		$rsm->addFieldResult('u', 'id', 'id');
+    	$rsm->addFieldResult('u', 'username', 'username');
+		$rsm->addFieldResult('u', 'email', 'email');
+		$rsm->addFieldResult('u', 'firstname', 'firstname');
+		$rsm->addFieldResult('u', 'lastname', 'lastname');
+		$rsm->addMetaResult('u', 'image_id', 'image_id');
+		$rsm->addMetaResult('u', 'country_id', 'country_id');
+		$rsm->addMetaResult('u', 'city_id', 'city_id');
+
+        $query = $this->_em->createNativeQuery('
+    	SELECT
+		u.*
+		FROM friendship fs
+		INNER JOIN fos_user_user u ON u.id = fs.target_id
+		'.($filtername ? 'LEFT JOIN country ON country.id = u.country_id LEFT JOIN city ON city.id = u.city_id' : '').'
+		WHERE
+		fs.author_id = :userid
+		AND fs.active AND u.enabled
+		'.($filtername ? '
+			AND (
+			country.title LIKE :filtername OR 
+			city.title LIKE :filtername OR
+			u.username LIKE :filtername OR
+			u.email LIKE :filtername OR  
+			u.firstname LIKE :filtername OR 
+			u.lastname LIKE :filtername
+		)' : '').'
+		
+		UNION
+		
+		SELECT
+		u.*
+		FROM friendship fs
+		INNER JOIN fos_user_user u ON u.id = fs.author_id
+		'.($filtername ? 'LEFT JOIN country ON country.id = u.country_id LEFT JOIN city ON city.id = u.city_id' : '').'
+		WHERE
+		fs.target_id = :userid
+		AND fs.active AND u.enabled
+		'.($filtername ? '
+			AND (
+			country.title LIKE :filtername OR 
+			city.title LIKE :filtername OR 
+			u.username LIKE :filtername OR
+			u.email LIKE :filtername OR
+			u.firstname LIKE :filtername OR 
+			u.lastname LIKE :filtername
+		)' : '').'
+		
+		UNION
+		
+		SELECT
+		u.*
+		FROM idolship fs
+		INNER JOIN fos_user_user u ON u.id = fs.target_id
+		'.($filtername ? 'LEFT JOIN country ON country.id = u.country_id LEFT JOIN city ON city.id = u.city_id' : '').'
+		WHERE
+		fs.author_id = :userid
+		AND u.enabled
+		'.($filtername ? '
+			AND (
+			country.title LIKE :filtername OR 
+			city.title LIKE :filtername OR 
+			u.username LIKE :filtername OR
+			u.email LIKE :filtername OR
+			u.firstname LIKE :filtername OR 
+			u.lastname LIKE :filtername
+		)' : '').'
+    	
+    	'.
+        (($limit !== null) ? ' LIMIT :limit ' : '').
+        (($offset !== null) ? ' OFFSET :offset ' : '')
+    	, $rsm)
+    		->setParameter('userid', $user->getId(), Type::BIGINT);
+    		
+    	if ($filtername)
+    		$query = $query->setParameter('filtername', '%'.$filtername.'%');
+    	
+    	if ($limit !== null)
+            $query = $query->setParameter('limit', (int)$limit, Type::INTEGER);
+        if ($offset !== null)
+            $query = $query->setParameter('offset', (int)$offset, Type::INTEGER);
+    	
+    	return $query->getResult();
+    }
 }

@@ -96,7 +96,9 @@ class PhotoController extends SiteController
                     'album' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($albumchoices))),
                     'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
                     'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
-                    'file' => new \Symfony\Component\Validator\Constraints\Image()
+                    'file' => new \Symfony\Component\Validator\Constraints\Image(),
+        			'tagtext' => array(),
+        			'taguser' => array()
                 ));
 
         $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
@@ -105,6 +107,8 @@ class PhotoController extends SiteController
                 ->add('content', 'textarea', array('required' => false, 'label' => 'Descripción'))
                 ->add('file', 'file', array('required' => true, 'label' => 'Archivo'))
                 ->add('privacy', 'choice', array('required' => true, 'choices' => $privacies, 'label' => 'Privacidad'))
+                ->add('tagtext', 'hidden', array('required' => false))
+                ->add('taguser', 'hidden', array('required' => false))
                 ->getForm();
 
 
@@ -149,6 +153,20 @@ class PhotoController extends SiteController
                     $photo->setPrivacy($data['privacy']);
                     $em->persist($photo);
                     $em->flush();
+                    
+                    $tagtexts = explode(',', $data['tagtext']);
+                    $tagusers = explode(',', $data['taguser']);
+                    $userrepo = $this->getRepository('User');
+                    
+                    foreach ($tagtexts as $tt) {
+                    	if (trim($tt)) $tagitems[] = $tt;
+                    }
+                    foreach ($tagusers as $tu) {
+                    	$tuser = $userrepo->find($tu);
+                    	if ($tuser) $tagitems[] = $tuser;
+                    }
+                    
+                    $this->get('tagger')->tag($user, $photo, $tagitems);
                     
                     $this->get('session')->setFlash('success', '¡Has subido una foto con éxito!');
                 }

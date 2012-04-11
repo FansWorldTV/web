@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\Form\FormError;
@@ -92,6 +94,44 @@ class UserController extends SiteController
     {
         return array();
     }
+    
+    /**
+     *  get params (all optional):
+     *   - text (partial match)
+     *   - page
+     *  @Route("/ajax/matching/", name="user_ajaxmatching")
+     */
+    public function ajaxMatching()
+    {
+        $request = $this->getRequest();
+    	$text = $request->get('text');
+    	$page = $request->get('page');
+    	$limit = null; $offset = null;
+    	
+    	$user = $this->get('security.context')->getToken()->getUser();
+    	
+    	if (!($user instanceof User)) throw new AccessDeniedException('Acceso denegado');
+    	
+    	if ($page !== null) {
+    		$page--;
+    		$limit = self::LIMIT_AJAX_GET;
+    		$offset = $limit * $page;
+    	}
+        
+    	$friends = $this->getRepository('User')->matching($user, $text, $limit, $offset);
+        
+        $response = array();
+        foreach ($friends as $friend) {
+            $response[] = array(
+            	'id' => $friend->getId(),
+            	'value' => (string)$friend,
+            	'add' => $friend->getId(),
+            );
+        }
+
+        return $this->jsonResponse($response);
+    }
+    
 
     /**
      *  @Route("/ajax/notification-number/", name="user_ajaxnotificationnumber") 
