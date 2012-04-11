@@ -741,22 +741,27 @@ var searchIdols = {
                 var elements = response.idols;
                 for(var i in elements){
                     var element = elements[i];
-                    var template = $(".searchIdol.templates .listMosaicTemp .element").clone();
+                    var template = $(".templates .listMosaicTemp .element").clone();
+                    var usrLink = Routing.generate(appLocale + '_user_detail', {
+                        'id':element.id
+                    });
                     
+                    template.find('a').attr('href', usrLink);
                     template.find('.name').html(element.name);
                     template.find('.commonFriends').html(element.commonFriends);
                     
+                    template.find('.avatar').attr('href', usrLink);
                     if(element.image){
                         template.find('.avatar img').attr('src', element.image);
                     }else{
-                        
+                        template.find('.avatar img').attr('src', '/fansworld/web/bundles/dodicifansworldweb/images/user_pic.jpg');
                     }
                     
-                    if(element.isidol){
-                        template.addClass('isidol');
+                    if(element.isFriend){
+                        template.addClass('isfriend');
                     }
                     
-                    $(".searchIdol.listMosaic").append(template);
+                    $(".listMosaic").append(template);
                 }
                 if(response.gotMore){
                     $("#addMore").removeClass('hidden');
