@@ -341,12 +341,17 @@ class VideoController extends SiteController
         $highlightVideos = $videoRepo->findBy(array('active' => true, 'highlight' => true, 'author' => $userid), array('createdAt' => 'desc'));
         $highlightVideo = count($highlightVideos) > 0 ? $highlightVideos[0] : false;
 
+        if ($user->getType() == User::TYPE_IDOL) {
+            $topFans = $this->getRepository('User')->FriendUsers($user, null, 5);
+        }
+        
         return array(
             'videos' => $videos,
             'addMore' => $addMore,
             'user' => $user,
             'highlightVideo' => $highlightVideo,
-            'highlightVideos' => $highlightVideos
+            'highlightVideos' => $highlightVideos,
+            'topFans' => $topFans
         );
     }
 

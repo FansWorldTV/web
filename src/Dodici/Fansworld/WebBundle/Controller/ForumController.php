@@ -144,10 +144,15 @@ class ForumController extends SiteController
         $threads = $this->getRepository('ForumThread')->findBy(array('author' => $user->getId()), array('postCount' => 'desc'), self::threadPerPage);
         $countAll = $this->getRepository('ForumThread')->countBy(array('author' => $user->getId()));
 
+        if ($user->getType() == User::TYPE_IDOL) {
+            $topFans = $this->getRepository('User')->FriendUsers($user, null, 5);
+        }
+        
         return array(
             'threads' => $threads,
             'user' => $user,
-            'addMore' => $countAll > self::threadPerPage ? true : false
+            'addMore' => $countAll > self::threadPerPage ? true : false,
+            'topFans' => $topFans
         );
     }
 

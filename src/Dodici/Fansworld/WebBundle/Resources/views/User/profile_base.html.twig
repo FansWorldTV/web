@@ -179,6 +179,16 @@
                                             {% endif %}
                                     </ul>
                             </div>
+                            <div class="specs greybox marginTop10">
+                                    <div class="idolname clearfix">
+                                            <h3>Top fans</h3>
+                                    </div>
+                                    <ul>
+                                            {% for fan in topFans %}
+                                                <li>{{ fan.name }}</li>
+                                            {% endfor %}
+                                    </ul>
+                            </div>
                     </div>
                 </div>
     {% endif %}

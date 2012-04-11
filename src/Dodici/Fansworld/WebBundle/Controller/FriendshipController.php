@@ -119,10 +119,15 @@ class FriendshipController extends SiteController
             $canAddMore = true;
         }
 
+        if ($user->getType() == User::TYPE_IDOL) {
+            $topFans = $this->getRepository('User')->FriendUsers($user, null, 5);
+        }
+        
         return array(
             'user' => $user,
             'friends' => $friends,
-            'canAddMore' => $canAddMore
+            'canAddMore' => $canAddMore,
+            'topFans' => $topFans
         );
     }
 
