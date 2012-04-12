@@ -35,38 +35,26 @@ class Meteor
      */
     public function push($entity)
     {
-    	$op = fsockopen($this->host, $this->port);
-    	socket_set_blocking($op,false);
-    	if ($op) {
-    		
-    		if ($entity instanceof Notification) {
-	    		$channel = 'notification';
-    			$html = $this->templating->render('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $entity));
-	    		$message = json_encode($html);
-    		} elseif ($entity instanceof Friendship) {
-    			$channel = 'friendship';
-    			$media = $entity->getAuthor()->getImage();
-    			$fs = array(
-                    'friendship' => array(
-                        'id' => $entity->getId(),
-                        'ts' => $entity->getCreatedat()->format('U')
-                    ),
-                    'user' => array(
-                        'id' => $entity->getAuthor()->getId(),
-                        'name' => (string) $entity->getAuthor(),
-                        'image' => $this->getImageUrl($media),
-                        'url' => $this->router->generate('user_detail', array('id' => $entity->getAuthor()->getId()))
-                    )
-                );
-                $message = json_encode($fs);
-    		} else {
-    			return false;
-    		}
-    		
-    		$out = "ADDMESSAGE ".$channel." ".$message."\n";
-    		
-    		fwrite($op, $out);
-    		return $out;
+    	if ($entity instanceof Notification) {
+	    	$html = $this->templating->render('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $entity));
+	    	$this->sendToSocket($html, 'notification');
+    	} elseif ($entity instanceof Friendship) {
+    		$media = $entity->getAuthor()->getImage();
+    		$fs = array(
+                'friendship' => array(
+                    'id' => $entity->getId(),
+                    'ts' => $entity->getCreatedat()->format('U')
+                ),
+                'user' => array(
+                    'id' => $entity->getAuthor()->getId(),
+                    'name' => (string) $entity->getAuthor(),
+                    'image' => $this->getImageUrl($media),
+                    'url' => $this->router->generate('user_detail', array('id' => $entity->getAuthor()->getId()))
+                )
+            );
+            $this->sendToSocket($fs, 'friendship');
+    	} else {
+    		return false;
     	}
     }
     
@@ -88,6 +76,19 @@ class Meteor
         }
         
         return false;
+    }
+    
+    private function sendToSocket($message, $channel)
+    {
+    	$op = fsockopen($this->host, $this->port);
+    	socket_set_blocking($op,false);
+    	if ($op) {
+    		$message = json_encode($message);
+    		$out = "ADDMESSAGE ".$channel." ".$message."\n";
+    		fwrite($op, $out);
+    		return true;
+    	}
+    	return false;
     }
     
 }
