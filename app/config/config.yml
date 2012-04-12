@@ -352,6 +352,9 @@ services:
     appstate:
       class: Dodici\Fansworld\WebBundle\Extensions\AppState
       arguments: [@security.context, @doctrine.orm.entity_manager]
+    meteor:
+      class: Dodici\Fansworld\WebBundle\Extensions\Meteor
+      arguments: [@doctrine.orm.entity_manager, @templating, @sonata.media.pool, @router, %meteor.host%, %meteor.port%]
     tagger:
       class: Dodici\Fansworld\WebBundle\Extensions\Tagger
       arguments: [@doctrine.orm.entity_manager]

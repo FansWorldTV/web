@@ -2,8 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Listener;
 
+use Dodici\Fansworld\WebBundle\Entity\Friendship;
 use Symfony\Component\HttpFoundation\Request;
-
 use Dodici\Fansworld\WebBundle\Entity\Notification;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Application\Sonata\UserBundle\Entity\User;
@@ -26,6 +26,11 @@ class NotificationMailer
 		
     	if ($entity instanceof Notification) {
 			$user = $entity->getTarget();
+			
+			// send comet push
+			$this->container->get('meteor')->push($entity);
+			
+			// send mail
 			$allowed = $user->getNotifyprefs();
 			if (in_array($entity->getType(), $allowed)) {
 				$mailer = $this->container->get('mailer');
@@ -51,6 +56,11 @@ class NotificationMailer
                 $sent = $mailer->send($message);
 				
 			}
+		}
+		
+    	if ($entity instanceof Friendship) {
+			// send comet push
+			$this->container->get('meteor')->push($entity);
 		}
 		
     }

@@ -86,13 +86,13 @@ class RequestBuilder {
         return json_decode($this->getCurl('/channels/'.$id.'/audios'));
     }
     
-    public function createMetadata($name, $channel, \DateTime $date)
+    public function createMetadata($name, $filename, $type, $channel, \DateTime $date)
     {
     	$tz = new \DateTimeZone('UTC');
     	$date = $date->setTimezone($tz);
     	$data = array(
-    		'media_type' => 'audio',
-    		'filename' => $name.'.mp3',
+    		'media_type' => $type,
+    		'filename' => $filename,
     		'name' => $name,
     		'channel' => $channel,
     		'publish_date' => $date->format('Y-m-d H:i:s'),
