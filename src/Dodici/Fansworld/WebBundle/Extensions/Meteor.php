@@ -12,19 +12,13 @@ class Meteor
 {
 	protected $request;
 	protected $em;
-	protected $templating;
-	protected $mediapool;
-	protected $router;
 	protected $host;
 	protected $port;
 
-    function __construct(EntityManager $em, $templating, $mediapool, $router, $host='127.0.0.1', $port='4671')
+    function __construct(EntityManager $em, $host='127.0.0.1', $port='4671')
     {
         $this->request = Request::createFromGlobals();
         $this->em = $em;
-        $this->templating = $templating;
-        $this->mediapool = $mediapool;
-        $this->router = $router;
         $this->host = $host;
         $this->port = $port;
     }
@@ -36,46 +30,17 @@ class Meteor
     public function push($entity)
     {
     	if ($entity instanceof Notification) {
-	    	$html = $this->templating->render('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $entity));
-	    	$this->sendToSocket($html, 'notification');
+	    	$this->sendToSocket($entity->getId(), $this->encryptChannelName('notification', $entity->getTarget()));
     	} elseif ($entity instanceof Friendship) {
-    		$media = $entity->getAuthor()->getImage();
-    		$fs = array(
-                'friendship' => array(
-                    'id' => $entity->getId(),
-                    'ts' => $entity->getCreatedat()->format('U')
-                ),
-                'user' => array(
-                    'id' => $entity->getAuthor()->getId(),
-                    'name' => (string) $entity->getAuthor(),
-                    'image' => $this->getImageUrl($media),
-                    'url' => $this->router->generate('user_detail', array('id' => $entity->getAuthor()->getId()))
-                )
-            );
-            $this->sendToSocket($fs, 'friendship');
+    		$this->sendToSocket($entity->getId(), $this->encryptChannelName('friendship', $entity->getTarget()));
     	} else {
     		return false;
     	}
     }
     
-    private function getImageUrl($media, $sizeFormat = 'small')
+    private function encryptChannelName($channel, User $user)
     {
-        $imageUrl = null;
-        $request = $this->request;
-        $mediaService = $this->mediapool;
-
-        $host = 'http://' . $request->getHost();
-
-        if ($media) {
-            $provider = $mediaService->getProvider($media->getProviderName());
-
-            $format = $provider->getFormatName($media, $sizeFormat);
-            $imageUrl = $provider->generatePublicUrl($media, $format);
-            
-            return $host . $imageUrl;
-        }
-        
-        return false;
+    	return $channel.'_'.sha1($user->getId().'hfd78has7');
     }
     
     private function sendToSocket($message, $channel)

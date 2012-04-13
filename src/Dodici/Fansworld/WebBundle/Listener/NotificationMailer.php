@@ -27,9 +27,6 @@ class NotificationMailer
     	if ($entity instanceof Notification) {
 			$user = $entity->getTarget();
 			
-			// send comet push
-			$this->container->get('meteor')->push($entity);
-			
 			// send mail
 			$allowed = $user->getNotifyprefs();
 			if (in_array($entity->getType(), $allowed)) {
@@ -57,12 +54,6 @@ class NotificationMailer
 				
 			}
 		}
-		
-    	if ($entity instanceof Friendship) {
-			// send comet push
-			$this->container->get('meteor')->push($entity);
-		}
-		
     }
     
 }
