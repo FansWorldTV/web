@@ -38,9 +38,9 @@ class Meteor
     	}
     }
     
-    private function encryptChannelName($channel, User $user)
+    public function encryptChannelName($channel, User $user)
     {
-    	return $channel.'_'.sha1($user->getId().'hfd78has7');
+    	return $channel.'_'.sha1($user->getId().'hfd78has7'.$channel);
     }
     
     private function sendToSocket($message, $channel)

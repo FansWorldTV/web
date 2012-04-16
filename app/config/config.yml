@@ -384,6 +384,11 @@ services:
       arguments: [@appstate]
       tags:
           - { name: twig.extension }
+    twig.extension.meteor:
+      class: Dodici\Fansworld\WebBundle\Extensions\MeteorExtension
+      arguments: [@meteor]
+      tags:
+          - { name: twig.extension }
     flumotion.api.request:
       class: Flumotion\APIBundle\Builder\RequestBuilder
       arguments: [ @doctrine, %flumotion.api_url%, %flumotion.api_key%, %flumotion.api_secret% ]
