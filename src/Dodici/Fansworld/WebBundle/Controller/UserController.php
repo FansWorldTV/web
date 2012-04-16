@@ -40,11 +40,7 @@ class UserController extends SiteController
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
 
-        if ($user->getType() == User::TYPE_IDOL) {
-            $topFans = $this->getRepository('User')->FriendUsers($user, null, 5);
-        }
-
-        return array('user' => $user, 'friendgroups' => $friendGroups, 'hasComments' => $hasComments, 'topFans' => $topFans);
+        return array('user' => $user, 'friendgroups' => $friendGroups, 'hasComments' => $hasComments);
     }
 
     /**
@@ -80,11 +76,7 @@ class UserController extends SiteController
             }
         }
 
-        if ($user->getType() == User::TYPE_IDOL) {
-            $topFans = $this->getRepository('User')->FriendUsers($user, null, 5);
-        }
-
-        return array('user' => $user, 'friendgroups' => $friendGroups, 'interests' => $interests, 'topFans' => $topFans);
+        return array('user' => $user, 'friendgroups' => $friendGroups, 'interests' => $interests);
     }
 
     /**
@@ -415,8 +407,7 @@ class UserController extends SiteController
         $user = $this->getRepository('User')->find($id);
 
         if ($user->getType() == User::TYPE_IDOL) {
-            $topFans = $this->getRepository('User')->FriendUsers($user, null, 5);
-            return array('user' => $user, 'topFans' => $topFans);
+            return array('user' => $user);
         } else {
             $loggedUser = $this->get('security.context')->getToken()->getUser();
             $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
@@ -457,15 +448,10 @@ class UserController extends SiteController
         $photos = $this->getRepository('Photo')->findBy(array('author' => $id, 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
         $totalCount = $this->getRepository('Photo')->countBy(array('author' => $id, 'active' => true));
 
-        if ($user->getType() == User::TYPE_IDOL) {
-            $topFans = $this->getRepository('User')->FriendUsers($user, null, 5);
-        }
-
         return array(
             'user' => $user,
             'photos' => $photos,
-            'gotMore' => $totalCount > self::LIMIT_PHOTOS ? true : false,
-            'topFans' => $topFans
+            'gotMore' => $totalCount > self::LIMIT_PHOTOS ? true : false
         );
     }
 
@@ -481,15 +467,10 @@ class UserController extends SiteController
         $albums = $this->getRepository('Album')->findBy(array('author' => $id, 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
         $totalCount = $this->getRepository('Album')->countBy(array('author' => $id, 'active' => true));
         
-        if ($user->getType() == User::TYPE_IDOL) {
-            $topFans = $this->getRepository('User')->FriendUsers($user, null, 5);
-        }
-
         return array(
             'user' => $user,
             'albums' => $albums,
-            'gotMore' => $totalCount > self::LIMIT_PHOTOS ? true : false,
-            'topFans' => $topFans
+            'gotMore' => $totalCount > self::LIMIT_PHOTOS ? true : false
         );
     }
 

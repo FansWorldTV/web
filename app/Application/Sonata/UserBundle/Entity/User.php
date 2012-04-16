@@ -152,6 +152,11 @@ class User extends BaseUser
     private $privacy;
     
     /**
+     * @var boolean $restricted
+     */
+    private $restricted;
+    
+    /**
      * @var array $notifyprefs
      * array (
      * Notification::TYPE_*,
@@ -246,6 +251,9 @@ class User extends BaseUser
         }
         if (null === $this->score) {
         	$this->setScore(0);
+        }
+        if (null === $this->restricted) {
+        	$this->setRestricted(false);
         }
     }
     
@@ -663,6 +671,26 @@ class User extends BaseUser
     public function getPrivacy()
     {
         return $this->privacy;
+    }
+    
+	/**
+     * Set restricted
+     *
+     * @param boolean $restricted
+     */
+    public function setRestricted($restricted)
+    {
+        $this->restricted = $restricted;
+    }
+
+    /**
+     * Get restricted
+     *
+     * @return boolean 
+     */
+    public function getRestricted()
+    {
+        return $this->restricted;
     }
     
 	/**

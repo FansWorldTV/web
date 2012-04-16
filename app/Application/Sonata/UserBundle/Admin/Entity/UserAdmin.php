@@ -65,6 +65,7 @@ class UserAdmin extends Admin
 				->add('lastname',null,array('label'=>'Apellido','required'=>false))
 				->add('phone',null,array('label'=>'Teléfono','required'=>false))
 				->add('content',null,array('label'=>'Descripción','required'=>false))
+				->add('restricted',null,array('label'=>'Restringido','required'=>false))
 				/*->add('mobile',null,array('label'=>'Móvil','required'=>false))
 			->with('Comunicación')
 				->add('skype',null,array('label'=>'Skype','required'=>false))

@@ -1,5 +1,5 @@
 $(function(){
-	$('#form_prefs input[type="checkbox"]').checkbox({
+	$('#form_prefs input[type="checkbox"], .form-profile input[type="checkbox"]').checkbox({
         empty: emptyCheckboxImg
     });
 	

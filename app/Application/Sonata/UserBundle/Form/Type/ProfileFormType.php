@@ -43,7 +43,8 @@ class ProfileFormType extends BaseType
 			->add('gmail',null,array('label'=>'Gmail','required'=>false))
 			*/
             
-			->add('content',null,array('label'=>'Sobre Mí','required'=>false))	
+			->add('content',null,array('label'=>'Sobre Mí','required'=>false))
+			->add('restricted',null,array('label'=>'Modo Restringido','required'=>false))	
         ;
         
         $builder->setAttribute('label', 'Modificar mis datos:');
