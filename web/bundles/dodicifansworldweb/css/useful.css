@@ -47,3 +47,5 @@
 .white { color: white; }
 
 .bold { font-weight: bold; }
+
+.center { margin: 0 auto; display: block; }

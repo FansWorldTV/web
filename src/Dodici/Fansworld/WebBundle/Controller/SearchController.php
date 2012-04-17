@@ -21,7 +21,6 @@ class SearchController extends SiteController
 
     /**
      * Site's home
-     * 
      * @Template()
      */
     public function indexAction()

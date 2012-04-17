@@ -1,0 +1,44 @@
+<div class="navy">
+    <ul>
+        <li><a class="homelink" href="{{ path('homepage') }}"><img src="{{ asset('bundles/dodicifansworldweb/images/ui/ico_home.png' )}}" /></a></li>
+        <li><a href="{{ path('search_idols') }}">Idolos</a></li>
+        <li><a href="{{ path('search_search') }}">Fans</a></li>
+        <li><a href="{{ path('video_list') }}">TV</a></li>
+        <li><a href="{{ path('photo_list') }}">Fotos</a></li>
+        <li><a href="{{ path('contest_list') }}">Concursos</a></li>
+        <li><a href="philanthropy.php">Filantropia</a></li>
+        <li><a href="{{ path('forum_index') }}">Foros</a></li>
+        <li class="notifications_user">
+            <a href="#1" class="hidden"><span></span></a>
+            <ul>
+                {% for notification in notifications%}
+                    <li class='clearfix notification'>{{ notification|raw }}</li>
+                {% endfor %}
+                <li class="more"><a href="#1">ver más</a></li>
+            </ul>
+        </li>
+        <li class="alerts_user">
+            <a href="#1" class="hidden"><span></span></a>
+            <ul>
+                <li class="more hidden"><a href="#1">15 notificaciones mas</a></li>
+            </ul>
+        </li>
+    </ul>
+    <div id="templatePendingFriends" class="hidden">
+        <ul>
+            <li class="clearfix">
+                <img class="avatar" src="{{ asset('bundles/dodicifansworldweb/images/user_pic.jpg' )}}" width="40" height="40" />
+                <span class="info">
+                    <a class="name" href="user_profile.php">Rodrigo Ramirez</a> 
+                    <span>
+                        Te quiere agregar como amigo<br />
+                        <a href="#" class="deny">rechazar</a>
+                    </span>
+                </span>
+                <div class="button">
+                    <a href="#1" class="accept">Aceptar</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

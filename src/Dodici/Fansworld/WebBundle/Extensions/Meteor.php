@@ -30,9 +30,9 @@ class Meteor
     public function push($entity)
     {
     	if ($entity instanceof Notification) {
-	    	$this->sendToSocket($entity->getId(), $this->encryptChannelName('notification', $entity->getTarget()));
+	    	return $this->sendToSocket($entity->getId(), $this->encryptChannelName('notification', $entity->getTarget()));
     	} elseif ($entity instanceof Friendship) {
-    		$this->sendToSocket($entity->getId(), $this->encryptChannelName('friendship', $entity->getTarget()));
+    		return $this->sendToSocket($entity->getId(), $this->encryptChannelName('friendship', $entity->getTarget()));
     	} else {
     		return false;
     	}
@@ -47,6 +47,7 @@ class Meteor
     {
     	$op = fsockopen($this->host, $this->port);
     	socket_set_blocking($op,false);
+        var_dump($op);
     	if ($op) {
     		$message = json_encode($message);
     		$out = "ADDMESSAGE ".$channel." ".$message."\n";

@@ -244,6 +244,16 @@ var ajax = {
         });
     },
     
+    getNotification: function(id, callback){
+        ajax.setCallback(callback);
+        $.ajax({
+            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxnotification' ),
+            data:{
+                'id': id
+            }
+        });
+    },
+    
     deleteNotification: function(id, callback){
         ajax.setCallback(callback);
         $.ajax({
@@ -365,7 +375,7 @@ var ajax = {
     },
     
     usersVideosAction: function(params, callback, errorCallback){
-       ajax.setCallback(callback, errorCallback);
+        ajax.setCallback(callback, errorCallback);
         $.ajax({
             url: 'http://' + location.host + Routing.generate( appLocale + '_video_ajaxusers '),
             data: params

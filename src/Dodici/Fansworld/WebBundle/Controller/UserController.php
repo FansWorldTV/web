@@ -3,7 +3,6 @@
 namespace Dodici\Fansworld\WebBundle\Controller;
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\Form\FormError;
@@ -86,7 +85,7 @@ class UserController extends SiteController
     {
         return array();
     }
-    
+
     /**
      *  get params (all optional):
      *   - text (partial match)
@@ -96,34 +95,35 @@ class UserController extends SiteController
     public function ajaxMatching()
     {
         $request = $this->getRequest();
-    	$text = $request->get('text');
-    	$page = $request->get('page');
-    	$limit = null; $offset = null;
-    	
-    	$user = $this->get('security.context')->getToken()->getUser();
-    	
-    	if (!($user instanceof User)) throw new AccessDeniedException('Acceso denegado');
-    	
-    	if ($page !== null) {
-    		$page--;
-    		$limit = self::LIMIT_AJAX_GET;
-    		$offset = $limit * $page;
-    	}
-        
-    	$friends = $this->getRepository('User')->matching($user, $text, $limit, $offset);
-        
+        $text = $request->get('text');
+        $page = $request->get('page');
+        $limit = null;
+        $offset = null;
+
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        if (!($user instanceof User))
+            throw new AccessDeniedException('Acceso denegado');
+
+        if ($page !== null) {
+            $page--;
+            $limit = self::LIMIT_AJAX_GET;
+            $offset = $limit * $page;
+        }
+
+        $friends = $this->getRepository('User')->matching($user, $text, $limit, $offset);
+
         $response = array();
         foreach ($friends as $friend) {
             $response[] = array(
-            	'id' => $friend->getId(),
-            	'value' => (string)$friend,
-            	'add' => $friend->getId(),
+                'id' => $friend->getId(),
+                'value' => (string) $friend,
+                'add' => $friend->getId(),
             );
         }
 
         return $this->jsonResponse($response);
     }
-    
 
     /**
      *  @Route("/ajax/notification-number/", name="user_ajaxnotificationnumber") 
@@ -156,6 +156,26 @@ class UserController extends SiteController
         }
 
         $response['countAll'] = $countAll;
+        return $this->jsonResponse($response);
+    }
+    
+    /**
+     *  @Route("/ajax/get-notification/", name="user_ajaxnotification")
+     */
+    public function ajaxNotification()
+    {
+        $request = $this->getRequest();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $notificationId = $request->get('id', false);
+        $response = array();
+        
+        if($notificationId){
+            $notiRepo = $this->getRepository('Notification');
+            $notification = $notiRepo->find($notificationId);
+            
+            $response = $this->renderView('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $notification));
+        }
+
         return $this->jsonResponse($response);
     }
 
@@ -239,7 +259,6 @@ class UserController extends SiteController
             $response = array();
             $pending = $friendRepo->Pending($user, $limit, $offset);
             $countTotal = $friendRepo->CountPending($user);
-            $mediaservice = $this->get('sonata.media.pool');
 
             $response['total'] = $countTotal;
 
@@ -406,6 +425,7 @@ class UserController extends SiteController
     {
         $user = $this->getRepository('User')->find($id);
 
+        $topFans = false;
         if ($user->getType() == User::TYPE_IDOL) {
             return array('user' => $user);
         } else {
@@ -466,7 +486,8 @@ class UserController extends SiteController
         $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
         $albums = $this->getRepository('Album')->findBy(array('author' => $id, 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
         $totalCount = $this->getRepository('Album')->countBy(array('author' => $id, 'active' => true));
-        
+
+        $topFans = false;
         return array(
             'user' => $user,
             'albums' => $albums,
