@@ -14,13 +14,15 @@ class Meteor
 	protected $em;
 	protected $host;
 	protected $port;
+	protected $clientport;
 
-    function __construct(EntityManager $em, $host='127.0.0.1', $port='4671')
+    function __construct(EntityManager $em, $host='127.0.0.1', $port='4671', $clientport='4670')
     {
         $this->request = Request::createFromGlobals();
         $this->em = $em;
         $this->host = $host;
         $this->port = $port;
+        $this->clientport = $clientport;
     }
 
     /**
@@ -41,6 +43,26 @@ class Meteor
     public function encryptChannelName($channel, User $user)
     {
     	return $channel.'_'.sha1($user->getId().'hfd78has7'.$channel);
+    }
+    
+    public function getHost()
+    {
+    	return $this->host;
+    }
+    
+    public function getControllerPort()
+    {
+    	return $this->port;
+    }
+    
+    public function getClientPort()
+    {
+    	return $this->clientport;
+    }
+    
+    public function getUniqid()
+    {
+    	return uniqid();
     }
     
     private function sendToSocket($message, $channel)

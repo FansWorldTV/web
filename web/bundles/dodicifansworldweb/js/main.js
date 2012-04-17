@@ -155,13 +155,13 @@ var site = {
             }
         }
             
-        if(typeof(notificationChannel) !== 'undefined')  {
-            Meteor.registerEventCallback("process", handleData);
-            Meteor.joinChannel(notificationChannel, 0);
-            Meteor.mode = 'stream';
-            
-            // Start streaming!
-            Meteor.connect();
+        if ((typeof Meteor != 'undefined') && (typeof notificationChannel != 'undefined')) {
+        	Meteor.registerEventCallback("process", handleData);
+	        Meteor.joinChannel(notificationChannel, 0);
+	        Meteor.mode = 'stream';
+	            
+	        // Start streaming!
+	        Meteor.connect();
             console.log('Escuchando notificaciones...');
         }
     },
