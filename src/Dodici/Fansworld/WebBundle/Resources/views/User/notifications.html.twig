@@ -5,7 +5,7 @@
 {% block content %}
 <div class="cont clearfix">
     <h2>Notificaciones</h2>
-    <div class="mask">
+    <div id="notificationsList" class="mask">
         {% for notification in notifications %}
             {{ notification|raw }}
         {% endfor %}

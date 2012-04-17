@@ -23,7 +23,6 @@ var site = {
         });
         $("ul.friendgroupsList").show();
         $("li.alerts_user a span").hide().parent().removeClass('hidden');
-        $("li.notifications_user a span").hide().parent().removeClass('hidden');
         
         $("a.btn_picture").colorbox({
             'iframe': true,
@@ -136,17 +135,17 @@ var site = {
     },
     
     listenNotifications: function(){
-        console.log('Escuchando...');
         function handleData(response){
             if(response){
                 var actualNumber = $("li.notifications_user a span").html();
+                var number = 0;
                 if(actualNumber == ''){
-                    actualNumber = 0;
+                    number = 0;
                 }else{
-                    parseInt(actualNumber);
+                    number = parseInt(actualNumber);
                 }
-                
-                $("li.notifications_user a span").html(actualNumber++).show();
+                number++;
+                $("li.notifications_user a span").html(number).show();
                 $(".notifications_user a:first span").effect("highlight",{},3000);
                 $(".notifications_user a:first").effect("bounce",{
                     times:1
@@ -156,12 +155,15 @@ var site = {
             }
         }
             
-        Meteor.registerEventCallback("process", handleData);
-        Meteor.joinChannel(notificationChannel, 0);
-        Meteor.mode = 'stream';
+        if(typeof(notificationChannel) !== 'undefined')  {
+            Meteor.registerEventCallback("process", handleData);
+            Meteor.joinChannel(notificationChannel, 0);
+            Meteor.mode = 'stream';
             
-        // Start streaming!
-        Meteor.connect();
+            // Start streaming!
+            Meteor.connect();
+            console.log('Escuchando notificaciones...');
+        }
     },
     
     getNotification: function(id){
@@ -179,6 +181,10 @@ var site = {
                 }
                 $("#notification_" + id).html(response).removeClass('loading');
                 
+                if($("#notificationsList").size()>0){
+                    $("#notificationsList").prepend(response);
+                }
+                
                 if(site.isClosedNotificationess){
                     $("#notification_" + id).addClass('hidden');
                 }
@@ -195,44 +201,9 @@ var site = {
             }else{
                 site.isClosedNotificationess = false;
             }
-//            $("li.notifications_user ul").hide();
-//            $("li.notifications_user ul div.info").remove();
-//            $("li.notifications_user ul").toggle().append("<li class='clearfix loading'></li>");
-//            
-//            if(site.isClosedNotificationess){
-//                ajax.getNotifications(function(response){ 
-//                    if(response){
-//                        $("li.notifications_user ul li.loading").remove();
-//                        $("li.notifications_user ul div.info").remove();
-//                    
-//                        for(var i in response.notifications){
-//                            var element = response.notifications[i];
-//                            var newli = $('<li>').addClass('clearfix notification');
-//                            if(element.readed){
-//                                newli.addClass('readed').css('background', '#f4f3b8');
-//                            }
-//                            newli.html(element.view);
-//                            $("li.notifications_user ul li.more").before(newli);
-//                        }
-//                        
-//                        site.readedNotification();
-//                        if(response.countAll > 5){
-//                            $("li.notifications_user ul li.more a").attr('href', Routing.generate(appLocale + '_user_notifications')).html( ' ver más').parent().removeClass('hidden');
-//                        }
-//                    } 
-//                });
-//                
-//                site.isClosedNotificationess = false;
-//            }else{
-//                $("li.notifications_user ul li.more").addClass('hidden');
-//                $("li.notifications_user ul li.loading").remove();
-//                $("li.notifications_user ul div.info").remove();
-//                $("li.notifications_user ul li.clearfix.notification").remove();
-//                
-//                site.isClosedNotificationess = true;
-//            }
         });
     },
+    
     readedNotification: function(){
         $("li.notifications_user li.notification:not('.readed')").hover(function(){
             var el = $(this).find('div.info');
@@ -255,6 +226,7 @@ var site = {
             });
         });
     },
+    
     getPendingFriends: function(){
         $("li.alerts_user a").click(function(){
             $("li.alerts_user ul").hide();

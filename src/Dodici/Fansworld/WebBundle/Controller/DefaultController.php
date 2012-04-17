@@ -48,13 +48,20 @@ class DefaultController extends SiteController
     public function menubarAction()
     {
         $notifications = array();
-    	$user = $this->get('security.context')->getToken()->getUser();
-	    	if ($user instanceof User) {
-	        $notifications = $this->getRepository('Notification')->findBy(array('target' => $user->getId()), array('createdAt' => 'desc'), 5);
-    	}
+        $user = $this->get('security.context')->getToken()->getUser();
+        $countNew = 0;
+        if ($user instanceof User) {
+            $notifications = $this->getRepository('Notification')->findBy(array('target' => $user->getId()), array('createdAt' => 'desc'), 5);
+            foreach($notifications as $notification){
+                if(!$notification->getReaded()){
+                    $countNew++;
+                }
+            }
+        }
         return array(
             'user' => $user,
-            'notifications' => $notifications
+            'notifications' => $notifications,
+            'countNew' => $countNew
         );
     }
 
