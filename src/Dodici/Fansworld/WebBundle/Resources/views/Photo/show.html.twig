@@ -20,7 +20,7 @@
         <div class="media_info">
             <div>
                 <strong>{{ photo.title }}<br></strong>
-                <span>por <a href="{{ path('user_detail', {'id': photo.author.id}) }}">{{ photo.author }}</a></span>
+                <span>por <a href="{{ path(username, {'id': photo.author.username}) }}">{{ photo.author }}</a></span>
                 <span>del album <a href="{{ path('album_show', {'id': photo.album.id, 'slug': photo.album.slug}) }}">{{ photo.album.title }}</a></span>
             </div>
             {% if photo.content %}

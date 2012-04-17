@@ -2,6 +2,9 @@
 
 {% block title %}{{ parent() }} - {{ video }}{% endblock %}
 
+{% block metafbtype %}video.other{% endblock %}
+{% block metadescription %}{{video.content}}{% endblock %}
+
 {% block content %}
 
 {% if appstate.canview(video) %}
@@ -18,7 +21,7 @@
             <div>
                 <strong>{{ video.title }}<br></strong>
                 {% if video.author %}
-                <span>por <a href="{{ path('user_detail', {'id': video.author.id}) }}">{{ video.author }}</a></span>
+                <span>por <a href="{{ path('user_wall', {username: video.author.username}) }}">{{ video.author }}</a></span>
                 {% endif %}
                 {% if video.videocategory %}
                 <span>en <a href="{{ path('video_category', {'id': video.videocategory.id, 'slug': video.videocategory.slug}) }}">{{ video.videocategory }}</a></span>

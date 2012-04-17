@@ -6,6 +6,6 @@
 {% endblock %}
 
 {% block text %}
-	<a class="notice-link" href="{{ path('user_detail', {'id': notification.author.id }) }}">{{ notification.author }}</a> 
+	<a class="notice-link" href="{{ path('user_wall', {username: notification.author.username }) }}">{{ notification.author }}</a> 
 	<span class="notice-text">aceptó tu solicitud de amistad</span>
 {% endblock %}

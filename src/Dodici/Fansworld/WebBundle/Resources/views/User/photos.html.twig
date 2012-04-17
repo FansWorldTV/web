@@ -46,7 +46,7 @@
 	        </div>
 	    </div>
 	    {% if viewMorePhotos %}
-	        <a class="loadmore" href="{{ path('user_listphotos', {'id': user.id}) }}">ver todas las imágenes</a>
+	        <a class="loadmore" href="{{ path('user_listphotos', {username: user.username}) }}">ver todas las imágenes</a>
 	    {% endif %}
 	    
 	    <div class="cont clearfix">

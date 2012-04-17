@@ -33,10 +33,10 @@
 
 {% block action %}
 	<span class="action_user">
-		<a href="{{ path('user_detail', {'id': comment.author.id }) }}">{{ comment.author }}</a> 
+		<a href="{{ path('user_wall', {username: comment.author.username }) }}">{{ comment.author }}</a> 
 		{% block share_action_text %}{{ ('shared_' ~ tag_item_type)|trans }}{% endblock %}
 		{% if comment.share.author is not null and comment.author.id != comment.share.author.id %}
-		{{ 'by'|trans }} <a href="{{ path('user_detail', {'id': comment.share.author.id }) }}">{{ comment.share.author }}</a>
+		{{ 'by'|trans }} <a href="{{ path('user_wall', {username: comment.share.author.username }) }}">{{ comment.share.author }}</a>
 		{% endif %}
 	</span>
 {% endblock %}

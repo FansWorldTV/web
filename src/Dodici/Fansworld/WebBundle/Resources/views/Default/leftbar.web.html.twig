@@ -7,7 +7,7 @@
                 <div class="user clearfix">
                     {% if user.image %}
                     <div class="avatar">
-                        <a href="{{ path('user_detail', {'id': user.id}) }}">
+                        <a href="{{ path('user_wall', {username: user.username}) }}">
                                 {% thumbnail user.image, 'avatar' %}
                         </a>
                     </div>
@@ -15,10 +15,10 @@
                     <div class="name">{{ user.firstname }} {{ user.lastname }} <a href="{{ path("fos_user_security_logout") }}">Salir</a></div>
                 </div>
                 <ul>
-                    <li class="active"><a class="user_n1" href="{{ path('user_detail', {'id': user.id}) }}">Mi perfil</a></li>
+                    <li class="active"><a class="user_n1" href="{{ path('user_wall', {username: user.username}) }}">Mi perfil</a></li>
                     <li><a class="user_n2" href="{{ path('search_friends') }}">Fans</a></li>
-                    <li><a class="user_n3" href="{{ path('user_photos', {'id': user.id}) }}">Fotos</a></li>
-                    <li><a class="user_n4" href="{{ path('video_myvideos', {'userid': user.id}) }}">Videos</a></li>
+                    <li><a class="user_n3" href="{{ path('user_photos', {username: user.username}) }}">Fotos</a></li>
+                    <li><a class="user_n4" href="{{ path('video_user', {'username': user.username}) }}">Videos</a></li>
                     <li><a class="user_n5" href="{{ path('contest_mycontests') }}">Mis concursos</a></li>
                     <li><a class="user_n6" href="user_philanthropy.php">Mis causas</a></li>
                 </ul>

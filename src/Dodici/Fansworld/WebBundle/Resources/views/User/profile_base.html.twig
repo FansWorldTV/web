@@ -79,15 +79,15 @@
                         <div class="tabs clearfix">
                             {% if user == app.user %}<a class="btn_edit_info" href="{{ path('fos_user_profile_edit') }}" title="Editar informacion">Editar informacion</a>{% endif %}
                             <ul>
-                                <li><a {% if active_tab == 'wall' %}class="active"{% endif %} href="{{ path('user_wall', {id: user.id}) }}">Muro</a></li>
-                                <li><a {% if active_tab == 'photos' %}class="active"{% endif %} href="{{ path('user_photos', {id: user.id}) }}">Fotos</a></li>
-                                <li><a {% if active_tab == 'videos' %}class="active"{% endif %} href="{{ path('video_myvideos', {userid: user.id}) }}">Videos</a></li>
+                                <li><a {% if active_tab == 'wall' %}class="active"{% endif %} href="{{ path('user_wall', {username: user.username}) }}">Muro</a></li>
+                                <li><a {% if active_tab == 'photos' %}class="active"{% endif %} href="{{ path('user_photos', {username: user.username}) }}">Fotos</a></li>
+                                <li><a {% if active_tab == 'videos' %}class="active"{% endif %} href="{{ path('video_user', {username: user.username}) }}">Videos</a></li>
                                 {% if appstate.idol(user) %}
-                               	<li><a {% if active_tab == 'forum' %}class="active"{% endif %} href="{{ path('forum_user', {id: user.id}) }}">Foro</a></li>
+                               	<li><a {% if active_tab == 'forum' %}class="active"{% endif %} href="{{ path('forum_user', {username: user.username}) }}">Foro</a></li>
                                 {% endif %}
-                                <li><a {% if active_tab == 'detail' %}class="active"{% endif %} href="{{ path('user_detail', {id: user.id}) }}">Informacion</a></li>
+                                <li><a {% if active_tab == 'detail' %}class="active"{% endif %} href="{{ path('user_detail', {username: user.username}) }}">Informacion</a></li>
                                 {% if appstate.idol(user) %}
-                               	<li><a {% if active_tab == 'fans' %}class="active"{% endif %} href="{{ path('friendship_user', {id: user.id}) }}">Fans</a></li>
+                               	<li><a {% if active_tab == 'fans' %}class="active"{% endif %} href="{{ path('friendship_user', {username: user.username}) }}">Fans</a></li>
                                 {% endif %}
                             </ul>
                         </div>

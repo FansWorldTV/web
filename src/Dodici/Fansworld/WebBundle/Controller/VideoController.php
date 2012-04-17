@@ -325,33 +325,28 @@ class VideoController extends SiteController
     /**
      * my videos
      * 
-     * @Route("/my-videos/{userid}", name="video_myvideos") 
+     * @Route("/u/{username}", name="video_user") 
      * @Template
      */
-    public function myVideosAction($userid)
+    public function myVideosAction($username)
     {
         $videoRepo = $this->getRepository('Video');
-        $user = $this->getRepository('User')->find($userid);
+        $user = $this->getRepository('User')->findOneByUsername($username);
         if (!$user)
             throw new HttpException(404, 'Usuario no encontrado');
         
-        $videos = $videoRepo->findBy(array('author' => $userid, 'active' => true), array('createdAt' => 'desc'), self::cantVideos);
+        $videos = $videoRepo->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'desc'), self::cantVideos);
         $countAll = $videoRepo->countBy(array('author' => $user->getId()));
         $addMore = $countAll > self::cantVideos ? true : false;
-        $highlightVideos = $videoRepo->findBy(array('active' => true, 'highlight' => true, 'author' => $userid), array('createdAt' => 'desc'));
+        $highlightVideos = $videoRepo->findBy(array('active' => true, 'highlight' => true, 'author' => $user->getId()), array('createdAt' => 'desc'));
         $highlightVideo = count($highlightVideos) > 0 ? $highlightVideos[0] : false;
-
-        if ($user->getType() == User::TYPE_IDOL) {
-            $topFans = $this->getRepository('User')->FriendUsers($user, null, 5);
-        }
         
         return array(
             'videos' => $videos,
             'addMore' => $addMore,
             'user' => $user,
             'highlightVideo' => $highlightVideo,
-            'highlightVideos' => $highlightVideos,
-            'topFans' => $topFans
+            'highlightVideos' => $highlightVideos
         );
     }
 

@@ -20,7 +20,7 @@
             <ul class="friends listMosaic"> 
                                 {% for friend in friends %}
                     <li>
-                        <a href="{{ path('user_detail', {'id': friend.id}) }}">
+                        <a href="{{ path('user_wall', {username: friend.username}) }}">
                             <div class="avatar">
                                 {% thumbnail friend.image, 'avatar' %}
                             </div>

@@ -101,13 +101,13 @@ class FriendshipController extends SiteController
     /**
      *  User friendships
      * 
-     *  @Route("/friendships/user/{id} ", name="friendship_user")
+     *  @Route("/u/{username}/fans", name="friendship_user")
      *  @Template
      */
-    public function userFriendshipsAction($id)
+    public function userFriendshipsAction($username)
     {
         $userRepo = $this->getRepository('User');
-        $user = $userRepo->find($id);
+        $user = $userRepo->findOneByUsername($username);
 
         if (!($user instanceof User))
             throw new \Exception('El usuario no existe.');
@@ -118,16 +118,11 @@ class FriendshipController extends SiteController
         if ($userRepo->CountFriendUsers($user) > SearchController::LIMIT_SEARCH) {
             $canAddMore = true;
         }
-
-        if ($user->getType() == User::TYPE_IDOL) {
-            $topFans = $this->getRepository('User')->FriendUsers($user, null, 5);
-        }
         
         return array(
             'user' => $user,
             'friends' => $friends,
-            'canAddMore' => $canAddMore,
-            'topFans' => $topFans
+            'canAddMore' => $canAddMore
         );
     }
 

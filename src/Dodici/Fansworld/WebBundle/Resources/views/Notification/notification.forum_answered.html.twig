@@ -6,6 +6,6 @@
 {% endblock %}
 
 {% block text %}
-	<a class="notice-link" href="{{ path('user_detail', {'id': notification.author.id }) }}">{{ notification.author }}</a> 
+	<a class="notice-link" href="{{ path('user_wall', {username: notification.author.username }) }}">{{ notification.author }}</a> 
 	<span class="notice-text">respondió en <a href="{{ path('forum_thread', {'id': notification.forumthread.id, 'slug': notification.forumthread.slug}) }}">{{ notification.forumthread }}</a></span>
 {% endblock %}

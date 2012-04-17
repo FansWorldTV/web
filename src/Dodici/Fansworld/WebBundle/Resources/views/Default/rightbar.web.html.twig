@@ -5,7 +5,7 @@
                         <ul class="users">
                         	{% for idol in topidols %}
                             <li class="user">
-                                <a href="{{ path('user_detail', {id: idol.id}) }}">
+                                <a href="{{ path('user_wall', {username: idol.username}) }}">
                                     <span class="tooltip">
                                         <h3 class="name">{{ idol }}</h3>
                                         <span class="fans">{{ idol.fanCount }} fans</span>
@@ -30,7 +30,7 @@
                         <ul class="users">
                         	{% for fan in topfans %}
                             <li class="user">
-                                <a href="{{ path('user_detail', {id: fan.id}) }}">
+                                <a href="{{ path('user_wall', {username: fan.username}) }}">
                                     <span class="tooltip">
                                         <h3 class="name">{{ fan }}</h3>
                                         <span class="fans">{{ fan.score }} puntos</span>

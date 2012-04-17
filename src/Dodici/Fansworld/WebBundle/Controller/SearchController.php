@@ -46,6 +46,7 @@ class SearchController extends SiteController
             foreach ($search as $element) {
                 $response['search'][] = array(
                     'id' => $element[0]->getId(),
+                	'username' => $element[0]->getUsername(),
                     'name' => (string) $element[0],
                     'image' => $this->getImageUrl($element[0]->getImage()),
                     'commonFriends' => $element['commonfriends'],
@@ -88,6 +89,7 @@ class SearchController extends SiteController
                 foreach ($search as $element) {
                     $response['search'][] = array(
                         'id' => $element[0]->getId(),
+                    	'username' => $element[0]->getUsername(),
                         'name' => (string) $element[0],
                         'image' => $this->getImageUrl($element[0]->getImage()),
                         'commonFriends' => $element['commonfriends'],
@@ -165,6 +167,7 @@ class SearchController extends SiteController
                 foreach ($search as $element) {
                     $response['search'][] = array(
                         'id' => $element->getId(),
+                    	'username' => $element->getUsername(),
                         'name' => (string) $element,
                         'image' => $this->getImageUrl($element->getImage())
                     );
@@ -228,6 +231,7 @@ class SearchController extends SiteController
                 foreach ($searchIdol as $idol) {
                     $response['idols'][] = array(
                         'id' => $idol[0]->getId(),
+                    	'username' => $idol[0]->getUsername(),
                         'name' => (string) $idol[0],
                         'image' => $this->getImageUrl($idol[0]->getImage()),
                         'commonFriends' => $idol['commonfriends'],

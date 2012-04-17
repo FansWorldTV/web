@@ -23,13 +23,13 @@ class UserController extends SiteController
     const LIMIT_PHOTOS = 8;
 
     /**
-     * @Route("/user/{id}", name="user_wall", requirements={"id"="\d+"})
+     * @Route("/u/{username}", name="user_wall")
      * @Template
      * @Secure(roles="ROLE_USER")
      */
-    public function wallAction($id)
+    public function wallAction($username)
     {
-        $user = $this->getRepository('User')->find($id);
+        $user = $this->getRepository('User')->findOneByUsername($username);
         if (!$user) {
             throw new HttpException(404, "No existe el usuario");
         }
@@ -43,18 +43,15 @@ class UserController extends SiteController
     }
 
     /**
-     * @Route("/user/{id}/info", name="user_detail", requirements={"id"="\d+"})
+     * @Route("/u/{username}/info", name="user_detail")
      * @Template
      * @Secure(roles="ROLE_USER")
      */
-    public function detailAction($id)
+    public function detailAction($username)
     {
-
-
-        $user = $this->getRepository('User')->find($id);
-        if (!$user) {
-            echo "No existe el usuario";
-            exit;
+        $user = $this->getRepository('User')->findOneByUsername($username);
+    	if (!$user) {
+            throw new HttpException(404, "No existe el usuario");
         }
 
         $loggedUser = $this->get('security.context')->getToken()->getUser();
@@ -194,7 +191,7 @@ class UserController extends SiteController
             try {
                 $notification = $this->getRepository('Notification')->find($notificationId);
 
-                if (!$user instanceof User)
+                if (!($user instanceof User))
                     throw new \Exception('Must be logged in');
                 if ($notification->getTarget() != $user)
                     throw new \Exception('Wrong user');
@@ -279,7 +276,7 @@ class UserController extends SiteController
                         'id' => $element->getAuthor()->getId(),
                         'name' => (string) $element->getAuthor(),
                         'image' => $this->getImageUrl($media),
-                        'url' => $this->generateUrl('user_detail', array('id' => $element->getAuthor()->getId()))
+                        'url' => $this->generateUrl('user_wall', array('username' => $element->getAuthor()->getUsername()))
                     )
                 );
             }
@@ -303,7 +300,7 @@ class UserController extends SiteController
 
         if ($friendshipId) {
             try {
-                if (!$user instanceof User)
+                if (!($user instanceof User))
                     throw new \Exception('Must be logged in');
                 $friendshipRepo = $this->getRepository('Friendship');
                 $friendship = $friendshipRepo->findOneBy(array('id' => $friendshipId));
@@ -345,7 +342,7 @@ class UserController extends SiteController
 
         if ($friendshipId) {
             try {
-                if (!$user instanceof User)
+                if (!($user instanceof User))
                     throw new \Exception('Must be logged in');
                 $friendshipRepo = $this->getRepository('Friendship');
                 $friendship = $friendshipRepo->find($friendshipId);
@@ -391,7 +388,7 @@ class UserController extends SiteController
                         'id' => $element->getAuthor()->getId(),
                         'name' => (string) $element->getAuthor(),
                         'image' => $this->getImageUrl($media),
-                        'url' => $this->generateUrl('user_detail', array('id' => $element->getAuthor()->getId()))
+                        'url' => $this->generateUrl('user_wall', array('username' => $element->getAuthor()->getUsername()))
                     )
                 );
             }
@@ -418,14 +415,17 @@ class UserController extends SiteController
     }
 
     /**
-     * @Route("/user/{id}/photos", name="user_photos")
+     * @Route("/u/{username}/photos", name="user_photos")
      * @Template
      */
-    public function photosAction($id)
+    public function photosAction($username)
     {
-        $user = $this->getRepository('User')->find($id);
+        $user = $this->getRepository('User')->findOneByUsername($username);
+        
+    	if (!$user) {
+            throw new HttpException(404, "No existe el usuario");
+        }
 
-        $topFans = false;
         if ($user->getType() == User::TYPE_IDOL) {
             return array('user' => $user);
         } else {
@@ -457,16 +457,20 @@ class UserController extends SiteController
     }
 
     /**
-     * @Route("/user/{id}/photos/list", name="user_listphotos")
+     * @Route("/u/{username}/photos/list", name="user_listphotos")
      * @Template
      */
-    public function listPhotosAction($id)
+    public function listPhotosAction($username)
     {
-        $user = $this->getRepository('User')->find($id);
+        $user = $this->getRepository('User')->findOneByUsername($username);
+    	if (!$user) {
+            throw new HttpException(404, "No existe el usuario");
+        }
+        
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
-        $photos = $this->getRepository('Photo')->findBy(array('author' => $id, 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
-        $totalCount = $this->getRepository('Photo')->countBy(array('author' => $id, 'active' => true));
+        $photos = $this->getRepository('Photo')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
+        $totalCount = $this->getRepository('Photo')->countBy(array('author' => $user->getId(), 'active' => true));
 
         return array(
             'user' => $user,
@@ -476,18 +480,20 @@ class UserController extends SiteController
     }
 
     /**
-     * @Route("/user/{id}/albums", name="user_listalbums")
+     * @Route("/u/{username}/albums", name="user_listalbums")
      * @Template
      */
-    public function listAlbumsAction($id)
+    public function listAlbumsAction($username)
     {
-        $user = $this->getRepository('User')->find($id);
+        $user = $this->getRepository('User')->findOneByUsername($username);
+    	if (!$user) {
+            throw new HttpException(404, "No existe el usuario");
+        }
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
-        $albums = $this->getRepository('Album')->findBy(array('author' => $id, 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
-        $totalCount = $this->getRepository('Album')->countBy(array('author' => $id, 'active' => true));
+        $albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
+        $totalCount = $this->getRepository('Album')->countBy(array('author' => $user->getId(), 'active' => true));
 
-        $topFans = false;
         return array(
             'user' => $user,
             'albums' => $albums,

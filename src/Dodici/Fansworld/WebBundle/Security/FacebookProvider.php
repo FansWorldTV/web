@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use \BaseFacebook;
 use \FacebookApiException;
+use Gedmo\Sluggable\Util\Urlizer as GedmoUrlizer;
 
 class FacebookProvider implements UserProviderInterface
 {
@@ -74,11 +75,28 @@ class FacebookProvider implements UserProviderInterface
 					$user->setCountry($location['country']);
 					$user->setCity($location['city']);
 				}
+				
+				$user->setFBData($fbdata);
+				
+				if ($user->getFirstname() || $user->getLastname()) {
+					$username = GedmoUrlizer::urlize($user->getFirstname() . ' ' . $user->getLastname());
+					if ($this->userManager->findUserBy(array('username' => $username))) {
+						$username = $username.uniqid();
+					}
+				} elseif ($fbdata['id']) {
+					$username = $fbdata['id'];
+					if ($this->userManager->findUserBy(array('username' => $username))) {
+						$username = $username.uniqid();
+					}
+				} else {
+					$username = uniqid();
+				}
+				
+				$user->setUsername($username);
             }
 
             // TODO use http://developers.facebook.com/docs/api/realtime
-            $user->setFBData($fbdata);
-
+            
             if (count($this->validator->validate($user, 'Facebook'))) {
                 // TODO: the user was found obviously, but doesnt match our expectations, do something smart
                 throw new UsernameNotFoundException('The facebook user could not be stored');

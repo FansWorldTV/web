@@ -21,7 +21,7 @@
 
 {% block inner_content %}
 <div class="cont clearfix">
-    <h2>{{ album.title }}<a class="more" href="{{ path('user_listalbums', {'id': user.id}) }}">ver todos los álbumes</a></h2>
+    <h2>{{ album.title }}<a class="more" href="{{ path('user_listalbums', {username: user.username}) }}">ver todos los álbumes</a></h2>
     <div class="user_album">
         <div class="mask">
             {% for photo in album.photos %}

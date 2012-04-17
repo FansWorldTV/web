@@ -41,7 +41,7 @@
                                         </div>
 
                                         <div class="marginTop10 clearfix">
-                                            <span class="marginTop10">de <a href="{{ path('user_detail', {"id":video.author.id}) }}">{% thumbnail video.author.image, "avatar" with {'class':'avatar'} %} {{ video.author }}</a> | </span>
+                                            <span class="marginTop10">de <a href="{{ path('user_wall', {username:video.author.username}) }}">{% thumbnail video.author.image, "avatar" with {'class':'avatar'} %} {{ video.author }}</a> | </span>
                                             <span class="timeago" data-time="{{ video.createdAt|date('c')}}">{{ video.createdAt|date('c')}}</span>
                                         </div>
 
@@ -78,7 +78,7 @@
                                     <span class="title">{{ video.title }}</span>
                                 </a>
                                 <br/>
-                                <span class="author">Por <a href="{{ path('user_detail', {id: video.author.id}) }}">{{ video.author }}</a></span>
+                                <span class="author">Por <a href="{{ path('user_wall', {username: video.author.username}) }}">{{ video.author }}</a></span>
                                 <br/>
                                 <span class="description">{{ video.content }}</span>
                             </li>

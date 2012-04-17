@@ -82,6 +82,7 @@ class ForumController extends SiteController
                 'createdAt' => $post->getCreatedAt()->format('c'),
                 'author' => array(
                     'id' => $post->getAuthor()->getId(),
+            		'username' => $post->getAuthor()->getUsername(),
                     'name' => (string) $post->getAuthor(),
                     'image' => $this->getImageUrl($post->getAuthor()->getImage())
                 )
@@ -118,11 +119,12 @@ class ForumController extends SiteController
                 'createdAt' => $post->getCreatedAt()->format('c'),
                 'author' => array(
                     'name' => (string) $post->getAuthor(),
+            		'username' => $post->getAuthor()->getUsername(),
                     'avatar' => $this->getImageUrl($post->getAuthor()->getImage()),
                     'id' => $post->getAuthor()->getId()
                 )
             );
-        } catch (Exception $exc) {
+        } catch (\Exception $exc) {
             $response['error'] = $exc->getMessage();
         }
         
@@ -130,12 +132,12 @@ class ForumController extends SiteController
     }
 
     /**
-     * @Route("/user/{id}", name= "forum_user", requirements = {"id" = "\d+"})
+     * @Route("/u/{username}", name= "forum_user")
      * @Template
      */
-    public function userThreadsAction($id)
+    public function userThreadsAction($username)
     {
-        $user = $this->getRepository('User')->find($id);
+        $user = $this->getRepository('User')->findOneByUsername($username);
         if (!$user instanceof User)
             throw new HttpException(404, 'Usuario no encontrado');
         if ($user->getType() != User::TYPE_IDOL)
@@ -143,16 +145,11 @@ class ForumController extends SiteController
 
         $threads = $this->getRepository('ForumThread')->findBy(array('author' => $user->getId()), array('postCount' => 'desc'), self::threadPerPage);
         $countAll = $this->getRepository('ForumThread')->countBy(array('author' => $user->getId()));
-
-        if ($user->getType() == User::TYPE_IDOL) {
-            $topFans = $this->getRepository('User')->FriendUsers($user, null, 5);
-        }
         
         return array(
             'threads' => $threads,
             'user' => $user,
-            'addMore' => $countAll > self::threadPerPage ? true : false,
-            'topFans' => $topFans
+            'addMore' => $countAll > self::threadPerPage ? true : false
         );
     }
 
@@ -183,7 +180,8 @@ class ForumController extends SiteController
                 'content' => $thread->getContent(),
                 'author' => array(
                     'id' => $thread->getAuthor()->getId(),
-                    'name' => (string) $thread->getAuthor()
+                    'name' => (string) $thread->getAuthor(),
+            		'username' => $thread->getAuthor()->getUsername(),
                 ),
                 'createdAt' => $thread->getCreatedAt()->format('c'),
                 'postCount' => $thread->getPostCount(),
@@ -222,7 +220,7 @@ class ForumController extends SiteController
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($post);
                 $em->flush();
-            } catch (Exception $exc) {
+            } catch (\Exception $exc) {
                 $response['error'] = $exc->getMessage();
             }
         } else {

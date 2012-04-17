@@ -623,8 +623,8 @@ var searchFront = {
                     for(var i in elements){
                         var element = elements[i];
                         var template = $(".searchFront.templates .listMosaicTemp .element").clone();
-                        var usrLink = Routing.generate(appLocale + '_user_detail', {
-                            'id':element.id
+                        var usrLink = Routing.generate(appLocale + '_user_wall', {
+                            'username':element.username
                         });
                     
                         template.find('a').attr('href', usrLink);
@@ -669,8 +669,8 @@ var searchFront = {
                 for(var i in elements){
                     var element = elements[i];
                     var template = $(".searchFront.templates .listMosaicTemp .element").clone();
-                    var usrLink = Routing.generate(appLocale + '_user_detail', {
-                        'id':element.id
+                    var usrLink = Routing.generate(appLocale + '_user_wall', {
+                        'username':element.username
                     });
                     
                     template.find('a').attr('href', usrLink);
@@ -727,8 +727,8 @@ var searchIdols = {
                     for(var i in elements){
                         var element = elements[i];
                         var template = $(".templates .listMosaicTemp .element").clone();
-                        var usrLink = Routing.generate(appLocale + '_user_detail', {
-                            'id':element.id
+                        var usrLink = Routing.generate(appLocale + '_user_wall', {
+                            'username':element.username
                         });
                     
                         template.find('a').attr('href', usrLink);
@@ -772,8 +772,8 @@ var searchIdols = {
                 for(var i in elements){
                     var element = elements[i];
                     var template = $(".templates .listMosaicTemp .element").clone();
-                    var usrLink = Routing.generate(appLocale + '_user_detail', {
-                        'id':element.id
+                    var usrLink = Routing.generate(appLocale + '_user_wall', {
+                        'username':element.username
                     });
                     
                     template.find('a').attr('href', usrLink);
@@ -835,8 +835,8 @@ var friendsSearch = {
                     for(var i in elements){
                         var element = elements[i];
                         var template = $(".friends.templates .listMosaicTemp .element").clone();
-                        var usrLink = Routing.generate(appLocale +'_user_detail', {
-                            'id':element.id
+                        var usrLink = Routing.generate(appLocale + '_user_wall', {
+                            'username':element.username
                         });
                     
                         template.find('a').attr('href', usrLink);
@@ -880,8 +880,8 @@ var friendsSearch = {
                 for(var i in elements){
                     var element = elements[i];
                     var template = $(".friends.templates .listMosaicTemp .element").clone();
-                    var usrLink = Routing.generate(appLocale +'_user_detail', {
-                        'id':element.id
+                    var usrLink = Routing.generate(appLocale + '_user_wall', {
+                        'username':element.username
                     });
                     
                     template.find('a').attr('href', usrLink);
@@ -1025,16 +1025,16 @@ var contest = {
             
             ajax.contestAddCommentAction(content, contestId, function(r){
                 var template = $("#templates.contest div.comment").clone();
-                template.find('div.avatar a').attr('href', Routing.generate(appLocale + '_user_detail', {
-                    'id': r.comment.id
+                template.find('div.avatar a').attr('href', Routing.generate(appLocale + '_user_wall', {
+                    'username': r.comment.username
                 }));
                 
                 if(r.comment.avatar){
                     template.find('div.avatar img').attr('src', r.comment.avatar);
                 }
                 
-                template.find('div.user_comment span.action_user a').attr('href', Routing.generate(appLocale + '_user_detail', {
-                    'id': r.comment.id
+                template.find('div.user_comment span.action_user a').attr('href', Routing.generate(appLocale + '_user_wall', {
+                    'username': r.comment.username
                 }));
                 template.find('div.user_comment span.action_user a').html(r.comment.name);
                 template.find('div.user_comment span.action_user span').html(jQuery.timeago(r.comment.createdAt.date));
@@ -1118,8 +1118,8 @@ var videos = {
         }
                         
         template.find('.tmpContent').html(video.content + "...");
-        template.find('span a.user').attr('href', Routing.generate(appLocale + '_user_detail', {
-            'id': video.author.id
+        template.find('span a.user').attr('href', Routing.generate(appLocale + '_user_wall', {
+            'username': video.author.username
         }));
         if(video.author.avatar){
             template.find('span a.user').html('<img src="'+video.author.avatar+'" />'+video.author.name);
@@ -1491,8 +1491,8 @@ var forum = {
                     for(var i in response.posts){
                         var post = response.posts[i];
                         var template = $("#templates div.comment").clone();
-                        var href = Routing.generate(appLocale + '_user_detail', {
-                            'id': post.author.id
+                        var href = Routing.generate(appLocale + '_user_wall', {
+                            'username': post.author.username
                         });
                        
                         template.find('a').attr('href', href);
@@ -1526,8 +1526,8 @@ var forum = {
             ajax.threadCommentAction(threadId, text, function(response){
                 if(!response.error){
                     var template = $("#templates div.comment").clone();
-                    var href = Routing.generate(appLocale + '_user_detail', {
-                        'id': response.data.author.id
+                    var href = Routing.generate(appLocale + '_user_wall', {
+                        'username': response.data.author.username
                     });
                        
                     template.find('a').attr('href', href);

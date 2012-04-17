@@ -1,11 +1,11 @@
 <div class="comment clearfix">
 	{% if comment.author.image %}
 	<div class="avatar">
-		<a href="{{ path('user_detail', {id: comment.author.id}) }}">{% thumbnail comment.author.image, 'avatar' %}</a>
+		<a href="{{ path('user_wall', {username: comment.author.username}) }}">{% thumbnail comment.author.image, 'avatar' %}</a>
 	</div>
 	{% endif %}
 	<div class="message">
-		<a href="{{ path('user_detail', {id: comment.author.id}) }}">{{ comment.author }}</a> 
+		<a href="{{ path('user_wall', {username: comment.author.username}) }}">{{ comment.author }}</a> 
 		{{ comment.content }}
 	</div>
 </div>
