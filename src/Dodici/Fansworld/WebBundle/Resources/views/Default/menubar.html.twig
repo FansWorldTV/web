@@ -12,7 +12,7 @@
             <a href="#1" class="hidden"><span></span></a>
             <ul>
                 {% for notification in notifications%}
-                    <li class='clearfix notification'>{{ notification|raw }}</li>
+                    <li class='clearfix notification'>{% include 'DodiciFansworldWebBundle:Notification:notification.html.twig' with {notification: notification} %}</li>
                 {% endfor %}
                 <li class="more"><a href="#1">ver más</a></li>
             </ul>

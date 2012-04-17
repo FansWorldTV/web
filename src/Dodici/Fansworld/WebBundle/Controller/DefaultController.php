@@ -47,16 +47,14 @@ class DefaultController extends SiteController
      */
     public function menubarAction()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
-        $notifications = $this->getRepository('Notification')->findBy(array('target' => $user->getId()), array('createdAt' => 'desc'), 5);
-        $notificationsViews = array();
-        foreach ($notifications as $notification) {
-            array_push($notificationsViews, $this->renderView('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $notification)));
-        }
-
+        $notifications = array();
+    	$user = $this->get('security.context')->getToken()->getUser();
+	    	if ($user instanceof User) {
+	        $notifications = $this->getRepository('Notification')->findBy(array('target' => $user->getId()), array('createdAt' => 'desc'), 5);
+    	}
         return array(
             'user' => $user,
-            'notifications' => $notificationsViews
+            'notifications' => $notifications
         );
     }
 

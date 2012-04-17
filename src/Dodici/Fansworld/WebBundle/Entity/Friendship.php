@@ -80,7 +80,7 @@ class Friendship
             $this->setCreatedAt(new \DateTime());
         }
         if (null === $this->active) {
-        	$this->setActive(false);
+        	$this->setActive(true);
         }
     }
 

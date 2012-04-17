@@ -45,6 +45,9 @@ class FriendshipController extends SiteController
             $friendship = new Friendship;
             $friendship->setAuthor($author);
             $friendship->setTarget($target);
+            if ($target->getRestricted()) {
+            	$friendship->setActive(false);
+            }
 
             foreach ($friendgroups as $id) {
                 $friendgroup = $this->getRepository('FriendGroup')->find($id);
