@@ -10,7 +10,7 @@ use Doctrine\DBAL\Types\Type;
 class UserRepository extends CountBaseRepository
 {
     /**
-     * Get the user's friends with optional search term and pagination
+     * Get the user's friends (followers) with optional search term and pagination
      * @param \Application\Sonata\UserBundle\Entity\User $user
      * @param string $filtername
      * @param int $limit
@@ -18,7 +18,37 @@ class UserRepository extends CountBaseRepository
      */
 	public function FriendUsers(\Application\Sonata\UserBundle\Entity\User $user, $filtername=null, $limit=null, $offset=null) 
     {
-    	$rsm = new ResultSetMapping;
+    	$query = $this->_em->createQuery('
+    	SELECT fs, u
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Friendship fs
+    	JOIN fs.author u
+    	WHERE fs.active = true AND fs.target = :user AND u.enabled = true
+    	'.($filtername ? '
+			AND (
+			u.username LIKE :filtername OR
+			u.email LIKE :filtername OR  
+			u.firstname LIKE :filtername OR 
+			u.lastname LIKE :filtername
+		)' : '').'
+    	')
+    	->setParameter('user', $user->getId())
+    	;
+    	
+    	if ($filtername)
+    		$query = $query->setParameter('filtername', '%'.$filtername.'%');
+    	
+    	if ($limit !== null)
+            $query = $query->setMaxResults($limit);
+        if ($offset !== null)
+            $query = $query->setFirstResult($offset);
+            
+        $results = array();
+        foreach($query->getResult() as $r) {
+        	$results[] = $r->getAuthor();
+        }
+        return $results;
+    	
+    	/*$rsm = new ResultSetMapping;
     	$rsm->addEntityResult('Application\Sonata\UserBundle\Entity\User', 'u');
 		$rsm->addFieldResult('u', 'id', 'id');
     	$rsm->addFieldResult('u', 'username', 'username');
@@ -81,7 +111,7 @@ class UserRepository extends CountBaseRepository
         if ($offset !== null)
             $query = $query->setParameter('offset', (int)$offset, Type::INTEGER);
     	
-    	return $query->getResult();
+    	return $query->getResult();*/
     }
     
 	/**
@@ -91,6 +121,27 @@ class UserRepository extends CountBaseRepository
      */
 	public function CountFriendUsers(\Application\Sonata\UserBundle\Entity\User $user, $filtername=null) 
     {
+    	$query = $this->_em->createQuery('
+    	SELECT COUNT(fs)
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Friendship fs
+    	JOIN fs.author u
+    	WHERE fs.active = true AND fs.target = :user AND u.enabled = true
+    	'.($filtername ? '
+			AND (
+			u.username LIKE :filtername OR
+			u.email LIKE :filtername OR  
+			u.firstname LIKE :filtername OR 
+			u.lastname LIKE :filtername
+		)' : '').'
+    	')
+    	->setParameter('user', $user->getId())
+    	;
+    	
+    	if ($filtername)
+    		$query = $query->setParameter('filtername', '%'.$filtername.'%');
+
+    	return $query->getSingleScalarResult();
+    	/*
     	$rsm = new ResultSetMapping;
     	$rsm->addScalarResult('countfriends', 'count');
 
@@ -142,7 +193,7 @@ class UserRepository extends CountBaseRepository
     		$query = $query->setParameter('filtername', '%'.$filtername.'%');
     	
     	$res = $query->getResult();
-    	return intval($res[0]['count']);
+    	return intval($res[0]['count']);*/
     }
     
     /**

@@ -107,7 +107,7 @@ var site = {
     },
     
     showCommentForm: function(){
-        $(".showCommentForm").click(function(){
+        $(".showCommentForm").live('click',function(){
             $(this).parent().find('div.form').toggleClass('hidden');
             return false;
         });
@@ -506,14 +506,22 @@ var site = {
 
 var friendship = {
     init: function(){
-        $("div.addFriend").hover(
+        
+    	if ($("ul.friendgroupsList li input:checkbox").length) {
+    	$("ul.friendgroupsList").hide();
+    	$("div.addFriend").hover(
             function(){
-                friendGroupList = $("ul.friendgroupsList").slideDown('normal');
+                if ($(this).has('.btn_friendship.add')) {
+                	friendGroupList = $("ul.friendgroupsList").slideDown('normal');
+                }
             },
             function(){
-                friendGroupList = $("ul.friendgroupsList").slideUp('normal');
+            	if ($(this).has('.btn_friendship.add')) {
+            		friendGroupList = $("ul.friendgroupsList").slideUp('normal');
+            	}
             }
             );
+    	}
             
         friendship.add();
         friendship.cancel();
@@ -533,7 +541,12 @@ var friendship = {
             
             ajax.addFriendAction(targetId, friendgroups, function(response){
                 if(!response.error){
-                    $("div.addFriend").after('<a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="' + response.friendship + '">Cancelar solicitud</a>').remove();
+                    if (response.active) {
+                    	self.removeClass('add').addClass('remove').attr('friendshipId', response.friendship).text('Dejar de Seguir');
+                    } else {
+                    	self.removeClass('add').addClass('remove').attr('friendshipId', response.friendship).text('Cancelar Solicitud');
+                    }
+                    success(response.message);
                 }else{
                     error(response.error);
                 }
@@ -546,13 +559,14 @@ var friendship = {
         $(".btn_friendship.remove:not('.loading')").live('click', function(){
             var self = $(this);
             var friendshipId = $(this).attr('friendshipId');
-            if(confirm('Estas seguro de dejar de ser amigo')){
+            if(confirm('Seguro deseas dejar de seguir a este fan?')){
                 self.addClass('loading');
                 ajax.cancelFriendAction(friendshipId, function(response){
                     if(!response.error) {
                         window.location.reload();  
                     }else{
                         error(response.error);
+                        self.removeClass('loading');
                     }
                 });
             }

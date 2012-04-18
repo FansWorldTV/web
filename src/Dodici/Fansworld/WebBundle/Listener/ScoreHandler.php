@@ -72,6 +72,19 @@ class ScoreHandler
 				$this->addScore($likedthing->getAuthor(), self::SCORE_GET_LIKED);
 			}
 		}
+		
+		if ($entity instanceof Friendship && $entity->getActive()) {
+			//$this->addScore($entity->getAuthor(), self::SCORE_NEW_FRIENDSHIP);
+            $this->addScore($entity->getTarget(), self::SCORE_NEW_FRIENDSHIP);
+                
+            $author = $entity->getAuthor();
+            $target = $entity->getTarget(); 
+            $author->setFriendCount($author->getFriendCount() + 1);
+            $target->setFriendCount($target->getFriendCount() + 1);
+            $em->persist($author);
+            $em->persist($target);
+            $em->flush();
+		}
     }
     
 	public function postUpdate(LifecycleEventArgs $eventArgs)
@@ -81,8 +94,8 @@ class ScoreHandler
 		$this->em = $em;
 		
     	if ($entity instanceof Friendship) {
-            if ($entity->getActive() == true) {
-                $this->addScore($entity->getAuthor(), self::SCORE_NEW_FRIENDSHIP);
+            if ($entity->getActive() == true && $entity->getTarget()->getRestricted()) {
+                //$this->addScore($entity->getAuthor(), self::SCORE_NEW_FRIENDSHIP);
                 $this->addScore($entity->getTarget(), self::SCORE_NEW_FRIENDSHIP);
                 
                 $author = $entity->getAuthor();
@@ -117,7 +130,7 @@ class ScoreHandler
         
         if ($entity instanceof Friendship) {
         	if ($entity->getActive() == true) {
-        		$this->addScore($entity->getAuthor(), -self::SCORE_NEW_FRIENDSHIP);
+        		//$this->addScore($entity->getAuthor(), -self::SCORE_NEW_FRIENDSHIP);
                 $this->addScore($entity->getTarget(), -self::SCORE_NEW_FRIENDSHIP);
         		
         		$author = $entity->getAuthor();

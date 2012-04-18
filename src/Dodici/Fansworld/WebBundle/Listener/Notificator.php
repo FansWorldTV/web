@@ -159,6 +159,7 @@ class Notificator
 			$em->persist($comment);
 			$em->flush();
 		}
+		
     }
     
 	public function postUpdate(LifecycleEventArgs $eventArgs)
@@ -167,7 +168,7 @@ class Notificator
 		$em = $eventArgs->getEntityManager();
 		
     	if ($entity instanceof Friendship) {
-            if ($entity->getActive() == true) {
+            if ($entity->getActive() == true  && $entity->getTarget()->getRestricted()) {
                 // notif: carlitos aceptó tu solicitud de amistad...
                 $notification = new Notification();
 	    		$notification->setType(Notification::TYPE_FRIENDSHIP_ACCEPTED);

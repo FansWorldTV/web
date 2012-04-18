@@ -42,7 +42,7 @@
 	                        {% set fship = appstate.friendshipwith(user) %}
 		                    {% if appstate.canfriend(user) and fship is null %}
 	                                <div class="addFriend" targetId="{{ user.id }}">
-	                                    <a class="btn btn_friendship add" href="#" alt="Agregar">Agregar</a>
+	                                    <a class="btn btn_friendship add" href="#">Seguir{% if user.restricted %} (solicitar){% endif %}</a>
 	                                    {% if friendgroups|length > 0 %}
 	                                        <ul class="friendgroupsList">
 	                                            {% for friendgroup in friendgroups %}
@@ -57,9 +57,9 @@
 		                    {% else %}
 		                    	{% if fship %}
 		                    		{% if fship.active %}
-		                    			<a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Dejar de ser Fan</a>
+		                    			<a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Dejar de Seguir</a>
 		                    		{% else %}
-		                    			<a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Solicitud Pendiente</a>
+		                    			<a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Cancelar Solicitud</a>
 		                    		{% endif %}
 		                    	{% endif %}
 		                    {% endif %}

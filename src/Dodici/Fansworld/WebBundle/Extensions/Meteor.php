@@ -69,7 +69,7 @@ class Meteor
     {
     	$op = fsockopen($this->host, $this->port);
     	socket_set_blocking($op,false);
-        var_dump($op);
+        
     	if ($op) {
     		$message = json_encode($message);
     		$out = "ADDMESSAGE ".$channel." ".$message."\n";

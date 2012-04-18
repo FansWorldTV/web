@@ -54,13 +54,23 @@ class FriendshipController extends SiteController
                 $friendship->addFriendGroup($friendgroup);
             }
 
-
+			
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($friendship);
             $em->flush();
+            
+            $trans = $this->get('translator');
+            if ($friendship->getActive()) {
+            	$message = $trans->trans('Ahora sigues a '. $target .'.');
+            } else {
+            	$message = $trans->trans('Le has enviado una solicitud a ' . $target . ', deberá aprobarla para que puedas seguirlo.');
+            }
+            
             $response = array(
                 'error' => false,
-                'friendship' => $friendship->getId()
+                'friendship' => $friendship->getId(),
+            	'active' => $friendship->getActive(),
+            	'message' => $message
             );
         } catch (\Exception $exc) {
             $response = array(
@@ -86,7 +96,7 @@ class FriendshipController extends SiteController
 
         $friendship = $this->getRepository('Friendship')->find($friendshipId);
 
-        if ($author->getId() == $friendship->getAuthor()->getId() || $author->getId() == $friendship->getTarget()->getId()) {
+        if ($author == $friendship->getAuthor()) {
             try {
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->remove($friendship);

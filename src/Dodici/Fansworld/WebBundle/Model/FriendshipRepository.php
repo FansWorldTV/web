@@ -80,7 +80,9 @@ class FriendshipRepository extends CountBaseRepository
      */
 	public function UsersAreFriends(\Application\Sonata\UserBundle\Entity\User $userone, \Application\Sonata\UserBundle\Entity\User $usertwo) 
     {
-    	$rsm = new ResultSetMapping;
+    	return count($this->findOneBy(array('author' => $userone, 'target' => $usertwo, 'active' => true))) > 0;
+    	
+    	/*$rsm = new ResultSetMapping;
     	$rsm->addScalarResult('countfriends', 'count');
 
         $query = $this->_em->createNativeQuery('
@@ -96,6 +98,7 @@ class FriendshipRepository extends CountBaseRepository
     		->setParameter('usertwo', $usertwo->getId(), Type::BIGINT);
     		
     	$res = $query->getResult();
-    	return intval($res[0]['count']) > 0;
+    	return intval($res[0]['count']) > 0;*/
     }
+    
 }

@@ -62,18 +62,8 @@ class AppState
     	$liking = $rep->byUserAndEntity($user, $entity);
     	
     	if (count($liking) >= 1) return false;
-    	
-    	if (method_exists($entity, 'getPrivacy')) {
-    		if ($entity->getPrivacy() == \Dodici\Fansworld\WebBundle\Entity\Privacy::FRIENDS_ONLY) {
-    			if (method_exists($entity, 'getAuthor') && $entity->getAuthor()) {
-	    			if ($user == $entity->getAuthor()) return true;
-    				$frep = $this->getRepository('DodiciFansworldWebBundle:Friendship');
-	    			if (!$frep->UsersAreFriends($user, $entity->getAuthor())) return false;
-    			}
-    		}
-    	}
-    	
-    	return true;
+    	    	
+    	return $this->canView($entity);
     }
     
 	public function canDislike($entity) 
@@ -143,7 +133,8 @@ class AppState
     			if (method_exists($entity, 'getAuthor') && $entity->getAuthor()) {
 	    			if ($user == $entity->getAuthor()) return true;
     				$frep = $this->getRepository('DodiciFansworldWebBundle:Friendship');
-	    			if (!$frep->UsersAreFriends($user, $entity->getAuthor())) return false;
+    				$fr = $frep->findOneBy(array('author' => $user, 'target' => $entity->getAuthor(), 'active' => true));
+	    			if (!$fr) return false;
     			}
     		}
     	}
