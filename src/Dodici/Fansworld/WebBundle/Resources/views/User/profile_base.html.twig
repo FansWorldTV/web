@@ -173,14 +173,13 @@
                                                         </span>
                                                 </li>
                                             {% endif %}
-                                                
                                             {% if user.birthday %}
                                                     <li>Fecha de Nacimiento: {{user.birthday|date('d/m/Y')}}</li>
                                             {% endif %}
                                     </ul>
                             </div>
-                            
-                            <div class="specs greybox marginTop10 padding10">
+
+                            <div class="specs greybox marginTop10 padding10 {% if not appstate.idolshipwith(user) %}hidden{% endif %}">
                                 <a class="btn center alignCenter btn_picture btn_upload_photo cboxElement" href="/fansworld/web/app_dev.php/photo/upload">SUBIR UNA FOTO</a>
                             </div>
                     </div>

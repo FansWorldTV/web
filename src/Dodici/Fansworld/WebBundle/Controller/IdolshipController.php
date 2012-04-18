@@ -47,6 +47,7 @@ class IdolshipController extends SiteController
 	        	
 	        	$message = $translator->trans('You are no longer a fan of') . ' "' . (string)$idol.'"';
 	        	$buttontext = $translator->trans('add_idol');
+                                    $isFan = false;
 	        } else {
 	        	$idolship = new Idolship();
 	        	$idolship->setAuthor($user);
@@ -56,11 +57,13 @@ class IdolshipController extends SiteController
 	        	
 	        	$message = $translator->trans('You are now a fan of') . ' "' . (string)$idol.'"';
 	        	$buttontext = $translator->trans('remove_idol');
+                                    $isFan = true;
 	        }
 	
 	        $response = new Response(json_encode(array(
 	        	'buttontext' => $buttontext,
-	        	'message' => $message
+	        	'message' => $message,
+                                    'isFan' => $isFan
 	        )));
 	        $response->headers->set('Content-Type', 'application/json');
 	        return $response;
