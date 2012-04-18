@@ -19,7 +19,7 @@
 			<div class="form-upload fieldcontainer">
 				<ul class="fields">
 	        		{{ form_widget(form) }}
-	        		
+
 	        		<li class="clearfix">
 	        			<label for="form_tagtext">Tags</label>
 	        			<div class="field">
@@ -32,10 +32,11 @@
 	        			<label for="form_tagtext">Fans / Idolos</label>
 	        			<div class="field">
 	        				<input class="completer" type="text" id="form_taguserac" data-route="user_ajaxmatching" data-field="form_taguser" />
-	        				<ul class="selectedtags"></ul>
+	        				<ul class="selectedtags">
+                                                                                                <li data-val="{{ idolToTag.id }}"><span class="name">{{ idolToTag }}</span><a class="deletetag"></a></li>
+                                                                                         </ul>
 	        			</div>
 	        		</li>
-	        		
 	        	</ul>
 			</div>
 			

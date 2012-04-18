@@ -180,7 +180,7 @@
                             </div>
 
                             <div class="specs greybox marginTop10 padding10 {% if not appstate.idolshipwith(user) %}hidden{% endif %}">
-                                <a class="btn center alignCenter btn_picture btn_upload_photo cboxElement" href="/fansworld/web/app_dev.php/photo/upload">SUBIR UNA FOTO</a>
+                                <a class="btn center alignCenter btn_picture btn_upload_photo cboxElement" href="{{ path('photo_upload') }}?idolToTag={{ user.id }}">SUBIR UNA FOTO</a>
                             </div>
                     </div>
                 </div>

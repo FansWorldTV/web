@@ -76,10 +76,13 @@ class PhotoController extends SiteController
     public function uploadAction()
     {
         $request = $this->getRequest();
+        $idolToTagId = $request->get('idolToTag', false);
         $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getEntityManager();
         $privacies = Privacy::getOptions();
 
+        $idolToTag = $this->getRepository('User')->find($idolToTagId);
+        
         $albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true));
         $albumchoices = array();
         foreach ($albums as $ab)
@@ -175,7 +178,7 @@ class PhotoController extends SiteController
             }
         }
 
-        return array('photo' => $photo, 'form' => $form->createView());
+        return array('photo' => $photo, 'form' => $form->createView(), 'idolToTag' => $idolToTag);
     }
 
     /**
