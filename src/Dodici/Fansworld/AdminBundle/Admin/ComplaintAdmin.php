@@ -27,6 +27,7 @@ class ComplaintAdmin extends Admin
     {
         $formMapper
             ->add('author', NULL, array (), array ())
+            ->add('complaintcategory', NULL, array (), array ())
             ->add('content', NULL, array (), array ())
             ->add('createdAt', NULL, array (), array ())
             ->add('active', NULL, array (), array ())
