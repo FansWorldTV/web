@@ -52,6 +52,16 @@ class Complaint
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
     private $active;
+    
+    /**
+     * @var ComplaintCategory
+     *
+     * @ORM\ManyToOne(targetEntity="ComplaintCategory")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="complaintcategory_id", referencedColumnName="id")
+     * })
+     */
+    private $complaintcategory;
             
     /**
      * @var Application\Sonata\UserBundle\Entity\User
@@ -275,5 +285,25 @@ class Complaint
     public function getComment()
     {
         return $this->comment;
+    }
+
+    /**
+     * Set complaintcategory
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\ComplaintCategory $complaintcategory
+     */
+    public function setComplaintcategory(\Dodici\Fansworld\WebBundle\Entity\ComplaintCategory $complaintcategory)
+    {
+        $this->complaintcategory = $complaintcategory;
+    }
+
+    /**
+     * Get complaintcategory
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\ComplaintCategory 
+     */
+    public function getComplaintcategory()
+    {
+        return $this->complaintcategory;
     }
 }

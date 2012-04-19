@@ -259,6 +259,11 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: complaint }
         arguments: [null, Dodici\Fansworld\WebBundle\Entity\Complaint, DodiciFansworldAdminBundle:ComplaintAdmin]
+    dodici.fansworld.adminbundle.admin.complaintcategory:
+        class: Dodici\Fansworld\AdminBundle\Admin\ComplaintCategoryAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: complaintcategory }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\ComplaintCategory, DodiciFansworldAdminBundle:ComplaintCategoryAdmin]
     dodici.fansworld.adminbundle.admin.hasinterest:
         class: Dodici\Fansworld\AdminBundle\Admin\HasInterestAdmin
         tags:
