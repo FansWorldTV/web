@@ -29,12 +29,13 @@ class ComplaintAdmin extends Admin
             ->add('author', NULL, array (), array ())
             ->add('complaintcategory', NULL, array (), array ())
             ->add('content', NULL, array (), array ())
-            ->add('createdAt', NULL, array (), array ())
-            ->add('active', NULL, array (), array ())
-            ->add('target', NULL, array (), array ())
-            ->add('video', NULL, array (), array ())
-            ->add('photo', NULL, array (), array ())
-            ->add('comment', NULL, array (), array ())
+            ->add('createdAt', 'date', array ('attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy HH:mm'), array ())
+            ->add('active', NULL, array ('required' => false), array ())
+            ->add('target', NULL, array ('required' => false), array ())
+            ->add('video', NULL, array ('required' => false), array ())
+            ->add('photo', NULL, array ('required' => false), array ())
+            ->add('comment', NULL, array ('required' => false), array ())
         ;
     }
 

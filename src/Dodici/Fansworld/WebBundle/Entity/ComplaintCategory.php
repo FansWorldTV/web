@@ -32,6 +32,10 @@ class ComplaintCategory implements Translatable
      */
     private $title;
     
+    public function __toString()
+    {
+    	return $this->getTitle();
+    }
 
     /**
      * Get id
