@@ -6,14 +6,20 @@
 {% endblock %}
 
 {% block content %}
-<div id="report" style="height: 220px">
+<div id="report" style="height: 120px">
     <form id="complaintReport" name="report" action="" method="post">
-        <select class="category" name="category">
+        <label>Categoria:</label>
+        <br/>
+        <select class="category" name="category" style="width: 300px">
             {% for category in categories %}
                 <option value="{{ category.id }}">{{ category }}</option>
             {% endfor %}
         </select>
-        <textarea class="comment"></textarea>
+        <br/>
+        <label>Comentario:</label>
+        <br/>
+        <textarea class="comment" style="width: 300px"></textarea>
+        <br/>
         <input type="submit" name="submit" value="Reportar" />
     </form>
 </div>
