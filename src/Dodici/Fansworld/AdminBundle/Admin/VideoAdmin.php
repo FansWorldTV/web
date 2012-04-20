@@ -61,6 +61,12 @@ class VideoAdmin extends Admin
                 	  'inline' => 'table', 
                     )
             )
+            ->add('hasteams', 'sonata_type_collection', array ('required' => false), 
+            	array(
+                      'edit' => 'inline',
+                	  'inline' => 'table', 
+                    )
+            )
         ;
     }
 
@@ -95,6 +101,9 @@ class VideoAdmin extends Admin
 	    foreach($video->getHasusers() as $qo) {
 	    	$qo->setVideo($video);
 	    }
+	    foreach($video->getHasteams() as $qo) {
+	    	$qo->setVideo($video);
+	    }
 	}
 	
 	public function prePersist($video) {
@@ -102,6 +111,9 @@ class VideoAdmin extends Admin
 	    	$qo->setVideo($video);
 	    }
 	    foreach($video->getHasusers() as $qo) {
+	    	$qo->setVideo($video);
+	    }
+	    foreach($video->getHasteams() as $qo) {
 	    	$qo->setVideo($video);
 	    }
 	}

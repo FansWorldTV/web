@@ -56,6 +56,16 @@ class UserAdmin extends Admin
                 ->add('plainPassword', 'text', array('required' => false))
                 ->add('type', 'choice', array ('choices' => array(User::TYPE_FAN => 'Fan', User::TYPE_IDOL => 'Idolo', User::TYPE_STAFF => 'Staff')), array ())
             ->end()
+            ->with('Idolo')
+				->add('origin',null,array('label'=>'Lugar de origen','required'=>false))
+				->add('nicknames',null,array('label'=>'Apodos','required'=>false))
+            	->add('idolcareers', 'sonata_type_collection', array ('label'=>'Equipos Carrera', 'required' => false), 
+            	array(
+                      'edit' => 'inline',
+                	  'inline' => 'table', 
+                    )
+            	)
+            ->end()
             ->with('Personal')
             	->add('sex','choice',array('label'=>'Sexo','required'=>false, 'choices' => array(User::SEX_MALE => 'Hombre', User::SEX_FEMALE => 'Mujer')))
             	->add('birthday', 'date', array ('required' => false, 'attr' => array('class' => 'datepicker'), 'widget' => 'single_text',
@@ -77,8 +87,6 @@ class UserAdmin extends Admin
             ->with('Social')
             	->add('country',null,array('label'=>'País','required'=>false))
 				->add('city',null,array('label'=>'Ciudad','required'=>false))
-				->add('origin',null,array('label'=>'Lugar de origen','required'=>false))
-				->add('nicknames',null,array('label'=>'Apodos','required'=>false))
 				->add('score',null,array('label'=>'Puntaje','required'=>false))
 				->add('level',null,array('label'=>'Nivel','required'=>false))
 				->add('image', 'sonata_type_model', array(), array('edit' => 'list', 'link_parameters' => array('context' => 'default', 'provider' => 'sonata.media.provider.image')))

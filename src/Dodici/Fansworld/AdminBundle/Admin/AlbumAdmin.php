@@ -58,6 +58,12 @@ class AlbumAdmin extends Admin
                 	  'inline' => 'table', 
                     )
             )
+            ->add('hasteams', 'sonata_type_collection', array ('required' => false), 
+            	array(
+                      'edit' => 'inline',
+                	  'inline' => 'table', 
+                    )
+            )
         ;
     }
 
@@ -91,6 +97,9 @@ class AlbumAdmin extends Admin
 	    foreach($album->getHasusers() as $qo) {
 	    	$qo->setAlbum($album);
 	    }
+	    foreach($album->getHasteams() as $qo) {
+	    	$qo->setAlbum($album);
+	    }
 	}
 	
 	public function prePersist($album) {
@@ -101,6 +110,9 @@ class AlbumAdmin extends Admin
 	    	$qo->setAlbum($album);
 	    }
 	    foreach($album->getHasusers() as $qo) {
+	    	$qo->setAlbum($album);
+	    }
+	    foreach($album->getHasteams() as $qo) {
 	    	$qo->setAlbum($album);
 	    }
 	}

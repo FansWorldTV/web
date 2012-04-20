@@ -123,6 +123,11 @@ class Photo
     protected $hasusers;
     
     /**
+     * @ORM\OneToMany(targetEntity="HasTeam", mappedBy="photo", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $hasteams;
+    
+    /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="photo", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $comments;
@@ -485,6 +490,35 @@ class Photo
 	public function addHasusers($hasusers)
     {
         $this->addHasUser($hasusers);
+    }
+
+	/**
+     * Add hasteams
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\HasTeam $hasteams
+     */
+    public function addHasTeam(\Dodici\Fansworld\WebBundle\Entity\HasTeam $hasteams)
+    {
+        $this->hasteams[] = $hasteams;
+    }
+
+    /**
+     * Get hasteams
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getHasteams()
+    {
+        return $this->hasteams;
+    }
+    
+	public function setHasteams($hasteams)
+    {
+        $this->hasteams = $hasteams;
+    }
+	public function addHasteams($hasteams)
+    {
+        $this->addHasTeam($hasteams);
     }
 
     /**

@@ -51,6 +51,12 @@ class NewsPostAdmin extends Admin
                 	  'inline' => 'table', 
                     )
             )
+            ->add('hasteams', 'sonata_type_collection', array ('required' => false), 
+            	array(
+                      'edit' => 'inline',
+                	  'inline' => 'table', 
+                    )
+            )
         ;
     }
 
@@ -81,6 +87,9 @@ class NewsPostAdmin extends Admin
 	    foreach($newspost->getHasusers() as $qo) {
 	    	$qo->setNewspost($newspost);
 	    }
+	    foreach($newspost->getHasteams() as $qo) {
+	    	$qo->setNewspost($newspost);
+	    }
 	}
 	
 	public function prePersist($newspost) {
@@ -88,6 +97,9 @@ class NewsPostAdmin extends Admin
 	    	$qo->setNewspost($newspost);
 	    }
 	    foreach($newspost->getHasusers() as $qo) {
+	    	$qo->setNewspost($newspost);
+	    }
+	    foreach($newspost->getHasteams() as $qo) {
 	    	$qo->setNewspost($newspost);
 	    }
 	}

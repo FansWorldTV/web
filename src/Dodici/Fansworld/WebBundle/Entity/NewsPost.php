@@ -95,6 +95,11 @@ class NewsPost implements Translatable
     protected $hasusers;
     
     /**
+     * @ORM\OneToMany(targetEntity="HasTeam", mappedBy="newspost", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $hasteams;
+    
+    /**
      * @var Application\Sonata\MediaBundle\Entity\Media
      * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="image", referencedColumnName="id")
@@ -442,6 +447,35 @@ class NewsPost implements Translatable
 	public function addHasusers($hasusers)
     {
         $this->addHasUser($hasusers);
+    }
+
+	/**
+     * Add hasteams
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\HasTeam $hasteams
+     */
+    public function addHasTeam(\Dodici\Fansworld\WebBundle\Entity\HasTeam $hasteams)
+    {
+        $this->hasteams[] = $hasteams;
+    }
+
+    /**
+     * Get hasteams
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getHasteams()
+    {
+        return $this->hasteams;
+    }
+    
+	public function setHasteams($hasteams)
+    {
+        $this->hasteams = $hasteams;
+    }
+	public function addHasteams($hasteams)
+    {
+        $this->addHasTeam($hasteams);
     }
 
     /**

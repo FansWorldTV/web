@@ -123,6 +123,11 @@ class User extends BaseUser
     private $level;
     
     /**
+     * @var Dodici\Fansworld\WebBundle\Entity\Team
+     */
+    private $team;
+    
+    /**
      * @var text $content
      */
     private $content;
@@ -186,6 +191,11 @@ class User extends BaseUser
     protected $hasinterests;
     
     /**
+     * @var ArrayCollection $idolcareers
+     */
+    protected $idolcareers;
+    
+    /**
      * @var integer $friendCount
      */
     private $friendCount;
@@ -207,6 +217,7 @@ class User extends BaseUser
     	$this->friendgroups = new ArrayCollection();
     	$this->idolships = new ArrayCollection();
     	$this->hasinterests = new ArrayCollection();
+    	$this->idolcareers = new ArrayCollection();
         $this->privacy = array();
         $this->notifyprefs = array_keys(Notification::getTypeList());
         $this->idolCount = 0;
@@ -772,6 +783,26 @@ class User extends BaseUser
     {
         return $this->level;
     }
+    
+	/**
+     * Set team
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Team $team
+     */
+    public function setTeam($team)
+    {
+        $this->team = $team;
+    }
+    
+	/**
+     * Get team
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Team 
+     */
+    public function getTeam()
+    {
+        return $this->team;
+    }
 
     /**
      * Set image
@@ -927,6 +958,40 @@ class User extends BaseUser
     public function setHasinterests($hasinterests)
     {
         $this->hasinterests = $hasinterests;
+    }
+    
+	/**
+     * Add idolcareers
+     *
+     * @param \Dodici\Fansworld\WebBundle\Entity\IdolCareer $idolcareers
+     */
+    public function addIdolcareer(\Dodici\Fansworld\WebBundle\Entity\IdolCareer $idolcareers)
+    {
+        $this->idolcareers[] = $idolcareers;
+    }
+	public function addIdolcareers(\Dodici\Fansworld\WebBundle\Entity\HasInterest $idolcareers)
+    {
+        $this->addIdolcareer($idolcareers);
+    }
+
+    /**
+     * Get idolcareers
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getIdolcareers()
+    {
+        return $this->idolcareers;
+    }
+    
+	/**
+     * Set idolcareers
+     *
+     * @param Doctrine\Common\Collections\Collection $idolcareers
+     */
+    public function setIdolcareers($idolcareers)
+    {
+        $this->idolcareers = $idolcareers;
     }
 
 	/**

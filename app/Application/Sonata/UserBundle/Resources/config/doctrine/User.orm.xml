@@ -55,6 +55,12 @@
         </many-to-one>
         
         <many-to-one
+            field="team"
+            target-entity="Dodici\Fansworld\WebBundle\Entity\Team"
+            >
+        </many-to-one>
+        
+        <many-to-one
             field="image"
             target-entity="Application\Sonata\MediaBundle\Entity\Media"
             >
@@ -107,6 +113,20 @@
                 field="hasinterests"
                 target-entity="Dodici\Fansworld\WebBundle\Entity\HasInterest"
                 mapped-by="author"
+                orphan-removal="true"
+                >
+				<cascade>
+                	<cascade-remove/>
+                	<cascade-persist/>
+            	</cascade>
+                <orphan-removal>true</orphan-removal>
+
+        </one-to-many>
+        
+        <one-to-many
+                field="idolcareers"
+                target-entity="Dodici\Fansworld\WebBundle\Entity\IdolCareer"
+                mapped-by="idol"
                 orphan-removal="true"
                 >
 				<cascade>

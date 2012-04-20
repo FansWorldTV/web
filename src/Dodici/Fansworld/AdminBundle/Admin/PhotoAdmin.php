@@ -55,6 +55,12 @@ class PhotoAdmin extends Admin
                 	  'inline' => 'table', 
                     )
             )
+            ->add('hasteams', 'sonata_type_collection', array ('required' => false), 
+            	array(
+                      'edit' => 'inline',
+                	  'inline' => 'table', 
+                    )
+            )
         ;
     }
 
@@ -87,6 +93,9 @@ class PhotoAdmin extends Admin
 	    foreach($photo->getHasusers() as $qo) {
 	    	$qo->setPhoto($photo);
 	    }
+	    foreach($photo->getHasteams() as $qo) {
+	    	$qo->setPhoto($photo);
+	    }
 	}
 	
 	public function prePersist($photo) {
@@ -94,6 +103,9 @@ class PhotoAdmin extends Admin
 	    	$qo->setPhoto($photo);
 	    }
 	    foreach($photo->getHasusers() as $qo) {
+	    	$qo->setPhoto($photo);
+	    }
+	    foreach($photo->getHasteams() as $qo) {
 	    	$qo->setPhoto($photo);
 	    }
 	}

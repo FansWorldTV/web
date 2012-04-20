@@ -2,6 +2,10 @@
 
 namespace Dodici\Fansworld\WebBundle\Extensions;
 
+use Dodici\Fansworld\WebBundle\Entity\HasTeam;
+
+use Dodici\Fansworld\WebBundle\Entity\Team;
+
 use Symfony\Component\HttpFoundation\Request;
 
 use Application\Sonata\UserBundle\Entity\User;
@@ -37,6 +41,7 @@ class Tagger
     	$tagrepo = $this->em->getRepository('DodiciFansworldWebBundle:Tag');
     	$hasrepo = $this->em->getRepository('DodiciFansworldWebBundle:HasTag');
     	$hasurepo = $this->em->getRepository('DodiciFansworldWebBundle:HasUser');
+    	$hastrepo = $this->em->getRepository('DodiciFansworldWebBundle:HasTeam');
     	$exp = explode('\\', get_class($entity));
     	$classname = end($exp);
     	
@@ -52,6 +57,19 @@ class Tagger
 		    		$hasuser->$methodname($entity);
 		    		
 		    		$entity->addHasUser($hasuser);
+		    		$this->em->persist($entity);
+	    		}
+    		} elseif ($t instanceof Team) {
+    			$exists = $hastrepo->findOneBy(array('team' => $t->getId(), 'author' => $user->getId(), strtolower($classname) => $entity->getId()));
+	    		
+	    		if (!$exists) {
+		    		$hasteam = new HasTeam();
+		    		$hasteam->setAuthor($user);
+		    		$hasteam->setTeam($t);
+		    		$methodname = 'set'.$classname;
+		    		$hasteam->$methodname($entity);
+		    		
+		    		$entity->addHasTeam($hasteam);
 		    		$this->em->persist($entity);
 	    		}
     		} else {

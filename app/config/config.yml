@@ -284,6 +284,31 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: hasuser }
         arguments: [null, Dodici\Fansworld\WebBundle\Entity\HasUser, DodiciFansworldAdminBundle:HasUserAdmin]
+    dodici.fansworld.adminbundle.admin.team:
+        class: Dodici\Fansworld\AdminBundle\Admin\TeamAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: team }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Team, DodiciFansworldAdminBundle:TeamAdmin]
+    dodici.fansworld.adminbundle.admin.teamcategory:
+        class: Dodici\Fansworld\AdminBundle\Admin\TeamCategoryAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: teamcategory }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\TeamCategory, DodiciFansworldAdminBundle:TeamCategoryAdmin]
+    dodici.fansworld.adminbundle.admin.idolcareer:
+        class: Dodici\Fansworld\AdminBundle\Admin\IdolCareerAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: idolcareer }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\IdolCareer, DodiciFansworldAdminBundle:IdolCareerAdmin]
+    dodici.fansworld.adminbundle.admin.hasteam:
+        class: Dodici\Fansworld\AdminBundle\Admin\HasTeamAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: hasteam }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\HasTeam, DodiciFansworldAdminBundle:HasTeamAdmin]
+    dodici.fansworld.adminbundle.admin.teamship:
+        class: Dodici\Fansworld\AdminBundle\Admin\TeamshipAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: teamship }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Teamship, DodiciFansworldAdminBundle:TeamshipAdmin]
     ### END ADMIN SERVICES ###
     liking.listener.persist:
         class: Dodici\Fansworld\WebBundle\Listener\LikingCountUpdater

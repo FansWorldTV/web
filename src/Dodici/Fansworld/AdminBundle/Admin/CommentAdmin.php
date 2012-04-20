@@ -50,6 +50,12 @@ class CommentAdmin extends Admin
                 	  'inline' => 'table', 
                     )
             )
+            ->add('hasteams', 'sonata_type_collection', array ('required' => false), 
+            	array(
+                      'edit' => 'inline',
+                	  'inline' => 'table', 
+                    )
+            )
         ;
     }
 
@@ -90,6 +96,9 @@ class CommentAdmin extends Admin
 	    foreach($comment->getHasusers() as $qo) {
 	    	$qo->setComment($comment);
 	    }
+	    foreach($comment->getHasteams() as $qo) {
+	    	$qo->setComment($comment);
+	    }
 	}
 	
 	public function prePersist($comment) {
@@ -97,6 +106,9 @@ class CommentAdmin extends Admin
 	    	$qo->setComment($comment);
 	    }
 	    foreach($comment->getHasusers() as $qo) {
+	    	$qo->setComment($comment);
+	    }
+	    foreach($comment->getHasteams() as $qo) {
 	    	$qo->setComment($comment);
 	    }
 	}
