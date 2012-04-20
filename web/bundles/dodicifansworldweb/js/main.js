@@ -38,6 +38,13 @@ var site = {
             innerWidth: 700, 
             innerHeight: 220
         });
+        
+        $('.report').colorbox({
+            'iframe': true,
+            'innerWidth': 350,
+            'innerHeight': 200
+        });
+        
         $(".btn_upload_photo,.btn_upload_video,.editbutton").colorbox({
             iframe: true, 
             innerWidth: 700, 
@@ -156,12 +163,12 @@ var site = {
         }
             
         if ((typeof Meteor != 'undefined') && (typeof notificationChannel != 'undefined')) {
-        	Meteor.registerEventCallback("process", handleData);
-	        Meteor.joinChannel(notificationChannel, 0);
-	        Meteor.mode = 'stream';
+            Meteor.registerEventCallback("process", handleData);
+            Meteor.joinChannel(notificationChannel, 0);
+            Meteor.mode = 'stream';
 	            
-	        // Start streaming!
-	        Meteor.connect();
+            // Start streaming!
+            Meteor.connect();
             console.log('Escuchando notificaciones...');
         }
     },
@@ -507,21 +514,21 @@ var site = {
 var friendship = {
     init: function(){
         
-    	if ($("ul.friendgroupsList li input:checkbox").length) {
-    	$("ul.friendgroupsList").hide();
-    	$("div.addFriend").hover(
-            function(){
-                if ($(this).has('.btn_friendship.add')) {
-                	friendGroupList = $("ul.friendgroupsList").slideDown('normal');
+        if ($("ul.friendgroupsList li input:checkbox").length) {
+            $("ul.friendgroupsList").hide();
+            $("div.addFriend").hover(
+                function(){
+                    if ($(this).has('.btn_friendship.add')) {
+                        friendGroupList = $("ul.friendgroupsList").slideDown('normal');
+                    }
+                },
+                function(){
+                    if ($(this).has('.btn_friendship.add')) {
+                        friendGroupList = $("ul.friendgroupsList").slideUp('normal');
+                    }
                 }
-            },
-            function(){
-            	if ($(this).has('.btn_friendship.add')) {
-            		friendGroupList = $("ul.friendgroupsList").slideUp('normal');
-            	}
-            }
-            );
-    	}
+                );
+        }
             
         friendship.add();
         friendship.cancel();
@@ -542,9 +549,9 @@ var friendship = {
             ajax.addFriendAction(targetId, friendgroups, function(response){
                 if(!response.error){
                     if (response.active) {
-                    	self.removeClass('add').addClass('remove').attr('friendshipId', response.friendship).text('Dejar de Seguir');
+                        self.removeClass('add').addClass('remove').attr('friendshipId', response.friendship).text('Dejar de Seguir');
                     } else {
-                    	self.removeClass('add').addClass('remove').attr('friendshipId', response.friendship).text('Cancelar Solicitud');
+                        self.removeClass('add').addClass('remove').attr('friendshipId', response.friendship).text('Cancelar Solicitud');
                     }
                     success(response.message);
                 }else{
