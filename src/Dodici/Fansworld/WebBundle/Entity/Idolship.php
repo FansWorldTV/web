@@ -56,6 +56,13 @@ class Idolship
      */
     private $favorite;
     
+    /**
+     * @var bigint $score
+     *
+     * @ORM\Column(name="score", type="bigint", nullable=false)
+     */
+    private $score;
+    
 	/**
      * @ORM\PrePersist()
      */
@@ -63,6 +70,9 @@ class Idolship
     {
         if (null === $this->favorite) {
             $this->setFavorite(false);
+        }
+    	if (null === $this->score) {
+            $this->setScore(0);
         }
         if (null === $this->createdAt) {
             $this->setCreatedAt(new \DateTime());
@@ -157,5 +167,25 @@ class Idolship
     public function getFavorite()
     {
         return $this->favorite;
+    }
+
+    /**
+     * Set score
+     *
+     * @param boolean $score
+     */
+    public function setScore($score)
+    {
+        $this->score = $score;
+    }
+
+    /**
+     * Get score
+     *
+     * @return bigint
+     */
+    public function getScore()
+    {
+        return $this->score;
     }
 }
