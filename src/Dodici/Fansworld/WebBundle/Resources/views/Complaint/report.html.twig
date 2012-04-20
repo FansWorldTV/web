@@ -28,8 +28,8 @@
     $(document).ready(function(){
         $("#complaintReport").live('submit', function(){
             ajax.genericAction('complaint_make', {
-                'entityType': '{{ entityType }}',
-                'entityId': {{ entityId }},
+                'type': '{{ entityType }}',
+                'id': {{ entityId }},
                 'comment': $("#complaintReport textarea.comment").val(),
                 'category': $("#complaintReport select option:selected").attr("value")
             }, 

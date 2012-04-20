@@ -43,7 +43,7 @@ class ComplaintController extends SiteController
 
                 $complaint = new Complaint();
                 $complaint->setAuthor($author);
-                $complaint->set{$typeEntity}($entity);
+                $complaint->set{ucfirst($entityType)}($entity);
                 $complaint->setContent($comment);
                 $complaint->setComplaintCategory($category);
 
@@ -54,6 +54,7 @@ class ComplaintController extends SiteController
                 $response['error'] = false;
             } catch (Exception $exc) {
                 $response['error'] = true;
+                $response['message'] = $exc->getMessage();
             }
         }
 
