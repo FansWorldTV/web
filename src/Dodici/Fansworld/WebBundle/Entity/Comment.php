@@ -169,6 +169,16 @@ class Comment
     private $contest;
     
     /**
+     * @var Team
+     *
+     * @ORM\ManyToOne(targetEntity="Team")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="team_id", referencedColumnName="id")
+     * })
+     */
+    private $team;
+    
+    /**
      * @var Comment
      *
      * @ORM\ManyToOne(targetEntity="Comment")
@@ -739,5 +749,25 @@ class Comment
     public function getCommentCount()
     {
         return $this->commentCount;
+    }
+
+    /**
+     * Set team
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Team $team
+     */
+    public function setTeam(\Dodici\Fansworld\WebBundle\Entity\Team $team)
+    {
+        $this->team = $team;
+    }
+
+    /**
+     * Get team
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Team 
+     */
+    public function getTeam()
+    {
+        return $this->team;
     }
 }

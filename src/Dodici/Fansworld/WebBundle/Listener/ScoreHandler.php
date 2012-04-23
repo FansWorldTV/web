@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Listener;
 
+use Dodici\Fansworld\WebBundle\Entity\Teamship;
+
 use Symfony\Component\DependencyInjection\Container;
 
 use Dodici\Fansworld\WebBundle\Entity\Comment;
@@ -17,6 +19,7 @@ use Application\Sonata\UserBundle\Entity\User;
 class ScoreHandler
 {
     const SCORE_ADD_IDOL = 1;
+    const SCORE_ADD_TEAM = 1;
     const SCORE_GET_LIKED = 2;
     const SCORE_NEW_SHARE = 3;
     const SCORE_NEW_PHOTO = 5;
@@ -40,6 +43,15 @@ class ScoreHandler
             $target->setFanCount($target->getFanCount() + 1);
             $em->persist($author);
             $em->persist($target);
+            $em->flush();
+		}
+		
+    	if ($entity instanceof Teamship) {
+			$this->addScore($entity->getAuthor(), self::SCORE_ADD_TEAM);
+			
+            $team = $entity->getTeam();
+            $team->setFanCount($team->getFanCount() + 1);
+            $em->persist($team);
             $em->flush();
 		}
 		
@@ -154,6 +166,15 @@ class ScoreHandler
             $em->persist($target);
             $em->flush();
         }
+        
+    	if ($entity instanceof Teamship) {
+			$this->addScore($entity->getAuthor(), -self::SCORE_ADD_TEAM);
+			
+            $team = $entity->getTeam();
+            $team->setFanCount($team->getFanCount() - 1);
+            $em->persist($team);
+            $em->flush();
+		}
     }
     
     private function addScore(User $user, $score)

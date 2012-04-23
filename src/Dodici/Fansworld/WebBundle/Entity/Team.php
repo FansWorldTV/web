@@ -95,6 +95,11 @@ class Team implements Translatable
      * @ORM\OneToMany(targetEntity="Application\Sonata\UserBundle\Entity\User", mappedBy="team")
      */
     protected $idols;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="team", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $comments;
 
     /**
      * @var integer $fanCount
@@ -120,6 +125,37 @@ class Team implements Translatable
     public function __construct()
     {
         $this->idols = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+	/**
+     * Add comments
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Comment $comments
+     */
+    public function addComment(\Dodici\Fansworld\WebBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+    }
+    
+	public function addComments(\Dodici\Fansworld\WebBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+    }
+
+    /**
+     * Get comments
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+    
+	public function setComments($comments)
+    {
+        $this->comments = $comments;
     }
     
     /**

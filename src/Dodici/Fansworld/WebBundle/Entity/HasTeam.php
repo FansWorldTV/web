@@ -109,6 +109,16 @@ class HasTeam
      */
     private $comment;
     
+    /**
+     * @var ForumThread
+     *
+     * @ORM\ManyToOne(targetEntity="ForumThread")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="forumthread_id", referencedColumnName="id")
+     * })
+     */
+    private $forumthread;
+    
 	/**
      * @ORM\PrePersist()
      */
@@ -309,5 +319,25 @@ class HasTeam
     public function getComment()
     {
         return $this->comment;
+    }
+
+    /**
+     * Set forumthread
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\ForumThread $forumthread
+     */
+    public function setForumthread(\Dodici\Fansworld\WebBundle\Entity\ForumThread $forumthread)
+    {
+        $this->forumthread = $forumthread;
+    }
+
+    /**
+     * Get forumthread
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\ForumThread 
+     */
+    public function getForumthread()
+    {
+        return $this->forumthread;
     }
 }

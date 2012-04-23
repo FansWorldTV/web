@@ -66,6 +66,16 @@ class ForumThread implements Translatable
     private $active;
     
     /**
+     * @ORM\OneToMany(targetEntity="HasUser", mappedBy="forumthread", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $hasusers;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="HasTeam", mappedBy="forumthread", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $hasteams;
+    
+    /**
      * @var integer $postCount
      *
      * @ORM\Column(name="postcount", type="integer", nullable=false)
@@ -291,4 +301,66 @@ class ForumThread implements Translatable
         return $this->forumposts;
     }
 
+
+    /**
+     * Add hasusers
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\HasUser $hasusers
+     */
+    public function addHasUser(\Dodici\Fansworld\WebBundle\Entity\HasUser $hasusers)
+    {
+        $this->hasusers[] = $hasusers;
+    }
+
+    /**
+     * Get hasusers
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getHasusers()
+    {
+        return $this->hasusers;
+    }
+    
+	/**
+     * Admin methods
+     */
+    
+	public function setHasusers($hasusers)
+    {
+        $this->hasusers = $hasusers;
+    }
+	public function addHasusers($hasusers)
+    {
+        $this->addHasUser($hasusers);
+    }
+
+	/**
+     * Add hasteams
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\HasTeam $hasteams
+     */
+    public function addHasTeam(\Dodici\Fansworld\WebBundle\Entity\HasTeam $hasteams)
+    {
+        $this->hasteams[] = $hasteams;
+    }
+
+    /**
+     * Get hasteams
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getHasteams()
+    {
+        return $this->hasteams;
+    }
+    
+	public function setHasteams($hasteams)
+    {
+        $this->hasteams = $hasteams;
+    }
+	public function addHasteams($hasteams)
+    {
+        $this->addHasTeam($hasteams);
+    }
 }
