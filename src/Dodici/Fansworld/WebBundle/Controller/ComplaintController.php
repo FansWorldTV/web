@@ -43,7 +43,10 @@ class ComplaintController extends SiteController
 
                 $complaint = new Complaint();
                 $complaint->setAuthor($author);
-                $complaint->set{ucfirst($entityType)}($entity);
+                
+                $setEntity = "set" . ucfirst($entityType);
+                
+                $complaint->$setEntity($entity);
                 $complaint->setContent($comment);
                 $complaint->setComplaintCategory($category);
 
@@ -70,11 +73,20 @@ class ComplaintController extends SiteController
     {
         $categories = $this->getRepository('ComplaintCategory')->findBy(array(), array());
         $entity = $this->getRepository($entityType)->find($entityId);
+        $reported = false;
+        
+        $user = $this->get('security.context')->getToken()->getUser();
+        
+        $complaintReported = $this->getRepository('Complaint')->findOneBy(array('author' => $user->getId(), $entityType => $entityId));
+        if($complaintReported){
+            $reported = true;
+        }
         
         return array(
             'categories' => $categories,
             'entityType' => $entityType,
-            'entityId' => $entity->getId()
+            'entityId' => $entity->getId(),
+            'reported' => $reported
         );
     }
 
