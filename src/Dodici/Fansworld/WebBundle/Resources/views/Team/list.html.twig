@@ -1,0 +1,58 @@
+{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+
+{% block title %}{{ parent() }} - Búsqueda{% endblock %}
+
+{% block content %}
+<div class="cont clearfix">
+    <h2>Listado de equipos</h2>
+    <div class="user_list">
+        <div class="mask">
+            <ul class="listMosaic" style="display: block; ">
+            </ul>
+            <a href="#" id="addMore" class="loadmore hidden">Agregar más</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        var category = {% if categoryId %} {{ categoryId }} {% else %} null {% endif %};
+        var activePage = 1;
+        
+        getTeams(category, activePage);
+        $("#addMore").live('click', function(){
+            getTeams(category, activePage);
+        });
+    });
+    
+    function getTeams(category, activePage){
+        $("div.mask").addClass('loading');
+        
+        ajax.genericAction('team_get',
+        {
+            'category': category,
+            'page': activePage
+        },
+        function(r){
+            for(i in r.images){
+                var element = r.images[i];
+                $("ul.listMosaic").append("<li> " + element.title + " </li>");
+            }
+            
+            if(r.gotMore){
+                $("#addMore").removeClass('hidden');
+            }else{
+                $("#addMore").addClass('hidden');
+            }
+            
+            activePage++;
+            $("div.mask").removeClass('loading');
+            console.log(r);
+        },
+        function(r){
+            console.log(r);
+            $("div.mask").removeClass('loading');
+        });
+    }
+</script>
+{% endblock %}
