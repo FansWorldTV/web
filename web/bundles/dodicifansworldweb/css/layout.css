@@ -949,3 +949,5 @@ ul.videos-small li.first { margin-left: 0px;}
 ul.videos-small li .title { height: 20px; }
 ul.videos-small li .title, ul.videos-small li .date, ul.videos-small li .stats { margin-top: 3px;padding-top: 3px;border-top: 1px dotted #aaa; font-weight: bold;}
 ul.videos-small li .stats .views { float: right;background: url('../images/ico/eye.png') center left no-repeat;padding-left: 20px; padding-top: 1px; padding-bottom: 1px; font-weight: bold;}
+.fieldinfo { width: 250px; color: #777; font-size: 11px; margin-top: 5px; word-wrap: break-word;}
+.fieldinfo strong { color: #555; }

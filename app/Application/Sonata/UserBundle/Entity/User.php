@@ -11,7 +11,7 @@
 namespace Application\Sonata\UserBundle\Entity;
 
 use Dodici\Fansworld\WebBundle\Entity\Notification;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use Sonata\UserBundle\Entity\BaseUser as BaseUser;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -26,6 +26,15 @@ class User extends BaseUser
 	const TYPE_FAN = 1;
 	const TYPE_IDOL = 2;
 	const TYPE_STAFF = 3;
+	
+	/**
+     * @var string
+     * @Assert\Regex(pattern="/^[a-zA-Z0-9.\-]+$/", message="Only use a-z 0-9 . -", groups={"Registration", "Profile"})
+     * @Assert\Regex(pattern="/[0-9.\-]+$/", message="Using only numbers/symbols not allowed", match=false, groups={"Registration", "Profile"})
+     * @Assert\MinLength(limit="3", message="Min 3 letters.", groups={"Registration", "Profile"})
+     * @Assert\MaxLength(limit="30", message="Max 30 letters.", groups={"Registration", "Profile"})
+     */
+    protected $username;
 	
     /**
      * @var integer $id

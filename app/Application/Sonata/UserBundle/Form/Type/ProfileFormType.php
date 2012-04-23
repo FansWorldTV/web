@@ -20,10 +20,12 @@ class ProfileFormType extends BaseType
 {
 	public function buildUserForm(FormBuilder $builder, array $options)
     {
-        parent::buildUserForm($builder, $options);
+        //parent::buildUserForm($builder, $options);
 
         // add your custom field
         $builder
+            ->add('username',null, array('max_length' => 30))
+            ->add('email', 'email')
 			->add('address',null,array('label'=>'Dirección','required'=>false))
 			->add('firstname',null,array('label'=>'Nombre','required'=>true))
 			->add('lastname',null,array('label'=>'Apellido','required'=>true))
