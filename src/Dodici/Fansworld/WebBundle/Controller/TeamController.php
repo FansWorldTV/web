@@ -58,8 +58,10 @@ class TeamController extends SiteController
         if($category){
             $categoryId = $category->getId();
         }
+        $categories = $this->getRepository('TeamCategory')->findBy(array(), array('title' => 'desc'));
         return array(
-            'categoryId' => $categoryId
+            'categoryId' => $categoryId,
+            'categories' => $categories
         );
     }
 

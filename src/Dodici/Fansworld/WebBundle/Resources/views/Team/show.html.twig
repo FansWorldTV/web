@@ -24,10 +24,11 @@
                 ajax.genericAction('teamship_ajaxtoggle', {
                     'team': teamId
                 }, function(response){
-                    console.log(response);
                     $("a.teamToggle").html(response.buttontext);
                     success(response.message);
                     $("a.teamToggle").removeClass('disabled');
+                }, function(error){
+                    console.error(error);
                 });
                 
                 return false;

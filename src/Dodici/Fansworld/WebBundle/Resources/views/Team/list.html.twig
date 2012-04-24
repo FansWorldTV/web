@@ -7,6 +7,12 @@
     <h2>Listado de equipos</h2>
     <div class="user_list">
         <div class="mask">
+            <ul class="categories">
+                {% for category in categories %}
+                    <li categoryId = "{{ category.id }}">{{ category.title }}</li>
+                {% endfor %}
+            </ul>
+            <br/>
             <ul class="listMosaic" style="display: block; ">
             </ul>
             <a href="#" id="addMore" class="loadmore hidden">Agregar más</a>
@@ -21,6 +27,13 @@
         
         getTeams(category, activePage);
         $("#addMore").live('click', function(){
+            getTeams(category, activePage);
+        });
+        
+        $("ul.categories li").live('click', function(){
+            category = $(this).attr('categoryId');
+            activePage = 1;
+            $("ul.listMosaic").html('');
             getTeams(category, activePage);
         });
     });
