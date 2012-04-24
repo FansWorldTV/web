@@ -143,7 +143,7 @@ class TeamController extends SiteController
             } else {
                 $teamship = new Teamship();
                 $teamship->setAuthor($user);
-                $teamship->setTarget($team);
+                $teamship->setTeam($team);
                 $em->persist($teamship);
                 $em->flush();
 

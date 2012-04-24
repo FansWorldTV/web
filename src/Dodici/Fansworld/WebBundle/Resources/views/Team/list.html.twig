@@ -36,7 +36,7 @@
         function(r){
             for(i in r.images){
                 var element = r.images[i];
-                $("ul.listMosaic").append("<li> " + element.title + " </li>");
+                $("ul.listMosaic").append("<li> <a href='"+ Routing.generate(appLocale +'_' +'team_show', {'id': element.id, 'slug': element.slug})+"'>" + element.title + " </a></li>");
             }
             
             if(r.gotMore){

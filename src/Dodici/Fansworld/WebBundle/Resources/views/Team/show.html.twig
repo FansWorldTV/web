@@ -1,0 +1,37 @@
+{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+
+{% block title %}{{ parent() }} - Detalle{% endblock %}
+
+{% block content %}
+        <div class="cont clearfix">
+            <h2>Detalle</h2>
+            <div class="user_list">
+                <div class="mask">
+                    {{ team.title}}
+                    {% if not appstate.teamshipwith(team)%}
+                        <a href="" class="teamToggle" onclick="return false;">Ser fan</a>
+                    {% else %}
+                        <a href="" class="teamToggle teamship" onclick="return false;">Dejar de ser fan</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var teamId = {{ team.id }};
+            $("a.teamToggle:not('.disabled')").live('click', function(){
+                $("a.teamToggle").addClass('disabled');
+                ajax.genericAction('teamship_ajaxtoggle', {
+                    'team': teamId
+                }, function(response){
+                    console.log(response);
+                    $("a.teamToggle").html(response.buttontext);
+                    success(response.message);
+                    $("a.teamToggle").removeClass('disabled');
+                });
+                
+                return false;
+            });
+        });
+    </script>
+{% endblock %}
