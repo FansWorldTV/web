@@ -7,7 +7,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class TeamCategoryAdmin extends Admin
+class SportAdmin extends Admin
 {
     public function configureShowFields(ShowMapper $showMapper)
     {
@@ -21,15 +21,15 @@ class TeamCategoryAdmin extends Admin
     {
         $formMapper
             ->add('title', NULL, array (), array ())
-            ->add('sport', NULL, array (), array ())
+            ->add('slug', NULL, array (), array ())
         ;
     }
 
     public function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('title', 'text', array ())
-            ->add('sport', 'orm_many_to_one', array ())
+            ->add('title', 'text', array ())
+            ->add('slug', 'text', array ())
         ;
     }
 
@@ -37,7 +37,7 @@ class TeamCategoryAdmin extends Admin
     {
         $datagridMapper
             ->add('title', 'doctrine_orm_string', array (  'field_type' => 'text',  'field_options' =>   array (  ),  'options' =>   array (  ),  'field_name' => 'title',))
-            ->add('sport', 'doctrine_orm_model', array (  'field_type' => 'entity',  'field_options' =>   array (    'class' => 'Dodici\\Fansworld\\WebBundle\\Entity\\Sport',  ),  'options' =>   array (  ),  'operator_type' => 'sonata_type_boolean',  'operator_options' =>   array (  ),  'field_name' => 'sport',  'mapping_type' => 2,))
+            ->add('slug', 'doctrine_orm_string', array (  'field_type' => 'text',  'field_options' =>   array (  ),  'options' =>   array (  ),  'field_name' => 'slug',))
         ;
     }
 }

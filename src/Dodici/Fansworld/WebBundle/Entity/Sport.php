@@ -8,12 +8,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
 
 /**
- * Dodici\Fansworld\WebBundle\Entity\TeamCategory
+ * Dodici\Fansworld\WebBundle\Entity\Sport
  *
- * @ORM\Table(name="teamcategory")
+ * @ORM\Table(name="sport")
  * @ORM\Entity
  */
-class TeamCategory implements Translatable
+class Sport implements Translatable
 {
     /**
      * @var bigint $id
@@ -31,16 +31,6 @@ class TeamCategory implements Translatable
      * @ORM\Column(name="title", type="string", length=100, nullable=false)
      */
     private $title;
-    
-    /**
-     * @var Sport
-     *
-     * @ORM\ManyToOne(targetEntity="Sport")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="sport_id", referencedColumnName="id")
-     * })
-     */
-    private $sport;
     
     /**
      * @Gedmo\Slug(fields={"title"}, unique=true)
@@ -102,25 +92,5 @@ class TeamCategory implements Translatable
     public function getSlug()
     {
         return $this->slug;
-    }
-
-    /**
-     * Set sport
-     *
-     * @param Dodici\Fansworld\WebBundle\Entity\Sport $sport
-     */
-    public function setSport(\Dodici\Fansworld\WebBundle\Entity\Sport $sport)
-    {
-        $this->sport = $sport;
-    }
-
-    /**
-     * Get sport
-     *
-     * @return Dodici\Fansworld\WebBundle\Entity\Sport 
-     */
-    public function getSport()
-    {
-        return $this->sport;
     }
 }

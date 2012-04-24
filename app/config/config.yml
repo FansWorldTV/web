@@ -309,6 +309,11 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: teamship }
         arguments: [null, Dodici\Fansworld\WebBundle\Entity\Teamship, DodiciFansworldAdminBundle:TeamshipAdmin]
+    dodici.fansworld.adminbundle.admin.sport:
+        class: Dodici\Fansworld\AdminBundle\Admin\SportAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: sport }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Sport, DodiciFansworldAdminBundle:SportAdmin]
     ### END ADMIN SERVICES ###
     liking.listener.persist:
         class: Dodici\Fansworld\WebBundle\Listener\LikingCountUpdater
