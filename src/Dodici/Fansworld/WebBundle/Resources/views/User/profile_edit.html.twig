@@ -21,4 +21,14 @@
 		</div>
 	{% endblock %}
 	{{ parent() }}
+<script type="text/javascript">
+    function validateProfile(email, username){
+        ajax.genericAction('profile_validate', {
+            'username': username,
+            'email': email
+        }, function(r){
+            console.log(r);
+        });
+    }
+</script>
 {% endblock %}
