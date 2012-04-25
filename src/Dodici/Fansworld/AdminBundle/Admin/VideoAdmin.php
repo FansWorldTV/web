@@ -40,6 +40,7 @@ class VideoAdmin extends Admin
             ->add('duration', NULL, array (), array ())
             ->add('stream', NULL, array (), array ())
             ->add('youtube', NULL, array (), array ())
+            ->add('event', NULL, array ('required' => false), array ())
             ->add('privacy', 'choice', array ('choices' => \Dodici\Fansworld\WebBundle\Entity\Privacy::getOptions()), array ())
             ->add('videocategory', NULL, array ('required' => false), array ())
             ->add('image', 'sonata_type_model', array(), array('edit' => 'list', 'link_parameters' => array('context' => 'default', 'provider' => 'sonata.media.provider.image')))

@@ -73,6 +73,13 @@ class Team implements Translatable
     private $teamcategory;
     
     /**
+     * @var string $external
+     *
+     * @ORM\Column(name="external", type="string", length=100, nullable=true)
+     */
+    private $external;
+    
+    /**
      * @Gedmo\Slug(fields={"title"}, unique=false)
      * @Gedmo\Translatable
      * @ORM\Column(length=128)
@@ -361,5 +368,25 @@ class Team implements Translatable
     public function addUser(\Application\Sonata\UserBundle\Entity\User $idols)
     {
         $this->idols[] = $idols;
+    }
+
+    /**
+     * Set external
+     *
+     * @param string $external
+     */
+    public function setExternal($external)
+    {
+        $this->external = $external;
+    }
+
+    /**
+     * Get external
+     *
+     * @return string 
+     */
+    public function getExternal()
+    {
+        return $this->external;
     }
 }

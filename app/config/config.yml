@@ -314,6 +314,26 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: sport }
         arguments: [null, Dodici\Fansworld\WebBundle\Entity\Sport, DodiciFansworldAdminBundle:SportAdmin]
+    dodici.fansworld.adminbundle.admin.event:
+        class: Dodici\Fansworld\AdminBundle\Admin\EventAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: event }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Event, DodiciFansworldAdminBundle:EventAdmin]
+    dodici.fansworld.adminbundle.admin.eventship:
+        class: Dodici\Fansworld\AdminBundle\Admin\EventshipAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: eventship }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Eventship, DodiciFansworldAdminBundle:EventshipAdmin]
+    dodici.fansworld.adminbundle.admin.meeting:
+        class: Dodici\Fansworld\AdminBundle\Admin\MeetingAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: meeting }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Meeting, DodiciFansworldAdminBundle:MeetingAdmin]
+    dodici.fansworld.adminbundle.admin.meetingship:
+        class: Dodici\Fansworld\AdminBundle\Admin\MeetingshipAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: meetingship }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Meetingship, DodiciFansworldAdminBundle:MeetingshipAdmin]
     ### END ADMIN SERVICES ###
     liking.listener.persist:
         class: Dodici\Fansworld\WebBundle\Listener\LikingCountUpdater
@@ -371,6 +391,14 @@ services:
         class: Dodici\Fansworld\WebBundle\Listener\AlbumImageSetter
         tags:
             - { name: doctrine.event_listener, event: postUpdate }
+    event.listener.persist:
+        class: Dodici\Fansworld\WebBundle\Listener\EventUpdater
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+    event.listener.remove:
+        class: Dodici\Fansworld\WebBundle\Listener\EventUpdater
+        tags:
+            - { name: doctrine.event_listener, event: postRemove }
     notification.listener.mailer:
         class: Dodici\Fansworld\WebBundle\Listener\NotificationMailer
         tags:

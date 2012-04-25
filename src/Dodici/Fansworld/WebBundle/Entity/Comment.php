@@ -179,6 +179,26 @@ class Comment
     private $team;
     
     /**
+     * @var Event
+     *
+     * @ORM\ManyToOne(targetEntity="Event")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     * })
+     */
+    private $event;
+    
+    /**
+     * @var Meeting
+     *
+     * @ORM\ManyToOne(targetEntity="Meeting")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="meeting_id", referencedColumnName="id")
+     * })
+     */
+    private $meeting;
+    
+    /**
      * @var Comment
      *
      * @ORM\ManyToOne(targetEntity="Comment")
@@ -769,5 +789,45 @@ class Comment
     public function getTeam()
     {
         return $this->team;
+    }
+
+    /**
+     * Set event
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Event $event
+     */
+    public function setEvent(\Dodici\Fansworld\WebBundle\Entity\Event $event)
+    {
+        $this->event = $event;
+    }
+
+    /**
+     * Get event
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Event 
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+
+    /**
+     * Set meeting
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Meeting $meeting
+     */
+    public function setMeeting(\Dodici\Fansworld\WebBundle\Entity\Meeting $meeting)
+    {
+        $this->meeting = $meeting;
+    }
+
+    /**
+     * Get meeting
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Meeting 
+     */
+    public function getMeeting()
+    {
+        return $this->meeting;
     }
 }

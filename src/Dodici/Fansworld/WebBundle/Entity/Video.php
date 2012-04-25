@@ -147,6 +147,16 @@ class Video implements Translatable
     private $videocategory;
     
     /**
+     * @var Event
+     *
+     * @ORM\ManyToOne(targetEntity="Event")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     * })
+     */
+    private $event;
+    
+    /**
      * @var Application\Sonata\MediaBundle\Entity\Media
      * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="image", referencedColumnName="id")
@@ -740,5 +750,25 @@ class Video implements Translatable
     public function getCommentCount()
     {
         return $this->commentCount;
+    }
+
+    /**
+     * Set event
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Event $event
+     */
+    public function setEvent(\Dodici\Fansworld\WebBundle\Entity\Event $event)
+    {
+        $this->event = $event;
+    }
+
+    /**
+     * Get event
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Event 
+     */
+    public function getEvent()
+    {
+        return $this->event;
     }
 }

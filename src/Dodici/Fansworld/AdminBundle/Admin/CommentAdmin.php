@@ -37,6 +37,7 @@ class CommentAdmin extends Admin
             ->add('video', NULL, array ('required' => false), array ())
             ->add('album', NULL, array ('required' => false), array ())
             ->add('photo', NULL, array ('required' => false), array ())
+            ->add('event', NULL, array ('required' => false), array ())
             ->add('contest', NULL, array ('required' => false), array ())
             ->add('hastags', 'sonata_type_collection', array ('required' => false), 
             	array(
