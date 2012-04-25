@@ -6,29 +6,62 @@
 			{% set current_edit_toolbar = 'profile' %}
 		{% endif %}
 		<div class="profile_edit_toolbar">
-			<a {% if current_edit_toolbar == 'profile' %}class="current"{% else %}href="{{ path('fos_user_profile_edit') }}"{% endif %}>
+                                        <a {% if current_edit_toolbar == 'profile' %}class="current"{% else %}href="{{ path('fos_user_profile_edit') }}"{% endif %}>
 		        <img src="{{ asset('bundles/dodicifansworldweb/images/ui/id-card.png' ) }}" alt="Modificar Perfil" title="Modificar Perfil" class="edit-profile-icon" />
 		    </a>
-	       	<a {% if current_edit_toolbar == 'password' %}class="current"{% else %}href="{{ path('fos_user_change_password') }}"{% endif %}>
-	       		<img src="{{ asset('bundles/dodicifansworldweb/images/ui/change-password-icon.png' ) }}" alt="Cambiar Contraseña" title="Cambiar Contraseña" class="change-password-icon" />
-	       	</a>
-	       	<a {% if current_edit_toolbar == 'notifications' %}class="current"{% else %}href="{{ path('notification_preferences') }}"{% endif %}>
-	       		<img src="{{ asset('bundles/dodicifansworldweb/images/ui/notification-email.png' ) }}" alt="Preferencias de Envío de Mails de Notificaciones" title="Preferencias de Envío de Mails de Notificaciones" class="notification-mail-prefs-icon" />
-	       	</a>
-	       	<a {% if current_edit_toolbar == 'interests' %}class="current"{% else %}href="{{ path('interest_edit') }}"{% endif %}>
-	       		<img src="{{ asset('bundles/dodicifansworldweb/images/ui/interests-icon.png' ) }}" alt="Intereses" title="Intereses" class="interests-icon" />
-	       	</a>
+                                        <a {% if current_edit_toolbar == 'password' %}class="current"{% else %}href="{{ path('fos_user_change_password') }}"{% endif %}>
+                                                <img src="{{ asset('bundles/dodicifansworldweb/images/ui/change-password-icon.png' ) }}" alt="Cambiar Contraseña" title="Cambiar Contraseña" class="change-password-icon" />
+                                        </a>
+                                        <a {% if current_edit_toolbar == 'notifications' %}class="current"{% else %}href="{{ path('notification_preferences') }}"{% endif %}>
+                                                <img src="{{ asset('bundles/dodicifansworldweb/images/ui/notification-email.png' ) }}" alt="Preferencias de Envío de Mails de Notificaciones" title="Preferencias de Envío de Mails de Notificaciones" class="notification-mail-prefs-icon" />
+                                        </a>
+                                        <a {% if current_edit_toolbar == 'interests' %}class="current"{% else %}href="{{ path('interest_edit') }}"{% endif %}>
+                                                <img src="{{ asset('bundles/dodicifansworldweb/images/ui/interests-icon.png' ) }}" alt="Intereses" title="Intereses" class="interests-icon" />
+                                        </a>
 		</div>
 	{% endblock %}
 	{{ parent() }}
-<script type="text/javascript">
-    function validateProfile(email, username){
-        ajax.genericAction('profile_validate', {
-            'username': username,
-            'email': email
-        }, function(r){
-            console.log(r);
-        });
-    }
-</script>
+
+                    <script type="text/javascript">
+                        $(document).ready(function(){
+                            var username = $("#fos_user_profile_form_user_username");
+                            var email = $("#fos_user_profile_form_user_email");
+
+                            username.live('keyup', function(){
+                                var htmlElement = $(this);
+                                ajaxValidateProfile(null, $(this).val(), function(response){
+                                    if(!response.isValidUsername){
+                                        htmlElement.css('background','#FEE');
+                                        htmlElement.parent().find('ul.errors').remove();
+                                        htmlElement.parent().append('<ul class="errors"><li>El usuario es invalido</li>');
+                                    }else{
+                                        htmlElement.css('background','#EFE');
+                                        htmlElement.parent().find('ul.errors').remove();
+                                    }
+                                });
+                            });
+                            email.live('keyup', function(){
+                                var htmlElement = $(this);
+                                ajaxValidateProfile($(this).val(), null, function(response){
+                                    if(!response.isValidEmail){
+                                        htmlElement.css('background','#FEE');
+                                        htmlElement.parent().find('ul.errors').remove();
+                                        htmlElement.parent().append('<ul class="errors"><li>El email es invalido</li>');
+                                    }else{
+                                        htmlElement.css('background','#EFE');
+                                        htmlElement.parent().find('ul.errors').remove();
+                                    }
+                                });
+                            });
+                        });
+                        function ajaxValidateProfile(email, username, callback){
+                            ajax.genericAction('profile_validate', {
+                                'username': username,
+                                'email': email
+                            }, function(r){
+                                console.log(r);
+                                callback(r);
+                            });
+                        }
+                    </script>
 {% endblock %}
