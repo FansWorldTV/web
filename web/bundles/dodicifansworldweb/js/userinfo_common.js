@@ -9,4 +9,5 @@ $(function() {
 		$('.userurlpreview').text($(this).val());
 	})
 	;
+        $('.userurlpreview').text($("#fos_user_profile_form_user_username").val());
 });
