@@ -21,13 +21,14 @@ class ValidateProfileController extends SiteController
         $request = $this->getRequest();
         $username = $request->get('username', false);
         $email = $request->get('email', false);
+        $user = $this->get('security.context')->getToken()->getUser();
 
-//        $alreadyExists = $this->getRepository('User')->findBy(array('email' => $email), array());
+        $findByMail = $this->getRepository('User')->findBy(array('email' => $email), array());
 
         $isValidEmail = false;
-//        if (!$alreadyExists) {
+        if ($findByMail->getId() == $user->getId() || !$findByMail) {
             $isValidEmail = filter_var($email, FILTER_VALIDATE_EMAIL) ? true : false;
-//        }
+        }
 
         $isValidUsername = false;
 
