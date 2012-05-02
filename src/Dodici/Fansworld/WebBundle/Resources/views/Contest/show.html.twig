@@ -14,6 +14,12 @@
             	{% endif %}
             	{% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: contest} %}
             </div>
+            <div class="hidden" id="formParticipate">
+                <form action="" class="formParticipate">
+                    <textarea name="content"></textarea>
+                    <input type="submit" value="Participar" name="submit"/>
+                </form>
+            </div>
             <div class="contenido">
                 {{ contest.content|raw() }}
                 {% if isParticipant %}

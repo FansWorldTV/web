@@ -973,7 +973,8 @@ var contest = {
     
     participate: function(){
         $("a.contestParticipate").click(function(){
-            var contestType = $(this).attr("contestType");
+            var contestId = $(this).attr('contestid');
+            var contestType = $(this).attr("contesttype");
             var text = false;
             var photo = false;
             var video = false;
@@ -983,23 +984,15 @@ var contest = {
                     inline: true, 
                     href: "#participateSplash ."+contestType
                 });
-                
-                switch(contestType) {
-                    case 2:
-                        text = $("#cboxLoadedContent").val();
-                        break;
-                }
                 $("#cboxLoadedContent input[type='button']").click(function(){
-                    var contestId = $(this).attr('contestId');
-                    ajax.contestParticipateAction(contestId, text, photo, video, function(r){
+                    ajax.contestParticipateAction(contestId, $("#cboxLoadedContent textarea").val(), photo, video, function(r){
                         if(r){
-                            
                             $("a.contestParticipate").parent().html('Ya estas participando');
+                            $.colorbox.close();
                         }
                     });
                 });
             }else{
-                var contestId = $(this).attr('contestId');
                 ajax.contestParticipateAction(contestId, text, photo, video, function(r){
                     if(r){
                         $("a.contestParticipate").parent().html('Ya estas participando');
