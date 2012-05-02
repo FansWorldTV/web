@@ -33,7 +33,9 @@
 	        			<div class="field">
 	        				<input class="completer" type="text" id="form_taguserac" data-route="user_ajaxmatching" data-field="form_taguser" />
 	        				<ul class="selectedtags">
-                                                                                                <li data-val="{{ idolToTag.id }}"><span class="name">{{ idolToTag }}</span><a class="deletetag"></a></li>
+                                                                                                {% if idolToTag %}
+                                                                                                    <li data-val="{{ idolToTag.id }}"><span class="name">{{ idolToTag }}</span><a class="deletetag"></a></li>
+                                                                                                {% endif %}
                                                                                          </ul>
 	        			</div>
 	        		</li>
