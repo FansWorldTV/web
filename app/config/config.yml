@@ -144,7 +144,7 @@ fos_facebook:
     app_id: %facebook.app_id%
     secret: %facebook.app_secret%
     cookie: true
-    permissions: [email, user_birthday, user_location]
+    permissions: [email, user_birthday, user_location, publish_actions]
     
 artseld_openinviter:
     username: "fansworld"
