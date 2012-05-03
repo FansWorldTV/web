@@ -35,41 +35,20 @@
             <textarea></textarea>
             <input type="button" value="Enviar"/>
         </div>
-    </div>
-    <div class="cont clearfix">
-        <h3>Comentarios</h3>
-        
-		{% include 'DodiciFansworldWebBundle:Comment:comment_block.html.twig' with {entity: contest} %}
-    </div>
-    <div class="cont clearfix">
-        <h3>Agregar comentario</h3>
-        <div class="add_comment">
-            <form>
-                <textarea cols="" rows="4"></textarea>
-                <input type="hidden" class="contestId" value="{{ contest.id }}" />
-                <a class="btn" href="#1">Comentar</a>
-            </form>
+        <div class="3">
+            
         </div>
+        <div class="4">
+            
+        </div>
+    </div>
+    <div class="cont clearfix">
+            {% include 'DodiciFansworldWebBundle:Comment:comment_block.html.twig' with {entity: contest} %}
     </div>
     <script type="text/javascript">
             $(document).ready(function(){
                 contest.init();
             });
     </script>
-</div>
-<div id="templates" class="contest hidden">
-    <div class="comment clearfix">
-        <div class="avatar">
-            <a href="#1">
-                <img src="{{ asset('bundles/dodicifansworldweb/images/user_pic.jpg' )}}" width="50" height="50" />
-            </a>
-        </div>
-        <div class="user_comment">
-            <span class="action_user" >
-                <a href=""></a>
-                <span></span>
-            </span>
-        </div>
-    </div>
 </div>
 {% endblock %}

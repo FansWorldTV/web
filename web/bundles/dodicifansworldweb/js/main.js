@@ -1,3 +1,5 @@
+var redirectColorbox = true;
+
 $(document).ready(function(){
     site.init();
     ajax.init();
@@ -904,16 +906,25 @@ var friendsSearch = {
 var contest = {
     page: 1,
     searchType: null,
+    id: $("a.contestParticipate").attr('contestid'),
+    type: $("a.contestParticipate").attr('contesttype'),
     
     init: function(){
         $(".nota.loading").hide();
         contest.changeType();
         
+        
+        contest.id = $("a.contestParticipate").attr('contestid');
+        contest.type = $("a.contestParticipate").attr('contesttype');
+        
         $("#addMore.contests").click(function(){
             contest.listAddMore();
         });
         
-        contest.participate();
+        $("a.contestParticipate").click(function(){
+            return contest.participate(parseInt(contest.id), parseInt(contest.type), false, false);
+        });
+        
         contest.addComment();
         contest.commentTimeago();
     },
@@ -971,37 +982,56 @@ var contest = {
         });
     },
     
-    participate: function(){
-        $("a.contestParticipate").click(function(){
-            var contestId = $(this).attr('contestid');
-            var contestType = $(this).attr("contesttype");
-            var text = false;
-            var photo = false;
-            var video = false;
+    participate: function(contestId, contestType, photo, video){
+        var text = false;
+        var href = false;
             
-            if(contestType != 1){
-                $.colorbox({
-                    inline: true, 
-                    href: "#participateSplash ."+contestType
-                });
-                $("#cboxLoadedContent input[type='button']").click(function(){
-                    ajax.contestParticipateAction(contestId, $("#cboxLoadedContent textarea").val(), photo, video, function(r){
-                        if(r){
-                            $("a.contestParticipate").parent().html('Ya estas participando');
-                            $.colorbox.close();
-                        }
-                    });
-                });
-            }else{
-                ajax.contestParticipateAction(contestId, text, photo, video, function(r){
+        if(contestType != 1){
+            var inline = false;
+            switch(contestType){
+                case 2:
+                    inline = true;
+                    href = "#participateSplash ."+contestType;
+                    break;
+                case 3:
+                    href = Routing.generate( appLocale + '_photo_upload');
+                    break;
+                case 4:
+                    href = Routing.generate(appLocale + '_video_upload');
+                    break;
+            }
+                
+            $.colorbox({
+                name: 'colorboxFrame',
+                iframe: true,
+                width: 462,
+                inline: inline, 
+                href: href,
+                onComplete: function(){
+                    if(contestType !== 2){
+                        redirectColorbox = false;
+                        $("form.upload-video").attr('target', 'colorboxFrame');
+                        $("form.upload-photo").attr('target', 'colorboxFrame');
+                    }
+                }
+            });
+            
+            $("#cboxLoadedContent input[type='button']").click(function(){
+                ajax.contestParticipateAction(contestId, $("#cboxLoadedContent textarea").val(), photo, video, function(r){
                     if(r){
                         $("a.contestParticipate").parent().html('Ya estas participando');
+                        $.colorbox.close();
                     }
                 });
-            }
-            
-            return false; 
-        });
+            });
+        }else{
+            ajax.contestParticipateAction(contestId, text, photo, video, function(r){
+                if(r){
+                    $("a.contestParticipate").parent().html('Ya estas participando');
+                }
+            });
+        }
+        return false;
     },
     
     addComment: function(){

@@ -11,7 +11,21 @@
 {% block content %}
 	{% if video %}
 		<script type="text/javascript">
-			window.top.location.href = "{{ path('video_show', {id: video.id, slug: video.slug}) }}";
+                                                     if(window.top.redirectColorbox){
+                                                         window.top.location.href = "{{ path('video_show', {id: video.id, slug: video.slug}) }}";
+                                                    }
+                                                    
+                                                    
+                                                    var videoUploaded = {% if video %}{{ video.id }} {% else %} false {% endif %};
+                                                    if(videoUploaded){
+                                                        ajax.contestParticipateAction(window.top.contest.id, false, false, videoUploaded, function(r){
+                                                            if(r){
+                                                                window.top.$("a.contestParticipate").parent().html('Ya estas participando');
+                                                                window.top.$.colorbox.close();
+                                                            }
+                                                        });
+                                                    }
+                                                    
 		</script>
 	{% else %}
 	<div class="greybox">

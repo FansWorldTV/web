@@ -581,6 +581,7 @@ class VideoController extends SiteController
 	                    $tagtexts = explode(',', $data['tagtext']);
 	                    $tagusers = explode(',', $data['taguser']);
 	                    $userrepo = $this->getRepository('User');
+                                $tagitems = array();
 	                    
 	                    foreach ($tagtexts as $tt) {
 	                    	if (trim($tt)) $tagitems[] = $tt;

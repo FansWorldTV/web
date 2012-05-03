@@ -156,6 +156,7 @@ var ajax = {
             
             $.ajax({
                 url: 'http://' + location.host + Routing.generate( appLocale + '_contest_ajaxparticipate'),
+                type: 'POST',
                 data: {
                     'contestId' : contest,
                     'text' : text,

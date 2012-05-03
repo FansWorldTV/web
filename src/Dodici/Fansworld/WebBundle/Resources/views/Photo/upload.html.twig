@@ -11,7 +11,21 @@
 {% block content %}
 	{% if photo %}
 		<script type="text/javascript">
-			window.top.location.href = "{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}";
+                                                    if(window.top.redirectColorbox){
+                                                         window.top.location.href = "{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}";
+                                                    }
+                                                    
+                                                    
+                                                    var photoUploaded = {% if photo %}{{ photo.id }} {% else %} false {% endif %};
+                                                    
+                                                    if(photoUploaded){
+                                                        ajax.contestParticipateAction(window.top.contest.id, false, photoUploaded, false, function(r){
+                                                            if(r){
+                                                                window.top.$("a.contestParticipate").parent().html('Ya estas participando');
+                                                                window.top.$.colorbox.close();
+                                                            }
+                                                        });
+                                                    }
 		</script>
 	{% else %}
 	<div class="greybox">
@@ -34,7 +48,7 @@
 	        				<input class="completer" type="text" id="form_taguserac" data-route="user_ajaxmatching" data-field="form_taguser" />
 	        				<ul class="selectedtags">
                                                                                                 {% if idolToTag %}
-                                                                                                    <li data-val="{{ idolToTag.id }}"><span class="name">{{ idolToTag }}</span><a class="deletetag"></a></li>
+                                                                                                <li data-val="{{ idolToTag.id }}"><span class="name">{{ idolToTag }}</span><a class="deletetag"></a></li>
                                                                                                 {% endif %}
                                                                                          </ul>
 	        			</div>

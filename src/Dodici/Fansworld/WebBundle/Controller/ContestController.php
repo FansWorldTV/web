@@ -146,10 +146,22 @@ class ContestController extends SiteController
                 $newParticipant = new ContestParticipant();
                 $newParticipant->setAuthor($user);
 
-                if ($contest->getType() == 2) {
-                    $newParticipant->setText($request->get('text'));
+                switch ($contest->getType()) {
+                    case 2:
+                        $newParticipant->setText($request->get('text'));
+                        break;
+                    case 3:
+                        $photoId = $request->get('photo');
+                        $photo = $this->getRepository('Photo')->find($photoId);
+                        $newParticipant->setPhoto($photo);
+                        break;
+                    case 4:
+                        $videoId = $request->get('video');
+                        $video = $this->getRepository('Video')->find($videoId);
+                        $newParticipant->setVideo($video);
+                        break;
                 }
-
+                
                 $newParticipant->setContest($contest);
                 $newParticipant->setWinner(false);
 
@@ -159,6 +171,7 @@ class ContestController extends SiteController
 
                 $response = true;
             } catch (\Exception $exc) {
+                echo $exc->getMessage();
                 $response = false;
             }
         } else {
