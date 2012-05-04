@@ -985,6 +985,7 @@ var contest = {
     participate: function(contestId, contestType, photo, video){
         var text = false;
         var href = false;
+        var iframe = true;
             
         if(contestType != 1){
             var inline = false;
@@ -992,6 +993,7 @@ var contest = {
                 case 2:
                     inline = true;
                     href = "#participateSplash ."+contestType;
+                    iframe = false;
                     break;
                 case 3:
                     href = Routing.generate( appLocale + '_photo_upload');
@@ -1003,7 +1005,7 @@ var contest = {
                 
             $.colorbox({
                 name: 'colorboxFrame',
-                iframe: true,
+                iframe: iframe,
                 width: 462,
                 inline: inline, 
                 href: href,
