@@ -21,13 +21,64 @@
                 </form>
             </div>
             <div class="contenido">
-                {{ contest.content|raw() }}
+                <div class="text">
+                    {{ contest.content|raw() }}
+                </div>
                 {% if isParticipant %}
                     <div class="options">Ya estas participando</div>
                 {% else %}
                     <div class="options"><a class="btn_action2 contestParticipate" contestId="{{ contest.id }}" contestType="{{ contest.type }}" href="#1">Participar</a></div>
                 {% endif %}
             </div>
+            
+            <hr/>
+            
+            {% set typeParticipate = constant('Dodici\\Fansworld\\WebBundle\\Entity\\Contest::TYPE_PARTICIPATE') %}
+            {% if contest.type != typeParticipate %}
+                <div id="tabs" class="marginTop10">
+                    <ul>
+                        <li><a href="#tabs-1">Participantes</a></li>
+                        <li><a href="#tabs-2">Ganadores</a></li>
+                        {% if contest.type > 2 %}
+                            <li><a href="#tabs-3">Publicaciones</a></li>
+                        {% endif %}
+                    </ul>
+                    <div id="tabs-1">
+                        <ul>
+                            {% for participant in participants %}
+                                <li>{{ participant.author }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div id="tabs-2">
+                        <ul>
+                            {% for winner in winners %}
+                                <li>{{ winner.author }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div id="tabs-3">
+                        <ul>
+                            {% for file in files %}
+                                <li>{{ file.file.id }}, Author: {{ file.author }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                        $("#tabs").tabs();
+                        $("div.contenido .text").expander({
+                            slicePoint: 100,
+                            expandText: '[+]',
+                            userCollapse: false,
+                            afterExpand: function() {
+                                $('.photomason').isotope().resize();
+                            }
+                        });
+                    });
+                </script>
+            {% endif %}
         </div>
     </div>
     <div id="participateSplash" class="hidden">

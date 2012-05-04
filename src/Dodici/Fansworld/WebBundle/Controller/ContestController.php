@@ -270,8 +270,24 @@ class ContestController extends SiteController
 
         $user = $this->get('security.context')->getToken()->getUser();
         $isParticipant = $this->getRepository('ContestParticipant')->findOneBy(array('contest' => $contest->getId(), 'author' => $user->getId()));
-
-        return array('contest' => $contest, 'isParticipant' => $isParticipant);
+        $participants = $this->getRepository('ContestParticipant')->findBy(array('contest' => $contest->getId()));
+        $winners = $this->getRepository('ContestParticipant')->findBy(array('contest' => $contest->getId(), 'winner' => true));
+        
+        $filesUploaded = array();
+        $files = $this->getRepository('ContestParticipant')->findBy(array('contest' => $contest->getId()));
+        switch($contest->getType()){
+            case Contest::TYPE_PHOTO:
+                foreach($files as $file){
+                    array_push($filesUploaded, array('file' => $file->getPhoto(), 'author' => $file->getAuthor()));
+                }
+                break;
+            case Contest::TYPE_VIDEO:
+                foreach($files as $file){
+                    array_push($filesUploaded, array('file' => $file->getVideo(), 'author' => $file->getAuthor()));
+                }
+                break;
+        }
+        return array('contest' => $contest, 'isParticipant' => $isParticipant, 'participants' => $participants, 'winners' => $winners, 'files' => $filesUploaded);
     }
 
 }
