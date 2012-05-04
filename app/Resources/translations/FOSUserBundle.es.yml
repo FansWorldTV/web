@@ -21,6 +21,7 @@ fos_user_profile_form_user_gmail: "Gmail"
 fos_user_profile_form_user_country: "País"
 fos_user_profile_form_user_city: "Ciudad"
 fos_user_profile_form_user_restricted: "Modo Restringido"
+fos_user_profile_form_user_linkfacebook: "Link Facebook"
 'Bad credentials': 'Usuario y/o contraseña incorrectos'
 'The presented password is invalid.': 'Contraseña incorrecta'
 'The presented password cannot be empty.': 'Debe ingresar una contraseña'

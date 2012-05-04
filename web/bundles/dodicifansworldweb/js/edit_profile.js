@@ -38,3 +38,24 @@ function filterCityField(callback) {
 		$('#fos_user_profile_form_user_city').html($('<option>').val(''));
 	}
 }
+
+// Link with facebook
+
+$(function(){
+	$('#fos_user_profile_form_user_linkfacebook').live('change', function(){
+		if ($(this).attr('checked') == 'checked') {
+			FB.ui({
+			   method: 'permissions.request',
+			   'perms': 'email,user_birthday,user_location,publish_actions',
+			   'display': 'popup',
+			   'response_type': 'signed_request',
+			   'fbconnect': 1,
+			   'next': 'http://' + location.host + Routing.generate( appLocale + '_' + 'facebook_jstoken')
+			  },
+			  function(response) {
+			    var uid = response.selected_profiles;
+			  }
+			);
+		}
+	});
+});

@@ -171,6 +171,11 @@ class User extends BaseUser
     private $restricted;
     
     /**
+     * @var boolean $linkfacebook
+     */
+    private $linkfacebook;
+    
+    /**
      * @var array $notifyprefs
      * array (
      * Notification::TYPE_*,
@@ -274,6 +279,9 @@ class User extends BaseUser
         }
         if (null === $this->restricted) {
         	$this->setRestricted(false);
+        }
+    	if (null === $this->linkfacebook) {
+        	$this->setLinkfacebook(false);
         }
     }
     
@@ -711,6 +719,26 @@ class User extends BaseUser
     public function getRestricted()
     {
         return $this->restricted;
+    }
+    
+	/**
+     * Set linkfacebook
+     *
+     * @param boolean $linkfacebook
+     */
+    public function setLinkfacebook($linkfacebook)
+    {
+        $this->linkfacebook = $linkfacebook;
+    }
+
+    /**
+     * Get linkfacebook
+     *
+     * @return boolean 
+     */
+    public function getLinkfacebook()
+    {
+        return $this->linkfacebook;
     }
     
 	/**
