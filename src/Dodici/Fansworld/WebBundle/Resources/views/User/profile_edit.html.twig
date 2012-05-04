@@ -21,46 +21,4 @@
 		</div>
 	{% endblock %}
 	{{ parent() }}
-
-                    <script type="text/javascript">
-                        $(document).ready(function(){
-                            var username = $("#fos_user_profile_form_user_username");
-                            var email = $("#fos_user_profile_form_user_email");
-
-                            username.live('keyup', function(){
-                                var htmlElement = $(this);
-                                ajaxValidateProfile(null, $(this).val(), function(response){
-                                    if(!response.isValidUsername){
-                                        htmlElement.css('background','#FEE');
-                                        htmlElement.parent().find('ul.errors').remove();
-                                        htmlElement.parent().append('<ul class="errors"><li>El usuario es invalido</li>');
-                                    }else{
-                                        htmlElement.css('background','#EFE');
-                                        htmlElement.parent().find('ul.errors').remove();
-                                    }
-                                });
-                            });
-                            email.live('keyup', function(){
-                                var htmlElement = $(this);
-                                ajaxValidateProfile($(this).val(), null, function(response){
-                                    if(!response.isValidEmail){
-                                        htmlElement.css('background','#FEE');
-                                        htmlElement.parent().find('ul.errors').remove();
-                                        htmlElement.parent().append('<ul class="errors"><li>El email es invalido</li>');
-                                    }else{
-                                        htmlElement.css('background','#EFE');
-                                        htmlElement.parent().find('ul.errors').remove();
-                                    }
-                                });
-                            });
-                        });
-                        function ajaxValidateProfile(email, username, callback){
-                            ajax.genericAction('profile_validate', {
-                                'username': username,
-                                'email': email
-                            }, function(r){
-                                callback(r);
-                            });
-                        }
-                    </script>
 {% endblock %}

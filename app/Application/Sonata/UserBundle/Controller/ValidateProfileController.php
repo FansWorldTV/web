@@ -2,6 +2,8 @@
 
 namespace Application\Sonata\UserBundle\Controller;
 
+use Application\Sonata\UserBundle\Entity\User;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\DependencyInjection\ContainerAware;
@@ -22,20 +24,29 @@ class ValidateProfileController extends SiteController
         $username = $request->get('username', false);
         $email = $request->get('email', false);
         $user = $this->get('security.context')->getToken()->getUser();
-
-        $findByMail = $this->getRepository('User')->findBy(array('email' => $email), array());
+        
+        if (!($user instanceof User)) throw new AccessDeniedException('Acceso denegado');
 
         $isValidEmail = false;
-        if ($findByMail->getId() == $user->getId() || !$findByMail) {
-            $isValidEmail = filter_var($email, FILTER_VALIDATE_EMAIL) ? true : false;
+        
+        if ($email) {
+        	$findByMail = $this->getRepository('User')->findOneByEmail($email);
+	        if (!$findByMail || ($findByMail == $user)) {
+	            $isValidEmail = filter_var($email, FILTER_VALIDATE_EMAIL) ? true : false;
+	        }
         }
 
         $isValidUsername = false;
 
-        if (preg_match("/^[a-zA-Z0-9.\-]+$/", $username) > 0) {
-            if (strlen($username) > 3 && strlen($username < 30)) {
-                $isValidUsername = true;
-            }
+        if ($username) {
+        	if (preg_match("/^[a-zA-Z0-9.\-]+$/", $username) > 0) {
+        		if (strlen($username) > 3 && strlen($username < 30)) {
+        			$findByUser = $this->getRepository('User')->findOneByUsername($username);
+	                if (!$findByUser || ($findByUser == $user)) {
+	                	$isValidUsername = true;
+	                }
+	            }
+	        }
         }
 
         return $this->jsonResponse(array(
