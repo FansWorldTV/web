@@ -24,6 +24,7 @@ class ContestController extends SiteController
 
     const commentsLimit = 6;
     const contestLimit = 20;
+    const participantsLimit = 5;
 
     /**
      * Site's home
@@ -270,7 +271,10 @@ class ContestController extends SiteController
 
         $user = $this->get('security.context')->getToken()->getUser();
         $isParticipant = $this->getRepository('ContestParticipant')->findOneBy(array('contest' => $contest->getId(), 'author' => $user->getId()));
-        $participants = $this->getRepository('ContestParticipant')->findBy(array('contest' => $contest->getId()));
+        $participants = $this->getRepository('ContestParticipant')->findBy(array('contest' => $contest->getId()), array('createdAt' => 'desc'), self::participantsLimit);
+        $countAllParticipants = $this->getRepository('ContestParticipant')->countBy(array('contest' => $contest->getId()));
+        $addMoreParticipants = $countAllParticipants > self::participantsLimit ? true : false;
+        
         $winners = $this->getRepository('ContestParticipant')->findBy(array('contest' => $contest->getId(), 'winner' => true));
         
         $filesUploaded = array();
@@ -287,7 +291,37 @@ class ContestController extends SiteController
                 }
                 break;
         }
-        return array('contest' => $contest, 'isParticipant' => $isParticipant, 'participants' => $participants, 'winners' => $winners, 'files' => $filesUploaded);
+        return array('contest' => $contest, 'isParticipant' => $isParticipant, 'participants' => $participants, 'winners' => $winners, 'files' => $filesUploaded, 'addMoreParticipants' => $addMoreParticipants);
+    }
+    
+    /**
+     * @Route("/ajax/contest/participants", name="contest_pagerParticipants") 
+     */
+    public function pagerParticipants()
+    {
+        $request = $this->getRequest();
+        $contestId = $request->get('contest');
+        $page = $request->get('page', 0);
+        $offset = ($page-1) * self::participantsLimit;
+        
+        $response = array();
+        
+        $countAllParticipants = $this->getRepository('ContestParticipant')->countBy(array('contest' => $contestId));
+        $participantsCount = $countAllParticipants / self::participantsLimit;
+        $response['addMore'] = $participantsCount > $page ? true : false;
+        
+        $participants = $this->getRepository('ContestParticipant')->findBy(array('contest'=>$contestId), array('createdAt' => 'desc'), self::participantsLimit, $offset);
+        foreach($participants as $participant){
+            $author =$participant->getAuthor(); 
+            $response['participants'][] = array(
+                'id' => $author->getId(),
+                'name' => (string) $author,
+                'avatar' => $this->getImageUrl($author->getImage())
+            );
+        }
+        
+        
+        return $this->jsonResponse($response);
     }
 
 }

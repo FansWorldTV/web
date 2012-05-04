@@ -905,17 +905,17 @@ var friendsSearch = {
 
 var contest = {
     page: 1,
+    participantsPage: 1,
     searchType: null,
-    id: $("a.contestParticipate").attr('contestid'),
-    type: $("a.contestParticipate").attr('contesttype'),
+    id: $("#contestId").val(),
+    type: $("#contestType").val(),
     
     init: function(){
         $(".nota.loading").hide();
         contest.changeType();
         
-        
-        contest.id = $("a.contestParticipate").attr('contestid');
-        contest.type = $("a.contestParticipate").attr('contesttype');
+        contest.id = $("#contestId").val();
+        contest.type = $("#contestType").val();
         
         $("#addMore.contests").click(function(){
             contest.listAddMore();
@@ -923,6 +923,10 @@ var contest = {
         
         $("a.contestParticipate").click(function(){
             return contest.participate(parseInt(contest.id), parseInt(contest.type), false, false);
+        });
+        
+        $("#addMoreParticipants:not('.loading')").click(function(){
+            contest.participantsPager();
         });
         
         contest.addComment();
@@ -934,6 +938,24 @@ var contest = {
         contest.page = 1;
         contest.searchType = filter;
         contest.listAddMore();
+    },
+    
+    participantsPager: function(){
+        ajax.genericAction('contest_pagerParticipants', {
+            'contest': contest.id, 
+            'page': contest.participantsPage
+        }, function(r){
+            for(var i in r.participants){
+                var participant = r.participants[i];
+                $("div#tabs-1 ul").append("<li>" + participant.name + "</li>");
+            }
+            if(!r.addMore){
+                $("#addMoreParticipants").hide();
+            }
+            contest.participantsPage++;
+        }, function(error){
+            console.error(error);
+        });
     },
     
     listAddMore: function(){

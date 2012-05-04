@@ -27,9 +27,12 @@
                 {% if isParticipant %}
                     <div class="options">Ya estas participando</div>
                 {% else %}
-                    <div class="options"><a class="btn_action2 contestParticipate" contestId="{{ contest.id }}" contestType="{{ contest.type }}" href="#1">Participar</a></div>
+                    <div class="options"><a class="btn_action2 contestParticipate" href="#1">Participar</a></div>
                 {% endif %}
             </div>
+            
+            <input type="hidden" id="contestId" value="{{ contest.id }}"/>
+            <input type="hidden" id="contestType" value="{{ contest.type }}"/>
             
             <hr/>
             
@@ -49,6 +52,11 @@
                                 <li>{{ participant.author }}</li>
                             {% endfor %}
                         </ul>
+                        {% if addMoreParticipants %}
+                            <div class="morelink">
+                                <a id="addMoreParticipants" href="">Ver más</a>
+                            </div>
+                        {% endif %}
                     </div>
                     <div id="tabs-2">
                         <ul>
