@@ -54,6 +54,7 @@ class FacebookProvider implements UserProviderInterface
         	if (empty($user)) {
                 $user = $this->userManager->createUser();
                 $user->setEnabled(true);
+                $user->setLinkfacebook(true);
                 $user->setPassword('');
                 
                 // Set FB image

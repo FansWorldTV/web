@@ -29,3 +29,4 @@ a.btn_action, input.btn_action { background:url(../images/ui/btn_action.gif) rep
 
 ul.selectedtags li a.deletetag { cursor: pointer; margin-left: 5px;height: 14px;width: 14px;display: block;float: right;background: url('../images/ui/closealert.png') top left no-repeat;}
 ul.selectedtags li a.deletetag:hover { background-position: bottom left;}
+div.loadingpopup {width: 100%; height: 100%; background:url(../images/ajax-loader-big.gif) no-repeat center center; }

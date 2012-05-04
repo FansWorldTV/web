@@ -53,7 +53,7 @@ class FacebookController extends SiteController
 					$em->flush();
 				}
 				
-		    	$this->jsonResponse(array(
+		    	return $this->jsonResponse(array(
 		    		'uid' => $fbuid
 		    	));
 			} else {
