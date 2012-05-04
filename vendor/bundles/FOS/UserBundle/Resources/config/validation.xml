@@ -106,7 +106,6 @@
             <option name="message">fos_user.current_password.invalid</option>
             <option name="groups">
                 <value>ChangePassword</value>
-                <value>Profile</value>
             </option>
         </constraint>
     </class>

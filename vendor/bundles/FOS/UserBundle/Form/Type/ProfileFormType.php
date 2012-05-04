@@ -33,7 +33,7 @@ class ProfileFormType extends AbstractType
 
         $builder
             ->add($child)
-            ->add('current', 'password')
+            //->add('current', 'password')
         ;
     }
 
