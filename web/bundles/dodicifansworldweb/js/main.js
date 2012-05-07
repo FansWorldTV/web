@@ -170,7 +170,7 @@ var site = {
             Meteor.mode = 'stream';
 	            
             // Start streaming!
-            Meteor.connect();
+            //Meteor.connect();
             console.log('Escuchando notificaciones...');
         }
     },

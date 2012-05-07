@@ -82,6 +82,11 @@ class ContestParticipant
      * @ORM\Column(name="text", type="text", nullable=true)
      */
     private $text;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="ContestVote", mappedBy="contestparticipant", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $votes;
 
 	/**
      * @ORM\PrePersist()
@@ -241,5 +246,29 @@ class ContestParticipant
     public function getVideo()
     {
         return $this->video;
+    }
+    public function __construct()
+    {
+        $this->votes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add votes
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\ContestVote $votes
+     */
+    public function addContestVote(\Dodici\Fansworld\WebBundle\Entity\ContestVote $votes)
+    {
+        $this->votes[] = $votes;
+    }
+
+    /**
+     * Get votes
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getVotes()
+    {
+        return $this->votes;
     }
 }
