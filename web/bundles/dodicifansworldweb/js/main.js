@@ -916,10 +916,7 @@ var contest = {
         $("div.contenido .text").expander({
             slicePoint: 100,
             expandText: '[+]',
-            userCollapse: false,
-            afterExpand: function() {
-                $('.photomason').isotope().resize();
-            }
+            userCollapse: false
         });
         
         $(".nota.loading").hide();

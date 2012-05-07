@@ -42,7 +42,7 @@
                     <ul>
                         <li><a href="#tabs-1">Participantes</a></li>
                         <li><a href="#tabs-2">Ganadores</a></li>
-                        {% if contest.type > 2 %}
+                        {% if contest.type > 1 %}
                             <li><a href="#tabs-3">Publicaciones</a></li>
                         {% endif %}
                     </ul>
@@ -66,11 +66,20 @@
                         </ul>
                     </div>
                     <div id="tabs-3">
-                        <ul>
-                            {% for file in files %}
-                                <li>{{ file.file.id }}, Author: {{ file.author }} {% if not voted %}<a class="vote button" participantid="{{ file.participantId }}" href="#">Votar</a>{% endif %}</li>
-                            {% endfor %}
-                        </ul>
+                        {% if texts|length > 0 %}
+                            <ul>
+                                {% for text in texts %}
+                                    <li class="text">{{ text.text }} {% if not voted %}<a class="vote button" participantid="{{ text.participantId }}" href="#">Votar</a>{% endif %}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                        {% if files|length > 0 %}
+                            <ul>
+                                {% for file in files %}
+                                    <li>{{ file.file.id }}, Author: {{ file.author }} {% if not voted %}<a class="vote button" participantid="{{ file.participantId }}" href="#">Votar</a>{% endif %}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
                     </div>
                 </div>
             {% endif %}

@@ -279,21 +279,27 @@ class ContestController extends SiteController
         $winners = $this->getRepository('ContestParticipant')->findBy(array('contest' => $contest->getId(), 'winner' => true));
 
         $filesUploaded = array();
-        $files = $this->getRepository('ContestParticipant')->findBy(array('contest' => $contest->getId()));
+        $textUploaded = array();
+        $participants = $this->getRepository('ContestParticipant')->findBy(array('contest' => $contest->getId()));
         $alreadyVoted = $this->getRepository('ContestVote')->byUserAndContest($user, $contest);
         switch ($contest->getType()) {
+            case Contest::TYPE_TEXT:
+                foreach ($participants as $participant) {
+                    array_push($textUploaded, array('participantId' => $participant->getId(), 'text' => $participant->getText(), 'author' => $participant->getAuthor()));
+                }
+                break;
             case Contest::TYPE_PHOTO:
-                foreach ($files as $file) {
-                    array_push($filesUploaded, array('participantId' => $file->getId(), 'file' => $file->getPhoto(), 'author' => $file->getAuthor()));
+                foreach ($participants as $participant) {
+                    array_push($filesUploaded, array('participantId' => $participant->getId(), 'file' => $participant->getPhoto(), 'author' => $participant->getAuthor()));
                 }
                 break;
             case Contest::TYPE_VIDEO:
-                foreach ($files as $file) {
-                    array_push($filesUploaded, array('participantId' => $file->getId(), 'file' => $file->getVideo(), 'author' => $file->getAuthor()));
+                foreach ($participants as $participant) {
+                    array_push($filesUploaded, array('participantId' => $participant->getId(), 'file' => $participant->getVideo(), 'author' => $participant->getAuthor()));
                 }
                 break;
         }
-        return array('contest' => $contest,'voted' => $alreadyVoted  , 'isParticipant' => $isParticipant, 'participants' => $participants, 'winners' => $winners, 'files' => $filesUploaded, 'addMoreParticipants' => $addMoreParticipants);
+        return array('contest' => $contest, 'voted' => $alreadyVoted, 'isParticipant' => $isParticipant, 'participants' => $participants, 'winners' => $winners, 'files' => $filesUploaded, 'texts' => $textUploaded , 'addMoreParticipants' => $addMoreParticipants);
     }
 
     /**
@@ -352,7 +358,7 @@ class ContestController extends SiteController
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($entity);
                 $em->flush();
-                
+
                 $response['voted'] = true;
             } catch (Exception $exc) {
                 $response['voted'] = false;
