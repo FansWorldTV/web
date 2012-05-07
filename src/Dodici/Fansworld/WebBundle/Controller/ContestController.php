@@ -13,6 +13,7 @@ use Dodici\Fansworld\WebBundle\Controller\SiteController;
 use Dodici\Fansworld\WebBundle\Entity\Comment;
 use Dodici\Fansworld\WebBundle\Entity\Contest;
 use Dodici\Fansworld\WebBundle\Entity\ContestParticipant;
+use Dodici\Fansworld\WebBundle\Entity\ContestVote;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -36,7 +37,7 @@ class ContestController extends SiteController
         return array(
         );
     }
-    
+
     /**
      * My Contests
      * 
@@ -48,12 +49,12 @@ class ContestController extends SiteController
         $user = $this->get('security.context')->getToken()->getUser();
         $participating = $this->getRepository('ContestParticipant')->userParticipating($user);
         $contests = array();
-        
-        foreach($participating as $item){
+
+        foreach ($participating as $item) {
             $contest = $this->getRepository('Contest')->find($item->getContest()->getId());
             $contests[] = $contest;
         }
-        
+
         return array(
             'user' => $user,
             'contests' => $contests
@@ -162,7 +163,7 @@ class ContestController extends SiteController
                         $newParticipant->setVideo($video);
                         break;
                 }
-                
+
                 $newParticipant->setContest($contest);
                 $newParticipant->setWinner(false);
 
@@ -229,7 +230,7 @@ class ContestController extends SiteController
                 'active' => true
             );
         }
-        
+
         $contests = $this->getRepository('Contest')->findBy($criteria, array('createdAt' => 'desc'), self::contestLimit, $offset);
         $contestsCount = $this->getRepository('Contest')->countBy($criteria);
 
@@ -274,26 +275,27 @@ class ContestController extends SiteController
         $participants = $this->getRepository('ContestParticipant')->findBy(array('contest' => $contest->getId()), array('createdAt' => 'desc'), self::participantsLimit);
         $countAllParticipants = $this->getRepository('ContestParticipant')->countBy(array('contest' => $contest->getId()));
         $addMoreParticipants = $countAllParticipants > self::participantsLimit ? true : false;
-        
+
         $winners = $this->getRepository('ContestParticipant')->findBy(array('contest' => $contest->getId(), 'winner' => true));
-        
+
         $filesUploaded = array();
         $files = $this->getRepository('ContestParticipant')->findBy(array('contest' => $contest->getId()));
-        switch($contest->getType()){
+        $alreadyVoted = $this->getRepository('ContestVote')->byUserAndContest($user, $contest);
+        switch ($contest->getType()) {
             case Contest::TYPE_PHOTO:
-                foreach($files as $file){
-                    array_push($filesUploaded, array('file' => $file->getPhoto(), 'author' => $file->getAuthor()));
+                foreach ($files as $file) {
+                    array_push($filesUploaded, array('participantId' => $file->getId(), 'file' => $file->getPhoto(), 'author' => $file->getAuthor()));
                 }
                 break;
             case Contest::TYPE_VIDEO:
-                foreach($files as $file){
-                    array_push($filesUploaded, array('file' => $file->getVideo(), 'author' => $file->getAuthor()));
+                foreach ($files as $file) {
+                    array_push($filesUploaded, array('participantId' => $file->getId(), 'file' => $file->getVideo(), 'author' => $file->getAuthor()));
                 }
                 break;
         }
-        return array('contest' => $contest, 'isParticipant' => $isParticipant, 'participants' => $participants, 'winners' => $winners, 'files' => $filesUploaded, 'addMoreParticipants' => $addMoreParticipants);
+        return array('contest' => $contest,'voted' => $alreadyVoted  , 'isParticipant' => $isParticipant, 'participants' => $participants, 'winners' => $winners, 'files' => $filesUploaded, 'addMoreParticipants' => $addMoreParticipants);
     }
-    
+
     /**
      * @Route("/ajax/contest/participants", name="contest_pagerParticipants") 
      */
@@ -302,25 +304,65 @@ class ContestController extends SiteController
         $request = $this->getRequest();
         $contestId = $request->get('contest');
         $page = $request->get('page', 0);
-        $offset = ($page-1) * self::participantsLimit;
-        
+        $offset = ($page - 1) * self::participantsLimit;
+
         $response = array();
-        
+
         $countAllParticipants = $this->getRepository('ContestParticipant')->countBy(array('contest' => $contestId));
         $participantsCount = $countAllParticipants / self::participantsLimit;
         $response['addMore'] = $participantsCount > $page ? true : false;
-        
-        $participants = $this->getRepository('ContestParticipant')->findBy(array('contest'=>$contestId), array('createdAt' => 'desc'), self::participantsLimit, $offset);
-        foreach($participants as $participant){
-            $author =$participant->getAuthor(); 
+
+        $participants = $this->getRepository('ContestParticipant')->findBy(array('contest' => $contestId), array('createdAt' => 'desc'), self::participantsLimit, $offset);
+        foreach ($participants as $participant) {
+            $author = $participant->getAuthor();
             $response['participants'][] = array(
                 'id' => $author->getId(),
                 'name' => (string) $author,
                 'avatar' => $this->getImageUrl($author->getImage())
             );
         }
-        
-        
+
+
+        return $this->jsonResponse($response);
+    }
+
+    /**
+     * @Route("/ajax/contest/participant/vote", name="contest_voteParticipant")
+     */
+    public function voteParticipant()
+    {
+        $request = $this->getRequest();
+        $contestId = $request->get('contest', false);
+        $participantId = $request->get('participant', false);
+        $author = $this->get('security.context')->getToken()->getUser();
+
+        $response = array();
+
+        $participant = $this->getRepository('ContestParticipant')->find($participantId);
+        $contest = $this->getRepository('Contest')->find($contestId);
+
+        $alreadyVoted = $this->getRepository('ContestVote')->byUserAndContest($author, $contest);
+
+        if (!$alreadyVoted) {
+            try {
+                $entity = new ContestVote;
+                $entity->setAuthor($author);
+                $entity->setContestparticipant($participant);
+
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($entity);
+                $em->flush();
+                
+                $response['voted'] = true;
+            } catch (Exception $exc) {
+                $response['voted'] = false;
+                $response['error'] = $exc->getMessage();
+            }
+        } else {
+            $response['voted'] = false;
+            $response['error'] = 'already voted';
+        }
+
         return $this->jsonResponse($response);
     }
 

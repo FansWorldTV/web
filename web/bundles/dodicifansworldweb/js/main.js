@@ -911,11 +911,39 @@ var contest = {
     type: $("#contestType").val(),
     
     init: function(){
+        $("#tabs").tabs();
+
+        $("div.contenido .text").expander({
+            slicePoint: 100,
+            expandText: '[+]',
+            userCollapse: false,
+            afterExpand: function() {
+                $('.photomason').isotope().resize();
+            }
+        });
+        
         $(".nota.loading").hide();
         contest.changeType();
         
         contest.id = $("#contestId").val();
         contest.type = $("#contestType").val();
+        
+        $("a.vote.button:not('.loading')").click(function(){
+            var self = $(this);
+            var participant = self.attr('participantId');
+            
+            self.addClass('loading');
+            contest.participantVote(participant, function(r){
+                self.removeClass('loading');
+                if(r.voted){
+                    $("a.vote.button").remove();
+                }else{
+                    error("Ya has votado");
+                    $("a.vote.button").remove();
+                }
+                console.log(r);
+            });
+        });
         
         $("#addMore.contests").click(function(){
             contest.listAddMore();
@@ -938,6 +966,17 @@ var contest = {
         contest.page = 1;
         contest.searchType = filter;
         contest.listAddMore();
+    },
+    
+    participantVote: function(participantId, callback){
+        ajax.genericAction('contest_voteParticipant', {
+            'participant': participantId,
+            'contest': contest.id
+        }, function(r){
+            callback(r);
+        }, function(error){
+            console.error(error);
+        });
     },
     
     participantsPager: function(){

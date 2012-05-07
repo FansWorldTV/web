@@ -68,24 +68,11 @@
                     <div id="tabs-3">
                         <ul>
                             {% for file in files %}
-                                <li>{{ file.file.id }}, Author: {{ file.author }}</li>
+                                <li>{{ file.file.id }}, Author: {{ file.author }} {% if not voted %}<a class="vote button" participantid="{{ file.participantId }}" href="#">Votar</a>{% endif %}</li>
                             {% endfor %}
                         </ul>
                     </div>
                 </div>
-                <script type="text/javascript">
-                    $(document).ready(function(){
-                        $("#tabs").tabs();
-                        $("div.contenido .text").expander({
-                            slicePoint: 100,
-                            expandText: '[+]',
-                            userCollapse: false,
-                            afterExpand: function() {
-                                $('.photomason').isotope().resize();
-                            }
-                        });
-                    });
-                </script>
             {% endif %}
         </div>
     </div>
@@ -104,10 +91,10 @@
     <div class="cont clearfix">
             {% include 'DodiciFansworldWebBundle:Comment:comment_block.html.twig' with {entity: contest} %}
     </div>
-    <script type="text/javascript">
-            $(document).ready(function(){
-                contest.init();
-            });
-    </script>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        contest.init();
+    });
+</script>
 {% endblock %}
