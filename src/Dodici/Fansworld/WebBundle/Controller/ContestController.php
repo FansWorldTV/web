@@ -339,17 +339,28 @@ class ContestController extends SiteController
         $participants = $this->getRepository('ContestParticipant')->findBy(array('contest' => $contestId), array('createdAt' => 'desc'), self::participantsLimit, $offset);
         foreach ($participants as $participant) {
             $author = $participant->getAuthor();
-            $element = array();
+            $elements = array();
 
+            $cantVotes = $this->getRepository('ContestVote')->countBy(array('contestparticipant' => $participant->getId()));
+            
             switch ($participant->getContest()->getType()) {
                 case Contest::TYPE_TEXT:
-                    $element[] = $participant->getText();
+                    $elements[] = array(
+                        'element' => $participant->getText(),
+                        'votes' => $cantVotes
+                        );
                     break;
                 case Contest::TYPE_PHOTO:
-                    $element[] = $participant->getPhoto();
+                    $elements[] = array(
+                        'element' => $participant->getPhoto(),
+                        'votes' => $cantVotes
+                    );
                     break;
                 case Contest::TYPE_VIDEO:
-                    $element[] = $participant->getVideo();
+                    $elements[] = array(
+                        'element' => $participant->getVideo(),
+                        'votes' => $cantVotes
+                    );
                     break;
             }
 
@@ -358,23 +369,12 @@ class ContestController extends SiteController
                 'name' => (string) $author,
                 'avatar' => $this->getImageUrl($author->getImage()),
                 'contestType' => $participant->getContest()->getType(),
-                'element' => $element
+                'element' => $elements
             );
         }
 
 
         return $this->jsonResponse($response);
-    }
-
-    public function pagerPublicated()
-    {
-        $request = $this->getRequest();
-        $contestId = $request->get('contest', false);
-        $page = $request->get('page', 1);
-        $offset = ($page - 1) * self::participantsLimit;
-
-        $response = array();
-        $countAll = $this->getRepository('');
     }
 
     /**
