@@ -8,6 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\Liking
+ * 
+ * A "like"
  *
  * @ORM\Table(name="liking")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\LikingRepository")

@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\Complaint
+ * 
+ * A user-lodged complaint about a photo/video/comment/user(target)
  *
  * @ORM\Table(name="complaint")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\ComplaintRepository")

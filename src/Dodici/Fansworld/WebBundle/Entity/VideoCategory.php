@@ -9,6 +9,8 @@ use Gedmo\Translatable\Translatable;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\VideoCategory
+ * 
+ * Video categories defined by FW.
  *
  * @ORM\Table(name="videocategory")
  * @ORM\Entity

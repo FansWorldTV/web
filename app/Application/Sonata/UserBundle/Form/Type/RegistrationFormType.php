@@ -24,6 +24,7 @@ class RegistrationFormType extends BaseType
         $builder
             ->add('username',null, array('max_length' => 30))
             ->add('email', 'email')
+            ->add('plainPassword', 'repeated', array('type' => 'password'))
 			//->add('address',null,array('label'=>'Dirección','required'=>false))
 			->add('firstname',null,array('label'=>'Nombre','required'=>true))
 			->add('lastname',null,array('label'=>'Apellido','required'=>true))

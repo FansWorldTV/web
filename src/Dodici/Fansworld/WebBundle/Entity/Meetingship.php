@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\Meetingship
+ * 
+ * A user's participation in a meeting
  *
  * @ORM\Table(name="meetingship")
  * @ORM\Entity

@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\HasTag
+ * 
+ * Relation between a tag and a content. Refactor a content superclass some day.
  *
  * @ORM\Table(name="hastag")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\HasTagRepository")

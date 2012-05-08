@@ -37,4 +37,23 @@ class ContactImporter
     	exit;
     }    
     
+    /**
+     * Generate a token for the invite users url
+     * @param User $user
+     */
+    public function inviteToken(User $user)
+    {
+    	return sha1($user->getId().'-ashurbanipal-'.$user->getUsername());
+    }
+    
+    public function inviteUrl(User $user)
+    {
+    	$router = $this->container->get('router');
+    	return $router->generate(
+    		'fos_user_registration_register', 
+    		array(
+    			'inviter' => $user->getUsername(), 
+    			'token' => $this->inviteToken($user)
+    		), true);
+    }
 }

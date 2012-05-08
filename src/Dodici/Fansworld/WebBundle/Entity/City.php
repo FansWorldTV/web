@@ -8,6 +8,8 @@ use Gedmo\Translatable\Translatable;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\City
+ * 
+ * Cities belong to a Country
  *
  * @ORM\Table(name="city")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\CityRepository")

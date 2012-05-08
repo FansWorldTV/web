@@ -8,6 +8,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\Album
+ * 
+ * A named collection of Photos owned by a User
+ * Can be tagged
  *
  * @ORM\Table(name="album")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\AlbumRepository")

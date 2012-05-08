@@ -8,6 +8,8 @@ use Gedmo\Translatable\Translatable;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\Country
+ * 
+ * Self-explanatory
  *
  * @ORM\Table(name="country")
  * @ORM\Entity

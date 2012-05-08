@@ -6,6 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\HasInterest
+ * 
+ * A user has an interest.
+ * Career/position/datefrom/dateto not currently in use
  *
  * @ORM\Table(name="hasinterest")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\HasInterestRepository")

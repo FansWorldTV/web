@@ -6,6 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\Eventship
+ * 
+ * A user's participation (check-in) in an event, created when checking in.
+ * User will select how he's following the event (type), and may select the team he's supporting
  *
  * @ORM\Table(name="eventship")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\EventshipRepository")

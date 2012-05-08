@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Security;
 
+use Dodici\Fansworld\WebBundle\Entity\Friendship;
+
 use Application\Sonata\MediaBundle\Entity\Media;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -54,6 +56,7 @@ class FacebookProvider implements UserProviderInterface
         	if (empty($user)) {
                 $user = $this->userManager->createUser();
                 $user->setEnabled(true);
+                $user->setConfirmationToken(null);
                 $user->setLinkfacebook(true);
                 $user->setPassword('');
                 
@@ -71,7 +74,7 @@ class FacebookProvider implements UserProviderInterface
 			        $user->setImage($media); 
 				}
 				
-				if ($fbdata['location']) {
+				if (isset($fbdata['location']) && $fbdata['location']) {
 					$location = $this->container->get('user.location')->parseLocation($fbdata['location']);
 					$user->setCountry($location['country']);
 					$user->setCity($location['city']);
@@ -94,6 +97,25 @@ class FacebookProvider implements UserProviderInterface
 				}
 				
 				$user->setUsername($username);
+				
+        		/* Invitation, check for session */
+				$session = $this->container->get('session');
+				$invitetoken = $session->get('registration.inviter');
+        		$inviteuser = $session->get('registration.token');
+        		$inviter = null;
+        		if ($invitetoken && $inviteuser) {
+	        		$userrepo = $this->container->get('doctrine')->getRepository('Application\Sonata\UserBundle\Entity\User');
+	        		$inviter = $userrepo->findOneByUsername($inviteuser);
+	        		$calcinvitetoken = $this->container->get('contact.importer')->inviteToken($inviter);
+	        		if ($inviter && ($invitetoken != $calcinvitetoken)) {
+	        			$em = $this->container->get('doctrine')->getEntityManager();
+		            	$friendship = new Friendship();
+		            	$friendship->setAuthor($user);
+		            	$friendship->setTarget($inviter);
+		            	$friendship->setActive(true);
+		            	$em->persist($friendship);
+	        		}
+        		}
             }
 
             // TODO use http://developers.facebook.com/docs/api/realtime

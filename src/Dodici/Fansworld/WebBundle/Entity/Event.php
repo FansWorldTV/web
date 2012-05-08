@@ -8,6 +8,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\Event
+ * 
+ * A live event to be followed by users, drawn from an external source - e.g. a soccer match people check into and comment about it
  *
  * @ORM\Table(name="event")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\EventRepository")

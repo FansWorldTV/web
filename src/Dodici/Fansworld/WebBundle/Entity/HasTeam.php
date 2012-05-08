@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\HasTeam
+ * 
+ * Tags a content with a team. Refactor a content superclass some day.
  *
  * @ORM\Table(name="hasteam")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\HasTeamRepository")

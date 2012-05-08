@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\ContestVote
+ * 
+ * A user's vote of a contest's submission. Users should only vote once in each contest
  *
  * @ORM\Table(name="contest_vote")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\ContestVoteRepository")

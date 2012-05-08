@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\HasUser
+ * 
+ * Tags a content with a user. Refactor a content superclass some day.
  *
  * @ORM\Table(name="hasuser")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\HasUserRepository")

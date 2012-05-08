@@ -39,7 +39,7 @@ class ValidateProfileController extends SiteController
         $isValidUsername = false;
 
         if ($username) {
-        	if (preg_match("/^[a-zA-Z0-9.\-]+$/", $username) > 0) {
+        	if (preg_match('/^[a-zA-Z0-9.\-]+$/', $username) > 0) {
         		if (strlen($username) > 3 && strlen($username < 30)) {
         			$findByUser = $this->getRepository('User')->findOneByUsername($username);
 	                if (!$findByUser || ($findByUser == $user)) {

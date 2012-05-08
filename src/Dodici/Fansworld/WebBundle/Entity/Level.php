@@ -9,6 +9,8 @@ use Gedmo\Translatable\Translatable;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\Level
+ * 
+ * User level. Based on score, cosmetic.
  *
  * @ORM\Table(name="level")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\LevelRepository")

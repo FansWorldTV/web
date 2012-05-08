@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\Teamship
+ * 
+ * User following a Team. Will receive activity updates, etc.
  *
  * @ORM\Table(name="teamship")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\TeamshipRepository")

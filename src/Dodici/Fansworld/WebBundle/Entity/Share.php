@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\Share
+ * 
+ * A sharing of a content by a user. Refactor a content superclass some day.
  *
  * @ORM\Table(name="share")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\ShareRepository")

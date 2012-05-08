@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\ContestParticipant
+ * 
+ * Represents a user's participation/submission to a contest
  *
  * @ORM\Table(name="contest_participant")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\ContestParticipantRepository")

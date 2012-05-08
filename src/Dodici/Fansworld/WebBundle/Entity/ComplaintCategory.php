@@ -9,6 +9,8 @@ use Gedmo\Translatable\Translatable;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\complaintCategory
+ * 
+ * Complaint types to be chosen by the complaining user
  *
  * @ORM\Table(name="complaintcategory")
  * @ORM\Entity

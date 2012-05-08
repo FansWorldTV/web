@@ -6,6 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\Comment
+ * 
+ * A comment that can belong to several entities (including a user - target), and can be in response to another comment
+ * Types other than TYPE_COMMENT are meant to be seen as an activity feed
  *
  * @ORM\Table(name="comment")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\CommentRepository")
@@ -13,14 +16,23 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Comment
 {
-    const TYPE_COMMENT = 1;
+    // Normal comment
+	const TYPE_COMMENT = 1;
+	// X and Y are now friends
     const TYPE_NEW_FRIEND = 2;
+    // X has been labelled in content Y
     const TYPE_LABELLED = 3;
+    // X has shared content Y
     const TYPE_SHARE = 4;
+    // X likes content Y
     const TYPE_LIKES = 5;
+    // X (idol) has a new forumthread
     const TYPE_NEW_THREAD = 6;
+    // X (idol) answered in a thread. No longer in use
     const TYPE_THREAD_ANSWERED = 7;
+    // X has uploaded a new photo
     const TYPE_NEW_PHOTO = 8;
+    // X has uploaded a new video
     const TYPE_NEW_VIDEO = 9;
     
     /**

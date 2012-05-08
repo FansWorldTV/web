@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\Idolship
+ * 
+ * A user following an idol. Will receive activity updates, etc.
  *
  * @ORM\Table(name="idolship")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\IdolshipRepository")

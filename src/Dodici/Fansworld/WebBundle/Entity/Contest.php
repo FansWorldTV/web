@@ -9,6 +9,8 @@ use Gedmo\Translatable\Translatable;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\Contest
+ * 
+ * A contest is created by FW so that users will participate and possibly become winners, either by FW's choice, or public vote
  *
  * @ORM\Table(name="contest")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\ContestRepository")
@@ -16,7 +18,9 @@ use Gedmo\Translatable\Translatable;
  */
 class Contest implements Translatable
 {
-    const TYPE_PARTICIPATE = 1;
+    // No input other than clicking on a button are required to participate
+	const TYPE_PARTICIPATE = 1;
+	// A text/photo/video is uploaded along with the participation. Intended to be subjected to public vote
     const TYPE_TEXT = 2;
     const TYPE_PHOTO = 3;
     const TYPE_VIDEO = 4;

@@ -8,6 +8,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\Meeting
+ * 
+ * A user-created planned gathering/event
  *
  * @ORM\Table(name="meeting")
  * @ORM\Entity

@@ -9,6 +9,8 @@ use Gedmo\Translatable\Translatable;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\IdolCareer
+ * 
+ * Idol career history in teams (or teamname if team does not exist in FW)
  *
  * @ORM\Table(name="idol_career")
  * @ORM\Entity

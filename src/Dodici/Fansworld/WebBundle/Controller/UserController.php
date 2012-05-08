@@ -508,7 +508,11 @@ class UserController extends SiteController
      */
     public function inviteAction()
     {
-        return array();
+        $user = $this->get('security.context')->getToken()->getUser();
+    	$url = $this->get('contact.importer')->inviteUrl($user);
+    	return array(
+    		'url' => $url
+    	);
     }
 
     /**
