@@ -69,14 +69,14 @@
                         {% if texts|length > 0 %}
                             <ul>
                                 {% for text in texts %}
-                                    <li class="text">{{ text.text }} {% if not voted %}<a class="vote button" participantid="{{ text.participantId }}" href="#">Votar</a>{% endif %}</li>
+                                    <li class="text">{{ text.text }} , Votos: {{ text.votes }} {% if not voted %}<a class="vote button" participantid="{{ text.participantId }}" href="#">Votar</a>{% endif %}</li>
                                 {% endfor %}
                             </ul>
                         {% endif %}
                         {% if files|length > 0 %}
                             <ul>
                                 {% for file in files %}
-                                    <li>{{ file.file.id }}, Author: {{ file.author }} {% if not voted %}<a class="vote button" participantid="{{ file.participantId }}" href="#">Votar</a>{% endif %}</li>
+                                    <li>{{ file.file.id }}, Author: {{ file.author }}, Votos: {{ file.votes }} {% if not voted %}<a class="vote button" participantid="{{ file.participantId }}" href="#">Votar</a>{% endif %}</li>
                                 {% endfor %}
                             </ul>
                         {% endif %}

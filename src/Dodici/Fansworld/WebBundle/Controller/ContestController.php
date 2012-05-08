@@ -285,17 +285,35 @@ class ContestController extends SiteController
         switch ($contest->getType()) {
             case Contest::TYPE_TEXT:
                 foreach ($participants as $participant) {
-                    array_push($textUploaded, array('participantId' => $participant->getId(), 'text' => $participant->getText(), 'author' => $participant->getAuthor()));
+                    $cantVotes = $this->getRepository('ContestVote')->countBy(array('contestparticipant' => $participant->getId()));
+                    array_push($textUploaded, array(
+                        'participantId' => $participant->getId(),
+                        'text' => $participant->getText(),
+                        'author' => $participant->getAuthor(),
+                        'votes' => $cantVotes
+                    ));
                 }
                 break;
             case Contest::TYPE_PHOTO:
                 foreach ($participants as $participant) {
-                    array_push($filesUploaded, array('participantId' => $participant->getId(), 'file' => $participant->getPhoto(), 'author' => $participant->getAuthor()));
+                    $cantVotes = $this->getRepository('ContestVote')->countBy(array('contestparticipant' => $participant->getId()));
+                    array_push($filesUploaded, array(
+                        'participantId' => $participant->getId(),
+                        'file' => $participant->getPhoto(),
+                        'author' => $participant->getAuthor(),
+                        'votes' => $cantVotes
+                    ));
                 }
                 break;
             case Contest::TYPE_VIDEO:
                 foreach ($participants as $participant) {
-                    array_push($filesUploaded, array('participantId' => $participant->getId(), 'file' => $participant->getVideo(), 'author' => $participant->getAuthor()));
+                    $cantVotes = $this->getRepository('ContestVote')->countBy(array('contestparticipant' => $participant->getId()));
+                    array_push($filesUploaded, array(
+                        'participantId' => $participant->getId(),
+                        'file' => $participant->getVideo(),
+                        'author' => $participant->getAuthor(),
+                        'votes' => $cantVotes
+                    ));
                 }
                 break;
         }
@@ -322,7 +340,7 @@ class ContestController extends SiteController
         foreach ($participants as $participant) {
             $author = $participant->getAuthor();
             $element = array();
-            
+
             switch ($participant->getContest()->getType()) {
                 case Contest::TYPE_TEXT:
                     $element[] = $participant->getText();
@@ -334,7 +352,7 @@ class ContestController extends SiteController
                     $element[] = $participant->getVideo();
                     break;
             }
-            
+
             $response['participants'][] = array(
                 'id' => $author->getId(),
                 'name' => (string) $author,
