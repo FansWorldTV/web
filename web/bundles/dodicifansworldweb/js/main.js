@@ -906,6 +906,7 @@ var friendsSearch = {
 var contest = {
     page: 1,
     participantsPage: 1,
+    publicationsPage: 1,
     searchType: null,
     id: $("#contestId").val(),
     type: $("#contestType").val(),
@@ -989,6 +990,18 @@ var contest = {
                 $("#addMoreParticipants").hide();
             }
             contest.participantsPage++;
+        }, function(error){
+            console.error(error);
+        });
+    },
+    
+    publishedPager: function(){
+        ajax.genericAction('contest_pagerParticipants', {
+            'contest': contest.id, 
+            'page': contest.publicationsPage
+        }, function(r){
+            console.log(r);
+            contest.publicationsPage++;
         }, function(error){
             console.error(error);
         });

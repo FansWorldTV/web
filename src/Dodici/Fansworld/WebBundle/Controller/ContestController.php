@@ -280,7 +280,7 @@ class ContestController extends SiteController
 
         $filesUploaded = array();
         $textUploaded = array();
-        $participants = $this->getRepository('ContestParticipant')->findBy(array('contest' => $contest->getId()));
+        $participants = $this->getRepository('ContestParticipant')->findBy(array('contest' => $contest->getId()), array('createdAt' => 'desc'), self::participantsLimit);
         $alreadyVoted = $this->getRepository('ContestVote')->byUserAndContest($user, $contest);
         switch ($contest->getType()) {
             case Contest::TYPE_TEXT:
@@ -299,7 +299,7 @@ class ContestController extends SiteController
                 }
                 break;
         }
-        return array('contest' => $contest, 'voted' => $alreadyVoted, 'isParticipant' => $isParticipant, 'participants' => $participants, 'winners' => $winners, 'files' => $filesUploaded, 'texts' => $textUploaded , 'addMoreParticipants' => $addMoreParticipants);
+        return array('contest' => $contest, 'voted' => $alreadyVoted, 'isParticipant' => $isParticipant, 'participants' => $participants, 'winners' => $winners, 'files' => $filesUploaded, 'texts' => $textUploaded, 'addMoreParticipants' => $addMoreParticipants);
     }
 
     /**
@@ -309,7 +309,7 @@ class ContestController extends SiteController
     {
         $request = $this->getRequest();
         $contestId = $request->get('contest');
-        $page = $request->get('page', 0);
+        $page = $request->get('page', 1);
         $offset = ($page - 1) * self::participantsLimit;
 
         $response = array();
@@ -321,15 +321,42 @@ class ContestController extends SiteController
         $participants = $this->getRepository('ContestParticipant')->findBy(array('contest' => $contestId), array('createdAt' => 'desc'), self::participantsLimit, $offset);
         foreach ($participants as $participant) {
             $author = $participant->getAuthor();
+            $element = array();
+            
+            switch ($participant->getContest()->getType()) {
+                case Contest::TYPE_TEXT:
+                    $element[] = $participant->getText();
+                    break;
+                case Contest::TYPE_PHOTO:
+                    $element[] = $participant->getPhoto();
+                    break;
+                case Contest::TYPE_VIDEO:
+                    $element[] = $participant->getVideo();
+                    break;
+            }
+            
             $response['participants'][] = array(
                 'id' => $author->getId(),
                 'name' => (string) $author,
-                'avatar' => $this->getImageUrl($author->getImage())
+                'avatar' => $this->getImageUrl($author->getImage()),
+                'contestType' => $participant->getContest()->getType(),
+                'element' => $element
             );
         }
 
 
         return $this->jsonResponse($response);
+    }
+
+    public function pagerPublicated()
+    {
+        $request = $this->getRequest();
+        $contestId = $request->get('contest', false);
+        $page = $request->get('page', 1);
+        $offset = ($page - 1) * self::participantsLimit;
+
+        $response = array();
+        $countAll = $this->getRepository('');
     }
 
     /**
