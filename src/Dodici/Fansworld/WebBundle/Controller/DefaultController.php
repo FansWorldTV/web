@@ -103,7 +103,7 @@ class DefaultController extends SiteController
      */
     public function topAction()
     {
-        $usercount = $this->getRepository('User')->countBy(array('enabled' => true));
+        $usercount = $this->getRepository('User')->countBy(array('enabled' => true, 'type' => User::TYPE_FAN));
         return array('usercount' => $usercount);
     }
 
