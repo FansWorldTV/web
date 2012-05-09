@@ -339,26 +339,27 @@ class ContestController extends SiteController
         $participants = $this->getRepository('ContestParticipant')->findBy(array('contest' => $contestId), array('createdAt' => 'desc'), self::participantsLimit, $offset);
         foreach ($participants as $participant) {
             $author = $participant->getAuthor();
-            $elements = array();
+            $element = array();
 
             $cantVotes = $this->getRepository('ContestVote')->countBy(array('contestparticipant' => $participant->getId()));
             
             switch ($participant->getContest()->getType()) {
                 case Contest::TYPE_TEXT:
-                    $elements[] = array(
-                        'element' => $participant->getText(),
+                    $element = array(
+                        'text' => $participant->getText(),
                         'votes' => $cantVotes
                         );
                     break;
                 case Contest::TYPE_PHOTO:
-                    $elements[] = array(
-                        'element' => $participant->getPhoto(),
+                    $element = array(
+                        'id' => $participant->getPhoto()->getId(),
+                        'image' => $this->getImageUrl($participant->getPhoto()),
                         'votes' => $cantVotes
                     );
                     break;
                 case Contest::TYPE_VIDEO:
-                    $elements[] = array(
-                        'element' => $participant->getVideo(),
+                    $element = array(
+                        'id' => $participant->getVideo()->getId(),
                         'votes' => $cantVotes
                     );
                     break;
@@ -369,7 +370,7 @@ class ContestController extends SiteController
                 'name' => (string) $author,
                 'avatar' => $this->getImageUrl($author->getImage()),
                 'contestType' => $participant->getContest()->getType(),
-                'element' => $elements
+                'element' => $element
             );
         }
 

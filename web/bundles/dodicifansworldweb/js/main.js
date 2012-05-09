@@ -905,8 +905,8 @@ var friendsSearch = {
 
 var contest = {
     page: 1,
-    participantsPage: 1,
-    publicationsPage: 1,
+    participantsPage: 2,
+    publicationsPage: 2,
     searchType: null,
     id: $("#contestId").val(),
     type: $("#contestType").val(),
@@ -982,6 +982,7 @@ var contest = {
             'contest': contest.id, 
             'page': contest.participantsPage
         }, function(r){
+            console.log(r);
             for(var i in r.participants){
                 var participant = r.participants[i];
                 $("div#tabs-1 ul").append("<li>" + participant.name + "</li>");
@@ -1001,6 +1002,10 @@ var contest = {
             'page': contest.publicationsPage
         }, function(r){
             console.log(r);
+            for(var i in r.participants){
+                var participant = r.participants[i];
+                $("#tabs-3 ul").append("<li>Element ID: " + participant.element.id + ", Author" + participant.name + "</li>");
+            }
             contest.publicationsPage++;
         }, function(error){
             console.error(error);
