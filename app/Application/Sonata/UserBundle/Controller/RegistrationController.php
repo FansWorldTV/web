@@ -61,13 +61,7 @@ class RegistrationController extends BaseController
 	            }
 	
 	            if ($inviter) {
-	            	$em = $this->container->get('doctrine')->getEntityManager();
-	            	$friendship = new Friendship();
-	            	$friendship->setAuthor($user);
-	            	$friendship->setTarget($inviter);
-	            	$friendship->setActive(true);
-	            	$em->persist($friendship);
-	            	$em->flush();
+	            	$this->container->get('contact.importer')->finalizeInvitation($inviter, $user);
 	            }
 	            
 	            $this->setFlash('fos_user_success', 'registration.flash.user_created');

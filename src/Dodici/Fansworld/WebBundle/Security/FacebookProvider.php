@@ -108,12 +108,7 @@ class FacebookProvider implements UserProviderInterface
 	        		$inviter = $userrepo->findOneByUsername($inviteuser);
 	        		$calcinvitetoken = $this->container->get('contact.importer')->inviteToken($inviter);
 	        		if ($inviter && ($invitetoken != $calcinvitetoken)) {
-	        			$em = $this->container->get('doctrine')->getEntityManager();
-		            	$friendship = new Friendship();
-		            	$friendship->setAuthor($user);
-		            	$friendship->setTarget($inviter);
-		            	$friendship->setActive(true);
-		            	$em->persist($friendship);
+	        			$this->container->get('contact.importer')->finalizeInvitation($inviter, $user, false);
 	        		}
         		}
             }

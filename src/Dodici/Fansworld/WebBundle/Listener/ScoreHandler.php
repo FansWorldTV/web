@@ -25,6 +25,7 @@ class ScoreHandler
     const SCORE_NEW_PHOTO = 5;
     const SCORE_NEW_FRIENDSHIP = 10;
     const SCORE_NEW_VIDEO = 25;
+    const SCORE_INVITE_FRIEND = 20;
     
 	protected $em;
 	
@@ -87,7 +88,9 @@ class ScoreHandler
 		
 		if ($entity instanceof Friendship && $entity->getActive()) {
 			//$this->addScore($entity->getAuthor(), self::SCORE_NEW_FRIENDSHIP);
-            $this->addScore($entity->getTarget(), self::SCORE_NEW_FRIENDSHIP);
+			$scoreadd = self::SCORE_NEW_FRIENDSHIP;
+			if ($entity->getInvitation()) $scoreadd += self::SCORE_INVITE_FRIEND;
+            $this->addScore($entity->getTarget(), $scoreadd);
                 
             $author = $entity->getAuthor();
             $target = $entity->getTarget(); 

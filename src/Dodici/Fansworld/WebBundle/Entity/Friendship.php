@@ -60,6 +60,13 @@ class Friendship
     private $active;
     
     /**
+     * @var boolean $invitation
+     *
+     * @ORM\Column(name="invitation", type="boolean", nullable=false)
+     */
+    private $invitation;
+    
+    /**
      * @ORM\ManyToMany(targetEntity="FriendGroup")
      * @ORM\JoinTable(name="friendship_friendgroup",
      *      joinColumns={@ORM\JoinColumn(name="friendship_id", referencedColumnName="id")},
@@ -83,6 +90,9 @@ class Friendship
         }
         if (null === $this->active) {
         	$this->setActive(true);
+        }
+        if (null === $this->invitation) {
+        	$this->setInvitation(false);
         }
     }
 
@@ -194,5 +204,25 @@ class Friendship
     public function getFriendgroups()
     {
         return $this->friendgroups;
+    }
+
+    /**
+     * Set invitation
+     *
+     * @param boolean $invitation
+     */
+    public function setInvitation($invitation)
+    {
+        $this->invitation = $invitation;
+    }
+
+    /**
+     * Get invitation
+     *
+     * @return boolean 
+     */
+    public function getInvitation()
+    {
+        return $this->invitation;
     }
 }

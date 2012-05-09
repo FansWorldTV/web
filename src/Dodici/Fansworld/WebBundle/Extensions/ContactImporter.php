@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Extensions;
 
+use Dodici\Fansworld\WebBundle\Entity\Friendship;
+
 use Application\Sonata\UserBundle\Entity\User;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -55,5 +57,22 @@ class ContactImporter
     			'inviter' => $user->getUsername(), 
     			'token' => $this->inviteToken($user)
     		), true);
+    }
+    
+    public function finalizeInvitation(User $inviter, User $target, $flush=true)
+    {
+    	$em = $this->container->get('doctrine')->getEntityManager();
+        $friendship = new Friendship();
+        $friendship->setAuthor($target);
+        $friendship->setTarget($inviter);
+        $friendship->setActive(true);
+        $friendship->setInvitation(true);
+        $em->persist($friendship);
+        
+        if ($flush) {
+        	$em->flush();
+        }
+        
+        return $friendship;
     }
 }
