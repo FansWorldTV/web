@@ -346,6 +346,7 @@ class ContestController extends SiteController
             switch ($participant->getContest()->getType()) {
                 case Contest::TYPE_TEXT:
                     $element = array(
+                        'id' => $participant->getId(),
                         'text' => $participant->getText(),
                         'votes' => $cantVotes
                         );
