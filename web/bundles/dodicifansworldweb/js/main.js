@@ -951,8 +951,12 @@ var contest = {
             return contest.participate(parseInt(contest.id), parseInt(contest.type), false, false);
         });
         
+        $("#addMoreElements:not('.loading')").click(function(){
+            return contest.publishedPager();
+        });
+        
         $("#addMoreParticipants:not('.loading')").click(function(){
-            contest.participantsPager();
+            return contest.participantsPager();
         });
         
         contest.addComment();
@@ -978,11 +982,13 @@ var contest = {
     },
     
     participantsPager: function(){
+        $("#addMoreParticipants").addClass('loading');
         ajax.genericAction('contest_pagerParticipants', {
             'contest': contest.id, 
             'page': contest.participantsPage
         }, function(r){
             console.log(r);
+            $("#addMoreParticipants").removeClass('loading');
             for(var i in r.participants){
                 var participant = r.participants[i];
                 $("div#tabs-1 ul").append("<li>" + participant.name + "</li>");
@@ -994,22 +1000,30 @@ var contest = {
         }, function(error){
             console.error(error);
         });
+        return false;
     },
     
     publishedPager: function(){
+        $("#addMoreElements").addClass('loading');
         ajax.genericAction('contest_pagerParticipants', {
             'contest': contest.id, 
             'page': contest.publicationsPage
         }, function(r){
             console.log(r);
+            $("#addMoreElements").removeClass('loading');
             for(var i in r.participants){
                 var participant = r.participants[i];
                 $("#tabs-3 ul").append("<li>Element ID: " + participant.element.id + ", Author" + participant.name + "</li>");
             }
             contest.publicationsPage++;
+            if(!r.addMore){
+                $("#addMoreElements").remove();
+            }
         }, function(error){
             console.error(error);
         });
+        
+        return false;
     },
     
     listAddMore: function(){
