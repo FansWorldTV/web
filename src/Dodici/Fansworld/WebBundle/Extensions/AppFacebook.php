@@ -48,7 +48,7 @@ class AppFacebook
      * @param Application\Sonata\UserBundle\Entity\User $user
      * @throws \Exception
      */
-    public function facebookFansworld($user=null)
+    public function facebookFansworld($user=null, $limit=null, $offset=null)
     {
     	$friends = $this->facebookFriends($user);
     	if (!$friends) throw new \Exception('Sin amigos');
@@ -57,7 +57,12 @@ class AppFacebook
     		$ids[] = $friend['id'];
     	}
     	$friendrepo = $this->em->getRepository('Application\\Sonata\\UserBundle\\Entity\\User');
-    	$fwfriends = $friendrepo->findBy(array('enabled' => true, 'linkfacebook' => true, 'facebookId' => $ids));
+    	$fwfriends = $friendrepo->findBy(
+    		array('enabled' => true, 'linkfacebook' => true, 'facebookId' => $ids),
+    		array('lastname' => 'ASC','firstname' => 'ASC'),
+    		$limit,
+    		$offset
+    	);
     	return $fwfriends;
     }
 }

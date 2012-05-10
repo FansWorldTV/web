@@ -21,6 +21,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FacebookController extends SiteController
 {
+	const LIMIT_AJAX_GET = 10;
+	
 	/**
      * Set access token by client js from uri hash
      * @Route("/jstoken", name="facebook_jstoken")
@@ -28,7 +30,10 @@ class FacebookController extends SiteController
      */
     public function jsTokenAction()
     {
-    	return array();
+    	$callback = $this->getRequest()->get('callback');
+    	return array(
+    		'callback' => $callback
+    	);
     }
     
 	/**
@@ -62,5 +67,38 @@ class FacebookController extends SiteController
     	} else {
     		throw new HttpException(400);
     	}
+    }
+    
+	/**
+     *  get friends in common
+     *  get params (all optional):
+     *   - page
+     *  @Route("/ajax/getcommonfriends/", name="facebook_commonfriends")
+     */
+    public function ajaxCommonFriends()
+    {
+        $request = $this->getRequest();
+    	$page = $request->get('page');
+    	$limit = null; $offset = null;
+    	
+    	if ($page !== null) {
+    		$page--;
+    		$limit = self::LIMIT_AJAX_GET;
+    		$offset = $limit * $page;
+    	}
+        
+    	$friends = $this->get('app.facebook')->facebookFansworld(null, $limit, $offset);
+    	
+        $rfriends = array();
+        foreach ($friends as $friend) {
+            $rfriends[] = array(
+            	'id' => $friend->getId(),
+            	'title' => (string)$friend,
+            	'image' => $this->getImageUrl($friend->getImage(), 'avatar'),
+            	'url' => $this->generateUrl('user_detail', array('username' => $friend->getUsername()))
+            );
+        }
+
+        return $this->jsonResponse(array('friends' => $rfriends));
     }
 }

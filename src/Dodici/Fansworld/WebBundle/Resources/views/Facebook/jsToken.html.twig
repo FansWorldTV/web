@@ -37,12 +37,21 @@
 			        	'facebook_settoken',
 			        	{signed_request: hashParams.signed_request},
 			        	function(response){
-			        		window.opener.success('Cuenta vinculada');
-			        		window.close();
+			        		{% block callbacksuccess %}
+				        		{% if callback is not null %}
+				        			window.opener.callbackfbtoken{{ callback }}();
+				        			window.close();
+				        		{% else %}
+					        		window.opener.success('Cuenta vinculada');
+					        		window.close();
+				        		{% endif %}
+			        		{% endblock %}
 			        	},
 			        	function(){
-			        		window.opener.error('Error recuperando token');
-			        		window.close();
+			        		{% block callbackerror %}
+				        		window.opener.error('Error recuperando token');
+				        		window.close();
+			        		{% endblock %}
 			        	}
 			        );
 			    }

@@ -53,7 +53,7 @@ $(function(){
 			   'next': 'http://' + location.host + Routing.generate( appLocale + '_' + 'facebook_jstoken')
 			  },
 			  function(response) {
-			    var uid = response.selected_profiles;
+			    
 			  }
 			);
 		}
