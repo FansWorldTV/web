@@ -78,4 +78,9 @@ class SiteController extends Controller
         	}
         }
     }
+    
+    public function trans($term)
+    {
+    	return $this->get('translator')->trans($term);
+    }
 }
