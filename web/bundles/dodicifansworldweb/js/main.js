@@ -23,7 +23,6 @@ var site = {
             $(this).addClass('loading');
         });
         $("ul.friendgroupsList").show();
-        $("li.alerts_user a span").hide().parent().removeClass('hidden');
         
         $("a.btn_picture").colorbox({
             'iframe': true,

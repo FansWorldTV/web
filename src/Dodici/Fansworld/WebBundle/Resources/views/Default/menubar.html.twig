@@ -20,9 +20,10 @@
             </ul>
         </li>
         <li class="alerts_user">
-            <a href="#1" class="hidden"><span></span></a>
+            {% set requests = appstate.getRequests %}
+            <a href="#1" ><span {% if not (requests|length > 0) %} class="hidden" {% endif %}>{{ requests|length }}</span></a>
             <ul>
-                {% for request in appstate.getRequests %}
+                {% for request in requests %}
                     <li class="clearfix hidden">
                         {% thumbnail request.author, 'avatar' %}
                         <span class="info">
