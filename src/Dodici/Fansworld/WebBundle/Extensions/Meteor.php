@@ -32,9 +32,9 @@ class Meteor
     public function push($entity)
     {
     	if ($entity instanceof Notification) {
-	    	return $this->sendToSocket($entity->getId(), $this->encryptChannelName('notification', $entity->getTarget()));
+	    	return $this->sendToSocket(array('t' => 'n', 'id' => $entity->getId()), $this->encryptChannelName('notification', $entity->getTarget()));
     	} elseif ($entity instanceof Friendship) {
-    		return $this->sendToSocket($entity->getId(), $this->encryptChannelName('friendship', $entity->getTarget()));
+    		return $this->sendToSocket(array('t' => 'f', 'id' => $entity->getId()), $this->encryptChannelName('notification', $entity->getTarget()));
     	} else {
     		return false;
     	}
