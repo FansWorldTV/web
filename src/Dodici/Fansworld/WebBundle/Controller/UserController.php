@@ -50,7 +50,7 @@ class UserController extends SiteController
     public function detailAction($username)
     {
         $user = $this->getRepository('User')->findOneByUsername($username);
-    	if (!$user) {
+        if (!$user) {
             throw new HttpException(404, "No existe el usuario");
         }
 
@@ -155,7 +155,7 @@ class UserController extends SiteController
         $response['countAll'] = $countAll;
         return $this->jsonResponse($response);
     }
-    
+
     /**
      *  @Route("/ajax/get-notification/", name="user_ajaxnotification")
      */
@@ -165,11 +165,11 @@ class UserController extends SiteController
         $user = $this->get('security.context')->getToken()->getUser();
         $notificationId = $request->get('id', false);
         $response = array();
-        
-        if($notificationId){
+
+        if ($notificationId) {
             $notiRepo = $this->getRepository('Notification');
             $notification = $notiRepo->find($notificationId);
-            
+
             $response = $this->renderView('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $notification));
         }
 
@@ -227,9 +227,47 @@ class UserController extends SiteController
             $response = array('number' => $countTotal);
         }
 
-        $response = new Response(json_encode($response));
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+        return $this->jsonResponse($response);
+    }
+
+    /**
+     * method to get the friendship data! ;)
+     * 
+     *  @Route("/ajax/getfriendship/", name="user_ajaxgetfriendship") 
+     */
+    public function ajaxGetFriendship()
+    {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $friendRepo = $this->getRepository('Friendship');
+        $response = false;
+        $request = $this->getRequest();
+        $friendshipId = $request->get('id', false);
+
+        if ($user instanceof User) {
+            if ($friendshipId) {
+                $friendship = $friendRepo->find($friendshipId);
+                if ($friendship) {
+                    $response = array(
+                        'friendship' => array(
+                            'id' => $friendship->getId(),
+                            'ts' => $friendship->getCreatedat()->format('U')
+                        ),
+                        'author' => array(
+                            'id' => $friendship->getAuthor()->getId(),
+                            'name' => (string) $friendship->getAuthor(),
+                            'image' => $this->getImageUrl($friendship->getAuthor()->getImage()),
+                            'url' => $this->generateUrl('user_wall', array('username' => $friendship->getAuthor()->getUsername()))
+                        ),
+                        'target' => array(
+                            'id' => $friendship->getTarget()->getId(),
+                            'restricted' => $friendship->getTarget()->getRestricted()
+                        )
+                    );
+                }
+            }
+        }
+
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -421,8 +459,8 @@ class UserController extends SiteController
     public function photosAction($username)
     {
         $user = $this->getRepository('User')->findOneByUsername($username);
-        
-    	if (!$user) {
+
+        if (!$user) {
             throw new HttpException(404, "No existe el usuario");
         }
 
@@ -463,10 +501,10 @@ class UserController extends SiteController
     public function listPhotosAction($username)
     {
         $user = $this->getRepository('User')->findOneByUsername($username);
-    	if (!$user) {
+        if (!$user) {
             throw new HttpException(404, "No existe el usuario");
         }
-        
+
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
         $photos = $this->getRepository('Photo')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
@@ -486,7 +524,7 @@ class UserController extends SiteController
     public function listAlbumsAction($username)
     {
         $user = $this->getRepository('User')->findOneByUsername($username);
-    	if (!$user) {
+        if (!$user) {
             throw new HttpException(404, "No existe el usuario");
         }
         $loggedUser = $this->get('security.context')->getToken()->getUser();
@@ -509,10 +547,10 @@ class UserController extends SiteController
     public function inviteAction()
     {
         $user = $this->get('security.context')->getToken()->getUser();
-    	$url = $this->get('contact.importer')->inviteUrl($user);
-    	return array(
-    		'url' => $url
-    	);
+        $url = $this->get('contact.importer')->inviteUrl($user);
+        return array(
+            'url' => $url
+        );
     }
 
     /**

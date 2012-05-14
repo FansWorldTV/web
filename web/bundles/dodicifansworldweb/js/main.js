@@ -14,8 +14,7 @@ $(document).ready(function(){
 });
 
 var site = {
-    timerPendingFriends : null,
-    timerNotifications: null,
+    //    timerPendingFriends : null,
     isClosedNotificationess: true,
     isClosedRequests: true,
     
@@ -123,28 +122,63 @@ var site = {
     },
     
     listenPendingRequests: function(){
-        ajax.numberPendingRequests(function(response){
+        function handleData(response){
+            console.log("entro algo");
+            console.log(response);
             if(response){
-                if(response.number > 0){
-                    var actualNumber = $("li.alerts_user a span").html();
-                    parseInt(actualNumber);
-                    
-                    $("li.alerts_user a span").html(response.number).parent().removeClass('hidden');
-                    
-                    if(actualNumber < response.number){
+                var actualNumber = $("li.alerts_user a span").html();
+                parseInt(actualNumber);
+                if(actualNumber == ''){
+                    actualNumber = 0;
+                }
+                
+                
+                ajax.genericAction('user_ajaxgetfriendship', {
+                    'id': response
+                }, function(r){
+                    console.log(r);
+                    if(r){
+                        if(!r.target.restricted){
+                            notice(r.author.name + " te empezó a seguir.");
+                        }else{
+                            var template = $("#templatePendingFriends ul li").clone();
+                            if(r.author.image){
+                                template.find("img.avatar").attr('src', r.author.image);
+                            }
+                            template.find("span.info a.name").attr('href', r.author.url).html(r.author.name);
+                            template.find("a.deny").attr('id', r.author.id);
+                            template.find("div.button a.accept").attr('id', r.author.id);
+                            template.addClass('hidden');
+                      
+                            $("li.alerts_user ul li.more").before(template);
+                        }
+                        actualNumber++;
+                        
+                        $("li.alerts_user a span").html(actualNumber).removeClass('hidden');
                         $(".alerts_user a:first span").effect("highlight",{},3000);
                         $(".alerts_user a:first").effect("bounce",{
                             times:1
                         },300);
                     }
-                }
-                site.timerPendingFriends = setTimeout('site.listenPendingRequests()', 10000);
+                });
             }
-        });
+        }
+            
+        if ((typeof Meteor != 'undefined') && (typeof friendshipChannel != 'undefined')) {
+            Meteor.registerEventCallback("process", handleData);
+            Meteor.joinChannel(friendshipChannel, 0);
+            Meteor.mode = 'stream';
+	            
+            // Start streaming!
+            Meteor.connect();
+            console.log('Escuchando requests...');
+        }
     },
     
     listenNotifications: function(){
         function handleData(response){
+            console.log("aca hay algo");
+            console.log(response);
             if(response){
                 var actualNumber = $("li.notifications_user a span").html();
                 var number = 0;
@@ -154,7 +188,7 @@ var site = {
                     number = parseInt(actualNumber);
                 }
                 number++;
-                $("li.notifications_user a span").html(number).show();
+                $("li.notifications_user a span").html(number).show().removeClass('hidden');
                 $(".notifications_user a:first span").effect("highlight",{},3000);
                 $(".notifications_user a:first").effect("bounce",{
                     times:1
@@ -164,15 +198,15 @@ var site = {
             }
         }
             
-        if ((typeof Meteor != 'undefined') && (typeof notificationChannel != 'undefined')) {
-            Meteor.registerEventCallback("process", handleData);
-            Meteor.joinChannel(notificationChannel, 0);
-            Meteor.mode = 'stream';
-	            
-            // Start streaming!
-            //Meteor.connect();
-            console.log('Escuchando notificaciones...');
-        }
+    //        if ((typeof Meteor != 'undefined') && (typeof notificationChannel != 'undefined')) {
+    //            Meteor.registerEventCallback("process", handleData);
+    //            Meteor.joinChannel(notificationChannel, 0);
+    //            Meteor.mode = 'stream';
+    //	            
+    //            // Start streaming!
+    //            Meteor.connect();
+    //            console.log('Escuchando notificaciones...');
+    //        }
     },
     
     getNotification: function(id){
@@ -238,49 +272,7 @@ var site = {
     
     getPendingFriends: function(){
         $("li.alerts_user a").click(function(){
-            $("li.alerts_user ul").hide();
-            $("li.alerts_user ul li.clearfix").remove();
-            $("li.alerts_user ul").toggle().append("<li class='clearfix loading'></li>");
-            
-            if(site.isClosedRequests){
-                ajax.pendingFriendsAction(1, 5, function(response){
-                    if(response){
-                        var cant = $("li.alerts_user a span").html();
-                        parseInt(cant);
-                        $("li.alerts_user ul li.clearfix").remove();
-                  
-                        if(response.total > 0){
-                            for(var i in response.friendships){
-                                var element = response.friendships[i];
-                                var template = $("#templatePendingFriends ul li").clone();
-                                if(element.user.image){
-                                    template.find("img.avatar").attr('src', element.user.image);
-                                }
-                                template.find("span.info a.name").attr('href', element.user.url).html(element.user.name);
-                                template.find("a.deny").attr('id', element.friendship.id);
-                                template.find("div.button a.accept").attr('id', element.friendship.id);
-                      
-                                $("li.alerts_user ul li.more").before(template);
-                            }
-                        }else{
-                            $("li.alerts_user ul li.more").before('<li class="clearfix">No hay solicitudes pendientes</li>');
-                        }
-                        
-                        site.acceptFriendRequest();
-                        site.denyFriendRequest();
-                  
-                        if(cant>5){
-                            $("li.alerts_user ul li.more a").html(cant-5 + ' notificaciones mas').parent().removeClass('hidden');
-                        }else{
-                            $("li.alerts_user ul li.more").addClass('hidden');
-                        }
-                    } 
-                });
-                site.isClosedRequests = false;
-            }else{
-                $("li.alerts_user ul li.clearfix").remove();
-                site.isClosedRequests = true;
-            }
+            $("li.alerts_user ul li").toggleClass('hidden');
         });
     },
     acceptFriendRequest: function(){
