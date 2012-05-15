@@ -1,0 +1,37 @@
+{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ 'Complaint'|trans }}{% endblock %}
+
+{% block content %}
+<div class="complaints">
+    <div class="cont clearfix">
+        <h1>{{ 'Complaint'|trans }}
+                <ul>
+                    <li><a href="#1" class="titleType">Tipo de Concurso</a>
+                        <ul class="complaintType">
+                            <li><a href="#">{{ 'All'|trans }}</a></li>
+                            <li class="1"><a href="#">Foto</a></li>
+                            <li class="2"><a href="#">Video</a></li>
+                            <li class="3"><a href="#">Comentario</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </h1>
+        <ul class="listComplaints">
+            {% for complaint in complaints%}
+                <li>
+                    <span><label>Autor:</label>{{ complaint.author }}</span>
+                    <span><label>Categoría: </label>{{ complaint.complaintcategory }}</span>
+                    <span><label>Contenido: </label>{{ complaint.content|raw }}</span>
+                    <span><label>Fecha de creación: </label>{{ complaint.createdAt|date()}}</span>
+                    <span><label>Activo: </label>{{ complaint.active }}</span>
+                    {% if complaint.target %}
+                        <span><label>Usuario reportado: </label>{{ complaint.target }}</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

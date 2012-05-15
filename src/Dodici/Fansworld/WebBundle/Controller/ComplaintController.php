@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dodici\Fansworld\WebBundle\Controller\SiteController;
 use Dodici\Fansworld\WebBundle\Entity\Complaint;
 use Symfony\Component\HttpFoundation\Request;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 /**
  * Comment controller.
@@ -88,6 +89,18 @@ class ComplaintController extends SiteController
             'entityId' => $entity->getId(),
             'reported' => $reported
         );
+    }
+    
+    /**
+     * list complaints
+     * @Route("/reports", name="complaint_list" )
+     * @Template
+     * @Secure("ROLE_ADMIN")
+     */
+    public function listAction()
+    {
+        $complaints = $this->getRepository('Complaint')->getByEntity();
+        return array('complaints' => $complaints);
     }
 
 }

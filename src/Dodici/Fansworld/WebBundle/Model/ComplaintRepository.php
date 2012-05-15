@@ -32,7 +32,7 @@ class ComplaintRepository extends CountBaseRepository
         return $this->findBy(array('author' => $user->getId(), $classname => $entity->getId()));
     }
 
-    public function getByEntity($limit = null, $offset = null, $groupBy = false)
+    public function getByEntity($limit = null, $offset = null, array $groupBy = null)
     {
         if (!$groupBy) {
             $query = $this->_em->createQuery('
@@ -46,7 +46,8 @@ class ComplaintRepository extends CountBaseRepository
                 FROM \Dodici\Fansworld\WebBundle\Entity\Complaint c
                 GROUP BY :groups
             ');
-            $query->setParameter('groups', $groupBy);
+            $groups = implode(', ', $groupBy);
+            $query->setParameter('groups', $groups);
         }
 
         if ($limit !== null)
