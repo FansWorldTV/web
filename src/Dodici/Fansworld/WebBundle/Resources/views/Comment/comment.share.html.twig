@@ -78,5 +78,5 @@
 {% block subcomments %}{% endblock %}
 
 {% block commentcount %}
-	<a href="{{ tag_item_url }}">{{ tag_item.commentCount }} comentarios</a>
+	<a href="{{ tag_item_url }}">{{ tag_item.commentCount }} {{ 'comments'|trans }}</a>
 {% endblock %}

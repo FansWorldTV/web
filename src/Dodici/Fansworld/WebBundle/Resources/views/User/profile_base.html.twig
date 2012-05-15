@@ -22,7 +22,7 @@
 		                    			{% set avatar_format = 'small_square' %}
 		                    		{% endif %}
 			                    	{% if user == app.user %}
-			                        <a class="change_image" href="{{ path('user_change_image') }}">Cambiar</a>
+			                        <a class="change_image" href="{{ path('user_change_image') }}">{{ 'Change'|trans }}</a>
 			                        {% endif %}
 			                        {% if user.image %}
 			                        	{% thumbnail user.image, avatar_format %}
@@ -80,7 +80,7 @@
                             {% if user == app.user %}<a class="btn_edit_info" href="{{ path('fos_user_profile_edit') }}" title="Editar informacion">Editar informacion</a>{% endif %}
                             <ul>
                                 <li><a {% if active_tab == 'wall' %}class="active"{% endif %} href="{{ path('user_wall', {username: user.username}) }}">Muro</a></li>
-                                <li><a {% if active_tab == 'photos' %}class="active"{% endif %} href="{{ path('user_photos', {username: user.username}) }}">Fotos</a></li>
+                                <li><a {% if active_tab == 'photos' %}class="active"{% endif %} href="{{ path('user_photos', {username: user.username}) }}">{{ 'Photos'|trans }}</a></li>
                                 <li><a {% if active_tab == 'videos' %}class="active"{% endif %} href="{{ path('video_user', {username: user.username}) }}">Videos</a></li>
                                 {% if appstate.idol(user) %}
                                	<li><a {% if active_tab == 'forum' %}class="active"{% endif %} href="{{ path('forum_user', {username: user.username}) }}">Foro</a></li>
@@ -134,19 +134,19 @@
                                     </div>
                                     <ul>
                                             {% if user.nicknames %}   
-                                                <li>Apodos: {{ user.nicknames|nl2br }}</li>
+                                                <li>{{ 'Nicknames'|trans }}: {{ user.nicknames|nl2br }}</li>
                                             {% endif %}
                                             
                                             {% if user.sex %}
-                                                <li>Sexo: {% if user.sex == 'm' %}Masculino{% else %}Femenino{% endif %}</li>
+                                                <li>{{ 'Gender'|trans }}: {% if user.sex == 'm' %}{{ 'Male'|trans }}{% else %}{{ 'Female'|trans }}{% endif %}</li>
                                             {% endif %}
                                         
                                             {% if user.country %}
-                                                <li>País: {{ user.country }}</li>
+                                                <li>{{ 'Country'|trans }}: {{ user.country }}</li>
                                             {% endif %}
                                                 
                                             {% if user.city %}   
-                                                <li>Ciudad: {{ user.city }}</li>
+                                                <li>{{ 'City'|trans }}: {{ user.city }}</li>
                                             {% endif %}
                                             
                                             {% if user.origin %}   
@@ -174,13 +174,13 @@
                                                 </li>
                                             {% endif %}
                                             {% if user.birthday %}
-                                                    <li>Fecha de Nacimiento: {{user.birthday|date('d/m/Y')}}</li>
+                                                    <li>{{ 'Birthday'|trans }}: {{user.birthday|date('d/m/Y')}}</li>
                                             {% endif %}
                                     </ul>
                             </div>
 
                             <div class="specs greybox marginTop10 padding10 {% if not appstate.idolshipwith(user) %}hidden{% endif %}">
-                                <a class="btn center alignCenter btn_picture btn_upload_photo cboxElement" href="{{ path('photo_upload') }}?idolToTag={{ user.id }}">SUBIR UNA FOTO</a>
+                                <a class="btn center alignCenter btn_picture btn_upload_photo cboxElement" href="{{ path('photo_upload') }}?idolToTag={{ user.id }}">{{ 'Upload photo'|trans}}</a>
                             </div>
                     </div>
                 </div>

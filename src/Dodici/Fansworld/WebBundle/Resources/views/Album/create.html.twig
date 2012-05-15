@@ -3,6 +3,6 @@
 {% else %}
 	<form action="{{ path('album_create') }}" method="post" enctype="multipart/form-data">
 		{{ form_widget(form) }}
-		<input type="submit" name="submit" value="ENVIAR" />
+		<input type="submit" name="submit" value="{{'Submit'|trans}}" />
 	</form>
 {% endif %}

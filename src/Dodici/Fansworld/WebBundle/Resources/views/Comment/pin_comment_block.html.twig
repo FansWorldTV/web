@@ -15,6 +15,6 @@
 	{% endfor %}
 	
 	{% if comments|length > 0 %}
-		<a class="allcomments" href="{{ path(appstate.type(entity) ~ '_show', {id:entity.id, slug:entity.slug}) }}">Ver los {{entity.commentcount}} comentarios</a>
+		<a class="allcomments" href="{{ path(appstate.type(entity) ~ '_show', {id:entity.id, slug:entity.slug}) }}">{{ 'View'|trans }} {{entity.commentcount}} {{ 'comments'|trans }}</a>
 	{% endif %}
 </div>

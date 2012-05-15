@@ -1,11 +1,11 @@
 {% extends "DodiciFansworldWebBundle::web.html.twig" %}
 
-{% block title %}{{ parent() }} - Mis concursos{% endblock %}
+{% block title %}{{ parent() }} - {{ 'My Contents'|trans }}{% endblock %}
 
 {% block content %}
 <div class="contests">
     <div class="cont clearfix">
-        <h1>Mis Concursos</h1>
+        <h1>{{ 'My Contents'|trans }}</h1>
         <div class="listContests">
             {% if contests|length>0  %}
                 {% for contest in contests  %}
@@ -20,7 +20,7 @@
                     </div>
                 {% endfor %}
             {% else %}    
-                <div class="nota"><h2>No hay resultados</h2></div>
+                <div class="nota"><h2>{{ 'No results'|trans }}</h2></div>
             {% endif %}
         </div>    
     </div>

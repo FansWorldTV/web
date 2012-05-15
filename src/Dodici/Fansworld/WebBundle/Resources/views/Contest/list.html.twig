@@ -1,17 +1,17 @@
 {% extends "DodiciFansworldWebBundle::web.html.twig" %}
 
-{% block title %}{{ parent() }} - Concursos{% endblock %}
+{% block title %}{{ parent() }} - {{ 'Contests'|trans }}{% endblock %}
 
 {% block content %}
 <div class="contests">
     <div class="cont clearfix">
-        <h1>Concursos
+        <h1>{{ 'Contests'|trans }}
             <ul>
                 <li><a href="#1" class="titleContestType">Tipo de Concurso</a>
                     <ul class="contestType">
-                        <li><a href="#">Todos</a></li>
-                        <li class="1"><a href="#">Participación Simple</a></li>
-                        <li class="2"><a href="#">Texto concurso</a></li>
+                        <li><a href="#">{{ 'All'|trans }}</a></li>
+                        <li class="1"><a href="#">{{ 'Simple participation'|trans }}</a></li>
+                        <li class="2"><a href="#">{{ 'Text contest'|trans }}</a></li>
                         <li class="3"><a href="#">Foto concurso</a></li>
                         <li class="4"><a href="#">Video concurso</a></li>
                     </ul>
@@ -29,16 +29,16 @@
                         {% endif %}
                         <div class="contenido">
                             <div> {{ contest.content|raw }} </div>
-                            <div class="options"><a class="btn_action2" href="{{ path('contest_show', {'id':contest.id, 'slug': contest.slug}) }}" >Participar</a></div>
+                            <div class="options"><a class="btn_action2" href="{{ path('contest_show', {'id':contest.id, 'slug': contest.slug}) }}" >{{ 'Participate'|trans }}</a></div>
                         </div>
                     </div>
                 {% endfor %}
             {% else %}    
-                <div class="nota"><h2>No hay resultados</h2></div>
+                <div class="nota"><h2>{{ 'No results'|trans }}</h2></div>
             {% endif %}
         </div>    
         {% if addMore %}
-            <a href="#" id="addMore" class="loadmore contests">Agregar Más</a>
+            <a href="#" id="addMore" class="loadmore contests">{{ 'Add more'|trans }}</a>
         {% endif %}
     </div>
     <div id="templates" class="contests hidden">

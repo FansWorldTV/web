@@ -9,19 +9,19 @@
     {% if not reported%}
         <div id="report" style="height: 120px">
             <form id="complaintReport" name="report" method="post">
-                <label>Categoria:</label>
+                <label>{{ 'Category'|trans }}:</label>
                 <br/>
-                <select class="category" name="category" style="width: 300px">
+                <select name="category" id="category" class="category" style="width: 300px">
                     {% for category in categories %}
                         <option value="{{ category.id }}">{{ category }}</option>
                     {% endfor %}
                 </select>
                 <br/>
-                <label>Comentario:</label>
+                <label>{{ 'Comment'|trans }}:</label>
                 <br/>
-                <textarea class="comment" style="width: 300px"></textarea>
+                <textarea name="comment" id="comment" class="comment" style="width: 300px"></textarea>
                 <br/>
-                <input type="submit" name="submit" value="Reportar" />
+                <input type="submit" name="submit" value="{{ 'Report'|trans }}" />
             </form>
         </div>
 
@@ -46,6 +46,6 @@
             });
         </script>
     {% else %}
-        <h2>Ya lo has reportado.</h2>
+        <h2>{{ 'You\'ve already reported'|trans}}.</h2>
     {% endif %}
 {% endblock %}

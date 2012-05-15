@@ -29,7 +29,7 @@
 {% block action %}
 	<span class="action_user">
 		<a href="{{ path('user_wall', {username: comment.author.username }) }}">{{ comment.author }}</a> 
-		fue etiquetado en 
+		{{ 'was tagged in'|trans }}
 		<a href="{{ tag_item_url }}">{{ tag_item }}</a>
 	</span>
 {% endblock %}

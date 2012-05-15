@@ -160,6 +160,7 @@ class PhotoController extends SiteController
                     $tagtexts = explode(',', $data['tagtext']);
                     $tagusers = explode(',', $data['taguser']);
                     $userrepo = $this->getRepository('User');
+                    $tagitems = array();
                     
                     foreach ($tagtexts as $tt) {
                     	if (trim($tt)) $tagitems[] = $tt;
@@ -169,12 +170,13 @@ class PhotoController extends SiteController
                     	if ($tuser) $tagitems[] = $tuser;
                     }
                     
+                    if(!empty($tagitems))
                     $this->get('tagger')->tag($user, $photo, $tagitems);
-                    
-                    $this->get('session')->setFlash('success', '¡Has subido una foto con éxito!');
+
+                    $this->get('session')->setFlash('success', $this->trans('upload_sucess'));
                 }
             } catch (\Exception $e) {
-                $form->addError(new FormError('Error subiendo foto'));
+                $form->addError(new FormError($this->trans('upload_error')));
             }
         }
 

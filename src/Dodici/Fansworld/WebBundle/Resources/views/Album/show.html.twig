@@ -13,7 +13,7 @@
             <div class="update clearfix"> 
                 <span></span> 
                 <div class="upd_option clearfix"> 
-                    <a class="btn_picture btn_upload_photo" href="{{ path('photo_upload') }}">cargar imagen</a> 
+                    <a class="btn_picture btn_upload_photo" href="{{ path('photo_upload') }}">{{'load image'|trans}}</a> 
                 </div>    
             </div>
         {% endif %} 
@@ -21,7 +21,7 @@
 
 {% block inner_content %}
 <div class="cont clearfix">
-    <h2>{{ album.title }}<a class="more" href="{{ path('user_listalbums', {username: user.username}) }}">ver todos los álbumes</a></h2>
+    <h2>{{ album.title }}<a class="more" href="{{ path('user_listalbums', {username: user.username}) }}">{{'view all albums'|trans}}</a></h2>
     <div class="user_album">
         <div class="mask">
             {% for photo in album.photos %}

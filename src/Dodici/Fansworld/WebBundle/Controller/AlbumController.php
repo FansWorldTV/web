@@ -75,9 +75,9 @@ class AlbumController extends SiteController
                 ));
 
         $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
-                ->add('title', 'text', array('required' => true, 'label' => 'Título'))
-                ->add('content', 'textarea', array('required' => false, 'label' => 'Descripción'))
-                ->add('privacy', 'choice', array('required' => true, 'choices' => $privacies, 'label' => 'Privacidad'))
+                ->add('title', 'text', array('required' => true, 'label' => $this->trans('Title')))
+                ->add('content', 'textarea', array('required' => false, 'label' => $this->trans('Description')))
+                ->add('privacy', 'choice', array('required' => true, 'choices' => $privacies, 'label' => $this->trans('Privacy')))
                 ->getForm();
 
 
@@ -96,7 +96,7 @@ class AlbumController extends SiteController
                     $em->flush();
                 }
             } catch (\Exception $e) {
-                $form->addError(new FormError('Error creando album'));
+                $form->addError(new FormError($this->trans('album_create_error')));
             }
         }
 

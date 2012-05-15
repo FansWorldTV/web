@@ -11,21 +11,20 @@
 {% block content %}
 	{% if photo %}
 		<script type="text/javascript">
-                                                    if(window.top.redirectColorbox){
-                                                         window.top.location.href = "{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}";
-                                                    }
-                                                    
-                                                    
-                                                    var photoUploaded = {% if photo %}{{ photo.id }} {% else %} false {% endif %};
-                                                    
-                                                    if(photoUploaded){
-                                                        ajax.contestParticipateAction(window.top.contest.id, false, photoUploaded, false, function(r){
-                                                            if(r){
-                                                                window.top.$("a.contestParticipate").parent().html('Ya estas participando');
-                                                                window.top.$.colorbox.close();
-                                                            }
-                                                        });
-                                                    }
+                if(window.top.redirectColorbox){
+                        window.top.location.href = "{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}";
+                }
+
+                var photoUploaded = {% if photo %}{{ photo.id }} {% else %} false {% endif %};
+
+                if(photoUploaded){
+                    ajax.contestParticipateAction(window.top.contest.id, false, photoUploaded, false, function(r){
+                        if(r){
+                            window.top.$("a.contestParticipate").parent().html('{{ 'Already participating'|trans }}');
+                            window.top.$.colorbox.close();
+                        }
+                    });
+                }
 		</script>
 	{% else %}
 	<div class="greybox">
@@ -57,7 +56,7 @@
 			</div>
 			
 	        <div class="actions clearfix">
-	            <input type="submit" name="submit" value="Subir" class="btn_action" />
+	            <input type="submit" name="submit" value="{{ 'Upload'|trans }}" class="btn_action" />
 	        </div>
 		</form>
 	</div>

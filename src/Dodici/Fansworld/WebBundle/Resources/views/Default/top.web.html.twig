@@ -1,19 +1,19 @@
 <div class="top">
     <div class="wrap">
         <div class="users">
-        	Ya somos <strong>{{ usercount }}</strong> fans 
+        	{{ 'We are'|trans }} <strong>{{ usercount }}</strong> fans 
         	{% if is_granted("IS_AUTHENTICATED_FULLY") %}
-        		<a class="btn" href="{{ path('user_invite') }}">Invitá a tus amigos</a>
+        		<a class="btn" href="{{ path('user_invite') }}">{{ 'Invite your friends'|trans }}</a>
         	{% else %}
-        		<a class="btn" href="{{ path('fos_user_registration_register') }}">Sumate</a>
+        		<a class="btn" href="{{ path('fos_user_registration_register') }}">{{ 'Join us'|trans }}</a>
         	{% endif %}
         </div>
         <div class="social">
             <ul>
-                <li><a href="#1">Espa&ntilde;ol</a>
+                <li><a href="{{ path('homepage',{_locale:'es'}) }}">Espa&ntilde;ol</a>
                     <ul>
-                        <li><a href="#1">Ingles</a></li>
-                        <li><a href="#1">Portugues</a></li>
+                        <li><a href="{{ path('homepage',{_locale:'en'}) }}">Ingles</a></li>
+                        <li><a href="#">Portugues</a></li>
                     </ul>
                 </li>
             </ul>

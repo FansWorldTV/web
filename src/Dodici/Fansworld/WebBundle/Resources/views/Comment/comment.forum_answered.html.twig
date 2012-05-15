@@ -9,7 +9,7 @@
 {% block action %}
 	<span class="action_user">
 		<a href="{{ path('user_wall', {username: comment.author.username }) }}">{{ comment.author }}</a> 
-		respondió en 
+		{{ 'answered'|trans }}
 		<a href="{{ path('forum_thread', {'id': comment.share.forumthread.id, 'slug': comment.share.forumthread.slug}) }}">{{ comment.share.forumthread }}</a>
 	</span>
 {% endblock %}

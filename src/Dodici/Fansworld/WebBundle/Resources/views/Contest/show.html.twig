@@ -1,6 +1,6 @@
 {% extends "DodiciFansworldWebBundle::web.html.twig" %}
 
-{% block title %}{{ parent() }} - Contest{% endblock %}
+{% block title %}{{ parent() }} - {{ 'Contents'|trans }}{% endblock %}
 
 {% block content %}
 <div class="col_468 left margin contests">
@@ -17,7 +17,7 @@
             <div class="hidden" id="formParticipate">
                 <form action="" class="formParticipate">
                     <textarea name="content"></textarea>
-                    <input type="submit" value="Participar" name="submit"/>
+                    <input type="submit" value="{{ 'Participate'|trans }}" name="submit"/>
                 </form>
             </div>
             <div class="contenido">
@@ -25,9 +25,9 @@
                     {{ contest.content|raw() }}
                 </div>
                 {% if isParticipant %}
-                    <div class="options">Ya estas participando</div>
+                    <div class="options">{{ 'Already participating'|trans }}</div>
                 {% else %}
-                    <div class="options"><a class="btn_action2 contestParticipate" href="#1">Participar</a></div>
+                    <div class="options"><a class="btn_action2 contestParticipate" href="#1">{{ 'Participate'|trans }}</a></div>
                 {% endif %}
             </div>
             
@@ -40,10 +40,10 @@
             {% if contest.type != typeParticipate %}
                 <div id="tabs" class="marginTop10">
                     <ul>
-                        <li><a href="#tabs-1">Participantes</a></li>
-                        <li><a href="#tabs-2">Ganadores</a></li>
+                        <li><a href="#tabs-1">{{ 'Participants'|trans }}</a></li>
+                        <li><a href="#tabs-2">{{ 'Winners'|trans }}</a></li>
                         {% if contest.type > 1 %}
-                            <li><a href="#tabs-3">Publicaciones</a></li>
+                            <li><a href="#tabs-3">{{ 'Publications'|trans }}</a></li>
                         {% endif %}
                     </ul>
                     <div id="tabs-1">
@@ -54,7 +54,7 @@
                         </ul>
                         {% if addMoreParticipants %}
                             <div class="morelink">
-                                <a id="addMoreParticipants" href="">Ver más</a>
+                                <a id="addMoreParticipants" href="">{{ 'View more'|trans }}</a>
                             </div>
                         {% endif %}
                     </div>
@@ -69,20 +69,20 @@
                         {% if texts|length > 0 %}
                             <ul>
                                 {% for text in texts %}
-                                    <li class="text">{{ text.text }} , Votos: {{ text.votes }} {% if not voted %}<a class="vote button" participantid="{{ text.participantId }}" href="#">Votar</a>{% endif %}</li>
+                                    <li class="text">{{ text.text }} , {{ 'Votes'|trans }}: {{ text.votes }} {% if not voted %}<a class="vote button" participantid="{{ text.participantId }}" href="#">{{ 'Vote'|trans }}</a>{% endif %}</li>
                                 {% endfor %}
                             </ul>
                         {% endif %}
                         {% if files|length > 0 %}
                             <ul>
                                 {% for file in files %}
-                                    <li>{{ file.file.id }}, Author: {{ file.author }}, Votos: {{ file.votes }} {% if not voted %}<a class="vote button" participantid="{{ file.participantId }}" href="#">Votar</a>{% endif %}</li>
+                                    <li>{{ file.file.id }}, {{ 'Author'|trans }}: {{ file.author }}, {{ 'Votes'|trans }}: {{ file.votes }} {% if not voted %}<a class="vote button" participantid="{{ file.participantId }}" href="#">{{ 'Vote'|trans }}</a>{% endif %}</li>
                                 {% endfor %}
                             </ul>
                         {% endif %}
                         {% if addMoreParticipants %}
                             <div class="morelink">
-                                <a id="addMoreElements" href="">Ver más</a>
+                                <a id="addMoreElements" href="">{{ 'View more'|trans }}</a>
                             </div>
                         {% endif %}
                     </div>
@@ -93,7 +93,7 @@
     <div id="participateSplash" class="hidden">
         <div class="2">
             <textarea></textarea>
-            <input type="button" value="Enviar"/>
+            <input type="button" value="{{ 'Submit'|trans }}"/>
         </div>
         <div class="3">
             
