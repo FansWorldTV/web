@@ -216,7 +216,7 @@ class ContestController extends SiteController
     {
         $request = $this->getRequest();
         $filter = $request->get('filter', false);
-        $page = $request->get('page', 0);
+        $page = $request->get('page', 1);
         $page--;
         $offset = $page * self::contestLimit;
 

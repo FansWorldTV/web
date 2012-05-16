@@ -57,5 +57,4 @@ class ComplaintRepository extends CountBaseRepository
         
         return $query->getResult();
     }
-
 }

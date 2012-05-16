@@ -19,6 +19,7 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
  */
 class ComplaintController extends SiteController
 {
+    const LIMIT_LIST = 10;
 
     /**
      * @Route("/ajax/report", name= "complaint_make")
@@ -99,8 +100,50 @@ class ComplaintController extends SiteController
      */
     public function listAction()
     {
-        $complaints = $this->getRepository('Complaint')->getByEntity();
-        return array('complaints' => $complaints);
+        $complaints = $this->getRepository('Complaint')->getByEntity(self::LIMIT_LIST);
+        $countAll = $this->getRepository('Complaint')->countBy(array());
+        
+        $addMore = $countAll > self::LIMIT_LIST ?  true : false;
+        
+        return array('complaints' => $complaints, 'addMore' => $addMore);
+    }
+    
+    /**
+     * ajax list complaints 
+     * @Route("/ajax/reports", name="complaint_ajaxlist")
+     */
+    public function ajaxListComplaintsAction()
+    {
+        $request = $this->getRequest();
+        $complaintType = $request->get('type', null);
+        $page = $request->get('page', 1);
+        $page = (int) $page;
+        $offset = ( $page -1 ) * self::LIMIT_LIST;
+        
+        if(empty($complaintType)){
+            $complaintType = null;
+        }
+        
+        $response = array();
+        
+        $complaints = $this->getRepository('Complaint')->getByEntity(self::LIMIT_LIST, $offset, $complaintType);
+        $countAll = $this->getRepository('Complaint')->countBy(array());
+        
+        $pageCount= $countAll / self::LIMIT_LIST;
+        $response['addMore'] = $pageCount > $page ? true : false;
+        
+        foreach($complaints as $complaint){
+            $response['complaints'][] = array(
+                'author' => (string) $complaint->getAuthor(),
+                'category' => $complaint->getComplaintCategory(),
+                'content' => $complaint->getContent(),
+                'createdAt' => $complaint->getCreatedAt()->format('d/m/Y H:i'),
+                'active' => $complaint->getActive(),
+                'target' => $complaint->getTarget() ? $complaint->getTarget()->getId() : false
+            );
+        }
+        
+        return $this->jsonResponse($response);
     }
 
 }

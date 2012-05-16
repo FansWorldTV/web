@@ -31,6 +31,21 @@
                 </li>
             {% endfor %}
         </ul>
+        {% if addMore %}
+            <a href="#" id="addMore" class="loadmore complaints">{{ 'Add more'|trans }}</a>
+        {% endif %}
     </div>
+</div>
+<div id="template" class="hidden">
+    <ul class="listComplaints">
+        <li>
+            <span class="author"><label>{{ 'Author'|trans }}:</label></span>
+            <span class="category"><label>{{ 'Category'|trans }}: </label></span>
+            <span class="cContent"><label>{{ 'Content'|trans }}: </label></span>
+            <span class="createdAt"><label>{{ 'Date of creation'|trans }}: </label></span>
+            <span class="cActive"><label>{{ 'Active'|trans }}: </label></span>
+            <span class="target"><label>{{ 'User reported'|trans }}: </label></span>
+        </li>
+    </ul>
 </div>
 {% endblock %}

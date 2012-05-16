@@ -1646,6 +1646,53 @@ var forum = {
     
 };
 
+
+var complaint = {
+    listType: [],
+    pageList : 1,
+    init: function(){
+        $("#addMore.complaints").live('click', complaint.pager());
+    },
+    pager: function(){
+        ajax.genericAction('complaint_ajaxlist', {
+            'page': complaint.pageList, 
+            'type': complaint.listType
+        }, function(response){
+            if(response){
+                console.log(response);
+                for(i in response.complaints){
+                    var element = response.complaints[i];
+                    var template = $("#template .listComplaints li").clone();
+                    template.find('.author').append(element.author);
+                    template.find('.category').append(element.category);
+                    template.find('.cContent').append(element.content);
+                    template.find('.createdAt').append(element.createdAt);
+                    var active = element.active ? 'activado' : 'desactivado';
+                    template.find('.cActive').append(active);
+                    if(element.target){
+                        template.find('.target').append(element.target);
+                    }else{
+                        template.find('.target').remove();
+                    }
+                    
+                    console.log(template);
+                    
+                    $("ul.listComplaints").append(template);
+                }
+                
+                complaint.pageList++;
+                if(response.addMore){
+                    $("#addMore").show();
+                }else{
+                    $("#addMore").remove();
+                }
+            }
+        }, function(error){
+            console.error(error);
+        });
+    }
+};
+
 function resizeColorbox(options) {
     $.colorbox.resize(options);
 }
