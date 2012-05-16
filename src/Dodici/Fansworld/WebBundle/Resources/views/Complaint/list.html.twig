@@ -9,10 +9,9 @@
                 <ul>
                     <li><a href="#1" class="titleType">Tipo de Concurso</a>
                         <ul class="complaintType">
-                            <li><a href="#">{{ 'All'|trans }}</a></li>
-                            <li class="1"><a href="#">Foto</a></li>
-                            <li class="2"><a href="#">Video</a></li>
-                            <li class="3"><a href="#">Comentario</a></li>
+                            <li class="photo"><a href="#">Foto</a></li>
+                            <li class="video"><a href="#">Video</a></li>
+                            <li class="comment"><a href="#">Comentario</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -48,4 +47,9 @@
         </li>
     </ul>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        complaint.init();
+    });
+</script>
 {% endblock %}

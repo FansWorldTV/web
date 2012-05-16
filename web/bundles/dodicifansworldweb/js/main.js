@@ -1649,11 +1649,26 @@ var forum = {
 
 var complaint = {
     listType: [],
-    pageList : 1,
+    pageList : 2,
     init: function(){
-        $("#addMore.complaints").live('click', complaint.pager());
+        complaint.changeType();
+        $("#addMore.complaints").live('click', function(){
+            return complaint.pager()
+        });
+    },
+    changeType: function(){
+        $(".complaints .complaintType li a").live('click', function(){
+            var self = $(this);
+            self.toggleClass('bold');
+            if( complaint.listType.indexOf(self.parent().attr('class')) > -1 ){
+                complaint.listType = removeArrayElement(complaint.listType, self.parent().attr('class'));                
+            }else{
+                complaint.listType.push(self.parent().attr('class'));
+            }
+        });
     },
     pager: function(){
+        $("#addMore").addClass('loading');
         ajax.genericAction('complaint_ajaxlist', {
             'page': complaint.pageList, 
             'type': complaint.listType
@@ -1683,6 +1698,7 @@ var complaint = {
                 complaint.pageList++;
                 if(response.addMore){
                     $("#addMore").show();
+                    $("#addMore").removeClass('loading');
                 }else{
                     $("#addMore").remove();
                 }
@@ -1690,6 +1706,8 @@ var complaint = {
         }, function(error){
             console.error(error);
         });
+        
+        return false;
     }
 };
 
@@ -1708,4 +1726,12 @@ function askText(callback) {
             }); 
         }
     });
+}
+
+function removeArrayElement(array, element){
+    var idx = array.indexOf(element); // Find the index
+    console.log(idx);
+    if(idx!=-1) array.splice(idx, 1); // Remove it if really found!
+
+    return array;
 }
