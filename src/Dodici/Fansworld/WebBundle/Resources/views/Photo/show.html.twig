@@ -7,10 +7,10 @@
     <div class="media">
         <div class="media_content">
             {% if prev %}
-            <a class="btn_prev" href="{{ path('photo_show', {'id': prev.id, 'slug': prev.slug}) }}" title="anterior">{{ 'previous|trans }}</a>
+            <a class="btn_prev" href="{{ path('photo_show', {'id': prev.id, 'slug': prev.slug}) }}" title="anterior">{{ 'previous'|trans }}</a>
             {% endif %}
             {% if next %}
-            <a class="btn_next" href="{{ path('photo_show', {'id': next.id, 'slug': next.slug}) }}" title="siguiente">{{ 'next|trans }}</a>
+            <a class="btn_next" href="{{ path('photo_show', {'id': next.id, 'slug': next.slug}) }}" title="siguiente">{{ 'next'|trans }}</a>
             {% endif %}
             <a class="media_img colorbox" href="{% path photo.image, 'huge' %}">{% thumbnail photo.image, 'big' %}</a>
         </div>

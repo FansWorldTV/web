@@ -20,18 +20,17 @@
         <ul class="listComplaints">
             {% for complaint in complaints%}
                 <li>
-                    <span><label>Autor:</label>{{ complaint.author }}</span>
-                    <span><label>Categoría: </label>{{ complaint.complaintcategory }}</span>
-                    <span><label>Contenido: </label>{{ complaint.content|raw }}</span>
-                    <span><label>Fecha de creación: </label>{{ complaint.createdAt|date()}}</span>
-                    <span><label>Activo: </label>{{ complaint.active }}</span>
+                    <span><label>{{ 'Author'|trans }}:</label>{{ complaint.author }}</span>
+                    <span><label>{{ 'Category'|trans }}: </label>{{ complaint.complaintcategory }}</span>
+                    <span><label>{{ 'Content'|trans }}: </label>{{ complaint.content|raw }}</span>
+                    <span><label>{{ 'Date of creation'|trans }}: </label>{{ complaint.createdAt|date()}}</span>
+                    <span><label>{{ 'Active'|trans }}: </label>{{ complaint.active }}</span>
                     {% if complaint.target %}
-                        <span><label>Usuario reportado: </label>{{ complaint.target }}</span>
+                        <span><label>{{ 'User reported'|trans }}: </label>{{ complaint.target }}</span>
                     {% endif %}
                 </li>
             {% endfor %}
         </ul>
     </div>
 </div>
-
 {% endblock %}
