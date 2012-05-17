@@ -135,7 +135,7 @@ class ComplaintController extends SiteController
         foreach($complaints as $complaint){
             $response['complaints'][] = array(
                 'author' => (string) $complaint->getAuthor(),
-                'category' => $complaint->getComplaintCategory(),
+                'category' => (string) $complaint->getComplaintCategory(),
                 'content' => $complaint->getContent(),
                 'createdAt' => $complaint->getCreatedAt()->format('d/m/Y H:i'),
                 'active' => $complaint->getActive(),

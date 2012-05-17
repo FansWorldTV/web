@@ -34,44 +34,50 @@ class ComplaintRepository extends CountBaseRepository
 
     public function getByEntity($limit = null, $offset = null, array $groupBy = null)
     {
-        if (!$groupBy) {
+        if (!$groupBy || count($groupBy) < 1) {
             $query = $this->_em->createQuery('
                 SELECT c 
                 FROM \Dodici\Fansworld\WebBundle\Entity\Complaint c
                 GROUP BY c.video, c.photo, c.comment
             ');
         } else {
+            
             $validGroups = array(
                 'video',
                 'photo',
                 'comment'
             );
-            
+
             $valid = false;
-            foreach($validGroups as $group){
+            foreach ($validGroups as $group) {
                 $valid = in_array($group, $groupBy);
+                if($valid)
+                    break;
             }
-            if(!$valid)
+            if (!$valid)
                 return false;
-            
-            if(count($groupBy) > 1){
+
+            if (count($groupBy) > 1) {
                 $groups = implode(', c.', $groupBy);
-            }else{
+                $groups = "c." . $groups;
+            } else {
                 $groups = "c." . $groupBy[0];
             }
-            
+
+
             $query = $this->_em->createQuery('
                 SELECT c 
                 FROM \Dodici\Fansworld\WebBundle\Entity\Complaint c
                 GROUP BY ' . $groups . '
             ');
         }
-
+        
         if ($limit !== null)
             $query = $query->setMaxResults((int) $limit);
         if ($offset !== null)
             $query = $query->setFirstResult((int) $offset);
-        
+
         return $query->getResult();
     }
+
 }

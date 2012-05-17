@@ -1658,6 +1658,7 @@ var complaint = {
     },
     changeType: function(){
         $(".complaints .complaintType li a").live('click', function(){
+            $(".cont ul.listComplaints li").remove();
             var self = $(this);
             self.toggleClass('bold');
             if( complaint.listType.indexOf(self.parent().attr('class')) > -1 ){
@@ -1665,6 +1666,9 @@ var complaint = {
             }else{
                 complaint.listType.push(self.parent().attr('class'));
             }
+            
+            complaint.pageList = 1;
+            complaint.pager();
         });
     },
     pager: function(){
@@ -1674,25 +1678,25 @@ var complaint = {
             'type': complaint.listType
         }, function(response){
             if(response){
-                console.log(response);
                 for(i in response.complaints){
                     var element = response.complaints[i];
                     var template = $("#template .listComplaints li").clone();
+                    
                     template.find('.author').append(element.author);
                     template.find('.category').append(element.category);
                     template.find('.cContent').append(element.content);
                     template.find('.createdAt').append(element.createdAt);
+                    
                     var active = element.active ? 'activado' : 'desactivado';
                     template.find('.cActive').append(active);
+                    
                     if(element.target){
                         template.find('.target').append(element.target);
                     }else{
                         template.find('.target').remove();
                     }
                     
-                    console.log(template);
-                    
-                    $("ul.listComplaints").append(template);
+                    $(".cont ul.listComplaints").append(template);
                 }
                 
                 complaint.pageList++;
