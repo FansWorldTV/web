@@ -54,20 +54,25 @@ class ComplaintRepository extends CountBaseRepository
                 if($valid)
                     break;
             }
+            
             if (!$valid)
                 return false;
 
             if (count($groupBy) > 1) {
                 $groups = implode(', c.', $groupBy);
                 $groups = "c." . $groups;
+                
+                $where = implode(' IS NOT null OR c.', $groupBy);
+                $where = 'c.' . $where . ' IS NOT null';
             } else {
                 $groups = "c." . $groupBy[0];
+                $where = "c.".$groupBy[0] . " IS NOT null";
             }
-
-
+            
             $query = $this->_em->createQuery('
                 SELECT c 
                 FROM \Dodici\Fansworld\WebBundle\Entity\Complaint c
+                WHERE '.$where.' 
                 GROUP BY ' . $groups . '
             ');
         }

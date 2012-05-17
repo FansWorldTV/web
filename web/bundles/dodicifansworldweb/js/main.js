@@ -1672,7 +1672,9 @@ var complaint = {
         });
     },
     pager: function(){
+        $("a.titleType").addClass('loading');
         $("#addMore").addClass('loading');
+        $("ul.complaintType").addClass('hidden');
         ajax.genericAction('complaint_ajaxlist', {
             'page': complaint.pageList, 
             'type': complaint.listType
@@ -1702,10 +1704,12 @@ var complaint = {
                 complaint.pageList++;
                 if(response.addMore){
                     $("#addMore").show();
-                    $("#addMore").removeClass('loading');
                 }else{
                     $("#addMore").remove();
                 }
+                $("a.titleType").removeClass('loading');
+                $("#addMore").removeClass('loading');
+                $("ul.complaintType").removeClass('hidden');
             }
         }, function(error){
             console.error(error);
