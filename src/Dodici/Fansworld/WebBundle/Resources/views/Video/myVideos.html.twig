@@ -27,7 +27,6 @@
     <div class="cont">
         <h2 class="border0">Videos</h2>
         
-        {% if ( not appstate.idol(user))%}
             {% if videos|length>0 %}
             <ul class="videos">
                     {% for video in videos %}
@@ -62,37 +61,7 @@
             {% else %}
                 <h2>No se encontraron videos.</h2>
             {% endif %}
-        {% else %}
-                <div class="idolVideos">
-                	{% if highlightVideo %}
-                    <div class="highLightedVideo">
-                        <iframe class="videoframe" src="{{ flumotiontwig.videoplayerurl(highlightVideo) }}"></iframe>
-                    </div>
-                    {% endif %}
-                    {% if videos|length > 0 %}
-                    <ul class="videos">
-                        {% for video in videos %}
-                            <li class="video{% if ((loop.index0 + 1)  % 3)==0  %} last{% endif %}" >
-                                {% if video.image %}
-                                    <a href="{{ path('video_show', {id: video.id, slug: video.slug}) }}">
-                                                {% thumbnail video.image, 'video' with {'class': 'wall'} %}
-                                    </a>
-                                {% endif %}
-                                <a href="{{ path('video_show', {id: video.id, slug: video.slug}) }}">
-                                    <span class="title">{{ video.title }}</span>
-                                </a>
-                                <br/>
-                                <span class="author">Por <a href="{{ path('user_wall', {username: video.author.username}) }}">{{ video.author }}</a></span>
-                                <br/>
-                                <span class="description">{{ video.content }}</span>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                        <h2>No se encontraron videos.</h2>
-                    {% endif %}
-                </div>
-        {% endif %}
+        
         
         {% if addMore %}
             <a href="#" id="addMore" class="loadmore myVideos marginTop10">Agregar Más</a>

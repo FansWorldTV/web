@@ -32,10 +32,8 @@
         <field name="birthday" column="birthday" type="datetime" nullable="true" />
         <field name="score" column="score" type="integer" nullable="true" />
         <field name="content" column="content" type="text" nullable="true" />
-        <field name="nicknames" column="nicknames" type="text" nullable="true" />
         <field name="friendCount" column="friendCount" type="integer" nullable="false" />
         <field name="idolCount" column="idolCount" type="integer" nullable="false" />
-        <field name="fanCount" column="fanCount" type="integer" nullable="false" />
         
         <many-to-one
             field="country"
@@ -114,20 +112,6 @@
                 field="hasinterests"
                 target-entity="Dodici\Fansworld\WebBundle\Entity\HasInterest"
                 mapped-by="author"
-                orphan-removal="true"
-                >
-				<cascade>
-                	<cascade-remove/>
-                	<cascade-persist/>
-            	</cascade>
-                <orphan-removal>true</orphan-removal>
-
-        </one-to-many>
-        
-        <one-to-many
-                field="idolcareers"
-                target-entity="Dodici\Fansworld\WebBundle\Entity\IdolCareer"
-                mapped-by="idol"
                 orphan-removal="true"
                 >
 				<cascade>

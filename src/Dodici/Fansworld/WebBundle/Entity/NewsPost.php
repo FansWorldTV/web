@@ -95,6 +95,11 @@ class NewsPost implements Translatable
     protected $hasusers;
     
     /**
+     * @ORM\OneToMany(targetEntity="HasIdol", mappedBy="newspost", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $hasidols;
+    
+    /**
      * @ORM\OneToMany(targetEntity="HasTeam", mappedBy="newspost", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $hasteams;
@@ -496,5 +501,25 @@ class NewsPost implements Translatable
     public function getCommentCount()
     {
         return $this->commentCount;
+    }
+
+    /**
+     * Add hasidols
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\HasIdol $hasidols
+     */
+    public function addHasIdol(\Dodici\Fansworld\WebBundle\Entity\HasIdol $hasidols)
+    {
+        $this->hasidols[] = $hasidols;
+    }
+
+    /**
+     * Get hasidols
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getHasidols()
+    {
+        return $this->hasidols;
     }
 }

@@ -28,7 +28,7 @@ class IdolCareerAdmin extends Admin
     {
         $formMapper
             ->add('idol', NULL, array (), array ())
-            ->add('team', NULL, array (), array ())
+            ->add('team', NULL, array ('required' => false), array ())
             ->add('teamname', NULL, array (), array ())
             ->add('position', NULL, array (), array ())
             ->add('content', NULL, array (), array ())
@@ -62,7 +62,7 @@ class IdolCareerAdmin extends Admin
             ->add('position', 'doctrine_orm_string', array (  'field_type' => 'text',  'field_options' =>   array (  ),  'options' =>   array (  ),  'field_name' => 'position',))
             ->add('content', 'doctrine_orm_string', array (  'field_type' => 'text',  'field_options' =>   array (  ),  'options' =>   array (  ),  'field_name' => 'content',))
             ->add('active', 'doctrine_orm_boolean', array (  'field_type' => 'sonata_type_boolean',  'field_options' =>   array (  ),  'options' =>   array (  ),  'field_name' => 'active',))
-            ->add('idol', 'doctrine_orm_model', array (  'field_type' => 'entity',  'field_options' =>   array (    'class' => 'Application\\Sonata\\UserBundle\\Entity\\User',  ),  'options' =>   array (  ),  'operator_type' => 'sonata_type_boolean',  'operator_options' =>   array (  ),  'field_name' => 'idol',  'mapping_type' => 2,))
+            ->add('idol', 'doctrine_orm_model', array (  'field_type' => 'entity',  'field_options' =>   array (    'class' => 'Dodici\\Fansworld\\WebBundle\\Entity\\Idol',  ),  'options' =>   array (  ),  'operator_type' => 'sonata_type_boolean',  'operator_options' =>   array (  ),  'field_name' => 'idol',  'mapping_type' => 2,))
             ->add('team', 'doctrine_orm_model', array (  'field_type' => 'entity',  'field_options' =>   array (    'class' => 'Dodici\\Fansworld\\WebBundle\\Entity\\Team',  ),  'options' =>   array (  ),  'operator_type' => 'sonata_type_boolean',  'operator_options' =>   array (  ),  'field_name' => 'team',  'mapping_type' => 2,))
         ;
     }

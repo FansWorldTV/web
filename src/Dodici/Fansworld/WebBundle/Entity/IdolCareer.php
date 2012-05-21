@@ -28,9 +28,9 @@ class IdolCareer implements Translatable
     private $id;
 
     /**
-     * @var Application\Sonata\UserBundle\Entity\User
+     * @var Idol
      *
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Idol")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idol_id", referencedColumnName="id")
      * })
@@ -278,12 +278,13 @@ class IdolCareer implements Translatable
         return $this->active;
     }
 
+
     /**
      * Set idol
      *
-     * @param Application\Sonata\UserBundle\Entity\User $idol
+     * @param Dodici\Fansworld\WebBundle\Entity\Idol $idol
      */
-    public function setIdol(\Application\Sonata\UserBundle\Entity\User $idol)
+    public function setIdol(\Dodici\Fansworld\WebBundle\Entity\Idol $idol)
     {
         $this->idol = $idol;
     }
@@ -291,7 +292,7 @@ class IdolCareer implements Translatable
     /**
      * Get idol
      *
-     * @return Application\Sonata\UserBundle\Entity\User 
+     * @return Dodici\Fansworld\WebBundle\Entity\Idol 
      */
     public function getIdol()
     {

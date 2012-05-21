@@ -179,6 +179,11 @@ class Video implements Translatable
     protected $hasusers;
     
     /**
+     * @ORM\OneToMany(targetEntity="HasIdol", mappedBy="video", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $hasidols;
+    
+    /**
      * @ORM\OneToMany(targetEntity="HasTeam", mappedBy="video", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $hasteams;
@@ -770,5 +775,25 @@ class Video implements Translatable
     public function getEvent()
     {
         return $this->event;
+    }
+
+    /**
+     * Add hasidols
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\HasIdol $hasidols
+     */
+    public function addHasIdol(\Dodici\Fansworld\WebBundle\Entity\HasIdol $hasidols)
+    {
+        $this->hasidols[] = $hasidols;
+    }
+
+    /**
+     * Get hasidols
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getHasidols()
+    {
+        return $this->hasidols;
     }
 }

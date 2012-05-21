@@ -138,6 +138,11 @@ class Photo
     protected $hasteams;
     
     /**
+     * @ORM\OneToMany(targetEntity="HasIdol", mappedBy="photo", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $hasidols;
+    
+    /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="photo", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $comments;
@@ -569,5 +574,25 @@ class Photo
     public function getEvent()
     {
         return $this->event;
+    }
+
+    /**
+     * Add hasidols
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\HasIdol $hasidols
+     */
+    public function addHasIdol(\Dodici\Fansworld\WebBundle\Entity\HasIdol $hasidols)
+    {
+        $this->hasidols[] = $hasidols;
+    }
+
+    /**
+     * Get hasidols
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getHasidols()
+    {
+        return $this->hasidols;
     }
 }

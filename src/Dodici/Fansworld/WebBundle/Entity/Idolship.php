@@ -35,14 +35,14 @@ class Idolship
     private $author;
     
     /**
-     * @var Application\Sonata\UserBundle\Entity\User
+     * @var Idol
      *
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Idol")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="target_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="idol_id", referencedColumnName="id")
      * })
      */
-    private $target;
+    private $idol;
     
     /**
      * @var datetime $createdAt
@@ -81,6 +81,7 @@ class Idolship
         }
     }
     
+
     /**
      * Get id
      *
@@ -112,46 +113,6 @@ class Idolship
     }
 
     /**
-     * Set author
-     *
-     * @param Application\Sonata\UserBundle\Entity\User $author
-     */
-    public function setAuthor(\Application\Sonata\UserBundle\Entity\User $author)
-    {
-        $this->author = $author;
-    }
-
-    /**
-     * Get author
-     *
-     * @return Application\Sonata\UserBundle\Entity\User 
-     */
-    public function getAuthor()
-    {
-        return $this->author;
-    }
-
-    /**
-     * Set target
-     *
-     * @param Application\Sonata\UserBundle\Entity\User $target
-     */
-    public function setTarget(\Application\Sonata\UserBundle\Entity\User $target)
-    {
-        $this->target = $target;
-    }
-
-    /**
-     * Get target
-     *
-     * @return Application\Sonata\UserBundle\Entity\User 
-     */
-    public function getTarget()
-    {
-        return $this->target;
-    }
-
-    /**
      * Set favorite
      *
      * @param boolean $favorite
@@ -174,7 +135,7 @@ class Idolship
     /**
      * Set score
      *
-     * @param boolean $score
+     * @param bigint $score
      */
     public function setScore($score)
     {
@@ -184,10 +145,50 @@ class Idolship
     /**
      * Get score
      *
-     * @return bigint
+     * @return bigint 
      */
     public function getScore()
     {
         return $this->score;
+    }
+
+    /**
+     * Set author
+     *
+     * @param Application\Sonata\UserBundle\Entity\User $author
+     */
+    public function setAuthor(\Application\Sonata\UserBundle\Entity\User $author)
+    {
+        $this->author = $author;
+    }
+
+    /**
+     * Get author
+     *
+     * @return Application\Sonata\UserBundle\Entity\User 
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * Set idol
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Idol $idol
+     */
+    public function setIdol(\Dodici\Fansworld\WebBundle\Entity\Idol $idol)
+    {
+        $this->idol = $idol;
+    }
+
+    /**
+     * Get idol
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Idol 
+     */
+    public function getIdol()
+    {
+        return $this->idol;
     }
 }

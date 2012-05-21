@@ -80,6 +80,13 @@ class Team implements Translatable
     private $external;
     
     /**
+     * @var string $twitter
+     *
+     * @ORM\Column(name="twitter", type="string", length=100, nullable=true)
+     */
+    private $twitter;
+    
+    /**
      * @Gedmo\Slug(fields={"title"}, unique=false)
      * @Gedmo\Translatable
      * @ORM\Column(length=128)
@@ -388,5 +395,25 @@ class Team implements Translatable
     public function getExternal()
     {
         return $this->external;
+    }
+
+    /**
+     * Set twitter
+     *
+     * @param string $twitter
+     */
+    public function setTwitter($twitter)
+    {
+        $this->twitter = $twitter;
+    }
+
+    /**
+     * Get twitter
+     *
+     * @return string 
+     */
+    public function getTwitter()
+    {
+        return $this->twitter;
     }
 }

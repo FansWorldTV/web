@@ -24,7 +24,7 @@ class User extends BaseUser
 	const SEX_FEMALE = 'f';
 	
 	const TYPE_FAN = 1;
-	const TYPE_IDOL = 2;
+	//const TYPE_IDOL = 2;
 	const TYPE_STAFF = 3;
 	
 	/**
@@ -145,12 +145,7 @@ class User extends BaseUser
      * @var string
      */
     private $origin;
-    
-    /**
-     * @var text $nicknames
-     */
-    private $nicknames;
-    
+        
     /**
      * @var Application\Sonata\MediaBundle\Entity\Media
      */
@@ -203,12 +198,7 @@ class User extends BaseUser
      * @var ArrayCollection $hasinterests
      */
     protected $hasinterests;
-    
-    /**
-     * @var ArrayCollection $idolcareers
-     */
-    protected $idolcareers;
-    
+        
     /**
      * @var integer $friendCount
      */
@@ -218,12 +208,7 @@ class User extends BaseUser
      * @var integer $idolCount
      */
     private $idolCount;
-    
-    /**
-     * @var integer $fanCount
-     */
-    private $fanCount;
-    
+        
     public function __construct()
     {
         parent::__construct();
@@ -231,12 +216,10 @@ class User extends BaseUser
     	$this->friendgroups = new ArrayCollection();
     	$this->idolships = new ArrayCollection();
     	$this->hasinterests = new ArrayCollection();
-    	$this->idolcareers = new ArrayCollection();
         $this->privacy = array();
         $this->notifyprefs = array_keys(Notification::getTypeList());
         $this->idolCount = 0;
         $this->friendCount = 0;
-        $this->fanCount = 0;
     }
     
     public function __toString()
@@ -620,27 +603,7 @@ class User extends BaseUser
     {
         return $this->content;
     }
-    
-	/**
-     * Set nicknames
-     *
-     * @param text $nicknames
-     */
-    public function setNicknames($nicknames)
-    {
-        $this->nicknames = $nicknames;
-    }
-
-    /**
-     * Get nicknames
-     *
-     * @return text 
-     */
-    public function getNicknames()
-    {
-        return $this->nicknames;
-    }
-    
+        
 	/**
      * Set type
      *
@@ -998,40 +961,6 @@ class User extends BaseUser
     }
     
 	/**
-     * Add idolcareers
-     *
-     * @param \Dodici\Fansworld\WebBundle\Entity\IdolCareer $idolcareers
-     */
-    public function addIdolcareer(\Dodici\Fansworld\WebBundle\Entity\IdolCareer $idolcareers)
-    {
-        $this->idolcareers[] = $idolcareers;
-    }
-	public function addIdolcareers(\Dodici\Fansworld\WebBundle\Entity\HasInterest $idolcareers)
-    {
-        $this->addIdolcareer($idolcareers);
-    }
-
-    /**
-     * Get idolcareers
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getIdolcareers()
-    {
-        return $this->idolcareers;
-    }
-    
-	/**
-     * Set idolcareers
-     *
-     * @param Doctrine\Common\Collections\Collection $idolcareers
-     */
-    public function setIdolcareers($idolcareers)
-    {
-        $this->idolcareers = $idolcareers;
-    }
-
-	/**
      * Set friendCount
      *
      * @param integer $friendCount
@@ -1073,24 +1002,4 @@ class User extends BaseUser
         return $this->idolCount;
     }
     
-	/**
-     * Set fanCount
-     *
-     * @param integer $fanCount
-     */
-    public function setFanCount($fanCount)
-    {
-        if ($fanCount < 0) $fanCount = 0;
-    	$this->fanCount = $fanCount;
-    }
-
-    /**
-     * Get fanCount
-     *
-     * @return integer 
-     */
-    public function getFanCount()
-    {
-        return $this->fanCount;
-    }
 }

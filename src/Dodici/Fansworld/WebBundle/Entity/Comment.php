@@ -211,6 +211,16 @@ class Comment
     private $meeting;
     
     /**
+     * @var Idol
+     *
+     * @ORM\ManyToOne(targetEntity="Idol")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idol_id", referencedColumnName="id")
+     * })
+     */
+    private $idol;
+    
+    /**
      * @var Comment
      *
      * @ORM\ManyToOne(targetEntity="Comment")
@@ -244,6 +254,11 @@ class Comment
      * @ORM\OneToMany(targetEntity="HasTeam", mappedBy="comment", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $hasteams;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="HasIdol", mappedBy="comment", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $hasidols;
 
     public function __toString()
     {
@@ -841,5 +856,45 @@ class Comment
     public function getMeeting()
     {
         return $this->meeting;
+    }
+
+    /**
+     * Set idol
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Idol $idol
+     */
+    public function setIdol(\Dodici\Fansworld\WebBundle\Entity\Idol $idol)
+    {
+        $this->idol = $idol;
+    }
+
+    /**
+     * Get idol
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Idol 
+     */
+    public function getIdol()
+    {
+        return $this->idol;
+    }
+
+    /**
+     * Add hasidols
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\HasIdol $hasidols
+     */
+    public function addHasIdol(\Dodici\Fansworld\WebBundle\Entity\HasIdol $hasidols)
+    {
+        $this->hasidols[] = $hasidols;
+    }
+
+    /**
+     * Get hasidols
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getHasidols()
+    {
+        return $this->hasidols;
     }
 }

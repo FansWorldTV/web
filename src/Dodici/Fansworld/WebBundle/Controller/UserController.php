@@ -464,34 +464,30 @@ class UserController extends SiteController
             throw new HttpException(404, "No existe el usuario");
         }
 
-        if ($user->getType() == User::TYPE_IDOL) {
-            return array('user' => $user);
-        } else {
-            $loggedUser = $this->get('security.context')->getToken()->getUser();
-            $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
+        $loggedUser = $this->get('security.context')->getToken()->getUser();
+        $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
 
-            $photos = $this->getRepository('Photo')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
-            $albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
+        $photos = $this->getRepository('Photo')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
+        $albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
 
-            $photosTotalCount = $this->getRepository('Photo')->countBy(array('author' => $user->getId(), 'active' => true));
-            $albumsTotalCount = $this->getRepository('Album')->countBy(array('author' => $user->getId(), 'active' => true));
+        $photosTotalCount = $this->getRepository('Photo')->countBy(array('author' => $user->getId(), 'active' => true));
+        $albumsTotalCount = $this->getRepository('Album')->countBy(array('author' => $user->getId(), 'active' => true));
 
-            $viewMorePhotos = $photosTotalCount > self::LIMIT_PHOTOS ? true : false;
-            $viewMoreAlbums = $albumsTotalCount > self::LIMIT_PHOTOS ? true : false;
+        $viewMorePhotos = $photosTotalCount > self::LIMIT_PHOTOS ? true : false;
+        $viewMoreAlbums = $albumsTotalCount > self::LIMIT_PHOTOS ? true : false;
 
-            $loggedUser = $this->get('security.context')->getToken()->getUser();
-            $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
+        $loggedUser = $this->get('security.context')->getToken()->getUser();
+        $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
 
-            return array(
-                'user' => $user,
-                'isLoggedUser' => $isLoggedUser,
-                'photos' => $photos,
-                'albums' => $albums,
-                'viewMorePhotos' => $viewMorePhotos,
-                'viewMoreAlbums' => $viewMoreAlbums,
-                'friendgroups' => $friendGroups
-            );
-        }
+        return array(
+            'user' => $user,
+            'isLoggedUser' => $isLoggedUser,
+            'photos' => $photos,
+            'albums' => $albums,
+            'viewMorePhotos' => $viewMorePhotos,
+            'viewMoreAlbums' => $viewMoreAlbums,
+            'friendgroups' => $friendGroups
+        );
     }
 
     /**

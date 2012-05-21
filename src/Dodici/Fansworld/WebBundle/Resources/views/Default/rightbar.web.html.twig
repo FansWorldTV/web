@@ -5,7 +5,7 @@
                         <ul class="users">
                         	{% for idol in topidols %}
                             <li class="user">
-                                <a href="{{ path('user_wall', {username: idol.username}) }}">
+                                <a href="{{ path('idol_wall', {slug: idol.slug}) }}">
                                     <span class="tooltip">
                                         <h3 class="name">{{ idol }}</h3>
                                         <span class="fans">{{ idol.fanCount }} fans</span>

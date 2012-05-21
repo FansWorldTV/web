@@ -11,7 +11,7 @@
                 <div class="cont clearfix">
                     <h2>Información{% if (user == app.user) %} <a class="more" href="{{ path('fos_user_profile_edit') }}">editar</a>{% endif %}</h2>
                     <div class="user_info">
-                        {% if not appstate.idol(user) %}
+                        
                             <h5>Informacion personal</h5>
                             <table>
                                 <tr>
@@ -40,14 +40,13 @@
                                     <td>{{ user.birthday|date('d/m/Y') }}</td>
                                 </tr>
                                 {% endif %}
-                                {% if user.score and not appstate.idol(user) %}
+                                {% if user.score %}
                                     <tr>
                                         <td class="dato">Puntos</td>
                                         <td>{{ user.score }}</td>
                                     </tr>
                                 {% endif %}
                             </table>
-                        {% endif %}    
                             
                         <h5>Biografía</h5>
                         <table>

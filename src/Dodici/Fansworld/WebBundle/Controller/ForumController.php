@@ -140,8 +140,8 @@ class ForumController extends SiteController
         $user = $this->getRepository('User')->findOneByUsername($username);
         if (!$user instanceof User)
             throw new HttpException(404, 'Usuario no encontrado');
-        if ($user->getType() != User::TYPE_IDOL)
-            throw new HttpException(400, 'Usuario no es ídolo');
+        if ($user->getType() != User::TYPE_STAFF)
+            throw new HttpException(400, 'Usuario no es staff');
 
         $threads = $this->getRepository('ForumThread')->findBy(array('author' => $user->getId()), array('postCount' => 'desc'), self::threadPerPage);
         $countAll = $this->getRepository('ForumThread')->countBy(array('author' => $user->getId()));

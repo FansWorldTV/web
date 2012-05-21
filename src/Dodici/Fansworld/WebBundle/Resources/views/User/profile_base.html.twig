@@ -4,24 +4,16 @@
 
 {% block javascripts %}
 	{{ parent() }}
-                   <script src="{{ asset('bundles/dodicifansworldweb/js/friendship.js') }}" type="text/javascript"></script>
-	{% if appstate.idol(user) %}
-		<script src="{{ asset('bundles/dodicifansworldweb/js/idol_profile.js') }}" type="text/javascript"></script>
-	{% endif %}
+    <script src="{{ asset('bundles/dodicifansworldweb/js/friendship.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
-                <div class="{% if appstate.idol(user) %}idol{% else %}user{% endif %}_profile_head profile_head clearfix">
+                <div class="user_profile_head profile_head clearfix">
                 	{% block profile_head %}
                 	{% block avatar_container %}
-                		{% if not appstate.idol(user) %}
 		                    <div class="avatar">
 		                    	{% block avatar_content %}
-		                    		{% if appstate.idol(user) %}
-		                    			{% set avatar_format = 'medium' %}
-		                    		{% else %}
-		                    			{% set avatar_format = 'small_square' %}
-		                    		{% endif %}
+		                    		{% set avatar_format = 'small_square' %}
 			                    	{% if user == app.user %}
 			                        <a class="change_image" href="{{ path('user_change_image') }}">{{ 'Change'|trans }}</a>
 			                        {% endif %}
@@ -32,14 +24,11 @@
 			                        {% endif %}
 		                        {% endblock %}
 		                    </div>
-	                    {% endif %}
                     {% endblock %}
                     <div class="user_info"> 
                     {% block profile_info %}
                     
-                    	{% if appstate.idol(user) %}
-                    		
-                    	{% else %}
+                    	
 	                        {% set fship = appstate.friendshipwith(user) %}
 		                    {% if appstate.canfriend(user) and fship is null %}
 	                                <div class="addFriend" targetId="{{ user.id }}">
@@ -71,7 +60,6 @@
 	                            	{% thumbnail user.level.image, 'small_square' with {class:'userAvatar', title: user.level.title, alt: user.level.title} %}
 	                            {% endif %}
 	                        </h1>
-                        {% endif %}
                         
                         {% block profile_tabs %}
                         {% if active_tab is not defined %}
@@ -83,13 +71,7 @@
                                 <li><a {% if active_tab == 'wall' %}class="active"{% endif %} href="{{ path('user_wall', {username: user.username}) }}">Muro</a></li>
                                 <li><a {% if active_tab == 'photos' %}class="active"{% endif %} href="{{ path('user_photos', {username: user.username}) }}">{{ 'Photos'|trans }}</a></li>
                                 <li><a {% if active_tab == 'videos' %}class="active"{% endif %} href="{{ path('video_user', {username: user.username}) }}">Videos</a></li>
-                                {% if appstate.idol(user) %}
-                               	<li><a {% if active_tab == 'forum' %}class="active"{% endif %} href="{{ path('forum_user', {username: user.username}) }}">Foro</a></li>
-                                {% endif %}
                                 <li><a {% if active_tab == 'detail' %}class="active"{% endif %} href="{{ path('user_detail', {username: user.username}) }}">Informacion</a></li>
-                                {% if appstate.idol(user) %}
-                               	<li><a {% if active_tab == 'fans' %}class="active"{% endif %} href="{{ path('friendship_user', {username: user.username}) }}">Fans</a></li>
-                                {% endif %}
                             </ul>
                         </div>
                         {% endblock %}
@@ -105,87 +87,8 @@
                 {% endblock %}
 {% endblock %}
 
-{% block centercolumn %}
-	{% if not appstate.idol(user) %}{{ parent() }}{% else %}
-	<div class="col_599 left">
-		{{ block('content') }}
-	</div>
-	{% endif %}
-{% endblock %}
 {% block rightbar %}
-    {% if not appstate.idol(user) %}
-        {{ parent() }}
-    {% else %}
-                <div class="col_169 right">
-                    <div class="idol_specs greybox">
-                            <div class="avatar">
-                                    {{ block('avatar_content') }}
-                                    {% if (app.user != user) %}
-                                            {% set fship = appstate.idolshipwith(user) %}
-                                            {% if fship %}
-                                                    <a class="btn btn_idolship remove" href="#" data-iduser="{{user.id}}">Dejar de ser Fan</a>
-                                            {% else %}
-                                                    <a class="btn btn_idolship add" href="#" data-iduser="{{user.id}}">Ser Fan</a>
-                                            {% endif %}
-                                    {% endif %}
-                            </div>
-                            <div class="specs greybox">
-                                    <div class="idolname clearfix">
-                                            <h1>{{ user }}</h1>
-                                    </div>
-                                    <ul>
-                                            {% if user.nicknames %}   
-                                                <li>{{ 'Nicknames'|trans }}: {{ user.nicknames|nl2br }}</li>
-                                            {% endif %}
-                                            
-                                            {% if user.sex %}
-                                                <li>{{ 'Gender'|trans }}: {% if user.sex == 'm' %}{{ 'Male'|trans }}{% else %}{{ 'Female'|trans }}{% endif %}</li>
-                                            {% endif %}
-                                        
-                                            {% if user.country %}
-                                                <li>{{ 'Country'|trans }}: {{ user.country }}</li>
-                                            {% endif %}
-                                                
-                                            {% if user.city %}   
-                                                <li>{{ 'City'|trans }}: {{ user.city }}</li>
-                                            {% endif %}
-                                            
-                                            {% if user.origin %}   
-                                                <li>Origen: {{ user.origin }}</li>
-                                            {% endif %}
-                                                    
-                                            {% set currentcareer = appstate.currentcareer(user) %}
-                                            {% if currentcareer %}
-                                                <li>
-                                                        {% if currentcareer.interest.image %}
-                                                                {% thumbnail currentcareer.interest.image, 'avatar' with {class: 'interest-icon'} %}
-                                                        {% endif %}
-                                                        <span class="interest-text">
-                                                                {{currentcareer.interest}}
-                                                                {% if currentcareer.position %}
-                                                                        - {{currentcareer.position}}
-                                                                {% endif %}
-                                                                {% if currentcareer.datefrom %}
-                                                                        desde {{currentcareer.datefrom|date('d/m/Y')}}
-                                                                {% endif %}
-                                                                {% if currentcareer.dateto %}
-                                                                        hasta {{currentcareer.dateto|date('d/m/Y')}}
-                                                                {% endif %}
-                                                        </span>
-                                                </li>
-                                            {% endif %}
-                                            {% if user.birthday %}
-                                                    <li>{{ 'Birthday'|trans }}: {{user.birthday|date('d/m/Y')}}</li>
-                                            {% endif %}
-                                    </ul>
-                            </div>
-
-                            <div class="specs greybox marginTop10 padding10 {% if not appstate.idolshipwith(user) %}hidden{% endif %}">
-                                <a class="btn center alignCenter btn_picture btn_upload_photo cboxElement" href="{{ path('photo_upload') }}?idolToTag={{ user.id }}">{{ 'Upload photo'|trans}}</a>
-                            </div>
-                    </div>
-                </div>
-    {% endif %}
+    {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function(){
             friendship.init();

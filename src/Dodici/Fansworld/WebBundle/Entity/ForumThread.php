@@ -76,6 +76,11 @@ class ForumThread implements Translatable
     protected $hasteams;
     
     /**
+     * @ORM\OneToMany(targetEntity="HasIdol", mappedBy="forumthread", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $hasidols;
+    
+    /**
      * @var integer $postCount
      *
      * @ORM\Column(name="postcount", type="integer", nullable=false)
@@ -362,5 +367,25 @@ class ForumThread implements Translatable
 	public function addHasteams($hasteams)
     {
         $this->addHasTeam($hasteams);
+    }
+
+    /**
+     * Add hasidols
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\HasIdol $hasidols
+     */
+    public function addHasIdol(\Dodici\Fansworld\WebBundle\Entity\HasIdol $hasidols)
+    {
+        $this->hasidols[] = $hasidols;
+    }
+
+    /**
+     * Get hasidols
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getHasidols()
+    {
+        return $this->hasidols;
     }
 }

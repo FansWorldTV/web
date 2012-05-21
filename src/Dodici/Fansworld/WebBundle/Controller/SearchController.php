@@ -222,8 +222,8 @@ class SearchController extends SiteController
         $user = $this->get('security.context')->getToken()->getUser();
         if ($user instanceof User) {
             $response = array();
-            $searchIdol = $this->getRepository('User')->SearchIdolFront($user, $query, $isIdol, self::LIMIT_SEARCH, $offset);
-            $countTotal = $this->getRepository('User')->CountSearchIdolFront($user, $query, $isIdol);
+            $searchIdol = $this->getRepository('Idol')->SearchFront($user, $query, $isIdol, self::LIMIT_SEARCH, $offset);
+            $countTotal = $this->getRepository('Idol')->CountSearchFront($user, $query, $isIdol);
 
             if ($countTotal > 0) {
                 $response['gotMore'] = ($countTotal / self::LIMIT_SEARCH) > $page ? true : false;
@@ -231,11 +231,9 @@ class SearchController extends SiteController
                 foreach ($searchIdol as $idol) {
                     $response['idols'][] = array(
                         'id' => $idol[0]->getId(),
-                    	'username' => $idol[0]->getUsername(),
+                    	'slug' => $idol[0]->getSlug(),
                         'name' => (string) $idol[0],
-                        'image' => $this->getImageUrl($idol[0]->getImage()),
-                        'commonFriends' => $idol['commonfriends'],
-                        'isidol' => $idol['isidol']
+                        'image' => $this->getImageUrl($idol[0]->getImage())
                     );
                 }
             }

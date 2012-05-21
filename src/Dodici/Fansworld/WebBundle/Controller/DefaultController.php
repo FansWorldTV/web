@@ -91,8 +91,9 @@ class DefaultController extends SiteController
         $user = $this->get('security.context')->getToken()->getUser();
 
         $repo = $this->getRepository('User');
+        $irepo = $this->getRepository('Idol');
         $topfans = $repo->findBy(array('enabled' => true, 'type' => User::TYPE_FAN), array('score' => 'DESC', 'friendCount' => 'DESC'), 15);
-        $topidols = $repo->findBy(array('enabled' => true, 'type' => User::TYPE_IDOL), array('fanCount' => 'DESC'), 15);
+        $topidols = $irepo->findBy(array('active' => true), array('fanCount' => 'DESC'), 15);
 
         return array('user' => $user, 'topfans' => $topfans, 'topidols' => $topidols);
     }

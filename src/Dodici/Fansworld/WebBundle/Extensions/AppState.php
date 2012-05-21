@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Extensions;
 
+use Dodici\Fansworld\WebBundle\Entity\Idol;
+
 use Dodici\Fansworld\WebBundle\Entity\Team;
 use Dodici\Fansworld\WebBundle\Entity\Photo;
 use Dodici\Fansworld\WebBundle\Entity\Comment;
@@ -254,20 +256,14 @@ class AppState
         return $frep->BetweenUsers($user, $target);
     }
 
-    public function idolshipWith(User $target)
+    public function idolshipWith(Idol $target)
     {
         if (!($this->user instanceof User))
             return false;
         $user = $this->user;
 
-        if ($user == $target)
-            return false;
-
-        if ($target->getType() != User::TYPE_IDOL)
-            return false;
-
         $frep = $this->getRepository('DodiciFansworldWebBundle:Idolship');
-        return $frep->findOneBy(array('author' => $user->getId(), 'target' => $target->getId()));
+        return $frep->findOneBy(array('author' => $user->getId(), 'idol' => $target->getId()));
     }
 
     public function teamshipWith(Team $team)
@@ -278,11 +274,6 @@ class AppState
 
         $frep = $this->getRepository('DodiciFansworldWebBundle:Teamship');
         return $frep->findOneBy(array('author' => $user->getId(), 'team' => $team->getId()));
-    }
-
-    public function isIdol(User $user)
-    {
-        return $user->getType() == User::TYPE_IDOL;
     }
 
     public function getType($entity)

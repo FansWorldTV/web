@@ -137,6 +137,11 @@ class Album
      */
     protected $hasusers;
     
+    /**
+     * @ORM\OneToMany(targetEntity="HasIdol", mappedBy="album", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $hasidols;
+    
     public function __construct()
     {
         $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
@@ -578,5 +583,25 @@ class Album
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Add hasidols
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\HasIdol $hasidols
+     */
+    public function addHasIdol(\Dodici\Fansworld\WebBundle\Entity\HasIdol $hasidols)
+    {
+        $this->hasidols[] = $hasidols;
+    }
+
+    /**
+     * Get hasidols
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getHasidols()
+    {
+        return $this->hasidols;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Model;
 
+use Dodici\Fansworld\WebBundle\Entity\Idol;
+
 use Application\Sonata\UserBundle\Entity\User;
 
 use Dodici\Fansworld\WebBundle\Entity\Team;
@@ -34,17 +36,17 @@ class EventRepository extends CountBaseRepository
     	return $query->getResult();
 	}
 	
-	public function byIdol(User $user, $limit=null, $offset=null)
+	public function byIdol(Idol $idol, $limit=null, $offset=null)
 	{
 		$query = $this->_em->createQuery('
     	SELECT e, hu
     	FROM \Dodici\Fansworld\WebBundle\Entity\Event e
-    	JOIN e.hasusers hu
+    	JOIN e.hasidols hu
     	WHERE
-    	e.active = true AND hu.target = :user
+    	e.active = true AND hu.idol = :idol
     	ORDER BY e.userCount DESC, e.fromtime ASC
     	')
-    		->setParameter('user', $user->getId());
+    		->setParameter('idol', $idol->getId());
     		
     	if ($limit !== null) $query = $query->setMaxResults($limit);
     	if ($offset !== null) $query = $query->setFirstResult($offset);

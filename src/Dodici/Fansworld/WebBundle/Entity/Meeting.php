@@ -86,6 +86,11 @@ class Meeting
      * @ORM\OneToMany(targetEntity="HasTeam", mappedBy="meeting", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $hasteams;
+
+    /**
+     * @ORM\OneToMany(targetEntity="HasIdol", mappedBy="meeting", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $hasidols;
     
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="meeting", cascade={"remove", "persist"}, orphanRemoval="true")
@@ -362,5 +367,25 @@ class Meeting
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * Add hasidols
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\HasIdol $hasidols
+     */
+    public function addHasIdol(\Dodici\Fansworld\WebBundle\Entity\HasIdol $hasidols)
+    {
+        $this->hasidols[] = $hasidols;
+    }
+
+    /**
+     * Get hasidols
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getHasidols()
+    {
+        return $this->hasidols;
     }
 }

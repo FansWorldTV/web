@@ -81,7 +81,7 @@ class PhotoController extends SiteController
         $em = $this->getDoctrine()->getEntityManager();
         $privacies = Privacy::getOptions();
 
-        $idolToTag = $this->getRepository('User')->find($idolToTagId);
+        $idolToTag = $this->getRepository('Idol')->find($idolToTagId);
         
         $albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true));
         $albumchoices = array();

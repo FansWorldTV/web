@@ -127,6 +127,11 @@ class Event
     protected $hasteams;
     
     /**
+     * @ORM\OneToMany(targetEntity="HasIdol", mappedBy="event", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $hasidols;
+    
+    /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="event", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $comments;
@@ -507,5 +512,25 @@ class Event
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Add hasidols
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\HasIdol $hasidols
+     */
+    public function addHasIdol(\Dodici\Fansworld\WebBundle\Entity\HasIdol $hasidols)
+    {
+        $this->hasidols[] = $hasidols;
+    }
+
+    /**
+     * Get hasidols
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getHasidols()
+    {
+        return $this->hasidols;
     }
 }

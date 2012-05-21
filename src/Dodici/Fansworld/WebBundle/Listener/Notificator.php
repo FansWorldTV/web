@@ -73,65 +73,6 @@ class Notificator
     		}
 		}
 		
-		if ($entity instanceof ForumThread) {
-			$idol = $entity->getAuthor();
-			// postear en su muro que tiene nuevo thread
-			$comment = new Comment();
-			$comment->setType(Comment::TYPE_NEW_THREAD);
-			$comment->setAuthor($idol);
-			$comment->setTarget($idol);
-			$comment->setPrivacy(Privacy::EVERYONE);
-			$share = new Share();
-			$share->setForumThread($entity);
-    		$comment->setShare($share);
-			$em->persist($comment);
-    		
-			// notificar a usuarios que tienen al ídolo
-			$fans = $em->getRepository('ApplicationSonataUserBundle:User')->byIdols($idol);
-			
-			foreach($fans as $fan) {
-				$notification = new Notification();
-    			$notification->setType(Notification::TYPE_FORUM_CREATED);
-    			$notification->setAuthor($idol);
-    			$notification->setTarget($fan);
-    			$notification->setForumThread($entity);
-    			$em->persist($notification);
-			}
-			$em->flush();
-		}
-		
-		if ($entity instanceof ForumPost) {
-			$thread = $entity->getForumThread();
-			$thread->setPostCount($thread->getPostCount() + 1);
-			$em->persist($thread);
-			if ($entity->getAuthor()->getType() == User::TYPE_IDOL) {
-				// si author es tipo idolo, postear en su muro que respondió
-				$comment = new Comment();
-				$comment->setType(Comment::TYPE_THREAD_ANSWERED);
-				$comment->setAuthor($entity->getAuthor());
-				$comment->setTarget($entity->getAuthor());
-				$comment->setPrivacy(Privacy::EVERYONE);
-				$share = new Share();
-				$share->setForumThread($thread);
-	    		$comment->setShare($share);
-				$em->persist($comment);
-				
-				// y notificar a los que postearon en el thread
-				$fans = $em->getRepository('ApplicationSonataUserBundle:User')->byThread($thread);
-				
-				foreach($fans as $fan) {
-					$notification = new Notification();
-	    			$notification->setType(Notification::TYPE_FORUM_ANSWERED);
-	    			$notification->setAuthor($entity->getAuthor());
-	    			$notification->setTarget($fan);
-	    			$notification->setForumThread($thread);
-	    			$em->persist($notification);
-				}
-				
-				$em->flush();
-			}
-		}
-		
 		if ($entity instanceof Photo && $entity->getAuthor()) {
 			$comment = new Comment();
 			$comment->setType(Comment::TYPE_NEW_PHOTO);

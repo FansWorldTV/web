@@ -39,7 +39,7 @@ class ScoreHandler
 			$this->addScore($entity->getAuthor(), self::SCORE_ADD_IDOL);
 			
         	$author = $entity->getAuthor();
-            $target = $entity->getTarget(); 
+            $target = $entity->getIdol(); 
             $author->setIdolCount($author->getIdolCount() + 1);
             $target->setFanCount($target->getFanCount() + 1);
             $em->persist($author);
@@ -162,7 +162,7 @@ class ScoreHandler
         	$this->addScore($entity->getAuthor(), -self::SCORE_ADD_IDOL);
         	
         	$author = $entity->getAuthor();
-            $target = $entity->getTarget(); 
+            $target = $entity->getIdol(); 
             $author->setIdolCount($author->getIdolCount() - 1);
             $target->setFanCount($target->getFanCount() - 1);
             $em->persist($author);

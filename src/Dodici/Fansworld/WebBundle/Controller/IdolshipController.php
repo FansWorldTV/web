@@ -32,9 +32,8 @@ class IdolshipController extends SiteController
 	    	
 	    	if (!$user instanceof User) throw new \Exception('Debe iniciar sesión');
 	    	
-	    	$idol = $this->getRepository('User')->find($ididol);
+	    	$idol = $this->getRepository('Idol')->find($ididol);
 	    	if (!$idol) throw new \Exception('Idolo no encontrado');
-	    	if ($idol->getType() != User::TYPE_IDOL) throw new \Exception('Usuario no es ídolo');;
 	    	
 	        $translator = $this->get('translator');
 	        $appstate = $this->get('appstate');
@@ -51,7 +50,7 @@ class IdolshipController extends SiteController
 	        } else {
 	        	$idolship = new Idolship();
 	        	$idolship->setAuthor($user);
-	        	$idolship->setTarget($idol);
+	        	$idolship->setIdol($idol);
 	        	$em->persist($idolship);
 	        	$em->flush();
 	        	
