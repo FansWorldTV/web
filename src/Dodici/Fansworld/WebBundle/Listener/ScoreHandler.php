@@ -187,11 +187,13 @@ class ScoreHandler
     	
     	$level = $this->em->getRepository('DodiciFansworldWebBundle:Level')->byScore($user->getScore());
         
-    	if ($user->getLevel() == null || $user->getLevel()->getId() != $level->getId()) {
-        	$user->setLevel($level);
-        }
-    	
-    	$this->em->persist($user);
-    	$this->em->flush();
+    	if ($level) {
+	    	if ($user->getLevel() == null || $user->getLevel()->getId() != $level->getId()) {
+	        	$user->setLevel($level);
+	        }
+	    	
+	    	$this->em->persist($user);
+	    	$this->em->flush();
+    	}
     }
 }

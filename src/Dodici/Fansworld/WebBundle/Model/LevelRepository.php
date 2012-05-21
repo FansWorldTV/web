@@ -23,6 +23,6 @@ class LevelRepository extends CountBaseRepository
     	')
     		->setParameter('score', $minscore)
     		->setMaxResults(1)
-    		->getSingleResult();
+    		->getOneOrNullResult();
 	}
 }
