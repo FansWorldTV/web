@@ -4,6 +4,7 @@
 
 {% block javascripts %}
 	{{ parent() }}
+                   <script src="{{ asset('bundles/dodicifansworldweb/js/friendship.js') }}" type="text/javascript"></script>
 	{% if appstate.idol(user) %}
 		<script src="{{ asset('bundles/dodicifansworldweb/js/idol_profile.js') }}" type="text/javascript"></script>
 	{% endif %}
@@ -185,4 +186,9 @@
                     </div>
                 </div>
     {% endif %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            friendship.init();
+        });
+    </script>
 {% endblock %}

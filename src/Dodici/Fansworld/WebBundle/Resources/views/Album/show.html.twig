@@ -2,6 +2,11 @@
 
 {% block title %}{{ parent() }} - {{ album.title }}{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/dodicifansworldweb/js/albums.js') }}" type="text/javascript"></script>
+{% endblock %}
+
 {% block profile_tabs %}
 	{% set active_tab = 'photos' %}
 	{{ parent() }}
@@ -36,4 +41,10 @@
     {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: album} %}
 </div>
 {% include 'DodiciFansworldWebBundle:Comment:comment_block.html.twig' with {entity: album} %}
+    
+    <script type="text/javascript">
+        $(document).ready(function(){
+            albums.init();
+        });
+    </script>
 {% endblock %}

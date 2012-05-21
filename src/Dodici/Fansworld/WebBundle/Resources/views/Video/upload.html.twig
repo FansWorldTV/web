@@ -4,10 +4,11 @@
 
 {% block javascripts %}
 	{{ parent() }}
+                  <script src="{{ asset('bundles/dodicifansworldweb/js/videos.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('bundles/dodicifansworldweb/js/base.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('bundles/dodicifansworldweb/js/popup_upload_video.js') }}" type="text/javascript"></script>
 {% endblock %}
-
+        
 {% block content %}
 	{% if video %}
 		<script type="text/javascript">
@@ -61,4 +62,10 @@
 		<div class="field" style="display:none;"><input type="text" name="album_new_name" /></div>
 	</div>
 	{% endif %}
+                
+<script type="text/javascript">
+    $(document).ready(function(){
+        videos.init();
+    });
+</script>
 {% endblock %}
