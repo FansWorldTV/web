@@ -3,7 +3,6 @@ var redirectColorbox = true;
 $(document).ready(function(){
     site.init();
     ajax.init();
-//    forum.init();
 });
 
 var site = {
