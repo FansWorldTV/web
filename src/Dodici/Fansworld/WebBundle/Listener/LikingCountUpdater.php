@@ -24,6 +24,7 @@ class LikingCountUpdater
 			$video = $entity->getVideo();
 			$photo = $entity->getPhoto();
 			$newspost = $entity->getNewspost();
+			$proposal = $entity->getProposal();
 			
 			if ($comment) {
 				$comment->likeUp();
@@ -49,6 +50,10 @@ class LikingCountUpdater
 				$newspost->likeUp();
 				$em->persist($newspost);
 			}
+			if ($proposal) {
+				$proposal->likeUp();
+				$em->persist($newspost);
+			}
 			
 			$this->createLikesComment($em, $entity);
 			
@@ -68,6 +73,7 @@ class LikingCountUpdater
 			$video = $entity->getVideo();
 			$photo = $entity->getPhoto();
 			$newspost = $entity->getNewspost();
+			$proposal = $entity->getProposal();
 			
 			if ($comment) {
 				$comment->likeDown();
@@ -93,6 +99,10 @@ class LikingCountUpdater
 				$newspost->likeDown();
 				$em->persist($newspost);
 			}
+			if ($proposal) {
+				$proposal->likeUp();
+				$em->persist($newspost);
+			}
 			
 			$em->flush();
 		}
@@ -114,6 +124,7 @@ class LikingCountUpdater
     	if ($entity->getVideo()) $share->setVideo($entity->getVideo());
     	if ($entity->getContest()) $share->setContest($entity->getContest());
     	if ($entity->getNewspost()) $share->setNewspost($entity->getNewspost());
+    	if ($entity->getProposal()) $share->setProposal($entity->getProposal());
     		
     	$comment->setShare($share);
 			

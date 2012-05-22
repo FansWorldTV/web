@@ -35,7 +35,7 @@ class LikeController extends SiteController
 	        $translator = $this->get('translator');
 	        $appstate = $this->get('appstate');
 	        
-	        if (!in_array($type, array('newspost','photo','video','album','contest','comment')))
+	        if (!in_array($type, array('newspost','photo','video','album','contest','comment','proposal')))
 	        throw new \Exception('Invalid type');
 	        
 	        $repo = $this->getRepository($type);

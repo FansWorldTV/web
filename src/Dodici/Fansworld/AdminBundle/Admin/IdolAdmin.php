@@ -48,7 +48,7 @@ class IdolAdmin extends Admin
             ->add('origin',null,array('label'=>'Lugar de origen','required'=>false))
             ->add('sex','choice',array('label'=>'Sexo','required'=>false, 'choices' => array(Idol::SEX_MALE => 'Hombre', Idol::SEX_FEMALE => 'Mujer')))
             ->add('twitter', NULL, array (), array ())
-            ->add('image', NULL, array ('required' => false), array ())
+            ->add('image', 'sonata_type_model', array(), array('edit' => 'list', 'link_parameters' => array('context' => 'default', 'provider' => 'sonata.media.provider.image')))
             ->add('team', NULL, array ('required' => false), array ())
             ->add('idolcareers', 'sonata_type_collection', array ('label'=>'Equipos Carrera', 'required' => false), 
             	array(

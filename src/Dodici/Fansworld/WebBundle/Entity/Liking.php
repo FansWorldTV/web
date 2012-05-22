@@ -94,6 +94,16 @@ class Liking
     private $contest;
     
     /**
+     * @var Proposal
+     *
+     * @ORM\ManyToOne(targetEntity="Proposal")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="proposal_id", referencedColumnName="id")
+     * })
+     */
+    private $proposal;
+    
+    /**
      * @var Comment
      *
      * @ORM\ManyToOne(targetEntity="Comment")
@@ -281,5 +291,25 @@ class Liking
     public function getComment()
     {
         return $this->comment;
+    }
+
+    /**
+     * Set proposal
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Proposal $proposal
+     */
+    public function setProposal(\Dodici\Fansworld\WebBundle\Entity\Proposal $proposal)
+    {
+        $this->proposal = $proposal;
+    }
+
+    /**
+     * Get proposal
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Proposal 
+     */
+    public function getProposal()
+    {
+        return $this->proposal;
     }
 }

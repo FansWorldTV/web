@@ -339,6 +339,11 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: meetingship }
         arguments: [null, Dodici\Fansworld\WebBundle\Entity\Meetingship, DodiciFansworldAdminBundle:MeetingshipAdmin]
+    dodici.fansworld.adminbundle.admin.proposal:
+        class: Dodici\Fansworld\AdminBundle\Admin\ProposalAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: proposal }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Proposal, DodiciFansworldAdminBundle:ProposalAdmin]
     ### END ADMIN SERVICES ###
     liking.listener.persist:
         class: Dodici\Fansworld\WebBundle\Listener\LikingCountUpdater

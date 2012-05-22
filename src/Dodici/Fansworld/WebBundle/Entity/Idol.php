@@ -445,13 +445,19 @@ class Idol implements SearchableInterface
      *
      * @param \Dodici\Fansworld\WebBundle\Entity\IdolCareer $idolcareers
      */
-    public function addIdolcareer(\Dodici\Fansworld\WebBundle\Entity\IdolCareer $idolcareers)
-    {
-        $this->idolcareers[] = $idolcareers;
-    }
-	public function addIdolcareers(\Dodici\Fansworld\WebBundle\Entity\IdolCareer $idolcareers)
+    public function addIdolcareers(\Dodici\Fansworld\WebBundle\Entity\IdolCareer $idolcareers)
     {
         $this->addIdolcareer($idolcareers);
+    }
+    
+	/**
+     * Add idolcareers
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\IdolCareer $idolcareers
+     */
+    public function addIdolCareer(\Dodici\Fansworld\WebBundle\Entity\IdolCareer $idolcareers)
+    {
+        $this->idolcareers[] = $idolcareers;
     }
 
     /**
@@ -517,5 +523,4 @@ class Idol implements SearchableInterface
     {
         return $this->fanCount;
     }
-
 }

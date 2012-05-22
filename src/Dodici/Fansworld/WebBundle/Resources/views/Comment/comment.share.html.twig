@@ -23,7 +23,11 @@
 {% elseif comment.share.newspost is not null %}
 	{% set tag_item = comment.share.newspost %} 
 	{% set tag_item_url = path("newspost_show", {'id': tag_item.id, 'slug': tag_item.slug }) %}
-	{% set tag_item_type = 'newspost' %}	
+	{% set tag_item_type = 'newspost' %}
+{% elseif comment.share.proposal is not null %}
+	{% set tag_item = comment.share.proposal %} 
+	{% set tag_item_url = path("proposal_show", {'id': tag_item.id, 'slug': tag_item.slug }) %}
+	{% set tag_item_type = 'proposal' %}	
 {% endif %}
 
 {% block avatar %}

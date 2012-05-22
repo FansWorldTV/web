@@ -68,14 +68,16 @@ class SiteController extends Controller
     	if (!$entity || (property_exists($entity, 'active') && !$entity->getActive()))
             throw new HttpException(404, 'Contenido no encontrado');
             
-    	if ($entity->getPrivacy() != Privacy::EVERYONE) {
-        	if ($user instanceof User) {
-        		if (!$this->get('appstate')->canView($entity)) {
-        			throw new AccessDeniedException('Acceso denegado');
-        		}
-        	} else {
-        		throw new AccessDeniedException('Debe iniciar sesión');
-        	}
+        if (property_exists($entity, 'privacy')) {
+	    	if ($entity->getPrivacy() != Privacy::EVERYONE) {
+	        	if ($user instanceof User) {
+	        		if (!$this->get('appstate')->canView($entity)) {
+	        			throw new AccessDeniedException('Acceso denegado');
+	        		}
+	        	} else {
+	        		throw new AccessDeniedException('Debe iniciar sesión');
+	        	}
+	        }
         }
     }
     
