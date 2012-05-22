@@ -268,7 +268,7 @@ class VideoController extends SiteController
         $countAll = $videosRepo->countSearchText($query, $user, null, true);
 
         $firstToBeHighlighted = false;
-        $usersVideos = false;
+        $usersVideos = array();
 
         $firstElement = true;
         foreach ($videos as $video) {
