@@ -205,7 +205,7 @@ class UserRepository extends CountBaseRepository
      * @param int $limit
      * @param int $offset
      */
-	public function SearchFront(\Application\Sonata\UserBundle\Entity\User $user, $filtername=null, $isfriend=null, $limit=null, $offset=null) 
+	public function SearchFront(\Application\Sonata\UserBundle\Entity\User $user=null, $filtername=null, $isfriend=null, $limit=null, $offset=null) 
     {
     	$rsm = new ResultSetMapping;
     	$rsm->addEntityResult('Application\Sonata\UserBundle\Entity\User', 'u');
@@ -234,7 +234,7 @@ class UserRepository extends CountBaseRepository
 		'.($filtername ? 'LEFT JOIN country ON country.id = u.country_id LEFT JOIN city ON city.id = u.city_id' : '').'
 		WHERE
 		u.type = :fantype AND
-		u.enabled AND u.id <> :userid
+		u.enabled AND (:userid IS NULL OR (u.id <> :userid))
 		'.($filtername ? '
 			AND (
 			country.title LIKE :filtername OR 
@@ -246,9 +246,12 @@ class UserRepository extends CountBaseRepository
 		)' : '').'
 		
 		AND
+		(
+		:userid IS NULL OR
 		(:isfriend IS NULL OR (
 			:isfriend = (SELECT (SELECT COUNT(id) FROM friendship WHERE active AND ((author_id = :userid AND target_id = u.id) OR (author_id = u.id AND target_id = :userid)) >= 1))
 		))
+		)
 		
 		ORDER BY isfriend DESC, commonfriends DESC, u.lastname ASC, u.firstname ASC, u.username ASC
 		
@@ -256,7 +259,7 @@ class UserRepository extends CountBaseRepository
         (($limit !== null) ? ' LIMIT :limit ' : '').
         (($offset !== null) ? ' OFFSET :offset ' : '')
     	, $rsm)
-    		->setParameter('userid', $user->getId(), Type::BIGINT)
+    		->setParameter('userid', $user ? $user->getId() : null, Type::BIGINT)
     		->setParameter('fantype', User::TYPE_FAN, Type::INTEGER)
     		->setParameter('isfriend', $isfriend, Type::BOOLEAN);
     		
@@ -278,7 +281,7 @@ class UserRepository extends CountBaseRepository
      * @param boolean $isfriend (null|true|false)
      * @param string $filtername
      */
-	public function CountSearchFront(\Application\Sonata\UserBundle\Entity\User $user, $filtername=null, $isfriend=null) 
+	public function CountSearchFront(\Application\Sonata\UserBundle\Entity\User $user=null, $filtername=null, $isfriend=null) 
     {
     	$rsm = new ResultSetMapping;
     	$rsm->addScalarResult('countusers', 'count');
@@ -290,7 +293,7 @@ class UserRepository extends CountBaseRepository
 		'.($filtername ? 'LEFT JOIN country ON country.id = u.country_id LEFT JOIN city ON city.id = u.city_id' : '').'
 		WHERE
 		u.type = :fantype AND
-		u.enabled AND u.id <> :userid
+		u.enabled AND (:userid IS NULL OR (u.id <> :userid))
 		'.($filtername ? '
 			AND (
 			country.title LIKE :filtername OR 
@@ -302,12 +305,15 @@ class UserRepository extends CountBaseRepository
 		)' : '').'
 		
 		AND
+		(
+		:userid IS NULL OR
 		(:isfriend IS NULL OR (
 			:isfriend = (SELECT (SELECT COUNT(id) FROM friendship WHERE active AND ((author_id = :userid AND target_id = u.id) OR (author_id = u.id AND target_id = :userid)) >= 1))
 		))
+		)
 		'
     	, $rsm)
-    		->setParameter('userid', $user->getId(), Type::BIGINT)
+    		->setParameter('userid', $user ? $user->getId() : null, Type::BIGINT)
     		->setParameter('fantype', User::TYPE_FAN, Type::INTEGER)
     		->setParameter('isfriend', $isfriend, Type::BOOLEAN);
     		
@@ -438,5 +444,36 @@ class UserRepository extends CountBaseRepository
             $query = $query->setParameter('offset', (int)$offset, Type::INTEGER);
     	
     	return $query->getResult();
+    }
+    
+	/**
+     * Search
+     * 
+     * term to search for:
+     * @param string $text
+     * 
+     * current logged in user, or null:
+     * @param User|null $user
+     * 
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function search($text, User $user=null, $limit=null, $offset=null)
+    {
+    	return $this->SearchFront($user, $text, null, $limit, $offset);
+    }
+    
+	/**
+     * Count Search
+     * 
+     * term to search for:
+     * @param string $text
+     * 
+     * current logged in user, or null:
+     * @param User|null $user
+     */
+    public function countSearch($text, User $user=null)
+    {
+    	return $this->CountSearchFront($user, $text, null);
     }
 }

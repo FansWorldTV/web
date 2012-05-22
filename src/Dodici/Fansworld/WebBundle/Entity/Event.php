@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Entity;
 
+use Dodici\Fansworld\WebBundle\Model\SearchableInterface;
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -15,7 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\EventRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Event
+class Event implements SearchableInterface
 {
     const TYPE_MATCH = 1;
     

@@ -27,7 +27,6 @@ class ForumController extends SiteController
 
     /**
      * @Route("/", name="forum_index")
-     * @Route("/", name="forumthread_show")
      * 
      * @Template
      */
@@ -42,7 +41,7 @@ class ForumController extends SiteController
     }
 
     /**
-     * @Route("/thread/{id}/{slug}", name= "forum_thread", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
+     * @Route("/thread/{id}/{slug}", name= "forumthread_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
      * @Template
      */
     public function threadAction($id)

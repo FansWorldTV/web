@@ -10,6 +10,8 @@
 
 namespace Application\Sonata\UserBundle\Entity;
 
+use Dodici\Fansworld\WebBundle\Model\SearchableInterface;
+
 use Dodici\Fansworld\WebBundle\Entity\Notification;
 use Symfony\Component\Validator\Constraints as Assert;
 use Sonata\UserBundle\Entity\BaseUser as BaseUser;
@@ -18,7 +20,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Application\Sonata\UserBundle\Entity\User
  */
-class User extends BaseUser
+class User extends BaseUser implements SearchableInterface
 {
 	const SEX_MALE = 'm';
 	const SEX_FEMALE = 'f';
@@ -229,6 +231,11 @@ class User extends BaseUser
     	} else {
     		return $this->getUsername() ?: $this->getEmail();
     	}
+    }
+    
+    public function getTitle()
+    {
+    	return (string)$this;
     }
     
 	public function serialize()

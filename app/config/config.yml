@@ -244,6 +244,11 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: idolship }
         arguments: [null, Dodici\Fansworld\WebBundle\Entity\Idolship, DodiciFansworldAdminBundle:IdolshipAdmin]
+    dodici.fansworld.adminbundle.admin.idol:
+        class: Dodici\Fansworld\AdminBundle\Admin\IdolAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: idol }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Idol, DodiciFansworldAdminBundle:IdolAdmin]
     dodici.fansworld.adminbundle.admin.level:
         class: Dodici\Fansworld\AdminBundle\Admin\LevelAdmin
         tags:
@@ -424,6 +429,9 @@ services:
     app.facebook:
       class: Dodici\Fansworld\WebBundle\Extensions\AppFacebook
       arguments: [@security.context, @doctrine.orm.entity_manager, @fos_facebook.api]
+    search:
+      class: Dodici\Fansworld\WebBundle\Extensions\Search
+      arguments: [@security.context, @doctrine.orm.entity_manager, @router]
     meteor:
       class: Dodici\Fansworld\WebBundle\Extensions\Meteor
       arguments: [@doctrine.orm.entity_manager, %meteor.host%, %meteor.port%, %meteor.clientport%]
@@ -448,6 +456,11 @@ services:
     twig.extension.appstate:
       class: Dodici\Fansworld\WebBundle\Extensions\AppStateExtension
       arguments: [@appstate]
+      tags:
+          - { name: twig.extension }
+    twig.extension.search:
+      class: Dodici\Fansworld\WebBundle\Extensions\SearchExtension
+      arguments: [@search]
       tags:
           - { name: twig.extension }
     twig.extension.meteor:

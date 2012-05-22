@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Entity;
 
+use Dodici\Fansworld\WebBundle\Model\SearchableInterface;
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -13,7 +15,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\IdolRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Idol
+class Idol implements SearchableInterface
 {
 	const SEX_MALE = 'm';
 	const SEX_FEMALE = 'f';
@@ -158,6 +160,15 @@ class Idol
         }
     }
     
+    public function __toString()
+    {
+    	return $this->getFirstname() . ' ' . $this->getLastname();
+    }
+    
+    public function getTitle()
+    {
+    	return (string)$this;
+    }
 
     /**
      * Get id

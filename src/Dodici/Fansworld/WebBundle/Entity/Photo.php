@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Entity;
 
+use Dodici\Fansworld\WebBundle\Model\SearchableInterface;
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -13,7 +15,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\PhotoRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Photo
+class Photo implements SearchableInterface
 {
     /**
      * @var bigint $id
