@@ -90,6 +90,13 @@ class Proposal
     private $slug;
     
     /**
+     * @var integer $weight
+     *
+     * @ORM\Column(name="weight", type="integer", nullable=false)
+     */
+    private $weight;
+    
+    /**
      * @var Application\Sonata\MediaBundle\Entity\Media
      * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="image", referencedColumnName="id")
@@ -132,6 +139,17 @@ class Proposal
         if (null === $this->commentCount) {
         	$this->setCommentCount(0);
         }
+        if (null === $this->weight) {
+        	$this->calculateWeight();
+        }
+    }
+    
+	/**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->calculateWeight();
     }
     
 	public function likeUp()
@@ -143,6 +161,11 @@ class Proposal
     	if ($this->getLikeCount() > 0) {
     		$this->setLikeCount($this->getLikeCount() - 1);
     	}
+    }
+    
+    public function calculateWeight()
+    {
+    	$this->setWeight($this->getLikeCount() * 2 + $this->getCommentCount());
     }
     
 
@@ -294,6 +317,26 @@ class Proposal
     public function getSlug()
     {
         return $this->slug;
+    }
+    
+	/**
+     * Set weight
+     *
+     * @param integer $weight
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+    }
+
+    /**
+     * Get weight
+     *
+     * @return integer 
+     */
+    public function getWeight()
+    {
+        return $this->weight;
     }
 
     /**

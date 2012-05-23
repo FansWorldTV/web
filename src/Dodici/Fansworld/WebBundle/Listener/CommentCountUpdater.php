@@ -21,6 +21,7 @@ class CommentCountUpdater
 			$video = $entity->getVideo();
 			$photo = $entity->getPhoto();
 			$newspost = $entity->getNewspost();
+			$proposal = $entity->getProposal();
 			
 			if ($comment) {
 				$this->increaseCount($em, $comment);
@@ -40,6 +41,9 @@ class CommentCountUpdater
 			if ($newspost) {
 				$this->increaseCount($em, $newspost);
 			}
+			if ($proposal) {
+				$this->increaseCount($em, $proposal);
+			}
 						
 			$em->flush();
 		}
@@ -57,6 +61,7 @@ class CommentCountUpdater
 			$video = $entity->getVideo();
 			$photo = $entity->getPhoto();
 			$newspost = $entity->getNewspost();
+			$proposal = $entity->getProposal();
 			
 			if ($comment) {
 				$this->increaseCount($em, $comment, -1);
@@ -75,6 +80,9 @@ class CommentCountUpdater
 			}
 			if ($newspost) {
 				$this->increaseCount($em, $newspost, -1);
+			}
+			if ($proposal) {
+				$this->increaseCount($em, $proposal, -1);
 			}
 						
 			$em->flush();

@@ -61,7 +61,9 @@ class CountBaseRepository extends EntityRepository
     	SELECT e FROM
     	'.$this->_entityName.' e ';
     	
-    	if ($conditions) $querystring .= ' WHERE ' . join(' OR ', $conditions) .' ';
+    	if ($conditions) $querystring .= ' WHERE (' . join(' OR ', $conditions) .') ';
+    	
+    	if (property_exists($this->_entityName, 'active')) $querystring .= ' AND (e.active = true) ';
     	
     	$querystring .= ' ORDER BY e.id DESC';
     	
@@ -96,11 +98,13 @@ class CountBaseRepository extends EntityRepository
     	SELECT COUNT(e.id) FROM
     	'.$this->_entityName.' e ';
     	
-    	if ($conditions) $querystring .= ' WHERE ' . join(' OR ', $conditions) .' ';
+    	if ($conditions) $querystring .= ' WHERE (' . join(' OR ', $conditions) .') ';
+    	
+    	if (property_exists($this->_entityName, 'active')) $querystring .= ' AND (e.active = true) ';
     	
     	$query = $this->_em->createQuery($querystring);
     	if ($conditions) $query = $query->setParameter('textlike', '%'.$text.'%');
     	
-    	return $query->getSingleScalarResult();
+    	return (int)$query->getSingleScalarResult();
     }
 }
