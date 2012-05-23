@@ -3,6 +3,13 @@ var searchBox = {
     query: null,
     searchType: null,
     init: function(){
+        console.log(searchBox);
+        if(searchBox.searchType !== null){
+            $("div.search a[type='" + searchBox.searchType +"']").addClass('bold');
+        }
+        if(searchBox.query !== null){
+            $("div.search input[type='text']").val(searchBox.query);
+        }
         searchBox.handleType();
         $("div.search input[type='text']").change(function(){
             searchBox.query = $(this).val();
@@ -23,8 +30,8 @@ var searchBox = {
     handleType: function(){
         $("div.search ul a").click(function(){
             console.log($(this));
-            $(searchBox.searchType).toggleClass('bold');
-            searchBox.searchType = $(this);
+            $("div.search a[type='" + searchBox.searchType +"']").toggleClass('bold');
+            searchBox.searchType = parseInt($(this).attr('type'));
             $(this).toggleClass('bold');
             
             return false;

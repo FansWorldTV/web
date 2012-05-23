@@ -255,7 +255,9 @@ class SearchController extends SiteController
         $offset = $page * self::LIMIT_SEARCH;
 
         $type = (int) $type;
-
+        
+        $types = $searcher->getTypes();
+        
         $search = $searcher->search($query, $type, self::LIMIT_SEARCH, $offset);
         $countAll = $searcher->count($query, $type);
 
