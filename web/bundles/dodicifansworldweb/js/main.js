@@ -96,6 +96,7 @@ var site = {
         site.globalDeleteButtons();
         site.expander();
         site.showCommentForm();
+        searchBox.init();
     },
     
     parseTimes: function(){

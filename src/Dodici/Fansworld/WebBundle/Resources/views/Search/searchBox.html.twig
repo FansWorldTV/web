@@ -1,0 +1,35 @@
+{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+
+{% block title %}{{ parent() }} - Búsqueda{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+<div class="cont clearfix">
+    <h2>Búsqueda</h2>
+        <div class="mask">
+            <div class="ajax-loader hidden">
+                <img src="{{ asset('bundles/dodicifansworldweb/images/ajax-loader.gif') }}" alt="" />
+            </div>
+            <ul class="listMosaic"> 
+                {% for element in search %}
+                    <li>{{ element.title }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+</div>
+    {% if addMore %}
+        <div class="paginador">
+            <a href="#" id="addMore" class="searchBox">Agregar más</a>
+        </div>
+    {% endif %}
+
+<script type="text/javascript">
+    searchBox.query = "{{ searchQuery }}";
+    searchBox.searchType = {{ searchType }};
+</script>    
+
+{% endblock %}

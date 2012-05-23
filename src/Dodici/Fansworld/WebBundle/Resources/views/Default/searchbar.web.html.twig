@@ -3,14 +3,15 @@
         <div class="search">
             <input type="text" data-default-text="Buscar..." />
             <ul>
-                <li><a href="search.php">Todo</a>
+                <li>
+                    <a href="#">Tipo</a>
                     <ul>
-                        <li><a href="search.php">Idolos</a></li>
-                        <li><a href="search.php">Fans</a></li>
-                        <li><a href="search.php">Noticias</a></li>
-                        <li><a href="search.php">Foros</a></li>
-                        <li><a href="search.php">Videos</a></li>
-                        <li><a href="search.php">Fotos</a></li>
+                        <li><a href="#" type="{{ constant('Dodici\\Fansworld\\WebBundle\\Extensions\\Search::TYPE_IDOL') }}">Idolos</a></li>
+                        <li><a href="#" type="{{ constant('Dodici\\Fansworld\\WebBundle\\Extensions\\Search::TYPE_USER') }}">Fans</a></li>
+                        <li><a href="#" type="{{ constant('Dodici\\Fansworld\\WebBundle\\Extensions\\Search::TYPE_EVENT') }}">Eventos</a></li>
+                        <li><a href="#" type="{{ constant('Dodici\\Fansworld\\WebBundle\\Extensions\\Search::TYPE_FORUM') }}">Foros</a></li>
+                        <li><a href="#" type="{{ constant('Dodici\\Fansworld\\WebBundle\\Extensions\\Search::TYPE_VIDEO') }}">Videos</a></li>
+                        <li><a href="#" type="{{ constant('Dodici\\Fansworld\\WebBundle\\Extensions\\Search::TYPE_PHOTO') }}">Fotos</a></li>
                     </ul>
                 </li>
             </ul>

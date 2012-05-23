@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Dodici\Fansworld\WebBundle\Controller\SiteController;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
+use Dodici\Fansworld\WebBundle\Extensions\Search;
 use Symfony\Component\HttpFoundation\Request;
 use Application\Sonata\UserBundle\Entity\User;
 
@@ -46,7 +47,7 @@ class SearchController extends SiteController
             foreach ($search as $element) {
                 $response['search'][] = array(
                     'id' => $element[0]->getId(),
-                	'username' => $element[0]->getUsername(),
+                    'username' => $element[0]->getUsername(),
                     'name' => (string) $element[0],
                     'image' => $this->getImageUrl($element[0]->getImage()),
                     'commonFriends' => $element['commonfriends'],
@@ -89,7 +90,7 @@ class SearchController extends SiteController
                 foreach ($search as $element) {
                     $response['search'][] = array(
                         'id' => $element[0]->getId(),
-                    	'username' => $element[0]->getUsername(),
+                        'username' => $element[0]->getUsername(),
                         'name' => (string) $element[0],
                         'image' => $this->getImageUrl($element[0]->getImage()),
                         'commonFriends' => $element['commonfriends'],
@@ -138,14 +139,14 @@ class SearchController extends SiteController
         $query = $request->get('query');
         $page = $request->get('page', 1);
         $userRepo = $this->getRepository('User');
-        
+
         $userId = $request->get('userid', false);
-        if($userId){
+        if ($userId) {
             $user = $userRepo->find($userId);
-        }else{
+        } else {
             $user = $this->get('security.context')->getToken()->getUser();
         }
-        
+
         $page = (int) $page;
 
         if ($page > 1) {
@@ -167,7 +168,7 @@ class SearchController extends SiteController
                 foreach ($search as $element) {
                     $response['search'][] = array(
                         'id' => $element->getId(),
-                    	'username' => $element->getUsername(),
+                        'username' => $element->getUsername(),
                         'name' => (string) $element,
                         'image' => $this->getImageUrl($element->getImage())
                     );
@@ -231,12 +232,69 @@ class SearchController extends SiteController
                 foreach ($searchIdol as $idol) {
                     $response['idols'][] = array(
                         'id' => $idol[0]->getId(),
-                    	'slug' => $idol[0]->getSlug(),
+                        'slug' => $idol[0]->getSlug(),
                         'name' => (string) $idol[0],
                         'image' => $this->getImageUrl($idol[0]->getImage())
                     );
                 }
             }
+        }
+
+        return $this->jsonResponse($response);
+    }
+
+    /**
+     * @Route("/search_box/{type}/{query}/{page}", defaults={"type" =  false, "query" = false, "page" = 1}, name="search_box")
+     * @Template()
+     */
+    public function searchBoxAction($type, $query, $page)
+    {
+        $searcher = $this->get('search');
+        $searcher instanceof Search;
+        $page = ((int) $page) - 1;
+        $offset = $page * self::LIMIT_SEARCH;
+
+        $type = (int) $type;
+
+        $search = $searcher->search($query, $type, self::LIMIT_SEARCH, $offset);
+        $countAll = $searcher->count($query, $type);
+
+        return array(
+            'search' => $search,
+            'addMore' => $countAll > self::LIMIT_SEARCH ? true : false,
+            'searchQuery' => $query,
+            'searchType' => $type
+        );
+    }
+
+    /**
+     *  @Route("/ajax/search_box", name="search_ajaxbox")
+     */
+    public function ajaxSearchBoxAction()
+    {
+        $request = $this->getRequest();
+
+        $query = $request->get('query', null);
+        $page = $request->get('page', 1);
+        $type = $request->get('type', false);
+
+        $page = ((int) $page );
+        $offset = ( $page - 1 ) * self::LIMIT_SEARCH;
+
+        $response = array();
+
+        $searcher = $this->get('search');
+        $searcher instanceof Search;
+        $search = $searcher->search($query, $type, self::LIMIT_SEARCH, $offset);
+
+        $countAll = $searcher->count($query, $type);
+        $response['addMore'] = $countAll > (self::LIMIT_SEARCH * $page) ? true : false;
+
+        foreach ($search as $element) {
+            $response['search'][] = array(
+                'title' => $element->getTitle(),
+                'content' => $element->getContent()
+            );
         }
 
         return $this->jsonResponse($response);
