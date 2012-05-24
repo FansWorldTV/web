@@ -101,6 +101,9 @@ class ORMPurger implements PurgerInterface
 
         // Drop association tables first
         $orderedTables = $this->getAssociationTables($commitOrder);
+        
+        // Get platform parameters
+        $platform = $this->em->getConnection()->getDatabasePlatform();
 
         // Drop tables in reverse commit order
         for ($i = count($commitOrder) - 1; $i >= 0; --$i) {
@@ -111,10 +114,10 @@ class ORMPurger implements PurgerInterface
                 continue;
             }
 
-            $orderedTables[] = $class->getTableName();
+            $orderedTables[] = $class->getQuotedTableName($platform);
         }
 
-        $platform = $this->em->getConnection()->getDatabasePlatform();
+        $this->em->getConnection()->executeUpdate("SET foreign_key_checks = 0;");
         foreach($orderedTables as $tbl) {
             if ($this->purgeMode === self::PURGE_MODE_DELETE) {
                 $this->em->getConnection()->executeUpdate("DELETE FROM " . $tbl);
@@ -122,6 +125,7 @@ class ORMPurger implements PurgerInterface
                 $this->em->getConnection()->executeUpdate($platform->getTruncateTableSQL($tbl, true));
             }
         }
+        $this->em->getConnection()->executeUpdate("SET foreign_key_checks = 1;");
     }
 
     private function getCommitOrder(EntityManager $em, array $classes)
@@ -130,6 +134,17 @@ class ORMPurger implements PurgerInterface
 
         foreach ($classes as $class) {
             $calc->addClass($class);
+
+            // $class before its parents
+            foreach ($class->parentClasses as $parentClass) {
+                $parentClass = $em->getClassMetadata($parentClass);
+
+                if ( ! $calc->hasClass($parentClass->name)) {
+                    $calc->addClass($parentClass);
+                }
+
+                $calc->addDependency($class, $parentClass);
+            }
 
             foreach ($class->associationMappings as $assoc) {
                 if ($assoc['isOwningSide']) {
@@ -141,6 +156,17 @@ class ORMPurger implements PurgerInterface
 
                     // add dependency ($targetClass before $class)
                     $calc->addDependency($targetClass, $class);
+
+                    // parents of $targetClass before $class, too
+                    foreach ($targetClass->parentClasses as $parentClass) {
+                        $parentClass = $em->getClassMetadata($parentClass);
+
+                        if ( ! $calc->hasClass($parentClass->name)) {
+                            $calc->addClass($parentClass);
+                        }
+
+                        $calc->addDependency($parentClass, $class);
+                    }
                 }
             }
         }

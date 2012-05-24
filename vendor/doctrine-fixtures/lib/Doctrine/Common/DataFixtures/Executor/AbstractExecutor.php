@@ -4,6 +4,7 @@ namespace Doctrine\Common\DataFixtures\Executor;
 
 use Doctrine\Common\DataFixtures\SharedFixtureInterface;
 use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\DataFixtures\ReferenceRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -25,27 +26,37 @@ abstract class AbstractExecutor
      * @var ReferenceRepository
      */
     protected $referenceRepository;
-    
+
     /**
      * Loads an instance of reference repository
-     * 
+     *
      * @param Doctrine\Common\Persistence\ObjectManager $manager
      */
     public function __construct(ObjectManager $manager)
     {
         $this->referenceRepository = new ReferenceRepository($manager);
     }
-    
+
     /**
      * Get reference repository
-     * 
+     *
      * @return ReferenceRepository
      */
     public function getReferenceRepository()
     {
         return $this->referenceRepository;
     }
-    
+
+    /**
+     * Set the reference repository
+     *
+     * @param ReferenceRepository $referenceRepository Reference repository
+     */
+    public function setReferenceRepository(ReferenceRepository $referenceRepository)
+    {
+        $this->referenceRepository = $referenceRepository;
+    }
+
     /**
      * Sets the Purger instance to use for this exector instance.
      *
@@ -86,9 +97,13 @@ abstract class AbstractExecutor
     public function load(ObjectManager $manager, FixtureInterface $fixture)
     {
         if ($this->logger) {
-            $this->log('loading ' . get_class($fixture));
+            $prefix = '';
+            if ($fixture instanceof OrderedFixtureInterface) {
+                $prefix = sprintf('[%d] ',$fixture->getOrder());
+            }
+            $this->log('loading ' . $prefix . get_class($fixture));
         }
-        // additionaly pass the instance of reference repository to shared fixtures
+        // additionally pass the instance of reference repository to shared fixtures
         if ($fixture instanceof SharedFixtureInterface) {
             $fixture->setReferenceRepository($this->referenceRepository);
         }

@@ -59,9 +59,26 @@ class ReferenceRepository
      *
      * @param Doctrine\Common\Persistence\ObjectManager $manager
      */
-    public function __construct(ObjectManager$manager)
+    public function __construct(ObjectManager $manager)
     {
         $this->manager = $manager;
+    }
+
+    /**
+     * Get identifier for a unit of work
+     *
+     * @param object $reference Reference object
+     * @param object $uow       Unit of work
+     *
+     * @return mixed
+     */
+    protected function getIdentifier($reference, $uow)
+    {
+        if (method_exists($uow, 'getEntityIdentifier')) {
+            return $uow->getEntityIdentifier($reference);
+        }
+
+        return $uow->getDocumentIdentifier($reference);
     }
 
     /**
@@ -78,11 +95,7 @@ class ReferenceRepository
         // in case if reference is set after flush, store its identity
         $uow = $this->manager->getUnitOfWork();
         if ($uow->isInIdentityMap($reference)) {
-            if ($uow instanceof \Doctrine\ORM\UnitOfWork) {
-                $this->identities[$name] = $uow->getEntityIdentifier($reference);
-            } else {
-                $this->identities[$name] = $uow->getDocumentIdentifier($reference);
-            }            
+            $this->identities[$name] = $this->getIdentifier($reference, $uow);
         }
     }
 
@@ -177,6 +190,16 @@ class ReferenceRepository
     }
 
     /**
+     * Get all stored identities
+     *
+     * @return array
+     */
+    public function getIdentities()
+    {
+        return $this->identities;
+    }
+
+    /**
      * Get all stored references
      *
      * @return array
@@ -184,5 +207,15 @@ class ReferenceRepository
     public function getReferences()
     {
         return $this->references;
+    }
+
+    /**
+     * Get object manager
+     *
+     * @return Doctrine\Common\Persistence\ObjectManager
+     */
+    public function getManager()
+    {
+        return $this->manager;
     }
 }
