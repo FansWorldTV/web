@@ -1,20 +1,23 @@
 <div class="header">
         <div class="logo"><a href="{{ path('homepage') }}"><img src="{{ asset('bundles/dodicifansworldweb/images/fansworld.png' )}}" alt="Fansworld" /></a></div>
         <div class="search">
-            <input type="text" data-default-text="Buscar..." />
-            <ul>
-                <li>
-                    <a href="#">Tipo</a>
-                    <ul>
-                        <li><a href="#" type="{{ constant('Dodici\\Fansworld\\WebBundle\\Extensions\\Search::TYPE_IDOL') }}">Idolos</a></li>
-                        <li><a href="#" type="{{ constant('Dodici\\Fansworld\\WebBundle\\Extensions\\Search::TYPE_USER') }}">Fans</a></li>
-                        <li><a href="#" type="{{ constant('Dodici\\Fansworld\\WebBundle\\Extensions\\Search::TYPE_EVENT') }}">Eventos</a></li>
-                        <li><a href="#" type="{{ constant('Dodici\\Fansworld\\WebBundle\\Extensions\\Search::TYPE_FORUM') }}">Foros</a></li>
-                        <li><a href="#" type="{{ constant('Dodici\\Fansworld\\WebBundle\\Extensions\\Search::TYPE_VIDEO') }}">Videos</a></li>
-                        <li><a href="#" type="{{ constant('Dodici\\Fansworld\\WebBundle\\Extensions\\Search::TYPE_PHOTO') }}">Fotos</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <input class="btn_search" name="" type="button" />
+            <form action="" name="search" method="post" >
+                <input type="text" data-default-text="Buscar..." />
+                <ul>
+                    <li>
+                        <a href="#">Tipo</a>
+                        <ul>
+                            <li><a href="#" type="{{ constant('Dodici\\Fansworld\\WebBundle\\Extensions\\Search::TYPE_IDOL') }}">Idolos</a></li>
+                            <li><a href="#" type="{{ constant('Dodici\\Fansworld\\WebBundle\\Extensions\\Search::TYPE_USER') }}">Fans</a></li>
+                            <li><a href="#" type="{{ constant('Dodici\\Fansworld\\WebBundle\\Extensions\\Search::TYPE_EVENT') }}">Eventos</a></li>
+                            <li><a href="#" type="{{ constant('Dodici\\Fansworld\\WebBundle\\Extensions\\Search::TYPE_FORUM') }}">Foros</a></li>
+                            <li><a href="#" type="{{ constant('Dodici\\Fansworld\\WebBundle\\Extensions\\Search::TYPE_VIDEO') }}">Videos</a></li>
+                            <li><a href="#" type="{{ constant('Dodici\\Fansworld\\WebBundle\\Extensions\\Search::TYPE_PHOTO') }}">Fotos</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <input class="btn_search" name="" type="submit" value=""/>
+            </form>
         </div>
 </div>

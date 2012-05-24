@@ -14,21 +14,26 @@ var searchBox = {
         $("div.search input[type='text']").change(function(){
             searchBox.query = $(this).val();
         });
-        $(".btn_search").click(function(){
+        $("div.search form").submit(function(){
+            $(".btn_search").addClass('loading');
             if(searchBox.searchType !== null){
-                $(this).addClass('loading');
                 window.location.href = Routing.generate(appLocale + "_search_box", {
                     'type': searchBox.searchType, 
                     'query': searchBox.query
                 });
             }else{
                 error('Te faltó seleccionar un criterio de búsqueda');
+                $(".btn_search").removeClass('loading');
             }
+            return false;
         });
+//        $(".btn_search").click(function(){
+//            
+//        });
         searchBox.addMore();
     },
     handleType: function(){
-        $("div.search ul a").click(function(){
+        $("div.search ul li ul a").click(function(){
             console.log($(this));
             $("div.search a[type='" + searchBox.searchType +"']").toggleClass('bold');
             searchBox.searchType = parseInt($(this).attr('type'));
