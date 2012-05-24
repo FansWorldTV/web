@@ -1,0 +1,24 @@
+-
+  interestcategory: 1
+  title: Clásica
+  image: classical.png
+-
+  interestcategory: 1
+  title: Rock
+  image: rock.png
+-
+  interestcategory: 1
+  title: Pop
+  image: pop.png
+-
+  interestcategory: 2
+  title: Ténis
+  image: tennis.png
+-
+  interestcategory: 2
+  title: Fútbol
+  image: soccer.png
+-
+  interestcategory: 2
+  title: Badminton
+  image: badminton.png

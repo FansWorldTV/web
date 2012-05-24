@@ -86,6 +86,13 @@ class Idol implements SearchableInterface
     private $image;
     
     /**
+     * @var Application\Sonata\MediaBundle\Entity\Media
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="splash", referencedColumnName="id")
+     */
+    private $splash;
+    
+    /**
      * @var Team
      *
      * @ORM\ManyToOne(targetEntity="Team")
@@ -522,5 +529,25 @@ class Idol implements SearchableInterface
     public function getFanCount()
     {
         return $this->fanCount;
+    }
+
+    /**
+     * Set splash
+     *
+     * @param Application\Sonata\MediaBundle\Entity\Media $splash
+     */
+    public function setSplash(\Application\Sonata\MediaBundle\Entity\Media $splash)
+    {
+        $this->splash = $splash;
+    }
+
+    /**
+     * Get splash
+     *
+     * @return Application\Sonata\MediaBundle\Entity\Media 
+     */
+    public function getSplash()
+    {
+        return $this->splash;
     }
 }

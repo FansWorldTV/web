@@ -1,0 +1,17 @@
+-
+  email: admin@example.com
+  username: admin
+  password: admin
+  type: staff
+  firstname: Administrador
+  lastname: Fansworld
+  roles:
+      - ROLE_SUPER_ADMIN
+-
+  email: juanperez@example.com
+  username: juan.perez
+  password: test
+  type: fan
+  firstname: Juan
+  lastname: Pérez
+  image: juanperez.jpg

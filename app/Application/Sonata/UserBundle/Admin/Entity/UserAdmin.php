@@ -54,7 +54,7 @@ class UserAdmin extends Admin
                 ->add('username')
                 ->add('email')
                 ->add('plainPassword', 'text', array('required' => false))
-                ->add('type', 'choice', array ('choices' => array(User::TYPE_FAN => 'Fan', User::TYPE_IDOL => 'Idolo', User::TYPE_STAFF => 'Staff')), array ())
+                ->add('type', 'choice', array ('choices' => array(User::TYPE_FAN => 'Fan', User::TYPE_STAFF => 'Staff')), array ())
             ->end()
             ->with('Personal')
             	->add('sex','choice',array('label'=>'Sexo','required'=>false, 'choices' => array(User::SEX_MALE => 'Hombre', User::SEX_FEMALE => 'Mujer')))

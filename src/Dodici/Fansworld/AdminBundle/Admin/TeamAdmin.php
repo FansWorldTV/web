@@ -26,13 +26,21 @@ class TeamAdmin extends Admin
     {
         $formMapper
             ->add('title', NULL, array (), array ())
+            ->add('shortname', NULL, array (), array ())
+            ->add('letters', NULL, array (), array ())
+            ->add('stadium', NULL, array (), array ())
+            ->add('website', NULL, array (), array ())
+            ->add('nicknames', NULL, array (), array ())
             ->add('content', NULL, array (), array ())
             ->add('createdAt', 'date', array ('attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy HH:mm'), array ())
+            ->add('foundedAt', 'date', array ('attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy HH:mm'), array ())
             ->add('active', NULL, array ('required' => false), array ())
             ->add('teamcategory', NULL, array (), array ())
             ->add('external', NULL, array (), array ())
             ->add('image', 'sonata_type_model', array(), array('edit' => 'list', 'link_parameters' => array('context' => 'default', 'provider' => 'sonata.media.provider.image')))
+            ->add('splash', 'sonata_type_model', array(), array('edit' => 'list', 'link_parameters' => array('context' => 'default', 'provider' => 'sonata.media.provider.image')))
         ;
     }
 

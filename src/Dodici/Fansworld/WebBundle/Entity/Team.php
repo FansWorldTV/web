@@ -36,12 +36,51 @@ class Team implements Translatable, SearchableInterface
     private $title;
     
     /**
+     * @var string $shortname
+     * @Gedmo\Translatable
+     *
+     * @ORM\Column(name="shortname", type="string", length=100, nullable=true)
+     */
+    private $shortname;
+    
+    /**
+     * @var string $letters
+     * @Gedmo\Translatable
+     *
+     * @ORM\Column(name="letters", type="string", length=100, nullable=true)
+     */
+    private $letters;
+    
+    /**
+     * @var string $stadium
+     * @Gedmo\Translatable
+     *
+     * @ORM\Column(name="stadium", type="string", length=100, nullable=true)
+     */
+    private $stadium;
+    
+    /**
+     * @var string $website
+     *
+     * @ORM\Column(name="website", type="string", length=100, nullable=true)
+     */
+    private $website;
+    
+    /**
      * @var text $content
      * @Gedmo\Translatable
      *
      * @ORM\Column(name="content", type="text", nullable=true)
      */
     private $content;
+    
+    /**
+     * @var text $nicknames
+     * @Gedmo\Translatable
+     *
+     * @ORM\Column(name="nicknames", type="text", nullable=true)
+     */
+    private $nicknames;
 
     /**
      * @var datetime $createdAt
@@ -49,6 +88,13 @@ class Team implements Translatable, SearchableInterface
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     private $createdAt;
+    
+    /**
+     * @var datetime $foundedAt
+     *
+     * @ORM\Column(name="founded_at", type="datetime", nullable=true)
+     */
+    private $foundedAt;
     
     /**
      * @var boolean $active
@@ -63,6 +109,13 @@ class Team implements Translatable, SearchableInterface
      * @ORM\JoinColumn(name="image", referencedColumnName="id")
      */
     private $image;
+    
+    /**
+     * @var Application\Sonata\MediaBundle\Entity\Media
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="splash", referencedColumnName="id")
+     */
+    private $splash;
     
     /**
      * @var TeamCategory
@@ -417,5 +470,145 @@ class Team implements Translatable, SearchableInterface
     public function getTwitter()
     {
         return $this->twitter;
+    }
+
+    /**
+     * Set shortname
+     *
+     * @param string $shortname
+     */
+    public function setShortname($shortname)
+    {
+        $this->shortname = $shortname;
+    }
+
+    /**
+     * Get shortname
+     *
+     * @return string 
+     */
+    public function getShortname()
+    {
+        return $this->shortname;
+    }
+
+    /**
+     * Set letters
+     *
+     * @param string $letters
+     */
+    public function setLetters($letters)
+    {
+        $this->letters = $letters;
+    }
+
+    /**
+     * Get letters
+     *
+     * @return string 
+     */
+    public function getLetters()
+    {
+        return $this->letters;
+    }
+
+    /**
+     * Set stadium
+     *
+     * @param string $stadium
+     */
+    public function setStadium($stadium)
+    {
+        $this->stadium = $stadium;
+    }
+
+    /**
+     * Get stadium
+     *
+     * @return string 
+     */
+    public function getStadium()
+    {
+        return $this->stadium;
+    }
+
+    /**
+     * Set website
+     *
+     * @param string $website
+     */
+    public function setWebsite($website)
+    {
+        $this->website = $website;
+    }
+
+    /**
+     * Get website
+     *
+     * @return string 
+     */
+    public function getWebsite()
+    {
+        return $this->website;
+    }
+
+    /**
+     * Set nicknames
+     *
+     * @param text $nicknames
+     */
+    public function setNicknames($nicknames)
+    {
+        $this->nicknames = $nicknames;
+    }
+
+    /**
+     * Get nicknames
+     *
+     * @return text 
+     */
+    public function getNicknames()
+    {
+        return $this->nicknames;
+    }
+
+    /**
+     * Set foundedAt
+     *
+     * @param datetime $foundedAt
+     */
+    public function setFoundedAt($foundedAt)
+    {
+        $this->foundedAt = $foundedAt;
+    }
+
+    /**
+     * Get foundedAt
+     *
+     * @return datetime 
+     */
+    public function getFoundedAt()
+    {
+        return $this->foundedAt;
+    }
+
+    /**
+     * Set splash
+     *
+     * @param Application\Sonata\MediaBundle\Entity\Media $splash
+     */
+    public function setSplash(\Application\Sonata\MediaBundle\Entity\Media $splash)
+    {
+        $this->splash = $splash;
+    }
+
+    /**
+     * Get splash
+     *
+     * @return Application\Sonata\MediaBundle\Entity\Media 
+     */
+    public function getSplash()
+    {
+        return $this->splash;
     }
 }

@@ -9,11 +9,13 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class LoadCountryData implements FixtureInterface
 {
-    function load(ObjectManager $manager)
+    const YAML_PATH = '../countries.yml';
+	
+	function load(ObjectManager $manager)
     {
-        if (file_exists(__DIR__.'/../countries.yml')) {
-	    	$loader = Yaml::parse(__DIR__.'/../countries.yml');
-	    	//var_dump($loader); exit;
+        if (file_exists(__DIR__.'/'.self::YAML_PATH)) {
+	    	$loader = Yaml::parse(__DIR__.'/'.self::YAML_PATH);
+	    	
 	        foreach ($loader as $ct) {
 	        	$country = new Country();
 	        	
@@ -52,16 +54,5 @@ class LoadCountryData implements FixtureInterface
         } else {
         	throw new \Exception('Fixture file does not exist');
         }
-    	
-        /*
-    	$userAdmin = new User();
-        $userAdmin->setUsername('admin');
-        $userAdmin->setPassword('test');
-
-        $manager->persist($userAdmin);
-        $manager->flush();
-
-        $this->addReference('admin-user', $userAdmin);
-        */
     }
 }
