@@ -464,7 +464,8 @@ class Idol implements SearchableInterface
      */
     public function addIdolCareer(\Dodici\Fansworld\WebBundle\Entity\IdolCareer $idolcareers)
     {
-        $this->idolcareers[] = $idolcareers;
+        $idolcareers->setIdol($this);
+    	$this->idolcareers[] = $idolcareers;
     }
 
     /**

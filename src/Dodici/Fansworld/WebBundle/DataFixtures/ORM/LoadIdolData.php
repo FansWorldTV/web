@@ -1,7 +1,9 @@
 <?php
 namespace Dodici\Fansworld\WebBundle\DataFixtures\ORM;
 
-use Dodici\Fansworld\WebBundle\Entity\Team;
+use Dodici\Fansworld\WebBundle\Entity\IdolCareer;
+
+use Dodici\Fansworld\WebBundle\Entity\Idol;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Application\Sonata\MediaBundle\Entity\Media;
@@ -11,12 +13,12 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Yaml\Yaml;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
-class LoadTeamData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
+class LoadIdolData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
 {
-	const IMAGE_FILE_PATH = '../Files/teams';
-	const YAML_PATH = '../teams.yml';
-	const SPLASH_FILENAME = 'equipo_%d_portada';
-	const IMAGE_FILENAME = 'equipo_%d_avatar';
+	const IMAGE_FILE_PATH = '../Files/idols';
+	const YAML_PATH = '../idols.yml';
+	const SPLASH_FILENAME = 'idolo_%d_portada';
+	const IMAGE_FILENAME = 'idolo_%d_avatar';
 	
 	private $container;
 
@@ -31,21 +33,35 @@ class LoadTeamData extends AbstractFixture implements FixtureInterface, Containe
 	    	$loader = Yaml::parse(__DIR__.'/'.self::YAML_PATH);
 	    	
 	        foreach ($loader as $ct) {
-	        	$team = new Team();
+	        	$idol = new Idol();
+	        	$idol->setFirstname($ct['firstname']);
+	        	$idol->setLastname($ct['lastname']);
+	        	$idol->setBirthday(\DateTime::createFromFormat('U', $ct['birthday']));
+	        	$idol->setNicknames($ct['nicknames']);
+	        	$idol->setTwitter($ct['twitter']);
+	        	$idol->setContent($ct['content']);
 	        	
-	        	$teamcategory = $manager->merge($this->getReference('teamcategory-'.$ct['teamcategory']));
-	        	$team->setTeamcategory($teamcategory);
-	        	$team->setTitle($ct['title']);
-	        	$team->setFoundedAt(\DateTime::createFromFormat('U', $ct['foundedAt']));
-	        	$team->setNicknames($ct['nicknames']);
-	        	$team->setLetters($ct['letters']);
-	        	$team->setShortname($ct['shortname']);
-	        	$team->setStadium($ct['stadium']);
-	        	$team->setWebsite($ct['website']);
-	        	$team->setTwitter($ct['twitter']);
-	        	$team->setExternal($ct['external']);
-	        	$team->setContent($ct['content']);
+	        	/* TEAMS */
+	        	if (isset($ct['teams']) && $ct['teams']) {
+	        		foreach ($ct['teams'] as $cy) {
+		        		$career = new IdolCareer();
+		        		
+	        			if (isset($cy['id'])) {
+		        			$team = $manager->merge($this->getReference('team-'.$cy['id']));
+		        			$career->setTeam($team);
+		        		} elseif (isset($cy['name'])) {
+		        			$career->setTeamname($cy['name']);
+		        		}
+		        		$career->setPosition($cy['position']);
+		        		$career->setDebut($cy['debut']);
+		        		$career->setActual($cy['actual']);
+		        		$career->setHighlight($cy['highlight']);
+		        		$idol->addIdolCareer($career);
+	        		}
+	        	}
+	        	/* END TEAMS */
 	        	
+	        	/* IMAGES */
 	        	$image = null; $splash = null; $ireal = null; $sreal = null;
 	        	$path = __DIR__.'/'.self::IMAGE_FILE_PATH.'/';
 	        	$imagefn = sprintf(self::IMAGE_FILENAME, $ct['id']);
@@ -64,7 +80,7 @@ class LoadTeamData extends AbstractFixture implements FixtureInterface, Containe
 	                $media->setProviderName('sonata.media.provider.image');
 	                $mediaManager->save($media);
 	                   
-	                $team->setImage($media);
+	                $idol->setImage($media);
 		        }
 		        
 	        	if ($sreal) {
@@ -75,11 +91,11 @@ class LoadTeamData extends AbstractFixture implements FixtureInterface, Containe
 	                $media->setProviderName('sonata.media.provider.image');
 	                $mediaManager->save($media);
 	                   
-	                $team->setSplash($media);
+	                $idol->setSplash($media);
 		        }
+		        /* END IMAGES */
 		
-		        $manager->persist($team);
-		        $this->addReference('team-'.$ct['id'], $team);
+		        $manager->persist($idol);
 	        }
 	        
 	        $manager->flush();
@@ -90,6 +106,6 @@ class LoadTeamData extends AbstractFixture implements FixtureInterface, Containe
     
 	public function getOrder()
     {
-        return 5; // the order in which fixtures will be loaded
+        return 6; // the order in which fixtures will be loaded
     }
 }

@@ -2,6 +2,10 @@
 
 namespace Dodici\Fansworld\WebBundle\Extensions;
 
+use Dodici\Fansworld\WebBundle\Entity\HasIdol;
+
+use Dodici\Fansworld\WebBundle\Entity\Idol;
+
 use Dodici\Fansworld\WebBundle\Entity\HasTeam;
 
 use Dodici\Fansworld\WebBundle\Entity\Team;
@@ -42,6 +46,7 @@ class Tagger
     	$hasrepo = $this->em->getRepository('DodiciFansworldWebBundle:HasTag');
     	$hasurepo = $this->em->getRepository('DodiciFansworldWebBundle:HasUser');
     	$hastrepo = $this->em->getRepository('DodiciFansworldWebBundle:HasTeam');
+    	$hasirepo = $this->em->getRepository('DodiciFansworldWebBundle:HasIdol');
     	$exp = explode('\\', get_class($entity));
     	$classname = end($exp);
     	
@@ -70,6 +75,19 @@ class Tagger
 		    		$hasteam->$methodname($entity);
 		    		
 		    		$entity->addHasTeam($hasteam);
+		    		$this->em->persist($entity);
+	    		}
+    		} elseif ($t instanceof Idol) {
+    			$exists = $hasirepo->findOneBy(array('idol' => $t->getId(), 'author' => $user->getId(), strtolower($classname) => $entity->getId()));
+	    		
+	    		if (!$exists) {
+		    		$hasidol = new HasIdol();
+		    		$hasidol->setAuthor($user);
+		    		$hasidol->setIdol($t);
+		    		$methodname = 'set'.$classname;
+		    		$hasidol->$methodname($entity);
+		    		
+		    		$entity->addHasIdol($hasidol);
 		    		$this->em->persist($entity);
 	    		}
     		} else {

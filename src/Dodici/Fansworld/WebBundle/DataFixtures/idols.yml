@@ -1,0 +1,25 @@
+-
+  id: 1
+  firstname: Javier
+  lastname: Pastore
+  birthday: 1986-10-19
+  twitter: jpastore
+  nicknames: |
+    El Flaco
+    Il Fantasista
+  content: |
+    El Flaco es un jugador muy bueno
+    Le gustan los fideos
+  teams:
+      -
+        name: Talleres de Córdoba
+        position: Volante Central
+        debut: true
+        actual: false
+        highlight: false
+      -
+        id: 1
+        position: Delantero
+        debut: false
+        actual: true
+        highlight: true

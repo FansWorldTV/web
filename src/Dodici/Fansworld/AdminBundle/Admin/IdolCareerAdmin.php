@@ -39,6 +39,9 @@ class IdolCareerAdmin extends Admin
             ->add('dateTo', 'date', array ('required' => false, 'attr' => array('class' => 'datepicker'), 'widget' => 'single_text',
                	'format' => 'dd/MM/yyyy'), array ())	
             ->add('active', NULL, array ('required' => false), array ())
+            ->add('actual', NULL, array ('required' => false), array ())
+            ->add('debut', NULL, array ('required' => false), array ())
+            ->add('highlight', NULL, array ('required' => false), array ())
         ;
     }
 

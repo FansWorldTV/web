@@ -99,6 +99,27 @@ class IdolCareer implements Translatable
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
     private $active;
+    
+    /**
+     * @var boolean $debut
+     *
+     * @ORM\Column(name="debut", type="boolean", nullable=false)
+     */
+    private $debut;
+    
+    /**
+     * @var boolean $actual
+     *
+     * @ORM\Column(name="actual", type="boolean", nullable=false)
+     */
+    private $actual;
+    
+    /**
+     * @var boolean $highlight
+     *
+     * @ORM\Column(name="highlight", type="boolean", nullable=false)
+     */
+    private $highlight;
             
 	/**
 	 * @Gedmo\Locale
@@ -124,6 +145,18 @@ class IdolCareer implements Translatable
     {
         if (null === $this->createdAt) {
             $this->setCreatedAt(new \DateTime());
+        }
+    	if (null === $this->active) {
+            $this->setActive(true);
+        }
+    	if (null === $this->debut) {
+            $this->setDebut(false);
+        }
+    	if (null === $this->actual) {
+            $this->setActual(false);
+        }
+    	if (null === $this->highlight) {
+            $this->setHighlight(false);
         }
     }
     
@@ -317,5 +350,65 @@ class IdolCareer implements Translatable
     public function getTeam()
     {
         return $this->team;
+    }
+
+    /**
+     * Set debut
+     *
+     * @param boolean $debut
+     */
+    public function setDebut($debut)
+    {
+        $this->debut = $debut;
+    }
+
+    /**
+     * Get debut
+     *
+     * @return boolean 
+     */
+    public function getDebut()
+    {
+        return $this->debut;
+    }
+
+    /**
+     * Set actual
+     *
+     * @param boolean $actual
+     */
+    public function setActual($actual)
+    {
+        $this->actual = $actual;
+    }
+
+    /**
+     * Get actual
+     *
+     * @return boolean 
+     */
+    public function getActual()
+    {
+        return $this->actual;
+    }
+
+    /**
+     * Set highlight
+     *
+     * @param boolean $highlight
+     */
+    public function setHighlight($highlight)
+    {
+        $this->highlight = $highlight;
+    }
+
+    /**
+     * Get highlight
+     *
+     * @return boolean 
+     */
+    public function getHighlight()
+    {
+        return $this->highlight;
     }
 }
