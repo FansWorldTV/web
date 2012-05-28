@@ -27,9 +27,6 @@ var searchBox = {
             }
             return false;
         });
-//        $(".btn_search").click(function(){
-//            
-//        });
         searchBox.addMore();
     },
     handleType: function(){
