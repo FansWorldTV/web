@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="fos_twitter.auth" class="FOS\TwitterBundle\Security\Authentication\Provider\TwitterProvider" public="false">
+            <argument type="service" id="fos_twitter.service"/>
+            <argument type="service" id="service_container"/>
+        </service>
+        
+        <service id="fos_twitter.anywhere_auth" class="FOS\TwitterBundle\Security\Authentication\Provider\TwitterAnywhereProvider" public="false">
+            <argument>%fos_twitter.consumer_secret%</argument>
+        </service>
+
+        <service id="fos_twitter.security.authentication.listener"
+                 class="FOS\TwitterBundle\Security\Firewall\TwitterListener"
+                 parent="security.authentication.listener.abstract"
+                 abstract="true">
+        </service>
+
+        <service id="fos_twitter.security.authentication.entry_point" class="FOS\TwitterBundle\Security\EntryPoint\TwitterAuthenticationEntryPoint" public="false" abstract="true">
+            <argument type="service" id="fos_twitter.service"/>
+        </service>
+
+    </services>
+</container>

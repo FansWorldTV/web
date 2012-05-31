@@ -51,7 +51,7 @@ class Search
         $this->request = Request::createFromGlobals();
         $this->em = $em;
         $this->router = $router;
-        $this->user = ($security_context->getToken()->getUser() instanceof User) ? $security_context->getToken()->getUser() : null;
+        $this->user = ($security_context->getToken() && ($security_context->getToken()->getUser() instanceof User)) ? $security_context->getToken()->getUser() : null;
     }
 
     private function getRepositoryByType($type)

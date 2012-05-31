@@ -6,8 +6,10 @@ use Dodici\Fansworld\WebBundle\Entity\Country;
 use Dodici\Fansworld\WebBundle\Entity\City;
 use Symfony\Component\Yaml\Yaml;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
-class LoadCountryData implements FixtureInterface
+class LoadCountryData extends AbstractFixture implements FixtureInterface, OrderedFixtureInterface
 {
     const YAML_PATH = '../countries.yml';
 	
@@ -48,11 +50,20 @@ class LoadCountryData implements FixtureInterface
 			        	}
 	        		}
 	        	}
+	        	
+	        	$this->addReference('country-'.$ct['id'], $country);
 	        }
+	        
+	        
 	        
 	        $manager->flush();
         } else {
         	throw new \Exception('Fixture file does not exist');
         }
+    }
+    
+	public function getOrder()
+    {
+        return 1; // the order in which fixtures will be loaded
     }
 }

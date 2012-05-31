@@ -33,7 +33,7 @@ class ProfileFormType extends BaseType
             ->add('birthday', 'date', array ('required' => false, 'attr' => array('class' => 'datepicker'), 'widget' => 'single_text',
                	'format' => 'dd/MM/yyyy'), array ())
             ->add('country',null,array('label'=>'País','required'=>false))
-			->add('city',null,array('label'=>'Ciudad','required'=>false))
+			->add('city',null,array('label'=>'Ciudad','required'=>false, 'choices' => array()))
 			->add('phone',null,array('label'=>'Teléfono','required'=>false))
 			
 			/*
@@ -47,7 +47,8 @@ class ProfileFormType extends BaseType
             
 			->add('content',null,array('label'=>'Sobre Mí','required'=>false))
 			->add('restricted',null,array('label'=>'Modo Restringido','required'=>false))
-			->add('linkfacebook',null,array('label'=>'Link Facebook','required'=>false))	
+			->add('linkfacebook',null,array('label'=>'Link Facebook','required'=>false))
+			->add('linktwitter',null,array('label'=>'Link Twitter','required'=>false))	
         ;
         
         $builder->setAttribute('label', 'Modificar mis datos:');

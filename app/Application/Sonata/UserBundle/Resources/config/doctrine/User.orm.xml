@@ -19,6 +19,10 @@
         <field name="skype" column="skype" type="string" length="250" nullable="true" />
         <field name="msn" column="msn" type="string" length="250" nullable="true" />
         <field name="twitter" column="twitter" type="string" length="250" nullable="true" />
+        <field name="twittertoken" column="twittertoken" type="string" length="255" nullable="true" />
+        <field name="twittersecret" column="twittersecret" type="string" length="255" nullable="true" />
+        <field name="twitterid" column="twitterid" type="string" length="255" nullable="true" />
+        <field name="linktwitter" column="linktwitter" type="boolean" nullable="false" />
         <field name="yahoo" column="yahoo" type="string" length="250" nullable="true" />
         <field name="gmail" column="gmail" type="string" length="250" nullable="true" />
         <field name="origin" column="origin" type="string" length="250" nullable="true" />

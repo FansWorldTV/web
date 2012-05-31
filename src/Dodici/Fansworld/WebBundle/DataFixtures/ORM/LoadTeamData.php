@@ -45,6 +45,10 @@ class LoadTeamData extends AbstractFixture implements FixtureInterface, Containe
 	        	$team->setTwitter($ct['twitter']);
 	        	$team->setExternal($ct['external']);
 	        	$team->setContent($ct['content']);
+	        	if (isset($ct['country'])) {
+	        		$country = $manager->merge($this->getReference('country-'.$ct['country']));
+	        		$team->setCountry($country);
+	        	}
 	        	
 	        	$image = null; $splash = null; $ireal = null; $sreal = null;
 	        	$path = __DIR__.'/'.self::IMAGE_FILE_PATH.'/';

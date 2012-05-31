@@ -38,6 +38,7 @@ class LoadUserData extends AbstractFixture implements FixtureInterface, Containe
 		    	$user->setLastname($ct['lastname']);
 		    	$user->setPlainPassword($ct['password']);
 		    	$user->setType($usertypes[$ct['type']]);
+		    	$user->setEnabled(true);
 		    	
 	        	if (isset($ct['roles']) && $ct['roles']) {
 	        		foreach ($ct['roles'] as $cy) {

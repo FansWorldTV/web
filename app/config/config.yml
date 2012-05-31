@@ -146,6 +146,11 @@ fos_facebook:
     cookie: true
     permissions: [email, user_birthday, user_location, publish_actions]
     
+fos_twitter:
+    file: %kernel.root_dir%/../vendor/twitteroauth/twitteroauth/twitteroauth.php
+    consumer_key: %twitter.app_key%
+    consumer_secret: %twitter.app_secret%
+    
 artseld_openinviter:
     username: "fansworld"
     private_key: "6c0b090b7bf71fa484ab40de80beb21a"

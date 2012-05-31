@@ -110,6 +110,16 @@ class Idol implements SearchableInterface
     private $origin;
     
     /**
+     * @var Country
+     *
+     * @ORM\ManyToOne(targetEntity="Country")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="country_id", referencedColumnName="id")
+     * })
+     */
+    private $country;
+    
+    /**
      * @var string $sex
      * 
      * @ORM\Column(name="sex", type="string", length=10, nullable=true)
@@ -550,5 +560,25 @@ class Idol implements SearchableInterface
     public function getSplash()
     {
         return $this->splash;
+    }
+
+    /**
+     * Set country
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Country $country
+     */
+    public function setCountry(\Dodici\Fansworld\WebBundle\Entity\Country $country)
+    {
+        $this->country = $country;
+    }
+
+    /**
+     * Get country
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Country 
+     */
+    public function getCountry()
+    {
+        return $this->country;
     }
 }

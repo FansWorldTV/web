@@ -167,6 +167,13 @@ abstract class BaseFacebook
    * @var string
    */
   protected $appSecret;
+  
+  /**
+   * The Application Access Token.
+   *
+   * @var string
+   */
+  protected $appAccessToken;
 
   /**
    * The ID of the Facebook user, or 0 if the user is logged out.
@@ -666,7 +673,13 @@ abstract class BaseFacebook
    *                public information about users and applications.
    */
   protected function getApplicationAccessToken() {
-    return $this->appId.'|'.$this->appSecret;
+    if ($this->appAccessToken) return $this->appAccessToken;
+  	$tokenfromfb = $this->getApplicationAccessTokenFromFacebook();
+    if ($tokenfromfb) {
+    	$this->appAccessToken = $tokenfromfb;
+    	return $tokenfromfb;
+    }
+  	return $this->appId.'|'.$this->appSecret;
   }
 
   /**
@@ -715,6 +728,41 @@ abstract class BaseFacebook
     } catch (FacebookApiException $e) {
       // most likely that user very recently revoked authorization.
       // In any event, we don't have an access token, so say so.
+      return false;
+    }
+
+    if (empty($access_token_response)) {
+      return false;
+    }
+
+    $response_params = array();
+    parse_str($access_token_response, $response_params);
+    if (!isset($response_params['access_token'])) {
+      return false;
+    }
+
+    return $response_params['access_token'];
+  }
+  
+  /**
+   * Retrieves an application access token from Facebook
+   *
+   * @param string $code An authorization code.
+   * @return mixed An access token exchanged for the authorization code, or
+   *               false if an access token could not be generated.
+   */
+  protected function getApplicationAccessTokenFromFacebook() {
+    
+    try {
+      // need to circumvent json_decode by calling _oauthRequest
+      // directly, since response isn't JSON format.
+      $access_token_response =
+        $this->makeRequest(
+          $this->getUrl('graph', '/oauth/access_token'),
+          $params = array('client_id' => $this->getAppId(),
+                          'client_secret' => $this->getAppSecret(),
+                          'grant_type' => 'client_credentials'));
+    } catch (FacebookApiException $e) {
       return false;
     }
 

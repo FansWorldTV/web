@@ -79,6 +79,26 @@ class User extends BaseUser implements SearchableInterface
     private $twitter;
     
     /**
+     * @var string $twittertoken
+     */
+    private $twittertoken;
+    
+    /**
+     * @var string $twittersecret
+     */
+    private $twittersecret;
+    
+    /**
+     * @var string $twitterid
+     */
+    private $twitterid;
+    
+    /**
+     * @var boolean $linktwitter
+     */
+    private $linktwitter;
+    
+    /**
      * @var string $yahoo
      */
     private $yahoo;
@@ -272,6 +292,9 @@ class User extends BaseUser implements SearchableInterface
         }
     	if (null === $this->linkfacebook) {
         	$this->setLinkfacebook(false);
+        }
+    	if (null === $this->linktwitter) {
+        	$this->setLinktwitter(false);
         }
     }
     
@@ -489,6 +512,86 @@ class User extends BaseUser implements SearchableInterface
     public function getTwitter()
     {
         return $this->twitter;
+    }
+    
+	/**
+     * Set twittertoken
+     *
+     * @param string $twittertoken
+     */
+    public function setTwittertoken($twittertoken)
+    {
+        $this->twittertoken = $twittertoken;
+    }
+
+    /**
+     * Get twittertoken
+     *
+     * @return string 
+     */
+    public function getTwittertoken()
+    {
+        return $this->twittertoken;
+    }
+    
+	/**
+     * Set twittersecret
+     *
+     * @param string $twittersecret
+     */
+    public function setTwittersecret($twittersecret)
+    {
+        $this->twittersecret = $twittersecret;
+    }
+
+    /**
+     * Get twittersecret
+     *
+     * @return string 
+     */
+    public function getTwittersecret()
+    {
+        return $this->twittersecret;
+    }
+    
+	/**
+     * Set twitterid
+     *
+     * @param string $twitterid
+     */
+    public function setTwitterid($twitterid)
+    {
+        $this->twitterid = $twitterid;
+    }
+
+    /**
+     * Get twitterid
+     *
+     * @return string 
+     */
+    public function getTwitterid()
+    {
+        return $this->twitterid;
+    }
+    
+	/**
+     * Set linktwitter
+     *
+     * @param boolean $linktwitter
+     */
+    public function setLinktwitter($linktwitter)
+    {
+        $this->linktwitter = $linktwitter;
+    }
+
+    /**
+     * Get linktwitter
+     *
+     * @return boolean 
+     */
+    public function getLinktwitter()
+    {
+        return $this->linktwitter;
     }
     
 	/**

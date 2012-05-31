@@ -1,4 +1,5 @@
 -
+  id: 1
   name: Afganistan
   cities:
       - Badakhshan
@@ -37,6 +38,7 @@
       - Vardak
       - Zabol
 -
+  id: 2
   name: Albania
   cities:
       - Berat
@@ -52,6 +54,7 @@
       - Tirane
       - Vlore
 -
+  id: 3
   name: Alemania
   cities:
       - Baden-Wberg Bayern
@@ -70,10 +73,12 @@
       - Schleswig-Holstein
       - Thuringen
 -
+  id: 4
   name: American Samoa
   cities:
       - American Samoa (General)
 -
+  id: 5
   name: Andorra
   cities:
       - Andorra la Vella
@@ -91,6 +96,7 @@
       - Saint Peter
       - Saint Philip
 -
+  id: 6
   name: Angola
   cities:
       - Bengo
@@ -112,10 +118,12 @@
       - Uige
       - Zaire
 -
+  id: 7
   name: Anguila
   cities:
       - Anguilla (General)
 -
+  id: 8
   name: Antigua and Barbuda
   cities:
       - Barbuda
@@ -126,14 +134,17 @@
       - Saint Peter
       - Saint Philip
 -
+  id: 9
   name: Antillas Holandesas
   cities:
       - Netherlands Antilles (General)
 -
+  id: 10
   name: Antartida
   cities:
       - Antarctica (General)
 -
+  id: 11
   name: Arabia Saudita
   cities:
       - Al Bahah
@@ -151,6 +162,7 @@
       - Najran
       - Tabuk
 -
+  id: 12
   name: Argelia
   cities:
       - Adrar
@@ -202,6 +214,7 @@
       - Tizi Ouzou
       - Tlemcen
 -
+  id: 13
   name: Argentina
   cities:
       - Capital Federal
@@ -229,6 +242,7 @@
       - Tierra del Fuego
       - Tucuman
 -
+  id: 14
   name: Armenia
   cities:
       - Aragatsotn
@@ -243,10 +257,12 @@
       - Vayots Dzor
       - Yerevan
 -
+  id: 15
   name: Aruba
   cities:
       - Aruba (General)
 -
+  id: 16
   name: Australia
   cities:
       - Australian Capital Territory
@@ -258,6 +274,7 @@
       - Victoria
       - Western Australia
 -
+  id: 17
   name: Austria
   cities:
       - Burgenland
@@ -270,6 +287,7 @@
       - Vorarlberg
       - Wien
 -
+  id: 18
   name: Azerbaijan
   cities:
       - Abseron
@@ -344,6 +362,7 @@
       - Zaqatala
       - Zardab
 -
+  id: 19
   name: Bahamas
   cities:
       - Acklins and Crooked Islands
@@ -368,6 +387,7 @@
       - San Salvador and Rum Cay
       - Sandy Point
 -
+  id: 20
   name: Bahrein
   cities:
       - Al Hadd
@@ -383,6 +403,7 @@
       - Mintaqat Juzur Hawar
       - Sitrah
 -
+  id: 21
   name: Bangladesh
   cities:
       - Bagerhat
@@ -455,6 +476,7 @@
       - Tangail
       - Thakurgaon
 -
+  id: 22
   name: Barbados
   cities:
       - Christ Church
@@ -469,6 +491,7 @@
       - Saint Philip
       - Saint Thomas
 -
+  id: 23
   name: Belice
   cities:
       - Belize
@@ -478,6 +501,7 @@
       - Stann Creek
       - Toledo
 -
+  id: 24
   name: Benin
   cities:
       - Atakora
@@ -488,6 +512,7 @@
       - Oueme
       - Zou
 -
+  id: 25
   name: Bermuda
   cities:
       - Devonshire
@@ -502,6 +527,7 @@
       - Southampton
       - Warwick
 -
+  id: 26
   name: Bielorrusia
   cities:
       - Brestskaya Voblasts
@@ -512,6 +538,7 @@
       - Minskaya Voblasts
       - Vitsyebskaya Voblasts
 -
+  id: 27
   name: Bolivia
   cities:
       - Chuquisaca
@@ -524,12 +551,14 @@
       - Santa Cruz
       - Tarija
 -
+  id: 28
   name: Bosnia y Herzegovina
   cities:
       - Bosanska Dubica
       - Federation of Bosnia and Herzegovina
       - Republika Srpska
 -
+  id: 29
   name: Botsuana
   cities:
       - Central
@@ -543,10 +572,12 @@
       - South-East
       - Southern
 -
+  id: 30
   name: Bouvet Island
   cities:
       - Bouvet Island (General)
 -
+  id: 31
   name: Brasil
   cities:
       - Acre
@@ -577,10 +608,12 @@
       - Sergipe
       - Tocantins
 -
+  id: 32
   name: British Indian Ocean Territory
   cities:
       - British Indian Ocean Territory (General)
 -
+  id: 33
   name: Brunei Darussalam
   cities:
       - Alibori
@@ -596,6 +629,7 @@
       - Tutong
       - Zou
 -
+  id: 34
   name: Bulgaria
   cities:
       - Blagoevgrad
@@ -628,6 +662,7 @@
       - Vratsa
       - Yambol
 -
+  id: 35
   name: Burkina Faso
   cities:
       - Bale
@@ -676,6 +711,7 @@
       - Zondoma
       - Zoundweogo
 -
+  id: 36
   name: Burundi
   cities:
       - Bubanza
@@ -695,6 +731,7 @@
       - Rutana
       - Ruyigi
 -
+  id: 37
   name: Butan
   cities:
       - Bumthang
@@ -716,6 +753,7 @@
       - Tongsa
       - Wangdi Phodrang
 -
+  id: 38
   name: Belgica
   cities:
       - Antwerpen
@@ -731,6 +769,7 @@
       - Vlaams-Brabant
       - West-Vlaanderen
 -
+  id: 39
   name: Cabo Verda
   cities:
       - Boa Vista
@@ -750,6 +789,7 @@
       - Sao Vicente
       - Tarrafal
 -
+  id: 40
   name: Camboya
   cities:
       - Batdambang
@@ -773,6 +813,7 @@
       - Svay Rieng
       - Takev
 -
+  id: 41
   name: Camerun
   cities:
       - Adamaoua
@@ -786,6 +827,7 @@
       - Sud
       - Sud-Ouest
 -
+  id: 42
   name: Canada
   cities:
       - Alberta
@@ -802,6 +844,7 @@
       - Saskatchewan
       - Yukon Territory
 -
+  id: 43
   name: Chad
   cities:
       - Batha
@@ -819,6 +862,7 @@
       - Salamat
       - Tandjile
 -
+  id: 44
   name: Chile
   cities:
       - Aisen del General Carlos Ibanez del Campo
@@ -835,6 +879,7 @@
       - Tarapaca
       - Valparaiso
 -
+  id: 45
   name: China
   cities:
       - Anhui
@@ -869,6 +914,7 @@
       - Yunnan
       - Zhejiang
 -
+  id: 46
   name: Chipre
   cities:
       - Famagusta
@@ -878,6 +924,7 @@
       - Nicosia
       - Paphos
 -
+  id: 47
   name: Colombia
   cities:
       - Amazonas
@@ -918,12 +965,14 @@
       - Vaupes
       - Vichada
 -
+  id: 48
   name: Comores
   cities:
       - Anjouan
       - Grande Comore
       - Moheli
 -
+  id: 49
   name: Congo
   cities:
       - Bouenza
@@ -937,6 +986,7 @@
       - Pool
       - Sangha
 -
+  id: 50
   name: Corea del Norte
   cities:
       - Chagang-do
@@ -953,6 +1003,7 @@
       - P yongyang-si
       - Yanggang-do
 -
+  id: 51
   name: Corea del Sur
   cities:
       - Ch ungch ong-bukto
@@ -972,6 +1023,7 @@
       - Taejon-jikhalsi
       - Ulsan-gwangyoksi
 -
+  id: 52
   name: Costa Rica
   cities:
       - Alajuela
@@ -982,6 +1034,7 @@
       - Puntarenas
       - San Jose
 -
+  id: 53
   name: Cote D Ivoire
   cities:
       - Abengourou
@@ -1044,6 +1097,7 @@
       - Yamoussoukro
       - Zuenoula
 -
+  id: 54
   name: Croacia
   cities:
       - Bjelovarsko-Bilogorska
@@ -1068,6 +1122,7 @@
       - Zadarska
       - Zagrebacka
 -
+  id: 55
   name: Cuba
   cities:
       - Camaguey
@@ -1086,6 +1141,7 @@
       - Santiago de Cuba
       - Villa Clara
 -
+  id: 56
   name: Dinamarca
   cities:
       - Arhus
@@ -1104,6 +1160,7 @@
       - Vestsjalland
       - Viborg
 -
+  id: 57
   name: Djibouti
   cities:
       - Dikhil
@@ -1111,6 +1168,7 @@
       - Obock
       - Tadjoura
 -
+  id: 58
   name: Dominica
   cities:
       - Saint Andrew
@@ -1124,10 +1182,12 @@
       - Saint Paul
       - Saint Peter
 -
+  id: 59
   name: East Timor
   cities:
       - East Timor (General)
 -
+  id: 60
   name: Ecuador
   cities:
       - Azuay
@@ -1153,6 +1213,7 @@
       - Tungurahua
       - Zamora-Chinchipe
 -
+  id: 61
   name: Egipto
   cities:
       - Ad Daqahliyah
@@ -1182,6 +1243,7 @@
       - Shamal Sina
       - Suhaj
 -
+  id: 62
   name: El Salvador
   cities:
       - Ahuachapan
@@ -1199,10 +1261,12 @@
       - Sonsonate
       - Usulutan
 -
+  id: 63
   name: El Vaticano
   cities:
       - Holy See (Vatican City State) (General)
 -
+  id: 64
   name: Emiratos Arabes Unidos
   cities:
       - Abu Dhabi
@@ -1213,10 +1277,12 @@
       - Sharjah
       - Umm Al Quwain
 -
+  id: 65
   name: Eritrea
   cities:
       - Eritrea (General)
 -
+  id: 66
   name: Eslovaquia
   cities:
       - Banska Bystrica
@@ -1228,6 +1294,7 @@
       - Trnava
       - Zilina
 -
+  id: 67
   name: Eslovenia
   cities:
       - Ajdovscina
@@ -1372,7 +1439,8 @@
       - Ziri
       - Zrece
 -
-  name: Espa�a
+  id: 68
+  name: España
   cities:
       - Andalucia
       - Aragon
@@ -1392,6 +1460,7 @@
       - Navarra
       - Pais Vasco
 -
+  id: 69
   name: Estados Unidos
   cities:
       - Alabama
@@ -1454,6 +1523,7 @@
       - Wisconsin
       - Wyoming
 -
+  id: 70
   name: Estonia
   cities:
       - Harjumaa
@@ -1478,6 +1548,7 @@
       - Viljandimaa
       - Vorumaa
 -
+  id: 71
   name: Etiopia
   cities:
       - Addis Abeba
@@ -1500,6 +1571,7 @@
       - Tigray
       - YeDebub Biheroch Bihereseboch na Hizboch
 -
+  id: 72
   name: Fiji
   cities:
       - Central
@@ -1508,6 +1580,7 @@
       - Rotuma
       - Western
 -
+  id: 73
   name: Filipinas
   cities:
       - Abra
@@ -1645,6 +1718,7 @@
       - Zamboanga del Norte
       - Zamboanga del Sur
 -
+  id: 74
   name: Finlandia
   cities:
       - Eastern Finland
@@ -1653,6 +1727,7 @@
       - Southern Finland
       - Western Finland
 -
+  id: 75
   name: Francia
   cities:
       - Alsace
@@ -1678,18 +1753,22 @@
       - Provence-Alpes-Cote d Azur
       - Rhone-Alpes
 -
+  id: 76
   name: French Guiana
   cities:
       - Guyane Departement
 -
+  id: 77
   name: French Polynesia
   cities:
       - Polynesie Française Territoire
 -
+  id: 78
   name: French Southern Territories
   cities:
       - French Southern Territories (General)
 -
+  id: 79
   name: Gabon
   cities:
       - Estuaire
@@ -1702,6 +1781,7 @@
       - Ogooue-Maritime
       - Woleu-Ntem
 -
+  id: 80
   name: Gambia
   cities:
       - Banjul
@@ -1711,6 +1791,7 @@
       - Upper River
       - Western
 -
+  id: 81
   name: Georgia
   cities:
       - Abashis Raioni
@@ -1778,6 +1859,7 @@
       - Zugdidi
       - Zugdidis Raioni
 -
+  id: 82
   name: Ghana
   cities:
       - Ashanti
@@ -1791,10 +1873,12 @@
       - Volta
       - Western
 -
+  id: 83
   name: Gibraltar
   cities:
       - Gibraltar (General)
 -
+  id: 84
   name: Granada
   cities:
       - Saint Andrew
@@ -1804,6 +1888,7 @@
       - Saint Mark
       - Saint Patrick
 -
+  id: 85
   name: Grecia
   cities:
       - Aitolia kai Akarnania
@@ -1858,20 +1943,24 @@
       - Xanthi
       - Zakinthos
 -
+  id: 86
   name: Groenlandia
   cities:
       - Nordgronland
       - Ostgronland
       - Vestgronland
 -
+  id: 87
   name: Guadalupe
   cities:
       - Guadeloupe Departement
 -
+  id: 88
   name: Guam
   cities:
       - Guam (General)
 -
+  id: 89
   name: Guatemala
   cities:
       - Alta Verapaz
@@ -1897,6 +1986,7 @@
       - Totonicapan
       - Zacapa
 -
+  id: 90
   name: Guinea
   cities:
       - Beyla
@@ -1934,6 +2024,7 @@
       - Tougue
       - Yomou
 -
+  id: 91
   name: Guinea Ecuatorial
   cities:
       - Annobon
@@ -1944,6 +2035,7 @@
       - Litoral
       - Wele-Nzas
 -
+  id: 92
   name: Guinea-Bissau
   cities:
       - Bafata
@@ -1956,6 +2048,7 @@
       - Quinara
       - Tombali
 -
+  id: 93
   name: Guyana
   cities:
       - Barima-Waini
@@ -1969,6 +2062,7 @@
       - Upper Demerara-Berbice
       - Upper Takutu-Upper Essequibo
 -
+  id: 94
   name: Haiti
   cities:
       - Artibonite
@@ -1981,10 +2075,12 @@
       - Sud
       - Sud-Est
 -
+  id: 95
   name: Heard Island and McDonald Isla
   cities:
       - Heard Island and McDonald Islands (General)
 -
+  id: 96
   name: Holanda
   cities:
       - Drenthe
@@ -2004,6 +2100,7 @@
       - Zuid-Holland
       - Zuidelijke IJsselmeerpolders
 -
+  id: 97
   name: Honduras
   cities:
       - Atlantida
@@ -2025,10 +2122,12 @@
       - Valle
       - Yoro
 -
+  id: 98
   name: Hong Kong
   cities:
       - Hong Kong (General)
 -
+  id: 99
   name: Hungria
   cities:
       - Bacs-Kiskun
@@ -2072,6 +2171,7 @@
       - Zala
       - Zalaegerszeg
 -
+  id: 100
   name: India
   cities:
       - Andaman and Nicobar Islands
@@ -2110,6 +2210,7 @@
       - Uttaranchal
       - West Bengal
 -
+  id: 101
   name: Indonesia
   cities:
       - Aceh
@@ -2144,6 +2245,7 @@
       - Sumatera Utara
       - Yogyakarta
 -
+  id: 102
   name: Iraq
   cities:
       - Al Anbar
@@ -2165,6 +2267,7 @@
       - Salah ad Din
       - Wasit
 -
+  id: 103
   name: Irlanda
   cities:
       - Carlow
@@ -2194,14 +2297,17 @@
       - Wexford
       - Wicklow
 -
+  id: 104
   name: Isalas Cocos
   cities:
       - Cocos (Keeling) Islands (General)
 -
+  id: 105
   name: Isla Christmas
   cities:
       - Christmas Island (General)
 -
+  id: 106
   name: Islandia
   cities:
       - Akranes
@@ -2242,6 +2348,7 @@
       - Vestur-Isafjardarsysla
       - Vestur-Skaftafellssysla
 -
+  id: 107
   name: Islas Caiman
   cities:
       - Creek
@@ -2253,22 +2360,27 @@
       - West End
       - Western
 -
+  id: 108
   name: Islas Cook
   cities:
       - Cook Islands (General)
 -
+  id: 109
   name: Islas Feroe
   cities:
       - Færøerne
 -
+  id: 110
   name: Islas Malvinas
   cities:
       - Falkland Islands (Malvinas) (General)
 -
+  id: 111
   name: Islas Marshall
   cities:
       - Marshall Islands (General)
 -
+  id: 112
   name: Islas Mauricio
   cities:
       - Agalega Islands
@@ -2284,6 +2396,7 @@
       - Rodrigues
       - Savanne
 -
+  id: 113
   name: Islas Salomon
   cities:
       - Central
@@ -2294,18 +2407,22 @@
       - Temotu
       - Western
 -
+  id: 114
   name: Islas Sandwhich
   cities:
       - South Georgia and the South Sandwich Islands (General)
 -
+  id: 115
   name: Islas Turks y Caicos
   cities:
       - Turks and Caicos Islands (General)
 -
+  id: 116
   name: Islas Wallis y Futuna
   cities:
       - Wallis and Futuna (General)
 -
+  id: 117
   name: Israel
   cities:
       - HaDarom
@@ -2315,6 +2432,7 @@
       - Tel Aviv
       - Yerushalayim
 -
+  id: 118
   name: Italia
   cities:
       - Abruzzi
@@ -2339,6 +2457,7 @@
       - Valle d Aosta
       - Veneto
 -
+  id: 119
   name: Jamaica
   cities:
       - Clarendon
@@ -2356,7 +2475,8 @@
       - Trelawny
       - Westmoreland
 -
-  name: Japon
+  id: 120
+  name: Japón
   cities:
       - Aichi
       - Akita
@@ -2406,6 +2526,7 @@
       - Yamaguchi
       - Yamanashi
 -
+  id: 121
   name: Jordania
   cities:
       - Al Balqa
@@ -2417,6 +2538,7 @@
       - Irbid
       - Ma
 -
+  id: 122
   name: Kazakhstan
   cities:
       - Almaty
@@ -2436,6 +2558,7 @@
       - West Kazakhstan
       - Zhambyl
 -
+  id: 123
   name: Kenia
   cities:
       - Central
@@ -2447,12 +2570,14 @@
       - Rift Valley
       - Western
 -
+  id: 124
   name: Kiribati
   cities:
       - Gilbert Islands
       - Line Islands
       - Phoenix Islands
 -
+  id: 125
   name: Kuwait
   cities:
       - Al Ahmadi
@@ -2460,6 +2585,7 @@
       - Al Kuwayt
       - Hawalli
 -
+  id: 126
   name: Kyrgyzstan
   cities:
       - Batken
@@ -2472,6 +2598,7 @@
       - Talas
       - Ysyk-Kol
 -
+  id: 127
   name: Laos
   cities:
       - Attapu
@@ -2488,6 +2615,7 @@
       - Xaignabouri
       - Xiangkhoang
 -
+  id: 128
   name: Latvia
   cities:
       - Aizkraukles
@@ -2517,6 +2645,7 @@
       - Ventspils
       - Ventspils
 -
+  id: 129
   name: Lesoto
   cities:
       - Berea
@@ -2530,6 +2659,7 @@
       - Quthing
       - Thaba-Tseka
 -
+  id: 130
   name: Liberia
   cities:
       - Bong
@@ -2543,6 +2673,7 @@
       - Nimba
       - Sino
 -
+  id: 131
   name: Libia
   cities:
       - Ajdabiya
@@ -2571,6 +2702,7 @@
       - Yafran
       - Zlitan
 -
+  id: 132
   name: Liechtenstein
   cities:
       - Balzers
@@ -2585,6 +2717,7 @@
       - Triesenberg
       - Vaduz
 -
+  id: 133
   name: Lituania
   cities:
       - Alytaus Apskritis
@@ -2598,12 +2731,14 @@
       - Utenos Apskritis
       - Vilniaus Apskritis
 -
+  id: 134
   name: Luxemburgo
   cities:
       - Diekirch
       - Grevenmacher
       - Luxembourg
 -
+  id: 135
   name: Libano
   cities:
       - Beqaa
@@ -2613,11 +2748,13 @@
       - Mont-Liban
       - Nabatiye
 -
+  id: 136
   name: Macao
   cities:
       - Ilhas
       - Macau
 -
+  id: 137
   name: Macedonia
   cities:
       - Aracinovo
@@ -2746,6 +2883,7 @@
       - Ilhas
       - Macau
 -
+  id: 138
   name: Madagascar
   cities:
       - Antananarivo
@@ -2755,6 +2893,7 @@
       - Toamasina
       - Toliara
 -
+  id: 139
   name: Malasia
   cities:
       - Johor
@@ -2773,6 +2912,7 @@
       - Terengganu
       - Wilayah Persekutuan
 -
+  id: 140
   name: Malaui
   cities:
       - Balaka
@@ -2803,6 +2943,7 @@
       - Thyolo
       - Zomba
 -
+  id: 141
   name: Maldivas
   cities:
       - Aliff
@@ -2826,10 +2967,12 @@
       - Thaa
       - Waavu
 -
+  id: 142
   name: Malta
   cities:
       - Malta (General)
 -
+  id: 143
   name: Mali
   cities:
       - Bamako
@@ -2842,6 +2985,7 @@
       - Sikasso
       - Tombouctou
 -
+  id: 144
   name: Marruecos
   cities:
       - Agadir
@@ -2884,10 +3028,12 @@
       - Tetouan
       - Tiznit
 -
+  id: 145
   name: Martinique
   cities:
       - Martinique Departement
 -
+  id: 146
   name: Mauritania
   cities:
       - Adrar
@@ -2903,10 +3049,12 @@
       - Tiris Zemmour
       - Trarza
 -
+  id: 147
   name: Mayotte
   cities:
       - Mayotte (General)
 -
+  id: 148
   name: Micronesia
   cities:
       - Chuuk
@@ -2914,6 +3062,7 @@
       - Pohnpei
       - Yap
 -
+  id: 149
   name: Moldavia
   cities:
       - Balti
@@ -2928,6 +3077,7 @@
       - Tighina
       - Ungheni
 -
+  id: 150
   name: Mongolia
   cities:
       - Arhangay
@@ -2955,12 +3105,14 @@
       - Ulaanbaatar
       - Uvs
 -
+  id: 151
   name: Montserrat
   cities:
       - Saint Anthony
       - Saint Georges
       - Saint Peter
 -
+  id: 152
   name: Mozambique
   cities:
       - Cabo Delgado
@@ -2974,6 +3126,7 @@
       - Tete
       - Zambezia
 -
+  id: 153
   name: Myanmar
   cities:
       - Chin State
@@ -2992,6 +3145,7 @@
       - Tenasserim
       - Yangon
 -
+  id: 154
   name: Mexico
   cities:
       - Aguascalientes
@@ -3027,12 +3181,14 @@
       - Yucatan
       - Zacatecas
 -
+  id: 155
   name: Monaco
   cities:
       - La Condamine
       - Monaco
       - Monte-Carlo
 -
+  id: 156
   name: Namibia
   cities:
       - Bethanien
@@ -3075,6 +3231,7 @@
       - Tsumeb
       - Windhoek
 -
+  id: 157
   name: Nauru
   cities:
       - Aiwo
@@ -3092,6 +3249,7 @@
       - Uaboe
       - Yaren
 -
+  id: 158
   name: Nepal
   cities:
       - Bagmati
@@ -3110,6 +3268,7 @@
       - Sagarmatha
       - Seti
 -
+  id: 159
   name: Nicaragua
   cities:
       - Boaco
@@ -3129,6 +3288,7 @@
       - Rivas
       - Zelaya
 -
+  id: 160
   name: Nigeria
   cities:
       - Abia
@@ -3171,18 +3331,22 @@
       - Yobe
       - Zamfara
 -
+  id: 161
   name: Niue
   cities:
       - Niue (General)
 -
+  id: 162
   name: Norfolk Island
   cities:
       - Norfolk Island (General)
 -
+  id: 163
   name: Northern Mariana Islands
   cities:
       - Northern Mariana Islands (General)
 -
+  id: 164
   name: Noruega
   cities:
       - Akershus
@@ -3205,10 +3369,12 @@
       - Vest-Agder
       - Vestfold
 -
+  id: 165
   name: Nueva Caledonia
   cities:
       - Nouvelle-Caledonie
 -
+  id: 166
   name: Nueva Zelanda
   cities:
       - Akaroa
@@ -3317,6 +3483,7 @@
       - Whangaroa
       - Woodville
 -
+  id: 167
   name: Niger
   cities:
       - Agadez
@@ -3327,6 +3494,7 @@
       - Tahoua
       - Zinder
 -
+  id: 168
   name: Oman
   cities:
       - Ad Dakhiliyah
@@ -3338,6 +3506,7 @@
       - Musandam
       - Zufar
 -
+  id: 169
   name: Pakistan
   cities:
       - Azad Kashmir
@@ -3349,14 +3518,17 @@
       - Punjab
       - Sindh
 -
+  id: 170
   name: Palau
   cities:
       - Palau (General)
 -
+  id: 171
   name: Palestinian Territory
   cities:
       - Palestinian Territory (General)
 -
+  id: 172
   name: Panama
   cities:
       - Bocas del Toro
@@ -3370,6 +3542,7 @@
       - San Blas
       - Veraguas
 -
+  id: 173
   name: Papua Nueva Guinea
   cities:
       - Central
@@ -3393,6 +3566,7 @@
       - Western
       - Western Highlands
 -
+  id: 174
   name: Paraguay
   cities:
       - Alto Paraguay
@@ -3415,6 +3589,7 @@
       - Presidente Hayes
       - San Pedro
 -
+  id: 175
   name: Peru
   cities:
       - Amazonas
@@ -3443,10 +3618,12 @@
       - Tumbes
       - Ucayali
 -
+  id: 176
   name: Pitcairn
   cities:
       - Pitcairn (General)
 -
+  id: 177
   name: Polonia
   cities:
       - Biala Podlaska
@@ -3515,6 +3692,7 @@
       - Zamosc
       - Zielona Gora
 -
+  id: 178
   name: Portugal
   cities:
       - Aveiro
@@ -3538,10 +3716,12 @@
       - Vila Real
       - Viseu
 -
+  id: 179
   name: Puerto Rico
   cities:
       - Puerto Rico (General)
 -
+  id: 180
   name: Qatar
   cities:
       - Ad Dawhah
@@ -3556,6 +3736,7 @@
       - Umm Said
       - Umm Salal
 -
+  id: 181
   name: Reino Unido
   cities:
       - Aberdeen City
@@ -3811,6 +3992,7 @@
       - Wrexham
       - York
 -
+  id: 182
   name: Republica Centroafricana
   cities:
       - Bamingui-Bangoran
@@ -3831,6 +4013,7 @@
       - Sangha-Mbaere
       - Vakaga
 -
+  id: 183
   name: Republica Checa
   cities:
       - Blansko
@@ -3863,10 +4046,12 @@
       - Vysocina
       - Zlinsky Kraj
 -
+  id: 184
   name: Republica Democratica del Cong
   cities:
       - Congo, The Democratic Republic of the (General)
 -
+  id: 185
   name: Republica Dominicana
   cities:
       - Azua
@@ -3900,6 +4085,7 @@
       - Santiago Rodriguez
       - Valverde
 -
+  id: 186
   name: Republica Islamica de Iran
   cities:
       - Ardabil
@@ -3935,6 +4121,7 @@
       - Zanjan
       - Zanjan
 -
+  id: 187
   name: Ruanda
   cities:
       - Butare
@@ -3948,6 +4135,7 @@
       - Kigali
       - Ruhengeri
 -
+  id: 188
   name: Rumania
   cities:
       - Alba
@@ -3993,6 +4181,7 @@
       - Vaslui
       - Vrancea
 -
+  id: 189
   name: Rusian
   cities:
       - Adygeya, Republic of
@@ -4087,6 +4276,7 @@
       - Yaroslavl
       - Yevrey
 -
+  id: 190
   name: Saint Kitts and Nevis
   cities:
       - Christ Church Nichola Town
@@ -4104,10 +4294,12 @@
       - Saint Thomas Middle Island
       - Trinity Palmetto Point
 -
+  id: 191
   name: Saint Pierre y Miquelon
   cities:
       - Saint-Pierre et Miquelon Collectivite Territoriale
 -
+  id: 192
   name: Samoa
   cities:
       - Aiga-i-le-Tai
@@ -4121,6 +4313,7 @@
       - Va
       - Vaisigano
 -
+  id: 193
   name: San Marino
   cities:
       - Acquaviva
@@ -4133,6 +4326,7 @@
       - San Marino
       - Serravalle
 -
+  id: 194
   name: San Vicente y Las Granadinas
   cities:
       - Charlotte
@@ -4142,12 +4336,14 @@
       - Saint George
       - Saint Patrick
 -
+  id: 195
   name: Santa Elena
   cities:
       - Ascension
       - Saint Helena
       - Tristan da Cunha
 -
+  id: 196
   name: Santa Lucia
   cities:
       - Anse-la-Raye
@@ -4162,11 +4358,13 @@
       - Soufriere
       - Vieux-Fort
 -
+  id: 197
   name: Sao Tome and Principe
   cities:
       - Principe
       - Sao Tome
 -
+  id: 198
   name: Senegal
   cities:
       - Dakar
@@ -4181,11 +4379,13 @@
       - Thies
       - Ziguinchor
 -
+  id: 199
   name: Serbia y Montenegro
   cities:
       - Kosovo
       - Vojvodina
 -
+  id: 200
   name: Seychelles
   cities:
       - Anse Boileau
@@ -4212,6 +4412,7 @@
       - Saint Louis
       - Takamaka
 -
+  id: 201
   name: Sierra Leona
   cities:
       - Eastern
@@ -4219,10 +4420,12 @@
       - Southern
       - Western Area
 -
+  id: 202
   name: Singapur
   cities:
       - Singapore (General)
 -
+  id: 203
   name: Siria
   cities:
       - Al Hasakah
@@ -4240,6 +4443,7 @@
       - Rif Dimashq
       - Tartus
 -
+  id: 204
   name: Somalia
   cities:
       - Bakool
@@ -4259,6 +4463,7 @@
       - Togdheer
       - Woqooyi Galbeed
 -
+  id: 205
   name: Sri Lanka
   cities:
       - Amparai
@@ -4294,6 +4499,7 @@
       - Vavuniya
       - Western Province
 -
+  id: 206
   name: Suazilandia
   cities:
       - Hhohho
@@ -4302,6 +4508,7 @@
       - Praslin
       - Shiselweni
 -
+  id: 207
   name: Sudafrica
   cities:
       - Eastern Cape
@@ -4314,6 +4521,7 @@
       - Northern Cape
       - Western Cape
 -
+  id: 208
   name: Sudan
   cities:
       - Al Istiwaiyah
@@ -4325,6 +4533,7 @@
       - Darfur
       - Kurdufan
 -
+  id: 209
   name: Suecia
   cities:
       - Alvsborgs Lan
@@ -4354,6 +4563,7 @@
       - Vastmanlands Lan
       - Vastra Gotaland
 -
+  id: 210
   name: Suiza
   cities:
       - Aargau
@@ -4383,6 +4593,7 @@
       - Zug
       - Zurich
 -
+  id: 211
   name: Surinam
   cities:
       - Brokopondo
@@ -4396,10 +4607,12 @@
       - Sipaliwini
       - Wanica
 -
+  id: 212
   name: Svalbard and Jan Mayen
   cities:
       - Svalbard and Jan Mayen (General)
 -
+  id: 213
   name: Tailandia
   cities:
       - Ang Thong
@@ -4477,6 +4690,7 @@
       - Yala
       - Yasothon
 -
+  id: 214
   name: Taiwan
   cities:
       - Fu-chien
@@ -4484,12 +4698,14 @@
       - T ai-pei
       - T ai-wan
 -
+  id: 215
   name: Tajikistan
   cities:
       - Khatlon
       - Kuhistoni Badakhshon
       - Sughd
 -
+  id: 216
   name: Tanzania
   cities:
       - Arusha
@@ -4519,6 +4735,7 @@
       - Zanzibar North
       - Zanzibar Urban
 -
+  id: 217
   name: Togo
   cities:
       - Amlame
@@ -4544,16 +4761,19 @@
       - Tsevie
       - Vogan
 -
+  id: 218
   name: Tonga
   cities:
       - Ha
       - Tongatapu
       - Vava
 -
+  id: 219
   name: Toquelau
   cities:
       - Tokelau (General)
 -
+  id: 220
   name: Trinidad y Tobago
   cities:
       - Arima
@@ -4569,6 +4789,7 @@
       - Tobago
       - Victoria
 -
+  id: 221
   name: Turkmenistan
   cities:
       - Ahal
@@ -4577,6 +4798,7 @@
       - Lebap
       - Mary
 -
+  id: 222
   name: Turquia
   cities:
       - Adana
@@ -4661,10 +4883,12 @@
       - Yozgat
       - Zonguldak
 -
+  id: 223
   name: Tuvalu
   cities:
       - Tuvalu (General)
 -
+  id: 224
   name: Tunez
   cities:
       - Al Mahdiyah
@@ -4693,6 +4917,7 @@
       - Tunis
       - Zaghwan
 -
+  id: 225
   name: Ucrania
   cities:
       - Cherkas ka Oblast
@@ -4723,6 +4948,7 @@
       - Zaporiz ka Oblast
       - Zhytomyrs ka Oblast
 -
+  id: 226
   name: Uganda
   cities:
       - Adjumani
@@ -4764,10 +4990,12 @@
       - Western
       - Yumbe
 -
+  id: 227
   name: United States
   cities:
       - United States Minor Outlying Islands (General)
 -
+  id: 228
   name: Uruguay
   cities:
       - Artigas
@@ -4790,6 +5018,7 @@
       - Tacuarembo
       - Treinta y Tres
 -
+  id: 229
   name: Uzbekistan
   cities:
       - Andijon
@@ -4807,6 +5036,7 @@
       - Surkhondaryo
       - Toshkent
 -
+  id: 230
   name: Vanuatu
   cities:
       - Ambrym
@@ -4824,6 +5054,7 @@
       - Tafea
       - Torba
 -
+  id: 231
   name: Venezuela
   cities:
       - Amazonas
@@ -4852,6 +5083,7 @@
       - Yaracuy
       - Zulia
 -
+  id: 232
   name: Vietnam
   cities:
       - An Giang
@@ -4932,18 +5164,22 @@
       - Yen Bai
       - Ying Thap Province
 -
+  id: 233
   name: Virgin Islands British
   cities:
       - Virgin Islands, British (General)
 -
+  id: 234
   name: Virgin Islands U.S.
   cities:
       - Virgin Islands, U.S. (General)
 -
+  id: 235
   name: Western Sahara
   cities:
       - Western Sahara (General)
 -
+  id: 236
   name: Yemen
   cities:
       - Abyan
@@ -4966,6 +5202,7 @@
       - Ta
       - Taizz Governorate
 -
+  id: 237
   name: Zaire
   cities:
       - Bandundu
@@ -4981,6 +5218,7 @@
       - Orientale
       - Sud-Kivu
 -
+  id: 238
   name: Zambia
   cities:
       - Central
@@ -4993,6 +5231,7 @@
       - Southern
       - Western
 -
+  id: 239
   name: Zimbabue
   cities:
       - Bulawayo
@@ -5005,9 +5244,3 @@
       - Matabeleland North
       - Matabeleland South
       - Midlands
--
-  name: Japan
-  cities:
--
-  name: Spain
-  cities:

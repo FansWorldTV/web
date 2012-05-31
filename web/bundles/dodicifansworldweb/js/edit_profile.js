@@ -58,4 +58,10 @@ $(function(){
 			);
 		}
 	});
+	
+	$('#fos_user_profile_form_user_linktwitter').live('change', function(){
+		if ($(this).attr('checked') == 'checked') {
+			window.open(Routing.generate(appLocale + '_' + 'twitter_redirect'), 'fw_twit_link', 'menubar=no,status=no,toolbar=no,width=500,height=300');
+		}
+	});
 });

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<xsd:schema xmlns="http://symfony.com/schema/dic/twitter"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://symfony.com/schema/dic/twitter"
+    elementFormDefault="qualified">
+
+    <xsd:element name="config" type="config" />
+
+    <xsd:complexType name="config">
+        <xsd:attribute name="alias" type="xsd:string" />
+        <xsd:attribute name="file" type="xsd:string" />
+        <xsd:attribute name="callback_url" type="xsd:string" />
+        <xsd:attribute name="anywhere_version" type="xsd:string" />
+        <xsd:attribute name="consumer_key" type="xsd:string" />
+        <xsd:attribute name="consumer_secret" type="xsd:string" />
+    </xsd:complexType>
+
+</xsd:schema>

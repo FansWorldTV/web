@@ -40,6 +40,10 @@ class LoadIdolData extends AbstractFixture implements FixtureInterface, Containe
 	        	$idol->setNicknames($ct['nicknames']);
 	        	$idol->setTwitter($ct['twitter']);
 	        	$idol->setContent($ct['content']);
+	        	if (isset($ct['country'])) {
+	        		$country = $manager->merge($this->getReference('country-'.$ct['country']));
+	        		$idol->setCountry($country);
+	        	}
 	        	
 	        	/* TEAMS */
 	        	if (isset($ct['teams']) && $ct['teams']) {

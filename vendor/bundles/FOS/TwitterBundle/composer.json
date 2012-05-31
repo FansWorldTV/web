@@ -1,0 +1,24 @@
+{
+    "name": "friendsofsymfony/twitter-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony FOSTwitterBundle",
+    "keywords": ["Twitter authentication"],
+    "homepage": "http://friendsofsymfony.github.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "FriendsOfSymfony Community",
+            "homepage": "https://github.com/FriendsOfSymfony/FOSTwitterBundle/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/framework-bundle": "2.*",
+        "symfony/security-bundle": "2.0.*",
+        "kertz/twitteroauth": "*"
+    },
+    "autoload": {
+        "psr-0": { "FOS\\TwitterBundle": "" }
+    },
+    "target-dir": "FOS/TwitterBundle"
+}

@@ -1,0 +1,17 @@
+<html>
+	<head>
+    	<link rel="stylesheet" href="{{ asset('bundles/dodicifansworldweb/css/popup.css') }}" type="text/css" media="all">
+		<script type="text/javascript">
+			{% if token %}
+				window.opener.success('Cuenta twitter vinculada');
+	    		window.close();
+			{% else %}
+				window.opener.error('Error recuperando token');
+	    		window.close();
+			{% endif %}
+		</script>
+	</head>
+	<body>
+		<div class="loadingpopup"></div>
+	</body>
+</html>
