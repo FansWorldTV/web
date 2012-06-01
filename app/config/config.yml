@@ -438,7 +438,7 @@ services:
       arguments: [@security.context, @doctrine.orm.entity_manager]
     app.facebook:
       class: Dodici\Fansworld\WebBundle\Extensions\AppFacebook
-      arguments: [@security.context, @doctrine.orm.entity_manager, @fos_facebook.api]
+      arguments: [@security.context, @doctrine.orm.entity_manager, @fos_facebook.api, @appstate, @router]
     search:
       class: Dodici\Fansworld\WebBundle\Extensions\Search
       arguments: [@security.context, @doctrine.orm.entity_manager, @router]

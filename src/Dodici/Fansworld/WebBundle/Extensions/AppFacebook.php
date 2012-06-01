@@ -15,14 +15,18 @@ class AppFacebook
     protected $em;
     protected $user;
     protected $facebook;
+    protected $appstate;
+    protected $router;
 
-    function __construct(SecurityContext $security_context, EntityManager $em, $facebook)
+    function __construct(SecurityContext $security_context, EntityManager $em, $facebook, $appstate, $router)
     {
         $this->security_context = $security_context;
         $this->request = Request::createFromGlobals();
         $this->em = $em;
         $this->user = $security_context->getToken() ? $security_context->getToken()->getUser() : null;
         $this->facebook = $facebook;
+        $this->appstate = $appstate;
+        $this->router = $router;
     }
 
     /**
@@ -32,13 +36,7 @@ class AppFacebook
      */
     public function facebookFriends($user=null)
     {
-    	if (!$user) {
-    		$user = $this->user;
-    	}
-    	if (!($user instanceof User)) throw new \Exception('Falta usuario');
-    	if (!$user->getFacebookId()) throw new \Exception('Usuario sin ID Facebook');
-    	
-    	$friends = $this->facebook->api('/me/friends');
+    	$friends = $this->api('/{uid}/friends', $user);
     	if (isset($friends['data'])) $friends = $friends['data'];
     	return $friends;
     }
@@ -64,5 +62,35 @@ class AppFacebook
     		$offset
     	);
     	return $fwfriends;
+    }
+    
+    public function upload($entity)
+    {
+    	if (!property_exists($entity, 'author')) throw new \Exception('La entidad no es compatible');
+    	$user = $entity->getAuthor();
+    	if (!($user instanceof User)) throw new \Exception('La entidad no tiene autor');
+    	
+    	$type = $this->appstate->getType($entity);
+    	$url = $this->router->generate($type.'_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()), true);
+    	
+    	return $this->verb('upload', array('other' => $url), $user);
+    }
+    
+    public function verb($verb, $params, $user)
+    {
+    	return $this->api('/{uid}/fansworld:'.$verb, $user, 'POST', $params);
+    }
+    
+    private function api($url, $user=null, $method='GET', $params=array())
+    {
+    	if (!$user) {
+    		$user = $this->user;
+    	}
+    	if (!($user instanceof User)) throw new \Exception('Falta usuario');
+    	if (!$user->getFacebookId()) throw new \Exception('Usuario sin ID Facebook');
+    	
+    	$url = str_replace('{uid}', $user->getFacebookId(), $url);
+    	
+    	return $this->facebook->api($url, $method, $params);
     }
 }

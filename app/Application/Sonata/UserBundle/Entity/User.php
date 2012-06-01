@@ -306,7 +306,9 @@ class User extends BaseUser implements SearchableInterface
     {
         $this->facebookId = $facebookId;
         //$this->setUsername($facebookId);
-        $this->salt = '';
+        if ($this->getPassword() == '') {
+        	$this->salt = '';
+        }
     }
 
     /**
