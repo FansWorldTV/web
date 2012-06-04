@@ -2,11 +2,11 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 .clearfix:after {visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}.clearfix {display:inline-block;}* html .clearfix {height:1%;}.clearfix {display:block;}
 body { font-family: Arial, Helvetica, sans-serif; color: #333;}
 .upload_image .current {
-	float: left;
-	margin-right: 8px;
+    float: left;
+    margin-right: 8px;
 }
 .upload_image .form {
-	float: left;
+    float: left;
 }
 
 .greybox { background: #F6F6F6; border: solid 1px white; box-shadow: 0 1px 1px #888; padding: 30px; border-radius: 5px;}
@@ -30,3 +30,28 @@ a.btn_action, input.btn_action { background:url(../images/ui/btn_action.gif) rep
 ul.selectedtags li a.deletetag { cursor: pointer; margin-left: 5px;height: 14px;width: 14px;display: block;float: right;background: url('../images/ui/closealert.png') top left no-repeat;}
 ul.selectedtags li a.deletetag:hover { background-position: bottom left;}
 div.loadingpopup {width: 100%; height: 100%; background:url(../images/ajax-loader-big.gif) no-repeat center center; }
+
+.cont.checkin {
+    background-color: #EFF0F1;
+}
+.cont.checkin h1{
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    font-family: arial;
+}
+.cont.checkin ul.selectFrom{
+    margin: 0 auto;
+    position: relative;
+    display: block;
+    height: 100px;
+    width: 600px;
+}
+.cont.checkin ul.selectFrom li{
+    display: block;
+    float: left;
+    background-color: #EFF0F1;
+}
+.cont.checkin ul.selectFrom li img{
+    cursor: pointer;
+}

@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dodici\Fansworld\WebBundle\Controller\SiteController;
 use Symfony\Component\HttpFoundation\Request;
+use Dodici\Fansworld\WebBundle\Entity\Eventship;
 
 /**
  * Event controller.
@@ -19,17 +20,62 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EventController extends SiteController
 {
-	/**
+
+    /**
      * @Route("/{id}/{slug}", name= "event_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
      */
     public function showAction($id)
     {
         //TODO: todo
-    	$event = $this->getRepository('Event')->find($id);
+        $event = $this->getRepository('Event')->find($id);
 
         $this->securityCheck($event);
 
         return new Response('TODO');
+    }
+
+    /**
+     * @Route("/checkin/{id}", name="event_checkin", requirements = {"id" = "\d+"}) 
+     * @Template
+     */
+    public function checkInAction($id)
+    {
+        return array('event' => $id);
+    }
+
+    /**
+     *  @Route("/ajax/checkin", name="event_checkinajax")
+     */
+    public function doCheckInAction()
+    {
+        $request = $this->getRequest();
+        $eventId = $request->get('event', false);
+        $type = $request->get('type', false);
+
+        $type = (int) $type;
+        $author = $this->get('security.context')->getToken()->getUser();
+        $event = $this->getRepository('Event')->find($eventId);
+
+        $response = array();
+        
+        try {
+            $eventShip = new Eventship();
+
+            $eventShip->setAuthor($author);
+            $eventShip->setEvent($event);
+            $eventShip->setType($type);
+
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($eventShip);
+            $em->flush();
+            
+            $response['error'] = false;
+        } catch (Exception $exc) {
+            $response['error'] = true;
+            $response['msg'] = $exc->getMessage();
+        }
+        
+        return $this->jsonResponse($response);
     }
 
 }
