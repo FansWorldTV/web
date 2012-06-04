@@ -1,0 +1,22 @@
+{% extends "DodiciFansworldWebBundle::popup.html.twig" %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/dodicifansworldweb/js/base.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/dodicifansworldweb/js/popup_event_checkin.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+    <style type="text/css">
+            body{ background-color: #EFF0F1; }
+    </style>
+    <div class="cont checkin">
+        <h1>¿Como estas siguiendo el evento?</h1>
+        <ul class="selectFrom" eventId = "{{ event }}">
+            <li type="1"><img src="{{ asset('bundles/dodicifansworldweb/images/checkIn/online.png') }}" /></li>
+            <li type="2"><img src="{{ asset('bundles/dodicifansworldweb/images/checkIn/tv.png') }}" /></li>
+            <li type="3"><img src="{{ asset('bundles/dodicifansworldweb/images/checkIn/radio.png') }}" /></li>
+            <li type="4"><img src="{{ asset('bundles/dodicifansworldweb/images/checkIn/live.png') }}" /></li>
+        </ul>
+    </div>
+{% endblock %}
