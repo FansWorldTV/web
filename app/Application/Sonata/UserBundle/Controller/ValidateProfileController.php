@@ -25,15 +25,16 @@ class ValidateProfileController extends SiteController
         $email = $request->get('email', false);
         $user = $this->get('security.context')->getToken()->getUser();
         
-        if (!($user instanceof User)) throw new AccessDeniedException('Acceso denegado');
+        if (!($user instanceof User)) $user = null;// throw new \Exception('Acceso denegado');
 
         $isValidEmail = false;
         
         if ($email) {
         	$findByMail = $this->getRepository('User')->findOneByEmail($email);
-	        if (!$findByMail || ($findByMail == $user)) {
-	            $isValidEmail = filter_var($email, FILTER_VALIDATE_EMAIL) ? true : false;
-	        }
+        	
+        	if( (is_null($user) && !$findByMail) || (!is_null($user) && ($findByMail == $user || !$findByMail)) ){
+        		$isValidEmail = filter_var($email, FILTER_VALIDATE_EMAIL) ? true : false;
+        	}
         }
 
         $isValidUsername = false;
@@ -42,16 +43,16 @@ class ValidateProfileController extends SiteController
         	if (preg_match('/^[a-zA-Z0-9.\-]+$/', $username) > 0) {
         		if (strlen($username) > 3 && strlen($username < 30)) {
         			$findByUser = $this->getRepository('User')->findOneByUsername($username);
-	                if (!$findByUser || ($findByUser == $user)) {
-	                	$isValidUsername = true;
-	                }
+        			if( (is_null($user) && !$findByUser) || (!is_null($user) && ($findByUser == $user || !$findByUser)) ){
+        				$isValidUsername = true;
+        			}
 	            }
 	        }
         }
-
+        
         return $this->jsonResponse(array(
                     'isValidEmail' => $isValidEmail,
-                    'isValidUsername' => $isValidUsername
+                    'isValidUsername' => $isValidUsername       			
                 ));
     }
 

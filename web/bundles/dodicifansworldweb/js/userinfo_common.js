@@ -15,31 +15,54 @@ $(function() {
 
 //Validate username/email
 $(document).ready(function(){
+	var iTypingDelay = 800;
     var username = $("#fos_user_registration_form_username, #fos_user_profile_form_user_username");
     var email = $("#fos_user_registration_form_email, #fos_user_profile_form_user_email");
 
-    username.live('keyup', function(){
-        var htmlElement = $(this);
-        htmlElement.removeClass('inputok inputerr').addClass('inputloading');
-        ajaxValidateProfile(null, $(this).val(), function(response){
-            if(response.isValidUsername){
-            	htmlElement.removeClass('inputloading').addClass('inputok');
-            }else{
-            	htmlElement.removeClass('inputloading').addClass('inputerr');
-            }
-        });
+
+    $(username).on('keyup', null, function(){
+    	var htmlElement = $(this);
+        var iTimeoutID = htmlElement.data("timerID") || null; 
+        if (iTimeoutID) {
+            clearTimeout(iTimeoutID);
+            iTimeoutID = null;
+        }        
+        iTimeoutID = setTimeout(function() {
+        	htmlElement.data("timerID", null);
+            htmlElement.removeClass('inputok inputerr').addClass('inputloading');
+            ajaxValidateProfile(null, username.val(), function(response){
+                if(response.isValidUsername){
+                	htmlElement.removeClass('inputloading').addClass('inputok');
+                }else{
+                	htmlElement.removeClass('inputloading').addClass('inputerr');
+                }
+            });
+        }, iTypingDelay);
+        htmlElement.data("timerID", iTimeoutID);
+    });  
+    
+    $(email).on('keyup', null, function(){
+    	var htmlElement = $(this);
+        var iTimeoutID = htmlElement.data("timerID") || null;
+        if (iTimeoutID) {
+            clearTimeout(iTimeoutID);
+            iTimeoutID = null;
+        }       
+        iTimeoutID = setTimeout(function() {
+        	htmlElement.data("timerID", null);
+            htmlElement.removeClass('inputok inputerr').addClass('inputloading');
+            ajaxValidateProfile( email.val(), null, function(response){
+                if(response.isValidEmail){
+                	htmlElement.removeClass('inputloading').addClass('inputok');
+                }else{
+                	htmlElement.removeClass('inputloading').addClass('inputerr');
+                }
+            });
+        }, iTypingDelay);
+        htmlElement.data("timerID", iTimeoutID);
     });
-    email.live('keyup', function(){
-        var htmlElement = $(this);
-        htmlElement.removeClass('inputok inputerr').addClass('inputloading');
-        ajaxValidateProfile($(this).val(), null, function(response){
-            if(response.isValidEmail){
-            	htmlElement.removeClass('inputloading').addClass('inputok');
-            }else{
-            	htmlElement.removeClass('inputloading').addClass('inputerr');
-            }
-        });
-    });
+    
+    
 });
 function ajaxValidateProfile(email, username, callback){
     ajax.genericAction('profile_validate', {
