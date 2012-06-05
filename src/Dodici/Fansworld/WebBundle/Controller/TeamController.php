@@ -165,5 +165,36 @@ class TeamController extends SiteController
             return new Response($e->getMessage(), 400);
         }
     }
+    
+    
+	/**
+     * @Route("/{slug}/twitter", name= "team_twitter")
+     * @Template()
+     */
+    public function twitterTabAction($slug)
+    {
+    	$lastTweets	=	array();
+        $team = $this->getRepository('Team')->findOneBy(array('slug' => $slug, 'active' => true));
 
+        if (!$team)
+            throw new HttpException(404, 'Equipo no encontrado');
+      	else{
+      		$ttScreenName = $team->getTwitter();
+      		if(!$ttScreenName)
+      			throw new HttpException(404, 'Equipo sin twitter');
+      	}
+        
+        $lastTweetsTemp = $this->get('fos_twitter.api')->get('statuses/user_timeline', array(
+            'screen_name' => $ttScreenName,
+            'count' => 10
+        ));        
+        foreach ($lastTweetsTemp as $tweet){
+        	$lastTweets[] = array(
+        		'text' =>	$tweet->text,
+        		'user' =>	$tweet->user->screen_name,
+        		'retweeted' => ($tweet->retweet_count > 0) ? true : false
+        	);
+        }
+        return array('lastTweets' => $lastTweets);
+    }
 }

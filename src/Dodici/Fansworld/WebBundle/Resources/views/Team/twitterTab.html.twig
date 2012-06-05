@@ -1,0 +1,11 @@
+{% block content %}
+    <h2>Listado de Tweets</h2>
+    <div>       
+        <ul>
+            {% for tweet in lastTweets %}
+                <li > <b>user:</b>{{ tweet.user }}  <b>text:</b>{{ tweet.text }} <b>retweeted</b>: {{ tweet.retweeted }}</li>
+            {% endfor %}
+        </ul>            
+        </div>
+    </div>
+{% endblock %}

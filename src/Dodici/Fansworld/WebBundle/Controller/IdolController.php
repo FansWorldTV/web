@@ -29,7 +29,7 @@ class IdolController extends SiteController
      */
     public function wallAction($slug)
     {
-        $idol = $this->getRepository('Slug')->findOneBySlug($slug);
+        $idol = $this->getRepository('Idol')->findOneBySlug($slug);
         if (!$idol) {
             throw new HttpException(404, "No existe el ídolo");
         }
@@ -38,6 +38,37 @@ class IdolController extends SiteController
         $hasComments = $hasComments > 0 ? true : false;
 
         return array('idol' => $idol, 'hasComments' => $hasComments);
+    }
+    
+	/**
+     * @Route("/i/{slug}/twitter", name= "idol_twitter")
+     * @Template()
+     */
+	public function twitterTabAction($slug)
+    {
+    	$lastTweets	=	array();
+        $idol = $this->getRepository('Idol')->findOneBy(array('slug' => $slug));
+
+        if (!$idol)
+            throw new HttpException(404, 'No existe el ídolo');
+      	else{
+      		$ttScreenName = $idol->getTwitter();
+      		if(!$ttScreenName)
+      			throw new HttpException(404, 'Idolo sin twitter');
+      	}
+        
+        $lastTweetsTemp = $this->get('fos_twitter.api')->get('statuses/user_timeline', array(
+            'screen_name' => $ttScreenName,
+            'count' => 10
+        ));        
+        foreach ($lastTweetsTemp as $tweet){
+        	$lastTweets[] = array(
+        		'text' =>	$tweet->text,
+        		'user' =>	$tweet->user->screen_name,
+        		'retweeted' => ($tweet->retweet_count > 0) ? true : false
+        	);
+        }
+        return array('lastTweets' => $lastTweets);
     }
 
 }
