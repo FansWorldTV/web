@@ -10,6 +10,10 @@
 
 namespace Application\Sonata\UserBundle\Entity;
 
+use Dodici\Fansworld\WebBundle\Entity\HasBadge;
+
+use Dodici\Fansworld\WebBundle\Entity\BadgeStep;
+
 use Dodici\Fansworld\WebBundle\Model\SearchableInterface;
 
 use Dodici\Fansworld\WebBundle\Entity\Notification;
@@ -220,6 +224,11 @@ class User extends BaseUser implements SearchableInterface
      * @var ArrayCollection $hasinterests
      */
     protected $hasinterests;
+    
+    /**
+     * @var ArrayCollection $hasbadges
+     */
+    protected $hasbadges;
         
     /**
      * @var integer $friendCount
@@ -238,6 +247,7 @@ class User extends BaseUser implements SearchableInterface
     	$this->friendgroups = new ArrayCollection();
     	$this->idolships = new ArrayCollection();
     	$this->hasinterests = new ArrayCollection();
+    	$this->hasbadges = new ArrayCollection();
         $this->privacy = array();
         $this->notifyprefs = array_keys(Notification::getTypeList());
         $this->idolCount = 0;
@@ -1070,6 +1080,48 @@ class User extends BaseUser implements SearchableInterface
     public function setHasinterests($hasinterests)
     {
         $this->hasinterests = $hasinterests;
+    }
+    
+	/**
+     * Add hasbadges
+     *
+     * @param \Dodici\Fansworld\WebBundle\Entity\HasBadge $hasbadges
+     */
+    public function addHasbadge(\Dodici\Fansworld\WebBundle\Entity\HasBadge $hasbadges)
+    {
+        $this->hasbadges[] = $hasbadges;
+    }
+	public function addHasbadges(\Dodici\Fansworld\WebBundle\Entity\HasBadge $hasbadges)
+    {
+        $this->addHasbadge($hasbadges);
+    }
+
+    /**
+     * Get hasbadges
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getHasbadges()
+    {
+        return $this->hasbadges;
+    }
+    
+	/**
+     * Set hasbadges
+     *
+     * @param Doctrine\Common\Collections\Collection $hasbadges
+     */
+    public function setHasbadges($hasbadges)
+    {
+        $this->hasbadges = $hasbadges;
+    }
+    
+    public function addBadgeStep(BadgeStep $bs)
+    {
+        $hasbadge = new HasBadge();
+        $hasbadge->setAuthor($this);
+        $hasbadge->setBadgestep($bs);
+        $this->addHasbadge($hasbadge);
     }
     
 	/**

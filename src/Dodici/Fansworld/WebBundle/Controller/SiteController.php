@@ -26,6 +26,8 @@ class SiteController extends Controller
         $entity = ucfirst($entity);
         if ($entity == 'Newspost') $entity = 'NewsPost';
         if ($entity == 'Forumpost') $entity = 'ForumPost';
+        if ($entity == 'Contestparticipant') $entity = 'ContestParticipant';
+        if ($entity == 'Quizanswer') $entity = 'QuizAnswer';
     	if (strtolower($entity) == 'user') {
             return $this->getDoctrine()->getRepository("ApplicationSonataUserBundle:User");
         } else {

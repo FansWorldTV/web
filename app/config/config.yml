@@ -426,6 +426,10 @@ services:
             - { name: doctrine.event_listener, event: postPersist }
         arguments:
             - "@service_container"
+    badge.listener.persist:
+        class: Dodici\Fansworld\WebBundle\Listener\BadgeGiver
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
     my.facebook.user:
         class: Dodici\Fansworld\WebBundle\Security\FacebookProvider
         arguments:

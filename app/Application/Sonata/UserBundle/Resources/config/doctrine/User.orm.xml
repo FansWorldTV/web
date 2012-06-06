@@ -126,6 +126,20 @@
 
         </one-to-many>
         
+        <one-to-many
+                field="hasbadges"
+                target-entity="Dodici\Fansworld\WebBundle\Entity\HasBadge"
+                mapped-by="author"
+                orphan-removal="true"
+                >
+                <cascade>
+                    <cascade-remove/>
+                    <cascade-persist/>
+                </cascade>
+                <orphan-removal>true</orphan-removal>
+
+        </one-to-many>
+        
     </entity>
 
 </doctrine-mapping>
