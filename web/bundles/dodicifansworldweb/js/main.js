@@ -36,10 +36,19 @@ var site = {
             'innerHeight': 200
         });
         
-        $(".btn_upload_photo,.btn_upload_video,.editbutton").colorbox({
+        $(".btn_upload_video,.editbutton").colorbox({
             iframe: true, 
             innerWidth: 700, 
             innerHeight: 455
+        });
+        
+        $(".btn_upload_photo").colorbox({
+            iframe: false, 
+            innerWidth: 700, 
+            innerHeight: 175,
+            onComplete: function() {
+                createUploader();
+            }
         });
         
         $.datepicker.setDefaults($.datepicker.regional[appLocale]);

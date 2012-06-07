@@ -230,6 +230,159 @@ class PhotoController extends SiteController
         }
 
         return $this->jsonResponse($response);
+    }    
+    
+	/**
+     * @Route("/fileupload", name="photo_fileupload")
+     * @Secure(roles="ROLE_USER")
+     * @Template
+     */
+    public function fileUploadAction()
+    {
+        $request = $this->getRequest();
+        if ($request->getMethod() == 'POST') {
+            $response = array('error'=> 'Could not save uploaded file.' .'The upload was cancelled, or server error encountered');
+            
+            $mediaManager = $this->get("sonata.media.manager.media");
+            $image = null;            
+            
+            $input = fopen("php://input", "r");
+            $imagecontent = stream_get_contents($input);
+            fclose($input);
+            
+            if ($imagecontent !== false) {
+                $name = $request->query->get('qqfile');
+                $pathinfo = pathinfo($name);
+                $filename = $pathinfo['filename'];
+                $ext = $pathinfo['extension'];                
+                $tmpName = $filename . '.' . $ext;
+                
+                
+                $tmpfile = tempnam('/tmp', 'IYT');
+                file_put_contents($tmpfile, $imagecontent);                
+                
+                
+                
+                $mediaManager = $this->get("sonata.media.manager.media");
+                $image = new Media();
+                $image->setBinaryContent($tmpfile);
+                $image->setMetadataValue('name',$tmpName);
+                $image->setContext('default');
+                $image->setProviderName('sonata.media.provider.image');
+                $mediaManager->save($image);
+                
+                
+                
+                $response = array('success' => true, 'mediaId' => $image->getId());
+            }
+            return $this->jsonResponse($response);
+        }
+       return array();
     }
+    
+	/**
+     * @Route("/fileupload/{mediaId}", name="photo_filemeta")
+     * @Secure(roles="ROLE_USER")
+     * @Template
+     */
+    public function fileMetaAction($mediaId)
+    {
+        $request = $this->getRequest();
+        $idolToTagId = $request->get('idolToTag', false);
+        $user = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getEntityManager();
+        $privacies = Privacy::getOptions();
+        $redirectColorBox = false;
 
+        $idolToTag = $this->getRepository('Idol')->find($idolToTagId);
+        
+        $albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true));
+        $albumchoices = array();
+        foreach ($albums as $ab)
+            $albumchoices[$ab->getId()] = $ab->getTitle();
+            
+        $albumchoices['NEW'] = '+ (NUEVO)';
+
+        $mediaManager = $this->get("sonata.media.manager.media");
+        $media = $mediaManager->findOneBy(array('id' => $mediaId));
+        $photo = new Photo();
+        $photo->setImage($media);
+        $defaultData = array('submited' => 'submited');
+
+        $collectionConstraint = new Collection(array(
+                    'title' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
+                    'album' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($albumchoices))),
+                    'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
+                    'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
+        			'tagtext' => array(),
+        			'taguser' => array(),
+                    'submited' => array()
+                ));
+
+        $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
+                ->add('title', 'text', array('required' => true, 'label' => 'Título'))
+                ->add('album', 'choice', array('required' => true, 'choices' => $albumchoices, 'label' => 'Album'))
+                ->add('content', 'textarea', array('required' => false, 'label' => 'Descripción'))
+                ->add('privacy', 'choice', array('required' => true, 'choices' => $privacies, 'label' => 'Privacidad'))
+                ->add('tagtext', 'hidden', array('required' => false))
+                ->add('taguser', 'hidden', array('required' => false))
+                ->add('submited', 'hidden', array('required' => false))
+                ->getForm();
+ 
+        if ($request->getMethod() == 'POST') {
+            try {
+                $form->bindRequest($request);
+                $data = $form->getData();
+
+                if ($form->isValid()) {
+                    $album = null;
+                    if ($data['album']) {
+                        if ($data['album'] == 'NEW') {
+                        	$albumtitle = $request->get('album_new_name');
+                        	if (!$albumtitle) throw new \Exception('Enter an Album Title');
+                        	$album = new Album();
+                        	$album->setTitle($albumtitle);
+                        	$album->setAuthor($user);
+                        	$album->setPrivacy($data['privacy']);
+                        	$em->persist($album);
+                        } else {
+	                    	$album = $this->getRepository('Album')->find($data['album']);
+	                        if (!$album || ($album && $album->getAuthor() != $user))
+	                            throw new \Exception('Invalid Album');
+                        }
+                    }
+                    $photo->setAuthor($user);
+                    $photo->setAlbum($album);
+                    $photo->setTitle($data['title']);
+                    $photo->setContent($data['content']);
+                    $photo->setPrivacy($data['privacy']);
+                    $em->persist($photo);
+                    $em->flush();
+                    
+                    $tagtexts = explode(',', $data['tagtext']);
+                    $tagusers = explode(',', $data['taguser']);
+                    $userrepo = $this->getRepository('User');
+                    $tagitems = array();
+                    
+                    foreach ($tagtexts as $tt) {
+                    	if (trim($tt)) $tagitems[] = $tt;
+                    }
+                    foreach ($tagusers as $tu) {
+                    	$tuser = $userrepo->find($tu);
+                    	if ($tuser) $tagitems[] = $tuser;
+                    }
+                    
+                    if(!empty($tagitems))
+                    $this->get('tagger')->tag($user, $photo, $tagitems);
+
+                    $this->get('session')->setFlash('success', $this->trans('upload_sucess'));
+                    $redirectColorBox = true;
+                    
+                }
+            } catch (\Exception $e) {
+                $form->addError(new FormError($this->trans('upload_error')));
+            }
+        }
+        return array('photo' => $photo, 'form' => $form->createView(), 'idolToTag' => $idolToTag, 'mediaId' => $mediaId, 'redirectColorBox' => $redirectColorBox);
+    }
 }
