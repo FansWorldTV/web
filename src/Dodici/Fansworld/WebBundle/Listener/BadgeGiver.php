@@ -28,23 +28,10 @@ class BadgeGiver
     {
 		$entity = $eventArgs->getEntity();
 		$em = $eventArgs->getEntityManager();
-		$user = null;
+		$user = null; $type = null; $amount = null;
 		if (property_exists($entity, 'author')) {
 		    $user = $entity->getAuthor();
 		}
-		
-		array(
-    		self::TYPE_IDOLSHIP => 'Ídolos seguidos',
-            self::TYPE_TEAMSHIP => 'Equipos seguidos',
-            self::TYPE_FRIENDSHIP => 'Usuarios seguidos',
-            self::TYPE_VIDEO => 'Vídeos subidos',
-            self::TYPE_PHOTO => 'Fotos subidas',
-            self::TYPE_EVENTSHIP => 'Check-ins',
-            self::TYPE_CONTESTPARTICIPANT => 'Participaciones Concursos',
-            self::TYPE_QUIZANSWER => 'Respuestas Encuestas',
-            self::TYPE_COMMENT => 'Comentarios',
-            self::TYPE_PROFILEVIEWS => 'Vistas perfil+fotos+videos',
-    	);
 		
     	/* Determine type/amount of badgeable thing */
     	
@@ -96,9 +83,10 @@ class BadgeGiver
 		*/
 		
 		/* Add whichever badge steps apply*/
-		
-		if ($this->addBadgeStepByTypeAndScore($user, $type, $amount, $em)) {
-		    $em->flush();
+		if ($user && $type && $amount) {
+    		if ($this->addBadgeStepByTypeAndScore($user, $type, $amount, $em)) {
+    		    $em->flush();
+    		}
 		}
 		
     }
