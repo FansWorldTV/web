@@ -48,6 +48,7 @@ var site = {
             innerHeight: 175,
             onComplete: function() {
                 createUploader();
+                resizePopup();
             }
         });
         

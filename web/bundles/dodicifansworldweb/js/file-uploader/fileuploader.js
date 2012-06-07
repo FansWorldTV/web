@@ -670,14 +670,8 @@ qq.extend(qq.FileUploader.prototype, {
         var text; 
         if (loaded != total){
             text = Math.round(loaded / total * 100) + '% from ' + this._formatSize(total);
-            $( "#progressbar" ).progressbar({
-                value: Math.round(loaded / total * 100)
-            });
         } else {                                   
             text = this._formatSize(total);
-            $( "#progressbar" ).progressbar({
-                value: 100
-            });
         }          
         
         qq.setText(size, text);         

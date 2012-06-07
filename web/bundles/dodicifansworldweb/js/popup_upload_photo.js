@@ -65,6 +65,7 @@ function createUploader(){
         debug: true,
         multiple: false,
         maxConnections: 1,
+        allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
         onComplete: function(id, fileName, responseJSON){
             if(responseJSON.success){
                 $.colorbox({
@@ -78,6 +79,22 @@ function createUploader(){
                     }
                 });
             }
+        },
+        onUpload: function(){
+            resizePopup();
+        },
+        onProgress: function(id, fileName, loaded, total){
+            if (loaded != total){
+                $( "#progressbar" ).progressbar({
+                    value: Math.round(loaded / total * 100)
+                });
+            } else {                                   
+                $( "#progressbar" ).progressbar({
+                    value: 100
+                });
+            }  
+            resizePopup();
+            
         }
     });           
 }
