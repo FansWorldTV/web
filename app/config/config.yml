@@ -349,6 +349,16 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: proposal }
         arguments: [null, Dodici\Fansworld\WebBundle\Entity\Proposal, DodiciFansworldAdminBundle:ProposalAdmin]
+    dodici.fansworld.adminbundle.admin.badge:
+        class: Dodici\Fansworld\AdminBundle\Admin\BadgeAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: badge }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Badge, DodiciFansworldAdminBundle:BadgeAdmin]
+    dodici.fansworld.adminbundle.admin.badgestep:
+        class: Dodici\Fansworld\AdminBundle\Admin\BadgeStepAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: badgestep }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\BadgeStep, DodiciFansworldAdminBundle:BadgeStepAdmin]
     ### END ADMIN SERVICES ###
     liking.listener.persist:
         class: Dodici\Fansworld\WebBundle\Listener\LikingCountUpdater

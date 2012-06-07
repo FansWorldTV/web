@@ -185,6 +185,10 @@ class Badge implements Translatable
     {
         $this->badgesteps[] = $badgesteps;
     }
+    public function addBadgeSteps(\Dodici\Fansworld\WebBundle\Entity\BadgeStep $badgesteps)
+    {
+        $this->addBadgeStep($badgesteps);
+    }
 
     /**
      * Get badgesteps
@@ -194,5 +198,9 @@ class Badge implements Translatable
     public function getBadgesteps()
     {
         return $this->badgesteps;
+    }
+    public function setBadgesteps($badgesteps)
+    {
+        $this->badgesteps = $badgesteps;
     }
 }
