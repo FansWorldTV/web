@@ -71,7 +71,7 @@ class Meteor
     	socket_set_blocking($op,false);
         
     	if ($op) {
-    		$message = json_encode($message);
+    		$message = addslashes(json_encode($message));
     		$out = "ADDMESSAGE ".$channel." ".$message."\n";
     		fwrite($op, $out);
     		return true;

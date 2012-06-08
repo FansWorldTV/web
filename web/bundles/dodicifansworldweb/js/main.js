@@ -165,9 +165,9 @@ var site = {
             }
         }
             
-        if ((typeof Meteor != 'undefined') && (typeof friendshipChannel != 'undefined')) {
+        if ((typeof Meteor != 'undefined') && (typeof notificationChannel != 'undefined')) {
             Meteor.registerEventCallback("process", handleData);
-            Meteor.joinChannel(friendshipChannel, 0);
+            Meteor.joinChannel(notificationChannel, 0);
             Meteor.mode = 'stream';
 	            
             // Start streaming!
