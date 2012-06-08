@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Listener;
 
+use Dodici\Fansworld\WebBundle\Entity\QuizAnswer;
+
 use Dodici\Fansworld\WebBundle\Entity\Teamship;
 
 use Symfony\Component\DependencyInjection\Container;
@@ -71,6 +73,16 @@ class ScoreHandler
     	if ($entity instanceof Comment) {
 			if ($entity->getType() == Comment::TYPE_SHARE) {
 				$this->addScore($entity->getAuthor(), self::SCORE_NEW_SHARE);
+			}
+		}
+		
+        if ($entity instanceof QuizAnswer) {
+			$options = $entity->getOptions();
+			foreach ($options as $option) {
+			    if ($option->getCorrect() && $entity->getQuizquestion()->getScore()) {
+			        $this->addScore($entity->getAuthor(), $entity->getQuizquestion()->getScore());
+			        break;
+			    }
 			}
 		}
 		

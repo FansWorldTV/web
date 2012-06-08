@@ -359,6 +359,21 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: badgestep }
         arguments: [null, Dodici\Fansworld\WebBundle\Entity\BadgeStep, DodiciFansworldAdminBundle:BadgeStepAdmin]
+    dodici.fansworld.adminbundle.admin.quizquestion:
+        class: Dodici\Fansworld\AdminBundle\Admin\QuizQuestionAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: quizquestion }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\QuizQuestion, DodiciFansworldAdminBundle:QuizQuestionAdmin]
+    dodici.fansworld.adminbundle.admin.quizoption:
+        class: Dodici\Fansworld\AdminBundle\Admin\QuizOptionAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: quizoption }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\QuizOption, DodiciFansworldAdminBundle:QuizOptionAdmin]
+    dodici.fansworld.adminbundle.admin.quizanswer:
+        class: Dodici\Fansworld\AdminBundle\Admin\QuizAnswerAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: quizanswer }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\QuizAnswer, DodiciFansworldAdminBundle:QuizAnswerAdmin]
     ### END ADMIN SERVICES ###
     liking.listener.persist:
         class: Dodici\Fansworld\WebBundle\Listener\LikingCountUpdater
@@ -424,6 +439,10 @@ services:
         class: Dodici\Fansworld\WebBundle\Listener\EventUpdater
         tags:
             - { name: doctrine.event_listener, event: postRemove }
+    opinionvote.listener.persist:
+        class: Dodici\Fansworld\WebBundle\Listener\OpinionCountUpdater
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
     notification.listener.mailer:
         class: Dodici\Fansworld\WebBundle\Listener\NotificationMailer
         tags:
