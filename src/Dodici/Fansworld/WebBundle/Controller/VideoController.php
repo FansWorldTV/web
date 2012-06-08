@@ -606,5 +606,175 @@ class VideoController extends SiteController
 
         return array('video' => $video, 'form' => $form->createView());
     }
+    
+	/**
+     * @Route("/fileupload", name="video_fileupload")
+     * @Secure(roles="ROLE_USER")
+     * @Template
+     */
+    public function fileUploadAction()
+    {
+        $request = $this->getRequest();
+        $defaultData = array();       
+        $video = null;
+        
+        $collectionConstraint = new Collection(array(
+                    'youtube' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
+                ));
+
+        $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
+                ->add('youtube', 'text', array('required' => true, 'label' => 'URL Youtube'))
+                ->getForm();
+                
+        if ($request->getMethod() == 'POST') {
+            
+            try {
+                $form->bindRequest($request);
+                $data = $form->getData();
+
+                if ($form->isValid()) {
+                    try {
+                        $flutwig = $this->get('flumotiontwig');
+                        $idyoutube = $flutwig->getYoutubeId($data['youtube']);
+                        if (!$idyoutube)
+                            throw new \Exception('URL inválida');
+
+                        $metadata = $flutwig->getYoutubeMetadata($idyoutube);
+                        if (!$metadata)
+                            throw new \Exception('No se encontró metadata youtube');
+                        
+                        return $this->forward('DodiciFansworldWebBundle:Video:filemeta', array(
+                        	'idyoutube' => $idyoutube,
+                        	'fromuploader' => true
+                        ));
+                    } catch (\Exception $e) {
+                        $form->addError(new FormError($e->getMessage()));
+                        $video = null;
+                    }
+                }
+            } catch (\Exception $e) {
+                $form->addError(new FormError('Error subiendo video'));
+            }
+        }
+        
+
+        return array('video' => $video, 'form' => $form->createView());
+    }
+    
+	/**
+     * @Route("/fileupload/{idyoutube}/{fromuploader}", name="video_filemeta", defaults = {"fromuploader" = false})
+     * @Secure(roles="ROLE_USER")
+     * @Template
+     */
+    public function fileMetaAction($idyoutube,$fromuploader)
+    {
+        $redirectColorBox = false;
+        $request = $this->getRequest();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getEntityManager();
+        $privacies = Privacy::getOptions();
+
+        $categories = $this->getRepository('VideoCategory')->findBy(array(), array('title' => 'ASC'));
+        $choicecat = array();
+        foreach ($categories as $cat)
+            $choicecat[$cat->getId()] = $cat;
+
+        $video = null;
+        
+        $flutwig = $this->get('flumotiontwig');
+        $metadata = $flutwig->getYoutubeMetadata($idyoutube);
+        
+
+        $defaultData = array(
+            'title' => $metadata['title']
+        );
+        $collectionConstraint = new Collection(array(
+                    'title' => array(new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
+                    'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
+                    'videocategory' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\Choice(array_keys($choicecat))),
+                    'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
+        			'tagtext' => array(),
+        			'taguser' => array()
+                ));
+
+        $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
+                ->add('title', 'text', array('required' => false, 'label' => 'Título'))
+                ->add('content', 'textarea', array('required' => false, 'label' => 'Descripción'))
+                ->add('videocategory', 'choice', array('required' => true, 'choices' => $choicecat, 'label' => 'Categoría'))
+                ->add('privacy', 'choice', array('required' => true, 'choices' => $privacies, 'label' => 'Privacidad'))
+                ->add('tagtext', 'hidden', array('required' => false))
+                ->add('taguser', 'hidden', array('required' => false))
+                ->getForm();
+
+        if ($fromuploader !== true) {
+            try {
+                $form->bindRequest($request);
+                $data = $form->getData();
+
+                if ($form->isValid()) {
+                    try {
+                        if (!$idyoutube)
+                            throw new \Exception('URL inválida');
+                        
+                        if (!$metadata)
+                            throw new \Exception('No se encontró metadata youtube');
+
+                        $image = null;
+                        $imagecontent = @file_get_contents($metadata['thumbnail_url']);
+                        if ($imagecontent) {
+                            $tmpfile = tempnam('/tmp', 'IYT');
+                            file_put_contents($tmpfile, $imagecontent);
+                            $mediaManager = $this->get("sonata.media.manager.media");
+                            $image = new Media();
+                            $image->setBinaryContent($tmpfile);
+                            $image->setContext('default');
+                            $image->setProviderName('sonata.media.provider.image');
+                            $mediaManager->save($image);
+                        }
+
+                        $videocategory = $this->getRepository('VideoCategory')->find($data['videocategory']);
+
+                        $video = new Video();
+                        $video->setAuthor($user);
+                        $video->setTitle($data['title'] ? : $metadata['title']);
+                        $video->setContent($data['content']);
+                        $video->setYoutube($idyoutube);
+                        $video->setImage($image);
+                        $video->setPrivacy($data['privacy']);
+                        $video->setVideocategory($videocategory);
+                        $em->persist($video);
+                        $em->flush();
+                        
+                        
+	                    $tagtexts = explode(',', $data['tagtext']);
+	                    $tagusers = explode(',', $data['taguser']);
+	                    $userrepo = $this->getRepository('User');
+                                $tagitems = array();
+	                    
+	                    foreach ($tagtexts as $tt) {
+	                    	if (trim($tt)) $tagitems[] = $tt;
+	                    }
+	                    foreach ($tagusers as $tu) {
+	                    	$tuser = $userrepo->find($tu);
+	                    	if ($tuser) $tagitems[] = $tuser;
+	                    }
+	                    
+	                    $this->get('tagger')->tag($user, $video, $tagitems);
+                        
+                        $this->get('session')->setFlash('success', '¡Has subido un video con éxito!');
+                        $redirectColorBox = true;
+                    } catch (\Exception $e) {
+                        $form->addError(new FormError($e->getMessage()));
+                        $video = null;
+                    }
+                }
+            } catch (\Exception $e) {
+                $form->addError(new FormError('Error subiendo video'));
+            }
+        }
+        
+
+        return array('video' => $video, 'form' => $form->createView(), 'redirectColorBox' => $redirectColorBox, 'idyoutube' => $idyoutube, 'metadata' => $metadata);
+    }
 
 }

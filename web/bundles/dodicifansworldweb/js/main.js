@@ -36,10 +36,20 @@ var site = {
             'innerHeight': 200
         });
         
-        $(".btn_upload_video,.editbutton").colorbox({
+        $(".editbutton").colorbox({
             iframe: true, 
             innerWidth: 700, 
             innerHeight: 455
+        });
+        
+        $(".btn_upload_video").colorbox({
+            iframe: false, 
+            innerWidth: 700, 
+            innerHeight: 455,
+            onComplete: function() {
+                createUploader();
+                resizePopup();
+            }
         });
         
         $(".btn_upload_photo").colorbox({

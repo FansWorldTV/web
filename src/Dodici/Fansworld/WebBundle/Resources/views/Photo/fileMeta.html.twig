@@ -10,10 +10,25 @@
 
 {% block content %}
     {% if redirectColorBox %}
+    
         <script type="text/javascript">
+            
+            if(window.contest != undefined){
+                var photoUploaded = {% if photo %}{{ photo.id }} {% else %} false {% endif %};
+                
+                ajax.contestParticipateAction(contest.id, false, photoUploaded, false, function(r){
+                    if(r){
+                        $("a.contestParticipate").parent().html('{{ 'Already participating'|trans }}');
+                        $.colorbox.close();
+                    }
+                });
+            }else{
                 location.href = "{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}";
+            }
+                        
         </script>
     {% else %}
+    
         <div class="greybox">
             <form action="{{ path('photo_filemeta', {'mediaId': mediaId}) }}" method="post" enctype="multipart/form-data" class="bigform upload-photo">
                 {% thumbnail photo.image, 'medium' %}

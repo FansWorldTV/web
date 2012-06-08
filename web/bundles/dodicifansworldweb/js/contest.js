@@ -170,7 +170,7 @@ var contest = {
     participate: function(contestId, contestType, photo, video){
         var text = false;
         var href = false;
-        var iframe = true;
+        var iframe = false;
             
         if(contestType != 1){
             var inline = false;
@@ -181,10 +181,10 @@ var contest = {
                     iframe = false;
                     break;
                 case 3:
-                    href = Routing.generate( appLocale + '_photo_upload');
+                    href = Routing.generate( appLocale + '_photo_fileupload');
                     break;
                 case 4:
-                    href = Routing.generate(appLocale + '_video_upload');
+                    href = Routing.generate(appLocale + '_video_fileupload');
                     break;
             }
                 
@@ -199,7 +199,9 @@ var contest = {
                         redirectColorbox = false;
                         $("form.upload-video").attr('target', 'colorboxFrame');
                         $("form.upload-photo").attr('target', 'colorboxFrame');
+                        createUploader();
                     }
+                    resizePopup();
                 }
             });
             

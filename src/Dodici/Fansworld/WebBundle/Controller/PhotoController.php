@@ -256,12 +256,8 @@ class PhotoController extends SiteController
                 $filename = $pathinfo['filename'];
                 $ext = $pathinfo['extension'];                
                 $tmpName = $filename . '.' . $ext;
-                
-                
                 $tmpfile = tempnam('/tmp', 'IYT');
-                file_put_contents($tmpfile, $imagecontent);                
-                
-                
+                file_put_contents($tmpfile, $imagecontent);
                 
                 $mediaManager = $this->get("sonata.media.manager.media");
                 $image = new Media();
@@ -270,8 +266,6 @@ class PhotoController extends SiteController
                 $image->setContext('default');
                 $image->setProviderName('sonata.media.provider.image');
                 $mediaManager->save($image);
-                
-                
                 
                 $response = array('success' => true, 'mediaId' => $image->getId());
             }
@@ -307,7 +301,7 @@ class PhotoController extends SiteController
         $media = $mediaManager->findOneBy(array('id' => $mediaId));
         $photo = new Photo();
         $photo->setImage($media);
-        $defaultData = array('submited' => 'submited');
+        $defaultData = array();
 
         $collectionConstraint = new Collection(array(
                     'title' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
@@ -315,8 +309,7 @@ class PhotoController extends SiteController
                     'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
                     'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
         			'tagtext' => array(),
-        			'taguser' => array(),
-                    'submited' => array()
+        			'taguser' => array()
                 ));
 
         $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
@@ -326,7 +319,6 @@ class PhotoController extends SiteController
                 ->add('privacy', 'choice', array('required' => true, 'choices' => $privacies, 'label' => 'Privacidad'))
                 ->add('tagtext', 'hidden', array('required' => false))
                 ->add('taguser', 'hidden', array('required' => false))
-                ->add('submited', 'hidden', array('required' => false))
                 ->getForm();
  
         if ($request->getMethod() == 'POST') {

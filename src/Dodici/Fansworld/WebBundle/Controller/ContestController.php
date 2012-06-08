@@ -269,7 +269,6 @@ class ContestController extends SiteController
         } else {
             $contest = false;
         }
-
         $user = $this->get('security.context')->getToken()->getUser();
         $isParticipant = $this->getRepository('ContestParticipant')->findOneBy(array('contest' => $contest->getId(), 'author' => $user->getId()));
         $participants = $this->getRepository('ContestParticipant')->findBy(array('contest' => $contest->getId()), array('createdAt' => 'desc'), self::participantsLimit);
@@ -282,6 +281,7 @@ class ContestController extends SiteController
         $textUploaded = array();
         $participants = $this->getRepository('ContestParticipant')->findBy(array('contest' => $contest->getId()), array('createdAt' => 'desc'), self::participantsLimit);
         $alreadyVoted = $this->getRepository('ContestVote')->byUserAndContest($user, $contest);
+        
         switch ($contest->getType()) {
             case Contest::TYPE_TEXT:
                 foreach ($participants as $participant) {
@@ -296,26 +296,29 @@ class ContestController extends SiteController
                 break;
             case Contest::TYPE_PHOTO:
                 foreach ($participants as $participant) {
-                    $cantVotes = $this->getRepository('ContestVote')->countBy(array('contestparticipant' => $participant->getId()));
-                    array_push($filesUploaded, array(
-                        'participantId' => $participant->getId(),
-                        'file' => $participant->getPhoto(),
-                        'author' => $participant->getAuthor(),
-                        'votes' => $cantVotes
-                    ));
+                    if($participant->getPhoto()){
+                        $cantVotes = $this->getRepository('ContestVote')->countBy(array('contestparticipant' => $participant->getId()));
+                        array_push($filesUploaded, array(
+                            'participantId' => $participant->getId(),
+                            'file' => $participant->getPhoto(),
+                            'author' => $participant->getAuthor(),
+                            'votes' => $cantVotes
+                        ));
+                    }
                 }
                 break;
             case Contest::TYPE_VIDEO:
                 foreach ($participants as $participant) {
-                    $cantVotes = $this->getRepository('ContestVote')->countBy(array('contestparticipant' => $participant->getId()));
-                    array_push($filesUploaded, array(
-                        'participantId' => $participant->getId(),
-                        'file' => $participant->getVideo(),
-                        'author' => $participant->getAuthor(),
-                        'votes' => $cantVotes
-                    ));
+                    if($participant->getVideo()){
+                        $cantVotes = $this->getRepository('ContestVote')->countBy(array('contestparticipant' => $participant->getId()));
+                        array_push($filesUploaded, array(
+                            'participantId' => $participant->getId(),
+                            'file' => $participant->getVideo(),
+                            'author' => $participant->getAuthor(),
+                            'votes' => $cantVotes
+                        ));
+                    }
                 }
-                break;
         }
         return array('contest' => $contest, 'voted' => $alreadyVoted, 'isParticipant' => $isParticipant, 'participants' => $participants, 'winners' => $winners, 'files' => $filesUploaded, 'texts' => $textUploaded, 'addMoreParticipants' => $addMoreParticipants);
     }
