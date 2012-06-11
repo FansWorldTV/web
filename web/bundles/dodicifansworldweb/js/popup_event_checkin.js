@@ -1,7 +1,3 @@
-$(document).ready(function(){
-    checkIn.init();
-});
-
 var checkIn = {};
 
 checkIn.eventId = null;
@@ -10,18 +6,23 @@ checkIn.init = function(){
     checkIn.eventId = $(".cont.checkin ul.selectFrom").attr("eventId");
     $(".cont.checkin ul.selectFrom li").click(function(){
         var type = $(this).attr("type");
-        checkIn.sendAjax(type);
+        var teamId = $(".selectTeam").val();
+        if(typeof(teamId) == 'undefined'){
+            teamId = false;
+        }
+        checkIn.sendAjax(type, teamId);
     });
 };
 
-checkIn.sendAjax = function(type) {
+checkIn.sendAjax = function(type, teamId) {
     ajax.genericAction('event_checkinajax', {
         event: checkIn.eventId, 
-        type: type
+        type: type,
+        team: teamId
     }, function(r){
         console.log(r);
         if(!r.error){
-            window.top.$.colorbox.close();
+            $.colorbox.close();
         }
     }, function(r){
         console.error(r);

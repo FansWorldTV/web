@@ -3,7 +3,6 @@ var searchBox = {
     query: null,
     searchType: null,
     init: function(){
-        console.log(searchBox);
         if(searchBox.searchType !== null){
             $("div.search a[type='" + searchBox.searchType +"']").addClass('bold');
         }

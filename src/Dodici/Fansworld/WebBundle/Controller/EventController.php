@@ -40,7 +40,13 @@ class EventController extends SiteController
      */
     public function checkInAction($id)
     {
-        return array('event' => $id);
+        $id = (int) $id;
+        $event = $this->getRepository('Event')->find($id);
+        $teams = array();
+        foreach ($event->getHasteams() as $team) {
+            array_push($teams, array($team->getId() => (string) $team));
+        }
+        return array('event' => $id, 'teams' => $teams);
     }
 
     /**
@@ -51,30 +57,40 @@ class EventController extends SiteController
         $request = $this->getRequest();
         $eventId = $request->get('event', false);
         $type = $request->get('type', false);
+        $teamId = $request->get('teamId', false);
 
         $type = (int) $type;
         $author = $this->get('security.context')->getToken()->getUser();
         $event = $this->getRepository('Event')->find($eventId);
+        
+        if ($teamId) {
+            $teamId = (int) $teamId;
+            $team = $this->getRepository('Team')->find($teamId);
+        }
 
         $response = array();
-        
+
         try {
             $eventShip = new Eventship();
 
             $eventShip->setAuthor($author);
             $eventShip->setEvent($event);
             $eventShip->setType($type);
+            
+            if($teamId){
+                $eventShip->setTeam($team);
+            }
 
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($eventShip);
             $em->flush();
-            
+
             $response['error'] = false;
         } catch (Exception $exc) {
             $response['error'] = true;
             $response['msg'] = $exc->getMessage();
         }
-        
+
         return $this->jsonResponse($response);
     }
 
