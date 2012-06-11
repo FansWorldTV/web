@@ -490,6 +490,9 @@ services:
     complainer:
       class: Dodici\Fansworld\WebBundle\Extensions\Complainer
       arguments: [@doctrine.orm.entity_manager]
+    visitator:
+      class: Dodici\Fansworld\WebBundle\Extensions\Visitator
+      arguments: [@security.context, @doctrine.orm.entity_manager]
     user.location:
       class: Dodici\Fansworld\WebBundle\Extensions\UserLocation
       arguments: [@doctrine.orm.entity_manager]

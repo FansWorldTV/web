@@ -10,6 +10,8 @@
 
 namespace Application\Sonata\UserBundle\Entity;
 
+use Dodici\Fansworld\WebBundle\Model\VisitableInterface;
+
 use Dodici\Fansworld\WebBundle\Entity\HasBadge;
 
 use Dodici\Fansworld\WebBundle\Entity\BadgeStep;
@@ -24,7 +26,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Application\Sonata\UserBundle\Entity\User
  */
-class User extends BaseUser implements SearchableInterface
+class User extends BaseUser implements SearchableInterface, VisitableInterface
 {
 	const SEX_MALE = 'm';
 	const SEX_FEMALE = 'f';
@@ -239,6 +241,16 @@ class User extends BaseUser implements SearchableInterface
      * @var integer $idolCount
      */
     private $idolCount;
+    
+    /**
+     * @var ArrayCollection $visits
+     */
+    protected $visits;
+    
+    /**
+     * @var integer $visitCount
+     */
+    private $visitCount;
         
     public function __construct()
     {
@@ -252,6 +264,8 @@ class User extends BaseUser implements SearchableInterface
         $this->notifyprefs = array_keys(Notification::getTypeList());
         $this->idolCount = 0;
         $this->friendCount = 0;
+        $this->visits = new ArrayCollection();
+        $this->visitCount = 0;
     }
     
     public function __toString()
@@ -1166,4 +1180,55 @@ class User extends BaseUser implements SearchableInterface
         return $this->idolCount;
     }
     
+	/**
+     * Add visits
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Visit $visits
+     */
+    public function addVisit(\Dodici\Fansworld\WebBundle\Entity\Visit $visits)
+    {
+        $visits->setTarget($this);
+        $this->setVisitCount($this->getVisitCount() + 1);
+        $this->visits[] = $visits;
+    }
+    
+	public function addVisits(\Dodici\Fansworld\WebBundle\Entity\Visit $visits)
+    {
+        $this->addVisit($visits);
+    }
+
+    /**
+     * Get visits
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getVisits()
+    {
+        return $this->visits;
+    }
+    
+	public function setVisits($visits)
+    {
+        $this->visits = $visits;
+    }
+    
+	/**
+     * Set visitCount
+     *
+     * @param integer $visitCount
+     */
+    public function setVisitCount($visitCount)
+    {
+        $this->visitCount = $visitCount;
+    }
+
+    /**
+     * Get visitCount
+     *
+     * @return integer 
+     */
+    public function getVisitCount()
+    {
+        return $this->visitCount;
+    }
 }

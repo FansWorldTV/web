@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Entity;
 
+use Dodici\Fansworld\WebBundle\Model\VisitableInterface;
+
 use Dodici\Fansworld\WebBundle\Model\SearchableInterface;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -16,7 +18,7 @@ use Gedmo\Translatable\Translatable;
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\TeamRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Team implements Translatable, SearchableInterface
+class Team implements Translatable, SearchableInterface, VisitableInterface
 {
     /**
      * @var bigint $id
@@ -186,6 +188,18 @@ class Team implements Translatable, SearchableInterface
      */
     private $fanCount;
     
+    /**
+     * @ORM\OneToMany(targetEntity="Visit", mappedBy="team", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $visits;
+    
+    /**
+     * @var integer $visitCount
+     *
+     * @ORM\Column(name="visitcount", type="integer", nullable=false)
+     */
+    private $visitCount;
+    
 	/**
      * @ORM\PrePersist()
      */
@@ -205,6 +219,8 @@ class Team implements Translatable, SearchableInterface
     {
         $this->idols = new \Doctrine\Common\Collections\ArrayCollection();
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->visits = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->visitCount = 0;
     }
     
     public function __toString()
@@ -640,5 +656,57 @@ class Team implements Translatable, SearchableInterface
     public function getCountry()
     {
         return $this->country;
+    }
+    
+	/**
+     * Add visits
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Visit $visits
+     */
+    public function addVisit(\Dodici\Fansworld\WebBundle\Entity\Visit $visits)
+    {
+        $visits->setTeam($this);
+        $this->setVisitCount($this->getVisitCount() + 1);
+        $this->visits[] = $visits;
+    }
+    
+	public function addVisits(\Dodici\Fansworld\WebBundle\Entity\Visit $visits)
+    {
+        $this->addVisit($visits);
+    }
+
+    /**
+     * Get visits
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getVisits()
+    {
+        return $this->visits;
+    }
+    
+	public function setVisits($visits)
+    {
+        $this->visits = $visits;
+    }
+
+    /**
+     * Set visitCount
+     *
+     * @param integer $visitCount
+     */
+    public function setVisitCount($visitCount)
+    {
+        $this->visitCount = $visitCount;
+    }
+
+    /**
+     * Get visitCount
+     *
+     * @return integer 
+     */
+    public function getVisitCount()
+    {
+        return $this->visitCount;
     }
 }

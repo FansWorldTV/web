@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Entity;
 
+use Dodici\Fansworld\WebBundle\Model\VisitableInterface;
+
 use Dodici\Fansworld\WebBundle\Model\SearchableInterface;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -15,7 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\PhotoRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Photo implements SearchableInterface
+class Photo implements SearchableInterface, VisitableInterface
 {
     /**
      * @var bigint $id
@@ -149,11 +151,25 @@ class Photo implements SearchableInterface
      */
     protected $comments;
     
+    /**
+     * @ORM\OneToMany(targetEntity="Visit", mappedBy="photo", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $visits;
+    
+    /**
+     * @var integer $visitCount
+     *
+     * @ORM\Column(name="visitcount", type="integer", nullable=false)
+     */
+    private $visitCount;
+    
     public function __construct()
     {
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->setActive(true);
         $this->setPrivacy(\Dodici\Fansworld\WebBundle\Entity\Privacy::FRIENDS_ONLY);
+        $this->visits = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->visitCount = 0;
     }
     
 	public function __toString()
@@ -596,5 +612,57 @@ class Photo implements SearchableInterface
     public function getHasidols()
     {
         return $this->hasidols;
+    }
+    
+	/**
+     * Add visits
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Visit $visits
+     */
+    public function addVisit(\Dodici\Fansworld\WebBundle\Entity\Visit $visits)
+    {
+        $visits->setPhoto($this);
+        $this->setVisitCount($this->getVisitCount() + 1);
+        $this->visits[] = $visits;
+    }
+    
+	public function addVisits(\Dodici\Fansworld\WebBundle\Entity\Visit $visits)
+    {
+        $this->addVisit($visits);
+    }
+
+    /**
+     * Get visits
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getVisits()
+    {
+        return $this->visits;
+    }
+    
+	public function setVisits($visits)
+    {
+        $this->visits = $visits;
+    }
+
+    /**
+     * Set visitCount
+     *
+     * @param integer $visitCount
+     */
+    public function setVisitCount($visitCount)
+    {
+        $this->visitCount = $visitCount;
+    }
+
+    /**
+     * Get visitCount
+     *
+     * @return integer 
+     */
+    public function getVisitCount()
+    {
+        return $this->visitCount;
     }
 }

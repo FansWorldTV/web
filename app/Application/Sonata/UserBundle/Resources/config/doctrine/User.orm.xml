@@ -38,6 +38,7 @@
         <field name="content" column="content" type="text" nullable="true" />
         <field name="friendCount" column="friendCount" type="integer" nullable="false" />
         <field name="idolCount" column="idolCount" type="integer" nullable="false" />
+        <field name="visitCount" column="visitCount" type="integer" nullable="false" />
         
         <many-to-one
             field="country"
@@ -130,6 +131,20 @@
                 field="hasbadges"
                 target-entity="Dodici\Fansworld\WebBundle\Entity\HasBadge"
                 mapped-by="author"
+                orphan-removal="true"
+                >
+                <cascade>
+                    <cascade-remove/>
+                    <cascade-persist/>
+                </cascade>
+                <orphan-removal>true</orphan-removal>
+
+        </one-to-many>
+        
+        <one-to-many
+                field="visits"
+                target-entity="Dodici\Fansworld\WebBundle\Entity\Visit"
+                mapped-by="target"
                 orphan-removal="true"
                 >
                 <cascade>

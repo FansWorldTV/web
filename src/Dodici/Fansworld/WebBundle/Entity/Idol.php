@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Entity;
 
+use Dodici\Fansworld\WebBundle\Model\VisitableInterface;
+
 use Dodici\Fansworld\WebBundle\Model\SearchableInterface;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -15,7 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\IdolRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Idol implements SearchableInterface
+class Idol implements SearchableInterface, VisitableInterface
 {
 	const SEX_MALE = 'm';
 	const SEX_FEMALE = 'f';
@@ -157,6 +159,25 @@ class Idol implements SearchableInterface
      * @ORM\Column(name="fancount", type="integer", nullable=false)
      */
     private $fanCount;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Visit", mappedBy="idol", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $visits;
+    
+    /**
+     * @var integer $visitCount
+     *
+     * @ORM\Column(name="visitcount", type="integer", nullable=false)
+     */
+    private $visitCount;
+    
+    public function __construct()
+    {
+        $this->visits = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->visitCount = 0;
+        $this->idolcareers = new \Doctrine\Common\Collections\ArrayCollection();
+    }
     
 	/**
      * @ORM\PrePersist()
@@ -497,10 +518,6 @@ class Idol implements SearchableInterface
     {
         $this->idolcareers = $idolcareers;
     }
-    public function __construct()
-    {
-        $this->idolcareers = new \Doctrine\Common\Collections\ArrayCollection();
-    }
     
     /**
      * Set twitter
@@ -580,5 +597,57 @@ class Idol implements SearchableInterface
     public function getCountry()
     {
         return $this->country;
+    }
+    
+	/**
+     * Add visits
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Visit $visits
+     */
+    public function addVisit(\Dodici\Fansworld\WebBundle\Entity\Visit $visits)
+    {
+        $visits->setIdol($this);
+        $this->setVisitCount($this->getVisitCount() + 1);
+        $this->visits[] = $visits;
+    }
+    
+	public function addVisits(\Dodici\Fansworld\WebBundle\Entity\Visit $visits)
+    {
+        $this->addVisit($visits);
+    }
+
+    /**
+     * Get visits
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getVisits()
+    {
+        return $this->visits;
+    }
+    
+	public function setVisits($visits)
+    {
+        $this->visits = $visits;
+    }
+
+    /**
+     * Set visitCount
+     *
+     * @param integer $visitCount
+     */
+    public function setVisitCount($visitCount)
+    {
+        $this->visitCount = $visitCount;
+    }
+
+    /**
+     * Get visitCount
+     *
+     * @return integer 
+     */
+    public function getVisitCount()
+    {
+        return $this->visitCount;
     }
 }
