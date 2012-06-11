@@ -459,6 +459,12 @@ services:
         class: Dodici\Fansworld\WebBundle\Listener\BadgeGiver
         tags:
             - { name: doctrine.event_listener, event: postPersist }
+    twitteractivity.listener.persist:
+        class: Dodici\Fansworld\WebBundle\Listener\TwitterActivity
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+        arguments:
+            - "@service_container"
     my.facebook.user:
         class: Dodici\Fansworld\WebBundle\Security\FacebookProvider
         arguments:
@@ -472,6 +478,9 @@ services:
     app.facebook:
       class: Dodici\Fansworld\WebBundle\Extensions\AppFacebook
       arguments: [@security.context, @doctrine.orm.entity_manager, @fos_facebook.api, @appstate, @router]
+    app.twitter:
+      class: Dodici\Fansworld\WebBundle\Extensions\AppTwitter
+      arguments: [@security.context, @doctrine.orm.entity_manager, @fos_twitter.api, @appstate, @router, @translator]  
     search:
       class: Dodici\Fansworld\WebBundle\Extensions\Search
       arguments: [@security.context, @doctrine.orm.entity_manager, @router]
