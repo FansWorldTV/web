@@ -1,0 +1,15 @@
+-
+  title: Seguir Ídolos
+  type: TYPE_IDOLSHIP
+  content: |
+    Algo
+  steps:
+      - 
+        minimum: 10
+        image: idolos_1.png
+      - 
+        minimum: 50
+        image: idolos_2.png
+      - 
+        minimum: 100
+        image: idolos_3.png

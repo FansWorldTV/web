@@ -183,6 +183,7 @@ class Badge implements Translatable
      */
     public function addBadgeStep(\Dodici\Fansworld\WebBundle\Entity\BadgeStep $badgesteps)
     {
+        $badgesteps->setBadge($this);
         $this->badgesteps[] = $badgesteps;
     }
     public function addBadgeSteps(\Dodici\Fansworld\WebBundle\Entity\BadgeStep $badgesteps)
