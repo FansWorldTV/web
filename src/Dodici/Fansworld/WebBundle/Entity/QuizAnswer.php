@@ -67,6 +67,7 @@ class QuizAnswer
     public function __construct()
     {
         $this->options = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
     
     /**
