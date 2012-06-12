@@ -4,7 +4,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Dodici\Fansworld\WebBundle\Entity\Photo;
 use Dodici\Fansworld\WebBundle\Entity\Video;
 
-class TwitterActivity
+class FacebookActivity
 {
     protected $container;
     
@@ -22,15 +22,15 @@ class TwitterActivity
 		
         if ($entity instanceof Photo && $entity->getAuthor()) {
 			$user = $entity->getAuthor();
-			if ($user->getLinktwitter() && $entity->getActive()){
-			    $upload =  $this->container->get('app.twitter')->upload($entity); 
+			if ($user->getLinkfacebook() && $entity->getActive()){
+                $this->container->get('app.facebook')->upload($entity);
 			} 
 		}
 		
     	if ($entity instanceof Video && $entity->getAuthor()) {
 			$user = $entity->getAuthor();
-    	    if ($user->getLinktwitter() && $entity->getActive()){
-			    $this->container->get('app.twitter')->upload($entity);
+    	    if ($user->getLinkfacebook() && $entity->getActive()){
+			    $this->container->get('app.facebook')->upload($entity);
 			}
 		}
     }

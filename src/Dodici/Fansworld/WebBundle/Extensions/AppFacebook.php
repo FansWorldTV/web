@@ -7,6 +7,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class AppFacebook
 {
@@ -17,8 +18,9 @@ class AppFacebook
     protected $facebook;
     protected $appstate;
     protected $router;
+    protected $translator; 
 
-    function __construct(SecurityContext $security_context, EntityManager $em, $facebook, $appstate, $router)
+    function __construct(SecurityContext $security_context, EntityManager $em, $facebook, $appstate, $router, $translator)
     {
         $this->security_context = $security_context;
         $this->request = Request::createFromGlobals();
@@ -27,6 +29,7 @@ class AppFacebook
         $this->facebook = $facebook;
         $this->appstate = $appstate;
         $this->router = $router;
+        $this->translator = $translator;
     }
 
     /**
@@ -72,13 +75,19 @@ class AppFacebook
     	
     	$type = $this->appstate->getType($entity);
     	$url = $this->router->generate($type.'_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()), true);
-    	
-    	return $this->verb('upload', array('other' => $url), $user);
+    	$message = $this->translator->trans('shared_'.$type).' '.$url.' #fansworlds';
+    	return $this->verb('feed', array(
+    		'message' => $message,
+    	    'name' => $entity->getSlug(),
+    	    'link' => $url,
+    	    'description' => $entity->getContent()
+    	), $user);
     }
     
     public function verb($verb, $params, $user)
     {
-    	return $this->api('/{uid}/fansworld:'.$verb, $user, 'POST', $params);
+    	//return $this->api('/{uid}/fansworld:'.$verb, $user, 'POST', $params);
+        return $this->api('/{uid}/'.$verb, $user, 'POST', $params);
     }
     
     private function api($url, $user=null, $method='GET', $params=array())
@@ -90,7 +99,6 @@ class AppFacebook
     	if (!$user->getFacebookId()) throw new \Exception('Usuario sin ID Facebook');
     	
     	$url = str_replace('{uid}', $user->getFacebookId(), $url);
-    	
     	return $this->facebook->api($url, $method, $params);
     }
 }
