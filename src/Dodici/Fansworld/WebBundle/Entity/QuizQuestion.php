@@ -247,9 +247,9 @@ class QuizQuestion implements Translatable
     /**
      * Add quizoptions
      *
-     * @param Dodici\WebBundle\Entity\QuizOption $quizoptions
+     * @param Dodici\Fansworld\WebBundle\Entity\QuizOption $quizoptions
      */
-    public function addQuizOption(\Dodici\WebBundle\Entity\QuizOption $quizoptions)
+    public function addQuizOption(QuizOption $quizoptions)
     {
         $this->quizoptions[] = $quizoptions;
     }
@@ -257,11 +257,11 @@ class QuizQuestion implements Translatable
 	/**
      * Add quizoptions
      *
-     * @param Dodici\WebBundle\Entity\QuizOption $quizoptions
+     * @param Dodici\Fansworld\WebBundle\Entity\QuizOption $quizoptions
      */
-    public function addQuizOptions(\Dodici\WebBundle\Entity\QuizOption $quizoptions)
+    public function addQuizOptions(QuizOption $quizoptions)
     {
-        $this->quizoptions[] = $quizoptions;
+        $this->addQuizOption($quizoptions);
     }
 
     /**
