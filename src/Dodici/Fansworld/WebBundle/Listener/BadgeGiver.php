@@ -2,6 +2,10 @@
 
 namespace Dodici\Fansworld\WebBundle\Listener;
 
+use Dodici\Fansworld\WebBundle\Entity\QuizAnswer;
+
+use Dodici\Fansworld\WebBundle\Entity\Visit;
+
 use Dodici\Fansworld\WebBundle\Entity\Comment;
 
 use Dodici\Fansworld\WebBundle\Entity\ContestParticipant;
@@ -75,12 +79,42 @@ class BadgeGiver
 			$amount = $this->getAmount($user, $entity, $em);
 		}
 		
-        /*if ($entity instanceof QuizAnswer) {
+        if ($entity instanceof QuizAnswer) {
 			$type = Badge::TYPE_QUIZANSWER;
 			$amount = $this->getAmount($user, $entity, $em);
 		}
-		TODO: photo/video/user views
-		*/
+		
+		//TODO: OFFLOAD VISIT LOAD TO BATCH?
+        if ($entity instanceof Visit) {
+			$photo = $entity->getPhoto();
+			$video = $entity->getVideo();
+			$target = $entity->getTarget();
+			$author = null;
+			if ($photo) {
+			    $author = $photo->getAuthor();
+			    if ($author) {
+			        $author->setPhotoVisitCount($author->getPhotoVisitCount() + 1);
+			        $em->persist($author);
+			    }
+			}
+            elseif ($video) {
+			    $author = $video->getAuthor();
+			    if ($author) {
+			        $author->setVideoVisitCount($author->getVideoVisitCount() + 1);
+			        $em->persist($author);
+			    }
+			}
+			elseif ($target) {
+			    $author = $target;
+			}
+			
+			if ($author) {
+			    $amount = $author->getVisitCount() + $author->getPhotoVisitCount() + $author->getVideoVisitCount();
+			    $type = Badge::TYPE_PROFILEVIEWS;
+			    $user = $author;
+			}
+		}
+		
 		
 		/* Add whichever badge steps apply*/
 		if ($user && $type && $amount) {
