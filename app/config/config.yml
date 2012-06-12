@@ -507,7 +507,7 @@ services:
       arguments: [@doctrine.orm.entity_manager]
     visitator:
       class: Dodici\Fansworld\WebBundle\Extensions\Visitator
-      arguments: [@security.context, @doctrine.orm.entity_manager]
+      arguments: [@security.context, @doctrine.orm.entity_manager, @session, @appstate]
     user.location:
       class: Dodici\Fansworld\WebBundle\Extensions\UserLocation
       arguments: [@doctrine.orm.entity_manager]

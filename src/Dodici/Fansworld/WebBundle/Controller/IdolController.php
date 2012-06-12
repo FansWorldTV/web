@@ -32,7 +32,8 @@ class IdolController extends SiteController
         $idol = $this->getRepository('Idol')->findOneBySlug($slug);
         if (!$idol) {
             throw new HttpException(404, "No existe el ídolo");
-        }
+        }else 
+            $this->get('visitator')->addVisit($idol);
 
         $hasComments = $this->getRepository('Comment')->countBy(array('idol' => $idol->getId()));
         $hasComments = $hasComments > 0 ? true : false;

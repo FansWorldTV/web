@@ -40,7 +40,8 @@ class VideoController extends SiteController
         $video = $this->getRepository('Video')->findOneBy(array('id' => $id, 'active' => true));
 
         $this->securityCheck($video);
-
+        
+        $this->get('visitator')->addVisit($video);
         return array('video' => $video);
     }
 

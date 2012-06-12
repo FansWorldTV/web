@@ -32,7 +32,8 @@ class UserController extends SiteController
         $user = $this->getRepository('User')->findOneByUsername($username);
         if (!$user) {
             throw new HttpException(404, "No existe el usuario");
-        }
+        }else
+            $this->get('visitator')->addVisit($user);
 
         $hasComments = $this->getRepository('Comment')->countBy(array('target' => $user->getId()));
         $hasComments = $hasComments > 0 ? true : false;

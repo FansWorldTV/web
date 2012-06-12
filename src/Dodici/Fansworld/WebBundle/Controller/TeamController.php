@@ -41,7 +41,9 @@ class TeamController extends SiteController
 
         if (!$team)
             throw new HttpException(404, 'Equipo no encontrado');
-
+        else
+            $this->get('visitator')->addVisit($team);
+                
         return array(
             'team' => $team,
         );
