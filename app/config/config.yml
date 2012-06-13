@@ -487,6 +487,9 @@ services:
     app.twitter:
       class: Dodici\Fansworld\WebBundle\Extensions\AppTwitter
       arguments: [@security.context, @doctrine.orm.entity_manager, @fos_twitter.api, @appstate, @router, @translator]  
+    fansworldmailer:
+      class: Dodici\Fansworld\WebBundle\Extensions\FansworldMailer
+      arguments: [@mailer, @templating,@security.context]  
     search:
       class: Dodici\Fansworld\WebBundle\Extensions\Search
       arguments: [@security.context, @doctrine.orm.entity_manager, @router]

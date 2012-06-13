@@ -76,16 +76,10 @@ class InviteController extends SiteController
             foreach ($users2bInvited as $user2bInvited) {
                 $inviteUrl = $importer->inviteUrl($user);
 
-                $mailer = $this->get('mailer');
                 $subject = "Invitation";
                 $html = $this->get('templating')->render('DodiciFansworldWebBundle:Invite:new_invitation.html.twig', array('url' => $inviteUrl, 'who' => $user));
-                $message = \Swift_Message::newInstance()
-                        ->setSubject($subject)
-                        ->setFrom('info@fansworld.tv')
-                        ->setTo($user2bInvited)
-                        ->setBody(trim(strip_tags($html)))
-                        ->addPart($html, 'text/html');
-                $sent = $mailer->send($message);
+                
+                $sent = $this->container->get('fansworldmailer')->send($user2bInvited,$subject,$html); 
 
                 $response['invites'][$user2bInvited] = array(
                     'url' => $inviteUrl,

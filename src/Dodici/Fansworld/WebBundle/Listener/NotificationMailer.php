@@ -21,38 +21,9 @@ class NotificationMailer
     
 	public function postPersist(LifecycleEventArgs $eventArgs)
     {
-		$entity = $eventArgs->getEntity();
-		$em = $eventArgs->getEntityManager();
-		
+		$entity = $eventArgs->getEntity();		
     	if ($entity instanceof Notification) {
-			$user = $entity->getTarget();
-			
-			// send mail
-			$allowed = $user->getNotifyprefs();
-			if (in_array($entity->getType(), $allowed)) {
-				$mailer = $this->container->get('mailer');
-				$html = $this->container->get('templating')->render('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $entity));
-		
-				$subject = substr(trim(strip_tags($html)), 0, 75);
-				
-				$html = str_replace(
-					array('href="/','src="/'),
-					array(
-						'href="http://'.$this->request->getHost().'/',
-						'src="http://'.$this->request->getHost().'/',
-					), $html);
-					
-				$html = $this->container->get('templating')->render('DodiciFansworldWebBundle:Mail:new_notification.html.twig', array('content' => $html));
-				
-				$message = \Swift_Message::newInstance()
-                        ->setSubject($subject)
-                        ->setFrom('info@fansworld.tv')
-                        ->setTo($user->getEmail())
-                        ->setBody(trim(strip_tags($html)))
-                        ->addPart($html, 'text/html');
-                $sent = $mailer->send($message);
-				
-			}
+			$this->container->get('fansworldmailer')->sendNotification($entity);
 		}
     }
     
