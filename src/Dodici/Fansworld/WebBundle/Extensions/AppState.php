@@ -141,8 +141,8 @@ class AppState
         if ($this->security_context->isGranted('ROLE_ADMIN'))
             return true;
 
-        if (method_exists($entity, 'getAuthor')) {
-            if ($user == $entity->getAuthor())
+        if (property_exists($entity, 'author')) {
+            if (($this->user instanceof User) && ($user == $entity->getAuthor()))
                 return true;
         }
 

@@ -109,7 +109,7 @@ class QuizQuestion implements Translatable
 
 
 	/**
-     * @ORM\OneToMany(targetEntity="QuizOption", mappedBy="quizquestion", cascade={"remove", "persist"}, orphanRemoval="true")
+     * @ORM\OneToMany(targetEntity="QuizOption", mappedBy="quizquestion", cascade={"remove", "persist"}, orphanRemoval="true", fetch="EAGER")
      */
     protected $quizoptions;
     
