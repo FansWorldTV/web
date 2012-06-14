@@ -264,6 +264,7 @@ class Event implements SearchableInterface
      */
     public function addHasTeam(\Dodici\Fansworld\WebBundle\Entity\HasTeam $hasteams)
     {
+        $hasteams->setEvent($this);
         $this->hasteams[] = $hasteams;
     }
 

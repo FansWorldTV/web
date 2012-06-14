@@ -1,0 +1,11 @@
+parameters:
+    #datafactory.ws.url: http://www.datafactory.ws/clientes/xml/index.php
+    datafactory.ws.url: http://www.dodici.com.ar/proxydf.php
+
+services:
+    datafactory:
+      class: DataFactory\FeedBundle\Feeder\Feeder
+      arguments: [ @doctrine, @datafactory.xmlrequest ]
+    datafactory.xmlrequest:
+      class: DataFactory\FeedBundle\Feeder\XmlRequest
+      arguments: [ %datafactory.ws.url% ]

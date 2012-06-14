@@ -1,0 +1,15 @@
+services:
+    flumotion.api.request:
+      class: Flumotion\APIBundle\Builder\RequestBuilder
+      arguments: [ @doctrine, %flumotion.api_url%, %flumotion.api_key%, %flumotion.api_secret% ]
+    flumotion.ftp:
+      class: Flumotion\APIBundle\Ftp\FtpWriter
+      arguments: [ @flumotion.api.request, %flumotion.ftp_host%, %flumotion.ftp_path%, %flumotion.ftp_file%, %flumotion.ftp_user%, %flumotion.ftp_pass% ]
+    flumotiontwig:
+      class: Flumotion\APIBundle\Extensions\FlumotionTwig
+      arguments: [@session, @doctrine.orm.entity_manager, @flumotion.api.request, %flumotion.player_baseurl%, %flumotion.player_video_baseurl%]
+    twig.extension.flumotiontwig:
+      class: Flumotion\APIBundle\Extensions\FlumotionTwigExtension
+      arguments: [@flumotiontwig]
+      tags:
+          - { name: twig.extension }

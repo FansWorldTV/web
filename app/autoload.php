@@ -27,6 +27,7 @@ $loader->registerNamespaces(array(
     'Gaufrette'     => __DIR__.'/../vendor/gaufrette/src',
 	'Dodici'   		   => __DIR__.'/../src',
 	'Flumotion'   	   => __DIR__.'/../src',
+	'DataFactory'   	   => __DIR__.'/../src',
 	'BaseFacebook'     => __DIR__.'/../vendor/facebook/src',
 	'Artseld' => __DIR__.'/../vendor/bundles',
 ));

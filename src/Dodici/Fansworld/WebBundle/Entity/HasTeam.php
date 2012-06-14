@@ -141,6 +141,13 @@ class HasTeam
      */
     private $forumthread;
     
+    /**
+     * @var integer $position
+     *
+     * @ORM\Column(name="position", type="integer", nullable=true)
+     */
+    private $position;
+    
 	/**
      * @ORM\PrePersist()
      */
@@ -401,5 +408,25 @@ class HasTeam
     public function getMeeting()
     {
         return $this->meeting;
+    }
+    
+	/**
+     * Set position
+     *
+     * @param integer $position
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer 
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 }

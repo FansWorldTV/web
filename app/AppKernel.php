@@ -38,6 +38,7 @@ class AppKernel extends Kernel
             new FOS\FacebookBundle\FOSFacebookBundle(),
             new Artseld\OpeninviterBundle\ArtseldOpeninviterBundle(),
             new FOS\TwitterBundle\FOSTwitterBundle(),
+            new DataFactory\FeedBundle\DataFactoryFeedBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
