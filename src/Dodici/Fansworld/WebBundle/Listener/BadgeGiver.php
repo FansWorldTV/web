@@ -146,7 +146,7 @@ class BadgeGiver
     
     private function getRepository($entity, $em)
     {
-        $classname = ucfirst($this->getType($entity));
+        $classname = ucfirst($this->getType($entity, $em));
         if ($classname == 'Newspost') $classname = 'NewsPost';
         if ($classname == 'Forumpost') $classname = 'ForumPost';
         if ($classname == 'Contestparticipant') $classname = 'ContestParticipant';
@@ -158,13 +158,10 @@ class BadgeGiver
         }
     }
     
-    private function getType($entity)
+    private function getType($entity, $em)
     {
-        $exp = explode('\\', get_class($entity));
-        $classname = strtolower(end($exp));
-        if (strpos($classname, 'proxy') !== false) {
-            $classname = str_replace(array('dodicifansworldwebbundleentity', 'proxy'), array('', ''), $classname);
-        }
-        return $classname;
+        $name = $em->getClassMetadata(get_class($entity))->getName();
+        $exp = explode('\\', $name);
+		return strtolower(end($exp));
     }
 }

@@ -492,22 +492,22 @@ services:
       arguments: [@mailer, @templating,@security.context]  
     search:
       class: Dodici\Fansworld\WebBundle\Extensions\Search
-      arguments: [@security.context, @doctrine.orm.entity_manager, @router]
+      arguments: [@security.context, @doctrine.orm.entity_manager, @router, @appstate]
     meteor:
       class: Dodici\Fansworld\WebBundle\Extensions\Meteor
       arguments: [@doctrine.orm.entity_manager, %meteor.host%, %meteor.port%, %meteor.clientport%]
     tagger:
       class: Dodici\Fansworld\WebBundle\Extensions\Tagger
-      arguments: [@doctrine.orm.entity_manager]
+      arguments: [@doctrine.orm.entity_manager, @appstate]
     sharer:
       class: Dodici\Fansworld\WebBundle\Extensions\Sharer
-      arguments: [@doctrine.orm.entity_manager]
+      arguments: [@doctrine.orm.entity_manager, @appstate]
     commenter:
       class: Dodici\Fansworld\WebBundle\Extensions\Commenter
-      arguments: [@doctrine.orm.entity_manager]
+      arguments: [@doctrine.orm.entity_manager, @appstate]
     complainer:
       class: Dodici\Fansworld\WebBundle\Extensions\Complainer
-      arguments: [@doctrine.orm.entity_manager]
+      arguments: [@doctrine.orm.entity_manager, @appstate]
     visitator:
       class: Dodici\Fansworld\WebBundle\Extensions\Visitator
       arguments: [@security.context, @doctrine.orm.entity_manager, @session, @appstate]

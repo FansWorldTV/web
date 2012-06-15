@@ -44,14 +44,16 @@ class Search
     protected $em;
     protected $router;
     protected $user;
+    protected $appstate;
 
-    function __construct(SecurityContext $security_context, EntityManager $em, Router $router)
+    function __construct(SecurityContext $security_context, EntityManager $em, Router $router, $appstate)
     {
         $this->security_context = $security_context;
         $this->request = Request::createFromGlobals();
         $this->em = $em;
         $this->router = $router;
         $this->user = ($security_context->getToken() && ($security_context->getToken()->getUser() instanceof User)) ? $security_context->getToken()->getUser() : null;
+        $this->appstate = $appstate;
     }
 
     private function getRepositoryByType($type)
@@ -60,16 +62,6 @@ class Search
         if (!in_array($type, array_keys($types)))
             throw new \Exception('Unsupported search type');
         return $this->em->getRepository($types[$type]);
-    }
-
-    private function getClass($entity)
-    {
-        $exp = explode('\\', get_class($entity));
-        $classname = strtolower(end($exp));
-        if (strpos($classname, 'proxy') !== false) {
-            $classname = str_replace(array('dodicifansworldwebbundleentity', 'proxy'), array('', ''), $classname);
-        }
-        return $classname;
     }
 
     public function search($text, $type, $limit = null, $offset = null)
@@ -86,7 +78,7 @@ class Search
 
     public function getUrl($entity, $absolute = false)
     {
-        $class = $this->getClass($entity);
+        $class = $this->appstate->getType($entity);
         switch ($class) {
             case 'user' :
                 return $this->router->generate('user_wall', array('username' => $entity->getUsername()), $absolute);

@@ -23,11 +23,7 @@ class ComplaintRepository extends CountBaseRepository
             return false;
         }
 
-        $exp = explode('\\', get_class($entity));
-        $classname = strtolower(end($exp));
-        if (strpos($classname, 'proxy') !== false) {
-            $classname = str_replace(array('dodicifansworldwebbundleentity', 'proxy'), array('', ''), $classname);
-        }
+        $classname = $this->getType($entity);
 
         return $this->findBy(array('author' => $user->getId(), $classname => $entity->getId()));
     }

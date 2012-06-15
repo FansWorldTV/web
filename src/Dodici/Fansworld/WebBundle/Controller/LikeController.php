@@ -55,8 +55,7 @@ class LikeController extends SiteController
 	        	$message = $translator->trans('You no longer like') . ' "' . (string)$entity.'"';
 	        	$buttontext = $translator->trans('like');
 	        } elseif ($appstate->canLike($entity)) {
-	        	$exp = explode('\\', get_class($entity));
-	    		$classname = end($exp);
+	        	$classname = $appstate->getType($entity);
 	        	$liking = new Liking();
 	        	$liking->setAuthor($user);
 	        	$methodname = 'set'.$classname;

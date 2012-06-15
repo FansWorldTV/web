@@ -12,13 +12,15 @@ use Doctrine\ORM\EntityManager;
 
 class Sharer
 {
-	protected $request;
+    protected $request;
 	protected $em;
+	protected $appstate;
 
-    function __construct(EntityManager $em)
+    function __construct(EntityManager $em, $appstate)
     {
         $this->request = Request::createFromGlobals();
         $this->em = $em;
+        $this->appstate = $appstate;
     }
 
     /**
@@ -28,8 +30,7 @@ class Sharer
      */
     public function share(User $user, $entity, $content=null)
     {
-    	$exp = explode('\\', get_class($entity));
-    	$classname = end($exp);
+    	$classname = $this->appstate->getType($entity);
     	
     	$comment = new Comment();
 		$comment->setType(Comment::TYPE_SHARE);

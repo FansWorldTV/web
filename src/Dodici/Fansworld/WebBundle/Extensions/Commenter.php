@@ -13,11 +13,13 @@ class Commenter
 {
 	protected $request;
 	protected $em;
+	protected $appstate;
 
-    function __construct(EntityManager $em)
+    function __construct(EntityManager $em, $appstate)
     {
         $this->request = Request::createFromGlobals();
         $this->em = $em;
+        $this->appstate = $appstate;
     }
 
     /**
@@ -29,8 +31,7 @@ class Commenter
      */
     public function comment(User $user, $entity, $content, $privacy_type = Privacy::EVERYONE)
     {
-    	$exp = explode('\\', get_class($entity));
-    	$classname = end($exp);
+    	$classname = $this->appstate->getType($entity);
     	
     	$comment = new Comment();
 		$comment->setType(Comment::TYPE_COMMENT);

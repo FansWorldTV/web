@@ -21,13 +21,15 @@ use Gedmo\Sluggable\Util\Urlizer as GedmoUrlizer;
 
 class Tagger
 {
-	protected $request;
+    protected $request;
 	protected $em;
+	protected $appstate;
 
-    function __construct(EntityManager $em)
+    function __construct(EntityManager $em, $appstate)
     {
         $this->request = Request::createFromGlobals();
         $this->em = $em;
+        $this->appstate = $appstate;
     }
 
     /**
@@ -47,8 +49,7 @@ class Tagger
     	$hasurepo = $this->em->getRepository('DodiciFansworldWebBundle:HasUser');
     	$hastrepo = $this->em->getRepository('DodiciFansworldWebBundle:HasTeam');
     	$hasirepo = $this->em->getRepository('DodiciFansworldWebBundle:HasIdol');
-    	$exp = explode('\\', get_class($entity));
-    	$classname = end($exp);
+    	$classname = $this->appstate->getType($entity);
     	
     	foreach ($tag as $t) {
     		if ($t instanceof User) {

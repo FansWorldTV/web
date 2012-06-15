@@ -21,11 +21,7 @@ class CommentRepository extends CountBaseRepository
 		if ($entity instanceof \Application\Sonata\UserBundle\Entity\User) {
     		$classname = 'target';
     	} else {
-    		$exp = explode('\\', get_class($entity));
-    		$classname = strtolower(end($exp));
-	    	if (strpos($classname, 'proxy') !== false) {
-	    		$classname = str_replace(array('dodicifansworldwebbundleentity','proxy'), array('',''), $classname);
-	    	}
+    		$classname = $this->getType($entity);
     	}
     	
 		$query = $this->_em->createQuery('

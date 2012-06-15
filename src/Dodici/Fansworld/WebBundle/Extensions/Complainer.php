@@ -11,13 +11,15 @@ use Doctrine\ORM\EntityManager;
 
 class Complainer
 {
-	protected $request;
+    protected $request;
 	protected $em;
+	protected $appstate;
 
-    function __construct(EntityManager $em)
+    function __construct(EntityManager $em, $appstate)
     {
         $this->request = Request::createFromGlobals();
         $this->em = $em;
+        $this->appstate = $appstate;
     }
 
     /**
@@ -28,8 +30,7 @@ class Complainer
      */
     public function complain(User $user, $entity, $content)
     {
-    	$exp = explode('\\', get_class($entity));
-    	$classname = end($exp);
+    	$classname = $this->appstate->getType($entity);
     	
     	$complaint = new Complaint();
 		$complaint->setAuthor($user);

@@ -278,12 +278,9 @@ class AppState
 
     public function getType($entity)
     {
-        $exp = explode('\\', get_class($entity));
-        $classname = strtolower(end($exp));
-        if (strpos($classname, 'proxy') !== false) {
-            $classname = str_replace(array('dodicifansworldwebbundleentity', 'proxy'), array('', ''), $classname);
-        }
-        return $classname;
+        $name = $this->em->getClassMetadata(get_class($entity))->getName();
+        $exp = explode('\\', $name);
+		return strtolower(end($exp));
     }
 
     public function getComments($entity)
