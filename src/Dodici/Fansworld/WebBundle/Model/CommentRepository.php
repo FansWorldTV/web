@@ -3,6 +3,7 @@
 namespace Dodici\Fansworld\WebBundle\Model;
 
 use Doctrine\DBAL\Types\Type;
+use Dodici\Fansworld\WebBundle\Entity\Privacy;
 
 use Application\Sonata\UserBundle\Entity\User;
 
@@ -16,24 +17,41 @@ use Doctrine\ORM\EntityRepository;
  */
 class CommentRepository extends CountBaseRepository
 {
-	public function wallEntity($entity, $limit = null, $offset = null)
+	public function wallEntity($entity,$user=null, $lastId = null, $privacy = null, $limit = null, $offset = null)
 	{
 		if ($entity instanceof \Application\Sonata\UserBundle\Entity\User) {
     		$classname = 'target';
     	} else {
     		$classname = $this->getType($entity);
     	}
+    	$whereClause = '';
     	
+	   
+   	
 		$query = $this->_em->createQuery('
     	SELECT c, cc
     	FROM \Dodici\Fansworld\WebBundle\Entity\Comment c
     	LEFT JOIN c.comments cc
-    	WHERE c.'.$classname.' = :entity
+    	WHERE c.'.$classname.' = :entity 
     	AND c.active = true
     	AND c.comment IS NULL
-    	ORDER BY c.createdAt DESC, cc.createdAt DESC
+    	AND (:lastId IS NULL OR ( c.id < :lastId ))    	
+    	AND
+    	(
+    		(c.privacy = :everyone)
+    		OR
+	    	(c.privacy = :friendsonly AND (:user IS NOT NULL) AND (
+	    		(SELECT COUNT(f.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = c.author AND f.target = :user) OR (f.target = c.author AND f.author = :user) AND f.active=true) >= 1
+	    	))
+    	)
+    	
+    	ORDER BY c.id DESC, cc.createdAt DESC
     	')
-        	->setParameter('entity', $entity->getId(), Type::BIGINT);
+        	->setParameter('entity', $entity->getId(), Type::BIGINT)
+            ->setParameter('everyone', Privacy::EVERYONE)
+        	->setParameter('friendsonly', Privacy::FRIENDS_ONLY)
+        	->setParameter('user', ($user instanceof User) ? $user->getId() : null)
+            ->setParameter('lastId', $lastId);
         
         if ($limit !== null)
             $query = $query->setMaxResults((int)$limit);
@@ -42,4 +60,6 @@ class CommentRepository extends CountBaseRepository
         
         return $query->getResult();
 	}
+	
+	
 }

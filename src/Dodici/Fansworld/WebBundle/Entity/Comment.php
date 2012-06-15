@@ -319,6 +319,8 @@ class Comment
         if (mb_strlen($cont) > $length) {
         	$cont = substr($cont, 0, $length) . '...';
         }
+        if(is_null($cont) || $cont === '')
+            $cont = 'empty';
         return $cont;
     }
 

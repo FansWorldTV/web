@@ -285,7 +285,7 @@ class AppState
 
     public function getComments($entity)
     {
-        $comments = $this->getRepository('DodiciFansworldWebBundle:Comment')->wallEntity($entity, self::LIMIT_WALL, 0);
+        $comments = $this->getRepository('DodiciFansworldWebBundle:Comment')->wallEntity($entity, $this->user, null, self::LIMIT_WALL, 0);
         return $comments;
     }
 
