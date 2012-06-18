@@ -108,7 +108,7 @@ class CountBaseRepository extends EntityRepository
     	return (int)$query->getSingleScalarResult();
     }
     
-    private function getType($entity)
+    protected function getType($entity)
     {
         $name = $this->_em->getClassMetadata(get_class($entity))->getName();
         $exp = explode('\\', $name);

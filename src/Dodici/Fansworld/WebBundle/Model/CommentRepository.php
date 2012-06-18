@@ -17,7 +17,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class CommentRepository extends CountBaseRepository
 {
-	public function wallEntity($entity,$user=null, $lastId = null, $privacy = null, $limit = null, $offset = null)
+	public function wallEntity($entity,$user=null, $lastId = null,  $limit = null, $offset = null)
 	{
 		if ($entity instanceof \Application\Sonata\UserBundle\Entity\User) {
     		$classname = 'target';
