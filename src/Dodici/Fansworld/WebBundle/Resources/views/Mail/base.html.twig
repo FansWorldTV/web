@@ -1,39 +1,79 @@
-<style type="text/css">
-{% block styles %}
-	.box {
-		background-color: #F6F6F6; border: solid 1px white; box-shadow: 0 1px 1px #888; padding: 30px; border-radius: 5px; margin: 15px;
-		font-family: arial;	
-	}
-	.header {
-		padding-bottom: 15px;
-		margin-bottom: 15px;
-		border-bottom: 1px solid #DDD;	
-	}
-	.footer {
-		margin-top: 30px;
-		padding-top: 15px;
-		border-top: 1px solid #DDD;
-		font-size: 12px;
-	}
-	.clear {
-		clear: both;
-	}
-{% endblock %}
-</style>
-<div class="box">
-	<div class="header">
-		<a href="{{ url('homepage') }}">
-			<img src="{% render 'DodiciFansworldWebBundle:Default:host' %}{{ asset('/bundles/dodicifansworldweb/images/fansworld.png') }}" alt="logo" />
-		</a>
-	</div>
-	<div class="text">
-		{% block text %}
-			{% if content is defined %}
-				{{ content|raw }}
-			{% endif %}
-		{% endblock %}
-	</div>
-	<div class="footer">
-		Copyright 2012, todos los derechos reservados
-	</div>
-</div>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="http://www.facebook.com/2008/fbml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        {% block title %}
+            <title>Fansworld Notification</title>
+        {% endblock %}
+    </head>
+    <body>
+        <style type="text/css">
+        {% block styles %}
+                body {
+                    background-color: #efefef;
+                    font-family: "Lucida Sans", "Lucida Grande", "FreeSans";
+                }
+                table, tr, td{
+                    padding:0 !important;
+                    margin:0 !important;
+                }
+                a{
+                    color: #2e5fc9;
+                    text-decoration: none;
+                    font-weight: bold;
+                }
+                p {
+                    margin: 0;
+                    padding: 0;
+                }
+        {% endblock %}
+            </style>
+            <table cellpadding="0" cellspacing="0" style="background-color: #ffffff; border: 1px solid #c9c9c9; border-radius: 3px; height: 270px; width: 500px;">
+                <tr style="height: 50px;">
+                    <td style="border-bottom: 1px solid #c9c9c9; width: 290px;">
+                        <img src="{{ asset('bundles/dodicifansworldweb/images/mail/logoBlanco.jpg') }}" alt="Comparti tu pasion" style="margin-top: 20px; margin-left: 28px; margin-bottom: 15px;"/>
+                    </td>
+                    <td style="border-bottom: 1px solid #c9c9c9; width: 273px;" align="right">
+                        <table cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <table cellpadding="0" cellspacing="0" style="font-size: 11px; text-align: right;">
+                                        <tr>
+                                            <td>
+                                                <span style="color: #444444;margin-right: 15px;">{{ notification.target }}</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td >
+                                                <span style="color: #adadad;margin-right: 15px;">({{ notification.target.username }})</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <img src="{{ appmedia.imageurl(notification.target.image, 'avatar') }}" style="margin-right:10px; width: 35px; height: 35px;"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 500px;vertical-align: top;" colspan="2">
+                        <div style="padding-left: 30px;">
+                            {% block text %}
+                            {% endblock %}
+                        </td>
+                    </tr>
+            </table>
+            <div style="width: 500px; margin-top: 10px;">
+                    <div style="float: left; font-size: 11px; color: #c0c0c0;">
+                        <p>Copyright 2012, todos los derechos reservados</p>
+                        <p>Echeverria 5438, Buenos Aires 1431,</p>
+                        <p>Argentina</p>
+                    </div>
+                    <img style="float:right;" src="{{ asset('bundles/dodicifansworldweb/images/mail/fwGris.jpg') }}" alt="" />
+            </div>
+        </body>
+</html>

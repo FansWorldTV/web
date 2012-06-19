@@ -1,0 +1,39 @@
+{% extends 'DodiciFansworldWebBundle:Mail:base.html.twig' %}
+
+{% block title %}
+    <title>Fansworld - {{ notification.author }} respondió en un comentario que hiciste</title>
+{% endblock %}
+    
+{% block text %}
+    {% if notification.comment is not null %}
+            {% set tag_item = notification.comment %}
+            {% set tag_item_url = path("comment_show", {'id': tag_item.id }) %}	
+    {% elseif notification.album is not null %}
+            {% set tag_item = notification.album %}
+            {% set tag_item_url = path("album_show", {'id': tag_item.id, 'slug': tag_item.slug }) %}	
+    {% elseif notification.photo is not null %}
+            {% set tag_item = notification.photo %} 
+            {% set tag_item_url = path("photo_show", {'id': tag_item.id, 'slug': tag_item.slug }) %}	
+    {% elseif notification.video is not null %}
+            {% set tag_item = notification.video %} 
+            {% set tag_item_url = path("video_show", {'id': tag_item.id, 'slug': tag_item.slug }) %}	
+    {% elseif notification.contest is not null %}
+            {% set tag_item = notification.contest %} 
+            {% set tag_item_url = path("contest_show", {'id': tag_item.id, 'slug': tag_item.slug })%}	
+    {% elseif notification.newspost is not null %}
+            {% set tag_item = notification.newspost %} 
+            {% set tag_item_url = path("newspost_show", {'id': tag_item.id, 'slug': tag_item.slug }) %}	
+    {% endif %}
+    <p style="margin-bottom: 15px;margin-top: 15px;">Hola {{ notification.target }},</p>
+    <div style="margin-bottom: 20px;">
+        <span style="float: left;margin-right: 15px;"><img src="{{ appmedia.imageurl(notification.target.image, 'avatar') }}" style="width: 45px;height: 45px;"/></span>    
+        <div>
+            <p style="margin-bottom: 10px;">
+                <a href="">{{ notification.author }}</a> te etiquetó en <a href="{{ tag_item_url }}">{{ tag_item }}</a>
+            </p>
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+    <p style="font-size: 11px; color: #c0c0c0; margin-top: 60px;">Ajustar tus preferencias de las notificaciones que recíbes</p>
+    </div>
+{% endblock %}

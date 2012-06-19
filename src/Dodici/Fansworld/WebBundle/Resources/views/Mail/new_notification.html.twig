@@ -2,19 +2,8 @@
 
 {% block styles %}
 	{{ parent() }}
-	.notificationcontent .avatar {
-		float: left;
-		margin-right: 10px;
-	}
-	.notificationcontent .info {
-		float: left;
-	}
 {% endblock %}
 
 {% block text %}
-	<p>Has recibido una nueva notificación:</p>
-	<div class="notificationcontent">
-		{{ content|raw }}
-		<div class="clear"></div>
-	</div>
+    {{ content|raw }}
 {% endblock %}

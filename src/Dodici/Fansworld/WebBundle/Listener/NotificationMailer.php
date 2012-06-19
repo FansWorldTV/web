@@ -10,21 +10,22 @@ use Application\Sonata\UserBundle\Entity\User;
 
 class NotificationMailer
 {
+
     protected $container;
     protected $request;
-    
-	function __construct($container)
+
+    function __construct($container)
     {
         $this->container = $container;
         $this->request = Request::createFromGlobals();
     }
-    
-	public function postPersist(LifecycleEventArgs $eventArgs)
+
+    public function postPersist(LifecycleEventArgs $eventArgs)
     {
-		$entity = $eventArgs->getEntity();		
-    	if ($entity instanceof Notification) {
-			$this->container->get('fansworldmailer')->sendNotification($entity);
-		}
+        $entity = $eventArgs->getEntity();
+        if ($entity instanceof Notification) {
+            $this->container->get('fansworldmailer')->sendNotification($entity);
+        }
     }
-    
+
 }

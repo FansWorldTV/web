@@ -1,7 +1,7 @@
 {% extends 'DodiciFansworldWebBundle:Mail:base.html.twig' %}
 
 {% block title %}
-    <title>Fansworld - {{ notification.author }} te ha aceptado como amigo</title>
+    <title>Fansworld - {{ notification.author }} creó un foro que posiblemente te interese</title>
 {% endblock %}
     
 {% block text %}
@@ -10,7 +10,7 @@
         <span style="float: left;margin-right: 15px;"><img src="{{ appmedia.imageurl(notification.target.image, 'avatar') }}" style="width: 45px;height: 45px;"/></span>    
         <div>
             <p style="margin-bottom: 10px;">
-                <a href="">{{ notification.author }}</a> te ha aceptado como amigo
+                <a href="">{{ notification.author }}</a> <a href="{{ path('forum_thread', {'id': notification.forumthread.id, 'slug': notification.forumthread.slug}) }}">{{ notification.forumthread }}</a>
             </p>
         </div>
     </div>
