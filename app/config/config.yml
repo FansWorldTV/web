@@ -539,6 +539,14 @@ services:
       class: Twig_Extensions_Extension_Text
       tags:
           - { name: twig.extension }
+    appmedia:
+      class: Dodici\Fansworld\WebBundle\Extensions\AppMedia
+      arguments: [@sonata.media.pool]
+    twig.extension.appmedia:
+      class: Dodici\Fansworld\WebBundle\Extensions\AppMediaExtension
+      arguments: [@appmedia]
+      tags:
+          - { name: twig.extension }
     app_user.registration.form.type:
         class: Application\Sonata\UserBundle\Form\Type\RegistrationFormType
         arguments: [%fos_user.model.user.class%]

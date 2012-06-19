@@ -2,6 +2,10 @@
 
 namespace Dodici\Fansworld\WebBundle\Listener;
 
+use Dodici\Fansworld\WebBundle\Entity\HasIdol;
+
+use Dodici\Fansworld\WebBundle\Entity\HasTeam;
+
 use Dodici\Fansworld\WebBundle\Entity\QuizAnswer;
 
 use Dodici\Fansworld\WebBundle\Entity\Teamship;
@@ -28,6 +32,12 @@ class ScoreHandler
     const SCORE_NEW_FRIENDSHIP = 10;
     const SCORE_NEW_VIDEO = 25;
     const SCORE_INVITE_FRIEND = 20;
+    
+    //Idolship/Teamship scores
+    const SCORE_TAG_TEAM_PHOTO = 5;
+    const SCORE_TAG_TEAM_VIDEO = 10;
+    const SCORE_TAG_IDOL_PHOTO = 5;
+    const SCORE_TAG_IDOL_VIDEO = 10;
     
 	protected $em;
 	
@@ -111,6 +121,30 @@ class ScoreHandler
             $em->persist($author);
             $em->persist($target);
             $em->flush();
+		}
+		
+		if ($entity instanceof HasTeam || $entity instanceof HasIdol) {
+		    if ($entity instanceof HasTeam) $thingname = 'team';
+		    else $thingname = 'idol';
+		    
+		    $author = $entity->getAuthor();
+		    $video = $entity->getVideo();
+		    $photo = $entity->getPhoto();
+		    
+		    $getmethod = 'get'.ucfirst($thingname);
+		    $thing = $entity->$getmethod();
+		    
+		    if ($author && ($video || $photo)) {
+		        $tsrepo = $this->em->getRepository('Dodici\Fansworld\WebBundle\Entity\\'.ucfirst($thingname).'ship');
+		        $tship = $tsrepo->findOneBy(array('author' => $author->getId(), $thingname => $thing->getId()));
+		        if ($tship) {
+    		        $score = constant('self::SCORE_TAG_'.strtoupper($thingname).'_'. ($video ? 'VIDEO' : 'PHOTO'));
+		            $this->addScore($author, $score);
+		            $tship->setScore($tship->getScore() + $score);
+		            $this->em->persist($tship);
+		            $this->em->flush();
+		        }
+		    }
 		}
     }
     

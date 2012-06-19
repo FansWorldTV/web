@@ -37,23 +37,7 @@ class SiteController extends Controller
 
     public function getImageUrl($media, $sizeFormat = 'small')
     {
-        $imageUrl = null;
-        $request = $this->getRequest();
-
-        $host = 'http://' . $request->getHost();
-
-        if ($media) {
-            $mediaService = $this->get('sonata.media.pool');
-            
-            $provider = $mediaService->getProvider($media->getProviderName());
-
-            $format = $provider->getFormatName($media, $sizeFormat);
-            $imageUrl = $provider->generatePublicUrl($media, $format);
-            
-            return $host . $imageUrl;
-        }
-        
-        return false;
+        return $this->get('appmedia')->getImageUrl($media, $sizeFormat);
     }
     
     public function jsonResponse($response)
