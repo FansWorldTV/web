@@ -57,6 +57,13 @@ class Teamship
      * @ORM\Column(name="score", type="bigint", nullable=false)
      */
     private $score;
+    
+    /**
+     * @var boolean $favorite
+     *
+     * @ORM\Column(name="favorite", type="boolean", nullable=false)
+     */
+    private $favorite;
         
 	/**
      * @ORM\PrePersist()
@@ -68,6 +75,9 @@ class Teamship
         }
     	if (null === $this->score) {
             $this->setScore(0);
+        }
+        if (null === $this->favorite) {
+            $this->setFavorite(false);
         }
     }
     
@@ -160,5 +170,25 @@ class Teamship
     public function getScore()
     {
         return $this->score;
+    }
+    
+	/**
+     * Set favorite
+     *
+     * @param boolean $favorite
+     */
+    public function setFavorite($favorite)
+    {
+        $this->favorite = $favorite;
+    }
+
+    /**
+     * Get favorite
+     *
+     * @return boolean 
+     */
+    public function getFavorite()
+    {
+        return $this->favorite;
     }
 }

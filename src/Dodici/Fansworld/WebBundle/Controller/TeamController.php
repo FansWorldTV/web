@@ -73,11 +73,6 @@ class TeamController extends SiteController
     public function ajaxGetTeams()
     {
         $request = $this->getRequest();
-        $teamcategory = $request->get('category', null);
-        
-        if($teamcategory == 'null'){
-            $teamcategory = null;
-        }
         
         $page = (int) $request->get('page', 1);
 
@@ -88,8 +83,17 @@ class TeamController extends SiteController
 
         $params = array();
         $params['active'] = true;
+        
+        /*
+        TODO: arreglar esto para que funcione con el m/m
+        
+        $teamcategory = $request->get('category', null);
+        if($teamcategory == 'null'){
+            $teamcategory = null;
+        }
         if ($teamcategory)
-            $params['teamcategory'] = $teamcategory;
+            $params['teamcategories'] = array($teamcategory);
+        */
 
         $teams = $this->getRepository('Team')->findBy($params, array('fanCount' => 'DESC'), $limit, $offset);
 

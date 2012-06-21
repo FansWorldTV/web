@@ -34,7 +34,7 @@ class LoadTeamData extends AbstractFixture implements FixtureInterface, Containe
 	        	$team = new Team();
 	        	
 	        	$teamcategory = $manager->merge($this->getReference('teamcategory-'.$ct['teamcategory']));
-	        	$team->setTeamcategory($teamcategory);
+	        	$team->addTeamcategory($teamcategory);
 	        	$team->setTitle($ct['title']);
 	        	$team->setFoundedAt(\DateTime::createFromFormat('U', $ct['foundedAt']));
 	        	$team->setNicknames($ct['nicknames']);

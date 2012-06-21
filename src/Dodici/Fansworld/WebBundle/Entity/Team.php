@@ -120,14 +120,13 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     private $splash;
     
     /**
-     * @var TeamCategory
-     *
-     * @ORM\ManyToOne(targetEntity="TeamCategory")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="teamcategory_id", referencedColumnName="id")
-     * })
+     * @ORM\ManyToMany(targetEntity="TeamCategory")
+     * @ORM\JoinTable(name="team_teamcategory",
+     *      joinColumns={@ORM\JoinColumn(name="team_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="teamcategory_id", referencedColumnName="id")}
+     *      )
      */
-    private $teamcategory;
+    protected $teamcategories;
     
     /**
      * @var Country
@@ -220,6 +219,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
         $this->idols = new \Doctrine\Common\Collections\ArrayCollection();
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->visits = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->teamcategories = new \Doctrine\Common\Collections\ArrayCollection();
         $this->visitCount = 0;
     }
     
@@ -388,26 +388,36 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
         return $this->slug;
     }
 
-    /**
-     * Set teamcategory
+	/**
+     * Add teamcategories
      *
-     * @param Dodici\Fansworld\WebBundle\Entity\TeamCategory $teamcategory
+     * @param Dodici\Fansworld\WebBundle\Entity\TeamCategory $teamcategories
      */
-    public function setTeamcategory(\Dodici\Fansworld\WebBundle\Entity\TeamCategory $teamcategory)
+    public function addTeamcategory(\Dodici\Fansworld\WebBundle\Entity\TeamCategory $teamcategories)
     {
-        $this->teamcategory = $teamcategory;
+        $this->teamcategories[] = $teamcategories;
+    }
+    
+    public function addTeamcategories(\Dodici\Fansworld\WebBundle\Entity\TeamCategory $teamcategories)
+    {
+        $this->addTeamcategory($teamcategories);
     }
 
     /**
-     * Get teamcategory
+     * Get teamcategories
      *
-     * @return Dodici\Fansworld\WebBundle\Entity\TeamCategory 
+     * @return Doctrine\Common\Collections\Collection 
      */
-    public function getTeamcategory()
+    public function getTeamcategories()
     {
-        return $this->teamcategory;
+        return $this->teamcategories;
     }
-
+    
+    public function setTeamcategories($teamcategories)
+    {
+        $this->teamcategories = $teamcategories;
+    }
+    
     /**
      * Add idols
      *
