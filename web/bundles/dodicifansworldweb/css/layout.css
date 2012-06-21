@@ -37,6 +37,7 @@ div.container section.content{
 div.container section.content section#leftcolumn{
     margin-right: 440px;
 	padding: 0 10px;
+	overflow: hidden;
 }
 
 div.container section#centercolumn{
@@ -44,6 +45,7 @@ div.container section#centercolumn{
     margin-left: -440px;
     padding: 5px;
     width: 250px;
+	overflow: hidden;
 }
 
 
