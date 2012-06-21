@@ -65,28 +65,12 @@ class DefaultController extends SiteController
         );
     }
 
-    /**
-     * Leftbar controller action
-     * @Template
-     */
-    public function leftbarAction()
-    {
-        $user = $this->get('security.context')->getToken()->getUser();
-        $request = $this->getRequest();
-        $hide_login = $request->get('hide_login', false);
-        $hide_ad = $request->get('hide_ad', false);
-        return array(
-            'user' => $user,
-            'hide_login' => $hide_login,
-            'hide_ad' => $hide_ad
-        );
-    }
-
+    
     /**
      * Rightbar controller action
      * @Template
      */
-    public function rightbarAction()
+    public function centercolumnAction()
     {
         $user = $this->get('security.context')->getToken()->getUser();
 
@@ -151,5 +135,24 @@ class DefaultController extends SiteController
         $schema = $request->getScheme();
         return new Response($schema . '://' . $host);
     }
+    
+	/**
+     * Leftbar controller action
+     * @Template
+     */
+    public function leftmenubarAction()
+    {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $request = $this->getRequest();
+        $hide_login = $request->get('hide_login', false);
+        $hide_ad = $request->get('hide_ad', false);
+        return array(
+            'user' => $user,
+            'hide_login' => $hide_login,
+            'hide_ad' => $hide_ad
+        );
+    }
+    
+	
 
 }

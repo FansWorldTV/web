@@ -115,6 +115,7 @@ var site = {
         site.expander();
         site.showCommentForm();
         searchBox.init();
+        site.BindLoginWidget();
     },
     
     parseTimes: function(){
@@ -398,6 +399,20 @@ var site = {
             expandText: '[+]',
             userCollapseText: '[-]'
         });
+    },
+    
+    BindLoginWidget: function(){
+        //fix triangle for firefox
+        if($.browser.mozilla == true){
+            $('header nav ul.right-container div#login-widget div.arrow-up-border').hide();
+        }
+        $('header nav ul li > div.header-ingresar').click(function(){
+           $('header nav ul.right-container div#login-widget').toggle(); 
+        });
+        $('div#login-widget #do-login').click(function(){
+            $('form.login').submit();
+        })
+         
     }
 }
 

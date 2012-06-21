@@ -1,0 +1,8 @@
+section#sidebar{
+    float: left;
+    margin-left: -190px;
+    overflow: hidden;
+    padding: 5px;
+    text-align: center;
+    width: 180px;
+}

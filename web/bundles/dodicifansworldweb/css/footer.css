@@ -1,0 +1,60 @@
+/*Estilos del footer*/
+footer{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+}
+footer .navy{
+	height: 35px;
+	background-color: #272526;
+}
+footer .navy ul li{
+	display:inline;
+	height: 35px;
+	line-height: 35px;
+	padding-left: 7px;
+	padding-right: 7px;
+	color:#F5F3F4;
+	font-size: 13px;
+	font-family: 'Ubuntu', sans-serif;
+}
+
+footer .navy ul li a{
+    text-decoration:none;
+	color: #F5F3F4;
+}
+
+footer .navy ul li a:hover{
+    text-decoration:underline;
+}
+
+/* Parte izquierda del footer */
+footer .navy ul.left-container{
+   float: left;
+   
+}
+footer .navy ul.left-container li a.homelink{
+	color:#C2C0C1;
+	text-decoration: none;
+}
+
+footer .navy ul.left-container li.slogan{
+	
+}
+
+
+/* Parte derecha del footer */
+footer .navy ul.right-container{
+	float: right;
+	
+}
+footer .navy ul.right-container li{
+    font-size: 12px;
+}
+
+footer .navy ul.right-container li a.icon img{
+    position: relative;
+    right: 5px;
+    top: 5px;
+}

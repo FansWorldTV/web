@@ -1,0 +1,17 @@
+<ul id='left-menu'>
+    <li>
+        <a class='icon'>
+            <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_alert.gif' )}}" />
+        </a>
+    </li>
+    <li>
+        <a class='icon'>
+            <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_notices.gif' )}}" />
+        </a>
+    </li>
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        <li>
+            <a href="{{ path("fos_user_security_logout") }}">Salir</a>
+        </li>
+    {% endif %}
+</ul>

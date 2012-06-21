@@ -7,39 +7,57 @@
 
 {% block body %}
 	{{ facebook_initialize({'xfbml': true, 'fbAsyncInit': 'onFbInit();', 'culture': appstate.culture(app.request.locale) }) }}
-
-	{% block top %}
-		{% render "DodiciFansworldWebBundle:Default:top" %}
-	{% endblock %}
 	
 	<div class="wrap">
-	{% block header %}
-		{% include "DodiciFansworldWebBundle:Default:searchbar.web.html.twig" %}
-		{% render "DodiciFansworldWebBundle:Default:menubar" %}
-	{% endblock %}
-	
-	{% block main %}
-		<div class="container">
-        	<div class="content clearfix">
-        		{% block leftbar %}
-        			{% render "DodiciFansworldWebBundle:Default:leftbar" %}
-        		{% endblock %}
-        		{% block centercolumn %}
-        		<div class="col_468 left margin">
-        			{% block content %}{% endblock %}
-        		</div>
-        		{% endblock %}
-        		{% block rightbar %}
-        			{% render "DodiciFansworldWebBundle:Default:rightbar" %}
-        		{% endblock %}
-        	</div>
-        	{% block footer %}
-        		{% include "DodiciFansworldWebBundle:Default:footer.web.html.twig" %}
-        	{% endblock %}
-        </div>
-	{% endblock %}
-	
-		
-	
+    	{% block header %}
+            <header>
+                {% render "DodiciFansworldWebBundle:Default:menubar" %}
+            </header>
+        {% endblock %}
+    	
+    	{% block main %}
+            
+            <section id='left-bar'>
+                {% render "DodiciFansworldWebBundle:Default:leftmenubar" %}
+            </section>
+            
+            
+    		<div class="container">
+                
+                <section class="content clearfix">
+                    {% block maincontent %}
+                        
+                        <section id='leftcolumn'>
+                    		{% block leftcolumn %}
+                    			{% block content %}
+                    			{% endblock %}
+                    		{% endblock %}
+                		</section>
+                		
+                		
+                        
+            	   {% endblock %}
+            	</section>
+            	
+            	<section id='centercolumn'>
+                    {% block centercolumn %}
+                        {% render "DodiciFansworldWebBundle:Default:centercolumn" %}
+                    {% endblock %}
+                </section>
+            	
+            	
+            	<section id='sidebar'>
+            	   {% block sidebar %}
+                        {% render "DodiciFansworldWebBundle:Default:sidebar" %}
+                    {% endblock %}
+            	</section>
+            	
+            </div>
+    	{% endblock %}
+    	
+    	{% block footer %}
+            {% include "DodiciFansworldWebBundle:Default:footer.html.twig" %}
+        {% endblock %}
+    	
 	</div>	
 {% endblock %}

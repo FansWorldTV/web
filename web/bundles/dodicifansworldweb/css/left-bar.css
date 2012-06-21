@@ -1,0 +1,18 @@
+section#left-bar{
+	background-color: #CDCDCD;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    width: 50px;
+}
+
+section#left-bar ul#left-menu li{
+	padding: 5px 0;
+    text-align: center;
+    width: 100%;
+}
+
+section#left-bar ul#left-menu li a img{
+	border-radius: 10px;
+    max-width: 40px;
+}
