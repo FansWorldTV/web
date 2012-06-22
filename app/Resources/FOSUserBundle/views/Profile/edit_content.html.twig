@@ -10,15 +10,25 @@
 					{% if key == 'user' %}
 						{% for k,row in val %}
 							{% if k == 'city' %}
-								<li class="clearfix">
-							    	{{ form_label(row) }}
-							        <div class="field">
-								        <select id="fos_user_profile_form_user_city" name="fos_user_profile_form[user][city]"></select>
-								        {{ form_errors(row) }}
-							        </div>
-							    </li>
+                                                                                                                                    <li class="clearfix">
+                                                                                                                                        {{ form_label(row) }}
+                                                                                                                                        <div class="field">
+                                                                                                                                                <select id="fos_user_profile_form_user_city" name="fos_user_profile_form[user][city]"></select>
+                                                                                                                                                {{ form_errors(row) }}
+                                                                                                                                        </div>
+                                                                                                                                    </li>
 							{% else %}
-								{{ form_row(row) }}
+                                                                                                                                    {% if k == 'team' %}
+                                                                                                                                        <li class="clearfix">
+                                                                                                                                            {{ form_label(row) }}
+                                                                                                                                            <div class="field">
+                                                                                                                                                    <select id="fos_user_profile_form_user_team" name="fos_user_profile_form[user][team]"></select>
+                                                                                                                                                    {{ form_errors(row) }}
+                                                                                                                                            </div>
+                                                                                                                                        </li>
+                                                                                                                                    {% else %}
+                                                                                                                                        {{ form_row(row) }}
+                                                                                                                                    {% endif %}
 							{% endif %}
 						{% endfor %}
 					{% elseif key == 'current' %}

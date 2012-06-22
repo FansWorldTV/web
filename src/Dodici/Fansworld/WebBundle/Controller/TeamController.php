@@ -43,7 +43,7 @@ class TeamController extends SiteController
             throw new HttpException(404, 'Equipo no encontrado');
         else
             $this->get('visitator')->addVisit($team);
-                
+
         return array(
             'team' => $team,
         );
@@ -55,9 +55,9 @@ class TeamController extends SiteController
      */
     public function listAction($categorySlug)
     {
-        $category = $this->getRepository('TeamCategory')->findOneBy(array('slug'=> $categorySlug));
+        $category = $this->getRepository('TeamCategory')->findOneBy(array('slug' => $categorySlug));
         $categoryId = null;
-        if($category){
+        if ($category) {
             $categoryId = $category->getId();
         }
         $categories = $this->getRepository('TeamCategory')->findBy(array(), array('title' => 'desc'));
@@ -73,7 +73,7 @@ class TeamController extends SiteController
     public function ajaxGetTeams()
     {
         $request = $this->getRequest();
-        
+
         $page = (int) $request->get('page', 1);
 
         $limit = self::LIMIT_ITEMS;
@@ -81,37 +81,47 @@ class TeamController extends SiteController
         $page--;
         $offset = $page * $limit;
 
+        $response = array();
         $params = array();
         $params['active'] = true;
-        
+
         /*
-        TODO: arreglar esto para que funcione con el m/m
-        
-        $teamcategory = $request->get('category', null);
-        if($teamcategory == 'null'){
-            $teamcategory = null;
-        }
-        if ($teamcategory)
-            $params['teamcategories'] = array($teamcategory);
-        */
+          TODO: arreglar esto para que funcione con el m/m
 
-        $teams = $this->getRepository('Team')->findBy($params, array('fanCount' => 'DESC'), $limit, $offset);
+          $teamcategory = $request->get('category', null);
+          if($teamcategory == 'null'){
+          $teamcategory = null;
+          }
+          if ($teamcategory)
+          $params['teamcategories'] = array($teamcategory);
+         */
 
-        $response = array();
-        foreach ($teams as $team) {
-            $response['images'][] = array(
-                'id' => $team->getId(),
-                'image' => $this->getImageUrl($team->getImage()),
-                'slug' => $team->getSlug(),
-                'title' => $team->getTitle()
-            );
-        }
-
-        $countTotal = $this->getRepository('Team')->countBy($params);
-        if ($countTotal > (($page + 1) * $limit)) {
-            $response['gotMore'] = true;
+        if ($page == 0) {
+            $teams = $this->getRepository('Team')->findBy($params, array('title' => 'DESC'));
+            
+            foreach($teams as $team){
+                $response['teams'][] = array(
+                    'id' => $team->getId(),
+                    'title' => (string) $team
+                );
+            }
         } else {
-            $response['gotMore'] = false;
+            $teams = $this->getRepository('Team')->findBy($params, array('fanCount' => 'DESC'), $limit, $offset);
+            foreach ($teams as $team) {
+                $response['images'][] = array(
+                    'id' => $team->getId(),
+                    'image' => $this->getImageUrl($team->getImage()),
+                    'slug' => $team->getSlug(),
+                    'title' => $team->getTitle()
+                );
+            }
+
+            $countTotal = $this->getRepository('Team')->countBy($params);
+            if ($countTotal > (($page + 1) * $limit)) {
+                $response['gotMore'] = true;
+            } else {
+                $response['gotMore'] = false;
+            }
         }
 
         return $this->jsonResponse($response);
@@ -171,36 +181,36 @@ class TeamController extends SiteController
             return new Response($e->getMessage(), 400);
         }
     }
-    
-    
-	/**
+
+    /**
      * @Route("/{slug}/twitter", name= "team_twitter")
      * @Template()
      */
     public function twitterTabAction($slug)
     {
-    	$lastTweets	=	array();
+        $lastTweets = array();
         $team = $this->getRepository('Team')->findOneBy(array('slug' => $slug, 'active' => true));
 
         if (!$team)
             throw new HttpException(404, 'Equipo no encontrado');
-      	else{
-      		$ttScreenName = $team->getTwitter();
-      		if(!$ttScreenName)
-      			throw new HttpException(404, 'Equipo sin twitter');
-      	}
-        
+        else {
+            $ttScreenName = $team->getTwitter();
+            if (!$ttScreenName)
+                throw new HttpException(404, 'Equipo sin twitter');
+        }
+
         $lastTweetsTemp = $this->get('fos_twitter.api')->get('statuses/user_timeline', array(
             'screen_name' => $ttScreenName,
             'count' => 10
-        ));        
-        foreach ($lastTweetsTemp as $tweet){
-        	$lastTweets[] = array(
-        		'text' =>	$tweet->text,
-        		'user' =>	$tweet->user->screen_name,
-        		'retweeted' => ($tweet->retweet_count > 0) ? true : false
-        	);
+                ));
+        foreach ($lastTweetsTemp as $tweet) {
+            $lastTweets[] = array(
+                'text' => $tweet->text,
+                'user' => $tweet->user->screen_name,
+                'retweeted' => ($tweet->retweet_count > 0) ? true : false
+            );
         }
         return array('lastTweets' => $lastTweets);
     }
+
 }
