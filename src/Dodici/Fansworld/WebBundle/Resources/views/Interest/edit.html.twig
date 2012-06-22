@@ -44,11 +44,12 @@
         <div class="fieldcontainer">
             <ul class="categories fields">
                 {% for category in teamcategories %}
-                    <li class="clearfix" data-idsport="">
+                    <li class="clearfix">
                         <label>{{ category.title }}</label>
-                        <select name="" id="">
+                        <select name="category[{{ category.id }}]" >
+                            <option value="null"></option>
                             {% for team in category.teams %}
-                                <option value="{{ team.id }}">{{ team }}</option>
+                                <option value="{{ team.id }}"  {% if category.selected == team.id %} selected="true" {% endif %} >{{ team }}</option>
                             {% endfor %}
                         </select>
                     </li>

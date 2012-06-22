@@ -40,7 +40,8 @@ class InterestController extends SiteController
             'teamcategories' => array()
         );
         
-        $response['user'] = $this->get('security.context')->getToken()->getUser();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $response['user'] = $user;
         
         $response['categories'] = $this->getRepository('InterestCategory')->findBy(array(), array('title' => 'ASC'));
         
@@ -49,17 +50,17 @@ class InterestController extends SiteController
         foreach($teams as $team){
             foreach($team->getTeamcategories() as $category){
                 $categories =& $response['teamcategories'];
+                $teamship = $this->getRepository('Teamship')->findOneBy(array("author" => $user->getId(), 'team' => $team->getId()));
                 $categories[$category->getId()] = array(
                     'id' => $category->getId(),
                     'title' => $category->getTitle(),
-                    'selected' => $this->getRepository('Teamship')->findBy(array('author' => $response['user']->getId(), ''))
+                    'selected' => $teamship ? $teamship->getId() : null
                 );
                 
                 if(!isset($categories[$category->getId()]['teams'])){
                     $categories[$category->getId()]['teams'] = array();
                 }
                 array_push($categories[$category->getId()]['teams'], $team);
-                
             }
         }
         return $response;
