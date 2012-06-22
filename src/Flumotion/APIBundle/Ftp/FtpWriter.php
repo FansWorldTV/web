@@ -20,4 +20,9 @@ class FtpWriter {
     	return $this->ftp->write($this->file, $this->api->getCalendar($blogs));
     }
     
+    public function writeFile($filename, $binarycontent)
+    {
+        return $this->ftp->write($filename, $binarycontent);
+    }
+    
 }

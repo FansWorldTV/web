@@ -553,18 +553,10 @@ class VideoController extends SiteController
                             throw new \Exception('No se encontró metadata youtube');
 
                         $image = null;
-                        $imagecontent = @file_get_contents($metadata['thumbnail_url']);
-                        if ($imagecontent) {
-                            $tmpfile = tempnam('/tmp', 'IYT');
-                            file_put_contents($tmpfile, $imagecontent);
-                            $mediaManager = $this->get("sonata.media.manager.media");
-                            $image = new Media();
-                            $image->setBinaryContent($tmpfile);
-                            $image->setContext('default');
-                            $image->setProviderName('sonata.media.provider.image');
-                            $mediaManager->save($image);
+                        if ($metadata['thumbnail_url']) {
+                            $image = $this->get('appmedia')->createImageFromUrl($metadata['thumbnail_url']);
                         }
-
+                        
                         $videocategory = $this->getRepository('VideoCategory')->find($data['videocategory']);
 
                         $video = new Video();
@@ -720,19 +712,12 @@ class VideoController extends SiteController
                         if (!$metadata)
                             throw new \Exception('No se encontró metadata youtube');
 
+                            
                         $image = null;
-                        $imagecontent = @file_get_contents($metadata['thumbnail_url']);
-                        if ($imagecontent) {
-                            $tmpfile = tempnam('/tmp', 'IYT');
-                            file_put_contents($tmpfile, $imagecontent);
-                            $mediaManager = $this->get("sonata.media.manager.media");
-                            $image = new Media();
-                            $image->setBinaryContent($tmpfile);
-                            $image->setContext('default');
-                            $image->setProviderName('sonata.media.provider.image');
-                            $mediaManager->save($image);
+                        if ($metadata['thumbnail_url']) {
+                            $image = $this->get('appmedia')->createImageFromUrl($metadata['thumbnail_url']);
                         }
-
+                        
                         $videocategory = $this->getRepository('VideoCategory')->find($data['videocategory']);
 
                         $video = new Video();

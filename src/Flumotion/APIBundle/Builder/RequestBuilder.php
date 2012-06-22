@@ -81,6 +81,11 @@ class RequestBuilder {
         return json_decode($this->getCurl('/pods/'.$id.'/streams'));
     }
     
+    public function getPod($id)
+    {
+        return json_decode($this->getCurl('/pods/'.$id));
+    }
+    
 	public function getAudios($id)
     {
         return json_decode($this->getCurl('/channels/'.$id.'/audios'));

@@ -30,4 +30,17 @@ class BatchController extends SiteController
 		$df->pending();
     }
 
+	/**
+     * @Route("/videoprocessing", name= "admin_batch_videoprocessing")
+     */
+    public function videoProcessingAction()
+    {
+        $videos = $this->getRepository('Video')->pendingProcessing(10);
+        $uploader = $this->get('video.uploader');
+        
+        foreach ($videos as $video) {
+            $uploader->process($video);
+        }
+    }
+    
 }

@@ -77,6 +77,13 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     private $active;
     
     /**
+     * @var boolean $processed
+     *
+     * @ORM\Column(name="processed", type="boolean", nullable=false)
+     */
+    private $processed;
+    
+    /**
      * @var integer $duration
      *
      * @ORM\Column(name="duration", type="integer", nullable=true)
@@ -271,6 +278,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
         $this->visits = new \Doctrine\Common\Collections\ArrayCollection();
         $this->visitCount = 0;
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->processed = false;
     }
     
 	public function likeUp()
@@ -423,6 +431,26 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     public function getActive()
     {
         return $this->active;
+    }
+    
+	/**
+     * Set processed
+     *
+     * @param boolean $processed
+     */
+    public function setProcessed($processed)
+    {
+        $this->processed = $processed;
+    }
+
+    /**
+     * Get processed
+     *
+     * @return boolean 
+     */
+    public function getProcessed()
+    {
+        return $this->processed;
     }
 
     /**

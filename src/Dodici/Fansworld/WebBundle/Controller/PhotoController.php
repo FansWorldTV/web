@@ -257,16 +257,9 @@ class PhotoController extends SiteController
                 $filename = $pathinfo['filename'];
                 $ext = $pathinfo['extension'];                
                 $tmpName = $filename . '.' . $ext;
-                $tmpfile = tempnam('/tmp', 'IYT');
-                file_put_contents($tmpfile, $imagecontent);
+                $meta = array('name' => $tmpName);
                 
-                $mediaManager = $this->get("sonata.media.manager.media");
-                $image = new Media();
-                $image->setBinaryContent($tmpfile);
-                $image->setMetadataValue('name',$tmpName);
-                $image->setContext('default');
-                $image->setProviderName('sonata.media.provider.image');
-                $mediaManager->save($image);
+                $image = $this->get('appmedia')->createImageFromBinary($imagecontent, $meta);
                 
                 $response = array('success' => true, 'mediaId' => $image->getId());
             }

@@ -511,6 +511,9 @@ services:
     visitator:
       class: Dodici\Fansworld\WebBundle\Extensions\Visitator
       arguments: [@security.context, @doctrine.orm.entity_manager, @session, @appstate]
+    video.uploader:
+      class: Dodici\Fansworld\WebBundle\Extensions\VideoUploader
+      arguments: [@doctrine.orm.entity_manager, @flumotion.api.request, @flumotion.ftp, @appmedia, %kernel.root_dir%/../web/uploads/videos]
     feeder.event:
       class: Dodici\Fansworld\WebBundle\Feeder\EventFeeder
       arguments: [@doctrine.orm.entity_manager, @datafactory]
@@ -541,7 +544,7 @@ services:
           - { name: twig.extension }
     appmedia:
       class: Dodici\Fansworld\WebBundle\Extensions\AppMedia
-      arguments: [@sonata.media.pool]
+      arguments: [@sonata.media.pool, @sonata.media.manager.media]
     twig.extension.appmedia:
       class: Dodici\Fansworld\WebBundle\Extensions\AppMediaExtension
       arguments: [@appmedia]

@@ -273,4 +273,30 @@ class VideoRepository extends CountBaseRepository
         
         return $query->getSingleScalarResult();
 	}
+	
+	/**
+	 * Get Flumotion videos pending process
+	 * @param int $limit
+	 */
+	public function pendingProcessing($limit=null)
+	{
+		$query = $this->_em->createQuery('
+    	SELECT v, va
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
+    	JOIN v.author va
+    	WHERE v.active = true
+    	AND
+    	v.processed = false
+    	AND
+    	v.stream IS NOT NULL
+    	AND
+    	v.author IS NOT NULL
+    	ORDER BY v.createdAt ASC
+    	');
+        
+        if ($limit !== null)
+            $query = $query->setMaxResults((int)$limit);
+        
+        return $query->getResult();
+	}
 }
