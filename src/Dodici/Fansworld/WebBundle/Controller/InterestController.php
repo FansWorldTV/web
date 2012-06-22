@@ -3,9 +3,7 @@
 namespace Dodici\Fansworld\WebBundle\Controller;
 
 use Dodici\Fansworld\WebBundle\Entity\HasInterest;
-
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\Form\FormError;
@@ -25,8 +23,9 @@ use Dodici\Fansworld\WebBundle\Entity\InterestCategory;
  */
 class InterestController extends SiteController
 {
-	const LIMIT_AJAX_GET = 6;
-	
+
+    const LIMIT_AJAX_GET = 6;
+
     /**
      * @Route("/edit", name="interest_edit")
      * @Template
@@ -34,33 +33,47 @@ class InterestController extends SiteController
      */
     public function editAction()
     {
+        $request = $this->getRequest();
+        $submit = $request->get('submit', false);
+        $sports = $request->get('category', null);
+        
+        $user = $this->get('security.context')->getToken()->getUser();
+        
+        if($submit){
+            $em = $this->getDoctrine()->getEntityManager();
+            foreach($sports as $id => $teamId){
+                $teamshipSelected = $this->getRepository('Teamship')->find($teamId);
+                /**
+                 * @todo Borrar el actual favorito y agregar el nuevo 
+                 */
+            }
+        }
+
         $response = array(
             'user',
             'categories',
-            'teamcategories' => array()
+            'sports' => array()
         );
-        
-        $user = $this->get('security.context')->getToken()->getUser();
+
         $response['user'] = $user;
-        
         $response['categories'] = $this->getRepository('InterestCategory')->findBy(array(), array('title' => 'ASC'));
-        
+
         $teams = $this->getRepository('Team')->findAll();
-        
-        foreach($teams as $team){
-            foreach($team->getTeamcategories() as $category){
-                $categories =& $response['teamcategories'];
+
+        foreach ($teams as $team) {
+            foreach ($team->getTeamcategories() as $category) {
+                $sports = & $response['sports'];
                 $teamship = $this->getRepository('Teamship')->findOneBy(array("author" => $user->getId(), 'team' => $team->getId()));
-                $categories[$category->getId()] = array(
-                    'id' => $category->getId(),
-                    'title' => $category->getTitle(),
+                $sports[$category->getSport()->getId()] = array(
+                    'id' => $category->getSport()->getId(),
+                    'title' => $category->getSport()->getTitle(),
                     'selected' => $teamship ? $teamship->getId() : null
                 );
-                
-                if(!isset($categories[$category->getId()]['teams'])){
-                    $categories[$category->getId()]['teams'] = array();
+
+                if (!isset($sports[$category->getSport()->getId()]['teams'])) {
+                    $sports[$category->getSport()->getId()]['teams'] = array();
                 }
-                array_push($categories[$category->getId()]['teams'], $team);
+                array_push($sports[$category->getSport()->getId()]['teams'], $team);
             }
         }
         return $response;
@@ -78,35 +91,36 @@ class InterestController extends SiteController
     public function ajaxInterests()
     {
         $request = $this->getRequest();
-    	$idcategory = $request->get('idcategory');
-    	$text = $request->get('text');
-    	$iduser = $request->get('iduser');
-    	$excludeuser = $request->get('excludeuser', false);
-    	$page = $request->get('page');
-    	$limit = null; $offset = null;
-    	
-    	if ($page !== null) {
-    		$page--;
-    		$limit = self::LIMIT_AJAX_GET;
-    		$offset = $limit * $page;
-    	}
-        
-    	$interests = $this->getRepository('Interest')->matching($idcategory, $text, $iduser, $excludeuser, $limit, $offset);
-        
+        $idcategory = $request->get('idcategory');
+        $text = $request->get('text');
+        $iduser = $request->get('iduser');
+        $excludeuser = $request->get('excludeuser', false);
+        $page = $request->get('page');
+        $limit = null;
+        $offset = null;
+
+        if ($page !== null) {
+            $page--;
+            $limit = self::LIMIT_AJAX_GET;
+            $offset = $limit * $page;
+        }
+
+        $interests = $this->getRepository('Interest')->matching($idcategory, $text, $iduser, $excludeuser, $limit, $offset);
+
         $response = array();
         foreach ($interests as $interest) {
             $response[] = array(
-            	'id' => $interest->getId(),
-            	'title' => $interest->getTitle(),
-            	'image' => $this->getImageUrl($interest->getImage(), 'avatar')
+                'id' => $interest->getId(),
+                'title' => $interest->getTitle(),
+                'image' => $this->getImageUrl($interest->getImage(), 'avatar')
             );
         }
 
         return $this->jsonResponse($response);
     }
-    
-	/**
-	 *  add an interest
+
+    /**
+     *  add an interest
      *  get params:
      *   - id (interest)
      *   - career (optional, boolean)
@@ -118,46 +132,47 @@ class InterestController extends SiteController
     public function ajaxAdd()
     {
         try {
-	    	$request = $this->getRequest();
-	        $user = $this->get('security.context')->getToken()->getUser();
-	        if (!$user) throw new AccessDeniedException('No inició sesión');
-	    	$idinterest = $request->get('id');
-	    	$interest = $this->getRepository('Interest')->find($idinterest);
-	    	if (!$interest) throw new \Exception('No existe el interés');
-	    	$career = $request->get('career', false);
-	    	$position = $request->get('position');
-	    	$datefrom = $request->get('datefrom');
-	    	$dateto = $request->get('dateto');
-	    	
-	    	$exists = $this->getRepository('HasInterest')->findBy(array('author' => $user->getId(), 'interest' => $interest->getId()));
-	    	if ($exists) throw new \Exception('El usuario ya tiene el interés "'.(string)$interest.'"');
-	    	
-	    	$hasinterest = new HasInterest();
-	    	$hasinterest->setAuthor($user);
-	    	$hasinterest->setCareer($career);
-	    	$hasinterest->setPosition($position);
-	    	$hasinterest->setDateFrom($datefrom);
-	    	$hasinterest->setDateTo($dateto);
-	    	$hasinterest->setInterest($interest);
-	    	
-	    	$em = $this->getDoctrine()->getEntityManager();
-	    	$em->persist($hasinterest);
-	    	$em->flush();
-	    	return $this->jsonResponse(array(
-	    		'id' => $interest->getId(),
-            	'title' => $interest->getTitle(),
-            	'image' => $this->getImageUrl($interest->getImage(), 'avatar'),
-	    		'message' => 'Se ha agregado el interés "'.(string)$interest.'"'
-	    	));
-	    	
+            $request = $this->getRequest();
+            $user = $this->get('security.context')->getToken()->getUser();
+            if (!$user)
+                throw new AccessDeniedException('No inició sesión');
+            $idinterest = $request->get('id');
+            $interest = $this->getRepository('Interest')->find($idinterest);
+            if (!$interest)
+                throw new \Exception('No existe el interés');
+            $career = $request->get('career', false);
+            $position = $request->get('position');
+            $datefrom = $request->get('datefrom');
+            $dateto = $request->get('dateto');
+
+            $exists = $this->getRepository('HasInterest')->findBy(array('author' => $user->getId(), 'interest' => $interest->getId()));
+            if ($exists)
+                throw new \Exception('El usuario ya tiene el interés "' . (string) $interest . '"');
+
+            $hasinterest = new HasInterest();
+            $hasinterest->setAuthor($user);
+            $hasinterest->setCareer($career);
+            $hasinterest->setPosition($position);
+            $hasinterest->setDateFrom($datefrom);
+            $hasinterest->setDateTo($dateto);
+            $hasinterest->setInterest($interest);
+
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($hasinterest);
+            $em->flush();
+            return $this->jsonResponse(array(
+                        'id' => $interest->getId(),
+                        'title' => $interest->getTitle(),
+                        'image' => $this->getImageUrl($interest->getImage(), 'avatar'),
+                        'message' => 'Se ha agregado el interés "' . (string) $interest . '"'
+                    ));
         } catch (\Exception $e) {
-        	return new Response($e->getMessage(), 400);
+            return new Response($e->getMessage(), 400);
         }
-    	
     }
-    
-	/**
-	 *  remove an interest
+
+    /**
+     *  remove an interest
      *  get params:
      *   - id (interest)
      *  @Route("/ajax/delete/", name="interest_ajaxdelete")
@@ -165,23 +180,25 @@ class InterestController extends SiteController
     public function ajaxDelete()
     {
         try {
-	    	$request = $this->getRequest();
-	        $user = $this->get('security.context')->getToken()->getUser();
-	        if (!$user) throw new AccessDeniedException('No inició sesión');
-	    	$idinterest = $request->get('id');
-	    	$interest = $this->getRepository('Interest')->find($idinterest);
-	    	if (!$interest) throw new \Exception('No existe el interés');
-	    	
-	    	$exists = $this->getRepository('HasInterest')->findOneBy(array('author' => $user->getId(), 'interest' => $interest->getId()));
-	    	if (!$exists) throw new \Exception('El usuario no tiene el interés');
-	    	$em = $this->getDoctrine()->getEntityManager();
-	    	$em->remove($exists);
-	    	$em->flush();
-	    	return $this->jsonResponse(array('message' => 'Se ha quitado el interés "'.(string)$interest.'"'));
-	    	
+            $request = $this->getRequest();
+            $user = $this->get('security.context')->getToken()->getUser();
+            if (!$user)
+                throw new AccessDeniedException('No inició sesión');
+            $idinterest = $request->get('id');
+            $interest = $this->getRepository('Interest')->find($idinterest);
+            if (!$interest)
+                throw new \Exception('No existe el interés');
+
+            $exists = $this->getRepository('HasInterest')->findOneBy(array('author' => $user->getId(), 'interest' => $interest->getId()));
+            if (!$exists)
+                throw new \Exception('El usuario no tiene el interés');
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->remove($exists);
+            $em->flush();
+            return $this->jsonResponse(array('message' => 'Se ha quitado el interés "' . (string) $interest . '"'));
         } catch (\Exception $e) {
-        	return new Response($e->getMessage(), 400);
+            return new Response($e->getMessage(), 400);
         }
-    	
     }
+
 }

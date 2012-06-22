@@ -42,19 +42,22 @@
     <h1>Equipo favorito de :</h1>
     <div class="greybox bigform">
         <div class="fieldcontainer">
-            <ul class="categories fields">
-                {% for category in teamcategories %}
-                    <li class="clearfix">
-                        <label>{{ category.title }}</label>
-                        <select name="category[{{ category.id }}]" >
-                            <option value="null"></option>
-                            {% for team in category.teams %}
-                                <option value="{{ team.id }}"  {% if category.selected == team.id %} selected="true" {% endif %} >{{ team }}</option>
-                            {% endfor %}
-                        </select>
-                    </li>
-                {% endfor %}
-            </ul>
+            <form action="" method="post" name="favorite">
+                <ul class="categories fields">
+                    {% for sport in sports %}
+                        <li class="clearfix">
+                            <label>{{ sport.title }}</label>
+                            <select name="sport[{{ sport.id }}]" >
+                                <option value="null"></option>
+                                {% for team in sport.teams %}
+                                    <option value="{{ team.id }}"  {% if sport.selected == team.id %} selected="true" {% endif %} >{{ team }}</option>
+                                {% endfor %}
+                            </select>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <input type="submit" value="Guardar" />
+             </form>
         </div>
     </div>
 {% endblock %}
