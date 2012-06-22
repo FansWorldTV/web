@@ -1,8 +1,15 @@
-section#sidebar{
-    float: left;
-    margin-left: -190px;
-    overflow: hidden;
-    padding: 5px;
-    text-align: center;
-    width: 180px;
+/* estilos para sidebar registro */
+#leftcolumn-sidebar{
+	border-left: 1px solid #D9D9D9;
+	padding-left: 15px;
+	
+}
+
+#leftcolumn-sidebar h3{
+	font-size: 16px;
+}
+
+#leftcolumn-sidebar p{
+    color: #808080;
+    font-size: 13px;
 }

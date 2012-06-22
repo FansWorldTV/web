@@ -4,6 +4,9 @@
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,images,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,center{margin:0;padding:0;border:0;outline:0;font-weight:normal;font-style:normal;font-size:100%;font-family:inherit}body{line-height:1}:focus{outline:0}ol,ul{list-style:none}table{border-collapse:collapse;border-spacing:0}blockquote:before,blockquote:after,q:before,q:after{content:""}blockquote,q{quotes:""""}input,textarea{margin:0;padding:0}hr{margin:0;padding:0;border:0;color:#000;background-color:#000;height:1px}
 .clearfix:after {visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}.clearfix {display:inline-block;}* html .clearfix {height:1%;}.clearfix {display:block;}
 
+img{
+	border:none;
+}
 
 body {
     background:#ffffff;
@@ -11,67 +14,70 @@ body {
     font-size:11px;
     color:#333;
     cursor:default;
-	padding: 41px 0 35px 50px;
+	
+	padding-top: 50px;
+
 }
 
 .wrap {width:100%; margin:0px auto;}
 
-.container  { 
-	width: 100%;
-	background:#fff url(../images/body/bg_container.gif) repeat-x bottom; 
-	overflo:hidden; 
-	padding:11px 0; 
-	margin:0px auto;
-	margin-bottom:60px;
+div.wrap >div.container-fluid{
+	padding: 0;
 }
 
-
-
-
-div.container section.content{
-    width:	100%;
-	float:left;
-}
-
-
-div.container section.content section#leftcolumn{
-    margin-right: 440px;
-	padding: 0 10px;
-	overflow: hidden;
-}
-
-div.container section#centercolumn{
-    float: left;
-    margin-left: -440px;
-    padding: 5px;
-    width: 250px;
-	overflow: hidden;
-}
-
-
-/* Estilo para botones */
-.make-me-button{
-    border-radius: 5px 5px 5px 5px;
-    height: 20px;
-    font-size: 13px;
-    padding: 3px 10px;
-    font-size: 15px;
-    line-height: 15px;
-    cursor: pointer;
-    -webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-o-user-select: none;
-	user-select: none;
-    
-}
-
-.make-me-button > span{
-   \
-}
-
-/* estilos de headers */
 .green{
-	color: #8cc63f;
+    color: #8cc63f;
+}
+
+/*Estilos regitros */
+.inputloading { background-image: url(../images/ajax-loader-small.gif) !important; background-position: 96% center !important; background-repeat: no-repeat !important;}
+.inputerr { background-image: url(../images/ico/error.png) !important; background-color: #FEE !important; background-position: 96% center !important; background-repeat: no-repeat !important;}
+.inputok { background-image: url(../images/ico/accept.png) !important; background-color: #EFE !important; background-position: 96% center !important; background-repeat: no-repeat !important;}
+
+
+div.register div.top{
+	border-bottom: 1px solid #D9D9D9;
+    margin-bottom: 15px;
+    padding: 15px;
+	color: #8a8a8a;
+}
+
+div.register div.top .fbconnect{
+	min-width: 185px;
+}
+div.register div.top h1,div.confirm h1{
+    font-size: 22px;	
+	line-height: 25px;
+}
+
+div.register div.top h2,div.confirm p{
+    font-size: 14px; 
+	line-height: 20px;
+	margin-bottom: 15px;
+}
+
+
+div.register div.bottom{
+    padding: 15px;   
+	color: #8a8a8a;
+}
+
+div.register div.bottom .title{
+    font-size: 14px;
+	margin-bottom: 15px;
+}
+
+div.register div.bottom div#fos_user_registration_form label{
+    float: left;
+	width: 80px;
+}
+div.register div.bottom div#fos_user_registration_form  .fieldinfo{
+	padding-left: 80px;
+	font-size: 10px;
+}
+
+div.register div.bottom div#fos_user_registration_form  ul.errors{
+	color: #CC3333;
+	padding-left: 80px;
 }
 

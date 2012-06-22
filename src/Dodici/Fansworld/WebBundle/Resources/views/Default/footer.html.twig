@@ -1,29 +1,39 @@
-<footer>
-    <div class='navy'>
-        <ul class='left-container'>
-            <li>
-                <a class="homelink" href="{{ path('homepage') }}">FANSWORLD.TV</a>
-            </li>
-            <li class='slogan'>Comparti tu pasion!</li>
-        </ul>
-        
-        <ul class='right-container'>
-            <li>
-                <a href='{{ path('about_terms') }}'>Terminos y condiciones</a>
-            </li>
-            <li>About Us</li>
-            <li>Site Map</li>
-            <li>Soporte</li>
-            <li>
-                <a class='icon'>
-                    <img src="{{ asset('bundles/dodicifansworldweb/images/tw-logo.png' )}}" />
-                </a>
-            </li>
-            <li>
-                <a class='icon'>
-                    <img src="{{ asset('bundles/dodicifansworldweb/images/fb-logo.png' )}}" />
-                </a>
-            </li>
-        </ul>        
+<footer class="navbar navbar-fixed-bottom">
+    <div  class="navbar-inner">
+        <div class='class="container'>
+            <ul class='nav pull-left'>
+                <li>
+                    <a class="homelink" href="{{ path('homepage') }}">FANSWORLD.TV</a>
+                </li>
+                <li class='slogan'>
+                    <p class="navbar-text">Comparti tu pasion!</p>
+                </li>
+            </ul>
+            
+            <ul class='nav pull-right'>
+                <li>
+                    <a href='{{ path('about_terms') }}'>Terminos y condiciones</a>
+                </li>
+                <li>
+                    <a>About Us</a>
+                </li>
+                <li>
+                    <a>Site Map</a>
+                </li>
+                <li>
+                    <a>Soporte</a>
+                </li>
+                <li>
+                    <a class='icon'>
+                        <img src="{{ asset('bundles/dodicifansworldweb/images/tw-logo.png' )}}" />
+                    </a>
+                </li>
+                <li>
+                    <a class='icon'>
+                        <img src="{{ asset('bundles/dodicifansworldweb/images/fb-logo.png' )}}" />
+                    </a>
+                </li>
+            </ul>        
+        </div>
     </div>    
 </footer>

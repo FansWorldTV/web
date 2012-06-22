@@ -2,9 +2,10 @@
 
 {% block fos_user_content %}
     <div class="clearfix confirm">
-    	<h1>{{ 'felicidades'|trans }}</h1>
+    	<h1 class='green'>{{ 'Bienvenido a Fansworld.tv'|trans }}</h1>
     	<div class="greybox">
 	        <p class="systemmessage">{{ 'registration.confirmed'|trans({'%username%': user.username}, 'FOSUserBundle') }}</p>
+	        <p>Ya podes empezar a disfrutar y conectarte con num.Fans fanaticos como vos.</p>
 	        {% if app.session is not empty %}
 	            {% set targetUrl = app.session.get('_security.target_path') %}
 	            {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans({}, 'FOSUserBundle') }}</a></p>{% endif %}

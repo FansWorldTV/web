@@ -1,4 +1,18 @@
 
+{% block field_errors %}
+    
+    {% spaceless %}
+        {% if errors|length > 0 %}
+        <ul class="errors span12">
+            {% for error in errors %}
+                <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endspaceless %}
+   
+{% endblock %}
+
 {% block field_label %}
 {% spaceless %}
     <label for="{{ id }}">
@@ -10,17 +24,7 @@
 {% endspaceless %}
 {% endblock field_label %}
 
-{% block field_errors %}
-	{% spaceless %}
-	    {% if errors|length > 0 %}
-	    <ul class="errors">
-	        {% for error in errors %}
-	            <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
-	        {% endfor %}
-	    </ul>
-	    {% endif %}
-	{% endspaceless %}
-{% endblock %}
+
 
 {% block field_row %}
 {% spaceless %}
@@ -29,7 +33,7 @@
 		{{ form_widget(form) }}
 	</div>
 	{% else %}
-    <li class="clearfix">
+    <li class=" span5">
     	{{ form_label(form) }}
         <div class="field">
 	        {{ form_widget(form) }}

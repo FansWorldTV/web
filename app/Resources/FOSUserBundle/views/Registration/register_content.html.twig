@@ -1,22 +1,37 @@
 {% form_theme form theme %}
 <div class="register">
-	<h1>Registro</h1>
-	<div class="greybox">
-    <form action="" method="post" class="fos_user_registration_register bigform">
-        <div class="fbconnect">
-            <p>Podés registrarte con Facebook:</p>
-            {{ facebook_login_button({'autologoutlink': false, label: 'facebook_login_register'|trans}) }}
+    <div class='top'>
+        <h1 class='green'>Registrate en FansWorld.tv</h1>
+        <h2>Conectate con tus idolos y clubes, demostrado tu pasion y compartiendo experiencias con amigos</h2>
+        
+        <div class='row-fluid'>
+            <div class='span4'>
+                <button class="btn btn-success" type="submit">Registrate en 20 segundos</button>
+            </div>
+            <div class='span4 fbconnect'>
+                {{ facebook_login_button({'autologoutlink': false, label: 'facebook_login_register'|trans}) }}
+            </div>
         </div>
-
-		<div class="form-register fieldcontainer">
-			<ul class="fields">
-        		{{ form_widget(form) }}
-        	</ul>
-		</div>
-		
-        <div class="actions clearfix">
-            <input type="submit" name="submit" value="Registrarme" class="btn_action" />
-        </div>
-    </form>
+        
+        
+        
     </div>
+	<div class='bottom'>
+        <div class="greybox">
+            <div class='title'>Llena los campos con tus datos</div>
+            <form action="" method="post" class="fos_user_registration_register bigform">
+                
+                <div class="form-register fieldcontainer">
+                    <ul class="fields row-fluid">
+                        {{ form_widget(form) }}
+                    </ul>
+                </div>
+                <div class="actions clearfix">
+                    <button name='submit' class='btn btn-success' type='submit'>Ingresar</button>
+                    
+                </div>
+            </form>
+        </div>
+	</div>
+	
 </div>

@@ -10,49 +10,44 @@
 	
 	<div class="wrap">
     	{% block header %}
-            <header>
+            <header class='navbar navbar-fixed-top'>
                 {% render "DodiciFansworldWebBundle:Default:menubar" %}
             </header>
         {% endblock %}
     	
     	{% block main %}
-            
-            <section id='left-bar'>
-                {% render "DodiciFansworldWebBundle:Default:leftmenubar" %}
-            </section>
-            
-            
-    		<div class="container">
-                
-                <section class="content clearfix">
-                    {% block maincontent %}
-                        
-                        <section id='leftcolumn'>
-                    		{% block leftcolumn %}
-                    			{% block content %}
-                    			{% endblock %}
-                    		{% endblock %}
-                		</section>
-                		
-                		
-                        
-            	   {% endblock %}
-            	</section>
-            	
-            	<section id='centercolumn'>
-                    {% block centercolumn %}
-                        {% render "DodiciFansworldWebBundle:Default:centercolumn" %}
-                    {% endblock %}
-                </section>
-            	
-            	
-            	<section id='sidebar'>
-            	   {% block sidebar %}
-                        {% render "DodiciFansworldWebBundle:Default:sidebar" %}
-                    {% endblock %}
-            	</section>
-            	
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span1 fill">
+                        <!--Sidebar content-->
+                        {% render "DodiciFansworldWebBundle:Default:leftmenubar" %}
+                    </div>
+                    <div class="span11">
+                        <div class='row-fluid'>
+                          {% block maincontent %}  
+                                <section class="span7">
+                                    {% block content %}
+                                    {% endblock %}
+                                </section>
+                                
+                                <section id='centercolumn' class='span3'>
+                                    {% block centercolumn %}
+                                        {% render "DodiciFansworldWebBundle:Default:centercolumn" %}
+                                    {% endblock %}
+                                </section>
+                            {% endblock %}
+                            
+                            <section id='sidebar' class='span2'>
+                               {% block sidebar %}
+                                    {% render "DodiciFansworldWebBundle:Default:sidebar" %}
+                                {% endblock %}
+                            </section>
+                        </div>
+                    </div>
+                </div>
             </div>
+            
+            
     	{% endblock %}
     	
     	{% block footer %}

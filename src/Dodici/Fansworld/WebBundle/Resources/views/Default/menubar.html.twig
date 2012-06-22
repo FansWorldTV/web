@@ -1,62 +1,65 @@
-<nav>
-    <ul class='left-container'>
-        <li>
-            <a class="homelink" href="{{ path('homepage') }}">
-                <img src="{{ asset('bundles/dodicifansworldweb/images/logofw.jpg' )}}" />
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('search_idols') }}">Idolos</a>
-        </li>
-        <li>
-            <a href="{{ path('team_list') }}">Equipos</a>
-        </li>
-        <li>
-            <a href="{{ path('video_list') }}">TV</a>
-        </li>
-        <li>
-            <a href="{{ path('contest_list') }}">Eventos</a>
-        </li>
-        <li>
-            <a href="">Fun</a>
-        </li>
-        <li>
-            <div class="search">
-            <form action="" name="search" method="post" >
-                <input type="text" data-default-text="Buscar..." />
-                <input class="btn_search" name="" type="submit" value=""/>
-            </form>
-        </div>
-        </li>
-    </ul>
-    <ul class='right-container'>
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-           <li>
-                <a class="userImglink" href="{{ path('homepage') }}">
-                    <img src="{{ asset('bundles/dodicifansworldweb/images/caritatemp.png' )}}" />
-                </a>
-            </li>
-            <li>
-                <a class="userNamelink" href="{{ path('contest_list') }}">Pablo Bauso</a>
-            </li>
-            <li>
-                <div class='header-share make-me-button'>
-                    <span>Compartir ^</span>
-                </div>
-            </li>
+<nav class='navbar-inner'>
+    <div class='container'>
+         
+         
+        <a class="btn btn-navbar navbar-fixed-top" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="{{ path('homepage') }}">
+          <img src="{{ asset('bundles/dodicifansworldweb/images/logofw.png' )}}" />
+        </a>
+         
+    
+    
+        
+        
+        <div class="nav-collapse">
             
-        {% else %}
-            <li>
-                <div class='header-ingresar make-me-button'>
-                    <span>Ingresar ^</span>
-                </div>
+            <ul class="nav">
+                <li>
+                    <a href="{{ path('search_idols') }}">Idolos</a>
+                </li>
+                <li>
+                    <a href="{{ path('team_list') }}">Equipos</a>
+                </li>
+                <li>
+                    <a href="{{ path('video_list') }}">TV</a>
+                </li>
+                <li>
+                    <a href="{{ path('contest_list') }}">Eventos</a>
+                </li>
+                <li>
+                    <a href="">Fun</a>
+                </li>
+            </ul>
+            
+            <form class="navbar-search pull-left" name="search" method="post">
+                <input type="text" class="search-query" placeholder="Search">
+            </form>
+            
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                
+                <a class="userImglink pull-right" href="{{ path('homepage') }}">
+                    <!--<img src="{{ asset('bundles/dodicifansworldweb/images/caritatemp.png' )}}" />-->
+                    {% thumbnail user.image, 'avatar' %}
+                </a>
+                <ul class="nav pull-right">
+                    <li>
+                        <a class="userNamelink pull-right" href="{{ path('user_wall', {username: user.username}) }}">{{ user.firstname }} {{ user.lastname }}</a>        
+                    </li>
+                </ul>
+                <a class='btn pull-right' href="#">Compartir</a>
+            
+            {% else %}
+                
+                <a class='btn btn-success pull-right header-ingresar' href="#">Ingresar</a>
+                <a class='btn btn-success pull-right' href="{{ path('fos_user_registration_register') }}">Registrarse</a>
                 <div id='login-widget'>
-                    <div class='arrow-up'>
+                    <div class='arrow-up'></div>
+                    <div class='arrow-up-border'></div>
                     
-                    </div>
-                    <div class='arrow-up-border'>
-                    
-                    </div>
                     {{ facebook_login_button({'autologoutlink': false, label: 'facebook_login_short'|trans, size: 'large'}) }}
                     
                     <form class="login clearfix" action="{{ path("fos_user_security_check") }}" method="post">
@@ -73,27 +76,26 @@
                             <li>
                                 <input type="password" id="password" name="_password" />
                             </li>
-
-                            <div class='bottom-login'>
-                                <div class="recordar">
-                                    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-                                    <label for="remember_me">Recordarme</label>
+                            <li>
+                                <div class='bottom-login'>
+                                    <div class="recordar">
+                                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                                        <label for="remember_me">Recordarme</label>
+                                    </div>
+                                    
+                                    <div class="olvidar">
+                                        <a>Olvido su contrase&ntilde;a</a>
+                                    </div>
+                                    
+                                    <button type='submit' class='btn btn-success'>Ingresar</button>
+                                    
                                 </div>
-                                
-                                <div class="olvidar">
-                                    <a>Olvido su contrase&ntilde;a</a>
-                                </div>
-                                
-                                <div id='do-login' class="header-ingresar make-me-button">
-                                    <span>Ingresar</span>
-                                </div>
-                            </div>
-                            
-                            <!--<input class="btn" type="submit" id="_submit" name="_submit" value="ENTRAR" />-->
+                            </li>
+                           
                         </ul>
                     </form>
                 </div>
-            </li>
-        {% endif %}
-    </ul>
+            {% endif %}
+        </div>
+    </div>
 </nav>
