@@ -33,7 +33,6 @@ class ProfileFormType extends BaseType
                     'format' => 'dd/MM/yyyy'), array())
                 ->add('country', null, array('label' => 'País', 'required' => false))
                 ->add('city', null, array('label' => 'Ciudad', 'required' => false, 'choices' => array()))
-                ->add('team', null, array('label' => 'Hincha de:', 'required' => false))
                 ->add('phone', null, array('label' => 'Teléfono', 'required' => false))
 
                 /*

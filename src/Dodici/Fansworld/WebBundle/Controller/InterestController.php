@@ -34,11 +34,35 @@ class InterestController extends SiteController
      */
     public function editAction()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        $response = array(
+            'user',
+            'categories',
+            'teamcategories' => array()
+        );
         
-        $categories = $this->getRepository('InterestCategory')->findBy(array(), array('title' => 'ASC'));
+        $response['user'] = $this->get('security.context')->getToken()->getUser();
         
-        return array('user' => $user, 'categories' => $categories);
+        $response['categories'] = $this->getRepository('InterestCategory')->findBy(array(), array('title' => 'ASC'));
+        
+        $teams = $this->getRepository('Team')->findAll();
+        
+        foreach($teams as $team){
+            foreach($team->getTeamcategories() as $category){
+                $categories =& $response['teamcategories'];
+                $categories[$category->getId()] = array(
+                    'id' => $category->getId(),
+                    'title' => $category->getTitle(),
+                    'selected' => $this->getRepository('Teamship')->findBy(array('author' => $response['user']->getId(), ''))
+                );
+                
+                if(!isset($categories[$category->getId()]['teams'])){
+                    $categories[$category->getId()]['teams'] = array();
+                }
+                array_push($categories[$category->getId()]['teams'], $team);
+                
+            }
+        }
+        return $response;
     }
 
     /**

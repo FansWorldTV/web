@@ -18,17 +18,7 @@
                                                                                                                                         </div>
                                                                                                                                     </li>
 							{% else %}
-                                                                                                                                    {% if k == 'team' %}
-                                                                                                                                        <li class="clearfix">
-                                                                                                                                            {{ form_label(row) }}
-                                                                                                                                            <div class="field">
-                                                                                                                                                    <select id="fos_user_profile_form_user_team" name="fos_user_profile_form[user][team]"></select>
-                                                                                                                                                    {{ form_errors(row) }}
-                                                                                                                                            </div>
-                                                                                                                                        </li>
-                                                                                                                                    {% else %}
-                                                                                                                                        {{ form_row(row) }}
-                                                                                                                                    {% endif %}
+                                                                                                                                    {{ form_row(row) }}
 							{% endif %}
 						{% endfor %}
 					{% elseif key == 'current' %}

@@ -34,7 +34,7 @@ class ProfileController extends BaseController
         $data = $form->getData();
         return $this->container->get('templating')->renderResponse(
             'FOSUserBundle:Profile:edit.html.'.$this->container->getParameter('fos_user.template.engine'),
-            array('form' => $form->createView(), 'theme' => $this->container->getParameter('fos_user.template.theme'), 'selectedcity' => $data->user->getCity(), 'selectedteam' => $data->user->getTeam())
+            array('form' => $form->createView(), 'theme' => $this->container->getParameter('fos_user.template.theme'), 'selectedcity' => $data->user->getCity())
         );
     }
 

@@ -7,10 +7,6 @@ $(function(){
         $('#fos_user_profile_form_user_city').val(selectedCity);
     });
     
-    filterTeamField(function(){
-        $('#fos_user_profile_form_user_team').val(selectedTeam);
-    });
-	
     $('#fos_user_profile_form_user_country').change(function(){
         $('label[for="fos_user_profile_form_user_city"]').addClass('loading');
         filterCityField(function(){
@@ -19,28 +15,6 @@ $(function(){
         });
     });
 });
-
-function filterTeamField(callback) {
-    $('#fos_user_profile_form_user_team').html($('<option>').val(''));
-    
-    ajax.genericAction('team_get', {
-        limit: 0
-    }, 
-    function(response){
-        if(response.teams){
-            $.each(response.teams, function(){
-                var team = this;
-                $('#fos_user_profile_form_user_team').append($('<option>').val(team.id).text(team.title));
-            });
-	            
-            if (typeof callback == 'function') callback();
-        }
-    },
-    function(errortxt) {
-        error(errortxt);
-    }
-    );
-}
 
 function filterCityField(callback) {
     if ($('#fos_user_profile_form_user_country').val()) {
