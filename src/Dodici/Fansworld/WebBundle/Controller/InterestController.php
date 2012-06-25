@@ -16,6 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Sonata\UserBundle\Entity\User;
 use Dodici\Fansworld\WebBundle\Entity\Interest;
 use Dodici\Fansworld\WebBundle\Entity\InterestCategory;
+use Dodici\Fansworld\WebBundle\Entity\Teamship;
 
 /**
  * Interest controller.
@@ -34,18 +35,36 @@ class InterestController extends SiteController
     public function editAction()
     {
         $request = $this->getRequest();
-        $submit = $request->get('submit', false);
-        $sports = $request->get('category', null);
-        
+        $sports = $request->get('sport', null);
+
         $user = $this->get('security.context')->getToken()->getUser();
-        
-        if($submit){
+
+        if (!is_null($sports)) {
             $em = $this->getDoctrine()->getEntityManager();
-            foreach($sports as $id => $teamId){
+            foreach ($sports as $id => $teamId) {
+                $teamId = (int) $teamId;
                 $teamshipSelected = $this->getRepository('Teamship')->find($teamId);
-                /**
-                 * @todo Borrar el actual favorito y agregar el nuevo 
-                 */
+                $teamshipActual = $this->getRepository('Teamship')->findBy(array('author' => $user->getId(), 'favorite' => true));
+
+                if ($teamshipActual) {
+                    $teamshipActual->setFavorite(false);
+                    $em->persist($teamshipActual);
+                    $em->flush();
+                }
+                
+                if (!$teamshipSelected) {
+                    $teamshipSelected = new Teamship();
+                    $teamshipSelected->setAuthor($user);
+                    $teamshipSelected->setFavorite(true);
+                    
+                    $team = $this->getRepository('Team')->find($teamId);
+                    
+                    $teamshipSelected->setTeam($team);
+                }
+
+                $teamshipSelected->setFavorite(true);
+                $em->persist($teamshipSelected);
+                $em->flush();
             }
         }
 
