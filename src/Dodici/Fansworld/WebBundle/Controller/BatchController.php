@@ -28,6 +28,8 @@ class BatchController extends SiteController
         $df = $this->get('feeder.event');
         $df->feed();
 		$df->pending();
+		
+		return new Response('Ok');
     }
 
 	/**
@@ -41,6 +43,8 @@ class BatchController extends SiteController
         foreach ($videos as $video) {
             $uploader->process($video);
         }
+        
+        return new Response('Ok');
     }
     
 }

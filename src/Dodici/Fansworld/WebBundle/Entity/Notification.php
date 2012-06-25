@@ -17,6 +17,7 @@ class Notification
     const TYPE_COMMENT_ANSWERED = 3;
     const TYPE_FORUM_CREATED = 4;
     const TYPE_FORUM_ANSWERED = 5;
+    const TYPE_VIDEO_PROCESSED = 6;
     
     /**
      * @var bigint $id

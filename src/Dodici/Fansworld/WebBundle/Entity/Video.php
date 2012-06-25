@@ -279,6 +279,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
         $this->visitCount = 0;
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->processed = false;
+        $this->privacy = Privacy::EVERYONE;
     }
     
 	public function likeUp()

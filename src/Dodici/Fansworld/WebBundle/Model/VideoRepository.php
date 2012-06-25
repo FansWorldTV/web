@@ -284,8 +284,7 @@ class VideoRepository extends CountBaseRepository
     	SELECT v, va
     	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
     	JOIN v.author va
-    	WHERE v.active = true
-    	AND
+    	WHERE
     	v.processed = false
     	AND
     	v.stream IS NOT NULL

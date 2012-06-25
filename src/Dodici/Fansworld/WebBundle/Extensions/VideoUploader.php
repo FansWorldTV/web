@@ -2,6 +2,7 @@
 
 namespace Dodici\Fansworld\WebBundle\Extensions;
 
+use Dodici\Fansworld\WebBundle\Entity\Notification;
 use Application\Sonata\MediaBundle\Entity\Media;
 use Symfony\Component\HttpFoundation\File\File;
 use Dodici\Fansworld\WebBundle\Entity\Video;
@@ -50,8 +51,7 @@ class VideoUploader
             $extension = substr($filename, $lastdot);
             $basename = substr($filename, 0, $lastdot);
         } else {
-            $filename = $file->getFilename();
-    		$extension = $file->guessExtension() ?: $file->getExtension();
+            $extension = $file->guessExtension() ?: $file->getExtension();
     		$basename = $file->getBasename('.'.$extension);
         }
         
@@ -60,7 +60,7 @@ class VideoUploader
         
         $file->move($this->uploadpath, $newname);
 		
-    	$token = $this->api->createMetadata($basename, $newname, 'video', 'uservideos|user_' . $author->getId(), new \DateTime());
+    	$token = $this->api->createMetadata($basename, $newname, 'video', 'uservideos|user_' . $author->getId(), new \DateTime(), array('published' => 1));
         
     	if ($token) {
     	    return intval($token);
@@ -88,7 +88,13 @@ class VideoUploader
                         $video->setActive(true);
                         $this->em->persist($video);
                         
-                        // TODO: SEND A NOTIFICATION TO THE USER
+                        // notify the user his video finished processing
+                        $notification = new Notification();
+        	    		$notification->setType(Notification::TYPE_VIDEO_PROCESSED);
+        	    		$notification->setAuthor($video->getAuthor());
+        	    		$notification->setTarget($video->getAuthor());
+        	    		$notification->setVideo($video);
+        	    		$this->em->persist($notification);
                         
                         $this->em->flush();
                     }

@@ -4,7 +4,8 @@
 		(constant('Dodici\\Fansworld\\WebBundle\\Entity\\Notification::TYPE_FORUM_ANSWERED')) : 'forum_answered',
 		(constant('Dodici\\Fansworld\\WebBundle\\Entity\\Notification::TYPE_FORUM_CREATED')) : 'forum_created',
 		(constant('Dodici\\Fansworld\\WebBundle\\Entity\\Notification::TYPE_FRIENDSHIP_ACCEPTED')) : 'friendship_accepted',
-		(constant('Dodici\\Fansworld\\WebBundle\\Entity\\Notification::TYPE_USER_TAGGED')) : 'user_tagged'
+		(constant('Dodici\\Fansworld\\WebBundle\\Entity\\Notification::TYPE_USER_TAGGED')) : 'user_tagged',
+		(constant('Dodici\\Fansworld\\WebBundle\\Entity\\Notification::TYPE_VIDEO_PROCESSED')) : 'video_processed'
 	}
 %}
 {% include "DodiciFansworldWebBundle:Notification:notification." ~ type_templates[notification.type] ~ ".html.twig" %}

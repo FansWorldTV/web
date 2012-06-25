@@ -91,7 +91,7 @@ class RequestBuilder {
         return json_decode($this->getCurl('/channels/'.$id.'/audios'));
     }
     
-    public function createMetadata($name, $filename, $type, $channel, \DateTime $date)
+    public function createMetadata($name, $filename, $type, $channel, \DateTime $date, $extradata=array())
     {
     	$tz = new \DateTimeZone('UTC');
     	$date = $date->setTimezone($tz);
@@ -103,6 +103,9 @@ class RequestBuilder {
     		'publish_date' => $date->format('Y-m-d H:i:s'),
     		'broadcast_date' => $date->format('Y-m-d H:i:s')
     	);
+    	
+    	$data = array_merge($data, $extradata);
+    	
     	return ($this->getCurl('/remote/metadata?response=id&'.$this->getSignature(),
     	$data, true));
     }
