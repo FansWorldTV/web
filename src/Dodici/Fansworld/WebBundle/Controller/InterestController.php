@@ -43,22 +43,40 @@ class InterestController extends SiteController
             $em = $this->getDoctrine()->getEntityManager();
             foreach ($sports as $id => $teamId) {
                 $teamId = (int) $teamId;
-                $teamshipSelected = $this->getRepository('Teamship')->find($teamId);
-                $teamshipActual = $this->getRepository('Teamship')->findBy(array('author' => $user->getId(), 'favorite' => true));
+                $teamSelected = $this->getRepository('Team')->find($teamId);
+                $teamshipSelected = $this->getRepository('Teamship')->findOneBy(array('author' => $user->getId(), 'team' => $teamSelected->getId()));
 
+                $teamshipsOwned = $this->getRepository('Teamship')->findBy(array('author' => $user->getId(), 'favorite' => true));
+                $teamshipsBySport = array();
+                foreach ($teamshipsOwned as $teamship) {
+                    foreach ($teamship->getTeam()->getTeamcategories() as $category) {
+                        $sport = $category->getSport();
+                        if ($teamship->getFavorite() == true) {
+                            $teamshipsBySport[$sport->getId()] = $teamship->getId();
+                        }
+                    }
+                }
+
+                $teamshipActual = false;
+                foreach ($teamSelected->getTeamcategories() as $selectedCategory) {
+                    $sportSelected = $selectedCategory->getSport();
+                    $exists = array_key_exists($sportSelected->getId(), $teamshipsBySport);
+                    if ($exists) {
+                        $teamshipActual = $this->getRepository('Teamship')->find($teamshipsBySport[$sportSelected->getId()]);
+                    }
+                }
+
+//                $teamshipActual = $this->getRepository('Teamship')->findBy(array('author' => $user->getId(), 'favorite' => true));
                 if ($teamshipActual) {
                     $teamshipActual->setFavorite(false);
                     $em->persist($teamshipActual);
                     $em->flush();
                 }
-                
+
                 if (!$teamshipSelected) {
                     $teamshipSelected = new Teamship();
                     $teamshipSelected->setAuthor($user);
-                    $teamshipSelected->setFavorite(true);
-                    
                     $team = $this->getRepository('Team')->find($teamId);
-                    
                     $teamshipSelected->setTeam($team);
                 }
 
@@ -79,22 +97,32 @@ class InterestController extends SiteController
 
         $teams = $this->getRepository('Team')->findAll();
 
+        $sports = & $response['sports'];
         foreach ($teams as $team) {
             foreach ($team->getTeamcategories() as $category) {
-                $sports = & $response['sports'];
+
                 $teamship = $this->getRepository('Teamship')->findOneBy(array("author" => $user->getId(), 'team' => $team->getId()));
-                $sports[$category->getSport()->getId()] = array(
-                    'id' => $category->getSport()->getId(),
-                    'title' => $category->getSport()->getTitle(),
-                    'selected' => $teamship ? $teamship->getId() : null
-                );
+
+                if (!isset($sports[$category->getSport()->getId()])) {
+                    $sports[$category->getSport()->getId()] = array(
+                        'id' => $category->getSport()->getId(),
+                        'title' => $category->getSport()->getTitle(),
+                        'selected' => false
+                    );
+                }
+
+                if ($teamship && $teamship->getFavorite()) {
+                    $sports[$category->getSport()->getId()]['selected'] = $teamship->getTeam()->getId();
+                }
 
                 if (!isset($sports[$category->getSport()->getId()]['teams'])) {
                     $sports[$category->getSport()->getId()]['teams'] = array();
                 }
-                array_push($sports[$category->getSport()->getId()]['teams'], $team);
+
+                $sports[$category->getSport()->getId()]['teams'][] = $team;
             }
         }
+
         return $response;
     }
 

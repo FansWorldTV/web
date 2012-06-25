@@ -5,7 +5,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('bundles/dodicifansworldweb/js/edit_interests.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/dodicifansworldweb/js/edit_interests.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block user_edit_toolbar %}
@@ -19,45 +19,45 @@
 {% endblock %}
 
 {% block inner_content %}
-    <h1>Modificar Intereses</h1>
-    <div class="greybox bigform interest-edit">
-        <div class="fieldcontainer">
-            <ul class="categories fields" data-iduser="{{ app.user.id }}">
+<h1>Modificar Intereses</h1>
+<div class="greybox bigform interest-edit">
+    <div class="fieldcontainer">
+        <ul class="categories fields" data-iduser="{{ app.user.id }}">
                 {% for category in categories %}
-                    <li class="clearfix interestcategory" data-idcategory="{{category.id}}">
-                        <label>{{ category }}</label>
-                        <div class="field">
-                            <input type="text" class="interest-chooser" data-idcategory="{{ category.id }}" />
-                        </div>
-                        <ul class="currentinterests clearfix">
-                        </ul>
-                    </li>
+                <li class="clearfix interestcategory" data-idcategory="{{category.id}}">
+                    <label>{{ category }}</label>
+                    <div class="field">
+                        <input type="text" class="interest-chooser" data-idcategory="{{ category.id }}" />
+                    </div>
+                    <ul class="currentinterests clearfix">
+                    </ul>
+                </li>
                 {% endfor %}
             </ul>
         </div>
     </div>
-    
+
     <hr/>
-    
+
     <h1>Equipo favorito de :</h1>
     <div class="greybox bigform">
         <div class="fieldcontainer">
-            <form action="" method="post" name="favorite">
-                <ul class="categories fields">
+            <ul class="categories fields">
                     {% for sport in sports %}
+                    <form action="" method="post" name="favorite">
                         <li class="clearfix">
                             <label>{{ sport.title }}</label>
                             <select name="sport[{{ sport.id }}]" >
                                 <option value="null"></option>
                                 {% for team in sport.teams %}
-                                    <option value="{{ team.id }}"  {% if sport.selected == team.id %} selected="true" {% endif %} >{{ team }}</option>
+                                <option value="{{ team.id }}"  {% if sport.selected == team.id %} selected="true" {% endif %} >{{ team }}</option>
                                 {% endfor %}
                             </select>
                         </li>
                     {% endfor %}
+                        <input type="submit" value="Guardar" />
+                    </form>
                 </ul>
-                <input type="submit" value="Guardar" />
-             </form>
+            </div>
         </div>
-    </div>
 {% endblock %}
