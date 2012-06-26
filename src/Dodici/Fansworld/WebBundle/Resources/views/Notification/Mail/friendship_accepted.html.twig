@@ -1,11 +1,11 @@
 {% extends 'DodiciFansworldWebBundle:Mail:base.html.twig' %}
 
 {% block title %}
-    <title>Fansworld - {{ notification.author }} te ha aceptado como amigo</title>
+    <title>Fansworld - {{ "notification_friendship_accepted"|trans({'%author%': notification.author}) }}</title>
 {% endblock %}
     
 {% block text %}
     <p style="margin-bottom: 10px;">
-        <a href="">{{ notification.author }}</a> te ha aceptado como amigo
+        <a href="">{{ notification.author }}</a> te aprobó para que puedas seguirlo
     </p>
 {% endblock %}

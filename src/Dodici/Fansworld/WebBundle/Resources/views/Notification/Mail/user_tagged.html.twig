@@ -1,7 +1,7 @@
 {% extends 'DodiciFansworldWebBundle:Mail:base.html.twig' %}
 
 {% block title %}
-    <title>Fansworld - {{ notification.author }} respondió en un comentario que hiciste</title>
+    <title>Fansworld - {{ "notification_user_tagged"|trans({'%author%': notification.author}) }}</title>
 {% endblock %}
     
 {% block text %}

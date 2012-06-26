@@ -148,12 +148,18 @@ class Notification
     
     public static function getTypeList() {
     	return array(
-    		self::TYPE_COMMENT_ANSWERED => 'Respuesta a Comentario',
-    		self::TYPE_FORUM_ANSWERED => 'Respuesta de ídolo en Foro',
-    		self::TYPE_FORUM_CREATED => 'Un ídolo creó un foro',
-    		self::TYPE_FRIENDSHIP_ACCEPTED => 'Solicitud de amistad aceptada',
-    		self::TYPE_USER_TAGGED => 'Usuario etiquetado',
+    		self::TYPE_COMMENT_ANSWERED => 'comment_answered',
+            self::TYPE_FORUM_ANSWERED => 'forum_answered',
+            self::TYPE_FORUM_CREATED => 'forum_created',
+            self::TYPE_FRIENDSHIP_ACCEPTED => 'friendship_accepted',
+            self::TYPE_USER_TAGGED => 'user_tagged',
+            self::TYPE_VIDEO_PROCESSED => 'video_processed'
     	);
+    }
+    
+    public function getTypeName() {
+        $arr = self::getTypeList();
+        return $arr[$this->type];
     }
     
     public function __construct() {

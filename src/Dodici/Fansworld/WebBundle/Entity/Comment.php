@@ -308,6 +308,29 @@ class Comment
     	}
     }
     
+    public static function getTypeList() {
+    	return array(
+    		self::TYPE_COMMENT => 'comment',
+    		self::TYPE_NEW_FRIEND => 'new_friend',
+    		self::TYPE_LABELLED => 'user_tagged',
+    		self::TYPE_SHARE => 'share',
+    		self::TYPE_LIKES => 'likes',
+    		self::TYPE_NEW_THREAD => 'forum_created',
+    		self::TYPE_THREAD_ANSWERED => 'forum_answered',
+    		self::TYPE_NEW_PHOTO => 'new_photo',
+    		self::TYPE_NEW_VIDEO => 'new_video'
+    	);
+    }
+    
+    public function getTypeName() {
+        if ($this->comment) {
+            return 'subcomment';
+        } else {
+            $arr = self::getTypeList();
+            return $arr[$this->type];
+        }
+    }
+    
 	/**
      * Get content, truncated to length
      *

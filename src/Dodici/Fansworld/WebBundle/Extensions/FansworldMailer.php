@@ -13,15 +13,17 @@ class FansworldMailer
     protected $templating;
     protected $request;
     protected $user;
+    protected $translator;
 
     const MAIL_FROM = 'info@fansworld.tv';
 
-    public function __construct($mailer, $templating, $security_context)
+    public function __construct($mailer, $templating, $security_context, $translator)
     {
         $this->mailer = $mailer;
         $this->templating = $templating;
         $this->request = Request::createFromGlobals();
         $this->user = $security_context->getToken() ? $security_context->getToken()->getUser() : null;
+        $this->translator = $translator;
     }
 
     public function send($sendTo, $subject, $body)
@@ -42,17 +44,20 @@ class FansworldMailer
         $allowed = $user->getNotifyprefs();
 
         if (in_array($entity->getType(), $allowed)) {
-            $type_templates = array(
-                Notification::TYPE_COMMENT_ANSWERED => 'comment_answered',
-                Notification::TYPE_FORUM_ANSWERED => 'forum_answered',
-                Notification::TYPE_FORUM_CREATED => 'forum_created',
-                Notification::TYPE_FRIENDSHIP_ACCEPTED => 'friendship_accepted',
-                Notification::TYPE_USER_TAGGED => 'user_tagged'
-            );
+            $typename = $entity->getTypeName();
 
-            $html = $this->templating->render('DodiciFansworldWebBundle:Notification:Mail/' . $type_templates[$entity->getType()] . '.html.twig', array('notification' => $entity, 'targetUser' => $entity->getTarget()));
-            $exploded = explode("\n", $html);
-            $subject = substr($exploded[6], 19, -8);
+            $html = $this->templating->render('DodiciFansworldWebBundle:Notification:Mail/' . $typename . '.html.twig', array('notification' => $entity, 'targetUser' => $entity->getTarget()));
+            
+            if ($entity->getType() == Notification::TYPE_VIDEO_PROCESSED) {
+                $params['%video%'] = (string)$entity->getVideo();
+            } else {
+                $params['%author%'] = (string)$entity->getAuthor();
+            }
+            
+            $subject = $this->translator->trans(
+            	'notification_'.$typename,
+                $params
+            );
 
             return $this->send($sendTo, $subject, $html);
         }
