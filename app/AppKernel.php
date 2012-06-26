@@ -39,6 +39,7 @@ class AppKernel extends Kernel
             new Artseld\OpeninviterBundle\ArtseldOpeninviterBundle(),
             new FOS\TwitterBundle\FOSTwitterBundle(),
             new DataFactory\FeedBundle\DataFactoryFeedBundle(),
+            new Bazinga\ExposeTranslationBundle\BazingaExposeTranslationBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

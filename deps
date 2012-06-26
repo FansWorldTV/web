@@ -155,3 +155,7 @@
 [KertzTwitterOAuth]
     git=git://github.com/kertz/twitteroauth.git
     target=/twitteroauth
+
+[ExposeTranslationBundle]
+    git=http://github.com/willdurand/BazingaExposeTranslationBundle.git
+    target=/bundles/Bazinga/ExposeTranslationBundle
