@@ -45,22 +45,25 @@ class VideoUploader
     {
         $file = new File($filepath);
         
-        if ($filename) {
-            $lastdot = strrpos($filename, '.');
+        $extension = $file->getExtension();
+    	$basename = $file->getBasename('.'.$extension);
+    	
+    	if ($filename) {
+    	    $lastdot = strrpos($filename, '.');
             if (!$lastdot) throw new \Exception('Invalid filename');
-            $extension = substr($filename, $lastdot);
-            $basename = substr($filename, 0, $lastdot);
-        } else {
-            $extension = $file->guessExtension() ?: $file->getExtension();
-    		$basename = $file->getBasename('.'.$extension);
-        }
+            $nameext = substr($filename, $lastdot);
+            $showname = substr($filename, 0, $lastdot);
+    	} else {
+    	    $nameext = $file->guessExtension() ?: $extension;
+    	    $showname = $basename;
+    	}
         
         $hash = uniqid();
         $newname = $basename .'_'. $hash . '.' . $extension;
         
         $file->move($this->uploadpath, $newname);
 		
-    	$token = $this->api->createMetadata($basename, $newname, 'video', 'uservideos|user_' . $author->getId(), new \DateTime(), array('published' => 1));
+    	$token = $this->api->createMetadata($showname, $newname, 'video', 'uservideos|user_' . $author->getId(), new \DateTime(), array('published' => 1));
         
     	if ($token) {
     	    return intval($token);
