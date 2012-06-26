@@ -8,13 +8,88 @@
 {% endblock %}
 
 {% block content %}
+                <div class="row-fluid">
+                    <div class="span1">
+                        {% thumbnail user.image, 'small_square' %}
+                    </div>
+                    <div class="span7">
+                        <a href="#">Configuración de Cuenta</a>
+                        <h1>{{ user }}</h1>
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#">Cuenta</a></li>
+                            <li><a href="#">Perfil</a></li>
+                            <li><a href="#">Contraseña</a></li>
+                            <li><a href="#">Notificaciones</a></li>
+                            <li><a href="#">Intereses</a></li>
+                            <li><a href="#">Privacidad</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span7">
+                        <p class="bold">Tus Datos Personales:</p>
+                    </div>
+                    <div class="span1">
+                        <a href="#">Editar</a>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span4">
+                        <dl class="dl-horizontal">
+                            <dt>Usuario</dt>
+                                <dd><strong>{{ app.user.username }}</strong> ({{ path('user_wall', {'username':app.user.username}) }})</dd>
+                            <dt>Email</dt>
+                                <dd>{{ app.user.email }}</dd>
+                            <dt>Dirección</dt>
+                                <dd>{{ app.user.address }}</dd>
+                            <dt>Nombre</dt>
+                                <dd>{{ app.user.firstname }}</dd>
+                            <dt>Apellido</dt>
+                                <dd>{{ app.user.lastname }}</dd>
+                            <dt>Género</dt>
+                                <dd>{{ app.user.sex }}</dd>
+                            <dt>Fecha Nac.</dt>
+                                <dd>{{ app.user.birthday|date() }}</dd>
+                            <dt>Ciudad, Pais</dt>
+                                <dd>{{ app.user.city }}, {{ app.user.country }}</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="row-fluid marginTop10">
+                    <div class="span7">
+                        <p class="bold">Sobre mi:</p>
+                    </div>
+                    <div class="span1">
+                        <a href="#">Editar</a>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span7">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+                    </div>
+                </div>
+                <div class="row-fluid marginTop10">
+                    <div class="span2">
+                        <em>Modo restringido:</em>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span1">
+                            <button class="btn" data-toggle="button">Activar</button>
+                    </div>
+                    <div class="span1">
+                        <i class="icon-question-sign"></i>
+                    </div>
+                </div>
+                <!--
                 <div class="user_profile_head profile_head clearfix">
                 	{% block profile_head %}
                 	{% block avatar_container %}
 		                    <div class="avatar">
 		                    	{% block avatar_content %}
 		                    		{% set avatar_format = 'small_square' %}
-			                    	{% if user == app.user %}
+			                    	{% if user == app.user %} 
 			                        <a class="change_image" href="{{ path('user_change_image') }}">{{ 'Change'|trans }}</a>
 			                        {% endif %}
 			                        {% if user.image %}
@@ -85,6 +160,7 @@
 	                {% endblock %}
 	                </div>
                 {% endblock %}
+                -->
 {% endblock %}
 
 {% block rightbar %}
