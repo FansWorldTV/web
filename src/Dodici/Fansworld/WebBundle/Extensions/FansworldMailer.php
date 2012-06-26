@@ -50,10 +50,10 @@ class FansworldMailer
                 Notification::TYPE_USER_TAGGED => 'user_tagged'
             );
 
-            $html = $this->templating->render('DodiciFansworldWebBundle:Notification:Mail/' . $type_templates[$entity->getType()] . '.html.twig', array('notification' => $entity));
+            $html = $this->templating->render('DodiciFansworldWebBundle:Notification:Mail/' . $type_templates[$entity->getType()] . '.html.twig', array('notification' => $entity, 'targetUser' => $entity->getTarget()));
             $exploded = explode("\n", $html);
             $subject = substr($exploded[6], 19, -8);
-
+echo "dale que vaaaaaaaaaaaaaaaa";exit;
             return $this->send($sendTo, $subject, $html);
         }
     }

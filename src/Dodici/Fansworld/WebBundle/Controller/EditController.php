@@ -33,7 +33,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends SiteController
 {
-
+    
     /**
      * 
      * @Route("/popup/{type}/{id}", name="edit_popup")

@@ -5,16 +5,7 @@
 {% endblock %}
     
 {% block text %}
-    <p style="margin-bottom: 15px;margin-top: 15px;">Hola {{ notification.target }},</p>
-    <div style="margin-bottom: 20px;">
-        <span style="float: left;margin-right: 15px;"><img src="{{ appmedia.imageurl(notification.target.image, 'avatar') }}" style="width: 45px;height: 45px;"/></span>    
-        <div>
-            <p style="margin-bottom: 10px;">
-                <a href="">{{ notification.author }}</a> te ha aceptado como amigo
-            </p>
-        </div>
-    </div>
-    <div style="clear: both;"></div>
-    <p style="font-size: 11px; color: #c0c0c0; margin-top: 60px;">Ajustar tus preferencias de las notificaciones que recíbes</p>
-    </div>
+    <p style="margin-bottom: 10px;">
+        <a href="">{{ notification.author }}</a> te ha aceptado como amigo
+    </p>
 {% endblock %}

@@ -5,7 +5,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         {% block title %}
-            <title>Fansworld Notification</title>
+            <title>Fansworld.TV</title>
         {% endblock %}
     </head>
     <body>
@@ -35,35 +35,50 @@
                     <td style="border-bottom: 1px solid #c9c9c9; width: 290px;">
                         <img src="{{ asset('bundles/dodicifansworldweb/images/mail/logoBlanco.jpg') }}" alt="Comparti tu pasion" style="margin-top: 20px; margin-left: 28px; margin-bottom: 15px;"/>
                     </td>
-                    <td style="border-bottom: 1px solid #c9c9c9; width: 273px;" align="right">
-                        <table cellpadding="0" cellspacing="0">
-                            <tr>
-                                <td>
-                                    <table cellpadding="0" cellspacing="0" style="font-size: 11px; text-align: right;">
-                                        <tr>
-                                            <td>
-                                                <span style="color: #444444;margin-right: 15px;">{{ notification.target }}</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td >
-                                                <span style="color: #adadad;margin-right: 15px;">({{ notification.target.username }})</span>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>
-                                    <img src="{{ appmedia.imageurl(notification.target.image, 'avatar') }}" style="margin-right:10px; width: 35px; height: 35px;"/>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
+                    {% if targetUser %}
+                        <td style="border-bottom: 1px solid #c9c9c9; width: 273px;" align="right">
+                            <table cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td>
+                                        <table cellpadding="0" cellspacing="0" style="font-size: 11px; text-align: right;">
+                                            <tr>
+                                                <td>
+                                                    <span style="color: #444444;margin-right: 15px;">{{ targetUser }}</span> <!-- FULL NAME -->
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    <span style="color: #adadad;margin-right: 15px;">({{ targetUser.username }})</span> <!--USERNAME-->
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <img src="{{ appmedia.imageurl(targetUser.image, 'avatar') }}" style="margin-right:10px; width: 35px; height: 35px;"/> <!--TARGET AVATAR-->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    {% endif  %}
                 </tr>
                 <tr>
                     <td style="width: 500px;vertical-align: top;" colspan="2">
                         <div style="padding-left: 30px;">
-                            {% block text %}
-                            {% endblock %}
+                            {% if targetUser %}
+                                <p style="margin-bottom: 15px;margin-top: 15px;">Hola {{ targetUser }},</p>
+                            {% endif %}
+                            <div style="margin-bottom: 20px;">
+                                {% if targetUser %}
+                                    <span style="float: left;margin-right: 15px;"><img src="{{ appmedia.imageurl(targetUser.image, 'avatar') }}" style="width: 45px;height: 45px;"/></span>    
+                                {% endif %}
+                                <div>
+                                    {% block text %}
+                                    {% endblock %}
+                                </div>
+                            </div>
+                            <div style="clear: both;"></div>
+                            <p style="font-size: 11px; color: #c0c0c0; margin-top: 60px;"><a href="{{ path('notification_preferences') }}">Ajustar tus preferencias de las notificaciones que recíbes</a></p>
+                            </div>
                         </td>
                     </tr>
             </table>
