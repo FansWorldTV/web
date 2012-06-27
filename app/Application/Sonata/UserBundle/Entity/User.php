@@ -182,7 +182,7 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
     /**
      * @var array $privacy
      * array (
-     * 'fieldname' => Privacy::EVERYONE|Privacy::FRIENDS_ONLY,
+     * 'fieldname' => Privacy::*,
      * ...
      * )
      */

@@ -163,6 +163,27 @@ class AppState
 
         return true;
     }
+    
+    public function canViewField(User $viewer, User $user, $fieldname)
+    {
+        $privacies = $viewer->getPrivacy();
+        
+        if (isset($privacies[$fieldname])) {
+            $privacy = $privacies[$fieldname];
+            
+            if ($privacy == Privacy::EVERYONE) return true;
+            
+            if ($privacy == Privacy::FRIENDS_ONLY) {
+                if ($viewer == $user) return true;
+                $frep = $this->getRepository('DodiciFansworldWebBundle:Friendship');
+                $fr = $frep->findOneBy(array('author' => $viewer, 'target' => $user, 'active' => true));
+            }
+            
+            if ($privacy == Privacy::ONLY_ME) return ($viewer == $user);
+        } else {
+            return (!($user->getRestricted()));
+        }
+    }
 
     public function canEdit($entity)
     {

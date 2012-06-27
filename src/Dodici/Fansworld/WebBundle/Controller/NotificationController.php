@@ -33,7 +33,11 @@ class NotificationController extends SiteController
         $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getEntityManager();
         $preferences = $user->getNotifyprefs();
-        $preflist = Notification::getTypeList();
+        $preftypes = Notification::getTypeList();
+        $preflist = array();
+        foreach ($preftypes as $key => $pt) {
+            $preflist[$key] = $this->trans('notification_'.$pt);
+        }
 
         $defaultData = array('prefs' => $preferences);
 
