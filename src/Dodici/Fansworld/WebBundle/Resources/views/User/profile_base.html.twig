@@ -8,92 +8,92 @@
 {% endblock %}
 
 {% block content %}
-                <div class="row-fluid">
+                <header class="row-fluid">
                     <div class="span1">
                         {% thumbnail user.image, 'small_square' %}
                     </div>
-                    <div class="span7">
+                    <div class="span8">
                         <a href="#">Configuración de Cuenta</a>
                         <h1>{{ user }}</h1>
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="#">Cuenta</a></li>
-                            <li><a href="#">Perfil</a></li>
-                            <li><a href="#">Contraseña</a></li>
-                            <li><a href="#">Notificaciones</a></li>
-                            <li><a href="#">Intereses</a></li>
-                            <li><a href="#">Privacidad</a></li>
-                            <li><a href="#">FAQ</a></li>
-                        </ul>
+                        <nav>
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#">Cuenta</a></li>
+                                <li><a href="#">Perfil</a></li>
+                                <li><a href="#">Contraseña</a></li>
+                                <li><a href="#">Notificaciones</a></li>
+                                <li><a href="#">Intereses</a></li>
+                                <li><a href="#">Privacidad</a></li>
+                                <li><a href="#">FAQ</a></li>
+                            </ul>
+                        </nav>
                     </div>
+                </header>
+    
+                <section class="row-fluid">
+                    <h4>Tus Datos Personales:<a href="#" class="pull-right">Editar</a></h4>
+                    <dl class="dl-horizontal">
+                        <dt>Usuario</dt>
+                            <dd><strong>{{ app.user.username }}</strong> ({{ path('user_wall', {'username':app.user.username}) }})</dd>
+                        <dt>Email</dt>
+                            <dd>{{ app.user.email }}</dd>
+                        <dt>Dirección</dt>
+                            <dd>{{ app.user.address }}</dd>
+                        <dt>Nombre</dt>
+                            <dd>{{ app.user.firstname }}</dd>
+                        <dt>Apellido</dt>
+                            <dd>{{ app.user.lastname }}</dd>
+                        <dt>Género</dt>
+                            <dd>{{ app.user.sex }}</dd>
+                        <dt>Fecha Nac.</dt>
+                            <dd>{{ app.user.birthday|date() }}</dd>
+                        <dt>Ciudad, Pais</dt>
+                            <dd>{{ app.user.city }}, {{ app.user.country }}</dd>
+                    </dl>
+                </section>
+                        
+                <section class="row-fluid">
+                    <h4>Sobre mi: <a href="#" class="pull-right">Editar</a></h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+                </section>
+                    
+    
+                <section class="row-fluid">
+                    <h5>Modo restringido:</h5>
+
+                    <span>
+                        <button class="btn pull-left" data-toggle="button">Activar</button>
+                        <i class="icon-question-sign"></i>
+                    </span>
+                    <div class="clearfix"></div>
+                </section>
+
+                <div class="span7">
+                        <section class="row">
+                            <div class="span4">
+                                <img src="{{ asset("bundles/dodicifansworldweb/images/tw-logo.png") }}" alt="Twitter" />
+                                Vincular con twitter:
+                            </div>
+                            <div class="span2">
+                                @nahuerosso
+                            </div>
+                            <div class="span1">
+                                <a href="#"  class="pull-right">Editar</a>
+                            </div>
+                        </section>
+                        <section class="row">
+                            <div class="span4">
+                                <img src="{{ asset("bundles/dodicifansworldweb/images/tw-logo.png") }}" alt="Twitter" />
+                                Vincular con facebook:
+                            </div>
+                            <div class="span2">
+                                Nahuel Rosso
+                            </div>
+                            <div class="span1">
+                                <a href="#"  class="pull-right">Editar</a>
+                            </div>
+                        </section>
                 </div>
-                <div class="row-fluid">
-                    <div class="span7">
-                        <p class="bold">Tus Datos Personales:</p>
-                    </div>
-                    <div class="span1">
-                        <a href="#">Editar</a>
-                    </div>
-                </div>
-                <div class="row-fluid">
-                    <div class="span4">
-                        <dl class="dl-horizontal">
-                            <dt>Usuario</dt>
-                                <dd><strong>{{ app.user.username }}</strong> ({{ path('user_wall', {'username':app.user.username}) }})</dd>
-                            <dt>Email</dt>
-                                <dd>{{ app.user.email }}</dd>
-                            <dt>Dirección</dt>
-                                <dd>{{ app.user.address }}</dd>
-                            <dt>Nombre</dt>
-                                <dd>{{ app.user.firstname }}</dd>
-                            <dt>Apellido</dt>
-                                <dd>{{ app.user.lastname }}</dd>
-                            <dt>Género</dt>
-                                <dd>{{ app.user.sex }}</dd>
-                            <dt>Fecha Nac.</dt>
-                                <dd>{{ app.user.birthday|date() }}</dd>
-                            <dt>Ciudad, Pais</dt>
-                                <dd>{{ app.user.city }}, {{ app.user.country }}</dd>
-                        </dl>
-                    </div>
-                </div>
-                <div class="row-fluid marginTop10">
-                    <div class="span7">
-                        <p class="bold">Sobre mi:</p>
-                    </div>
-                    <div class="span1">
-                        <a href="#">Editar</a>
-                    </div>
-                </div>
-                <div class="row-fluid">
-                    <div class="span7">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-                    </div>
-                </div>
-                <div class="row-fluid marginTop10">
-                    <div class="span2">
-                        <em>Modo restringido:</em>
-                    </div>
-                </div>
-                <div class="row-fluid">
-                    <div class="span2">
-                            <button class="btn floatLeft" data-toggle="button">Activar</button>
-                            <i class="icon-question-sign"></i>
-                    </div>
-                </div>
-                <div class="row-fluid marginTop10">
-                    <div class="span3">
-                        <ul>
-                            <li class="clearfix">
-                                <img src="{{ asset("bundles/dodicifansworldweb/images/tw-logo.png") }}" alt="Twitter" class="floatLeft margin"/>
-                                <span>Vincular con twitter: </span><span>usuarioTwitter</span><a href="#" class="floatRight">Editar</a>
-                            </li>
-                            <li class="clearfix">
-                                <img src="{{ asset("bundles/dodicifansworldweb/images/tw-fb.png") }}" alt="Twitter" class="floatLeft"/>
-                                <span>Vincular con facebook: </span><span>usuarioFb</span><a href="#" class="floatRight">Editar</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                
                 <!--
                 <div class="user_profile_head profile_head clearfix">
                 	{% block profile_head %}
