@@ -29,7 +29,7 @@ div.wrap >div.container-fluid{
     color: #8cc63f;
 }
 
-/*Estilos regitros */
+/*Estilos registros */
 .inputloading { background-image: url(../images/ajax-loader-small.gif) !important; background-position: 96% center !important; background-repeat: no-repeat !important;}
 .inputerr { background-image: url(../images/ico/error.png) !important; background-color: #FEE !important; background-position: 96% center !important; background-repeat: no-repeat !important;}
 .inputok { background-image: url(../images/ico/accept.png) !important; background-color: #EFE !important; background-position: 96% center !important; background-repeat: no-repeat !important;}

@@ -407,7 +407,7 @@ var site = {
             $('header nav div#login-widget div.arrow-up-border').hide();
         }
         $('header .header-ingresar').click(function(){
-           $('header nav  div#login-widget').toggle(); 
+           $('header div#login-widget').toggle(); 
         });
         $('div#login-widget #do-login').click(function(){
             $('form.login').submit();

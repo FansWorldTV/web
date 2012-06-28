@@ -111,6 +111,7 @@ sonata_media:
                 - sonata.media.provider.file
 
             formats:
+                headeravatar: { width: 40 , height: 40 , quality: 70}
                 avatar: { width: 50 , height: 50 , quality: 70}
                 small: { width: 100 , quality: 70}
                 small_square: { width: 100, height: 100 , quality: 75}

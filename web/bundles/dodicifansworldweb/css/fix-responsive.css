@@ -16,6 +16,33 @@
     border-radius:0;
  }
  
+ ul#left-menu{
+	overflow: hidden;
+ }
+ 
+ .navbar .brand{
+	padding-bottom: 10px;
+ }
+ 
+ footer.navbar div.navbar-inner{
+	min-height: 36px;
+ }
+ 
+ footer.navbar div.navbar-inner div.container{
+	overflow: hidden;
+ 	height: 36px;
+ }
+ 
+ 
+ .navbar-search .search-query,.navbar-search .search-query:-moz-placeholder{
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid white;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);     	
+}
+
+ 
+ 
 @media (max-width: 767px) {
      .sidebar-nav-fixed {
         position:static;
@@ -23,6 +50,26 @@
         margin-top: 10px;
         
      }
+    
+     .navbar-fixed-top, .navbar-fixed-bottom{
+       position: fixed !important;
+       padding: 0 20px;
+     }
+     
+     .navbar-fixed-bottom{
+        display: none;
+     }
+     
+    .navbar .nav  li.show-on-collapse{
+       display: block;
+    }
+    
+     ul#left-menu li{
+	   float: left;
+     	
+     }
+     
+     
  }
 
 @media (max-width: 979px) {
@@ -30,25 +77,27 @@
         width: 3%;
         top: 50px;
      }
- }
- 
- .navbar .btn-navbar{
-    position: relative !important;
-}
-@media (max-width: 767px) {
-    .navbar-fixed-top, .navbar-fixed-bottom{
-       position: fixed !important;
-       padding: 0 20px;
-    }
-}
-
-@media (max-width: 979px) {
+     
+    header div#login-widget{
+       top:30px;
+     }
+     
     .navbar-fixed-top, .navbar-fixed-bottom{
        position: fixed !important;
     }
     
     body{
-	   padding-top: 54px;
+       padding-top: 54px;
     }
+    
+    .navbar-fixed-top .navbar-inner, .navbar-fixed-bottom .navbar-inner{
+	   padding: 0 5px;
+    }
+    
  }
+ 
+ .navbar .btn-navbar{
+    position: relative !important;
+}
+
  
