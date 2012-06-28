@@ -15,6 +15,7 @@ class Meteor
 	protected $host;
 	protected $port;
 	protected $clientport;
+	protected $socket;
 
     function __construct(EntityManager $em, $host='127.0.0.1', $port='4671', $clientport='4670')
     {
@@ -67,13 +68,15 @@ class Meteor
     
     private function sendToSocket($message, $channel)
     {
-    	$op = fsockopen($this->host, $this->port);
-    	socket_set_blocking($op,false);
+    	if (!$this->socket) {
+            $this->socket = fsockopen($this->host, $this->port);
+        	stream_set_blocking($this->socket,true);
+    	}
         
-    	if ($op) {
+    	if ($this->socket) {
     		$message = addslashes(json_encode($message));
     		$out = "ADDMESSAGE ".$channel." ".$message."\n";
-    		fwrite($op, $out);
+    		fwrite($this->socket, $out);
     		return true;
     	}
     	return false;

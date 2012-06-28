@@ -420,19 +420,41 @@ function onFbInit() {
 
 
 /* Wrapper functions for Toast messages */
-function notice (message) {
-    $().toastmessage('showNoticeToast', message);
-}
-function warning (message) {
-    $().toastmessage('showWarningToast', message);
-}
-function error (message) {
-    $().toastmessage('showToast', {
-        text     : message,
-        sticky   : true,
-        type     : 'error'
+function notice (message, callback) {
+    createNotify({
+        message: { html: message },
+        type: 'info',
+        onClosed: callback
     });
 }
-function success (message) {
-    $().toastmessage('showSuccessToast', message);
+function warning (message, callback) {
+    createNotify({
+        message: { html: message },
+        type: 'danger',
+        onClosed: callback
+    });
 }
+function error (message, callback) {
+    createNotify({
+        message: { html: message },
+        type: 'error',
+        onClosed: callback,
+        fadeOut: { enabled: false }
+    });
+}
+function success (message, callback) {
+    createNotify({
+        message: { html: message },
+        type: 'success',
+        onClosed: callback
+    });
+}
+
+function createNotify (options) {
+    $('.notifications.top-right').notify(options).show();
+}
+
+$(function(){
+   var notifydiv = $('<div>').addClass('notifications top-right');
+   $('body').append(notifydiv);
+});
