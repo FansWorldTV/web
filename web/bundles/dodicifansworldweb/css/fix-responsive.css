@@ -38,9 +38,13 @@
     background-color: #ffffff;
     color: #000000;
     border: 1px solid white;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);     	
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);  
+ border-radius: 10px 0 0 10px;   	
 }
 
+.navbar-search .input-append .add-on:last-child{
+    border-radius: 0 10px 10px 0;
+}
  
  
 @media (max-width: 767px) {
