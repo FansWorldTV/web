@@ -42,9 +42,14 @@ div.register div.top{
 	color: #8a8a8a;
 }
 
-div.register div.top .fbconnect{
-	min-width: 185px;
+div.register div.top .fbconnect a{
+	border-radius: 5px;
 }
+
+div.register div.top .fbconnect a span{
+    border-radius: 0 5px 5px 0;
+}
+
 div.register div.top h1,div.confirm h1{
     font-size: 22px;	
 	line-height: 25px;
@@ -67,17 +72,24 @@ div.register div.bottom .title{
 	margin-bottom: 15px;
 }
 
-div.register div.bottom div#fos_user_registration_form label{
+div.register div.bottom form  .span6{
+	margin-left: 0%;
+}
+
+div.register div.bottom form .span6 input[type='text'],
+div.register div.bottom form .span6 input[type='password'],	
+div.register div.bottom form  .span6 input[type='email']{
+	width: 65%;
+}
+
+div.register div.bottom form  label.control-label{
     float: left;
-	width: 80px;
-}
-div.register div.bottom div#fos_user_registration_form  .fieldinfo{
-	padding-left: 80px;
-	font-size: 10px;
+	width: 90px;
 }
 
-div.register div.bottom div#fos_user_registration_form  ul.errors{
+div.register div.bottom form  p.help-block{
+    padding-left: 90px;
+}
+div.register div.bottom form  p.error{
 	color: #CC3333;
-	padding-left: 80px;
 }
-

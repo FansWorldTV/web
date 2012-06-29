@@ -1,6 +1,5 @@
 /* estilos para sidebar registro */
 #leftcolumn-sidebar{
-	border-left: 1px solid #D9D9D9;
 	padding-left: 15px;
 	
 }
@@ -12,4 +11,13 @@
 #leftcolumn-sidebar p{
     color: #808080;
     font-size: 13px;
+    margin: 10px 0;
 }
+
+@media (max-width: 979px) {
+	#leftcolumn-sidebar{
+	    border-left: 1px solid #D9D9D9;
+	}	
+}
+
+

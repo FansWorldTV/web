@@ -5,11 +5,8 @@
         <h2>Conectate con tus idolos y clubes, demostrado tu pasion y compartiendo experiencias con amigos</h2>
         
         <div class='row-fluid'>
-            <div class='span4'>
-                <button class="btn btn-success" type="submit">Registrate en 20 segundos</button>
-            </div>
-            <div class='span4 fbconnect'>
-                {{ facebook_login_button({'autologoutlink': false, label: 'facebook_login_register'|trans}) }}
+            <div class='span12 fbconnect'>
+                {{ facebook_login_button({'autologoutlink': false, label: 'facebook_login_register'|trans, size: 'xlarge'}) }}
             </div>
         </div>
         
@@ -18,19 +15,38 @@
     </div>
 	<div class='bottom'>
         <div class="greybox">
-            <div class='title'>Llena los campos con tus datos</div>
-            <form action="" method="post" class="fos_user_registration_register bigform">
+            <div class='title'>
+                <span class="badge badge-success">1</span>
+                Llena los campos con tus datos
+            </div>
+            <div class="form-register fieldcontainer ">
                 
-                <div class="form-register fieldcontainer">
-                    <ul class="fields row-fluid">
-                        {{ form_widget(form) }}
-                    </ul>
-                </div>
-                <div class="actions clearfix">
-                    <button name='submit' class='btn btn-success' type='submit'>Ingresar</button>
-                    
-                </div>
-            </form>
+                    <form action="" method="post" class="fos_user_registration_register">    
+                        
+                        
+                            <div class="fields row-fluid">
+                                <div class='span6'>
+                                    {{ form_row(form.firstname) }}
+                                    {{ form_row(form.lastname) }}
+                                    {{ form_row(form.username) }}
+                                    {{ form_row(form.email) }}
+                                </div>
+                                
+                                <div class='span6'>
+                                    {{ form_row(form.plainPassword) }}
+                                    {{ form_row(form.accept_toc) }}
+                                </div>
+                                
+                            </div>
+                        
+                        <div class="actions clearfix">
+                            <button id='submitRegister' name='submit' class='btn btn-success' type='submit' disabled='disabled'>Registrate</button>
+                            
+                        </div>
+                        {{ form_rest(form) }}
+                    </form>
+                
+            </div>
         </div>
 	</div>
 	

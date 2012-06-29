@@ -45,7 +45,12 @@
 .navbar-search .input-append .add-on:last-child{
     border-radius: 0 10px 10px 0;
 }
- 
+
+
+.btn-success {
+    background-image: -moz-linear-gradient(center top , #8FCA48, #79C41E);
+}
+
  
 @media (max-width: 767px) {
      .sidebar-nav-fixed {
@@ -73,13 +78,16 @@
      	
      }
      
+    div.register div.bottom form p.help-block{
+       padding: 90px;
+    }
      
  }
 
 @media (max-width: 979px) {
      .sidebar-nav-fixed {
         width: 3%;
-        top: 50px;
+        top: 40px;
      }
      
     header div#login-widget{
@@ -96,6 +104,10 @@
     
     .navbar-fixed-top .navbar-inner, .navbar-fixed-bottom .navbar-inner{
 	   padding: 0 5px;
+    }
+    
+    div.register div.bottom form p.help-block{
+	   padding: 0;
     }
     
  }

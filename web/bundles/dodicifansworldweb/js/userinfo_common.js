@@ -1,8 +1,9 @@
+//validate accept ToC and make url for username
 $(function() {
 	$('#fos_user_registration_form_username, #fos_user_profile_form_user_username')
 	.after(
-		$('<div>')
-		.addClass('fieldinfo')
+		$('<p>')
+		.addClass('fieldinfo help-block')
 		.html('http://'+location.host+'/u/'+'<strong class="userurlpreview">'+$(this).val()+'</strong>')
 	)
 	.keyup(function(){
@@ -10,10 +11,12 @@ $(function() {
 	})
 	;
         $('.userurlpreview').text($("#fos_user_profile_form_user_username").val());
+        
+        validateTocRegister();    
 });
 
 
-//Validate username/email
+//Validate username/email 
 $(document).ready(function(){
 	var iTypingDelay = 800;
     var username = $("#fos_user_registration_form_username, #fos_user_profile_form_user_username");
@@ -64,6 +67,7 @@ $(document).ready(function(){
     
     
 });
+
 function ajaxValidateProfile(email, username, callback){
     ajax.genericAction('profile_validate', {
         'username': username,
@@ -71,4 +75,17 @@ function ajaxValidateProfile(email, username, callback){
     }, function(r){
         callback(r);
     });
+}
+
+function validateTocRegister()
+{
+    $('input#fos_user_registration_form_accept_toc').click(function(e){
+        if($(this).is(':checked')){
+            $('form.fos_user_registration_register button#submitRegister').removeAttr('disabled');
+        }else{
+            $('form.fos_user_registration_register button#submitRegister').attr('disabled','true');
+        }
+        
+        
+    })
 }
