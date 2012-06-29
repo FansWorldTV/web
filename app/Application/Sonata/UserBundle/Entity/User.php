@@ -206,6 +206,15 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
      * )
      */
     private $notifyprefs;
+    
+    /**
+     * @var array $notifymail
+     * array (
+     * Notification::TYPE_*,
+     * ...
+     * )
+     */
+    private $notifymail;
 
 	/**
      * @var ArrayCollection $friendships
@@ -272,6 +281,7 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
     	$this->hasbadges = new ArrayCollection();
         $this->privacy = array();
         $this->notifyprefs = array_keys(Notification::getTypeList());
+        $this->notifymail = array_keys(Notification::getTypeList());
         $this->idolCount = 0;
         $this->friendCount = 0;
         $this->visits = new ArrayCollection();
@@ -870,6 +880,26 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
     public function getNotifyprefs()
     {
         return $this->notifyprefs;
+    }
+    
+	/**
+     * Set notifymail
+     *
+     * @param array $notifymail
+     */
+    public function setNotifymail($notifymail)
+    {
+        $this->notifymail = $notifymail;
+    }
+
+    /**
+     * Get notifymail
+     *
+     * @return array 
+     */
+    public function getNotifymail()
+    {
+        return $this->notifymail;
     }
 
     /**

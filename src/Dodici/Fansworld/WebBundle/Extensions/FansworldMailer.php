@@ -41,7 +41,7 @@ class FansworldMailer
     {
         $user = $entity->getTarget();
         $sendTo = $user->getEmail();
-        $allowed = $user->getNotifyprefs();
+        $allowed = $user->getNotifymail();
 
         if (in_array($entity->getType(), $allowed)) {
             $typename = $entity->getTypeName();
