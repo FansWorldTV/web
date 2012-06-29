@@ -105,6 +105,13 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     private $youtube;
     
     /**
+     * @var string $vimeo
+     *
+     * @ORM\Column(name="vimeo", type="string", length=250, nullable=true)
+     */
+    private $vimeo;
+    
+    /**
      * @var integer $privacy
      * Privacy::EVERYONE|Privacy::FRIENDS_ONLY
      *
@@ -270,6 +277,18 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
 				$youtube = substr($youtube, 0, strpos($youtube, '&'));
 			}
 			$this->setYoutube($youtube);
+		}
+		
+		if ($this->getVimeo()) {
+		    $vimeo = $this->getVimeo();
+			$vimeo = str_replace(
+			array('http://','https://','www.','vimeo.com/'), 
+			array('','','',''), 
+			$vimeo);
+			if (strpos($vimeo, '?') !== false) {
+				$vimeo = substr($vimeo, 0, strpos($vimeo, '?'));
+			}
+			$this->setVimeo($vimeo);
 		}
     }
     
@@ -512,6 +531,26 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     public function getYoutube()
     {
         return $this->youtube;
+    }
+    
+	/**
+     * Set vimeo
+     *
+     * @param string $vimeo
+     */
+    public function setVimeo($vimeo)
+    {
+        $this->vimeo = $vimeo;
+    }
+
+    /**
+     * Get vimeo
+     *
+     * @return string 
+     */
+    public function getVimeo()
+    {
+        return $this->vimeo;
     }
 
     /**

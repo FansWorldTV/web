@@ -514,7 +514,7 @@ services:
       arguments: [@security.context, @doctrine.orm.entity_manager, @session, @appstate]
     video.uploader:
       class: Dodici\Fansworld\WebBundle\Extensions\VideoUploader
-      arguments: [@doctrine.orm.entity_manager, @flumotion.api.request, @flumotion.ftp, @appmedia, %kernel.root_dir%/../web/uploads/videos]
+      arguments: [@doctrine.orm.entity_manager, @flumotion.api.request, @flumotion.ftp, @appmedia, @security.context, %kernel.root_dir%/../web/uploads/videos]
     feeder.event:
       class: Dodici\Fansworld\WebBundle\Feeder\EventFeeder
       arguments: [@doctrine.orm.entity_manager, @datafactory]

@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Extensions;
 
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\SecurityContext;
 use Dodici\Fansworld\WebBundle\Entity\Notification;
 use Application\Sonata\MediaBundle\Entity\Media;
 use Symfony\Component\HttpFoundation\File\File;
@@ -19,15 +21,19 @@ class VideoUploader
 	protected $api;
 	protected $ftp;
 	protected $appmedia;
+	protected $security_context;
+    protected $user;
 	protected $uploadpath;
 
-    function __construct(EntityManager $em, RequestBuilder $api, FtpWriter $ftp, AppMedia $appmedia, $uploadpath)
+    function __construct(EntityManager $em, RequestBuilder $api, FtpWriter $ftp, AppMedia $appmedia, SecurityContext $security_context, $uploadpath)
     {
         $this->request = Request::createFromGlobals();
         $this->em = $em;
         $this->api = $api;
         $this->ftp = $ftp;
         $this->appmedia = $appmedia;
+        $this->security_context = $security_context;
+        $this->user = $security_context->getToken() ? $security_context->getToken()->getUser() : null;
         $this->uploadpath = $uploadpath;
     }
 
@@ -105,6 +111,137 @@ class VideoUploader
                     // might be 404, thumb not ready yet
                 }
             }
+        }
+    }
+    
+    public function createVideoFromUrl($url, $user=null)
+    {
+        if (!$user) $user = $this->user;
+        if (!($user instanceof User)) throw new AccessDeniedException('Tried to create video with no user logged in');
+        
+        $idyoutube = $this->getYoutubeId($url);
+        $idvimeo = $this->getVimeoId($url);
+        
+        if ($idyoutube) {
+            $metadata = $this->getYoutubeMetadata($idyoutube);
+            
+            $image = null;
+            if ($metadata['thumbnail_url']) {
+                $image = $this->appmedia->createImageFromUrl($metadata['thumbnail_url']);
+            }
+            $title = $metadata['title'];
+            $description = null;
+        } 
+        
+        if ($idvimeo) {
+            $metadata = $this->getVimeoMetadata($idvimeo);
+            
+            $image = null;
+            if ($metadata['thumbnail_large']) {
+                $image = $this->appmedia->createImageFromUrl($metadata['thumbnail_large']);
+            }
+            $title = $metadata['title'];
+            $description = $metadata['description'];
+        } 
+
+        if ($idvimeo || $idyoutube) {
+            $video = new Video();
+            $video->setAuthor($user);
+            $video->setTitle($title);
+            $video->setContent($description);
+            $video->setYoutube($idyoutube);
+            $video->setVimeo($idvimeo);
+            $video->setImage($image);
+            
+            return $video;
+        } else {
+            throw new \Exception('Could not parse URL');
+        }
+    }
+    
+	/**
+     * @throws \RuntimeException
+     * @param string $id
+     * @return mixed|null|string
+     */
+    private function getYoutubeMetadata($id)
+    {
+        if (!$id) {
+            return null;
+        }
+
+        $url = sprintf('http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=%s&format=json', $id);
+        $metadata = @file_get_contents($url);
+
+        if (!$metadata) {
+            throw new \RuntimeException('Unable to retrieve youtube video information for :' . $url);
+        }
+
+        $metadata = json_decode($metadata, true);
+
+        if (!$metadata) {
+            throw new \RuntimeException('Unable to decode youtube video information for :' . $url);
+        }
+
+        return $metadata;
+    }
+    
+	/**
+     * @throws \RuntimeException
+     * @param string $id
+     * @return mixed|null|string
+     */
+    private function getVimeoMetadata($id)
+    {
+        if (!$id) {
+            return null;
+        }
+
+        $url = sprintf('http://vimeo.com/api/v2/video/%s.json', $id);
+        $metadata = @file_get_contents($url);
+
+        if (!$metadata) {
+            throw new \RuntimeException('Unable to retrieve vimeo video information for :' . $url);
+        }
+
+        $metadata = json_decode($metadata, true);
+
+        if (!$metadata) {
+            throw new \RuntimeException('Unable to decode vimeo video information for :' . $url);
+        }
+
+        return $metadata[0];
+    }
+    
+    private function getYoutubeId($youtube)
+    {
+    	if ((strpos($youtube, 'youtube.com') !== false) || (strpos($youtube, 'youtu.be') !== false)) {
+            $youtube = str_replace(
+    		array('http://','www.','youtube.com/watch?v=','youtu.be/','youtube.com/v/'), 
+    		array('','','','',''), 
+    		$youtube);
+    		if (strpos($youtube, '&') !== false) {
+    			$youtube = substr($youtube, 0, strpos($youtube, '&'));
+    		}
+    		return $youtube;
+		} else {
+		    return null;
+		}
+    }
+    
+    private function getVimeoId($vimeo)
+    {
+        if (strpos($vimeo, 'vimeo.com') !== false) {
+            $vimeo = str_replace(
+    		array('http://','https://','www.','vimeo.com/'), 
+    		array('','','',''), 
+    		$vimeo);
+    		if (strpos($vimeo, '?') !== false) {
+    			$vimeo = substr($vimeo, 0, strpos($vimeo, '?'));
+    		}
+    		return $vimeo;
+        } else {
+            return null;
         }
     }
 }

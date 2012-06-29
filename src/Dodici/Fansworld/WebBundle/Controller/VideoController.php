@@ -543,12 +543,12 @@ class VideoController extends SiteController
 
                 if ($form->isValid()) {
                     try {
-                        $flutwig = $this->get('flumotiontwig');
-                        $idyoutube = $flutwig->getYoutubeId($data['youtube']);
+                        $videouploader = $this->get('video.uploader');
+                        $idyoutube = $videouploader->getYoutubeId($data['youtube']);
                         if (!$idyoutube)
                             throw new \Exception('URL inválida');
 
-                        $metadata = $flutwig->getYoutubeMetadata($idyoutube);
+                        $metadata = $videouploader->getYoutubeMetadata($idyoutube);
                         if (!$metadata)
                             throw new \Exception('No se encontró metadata youtube');
 
@@ -627,12 +627,12 @@ class VideoController extends SiteController
 
                 if ($form->isValid()) {
                     try {
-                        $flutwig = $this->get('flumotiontwig');
-                        $idyoutube = $flutwig->getYoutubeId($data['youtube']);
+                        $videouploader = $this->get('video.uploader');
+                        $idyoutube = $videouploader->getYoutubeId($data['youtube']);
                         if (!$idyoutube)
                             throw new \Exception('URL inválida');
 
-                        $metadata = $flutwig->getYoutubeMetadata($idyoutube);
+                        $metadata = $videouploader->getYoutubeMetadata($idyoutube);
                         if (!$metadata)
                             throw new \Exception('No se encontró metadata youtube');
                         
@@ -674,8 +674,8 @@ class VideoController extends SiteController
 
         $video = null;
         
-        $flutwig = $this->get('flumotiontwig');
-        $metadata = $flutwig->getYoutubeMetadata($idyoutube);
+        $videouploader = $this->get('video.uploader');
+        $metadata = $videouploader->getYoutubeMetadata($idyoutube);
         
 
         $defaultData = array(
