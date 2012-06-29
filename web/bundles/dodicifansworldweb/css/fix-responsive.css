@@ -51,7 +51,17 @@
     background-image: -moz-linear-gradient(center top , #8FCA48, #79C41E);
 }
 
- 
+
+section.ayuda h2 .badge{
+	line-height: 36px;
+	vertical-align: top;
+	font-size: 16px;
+}
+
+p.help-block.error{
+	color: #CC3333;
+}
+
 @media (max-width: 767px) {
      .sidebar-nav-fixed {
         position:static;

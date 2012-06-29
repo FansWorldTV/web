@@ -581,3 +581,34 @@ legend + .control-group {
     padding-left: 160px;
   }
 }
+
+// 2column-specific styles
+// --------------------------
+
+.form-2column {
+  
+  // Float the labels left
+  .control-label {
+    float: left;
+    width: 90px;
+  }
+  
+  // set padding for labels
+  .help-block {
+     padding-left: 90px;
+  }
+  
+  
+  //set error color
+  p.error{
+    color: #CC3333;
+  }
+  
+  //set inputs width
+  input[type='text'],
+  input[type='password'], 
+  input[type='email']{
+    width: 65%;
+  }
+}
+

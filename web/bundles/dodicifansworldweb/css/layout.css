@@ -1,33 +1,4 @@
-@import url('useful.css');
-@import url('colorbox.css');
 
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,images,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,center{margin:0;padding:0;border:0;outline:0;font-weight:normal;font-style:normal;font-size:100%;font-family:inherit}body{line-height:1}:focus{outline:0}ol,ul{list-style:none}table{border-collapse:collapse;border-spacing:0}blockquote:before,blockquote:after,q:before,q:after{content:""}blockquote,q{quotes:""""}input,textarea{margin:0;padding:0}hr{margin:0;padding:0;border:0;color:#000;background-color:#000;height:1px}
-.clearfix:after {visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}.clearfix {display:inline-block;}* html .clearfix {height:1%;}.clearfix {display:block;}
-
-img{
-	border:none;
-}
-
-body {
-    background:#ffffff;
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:11px;
-    color:#333;
-    cursor:default;
-	
-	padding-top: 50px;
-
-}
-
-.wrap {width:100%; margin:0px auto;}
-
-div.wrap >div.container-fluid{
-	padding: 0;
-}
-
-.green{
-    color: #8cc63f;
-}
 
 /*Estilos registros */
 .inputloading { background-image: url(../images/ajax-loader-small.gif) !important; background-position: 96% center !important; background-repeat: no-repeat !important;}
@@ -72,24 +43,4 @@ div.register div.bottom .title{
 	margin-bottom: 15px;
 }
 
-div.register div.bottom form  .span6{
-	margin-left: 0%;
-}
 
-div.register div.bottom form .span6 input[type='text'],
-div.register div.bottom form .span6 input[type='password'],	
-div.register div.bottom form  .span6 input[type='email']{
-	width: 65%;
-}
-
-div.register div.bottom form  label.control-label{
-    float: left;
-	width: 90px;
-}
-
-div.register div.bottom form  p.help-block{
-    padding-left: 90px;
-}
-div.register div.bottom form  p.error{
-	color: #CC3333;
-}

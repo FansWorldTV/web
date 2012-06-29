@@ -2,27 +2,50 @@
 
 {% block fos_user_content %}
 <div class="resetpassword">
-	<h1>Restablecer Contraseña</h1>
-	<div class="greybox">
-	{% if invalid_username is defined %}
-        <div class="errors">
-            {{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}
+	<h1>Recuperar clave</h1>
+	<div class="greybox row-fluid">
+	   <div class='span8'>
+            <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request horizontal-form">
+                <div class="form-resetpassword fieldcontainer">
+                    <ul class="fields">
+                        <li class="clearfix">
+                            <div class="control-group {% if invalid_username is defined %} error {% endif %} ">
+                                <label for="username" class="control-label">{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}</label>
+                                <div class="controls">
+                                    <input type="text" id="username" name="username" />
+                                    {% if invalid_username is defined %}
+                                        <p class="help-block">
+                                            {{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}
+                                        </p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        
+                            
+                            
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="actions clearfix">
+                    <button type="submit" name="submit"  class="btn btn-success" />Restablecer</button>
+                    
+                </div>
+            </form>   
         </div>
-    {% endif %}
-	<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request bigform">
-    	<div class="form-resetpassword fieldcontainer">
-			<ul class="fields">
-        		<li class="clearfix">
-        			<label for="username">{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}</label>
-	                <input type="text" id="username" name="username" />
-        		</li>
-        	</ul>
-		</div>
-		
-        <div class="actions clearfix">
-            <input type="submit" name="submit" value="Restablecer" class="btn_action" />
+        <div class='span4'>
+            <section class='ayuda'>
+                <h2><span class="badge">?</span>Ayuda</h2>
+                <p>
+                    Recibirás un correo electrónico con un vínculo a través del cual podrás restablecer tu contraseña
+                </p>
+            </section>
+        
+            
         </div>
-    </form>
+	   
+	
     </div>
 </div>
 {% endblock fos_user_content %}
+

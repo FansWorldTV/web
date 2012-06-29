@@ -1,17 +1,29 @@
 {% form_theme form theme %}
 <div class="resetnew-password">
 	<h1>Restablecer Contraseña</h1>
-	<div class="greybox">
-    <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset bigform">
-        <div class="form-resetnew-password fieldcontainer">
-			<ul class="fields">
-        		{{ form_widget(form) }}
-        	</ul>
-		</div>
-		
-        <div class="actions clearfix">
-            <input type="submit" name="submit" value="Restablecer" class="btn_action" />
+	<div class="greybox row-fluid">
+        <div class='span8'>
+            <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset bigform">
+                <div class="form-resetnew-password fieldcontainer">
+        			<ul class="fields">
+                		{{ form_widget(form) }}
+                	</ul>
+        		</div>
+        		
+                <div class="actions clearfix">
+                    <button type='submit' class='btn btn-success' name='submit'>Cambiar</button>
+                </div>
+            </form>
         </div>
-    </form>
+        <div class='span4'>
+            <section class='ayuda'>
+                <h2><span class="badge">?</span>Ayuda</h2>
+                <p>
+                    Phasellus gravida porttitor tristique. Aenean nisl nulla, sagittis at mattis sit amet, tincid
+                </p>
+            </section>
+        
+            
+        </div>
     </div>
 </div>

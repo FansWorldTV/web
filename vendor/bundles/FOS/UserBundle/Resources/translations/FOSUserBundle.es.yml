@@ -56,7 +56,7 @@ registration:
 # Password resetting
 resetting:
     password_already_requested: La contraseña para este usuario ya ha sido solicitada dentro de las 24 horas.
-    check_email: Un email ha sido enviado a %email%. Contiene un enlace de activación que debes presionar para restablecer tu contraseña.
+    check_email: A la brevedad recibirás un correo electrónico con un vínculo que deberás visitar para restablecer tu contraseña. Si no lo recibes, verifica tu carpeta de correo no deseado, o envíanos un mail a
     request:
         invalid_username: El usuario o dirección de correo "%username%" no existe.
         username: "Nombre de usuario:"
