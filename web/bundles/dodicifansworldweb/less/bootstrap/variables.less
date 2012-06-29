@@ -10,20 +10,20 @@
 
 // Grays
 // -------------------------
-@black:                 #292929;
+@black:                 #000;
 @grayDarker:            #222;
-@grayDark:              #8e8e8e;
-@gray:                  #c9c9c9;
-@grayLight:             #d8d8d8;
+@grayDark:              #333;
+@gray:                  #555;
+@grayLight:             #999;
 @grayLighter:           #eee;
-@white:                 #ffffff;
+@white:                 #fff;
 
 
 // Accent colors
 // -------------------------
 @blue:                  #049cdb;
 @blueDark:              #0064cd;
-@green:                 #8fca48;
+@green:                 #46a546;
 @red:                   #9d261d;
 @yellow:                #ffc40d;
 @orange:                #f89406;
@@ -34,18 +34,18 @@
 // Scaffolding
 // -------------------------
 @bodyBackground:        @white;
-@textColor:             @black;
+@textColor:             @grayDark;
 
 
 // Links
 // -------------------------
-@linkColor:             #8fca49;
+@linkColor:             #08c;
 @linkColorHover:        darken(@linkColor, 15%);
 
 
 // Typography
 // -------------------------
-@sansFontFamily:        "PT Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+@sansFontFamily:        "Helvetica Neue", Helvetica, Arial, sans-serif;
 @serifFontFamily:       Georgia, "Times New Roman", Times, serif;
 @monoFontFamily:        Menlo, Monaco, Consolas, "Courier New", monospace;
 
@@ -73,14 +73,14 @@
 @btnBackgroundHighlight:            darken(@white, 10%);
 @btnBorder:                         #ccc;
 
-@btnPrimaryBackground:              @green;
+@btnPrimaryBackground:              @linkColor;
 @btnPrimaryBackgroundHighlight:     spin(@btnPrimaryBackground, 15%);
 
 @btnInfoBackground:                 #5bc0de;
 @btnInfoBackgroundHighlight:        #2f96b4;
 
-@btnSuccessBackground:              #8fca48;
-@btnSuccessBackgroundHighlight:     #75c811;
+@btnSuccessBackground:              #62c462;
+@btnSuccessBackgroundHighlight:     #51a351;
 
 @btnWarningBackground:              lighten(@orange, 15%);
 @btnWarningBackgroundHighlight:     @orange;
@@ -180,7 +180,7 @@
 @errorBackground:         #f2dede;
 @errorBorder:             darken(spin(@errorBackground, -10), 3%);
 
-@successText:             #8fca48;
+@successText:             #468847;
 @successBackground:       #dff0d8;
 @successBorder:           darken(spin(@successBackground, -10), 5%);
 
