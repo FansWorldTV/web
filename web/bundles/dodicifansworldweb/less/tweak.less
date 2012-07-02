@@ -14,8 +14,15 @@ ul, ol{
 }
 
 input {
-    border: 1px solid #cccccc;
-    color: #cccccc;
+    border: 1px solid  @grayLight;
+    color: @grayLight;
     background-color: white;
     border-radius: 3px;
+}
+
+input:focus:required:invalid:focus, textarea:focus:required:invalid:focus, select:focus:required:invalid:focus {
+    border-color:  @grayLight;
+    -webkit-box-shadow: 0 0 6px @green;
+    -moz-box-shadow: 0 0 6px @green;
+    box-shadow: 0 0 6px @green;
 }

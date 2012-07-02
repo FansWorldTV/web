@@ -48,27 +48,4 @@ class ProfileController extends BaseController
                         'DodiciFansworldWebBundle:User:profile_edit/account.html.twig', array('user' => $user)
         );
     }
-
-    /**
-     *  @Route("/u/{username}/password", name="profile_password")
-     */
-    public function passwordAction($username)
-    {
-        try {
-            $userLogged = $this->container->get('security.context')->getToken()->getUser();
-            $user = $this->container->get('Doctrine')->getRepository("ApplicationSonataUserBundle:User")->findOneBy(array('username' => $username));
-
-            if ($userLogged->getId() !== $user->getId()) {
-                throw new AccessDeniedException('This user does not have access to this section.');
-            }
-        } catch (Exception $exc) {
-            throw new AccessDeniedException('This user does not have access to this section.');
-        }
-
-        $user = $this->container->get('Doctrine')->getRepository("ApplicationSonataUserBundle:User")->findOneBy(array('username' => $username));
-        return $this->container->get('templating')->renderResponse(
-                        'DodiciFansworldWebBundle:User:profile_edit/password.html.twig', array('user' => $user)
-        );
-    }
-
 }

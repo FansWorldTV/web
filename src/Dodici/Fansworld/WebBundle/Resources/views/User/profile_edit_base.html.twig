@@ -15,17 +15,19 @@
         <div class="span8">
             <a href="#">Configuración de Cuenta</a>
             <h1>{{ user }}</h1>
+            {% block user_edit_toolbar %}
             <nav>
                 <ul class="nav nav-tabs-profile">
-                    <li class="active"><a href="{{ path('profile_account', {'username': user.username}) }}">Cuenta</a></li>
-                    <li><a href="{{ path('profile_password', {'username': user.username}) }}">Perfil</a></li>
-                    <li><a href="{{ path('fos_user_change_password') }}">Contraseña</a></li>
-                    <li><a href="{{ path('notification_preferences') }}">Notificaciones</a></li>
-                    <li><a href="{{ path('interest_edit') }}">Intereses</a></li>
-                    <li><a href="#">Privacidad</a></li>
-                    <li><a href="#">FAQ</a></li>
+                    <li {% if current_edit_toolbar == 'account' %} class="active" {% endif %}><a href="{{ path('profile_account', {'username': user.username}) }}">Cuenta</a></li>
+                    <li {% if current_edit_toolbar == 'profile' %} class="active" {% endif %}><a href="#">Perfil</a></li>
+                    <li {% if current_edit_toolbar == 'password' %} class="active" {% endif %}><a href="{{ path('fos_user_change_password') }}">Contraseña</a></li>
+                    <li {% if current_edit_toolbar == 'notifications' %} class="active" {% endif %}><a href="{{ path('notification_preferences') }}">Notificaciones</a></li>
+                    <li {% if current_edit_toolbar == 'interests' %} class="active" {% endif %}><a href="{{ path('interest_edit') }}">Intereses</a></li>
+                    <li {% if current_edit_toolbar == 'privacy' %} class="active" {% endif %}><a href="#">Privacidad</a></li>
+                    <li {% if current_edit_toolbar == 'faq' %} class="active" {% endif %}><a href="#">FAQ</a></li>
                 </ul>
             </nav>
+            {% endblock %}
         </div>
     </header>
 
