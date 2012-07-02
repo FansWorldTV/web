@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Extensions;
 
+use Dodici\Fansworld\WebBundle\Entity\Comment;
+
 use Dodici\Fansworld\WebBundle\Entity\Friendship;
 use Dodici\Fansworld\WebBundle\Entity\Notification;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,15 +14,17 @@ class Meteor
 {
 	protected $request;
 	protected $em;
+	protected $appstate;
 	protected $host;
 	protected $port;
 	protected $clientport;
 	protected $socket;
 
-    function __construct(EntityManager $em, $host='127.0.0.1', $port='4671', $clientport='4670')
+    function __construct(EntityManager $em, $appstate, $host='127.0.0.1', $port='4671', $clientport='4670')
     {
         $this->request = Request::createFromGlobals();
         $this->em = $em;
+        $this->appstate = $appstate;
         $this->host = $host;
         $this->port = $port;
         $this->clientport = $clientport;
@@ -36,6 +40,28 @@ class Meteor
 	    	return $this->sendToSocket(array('t' => 'n', 'id' => $entity->getId()), $this->encryptChannelName('notification', $entity->getTarget()));
     	} elseif ($entity instanceof Friendship) {
     		return $this->sendToSocket(array('t' => 'f', 'id' => $entity->getId()), $this->encryptChannelName('notification', $entity->getTarget()));
+    	} elseif ($entity instanceof Comment) {
+    	    $possiblewalls = array(
+    	        $entity->getTarget(), $entity->getVideo(), $entity->getPhoto(), $entity->getAlbum(), $entity->getContest(), $entity->getEvent(),
+    	        $entity->getMeeting()
+    	    );
+    	    
+    	    $wallname = null;
+    	    
+    	    foreach ($possiblewalls as $pw) {
+    	        if ($pw) {
+    	            $wallname = 'wall_' . $this->appstate->getType($pw) . '_' . $pw->getId();
+    	            break;
+    	        }
+    	    }
+    	    
+    	    if ($wallname) {
+        	    $data = array('t' => 'c', 'w' => $wallname, 'id' => $entity->getId());
+        	    if ($entity->getComment()) $data['p'] = $entity->getComment()->getId();
+        	    return $this->sendToSocket($data, 'wall_'.$wallname);
+    	    } else {
+    	        throw new \Exception('Could not form wall channel name for comment - no owner entity found');
+    	    }
     	} else {
     		return false;
     	}

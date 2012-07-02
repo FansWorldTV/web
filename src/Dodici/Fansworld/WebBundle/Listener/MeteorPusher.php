@@ -2,6 +2,7 @@
 
 namespace Dodici\Fansworld\WebBundle\Listener;
 
+use Dodici\Fansworld\WebBundle\Entity\Comment;
 use Dodici\Fansworld\WebBundle\Entity\Friendship;
 use Symfony\Component\HttpFoundation\Request;
 use Dodici\Fansworld\WebBundle\Entity\Notification;
@@ -25,6 +26,7 @@ class MeteorPusher
         $entity = $eventArgs->getEntity();
         $em = $eventArgs->getEntityManager();
 
+        /* NOTIFICATIONS / FRIENDSHIPS */
         if ($entity instanceof Notification || $entity instanceof Friendship) {
             $target = $entity->getTarget();
             $allowed = $target->getNotifyprefs();
@@ -45,6 +47,11 @@ class MeteorPusher
                     $em->flush();
                 }
             }
+        }
+        
+        /* COMMENTS */
+        if ($entity instanceof Comment) {
+            $this->container->get('meteor')->push($entity);
         }
     }
 
