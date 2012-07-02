@@ -36,10 +36,14 @@ class Meteor
      */
     public function push($entity)
     {
-    	if ($entity instanceof Notification) {
-	    	return $this->sendToSocket(array('t' => 'n', 'id' => $entity->getId()), $this->encryptChannelName('notification', $entity->getTarget()));
-    	} elseif ($entity instanceof Friendship) {
-    		return $this->sendToSocket(array('t' => 'f', 'id' => $entity->getId()), $this->encryptChannelName('notification', $entity->getTarget()));
+    	if ($entity instanceof Notification || $entity instanceof Friendship) {
+	    	return $this->sendToSocket(
+	    	    array(
+	    	    	't' => (($entity instanceof Notification) ? 'n' : 'f'), 
+	    	    	'id' => $entity->getId()
+	    	    ), 
+	    	    $this->encryptChannelName('notification', $entity->getTarget())
+	    	);
     	} elseif ($entity instanceof Comment) {
     	    $possiblewalls = array(
     	        $entity->getTarget(), $entity->getVideo(), $entity->getPhoto(), $entity->getAlbum(), $entity->getContest(), $entity->getEvent(),
@@ -50,7 +54,7 @@ class Meteor
     	    
     	    foreach ($possiblewalls as $pw) {
     	        if ($pw) {
-    	            $wallname = 'wall_' . $this->appstate->getType($pw) . '_' . $pw->getId();
+    	            $wallname = $this->appstate->getType($pw) . '_' . $pw->getId();
     	            break;
     	        }
     	    }

@@ -13,6 +13,8 @@ notifications.listen = function(){
                 notifications.handleNotification(response.id);
             }else if(response.t == 'f'){
                 notifications.handleFriendship(response.id);
+            }else if(response.t == 'c'){
+                notifications.handleComment(response.w, response.id, response.p)
             }
         }
     }
@@ -21,6 +23,12 @@ notifications.listen = function(){
         Meteor.registerEventCallback("process", handleData);
         Meteor.joinChannel(notificationChannel, 0);
         Meteor.mode = 'stream';
+        
+        var walls = $('[data-wall]');
+        $.each(walls, function(){
+            var wallname = $(this).attr('data-wall');
+            Meteor.joinChannel('wall_' + wallname, 0);
+        });
                                        	            
         // Start streaming!
         Meteor.connect();
@@ -105,6 +113,12 @@ notifications.handleFriendship = function(id){
             },300);
         }
     });
+};
+
+notifications.handleComment = function(wallname, id, parent) {
+    if (!($('[data-comment="'+id+'"]').length)) {
+        // TODO: render comment in appropiate wall container
+    }
 };
 
 $(document).ready(function(){
