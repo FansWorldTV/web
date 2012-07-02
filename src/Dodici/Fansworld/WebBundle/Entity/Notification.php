@@ -19,6 +19,9 @@ class Notification
     const TYPE_FORUM_ANSWERED = 5;
     const TYPE_VIDEO_PROCESSED = 6;
     
+    // Artificial type for Friendship
+    const TYPE_FRIENDSHIP_CREATED = 99;
+    
     /**
      * @var bigint $id
      *
@@ -153,7 +156,10 @@ class Notification
             self::TYPE_FORUM_CREATED => 'forum_created',
             self::TYPE_FRIENDSHIP_ACCEPTED => 'friendship_accepted',
             self::TYPE_USER_TAGGED => 'user_tagged',
-            self::TYPE_VIDEO_PROCESSED => 'video_processed'
+            self::TYPE_VIDEO_PROCESSED => 'video_processed',
+            
+            // Artificial type
+            self::TYPE_FRIENDSHIP_CREATED => 'friendship_created',
     	);
     }
     
