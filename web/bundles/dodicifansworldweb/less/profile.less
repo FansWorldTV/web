@@ -49,10 +49,12 @@
 }
 
 .green-circle{
-    width: 22px; height: 22px; 
-    -webkit-border-radius: 5em; -moz-border-radius: 5em;
+    display: block;
+    .square(22px);
+    .border-radius(5em);
     background-color: #b8ce01;
     border-color: #b8ce01;
+    margin: 0 !important;
     
     p {
         .center-block();
@@ -63,12 +65,24 @@
     }
 }
 
-dl.with-circles {
-    dt span {
-        margin-top: 3px;
-        margin-left: 15px;
+.numbered{
+    span {
+        display: block;
+        .size(22px, 26px);
+        .border-radius(5em);
+        .pull-left();
+        margin-top: -5px;
+        margin-left: 0;
+        margin-right: 11px;
+        background-color: #b8ce01;
+        border-color: #b8ce01;
+        text-align: center;
+        padding-top: 5px;
+        color: white;
     }
+}
 
+dl.with-circles {
     dd {
         margin-top: 15px;
         margin-left: 37px;
