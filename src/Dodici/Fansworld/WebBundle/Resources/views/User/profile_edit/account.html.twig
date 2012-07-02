@@ -1,79 +1,83 @@
 {% extends "DodiciFansworldWebBundle:User:profile_edit_base.html.twig" %}
 
+{% block user_edit_toolbar %}
+	{% set current_edit_toolbar = 'account' %}
+	{{ parent() }}
+{% endblock %}
+
 {% block profile_edit_body %}
+        {% if user == app.user %}
+            {% set userLogged = true %}
+        {% else %}
+            {% set userLogged = false %}
+        {% endif %}
 
-{% if user == app.user %}
-    {% set userLogged = true %}
-{% else %}
-    {% set userLogged = false %}
-{% endif %}
+        <section id="personalData" class="row-fluid">
+            <h4>Tus Datos Personales:{% if userLogged %}<a href="#" class="pull-right">Editar</a>{% endif %}</h4>
+            <dl class="dl-horizontal">
+                <dt>Usuario</dt>
+                <dd><strong>{{ app.user.username }}</strong> ({{ path('user_wall', {'username':user.username}) }})</dd>
+                <dt>Email</dt>
+                <dd>{{ user.email }}</dd>
+                <dt>Dirección</dt>
+                <dd>{{ user.address }}</dd>
+                <dt>Nombre</dt>
+                <dd>{{ user.firstname }}</dd>
+                <dt>Apellido</dt>
+                <dd>{{ user.lastname }}</dd>
+                <dt>Género</dt>
+                <dd>{% if user.sex == 'm' %}Hombre{% else %}Mujer{% endif %}</dd>
+                <dt>Fecha Nac.</dt>
+                <dd>{{ user.birthday|date() }}</dd>
+                <dt>Ciudad, Pais</dt>
+                <dd>{{ user.city }}, {{ user.country }}</dd>
+            </dl>
+        </section>
 
-<section id="personalData" class="row-fluid">
-    <h4>Tus Datos Personales:{% if userLogged %}<a href="#" class="pull-right">Editar</a>{% endif %}</h4>
-    <dl class="dl-horizontal">
-        <dt>Usuario</dt>
-        <dd><strong>{{ app.user.username }}</strong> ({{ path('user_wall', {'username':user.username}) }})</dd>
-        <dt>Email</dt>
-        <dd>{{ user.email }}</dd>
-        <dt>Dirección</dt>
-        <dd>{{ user.address }}</dd>
-        <dt>Nombre</dt>
-        <dd>{{ user.firstname }}</dd>
-        <dt>Apellido</dt>
-        <dd>{{ user.lastname }}</dd>
-        <dt>Género</dt>
-        <dd>{% if user.sex == 'm' %}Hombre{% else %}Mujer{% endif %}</dd>
-        <dt>Fecha Nac.</dt>
-        <dd>{{ user.birthday|date() }}</dd>
-        <dt>Ciudad, Pais</dt>
-        <dd>{{ user.city }}, {{ user.country }}</dd>
-    </dl>
-</section>
-
-<section id="aboutMe" class="row-fluid">
-    <h4>Sobre mi: {% if userLogged %}<a href="#" class="pull-right">Editar</a>{% endif %}</h4>
-    <p>{{ user.content }}</p>
-</section>
+        <section id="aboutMe" class="row-fluid">
+            <h4>Sobre mi: {% if userLogged %}<a href="#" class="pull-right">Editar</a>{% endif %}</h4>
+            <p>{{ user.content }}</p>
+        </section>
 
 
-<section id="restrictedMode" class="row-fluid">
-    <h5>Modo restringido:</h5>
+        <section id="restrictedMode" class="row-fluid">
+            <h5>Modo restringido:</h5>
 
-    {% if userLogged %}
-    <span>
-        <button class="btn btn-primary pull-left {% if user.restricted %}active{% endif %}" data-toggle="button">Activar</button>
-        <i class="icon-question-sign"></i>
-    </span>
-    <div class="clearfix"></div>
-    {% else %}
-    
-    {% endif %}
-</section>
+            {% if userLogged %}
+            <span>
+                <button class="btn btn-primary pull-left {% if user.restricted %}active{% endif %}" data-toggle="button">Activar</button>
+                <i class="icon-question-sign"></i>
+            </span>
+            <div class="clearfix"></div>
+            {% else %}
 
-<section id="socialConnect" class="span7">
-    <section class="row">
-        <div class="span4">
-            <img src="{{ asset("bundles/dodicifansworldweb/images/tw-logo.png") }}" alt="Twitter" />
-            Vincular con twitter:
-        </div>
-        <div class="span2">
-            @nahuerosso
-        </div>
-        <div class="span1">
-            <a href="#"  class="pull-right">Editar</a>
-        </div>
+            {% endif %}
+        </section>
+
+        <section id="socialConnect" class="span7">
+            <section class="row">
+                <div class="span4">
+                    <img src="{{ asset("bundles/dodicifansworldweb/images/tw-logo.png") }}" alt="Twitter" />
+                    Vincular con twitter:
+                </div>
+                <div class="span2">
+                    @nahuerosso
+                </div>
+                <div class="span1">
+                    <a href="#"  class="pull-right">Editar</a>
+                </div>
+            </section>
+            <section class="row">
+                <div class="span4">
+                    <img src="{{ asset("bundles/dodicifansworldweb/images/tw-logo.png") }}" alt="Twitter" />
+                    Vincular con facebook:
+                </div>
+                <div class="span2">
+                    Nahuel Rosso
+                </div>
+                <div class="span1">
+                    <a href="#"  class="pull-right">Editar</a>
+                </div>
+            </section>
     </section>
-    <section class="row">
-        <div class="span4">
-            <img src="{{ asset("bundles/dodicifansworldweb/images/tw-logo.png") }}" alt="Twitter" />
-            Vincular con facebook:
-        </div>
-        <div class="span2">
-            Nahuel Rosso
-        </div>
-        <div class="span1">
-            <a href="#"  class="pull-right">Editar</a>
-        </div>
-    </section>
-</section>
 {% endblock %}
