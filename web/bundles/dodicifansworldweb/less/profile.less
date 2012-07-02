@@ -47,3 +47,40 @@
 #avatar img {
     .square(100px);
 }
+
+.green-circle{
+    width: 22px; height: 22px; 
+    -webkit-border-radius: 5em; -moz-border-radius: 5em;
+    background-color: #b8ce01;
+    border-color: #b8ce01;
+    
+    p {
+        .center-block();
+        color: white;
+        padding-top: 2px;
+        padding-left: 7px;
+        font-weight: bold;
+    }
+}
+
+dl.with-circles {
+    dt span {
+        margin-top: 3px;
+        margin-left: 15px;
+    }
+
+    dd {
+        margin-top: 15px;
+        margin-left: 37px;
+
+        div.row{
+            margin-left:1px;
+        }
+        
+        .error-passwords {
+            color: @gray;
+            font-size: 10px;
+            width: 100%;
+        }
+    }
+}

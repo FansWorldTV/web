@@ -24,11 +24,15 @@ class SiteController extends Controller
     public function getRepository($entity, $environment = "FansworldWeb")
     {
         $entity = ucfirst($entity);
-        if ($entity == 'Newspost') $entity = 'NewsPost';
-        if ($entity == 'Forumpost') $entity = 'ForumPost';
-        if ($entity == 'Contestparticipant') $entity = 'ContestParticipant';
-        if ($entity == 'Quizanswer') $entity = 'QuizAnswer';
-    	if (strtolower($entity) == 'user') {
+        if ($entity == 'Newspost')
+            $entity = 'NewsPost';
+        if ($entity == 'Forumpost')
+            $entity = 'ForumPost';
+        if ($entity == 'Contestparticipant')
+            $entity = 'ContestParticipant';
+        if ($entity == 'Quizanswer')
+            $entity = 'QuizAnswer';
+        if (strtolower($entity) == 'user') {
             return $this->getDoctrine()->getRepository("ApplicationSonataUserBundle:User");
         } else {
             return $this->getDoctrine()->getRepository("Dodici" . $environment . "Bundle:" . $entity);
