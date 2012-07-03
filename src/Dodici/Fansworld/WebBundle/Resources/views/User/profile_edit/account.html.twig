@@ -13,45 +13,58 @@
         {% endif %}
 
         <section id="personalData" class="row-fluid">
-            <h4>Tus Datos Personales:{% if userLogged %}<a href="#" class="pull-right">Editar</a>{% endif %}</h4>
+            <h4>Tus Datos Personales:{% if userLogged %}<a href="{{ path('fos_user_profile_edit') }}" class="pull-right">Editar</a>{% endif %}</h4>
             <dl class="dl-horizontal">
-                <dt>Usuario</dt>
-                <dd><strong>{{ app.user.username }}</strong> ({{ path('user_wall', {'username':user.username}) }})</dd>
-                <dt>Email</dt>
-                <dd>{{ user.email }}</dd>
-                <dt>Dirección</dt>
-                <dd>{{ user.address }}</dd>
-                <dt>Nombre</dt>
-                <dd>{{ user.firstname }}</dd>
-                <dt>Apellido</dt>
-                <dd>{{ user.lastname }}</dd>
-                <dt>Género</dt>
-                <dd>{% if user.sex == 'm' %}Hombre{% else %}Mujer{% endif %}</dd>
-                <dt>Fecha Nac.</dt>
-                <dd>{{ user.birthday|date() }}</dd>
-                <dt>Ciudad, Pais</dt>
-                <dd>{{ user.city }}, {{ user.country }}</dd>
+                {% if user.username %}
+                    <dt>Usuario</dt>
+                        <dd><strong>{{ user.username }}</strong> ({{ path('user_wall', {'username':user.username}) }})</dd>
+                {% endif %}
+                
+                {% if user.email %}
+                    <dt>Email</dt>
+                        <dd>{{ user.email }}</dd>
+                {% endif %}
+                
+                {% if user.address %}
+                    <dt>Dirección</dt>
+                        <dd>{{ user.address }}</dd>
+                {% endif %}
+                        
+                {% if user.firstname %}
+                    <dt>Nombre</dt>
+                        <dd>{{ user.firstname }}</dd>
+                {% endif %}
+                
+                {% if user.lastname %}
+                    <dt>Apellido</dt>
+                        <dd>{{ user.lastname }}</dd>
+                {% endif %}
+                
+                {% if user.sex %}
+                    <dt>Género</dt>
+                        <dd>{% if user.sex == 'm' %}Hombre{% else %}Mujer{% endif %}</dd>
+                {% endif %}
+                
+                {% if user.birthday %}
+                    <dt>Fecha Nac.</dt>
+                        <dd>{{ user.birthday|date() }}</dd>
+                {% endif %}
+                
+                {% if user.city and user.country %}
+                        <dt>Ciudad, Pais</dt>
+                            <dd>{{ user.city }}, {{ user.country }}</dd>
+                {% endif %}
             </dl>
         </section>
 
         <section id="aboutMe" class="row-fluid">
-            <h4>Sobre mi: {% if userLogged %}<a href="#" class="pull-right">Editar</a>{% endif %}</h4>
+            <h4>Sobre mi: </h4>
             <p>{{ user.content }}</p>
         </section>
 
 
         <section id="restrictedMode" class="row-fluid">
-            <h5>Modo restringido:</h5>
-
-            {% if userLogged %}
-            <span>
-                <button class="btn btn-primary pull-left {% if user.restricted %}active{% endif %}" data-toggle="button">Activar</button>
-                <i class="icon-question-sign"></i>
-            </span>
-            <div class="clearfix"></div>
-            {% else %}
-
-            {% endif %}
+            <h5>Modo restringido: {% if user.restricted %}<span class="green">ON</span>{% else %}<span class="red">OFF</span>{% endif %}</h5>
         </section>
 
         <section id="socialConnect" class="span7">
@@ -63,9 +76,11 @@
                 <div class="span2">
                     @nahuerosso
                 </div>
+                {% if userLogged %}
                 <div class="span1">
                     <a href="#"  class="pull-right">Editar</a>
                 </div>
+                {% endif %}
             </section>
             <section class="row">
                 <div class="span4">
@@ -75,9 +90,11 @@
                 <div class="span2">
                     Nahuel Rosso
                 </div>
+                {% if userLogged %}
                 <div class="span1">
                     <a href="#"  class="pull-right">Editar</a>
                 </div>
+                {% endif %}
             </section>
     </section>
 {% endblock %}

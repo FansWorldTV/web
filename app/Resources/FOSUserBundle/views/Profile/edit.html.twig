@@ -13,15 +13,10 @@
 {% endblock %}
 
 {% block user_edit_toolbar %}
-	{% set current_edit_toolbar = 'profile' %}
+	{% set current_edit_toolbar = 'account' %}
 	{{ parent() }}
 {% endblock %}
 
-{% block profile_tabs %}
-	{% set active_tab = 'detail' %}
-	{{ parent() }}
-{% endblock %}
-
-{% block inner_content %}
+{% block profile_edit_body %}
 	{% include "FOSUserBundle:Profile:edit_content.html.twig" %}
 {% endblock %}
