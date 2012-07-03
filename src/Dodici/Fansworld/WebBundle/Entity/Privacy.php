@@ -15,4 +15,10 @@ class Privacy
 			self::ONLY_ME => 'only_me'
 		);
 	}
+	
+	public static function getFields() {
+	    return array(
+	        'email', 'address', 'firstname', 'lastname', 'sex', 'birthday', 'country', 'city', 'phone', 'content', 'facebook', 'twitter'
+	    );
+	}
 }
