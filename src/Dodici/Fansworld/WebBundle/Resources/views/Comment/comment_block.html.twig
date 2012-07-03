@@ -7,9 +7,7 @@
 		{% include 'DodiciFansworldWebBundle:Comment:comment_form.html.twig' with {entity: entity} %}
 	{% endif %}
 	
-	{% for comment in comments %}
-		{% if appstate.canview(comment) %}
-			{% include 'DodiciFansworldWebBundle:Comment:comment.html.twig' with {comment: comment} %}
-		{% endif %}
-	{% endfor %}
+	<div data-wall="{{ appstate.type(entity) ~ '_' ~ entity.id }}">
+		
+	</div>
 </div>

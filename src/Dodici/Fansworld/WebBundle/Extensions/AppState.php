@@ -307,9 +307,9 @@ class AppState
 		return strtolower(end($exp));
     }
 
-    public function getComments($entity)
+    public function getComments($entity, $lastId=null, $limit=self::LIMIT_WALL)
     {
-        $comments = $this->getRepository('DodiciFansworldWebBundle:Comment')->wallEntity($entity, $this->user, null, self::LIMIT_WALL, 0);
+        $comments = $this->getRepository('DodiciFansworldWebBundle:Comment')->wallEntity($entity, $this->user, $lastId, $limit);
         return $comments;
     }
 

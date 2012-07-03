@@ -1,5 +1,5 @@
 {% block comment %}
-<div class="{% block comment_block_class %}actualizacion clearfix comment_unit{% endblock %}">
+<div class="{% block comment_block_class %}actualizacion clearfix comment_unit{% endblock %}" data-comment="{{ comment.id }}">
 {% block comment_content %}
 	{% block avatar %}
 		{% if image is defined and image is not null %}
@@ -40,9 +40,11 @@
                                             {% include 'DodiciFansworldWebBundle:Comment:comment_form.html.twig' with {shortform: true, entity: comment} %}
                                         </div>
 	                  
-                                        {% for subcomment in comment.comments %}
-                                                {% include 'DodiciFansworldWebBundle:Comment:comment.html.twig' with {comment: subcomment} %}
-                                        {% endfor %}
+	                                    <div class="subcomment-container" data-subcomments="{{ comment.id }}">   
+	                                        {% for subcomment in comment.comments %}
+	                                                {% include 'DodiciFansworldWebBundle:Comment:comment.html.twig' with {comment: subcomment} %}
+	                                        {% endfor %}
+                                        </div>
                                     </div>
 				{% endif %}
 			{% endblock %}

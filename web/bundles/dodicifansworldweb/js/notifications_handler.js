@@ -21,17 +21,15 @@ notifications.listen = function(){
     
     if ((typeof Meteor != 'undefined') && (typeof notificationChannel != 'undefined')) {
         Meteor.registerEventCallback("process", handleData);
-        Meteor.joinChannel(notificationChannel, 0);
         Meteor.mode = 'stream';
+        Meteor.debugmode = true;
+        Meteor.pingtimeout = 3600000;
         
-        var walls = $('[data-wall]');
-        $.each(walls, function(){
-            var wallname = $(this).attr('data-wall');
-            Meteor.joinChannel('wall_' + wallname, 0);
-        });
+        
+        Meteor.joinChannel(notificationChannel);
+        Meteor.connect();
                                        	            
         // Start streaming!
-        Meteor.connect();
         console.log('Escuchando notifications...');
     }
 };
@@ -116,9 +114,7 @@ notifications.handleFriendship = function(id){
 };
 
 notifications.handleComment = function(wallname, id, parent) {
-    if (!($('[data-comment="'+id+'"]').length)) {
-        // TODO: render comment in appropiate wall container
-    }
+    $('[data-wall="'+wallname+'"]').addWallComment(id, parent);
 };
 
 $(document).ready(function(){

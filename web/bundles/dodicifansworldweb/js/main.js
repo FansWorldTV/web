@@ -116,6 +116,8 @@ var site = {
         site.showCommentForm();
         searchBox.init();
         site.BindLoginWidget();
+        
+        $('[data-wall]').wall();
     },
     
     parseTimes: function(){

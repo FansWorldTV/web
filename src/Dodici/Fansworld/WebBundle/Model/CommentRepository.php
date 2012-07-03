@@ -24,25 +24,26 @@ class CommentRepository extends CountBaseRepository
     	} else {
     		$classname = $this->getType($entity);
     	}
-    	$whereClause = '';
     	
-	   
    	
 		$query = $this->_em->createQuery('
     	SELECT c, cc
     	FROM \Dodici\Fansworld\WebBundle\Entity\Comment c
     	LEFT JOIN c.comments cc
+    	LEFT JOIN c.author ca
     	WHERE c.'.$classname.' = :entity 
     	AND c.active = true
     	AND c.comment IS NULL
     	AND (:lastId IS NULL OR ( c.id < :lastId ))    	
     	AND
     	(
+    		(c.author = :user)
+    		OR
     		(c.privacy = :everyone)
     		OR
 	    	(c.privacy = :friendsonly AND (:user IS NOT NULL) AND (
-	    		(SELECT COUNT(f.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = c.author AND f.target = :user) OR (f.target = c.author AND f.author = :user) AND f.active=true) >= 1
-	    	))
+	    		true = true
+            ))
     	)
     	
     	ORDER BY c.id DESC, cc.createdAt DESC
@@ -57,7 +58,7 @@ class CommentRepository extends CountBaseRepository
             $query = $query->setMaxResults((int)$limit);
         if ($offset !== null)
             $query = $query->setFirstResult((int)$offset);
-        
+            
         return $query->getResult();
 	}
 	

@@ -51,7 +51,7 @@ class CommentController extends SiteController
 
     /**
      * 
-     * @Route("/ajax/comment/post", name="comment_ajaxpost")
+     * @Route("/ajax/post", name="comment_ajaxpost")
      */
     public function ajaxPostAction()
     {
@@ -104,4 +104,54 @@ class CommentController extends SiteController
         }
     }
 
+	/**
+     *  @Route("/ajax/get/", name="comment_ajaxget")
+     */
+    public function ajaxGetAction()
+    {
+        $request = $this->getRequest();
+        
+        $commentId = $request->get('id', false);
+        $wallname = $request->get('wall');
+        $limit = $request->get('limit');
+        $response = array();
+
+        if ($commentId) {
+            $comment = $this->getRepository('Comment')->find($commentId);
+            if ($this->get('appstate')->canView($comment)) {
+                $response = $this->jsonComment($comment);
+            } else {
+                throw new HttpException(401, 'Cannot view comment, unauthorized');
+            }
+        } elseif ($wallname && !$commentId) {
+            $exp = explode('_', $wallname);
+            if (count($exp) != 2) throw new HttpException(400, 'Invalid wall id');
+            
+            $type = $exp[0]; $entityId = intval($exp[1]);
+            
+            $allowedtypes = array('user', 'video', 'photo', 'album', 'contest', 'proposal', 'team', 'event', 'meeting', 'idol');
+            
+            if (!in_array($type, $allowedtypes) || !$entityId) throw new HttpException(400, 'Invalid wall id');
+            
+            $entity = $this->getRepository($type)->find($entityId);
+            
+            if (!$entity || ($entity && property_exists($entity, 'active') && !$entity->getActive())) 
+                throw new HttpException(400, 'Wall entity not found');
+                
+            $comments = $this->get('appstate')->getComments($entity, null, $limit);
+            foreach ($comments as $comment) {
+                $response[] = $this->jsonComment($comment);
+            }
+            
+        } else {
+            throw new HttpException(400, 'Invalid request parameters');
+        }
+
+        return $this->jsonResponse($response);
+    }
+    
+    private function jsonComment(Comment $comment)
+    {
+        return $this->renderView('DodiciFansworldWebBundle:Comment:comment.html.twig', array('comment' => $comment));
+    }
 }
