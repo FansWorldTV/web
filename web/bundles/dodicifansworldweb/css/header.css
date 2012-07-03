@@ -115,3 +115,7 @@ header div#login-widget div.arrow-up-border {
 
 
 
+/* Footer */
+footer.navbar .nav > li > a.icon{
+	padding-top: 7px;
+}

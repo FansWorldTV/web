@@ -33,19 +33,19 @@
  	height: 36px;
  }
  
- 
+ /*
  .navbar-search .search-query,.navbar-search .search-query:-moz-placeholder{
     background-color: #ffffff;
     color: #000000;
     border: 1px solid white;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);  
- border-radius: 10px 0 0 10px;   	
+    border-radius: 10px 0 0 10px;   	
 }
 
 .navbar-search .input-append .add-on:last-child{
     border-radius: 0 10px 10px 0;
 }
-
+*/
 
 .btn-success {
     background-image: -moz-linear-gradient(center top , #8FCA48, #79C41E);
@@ -61,6 +61,41 @@ section.ayuda h2 .badge{
 p.help-block.error{
 	color: #CC3333;
 }
+
+.circular{
+	border-radius: 10px 10px 10px 10px;
+    color: white;
+    font-size: 13px;
+    padding: 1px 6px;
+}
+
+.circular-success{
+	background-color: #8FCA48;
+}
+
+
+.form-2column  label.control-label[for='fos_user_registration_form_accept_toc']{
+	width: 180px;
+}
+
+div.register h1{
+	color: #8cc63f;
+}
+
+div.register div.top > *{
+	margin-bottom: 5px;
+}
+
+div.register div.top{
+	border-bottom: 1px solid #D9D9D9;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+div.register div.bottom div.actions{
+    padding-left: 90px;    
+}
+
 
 @media (max-width: 767px) {
      .sidebar-nav-fixed {
@@ -126,4 +161,6 @@ p.help-block.error{
     position: relative !important;
 }
 
- 
+ .nav-collapse .nav > li > a, .nav-collapse .dropdown-menu a{
+	color: #E4E1BC;
+ }
