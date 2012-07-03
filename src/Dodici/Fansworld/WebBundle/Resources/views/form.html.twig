@@ -1,43 +1,44 @@
 {% block field_label %}
 {% spaceless %}
-    <label for="{{ id }}">
-    	{{ label|trans }}
-    	{% if required %}
-    		<span class="required" title="Campo requerido">*</span>
-    	{% endif %}
+    <label class='control-label' for="{{ id }}">
+        {{ label|trans }}
+        {% if required %}
+            <span class="required" title="Campo requerido">*</span>
+        {% endif %}
     </label>
 {% endspaceless %}
 {% endblock field_label %}
 
 {% block field_errors %}
-	{% spaceless %}
-	    {% if errors|length > 0 %}
-	    <ul class="errors">
-	        {% for error in errors %}
-	            <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
-	        {% endfor %}
-	    </ul>
-	    {% endif %}
-	{% endspaceless %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+            {% for error in errors %}
+                <p class="help-block error">{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</p>
+                
+            {% endfor %}
+        {% endif %}
+    {% endspaceless %}   
 {% endblock %}
+
 
 {% block field_row %}
 {% spaceless %}
-	{% if form.haschildren %}
-	<div class="unit">
-		{{ form_widget(form) }}
-	</div>
-	{% else %}
-    <li class="clearfix">
-    	{{ form_label(form) }}
-        <div class="field">
-	        {{ form_widget(form) }}
-	        {{ form_errors(form) }}
+    {% if form.haschildren %}
+    <div class="unit">
+        {{ form_widget(form) }}
+    </div>
+    {% else %}
+    <div class="control-group ">
+        {{ form_label(form) }}
+        <div class="controls">
+            {{ form_widget(form) }}
+            {{ form_errors(form) }}
         </div>
-    </li>
+    </div>
     {% endif %}
 {% endspaceless %}
 {% endblock field_row %}
+
 
 {% block choice_widget %}
 {% spaceless %}

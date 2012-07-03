@@ -81,9 +81,9 @@ function validateTocRegister()
 {
     $('input#fos_user_registration_form_accept_toc').click(function(e){
         if($(this).is(':checked')){
-            $('form.fos_user_registration_register button#submitRegister').removeAttr('disabled');
+            $('form.fos_user_registration_register button#submitRegister').removeAttr('disabled').addClass('btn-success');
         }else{
-            $('form.fos_user_registration_register button#submitRegister').attr('disabled','true');
+            $('form.fos_user_registration_register button#submitRegister').attr('disabled','true').removeClass('btn-success');
         }
         
         

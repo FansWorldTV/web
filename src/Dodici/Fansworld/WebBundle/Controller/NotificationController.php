@@ -32,21 +32,29 @@ class NotificationController extends SiteController
         $request = $this->getRequest();
         $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getEntityManager();
-        $preferences = $user->getNotifyprefs();
+        $notifyPreferences = $user->getNotifyprefs();
+        $notifyMail = $user->getNotifymail();
         $preftypes = Notification::getTypeList();
-        $preflist = array();
+        $prefList = array();
+        $maillist = array();
+       
         foreach ($preftypes as $key => $pt) {
-            $preflist[$key] = $this->trans('notification_'.$pt);
+            $prefList[$key] = $this->trans('notification_'.$pt);
+            $mailList[$key] = $this->trans('notification_'.$pt);
+            
         }
 
-        $defaultData = array('prefs' => $preferences);
+        $defaultData = array('prefs' => $notifyPreferences,
+                             'mails' => $notifyMail);
 
         $collectionConstraint = new Collection(array(
-                    'prefs' => array(new \Symfony\Component\Validator\Constraints\Choice(array('choices' => array_keys($preflist), 'multiple' => true))),
+                    'prefs' => array(new \Symfony\Component\Validator\Constraints\Choice(array('choices' => array_keys($prefList), 'multiple' => true))),
+        			'mails' => array(new \Symfony\Component\Validator\Constraints\Choice(array('choices' => array_keys($mailList), 'multiple' => true))),
                 ));
 
         $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
-                ->add('prefs', 'choice', array('required' => false, 'choices' => $preflist, 'label' => 'Notificar por mail', 'multiple' => true, 'expanded' => true))
+                ->add('prefs', 'choice', array('required' => false, 'choices' => $prefList, 'label' => 'Notificar por mail', 'multiple' => true, 'expanded' => true))
+                ->add('mails', 'choice', array('required' => false, 'choices' => $mailList, 'label' => 'Notificar por mail', 'multiple' => true, 'expanded' => true))
                 ->getForm();
 
 
@@ -57,6 +65,7 @@ class NotificationController extends SiteController
 
                 if ($form->isValid()) {
                     $user->setNotifyprefs($data['prefs']);
+                    $user->setNotifymail($data['mails']);
                     $em->persist($user);
                     $em->flush();
                     $this->get('session')->setFlash('success', '¡Has cambiado tus preferencias con éxito!');
@@ -66,7 +75,7 @@ class NotificationController extends SiteController
             }
         }
 
-        return array('form' => $form->createView());
+        return array('form' => $form->createView(), 'preftypes' => $preftypes);
     }
 
 }

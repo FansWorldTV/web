@@ -63,14 +63,18 @@ p.help-block.error{
 }
 
 .circular{
-	border-radius: 10px 10px 10px 10px;
-    color: white;
+	background-color: #F7F7F7;
+    border: 1px solid #C5C5C5;
+    border-radius: 10px 10px 10px 10px;
+    color: #BDBDBD;
     font-size: 13px;
     padding: 1px 6px;
 }
 
 .circular-success{
 	background-color: #8FCA48;
+	color: white;
+	border: none;
 }
 
 
@@ -161,6 +165,6 @@ div.register div.bottom div.actions{
     position: relative !important;
 }
 
- .nav-collapse .nav > li > a, .nav-collapse .dropdown-menu a{
+ .nav-collapse .nav > li > a{
 	color: #E4E1BC;
  }

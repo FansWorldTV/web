@@ -1,5 +1,5 @@
 {% set user = app.user %}
-{% extends "DodiciFansworldWebBundle:User:profile_edit.html.twig" %}
+{% extends "DodiciFansworldWebBundle:User:profile_edit_base.html.twig" %}
 
 {% form_theme form 'DodiciFansworldWebBundle::form.html.twig' %}
 
@@ -20,19 +20,43 @@
 	{{ parent() }}
 {% endblock %}
 
-{% block inner_content %}
-	<h1>Notificar por mail</h1>
-	<div class="greybox">
-		<form action="{{ path('notification_preferences') }}" method="post" enctype="multipart/form-data" class="bigform notify-prefs">
-			<div class="form-notifyprefs fieldcontainer">
-				<ul class="fields">
-	        		{{ form_widget(form) }}
-	        	</ul>
-			</div>
-			
-	        <div class="actions clearfix">
-	        	<input type="submit" name="submit" value="Guardar" class="btn_action" />
-	        </div>
-		</form>
+{% block profile_edit_body %}
+	<h1>Seleccione las opciones</h1>
+	<div class="row-fluid">
+        <div class='span8'>
+    		<form action="{{ path('notification_preferences') }}" method="post" enctype="multipart/form-data" class="notify-prefs">
+    			<div class="form-notifyprefs fieldcontainer">
+    				
+    	        		<table class='table'>
+                           <thead>
+                               <th>Seleccione las opciones</th>
+                               <th>En perfil</th>
+                               <th>Mail</th>
+                           </thead>
+                           <tbody>
+                                {% for preftype in preftypes|keys %}
+                                    <tr>
+                                      <td>{{ form_label(form.prefs[preftype]) }}</td>
+                                      <td>{{ form_widget(form.prefs[preftype]) }}</td>
+                                      <td>{{ form_widget(form.mails[preftype]) }}</td>
+                                    </tr>
+                                {% endfor %}
+                          </tbody>
+                        </table>
+    			</div>
+    	        <div class="actions clearfix">
+    	        	<button type="submit" name="submit" class='btn btn-success'>Guardar</button>
+    	        </div>
+    		</form>
+		</div>
+		<div class='span4'>
+            <section class='ayuda'>
+                <h2><span class="circular">?</span>Ayuda</h2>
+                <p>
+                    Phasellus gravida porttitor tristique. Aenean nisl nulla, sagittis at mattis sit amet, tincid
+                </p>
+            </section>
+		</div>
 	</div>
+	
 {% endblock %}
