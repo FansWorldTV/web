@@ -24,17 +24,16 @@
                           $.each(r, function(){
                              wallel.prepend(this.toString());
                           });
+                          if (typeof Meteor != 'undefined') {
+                              Meteor.joinChannel('wall_' + wallid);
+                          }
+                          wallel.removeClass('loading');
+                          wallel.attr('data-wall-loaded', 1);
                       }
-                  }
+                  },
+                  function(){},
+                  'get'
                   );
-                  
-                  
-                  if (typeof Meteor != 'undefined') {
-                      Meteor.joinChannel('wall_' + wallid);
-                  }
-                  
-                  wallel.removeClass('loading');
-                  wallel.attr('data-wall-loaded', 1);
               }
           }
       });
@@ -60,7 +59,9 @@
                       container.prepend(r.toString());
                   }
               }
-          }
+          },
+          function(){},
+          'get'
           );
       }
   };

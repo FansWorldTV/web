@@ -383,10 +383,12 @@ var ajax = {
         });
     },
   
-    genericAction: function(route, params, callback, errorCallback){
+    genericAction: function(route, params, callback, errorCallback, type){
+        if (typeof type == 'undefined') type = 'post';
         ajax.setCallback(callback, errorCallback);
         $.ajax({
             url: 'http://' + location.host + Routing.generate( appLocale + '_' + route),
+            type: type,
             data: params
         });
     }

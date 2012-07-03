@@ -154,7 +154,8 @@ class AppState
                     if ($user == $entity->getAuthor())
                         return true;
                     $frep = $this->getRepository('DodiciFansworldWebBundle:Friendship');
-                    $fr = $frep->findOneBy(array('author' => $user, 'target' => $entity->getAuthor(), 'active' => true));
+                    $fr = $frep->findOneBy(array('author' => $user->getId(), 'target' => $entity->getAuthor()->getId(), 'active' => true));
+                    
                     if (!$fr)
                         return false;
                 }
@@ -177,7 +178,7 @@ class AppState
             if ($viewer && ($privacy == Privacy::FRIENDS_ONLY)) {
                 if ($viewer == $user) return true;
                 $frep = $this->getRepository('DodiciFansworldWebBundle:Friendship');
-                $fr = $frep->findOneBy(array('author' => $viewer, 'target' => $user, 'active' => true));
+                $fr = $frep->findOneBy(array('author' => $viewer->getId(), 'target' => $user->getId(), 'active' => true));
             }
             
             if ($privacy == Privacy::ONLY_ME) return ($viewer == $user);
