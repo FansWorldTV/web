@@ -10,6 +10,8 @@
 
 namespace Application\Sonata\UserBundle\Entity;
 
+use Dodici\Fansworld\WebBundle\Entity\Privacy;
+
 use Dodici\Fansworld\WebBundle\Model\VisitableInterface;
 
 use Dodici\Fansworld\WebBundle\Entity\HasBadge;
@@ -279,7 +281,7 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
     	$this->idolships = new ArrayCollection();
     	$this->hasinterests = new ArrayCollection();
     	$this->hasbadges = new ArrayCollection();
-        $this->privacy = array();
+    	$this->privacy = Privacy::getDefaultFieldPrivacy();
         $this->notifyprefs = array_keys(Notification::getTypeList());
         $this->notifymail = array_keys(Notification::getTypeList());
         $this->idolCount = 0;
