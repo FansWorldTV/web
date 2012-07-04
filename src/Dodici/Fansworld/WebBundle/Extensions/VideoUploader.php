@@ -244,4 +244,15 @@ class VideoUploader
             return null;
         }
     }
+    
+    public function createVideoFromBinary($videocontent, User $author, $filename=null)
+    {
+        if ($videocontent) {
+            $tmpfile = tempnam('/tmp', 'IYT');
+            file_put_contents($tmpfile, $videocontent);
+            return $this->upload($tmpfile, $author,$filename);
+        } else {
+            throw new \Exception('No binary video content');
+        }
+    }
 }

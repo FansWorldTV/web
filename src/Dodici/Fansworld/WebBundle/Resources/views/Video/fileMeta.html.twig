@@ -24,15 +24,17 @@
                     });
                 }           
             }else{
-                location.href = "{{ path('video_show', {id: video.id, slug: video.slug}) }}";
+                location.href = "{{ path('video_user', {username: user.username}) }}";
             }
                         
         </script>
     {% else %}
     
         <div class="greybox">
-            <form action="{{ path('video_filemeta', {'idyoutube': idyoutube}) }}" method="post" enctype="multipart/form-data" class="bigform upload-video">
-                <img src='{{ metadata.thumbnail_url }}' />
+            <form action="{{ path('video_filemeta', {'videotemp': videotemp, 'fromuploader' : false}) }}" method="post" enctype="multipart/form-data" class="bigform upload-video">
+                {% if thumbnail_url is defined %}
+                    <img src='{{ thumbnail_url }}' />
+                {% endif %}
                 <div class="form-upload fieldcontainer">
                     <ul class="fields">
                         {{ form_widget(form) }}
