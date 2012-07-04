@@ -17,7 +17,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class CommentRepository extends CountBaseRepository
 {
-	public function wallEntity($entity,$user=null, $lastId = null,  $limit = null, $offset = null)
+	public function wallEntity($entity, $user=null, $lastId = null, $limit = null, $offset = null)
 	{
 		if ($entity instanceof \Application\Sonata\UserBundle\Entity\User) {
     		$classname = 'target';
@@ -41,8 +41,8 @@ class CommentRepository extends CountBaseRepository
     		OR
     		(c.privacy = :everyone)
     		OR
-	    	(c.privacy = :friendsonly AND (:user IS NOT NULL) AND (
-	    		true = true
+	    	((c.privacy = :friendsonly) AND (:user IS NOT NULL) AND (
+	    		(SELECT COUNT(iss.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship iss WHERE (iss.author = :user AND iss.target = ca.id AND iss.active = true)) >= 1
             ))
     	)
     	
