@@ -1,7 +1,6 @@
 .navbar .nav > li > a{
     color: #e4e1bc;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 15px;
 }
 .navbar .nav  li.show-on-collapse{
     display: none;  
@@ -9,6 +8,21 @@
 
 .navbar .nav > li > a:hover{
     color: #ffffff;
+}
+
+/* User menu */
+
+.navbar .user-menu li > a {
+    font-size: 13px;
+}
+
+.navbar .avatar {
+    .square(40px);
+    .pull-right();
+    
+    img {
+        .square(40px);
+    }
 }
 
 /* Login widget */
@@ -111,9 +125,22 @@ header div#login-widget div.arrow-up-border {
     width: 0;
 }
 
-
-
 /* Footer */
+footer.navbar, footer.navbar .nav > li > a {
+    font-size: 13px;
+}
 footer.navbar .nav > li > a.icon{
     padding-top: 7px;
+}
+footer.navbar .institutional > li > a {
+    font-size: 12px;
+}
+footer.navbar .institutional > li {
+    > .icon {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+    &:last-child > .icon {
+        padding-right: 10px;
+    }
 }
