@@ -4,9 +4,9 @@
     <h4 class="numbered"><span>1</span>Modificar Perfil</h4>
     <div class="clearfix"></div>
 
-    <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register bigform">
+    <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register form-2column">
         {{ form_errors(form) }}
-        <div class="column span3">
+        <div class="column span6">
         {% for key, val in form %}
             {% if key == 'user' %}
                 {% for k,row in val %}
@@ -19,7 +19,7 @@
                             </div>
                         </div>
         </div>
-        <div class="column span3">
+        <div class="column span6">
                     {% else %}
                         {{ form_row(row) }}
                     {% endif %}

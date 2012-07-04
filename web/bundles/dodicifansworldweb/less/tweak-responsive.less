@@ -58,6 +58,10 @@ section.ayuda h2 .badge{
     font-size: 16px;
 }
 
+section.ayuda h2 .circular{
+    margin-right: 10px;
+}
+
 p.help-block.error{
     color: #CC3333;
 }
@@ -100,7 +104,52 @@ div.register div.bottom div.actions{
     padding-left: 90px;    
 }
 
+@media (max-width: 1024px) {
+    header.navbar  ul.nav li.dropdown a.dropdown-toggle.username span{
+        display:none;
+    }
+}
 
+
+ 
+
+@media (max-width: 979px) {
+     .sidebar-nav-fixed {
+        width: 3%;
+        top: 40px;
+     }
+     
+    header div#login-widget{
+       top:30px;
+     }
+     
+    .navbar-fixed-top, .navbar-fixed-bottom{
+       position: fixed !important;
+    }
+    
+    body{
+       padding-top: 54px;
+    }
+    
+    .navbar-fixed-top .navbar-inner, .navbar-fixed-bottom .navbar-inner{
+       padding: 0 5px;
+    }
+    
+    form.form-2column p.help-block{
+       padding: 0;
+    }
+    
+    header.navbar nav.navbar-inner div.container ul.nav.usermenu{
+        left: auto;
+        position: absolute;
+        right: 55px;
+        top: 0;
+        a.dropdown-toggle.username span{
+            display: inline-block;
+        }
+    }
+ }
+ 
 @media (max-width: 767px) {
      .sidebar-nav-fixed {
         position:static;
@@ -130,37 +179,25 @@ div.register div.bottom div.actions{
     div.register div.bottom form p.help-block{
        padding: 90px;
     }
-     
+    
+    header.navbar nav.navbar-inner div.container ul.nav.usermenu{
+        right: 75px;
+    }
+    
  }
 
-@media (max-width: 979px) {
-     .sidebar-nav-fixed {
-        width: 3%;
-        top: 40px;
-     }
-     
-    header div#login-widget{
-       top:30px;
-     }
-     
-    .navbar-fixed-top, .navbar-fixed-bottom{
-       position: fixed !important;
+@media (max-width: 550px) {
+     header.navbar  ul.nav li.dropdown a.dropdown-toggle.username{ 
+        span{
+            visibility: hidden;
+        }
+        b#overimage{
+            visibility: visible !important;
+        }
     }
-    
-    body{
-       padding-top: 54px;
-    }
-    
-    .navbar-fixed-top .navbar-inner, .navbar-fixed-bottom .navbar-inner{
-       padding: 0 5px;
-    }
-    
-    div.register div.bottom form p.help-block{
-       padding: 0;
-    }
-    
- }
- 
+}
+
+
  .navbar .btn-navbar{
     position: relative !important;
 }

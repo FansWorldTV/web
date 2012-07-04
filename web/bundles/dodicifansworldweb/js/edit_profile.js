@@ -1,8 +1,10 @@
 $(function(){
+    /*
     $('#form_prefs input[type="checkbox"], .form-profile input[type="checkbox"]').checkbox({
-        empty: emptyCheckboxImg
+        empty: emptyCheckboxImg,
+        cls: 'jquery-safari-checkbox'
     });
-	
+	*/
     filterCityField(function(){
         $('#fos_user_profile_form_user_city').val(selectedCity);
     });
