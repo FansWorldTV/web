@@ -22,7 +22,7 @@
                     <li {% if current_edit_toolbar == 'password' %} class="active" {% endif %}><a href="{{ path('fos_user_change_password') }}">Contraseña</a></li>
                     <li {% if current_edit_toolbar == 'notifications' %} class="active" {% endif %}><a href="{{ path('notification_preferences') }}">Notificaciones</a></li>
                     <li {% if current_edit_toolbar == 'interests' %} class="active" {% endif %}><a href="{{ path('interest_edit') }}">Intereses</a></li>
-                    <li {% if current_edit_toolbar == 'privacy' %} class="active" {% endif %}><a href="#">Privacidad</a></li>
+                    <li {% if current_edit_toolbar == 'privacy' %} class="active" {% endif %}><a href="{{ path('profile_privacy') }}">Privacidad</a></li>
                 </ul>
             </nav>
             {% endblock %}

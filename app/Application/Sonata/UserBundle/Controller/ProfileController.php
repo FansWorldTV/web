@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Dodici\Fansworld\WebBundle\Entity\Privacy;
+use Symfony\Component\HttpFoundation\Request;
 
 class ProfileController extends BaseController
 {
@@ -48,4 +50,5 @@ class ProfileController extends BaseController
                         'DodiciFansworldWebBundle:User:profile_edit/account.html.twig', array('user' => $user)
         );
     }
+
 }
