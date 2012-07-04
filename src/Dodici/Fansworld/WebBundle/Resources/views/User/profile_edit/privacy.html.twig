@@ -21,29 +21,4 @@
     </dl>
 </div>
 
-<script type="text/javascript">
-    $(document).ready(function(){
-        $("dl.privacies button.btn").click(function(){
-            var privacies = {};
-            
-            $(".privacies button").addClass('disabled');
-            
-            $(".privacies dd").each(function(i, element){
-                var field = $(element).find('.active').attr('data-field');
-                var value = $(element).find('.active').attr('data-value');
-                privacies[field] = value;
-            });
-            
-            ajax.genericAction('profile_ajaxprivacy', {
-                'privacy' : privacies,
-            }, function(response){
-                success(response.error);
-                $(".privacies button").removeClass('disabled');
-            }, function(e){
-                error(e);
-            });
-        });
-    });
-</script>
-
 {% endblock %}

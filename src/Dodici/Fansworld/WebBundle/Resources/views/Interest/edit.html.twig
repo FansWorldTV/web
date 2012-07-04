@@ -1,5 +1,5 @@
 {% set user = app.user %}
-{% extends "DodiciFansworldWebBundle:User:profile_edit.html.twig" %}
+{% extends "DodiciFansworldWebBundle:User:profile_edit_base.html.twig" %}
 
 {% block title %}{{ parent() }} - Modificar Intereses{% endblock %}
 
@@ -13,12 +13,7 @@
     {{ parent() }}
 {% endblock %}
 
-{% block profile_tabs %}
-    {% set active_tab = 'detail' %}
-    {{ parent() }}
-{% endblock %}
-
-{% block inner_content %}
+{% block profile_edit_body %}
 <h1>Modificar Intereses</h1>
 <div class="greybox bigform interest-edit">
     <div class="fieldcontainer">

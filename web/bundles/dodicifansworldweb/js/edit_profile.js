@@ -14,6 +14,31 @@ $(function(){
             $('label[for="fos_user_profile_form_user_city"]').closest('li').effect("highlight",{},1000);
         });
     });
+    
+    $("dl.privacies button.btn").click(function(){
+        var privacies = {};
+
+        $(".privacies button").addClass('disabled');
+
+        $(".privacies dd").each(function(i, element){
+            var field = $(element).find('.active').attr('data-field');
+            var value = $(element).find('.active').attr('data-value');
+            privacies[field] = value;
+        });
+
+        var clickedField = $(this).attr('data-field');
+        var clickedValue = $(this).attr('data-value');
+        privacies[clickedField] = clickedValue;
+
+        ajax.genericAction('profile_ajaxprivacy', {
+            'privacy' : privacies,
+        }, function(response){
+            success(response.error);
+            $(".privacies button").removeClass('disabled');
+        }, function(e){
+            error(e);
+        });
+    });
 });
 
 function filterCityField(callback) {
