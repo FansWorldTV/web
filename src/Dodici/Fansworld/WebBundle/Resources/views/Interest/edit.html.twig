@@ -14,10 +14,12 @@
 {% endblock %}
 
 {% block profile_edit_body %}
-<h1>Modificar Intereses</h1>
-<div class="greybox bigform interest-edit">
-    <div class="fieldcontainer">
-        <ul class="categories fields" data-iduser="{{ app.user.id }}">
+    <section class="row-fluid">
+        <div class="row">
+            <h4 class="numbered"><span>1</span>Modificar Intereses</h4>
+        </div>
+        <div class="row">
+            <ul class="categories fields" data-iduser="{{ app.user.id }}">
                 {% for category in categories %}
                 <li class="clearfix interestcategory" data-idcategory="{{category.id}}">
                     <label>{{ category }}</label>
@@ -30,29 +32,32 @@
                 {% endfor %}
             </ul>
         </div>
-    </div>
+    </section>
 
     <hr/>
 
-    <h1>Equipo favorito de :</h1>
-    <div class="greybox bigform">
-        <div class="fieldcontainer">
-            <ul class="categories fields">
-                    {% for sport in sports %}
-                    <form action="" method="post" name="favorite">
-                        <li class="clearfix">
-                            <label>{{ sport.title }}</label>
-                            <select name="sport[{{ sport.id }}]" >
-                                <option value="null"></option>
-                                {% for team in sport.teams %}
-                                <option value="{{ team.id }}"  {% if sport.selected == team.id %} selected="true" {% endif %} >{{ team }}</option>
-                                {% endfor %}
-                            </select>
-                        </li>
-                    {% endfor %}
-                        <input type="submit" value="Guardar" />
-                    </form>
-                </ul>
-            </div>
+    <section class="row-fluid">
+        <div class="row">
+            <h4 class="numbered"><span>2</span>Equipo favorito de :</h4>
         </div>
+        <div class="row">
+            <ul class="categories fields">
+                {% for sport in sports %}
+                <form action="" method="post" name="favorite">
+                    <li class="clearfix">
+                        <label>{{ sport.title }}</label>
+                        <select name="sport[{{ sport.id }}]" >
+                            <option value="null"></option>
+                            {% for team in sport.teams %}
+                            <option value="{{ team.id }}"  {% if sport.selected == team.id %} selected="true" {% endif %} >{{ team }}</option>
+                            {% endfor %}
+                        </select>
+                    </li>
+                {% endfor %}
+                    <input type="submit" value="Guardar" />
+                </form>
+            </ul>
+        </div>
+    </section>
+
 {% endblock %}
