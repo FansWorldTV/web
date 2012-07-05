@@ -8,17 +8,29 @@
 {% block profile_edit_body %}
 
 <div class="row-fluid">
-    <h3>¿ Quien puede ver tu ...</h3>
-    <dl  class="privacies dl-horizontal">
-        {% for field, value in privacyFields %}
-            <dt>... {{ field|trans }} ?</dt>
-                <dd class="btn-group" data-toggle="buttons-radio">
-                        <button class="btn {% if value=='everyone' %}active{% endif %}" data-field="{{field}}" data-value="everyone">Público</button>
-                        <button class="btn {% if value=='friends_only' %}active{% endif %}" data-field="{{field}}" data-value="friends_only">Solo Fans</button>
-                        <button class="btn {% if value=='only_me' %}active{% endif %}" data-field="{{field}}" data-value="only_me">Privado</button>
-                </dd>
-        {% endfor %}
-    </dl>
+    <h3>Ajustes de privacidad</h3>
+    <table class="table">
+        <tbody>
+            {% for field, value in privacyFields %}
+                    {% if field == 'facebook' or field == 'twitter' %}
+                    {% else %}
+                        {% if app.user.fieldvalue(field) %}
+                            <tr>
+                                <td>{{ field|trans }}</td>
+                                <td>
+                                        {{ app.user.fieldvalue(field)|truncate(20) }}
+                                </td>
+                                <td class="btn-group" data-toggle="buttons-radio">
+                                        <button class="btn {% if value=='everyone' %}active{% endif %}" data-field="{{field}}" data-value="everyone">Público</button>
+                                        <button class="btn {% if value=='friends_only' %}active{% endif %}" data-field="{{field}}" data-value="friends_only">Solo Fans</button>
+                                        <button class="btn {% if value=='only_me' %}active{% endif %}" data-field="{{field}}" data-value="only_me">Privado</button>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
 {% endblock %}

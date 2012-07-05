@@ -1315,4 +1315,12 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
     {
         return $this->videoVisitCount;
     }
+    
+    /**
+     * Get a field value 
+     */
+    public function getFieldValue($fieldname)
+    {
+        return $this->{'get'.$fieldname}();
+    }
 }
