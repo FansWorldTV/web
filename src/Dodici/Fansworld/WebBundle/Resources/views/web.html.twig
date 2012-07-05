@@ -1,9 +1,6 @@
 {% extends "DodiciFansworldWebBundle::layout.html.twig" %}
 
-{% block stylesheets %}
-	{{ parent() }}
-	<link rel="stylesheet" href="{{ asset('bundles/dodicifansworldweb/css/web.css') }}" type="text/css" media="all">
-{% endblock %}
+
 
 {% block body %}
 	{{ facebook_initialize({'xfbml': true, 'fbAsyncInit': 'onFbInit();', 'culture': appstate.culture(app.request.locale) }) }}

@@ -114,6 +114,7 @@ class CommentController extends SiteController
         $commentId = $request->get('id', false);
         $wallname = $request->get('wall');
         $limit = $request->get('limit');
+        $lastid = $request->get('lastid');
         $response = array();
 
         if ($commentId) {
@@ -125,20 +126,23 @@ class CommentController extends SiteController
             }
         } elseif ($wallname && !$commentId) {
             $exp = explode('_', $wallname);
-            if (count($exp) != 2) throw new HttpException(400, 'Invalid wall id');
+            if (count($exp) != 2) 
+                throw new HttpException(400, 'Invalid wall id');
             
-            $type = $exp[0]; $entityId = intval($exp[1]);
+            $type = $exp[0]; 
+            $entityId = intval($exp[1]);
             
             $allowedtypes = array('user', 'video', 'photo', 'album', 'contest', 'proposal', 'team', 'event', 'meeting', 'idol');
             
-            if (!in_array($type, $allowedtypes) || !$entityId) throw new HttpException(400, 'Invalid wall id');
+            if (!in_array($type, $allowedtypes) || !$entityId) 
+                throw new HttpException(400, 'Invalid wall id');
             
             $entity = $this->getRepository($type)->find($entityId);
             
             if (!$entity || ($entity && property_exists($entity, 'active') && !$entity->getActive())) 
                 throw new HttpException(400, 'Wall entity not found');
                 
-            $comments = $this->get('appstate')->getComments($entity, null, $limit);
+            $comments = $this->get('appstate')->getComments($entity, $lastid, $limit);
             foreach ($comments as $comment) {
                 $response[] = $this->jsonComment($comment);
             }

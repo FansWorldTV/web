@@ -1,17 +1,27 @@
 {% block comment %}
 <div class="{% block comment_block_class %}actualizacion clearfix comment_unit{% endblock %}" data-comment="{{ comment.id }}">
 {% block comment_content %}
-	{% block avatar %}
-		{% if image is defined and image is not null %}
-		<div class="avatar">
-			{% thumbnail image, 'avatar' %}
-		</div>
-		{% endif %}
+    {% block comment_header %}
+    	<header>
+        	{% block avatar %}
+        		{% if image is defined and image is not null %}
+        		<div class="avatar">
+        			{% thumbnail image, 'avatar' %}
+        		</div>
+        		{% endif %}
+        	{% endblock %}
+        	<div class='action_container'>
+            	{% block action %}
+                    <span class="action_user"></span>
+                {% endblock %}
+            </div>
+            
+	   </header>
 	{% endblock %}
 	{% block info %}
 	<div class="{% block info_block_class %}status{% endblock %}">
 		{% block info_text %}
-			{% block action %}<span class="action_user"></span>{% endblock %}
+			
 			{% block title %}<span class="title"></span>{% endblock %}
 			{% block description %}<p></p>{% endblock %}
 			{% block date %}
