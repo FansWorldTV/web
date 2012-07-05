@@ -14,18 +14,19 @@
   &.right  { margin-left:  2px; }
   &.bottom { margin-top:   2px; }
   &.left   { margin-left: -2px; }
-  &.top .tooltip-arrow    { #popoverArrow > .top(); }
-  &.left .tooltip-arrow   { #popoverArrow > .left(); }
-  &.bottom .tooltip-arrow { #popoverArrow > .bottom(); }
-  &.right .tooltip-arrow  { #popoverArrow > .right(); }
+  &.top .tooltip-arrow    { #popoverArrow > .top(5px, #e0e0e0); }
+  &.left .tooltip-arrow   { #popoverArrow > .left(5px, #e0e0e0); }
+  &.bottom .tooltip-arrow { #popoverArrow > .bottom(5px, #e0e0e0); }
+  &.right .tooltip-arrow  { #popoverArrow > .right(5px, #e0e0e0); }
 }
 .tooltip-inner {
   max-width: 200px;
   padding: 3px 8px;
-  color: @white;
+  color: #333;
   text-align: center;
   text-decoration: none;
-  background-color: @black;
+  background-color: @white;
+  border: 1px solid #e0e0e0;
   .border-radius(4px);
 }
 .tooltip-arrow {
