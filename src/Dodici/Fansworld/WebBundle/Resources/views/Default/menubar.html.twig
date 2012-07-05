@@ -79,9 +79,9 @@
                                 <a href="{{ path('profile_account', {'username': user.username}) }}">Configuración de Cuenta</a>
                             </li>
                             <li>
-                                <a href="#">Configuración de Privacidad</a></li>
+                                <a href="{{ path('profile_privacy') }}">Configuración de Privacidad</a></li>
                             <li>
-                                <a href="#">Cambiar Contraseña</a></li>
+                                <a href="{{ path('fos_user_change_password') }}">Cambiar Contraseña</a></li>
                             <li>
                                 <a href="{{ path('notification_preferences') }}">Preferencias de Notificación</a></li>
                             <li class="divider"></li>
