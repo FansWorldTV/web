@@ -8,58 +8,70 @@
 {% endblock  %}
 
 {% block content %}
-<div class="contests">
-    <div class="cont clearfix">
-        <h1>{{ 'Contests'|trans }}
-            <ul>
-                <li><a href="#1" class="titleContestType">Tipo de Concurso</a>
-                    <ul class="contestType">
-                        <li><a href="#">{{ 'All'|trans }}</a></li>
-                        <li class="1"><a href="#">{{ 'Simple participation'|trans }}</a></li>
-                        <li class="2"><a href="#">{{ 'Text contest'|trans }}</a></li>
-                        <li class="3"><a href="#">{{ 'Contest photo'|trans }}</a></li>
-                        <li class="4"><a href="#">{{ 'Contest video'|trans }}</a></li>
+    <header class="row">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="#">{{ 'Contests'|trans }}</a>
+                    <ul class="nav pull-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tipo de concurso<b class="caret"></b></a>
+                            <ul class="dropdown-menu contestType">
+                                <li class="1"><a href="#">{{ 'Simple participation'|trans }}</a></li>
+                                <li class="2"><a href="#">{{ 'Text contest'|trans }}</a></li>
+                                <li class="3"><a href="#">{{ 'Contest photo'|trans }}</a></li>
+                                <li class="4"><a href="#">{{ 'Contest video'|trans }}</a></li>
+                            </ul>
+                        </li>
                     </ul>
-                </li>
-            </ul>
-        </h1>
-        <div class="listContests">
-            <div class="nota loading border0"></div>
-            {% if contests|length>0  %}
-                {% for contest in contests  %}
-                    <div class="nota clearfix">
-                        <h2><a href="{{ path('contest_show', {'id':contest.id, 'slug': contest.slug}) }}">{{ contest.title }}</a></h2>
-                        {% if contest.image %}
-                        <div class="media"><a href="{{ path('contest_show', {'id':contest.id, slug: contest.slug}) }}">{% thumbnail contest.image, 'small' %}</a></div>
-                        {% endif %}
-                        <div class="contenido">
-                            <div> {{ contest.content|raw }} </div>
-                            <div class="options"><a class="btn_action2" href="{{ path('contest_show', {'id':contest.id, 'slug': contest.slug}) }}" >{{ 'Participate'|trans }}</a></div>
-                        </div>
-                    </div>
-                {% endfor %}
-            {% else %}    
-                <div class="nota"><h2>{{ 'No results'|trans }}</h2></div>
-            {% endif %}
-        </div>    
-        {% if addMore %}
-            <a href="#" id="addMore" class="loadmore contests">{{ 'Add more'|trans }}</a>
-        {% endif %}
-    </div>
-    <div id="templates" class="contests hidden">
-        <div class="nota clearfix template">
-            <h2><a href=""></a></h2>
-            <div class="media"><a href=""></a></div>
-            <div class="contenido">
-                <p></p>
-                <div class="options"><a class="btn_action2" href="#">{{ 'Participate'|trans }}</a></div>
+                </div>
             </div>
+        </div>
+    </header>
+    <section class="listContests row">
+        <div class="list">
+                {% if contests|length>0  %}
+                    {% for contest in contests  %}
+                        <div class="row">
+                            <h4><a href="{{ path('contest_show', {'id':contest.id, 'slug': contest.slug}) }}">{{ contest.title }}</a></h4>
+
+                            {% if contest.image %}
+                                <a href="{{ path('contest_show', {'id':contest.id, slug: contest.slug}) }}">{% thumbnail contest.image, 'small' %}</a>
+                            {% endif %}
+
+                            <div class="contenido">
+                                <p> {{ contest.content|raw }} </p>
+                                <a class="btn btn-primary" href="{{ path('contest_show', {'id':contest.id, 'slug': contest.slug}) }}" >{{ 'Participate'|trans }}</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-error">
+                        <h3>{{ 'No results'|trans }}</h3>
+                    </div>
+                {% endif %}
+        </div>
+            
+        <div class="span4 {% if not addMore %}hidden{% endif %}">
+            <a href="#" id="addMore" class="loadmore contests">{{ 'Add more'|trans }}</a>
+        </div>
+    </section>
+    
+    
+<div id="templates" class="contests hidden">
+    <div class="row">
+        <h2><a href=""></a></h2>
+        <div class="media"><a href=""></a></div>
+        <div class="contenido">
+            <p></p>
+            <a class="btn btn-primary" href="#">{{ 'Participate'|trans }}</a>
         </div>
     </div>
 </div>
+
 <script type="text/javascript">
-    $(document).ready(function(){
-        contest.init();
-    });
+$(document).ready(function(){
+    contest.init();
+});
 </script>
 {% endblock %}

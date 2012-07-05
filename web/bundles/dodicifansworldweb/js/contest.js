@@ -59,7 +59,7 @@ var contest = {
     },
     
     search: function(filter){
-        $("div.nota:not('.template'):not('.loading'), #addMore").remove();
+        $("section.listContests div.list").html("");
         contest.page = 1;
         contest.searchType = filter;
         contest.listAddMore();
@@ -122,14 +122,12 @@ var contest = {
     },
     
     listAddMore: function(){
-        $(".nota.loading").show();
         ajax.contestsListAction(contest.page, contest.searchType, function(r){
             if(r){
-                $(".nota.loading").hide();
                 if(r.contests.length>0) {
                     for(var i in r.contests){
                         var element = r.contests[i];
-                        var template = $("#templates .nota").clone();
+                        var template = $("#templates .row").clone();
                         var contestShowUrl = Routing.generate( appLocale + '_contest_show', {
                             'id': element.id,
                             'slug': element.slug
@@ -137,7 +135,7 @@ var contest = {
                         
                         template.find("h2 a").html(element.title);
                         template.find("h2 a").attr('href', contestShowUrl);
-                        template.find(".contenido .options a").attr('href', contestShowUrl);
+                        template.find(".contenido a").attr('href', contestShowUrl);
                         template.find("div.media a").attr("href", contestShowUrl );
                         if(element.image){
                             template.find("div.media a").html('<img src="' + element.image + '" alt="" />');
@@ -146,12 +144,17 @@ var contest = {
                         }
                         template.find("div.contenido p").html(element.content);
                         template.removeClass('template');
-                        $("div.contests div.cont").append(template);
+                        $("section.listContests .list").append(template);
                     }
                 }else if(contest.page == 1){
-                    $("div.contests div.cont").append('<div class="nota"><h2>No hay resultados</h2></div>');
+                    $("section.listContests .list").append('<div class="alert alert-error"><h3>No hay resultados</h3></div>');
                 }
                 
+                if(r.addMore){
+                    $("#addMore").removeClass('hidden');
+                }else{
+                    $("#addMore").addClass('hidden');
+                }
                 
                 contest.page++;
             }
@@ -162,7 +165,6 @@ var contest = {
         $('ul.contestType a').click(function(){
             var name = $(this).html();
             var type = $(this).parent().attr('class');
-            $(".titleContestType").html(name);
             contest.search(type);
         });
     },

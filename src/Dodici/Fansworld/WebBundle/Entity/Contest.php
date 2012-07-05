@@ -19,12 +19,13 @@ use Gedmo\Translatable\Translatable;
 class Contest implements Translatable
 {
     // No input other than clicking on a button are required to participate
-	const TYPE_PARTICIPATE = 1;
-	// A text/photo/video is uploaded along with the participation. Intended to be subjected to public vote
+
+    const TYPE_PARTICIPATE = 1;
+    // A text/photo/video is uploaded along with the participation. Intended to be subjected to public vote
     const TYPE_TEXT = 2;
     const TYPE_PHOTO = 3;
     const TYPE_VIDEO = 4;
-    
+
     /**
      * @var bigint $id
      *
@@ -49,7 +50,7 @@ class Contest implements Translatable
      * @ORM\Column(name="content", type="text", nullable=true)
      */
     private $content;
-    
+
     /**
      * @var text $data
      * @Gedmo\Translatable
@@ -57,106 +58,105 @@ class Contest implements Translatable
      * @ORM\Column(name="data", type="text", nullable=true)
      */
     private $data;
-    
+
     /**
      * @var boolean $active
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
     private $active;
-    
+
     /**
      * @var Application\Sonata\MediaBundle\Entity\Media
      * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="image", referencedColumnName="id")
      */
     private $image;
-    
+
     /**
      * @var datetime $createdAt
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     private $createdAt;
-    
+
     /**
      * @var datetime $endDate
      *
      * @ORM\Column(name="end_date", type="datetime", nullable=true)
      */
     private $endDate;
-    
+
     /**
      * @var integer $type
      *
      * @ORM\Column(name="type", type="integer", nullable=false)
      */
     private $type;
-    
+
     /**
      * @var integer $likeCount
      *
      * @ORM\Column(name="likecount", type="integer", nullable=false)
      */
     private $likeCount;
-        
+
     /**
      * @var integer $commentCount
      *
      * @ORM\Column(name="commentcount", type="integer", nullable=false)
      */
     private $commentCount;
-    
+
     /**
      * @Gedmo\Slug(fields={"title"}, unique=false)
      * @Gedmo\Translatable
      * @ORM\Column(length=128)
      */
     private $slug;
-    
-	/**
-	 * @Gedmo\Locale
-	 * Used locale to override Translation listener`s locale
-	 * this is not a mapped field of entity metadata, just a simple property
-	 */
-	private $locale;
-	
-	public function setTranslatableLocale($locale)
-	{
-	    $this->locale = $locale;
-	}
 
+    /**
+     * @Gedmo\Locale
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     */
+    private $locale;
 
-	/**
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
+    /**
      * @ORM\OneToMany(targetEntity="ContestParticipant", mappedBy="contest", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $participants;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="contest", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $comments;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Liking", mappedBy="contest", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $likings;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="HasTag", mappedBy="contest", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $hastags;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="HasUser", mappedBy="contest", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $hasusers;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="HasIdol", mappedBy="contest", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $hasidols;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="HasTeam", mappedBy="contest", cascade={"remove", "persist"}, orphanRemoval="true")
      */
@@ -170,10 +170,10 @@ class Contest implements Translatable
 
     public function __toString()
     {
-    	return $this->getTitle();
+        return $this->getTitle();
     }
-    
-	/**
+
+    /**
      * @ORM\PrePersist()
      */
     public function prePersist()
@@ -182,24 +182,25 @@ class Contest implements Translatable
             $this->setCreatedAt(new \DateTime());
         }
         if (null === $this->likeCount) {
-        	$this->setLikeCount(0);
+            $this->setLikeCount(0);
         }
         if (null === $this->commentCount) {
-        	$this->setCommentCount(0);
+            $this->setCommentCount(0);
         }
     }
 
-	public function likeUp()
+    public function likeUp()
     {
-    	$this->setLikeCount($this->getLikeCount() + 1);
+        $this->setLikeCount($this->getLikeCount() + 1);
     }
+
     public function likeDown()
     {
-    	if ($this->getLikeCount() > 0) {
-    		$this->setLikeCount($this->getLikeCount() - 1);
-    	}
+        if ($this->getLikeCount() > 0) {
+            $this->setLikeCount($this->getLikeCount() - 1);
+        }
     }
-    
+
     /**
      * Get id
      *
@@ -369,15 +370,15 @@ class Contest implements Translatable
     {
         return $this->participants;
     }
-    
-	public function setParticipants($participants)
+
+    public function setParticipants($participants)
     {
         $this->participants = $participants;
     }
-    
+
     public function addParticipants($participant)
     {
-    	$this->participants[] = $participant;
+        $this->participants[] = $participant;
     }
 
     /**
@@ -399,8 +400,8 @@ class Contest implements Translatable
     {
         return $this->endDate;
     }
-    
-	/**
+
+    /**
      * Add comments
      *
      * @param Dodici\Fansworld\WebBundle\Entity\Comment $comments
@@ -409,8 +410,8 @@ class Contest implements Translatable
     {
         $this->comments[] = $comments;
     }
-    
-	public function addComments(\Dodici\Fansworld\WebBundle\Entity\Comment $comments)
+
+    public function addComments(\Dodici\Fansworld\WebBundle\Entity\Comment $comments)
     {
         $this->comments[] = $comments;
     }
@@ -424,8 +425,8 @@ class Contest implements Translatable
     {
         return $this->comments;
     }
-    
-	public function setComments($comments)
+
+    public function setComments($comments)
     {
         $this->comments = $comments;
     }
@@ -529,29 +530,31 @@ class Contest implements Translatable
     {
         return $this->hasusers;
     }
-    
-	/**
+
+    /**
      * Admin methods
      */
     public function setHastags($hastags)
     {
         $this->hastags = $hastags;
     }
-	public function addHastags($hastags)
+
+    public function addHastags($hastags)
     {
         $this->addHasTag($hastags);
     }
-    
-	public function setHasusers($hasusers)
+
+    public function setHasusers($hasusers)
     {
         $this->hasusers = $hasusers;
     }
-	public function addHasusers($hasusers)
+
+    public function addHasusers($hasusers)
     {
         $this->addHasUser($hasusers);
     }
 
-	/**
+    /**
      * Add hasteams
      *
      * @param Dodici\Fansworld\WebBundle\Entity\HasTeam $hasteams
@@ -570,12 +573,13 @@ class Contest implements Translatable
     {
         return $this->hasteams;
     }
-    
-	public function setHasteams($hasteams)
+
+    public function setHasteams($hasteams)
     {
         $this->hasteams = $hasteams;
     }
-	public function addHasteams($hasteams)
+
+    public function addHasteams($hasteams)
     {
         $this->addHasTeam($hasteams);
     }
@@ -619,4 +623,5 @@ class Contest implements Translatable
     {
         return $this->hasidols;
     }
+
 }
