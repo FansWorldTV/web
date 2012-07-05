@@ -24,7 +24,7 @@ var site = {
             empty: emptyCheckboxImg
         });
         
-        $('[rel="tooltip"]').tooltip();
+        $('[title]').tooltip();
         
         $('.change_image').colorbox({
             iframe: true, 
