@@ -1,0 +1,37 @@
+// 2column-specific styles
+// --------------------------
+
+.form-2column {
+  
+  // Float the labels left
+  .control-label {
+    float: left;
+    width: 100px;
+    [for='fos_user_registration_form_accept_toc']{
+        width: 180px;
+    }
+  }
+  
+  // set padding for labels
+  .help-block {
+     padding-left: 100px;
+  }
+  
+  
+  //set error color
+  p.error{
+    color: #CC3333;
+  }
+  
+  //set inputs width
+  input[type='text'],
+  input[type='password'], 
+  input[type='email']{
+    width: 65%;
+  }
+}
+
+//General help-block
+p.help-block.error{
+    color: #CC3333;
+}
