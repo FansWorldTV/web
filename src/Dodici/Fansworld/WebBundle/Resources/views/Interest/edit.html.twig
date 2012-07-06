@@ -14,49 +14,56 @@
 {% endblock %}
 
 {% block profile_edit_body %}
-    <section class="row-fluid">
-        <div class="row">
-            <h4 class="numbered"><span>1</span>Modificar Intereses</h4>
-        </div>
-        <div class="row">
-            <ul class="categories fields" data-iduser="{{ app.user.id }}">
-                {% for category in categories %}
-                <li class="clearfix interestcategory" data-idcategory="{{category.id}}">
-                    <label>{{ category }}</label>
-                    <div class="field">
-                        <input type="text" class="interest-chooser" data-idcategory="{{ category.id }}" />
-                    </div>
-                    <ul class="currentinterests clearfix">
-                    </ul>
-                </li>
+<section class="row-fluid">
+    <div class="row">
+        <ul class="categories fields">
+                {% set index = 1 %}
+                {% for sport in sports %}
+                <form action="" method="post" name="favorite">
+                    <li class="clearfix">
+                        <h3>{{index}}. De que equipo de {{ sport.title }} eres hincha?</h4>
+                            <p>Ultricies nisl dignissim lobortis. Nunc eu tincidunt massa. Nullam mi ant</p>
+                            <select name="sport[{{ sport.id }}]" >
+                                <option value="null"></option>
+                            {% for team in sport.teams %}
+                                <option value="{{ team.id }}"  {% if sport.selected == team.id %} selected="true" {% endif %} >{{ team }}</option>
+                            {% endfor %}
+                            </select>
+                    </li>
+                    {% set index = index+1 %}
                 {% endfor %}
+                    <input type="submit" value="Guardar"  class="btn btn-primary"/>
+                </form>
             </ul>
         </div>
     </section>
 
-    <hr/>
 
     <section class="row-fluid">
         <div class="row">
-            <h4 class="numbered"><span>2</span>Equipo favorito de :</h4>
+            <h3>{{index}}. Tienes otros intereses?</h3>
         </div>
         <div class="row">
-            <ul class="categories fields">
-                {% for sport in sports %}
-                <form action="" method="post" name="favorite">
-                    <li class="clearfix">
-                        <label>{{ sport.title }}</label>
-                        <select name="sport[{{ sport.id }}]" >
-                            <option value="null"></option>
-                            {% for team in sport.teams %}
-                            <option value="{{ team.id }}"  {% if sport.selected == team.id %} selected="true" {% endif %} >{{ team }}</option>
-                            {% endfor %}
-                        </select>
-                    </li>
-                {% endfor %}
-                    <input type="submit" value="Guardar" />
-                </form>
-            </ul>
+            <div class="span7">
+                <table class="table categories" data-iduser="{{ app.user.id }}">
+                    <tbody>
+                        {% for category in categories %}
+                            <tr>
+                                <td>{{ category }}</td>
+                                <td>
+                                    <input type="text" class="interest-chooser" data-idcategory="{{ category.id }}" />
+                                    <ul class="currentinterests list-labels">
+                                    </ul>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
 

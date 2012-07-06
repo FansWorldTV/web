@@ -1,9 +1,9 @@
 jQuery.fn.refreshCategory = function() {
 	var el = this;
 	var idcategory = el.attr('data-idcategory');
-	var iduser = el.parents('ul.categories').attr('data-iduser');
-	
-	var ul = el.find('.currentinterests');
+	var iduser = el.parents('table.categories').attr('data-iduser');
+
+	var ul = el.parent().find('.currentinterests');
 	ul.empty().addClass('loading');
 	
 	
@@ -46,7 +46,10 @@ $(function(){
 				ajax.genericAction('interest_ajaxadd', {id: item.id}, 
 				function(data){
 					el.removeClass('loading');
-					var ul = el.parents('.interestcategory').find('.currentinterests');
+					var ul = el.parent().find('.currentinterests');
+                                                                                          console.log(el);
+                                                                                          console.log(ul);
+                                                                                          console.log(data);
 					success(data.message);
 					formInterestItem(data)
 					.appendTo( ul );
@@ -67,7 +70,7 @@ $(function(){
 		;
 	});
 	
-	$('.interestcategory .deleteinterest:not(.loading)').live('click',function(e){
+	$('.currentinterests .deleteinterest:not(.loading)').live('click',function(e){
 		e.preventDefault();
 		var el = $(this);
 		var li = el.closest('li');
@@ -87,14 +90,14 @@ $(function(){
 		);
 	});
 	
-	$('.interestcategory').each(function(){
+	$('.interest-chooser').each(function(){
 		$(this).refreshCategory();
 	});
 });
 
 function formInterestItem(item) {
-	return $( "<li></li>" )
+	return $( "<li class='label'></li>" )
 	.attr('data-idinterest', item.id)
 	.append( "<img alt='' src='"+item.image+"' /> <span class='name'>" + item.title + "</span>" )
-	.append( "<a class='deleteinterest'></a>" );
+	.append( "<a class='close deleteinterest' href='#'>&times;</a>" );
 }
