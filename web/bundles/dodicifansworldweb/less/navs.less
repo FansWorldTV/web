@@ -1,0 +1,132 @@
+/* General */
+.navbar{
+    .nav-collapse .nav > li > a{
+        color: #E4E1BC;
+    }
+    
+    .btn-navbar{
+        position: relative !important;
+    }
+    
+    .nav > li > a{
+        color: #e4e1bc;
+        font-size: 15px;
+        &:hover {
+        {
+            color: @white;
+        }
+    }
+    
+    .nav  li.show-on-collapse{
+        display: none;  
+    }
+    
+    .user-menu li > a {
+        font-size: 13px;
+    }
+    
+    .avatar {
+        .square(40px);
+        .pull-right();
+        img {
+            .square(40px);
+        }
+    }
+    .brand{
+        margin-left: 0;
+        padding-bottom: 10px; 
+    }
+}
+
+/* Header Only */
+header.navbar{
+    ul.nav li.dropdown a.dropdown-toggle.username{
+        padding: 0;
+        span{
+            max-width: 105px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: inline-block;
+            position: relative;
+            top: 3px;
+        }
+        
+        b#overimage{
+            position: absolute;
+            right: 4px;
+            top: 14px;
+            visibility: hidden;
+        }
+    }
+        
+
+
+}
+
+
+
+/* Footer  Only*/
+footer.navbar{
+    font-size: 13px;
+    .nav > li > a{
+        font-size: 13px;
+        .icon{
+            padding-top: 7px;
+        }
+    }
+    
+    .institutional > li {
+        > a {
+            font-size: 12px;
+        }
+        
+        > .icon {
+            padding-left: 2px;
+            padding-right: 2px;
+        }
+        &:last-child > .icon {
+            padding-right: 10px;
+        }
+    }
+    div.navbar-inner{
+        min-height: 36px;
+        div.container{
+            overflow: hidden;
+            height: 36px;
+        }
+     }
+}
+
+
+.navbar-fixed-top , .navbar-fixed-bottom {
+    .container{
+        width:100% !important;
+    }
+}
+
+//Left sidebar nav's styles
+nav.leftmenubar{
+    .sidebar-nav-fixed {
+         position:fixed;
+         top: 40px;
+         width:50px;
+         height: 100%;
+     }
+     
+     .sidebar-nav.well{
+        padding: 10px;
+        border-radius:0;
+     }
+     
+     ul#left-menu{
+        overflow: hidden;
+     }
+}
+
+
+
+ 
+ 
+ 
+ 

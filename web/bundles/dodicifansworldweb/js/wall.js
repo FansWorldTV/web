@@ -72,6 +72,7 @@
                           wallel.attr('data-wall-loaded', 1);
                       }
                       window.endlessScrollPaused = false;
+                      $("abbr.timeago").timeago();
                       
                   },
                   function(){},

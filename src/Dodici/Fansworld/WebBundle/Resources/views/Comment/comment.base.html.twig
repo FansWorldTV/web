@@ -14,6 +14,7 @@
             	{% block action %}
                     <span class="action_user"></span>
                 {% endblock %}
+                {% include 'DodiciFansworldWebBundle:Comment:date.html.twig' with {date: comment.createdAt} %}
             </div>
             
 	   </header>
@@ -26,7 +27,7 @@
 			{% block description %}<p></p>{% endblock %}
 			{% block date %}
 				<div class="info">
-					{% include 'DodiciFansworldWebBundle:Comment:date.html.twig' with {date: comment.createdAt} %}
+					
 					{% block commentcount %}
 					<span class="comments">{{ comment.commentCount }} {{ 'comments'|trans }}</span>
 					{% endblock %}
