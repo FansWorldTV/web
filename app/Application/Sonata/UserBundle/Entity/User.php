@@ -1014,7 +1014,7 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
      *
      * @param Application\Sonata\MediaBundle\Entity\Media $splash
      */
-    public function setImage(\Application\Sonata\MediaBundle\Entity\Media $splash)
+    public function setSplash(\Application\Sonata\MediaBundle\Entity\Media $splash)
     {
         $this->splash = $splash;
     }
