@@ -73,6 +73,12 @@
             >
         </many-to-one>
         
+        <many-to-one
+            field="splash"
+            target-entity="Application\Sonata\MediaBundle\Entity\Media"
+            >
+        </many-to-one>
+        
         <one-to-many
                 field="friendships"
                 target-entity="Dodici\Fansworld\WebBundle\Entity\Friendship"

@@ -295,4 +295,31 @@ class VideoRepository extends CountBaseRepository
         
         return $query->getResult();
 	}
+	
+	/**
+	 * Get highlight videos (idol, team)
+	 * @param Idol|Team $entity
+	 */
+	public function highlights($entity, $limit)
+	{
+		$type = $this->getType($entity);
+	    
+	    $query = $this->_em->createQuery('
+    	SELECT v, vi
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
+    	JOIN v.image vi
+    	WHERE
+    	v.active = true
+    	AND
+    	v.'.$type.' = :entid
+    	ORDER BY v.highlight DESC, v.createdAt DESC
+    	')
+	    ->setParameter('entid', $entity->getId())
+	    ;
+        
+        if ($limit !== null)
+            $query = $query->setMaxResults((int)$limit);
+        
+        return $query->getResult();
+	}
 }

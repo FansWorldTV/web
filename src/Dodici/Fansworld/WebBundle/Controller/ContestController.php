@@ -149,15 +149,15 @@ class ContestController extends SiteController
                 $newParticipant->setAuthor($user);
 
                 switch ($contest->getType()) {
-                    case 2:
+                    case Contest::TYPE_TEXT:
                         $newParticipant->setText($request->get('text'));
                         break;
-                    case 3:
+                    case Contest::TYPE_PHOTO:
                         $photoId = $request->get('photo');
                         $photo = $this->getRepository('Photo')->find($photoId);
                         $newParticipant->setPhoto($photo);
                         break;
-                    case 4:
+                    case Contest::TYPE_VIDEO:
                         $videoId = $request->get('video');
                         $video = $this->getRepository('Video')->find($videoId);
                         $newParticipant->setVideo($video);

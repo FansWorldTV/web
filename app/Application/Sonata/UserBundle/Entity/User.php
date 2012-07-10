@@ -182,6 +182,11 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
     private $image;
     
     /**
+     * @var Application\Sonata\MediaBundle\Entity\Media
+     */
+    private $splash;
+    
+    /**
      * @var array $privacy
      * array (
      * 'fieldname' => Privacy::*,
@@ -1002,6 +1007,26 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
     public function getImage()
     {
         return $this->image;
+    }
+    
+	/**
+     * Set splash
+     *
+     * @param Application\Sonata\MediaBundle\Entity\Media $splash
+     */
+    public function setImage(\Application\Sonata\MediaBundle\Entity\Media $splash)
+    {
+        $this->splash = $splash;
+    }
+
+    /**
+     * Get splash
+     *
+     * @return Application\Sonata\MediaBundle\Entity\Media 
+     */
+    public function getSplash()
+    {
+        return $this->splash;
     }
 
     /**
