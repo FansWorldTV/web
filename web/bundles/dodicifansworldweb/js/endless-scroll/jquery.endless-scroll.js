@@ -85,7 +85,8 @@ EndlessScroll = (function() {
     },
     ceaseFire: function() {
       return false;
-    }
+    },
+    enableScrollTop: true
   };
 
   function EndlessScroll(scope, options) {
@@ -182,8 +183,19 @@ EndlessScroll = (function() {
   EndlessScroll.prototype.shouldTryFiring = function() {
     var shouldTryOrNot;
     shouldTryOrNot = this.didScroll && this.firing === true;
+    
+    //fix jm
+    if(this.scrollDirection == 'prev')
+    {
+        if(!this.enableScrollTop){
+            shouldTryOrNot = false;
+        }
+    }
+    
     if (shouldTryOrNot) {
-      this.didScroll = false;
+        this.didScroll = false;
+            
+      
     }
     return shouldTryOrNot;
   };

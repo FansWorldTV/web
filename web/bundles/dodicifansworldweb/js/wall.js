@@ -114,7 +114,7 @@
 function bindWallUpdate(wallel){
     $(window).endlessScroll({
         fireOnce: true,
-        pagesToKeep: 5,
+        enableScrollTop: false,
         inflowPixels: 100,
         fireDelay: 250,
         intervalFrequency: 2000,
