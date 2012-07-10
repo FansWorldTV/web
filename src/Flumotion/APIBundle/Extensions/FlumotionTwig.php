@@ -1,6 +1,7 @@
 <?php
 namespace Flumotion\APIBundle\Extensions;
 
+use Dodici\Fansworld\WebBundle\Extensions\Visitator;
 use Symfony\Component\HttpFoundation\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
@@ -12,26 +13,27 @@ class FlumotionTwig
     protected $request;
     protected $em;
     protected $api;
+    protected $visitator;
     
     protected $playerbaseurl;
     protected $videoplayerbaseurl;
     
 
-    function __construct(Session $session, EntityManager $em, $api, $playerbaseurl, $videoplayerbaseurl)
+    function __construct(Session $session, EntityManager $em, $api, Visitator $visitator, $playerbaseurl, $videoplayerbaseurl)
     {
         $this->session = $session;
         $this->request = Request::createFromGlobals();
         $this->em = $em;
         $this->api = $api;
+        $this->visitator = $visitator;
+        
         $this->playerbaseurl = $playerbaseurl;
         $this->videoplayerbaseurl = $videoplayerbaseurl;
     }
     
 	public function getVideoPlayerUrl(Video $video)
     {
-    	$video->setViewCount($video->getViewCount() + 1);
-    	$this->em->persist($video);
-    	$this->em->flush();
+    	$this->visitator->visit($video);
     	if ($video->getYoutube()) {
     		return sprintf('http://www.youtube.com/embed/%1$s?autoplay=1&wmode=transparent', $video->getYoutube());
     	} elseif ($video->getVimeo()) {

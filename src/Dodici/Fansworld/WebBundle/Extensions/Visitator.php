@@ -56,7 +56,7 @@ class Visitator
      * Check sesion for timestamp, if correct add visit
      * @param $entity
      */
-    public function addVisit(VisitableInterface $entity)
+    private function addVisit(VisitableInterface $entity)
     {
         $visit = null;
         if($this->shouldAddVisit($entity)){
