@@ -34,57 +34,7 @@ class InterestController extends SiteController
      */
     public function editAction()
     {
-        $request = $this->getRequest();
-        $sports = $request->get('sport', null);
-
         $user = $this->get('security.context')->getToken()->getUser();
-
-        if (!is_null($sports)) {
-            $em = $this->getDoctrine()->getEntityManager();
-            foreach ($sports as $id => $teamId) {
-                $teamId = (int) $teamId;
-                $teamSelected = $this->getRepository('Team')->find($teamId);
-                $teamshipSelected = $this->getRepository('Teamship')->findOneBy(array('author' => $user->getId(), 'team' => $teamSelected->getId()));
-
-                $teamshipsOwned = $this->getRepository('Teamship')->findBy(array('author' => $user->getId(), 'favorite' => true));
-                $teamshipsBySport = array();
-                foreach ($teamshipsOwned as $teamship) {
-                    foreach ($teamship->getTeam()->getTeamcategories() as $category) {
-                        $sport = $category->getSport();
-                        if ($teamship->getFavorite() == true) {
-                            $teamshipsBySport[$sport->getId()] = $teamship->getId();
-                        }
-                    }
-                }
-
-                $teamshipActual = false;
-                foreach ($teamSelected->getTeamcategories() as $selectedCategory) {
-                    $sportSelected = $selectedCategory->getSport();
-                    $exists = array_key_exists($sportSelected->getId(), $teamshipsBySport);
-                    if ($exists) {
-                        $teamshipActual = $this->getRepository('Teamship')->find($teamshipsBySport[$sportSelected->getId()]);
-                    }
-                }
-
-//                $teamshipActual = $this->getRepository('Teamship')->findBy(array('author' => $user->getId(), 'favorite' => true));
-                if ($teamshipActual) {
-                    $teamshipActual->setFavorite(false);
-                    $em->persist($teamshipActual);
-                    $em->flush();
-                }
-
-                if (!$teamshipSelected) {
-                    $teamshipSelected = new Teamship();
-                    $teamshipSelected->setAuthor($user);
-                    $team = $this->getRepository('Team')->find($teamId);
-                    $teamshipSelected->setTeam($team);
-                }
-
-                $teamshipSelected->setFavorite(true);
-                $em->persist($teamshipSelected);
-                $em->flush();
-            }
-        }
 
         $response = array(
             'user',

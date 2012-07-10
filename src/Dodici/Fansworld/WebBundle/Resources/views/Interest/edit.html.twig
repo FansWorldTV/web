@@ -16,25 +16,46 @@
 {% block profile_edit_body %}
 <section class="row-fluid">
     <div class="row">
-        <ul class="categories fields">
-                {% set index = 1 %}
-                {% for sport in sports %}
-                <form action="" method="post" name="favorite">
-                    <li class="clearfix">
-                        <h3>{{index}}. De que equipo de {{ sport.title }} eres hincha?</h4>
-                            <p>Ultricies nisl dignissim lobortis. Nunc eu tincidunt massa. Nullam mi ant</p>
-                            <select name="sport[{{ sport.id }}]" >
-                                <option value="null"></option>
-                            {% for team in sport.teams %}
-                                <option value="{{ team.id }}"  {% if sport.selected == team.id %} selected="true" {% endif %} >{{ team }}</option>
-                            {% endfor %}
-                            </select>
-                    </li>
-                    {% set index = index+1 %}
-                {% endfor %}
-                    <input type="submit" value="Guardar"  class="btn btn-primary"/>
-                </form>
-            </ul>
+        {% set index = 1 %}
+        {% for sport in sports %}
+            <div class="span7">
+                    <h3>{{index}}. De que equipo de {{ sport.title }} eres hincha?</h4>
+                    <p>Ultricies nisl dignissim lobortis. Nunc eu tincidunt massa. Nullam mi ant</p>
+                    <input type="text" class="team-chooser" data-sport-id="{{sport.id}}"/>
+                    {% for team in sport.teams %}
+                        {% if sport.selected == team.id%}
+                            <div class="well selectedteam" data-team-id = "{{team.id}}">
+                                    <!--button class="close">&times;</button-->
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                {% thumbnail team.image, 'avatar' %}
+                                            </td>
+                                            <td align="center" style="width:225px;">
+                                                <h4>{{ team }}</h4>
+                                                <a href="#"></a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+            </div>
+            {% set index = index+1 %}
+        {% endfor %}
+        </div>
+        
+        <div class="well selectedteam template hidden" data-team-id = "">
+                <table>
+                    <tr>
+                        <td class="avatar">
+                        </td>
+                        <td align="center" style="width:225px;">
+                            <h4 class="title"></h4>
+                            <a href="#"></a>
+                        </td>
+                    </tr>
+                </table>
         </div>
     </section>
 

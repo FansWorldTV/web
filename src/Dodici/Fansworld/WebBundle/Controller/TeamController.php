@@ -98,8 +98,8 @@ class TeamController extends SiteController
 
         if ($page == 0) {
             $teams = $this->getRepository('Team')->findBy($params, array('title' => 'DESC'));
-            
-            foreach($teams as $team){
+
+            foreach ($teams as $team) {
                 $response['teams'][] = array(
                     'id' => $team->getId(),
                     'title' => (string) $team
@@ -211,6 +211,90 @@ class TeamController extends SiteController
             );
         }
         return array('lastTweets' => $lastTweets);
+    }
+
+    /**
+     *  @Route("/ajax/search/", name="team_ajaxsearch")
+     */
+    public function ajaxTeams()
+    {
+        $request = $this->getRequest();
+        $idcategory = $request->get('idcategory');
+        $text = $request->get('text');
+        $page = $request->get('page');
+
+        $limit = null;
+        $offset = null;
+
+        if ($page !== null) {
+            $page--;
+            $limit = self::LIMIT_AJAX_GET;
+            $offset = $limit * $page;
+        }
+
+        $teams = $this->getRepository('Team')->matching($idcategory, $text, $limit, $offset);
+
+        $response = array();
+        foreach ($teams as $team) {
+            $response[] = array(
+                'id' => $team->getId(),
+                'title' => $team->getTitle(),
+                'image' => $this->getImageUrl($team->getImage(), 'avatar')
+            );
+        }
+
+        return $this->jsonResponse($response);
+    }
+
+    /**
+     *
+     * @Route("/ajax/favorite", name="team_ajaxfavorite")
+     */
+    public function ajaxFavorite()
+    {
+        $request = $this->getRequest();
+        $actualTeamId = $request->get('actual', false);
+        $selectedTeamId = $request->get('selected', false);
+
+        $user = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $teamshipRepo = $this->getRepository('Teamship');
+        $teamRepo = $this->getRepository('Team');
+
+        $actualTeam = $teamRepo->find($actualTeamId);
+        $selectedTeam = $teamRepo->find($selectedTeamId);
+
+        $response = array('error' => false);
+        
+        try {
+            if ($actualTeam) {
+                $actual = $teamshipRepo->findOneBy(array('author' => $user->getId(), 'team' => $actualTeam->getId()));
+                if($actual){
+                    $actual->setFavorite(false);
+                    $em->persist($actual);
+                }
+            }
+
+            if ($selectedTeam) {
+                $selectedTeamship = $teamshipRepo->findOneBy(array('author' => $user->getId(), 'team' => $selectedTeam->getId()));
+                if ($selectedTeamship) {
+                    $selectedTeamship->setFavorite(true);
+                    $em->persist($selectedTeamship);
+                } else {
+                    $newTeamship = new Teamship();
+                    $newTeamship->setAuthor($user);
+                    $newTeamship->setFavorite(true);
+                    $newTeamship->setTeam($selectedTeam);
+                    $em->persist($newTeamship);
+                }
+                $em->flush();
+            }
+        } catch (Exception $exc) {
+            $response['error'] = $exc->getMessage();
+        }
+        
+        return $this->jsonResponse($response);
     }
 
 }
