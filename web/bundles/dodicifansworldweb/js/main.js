@@ -20,9 +20,6 @@ var site = {
             'innerWidth': 350,
             'innerHeight': 200
         });
-        $('input:checkbox.prettycheckbox').checkbox({
-            empty: emptyCheckboxImg
-        });
         
         $('[title]').tooltip();
         
