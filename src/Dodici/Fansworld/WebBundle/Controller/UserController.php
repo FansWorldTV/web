@@ -33,7 +33,7 @@ class UserController extends SiteController
         if (!$user) {
             throw new HttpException(404, "No existe el usuario");
         }else
-            $this->get('visitator')->addVisit($user);
+            $this->get('visitator')->visit($user);
 
         $hasComments = $this->getRepository('Comment')->countBy(array('target' => $user->getId()));
         $hasComments = $hasComments > 0 ? true : false;
@@ -54,7 +54,7 @@ class UserController extends SiteController
         if (!$user) {
             throw new HttpException(404, "No existe el usuario");
         }else
-            $this->get('visitator')->addVisit($user);
+            $this->get('visitator')->visit($user);
 
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
@@ -465,7 +465,7 @@ class UserController extends SiteController
         if (!$user) {
             throw new HttpException(404, "No existe el usuario");
         }else
-            $this->get('visitator')->addVisit($user);
+            $this->get('visitator')->visit($user);
 
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
@@ -503,7 +503,7 @@ class UserController extends SiteController
         if (!$user) {
             throw new HttpException(404, "No existe el usuario");
         }else
-            $this->get('visitator')->addVisit($user);
+            $this->get('visitator')->visit($user);
 
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
@@ -527,7 +527,7 @@ class UserController extends SiteController
         if (!$user) {
             throw new HttpException(404, "No existe el usuario");
         }else
-            $this->get('visitator')->addVisit($user);
+            $this->get('visitator')->visit($user);
 
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
@@ -606,4 +606,19 @@ class UserController extends SiteController
         return array('media' => $media, 'form' => $form->createView());
     }
 
+    
+    /**
+     * @Route("/u/{username}/idols", name="user_idols")
+     * @Template
+     * @Secure(roles="ROLE_USER")
+     */
+    public function idolTabAction($username)
+    {
+        $user = $this->getRepository('User')->findOneByUsername($username);
+        if (!$user) {
+            throw new HttpException(404, "No existe el usuario");
+        }else
+            $this->get('visitator')->visit($user);
+        
+    }
 }

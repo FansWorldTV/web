@@ -49,7 +49,7 @@ class PhotoController extends SiteController
         
         $this->securityCheck($photo);
         
-        $this->get('visitator')->addVisit($photo);
+        $this->get('visitator')->visit($photo);
         return array(
             'photo' => $photo,
             'prev' => $prev,

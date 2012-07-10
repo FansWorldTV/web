@@ -41,7 +41,7 @@ class VideoController extends SiteController
 
         $this->securityCheck($video);
 
-        $this->get('visitator')->addVisit($video);
+        $this->get('visitator')->visit($video);
         return array('video' => $video);
     }
 
@@ -337,7 +337,7 @@ class VideoController extends SiteController
         if (!$user) {
             throw new HttpException(404, "No existe el usuario");
         }else
-            $this->get('visitator')->addVisit($user);
+            $this->get('visitator')->visit($user);
 
         $videos = $videoRepo->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'desc'), self::cantVideos);
         $countAll = $videoRepo->countBy(array('author' => $user->getId()));
