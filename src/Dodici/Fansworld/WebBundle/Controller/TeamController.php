@@ -197,6 +197,7 @@ class TeamController extends SiteController
             $ttScreenName = $team->getTwitter();
             if (!$ttScreenName)
                 throw new HttpException(404, 'Equipo sin twitter');
+            $this->get('visitator')->addVisit($team);
         }
 
         $lastTweetsTemp = $this->get('fos_twitter.api')->get('statuses/user_timeline', array(

@@ -53,7 +53,8 @@ class UserController extends SiteController
         $user = $this->getRepository('User')->findOneByUsername($username);
         if (!$user) {
             throw new HttpException(404, "No existe el usuario");
-        }
+        }else
+            $this->get('visitator')->addVisit($user);
 
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
@@ -463,7 +464,8 @@ class UserController extends SiteController
 
         if (!$user) {
             throw new HttpException(404, "No existe el usuario");
-        }
+        }else
+            $this->get('visitator')->addVisit($user);
 
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
@@ -500,7 +502,8 @@ class UserController extends SiteController
         $user = $this->getRepository('User')->findOneByUsername($username);
         if (!$user) {
             throw new HttpException(404, "No existe el usuario");
-        }
+        }else
+            $this->get('visitator')->addVisit($user);
 
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
@@ -523,7 +526,9 @@ class UserController extends SiteController
         $user = $this->getRepository('User')->findOneByUsername($username);
         if (!$user) {
             throw new HttpException(404, "No existe el usuario");
-        }
+        }else
+            $this->get('visitator')->addVisit($user);
+
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
         $albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);

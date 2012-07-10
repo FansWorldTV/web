@@ -32,42 +32,43 @@ class IdolController extends SiteController
         $idol = $this->getRepository('Idol')->findOneBySlug($slug);
         if (!$idol) {
             throw new HttpException(404, "No existe el ídolo");
-        }else 
-            $this->get('visitator')->addVisit($idol);
+        }else
+            $this->get('visitator')->visit($idol);
 
         $hasComments = $this->getRepository('Comment')->countBy(array('idol' => $idol->getId()));
         $hasComments = $hasComments > 0 ? true : false;
 
         return array('idol' => $idol, 'hasComments' => $hasComments);
     }
-    
-	/**
+
+    /**
      * @Route("/i/{slug}/twitter", name= "idol_twitter")
      * @Template()
      */
-	public function twitterTabAction($slug)
+    public function twitterTabAction($slug)
     {
-    	$lastTweets	=	array();
+        $lastTweets = array();
         $idol = $this->getRepository('Idol')->findOneBy(array('slug' => $slug));
 
         if (!$idol)
             throw new HttpException(404, 'No existe el ídolo');
-      	else{
-      		$ttScreenName = $idol->getTwitter();
-      		if(!$ttScreenName)
-      			throw new HttpException(404, 'Idolo sin twitter');
-      	}
-        
+        else {
+            $ttScreenName = $idol->getTwitter();
+            if (!$ttScreenName)
+                throw new HttpException(404, 'Idolo sin twitter');
+            $this->get('visitator')->visit($idol);
+        }
+
         $lastTweetsTemp = $this->get('fos_twitter.api')->get('statuses/user_timeline', array(
             'screen_name' => $ttScreenName,
             'count' => 10
-        ));        
-        foreach ($lastTweetsTemp as $tweet){
-        	$lastTweets[] = array(
-        		'text' =>	$tweet->text,
-        		'user' =>	$tweet->user->screen_name,
-        		'retweeted' => ($tweet->retweet_count > 0) ? true : false
-        	);
+                ));
+        foreach ($lastTweetsTemp as $tweet) {
+            $lastTweets[] = array(
+                'text' => $tweet->text,
+                'user' => $tweet->user->screen_name,
+                'retweeted' => ($tweet->retweet_count > 0) ? true : false
+            );
         }
         return array('lastTweets' => $lastTweets);
     }
