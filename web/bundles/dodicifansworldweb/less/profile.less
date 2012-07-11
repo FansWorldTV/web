@@ -124,3 +124,42 @@ ul.list-labels {
         }
     }
 }
+
+ul.idolships{
+        li{
+            display:block;
+            .square(114px);
+            border: 1px solid @gray;
+            .pull-left();
+        }
+        button, span{
+            position: relative;
+        }
+        button{
+            top:-25px; 
+            margin-left: 5px;
+        }
+        span.fan-quantity {
+            top: -24px;
+            .pull-right();
+            margin-right: 5px;
+            -webkit-text-shadow:0 0 15px black; 
+            -moz-text-shadow: 0 0 15px black; 
+            text-shadow:0 0 15px black; 
+            color: @white;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        span.idol-name{
+            background-color: transparent;
+            border: 1px solid @gray;
+            top: -20px;
+            left: -1px;
+            display: block;
+            .size(auto, 100px);
+            padding: 7px;
+            text-align: left;
+            color: @grayDark;
+            font-weight: bold;
+        }
+}
