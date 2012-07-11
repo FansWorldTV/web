@@ -1,0 +1,94 @@
+{% block header_main %}
+    <section class='header_main row-fluid header_large'>	
+	    <div class='main_left span8' >
+	        {% block avatar_container %}
+			    <div class="avatar">
+			        {% block avatar_content %}
+			            {% set avatar_format = 'small_square' %}
+			            
+			            {% if user.image %}
+			                {% thumbnail user.image, avatar_format %}
+			            {% else %}
+			                <img src="{{ asset('bundles/dodicifansworldweb/images/user_pic.jpg' )}}" />
+			            {% endif %}
+			        {% endblock %}
+			    </div>
+			{% endblock %}    
+			{% if user.splash %}
+	            {{ user.splash }}
+	        {% else %}
+	            <img src="{{ asset('bundles/dodicifansworldweb/images/demoheader.png' )}}" />
+	        {% endif %}
+			
+	    </div>
+	    <div class='main_right span4 row-fluid' >
+	        <div class='span9 user-info'>
+	            <h1>
+	                {{ user }}
+	            </h1>   
+	            
+	            {% if user.level %}
+	                <div class='user-level'>{{ user.level.title }}</div>
+	            {% endif %}
+	                
+	            {% block profile_info %}
+	                {% set fship = appstate.friendshipwith(user) %}
+	                {% if appstate.canfriend(user) and fship is null %}
+	                    <div class="addFriend" targetId="{{ user.id }}">
+	                        <button class="btn btn-large btn_friendship add btn-success"> Ser fan{% if user.restricted %} (solicitar){% endif %}</button>
+	                        {% if friendgroups|length > 0 %}
+	                            <!--
+	                            <ul class="friendgroupsList">
+	                                {% for friendgroup in friendgroups %}
+	                                    <li id="{{ friendgroup.id }}">
+	                                        <input type="checkbox" id="friendgroup[{{ friendgroup.id }}]" name="friendgroup[{{ friendgroup.id }}]" value="{{ friendgroup.id }}"/>
+	                                        <label for="friendgroup[{{ friendgroup.id }}]">{{ friendgroup.title }}</label>
+	                                    </li>
+	                                {% endfor %}
+	                            </ul>
+	                            -->
+	                        {% endif %}
+	                    </div>
+	                {% else %}
+	                    {% if fship %}
+	                        {% if fship.active %}
+	                            <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Dejar de Seguir</a>
+	                        {% else %}
+	                            <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Cancelar Solicitud</a>
+	                        {% endif %}
+	                    {% endif %}
+	                {% endif %}
+	            {% endblock %}
+	                
+	            
+	        </div>
+	        
+	        <div class='span3 numbers-info'>
+	            <section class='fotos-info'>
+	                <div class='numero'>91</div>
+	                <div class='tipo'>Fotos</div>
+	                <div class='separador' />
+	            </section>
+	            
+	            <section class='videos-info'>
+	                <div class='numero'>59</div>
+	                <div class='tipo'>Videos</div>
+	                <div class='separador' />
+	            </section>
+	            
+	            <section class='fans-info'>
+	                <div class='numero'>26</div>
+	                <div class='tipo'>Fans</div>
+	                <div class='separador' />
+	            </section>
+	        </div>
+	        
+	        
+	    </div>
+    </section>
+{% endblock %}
+
+
+{% block profile_tabs %}
+    {% include 'DodiciFansworldWebBundle:User/Profile:header_navbar.html.twig' with {entity: user} %}
+{% endblock %}

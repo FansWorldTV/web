@@ -162,4 +162,167 @@ ul.idolships{
             color: @grayDark;
             font-weight: bold;
         }
+
+}
+
+header.profile_head{
+    border-bottom: 2px solid #D2D2D2;
+    margin-bottom: 25px;
+    overflow: hidden;
+    
+    
+    section.header_main{
+        color: @white;
+        background-color: #292929;
+        overflow: hidden;
+        div.main_left{
+            background-color: #292929;
+            //height: 225px;
+            > img{
+                width:100%
+            }
+        }
+        
+        div.main_right{
+            background-color: #292929;
+               
+        }
+    }
+    
+    section.header_main.header_small{
+        height: 60px;
+        div.user-info{
+            margin-top:0;
+            .avatar{
+                float:left;
+            }
+            .text-info{
+                float: left;
+                margin-top: 5px;
+                padding-left: 15px;
+            }
+            
+            
+            h1{
+                font-size: 26px;
+                line-height: 26px;
+            }
+            
+                
+            .user-level{
+                font-size: 13px;
+            }
+        }
+        
+        .numbers-info{
+            padding: 5px 0;
+            > section{
+                float: left;
+                height: 40px;
+                padding-top: 10px;
+                
+            }
+            
+            section.with-border{
+                border-left: 2px solid gray;
+                border-right: 2px solid gray;
+            }
+            
+            .fotos-info, .videos-info, .fans-info{
+                text-align: center;
+                width: 30%;
+                
+                div.numero{
+                    font-size: 26px;
+                }   
+                div.tipo{
+                    font-size: 11px;
+                    text-transform: uppercase;
+                }
+                
+            }
+        }
+        
+        .addFriend{
+            
+        }
+        
+        .btn_friendship{
+            margin-top: 5px;
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    
+    
+    }
+    
+    section.header_main.header_large{
+        div.main_left{
+            div.avatar{
+                margin-left: 30px;
+                margin-top: -6px;
+                position: absolute;
+            }
+        }
+        
+        
+        div.main_right{
+            div.user-info{
+                margin-top: 10%;
+                h1{
+                    height: 72px;
+                    font-size: 36px;
+                }
+                .addFriend{
+                    margin-top: 22%;
+                }
+                
+                .btn_friendship{
+                    font-size: 20px;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                }
+                    
+                .user-level{
+                    font-size: 13px;
+                }
+            }
+            
+            .numbers-info{
+                margin-top: 16%;
+                .fotos-info, .videos-info, .fans-info{
+                    padding-right: 20%;
+                    text-align: right;
+                    
+                    div.numero{
+                        font-size: 30px;
+                    }   
+                    div.tipo{
+                        font-size: 11px;
+                        text-transform: uppercase;
+                        padding-top: 5px;
+                    }
+                    div.separador{
+                        border-bottom: 2px solid gray;
+                        float: right;
+                        height: 0;
+                        margin: 7px 0;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    
+    }
+    
+    .nav-tabs-profile{
+        margin-top: 10px;
+        font-size: 16px;
+        color: @navbarprofilelinks;
+        li
+        {
+            margin-right: 15px;
+        }
+    }
 }
