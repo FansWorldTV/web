@@ -32,7 +32,7 @@
         <div class="list">
                 {% if contests|length>0  %}
                     {% for contest in contests  %}
-                        <div class="row">
+                        <div class="contest-row">
                             <h4><a href="{{ path('contest_show', {'id':contest.id, 'slug': contest.slug}) }}">{{ contest.title }}</a></h4>
 
                             {% if contest.image %}
@@ -59,8 +59,8 @@
     
     
 <div id="templates" class="contests hidden">
-    <div class="row">
-        <h2><a href=""></a></h2>
+    <div class="contest-row">
+        <h4><a href=""></a></h4>
         <div class="media"><a href=""></a></div>
         <div class="contenido">
             <p></p>

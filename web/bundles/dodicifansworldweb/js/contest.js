@@ -7,8 +7,6 @@ var contest = {
     type: $("#contestType").val(),
     
     init: function(){
-        $("#tabs").tabs();
-
         $("div.contenido .text").expander({
             slicePoint: 100,
             expandText: '[+]',
@@ -127,14 +125,14 @@ var contest = {
                 if(r.contests.length>0) {
                     for(var i in r.contests){
                         var element = r.contests[i];
-                        var template = $("#templates .row").clone();
+                        var template = $("#templates .contest-row").clone();
                         var contestShowUrl = Routing.generate( appLocale + '_contest_show', {
                             'id': element.id,
                             'slug': element.slug
                         });
                         
-                        template.find("h2 a").html(element.title);
-                        template.find("h2 a").attr('href', contestShowUrl);
+                        template.find("h4 a").html(element.title);
+                        template.find("h4 a").attr('href', contestShowUrl);
                         template.find(".contenido a").attr('href', contestShowUrl);
                         template.find("div.media a").attr("href", contestShowUrl );
                         if(element.image){
