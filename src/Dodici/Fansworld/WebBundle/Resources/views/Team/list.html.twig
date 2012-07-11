@@ -2,6 +2,11 @@
 
 {% block title %}{{ parent() }} - Búsqueda{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/dodicifansworldweb/js/teams.js') }}" type="text/javascript"></script>
+{% endblock %}
+
 {% block content %}
 <div class="cont clearfix">
     <h2>Listado de equipos</h2>
@@ -19,53 +24,11 @@
         </div>
     </div>
 </div>
-
+<input type="hidden" id="categoryId" value="{% if categoryId %} {{ categoryId }} {% else %} null {% endif %}"/>
 <script type="text/javascript">
     $(document).ready(function(){
-        var category = {% if categoryId %} {{ categoryId }} {% else %} null {% endif %};
-        var activePage = 1;
-        
-        getTeams(category, activePage);
-        $("#addMore").live('click', function(){
-            getTeams(category, activePage);
-        });
-        
-        $("ul.categories li").live('click', function(){
-            category = $(this).attr('categoryId');
-            activePage = 1;
-            $("ul.listMosaic").html('');
-            getTeams(category, activePage);
-        });
+        list.category = {% if categoryId %} {{ categoryId }} {% else %} null {% endif %};
+        list.init();
     });
-    
-    function getTeams(category, activePage){
-        $("div.mask").addClass('loading');
-        
-        ajax.genericAction('team_get',
-        {
-            'category': category,
-            'page': activePage
-        },
-        function(r){
-            for(i in r.images){
-                var element = r.images[i];
-                $("ul.listMosaic").append("<li> <a href='"+ Routing.generate(appLocale +'_' +'team_show', {'id': element.id, 'slug': element.slug})+"'>" + element.title + " </a></li>");
-            }
-            
-            if(r.gotMore){
-                $("#addMore").removeClass('hidden');
-            }else{
-                $("#addMore").addClass('hidden');
-            }
-            
-            activePage++;
-            $("div.mask").removeClass('loading');
-            console.log(r);
-        },
-        function(r){
-            console.log(r);
-            $("div.mask").removeClass('loading');
-        });
-    }
 </script>
 {% endblock %}
