@@ -12,12 +12,10 @@
 <div class="cont clearfix">
     <h2>Búsqueda</h2>
     <div class="user_list">
-        <div class="search">
-            <form id="formSearch" method="post" action="" class="searchIdol">
-                <input type="text" name="query" value="" id="query"/>
-                <input type="button" value="Buscar" name="submit" id="search" class="hidden"/>
-            </form>
-        </div>
+        <form id="formSearch" method="post" action="" class="searchIdol">
+            <input type="text" name="query" value="" id="query"/>
+            <input type="submit" value="Buscar" name="submit" id="search" class="hidden"/>
+        </form>
         <div class="mask">
             <div class="ajax-loader hidden">
                 <img src="{{ asset('bundles/dodicifansworldweb/images/ajax-loader.gif') }}" alt="" />

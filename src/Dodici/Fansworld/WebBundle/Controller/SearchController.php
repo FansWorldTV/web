@@ -225,7 +225,7 @@ class SearchController extends SiteController
             $response = array();
             $searchIdol = $this->getRepository('Idol')->SearchFront($user, $query, $isIdol, self::LIMIT_SEARCH, $offset);
             $countTotal = $this->getRepository('Idol')->CountSearchFront($user, $query, $isIdol);
-
+            
             if ($countTotal > 0) {
                 $response['gotMore'] = ($countTotal / self::LIMIT_SEARCH) > $page ? true : false;
 

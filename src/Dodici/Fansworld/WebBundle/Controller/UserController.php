@@ -21,6 +21,7 @@ class UserController extends SiteController
     const LIMIT_SEARCH = 20;
     const LIMIT_NOTIFICATIONS = 5;
     const LIMIT_PHOTOS = 8;
+    const LIMIT_LIST_IDOLS = 15;
 
     /**
      * @Route("/u/{username}", name="user_wall")
@@ -620,5 +621,15 @@ class UserController extends SiteController
         }else
             $this->get('visitator')->visit($user);
         
+        $idolships = $this->getRepository('Idolship')->findBy(array('author' => $user->getId()), array('createdAt' => 'desc'), self::LIMIT_LIST_IDOLS);
+        $idolshipsCount = $this->getRepository('Idolship')->countBy(array('author' => $user->getId()));
+        
+        $return = array(
+            'idolships' => $idolships,
+            'addMore' => $idolshipsCount > self::LIMIT_LIST_IDOLS ? true: false,
+            'user' => $user
+        );
+        
+        return $return;
     }
 }

@@ -1,0 +1,39 @@
+{% extends "DodiciFansworldWebBundle:User:profile_base.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ 'Idols'|trans }}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block profile_tabs %}
+	{% set active_tab = 'idols' %}
+	{{ parent() }}
+{% endblock %}
+
+{% block profile_head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block inner_content %}
+    <section class="row-fluid">
+        {% if idolships|length > 0 %}
+            <ul class="idolships unstyled">
+                {% for idolship in idolships %}
+                    <li>
+                        {% if idolship.idol.image %}
+                            {% thumbnail idolship.idol.image, 'avatar' %}
+                        {% else %}
+                            <img src="http://localhost/fansworld/web/bundles/dodicifansworldweb/images/user_pic.jpg" />
+                        {% endif %}
+                        <button class="btn btn-mini btn-success">SER FAN</button>
+                        <span class="fan-quantity">2233</span>    
+                        <span class="idol-name">{{ idolship.idol }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h3>No posee ídolos</h3>
+        {% endif %}
+    </section>
+{% endblock %}
