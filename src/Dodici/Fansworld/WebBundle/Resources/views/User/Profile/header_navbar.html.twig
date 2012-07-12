@@ -22,7 +22,7 @@
                 <a href="{{ path('user_photos', {username: user.username}) }}">{{ 'Photos'|trans }}</a>
             </li>
             <li {% if active_tab == 'idolos' %}class="active"{% endif %}>
-                <a href="{{ path('user_idols') }}">Idolos</a>
+                <a href="{{ path('user_idols', {'username': user.username}) }}">Idolos</a>
             </li>
             <li {% if active_tab == 'fans' %}class="active"{% endif %}>
                 <a href="">Fans</a>
