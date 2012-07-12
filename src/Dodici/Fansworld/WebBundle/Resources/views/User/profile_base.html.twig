@@ -8,10 +8,16 @@
 {% endblock %}
 
 {% block content %}
-	<header class="user_profile_head profile_head row-fluid">
+    {% set fship = appstate.friendshipwith(user) %}
+    {% if appstate.canfriend(user) and fship is null %}
+        {% set tplLarge = true %}
+    {% else %}
+        {% set tplLarge = false %}
+    {% endif %}
+    
+	<header class="user_profile_head profile_head {% if tplLarge %} large {% else %} small {% endif %}  row-fluid">
 		{% block profile_head %}
-			{% set fship = appstate.friendshipwith(user) %}
-            {% if appstate.canfriend(user) and fship is null %}
+                                                      {% if tplLarge %}
 				{% include 'DodiciFansworldWebBundle:User/Profile:header_large.html.twig' with {entity: user} %}
 			{% else %}
 				{% include 'DodiciFansworldWebBundle:User/Profile:header_small.html.twig' with {entity: user} %}
