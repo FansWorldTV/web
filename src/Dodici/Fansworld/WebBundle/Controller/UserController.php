@@ -607,7 +607,6 @@ class UserController extends SiteController
         return array('media' => $media, 'form' => $form->createView());
     }
 
-    
     /**
      * @Route("/u/{username}/idols", name="user_idols")
      * @Template
@@ -620,16 +619,67 @@ class UserController extends SiteController
             throw new HttpException(404, "No existe el usuario");
         }else
             $this->get('visitator')->visit($user);
-        
+
         $idolships = $this->getRepository('Idolship')->findBy(array('author' => $user->getId()), array('createdAt' => 'desc'), self::LIMIT_LIST_IDOLS);
         $idolshipsCount = $this->getRepository('Idolship')->countBy(array('author' => $user->getId()));
-        
+
         $return = array(
             'idolships' => $idolships,
-            'addMore' => $idolshipsCount > self::LIMIT_LIST_IDOLS ? true: false,
+            'addMore' => $idolshipsCount > self::LIMIT_LIST_IDOLS ? true : false,
             'user' => $user
         );
-        
+
         return $return;
     }
+
+    /**
+     * @Route("/ajax/user_idols/", name="user_ajaxidols")
+     */
+    public function ajaxGetUserIdols()
+    {
+        $request = $this->getRequest();
+        $userId = $request->get('userid', false);
+        $page = $request->get('page', 0);
+
+        $response = array(
+            'addMore' => false,
+            'idolship' => array()
+        );
+
+        
+
+        if (!$userId) {
+            $user = $this->get('security.context')->getToken()->getUser();
+        } else {
+            $user = $this->getRepository('User')->find($userId);
+        }
+
+        $idolshipsCount = $this->getRepository('Idolship')->countBy(array('author' => $user->getId()));
+        
+        if (( $idolshipsCount / self::LIMIT_LIST_IDOLS ) > $page) {
+            $response['addMore'] = true;
+        }
+        
+        if ($page > 0) {
+            $page--;
+            $offset = self::LIMIT_LIST_IDOLS * $page;
+        } else {
+            $offset = 0;
+        }
+        
+        $idolships = $this->getRepository('Idolship')->findBy(array('author' => $user->getId()), array('createdAt' => 'desc'), self::LIMIT_LIST_IDOLS, $offset);
+
+
+        foreach ($idolships as $idolship) {
+            $idol = $idolship->getIdol();
+            $response['idolship'][] = array(
+                'name' => (string) $idol,
+                'avatar' => $this->getImageUrl($idol->getImage()),
+                'id' => $idol->getId()
+            );
+        }
+        
+        return $this->jsonResponse($response);
+    }
+
 }

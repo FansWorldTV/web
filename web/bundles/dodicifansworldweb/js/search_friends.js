@@ -36,7 +36,7 @@ var friendsSearch = {
                         if(element.image){
                             template.find('.avatar img').attr('src', element.image);
                         }else{
-                            template.find('.avatar img').attr('src', '/fansworld/web/bundles/dodicifansworldweb/images/user_pic.jpg');
+                            template.find('.avatar img').attr('src', '/fansworld/web/bundles/dodicifansworldweb/images/profile_no_image.png');
                         }
                     
                         $(".friends.listMosaic").append(template);
@@ -81,7 +81,7 @@ var friendsSearch = {
                     if(element.image){
                         template.find('.avatar img').attr('src', element.image);
                     }else{
-                        template.find('.avatar img').attr('src', '/fansworld/web/bundles/dodicifansworldweb/images/user_pic.jpg');
+                        template.find('.avatar img').attr('src', '/fansworld/web/bundles/dodicifansworldweb/images/profile_no_image.png');
                     }
                     
                     $(".friends.listMosaic").append(template);

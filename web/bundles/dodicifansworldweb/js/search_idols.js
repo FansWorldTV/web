@@ -33,7 +33,7 @@ var searchIdols = {
                         if(element.image){
                             template.find('.avatar img').attr('src', element.image);
                         }else{
-                            template.find('.avatar img').attr('src', '/fansworld/web/bundles/dodicifansworldweb/images/user_pic.jpg');
+                            template.find('.avatar img').attr('src', '/fansworld/web/bundles/dodicifansworldweb/images/profile_no_image.png');
                         }
                     
                         if(element.isFriend){
@@ -78,7 +78,7 @@ var searchIdols = {
                     if(element.image){
                         template.find('.avatar img').attr('src', element.image);
                     }else{
-                        template.find('.avatar img').attr('src', '/fansworld/web/bundles/dodicifansworldweb/images/user_pic.jpg');
+                        template.find('.avatar img').attr('src', '/fansworld/web/bundles/dodicifansworldweb/images/profile_no_image.png');
                     }
                     
                     if(element.isFriend){
