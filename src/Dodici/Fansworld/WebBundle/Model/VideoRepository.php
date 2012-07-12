@@ -300,18 +300,19 @@ class VideoRepository extends CountBaseRepository
 	 * Get highlight videos (idol, team)
 	 * @param Idol|Team $entity
 	 */
-	public function highlights($entity, $limit)
+	public function highlights($entity, $limit=null)
 	{
 		$type = $this->getType($entity);
 	    
 	    $query = $this->_em->createQuery('
-    	SELECT v, vi
+    	SELECT v, vi, vhh
     	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
     	JOIN v.image vi
+    	INNER JOIN v.has'.$type.'s vhh
     	WHERE
     	v.active = true
     	AND
-    	v.'.$type.' = :entid
+    	vhh.'.$type.' = :entid
     	ORDER BY v.highlight DESC, v.createdAt DESC
     	')
 	    ->setParameter('entid', $entity->getId())
