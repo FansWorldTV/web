@@ -28,11 +28,12 @@ class FormatThumbnail extends BaseFormatThumbnail
         if ($format == 'reference') {
             $path = $provider->getReferenceImage($media);
         } else {
-            $path = sprintf('%s/thumb_%s_%s_%s.jpg',  
+            $path = sprintf('%s/thumb_%s_%s_%s.%s',  
             	$provider->generatePath($media), 
             	$media->getId(), 
             	$format, 
-            	substr($media->getProviderReference(), 0, strrpos($media->getProviderReference(), '.'))
+            	substr($media->getProviderReference(), 0, strrpos($media->getProviderReference(), '.')),
+            	$this->getExtension($media)
             	);
         }
 
@@ -47,11 +48,12 @@ class FormatThumbnail extends BaseFormatThumbnail
      */
     public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
-        return sprintf('%s/thumb_%s_%s_%s.jpg',
+        return sprintf('%s/thumb_%s_%s_%s.%s',
             $provider->generatePath($media),
             $media->getId(),
             $format,
-            substr($media->getProviderReference(), 0, strrpos($media->getProviderReference(), '.'))
+            substr($media->getProviderReference(), 0, strrpos($media->getProviderReference(), '.')),
+            $this->getExtension($media)
         );
     }
 
