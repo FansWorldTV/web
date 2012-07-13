@@ -419,7 +419,7 @@ var site = {
     },
     
     bindCarousel: function(){
-        $('.carousel').carousel().bind('slid', function() {
+        $('.carousel').carousel({interval: 5000}).bind('slid', function() {
             // Get currently selected item
             var item = $('#myCarousel .carousel-inner .item.active');
 
