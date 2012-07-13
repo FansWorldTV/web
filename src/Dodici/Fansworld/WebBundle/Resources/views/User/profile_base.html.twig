@@ -9,7 +9,7 @@
 
 {% block content %}
     {% set fship = appstate.friendshipwith(user) %}
-    {% if appstate.canfriend(user) and fship is null %}
+    {% if (appstate.canfriend(user) and fship is null) or ( isHome is defined and isHome) %}
         {% set tplLarge = true %}
     {% else %}
         {% set tplLarge = false %}
@@ -17,12 +17,15 @@
     
 	<header class="user_profile_head profile_head {% if tplLarge %} large {% else %} small {% endif %}  row-fluid">
 		{% block profile_head %}
-                                                      {% if tplLarge %}
+            {% if tplLarge %}
 				{% include 'DodiciFansworldWebBundle:User/Profile:header_large.html.twig' with {entity: user} %}
 			{% else %}
 				{% include 'DodiciFansworldWebBundle:User/Profile:header_small.html.twig' with {entity: user} %}
 			{% endif %}
 		{% endblock %}
+		{% block profile_tabs %}
+            {% include 'DodiciFansworldWebBundle:User/Profile:header_navbar.html.twig' with {entity: user} %}
+        {% endblock %}
 	</header>
 	
 	{% block user_profile_body %}

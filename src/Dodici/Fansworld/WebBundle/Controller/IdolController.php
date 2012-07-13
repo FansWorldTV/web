@@ -38,7 +38,7 @@ class IdolController extends SiteController
         $hasComments = $this->getRepository('Comment')->countBy(array('idol' => $idol->getId()));
         $hasComments = $hasComments > 0 ? true : false;
 
-        return array('idol' => $idol, 'hasComments' => $hasComments);
+        return array('idol' => $idol, 'hasComments' => $hasComments, 'isHome' => true);
     }
 
     /**

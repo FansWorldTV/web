@@ -1,0 +1,35 @@
+//carousel custom styles
+.carousel {
+    margin-bottom: 0;
+    .item > img{
+        width: 100%;
+    }
+    
+    #carousel-nav {
+        position: absolute;
+        right: 5%;
+        text-align: center;
+        top: 2%;
+        a {
+            margin: 5px 0px;
+            background: url(images/carouseldot.png) no-repeat 0 0;
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+            position: static;
+            
+            
+        }
+        a.active {
+            background: url(images/carouseldotactive.png) no-repeat 0 0;
+        }
+    }
+}
+
+
+
+
+
+

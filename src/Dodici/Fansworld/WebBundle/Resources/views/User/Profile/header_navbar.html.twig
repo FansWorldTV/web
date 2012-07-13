@@ -3,9 +3,7 @@
         {% set active_tab = 'wall' %}
     {% endif %}
     <nav class='span12'>
-    
-        
-        <ul class="nav nav-tabs-profile">
+       <ul class="nav nav-tabs-profile">
             <li {% if active_tab == 'wall' %}class="active"{% endif %}>
                 <a  href="{{ path('user_wall', {username: user.username}) }}">Muro</a>
             </li>
@@ -33,7 +31,6 @@
             <li {% if active_tab == 'badges' %}class="active"{% endif %}>
                 <a href="">Badges</a>
             </li>
-            
         </ul>
     </nav>
 {% endblock %}

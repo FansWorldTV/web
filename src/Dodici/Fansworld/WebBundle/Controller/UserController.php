@@ -41,7 +41,7 @@ class UserController extends SiteController
         $loggedUser = $this->get('security.context')->getToken()->getUser();
         $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
 
-        return array('user' => $user, 'friendgroups' => $friendGroups, 'hasComments' => $hasComments);
+        return array('user' => $user, 'friendgroups' => $friendGroups, 'hasComments' => $hasComments, 'isHome' => true);
     }
 
     /**

@@ -38,6 +38,7 @@ class TeamController extends SiteController
     {
         $repo = $this->getRepository('Team');
         $team = $repo->findOneBy(array('id' => $id, 'active' => true));
+        $highlights = $this->getRepository('video')->highlights($team,4);
 
         if (!$team)
             throw new HttpException(404, 'Equipo no encontrado');
@@ -46,6 +47,8 @@ class TeamController extends SiteController
 
         return array(
             'team' => $team,
+        	'isHome' => true,
+            'highlights' => $highlights,
         );
     }
 

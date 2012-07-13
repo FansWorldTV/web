@@ -1,1 +1,25 @@
-TODO
+{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+
+{% block content %}
+	<header class="team_profile_head profile_head row-fluid">
+		{% block profile_head %}
+			{% set fship = appstate.idolshipWith(idol) %}
+            {% if  fship is null %}
+				{% include 'DodiciFansworldWebBundle:Idol/Profile:header_large.html.twig' with {entity: idol} %}
+			{% else %}
+				{% if isHome is defined and isHome %}
+					{% include 'DodiciFansworldWebBundle:Idol/Profile:header_large.html.twig'  with {entity: idol} %}
+				{% else %}
+					{% include 'DodiciFansworldWebBundle:Idol/Profile:header_small.html.twig'  with {entity: idol} %}
+				{% endif %}				
+
+			{% endif %}
+		{% endblock %}
+		
+		{% block profile_tabs %}
+            {% include 'DodiciFansworldWebBundle:Idol/Profile:header_navbar.html.twig' with {entity: idol} %}
+		{% endblock %}
+		
+	</header>
+	TODO
+{% endblock %}

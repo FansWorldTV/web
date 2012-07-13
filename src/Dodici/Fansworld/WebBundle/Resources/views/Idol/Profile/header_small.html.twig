@@ -5,8 +5,11 @@
 {% endblock %}
 
 {% block header_subtitle %}
-    {% if entity.level %}
-        {{ entity.level.title }}
+    {% if entity.country %}
+        {{ entity.country }}
+    {% endif %}
+    {% if entity.team %}
+        {{ entity.team }}
     {% endif %}
 {% endblock %}
 
@@ -22,17 +25,17 @@
     </section>
     
     <section class='fans-info'>
-        <div class='numero'>{{ entity.friendCount }}</div>
+        <div class='numero'>{{ entity.fanCount }}</div>
         <div class='tipo'>Fans</div>
     </section>
 {% endblock %}
 
 {% block header_fship %}
-    {% set fship = appstate.friendshipwith(entity) %}
-    {% if appstate.canfriend(entity) and fship is null %}
+    
+    {% if  fship is null %}
         <div class="addFriend" targetId="{{ entity.id }}">
-            <button class="btn btn-large btn_friendship add btn-success"> Ser fan{% if entity.restricted %} (solicitar){% endif %}</button>
-            			{#
+            <button class="btn btn-large btn_friendship add btn-success"> Ser fan </button>
+        				{#
 							{% if friendgroups|length > 0 %}
 	                            
 	                            <ul class="friendgroupsList">

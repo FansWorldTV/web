@@ -3,18 +3,31 @@
 {% block title %}{{ parent() }} - Detalle{% endblock %}
 
 {% block content %}
+	<header class="team_profile_head profile_head row-fluid">
+		{% block profile_head %}
+			{% set fship = appstate.teamshipwith(team) %}
+            {% if  fship is null %}
+				{% include 'DodiciFansworldWebBundle:Team/Profile:header_large.html.twig' with {entity: team} %}
+			{% else %}
+				{% if isHome is defined and isHome %}
+					{% include 'DodiciFansworldWebBundle:Team/Profile:header_large.html.twig'  with {entity: team} %}
+				{% else %}
+					{% include 'DodiciFansworldWebBundle:Team/Profile:header_small.html.twig'  with {entity: team} %}
+				{% endif %}				
+
+			{% endif %}
+		{% endblock %}
+		
+		{% block profile_tabs %}
+            {% include 'DodiciFansworldWebBundle:Team/Profile:header_navbar.html.twig' with {entity: team} %}
+		{% endblock %}
+		
+	</header>
+
+
         <div class="cont clearfix">
             <h2>{{ 'Detail'|trans }}</h2>
-            <div class="user_list">
-                <div class="mask">
-                    {{ team.title}}
-                    {% if not appstate.teamshipwith(team)%}
-                        <a href="" class="teamToggle" onclick="return false;">Ser fan</a>
-                    {% else %}
-                        <a href="" class="teamToggle teamship" onclick="return false;">Dejar de ser fan</a>
-                    {% endif %}
-                </div>
-            </div>
+            TODO
         </div>
     <script type="text/javascript">
         $(document).ready(function(){

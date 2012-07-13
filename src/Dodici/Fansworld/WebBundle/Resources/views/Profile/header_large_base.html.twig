@@ -1,0 +1,50 @@
+{% block header_main %}
+    <section class='header_main row-fluid header_large'>	
+	    <div class='main_left span8' >
+	        {% block avatar_container %}
+			    <div class="avatar">
+			        {% block avatar_content %}
+			            {% set avatar_format = 'small_square' %}
+			            
+			            {% if entity.image %}
+			                {% thumbnail entity.image, avatar_format %}
+			            {% else %}
+			                <img src="{{ asset('bundles/dodicifansworldweb/images/profile_no_image.png' )}}" />
+			            {% endif %}
+			        {% endblock %}
+			    </div>
+			{% endblock %}  
+			
+			{% block splash_container %}  
+    			
+			{% endblock %}
+	    </div>
+	    <div class='main_right span4 row-fluid' >
+	        <div class='span9 user-info'>
+	            <h1>
+					{% block header_title %}
+        	                {{ entity }}
+    	            {% endblock %}
+	            </h1>
+	            
+	            <div class='header-subtitle'>
+					{% block header_subtitle %}
+    	            
+                	{% endblock %}
+                </div>
+                
+                <div class='header-fship'>
+    	            {% block header_fship %}
+    	                
+    	            {% endblock %}
+	            </div>
+	            
+	        </div>
+	        <div class='span3 numbers-info'>
+	        	{% block header_numbersinfo %}
+    	            
+	            {% endblock %}
+	        </div>
+	    </div>
+    </section>
+{% endblock %}

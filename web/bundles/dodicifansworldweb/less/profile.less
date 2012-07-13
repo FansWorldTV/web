@@ -206,6 +206,10 @@ header.profile_head{
             margin-top:0;
             .avatar{
                 float:left;
+                img{
+                    max-width: 60px;
+                    max-height: 60px;
+                }
             }
             .text-info{
                 float: left;
@@ -220,7 +224,7 @@ header.profile_head{
             }
             
                 
-            .user-level{
+            .header-subtitle{
                 font-size: 13px;
             }
         }
@@ -254,16 +258,19 @@ header.profile_head{
             }
         }
         
-        .addFriend{
-            
+        .header-fship{
+            margin-top: 5px;
+            .btn_friendship{
+                
+                font-size: 20px;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+        
         }
         
-        .btn_friendship{
-            margin-top: 5px;
-            font-size: 20px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
+        
+        
     
     
     }
@@ -274,6 +281,11 @@ header.profile_head{
                 margin-left: 30px;
                 margin-top: -6px;
                 position: absolute;
+                z-index: 99;
+                img{
+                    max-width: 100px;
+                    max-height: 100px;
+                }
             }
         }
         
@@ -289,13 +301,15 @@ header.profile_head{
                     margin-top: 22%;
                 }
                 
-                .btn_friendship{
-                    font-size: 20px;
-                    font-weight: bold;
-                    text-transform: uppercase;
+                .header-fship{
+                    .btn_friendship{
+                        font-size: 20px;
+                        font-weight: bold;
+                        text-transform: uppercase;
+                    }
                 }
-                    
-                .user-level{
+                
+                .header-subtitle{
                     font-size: 13px;
                 }
             }

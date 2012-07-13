@@ -1,0 +1,39 @@
+{% block header_navbar %}
+    {% if active_tab is not defined %}
+        {% set active_tab = 'wall' %}
+    {% endif %}
+    
+    <nav class='span12'>
+       <ul class="nav nav-tabs-profile">
+            <li {% if active_tab == 'wall' %}class="active"{% endif %}>
+                <a  href="{{ path('idol_wall', {slug: entity.slug}) }}">Muro</a>
+            </li>
+            
+            <li {% if active_tab == 'biografia' %}class="active"{% endif %}>
+                <a  href="">Biografia</a>
+            </li>
+            
+            <li {% if active_tab == 'videos' %}class="active"{% endif %}>
+                <a  href="">Videos</a>
+            </li>
+            
+            <li {% if active_tab == 'photos' %}class="active"{% endif %}>
+                <a href="">{{ 'Photos'|trans }}</a>
+            </li>
+            
+            <li {% if active_tab == 'tweets' %}class="active"{% endif %}>
+                <a href="">Tweets</a>
+            </li>
+            
+            <li {% if active_tab == 'fans' %}class="active"{% endif %}>
+                <a href="">Fans</a>
+            </li>
+            
+            <li {% if active_tab == 'eventos' %}class="active"{% endif %}>
+                <a href="">Eventos</a>
+            </li>
+            
+            
+        </ul>
+    </nav>
+{% endblock %}

@@ -117,6 +117,8 @@ var site = {
         site.BindLoginWidget();
         
         $('[data-wall]').wall();
+        site.bindCarousel();
+        
     },
     
     parseTimes: function(){
@@ -414,6 +416,27 @@ var site = {
             $('form.login').submit();
         })
          
+    },
+    
+    bindCarousel: function(){
+        $('.carousel').carousel().bind('slid', function() {
+            // Get currently selected item
+            var item = $('#myCarousel .carousel-inner .item.active');
+
+            // Deactivate all nav links
+            $('#carousel-nav a').removeClass('active');
+
+            // Index is 1-based, use this to activate the nav link based on slide
+            var index = item.index() + 1;
+            $('#carousel-nav a:nth-child(' + index + ')').addClass('active');
+        });
+        
+        $('#carousel-nav a').click(function(q){
+            q.preventDefault();
+            targetSlide = $(this).attr('data-to')-1;
+            $('#myCarousel').carousel(targetSlide);
+        });​
+        
     }
 }
 
