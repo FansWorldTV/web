@@ -393,7 +393,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
      *
      * @param Dodici\Fansworld\WebBundle\Entity\TeamCategory $teamcategories
      */
-    public function addTeamcategory(\Dodici\Fansworld\WebBundle\Entity\TeamCategory $teamcategories)
+    public function addTeamCategory(\Dodici\Fansworld\WebBundle\Entity\TeamCategory $teamcategories)
     {
         $this->teamcategories[] = $teamcategories;
     }

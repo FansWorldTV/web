@@ -58,10 +58,20 @@ class VideoCategory implements Translatable
      * @ORM\OneToMany(targetEntity="Video", mappedBy="videocategory", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $videos;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Video")
+     * @ORM\JoinTable(name="video_channel_home",
+     *      joinColumns={@ORM\JoinColumn(name="videocategory_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="video_id", referencedColumnName="id")}
+     *      )
+     */
+    protected $homevideos;
 
     public function __construct()
     {
         $this->videos = new ArrayCollection();
+        $this->homevideos = new ArrayCollection();
     }
 
     public function __toString()
@@ -138,5 +148,35 @@ class VideoCategory implements Translatable
     public function getVideos()
     {
         return $this->videos;
+    }
+    
+	/**
+     * Add homevideos
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\TeamCategory $homevideos
+     */
+    public function addHomevideo(\Dodici\Fansworld\WebBundle\Entity\Video $homevideos)
+    {
+        $this->homevideos[] = $homevideos;
+    }
+    
+    public function addHomevideos(\Dodici\Fansworld\WebBundle\Entity\Video $homevideos)
+    {
+        $this->addHomevideo($homevideos);
+    }
+
+    /**
+     * Get homevideos
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getHomevideos()
+    {
+        return $this->homevideos;
+    }
+    
+    public function setHomevideos($homevideos)
+    {
+        $this->homevideos = $homevideos;
     }
 }

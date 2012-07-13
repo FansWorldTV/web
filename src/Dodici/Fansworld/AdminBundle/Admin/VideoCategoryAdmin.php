@@ -22,6 +22,7 @@ class VideoCategoryAdmin extends Admin
     {
         $formMapper
             ->add('title', NULL, array (), array ())
+            ->add('homevideos', NULL, array (), array ())
         ;
     }
 
