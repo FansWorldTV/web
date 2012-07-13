@@ -379,6 +379,11 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: quizanswer }
         arguments: [null, Dodici\Fansworld\WebBundle\Entity\QuizAnswer, DodiciFansworldAdminBundle:QuizAnswerAdmin]
+    dodici.fansworld.adminbundle.admin.homevideo:
+        class: Dodici\Fansworld\AdminBundle\Admin\HomeVideoAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: homevideo }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\HomeVideo, DodiciFansworldAdminBundle:HomeVideoAdmin]
     ### END ADMIN SERVICES ###
     liking.listener.persist:
         class: Dodici\Fansworld\WebBundle\Listener\LikingCountUpdater
