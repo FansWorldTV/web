@@ -1,0 +1,36 @@
+{% extends "DodiciFansworldWebBundle:User:profile_base.html.twig" %}
+
+{% block title %}{{ parent() }} - Twitter{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block profile_tabs %}
+	{% set active_tab = 'twitter' %}
+	{{ parent() }}
+{% endblock %}
+
+{% block profile_head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block inner_content %}
+    <div class="row-fluid">
+        <div class="twitter-tab span8">
+            {% if user.twitter %}
+                <h2>{{ user.twitter }}</h2>
+
+                {% if lastTweets|length > 0 %}
+                    {% for tweet in lastTweets %}
+                        <p {% if loop.first %}class="big"{% endif %}>{{ tweet.text|raw() }}</p>
+                    {% endfor %}
+                {% else %}
+                        <p class="big">No hay tweets disponibles</p>
+                {% endif %}
+            {% else %}
+                <p class="big">No hay una cuenta asociada</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

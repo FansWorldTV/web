@@ -20,7 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class TwitterController extends SiteController
 {
-	/**
+
+    /**
      * Set access token
      * @Route("/tokenize", name="twitter_tokenize")
      * @Secure(roles="ROLE_USER")
@@ -28,41 +29,80 @@ class TwitterController extends SiteController
      */
     public function tokenizeAction()
     {
-    	$request = $this->getRequest();
-		$t = $this->get('fos_twitter.service');
-    	$accesstoken = $t->getAccessToken($request);
-    		
-    	if ($accesstoken) {
-    		$user = $this->get('security.context')->getToken()->getUser();
-    		if ($user instanceof User) {
-    			$user->setTwitter($accesstoken['screen_name']);
-    			$user->setTwitterid($accesstoken['user_id']);
-    			$user->setTwittertoken($accesstoken['oauth_token']);
-    			$user->setTwittersecret($accesstoken['oauth_token_secret']);
-    			$em = $this->getDoctrine()->getEntityManager();
-    			$em->persist($user);
-    			$em->flush($em);
-    		}
-    	}
-    	
-    	return array(
-    		'token' => $accesstoken
-    	);
+        $request = $this->getRequest();
+        $t = $this->get('fos_twitter.service');
+        $accesstoken = $t->getAccessToken($request);
+
+        if ($accesstoken) {
+            $user = $this->get('security.context')->getToken()->getUser();
+            if ($user instanceof User) {
+                $user->setTwitter($accesstoken['screen_name']);
+                $user->setTwitterid($accesstoken['user_id']);
+                $user->setTwittertoken($accesstoken['oauth_token']);
+                $user->setTwittersecret($accesstoken['oauth_token_secret']);
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($user);
+                $em->flush($em);
+            }
+        }
+
+        return array(
+            'token' => $accesstoken
+        );
     }
-    
-	/**
+
+    /**
      * Redirect to Twitter with callback
      * @Route("/redirect", name="twitter_redirect")
      * @Secure(roles="ROLE_USER")
      */
     public function redirectAction()
     {
-    	$request = $this->getRequest();
-		$t = $this->get('fos_twitter.service');
-    	$t->setCallbackRoute($this->get('router'), 'twitter_tokenize');
-    	$url = $t->getLoginUrl($request);
-    	
-		return $this->redirect($url);
+        $request = $this->getRequest();
+        $t = $this->get('fos_twitter.service');
+        $t->setCallbackRoute($this->get('router'), 'twitter_tokenize');
+        $url = $t->getLoginUrl($request);
+
+        return $this->redirect($url);
     }
-    
+
+    /**
+     * user and idol tab
+     * @Route("/{username}", name="twitter_tab")
+     * @Template()
+     */
+    public function tabAction($username)
+    {
+        $user = $this->getRepository('User')->findOneByUsername($username);
+        if (!$user) {
+            throw new HttpException(404, "No existe el usuario");
+        }else
+            $this->get('visitator')->visit($user);
+
+        $response = array(
+            'user' => $user,
+            'lastTweets' => array()
+        );
+
+        $lastTweets = $this->get('fos_twitter.api')->get('statuses/user_timeline', array(
+            'screen_name' => $user->getTwitter(),
+            'count' => 10
+                ));
+
+
+        $pattern = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
+
+        if (is_array($lastTweets)) {
+            foreach ($lastTweets as $tweet) {
+                $response['lastTweets'][] = array(
+                    'text' => preg_replace($pattern, "<a target=\"_blank\" href=\"\\0\" rel=\"nofollow\">\\0</a>", $tweet->text),
+                    'user' => $tweet->user->screen_name,
+                    'retweeted' => ($tweet->retweet_count > 0) ? true : false
+                );
+            }
+        }
+
+        return $response;
+    }
+
 }
