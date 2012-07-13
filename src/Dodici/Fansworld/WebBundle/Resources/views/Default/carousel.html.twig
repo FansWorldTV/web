@@ -1,0 +1,34 @@
+{% if carouselitems is not defined %}
+    (% set carouselitems = null %}
+{% endif %}    
+    
+{% block carousel %}
+    <div id="myCarousel" class="carousel slide">
+        <!-- Carousel items -->
+        <div class="carousel-inner">
+            {% if carouselitems|length > 0 %}
+                {% for carouselitem in carouselitems %}
+                    <div class="item {% if loop.first %} active {% endif %}" data-video='{{ carouselitem.id }}'>
+                        {% thumbnail carouselitem.image, 'splash' %}
+                        <div class="carousel-caption">
+                            <h4>{% if carouselitem.title is defined %} {{ carouselitem.title }} {% endif %}</h4>
+                            <p>{% if carouselitem.content is defined %} {{ carouselitem.content }} {% endif %}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <!-- Carousel nav -->
+        
+        <div id="carousel-nav">
+            {% if carouselitems|length > 0 %}
+                {% for carouselitem in carouselitems %}
+                    <a href="#myCarousel" data-to="{{ loop.index }}" class="{% if loop.first %} active {% endif %}"></a>
+                {% endfor %}
+            {% endif %}
+		</div>
+        <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+        <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div>
+
+{% endblock %}
