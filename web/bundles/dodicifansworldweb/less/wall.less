@@ -1,8 +1,61 @@
+//estilos generales
+
+.user_profile_body{
+    background-color: #f8f8f8;
+    padding-left: 15px;
+}
+
+//Estilos formulario commentarios
+//formulario principal del wall
+.commentform.update{
+    width: 100%;
+    border: 2px solid #D3D3D3;
+    .border-radius(5px);
+    margin-bottom: 20px;
+    .upd{
+        position: relative;
+        padding-right: 1%;
+        div.cam-container{
+            position: absolute;
+            top: 5%;
+            right: 1%;
+        }
+        
+        textarea{
+            border:none;
+            width:99%;
+            margin-bottom: 0;
+        }
+    }
+    .bottom{
+        padding-top: 10px;
+        div.icons-container{
+            padding-left: 15px;
+        }
+        div.who-container{
+            input{
+                width: 100%;
+            }
+        }
+        border-top: 1px solid #ebebeb;
+        background-color: #f8f8f8;
+        button{
+            .pull-right();
+            margin-right: 10px;
+        }
+        img{
+           vertical-align: text-bottom; 
+        }
+    }
+}
+
+
+
 /* Estilos actualizacion */
 div.actualizacion{
-    header{
+    header.comment-header{
         overflow: hidden;
-        
+        padding-left: 15px;
         div.avatar{
             float: left;    
         }
@@ -10,9 +63,90 @@ div.actualizacion{
         div.action_container{
             float: left;
             margin-left: 15px;
+            line-height: 40px;
+            color: #848484;
         }
     
     }
-    
-
+    .status{
+        width: 100%;
+        border: 2px solid #D3D3D3;
+        .border-radius(5px);
+        margin-bottom: 20px;
+        margin-top: 15px;
+        background-color: @white;
+        padding-bottom: 15px;
+        
+        header.infotext-header{
+            padding-bottom: 5px;
+            padding-left: 15px;
+            padding-top: 5px;
+            overflow: hidden;
+            .title{
+                a{
+                    color: #333333;
+                }
+            }
+            .comment-toolbar{
+                .pull-right();
+                border: 1px solid #D0D0D0;
+                .border-radius(5px);
+                margin-right: 5px;
+                padding: 1px;
+                img{
+                    cursor: pointer;
+                }
+                
+                img.toolbar-compartir{
+                    border-right: 1px solid #e8e8e8;
+                    border-left: 1px solid #e8e8e8;
+                }
+            }
+        }
+        
+        div.infotext-content{
+            div.content-container{
+                div.video, div.image{
+                    background-color: black;
+                    text-align: center;
+                }
+                > p{
+                    padding-left: 15px;
+                }
+                    
+            }
+            
+            div.info{
+                padding-left: 15px;
+            }
+            
+            div.social{
+                padding-left: 15px;
+            }
+            
+        }
+        
+        div.infotext-subcomments{
+            padding-top: 15px;
+            padding-left: 15px;
+            textarea{
+                height: 20px;
+            }
+        }
+    }
+    section.subcomment-container{
+        overflow: hidden;
+        > *{
+            .pull-left();
+        }
+        margin-bottom: 15px;
+        div.subcomment-avatar{
+        
+        }
+        div.subcomment-content{
+            padding-left: 15px;
+        }
+    }
 }
+
+

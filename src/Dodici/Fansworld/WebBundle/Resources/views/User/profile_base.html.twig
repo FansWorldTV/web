@@ -29,9 +29,15 @@
 	</header>
 	
 	{% block user_profile_body %}
-		<div class="user_profile_body">
-			{% block inner_content %}
-			{% endblock %}
+		<div class="user_profile_body row-fluid">
+            <section class='inner-content span9'>
+                {% block inner_content %}
+            	{% endblock %}
+            </section>
+			<section class='inner-sidebar span3'>
+                {% block inner_sidebar %}
+                {% endblock %}
+            </section>
 		</div>
 	{% endblock %}
 

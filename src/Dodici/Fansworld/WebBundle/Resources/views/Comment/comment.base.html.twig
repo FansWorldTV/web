@@ -1,72 +1,97 @@
 {% block comment %}
-<div class="{% block comment_block_class %}actualizacion clearfix comment_unit{% endblock %}" data-comment="{{ comment.id }}">
-{% block comment_content %}
-    {% block comment_header %}
-    	<header>
-        	{% block avatar %}
-        		{% if image is defined and image is not null %}
-        		<div class="avatar">
-        			{% thumbnail image, 'avatar' %}
-        		</div>
-        		{% endif %}
+    <div class="{% block comment_block_class %}actualizacion clearfix comment_unit{% endblock %}" data-comment="{{ comment.id }}">
+    	{% block comment_content %}
+    		{% block comment_header %}
+            	<header class='comment-header'>
+                	{% block avatar %}
+                		{% if image is defined and image is not null %}
+                		<div class="avatar">
+                			{% thumbnail image, 'headeravatar' %}
+                		</div>
+                		{% endif %}
+                	{% endblock %}
+                	<div class='action_container'>
+                    	{% block action %}
+                            <span class="action_user"></span>
+                        {% endblock %}
+                        ( {% include 'DodiciFansworldWebBundle:Comment:date.html.twig' with {date: comment.createdAt} %} )
+                    </div>
+        	   </header>
         	{% endblock %}
-        	<div class='action_container'>
-            	{% block action %}
-                    <span class="action_user"></span>
-                {% endblock %}
-                {% include 'DodiciFansworldWebBundle:Comment:date.html.twig' with {date: comment.createdAt} %}
-            </div>
-            
-	   </header>
-	{% endblock %}
-	{% block info %}
-	<div class="{% block info_block_class %}status{% endblock %}">
-		{% block info_text %}
-			
-			{% block title %}<span class="title"></span>{% endblock %}
-			{% block description %}<p></p>{% endblock %}
-			{% block date %}
-				<div class="info">
-					
-					{% block commentcount %}
-					<span class="comments">{{ comment.commentCount }} {{ 'comments'|trans }}</span>
-					{% endblock %}
-				</div>
-			{% endblock %}
-			{% block comment_social %}
-				<div class="social">
-					{% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {entity: comment, showcount: true} %}
-					{% block share_button %}{% include 'DodiciFansworldWebBundle:Default:share_button.html.twig' with {entity: comment} %}{% endblock %}
-				</div>
-			{% endblock %}
-			{% block subcomments %}
+        	{% block info %}
+                <div class="{% block info_block_class %}status{% endblock %}">
+        			{% block info_text %}
+                        <header class='infotext-header'>
+                            {% block title %}
+                                <span class="title"></span>
+							{% endblock %}
+                            {% block comment_toolbar %}
+                                <div class="comment-toolbar">
+                                
+                                    <img class='toolbar-comentarios' src="{{ asset("bundles/dodicifansworldweb/images/ico/comentarios.png") }}" alt="Comentarios" />
+                                    <img class='toolbar-compartir' src="{{ asset("bundles/dodicifansworldweb/images/ico/compartir.png") }}" alt="Compartir" />
+                                    <img class='toolbar-favortios' src="{{ asset("bundles/dodicifansworldweb/images/ico/favoritos.png") }}" alt="Favorito" />
+                                </div>
+                            {% endblock %}
+							
+                        </header>
+                        
+        				<div class='infotext-content'>
+                            
+                            <div class="content-container">
+                                {% block info_commentcontent %}{% endblock %}
+                                {% block description %}<p></p>{% endblock %}
+                            </div>
+
+                            {#
+                            {% block date %}
+                                <div class="info">
+                                    {% block commentcount %}
+                                        <span class="comments">{{ comment.commentCount }} {{ 'comments'|trans }}</span>
+                                    {% endblock %}
+                                </div>
+                            {% endblock %}
+							#}                            
+
+
+                            {% block comment_social %}
+                            {#
+                                <div class="social">
+                                    {% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {entity: comment, showcount: true} %}
+                                    {% block share_button %}{% include 'DodiciFansworldWebBundle:Default:share_button.html.twig' with {entity: comment} %}{% endblock %}
+                                </div>
+							#}
+                            {% endblock %}
+                        	
+                        
+                        </div>
+						
+                        
+        				<div class="infotext-subcomments">
+                            {% block subcomments %}
                                 {% if comment.comment is null %}
                                     <div class="comments">
-                                        {% if comment.comments|length > 0 %}
+                                        <div class="subcomment-container" data-subcomments="{{ comment.id }}">   
+                                            {% for subcomment in comment.comments %}
+                                                {% include 'DodiciFansworldWebBundle:Comment:comment.subcomment.html.twig' with {comment: subcomment} %}
+                                            {% endfor %}
+                                        </div>
                                         <div class="form">
-                                        {% else %}
-                                        <a href="#" class="showCommentForm">{{ 'Make a comment'|trans }}</a>
-                                        <div class="form hidden">
-                                        {% endif %}
                                             {% include 'DodiciFansworldWebBundle:Comment:comment_form.html.twig' with {shortform: true, entity: comment} %}
                                         </div>
-	                  
-	                                    <div class="subcomment-container" data-subcomments="{{ comment.id }}">   
-	                                        {% for subcomment in comment.comments %}
-	                                                {% include 'DodiciFansworldWebBundle:Comment:comment.html.twig' with {comment: subcomment} %}
-	                                        {% endfor %}
-                                        </div>
                                     </div>
-				{% endif %}
-			{% endblock %}
-	 	{% endblock %}
-	</div>
-	{% endblock %}
-	{% block deleter %}
-		{% if appstate.candelete(comment) %}
-			<a class="deletecomment" data-id="{{comment.id}}"></a>
-		{% endif %}
-	{% endblock %}
-{% endblock %}
-</div>
+                                {% endif %}
+                            {% endblock %}
+                        </div>
+        				
+        			{% endblock %}
+                </div>
+        	{% endblock %}
+        	{% block deleter %}
+        		{% if appstate.candelete(comment) %}
+        			<a class="deletecomment" data-id="{{comment.id}}"></a>
+        		{% endif %}
+        	{% endblock %}
+    	{% endblock %}
+    </div>
 {% endblock %}

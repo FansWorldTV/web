@@ -1,3 +1,11 @@
 {% extends 'DodiciFansworldWebBundle:Comment:comment.share.html.twig' %}
 
 {% block share_action_text %}{{ 'action_uploaded_photo'|trans }}{% endblock %}
+
+{% block info_commentcontent %}
+    {% if tag_item.image is defined and tag_item.image is not null %}
+        <div class="image">
+            <a href="{{ tag_item_url }}">{% thumbnail tag_item.image, 'wall' %}</a>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -50,7 +50,9 @@
 		<a href="{{ tag_item_url }}">{{ tag_item }}</a>
 	</span>
 {% endblock %}
-{% block description %}
+
+
+{% block info_commentcontent %}
 	{% if tag_item.image is defined and tag_item.image is not null %}
 		{% if tag_item_type == 'video' %}
 			<div class="video">
@@ -63,6 +65,9 @@
 			</div>
 		{% endif %}
 	{% endif %}
+{% endblock %}    
+    
+{% block description %}    
 	{% if comment.content %}
 		<div class="share-desc">
 			<p>{{ comment.content }}</p>
@@ -71,15 +76,21 @@
 {% endblock %}
 
 {% block comment_social %}
-	<div class="social">
+	{#
+    <div class="social">
+        
 		{% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {entity: tag_item, showcount: true, type: tag_item_type} %}
 		{% if comment.author != app.user %}
 			{% block share_button %}{% include 'DodiciFansworldWebBundle:Default:share_button.html.twig' with {entity: tag_item, type: tag_item_type} %}{% endblock %}
 		{% endif %}
+		
 	</div>
+	#}
 {% endblock %}
 
-{% block subcomments %}{% endblock %}
+{% block subcomments %}
+    {{ parent() }}
+{% endblock %}
 
 {% block commentcount %}
 	<a href="{{ tag_item_url }}">{{ tag_item.commentCount }} {{ 'comments'|trans }}</a>

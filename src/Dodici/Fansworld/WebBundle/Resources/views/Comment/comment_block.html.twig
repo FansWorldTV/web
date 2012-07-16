@@ -3,7 +3,7 @@
 {% endif %}
 <h2>{{ 'Comments'|trans }}</h2>
 <div class="actualizaciones clearfix">
-	{% if appstate.cancomment(entity) %}
+	{% if appstate.cancomment(entity) or true %}
 		{% include 'DodiciFansworldWebBundle:Comment:comment_form.html.twig' with {entity: entity} %}
 	{% endif %}
 	

@@ -1,31 +1,15 @@
-{% extends 'DodiciFansworldWebBundle:Comment:comment.base.html.twig' %}
-
-{% block comment_block_class %}status_comment clearfix{% endblock %}
-
-{% block info_block_class %}status_comment_user{% endblock %}
-
-{% block comment_social %}{% endblock %}
-
-{% block subcomments %}{% endblock %}
-
-{% block avatar %}
-	{% set image = comment.author.image %}
-	{{ parent() }}
-{% endblock %}
-
-{% block action %}
-	<span class="action_user">
-		<a href="{{ path('user_wall', {username: comment.author.username }) }}">{{ comment.author }}</a>
-		{% include 'DodiciFansworldWebBundle:Comment:date.html.twig' with {date: comment.createdAt} %}
-	</span>
-{% endblock %}
-
-{% block title %}{% endblock %}
-{% block date %}{% endblock %}
-
-
-{% block description %}
-<p>
-	{{ comment.content|nl2br }}
-</p>
-{% endblock %}
+{% set image = comment.author.image %}
+<section class='subcomment-container'>
+	<div class='subcomment-avatar'>
+	    {% block avatar %}
+	        {% if image is defined and image is not null %}
+	            {% thumbnail image, 'headeravatar' %}
+	        {% endif %}
+	    {% endblock %}
+	 </div>
+	 <div class='subcomment-content'>
+	    <p>
+	        {{ comment.content|nl2br }}
+	    </p>
+	 </div>
+</section>	 
