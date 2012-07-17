@@ -5,9 +5,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Bundle\DoctrineBundle\Registry;
 
-use Dodici\WebBundle\Entity\Blog;
-use Dodici\WebBundle\Entity\BlogTime;
-
 class RequestBuilder {
     /** @var \Symfony\Bundle\DoctrineBundle\Registry */
     private $orm;
@@ -109,7 +106,7 @@ class RequestBuilder {
     	return ($this->getCurl('/remote/metadata?response=id&'.$this->getSignature(),
     	$data, true));
     }
-    
+    /*
     public function getCalendar($blogs)
     {
     	$cal = "BEGIN:VCALENDAR\n";
@@ -180,5 +177,5 @@ class RequestBuilder {
 		    	}
     		}
     	}
-    }
+    }*/
 }

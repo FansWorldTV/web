@@ -282,9 +282,9 @@ class QuizQuestion implements Translatable
     /**
      * Add quizanswers
      *
-     * @param Dodici\WebBundle\Entity\QuizAnswer $quizanswers
+     * @param Dodici\Fansworld\WebBundle\Entity\QuizAnswer $quizanswers
      */
-    public function addQuizAnswer(\Dodici\WebBundle\Entity\QuizAnswer $quizanswers)
+    public function addQuizAnswer(\Dodici\Fansworld\WebBundle\Entity\QuizAnswer $quizanswers)
     {
         $this->quizanswers[] = $quizanswers;
     }
