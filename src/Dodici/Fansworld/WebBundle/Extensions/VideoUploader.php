@@ -95,6 +95,9 @@ class VideoUploader
                         $video->setImage($image);
                         $video->setProcessed(true);
                         $video->setActive(true);
+                        if (isset($pod->duration) && $pod->duration) {
+                            $video->setDuration(intval($pod->duration));
+                        }
                         $this->em->persist($video);
                         
                         // notify the user his video finished processing
@@ -121,16 +124,21 @@ class VideoUploader
         
         $idyoutube = $this->getYoutubeId($url);
         $idvimeo = $this->getVimeoId($url);
+        $duration = null;
         
         if ($idyoutube) {
             $metadata = $this->getYoutubeMetadata($idyoutube);
             
+            $thumbs = $metadata['media$group']['media$thumbnail'];
+            $thumburl = $thumbs[0]['url'];
+            
             $image = null;
-            if ($metadata['thumbnail_url']) {
-                $image = $this->appmedia->createImageFromUrl($metadata['thumbnail_url']);
+            if ($thumburl) {
+                $image = $this->appmedia->createImageFromUrl($thumburl);
             }
-            $title = $metadata['title'];
-            $description = null;
+            $title = $metadata['title']['$t'];
+            $description = $metadata['content']['$t'];
+            $duration = $metadata['media$group']['yt$duration']['seconds'];
         } 
         
         if ($idvimeo) {
@@ -142,6 +150,7 @@ class VideoUploader
             }
             $title = $metadata['title'];
             $description = $metadata['description'];
+            $duration = $metadata['duration'];
         } 
 
         if ($idvimeo || $idyoutube) {
@@ -152,6 +161,7 @@ class VideoUploader
             $video->setYoutube($idyoutube);
             $video->setVimeo($idvimeo);
             $video->setImage($image);
+            $video->setDuration($duration);
             
             return $video;
         } else {
@@ -170,7 +180,7 @@ class VideoUploader
             return null;
         }
 
-        $url = sprintf('http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=%s&format=json', $id);
+        $url = sprintf('https://gdata.youtube.com/feeds/api/videos/%s?alt=json', $id);
         $metadata = @file_get_contents($url);
 
         if (!$metadata) {
@@ -179,11 +189,11 @@ class VideoUploader
 
         $metadata = json_decode($metadata, true);
 
-        if (!$metadata) {
+        if (!$metadata || !isset($metadata['entry'])) {
             throw new \RuntimeException('Unable to decode youtube video information for :' . $url);
         }
 
-        return $metadata;
+        return $metadata['entry'];
     }
     
 	/**
