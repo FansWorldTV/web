@@ -3,6 +3,41 @@
 {% block title %}{{ parent() }} - {% trans %}Photo{% endtrans %}{% endblock %}
 
 {% block content %}
+<div class="row-fluid">
+    <div class="span6">
+        <div class="row">
+            <div class="media_content">
+                {% if prev %}
+                <a class="btn_prev" href="{{ path('photo_show', {'id': prev.id, 'slug': prev.slug}) }}" title="anterior">{{ 'previous'|trans }}</a>
+                {% endif %}
+                
+                <a class="media_img colorbox" href="{% path photo.image, 'huge' %}">{% thumbnail photo.image, 'big' %}</a>
+                
+                {% if next %}
+                <a class="btn_next" href="{{ path('photo_show', {'id': next.id, 'slug': next.slug}) }}" title="siguiente">{{ 'next'|trans }}</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="span3">
+                {% if photo.content %}
+                    <p>{{ photo.content|truncate(75) }}... <a href="#">más</a></p>
+                {% endif %}
+            </div>
+            <div class="span3">
+                <button class="btn">:(</button>
+                <button class="btn">Editar</button>
+                <button class="btn">Compartir</button>
+                <button class="btn">32</button>
+            </div>
+        </div>
+    </div>
+    <div class="span1">
+    </div>
+</div>
+
+<hr/><hr/><hr/><hr/><hr/><hr/><hr/>
+
 <div class="cont clearfix">
     <div class="media">
         <div class="media_content">
