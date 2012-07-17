@@ -410,7 +410,7 @@ var site = {
             $('header nav div#login-widget div.arrow-up-border').hide();
         }
         $('header .header-ingresar').click(function(){
-           $('header div#login-widget').toggle(); 
+            $('header div#login-widget').toggle(); 
         });
         $('div#login-widget #do-login').click(function(){
             $('form.login').submit();
@@ -419,7 +419,9 @@ var site = {
     },
     
     bindCarousel: function(){
-        $('.carousel').carousel({interval: 5000}).bind('slid', function() {
+        $('.carousel').carousel({
+            interval: 5000
+        }).bind('slid', function() {
             // Get currently selected item
             var item = $('#myCarousel .carousel-inner .item.active');
 
@@ -437,6 +439,25 @@ var site = {
             $('#myCarousel').carousel(targetSlide);
         });​
         
+    },
+    
+    startMosaic: function(container, options){
+        // initialize the plugin
+        var $container 	= container,
+        $imgs		= $container.find('img').hide(),
+        totalImgs                          = $imgs.length,
+        cnt			= 0;
+
+        $imgs.each(function(i) {
+            var $img	= $(this);
+            $('<img/>').load(function() {
+                ++cnt;
+                if( cnt === totalImgs ) {
+                    $imgs.show();
+                    $container.montage(options);
+                }
+            }).attr('src',$img.attr('src'));
+        });
     }
 }
 

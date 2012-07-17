@@ -11,14 +11,15 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class AppTwitter
 {
-	protected $security_context;
+
+    protected $security_context;
     protected $request;
     protected $em;
     protected $user;
     protected $twitter;
     protected $appstate;
     protected $router;
-    protected $translator; 
+    protected $translator;
 
     function __construct(SecurityContext $security_context, EntityManager $em, $twitter, $appstate, $router, $translator)
     {
@@ -37,85 +38,92 @@ class AppTwitter
      * @param Application\Sonata\UserBundle\Entity\User $user
      * @throws \Exception
      */
-    public function twitterFriends($user=null)
+    public function twitterFriends($user = null)
     {
-    	$friends = $this->api('friends/ids', $user, 'GET' ,array('user_id' => $user->getTwitterid()));
-    	if (isset($friends['ids'])) $friends = $friends['ids'];
-    	return $friends;
+        $friends = $this->api('friends/ids', $user, 'GET', array('user_id' => $user->getTwitterid()));
+        if (isset($friends['ids']))
+            $friends = $friends['ids'];
+        return $friends;
     }
-    
+
     /**
      * Get users that are twitter friends/is following
      * @param Application\Sonata\UserBundle\Entity\User $user
      * @throws \Exception
      */
-    public function twitterFansworld($user=null, $limit=null, $offset=null)
+    public function twitterFansworld($user = null, $limit = null, $offset = null)
     {
-    	$friends = $this->facebookFriends($user);
-    	if (!$friends) throw new \Exception('Sin amigos');
-    	
-    	$friendrepo = $this->em->getRepository('translator');
-    	$ttfriends = $friendrepo->findBy(
-    		array('enabled' => true, 'linktwitter' => true, 'twitterId' => $friends),
-    		array('lastname' => 'ASC','firstname' => 'ASC'),
-    		$limit,
-    		$offset
-    	);
-    	return $ttfriends;
+        $friends = $this->facebookFriends($user);
+        if (!$friends)
+            throw new \Exception('Sin amigos');
+
+        $friendrepo = $this->em->getRepository('translator');
+        $ttfriends = $friendrepo->findBy(
+                array('enabled' => true, 'linktwitter' => true, 'twitterId' => $friends), array('lastname' => 'ASC', 'firstname' => 'ASC'), $limit, $offset
+        );
+        return $ttfriends;
     }
-    
-	/**
+
+    /**
      * Get followers from twitter
      * @param Application\Sonata\UserBundle\Entity\User $user
      * @throws \Exception
      */
-    public function twitterFollowers($user=null)
+    public function twitterFollowers($user = null)
     {
-    	$followers = $this->api('followers/ids', $user, 'GET' ,array('user_id' => $user->getTwitterid()));
-    	if (isset($followers['ids'])) $followers = $followers['ids'];
-    	return $followers;
+        $followers = $this->api('followers/ids', $user, 'GET', array('user_id' => $user->getTwitterid()));
+        if (isset($followers['ids']))
+            $followers = $followers['ids'];
+        return $followers;
     }
-    
+
     public function upload($entity)
     {
-    	if (!property_exists($entity, 'author')) throw new \Exception('La entidad no es compatible');
-    	$user = $entity->getAuthor();
-    	if (!($user instanceof User)) throw new \Exception('La entidad no tiene autor');
-    	
-    	$type = $this->appstate->getType($entity);
-    	$url = $this->router->generate($type.'_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()), true);
-    	$message = $this->translator->trans('shared_'.$type).' '.$url.' #fansworlds';
-    	
-    	$params = array(
-    		'status' => $message    	    
-    	);
-    	return $this->api('statuses/update',$user,'POST',$params);
+        if (!property_exists($entity, 'author'))
+            throw new \Exception('La entidad no es compatible');
+        $user = $entity->getAuthor();
+        if (!($user instanceof User))
+            throw new \Exception('La entidad no tiene autor');
+
+        $type = $this->appstate->getType($entity);
+        $url = $this->router->generate($type . '_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()), true);
+        $message = $this->translator->trans('shared_' . $type) . ' ' . $url . ' #fansworlds';
+
+        $params = array(
+            'status' => $message
+        );
+        return $this->api('statuses/update', $user, 'POST', $params);
     }
-    
+
     /*
-    public function verb($verb, $params, $user)
+      public function verb($verb, $params, $user)
+      {
+      return $this->api('/{uid}/fansworld:'.$verb, $user, 'POST', $params);
+      }
+     */
+
+    private function api($url, $user = null, $method = 'GET', $params = array())
     {
-    	return $this->api('/{uid}/fansworld:'.$verb, $user, 'POST', $params);
+        if (!$user) {
+            $user = $this->user;
+        }
+        if (!($user instanceof User))
+            throw new \Exception('Falta usuario');
+        if (!$user->getTwitterId())
+            throw new \Exception('Usuario sin ID Twitter');
+        if (!$user->getTwittertoken() || !$user->getTwittersecret())
+            throw new \Exception('Usuario sin cuenta de Twitter relacionada');
+
+        $this->twitter->setOAuthToken($user->getTwittertoken(), $user->getTwittersecret());
+
+        if ($method == 'POST') {
+            return $this->twitter->post($url, $params);
+        } else if ($method == 'GET') {
+            return $this->twitter->get($url, $params);
+        }
+
+
+        //return $this->twitter->api($url, $method, $params);
     }
-    */
-    private function api($url, $user=null, $method='GET', $params=array())
-    {
-    	if (!$user) {
-    		$user = $this->user;
-    	}
-    	if (!($user instanceof User)) throw new \Exception('Falta usuario');
-    	if (!$user->getTwitterId()) throw new \Exception('Usuario sin ID Twitter');
-    	if (!$user->getTwittertoken() || !$user->getTwittersecret()) throw new \Exception('Usuario sin cuenta de Twitter relacionada');
-    	
-    	$this->twitter->setOAuthToken($user->getTwittertoken(),$user->getTwittersecret());
-    	
-    	if ($method == 'POST') {
-    	    return $this->twitter->post($url, $params );
-    	}else if($method == 'GET'){
-    	    return $this->twitter->get($url, $params );
-    	}
-    	 
-    	
-    	//return $this->twitter->api($url, $method, $params);
-    }
+
 }

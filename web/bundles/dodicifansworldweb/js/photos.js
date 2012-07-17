@@ -3,6 +3,7 @@ var photos = {
     
     init: function(){
         photos.get();  
+        
     },
     
     get : function(){

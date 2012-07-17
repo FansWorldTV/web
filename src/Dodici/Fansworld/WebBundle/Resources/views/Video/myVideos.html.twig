@@ -6,7 +6,7 @@
     {{ parent() }}
     <script src="{{ asset('bundles/dodicifansworldweb/js/videos.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/dodicifansworldweb/js/popup.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/dodicifansworldweb/js/jquery.montage.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/dodicifansworldweb/js/jquery/jquery.montage.min.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block stylesheets %}
@@ -92,25 +92,7 @@
     
     <script type="text/javascript">
         $(document).ready(function(){
-            // initialize the plugin
-            var $container 	= $('#am-container'),
-            $imgs		= $container.find('img').hide(),
-            totalImgs                          = $imgs.length,
-            cnt			= 0;
-
-            $imgs.each(function(i) {
-                    var $img	= $(this);
-                    $('<img/>').load(function() {
-                            ++cnt;
-                            if( cnt === totalImgs ) {
-                                    $imgs.show();
-                                    $container.montage({
-                                            minw: 300,
-                                            margin 	: 0
-                                    });
-                            }
-                    }).attr('src',$img.attr('src'));
-            });
+            site.startMosaic($('#am-container'), {minw: 300, margin: 0});
         });
     </script>
 {% endblock %}

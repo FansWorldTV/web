@@ -5,7 +5,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/dodicifansworldweb/js/albums.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/dodicifansworldweb/js/jquery.montage.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/dodicifansworldweb/js/jquery/jquery.montage.min.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block profile_tabs %}
@@ -34,6 +34,9 @@
                     </a>
             {% endfor %}
         </div>
+        {% if viewMoreAlbums %}
+            <a class="loadmore albums" href="#1">ver más</a> 
+        {% endif %}
     </div>
     <div class="row-fluid">
         <h3>Otras fotos ( {{ photos|length }} )</h3>
@@ -42,81 +45,12 @@
                 <a href="{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}">{% thumbnail photo.image, 'small' with {title: photo.title} %}</a>
             {% endfor %}
         </div>
+        {% if viewMorePhotos %}
+            <a class="loadmore" href="{{ path('user_listphotos', {username: user.username}) }}">ver todas las imágenes</a>
+        {% endif %}
     </div>
+    <input type="hidden" value="{{user.id}}" id="userid"/>
     <script type="text/javascript">
-        $(document).ready(function(){
-            // initialize the plugin
-            var $container 	= $('.am-container'),
-            $imgs		= $container.find('img').hide(),
-            totalImgs                          = $imgs.length,
-            cnt			= 0;
-
-            $imgs.each(function(i) {
-                    var $img	= $(this);
-                    $('<img/>').load(function() {
-                            ++cnt;
-                            if( cnt === totalImgs ) {
-                                    $imgs.show();
-                                    var options = {
-                                        minsize: true,
-                                        margin : 0
-                                    };
-                                    
-                                    console.log(options);
-                                    $container.montage(options);
-                            }
-                    }).attr('src',$img.attr('src'));
-            });
-        });
+        site.startMosaic($('.am-container'), {minsize: true,margin : 0});
     </script>
-    {#
-	    <div class="cont clearfix">
-	        <div class="user_album">
-	            <div class="mask">
-	                {% for photo in photos %}
-	                    <div class="pic"><a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">{% thumbnail photo.image, 'small' %}</a></div>
-	                {% endfor %}
-	            </div>
-	        </div>
-	    </div>
-	    {% if viewMorePhotos %}
-	        <a class="loadmore" href="{{ path('user_listphotos', {username: user.username}) }}">ver todas las imágenes</a>
-	    {% endif %}
-	    
-	    <div class="cont clearfix">
-	        <h2>Álbumes de usuario</h2>
-	        <div class="album_covers">
-	            <div class="mask"> 
-	                {% for album in albums %}
-	                    <div class="album_cover"> 
-	                        <a href="{{ path('album_show', { 'id': album.id, 'slug': album.slug } ) }}">{% thumbnail album.image, 'medium' %}</a>
-	                        <a href="{{ path('album_show', { 'id': album.id, 'slug': album.slug } ) }}">{{ album.title }}</a>
-	                        <span>{{ album.photoCount }} {{ 'photos'|trans }} - <a href="{{ path('album_show', { 'id': album.id, 'slug': album.slug } ) }}">{{ album.commentCount }} {{ 'comments'|trans }}</a></span>
-	                    </div>
-	                {% endfor %}
-	            </div>
-	        </div>
-	    </div>
-	    {% if viewMoreAlbums %}
-	        <a class="loadmore albums" href="#1">ver más</a> 
-	    {% endif %}
-	<input type="hidden" value="{{user.id}}" id="userid"/>
-	<div id="templates" class="hidden">
-	    <div class="album_cover"> 
-	        <a class="image" href=""><img src=""></a>
-	        <a class="title" href=""></a>
-	        <span></span>
-	    </div>
-	    <div class="pic">
-	        <a href="photo.php">
-	            <img src="" alt="picture" />
-	        </a>
-	    </div>
-	</div>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            albums.init();
-        });
-    </script>
-#}
 {% endblock %}
