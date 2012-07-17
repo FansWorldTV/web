@@ -8,55 +8,115 @@
 {% endblock %}
 
 {% block inner_content %}
-                <div class="cont clearfix">
-                    <h2>Información{% if (user == app.user) %} <a class="more" href="{{ path('fos_user_profile_edit') }}">editar</a>{% endif %}</h2>
-                    <div class="user_info">
+        {% if user == app.user %}
+            {% set userLogged = true %}
+        {% else %}
+            {% set userLogged = false %}
+        {% endif %}
+
+        <section id="personalData" class="row-fluid">
+            <h4>Tus Datos Personales:{% if userLogged %}<a href="{{ path('fos_user_profile_edit') }}" class="pull-right">Editar</a>{% endif %}</h4>
+            <dl class="dl-horizontal">
+                {% if user.username %}
+                    <dt>Usuario</dt>
+                        <dd><strong>{{ user.username }}</strong> ({{ path('user_wall', {'username':user.username}) }})</dd>
+                {% endif %}
+                
+                {% if user.email %}
+                    <dt>Email</dt>
+                        <dd>{{ user.email }}</dd>
+                {% endif %}
+                
+                {% if user.address %}
+                    <dt>Dirección</dt>
+                        <dd>{{ user.address }}</dd>
+                {% endif %}
                         
-                            <h5>Informacion personal</h5>
-                            <table>
-                                <tr>
-                                    <td class="dato">Nombre</td>
-                                    <td>{{ user }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="dato">Sexo</td>
-                                    <td>{{ ('sex_' ~ user.sex)|trans }}</td>
-                                </tr>
-                                {% if user.country %}
-                                <tr>
-                                    <td class="dato">Pais</td>
-                                    <td>{{ user.country }}</td>
-                                </tr>
-                                {% endif %}
-                                {% if user.city %}
-                                <tr>
-                                    <td class="dato">Provincia</td>
-                                    <td>{{ user.city }}</td>
-                                </tr>
-                                {% endif %}
-                                {% if user.birthday %}
-                                <tr>
-                                    <td class="dato">Fecha de nacimiento</td>
-                                    <td>{{ user.birthday|date('d/m/Y') }}</td>
-                                </tr>
-                                {% endif %}
-                                {% if user.score %}
-                                    <tr>
-                                        <td class="dato">Puntos</td>
-                                        <td>{{ user.score }}</td>
-                                    </tr>
-                                {% endif %}
-                            </table>
-                            
-                        <h5>Biografía</h5>
-                        <table>
-                            <tr>
-                                <td>{{ user.content|nl2br }}</td>
-                            </tr>
-                        </table>
-                        
-                        
-                        <h5>Intereses</h5>
+                {% if user.firstname %}
+                    <dt>Nombre</dt>
+                        <dd>{{ user.firstname }}</dd>
+                {% endif %}
+                
+                {% if user.lastname %}
+                    <dt>Apellido</dt>
+                        <dd>{{ user.lastname }}</dd>
+                {% endif %}
+                
+                {% if user.sex %}
+                    <dt>Género</dt>
+                        <dd>{% if user.sex == 'm' %}Hombre{% else %}Mujer{% endif %}</dd>
+                {% endif %}
+                
+                {% if user.birthday %}
+                    <dt>Fecha Nac.</dt>
+                        <dd>{{ user.birthday|date() }}</dd>
+                {% endif %}
+                
+                {% if user.city and user.country %}
+                        <dt>Ciudad, Pais</dt>
+                            <dd>{{ user.city }}, {{ user.country }}</dd>
+                {% endif %}
+            </dl>
+        </section>
+
+        {% if user.content %}
+            <section id="aboutMe" class="row-fluid">
+                <h4>Sobre mi: </h4>
+                <p>{{ user.content|nl2br }}</p>
+            </section>
+        {% endif %}
+
+        <section id="myInterests">
+            <dl>
+                {% for interest in interests %}
+                    {% if interest.interest is defined %}
+                        <dt class="dato">{{ interest.category }}</dt>
+                                {% for ele in interest.interest %}
+                                    <dd data-idinterest="1">
+                                        <img alt="" src="{{ele.image}}"> 
+                                        <span class="name">{{ele.title}}</span>
+                                    </dd>
+                                {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </dl>
+        </section>
+
+
+    <!--div class="row-fluid">
+        <div class="span2">
+            <dl>
+                <dt>Nombre</dt>
+                <dd>{{ user }}</dd>
+                
+                <dt>Sexo</dt>
+                <dd>{{ ('sex_' ~ user.sex)|trans }}</dd>
+                
+                <dt>Nacimiento</dt>
+                <dd>{{ user.birthday|date('d/m/Y') }}</dd>
+                
+                {% if user.country %}
+                    <dt>Pais</dt>
+                    <dd>{{ user.country }}</dd>
+                {% endif %}
+                
+                {% if user.city %}
+                    <dt>Provincia</dt>
+                    <dd>{{ user.city}}</dd>
+                {% endif %}
+                
+                {% if user.score %}
+                    <dt>Puntos</dt>
+                    <dd>{{ user.score }}</dd>
+                {% endif %}
+            </dl>
+        </div>
+        <div class="span6">
+            <div class="row">
+                {{ user.content|nl2br }}
+            </div>
+            <div class="row">
+                <span>Intereses</span>
                         
                         <table>
                             {% for interest in interests %}
@@ -77,6 +137,7 @@
                                 {% endif %}
                             {% endfor %}
                         </table>
-                    </div>
-                </div>
+            </div>
+        </div>
+    </div-->
 {% endblock %}
