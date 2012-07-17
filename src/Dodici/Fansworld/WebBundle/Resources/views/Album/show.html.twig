@@ -14,37 +14,35 @@
 
 {% block profile_head %}
 	{{ parent() }}
-	{% if (user == app.user) %}
-            <div class="update clearfix"> 
-                <span></span> 
-                <div class="upd_option clearfix"> 
-                    <a class="btn_picture btn_upload_photo" href="{{ path('photo_fileupload') }}">{{'load image'|trans}}</a> 
-                </div>    
-            </div>
-        {% endif %} 
 {% endblock %}
 
 {% block inner_content %}
-<div class="cont clearfix">
-    <h2>{{ album.title }}<a class="more" href="{{ path('user_listalbums', {username: user.username}) }}">{{'view all albums'|trans}}</a></h2>
-    <div class="user_album">
-        <div class="mask">
-            {% for photo in album.photos %}
-	            {% if appstate.canview(photo) %}
-	                <div class="pic">
-	                    <a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">{% thumbnail photo.image, 'big' %}</a>
-	                </div>
-	            {% endif %}
-            {% endfor %}
-        </div>
+{% if (user == app.user) %}
+    <div class="row-fluid update clearfix"> 
+        <span></span> 
+        <div class="upd_option clearfix"> 
+            <a class="btn_picture btn_upload_photo" href="{{ path('photo_fileupload') }}">{{'load image'|trans}}</a> 
+        </div>    
     </div>
-    {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: album} %}
-</div>
-{% include 'DodiciFansworldWebBundle:Comment:comment_block.html.twig' with {entity: album} %}
+{% endif %} 
     
-    <script type="text/javascript">
-        $(document).ready(function(){
-            albums.init();
-        });
-    </script>
+<div class="row-fluid">
+    <h3>{{ album.title }} <a class="more" href="{{ path('user_listalbums', {username: user.username}) }}">{{'view all albums'|trans}}</a></h3>
+    <div class="am-container">
+        {% for photo in album.photos %}
+                {% if appstate.canview(photo) %}
+                        <a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">{% thumbnail photo.image, 'medium' %}</a>
+                {% endif %}
+        {% endfor %}
+    </div>
+        {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: album} %}    
+        {% include 'DodiciFansworldWebBundle:Comment:comment_block.html.twig' with {entity: album} %}
+</div>
+    
+<script type="text/javascript">
+    $(document).ready(function(){
+        site.startMosaic($('.am-container'), {margin : 0});
+        albums.init();
+    });
+</script>
 {% endblock %}
