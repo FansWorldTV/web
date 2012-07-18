@@ -30,6 +30,11 @@
         <div class="am-container albums">
             {% for album in albums %}
                     <a href="{{ path('album_show', { 'id': album.id, 'slug': album.slug } ) }}">
+                        <span class="title">
+                            Betis vs Sevilla
+                            <br/>
+                            <span class="photos-quant">{{ album.photos|length }} fotos</span>
+                        </span>
                         {% thumbnail album.image, 'medium' with {title: album.title} %}
                     </a>
             {% endfor %}
