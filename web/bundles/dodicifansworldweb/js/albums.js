@@ -6,31 +6,29 @@ var albums = {
     },
     
     get: function(){
-        $("a.loadmore.albums").click(function(){
+        $(".loadmore.albums").click(function(){
             $(this).addClass('loading');
             var userid = $("#userid").val();
             ajax.getAlbumsAction(userid, albums.pager, function(r){
                 if(r){
                     for(var i in r['albums']){
                         var ele = r['albums'][i];
-                        var template = $("div#templates div.album_cover").clone();
+                        var template = $("div#templates a").clone();
                         var href = Routing.generate(appLocale + '_album_show', {
                             'id':ele.id
                         });
-                        template.find(".image").attr("href", href);
-                        template.find(".image img").attr("src", ele.image);
-                        template.find(".title").attr("href", href).html(ele.title);
-                        template.find("span").html(ele.countImages + " imágenes - <a href='" + Routing.generate(appLocale + '_album_show', {
-                            'id':ele.id
-                        }) + "'>" + ele.comments + " comentarios</a>");
+                        template.attr('href', href);
+                        template.append(ele.image);
+                        template.find('span.title').prepend(ele.title);
+                        template.find('span.title span.photos-quant').html(ele.countImages + ' fotos');
                     
-                        $("div.album_covers div.mask").append(template);
+                        $(".am-container.albums").append(template);
                     }
                     if(!r['gotMore']){
-                        $("a.loadmore.albums").hide();
+                        $(".loadmore.albums").hide();
                     }
                     albums.pager++;
-                    $("a.loadmore.albums").removeClass('loading');
+                    $(".loadmore.albums").removeClass('loading');
                 }
             });
         });

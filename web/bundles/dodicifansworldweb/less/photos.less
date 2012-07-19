@@ -1,0 +1,27 @@
+.am-container.albums a {
+    background-color: black;
+    text-decoration: none;
+    color: white;
+}
+.am-container.albums a:hover img{
+    opacity: 0.5;
+}
+.am-container.albums a span, .am-container.albums a:hover span{
+    font-weight: bold;
+    position: absolute;
+    z-index: 1000;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+}
+.am-container.albums a span.title { 
+    font-size: 21px; line-height: 20px; margin-top: 10px; margin-left: 10px;
+}
+.am-container.albums a span.photos-quant { 
+    font-size: 12px; margin-top: 5px;
+}
+.am-container.albums a span{
+    display: none;
+}
+.am-container.albums a:hover span {
+    display: block;
+}
