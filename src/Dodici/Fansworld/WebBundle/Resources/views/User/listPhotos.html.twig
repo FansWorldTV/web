@@ -9,43 +9,44 @@
 
 {% block profile_head %}
 	{{ parent() }}
-	{% if (user == app.user) %}
-        <div class="update clearfix"> 
-            <span></span> 
-            <div class="upd_option clearfix"> 
-                <a class="btn_picture btn_upload_photo" href="{{ path('photo_upload') }}">cargar imagen</a> 
-            </div>    
-        </div>
-    {% endif %}
 {% endblock %}
 
 {% block inner_content %}
-    <div class="cont clearfix">
-        <h2>Fotos</h2>
-        <div class="album_covers">
-            <div class="mask"> 
-                {% for photo in photos %}
-                    <div class="album_cover"> 
-                        <a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">{% thumbnail photo.image, 'medium' %}</a>
-                        <a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">{{ photo.title }}</a>
-                        <span><a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">{{ photo.commentCount }} comentarios</a></span>
-                    </div>
-                {% endfor %}
+    {% if (user == app.user) %}
+            <div class="row-fluid update clearfix"> 
+                <div class="upd_option clearfix"> 
+                    <a class="btn_picture btn_upload_photo" href="{{ path('photo_fileupload') }}">{{ 'upload photo'|trans }}</a> 
+                </div>    
             </div>
-        </div>
-    </div>
-    {% if gotMore %}
-        <a class="loadmore pictures" href="#1">ver más</a> 
     {% endif %}
+    <div class="row-fluid">
+        <h3>Fotos</h3>
+        <div class="am-container photos">
+            {% for photo in photos %}
+                <a href="{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}">{% thumbnail photo.image, 'small' with {title: photo.title} %}</a>
+            {% endfor %}
+        </div>
+        {% if gotMore %}
+            <a class="loadmore pictures" href="#1">ver más</a> 
+        {% endif %}
+    </div>
     
 <input type="hidden" value="{{user.id}}" id="userid"/>
 <div id="templates" class="hidden">
-    <div class="album_cover">
-        <a class="image" href="">
-            <img src="">
+    <div id="templates" class="hidden">
+        <a href="" >
+            <span class="title">
+                <br/>
+                <span class="photos-quant"></span>
+            </span>
         </a>
-        <a class="title" href=""></a>
-        <span></span>
     </div>
 </div>
+<script type="text/javascript">
+    site.startMosaic($('.am-container'), {
+        minsize: false,
+        liquid: true,
+        margin : 0
+    });
+</script>
 {% endblock %}
