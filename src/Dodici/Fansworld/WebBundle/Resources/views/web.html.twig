@@ -7,22 +7,22 @@
 	
 	<div class="wrap">
     	{% block header %}
-            <header class='navbar navbar-fixed-top'>
+            <header id='header' class='navbar navbar-fixed-top'>
                 {% render "DodiciFansworldWebBundle:Default:menubar" %}
             </header>
+        {% endblock %}
+        
+        {% block toolbar %}
+            <!--Toolbar-->
+            <nav id='toolbar' class="leftmenubar" data-fwtoolbar="true">
+                {% render "DodiciFansworldWebBundle:Default:leftmenubar" %}
+            </nav>
         {% endblock %}
     	
     	{% block main %}
             <div class="container-fluid">
                 <div class="row-fluid">
-                    <div class="span1 fill">
-                        <!--Sidebar content-->
-                        <nav class="leftmenubar">
-                        	{% render "DodiciFansworldWebBundle:Default:leftmenubar" %}
-                        </nav>
-                        
-                    </div>
-                    <div class="span11">
+                    <div id="main-content-frame" class="span12">
                         <div class='row-fluid'>
                           {% block maincontent %}  
                                 <section class="span7">
