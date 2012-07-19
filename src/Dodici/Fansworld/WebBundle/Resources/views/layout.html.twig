@@ -37,6 +37,7 @@
 		                }
 	                </script>
                 {% endif %}
+                
                 <script type="text/javascript">
                     var appLocale = '{{ app.request.locale }}';
                 </script>
@@ -60,6 +61,7 @@
 	                'bundles/dodicifansworldweb/js/main.js'
 	                'bundles/dodicifansworldweb/js/notifications_handler.js'
 	                'bundles/dodicifansworldweb/js/search_box.js'
+	                'bundles/dodicifansworldweb/js/template_helper.js'
 				%}
 				<script type="text/javascript" src="{{ asset_url }}"></script>
 				{% endjavascripts %}

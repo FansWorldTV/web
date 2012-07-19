@@ -1,0 +1,18 @@
+<section class='subcomment-container'>
+	<div class='subcomment-avatar'>
+	    {% block avatar %}
+	        <div class="avatar">
+				<img src='{% raw %}{{>authorAvatarUrl}}{% endraw %}' />
+			</div>
+	    {% endblock %}
+	 </div>
+	 <div class='subcomment-content'>
+	    {% raw %}
+			{{if content}}
+				<div class="share-desc">
+					<p>{{>content}}</p>
+				</div>
+			{{/if}}
+		{% endraw %}
+	 </div>
+</section>	 

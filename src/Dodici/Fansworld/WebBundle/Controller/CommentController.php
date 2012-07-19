@@ -115,6 +115,10 @@ class CommentController extends SiteController
         $wallname = $request->get('wall');
         $limit = $request->get('limit');
         $lastid = $request->get('lastid');
+        
+        $useJson = $request->get('usejson');
+        
+        
         $response = array();
 
         if ($commentId) {
@@ -144,7 +148,7 @@ class CommentController extends SiteController
                 
             $comments = $this->get('appstate')->getComments($entity, $lastid, $limit);
             foreach ($comments as $comment) {
-                $response[] = $this->jsonComment($comment);
+                $response[] = $this->jsonComment($comment,$useJson);
             }
             
         } else {
@@ -154,8 +158,110 @@ class CommentController extends SiteController
         return $this->jsonResponse($response);
     }
     
-    private function jsonComment(Comment $comment)
+    private function jsonComment(Comment $comment,$useJson)
     {
-        return $this->renderView('DodiciFansworldWebBundle:Comment:comment.html.twig', array('comment' => $comment));
+    	$appMedia	=	$this->get('appmedia');
+    	if($useJson != true)
+    	{
+          	return $this->renderView('DodiciFansworldWebBundle:Comment:comment.html.twig', array('comment' => $comment));
+    	}
+        
+        $appstate 	= 	$this->get('appstate');
+        
+        $author		= 	array(
+			'authorId'		=>	$comment->getAuthor()->getId(),
+			'authorUsername'	=>	$comment->getAuthor()->getUsername(),
+        	'authorAvatarUrl'		=>	$appMedia->getImageUrl( $comment->getAuthor()->getImage(),'headeravatar'),
+        	'authorWallUrl'	=>  $this->generateUrl('user_wall', array('username' => $comment->getAuthor()->getUsername() )),
+		);
+        
+        $type		=	array(
+			'typeId'	=>	$comment->getType(),
+			'typeName'	=>	$comment->getTypeName()	
+		);
+        
+        $tag		=	$this->getTagItem($comment);
+        
+        $target		=	$this->getTarget($comment);
+        
+        $commentArray = array(
+            'id'	        =>  $comment->getId(),
+            'canDelete'	    =>  $appstate->canDelete($comment),
+            'content'		=>  $comment->getContent(),
+			'time'			=>	$comment->getCreatedAt()->format('c'),
+			'commentCount'	=>	$comment->getCommentCount(),
+        	'templateId'	=>	'comment-'.$comment->getTypeName(),
+        );
+        
+        $commentArray	=	array_merge($commentArray,$tag,$type,$author, $target);
+        
+        $subcomments    = $comment->getComments();
+        if($subcomments)
+        {
+                foreach($subcomments as $subcomment){
+                    $commentArray['subcomments'][]    =    $this->jsonComment($subcomment,$useJson);    
+                }
+        }
+        
+        return $commentArray;    
+    }
+    
+    private function getTarget(Comment $comment)
+    {
+    	$target	= $comment->getTarget();
+    	$targetData	=	array();
+    	if(is_null($target))
+    	{
+    		return array();
+    	}else{
+    		$targetData		= 	array(
+    				'targetId'			=>	$target->getId(),
+    				'targetUsername'	=>	$target->getUsername(),
+    				'targetAvatarUrl'	=>	$this->get('appmedia')->getImageUrl( $target->getImage(),'headeravatar'),
+    				'targetWallUrl'		=>  $this->generateUrl('user_wall', array('username' => $target->getUsername() )),
+    		);
+    	}
+    	
+    	return $targetData;
+    }
+    
+    private function getTagItem(Comment $comment)
+    {
+    	$appMedia	=	$this->get('appmedia');
+    	$tag	=	array();
+    	$share	=	$comment->getShare();
+    	
+    	if(is_null($share))
+    		return array();
+    	
+    	$validTypes	=	array('comment','album','photo','video','contest','newpost','proposal','forumthread');
+    	
+    	foreach($validTypes as $type){
+    		$getType = 'get'.ucfirst($type);
+    		if( !is_null( $share->$getType() ) ){
+    			$tag_item	=	$share->$getType();
+				if($type == 'comment'){
+					$tag['shareUrl']	=	$this->generateUrl($type.'_show', array(
+							'id' => $tag_item->getId()
+					));
+				}else{
+					$tag['shareUrl']	=	$this->generateUrl($type.'_show', array(
+							'id' 	=> $tag_item->getId(),
+							'slug' 	=> $tag_item->getSlug()
+					));
+					if(!is_null($tag_item->getImage() ))
+					{
+						$tag['shareImage'] 	= 	$appMedia->getImageUrl($tag_item->getImage(),'wall');
+					}
+				}
+    			$tag['shareType'] 	= 	$type;
+    			
+    			$tag['shareTitle'] 			= 	$tag_item->__toString();
+    			$tag['shareActiontext'] 	= 	$this->trans('shared_'.$type);
+    			
+    			break;
+    		}
+    	}
+    	return $tag;
     }
 }

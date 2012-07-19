@@ -1,0 +1,24 @@
+{% extends 'DodiciFansworldWebBundle:Template/Comment:share.html.twig' %}
+
+
+
+{% block avatar %}
+	<div class="ico">
+		<img src="{{ asset('bundles/dodicifansworldweb/images/ico/like.gif' )}}" alt="icon" />
+	</div>
+{% endblock %}
+
+{% block action %}
+	<span class="action_user">
+		<a href="{% raw %}{{>authorWallUrl}}{% endraw %}">{% raw %}{{>authorUsername}}{% endraw %}</a>
+		{% block share_action_text %}
+			{{ 'like'|trans }}
+			{% raw %}
+				<a href="{{>shareUrl}}">{{>shareTitle}}</a>
+			{% endraw %}
+		{% endblock %}
+	</span>
+{% endblock %}
+
+{% block title %}{% endblock %}
+{% block description %}{% endblock %}

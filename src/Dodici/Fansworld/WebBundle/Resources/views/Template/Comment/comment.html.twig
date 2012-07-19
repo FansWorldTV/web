@@ -1,0 +1,11 @@
+{% extends 'DodiciFansworldWebBundle:Template/Comment:share.html.twig' %}
+
+
+{% block action %}
+	<span class="action_user">
+		<a href="{% raw %}{{>authorWallUrl}}{% endraw %}">{% raw %}{{>authorUsername}}{% endraw %}</a> 
+		{% block share_action_text %}{{ 'says'|trans }}{% endblock %}
+	</span>
+{% endblock %}
+
+{% block title %}{% endblock %}

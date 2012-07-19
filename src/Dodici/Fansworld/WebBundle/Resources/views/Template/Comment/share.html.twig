@@ -1,0 +1,54 @@
+{% extends 'DodiciFansworldWebBundle:Template/Comment:base.html.twig' %}
+
+{% block action %}
+	<span class="action_user">
+		<a href="{% raw %}{{>authorWallUrl}}{% endraw %}">{% raw %}{{>authorUsername}}{% endraw %}</a> 
+		{% block share_action_text %}{% raw %}{{>shareActiontext}}{% endraw %}{% endblock %}
+		{#
+		{% if comment.share.author is not null and comment.author.id != comment.share.author.id %}
+		{{ 'by'|trans }} <a href="{{ path('user_wall', {username: comment.share.author.username }) }}">{{ comment.share.author }}</a>
+		{% endif %}
+		#}
+	</span>
+{% endblock %}
+
+{% block title %}
+	<span class="title">
+		<a href="{% raw %}{{>shareUrl}}{% endraw %}">{% raw %}{{>shareTitle}}{% endraw %}</a>
+	</span>
+{% endblock %}
+
+
+{% block info_commentcontent %}
+	{% raw %}
+		{{if shareImage}}
+			<div class="{{>shareType}}">
+				<a href="{{>shareUrl}}"><img src='{{>shareImage}}' alt='{{>shareTitle}}'/></a>
+			</div>
+		{{/if}}
+	{% endraw %}
+{% endblock %}    
+    
+{% block description %}  
+	{% raw %}
+		{{if content}}
+			<div class="share-desc">
+				<p>{{>content}}</p>
+			</div>
+		{{/if}}
+	{% endraw %}
+{% endblock %}
+
+{% block comment_social %}
+	{#
+    <div class="social">
+        
+		{% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {entity: tag_item, showcount: true, type: tag_item_type} %}
+		{% if comment.author != app.user %}
+			{% block share_button %}{% include 'DodiciFansworldWebBundle:Default:share_button.html.twig' with {entity: tag_item, type: tag_item_type} %}{% endblock %}
+		{% endif %}
+		
+	</div>
+	#}
+{% endblock %}
+

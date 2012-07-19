@@ -16,13 +16,14 @@
                   
                   ajax.genericAction('comment_ajaxget', {
                           wall : wallid,
-                          limit: commentsLimit
+                          limit: commentsLimit,
+                          usejson: true
                       },
                       function(r){
                           console.log(r);
                           if(r){
-                              $.each(r, function(){
-                                 wallel.append(this.toString());
+                              $.each(r, function(index, value){
+                            	  templateHelper.renderTemplate(value.templateId,value,wallel);
                               });
                               if (typeof Meteor != 'undefined') {
                                   Meteor.joinChannel('wall_' + wallid);
@@ -58,13 +59,14 @@
               ajax.genericAction('comment_ajaxget', {
                   wall : wallid,
                   limit: commentsLimit,
-                  lastid: lastid
+                  lastid: lastid,
+                  usejson: true
                   },
                   function(r){
                       console.log(r);
                       if(r){
-                          $.each(r, function(){
-                             wallel.append(this.toString());
+                          $.each(r, function(index, value){
+                        	  templateHelper.renderTemplate(value.templateId,value,wallel);
                           });
                           $("abbr.timeago").timeago();
                           if (typeof Meteor != 'undefined') {
@@ -127,3 +129,8 @@ function bindWallUpdate(wallel){
         }
     });
 }
+
+$(function(){
+	var toLoad	=	['comment-new_video','comment-new_photo','comment-likes','comment-new_friend','comment-subcomment','comment-comment'];
+	templateHelper.preLoadTemplates(toLoad);
+});
