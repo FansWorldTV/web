@@ -48,7 +48,7 @@
         <h3>Otras fotos ( {{ photos|length }} )</h3>
         <div class="am-container photos">
             {% for photo in photos %}
-                <a href="{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}">{% thumbnail photo.image, 'small' with {title: photo.title} %}</a>
+                <a href="{{ path('user_photodetail', {id: photo.id, slug: photo.slug, username: user.username}) }}">{% thumbnail photo.image, 'small' with {title: photo.title} %}</a>
             {% endfor %}
         </div>
         {% if viewMorePhotos %}

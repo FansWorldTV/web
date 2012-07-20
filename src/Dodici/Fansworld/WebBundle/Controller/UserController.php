@@ -681,5 +681,39 @@ class UserController extends SiteController
         
         return $this->jsonResponse($response);
     }
+    
+    /**
+     * @Route("/u/{username}/photos/{id}/{slug}", name="user_photodetail")
+     * @Template
+     */
+    public function photoDetailAction($username,$id)
+    {
+    	$user = $this->getRepository('User')->findOneByUsername($username);
+    	
+    	$photoRepo = $this->getRepository('Photo');
+    	$photo = $photoRepo->findOneBy(array('id' => $id, 'active' => true));
+    	
+    	$next = $photoRepo->getNextActive($id);
+    	$prev = $photoRepo->getPrevActive($id);
+    	
+    	if (!$user) {
+    		throw new HttpException(404, "No existe el usuario");
+    	}else
+    		$this->get('visitator')->visit($photo);
+    
+    	$loggedUser = $this->get('security.context')->getToken()->getUser();
+    	$isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
+    	 
+    	$this->securityCheck($photo);
+    
+    
+    	return array(
+    			'user' => $user,
+    			'isLoggedUser' => $isLoggedUser,
+    			'photo' => $photo,
+    			'prev' => $prev,
+    			'next' => $next
+    	);
+    }
 
 }

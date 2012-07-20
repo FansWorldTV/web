@@ -25,3 +25,75 @@
 .am-container.albums a:hover span {
     display: block;
 }
+
+.photodetail-container{
+    .image-container{
+        position: relative;
+    }        
+    
+    .subphoto-container{
+        padding-top: 15px;
+        .actions{
+            .photo-toolbar{
+                .pull-right();
+            }
+        }  
+    }
+    
+    .carousel-control{
+        line-height: 26px;
+        margin-top: 0;
+    }
+    
+    .tag-container{
+        font-size: 14px;
+        text-transform: uppercase;
+        color: #a19e9f;
+        padding-top: 15px;
+        .tags{
+            border-top: 1px solid #b9b9b9;
+            text-align: right;
+            padding-top: 10px;
+        }
+        .tag-title{
+            text-align: right;
+        }
+    }
+    
+    .form-container{
+        padding-top: 20px;
+        textarea{
+            width: 99%;
+        }
+    }
+    
+    section.subcomment-container{
+        overflow: hidden;
+        > *{
+            .pull-left();
+        }
+        margin-bottom: 15px;
+        div.subcomment-avatar{
+        
+        }
+        div.subcomment-content{
+            padding-left: 15px;
+        }
+    }
+}
+
+
+/* Sidebar images */
+section.sidebarimage-container{
+    position: relative;
+    margin-bottom: 20px;
+    
+    .carousel-control{
+        width:40px;
+        height:40px;
+        position:absolute;
+        left:50%;
+        top:50%;
+        margin:-20px 0 0 -20px;
+    }
+}
