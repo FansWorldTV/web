@@ -20,34 +20,28 @@
         {% endblock %}
     	
     	{% block main %}
-            <div class="container-fluid">
-                <div class="row-fluid">
-                    <div id="main-content-frame" class="span12">
-                        <div class='row-fluid'>
-                          {% block maincontent %}  
-                                <section class="span7">
-                                    {% block content %}
-                                    {% endblock %}
-                                </section>
-                                
-                                <section id='centercolumn' class='span3'>
-                                    {% block centercolumn %}
-                                        {% render "DodiciFansworldWebBundle:Default:centercolumn" %}
-                                    {% endblock %}
-                                </section>
+            <div id="main-content-frame" class="container-fluid">
+                <div class='row-fluid'>
+                  {% block maincontent %}  
+                        <section class="span7">
+                            {% block content %}
                             {% endblock %}
-                            
-                            <section id='sidebar' class='span2'>
-                               {% block sidebar %}
-                                    {% render "DodiciFansworldWebBundle:Default:sidebar" %}
-                                {% endblock %}
-                            </section>
-                        </div>
-                    </div>
+                        </section>
+                        
+                        <section id='centercolumn' class='span3'>
+                            {% block centercolumn %}
+                                {% render "DodiciFansworldWebBundle:Default:centercolumn" %}
+                            {% endblock %}
+                        </section>
+                    {% endblock %}
+                    
+                    <section id='sidebar' class='span2'>
+                       {% block sidebar %}
+                            {% render "DodiciFansworldWebBundle:Default:sidebar" %}
+                        {% endblock %}
+                    </section>
                 </div>
             </div>
-            
-            
     	{% endblock %}
     	
     	{% block footer %}

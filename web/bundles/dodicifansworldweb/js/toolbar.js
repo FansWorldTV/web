@@ -53,35 +53,11 @@
         .removeAttr('style')
         .addClass(position);
         
-        $('#toolbar-filler').remove();
-        
         // class for padding to avoid hiding content under the toolbar, etc
         var frame = $('#main-content-frame');
         frame
         .removeClass(positions.join(' '))
         .addClass(position);
-        
-        if (position == 'left' || position == 'right') {
-            frame.removeClass('span12').addClass('span11');
-            
-            if (position == 'left') {
-                var filler = $('<div>')
-                .attr('id', 'toolbar-filler')
-                .addClass('span1');
-                frame.before(filler);
-            }
-        } else {
-            frame.removeClass('span11').addClass('span12');
-        }
-        
-        /*
-        var clone = bar.clone();
-        clone
-        .removeClass(positions.join(' ') + ' ui-draggable-dragging')
-        .addClass(position);
-        $('#footer').before(clone);
-        bar.remove();
-        */
     };
     
     // Initialize toolbar
