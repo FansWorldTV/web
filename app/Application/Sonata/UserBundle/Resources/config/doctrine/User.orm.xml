@@ -32,6 +32,7 @@
         <field name="linkfacebook" column="linkfacebook" type="boolean" nullable="false" />
         <field name="notifyprefs" column="notifyprefs" type="array" />
         <field name="notifymail" column="notifymail" type="array" />
+        <field name="preferences" column="preferences" type="array" />
         <field name="facebookId" column="facebookid" type="string" length="255" nullable="true" />
         <field name="type" column="type" type="integer" nullable="false" />
         <field name="birthday" column="birthday" type="datetime" nullable="true" />

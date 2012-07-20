@@ -521,6 +521,9 @@ services:
     visitator:
       class: Dodici\Fansworld\WebBundle\Extensions\Visitator
       arguments: [@security.context, @doctrine.orm.entity_manager, @session, @appstate]
+    preferences:
+      class: Dodici\Fansworld\WebBundle\Extensions\Preferences
+      arguments: [@security.context, @doctrine.orm.entity_manager, @session, @appstate]
     video.playlist:
       class: Dodici\Fansworld\WebBundle\Extensions\VideoPlaylist
       arguments: [@security.context, @doctrine.orm.entity_manager, @appstate]

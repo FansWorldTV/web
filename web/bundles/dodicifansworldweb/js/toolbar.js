@@ -19,7 +19,22 @@
         
         var position = defaults.position;
         
-        publicMethod.reposition($(el), position);
+        // get position from user/session
+        ajax.genericAction('preference_get', {
+                key: 'toolbar_pos'
+            },
+            function(val){
+                if (val) {
+                    position = val;
+                }
+                publicMethod.reposition($(el), position, false);
+            },
+            function(msg){
+                error(msg);
+                publicMethod.reposition($(el), position, false);
+            },
+            'get'
+        );
     };
     
     // ****************
@@ -48,7 +63,7 @@
         return $this;
     };
     
-    publicMethod.reposition = function (bar, position) {
+    publicMethod.reposition = function (bar, position, save) {
         bar.removeClass(positions.join(' ') + ' ui-draggable-dragging')
         .removeAttr('style')
         .addClass(position);
@@ -58,6 +73,21 @@
         frame
         .removeClass(positions.join(' '))
         .addClass(position);
+        
+        // save settings to user/session
+        if (typeof save == 'undefined') save = true;
+        
+        if (save) {
+            ajax.genericAction('preference_set', {
+                    key: 'toolbar_pos',
+                    value: position
+                },
+                function(){},
+                function(msg){
+                    error(msg);
+                }
+            );
+        }
     };
     
     // Initialize toolbar

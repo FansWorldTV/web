@@ -222,6 +222,16 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
      * )
      */
     private $notifymail;
+    
+    /**
+     * @var array $preferences
+     * array (
+     * key => value
+     * ...
+     * )
+     * miscellaneous preferences
+     */
+    private $preferences;
 
 	/**
      * @var ArrayCollection $friendships
@@ -289,6 +299,7 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
     	$this->privacy = Privacy::getDefaultFieldPrivacy();
         $this->notifyprefs = array_keys(Notification::getTypeList());
         $this->notifymail = array_keys(Notification::getTypeList());
+        $this->preferences = array();
         $this->idolCount = 0;
         $this->friendCount = 0;
         $this->visits = new ArrayCollection();
@@ -907,6 +918,26 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
     public function getNotifymail()
     {
         return $this->notifymail;
+    }
+    
+	/**
+     * Set preferences
+     *
+     * @param array $preferences
+     */
+    public function setPreferences($preferences)
+    {
+        $this->preferences = $preferences;
+    }
+
+    /**
+     * Get preferences
+     *
+     * @return array 
+     */
+    public function getPreferences()
+    {
+        return $this->preferences;
     }
 
     /**
