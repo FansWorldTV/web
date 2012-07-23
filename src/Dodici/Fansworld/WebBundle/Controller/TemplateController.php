@@ -24,7 +24,7 @@ class TemplateController extends SiteController
 	 * @Route("/ajax/get/comment", name="template_comment")
 	 * @Template
 	 */
-	public function CommentAction()
+	public function commentAction()
 	{
 		$request = $this->getRequest();
 		$type = $request->get('type');

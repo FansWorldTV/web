@@ -29,7 +29,7 @@
                                 <span class="title"></span>
 							{% endblock %}
                             {% block comment_toolbar %}
-								{% include 'DodiciFansworldWebBundle:Template/comment:toolbar.html.twig'  %}
+								{% include 'DodiciFansworldWebBundle:Template/Comment:toolbar.html.twig'  %}
                             {% endblock %}
 		                </header>
         				<div class='infotext-content'>
@@ -46,14 +46,14 @@
                                 			{{if subcomments}}
 												{{for subcomments}}
 													{% endraw %}
-														{% include 'DodiciFansworldWebBundle:Template/comment:subcomment.html.twig'  %}
+														{% include 'DodiciFansworldWebBundle:Template/Comment:subcomment.html.twig'  %}
 													{% raw %}
 												{{/for}}
 											{{/if}}
 										{% endraw %}
                                     </div>
                                     <div class="form">
-                                    	{% include 'DodiciFansworldWebBundle:Template/comment:shortform.html.twig'  %}
+                                    	{% include 'DodiciFansworldWebBundle:Template/Comment:shortform.html.twig'  %}
 									</div>
 								</div>
                             {% endblock %}

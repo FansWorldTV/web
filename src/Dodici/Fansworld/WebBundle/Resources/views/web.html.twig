@@ -20,7 +20,7 @@
         {% endblock %}
     	
     	{% block main %}
-            <div id="main-content-frame" class="container-fluid">
+            <div id="main-content-frame" class="container-fluid {{ preferences.get('toolbar_pos')|default('top') }}">
                 <div class='row-fluid'>
                   {% block maincontent %}  
                         <section class="span7">
