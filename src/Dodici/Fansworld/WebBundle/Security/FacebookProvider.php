@@ -61,7 +61,7 @@ class FacebookProvider implements UserProviderInterface
                 $user->setPassword('');
                 
                 // Set FB image
-		        $imagecontent = file_get_contents(sprintf('https://graph.facebook.com/%1$s/picture', $fbdata['id']));
+		        $imagecontent = file_get_contents(sprintf('https://graph.facebook.com/%1$s/picture?type=large', $fbdata['id']));
 				if ($imagecontent) {
 					$tmpfile = tempnam('/tmp', 'IFB');
 					file_put_contents($tmpfile, $imagecontent);

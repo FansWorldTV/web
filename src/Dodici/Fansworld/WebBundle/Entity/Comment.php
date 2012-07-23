@@ -295,6 +295,9 @@ class Comment
         if (null === $this->active) {
         	$this->setActive(true);
         }
+        if (null === $this->privacy) {
+            $this->setPrivacy(Privacy::EVERYONE);
+        }
     }
 	
     public function likeUp()

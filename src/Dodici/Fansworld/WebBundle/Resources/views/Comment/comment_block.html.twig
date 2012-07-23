@@ -1,6 +1,3 @@
-{% if comments is not defined %}
-	{% set comments = appstate.comments(entity) %}
-{% endif %}
 <h2>{{ 'Comments'|trans }}</h2>
 <div class="actualizaciones clearfix">
 	{% if appstate.cancomment(entity) or true %}
