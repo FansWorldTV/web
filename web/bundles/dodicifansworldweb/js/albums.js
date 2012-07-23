@@ -3,6 +3,10 @@ var albums = {
     
     init: function(){
         albums.get();  
+        $(".relatedTags ul.tags").hide();
+        $(".showOrHideTags").click(function(){
+            $('ul.tags').toggle('blind');
+        });
     },
     
     get: function(){
