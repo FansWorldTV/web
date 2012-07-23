@@ -128,8 +128,8 @@
     
     // Setup FWToolbar
     publicMethod.init();
+    
+    $(function(){
+        $('[data-fwtoolbar]').fwtoolbar();
+    });
 }( jQuery, document, this ));
-
-$(function(){
-    $('[data-fwtoolbar]').fwtoolbar();
-});

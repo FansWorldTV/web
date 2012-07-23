@@ -37,4 +37,64 @@ class BadgeStepRepository extends CountBaseRepository
     		
     	return $query->getResult();
     }
+    
+	/**
+     * Returns badgesteps the user has
+     * 
+     * @return array(
+     * 	   'badge' => Badge
+     * 	   'steps' => array(
+     *     	   BadgeStep,
+     *     	   ...
+     *     )
+     * )
+     * 
+     * ordered by
+	 *     Badge->type ASC,
+     *     BadgeStep->minimum ASC
+     * 
+     * @param User $user
+     */
+    public function byUser(User $user)
+    {
+        $query = $this->_em->createQuery('
+    	SELECT u, hsb, bs, b
+    	FROM \Application\Sonata\UserBundle\Entity\User u
+    	JOIN u.hasbadges hsb
+    	JOIN hsb.badgestep bs
+    	JOIN bs.badge b
+    	WHERE
+        	u.id = :user
+        ORDER BY
+        	b.type ASC, bs.minimum ASC
+    	')
+    	    ->setParameter('user', $user->getId());
+    		
+    	$resultuser = $query->getOneOrNullResult();
+    	
+    	if ($resultuser instanceof User) {
+    	    $resultarr = array();
+    	    // arrange results
+    	    $hsbr = $resultuser->getHasbadges();
+    	    
+    	    foreach ($hsbr as $hsb) {
+    	        $badgestep = $hsb->getBadgeStep();
+    	        $badge = $badgestep->getBadge();
+    	        //$date = $hsb->getCreatedAt();
+    	        
+    	        if (!isset($resultarr[$badge->getId()])) {
+    	            $resultarr[$badge->getId()] = array(
+    	                'badge' => $badge,
+    	                'steps' => array()
+    	            );
+    	        }
+    	        
+    	        $resultarr[$badge->getId()]['steps'][] = $badgestep;
+    	    }
+    	    
+    	    return $resultarr;
+    	} else {
+    	    return null;
+    	}
+    }
 }

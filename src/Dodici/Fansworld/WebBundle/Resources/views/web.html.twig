@@ -14,7 +14,7 @@
         
         {% block toolbar %}
             <!--Toolbar-->
-            <nav id='toolbar' class="leftmenubar" data-fwtoolbar="true">
+            <nav id='toolbar' class="leftmenubar {{ preferences.get('toolbar_pos')|default('top') }}" data-fwtoolbar="true">
                 {% render "DodiciFansworldWebBundle:Default:leftmenubar" %}
             </nav>
         {% endblock %}

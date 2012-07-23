@@ -554,6 +554,11 @@ services:
       arguments: [@meteor]
       tags:
           - { name: twig.extension }
+    twig.extension.preferences:
+      class: Dodici\Fansworld\WebBundle\Extensions\PreferencesExtension
+      arguments: [@preferences]
+      tags:
+          - { name: twig.extension }
     twig.extension.text:
       class: Twig_Extensions_Extension_Text
       tags:
