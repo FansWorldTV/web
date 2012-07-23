@@ -1,0 +1,59 @@
+{% extends "DodiciFansworldWebBundle:User:profile_base.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ 'Badges'|trans }}{% endblock %}
+
+
+{% block profile_tabs %}
+	{% set active_tab = 'badges' %}
+	{{ parent() }}
+{% endblock %}
+
+{% block inner_content %}
+    <section class="badges-container">
+        {% if badges|length > 0 %}
+            <ul class="badges unstyled">
+                {% for badge in badges %}
+                    <li>
+                    	<div class='row-fluid'>
+                    		<div class="span2">
+                    		
+                    			{% if badge.steps %}
+                    				 {% for step in badge.steps %}
+                    				 	{% if loop.last %}
+                    				 		{% thumbnail step.image, 'avatar' %}	
+                    					{% endif %}
+                    				 {% endfor %}
+		                            
+		                        {% else %}
+		                            <img src="{{ asset('bundles/dodicifansworldweb/images/profile_no_image.png' )}}" />
+		                        {% endif %}
+		                        
+                    		</div>
+                    		<div class="span10">
+                    			<span class="badge-label">{{ badge.badge.title }}</span>
+                    			<div class="row-fluid">
+                    				<div class="span10 badge-content">
+                    					{{ badge.badge.content }}
+                    				</div>
+                    			</div>
+                    		</div>
+                    	
+                    	</div>
+                        
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h3>No posee badges</h3>
+        {% endif %}
+    </section>
+{% endblock %}
+{% block inner_sidebar %}
+	<section class='badges-sidebar'>
+		<h3>Que son y como conseguirlos?</h3>
+		<p>
+			In id ligula sit amet nulla feugiat egestas. Aliquam erat volutpat. Praesent at metus ac massa consequat rutrum. Sed at enim justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer euismod, augue ac congue gravida, odio odio feugiat erat, quis commodo diam ligula ut diam. Proin at rhonc
+		</p>
+	</section>
+	
+{% endblock %}

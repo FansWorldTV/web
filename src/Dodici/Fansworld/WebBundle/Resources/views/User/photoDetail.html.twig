@@ -1,0 +1,23 @@
+{% extends "DodiciFansworldWebBundle:User:profile_base.html.twig" %}
+
+{% block title %}{{ parent() }} - Detalle Foto{% endblock %}
+
+{% block profile_tabs %}
+	{% set active_tab = 'photos' %}
+	{{ parent() }}
+{% endblock %}
+
+{%  set route_name = 'user_photodetail' %}
+
+{% block inner_content %}
+    <div class="cont">
+    	<section class='photodetail-container'>
+    		{% include 'DodiciFansworldWebBundle:Photo:show.html.twig' with {entity: user} %}
+    	</section>
+    </div>
+{% endblock %}
+
+{% block inner_sidebar %}
+	{% include 'DodiciFansworldWebBundle:Photo:sidebar_show.html.twig' with {entity: user, direction: 'prev'} %}
+	{% include 'DodiciFansworldWebBundle:Photo:sidebar_show.html.twig' with {entity: user, direction: 'next'} %}
+{% endblock %}

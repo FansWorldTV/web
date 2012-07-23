@@ -1,75 +1,61 @@
-{% extends "DodiciFansworldWebBundle::web.html.twig" %}
-
-{% block title %}{{ parent() }} - {% trans %}Photo{% endtrans %}{% endblock %}
-
-{% block content %}
-<div class="row-fluid">
-    <div class="span6">
-        <div class="row">
-            <div class="media_content">
-                {% if prev %}
-                <a class="btn_prev" href="{{ path('photo_show', {'id': prev.id, 'slug': prev.slug}) }}" title="anterior">{{ 'previous'|trans }}</a>
-                {% endif %}
-                
-                <a class="media_img colorbox" href="{% path photo.image, 'huge' %}">{% thumbnail photo.image, 'big' %}</a>
-                
-                {% if next %}
-                <a class="btn_next" href="{{ path('photo_show', {'id': next.id, 'slug': next.slug}) }}" title="siguiente">{{ 'next'|trans }}</a>
-                {% endif %}
-            </div>
-        </div>
-        <div class="row">
-            <div class="span3">
-                {% if photo.content %}
-                    <p>{{ photo.content|truncate(75) }}... <a href="#">más</a></p>
-                {% endif %}
-            </div>
-            <div class="span3">
-                <button class="btn">:(</button>
-                <button class="btn">Editar</button>
-                <button class="btn">Compartir</button>
-                <button class="btn">32</button>
-            </div>
-        </div>
-    </div>
-    <div class="span1">
-    </div>
-</div>
-
-<hr/><hr/><hr/><hr/><hr/><hr/><hr/>
-
-<div class="cont clearfix">
-    <div class="media">
-        <div class="media_content">
-            {% if prev %}
-            <a class="btn_prev" href="{{ path('photo_show', {'id': prev.id, 'slug': prev.slug}) }}" title="anterior">{{ 'previous'|trans }}</a>
+{% set comments = appstate.comments(photo) %}
+{% block inner_content %}
+	<section class='image-container'>
+		{% if prev %}
+			<a class="carousel-control left" href="{{ path(route_name, {'id': prev.id, 'slug': prev.slug, username: entity.username}) }}" title="{{ 'previous'|trans }}">‹</a>
+	    {% endif %}
+	    		
+	    {% thumbnail photo.image, 'wall' %}
+	    		
+	    {% if next %}
+	    	<a class="carousel-control right" href="{{ path(route_name, {'id': next.id, 'slug': next.slug, username: entity.username}) }}" title="{{ 'next'|trans }}">›</a>
+		{% endif %}
+	</section>
+	
+    <section class='subphoto-container row-fluid'>
+    	<div class='content span6'>
+			{% if photo.content %}
+            	<p>{{ photo.content|truncate(75) }}... <a href="#">más</a></p>
             {% endif %}
-            {% if next %}
-            <a class="btn_next" href="{{ path('photo_show', {'id': next.id, 'slug': next.slug}) }}" title="siguiente">{{ 'next'|trans }}</a>
-            {% endif %}
-            <a class="media_img colorbox" href="{% path photo.image, 'huge' %}">{% thumbnail photo.image, 'big' %}</a>
-        </div>
-            
-        {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: photo} %}
-
-        <div class="media_info">
-            <div>
-                <strong>{{ photo.title }}<br></strong>
-                <span>{{ 'by'|trans }} <a href="{{ path('user_detail', {'username': photo.author.username}) }}">{{ photo.author }}</a></span>
-                <span>del album <a href="{{ path('album_show', {'id': photo.album.id, 'slug': photo.album.slug}) }}">{{ photo.album.title }}</a></span>
-            </div>
-            {% if photo.content %}
-            	<div class="description">
-            		{{ photo.content }}
-            	</div>
-            {% endif %}
-        </div>
-    </div>
-</div>
-<div class="cont clearfix">
-    {% include 'DodiciFansworldWebBundle:Comment:comment_block.html.twig' with {entity: photo} %}
-</div>
-<script type="text/javascript">
-    $("div.media_content a.colorbox").colorbox();
-</script>
+    	</div>
+    	<div class="actions span6">
+    		{% include 'DodiciFansworldWebBundle:Photo:toolbar.html.twig'  %}
+    	</div>
+    </section>
+    
+    <section class='tag-container '>
+		<div class="row-fluid">
+			<div class="span6 comments-count">
+				{{ 'comments'|trans }} ( {{ photo.commentCount }} )
+			</div>
+			<div class="span6 tag-title">
+				{{ 'tags'|trans }}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span12 tags">
+				{% if photo.hastags %}
+					{% for tag in photo.getHastags %}
+						<button class="btn">{{ tag }}</button>
+					{% endfor %}
+				{% else %}
+					<button class="btn">sin tags</button>	
+				{% endif %}
+			</div>
+		</div>
+	</section>
+	
+	<section class='form-container'>
+		{% include 'DodiciFansworldWebBundle:Comment:comment_form.html.twig' with {shortform: true, entity: photo} %}
+	</section>
+	
+	<section class="comments-container">
+		{% block comments %}
+        	
+				{% for comment in comments %}
+                	{% include 'DodiciFansworldWebBundle:Comment:comment.subcomment.html.twig' with {comment: comment} %}
+                {% endfor %}
+			
+		{% endblock %}
+	</section>	
 {% endblock %}

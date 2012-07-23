@@ -29,7 +29,7 @@
                 <a href="">Eventos</a>
             </li>
             <li {% if active_tab == 'badges' %}class="active"{% endif %}>
-                <a href="">Badges</a>
+                <a href="{{ path('user_badges', {'username': user.username}) }}">Badges</a>
             </li>
         </ul>
     </nav>

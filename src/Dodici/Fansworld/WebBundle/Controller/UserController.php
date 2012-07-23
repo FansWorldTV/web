@@ -715,5 +715,30 @@ class UserController extends SiteController
     			'next' => $next
     	);
     }
+    
+    /**
+     * @Route("/u/{username}/badges", name="user_badges")
+     * @Template
+     * @Secure(roles="ROLE_USER")
+     */
+    public function badgeTabAction($username)
+    {
+    	$user = $this->getRepository('User')->findOneByUsername($username);
+    	if (!$user) {
+    		throw new HttpException(404, "No existe el usuario");
+    	}else
+    		$this->get('visitator')->visit($user);
+    
+    	$badges = $this->getRepository('BadgeStep')->byUser($user);
+    	//$idolshipsCount = $this->getRepository('Idolship')->countBy(array('author' => $user->getId()));
+    
+    	$return = array(
+    			'badges' => $badges,
+    			//'addMore' => $idolshipsCount > self::LIMIT_LIST_IDOLS ? true : false,
+    			'user' => $user
+    	);
+    
+    	return $return;
+    }
 
 }

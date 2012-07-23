@@ -288,6 +288,11 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
      */
     private $videoVisitCount;
     
+    /**
+     * @var integer $videoCount
+     */
+    private $videoCount;
+    
     public function __construct()
     {
         parent::__construct();
@@ -306,6 +311,7 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
         $this->visitCount = 0;
         $this->photoVisitCount = 0;
         $this->videoVisitCount = 0;
+        $this->videoCount = 0;
     }
     
     public function __toString()
@@ -1238,6 +1244,16 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
         $this->addHasbadge($hasbadge);
     }
     
+    /**
+     * Get friendCount
+     *
+     * @return integer
+     */
+    public function getFriendCount()
+    {
+    	return $this->friendCount;
+    }
+    
 	/**
      * Set friendCount
      *
@@ -1250,14 +1266,27 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
     }
 
     /**
-     * Get friendCount
+     * Get videoCount
      *
      * @return integer 
      */
-    public function getFriendCount()
+    public function getVideoCount()
     {
-        return $this->friendCount;
+        return $this->videoCount;
     }
+    
+    /**
+     * Set videoCount
+     *
+     * @param integer $videoCount
+     */
+    public function setVideoCount($videoCount)
+    {
+    	if ($videoCount < 0) $videoCount = 0;
+    	$this->videoCount = $videoCount;
+    }
+    
+    
     
 	/**
      * Set idolCount
