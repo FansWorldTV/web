@@ -23,10 +23,10 @@ class DefaultController extends SiteController
     }
 
     /**
-     * Sidebar controller action
+     * Ad Column controller action
      * @Template
      */
-    public function sidebarAction()
+    public function adcolumnAction()
     {
         return array();
     }
@@ -67,10 +67,10 @@ class DefaultController extends SiteController
 
     
     /**
-     * Rightbar controller action
+     * Related column
      * @Template
      */
-    public function centercolumnAction()
+    public function relatedcolumnAction()
     {
         $user = $this->get('security.context')->getToken()->getUser();
 

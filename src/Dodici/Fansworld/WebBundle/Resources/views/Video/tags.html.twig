@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block title %}{{ parent() }} - TV{% endblock %}
-{% block centercolumn %}
+{% block relatedcolumn %}
     <div class="col_599 left margin">
             <div class="cont clearfix withOutRightBar">
                 {% if videos|length>0 %}
@@ -71,35 +71,4 @@
             </li>
         </ul>
     </div>
-{% endblock %}
-
-{% block rightbar %}
-    <div class="col_169 floatLeft">
-        <h2>Categorías</h2>
-        <div class="navy">
-            <ul>
-                {% for category in categories %}
-                    <li><a href="{{ path('video_category', { id: category.id, slug: category.slug } ) }}">{{ category.title }}</a></li>
-                {% endfor %}
-            </ul>
-        </div>
-        <h2>Tags Populares</h2>
-        <div class="navy">
-            <ul>
-                {% for tag in popularTags %}
-                    {% if tag.id == selected%}
-                        <li><a class="current" tagId="{{ tag.id }}" href="{{ path('video_tags', {'slug': tag.slug}) }}" >{{ tag.title }}</a></li>
-                    {% else %}
-                        <li><a href="{{ path('video_tags', {'slug': tag.slug}) }}" >{{ tag.title }}</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-
-<script type="text/javascript">
-    $(document).ready(function(){
-        videos.init();
-    });
-</script>
 {% endblock %}

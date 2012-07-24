@@ -22,24 +22,24 @@
     	{% block main %}
             <div id="main-content-frame" class="container-fluid {{ preferences.get('toolbar_pos')|default('top') }}">
                 <div class='row-fluid'>
-                  {% block maincontent %}  
-                        <section class="span7">
+                    {% block maincontent %}  
+                        <section id="content" class="span7">
                             {% block content %}
                             {% endblock %}
                         </section>
                         
-                        <section id='centercolumn' class='span3'>
-                            {% block centercolumn %}
-                                {% render "DodiciFansworldWebBundle:Default:centercolumn" %}
+                        <aside id='relatedcolumn' class='span3'>
+                            {% block relatedcolumn %}
+                                {% render "DodiciFansworldWebBundle:Default:relatedcolumn" %}
                             {% endblock %}
-                        </section>
+                        </aside>
                     {% endblock %}
                     
-                    <section id='sidebar' class='span2'>
-                       {% block sidebar %}
-                            {% render "DodiciFansworldWebBundle:Default:sidebar" %}
+                    <aside id='adcolumn' class='span2 advertising'>
+                        {% block advertising %}
+                            {% render "DodiciFansworldWebBundle:Default:adcolumn" %}
                         {% endblock %}
-                    </section>
+                    </aside>
                 </div>
             </div>
     	{% endblock %}

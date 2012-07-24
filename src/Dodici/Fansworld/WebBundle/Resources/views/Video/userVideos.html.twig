@@ -7,7 +7,7 @@
     <script src="{{ asset('bundles/dodicifansworldweb/js/videos.js') }}" type="text/javascript"></script>
 {% endblock %}
 
-{% block centercolumn %}
+{% block relatedcolumn %}
     <div class="col_468 left margin">
         <div class="cont clearfix video-list-global">
         {% if highlight %}
@@ -44,8 +44,4 @@
         videos.init();
     });
 </script>
-{% endblock %}
-
-{% block rightbar %}
-    {% render 'DodiciFansworldWebBundle:Video:rightbar' %}
 {% endblock %}
