@@ -34,10 +34,24 @@ class Visitator
     }
 
     /**
-     * Create a visit object, add to entity
+     * Check sesion for timestamp, if correct add visit
      * @param $entity
      */
     public function visit(VisitableInterface $entity)
+    {
+        $visit = null;
+        if($this->shouldAddVisit($entity)){
+            $visit = $this->addVisit($entity);
+            $this->updateLastVisit($entity);
+        }
+    	return $visit;
+    }  
+    
+    /**
+     * Create a visit object, add to entity
+     * @param $entity
+     */
+    private function addVisit(VisitableInterface $entity)
     {
         $type = $this->appstate->getType($entity);
         
@@ -51,20 +65,6 @@ class Visitator
 		
 		return $visit;
     }    
-    
-    /**
-     * Check sesion for timestamp, if correct add visit
-     * @param $entity
-     */
-    private function addVisit(VisitableInterface $entity)
-    {
-        $visit = null;
-        if($this->shouldAddVisit($entity)){
-            $visit = $this->visit($entity);
-            $this->updateLastVisit($entity);
-        }
-    	return $visit;
-    }  
     
     private function updateLastVisit($entity){
         $type = $this->appstate->getType($entity);
