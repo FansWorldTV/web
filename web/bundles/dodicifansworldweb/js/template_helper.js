@@ -58,21 +58,27 @@ var templateHelper = {
 			}
 		},
 		
-		renderTemplate:	function(templateId,jsonData,destino)
+		renderTemplate:	function(templateId,jsonData,destino,prepend)
 		{
 			var tplString	=	templateHelper.getTemplate(templateId);	
 			if(tplString == true){
-				templateHelper.appendRenderedTemplate(templateId,jsonData,destino);	
+				templateHelper.appendRenderedTemplate(templateId,jsonData,destino,prepend);	
 			}else{
 				tplString.done(function (data) { 
-					templateHelper.appendRenderedTemplate(templateId,jsonData,destino);
+					templateHelper.appendRenderedTemplate(templateId,jsonData,destino,prepend);
 				 });
 			}
 		},
 		
-		appendRenderedTemplate: function(templateId,jsonData,destino)
+		appendRenderedTemplate: function(templateId,jsonData,destino,prepend)
 		{
-			$( destino ).append( $.render[templateId]( jsonData ) );
+			if(prepend == true){
+				$( destino ).prepend( $.render[templateId]( jsonData ) );
+			}else{
+				$( destino ).append( $.render[templateId]( jsonData ) );
+			}
+				
+			
 		}
 		
 		

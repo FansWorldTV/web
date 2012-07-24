@@ -22,6 +22,6 @@
 		{% if sharebutton %}
 			{% include 'DodiciFansworldWebBundle:Default:share_button.html.twig' with {entity: entity} %}
 		{% endif %}
-                                    <a class="report" href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}">Denunciar</a> 
+		<a class="report" href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}">Denunciar</a> 
 	</div>
 </div>

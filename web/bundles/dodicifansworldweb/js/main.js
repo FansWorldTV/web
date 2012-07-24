@@ -268,9 +268,14 @@ var site = {
             ajax.likeToggleAction(type, id,
                 function(response){
                     el.removeClass('loading');
-                    el.text(response.buttontext);
-                    el.siblings('.likecount:first').text(response.likecount);
+                    el.text(response.likecount);
+                    //el.siblings('.likecount:first').text(response.likecount);
                     success(response.message);
+                    if(response.liked){
+                    	el.addClass('liked');
+                    }else{
+                    	el.removeClass('liked');
+                    }
                 },
                 function(responsetext){
                     el.removeClass('loading');
@@ -311,36 +316,58 @@ var site = {
             var id = el.attr('data-id');
             var ispin = (el.attr('data-pin') == 'true');
             var content = el.parents('.commentform').find('.comment_message').val();
-            var privacy = el.parents('.commentform').find('.post_privacidad').val();
-            el.addClass('loading');
-        	
-            ajax.globalCommentAction(type, id, content, privacy, ispin,
-                function(response){
-                    el.closest('.commentform').find('textarea.comment_message').val('');
-                    el.removeClass('loading');
-                    success(response.message);
-                    el.parents('.commentform').after(response.commenthtml);
-                    $('.timeago').each(function(){
-                        $(this).html($.timeago($(this).attr('data-time')));
-                    });
-                    if (ispin) {
-                        $('.masonbricks').isotope().resize();
-                    }
-                    site.expander();
-                },
-                function(responsetext){
-                    el.removeClass('loading');
-                    error(responsetext);
-                });
-        	
+            //var privacy = el.parents('.commentform').find('.post_privacidad').val();
+            var privacy = 1;
+            var textAreaElement = el.closest('.commentform').find('textarea.comment_message');
+            var elDestination = '[data-wall]';
+            site.postComment(textAreaElement,type,id,ispin,content,privacy,elDestination);
+            return false;
+     
         });
     	
         $('textarea.comment_message').live('keydown', function (e) {
             if ( e.keyCode == 13 ){
-                $(this).closest('.commentform').find('.comment_button').click();
+            	var textAreaElement		= $(this);
+                var type 	= textAreaElement.attr('data-type');
+                var id 		= textAreaElement.attr('data-id');
+                var ispin 	= (textAreaElement.attr('data-pin') == 'true');
+                var content = textAreaElement.val();
+                var privacy = 1;
+                //var privacy = el.parents('.commentform').find('.post_privacidad').val();   
+                var elDestination = textAreaElement.closest('.comments').find('div.subcomments-container');
+            	site.postComment(textAreaElement,type,id,ispin,content,privacy,elDestination);
                 return false;
             }
         });
+    },
+    
+    postComment: function(textAreaElement,type,id,ispin,content,privacy,elDestination){
+    	textAreaElement.addClass('loading');
+    	textAreaElement.attr('disabled','disabled');
+    	success('Enviando comentario.');
+    	ajax.globalCommentAction(type, id, content, privacy, ispin,
+            function(response){
+    			textAreaElement.val('');
+    			textAreaElement.removeClass('loading');
+                success(response.message);
+                
+               
+                templateHelper.renderTemplate(response.jsonComment.templateId,response.jsonComment,elDestination,true);
+                
+                $('.timeago').each(function(){
+                    $(this).html($.timeago($(this).attr('data-time')));
+                });
+                if (ispin) {
+                    $('.masonbricks').isotope().resize();
+                }
+                site.expander();
+                textAreaElement.removeAttr('disabled');
+            },
+            function(responsetext){
+            	textAreaElement.removeClass('loading');
+            	textAreaElement.removeAttr('disabled');
+                error(responsetext);
+            });
     },
     
     globalDeleteButtons: function(){

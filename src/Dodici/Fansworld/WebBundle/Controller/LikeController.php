@@ -40,7 +40,9 @@ class LikeController extends SiteController
 	        
 	        $repo = $this->getRepository($type);
 	        $entity = $repo->find($id);
-	        $likecount = $entity->getLikeCount(); $buttontext = null; $message = null;
+	        $likecount = $entity->getLikeCount(); 
+	        $buttontext = null; 
+	        $message = null;
 	        $user = $this->get('security.context')->getToken()->getUser();
 	        $em = $this->getDoctrine()->getEntityManager();
 	        
@@ -54,6 +56,7 @@ class LikeController extends SiteController
 	        	
 	        	$message = $translator->trans('You no longer like') . ' "' . (string)$entity.'"';
 	        	$buttontext = $translator->trans('like');
+	        	$liked = false;
 	        } elseif ($appstate->canLike($entity)) {
 	        	$classname = $appstate->getType($entity);
 	        	$liking = new Liking();
@@ -66,6 +69,7 @@ class LikeController extends SiteController
 	        	
 	        	$message = $translator->trans('You now like') . ' "' . (string)$entity.'"';
 	        	$buttontext = $translator->trans('unlike');
+	        	$liked = true;
 	        } else {
 	        	if (!($user instanceof User)) {
 	        		throw new \Exception('User not logged in');
@@ -75,9 +79,10 @@ class LikeController extends SiteController
 	        }
 	
 	        $response = new Response(json_encode(array(
-	        	'buttontext' => $buttontext,
-	        	'likecount' => $likecount,
-	        	'message' => $message
+	        	'buttontext'	=> $buttontext,
+	        	'likecount' 	=> $likecount,
+	        	'message' 		=> $message,
+	        	'liked'			=> $liked,
 	        )));
 	        $response->headers->set('Content-Type', 'application/json');
 	        return $response;

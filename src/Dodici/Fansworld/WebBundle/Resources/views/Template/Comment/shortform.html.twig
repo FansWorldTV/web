@@ -1,6 +1,9 @@
 <div class="status_comment commentform">
 	<div class="shortcommentform">
-    	<textarea class="comment_message" cols="" rows="2" data-type="" data-id="">comentar...</textarea>
+		{% raw %}
+			<textarea class="comment_message" cols="" rows="2" data-type="comment" data-id="{{>id}}" placeholder='comentar...'></textarea>	
+		{% endraw %}
+    	
 		{#}
 		{% if entity.privacy is defined %}
         	<input class="post_privacidad" type="hidden" value="{{ entity.privacy }}" />

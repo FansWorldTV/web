@@ -8,6 +8,14 @@
     
 }
 
+//Estilos de loading endless scroll
+.comment-loading{
+    bottom: 45px;
+    position: fixed;
+    left:  25%;
+    display: none;
+}
+
 //Estilos formulario commentarios
 //formulario principal del wall
 .commentform.update{
@@ -98,11 +106,24 @@ div.actualizacion{
                 padding: 1px;
                 img{
                     cursor: pointer;
+                    padding: 5px;
                 }
                 
                 img.toolbar-compartir{
                     border-right: 1px solid #e8e8e8;
                     border-left: 1px solid #e8e8e8;
+                }
+                div.like-container{
+                    background: url("../images/ico/favoritos.png") no-repeat scroll 2px 5px transparent;
+                    float: right;
+                    min-width: 14px;
+                    padding-left: 18px;
+                    padding-top: 2px;
+                    cursor: pointer;
+                }
+                
+                div.like-container.liked{
+                    background-position: 2px -13px;
                 }
             }
         }

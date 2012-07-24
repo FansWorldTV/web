@@ -13,7 +13,7 @@
           if (wallid) {
               if (!wallel.attr('data-wall-loaded')) {
                   wallel.addClass('loading');
-                  
+                  $('.comment-loading').show();
                   ajax.genericAction('comment_ajaxget', {
                           wall : wallid,
                           limit: commentsLimit,
@@ -25,13 +25,17 @@
                               $.each(r, function(index, value){
                             	  templateHelper.renderTemplate(value.templateId,value,wallel);
                               });
-                              if (typeof Meteor != 'undefined') {
-                                  Meteor.joinChannel('wall_' + wallid);
-                              }
+                              
                               wallel.removeClass('loading');
+                              $('.comment-loading').hide();
                               wallel.attr('data-wall-loaded', 1);
                               bindWallUpdate(wallel);
                               $("abbr.timeago").timeago();
+                              
+                              if (typeof Meteor != 'undefined') {
+                                  Meteor.joinChannel('wall_' + wallid);
+                              }
+                              
                              
                           }
                       },
@@ -55,6 +59,7 @@
           if (wallid) {
              var lastid = wallel.find('[data-comment]').last().attr('data-comment');
              wallel.addClass('loading');
+             $('.comment-loading').show();
               
               ajax.genericAction('comment_ajaxget', {
                   wall : wallid,
@@ -69,13 +74,17 @@
                         	  templateHelper.renderTemplate(value.templateId,value,wallel);
                           });
                           $("abbr.timeago").timeago();
+                          wallel.removeClass('loading');
+                          $('.comment-loading').hide();
+                          wallel.attr('data-wall-loaded', 1);
+                          window.endlessScrollPaused = false;
+                          
                           if (typeof Meteor != 'undefined') {
                               Meteor.joinChannel('wall_' + wallid);
                           }
-                          wallel.removeClass('loading');
-                          wallel.attr('data-wall-loaded', 1);
+                          
                       }
-                      window.endlessScrollPaused = false;
+                     
                       
                       
                   },
@@ -123,6 +132,7 @@ function bindWallUpdate(wallel){
         fireDelay: 250,
         intervalFrequency: 2000,
         ceaseFireOnEmpty: false,
+        loader: 'cargando',
         callback: function(i, p, d) {
             wallel.wallUpdate();
             

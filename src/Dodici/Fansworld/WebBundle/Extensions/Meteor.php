@@ -47,7 +47,7 @@ class Meteor
     	} elseif ($entity instanceof Comment) {
     	    $possiblewalls = array(
     	        $entity->getTarget(), $entity->getVideo(), $entity->getPhoto(), $entity->getAlbum(), $entity->getContest(), $entity->getEvent(),
-    	        $entity->getMeeting()
+    	        $entity->getMeeting(), $entity->getComment()
     	    );
     	    
     	    $wallname = null;
@@ -61,7 +61,9 @@ class Meteor
     	    
     	    if ($wallname) {
         	    $data = array('t' => 'c', 'w' => $wallname, 'id' => $entity->getId());
-        	    if ($entity->getComment()) $data['p'] = $entity->getComment()->getId();
+        	    if ($entity->getComment()){ 
+        	    	$data['p'] = $entity->getComment()->getId();
+        	    }
         	    return $this->sendToSocket($data, 'wall_'.$wallname);
     	    } else {
     	        throw new \Exception('Could not form wall channel name for comment - no owner entity found');

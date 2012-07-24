@@ -56,6 +56,7 @@ class CommentController extends SiteController
     public function ajaxPostAction()
     {
         try {
+        	
             $request = $this->getRequest();
             $id = intval($request->get('id'));
             $type = $request->get('type');
@@ -73,7 +74,8 @@ class CommentController extends SiteController
 
             $repo = $this->getRepository($type);
             $entity = $repo->find($id);
-
+			
+            
             if (!$entity)
                 throw new \Exception('Entity does not exist');
             if (!$appstate->canComment($entity))
@@ -82,9 +84,9 @@ class CommentController extends SiteController
             $message = null;
             $user = $this->get('security.context')->getToken()->getUser();
             $em = $this->getDoctrine()->getEntityManager();
-
+            
             $comment = $this->get('commenter')->comment($user, $entity, $content, $privacy);
-
+			
             if ($entity instanceof Comment) {
                 $message = $translator->trans('You have replied to a comment');
             } else {
@@ -92,10 +94,12 @@ class CommentController extends SiteController
             }
 
             $templatename = ($ispin ? 'pin_comment.html.twig' : 'comment.html.twig');
-
+			$jsonComment	=	$this->jsonComment($comment, 'true');
+            
             $response = new Response(json_encode(array(
-                                'commenthtml' => $this->renderView('DodiciFansworldWebBundle:Comment:' . $templatename, array('comment' => $comment)),
-                                'message' => $message
+                                'commenthtml' 	=> $this->renderView('DodiciFansworldWebBundle:Comment:' . $templatename, array('comment' => $comment)),
+            					'jsonComment'	=> $jsonComment,
+                                'message' 		=> $message
                             )));
             $response->headers->set('Content-Type', 'application/json');
             return $response;
@@ -177,7 +181,8 @@ class CommentController extends SiteController
         
         $type		=	array(
 			'typeId'	=>	$comment->getType(),
-			'typeName'	=>	$comment->getTypeName()	
+			'typeName'	=>	$comment->getTypeName(),
+        	'type'	=>	$this->get('appstate')->getType($comment),
 		);
         
         $tag		=	$this->getTagItem($comment);
@@ -231,8 +236,25 @@ class CommentController extends SiteController
     	$tag	=	array();
     	$share	=	$comment->getShare();
     	
-    	if(is_null($share))
-    		return array();
+    	if(is_null($share)){
+    		if($this->get('appstate')->getType($comment) == 'comment'){
+    			$type = 'comment';
+    			$tag['shareUrl']	=	$this->generateUrl($type.'_show', array(
+    					'id' => $comment->getId()
+    			));
+    			$tag['shareType'] 			= 	$type;
+    			$tag['shareId'] 			= 	$comment->getId();
+    			$tag['shareTitle'] 			= 	$comment->__toString();
+    			$tag['shareActiontext'] 	= 	$this->trans('shared_'.$type);
+    			$tag['shareLikeCount'] 		= 	$comment->getLikeCount();
+    			if($this->get('appstate')->canDislike($comment)){
+    				$tag['shareLikeClass'] = 'liked';
+    			}else $tag['shareLikeClass'] = '';
+    		}
+    		
+    		return $tag;
+    	}
+    		
     	
     	$validTypes	=	array('comment','album','photo','video','contest','newpost','proposal','forumthread');
     	
@@ -254,14 +276,20 @@ class CommentController extends SiteController
 						$tag['shareImage'] 	= 	$appMedia->getImageUrl($tag_item->getImage(),'wall');
 					}
 				}
-    			$tag['shareType'] 	= 	$type;
-    			
+    			$tag['shareType'] 			= 	$type;
+    			$tag['shareId'] 			= 	$tag_item->getId();
     			$tag['shareTitle'] 			= 	$tag_item->__toString();
     			$tag['shareActiontext'] 	= 	$this->trans('shared_'.$type);
+    			$tag['shareLikeCount'] 		= 	$tag_item->getLikeCount();
+    			if($this->get('appstate')->canDislike($tag_item)){
+    				$tag['shareLikeClass'] = 'liked';
+    			}else $tag['shareLikeClass'] = '';
     			
     			break;
     		}
     	}
+
+    	
     	return $tag;
     }
 }
