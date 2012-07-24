@@ -3,12 +3,12 @@
 		{% if direction == 'prev' %}
 			{% if prev %}
 				<a class="carousel-control" href="{{ path(route_name, {'id': prev.id, 'slug': prev.slug, username: entity.username}) }}" title="{{ 'previous'|trans }}">‹</a>
-				{% thumbnail prev.image, 'medium' with {width: ''} %}
+				{% thumbnail prev.image, 'medium' with {width: '', title: ''} %}
 		    {% endif %}
 		{% elseif direction == 'next' %}
 	    	{% if next %}
 		    	<a class="carousel-control" href="{{ path(route_name, {'id': next.id, 'slug': next.slug, username: entity.username}) }}" title="{{ 'next'|trans }}">›</a>
-		    	{% thumbnail next.image, 'medium' with {width: ''} %}
+		    	{% thumbnail next.image, 'medium' with {width: '', title: ''} %}
 			{% endif %}
 		{% endif %}
     		
