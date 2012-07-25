@@ -19,6 +19,10 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Photo implements SearchableInterface, VisitableInterface
 {
+    const WEIGHT_OUTDATE_FACTOR = 0.2;
+    const WEIGHT_LIKES_FACTOR = 1.5;
+    const WEIGHT_VIEWS_FACTOR = 1.0;
+    
     /**
      * @var bigint $id
      *
@@ -163,6 +167,13 @@ class Photo implements SearchableInterface, VisitableInterface
      */
     private $visitCount;
     
+    /**
+     * @var integer $weight
+     *
+     * @ORM\Column(name="weight", type="integer", nullable=false)
+     */
+    private $weight;
+    
     public function __construct()
     {
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
@@ -191,6 +202,28 @@ class Photo implements SearchableInterface, VisitableInterface
         if (null === $this->commentCount) {
         	$this->setCommentCount(0);
         }
+        if (null === $this->weight) {
+        	$this->calculateWeight();
+        }
+    }
+    
+	/**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->calculateWeight();
+    }
+    
+    public function calculateWeight()
+    {
+    	$this->setWeight(
+    	    round(
+        	    log($this->visitCount * self::WEIGHT_VIEWS_FACTOR, 10) +
+        	    log($this->likeCount * self::WEIGHT_LIKES_FACTOR, 10) +
+        	    $this->createdAt->format('U') / 86400 * self::WEIGHT_OUTDATE_FACTOR
+    	    )
+    	);
     }
     
 	public function likeUp()
@@ -664,5 +697,25 @@ class Photo implements SearchableInterface, VisitableInterface
     public function getVisitCount()
     {
         return $this->visitCount;
+    }
+
+    /**
+     * Set weight
+     *
+     * @param integer $weight
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+    }
+
+    /**
+     * Get weight
+     *
+     * @return integer 
+     */
+    public function getWeight()
+    {
+        return $this->weight;
     }
 }
