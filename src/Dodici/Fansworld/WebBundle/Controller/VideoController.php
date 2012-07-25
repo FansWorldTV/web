@@ -19,6 +19,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dodici\Fansworld\WebBundle\Controller\SiteController;
 use Dodici\Fansworld\WebBundle\Entity\Video;
+use Dodici\Fansworld\WebBundle\Entity\Visit;
+use Dodici\Fansworld\WebBundle\Model\VisitRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Dodici\Fansworld\WebBundle\Model\VideoRepository;
 
@@ -497,325 +499,80 @@ class VideoController extends SiteController
                 ));
     }
 
-    /**
-     * @Route("/upload", name="video_upload")
-     * @Secure(roles="ROLE_USER")
-     * @Template
-     */
-    public function uploadAction()
+    public function ajaxHighlightVideosAction()
     {
         $request = $this->getRequest();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $em = $this->getDoctrine()->getEntityManager();
-        $privacies = Privacy::getOptions();
 
-        $categories = $this->getRepository('VideoCategory')->findBy(array(), array('title' => 'ASC'));
-        $choicecat = array();
-        foreach ($categories as $cat)
-            $choicecat[$cat->getId()] = $cat;
-
-        $video = null;
-
-        $defaultData = array();
-
-        $collectionConstraint = new Collection(array(
-                    'title' => array(new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
-                    'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
-                    'videocategory' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\Choice(array_keys($choicecat))),
-                    'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
-                    'youtube' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
-                    'tagtext' => array(),
-                    'taguser' => array()
-                ));
-
-        $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
-                ->add('title', 'text', array('required' => false, 'label' => 'Título'))
-                ->add('content', 'textarea', array('required' => false, 'label' => 'Descripción'))
-                ->add('videocategory', 'choice', array('required' => true, 'choices' => $choicecat, 'label' => 'Categoría'))
-                ->add('youtube', 'text', array('required' => true, 'label' => 'URL Youtube'))
-                ->add('privacy', 'choice', array('required' => true, 'choices' => $privacies, 'label' => 'Privacidad'))
-                ->add('tagtext', 'hidden', array('required' => false))
-                ->add('taguser', 'hidden', array('required' => false))
-                ->getForm();
-
-
-        if ($request->getMethod() == 'POST') {
-            try {
-                $form->bindRequest($request);
-                $data = $form->getData();
-
-                if ($form->isValid()) {
-                    try {
-                        $videouploader = $this->get('video.uploader');
-                        $idyoutube = $videouploader->getYoutubeId($data['youtube']);
-                        if (!$idyoutube)
-                            throw new \Exception('URL inválida');
-
-                        $metadata = $videouploader->getYoutubeMetadata($idyoutube);
-                        if (!$metadata)
-                            throw new \Exception('No se encontró metadata youtube');
-
-                        $image = null;
-                        if ($metadata['thumbnail_url']) {
-                            $image = $this->get('appmedia')->createImageFromUrl($metadata['thumbnail_url']);
-                        }
-
-                        $videocategory = $this->getRepository('VideoCategory')->find($data['videocategory']);
-
-                        $video = new Video();
-                        $video->setAuthor($user);
-                        $video->setTitle($data['title'] ? : $metadata['title']);
-                        $video->setContent($data['content']);
-                        $video->setYoutube($idyoutube);
-                        $video->setImage($image);
-                        $video->setPrivacy($data['privacy']);
-                        $video->setVideocategory($videocategory);
-                        $em->persist($video);
-                        $em->flush();
-
-
-                        $tagtexts = explode(',', $data['tagtext']);
-                        $tagusers = explode(',', $data['taguser']);
-                        $userrepo = $this->getRepository('User');
-                        $tagitems = array();
-
-                        foreach ($tagtexts as $tt) {
-                            if (trim($tt))
-                                $tagitems[] = $tt;
-                        }
-                        foreach ($tagusers as $tu) {
-                            $tuser = $userrepo->find($tu);
-                            if ($tuser)
-                                $tagitems[] = $tuser;
-                        }
-
-                        $this->get('tagger')->tag($user, $video, $tagitems);
-
-                        $this->get('session')->setFlash('success', '¡Has subido un video con éxito!');
-                    } catch (\Exception $e) {
-                        $form->addError(new FormError($e->getMessage()));
-                        $video = null;
-                    }
-                }
-            } catch (\Exception $e) {
-                $form->addError(new FormError('Error subiendo video'));
-            }
-        }
-
-        return array('video' => $video, 'form' => $form->createView());
-    }
-
-    /**
-     * @Route("/fileupload", name="video_fileupload")
-     * @Secure(roles="ROLE_USER")
-     * @Template
-     */
-    public function fileUploadAction()
-    {
-        $request = $this->getRequest();
-        $defaultData = array();
-        $video = null;
-        $user = $this->get('security.context')->getToken()->getUser();
-
-        $collectionConstraint = new Collection(array(
-                    'videourl' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
-                ));
-
-        $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
-                ->add('videourl', 'text', array('required' => true, 'label' => 'URL Video'))
-                ->getForm();
-
-        if ($request->getMethod() == 'POST') {
-
-            try {
-                $form->bindRequest($request);
-                $data = $form->getData();
-
-                if ($form->isValid()) {
-                    try {
-                        $videotemp = $this->get('video.uploader')->createVideoFromUrl($data['videourl'], $user);
-                        $em = $this->getDoctrine()->getEntityManager();
-                        $em->persist($videotemp);
-                        $em->flush();
-
-                        return $this->forward('DodiciFansworldWebBundle:Video:filemeta', array(
-                                    'videotemp' => $videotemp->getId(),
-                                    'fromuploader' => true
-                                ));
-                    } catch (\Exception $e) {
-                        $form->addError(new FormError($e->getMessage()));
-                        $video = null;
-                    }
-                }
-            } catch (\Exception $e) {
-                $form->addError(new FormError('Error subiendo video'));
-            }
-        }
-
-
-        return array('form' => $form->createView());
-    }
-
-    /**
-     * @Route("/ajax/fileupload", name="video_ajaxfileupload")
-     * @Secure(roles="ROLE_USER")
-     * @Template
-     */
-    public function ajaxFileUploadAction()
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $request = $this->getRequest();
-        if ($request->getMethod() == 'POST') {
-            $response = array('error' => 'Could not save uploaded file.' . 'The upload was cancelled, or server error encountered');
-
-            $mediaManager = $this->get("sonata.media.manager.media");
-            $video = null;
-
-            $input = fopen("php://input", "r");
-            $videocontent = stream_get_contents($input);
-            fclose($input);
-
-            if ($videocontent !== false) {
-                $name = $request->query->get('qqfile');
-                $pathinfo = pathinfo($name);
-                $filename = $pathinfo['filename'];
-                $ext = $pathinfo['extension'];
-                $tmpName = $filename . '.' . $ext;
-
-                $videoToken = $this->get('video.uploader')->createVideoFromBinary($videocontent, $user, $tmpName);
-
-
-                $video = new Video();
-                $video->setAuthor($user);
-                $video->setTitle($tmpName);
-                $video->setStream($videoToken);
-                $video->setProcessed(false);
-                $video->setActive(false);
-
-
-                $em->persist($video);
-                $em->flush();
-
-                $response = array('success' => true, 'videoid' => $video->getId());
-            }
-            return $this->jsonResponse($response);
-        }
-        return array();
-    }
-
-    /**
-     * @Route("/fileupload/{videotemp}/{fromuploader}", name="video_filemeta", defaults = {"fromuploader" = false})
-     * @Secure(roles="ROLE_USER")
-     * @Template
-     */
-    public function fileMetaAction($videotemp, $fromuploader)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-
-        $video = $this->getRepository('Video')->findOneBy(array('id' => $videotemp));
-        $thumbnail = null;
-
-        $redirectColorBox = false;
-        $request = $this->getRequest();
-        $user = $this->get('security.context')->getToken()->getUser();
-
-        $privacies = Privacy::getOptions();
-
-        $categories = $this->getRepository('VideoCategory')->findBy(array(), array('title' => 'ASC'));
-        $choicecat = array();
-        foreach ($categories as $cat)
-            $choicecat[$cat->getId()] = $cat;
-        $videouploader = $this->get('video.uploader');
-
-
-        $defaultData = array();
-
-        $defaultData = array(
-            'title' => $video->getTitle(),
+        $response = array(
+            'videos' => array()
         );
 
+        $user = $request->get('userId', false);
+        $page = $request->get('page', 1);
 
-        $collectionConstraint = new Collection(array(
-                    'title' => array(new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
-                    'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
-                    'videocategory' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\Choice(array_keys($choicecat))),
-                    'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
-                    'tagtext' => array(),
-                    'taguser' => array()
-                ));
+        $repoVideos = $this->getRepository('Video');
+        $repoVideos instanceof VideoRepository;
 
-        $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
-                ->add('title', 'text', array('required' => false, 'label' => 'Título'))
-                ->add('content', 'textarea', array('required' => false, 'label' => 'Descripción'))
-                ->add('videocategory', 'choice', array('required' => true, 'choices' => $choicecat, 'label' => 'Categoría'))
-                ->add('privacy', 'choice', array('required' => true, 'choices' => $privacies, 'label' => 'Privacidad'))
-                ->add('tagtext', 'hidden', array('required' => false))
-                ->add('taguser', 'hidden', array('required' => false))
-                ->getForm();
+        $page = (int) $page;
+        $offset = ($page - 1) * self::cantVideos;
 
-        if ($fromuploader == false) {
-            try {
-                $form->bindRequest($request);
-                $data = $form->getData();
+        $videos = $repoVideos->findBy(array('author' => $user, 'highlight' => true), array('createdat' => 'desc'), self::cantVideos, $offset);
 
-                if ($form->isValid()) {
-                    try {
-
-
-                        $image = null;
-                        if (!$video->getImage()) {
-                            /*
-                              $image = $this->get('appmedia')->createImageFromUrl($video->getImage());
-                              $video->setImage($image); */
-                        }
-
-
-                        $videocategory = $this->getRepository('VideoCategory')->find($data['videocategory']);
-
-
-                        $video->setAuthor($user);
-                        $video->setTitle($data['title'] ? : $defaultData['title']);
-                        $video->setContent($data['content']);
-
-                        $video->setPrivacy($data['privacy']);
-                        $video->setVideocategory($videocategory);
-                        $em->persist($video);
-                        $em->flush();
-
-
-                        $tagtexts = explode(',', $data['tagtext']);
-                        $tagusers = explode(',', $data['taguser']);
-                        $userrepo = $this->getRepository('User');
-                        $tagitems = array();
-
-                        foreach ($tagtexts as $tt) {
-                            if (trim($tt))
-                                $tagitems[] = $tt;
-                        }
-                        foreach ($tagusers as $tu) {
-                            $tuser = $userrepo->find($tu);
-                            if ($tuser)
-                                $tagitems[] = $tuser;
-                        }
-
-                        $this->get('tagger')->tag($user, $video, $tagitems);
-
-                        $this->get('session')->setFlash('success', '¡Has subido un video con éxito!');
-                        $redirectColorBox = true;
-                    } catch (\Exception $e) {
-                        $form->addError(new FormError($e->getMessage()));
-                        $video = null;
-                    }
-                }
-            } catch (\Exception $e) {
-                $form->addError(new FormError('Error subiendo video'));
-            }
+        foreach ($videos as $video) {
+            $response['videos'][] = array(
+                'id' => $video->getId(),
+                'title' => $video->getTitle(),
+                'slug' => $video->getSlug(),
+                'image' => $this->getImageUrl($video->getImage, 'medium')
+            );
         }
 
+        return $this->jsonResponse($response);
+    }
 
-        return array('video' => $video, 'form' => $form->createView(), 'redirectColorBox' => $redirectColorBox, 'videotemp' => $videotemp, 'thumbnail_url' => $thumbnail, 'user' => $user);
+    /**
+     * @Route("/ajax/visited-videos", name="video_visitedvideos")
+     */
+    public function ajaxVisitVideosAction()
+    {
+        $request = $this->getRequest();
+
+        $user = $request->get('userId', false);
+        if (!$user) {
+            $user = $this->get('security.context')->getToken()->getUser()->getId();
+        }
+        
+        $today = $request->get('today', false);
+        $popular = $request->get('isPopular', false);
+        
+        $page = $request->get('page', 1);
+        $offset = ($page - 1) * self::cantVideos;
+
+        $response = array(
+            'visits' => array()
+        );
+
+        $videoRepo = $this->getRepository('Video');
+        $videoRepo instanceof VideoRepository;
+
+        if($today){
+            $date = new \DateTime();
+            $videos = $videoRepo->dateFromVideos($date, array('created_at' => 'desc'), self::cantVideos, $offset);
+        }else{
+            $videos = $videoRepo->findBy(array('author' => $user), array('visitCount' => 'desc'), self::cantVideos, $offset);
+        }
+
+        foreach ($videos as $video) {
+            $response['visits'][] = array(
+                'id' => $video->getId(),
+                'title' => $video->getTitle(),
+                'slug' => $video->getSlug(),
+                'image' => $this->getImageUrl($video->getImage(), 'medium'),
+                'visitCount' => $video->getVisitCount()
+            );
+        }
+
+        return $this->jsonResponse($response);
     }
 
 }
