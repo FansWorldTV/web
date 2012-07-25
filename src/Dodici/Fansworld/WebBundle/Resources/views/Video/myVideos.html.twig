@@ -93,8 +93,8 @@
                     }, 
                     function(r){
                         $("#am-container").html("");
-                        for(var i in r.visits) {
-                            var ele = r.visits[i];
+                        for(var i in r.videos) {
+                            var ele = r.videos[i];
                             addVideo(ele);
                         }
                         $newImgs = $("#am-container .newimg");
@@ -119,8 +119,8 @@
                     
                     ajax.genericAction('video_visitedvideos', params, function(r){
                         $("#am-container").html("");
-                        for(var i in r.visits) {
-                            var ele = r.visits[i];
+                        for(var i in r.videos) {
+                            var ele = r.videos[i];
                             addVideo(ele);
                         }
                         $newImgs = $("#am-container .newimg");

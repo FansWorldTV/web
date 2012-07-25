@@ -566,7 +566,7 @@ class VideoController extends SiteController
         }
 
         foreach ($videos as $video) {
-            $response['visits'][] = array(
+            $response['videos'][] = array(
                 'id' => $video->getId(),
                 'title' => $video->getTitle(),
                 'slug' => $video->getSlug(),
@@ -575,6 +575,33 @@ class VideoController extends SiteController
             );
         }
 
+        return $this->jsonResponse($response);
+    }
+    
+    public function popularVideosAction(){
+        $request = $this->getRequest();
+        $user = $request->get('userid', false);
+        if(!$user) {
+            $user = $this->get('security.context')->getToken()->getUser()->getId();
+        }
+        
+        $page = $request->get('page', 1);
+        $offset = ($page - 1 ) * self::cantVideos;
+        
+        $response = array();
+        
+        $videos = $this->getRepository('Video')->findBy(array('author' => $user), array('weight' => 'desc'), self::cantVideos, $offset);
+        
+        foreach($videos as $video){
+            $response['videos'][] = array(
+                'id' => $video->getId(),
+                'title' => $video->getTitle(),
+                'slug' => $video->getSlug(),
+                'image' => $this->getImageUrl($video->getImage(), 'medium'),
+                'visitCount' => $video->getVisitCount()
+            );
+        }
+        
         return $this->jsonResponse($response);
     }
 
