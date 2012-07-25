@@ -327,7 +327,7 @@ class VideoRepository extends CountBaseRepository
             SELECT v
             FROM \Dodici\Fansworld\WebBundle\Entity\Video v
             WHERE v.createdAt >= :date_from AND v.createdAt <= :date_to
-            ORDER BY v.createdAt DESC
+            ORDER BY v.visitCount DESC
             ')
                 
         ->setParameter('date_from', $date->format("Y-m-d 00:00:00") )

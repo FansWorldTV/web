@@ -34,11 +34,11 @@
     {% endif %}
     
     <div class="row-fluid">
-        <div class="btn-group">
-            <button class="btn">Destacados</button>
-            <button class="btn">Mas Vistos</button>
-            <button class="btn">Populares</button>
-            <button class="btn">Mas Vistos del día</button>
+        <div class="btn-group list-videos">
+            <button class="btn" data-type="0">Destacados</button>
+            <button class="btn" data-type="1">Mas Vistos</button>
+            <button class="btn" data-type="2">Populares</button>
+            <button class="btn" data-type="3">Mas Vistos del día</button>
         </div>
     </div>
     
@@ -62,9 +62,76 @@
         <input type="hidden" id="userId" value="{{ user.id }}"/>
     </div>
     
-    
+    <div id="templates" class="hidden">
+        <div class="video">
+            <a href="">
+                <span class="title"></span>
+                <img src="" title="" alt="" />
+                <button class="btn btn-primary">+</button>
+            </a>
+        </div>
+    </div>
     
     <script type="text/javascript">
             site.startMosaic($('#am-container'), {minw: 300, margin: 0, liquid: true, minsize: true});
+            function addVideo(ele){
+                var template = $("#templates .video").find('a').clone();
+                template.addClass('newimg').attr('href', Routing.generate( appLocale + "_video_show",{'id': ele.id, 'slug': ele.slug}));
+                template.find('.title').html(ele.title);
+                template.find('img').attr('src', ele.image).attr('alt', ele.title);
+                $("#am-container").append(template);
+            }
+            $("div.list-videos .btn").live('click', function(){
+                var type = $(this).attr('data-type');
+                var userid = $("#userId").val();
+                var page = 1;
+                
+                if(type == 0){
+                    ajax.genericAction('video_highlighted', {
+                        'userid': userid,
+                        'page': page
+                    }, 
+                    function(r){
+                        $("#am-container").html("");
+                        for(var i in r.visits) {
+                            var ele = r.visits[i];
+                            addVideo(ele);
+                        }
+                        $newImgs = $("#am-container .newimg");
+                        $newImgs.imagesLoaded( function(){
+                            $("#am-container").montage('add', $("#am-container .newimg"));
+                        });
+                        $newImgs.removeClass('.newimg');
+                    }, 
+                    function(msg){
+                        error(msg);
+                    });
+                }else if(type == 1 || type == 2 || type == 3){
+                    var params = {};
+                    params['userid'] = userid;
+                    params['page'] = page;
+                    
+                    if(type == 2 ){
+                        params['isPopular'] = true;
+                    } else if(type==3){
+                        params['today'] = true;
+                    }
+                    
+                    ajax.genericAction('video_visitedvideos', params, function(r){
+                        $("#am-container").html("");
+                        for(var i in r.visits) {
+                            var ele = r.visits[i];
+                            addVideo(ele);
+                        }
+                        $newImgs = $("#am-container .newimg");
+                        $newImgs.imagesLoaded( function(){
+                            $("#am-container").montage('add', $("#am-container .newimg"));
+                        });
+                        $newImgs.removeClass('.newimg');
+                    }, function(msg){
+                        error(msg);
+                    });
+                }
+            });
     </script>
 {% endblock %}

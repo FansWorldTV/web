@@ -499,6 +499,9 @@ class VideoController extends SiteController
                 ));
     }
 
+    /**
+     * @Route("/ajax/highlighted-videos", name="video_highlighted")
+     */
     public function ajaxHighlightVideosAction()
     {
         $request = $this->getRequest();
@@ -516,7 +519,7 @@ class VideoController extends SiteController
         $page = (int) $page;
         $offset = ($page - 1) * self::cantVideos;
 
-        $videos = $repoVideos->findBy(array('author' => $user, 'highlight' => true), array('createdat' => 'desc'), self::cantVideos, $offset);
+        $videos = $repoVideos->findBy(array('author' => $user, 'highlight' => true), array('createdAt' => 'desc'), self::cantVideos, $offset);
 
         foreach ($videos as $video) {
             $response['videos'][] = array(
@@ -557,7 +560,7 @@ class VideoController extends SiteController
 
         if($today){
             $date = new \DateTime();
-            $videos = $videoRepo->dateFromVideos($date, array('created_at' => 'desc'), self::cantVideos, $offset);
+            $videos = $videoRepo->dateFromVideos($date, self::cantVideos, $offset);
         }else{
             $videos = $videoRepo->findBy(array('author' => $user), array('visitCount' => 'desc'), self::cantVideos, $offset);
         }
