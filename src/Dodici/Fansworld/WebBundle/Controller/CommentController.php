@@ -82,7 +82,7 @@ class CommentController extends SiteController
                 throw new \Exception('Unauthorized');
 
             $message = null;
-            $user = $this->get('security.context')->getToken()->getUser();
+            $user = $this->getUser();
             $em = $this->getDoctrine()->getEntityManager();
             
             $comment = $this->get('commenter')->comment($user, $entity, $content, $privacy);

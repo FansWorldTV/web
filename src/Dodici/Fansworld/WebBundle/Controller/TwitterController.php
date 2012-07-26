@@ -34,7 +34,7 @@ class TwitterController extends SiteController
         $accesstoken = $t->getAccessToken($request);
 
         if ($accesstoken) {
-            $user = $this->get('security.context')->getToken()->getUser();
+            $user = $this->getUser();
             if ($user instanceof User) {
                 $user->setTwitter($accesstoken['screen_name']);
                 $user->setTwitterid($accesstoken['user_id']);

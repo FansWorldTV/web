@@ -99,7 +99,7 @@ class ForumController extends SiteController
         $request = $this->getRequest();
         $threadId = $request->get('thread', false);
         $comment = $request->get('comment', false);
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         
         $thread = $this->getRepository('ForumThread')->find($threadId);
 
@@ -202,7 +202,7 @@ class ForumController extends SiteController
         $request = $this->getRequest();
         $threadId = $request->get('id', false);
         $content = $request->get('content', false);
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $response = array(
             'error' => false
         );

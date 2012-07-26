@@ -67,7 +67,7 @@ class InviteController extends SiteController
         $response = null;
 
         if ($users2bInvited) {
-            $user = $this->get('security.context')->getToken()->getUser();
+            $user = $this->getUser();
 
             $importer = $this->get('contact.importer');
             $importer instanceof ContactImporter;

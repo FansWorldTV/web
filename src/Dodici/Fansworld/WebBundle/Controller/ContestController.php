@@ -46,7 +46,7 @@ class ContestController extends SiteController
      */
     public function myContestsAction()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $participating = $this->getRepository('ContestParticipant')->userParticipating($user);
         $contests = array();
 
@@ -95,7 +95,7 @@ class ContestController extends SiteController
             $content = $request->get('content');
             $contest = $this->getRepository('Contest')->findOneBy(array('id' => $contestId));
 
-            $user = $this->get('security.context')->getToken()->getUser();
+            $user = $this->getUser();
 
             $newComment = new Comment();
             $newComment->setAuthor($user);
@@ -138,7 +138,7 @@ class ContestController extends SiteController
     {
         $request = $this->getRequest();
         $contest = $request->get('contestId');
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $contest = $this->getRepository('Contest')->findOneBy(array('id' => $contest));
 
         $isParticipant = $this->getRepository('ContestParticipant')->findOneBy(array('author' => $user, 'contest' => $contest));
@@ -269,7 +269,7 @@ class ContestController extends SiteController
         } else {
             $contest = false;
         }
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $isParticipant = $this->getRepository('ContestParticipant')->findOneBy(array('contest' => $contest->getId(), 'author' => $user->getId()));
         $participants = $this->getRepository('ContestParticipant')->findBy(array('contest' => $contest->getId()), array('createdAt' => 'desc'), self::participantsLimit);
         $countAllParticipants = $this->getRepository('ContestParticipant')->countBy(array('contest' => $contest->getId()));
@@ -390,7 +390,7 @@ class ContestController extends SiteController
         $request = $this->getRequest();
         $contestId = $request->get('contest', false);
         $participantId = $request->get('participant', false);
-        $author = $this->get('security.context')->getToken()->getUser();
+        $author = $this->getUser();
 
         $response = array();
 

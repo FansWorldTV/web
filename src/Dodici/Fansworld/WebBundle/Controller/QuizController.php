@@ -46,7 +46,7 @@ class QuizController extends SiteController
 
         $quiz = $this->getRepository('QuizQuestion')->find($quizId);
         if ($quiz) {
-            $author = $this->get('security.context')->getToken()->getUser();
+            $author = $this->getUser();
             $quizAlreadyResponded = $this->getRepository('QuizAnswer')->countBy(array('author' => $author->getId(), 'quizquestion' => $quiz->getId()));
             if ($quizAlreadyResponded > 0) {
                 $response['error'] = true;

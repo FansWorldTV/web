@@ -53,7 +53,7 @@ class SiteController extends Controller
 
     public function securityCheck($entity)
     {
-    	$user = $this->get('security.context')->getToken()->getUser();
+    	$user = $this->getUser();
     	
     	if (!$entity || (property_exists($entity, 'active') && !$entity->getActive()))
             throw new HttpException(404, 'Contenido no encontrado');
@@ -69,6 +69,12 @@ class SiteController extends Controller
 	        	}
 	        }
         }
+    }
+    
+    public function getUser()
+    {
+        $user = $this->get('security.context')->getToken()->getUser();
+        return ($user instanceof User) ? $user : null;
     }
     
     public function trans($term)

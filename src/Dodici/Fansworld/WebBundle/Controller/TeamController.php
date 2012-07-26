@@ -140,7 +140,7 @@ class TeamController extends SiteController
         try {
             $request = $this->getRequest();
             $idteam = intval($request->get('team'));
-            $user = $this->get('security.context')->getToken()->getUser();
+            $user = $this->getUser();
 
             if (!$user instanceof User)
                 throw new \Exception('Debe iniciar sesión');
@@ -260,7 +260,7 @@ class TeamController extends SiteController
         $actualTeamId = $request->get('actual', false);
         $selectedTeamId = $request->get('selected', false);
 
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
 
         $teamshipRepo = $this->getRepository('Teamship');

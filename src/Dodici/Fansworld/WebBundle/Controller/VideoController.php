@@ -53,7 +53,7 @@ class VideoController extends SiteController
      */
     public function rightbarAction()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $vidrepo = $this->getRepository("Video");
         $mostviewed = $vidrepo->search(null, $user, 3, null, null, null, null, null, null, 'views');
         $mostliked = $vidrepo->search(null, $user, 3, null, null, null, null, null, null, 'likes');
@@ -87,7 +87,7 @@ class VideoController extends SiteController
 
         $request = $this->getRequest();
         $query = $request->get('query', null);
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $vidrepo = $this->getRepository("Video");
         $videosbycat = array();
         $highlight = null;
@@ -125,7 +125,7 @@ class VideoController extends SiteController
         $query = $request->get('query', false);
         $categoryId = $request->get('category', null);
 
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $page = (int) $page;
         $offset = ($page - 1) * self::cantVideos;
@@ -222,7 +222,7 @@ class VideoController extends SiteController
 
         $query = $query == "null" ? null : $query;
 
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         if ($page > 1) {
             $offset = ($page - 1) * 12;
@@ -265,7 +265,7 @@ class VideoController extends SiteController
         $videosRepo = $this->getRepository('Video');
         $videosRepo instanceof VideoRepository;
 
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $videos = $videosRepo->search($query, $user, 16, null, null, false);
         $countAll = $videosRepo->countSearch($query, $user, null, false);
@@ -306,7 +306,7 @@ class VideoController extends SiteController
         $videosRepo = $this->getRepository('Video');
         $videosRepo instanceof VideoRepository;
 
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $videos = $videosRepo->search($query, $user, 16, $offset, null, false);
         $countAll = $videosRepo->countSearch($query, $user, null, false);
@@ -341,7 +341,7 @@ class VideoController extends SiteController
         }else
             $this->get('visitator')->visit($author);
         
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $videoRepo = $this->getRepository('Video');
         $videoRepo instanceof VideoRepository;
@@ -371,7 +371,7 @@ class VideoController extends SiteController
 
         $videos = array();
         if ($slug) {
-            $user = $this->get('security.context')->getToken()->getUser();
+            $user = $this->getUser();
             $tag = $this->getRepository('Tag')->findOneBy(array('slug' => $slug));
 
             $videosRepo = $this->getRepository('Video')->search($tag, $user, self::cantVideos);
@@ -407,7 +407,7 @@ class VideoController extends SiteController
         $page = (int) $request->get('page', 1);
         $id = $request->get('id', false);
         $offset = ($page - 1) * self::cantVideos;
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $tag = $this->getRepository('Tag')->find($id);
 
         $videos = array();
@@ -464,7 +464,7 @@ class VideoController extends SiteController
 
         $authorId = $request->get('userId', false);
         $author = $this->getRepository('User')->find($authorId);
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         
         $page = $request->get('page', 1);
 
@@ -500,7 +500,7 @@ class VideoController extends SiteController
 
         $authorId = $request->get('userId', false);
         $author = $this->getRepository('User')->find($authorId);
-        $user = $this->get('security.context')->getToken()->getUser()->getId();
+        $user = $this->getUser();
         
         $today = $request->get('today', false);
         
@@ -548,7 +548,7 @@ class VideoController extends SiteController
         $request = $this->getRequest();
         $authorId = $request->get('userid', false);
         $author = $this->getRepository('User')->find($authorId);
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         
         $page = $request->get('page', 1);
         $offset = ($page - 1 ) * self::cantVideos;

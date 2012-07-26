@@ -40,7 +40,7 @@ class DeleteController extends SiteController
 	        
 	        $repo = $this->getRepository($type);
 	        $entity = $repo->find($id);
-	        $user = $this->get('security.context')->getToken()->getUser();
+	        $user = $this->getUser();
 	        $em = $this->getDoctrine()->getEntityManager();
 	        $redirect = null;
 	        

@@ -43,7 +43,7 @@ class LikeController extends SiteController
 	        $likecount = $entity->getLikeCount(); 
 	        $buttontext = null; 
 	        $message = null;
-	        $user = $this->get('security.context')->getToken()->getUser();
+	        $user = $this->getUser();
 	        $em = $this->getDoctrine()->getEntityManager();
 	        
 	        if ($appstate->canDislike($entity)) {

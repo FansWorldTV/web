@@ -38,7 +38,7 @@ class UserController extends SiteController
 
         $hasComments = $this->getRepository('Comment')->countBy(array('target' => $user->getId()));
         $hasComments = $hasComments > 0 ? true : false;
-        $loggedUser = $this->get('security.context')->getToken()->getUser();
+        $loggedUser = $this->getUser();
         $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
 
         return array('user' => $user, 'friendgroups' => $friendGroups, 'hasComments' => $hasComments, 'isHome' => true);
@@ -57,7 +57,7 @@ class UserController extends SiteController
         }else
             $this->get('visitator')->visit($user);
 
-        $loggedUser = $this->get('security.context')->getToken()->getUser();
+        $loggedUser = $this->getUser();
         $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
 
         $categories = $this->getRepository('InterestCategory')->findBy(array(), array('title' => 'ASC'));
@@ -100,7 +100,7 @@ class UserController extends SiteController
         $limit = null;
         $offset = null;
 
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         if (!($user instanceof User))
             throw new AccessDeniedException('Acceso denegado');
@@ -130,7 +130,7 @@ class UserController extends SiteController
      */
     public function ajaxNotificationNumber()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $notiRepo = $this->getRepository('Notification');
         $number = $notiRepo->countLatest($user, false);
 
@@ -142,7 +142,7 @@ class UserController extends SiteController
      */
     public function ajaxNotifications()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $notiRepo = $this->getRepository('Notification');
         $notifications = $notiRepo->latest($user, null, self::LIMIT_NOTIFICATIONS);
         $countAll = $notiRepo->countBy(array('author' => $user->getId()));
@@ -165,7 +165,7 @@ class UserController extends SiteController
     public function ajaxNotification()
     {
         $request = $this->getRequest();
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $notificationId = $request->get('id', false);
         $response = array();
 
@@ -186,7 +186,7 @@ class UserController extends SiteController
     {
         $request = $this->getRequest();
         $notificationId = $request->get('id', false);
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $response = false;
 
@@ -223,7 +223,7 @@ class UserController extends SiteController
 
         $response = false;
 
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         if ($user instanceof User) {
             $countTotal = $friendRepo->CountPending($user);
 
@@ -240,7 +240,7 @@ class UserController extends SiteController
      */
     public function ajaxGetFriendship()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $friendRepo = $this->getRepository('Friendship');
         $response = false;
         $request = $this->getRequest();
@@ -292,7 +292,7 @@ class UserController extends SiteController
 
         $response = false;
 
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         if ($user instanceof User) {
             $response = array();
             $pending = $friendRepo->Pending($user, $limit, $offset);
@@ -335,7 +335,7 @@ class UserController extends SiteController
     {
         $request = $this->getRequest();
         $friendshipId = $request->get('id', false);
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $error = true;
 
@@ -375,7 +375,7 @@ class UserController extends SiteController
     {
         $request = $this->getRequest();
         $friendshipId = $request->get('id', false);
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
 
 
@@ -413,7 +413,7 @@ class UserController extends SiteController
      */
     public function friendRequestsAction()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $friendsRequest = false;
         if ($user instanceof User) {
@@ -445,7 +445,7 @@ class UserController extends SiteController
      */
     public function notificationsAction()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $notiRepo = $this->getRepository('Notification');
         $notifications = $notiRepo->findBy(array('target' => $user->getId()), array('createdAt' => 'DESC'));
         $response = array();
@@ -468,7 +468,7 @@ class UserController extends SiteController
         }else
             $this->get('visitator')->visit($user);
 
-        $loggedUser = $this->get('security.context')->getToken()->getUser();
+        $loggedUser = $this->getUser();
         $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
 
         $photos = $this->getRepository('Photo')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
@@ -480,7 +480,7 @@ class UserController extends SiteController
         $viewMorePhotos = $photosTotalCount > self::LIMIT_PHOTOS ? true : false;
         $viewMoreAlbums = $albumsTotalCount > self::LIMIT_PHOTOS ? true : false;
 
-        $loggedUser = $this->get('security.context')->getToken()->getUser();
+        $loggedUser = $this->getUser();
         $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
 
         return array(
@@ -506,7 +506,7 @@ class UserController extends SiteController
         }else
             $this->get('visitator')->visit($user);
 
-        $loggedUser = $this->get('security.context')->getToken()->getUser();
+        $loggedUser = $this->getUser();
         $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
         $photos = $this->getRepository('Photo')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
         $totalCount = $this->getRepository('Photo')->countBy(array('author' => $user->getId(), 'active' => true));
@@ -530,7 +530,7 @@ class UserController extends SiteController
         }else
             $this->get('visitator')->visit($user);
 
-        $loggedUser = $this->get('security.context')->getToken()->getUser();
+        $loggedUser = $this->getUser();
         $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
         
         $photos = $this->getRepository('Photo')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
@@ -558,7 +558,7 @@ class UserController extends SiteController
      */
     public function inviteAction()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $url = $this->get('contact.importer')->inviteUrl($user);
         return array(
             'url' => $url
@@ -573,7 +573,7 @@ class UserController extends SiteController
     public function changeImageAction()
     {
         $request = $this->getRequest();
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
 
         $media = $user->getImage();
@@ -658,7 +658,7 @@ class UserController extends SiteController
         
 
         if (!$userId) {
-            $user = $this->get('security.context')->getToken()->getUser();
+            $user = $this->getUser();
         } else {
             $user = $this->getRepository('User')->find($userId);
         }
@@ -710,7 +710,7 @@ class UserController extends SiteController
     	}else
     		$this->get('visitator')->visit($photo);
     
-    	$loggedUser = $this->get('security.context')->getToken()->getUser();
+    	$loggedUser = $this->getUser();
     	$isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
     	 
     	$this->securityCheck($photo);

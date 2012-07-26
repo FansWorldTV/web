@@ -60,7 +60,7 @@ class EventController extends SiteController
         $teamId = $request->get('teamId', false);
 
         $type = (int) $type;
-        $author = $this->get('security.context')->getToken()->getUser();
+        $author = $this->getUser();
         $event = $this->getRepository('Event')->find($eventId);
         
         if ($teamId) {

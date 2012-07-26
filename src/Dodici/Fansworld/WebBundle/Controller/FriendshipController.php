@@ -29,7 +29,7 @@ class FriendshipController extends SiteController
         try {
             $response = null;
             $request = $this->getRequest();
-            $author = $this->get('security.context')->getToken()->getUser();
+            $author = $this->getUser();
 
             if (!($author instanceof User))
                 throw new \Exception('Debe iniciar sesión');
@@ -91,7 +91,7 @@ class FriendshipController extends SiteController
         $response = array('error' => false);
 
         $request = $this->getRequest();
-        $author = $this->get('security.context')->getToken()->getUser();
+        $author = $this->getUser();
         $friendshipId = $request->get('friendship');
 
         $friendship = $this->getRepository('Friendship')->find($friendshipId);

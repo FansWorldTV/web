@@ -51,7 +51,7 @@ class EditController extends SiteController
 	        
 	        $repo = $this->getRepository($type);
 	        $entity = $repo->find($id);
-	        $user = $this->get('security.context')->getToken()->getUser();
+	        $user = $this->getUser();
 	        $em = $this->getDoctrine()->getEntityManager();
 	        
 	        if (!$entity->getActive()) throw new \Exception('Entity has been deleted'); 

@@ -42,7 +42,7 @@ class FacebookController extends SiteController
      */
     public function setTokenAction()
     {
-    	$user = $this->get('security.context')->getToken()->getUser();
+    	$user = $this->getUser();
     	$signed_request = $this->getRequest()->get('signed_request');
     	if ($signed_request && ($user instanceof User)) {
 	    	$facebook = $this->get('fos_facebook.api');

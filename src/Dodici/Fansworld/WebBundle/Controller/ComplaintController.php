@@ -28,7 +28,7 @@ class ComplaintController extends SiteController
     public function ajaxReportAction()
     {
         $request = $this->getRequest();
-        $author = $this->get('security.context')->getToken()->getUser();
+        $author = $this->getUser();
         $entityType = $request->get('type', false);
         $entityId = $request->get('id', false);
         $categoryId = $request->get('category', false);
@@ -77,7 +77,7 @@ class ComplaintController extends SiteController
         $entity = $this->getRepository($entityType)->find($entityId);
         $reported = false;
         
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         
         $complaintReported = $this->getRepository('Complaint')->findOneBy(array('author' => $user->getId(), $entityType => $entityId));
         if($complaintReported){

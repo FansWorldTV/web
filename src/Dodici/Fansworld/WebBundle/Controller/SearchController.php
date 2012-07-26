@@ -38,7 +38,7 @@ class SearchController extends SiteController
     {
         $request = $this->getRequest();
         $query = $request->get('query');
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $response = array();
 
         if ($query && $user instanceof User) {
@@ -78,7 +78,7 @@ class SearchController extends SiteController
 
         $response = false;
         $response = array();
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $query = $query == '' ? null : $query;
 
@@ -119,7 +119,7 @@ class SearchController extends SiteController
     public function friendsAction()
     {
         $userRepo = $this->getRepository('User');
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $friends = $userRepo->FriendUsers($user, null, self::LIMIT_SEARCH, null);
 
@@ -144,7 +144,7 @@ class SearchController extends SiteController
         if ($userId) {
             $user = $userRepo->find($userId);
         } else {
-            $user = $this->get('security.context')->getToken()->getUser();
+            $user = $this->getUser();
         }
 
         $page = (int) $page;
@@ -220,7 +220,7 @@ class SearchController extends SiteController
             $offset = 0;
         }
 
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         if ($user instanceof User) {
             $response = array();
             $searchIdol = $this->getRepository('Idol')->SearchFront($user, $query, $isIdol, self::LIMIT_SEARCH, $offset);

@@ -48,7 +48,7 @@ class DefaultController extends SiteController
     public function menubarAction()
     {
         $notifications = array();
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $countNew = 0;
         if ($user instanceof User) {
             $notifications = $this->getRepository('Notification')->findBy(array('target' => $user->getId()), array('createdAt' => 'desc'), 5);
@@ -72,7 +72,7 @@ class DefaultController extends SiteController
      */
     public function relatedcolumnAction()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $repo = $this->getRepository('User');
         $irepo = $this->getRepository('Idol');
@@ -142,7 +142,7 @@ class DefaultController extends SiteController
      */
     public function leftmenubarAction()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $request = $this->getRequest();
         $hide_login = $request->get('hide_login', false);
         $hide_ad = $request->get('hide_ad', false);

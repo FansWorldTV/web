@@ -22,7 +22,7 @@ class PrivacyController extends SiteController
      */
     public function privacyAction()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         if (!is_object($user) || !$user instanceof User) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
@@ -42,7 +42,7 @@ class PrivacyController extends SiteController
         $error = false;
         
         try {
-            $user = $this->get('security.context')->getToken()->getUser();
+            $user = $this->getUser();
             $user instanceof User;
             $user->setPrivacy($privacies);
             

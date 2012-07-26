@@ -37,7 +37,7 @@ class VideoUploadController extends SiteController
     public function uploadAction()
     {
         $request = $this->getRequest();
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
         $privacies = Privacy::getOptions();
 
@@ -147,7 +147,7 @@ class VideoUploadController extends SiteController
         $request = $this->getRequest();
         $defaultData = array();
         $video = null;
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $collectionConstraint = new Collection(array(
                     'videourl' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
@@ -196,7 +196,7 @@ class VideoUploadController extends SiteController
     public function ajaxFileUploadAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $request = $this->getRequest();
         if ($request->getMethod() == 'POST') {
             $response = array('error' => 'Could not save uploaded file.' . 'The upload was cancelled, or server error encountered');
@@ -251,7 +251,7 @@ class VideoUploadController extends SiteController
 
         $redirectColorBox = false;
         $request = $this->getRequest();
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $privacies = Privacy::getOptions();
 

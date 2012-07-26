@@ -34,7 +34,7 @@ class InterestController extends SiteController
      */
     public function editAction()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $response = array(
             'user',
@@ -130,7 +130,7 @@ class InterestController extends SiteController
     {
         try {
             $request = $this->getRequest();
-            $user = $this->get('security.context')->getToken()->getUser();
+            $user = $this->getUser();
             if (!$user)
                 throw new AccessDeniedException('No inició sesión');
             $idinterest = $request->get('id');
@@ -178,7 +178,7 @@ class InterestController extends SiteController
     {
         try {
             $request = $this->getRequest();
-            $user = $this->get('security.context')->getToken()->getUser();
+            $user = $this->getUser();
             if (!$user)
                 throw new AccessDeniedException('No inició sesión');
             $idinterest = $request->get('id');

@@ -30,7 +30,7 @@ class NotificationController extends SiteController
     public function preferencesAction()
     {
         $request = $this->getRequest();
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
         $notifyPreferences = $user->getNotifyprefs();
         $notifyMail = $user->getNotifymail();

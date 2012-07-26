@@ -78,7 +78,7 @@ class PhotoController extends SiteController
     {
         $request = $this->getRequest();
         $idolToTagId = $request->get('idolToTag', false);
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
         $privacies = Privacy::getOptions();
 
@@ -277,7 +277,7 @@ class PhotoController extends SiteController
     {
         $request = $this->getRequest();
         $idolToTagId = $request->get('idolToTag', false);
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
         $privacies = Privacy::getOptions();
         $redirectColorBox = false;

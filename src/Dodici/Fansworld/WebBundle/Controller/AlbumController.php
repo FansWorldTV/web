@@ -60,7 +60,7 @@ class AlbumController extends SiteController
     public function createAction()
     {
         $request = $this->getRequest();
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
         $privacies = Privacy::getOptions();
 
