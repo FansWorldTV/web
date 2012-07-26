@@ -88,6 +88,11 @@ class RequestBuilder {
         return json_decode($this->getCurl('/channels/'.$id.'/audios'));
     }
     
+    public function deletePod($id)
+    {
+        return $this->getCurl('/interface/content/pod/'.$id.'/DELETE/?'.$this->getSignature(), array(), true);
+    }
+    
     public function createMetadata($name, $filename, $type, $channel, \DateTime $date, $extradata=array())
     {
     	$tz = new \DateTimeZone('UTC');
