@@ -318,8 +318,8 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     {
     	$this->setWeight(
     	    round(
-        	    log($this->visitCount * self::WEIGHT_VIEWS_FACTOR, 10) +
-        	    log($this->likeCount * self::WEIGHT_LIKES_FACTOR, 10) +
+        	    ($this->visitCount ? log($this->visitCount * self::WEIGHT_VIEWS_FACTOR, 10) : 0) +
+        	    ($this->likeCount ? log($this->likeCount * self::WEIGHT_LIKES_FACTOR, 10) : 0) +
         	    $this->createdAt->format('U') / 86400 * self::WEIGHT_OUTDATE_FACTOR
     	    )
     	);
