@@ -43,6 +43,8 @@
         <field name="visitCount" column="visitCount" type="integer" nullable="false" />
         <field name="photoVisitCount" column="photoVisitCount" type="integer" nullable="false" />
         <field name="videoVisitCount" column="videoVisitCount" type="integer" nullable="false" />
+        <field name="videoCount" column="videoCount" type="integer" nullable="false" />
+        <field name="photoCount" column="photoCount" type="integer" nullable="false" />
         
         <many-to-one
             field="country"
@@ -164,6 +166,8 @@
                 <orphan-removal>true</orphan-removal>
 
         </one-to-many>
+        
+        
         
     </entity>
 

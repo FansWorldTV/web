@@ -106,7 +106,7 @@ var site = {
         site.acceptFriendRequest();
         site.getPendingFriends();
         site.getNotifications();
-        site.readedNotification()
+        site.readedNotification();
         site.likeButtons();
         site.shareButtons();
         site.globalCommentButtons();
@@ -118,7 +118,6 @@ var site = {
         
         $('[data-wall]').wall();
         site.bindCarousel();
-        
     },
     
     parseTimes: function(){

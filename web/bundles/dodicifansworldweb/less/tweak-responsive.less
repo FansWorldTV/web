@@ -1,4 +1,4 @@
-@media (max-width: 1024px) {
+@media (max-width: 1030px) {
     header.navbar  ul.nav li.dropdown a.dropdown-toggle.username span{
         display:none;
     }
@@ -35,6 +35,32 @@
             display: inline-block;
         }
     }
+    
+    
+    header.profile_head section.header_main.header_large div.main_right{ 
+        div.user-info h1{
+            font-size: 25px;
+            height: 50px;
+            line-height: 25px;
+        }
+        
+        .numbers-info{
+            .fotos-info, .videos-info, .fans-info{
+                div.tipo{
+                    font-size: 8px;
+                    padding-top: 1px;
+                }
+                div.numero{
+                    font-size: 20px;
+                }
+            } 
+        } 
+    }
+    
+    
+    
+    
+    
 }
  
 @media (max-width: 767px) {
@@ -59,8 +85,34 @@
         padding: 90px;
     }
     
-    header.navbar nav.navbar-inner div.container ul.nav.usermenu{
-        right: 75px;
+    header.navbar{ 
+        nav.navbar-inner div.container ul.nav.usermenu{
+            right: 75px;
+        }
+        ul.nav li.dropdown a.dropdown-toggle.username{ 
+            span{
+                width: 100px;
+            }
+        }
+    }
+    
+    nav.profilenavbar-container{
+        .nav-tabs-profile{
+            .nav-stacked();
+        }
+        
+    }
+    
+    
+    header.profile_head section.header_main.header_large div.main_right{ 
+        .user-info{
+            .pull-left();
+             padding-left: 2%;
+        }    
+        .numbers-info{
+            .pull-right(); 
+            margin-top: 1%;
+        } 
     }
     
 }

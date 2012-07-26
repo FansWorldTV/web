@@ -18,7 +18,7 @@
 {% endblock %}
 
 {% block inner_content %}
-    {% if (user == app.user) %}
+    {% if selfWall %}
         <div class="row-fluid update clearfix"> 
             <div class="upd_option clearfix"> 
                 <a class="btn_picture btn_upload_photo" href="{{ path('photo_fileupload') }}">{{ 'upload photo'|trans }}</a> 

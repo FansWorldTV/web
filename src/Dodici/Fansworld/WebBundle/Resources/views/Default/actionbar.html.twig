@@ -1,0 +1,17 @@
+<section class="photo-toolbar">
+	<button class='btn'>
+		<img class='toolbar-flag' src="{{ asset("bundles/dodicifansworldweb/images/ico/flag.png") }}" alt="Denunciar" />
+	</button>
+	<button class="btn">
+		<img class='toolbar-comentarios' src="{{ asset("bundles/dodicifansworldweb/images/ico/edit.png") }}" alt="Comentarios" />
+		Editar
+	</button>
+	<button class="btn">
+		<img class='toolbar-compartir' src="{{ asset("bundles/dodicifansworldweb/images/ico/compartir.png") }}" alt="Compartir" />
+		Compartir	
+	</button>
+	<button class="btn">
+		<img class='toolbar-favoritos' src="{{ asset("bundles/dodicifansworldweb/images/ico/favoritos.png") }}" alt="Favorito" />
+		{{ photo.likeCount }}
+	</button>
+</section>

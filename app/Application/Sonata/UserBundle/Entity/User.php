@@ -293,6 +293,11 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
      */
     private $videoCount;
     
+    /**
+     * @var integer $photoCount
+     */
+    private $photoCount;
+    
     public function __construct()
     {
         parent::__construct();
@@ -312,6 +317,7 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
         $this->photoVisitCount = 0;
         $this->videoVisitCount = 0;
         $this->videoCount = 0;
+        $this->photoCount = 0;
     }
     
     public function __toString()
@@ -1286,6 +1292,26 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
     	$this->videoCount = $videoCount;
     }
     
+    /**
+     * Get photoCount
+     *
+     * @return integer
+     */
+    public function getPhotoCount()
+    {
+    	return $this->photoCount;
+    }
+    
+    /**
+     * Set photoCount
+     *
+     * @param integer $photoCount
+     */
+    public function setphotoCount($photoCount)
+    {
+    	if ($photoCount < 0) $photoCount = 0;
+    	$this->photoCount = $photoCount;
+    }
     
     
 	/**

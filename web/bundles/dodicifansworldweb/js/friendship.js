@@ -36,9 +36,9 @@ var friendship = {
             ajax.addFriendAction(targetId, friendgroups, function(response){
                 if(!response.error){
                     if (response.active) {
-                        self.removeClass('add').addClass('remove').attr('friendshipId', response.friendship).text('Dejar de Seguir');
+                        self.removeClass('add').removeClass('btn-success').addClass('remove').attr('friendshipId', response.friendship).text('Dejar de Seguir');
                     } else {
-                        self.removeClass('add').addClass('remove').attr('friendshipId', response.friendship).text('Cancelar Solicitud');
+                        self.removeClass('add').removeClass('btn-success').addClass('remove').attr('friendshipId', response.friendship).text('Cancelar Solicitud');
                     }
                     success(response.message);
                 }else{

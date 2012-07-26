@@ -8,8 +8,9 @@
 {% endblock %}
 
 {% block profile_head %}
+	
 	{{ parent() }}
-	{% if (user == app.user) %}
+	{% if selfWall %}
         <div class="update clearfix"> 
             <span></span> 
             <div class="upd_option clearfix"> 

@@ -10,50 +10,79 @@
     {% endif %}
 {% endblock %}
 
-{% block header_numbersinfo %}
-    <section class='fotos-info'>
-        <div class='numero'>91</div>
-        <div class='tipo'>Fotos</div>
-    </section>
-    
-    <section class='videos-info with-border'>
-        <div class='numero'>59</div>
-        <div class='tipo'>Videos</div>
-    </section>
-    
-    <section class='fans-info'>
-        <div class='numero'>{{ entity.friendCount }}</div>
-        <div class='tipo'>Fans</div>
-    </section>
-{% endblock %}
-
-{% block header_fship %}
-    {% set fship = appstate.friendshipwith(entity) %}
-    {% if appstate.canfriend(entity) and fship is null %}
-        <div class="addFriend" targetId="{{ entity.id }}">
-            <button class="btn btn-large btn_friendship add btn-success"> Ser fan{% if entity.restricted %} (solicitar){% endif %}</button>
-            			{#
-							{% if friendgroups|length > 0 %}
-	                            
-	                            <ul class="friendgroupsList">
-	                                {% for friendgroup in friendgroups %}
-	                                    <li id="{{ friendgroup.id }}">
-	                                        <input type="checkbox" id="friendgroup[{{ friendgroup.id }}]" name="friendgroup[{{ friendgroup.id }}]" value="{{ friendgroup.id }}"/>
-	                                        <label for="friendgroup[{{ friendgroup.id }}]">{{ friendgroup.title }}</label>
-	                                    </li>
-	                                {% endfor %}
-	                            </ul>
-	                           
-	                        {% endif %}
-						#}
+{% block header_small_right %}
+	{% if selfWall %}
+		<div class='span2'>
+            <div class='header-fship'>
+            </div>
         </div>
-    {% else %}
-        {% if fship %}
-            {% if fship.active %}
-                <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Dejar de Seguir</a>
-            {% else %}
-                <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Cancelar Solicitud</a>
-            {% endif %}
-        {% endif %}
-    {% endif %}
+		<div class='span4 numbers-info'>
+			<section class='fotos-info'>
+		        <div class='numero'>{{ entity.photoCount }}</div>
+		        <div class='tipo'>Fotos</div>
+		    </section>
+		    
+		    <section class='videos-info with-border'>
+		        <div class='numero'>{{ entity.videoCount }}</div>
+		        <div class='tipo'>Videos</div>
+		    </section>
+		    
+		    <section class='fans-info'>
+		        <div class='numero'>{{ entity.friendCount }}</div>
+		        <div class='tipo'>Fans</div>
+		    </section>
+        </div>
+	{% else %}
+		
+		<div class='span4 numbers-info'>
+		    <section class='fotos-info'>
+		        <div class='numero'>{{ entity.photoCount }}</div>
+		        <div class='tipo'>Fotos</div>
+		    </section>
+		    
+		    <section class='videos-info with-border'>
+		        <div class='numero'>{{ entity.videoCount }}</div>
+		        <div class='tipo'>Videos</div>
+		    </section>
+		    
+		    <section class='fans-info'>
+		        <div class='numero'>{{ entity.friendCount }}</div>
+		        <div class='tipo'>Fans</div>
+		    </section>
+		</div>
+		
+		<div class='span2'>
+            <div class='header-fship'>
+			    {% set fship = appstate.friendshipwith(entity) %}
+			    {% if appstate.canfriend(entity) and fship is null %}
+			        <div class="addFriend" targetId="{{ entity.id }}">
+			            <button class="btn btn-large btn_friendship add btn-success"> Ser fan{% if entity.restricted %} (solicitar){% endif %}</button>
+			            			{#
+										{% if friendgroups|length > 0 %}
+				                            
+				                            <ul class="friendgroupsList">
+				                                {% for friendgroup in friendgroups %}
+				                                    <li id="{{ friendgroup.id }}">
+				                                        <input type="checkbox" id="friendgroup[{{ friendgroup.id }}]" name="friendgroup[{{ friendgroup.id }}]" value="{{ friendgroup.id }}"/>
+				                                        <label for="friendgroup[{{ friendgroup.id }}]">{{ friendgroup.title }}</label>
+				                                    </li>
+				                                {% endfor %}
+				                            </ul>
+				                           
+				                        {% endif %}
+									#}
+			        </div>
+			    {% else %}
+			        {% if fship %}
+			            {% if fship.active %}
+			                <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Dejar de Seguir</a>
+			            {% else %}
+			                <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Cancelar Solicitud</a>
+			            {% endif %}
+			        {% endif %}
+			    {% endif %}
+			</div>
+		</div>
+		
+	{% endif %}
 {% endblock %}
