@@ -422,7 +422,7 @@ class VideoController extends SiteController
             $user = $this->get('security.context')->getToken()->getUser();
             $tag = $this->getRepository('Tag')->findOneBy(array('slug' => $slug));
 
-            $videosRepo = $this->getRepository('Video')->byTag($tag, $user, self::cantVideos);
+            $videosRepo = $this->getRepository('Video')->search($tag, $user, self::cantVideos);
             foreach ($videosRepo as $video) {
                 $videos[] = $video;
             }
@@ -430,7 +430,7 @@ class VideoController extends SiteController
             $id = $tag->getId();
         }
 
-        $countAll = $this->getRepository('Video')->countByTag($tag, $user);
+        $countAll = $this->getRepository('Video')->countSearch($tag, $user);
         $addMore = $countAll > self::cantVideos ? true : false;
 
 
@@ -460,7 +460,7 @@ class VideoController extends SiteController
 
         $videos = array();
         if ($id) {
-            $videosRepo = $this->getRepository('Video')->byTag($tag, $user, self::cantVideos, $offset);
+            $videosRepo = $this->getRepository('Video')->search($tag, $user, self::cantVideos, $offset);
             foreach ($videosRepo as $video) {
                 $tags = array();
                 foreach ($video->getHastags() as $tag) {
@@ -489,7 +489,7 @@ class VideoController extends SiteController
         }
 
         $tag = $this->getRepository('Tag')->find($id);
-        $countAll = $this->getRepository('Video')->countByTag($tag, $user);
+        $countAll = $this->getRepository('Video')->countSearch($tag, $user);
         $addMore = $countAll > (($page) * self::cantVideos) ? true : false;
 
 
