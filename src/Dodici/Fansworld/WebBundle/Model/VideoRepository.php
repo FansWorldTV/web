@@ -44,7 +44,8 @@ class VideoRepository extends CountBaseRepository
         $sortcriterias = array(
             'default' => 'v.weight DESC',
             'views' => 'v.viewCount DESC',
-            'likes' => 'v.likeCount DESC'
+            'likes' => 'v.likeCount DESC',
+            'date' => 'v.createdAt DESC'
         );
 
         $query = $this->_em->createQuery('
@@ -92,7 +93,7 @@ class VideoRepository extends CountBaseRepository
     	AND
     	( :dateto IS NULL OR (v.createdAt <= :dateto) )
     	
-    	ORDER BY v.createdAtWeek DESC,
+    	ORDER BY 
     	
     	' . $sortcriterias[$sortcriteria] . '
     	
