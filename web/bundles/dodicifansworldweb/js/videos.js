@@ -7,7 +7,7 @@ var videos = {
         videos.searchByCategory.search();
         videos.searchByCategory.addMore();
         videos.searchByTags.addMore();
-        videos.searchMyVideos.addMore();
+        videos.searchMyVideos.init();
         videos.usersVideos.addMore();
     },
     
@@ -263,37 +263,116 @@ var videos = {
     },
     
     searchMyVideos: {
+        type: null,
+        userid: null,
+        
+        init: function(){
+            videos.searchMyVideos.userid = $("#userId").val();
+            videos.searchMyVideos.toggleType();
+        },
+        
+        appendVideo: function(ele){
+            var template = $("#templates .video").find('a').clone();
+            template.addClass('newimg').attr('href', Routing.generate( appLocale + "_video_show",{
+                'id': ele.id, 
+                'slug': ele.slug
+            }));
+            template.find('.title').html(ele.title);
+            template.find('img').attr('src', ele.image).attr('alt', ele.title);
+            $("#am-container").append(template); 
+        },
+        
         addMore: function(){
-            $("#addMore.myVideos:not('.loading')").live('click', function(){
-                if(videos.pager==1){
-                    videos.pager++;
+            $(".btn.loadmore.myVideos").live('click', function(){
+                var params = {};
+                params['userid'] = videos.searchMyVideos.userid;
+                params['page'] = videos.searchMyVideos.pager;
+                
+                switch(videos.searchMyVideos.type){
+                    case 2:
+                        params['isPopular'] = true;
+                        break;
+                    case 3:
+                        params['today'] = true;
+                        break;
                 }
-                var self = $(this);
-                var userid = $("#userId").val();
-                self.addClass('loading');
-            
-                ajax.searchMyVideos(userid, videos.pager, function(response){
-                    if(response){
-                        if(!response.addMore){
-                            self.remove();
-                        }
-                        for(var i in response.videos){
-                            var video = response.videos[i];
-                            var template = $("#templates ul.videos li").clone();
-                            var videoUrl = Routing.generate(appLocale + '_video_show', {
-                                'id':video.id, 
-                                'slug': video.slug
-                            });
-                            videos.addSearchContent(template, video, videoUrl);
-                        }
-                        videos.pager++;
+
+                var url = null;
+                if(videos.searchMyVideos.type == 0){
+                    url = 'video_highlighted';
+                }else{
+                    url = 'video_visited';
+                }
+                ajax.genericAction(url, params, function(r){
+                    if(r.addMore){
+                        videos.searchMyVideos.pager++;
+                    }else{
+                        $(".btn.loadmore.myVideos").remove();
                     }
-                    self.removeClass('loading');
-                }, function(text){
-                    error(text);
-                    self.removeClass('loading');
+                    for(var i in r.videos) {
+                        var ele = r.videos[i];
+                        videos.searchMyVideos.appendVideo(ele);
+                    }
+                    $newImgs = $("#am-container .newimg");
+                    $newImgs.imagesLoaded( function(){
+                        $("#am-container").montage('add', $("#am-container .newimg"));
+                    });
+                    $newImgs.removeClass('.newimg');
+                }, function(msg){
+                    error(msg);
                 });
-                return false;
+            });
+        },
+        
+        toggleType: function(){
+            $("div.list-videos .btn").live('click', function(){
+                videos.searchMyVideos.pager = 1;
+                videos.searchMyVideos.type = $(this).attr('data-type');
+                $("div.list-videos .btn.active").removeClass('active');
+                $(this).addClass('active');
+                
+                var url = null;
+                var params = {};
+                params['userid'] = videos.searchMyVideos.userid;
+                params['page'] = videos.searchMyVideos.pager = 1;
+                
+                switch(videos.searchMyVideos.type){
+                    case "0":
+                        url = "video_highlighted";
+                        break;
+                    case "1":
+                        url = "video_visited";
+                        break;
+                    case "2":
+                        url = "video_populars";
+                        params['isPopular'] = true;
+                        break;
+                    case "3":
+                        url = "video_visited";
+                        params['today'] = true;
+                        break;
+                }
+                
+                ajax.genericAction(url, params, function(r){
+                    if(r.addMore){
+                        videos.searchMyVideos.pager++;
+                    }else{
+                        $(".btn.loadmore.myVideos").remove();
+                    }
+                    $("#am-container").html("");
+                    console.log(r);
+                    for(var i in r.videos) {
+                        var ele = r.videos[i];
+                        videos.searchMyVideos.appendVideo(ele);
+                    }
+                    $newImgs = $("#am-container .newimg");
+                    $newImgs.imagesLoaded( function(){
+                        $("#am-container").montage('add', $("#am-container .newimg"));
+                    });
+                    $newImgs.removeClass('.newimg');
+                }, function(msg){
+                    error(msg);
+                });
             });
         }
     }
