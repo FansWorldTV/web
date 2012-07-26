@@ -55,8 +55,8 @@ class VideoController extends SiteController
     {
         $user = $this->get('security.context')->getToken()->getUser();
         $vidrepo = $this->getRepository("Video");
-        $mostviewed = $vidrepo->searchText(null, $user, 3, null, null, null, 'views');
-        $mostliked = $vidrepo->searchText(null, $user, 3, null, null, null, 'likes');
+        $mostviewed = $vidrepo->search(null, $user, 3, null, null, null, null, null, null, 'views');
+        $mostliked = $vidrepo->search(null, $user, 3, null, null, null, null, null, null, 'likes');
 
         return array(
             'mostviewed' => $mostviewed,
@@ -99,11 +99,11 @@ class VideoController extends SiteController
         $categories = $this->getRepository('VideoCategory')->findBy(array(), array('title' => 'ASC'));
 
         foreach ($categories as $category) {
-            $catvids = $vidrepo->searchText(null, $user, 2, null, $category, false);
+            $catvids = $vidrepo->search(null, $user, 2, null, $category, true);
             $videosbycat[] = array('category' => $category, 'videos' => $catvids);
         }
 
-        $uservideos = $vidrepo->searchText($query, $user, 12, null, null, true);
+        $uservideos = $vidrepo->search($query, $user, 12, null, null, false);
 
 
 
@@ -136,8 +136,8 @@ class VideoController extends SiteController
             $videos = $this->getRepository('Video')->findBy(array('active' => true, 'videocategory' => $categoryId), array('createdAt' => 'DESC'), self::cantVideos, $offset);
             $countAll = $this->getRepository('Video')->countBy(array('active' => true, 'videocategory' => $categoryId));
         } else {
-            $videos = $this->getRepository('Video')->searchText($query, $user, self::cantVideos, $offset, $categoryId);
-            $countAll = $this->getRepository('Video')->countSearchText($query, $user, $categoryId);
+            $videos = $this->getRepository('Video')->search($query, $user, self::cantVideos, $offset, $categoryId);
+            $countAll = $this->getRepository('Video')->countSearch($query, $user, $categoryId);
         }
 
         $response['addMore'] = $countAll > (($page) * self::cantVideos) ? true : false;
@@ -195,8 +195,8 @@ class VideoController extends SiteController
         if (count($highlights))
             $highlight = $highlights[0];
 
-        $categoryVids = $vidRepo->searchText(null, $user, 12, null, $category);
-        $countAll = $vidRepo->countSearchText(null, $user, $category);
+        $categoryVids = $vidRepo->search(null, $user, 12, null, $category);
+        $countAll = $vidRepo->countSearch(null, $user, $category);
         $addMore = $countAll > 12 ? true : false;
 
         return array(
@@ -232,8 +232,8 @@ class VideoController extends SiteController
         $vidRepo = $this->getRepository('Video');
         $response = array('gotMore' => false, 'vids' => null);
 
-        $categoryVids = $vidRepo->searchText($query, $user, 12, $offset, $categoryId);
-        $countAll = $vidRepo->countSearchText($query, $user, $categoryId);
+        $categoryVids = $vidRepo->search($query, $user, 12, $offset, $categoryId);
+        $countAll = $vidRepo->countSearch($query, $user, $categoryId);
 
 
         if (($countAll / 12) > $page) {
@@ -267,8 +267,8 @@ class VideoController extends SiteController
 
         $user = $this->get('security.context')->getToken()->getUser();
 
-        $videos = $videosRepo->searchText($query, $user, 16, null, null, true);
-        $countAll = $videosRepo->countSearchText($query, $user, null, true);
+        $videos = $videosRepo->search($query, $user, 16, null, null, false);
+        $countAll = $videosRepo->countSearch($query, $user, null, false);
 
         $firstToBeHighlighted = false;
         $usersVideos = array();
@@ -308,8 +308,8 @@ class VideoController extends SiteController
 
         $user = $this->get('security.context')->getToken()->getUser();
 
-        $videos = $videosRepo->searchText($query, $user, 16, $offset, null, true);
-        $countAll = $videosRepo->countSearchText($query, $user, null, true);
+        $videos = $videosRepo->search($query, $user, 16, $offset, null, false);
+        $countAll = $videosRepo->countSearch($query, $user, null, false);
 
         $usersVideos = false;
 

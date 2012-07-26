@@ -15,16 +15,34 @@ class VideoRepository extends CountBaseRepository
 {
 
     /**
-     * Search videos by text, visible to the user
-     * @param User $user
-     * @param string $searchterm
-     * @param int $limit
-     * @param int $offset
+     * Search videos by text/tag, visible to the user
+     * 
+     * @param string|Tag|null $searchterm
+     * @param User|null $user
+     * @param int|null $limit
+     * @param int|null $offset
+     * @param VideoCategory|null $category
+     * @param boolean|null $highlighted
+     * @param User|null $author
+     * @param DateTime|null $datefrom
+     * @param DateTime|null $dateto
+     * @param 'default'|'views'|'likes' $sortcriteria
      */
-    public function searchText($searchterm = null, $user = null, $limit = null, $offset = null, $category = null, $isfromuser = null, $sortcriteria = 'default')
+    public function search(
+        $searchterm = null,
+        $user = null,
+        $limit = null,
+        $offset = null,
+        $category = null,
+        $highlighted = null,
+        $author = null,
+        $datefrom = null,
+        $dateto = null,
+        $sortcriteria = 'default'
+    )
     {
         $sortcriterias = array(
-            'default' => 'v.highlight DESC, v.viewCount DESC',
+            'default' => 'v.weight DESC',
             'views' => 'v.viewCount DESC',
             'likes' => 'v.likeCount DESC'
         );
@@ -47,7 +65,8 @@ class VideoRepository extends CountBaseRepository
     		(v.privacy = :everyone)
     		OR
 	    	(v.privacy = :friendsonly AND (:user IS NOT NULL) AND (
-	    		(SELECT COUNT(f.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = v.author AND f.target = :user) OR (f.target = v.author AND f.author = :user) AND f.active=true) >= 1
+	    		(:user = v.author) OR
+	    		((SELECT COUNT(f.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = v.author AND f.target = :user) OR (f.target = v.author AND f.author = :user) AND f.active=true) >= 1)
 	    	))
     	)
     	AND
@@ -62,12 +81,17 @@ class VideoRepository extends CountBaseRepository
     	)
     	AND
     	(
-    		(:isfromuser IS NULL OR
-    			(:isfromuser = true AND v.author IS NOT NULL)
-    			OR
-    			(:isfromuser = false AND v.author IS NULL)
+    		(:highlighted IS NULL OR
+    			(v.highlight = :highlighted)
     		)
     	)
+    	AND
+    	( :author IS NULL OR (v.author = :author) )
+    	AND
+    	( :datefrom IS NULL OR (v.createdAt >= :datefrom) )
+    	AND
+    	( :dateto IS NULL OR (v.createdAt <= :dateto) )
+    	
     	ORDER BY v.createdAtWeek DESC,
     	
     	' . $sortcriterias[$sortcriteria] . '
@@ -79,7 +103,10 @@ class VideoRepository extends CountBaseRepository
                 ->setParameter('friendsonly', Privacy::FRIENDS_ONLY)
                 ->setParameter('user', ($user instanceof User) ? $user->getId() : null)
                 ->setParameter('category', ($category instanceof VideoCategory) ? $category->getId() : $category)
-                ->setParameter('isfromuser', $isfromuser);
+                ->setParameter('datefrom', $datefrom)
+                ->setParameter('dateto', $dateto)
+                ->setParameter('highlighted', $highlighted)
+                ->setParameter('author', ($author instanceof User) ? $author->getId() : null);
 
         if ($limit !== null)
             $query = $query->setMaxResults((int) $limit);
@@ -90,79 +117,29 @@ class VideoRepository extends CountBaseRepository
     }
 
     /**
-     * Search videos by tag, visible to the user
-     * @param User $user
-     * @param Tag $tag
-     * @param int $limit
-     * @param int $offset
+     * Count videos by text/tag, visible to the user
+     * 
+     * @param string|Tag|null $searchterm
+     * @param User|null $user
+     * @param int|null $limit
+     * @param int|null $offset
+     * @param VideoCategory|null $category
+     * @param boolean|null $highlighted
+     * @param User|null $author
+     * @param DateTime|null $datefrom
+     * @param DateTime|null $dateto
      */
-    public function byTag(Tag $tag, $user = null, $limit = null, $offset = null, $category = null, $isfromuser = null, $sortcriteria = 'default')
-    {
-        $sortcriterias = array(
-            'default' => 'v.highlight DESC, v.viewCount DESC',
-            'views' => 'v.viewCount DESC',
-            'likes' => 'v.likeCount DESC'
-        );
-
-        $query = $this->_em->createQuery('
-    	SELECT v, va
-    	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
-    	LEFT JOIN v.author va
-    	INNER JOIN v.hastags vht
-    	INNER JOIN vht.tag vhtag
-    	WHERE v.active = true
-    	AND
-    	(:tag = vhtag)
-    	AND
-    	(
-    		(v.privacy = :everyone)
-    		OR
-	    	(v.privacy = :friendsonly AND (:user IS NOT NULL) AND (
-	    		(SELECT COUNT(f.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = v.author AND f.target = :user) OR (f.target = v.author AND f.author = :user) AND f.active=true) >= 1
-	    	))
-    	)
-    	AND
-    	(
-    		(:category IS NULL OR
-    			(
-    				(:category = false AND v.videocategory IS NULL)
-    				OR
-    				(:category <> false AND v.videocategory = :category)
-    			)
-    		)
-    	)
-    	AND
-    	(
-    		(:isfromuser IS NULL OR
-    			(:isfromuser = true AND v.author IS NOT NULL)
-    			OR
-    			(:isfromuser = false AND v.author IS NULL)
-    		)
-    	)
-    	ORDER BY v.createdAtWeek DESC,
-    	' . $sortcriterias[$sortcriteria] . '
-    	')
-                ->setParameter('tag', $tag->getId())
-                ->setParameter('everyone', Privacy::EVERYONE)
-                ->setParameter('friendsonly', Privacy::FRIENDS_ONLY)
-                ->setParameter('user', ($user instanceof User) ? $user->getId() : null)
-                ->setParameter('category', ($category instanceof VideoCategory) ? $category->getId() : $category)
-                ->setParameter('isfromuser', $isfromuser);
-
-        if ($limit !== null)
-            $query = $query->setMaxResults((int) $limit);
-        if ($offset !== null)
-            $query = $query->setFirstResult((int) $offset);
-
-        return $query->getResult();
-    }
-
-    /**
-     * Count videos by text, visible to the user
-     * @param User $user
-     * @param string $searchterm
-     */
-    public function countSearchText($searchterm = null, $user = null, $category = null, $isfromuser = null)
+    public function countSearch(
+        $searchterm = null, 
+        $user = null, 
+        $limit = null, 
+        $offset = null, 
+        $category = null, 
+        $highlighted = null, 
+        $author = null,
+        $datefrom = null,
+        $dateto = null
+    )
     {
 
         $query = $this->_em->createQuery('
@@ -182,7 +159,8 @@ class VideoRepository extends CountBaseRepository
     		(v.privacy = :everyone)
     		OR
 	    	(v.privacy = :friendsonly AND (:user IS NOT NULL) AND (
-	    		(SELECT COUNT(f.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = v.author AND f.target = :user) OR (f.target = v.author AND f.author = :user) AND f.active=true) >= 1
+	    		(:user = v.author) OR
+	    		((SELECT COUNT(f.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = v.author AND f.target = :user) OR (f.target = v.author AND f.author = :user) AND f.active=true) >= 1)
 	    	))
     	)
     	AND
@@ -197,12 +175,16 @@ class VideoRepository extends CountBaseRepository
     	)
     	AND
     	(
-    		(:isfromuser IS NULL OR
-    			(:isfromuser = true AND v.author IS NOT NULL)
-    			OR
-    			(:isfromuser = false AND v.author IS NULL)
+    		(:highlighted IS NULL OR
+    			(v.highlight = :highlighted)
     		)
     	)
+    	AND
+    	( :author IS NULL OR (v.author = :author) )
+    	AND
+    	( :datefrom IS NULL OR (v.createdAt >= :datefrom) )
+    	AND
+    	( :dateto IS NULL OR (v.createdAt <= :dateto) )
     	')
                 ->setParameter('searchterm', $searchterm)
                 ->setParameter('searchlike', '%' . $searchterm . '%')
@@ -210,60 +192,10 @@ class VideoRepository extends CountBaseRepository
                 ->setParameter('friendsonly', Privacy::FRIENDS_ONLY)
                 ->setParameter('user', ($user instanceof User) ? $user->getId() : null)
                 ->setParameter('category', ($category instanceof VideoCategory) ? $category->getId() : $category)
-                ->setParameter('isfromuser', $isfromuser);
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
-     * Count videos by tag, visible to the user
-     * @param User $user
-     * @param Tag $tag
-     */
-    public function countByTag(Tag $tag, $user = null, $category = null, $isfromuser = null)
-    {
-
-        $query = $this->_em->createQuery('
-    	SELECT COUNT(v.id)
-    	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
-    	INNER JOIN v.hastags vht
-    	INNER JOIN vht.tag vhtag
-    	WHERE v.active = true
-    	AND
-    	(:tag = vhtag)
-    	AND
-    	(
-    		(v.privacy = :everyone)
-    		OR
-	    	(v.privacy = :friendsonly AND (:user IS NOT NULL) AND (
-	    		(SELECT COUNT(f.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = v.author AND f.target = :user) OR (f.target = v.author AND f.author = :user) AND f.active=true) >= 1
-	    	))
-    	)
-    	AND
-    	(
-    		(:category IS NULL OR
-    			(
-    				(:category = false AND v.videocategory IS NULL)
-    				OR
-    				(:category <> false AND v.videocategory = :category)
-    			)
-    		)
-    	)
-    	AND
-    	(
-    		(:isfromuser IS NULL OR
-    			(:isfromuser = true AND v.author IS NOT NULL)
-    			OR
-    			(:isfromuser = false AND v.author IS NULL)
-    		)
-    	)
-    	')
-                ->setParameter('tag', $tag->getId())
-                ->setParameter('everyone', Privacy::EVERYONE)
-                ->setParameter('friendsonly', Privacy::FRIENDS_ONLY)
-                ->setParameter('user', ($user instanceof User) ? $user->getId() : null)
-                ->setParameter('category', ($category instanceof VideoCategory) ? $category->getId() : $category)
-                ->setParameter('isfromuser', $isfromuser);
+                ->setParameter('datefrom', $datefrom)
+                ->setParameter('dateto', $dateto)
+                ->setParameter('highlighted', $highlighted)
+                ->setParameter('author', ($author instanceof User) ? $author->getId() : null);
 
         return $query->getSingleScalarResult();
     }

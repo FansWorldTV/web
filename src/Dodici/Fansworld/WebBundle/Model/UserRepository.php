@@ -461,7 +461,7 @@ class UserRepository extends CountBaseRepository
      * @param int|null $limit
      * @param int|null $offset
      */
-    public function search($text, User $user = null, $limit = null, $offset = null)
+    public function search($text = null, $user = null, $limit = null, $offset = null)
     {
         return $this->SearchFront($user, $text, null, $limit, $offset);
     }
@@ -475,7 +475,7 @@ class UserRepository extends CountBaseRepository
      * current logged in user, or null:
      * @param User|null $user
      */
-    public function countSearch($text, User $user = null)
+    public function countSearch($text = null, $user = null)
     {
         return $this->CountSearchFront($user, $text, null);
     }

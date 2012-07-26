@@ -48,9 +48,11 @@ class CountBaseRepository extends EntityRepository
      * @param int|null $limit
      * @param int|null $offset
      */
-    public function search($text, User $user=null, $limit=null, $offset=null)
+    public function search($text, $user=null, $limit=null, $offset=null)
     {
-    	$textfields=array('title','content');
+    	if (!($user instanceof User)) $user = null;
+        
+        $textfields=array('title','content');
     	
     	$conditions = array();
     	foreach ($textfields as $tf) {
@@ -85,9 +87,11 @@ class CountBaseRepository extends EntityRepository
      * current logged in user, or null:
      * @param User|null $user
      */
-    public function countSearch($text, User $user=null)
+    public function countSearch($text, $user=null)
     {
-    	$textfields=array('title','content');
+    	if (!($user instanceof User)) $user = null;
+        
+        $textfields=array('title','content');
     	
     	$conditions = array();
     	foreach ($textfields as $tf) {
