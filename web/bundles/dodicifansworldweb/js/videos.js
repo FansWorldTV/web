@@ -325,7 +325,7 @@ var videos = {
         },
         
         toggleType: function(){
-            $("div.list-videos .btn").live('click', function(){
+            $("div.list-videos .btn:not('.active')").live('click', function(){
                 videos.searchMyVideos.pager = 1;
                 videos.searchMyVideos.type = $(this).attr('data-type');
                 $("div.list-videos .btn.active").removeClass('active');

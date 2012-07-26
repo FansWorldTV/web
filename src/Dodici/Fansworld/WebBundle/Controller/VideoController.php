@@ -462,7 +462,10 @@ class VideoController extends SiteController
             'videos' => array()
         );
 
-        $user = $request->get('userId', false);
+        $authorId = $request->get('userId', false);
+        $author = $this->getRepository('User')->find($authorId);
+        $user = $this->get('security.context')->getToken()->getUser();
+        
         $page = $request->get('page', 1);
 
         $repoVideos = $this->getRepository('Video');
@@ -471,8 +474,8 @@ class VideoController extends SiteController
         $page = (int) $page;
         $offset = ($page - 1) * self::cantVideos;
 
-        $videos = $repoVideos->search(null, $user, self::cantVideos, $offset, null, true, $user);
-        $countAll = $repoVideos->countSearch(null, $user, self::cantVideos, $offset, null, true, $user);
+        $videos = $repoVideos->search(null, $user, self::cantVideos, $offset, null, true, $author);
+        $countAll = $repoVideos->countSearch(null, $user, self::cantVideos, $offset, null, true, $author);
         
         $response['addMore'] = $countAll > self::cantVideos ? true : false;
 
@@ -495,7 +498,8 @@ class VideoController extends SiteController
     {
         $request = $this->getRequest();
 
-        $author = $request->get('userId', false);
+        $authorId = $request->get('userId', false);
+        $author = $this->getRepository('User')->find($authorId);
         $user = $this->get('security.context')->getToken()->getUser()->getId();
         
         $today = $request->get('today', false);
@@ -542,10 +546,9 @@ class VideoController extends SiteController
      */
     public function popularVideosAction(){
         $request = $this->getRequest();
-        $user = $request->get('userid', false);
-        if(!$user) {
-            $user = $this->get('security.context')->getToken()->getUser()->getId();
-        }
+        $authorId = $request->get('userid', false);
+        $author = $this->getRepository('User')->find($authorId);
+        $user = $this->get('security.context')->getToken()->getUser();
         
         $page = $request->get('page', 1);
         $offset = ($page - 1 ) * self::cantVideos;
@@ -555,8 +558,8 @@ class VideoController extends SiteController
         $videoRepo = $this->getRepository('Video');
         $videoRepo instanceof VideoRepository;
         
-        $videos = $videoRepo->search(null, $user, self::cantVideos, $offset, null, null, $user);
-        $countAll = $videoRepo->countSearch(null, $user, self::cantVideos, $offset, null, null, $user);
+        $videos = $videoRepo->search(null, $user, self::cantVideos, $offset, null, null, $author);
+        $countAll = $videoRepo->countSearch(null, $user, self::cantVideos, $offset, null, null, $author);
         
         $response['addMore'] = $countAll > self::cantVideos ? true : false;
         
