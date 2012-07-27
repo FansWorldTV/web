@@ -3,9 +3,7 @@
 namespace Dodici\Fansworld\WebBundle\Controller;
 
 use Symfony\Component\HttpKernel\Exception\HttpException;
-
 use Application\Sonata\UserBundle\Entity\User;
-
 use Dodici\Fansworld\WebBundle\Entity\Album;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use JMS\SecurityExtraBundle\Annotation\Secure;
@@ -43,20 +41,23 @@ class PhotoController extends SiteController
     {
         $repo = $this->getRepository('Photo');
         $photo = $repo->findOneBy(array('id' => $id, 'active' => true));
+        $user = $this->getRepository('User')->find($photo->getAuthor()->getId());
+        
 
         $next = $repo->getNextActive($id);
         $prev = $repo->getPrevActive($id);
-        
+
         $this->securityCheck($photo);
-        
+
         $this->get('visitator')->visit($photo);
         return array(
             'photo' => $photo,
             'prev' => $prev,
-            'next' => $next
-            );
+            'next' => $next,
+            'user' => $user
+        );
     }
-    
+
     /**
      * @Route("/", name= "photo_list")
      * @Secure(roles="ROLE_USER")
@@ -65,8 +66,7 @@ class PhotoController extends SiteController
     public function listAction()
     {
         return array(
-            
-            );
+        );
     }
 
     /**
@@ -83,12 +83,12 @@ class PhotoController extends SiteController
         $privacies = Privacy::getOptions();
 
         $idolToTag = $this->getRepository('Idol')->find($idolToTagId);
-        
+
         $albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true));
         $albumchoices = array();
         foreach ($albums as $ab)
             $albumchoices[$ab->getId()] = $ab->getTitle();
-            
+
         $albumchoices['NEW'] = '+ (NUEVO)';
 
         $photo = null;
@@ -101,8 +101,8 @@ class PhotoController extends SiteController
                     'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
                     'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
                     'file' => new \Symfony\Component\Validator\Constraints\Image(),
-        			'tagtext' => array(),
-        			'taguser' => array()
+                    'tagtext' => array(),
+                    'taguser' => array()
                 ));
 
         $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
@@ -125,17 +125,18 @@ class PhotoController extends SiteController
                     $album = null;
                     if ($data['album']) {
                         if ($data['album'] == 'NEW') {
-                        	$albumtitle = $request->get('album_new_name');
-                        	if (!$albumtitle) throw new \Exception('Enter an Album Title');
-                        	$album = new Album();
-                        	$album->setTitle($albumtitle);
-                        	$album->setAuthor($user);
-                        	$album->setPrivacy($data['privacy']);
-                        	$em->persist($album);
+                            $albumtitle = $request->get('album_new_name');
+                            if (!$albumtitle)
+                                throw new \Exception('Enter an Album Title');
+                            $album = new Album();
+                            $album->setTitle($albumtitle);
+                            $album->setAuthor($user);
+                            $album->setPrivacy($data['privacy']);
+                            $em->persist($album);
                         } else {
-	                    	$album = $this->getRepository('Album')->find($data['album']);
-	                        if (!$album || ($album && $album->getAuthor() != $user))
-	                            throw new \Exception('Invalid Album');
+                            $album = $this->getRepository('Album')->find($data['album']);
+                            if (!$album || ($album && $album->getAuthor() != $user))
+                                throw new \Exception('Invalid Album');
                         }
                     }
 
@@ -157,22 +158,24 @@ class PhotoController extends SiteController
                     $photo->setPrivacy($data['privacy']);
                     $em->persist($photo);
                     $em->flush();
-                    
+
                     $tagtexts = explode(',', $data['tagtext']);
                     $tagusers = explode(',', $data['taguser']);
                     $userrepo = $this->getRepository('User');
                     $tagitems = array();
-                    
+
                     foreach ($tagtexts as $tt) {
-                    	if (trim($tt)) $tagitems[] = $tt;
+                        if (trim($tt))
+                            $tagitems[] = $tt;
                     }
                     foreach ($tagusers as $tu) {
-                    	$tuser = $userrepo->find($tu);
-                    	if ($tuser) $tagitems[] = $tuser;
+                        $tuser = $userrepo->find($tu);
+                        if ($tuser)
+                            $tagitems[] = $tuser;
                     }
-                    
-                    if(!empty($tagitems))
-                    $this->get('tagger')->tag($user, $photo, $tagitems);
+
+                    if (!empty($tagitems))
+                        $this->get('tagger')->tag($user, $photo, $tagitems);
 
                     $this->get('session')->setFlash('success', $this->trans('upload_sucess'));
                 }
@@ -191,17 +194,19 @@ class PhotoController extends SiteController
     {
         $request = $this->getRequest();
         $userId = $request->get('userId');
-        if ($userId == 'null') $userId = null;
+        if ($userId == 'null')
+            $userId = null;
         $page = (int) $request->get('page');
         $renderpin = $request->get('renderpin', false);
-        
+
         $limit = $renderpin ? self::LIMIT_PHOTOS_PIN : self::LIMIT_PHOTOS;
 
         $page--;
         $offset = $page * $limit;
-        
+
         $params = array();
-        if ($userId) $params['author'] = $userId;
+        if ($userId)
+            $params['author'] = $userId;
         $params['active'] = true;
 
         $photos = $this->getRepository('Photo')->findBy($params, array('createdAt' => 'DESC'), $limit, $offset);
@@ -209,17 +214,17 @@ class PhotoController extends SiteController
         $response = array();
         foreach ($photos as $photo) {
             if ($renderpin) {
-            	$response['images'][] = array(
-            		'htmlpin' => $this->renderView('DodiciFansworldWebBundle:Default:pin.html.twig', array('entity' => $photo))
-            	);
+                $response['images'][] = array(
+                    'htmlpin' => $this->renderView('DodiciFansworldWebBundle:Default:pin.html.twig', array('entity' => $photo))
+                );
             } else {
-	        	$response['images'][] = array(
-	                'id' => $photo->getId(),
-	                'image' => $this->getImageUrl($photo->getImage()),
-	                'slug' => $photo->getSlug(),
-	                'title' => $photo->getTitle(),
-	                'comments' => $photo->getCommentCount()
-	            );
+                $response['images'][] = array(
+                    'id' => $photo->getId(),
+                    'image' => $this->getImageUrl($photo->getImage()),
+                    'slug' => $photo->getSlug(),
+                    'title' => $photo->getTitle(),
+                    'comments' => $photo->getCommentCount()
+                );
             }
         }
 
@@ -231,9 +236,9 @@ class PhotoController extends SiteController
         }
 
         return $this->jsonResponse($response);
-    }    
-    
-	/**
+    }
+
+    /**
      * @Route("/fileupload", name="photo_fileupload")
      * @Secure(roles="ROLE_USER")
      * @Template
@@ -242,33 +247,33 @@ class PhotoController extends SiteController
     {
         $request = $this->getRequest();
         if ($request->getMethod() == 'POST') {
-            $response = array('error'=> 'Could not save uploaded file.' .'The upload was cancelled, or server error encountered');
-            
+            $response = array('error' => 'Could not save uploaded file.' . 'The upload was cancelled, or server error encountered');
+
             $mediaManager = $this->get("sonata.media.manager.media");
-            $image = null;            
-            
+            $image = null;
+
             $input = fopen("php://input", "r");
             $imagecontent = stream_get_contents($input);
             fclose($input);
-            
+
             if ($imagecontent !== false) {
                 $name = $request->query->get('qqfile');
                 $pathinfo = pathinfo($name);
                 $filename = $pathinfo['filename'];
-                $ext = $pathinfo['extension'];                
+                $ext = $pathinfo['extension'];
                 $tmpName = $filename . '.' . $ext;
                 $meta = array('name' => $tmpName);
-                
+
                 $image = $this->get('appmedia')->createImageFromBinary($imagecontent, $meta);
-                
+
                 $response = array('success' => true, 'mediaId' => $image->getId());
             }
             return $this->jsonResponse($response);
         }
-       return array();
+        return array();
     }
-    
-	/**
+
+    /**
      * @Route("/fileupload/{mediaId}", name="photo_filemeta")
      * @Secure(roles="ROLE_USER")
      * @Template
@@ -283,12 +288,12 @@ class PhotoController extends SiteController
         $redirectColorBox = false;
 
         $idolToTag = $this->getRepository('Idol')->find($idolToTagId);
-        
+
         $albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true));
         $albumchoices = array();
         foreach ($albums as $ab)
             $albumchoices[$ab->getId()] = $ab->getTitle();
-            
+
         $albumchoices['NEW'] = '+ (NUEVO)';
 
         $mediaManager = $this->get("sonata.media.manager.media");
@@ -302,8 +307,8 @@ class PhotoController extends SiteController
                     'album' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($albumchoices))),
                     'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
                     'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
-        			'tagtext' => array(),
-        			'taguser' => array()
+                    'tagtext' => array(),
+                    'taguser' => array()
                 ));
 
         $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
@@ -314,7 +319,7 @@ class PhotoController extends SiteController
                 ->add('tagtext', 'hidden', array('required' => false))
                 ->add('taguser', 'hidden', array('required' => false))
                 ->getForm();
- 
+
         if ($request->getMethod() == 'POST') {
             try {
                 $form->bindRequest($request);
@@ -324,17 +329,18 @@ class PhotoController extends SiteController
                     $album = null;
                     if ($data['album']) {
                         if ($data['album'] == 'NEW') {
-                        	$albumtitle = $request->get('album_new_name');
-                        	if (!$albumtitle) throw new \Exception('Enter an Album Title');
-                        	$album = new Album();
-                        	$album->setTitle($albumtitle);
-                        	$album->setAuthor($user);
-                        	$album->setPrivacy($data['privacy']);
-                        	$em->persist($album);
+                            $albumtitle = $request->get('album_new_name');
+                            if (!$albumtitle)
+                                throw new \Exception('Enter an Album Title');
+                            $album = new Album();
+                            $album->setTitle($albumtitle);
+                            $album->setAuthor($user);
+                            $album->setPrivacy($data['privacy']);
+                            $em->persist($album);
                         } else {
-	                    	$album = $this->getRepository('Album')->find($data['album']);
-	                        if (!$album || ($album && $album->getAuthor() != $user))
-	                            throw new \Exception('Invalid Album');
+                            $album = $this->getRepository('Album')->find($data['album']);
+                            if (!$album || ($album && $album->getAuthor() != $user))
+                                throw new \Exception('Invalid Album');
                         }
                     }
                     $photo->setAuthor($user);
@@ -344,26 +350,27 @@ class PhotoController extends SiteController
                     $photo->setPrivacy($data['privacy']);
                     $em->persist($photo);
                     $em->flush();
-                    
+
                     $tagtexts = explode(',', $data['tagtext']);
                     $tagusers = explode(',', $data['taguser']);
                     $userrepo = $this->getRepository('User');
                     $tagitems = array();
-                    
+
                     foreach ($tagtexts as $tt) {
-                    	if (trim($tt)) $tagitems[] = $tt;
+                        if (trim($tt))
+                            $tagitems[] = $tt;
                     }
                     foreach ($tagusers as $tu) {
-                    	$tuser = $userrepo->find($tu);
-                    	if ($tuser) $tagitems[] = $tuser;
+                        $tuser = $userrepo->find($tu);
+                        if ($tuser)
+                            $tagitems[] = $tuser;
                     }
-                    
-                    if(!empty($tagitems))
-                    $this->get('tagger')->tag($user, $photo, $tagitems);
+
+                    if (!empty($tagitems))
+                        $this->get('tagger')->tag($user, $photo, $tagitems);
 
                     $this->get('session')->setFlash('success', $this->trans('upload_sucess'));
                     $redirectColorBox = true;
-                    
                 }
             } catch (\Exception $e) {
                 $form->addError(new FormError($this->trans('upload_error')));
@@ -371,4 +378,5 @@ class PhotoController extends SiteController
         }
         return array('photo' => $photo, 'form' => $form->createView(), 'idolToTag' => $idolToTag, 'mediaId' => $mediaId, 'redirectColorBox' => $redirectColorBox);
     }
+
 }

@@ -1,0 +1,60 @@
+{% set comments = appstate.comments(photo) %}
+<div class="photo-show row-fluid">
+    <div class="span">
+        <div class="row-fluid">
+            <div class="media_content">
+                <a class="media_img colorbox" href="{% path photo.image, 'huge' %}">{% thumbnail photo.image, 'big' %}</a>
+            </div>
+        </div>
+        <div class="detail-photo row-fluid">
+            <div class="span content">
+                {% if photo.content %}
+                    <p>{{ photo.content|truncate(75) }}... <a href="#">más</a></p>
+                {% endif %}
+            </div>
+            {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: photo} %}
+        </div>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span">
+        <section class='tag-container '>
+            <div class="row-fluid">
+                <div class="span6 comments-count">
+                    {{ 'comments'|trans }} ( {{ photo.commentCount }} )
+                </div>
+                <div class="span6 tag-title">
+                    {{ 'tags'|trans }}
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12 tags">
+                    {% if photo.hastags %}
+                            {% for tag in photo.getHastags %}
+                                <button class="btn">{{ tag }}</button>
+                            {% endfor %}
+                    {% else %}
+                            <button class="btn">sin tags</button>	
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        <section class='form-container'>
+            {% include 'DodiciFansworldWebBundle:Comment:comment_form.html.twig' with {shortform: true, entity: photo} %}
+        </section>
+
+        <section class="comments-container">
+            {% block comments %}
+
+            {% for comment in comments %}
+                {% include 'DodiciFansworldWebBundle:Comment:comment.subcomment.html.twig' with {comment: comment} %}
+            {% endfor %}
+
+            {% endblock %}
+        </section>	
+    </div>
+</div>
+<script type="text/javascript">
+    $("div.media_content a.colorbox").colorbox();
+</script>
