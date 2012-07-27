@@ -257,16 +257,16 @@ var site = {
         }); 
     },
     likeButtons: function(){
-        $('.likebutton:not(.loading)').live('click',function(e){
+        $('.likebutton:not(.loading-small)').live('click',function(e){
             e.preventDefault();
             var el = $(this);
             var type = el.attr('data-type');
             var id = el.attr('data-id');
-            el.addClass('loading');
+            el.addClass('loading-small');
         	
             ajax.likeToggleAction(type, id,
                 function(response){
-                    el.removeClass('loading');
+                    el.removeClass('loading-small');
                     el.text(response.likecount);
                     //el.siblings('.likecount:first').text(response.likecount);
                     success(response.message);
@@ -277,30 +277,30 @@ var site = {
                     }
                 },
                 function(responsetext){
-                    el.removeClass('loading');
+                    el.removeClass('loading-small');
                     error(responsetext);
                 });
         	
         });
     },
     shareButtons: function(){
-        $('.sharebutton:not(.loading,.disabled)').live('click',function(e){
+        $('.sharebutton:not(.loading-small,.disabled)').live('click',function(e){
             e.preventDefault();
             var el = $(this);
             
             askText(function(text){
                 var type = el.attr('data-type');
                 var id = el.attr('data-id');
-                el.addClass('loading');
+                el.addClass('loading-small');
             	
                 ajax.shareAction(type, id, text,
                     function(response){
-                        el.removeClass('loading');
+                        el.removeClass('loading-small');
                         el.addClass('disabled');
                         success(response.message);
                     },
                     function(responsetext){
-                        el.removeClass('loading');
+                        el.removeClass('loading-small');
                         error(responsetext);
                     });
             });
@@ -341,13 +341,13 @@ var site = {
     },
     
     postComment: function(textAreaElement,type,id,ispin,content,privacy,elDestination){
-    	textAreaElement.addClass('loading');
+    	textAreaElement.addClass('loadingSmall');
     	textAreaElement.attr('disabled','disabled');
-    	success('Enviando comentario.');
+    	
     	ajax.globalCommentAction(type, id, content, privacy, ispin,
             function(response){
     			textAreaElement.val('');
-    			textAreaElement.removeClass('loading');
+    			textAreaElement.removeClass('loadingSmall');
                 success(response.message);
                 
                
@@ -363,7 +363,7 @@ var site = {
                 textAreaElement.removeAttr('disabled');
             },
             function(responsetext){
-            	textAreaElement.removeClass('loading');
+            	textAreaElement.removeClass('loadingSmall');
             	textAreaElement.removeAttr('disabled');
                 error(responsetext);
             });

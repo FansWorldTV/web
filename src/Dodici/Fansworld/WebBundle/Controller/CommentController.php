@@ -97,7 +97,6 @@ class CommentController extends SiteController
 			$jsonComment	=	$this->jsonComment($comment, 'true');
             
             $response = new Response(json_encode(array(
-                                'commenthtml' 	=> $this->renderView('DodiciFansworldWebBundle:Comment:' . $templatename, array('comment' => $comment)),
             					'jsonComment'	=> $jsonComment,
                                 'message' 		=> $message
                             )));

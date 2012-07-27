@@ -87,7 +87,7 @@ class AppTwitter
 
         $type = $this->appstate->getType($entity);
         $url = $this->router->generate($type . '_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()), true);
-        $message = $this->translator->trans('shared_' . $type) . ' ' . $url . ' #fansworlds';
+        $message = $this->translator->trans('shared_' . $type) . ' ' . $url . ' #fansworld';
 
         $params = array(
             'status' => $message

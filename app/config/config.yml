@@ -481,6 +481,12 @@ services:
             - { name: doctrine.event_listener, event: postPersist }
         arguments:
             - "@service_container"
+    usercounter.listener.persist:
+        class: Dodici\Fansworld\WebBundle\Listener\UserCounter
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+        arguments:
+            - "@service_container"        
     my.facebook.user:
         class: Dodici\Fansworld\WebBundle\Security\FacebookProvider
         arguments:
@@ -503,6 +509,7 @@ services:
     search:
       class: Dodici\Fansworld\WebBundle\Extensions\Search
       arguments: [@security.context, @doctrine.orm.entity_manager, @router, @appstate]
+    
     meteor:
       class: Dodici\Fansworld\WebBundle\Extensions\Meteor
       arguments: [@doctrine.orm.entity_manager, @appstate, %meteor.host%, %meteor.port%, %meteor.clientport%]

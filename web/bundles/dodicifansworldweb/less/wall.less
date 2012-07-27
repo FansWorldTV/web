@@ -14,7 +14,13 @@
     position: fixed;
     left:  25%;
     display: none;
+    > div{
+        height: 32px;
+        width: 32px;
+    }
 }
+
+
 
 //Estilos formulario commentarios
 //formulario principal del wall
@@ -122,8 +128,14 @@ div.actualizacion{
                     cursor: pointer;
                 }
                 
+                
+                
                 div.like-container.liked{
                     background-position: 2px -13px;
+                }
+                
+                div.like-container.loading-small{
+                    .loading(@loadingImageSmall, 0 3px);
                 }
             }
         }
@@ -158,6 +170,9 @@ div.actualizacion{
             padding-left: 15px;
             textarea{
                 height: 20px;
+            }
+            .loadingSmall{
+                .loading(@loadingImageSmall, center 5px);
             }
         }
     }
