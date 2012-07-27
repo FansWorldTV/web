@@ -44,22 +44,49 @@
     <div class="content">
         <p>{{ album.content }}</p>
     </div>
-        
-    <div class="relatedTags">
-        <label class="showOrHideTags">RELACIONADOS Y TAGS</label>
-        <ul class="tags">
-            {% for hastag in album.hastags %}
-                <li><span class="label">{{ hastag.tag.title }}</span></li>
-            {% endfor %}
-        </ul>
-    </div>
 </div>
 <div class="clearfix"></div>
 <div class="row-fluid">
     {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: album} %}    
 </div>
-<div class="row-fluid">
-    {% include 'DodiciFansworldWebBundle:Comment:comment_block.html.twig' with {entity: album} %}
+<div class="row-fluid comments-and-tags">
+    <div class="span">
+        <section class='tag-container '>
+            <div class="row-fluid">
+                <div class="span6 comments-count">
+                    {{ 'comments'|trans }} ( {{ album.commentCount }} )
+                </div>
+                <div class="span6 tag-title">
+                    {{ 'tags'|trans }}
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12 tags">
+                    {% if album.hastags %}
+                            {% for hastag in album.hastags %}
+                                <button class="btn">{{ hastag.tag.title }}</button>
+                            {% endfor %}
+                    {% else %}
+                            <button class="btn">sin tags</button>	
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        <section class='form-container'>
+            {% include 'DodiciFansworldWebBundle:Comment:comment_form.html.twig' with {shortform: true, entity: album} %}
+        </section>
+
+        <section class="comments-container">
+            {% block comments %}
+
+            {% for comment in album.comments %}
+                {% include 'DodiciFansworldWebBundle:Comment:comment.subcomment.html.twig' with {comment: comment} %}
+            {% endfor %}
+
+            {% endblock %}
+        </section>	
+    </div>
 </div>
     
 <script type="text/javascript">
