@@ -101,12 +101,12 @@ class Meteor
     private function sendToSocket($message, $channel)
     {
     	if (!$this->socket) {
-            $this->socket = fsockopen($this->host, $this->port);
-        	stream_set_blocking($this->socket,true);
+            $this->socket = @fsockopen($this->host, $this->port);
     	}
         
     	if ($this->socket) {
-    		$message = addslashes(json_encode($message));
+    		stream_set_blocking($this->socket,true);
+    	    $message = addslashes(json_encode($message));
     		$out = "ADDMESSAGE ".$channel." ".$message."\n";
     		fwrite($this->socket, $out);
     		return true;
