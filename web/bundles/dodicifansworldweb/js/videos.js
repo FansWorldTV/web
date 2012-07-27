@@ -265,6 +265,8 @@ var videos = {
     searchMyVideos: {
         type: null,
         userid: null,
+        canAddMore: false,
+        pager: 1,
         
         init: function(){
             videos.searchMyVideos.userid = $("#userId").val();
@@ -283,44 +285,39 @@ var videos = {
         },
         
         addMore: function(){
-            $(".btn.loadmore.myVideos").live('click', function(){
-                var params = {};
-                params['userid'] = videos.searchMyVideos.userid;
-                params['page'] = videos.searchMyVideos.pager;
+            var params = {};
+            params['userid'] = videos.searchMyVideos.userid;
+            params['page'] = videos.searchMyVideos.pager;
                 
-                switch(videos.searchMyVideos.type){
-                    case 2:
-                        params['isPopular'] = true;
-                        break;
-                    case 3:
-                        params['today'] = true;
-                        break;
-                }
+            switch(videos.searchMyVideos.type){
+                case 2:
+                    params['isPopular'] = true;
+                    break;
+                case 3:
+                    params['today'] = true;
+                    break;
+            }
 
-                var url = null;
-                if(videos.searchMyVideos.type == 0){
-                    url = 'video_highlighted';
-                }else{
-                    url = 'video_visited';
+            var url = null;
+            if(videos.searchMyVideos.type == 0){
+                url = 'video_highlighted';
+            }else{
+                url = 'video_visited';
+            }
+            ajax.genericAction(url, params, function(r){
+                videos.searchMyVideos.canAddMore = r.addMore;
+                videos.searchMyVideos.pager++;
+                for(var i in r.videos) {
+                    var ele = r.videos[i];
+                    videos.searchMyVideos.appendVideo(ele);
                 }
-                ajax.genericAction(url, params, function(r){
-                    if(r.addMore){
-                        videos.searchMyVideos.pager++;
-                    }else{
-                        $(".btn.loadmore.myVideos").remove();
-                    }
-                    for(var i in r.videos) {
-                        var ele = r.videos[i];
-                        videos.searchMyVideos.appendVideo(ele);
-                    }
-                    $newImgs = $("#am-container .newimg");
-                    $newImgs.imagesLoaded( function(){
-                        $("#am-container").montage('add', $("#am-container .newimg"));
-                    });
-                    $newImgs.removeClass('.newimg');
-                }, function(msg){
-                    error(msg);
+                $newImgs = $("#am-container .newimg");
+                $newImgs.imagesLoaded( function(){
+                    $("#am-container").montage('add', $("#am-container .newimg"));
                 });
+                $newImgs.removeClass('.newimg');
+            }, function(msg){
+                error(msg);
             });
         },
         
@@ -354,13 +351,8 @@ var videos = {
                 }
                 
                 ajax.genericAction(url, params, function(r){
-                    if(r.addMore){
-                        videos.searchMyVideos.pager++;
-                    }else{
-                        $(".btn.loadmore.myVideos").remove();
-                    }
+                    videos.searchMyVideos.canAddMore = r.addMore;
                     $("#am-container").html("");
-                    console.log(r);
                     for(var i in r.videos) {
                         var ele = r.videos[i];
                         videos.searchMyVideos.appendVideo(ele);
@@ -373,6 +365,23 @@ var videos = {
                 }, function(msg){
                     error(msg);
                 });
+            });
+        },
+        
+        bindAddMore: function(){
+            $(window).endlessScroll({
+                fireOnce: true,
+                enableScrollTop: false,
+                inflowPixels: 100,
+                fireDelay: 250,
+                intervalFrequency: 2000,
+                ceaseFireOnEmpty: false,
+                loader: 'cargando',
+                callback: function(i, p, d) {
+                    if(videos.searchMyVideos.canAddMore){
+                        videos.searchMyVideos.addMore();
+                    }
+                }
             });
         }
     }

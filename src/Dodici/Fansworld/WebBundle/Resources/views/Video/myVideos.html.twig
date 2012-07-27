@@ -56,9 +56,6 @@
         {% else %}
             <h2>No se encontraron videos.</h2>
         {% endif %}
-        {% if addMore %}
-            <a href="#" class="btn loadmore myVideos">Agregar Más</a>
-        {% endif %}
         <input type="hidden" id="userId" value="{{ user.id }}"/>
     </div>
     
@@ -74,6 +71,9 @@
     
     <script type="text/javascript">
             site.startMosaic($('#am-container'), {minw: 150, margin: 0, liquid: true, minsize: false});
+            {% if addMore %}
+                videos.searchMyVideos.canAddMore = true;
+            {% endif %}
             videos.init();
     </script>
 {% endblock %} 
