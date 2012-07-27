@@ -1,0 +1,39 @@
+<div class="row-fluid comments-and-tags">
+    <div class="span">
+        <section class='tag-container '>
+            <div class="row-fluid">
+                <div class="span6 comments-count">
+                    {{ 'comments'|trans }} ( {{ entity.commentCount }} )
+                </div>
+                <div class="span6 tag-title">
+                    {{ 'tags'|trans }}
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12 tags">
+                    {% if entity.hastags %}
+                            {% for hastag in entity.hastags %}
+                                <button class="btn">{{ hastag.tag.title }}</button>
+                            {% endfor %}
+                    {% else %}
+                            <button class="btn">sin tags</button>	
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        <section class='form-container'>
+            {% include 'DodiciFansworldWebBundle:Comment:comment_form.html.twig' with {shortform: true, entity: entity} %}
+        </section>
+
+        <section class="comments-container">
+            {% block comments %}
+
+            {% for comment in entity.comments %}
+                {% include 'DodiciFansworldWebBundle:Comment:comment.subcomment.html.twig' with {comment: comment} %}
+            {% endfor %}
+
+            {% endblock %}
+        </section>	
+    </div>
+</div>
