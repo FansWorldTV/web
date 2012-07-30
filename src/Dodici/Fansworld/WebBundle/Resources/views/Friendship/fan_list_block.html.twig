@@ -1,0 +1,29 @@
+{% block fans_list_block %}
+    <section class="fans-container">
+    	<header class='title'>
+    		<h4>{{ block_title }} ( {{ friends|length }} )</h4>
+    	</header>
+        {% if friends|length > 0 %}
+            <ul class="friends"> 
+				{% for friend in friends %}
+                	<li>
+                		<div class='fan-container'>
+                			<a href="{{ path('user_wall', {username: friend.username}) }}">
+	                        	<div class="avatar">
+	                            	{% thumbnail friend.image, 'big_square' %}
+	                            </div>
+	                            <span class="name">{{ friend }}</span>
+	                            <span class="friendCount">{{ friend.friendCount }}</span>
+	                            <div class="addFriend" targetId="{{ friend.id }}">
+	                            	<button class="btn btn_friendship add btn-success"> Ser fan{% if friend.restricted %} (solicitar){% endif %}</button>
+                            	</div>
+	                        </a>
+                		</div>
+                    </li>
+				{% endfor %}
+			</ul>
+        {% else %}
+            <h3>No posee Fans</h3>
+        {% endif %}
+    </section>
+{% endblock %}

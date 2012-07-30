@@ -25,7 +25,7 @@
 	                <a href="{{ path('user_idols', {'username': user.username}) }}">Idolos</a>
 	            </li>
 	            <li {% if active_tab == 'fans' %}class="active"{% endif %}>
-	                <a href="">Fans</a>
+	                <a href="{{ path('user_fans', {'username': user.username}) }}">Fans</a>
 	            </li>
 	            <li {% if active_tab == 'eventos' %}class="active"{% endif %}>
 	                <a href="">Eventos</a>

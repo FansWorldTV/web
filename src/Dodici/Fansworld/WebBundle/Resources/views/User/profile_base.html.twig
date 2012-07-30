@@ -1,8 +1,10 @@
 {% extends "DodiciFansworldWebBundle::web.html.twig" %}
 {% if (user == app.user) %}
 	{% set selfWall = true %}
+	{% set fship = null %}
 {% else %}
 	{% set selfWall = false %}
+	{% set fship = appstate.friendshipwith(user) %}
 {% endif %}
 
 {% block title %}{{ parent() }} - {{ user }}{% endblock %}
@@ -16,7 +18,7 @@
 {% endblock %}
 
 {% block content %}
-    {% set fship = appstate.friendshipwith(user) %}
+
     {% if (appstate.canfriend(user) and fship is null) or ( isHome is defined and isHome) %}
         {% set tplLarge = true %}
     {% else %}

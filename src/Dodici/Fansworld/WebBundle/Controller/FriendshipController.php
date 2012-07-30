@@ -114,7 +114,7 @@ class FriendshipController extends SiteController
     /**
      *  User friendships
      * 
-     *  @Route("/u/{username}/fans", name="friendship_user")
+     *  @Route("/su/{username}/fans", name="friendship_user")
      *  @Template
      */
     public function userFriendshipsAction($username)

@@ -715,5 +715,30 @@ class UserController extends SiteController
     
     	return $return;
     }
+    
+    /**
+     * @Route("/u/{username}/fans", name="user_fans")
+     * @Template
+     * @Secure(roles="ROLE_USER")
+     */
+    public function fansTabAction($username)
+    {
+    	$user = $this->getRepository('User')->findOneByUsername($username);
+    	if (!$user) {
+    		throw new HttpException(404, "No existe el usuario");
+    	}else
+    		$this->get('visitator')->visit($user);
+    
+    	
+    	$friends = $this->getRepository('User')->FriendUsers($user, null, SearchController::LIMIT_SEARCH, null);
+    
+    	$return = array(
+    			'friends' => $friends,
+    			//'addMore' => $idolshipsCount > self::LIMIT_LIST_IDOLS ? true : false,
+    			'user' => $user
+    	);
+    
+    	return $return;
+    }
 
 }

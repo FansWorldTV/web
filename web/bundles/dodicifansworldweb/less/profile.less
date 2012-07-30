@@ -398,3 +398,58 @@ div.twitter-tab {
     p.big { font-size: 26px; line-height: 36px; margin-bottom: 40px;}
     p { font-size: 14px; color: #4e4c4d; line-height: 19px; margin-bottom: 20px;}
 }
+
+//Estilos de fans
+section.fans-container{
+    overflow: hidden;
+    margin-bottom: 15px;
+    header.title{
+        h4{
+            color: #4d4d4d;
+        }
+    }
+    ul.friends{
+        >li{
+            margin-right: 6px;
+            margin-bottom: 8px;
+            .pull-left();
+            .fan-container{
+                position: relative;
+                
+                .name{
+                    color: @white;
+                    font-size: 20px;
+                    font-weight: bold;
+                    position: absolute;
+                    text-align: center;
+                    top: 15px;
+                    max-width: 100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    text-shadow: 1px 1px 0 rgba(128,128,128,.5);
+                }
+                .addFriend{
+                    bottom: 10px;
+                    left: 10px;
+                    position: absolute;
+                    .btn_friendship{
+                        text-transform: uppercase;
+                        font-weight: bold;
+                    }
+                }
+                
+                .friendCount{
+                    bottom: 15px;
+                    color: white;
+                    font-size: 20px;
+                    font-weight: bold;
+                    position: absolute;
+                    right: 10px;
+                    text-shadow: 1px 1px 0 rgba(128,128,128,.5);
+                }
+            }
+            
+        }
+    }
+    
+}
