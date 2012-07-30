@@ -40,11 +40,13 @@ class VideoController extends SiteController
     public function showAction($id)
     {
         $video = $this->getRepository('Video')->findOneBy(array('id' => $id, 'active' => true));
+        $user =  $this->getRepository('User')->find($video->getAuthor()->getId());
+        $videos = $this->getRepository('Video')->findBy(array('active' => true), array('createdAt' => 'desc'), self::cantVideos); //TODO NAHUEL
 
         $this->securityCheck($video);
 
         $this->get('visitator')->visit($video);
-        return array('video' => $video);
+        return array('video' => $video, 'user' => $user, 'related_videos' => $videos);
     }
 
     /**
