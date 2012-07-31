@@ -27,6 +27,7 @@ class VideoRepository extends CountBaseRepository
      * @param DateTime|null $datefrom
      * @param DateTime|null $dateto
      * @param 'default'|'views'|'likes' $sortcriteria
+     * @param User|Idol|Team|null $taggedentity
      */
     public function search(
         $searchterm = null,
@@ -38,7 +39,8 @@ class VideoRepository extends CountBaseRepository
         $author = null,
         $datefrom = null,
         $dateto = null,
-        $sortcriteria = 'default'
+        $sortcriteria = 'default',
+        $taggedentity = null
     )
     {
         $sortcriterias = array(
@@ -47,13 +49,23 @@ class VideoRepository extends CountBaseRepository
             'likes' => 'v.likeCount DESC',
             'date' => 'v.createdAt DESC'
         );
+        
+        if ($taggedentity) {
+            $type = $this->getType($taggedentity);
+        }
 
         $query = $this->_em->createQuery('
     	SELECT v, va
     	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
     	LEFT JOIN v.author va
+    	'.
+    	($taggedentity ? ' INNER JOIN v.has' . $type . 's vhh ' : '')
+    	.'
     	WHERE v.active = true
     	AND
+    	'.
+    	($taggedentity ? ' vhh.' . (($type == 'user') ? 'target' : $type) . ' = :taggedentity AND ' : '')
+    	.'
     	(:searchterm IS NULL OR (
     		(v.title LIKE :searchlike)
     		OR
@@ -108,6 +120,9 @@ class VideoRepository extends CountBaseRepository
                 ->setParameter('dateto', $dateto)
                 ->setParameter('highlighted', $highlighted)
                 ->setParameter('author', ($author instanceof User) ? $author->getId() : null);
+                
+        if ($taggedentity)
+            $query = $query->setParameter('taggedentity', $taggedentity->getId());
 
         if ($limit !== null)
             $query = $query->setMaxResults((int) $limit);
@@ -129,6 +144,7 @@ class VideoRepository extends CountBaseRepository
      * @param User|null $author
      * @param DateTime|null $datefrom
      * @param DateTime|null $dateto
+     * @param User|Idol|Team|null $taggedentity
      */
     public function countSearch(
         $searchterm = null, 
@@ -139,15 +155,26 @@ class VideoRepository extends CountBaseRepository
         $highlighted = null, 
         $author = null,
         $datefrom = null,
-        $dateto = null
+        $dateto = null,
+        $taggedentity = null
     )
     {
 
+        if ($taggedentity) {
+            $type = $this->getType($taggedentity);
+        }
+        
         $query = $this->_em->createQuery('
     	SELECT COUNT(v.id)
     	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
+    	'.
+    	($taggedentity ? ' INNER JOIN v.has' . $type . 's vhh ' : '')
+    	.'
     	WHERE v.active = true
     	AND
+    	'.
+    	($taggedentity ? ' vhh.' . (($type == 'user') ? 'target' : $type) . ' = :taggedentity AND ' : '')
+    	.'
     	(:searchterm IS NULL OR (
     		(v.title LIKE :searchlike)
     		OR
@@ -197,6 +224,9 @@ class VideoRepository extends CountBaseRepository
                 ->setParameter('dateto', $dateto)
                 ->setParameter('highlighted', $highlighted)
                 ->setParameter('author', ($author instanceof User) ? $author->getId() : null);
+                
+        if ($taggedentity)
+            $query = $query->setParameter('taggedentity', $taggedentity->getId());
 
         return $query->getSingleScalarResult();
     }
@@ -242,7 +272,7 @@ class VideoRepository extends CountBaseRepository
     	WHERE
     	v.active = true
     	AND
-    	vhh.' . $type . ' = :entid
+    	vhh.' . (($type == 'user') ? 'target' : $type) . ' = :entid
     	ORDER BY v.highlight DESC, v.createdAt DESC
     	')
                 ->setParameter('entid', $entity->getId())
