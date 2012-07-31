@@ -30,9 +30,9 @@
     </section>
 {% endblock %}
 
-{% block header_fship %}
+{% block header_iship %}
     
-    {% if  fship is null %}
+    {% if  iship is null %}
         <div class="addFriend" targetId="{{ entity.id }}">
             <button class="btn btn-large btn_friendship add btn-success"> Ser fan </button>
         				{#
@@ -51,11 +51,11 @@
 						#}
         </div>
     {% else %}
-        {% if fship %}
-            {% if fship.active %}
-                <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Dejar de Seguir</a>
+        {% if iship %}
+            {% if iship.active %}
+                <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ iship.id }}">Dejar de Seguir</a>
             {% else %}
-                <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Cancelar Solicitud</a>
+                <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ iship.id }}">Cancelar Solicitud</a>
             {% endif %}
         {% endif %}
     {% endif %}

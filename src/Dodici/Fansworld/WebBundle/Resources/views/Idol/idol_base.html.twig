@@ -1,0 +1,16 @@
+{% extends "DodiciFansworldWebBundle:Profile:base.html.twig" %}
+
+{% set iship = appstate.idolshipwith(idol) %}
+
+{% if (iship is null) or ( isHome is defined and isHome) %}
+	{% set tplLarge = true %}
+{% else %}
+	{% set tplLarge = false %}
+{% endif %}
+
+{% set profile_head_class 	= 'user_profile_head' %}
+{% set user_profile_body 	= 'user_profile_body' %}
+{% set entity_type 		= 'Idol' %}
+{% set entity 		= idol %}
+
+{% block title %}{{ parent() }} - {{ idol }}{% endblock %}

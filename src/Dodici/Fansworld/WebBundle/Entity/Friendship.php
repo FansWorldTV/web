@@ -195,6 +195,16 @@ class Friendship
     {
         $this->friendgroups[] = $friendgroups;
     }
+    
+    public function addFriendgroups($friendgroups){
+        $this->addFriendGroup($friendgroups);
+    }
+    
+    public function setFriendgroups($friendgroups){
+        foreach($friendgroups as $friendgroup){
+            $this->addFriendGroup($friendgroup);
+        }
+    }
 
     /**
      * Get friendgroups

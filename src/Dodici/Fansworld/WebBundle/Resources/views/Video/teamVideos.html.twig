@@ -1,0 +1,12 @@
+{% extends "DodiciFansworldWebBundle:Team:team_base.html.twig" %}
+
+{% block title %}{{ parent() }} - Twitter{% endblock %}
+
+{% block profile_tabs %}
+	{% set active_tab = 'twitter' %}
+	{{ parent() }}
+{% endblock %}
+
+{% block inner_content %}
+    {% include 'DodiciFansworldWebBundle:Video:blocks/listMosaic.html.twig'  %}
+{% endblock %}
