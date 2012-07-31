@@ -124,7 +124,7 @@ class Event implements SearchableInterface
     protected $hasusers;
     
     /**
-     * @ORM\OneToMany(targetEntity="HasTeam", mappedBy="event", cascade={"remove", "persist"}, orphanRemoval="true")
+     * @ORM\OneToMany(targetEntity="HasTeam", mappedBy="event", cascade={"remove", "persist"}, orphanRemoval="true", fetch="EAGER")
      */
     protected $hasteams;
     
@@ -138,9 +138,15 @@ class Event implements SearchableInterface
      */
     protected $comments;
     
+    /**
+     * @ORM\OneToMany(targetEntity="EventIncident", mappedBy="event", cascade={"remove", "persist"}, orphanRemoval="true", fetch="EAGER")
+     */
+    protected $incidents;
+    
     public function __construct()
     {
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->incidents = new \Doctrine\Common\Collections\ArrayCollection();
         $this->setActive(true);
         $this->setType(self::TYPE_MATCH);
     }
@@ -535,5 +541,26 @@ class Event implements SearchableInterface
     public function getHasidols()
     {
         return $this->hasidols;
+    }
+
+    /**
+     * Add incidents
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\EventIncident $incidents
+     */
+    public function addEventIncident(\Dodici\Fansworld\WebBundle\Entity\EventIncident $incidents)
+    {
+        $incidents->setEvent($this);
+        $this->incidents[] = $incidents;
+    }
+
+    /**
+     * Get incidents
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getIncidents()
+    {
+        return $this->incidents;
     }
 }

@@ -31,6 +31,18 @@ class BatchController extends SiteController
 		
 		return new Response('Ok');
     }
+    
+	/**
+     * @Route("/eventminutefeeding", name= "admin_batch_eventminutefeeding")
+     */
+    public function eventMinuteFeedingAction()
+    {
+        $df = $this->get('feeder.event.minute');
+        $df->feed();
+		$df->pending();
+		
+		return new Response('Ok');
+    }
 
 	/**
      * @Route("/videoprocessing", name= "admin_batch_videoprocessing")

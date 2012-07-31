@@ -546,6 +546,9 @@ services:
     feeder.event:
       class: Dodici\Fansworld\WebBundle\Feeder\EventFeeder
       arguments: [@doctrine.orm.entity_manager, @datafactory]
+    feeder.event.minute:
+      class: Dodici\Fansworld\WebBundle\Feeder\EventMinuteFeeder
+      arguments: [@doctrine.orm.entity_manager, @datafactory]
     user.location:
       class: Dodici\Fansworld\WebBundle\Extensions\UserLocation
       arguments: [@doctrine.orm.entity_manager]

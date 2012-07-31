@@ -35,22 +35,32 @@ class Feeder {
         foreach ($xmlchannels->canal as $canal) {
             $channelname = (string)$canal;
             $exp = explode('.', $channelname);
-            if (end($exp) == $type) {
-                $xmldata = $xrepo->findOneByChannel($type);
-                $channelxml = $this->xmlrequest->request( array( 'canal' => $channelname ) );
-                if ($channelxml) {
-                    if ($xmldata) {
-                        $xmldata->setChanged(new \DateTime());
-                    } else {
-                        $xmldata = new XmlData();
-                        $xmldata->setChannel($channelname);
+            if (in_array($type, $exp)) {
+                
+                if (
+                    (!in_array($type, array('fixture', 'ficha')))
+                    ||
+                    ($type == 'fixture' && !is_numeric(end($exp)))
+                    ||
+                    ($type == 'ficha' && is_numeric(end($exp)))
+                ) {
+                    $xmldata = $xrepo->findOneByChannel($channelname);
+                    $channelxml = $this->xmlrequest->request( array( 'canal' => $channelname ) );
+                    if ($channelxml) {
+                        if ($xmldata) {
+                            $xmldata->setChanged(new \DateTime());
+                        } else {
+                            $xmldata = new XmlData();
+                            $xmldata->setChannel($channelname);
+                        }
+                        
+                        $xmldata->setData($channelxml->asXML());
+                        
+                        $xmls[] = $channelxml;
+                        $em->persist($xmldata);
                     }
-                    
-                    $xmldata->setData($channelxml->asXML());
-                    
-                    $xmls[] = $channelxml;
-                    $em->persist($xmldata);
                 }
+                
             }
         }
         

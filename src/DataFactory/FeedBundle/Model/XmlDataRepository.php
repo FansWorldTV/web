@@ -23,9 +23,11 @@ class XmlDataRepository extends EntityRepository
     	FROM \DataFactory\FeedBundle\Entity\XmlData xd
     	WHERE xd.channel LIKE :likechan
     	')
-        	->setParameter('likechan', '%.'.$type);
+        	->setParameter('likechan', '%.'.$type.'%');
         
-        return $query->getSingleScalarResult();
+        $date = $query->getSingleScalarResult();
+        
+        return $date ? (new \DateTime($date)) : null;
 	}
 	
 	/**
@@ -41,7 +43,7 @@ class XmlDataRepository extends EntityRepository
     	AND
     	xd.processed <= xd.changed
     	')
-        	->setParameter('likechan', '%.'.$type);
+        	->setParameter('likechan', '%.'.$type.'%');
         
         return $query->getResult();
 	}
