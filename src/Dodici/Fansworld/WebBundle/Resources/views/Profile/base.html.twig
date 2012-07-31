@@ -1,0 +1,57 @@
+{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/dodicifansworldweb/js/friendship.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+	    $(document).ready(function(){
+	        friendship.init();
+	    });
+    </script>
+{% endblock %}
+
+{% block content %}
+    {% if selfWall is not defined %}
+        {% set selfWall = false %}
+    {% endif %}
+    
+	{% if tplLarge is not defined %}
+        {% set tplLarge = true %}
+    {% endif %}
+    
+    {% if profile_head_class is not defined %}
+        {% set profile_head_class = '' %}
+    {% endif %}
+
+    <header class="{{ profile_head_class }} profile_head {% if tplLarge %} large {% else %} small {% endif %}  row-fluid">
+		{% block profile_head %}
+            {% if tplLarge %}
+				{% include 'DodiciFansworldWebBundle:' ~ entity_type ~ '/Profile:header_large.html.twig' %}
+			{% else %}
+				{% include 'DodiciFansworldWebBundle:' ~ entity_type ~ '/Profile:header_small.html.twig' %}
+			{% endif %}
+		{% endblock %}
+		
+		{% block profile_tabs %}
+            {% include 'DodiciFansworldWebBundle:' ~ entity_type ~ '/Profile:header_navbar.html.twig' %}
+        {% endblock %}
+	</header>
+	
+	{% block user_profile_body %}
+		{% if profile_body_class is not defined %}
+	        {% set profile_body_class = '' %}
+	    {% endif %}
+		<div class="{{ profile_body_class }} row-fluid">
+            <section class='inner-content span9'>
+                {% block inner_content %}
+            	{% endblock %}
+            </section>
+			<section class='inner-sidebar span3'>
+                {% block inner_sidebar %}
+                {% endblock %}
+            </section>
+		</div>
+	{% endblock %}
+
+{% endblock %}

@@ -1,63 +1,21 @@
-{% extends "DodiciFansworldWebBundle::web.html.twig" %}
+{% extends "DodiciFansworldWebBundle:Profile:base.html.twig" %}
 {% if (user == app.user) %}
 	{% set selfWall = true %}
-	{% set fship = null %}
 {% else %}
 	{% set selfWall = false %}
-	{% set fship = appstate.friendshipwith(user) %}
 {% endif %}
 
+{% set fship = appstate.friendshipwith(user) %}
+
+{% if (appstate.canfriend(user) and fship is null) or ( isHome is defined and isHome) %}
+	{% set tplLarge = true %}
+{% else %}
+	{% set tplLarge = false %}
+{% endif %}
+
+{% set profile_head_class 	= 'user_profile_head' %}
+{% set user_profile_body 	= 'user_profile_body' %}
+{% set entity_type 			= 'User' %}
+{% set entity 				= user %}
+
 {% block title %}{{ parent() }} - {{ user }}{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('bundles/dodicifansworldweb/js/friendship.js') }}" type="text/javascript"></script>
-    <script type="text/javascript">
-    	friendship.init();
-    </script>
-{% endblock %}
-
-{% block content %}
-
-    {% if (appstate.canfriend(user) and fship is null) or ( isHome is defined and isHome) %}
-        {% set tplLarge = true %}
-    {% else %}
-        {% set tplLarge = false %}
-    {% endif %}
-    
-	<header class="user_profile_head profile_head {% if tplLarge %} large {% else %} small {% endif %}  row-fluid">
-		{% block profile_head %}
-            {% if tplLarge %}
-				{% include 'DodiciFansworldWebBundle:User/Profile:header_large.html.twig' with {entity: user} %}
-			{% else %}
-				{% include 'DodiciFansworldWebBundle:User/Profile:header_small.html.twig' with {entity: user,selfWall: selfWall} %}
-			{% endif %}
-		{% endblock %}
-		{% block profile_tabs %}
-            {% include 'DodiciFansworldWebBundle:User/Profile:header_navbar.html.twig' with {entity: user} %}
-        {% endblock %}
-	</header>
-	
-	{% block user_profile_body %}
-		<div class="user_profile_body row-fluid">
-            <section class='inner-content span9'>
-                {% block inner_content %}
-            	{% endblock %}
-            </section>
-			<section class='inner-sidebar span3'>
-                {% block inner_sidebar %}
-                {% endblock %}
-            </section>
-		</div>
-	{% endblock %}
-
-{% endblock %}
-
-{% block rightbar %}
-    {{ parent() }}
-    <script type="text/javascript">
-        $(document).ready(function(){
-            friendship.init();
-        });
-    </script>
-{% endblock %}
