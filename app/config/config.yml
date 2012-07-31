@@ -385,6 +385,11 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: homevideo }
         arguments: [null, Dodici\Fansworld\WebBundle\Entity\HomeVideo, DodiciFansworldAdminBundle:HomeVideoAdmin]
+    dodici.fansworld.adminbundle.admin.hasidol:
+        class: Dodici\Fansworld\AdminBundle\Admin\HasIdolAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: hasidol }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\HasIdol, DodiciFansworldAdminBundle:HasIdolAdmin]
     ### END ADMIN SERVICES ###
     liking.listener.persist:
         class: Dodici\Fansworld\WebBundle\Listener\LikingCountUpdater
