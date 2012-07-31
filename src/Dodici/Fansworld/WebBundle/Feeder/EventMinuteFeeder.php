@@ -52,7 +52,11 @@ class EventMinuteFeeder {
         if ($event) {
             $hts = $event->getHasteams();
             $teamsext = array();
-            foreach ($hts as $ht) $teamsext[$ht->getTeam()->getExternal()] = $ht->getTeam();
+            $hasteams = array();
+            foreach ($hts as $ht) { 
+                $teamsext[$ht->getTeam()->getExternal()] = $ht->getTeam();
+                $hasteams[$ht->getTeam()->getId()] = $ht;
+            }
             
             $incs = $xml->xpath('fichapartido/incidencias/incidencia');
             $dfteams = $xml->xpath('fichapartido/equipo');
@@ -64,12 +68,19 @@ class EventMinuteFeeder {
             foreach ($incs as $inc) {
                 // Asumiendo que ID es único, y no "tipo"
                 $dfincid = (string)$inc->attributes()->id;
+                $dfinctype = (string)$inc->attributes()->tipo;
                 
                 $incident = $eventincrepo->findOneBy(array('event' => $event->getId(), 'external' => $dfincid));
                 
-                if (!$incident) {
+                $type = EventIncident::translateType($dfinctype);
+                
+                if (!$incident && $type) {
                     $incident = new EventIncident();
                     $incident->setExternal($dfincid);
+                    
+                    $type = EventIncident::translateType($dfinctype);
+                    
+                    $incident->setType($type);
                     
                     $team = $teams[(string)$inc->equiponomcorto];
                     $incident->setTeam($team);
@@ -77,9 +88,16 @@ class EventMinuteFeeder {
                     $event->addEventIncident($incident);
                     
                     $this->em->persist($event);
-                    $this->em->flush();
+                    
+                    if ($type == EventIncident::TYPE_GOAL) {
+                        $ht = $hasteams[$team->getId()];
+                        $ht->setScore($ht->getScore() + 1);
+                        $this->em->persist($ht);
+                    }
                 }
             }
+            
+            $this->em->flush();
         }
     }
     

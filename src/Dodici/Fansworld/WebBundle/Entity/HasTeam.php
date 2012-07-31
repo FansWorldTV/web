@@ -148,6 +148,13 @@ class HasTeam
      */
     private $position;
     
+    /**
+     * @var integer $score
+     *
+     * @ORM\Column(name="score", type="integer", nullable=true)
+     */
+    private $score;
+    
 	/**
      * @ORM\PrePersist()
      */
@@ -157,8 +164,6 @@ class HasTeam
             $this->setCreatedAt(new \DateTime());
         }
     }
-
-
 
     /**
      * Get id
@@ -428,5 +433,25 @@ class HasTeam
     public function getPosition()
     {
         return $this->position;
+    }
+    
+	/**
+     * Set score
+     *
+     * @param integer $score
+     */
+    public function setScore($score)
+    {
+        $this->score = $score;
+    }
+
+    /**
+     * Get score
+     *
+     * @return integer 
+     */
+    public function getScore()
+    {
+        return $this->score;
     }
 }
