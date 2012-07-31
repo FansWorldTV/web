@@ -7,10 +7,6 @@
 	{{ parent() }}
 {% endblock %}
 
-{% block profile_head %}
-	{{ parent() }}
-{% endblock %}
-
 {% block inner_content %}
     {% render "DodiciFansworldWebBundle:Twitter:lastTweets" with { entity: team } %}
 {% endblock %}

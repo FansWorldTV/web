@@ -905,6 +905,10 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     {
         $this->hasidols[] = $hasidols;
     }
+    
+    public function addHasidols($hasidols){
+        $this->addHasIdol($hasidols);
+    }
 
     /**
      * Get hasidols
@@ -914,6 +918,15 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     public function getHasidols()
     {
         return $this->hasidols;
+    }
+    
+    /**
+     *  Set hasidols 
+     */
+    public function setHasidols($hasidols){
+        foreach ($hasidols as $hasidol){
+            $this->addHasIdol($hasidol);
+        }
     }
     
 	/**

@@ -1,0 +1,18 @@
+<div class="row-fluid">
+    <div class="span1"></div>
+    <div class="twitter-tab span8">
+        {% if entity.twitter %}
+            <h2>@{{ entity.twitter }}</h2>
+
+            {% if lastTweets|length > 0 %}
+                {% for tweet in lastTweets %}
+                    <p {% if loop.first %}class="big"{% endif %}>{{ tweet.text|raw() }}</p>
+                {% endfor %}
+            {% else %}
+                    <p class="big">No hay tweets disponibles</p>
+            {% endif %}
+        {% else %}
+            <p class="big">No hay una cuenta asociada</p>
+        {% endif %}
+    </div>
+</div>
