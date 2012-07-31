@@ -1,0 +1,26 @@
+{% extends "DodiciFansworldWebBundle::layout.html.twig" %}
+
+{% block main %}
+	<div id="main-content-frame" class="container-fluid {{ preferences.get('toolbar_pos')|default('top') }}">
+    	<div class='row-fluid'>
+        	{% block maincontent %}  
+            	<section id="content" class="span7">
+                	{% block content %}
+                    {% endblock %}
+                 </section>
+                        
+                 <aside id='relatedcolumn' class='span3'>
+                	{% block relatedcolumn %}
+                    	{% render "DodiciFansworldWebBundle:Default:relatedcolumn" %}
+					{% endblock %}
+                 </aside>
+			{% endblock %}
+                    
+            <aside id='adcolumn' class='span2 advertising'>
+            	{% block advertising %}
+                	{% render "DodiciFansworldWebBundle:Default:adcolumn" %}
+                {% endblock %}
+			</aside>
+		</div>
+	</div>
+{% endblock %}
