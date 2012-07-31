@@ -68,24 +68,17 @@ class TwitterController extends SiteController
 
     /**
      * user and idol tab
-     * @Route("/{username}", name="twitter_tab")
      * @Template()
      */
-    public function tabAction($username)
+    public function lastTweetsAction($entity)
     {
-        $user = $this->getRepository('User')->findOneByUsername($username);
-        if (!$user) {
-            throw new HttpException(404, "No existe el usuario");
-        }else
-            $this->get('visitator')->visit($user);
-
         $response = array(
-            'user' => $user,
+            'entity' => $entity,
             'lastTweets' => array()
         );
 
         $lastTweets = $this->get('fos_twitter.api')->get('statuses/user_timeline', array(
-            'screen_name' => $user->getTwitter(),
+            'screen_name' => $entity->getTwitter(),
             'count' => 10
                 ));
 

@@ -1,0 +1,16 @@
+{% extends "DodiciFansworldWebBundle:Profile:base.html.twig" %}
+
+{% set tship = appstate.teamshipwith(team) %}
+
+{% if (tship is null) or ( isHome is defined and isHome) %}
+	{% set tplLarge = true %}
+{% else %}
+	{% set tplLarge = false %}
+{% endif %}
+
+{% set profile_head_class 	= 'team_profile_head' %}
+{% set team_profile_body 	= 'team_profile_body' %}
+{% set entity_type 		= 'Team' %}
+{% set entity 		= team %}
+
+{% block title %}{{ parent() }} - {{ team }}{% endblock %}

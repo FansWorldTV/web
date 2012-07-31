@@ -47,7 +47,6 @@ class IdolController extends SiteController
      */
     public function twitterTabAction($slug)
     {
-        $lastTweets = array();
         $idol = $this->getRepository('Idol')->findOneBy(array('slug' => $slug));
 
         if (!$idol)
@@ -59,18 +58,7 @@ class IdolController extends SiteController
             $this->get('visitator')->visit($idol);
         }
 
-        $lastTweetsTemp = $this->get('fos_twitter.api')->get('statuses/user_timeline', array(
-            'screen_name' => $ttScreenName,
-            'count' => 10
-                ));
-        foreach ($lastTweetsTemp as $tweet) {
-            $lastTweets[] = array(
-                'text' => $tweet->text,
-                'user' => $tweet->user->screen_name,
-                'retweeted' => ($tweet->retweet_count > 0) ? true : false
-            );
-        }
-        return array('lastTweets' => $lastTweets);
+        return array('idol' => $idol);
     }
 
 }

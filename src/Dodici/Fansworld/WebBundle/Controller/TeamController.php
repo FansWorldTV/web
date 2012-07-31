@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Collection;
+use Dodici\Fansworld\WebBundle\Entity\Team;
 
 /**
  * Team controller.
@@ -38,7 +39,7 @@ class TeamController extends SiteController
     {
         $repo = $this->getRepository('Team');
         $team = $repo->findOneBy(array('id' => $id, 'active' => true));
-        $highlights = $this->getRepository('video')->highlights($team,4);
+        $highlights = $this->getRepository('video')->highlights($team, 4);
 
         if (!$team)
             throw new HttpException(404, 'Equipo no encontrado');
@@ -47,7 +48,7 @@ class TeamController extends SiteController
 
         return array(
             'team' => $team,
-        	'isHome' => true,
+            'isHome' => true,
             'highlights' => $highlights,
         );
     }
@@ -191,30 +192,17 @@ class TeamController extends SiteController
      */
     public function twitterTabAction($slug)
     {
-        $lastTweets = array();
         $team = $this->getRepository('Team')->findOneBy(array('slug' => $slug, 'active' => true));
-
         if (!$team)
-            throw new HttpException(404, 'Equipo no encontrado');
+            throw new HttpException(404, 'No existe el equipo');
         else {
             $ttScreenName = $team->getTwitter();
             if (!$ttScreenName)
                 throw new HttpException(404, 'Equipo sin twitter');
             $this->get('visitator')->visit($team);
         }
-
-        $lastTweetsTemp = $this->get('fos_twitter.api')->get('statuses/user_timeline', array(
-            'screen_name' => $ttScreenName,
-            'count' => 10
-                ));
-        foreach ($lastTweetsTemp as $tweet) {
-            $lastTweets[] = array(
-                'text' => $tweet->text,
-                'user' => $tweet->user->screen_name,
-                'retweeted' => ($tweet->retweet_count > 0) ? true : false
-            );
-        }
-        return array('lastTweets' => $lastTweets);
+        
+        return array('team' => $team);
     }
 
     /**
@@ -270,11 +258,11 @@ class TeamController extends SiteController
         $selectedTeam = $teamRepo->find($selectedTeamId);
 
         $response = array('error' => false);
-        
+
         try {
             if ($actualTeam) {
                 $actual = $teamshipRepo->findOneBy(array('author' => $user->getId(), 'team' => $actualTeam->getId()));
-                if($actual){
+                if ($actual) {
                     $actual->setFavorite(false);
                     $em->persist($actual);
                 }
@@ -297,7 +285,7 @@ class TeamController extends SiteController
         } catch (Exception $exc) {
             $response['error'] = $exc->getMessage();
         }
-        
+
         return $this->jsonResponse($response);
     }
 
