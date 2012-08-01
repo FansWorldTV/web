@@ -1,3 +1,12 @@
-{% block content %}
+{% extends "DodiciFansworldWebBundle:Idol:idol_base.html.twig" %}
+
+{% block title %}{{ parent() }} - Twitter{% endblock %}
+
+{% block profile_tabs %}
+	{% set active_tab = 'twitter' %}
+	{{ parent() }}
+{% endblock %}
+
+{% block inner_content %}
     {% render "DodiciFansworldWebBundle:Twitter:lastTweets" with { entity: idol } %}
 {% endblock %}
