@@ -2,3 +2,4 @@ php app/console doctrine:schema:update --force
 php app/console assetic:dump --env=prod
 php app/console cache:clear --env=prod
 php app/console cache:warmup --env=prod
+php /usr/share/sami/sami.php update /usr/share/sami/projects/fansworld.php
