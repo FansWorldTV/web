@@ -17,6 +17,10 @@
                 <a href="{{ path('team_photos', {slug: entity.slug}) }}">{{ 'Photos'|trans }}</a>
             </li>
             
+            <li {% if active_tab == 'tweets' %}class="active"{% endif %}>
+                <a href="{{ path('team_twitter', {slug: entity.slug}) }}">Tweets</a>
+            </li>
+            
             <li {% if active_tab == 'fans' %}class="active"{% endif %}>
                 <a href="">Fans</a>
             </li>
