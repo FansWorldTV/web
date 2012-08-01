@@ -61,4 +61,28 @@ class IdolController extends SiteController
         return array('idol' => $idol);
     }
 
+    /**
+     * @Route("/i/{slug}/photos", name="idol_photos")
+     * @Template
+     */
+    public function photosTabAction($slug)
+    {
+        $idol = $this->getRepository('Idol')->findOneBy(array('slug' => $slug));
+
+        if (!$idol) {
+            throw new HttpException(404, "No existe el ídolo");
+        }else
+            $this->get('visitator')->visit($idol);
+
+        $photos = $this->getRepository('Photo')->searchByEntity($idol, self::LIMIT_PHOTOS);
+        $photosTotalCount = $this->getRepository('Photo')->countByEntity($idol);
+
+        $viewMorePhotos = $photosTotalCount > self::LIMIT_PHOTOS ? true : false;
+
+        return array(
+            'idol' => $idol,
+            'photos' => $photos,
+            'gotMore' => $viewMorePhotos
+        );
+    }
 }

@@ -289,4 +289,28 @@ class TeamController extends SiteController
         return $this->jsonResponse($response);
     }
 
+    /**
+     * @Route("/{slug}/photos", name= "team_photos")
+     * @Template()
+     */
+    public function photosTabAction($slug)
+    {
+        $team = $this->getRepository('Team')->findOneBy(array('slug' => $slug));
+
+        if (!$team) {
+            throw new HttpException(404, "No existe el equipo");
+        }else
+            $this->get('visitator')->visit($team);
+
+        $photos = $this->getRepository('Photo')->searchByEntity($team, self::LIMIT_ITEMS);
+        $photosTotalCount = $this->getRepository('Photo')->countByEntity($team);
+
+        $viewMorePhotos = $photosTotalCount > self::LIMIT_ITEMS ? true : false;
+
+        return array(
+            'team' => $team,
+            'photos' => $photos,
+            'gotMore' => $viewMorePhotos
+        );
+    }
 }

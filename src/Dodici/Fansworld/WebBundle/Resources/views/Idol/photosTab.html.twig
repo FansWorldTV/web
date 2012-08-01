@@ -1,0 +1,30 @@
+{% extends "DodiciFansworldWebBundle:Idol:idol_base.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ 'Photos'|trans }}{% endblock %}
+
+{% block profile_tabs %}
+	{% set active_tab = 'photos' %}
+	{{ parent() }}
+{% endblock %}
+
+{% block inner_content %}
+    <div class="row-fluid">
+        <h3>Fotos</h3>
+        <div class="am-container photos">
+            {% for photo in photos %}
+                <a href="{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}">{% thumbnail photo.image, 'small' with {title: photo.title} %}</a>
+            {% endfor %}
+        </div>
+        {% if gotMore %}
+            <a class="loadmore pictures" href="#1">ver más</a> 
+        {% endif %}
+    </div>
+    
+    <script type="text/javascript">
+        site.startMosaic($('.am-container'), {
+            minsize: false,
+            liquid: true,
+            margin : 0
+        });
+    </script>
+{% endblock %}
