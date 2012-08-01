@@ -14,11 +14,11 @@
             </li>
             
             <li {% if active_tab == 'videos' %}class="active"{% endif %}>
-                <a  href="">Videos</a>
+                <a  href="{{ path('video_idol', {slug: entity.slug}) }}">Videos</a>
             </li>
             
             <li {% if active_tab == 'photos' %}class="active"{% endif %}>
-                <a href="">{{ 'Photos'|trans }}</a>
+                <a href="{{ path('idol_photos', {slug: entity.slug}) }}">{{ 'Photos'|trans }}</a>
             </li>
             
             <li {% if active_tab == 'tweets' %}class="active"{% endif %}>
