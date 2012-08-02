@@ -1,0 +1,31 @@
+{% if filters is defined %}
+    <!-- Button group de filtros -->
+    <section id="{{ filters.id }}" class="row-fluid">
+        <div class="btn-group {{ filters.class }}">
+            {% if filters.list|length>0 %}
+                {% for filter in filters.list %}
+                    <button class="btn {{ filter.class }}" data-type="{{ filter.dataType }}">{{ filter.name }}</button>        
+                {% endfor %}
+            {% endif %}
+        </div>
+    </section>
+{%  endif %}
+
+{% if sorts is defined %}
+    <!-- Button group de filtros -->
+    <section id="{{ sorts.id }}" class="row-fluid">
+        <div class="btn-group {{ sorts.class }}">
+            {% if sorts.list|length>0 %}
+                {% for sort in sorts.list %}
+                    <button class="btn {{ sort.class }}" data-type="{{ sort.dataType }}">{{ sort.name }}</button>        
+                {% endfor %}
+            {% endif %}
+        </div>
+    </section>
+{%  endif %}
+
+
+
+
+    
+        
