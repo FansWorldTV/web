@@ -9,6 +9,9 @@ use Dodici\Fansworld\WebBundle\Entity\Liking;
 use Dodici\Fansworld\WebBundle\Entity\Share;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
 
+/**
+ * Updates Likecounts in entities
+ */
 class LikingCountUpdater
 {
     

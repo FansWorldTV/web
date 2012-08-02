@@ -6,6 +6,9 @@ use Dodici\Fansworld\WebBundle\Entity\OpinionVote;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 
+/**
+ * Updates opinion vote counts
+ */
 class OpinionCountUpdater
 {
     

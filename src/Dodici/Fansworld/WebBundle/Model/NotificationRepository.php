@@ -12,8 +12,12 @@ use Doctrine\ORM\EntityRepository;
 class NotificationRepository extends CountBaseRepository
 {
 	/**
-     * Get notifications for user
-     */
+	 * Get notifications for user
+	 * @param User $user
+	 * @param boolean|null $readed
+	 * @param int|null $limit
+	 * @param int|null $offset
+	 */
     public function latest(\Application\Sonata\UserBundle\Entity\User $user, $readed = null, $limit = null, $offset = null)
     {
     	$query = $this->_em->createQuery('
@@ -42,8 +46,10 @@ class NotificationRepository extends CountBaseRepository
     }
     
 	/**
-     * Count notifications for user
-     */
+	 * Count notifications for user
+	 * @param User $user
+	 * @param boolean|null $readed
+	 */
     public function countLatest(\Application\Sonata\UserBundle\Entity\User $user, $readed = null)
     {
     	$query = $this->_em->createQuery('

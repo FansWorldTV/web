@@ -49,7 +49,6 @@ class ProposalRepository extends CountBaseRepository
 	
 	/**
 	 * Count active proposals
-	 * @param User $user
 	 */
 	public function popularCount()
 	{

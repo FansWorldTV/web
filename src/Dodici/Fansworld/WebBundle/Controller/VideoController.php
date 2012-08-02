@@ -367,7 +367,7 @@ class VideoController extends SiteController
         $offset = ($page - 1) * self::cantVideos;
 
         $videos = $repoVideos->search(null, $user, self::cantVideos, $offset, null, true, $author);
-        $countAll = $repoVideos->countSearch(null, $user, self::cantVideos, $offset, null, true, $author);
+        $countAll = $repoVideos->countSearch(null, $user, null, true, $author);
 
         $response['addMore'] = $countAll > self::cantVideos ? true : false;
 
@@ -412,10 +412,10 @@ class VideoController extends SiteController
             $dateto = $date->format("Y-m-d 23:59:59");
 
             $videos = $videoRepo->search(null, $user, self::cantVideos, $offset, null, null, $author, $datefrom, $dateto);
-            $countAll = $videoRepo->countSearch(null, $user, self::cantVideos, $offset, null, null, $author, $datefrom, $dateto);
+            $countAll = $videoRepo->countSearch(null, $user, null, null, $author, $datefrom, $dateto);
         } else {
             $videos = $videoRepo->search(null, $user, self::cantVideos, $offset, null, null, $author, null, null, 'views');
-            $countAll = $videoRepo->countSearch(null, $user, self::cantVideos, $offset, null, null, $author, null, null, 'views');
+            $countAll = $videoRepo->countSearch(null, $user, null, null, $author);
         }
 
         $response['addMore'] = $countAll > self::cantVideos ? true : false;
@@ -452,7 +452,7 @@ class VideoController extends SiteController
         $videoRepo instanceof VideoRepository;
 
         $videos = $videoRepo->search(null, $user, self::cantVideos, $offset, null, null, $author);
-        $countAll = $videoRepo->countSearch(null, $user, self::cantVideos, $offset, null, null, $author);
+        $countAll = $videoRepo->countSearch(null, $user, null, null, $author);
 
         $response['addMore'] = $countAll > self::cantVideos ? true : false;
 

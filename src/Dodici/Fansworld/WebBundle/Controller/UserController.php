@@ -763,7 +763,7 @@ class UserController extends SiteController
         $videoRepo instanceof VideoRepository;
 
         $videos = $videoRepo->search(null, $user, self::LIMIT_VIDEOS, null, null, null, $author, null, $author);
-        $countAll = $videoRepo->countSearch(null, $user, self::LIMIT_VIDEOS, null, null, null, $author, null, $author);
+        $countAll = $videoRepo->countSearch(null, $user, null, null, $author, null, null, $author);
 
         $addMore = $countAll > self::LIMIT_VIDEOS ? true : false;
 

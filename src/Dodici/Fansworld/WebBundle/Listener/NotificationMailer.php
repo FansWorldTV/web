@@ -8,6 +8,9 @@ use Dodici\Fansworld\WebBundle\Entity\Notification;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Application\Sonata\UserBundle\Entity\User;
 
+/**
+ * Calls the mailer when a notification is created
+ */
 class NotificationMailer
 {
 

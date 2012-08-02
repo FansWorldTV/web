@@ -10,6 +10,9 @@ use Dodici\Fansworld\WebBundle\Entity\Notification;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Application\Sonata\UserBundle\Entity\User;
 
+/**
+ * Pushes newly created relevant entities into the Meteor service
+ */
 class MeteorPusher
 {
 

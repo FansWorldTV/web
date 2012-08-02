@@ -15,6 +15,9 @@ use Dodici\Fansworld\WebBundle\Entity\Video;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Application\Sonata\UserBundle\Entity\User;
 
+/**
+ * Creates notifications when something notification-worthy happens
+ */
 class Notificator
 {
     

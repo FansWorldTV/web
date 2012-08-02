@@ -4,6 +4,9 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Dodici\Fansworld\WebBundle\Entity\Photo;
 use Dodici\Fansworld\WebBundle\Entity\Video;
 
+/**
+ * Updates user's photo and video counts when they're created
+ */
 class UserCounter
 {
 	protected $container;

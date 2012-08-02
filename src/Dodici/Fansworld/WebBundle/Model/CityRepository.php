@@ -5,6 +5,9 @@ use Dodici\Fansworld\WebBundle\Entity\Country;
 
 use Doctrine\ORM\EntityRepository;
 
+/**
+ * CityRepository
+ */
 class CityRepository extends CountBaseRepository
 {
 	/**

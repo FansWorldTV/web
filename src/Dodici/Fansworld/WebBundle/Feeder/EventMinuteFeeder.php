@@ -7,6 +7,9 @@ use Dodici\Fansworld\WebBundle\Entity\Event;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\DoctrineBundle\Registry;
 
+/**
+ * Gets match incidents from DataFactory, injects them into Events
+ */
 class EventMinuteFeeder {
     /** @var \Symfony\Bundle\DoctrineBundle\Registry */
     private $em;

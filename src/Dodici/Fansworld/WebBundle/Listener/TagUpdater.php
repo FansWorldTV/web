@@ -6,6 +6,9 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Dodici\Fansworld\WebBundle\Entity\HasTag;
 use Dodici\Fansworld\WebBundle\Entity\Tag;
 
+/**
+ * Updates tag usecounts when something is tagged
+ */
 class TagUpdater
 {
     

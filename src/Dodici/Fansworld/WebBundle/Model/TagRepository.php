@@ -12,6 +12,8 @@ class TagRepository extends CountBaseRepository
 	/**
 	 * Get matching
 	 * @param string $text
+	 * @param int|null $limit
+	 * @param int|null $offset
 	 */
 	public function matching($text=null, $limit=null, $offset=null)
 	{

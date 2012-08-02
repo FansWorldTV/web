@@ -22,6 +22,9 @@ use Dodici\Fansworld\WebBundle\Entity\Video;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Application\Sonata\UserBundle\Entity\User;
 
+/**
+ * Updates user scores when they perform a score-worthy action
+ */
 class ScoreHandler
 {
     const SCORE_ADD_IDOL = 1;

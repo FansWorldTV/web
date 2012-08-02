@@ -5,6 +5,9 @@ use Application\Sonata\UserBundle\Entity\User;
 
 use Doctrine\ORM\EntityRepository;
 
+/**
+ * Base repository class with generic count/search methods
+ */
 class CountBaseRepository extends EntityRepository
 {
     /**

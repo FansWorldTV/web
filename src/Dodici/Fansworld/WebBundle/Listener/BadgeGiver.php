@@ -25,6 +25,9 @@ use Dodici\Fansworld\WebBundle\Entity\Badge;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Application\Sonata\UserBundle\Entity\User;
 
+/**
+ * Listens to user's badge-worthy actions, and awards badges if necessary
+ */
 class BadgeGiver
 {
     

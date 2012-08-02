@@ -8,6 +8,9 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Dodici\Fansworld\WebBundle\Entity\Album;
 use Dodici\Fansworld\WebBundle\Entity\Photo;
 
+/**
+ * Sets the thumbnail of an album as the album's last uploaded photo
+ */
 class AlbumImageSetter
 {
     

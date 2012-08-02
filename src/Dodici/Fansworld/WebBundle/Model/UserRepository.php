@@ -7,6 +7,9 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\DBAL\Types\Type;
 
+/**
+ * UserRepository
+ */
 class UserRepository extends CountBaseRepository
 {
 

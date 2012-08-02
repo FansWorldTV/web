@@ -4,6 +4,9 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Dodici\Fansworld\WebBundle\Entity\Photo;
 use Dodici\Fansworld\WebBundle\Entity\Video;
 
+/**
+ * Posts user activity to Facebook's timeline, if the user has it enabled
+ */
 class FacebookActivity
 {
     protected $container;

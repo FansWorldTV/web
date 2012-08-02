@@ -8,6 +8,9 @@ use Dodici\Fansworld\WebBundle\Entity\Event;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\DoctrineBundle\Registry;
 
+/**
+ * Gets matches from Datafactory's fixture, creates events from it
+ */
 class EventFeeder {
     /** @var \Symfony\Bundle\DoctrineBundle\Registry */
     private $em;

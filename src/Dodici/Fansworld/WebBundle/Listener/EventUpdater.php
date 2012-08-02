@@ -8,6 +8,9 @@ use Dodici\Fansworld\WebBundle\Entity\Event;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 
+/**
+ * Updates event user count
+ */
 class EventUpdater
 {
     

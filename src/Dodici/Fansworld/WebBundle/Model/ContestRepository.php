@@ -4,6 +4,9 @@ namespace Dodici\Fansworld\WebBundle\Model;
 
 use Doctrine\ORM\EntityRepository;
 
+/**
+ * ContestRepository
+ */
 class ContestRepository extends CountBaseRepository
 {
 

@@ -335,7 +335,7 @@ class TeamController extends SiteController
         $user = $this->getUser();
 
         $videos = $videoRepo->search(null, $user, self::LIMIT_ITEMS, null, null, null, null, null, null, 'default', $team);
-        $countAll = $videoRepo->countSearch(null, $user, self::LIMIT_ITEMS, null, null, null, null, null, null, $team);
+        $countAll = $videoRepo->countSearch(null, $user, null, null, null, null, null, $team);
 
         $addMore = $countAll > self::LIMIT_ITEMS ? true : false;
 

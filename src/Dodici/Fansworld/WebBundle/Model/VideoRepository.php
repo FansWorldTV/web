@@ -137,8 +137,6 @@ class VideoRepository extends CountBaseRepository
      * 
      * @param string|Tag|null $searchterm
      * @param User|null $user
-     * @param int|null $limit
-     * @param int|null $offset
      * @param VideoCategory|null $category
      * @param boolean|null $highlighted
      * @param User|null $author
@@ -149,8 +147,6 @@ class VideoRepository extends CountBaseRepository
     public function countSearch(
         $searchterm = null, 
         $user = null, 
-        $limit = null, 
-        $offset = null, 
         $category = null, 
         $highlighted = null, 
         $author = null,
@@ -233,7 +229,7 @@ class VideoRepository extends CountBaseRepository
 
     /**
      * Get Flumotion videos pending process
-     * @param int $limit
+     * @param int|null $limit
      */
     public function pendingProcessing($limit = null)
     {
@@ -259,6 +255,7 @@ class VideoRepository extends CountBaseRepository
     /**
      * Get highlight videos (idol, team)
      * @param Idol|Team $entity
+     * @param int|null $limit
      */
     public function highlights($entity, $limit = null)
     {
@@ -284,7 +281,13 @@ class VideoRepository extends CountBaseRepository
         return $query->getResult();
     }
 
-    public function dateFromVideos($date, $limit, $offset)
+    /**
+     * Get a day's videos
+     * @param DateTime $date
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function dateFromVideos($date, $limit=null, $offset=null)
     {
         $query = $this->_em->createQuery('
             SELECT v

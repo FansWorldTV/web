@@ -6,6 +6,9 @@ use Dodici\Fansworld\WebBundle\Entity\Comment;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 
+/**
+ * Updates entity comment counts after comment creation
+ */
 class CommentCountUpdater
 {
     

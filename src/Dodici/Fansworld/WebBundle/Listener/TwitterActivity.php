@@ -4,6 +4,9 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Dodici\Fansworld\WebBundle\Entity\Photo;
 use Dodici\Fansworld\WebBundle\Entity\Video;
 
+/**
+ * Posts activity to the user's twitter, if it's enabled
+ */
 class TwitterActivity
 {
     protected $container;
