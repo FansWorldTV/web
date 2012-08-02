@@ -141,14 +141,7 @@ class Idol implements SearchableInterface, VisitableInterface
      * @ORM\Column(name="external", type="string", length=100, nullable=true)
      */
     private $external;
-    
-    /**
-     * @var integer $score
-     * 
-     * @ORM\Column(name="score", type="integer", nullable=false)
-     */
-    private $score;
-    
+        
     /**
      * @ORM\OneToMany(targetEntity="IdolCareer", mappedBy="idol", cascade={"remove", "persist"}, orphanRemoval="true")
      */
@@ -199,9 +192,6 @@ class Idol implements SearchableInterface, VisitableInterface
         }
         if (null === $this->fanCount) {
         	$this->setFanCount(0);
-        }
-    	if (null === $this->score) {
-        	$this->setScore(0);
         }
     }
     
@@ -403,26 +393,6 @@ class Idol implements SearchableInterface, VisitableInterface
     public function getSex()
     {
         return $this->sex;
-    }
-
-    /**
-     * Set score
-     *
-     * @param integer $score
-     */
-    public function setScore($score)
-    {
-        $this->score = $score;
-    }
-
-    /**
-     * Get score
-     *
-     * @return integer 
-     */
-    public function getScore()
-    {
-        return $this->score;
     }
 
     /**
