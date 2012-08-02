@@ -1,3 +1,4 @@
+<!-- Button group de filtros -->
 <section id="toggle-video-types" class="row-fluid">
     <div class="btn-group list-videos">
         <button class="btn" data-type="0">Destacados</button>
@@ -7,6 +8,7 @@
     </div>
 </section>
     
+<!-- Listado de videos para mostrar como montage -->
 <div class="row-fluid">
     {% if videos|length>0 %}
         <div id="am-container" class="am-container list-mosaic">
@@ -23,6 +25,7 @@
     <input type="hidden" id="entityId" value="2"/> <!-- @todo cambiar esto por entity id y poner tambien un entity type -->
 </div>
     
+<!-- Template que se usa para clonar y editar por javascript -->
 <div id="templates" class="hidden">
     <div class="video">
         <a href="">
@@ -33,6 +36,7 @@
     </div>
 </div>
     
+<!-- Init del montage -->
 <script type="text/javascript">
         site.startMosaic($('#am-container'), {minw: 150, margin: 0, liquid: true, minsize: false});
         {% if addMore %}
