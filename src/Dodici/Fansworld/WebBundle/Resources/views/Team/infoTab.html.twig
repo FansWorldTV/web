@@ -1,0 +1,64 @@
+{% extends "DodiciFansworldWebBundle:Team:base.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_fullwidth.html.twig"  %}
+
+{% block title %}{{ parent() }} - Datos{% endblock %}
+
+{% block profile_tabs %}
+	{% set active_tab = 'info' %}
+	{{ parent() }}
+{% endblock %}
+
+{% block inner_content %}
+    <section id="personalData" class="row-fluid">
+            <h4>Datos :</h4>
+            <dl class="dl-horizontal">
+                {% if team.title %}
+                    <dt>Nombre</dt>
+                        <dd>{{ team.title }}</dd>
+                {% endif %}
+                
+                {% if team.shortname %}
+                    <dt>Nombre corto</dt>
+                        <dd>{{ team.shortname }}</dd>
+                {% endif %}
+                        
+                {% if team.letters %}
+                    <dt>Iniciales</dt>
+                        <dd>{{ team.letters }}</dd>
+                {% endif %}
+                
+                {% if team.stadium %}
+                    <dt>Estadio</dt>
+                        <dd>{{ team.stadium }}</dd>
+                {% endif %}
+                
+                {% if team.website %}
+                    <dt>Sitio web</dt>
+                        <dd>{{ team.website }}</dd>
+                {% endif %}
+                
+                {% if team.nicknames %}
+                        <dt>Apodos</dt>
+                            <dd>{{ team.nicknames }}</dd>
+                {% endif %}
+                            
+                {% if team.foundedAt %}
+                        <dt>Fundado</dt>
+                            <dd>{{ team.foundedAt|date() }}</dd>
+                {% endif %}
+                            
+                {% if team.country %}
+                        <dt>País</dt>
+                            <dd>{{ team.country }}</dd>
+                {% endif %}
+            </dl>
+        </section>
+
+        {% if team.content %}
+            <section id="aboutMe" class="row-fluid">
+                <h4>Sobre mi: </h4>
+                <p>{{ team.content|nl2br }}</p>
+            </section>
+        {% endif %}
+{% endblock %}

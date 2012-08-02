@@ -1,0 +1,64 @@
+{% extends "DodiciFansworldWebBundle:Idol:base.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_fullwidth.html.twig"  %}
+
+{% block title %}{{ parent() }} -  {{ 'Biography'|trans() }}{% endblock %}
+
+{% block profile_tabs %}
+	{% set active_tab = 'biography' %}
+	{{ parent() }}
+{% endblock %}
+
+{% block inner_content %}
+    <section id="personalData" class="row-fluid">
+            <h4>Datos personales:</h4>
+            <dl class="dl-horizontal">
+                {% if idol.firstname %}
+                    <dt>Nombre</dt>
+                        <dd>{{ idol.firstname }}</dd>
+                {% endif %}
+                
+                {% if idol.lastname %}
+                    <dt>Apellido</dt>
+                        <dd>{{ idol.lastname }}</dd>
+                {% endif %}
+                        
+                {% if idol.nicknames %}
+                    <dt>Apodos</dt>
+                        <dd>{{ idol.nicknames }}</dd>
+                {% endif %}
+                
+                {% if idol.sex %}
+                    <dt>Género</dt>
+                        <dd>{% if idol.sex == 'm' %}Hombre{% else %}Mujer{% endif %}</dd>
+                {% endif %}
+                
+                {% if idol.birthday %}
+                    <dt>Fecha Nac.</dt>
+                        <dd>{{ idol.birthday|date() }}</dd>
+                {% endif %}
+                
+                {% if idol.country %}
+                        <dt>Pais</dt>
+                            <dd>{{ idol.country }}</dd>
+                {% endif %}
+                            
+                {% if idol.team %}
+                        <dt>Equipo</dt>
+                            <dd>{{ idol.team }}</dd>
+                {% endif %}
+                            
+                {% if idol.origin %}
+                        <dt>Lugar de origen</dt>
+                            <dd>{{ idol.origin }}</dd>
+                {% endif %}
+            </dl>
+        </section>
+
+        {% if idol.content %}
+            <section id="aboutMe" class="row-fluid">
+                <h4>Sobre mi: </h4>
+                <p>{{ idol.content|nl2br }}</p>
+            </section>
+        {% endif %}
+{% endblock %}
