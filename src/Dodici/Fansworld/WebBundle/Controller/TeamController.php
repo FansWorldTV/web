@@ -313,4 +313,37 @@ class TeamController extends SiteController
             'gotMore' => $viewMorePhotos
         );
     }
+    
+    /**
+     * team videos
+     * @Route("/team/{slug}/videos", name="video_team") 
+     * @Template()
+     */
+    public function videosTabAction($slug)
+    {
+        $team = $this->getRepository('Team')->findOneBy(array('slug' => $slug));
+
+        if (!$team) {
+            throw new HttpException(404, "No existe el equipo");
+        } else {
+            $this->get('visitator')->visit($team);
+        }
+
+        $videoRepo = $this->getRepository('Video');
+        $videoRepo instanceof VideoRepository;
+
+        $user = $this->getUser();
+
+        $videos = $videoRepo->search(null, $user, self::cantVideos, null, null, null, null, null, null, 'default', $team);
+        $countAll = $videoRepo->countSearch(null, $user, self::cantVideos, null, null, null, null, null, null, $team);
+
+        $addMore = $countAll > self::cantVideos ? true : false;
+
+        return array(
+            'videos' => $videos,
+            'addMore' => $addMore,
+            'user' => $user,
+            'team' => $team
+        );
+    }
 }

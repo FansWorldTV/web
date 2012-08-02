@@ -533,7 +533,7 @@ class UserController extends SiteController
 
         $loggedUser = $this->getUser();
         $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
-        
+
         $photos = $this->getRepository('Photo')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
         $albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
 
@@ -656,7 +656,7 @@ class UserController extends SiteController
             'idolship' => array()
         );
 
-        
+
 
         if (!$userId) {
             $user = $this->getUser();
@@ -665,18 +665,18 @@ class UserController extends SiteController
         }
 
         $idolshipsCount = $this->getRepository('Idolship')->countBy(array('author' => $user->getId()));
-        
+
         if (( $idolshipsCount / self::LIMIT_LIST_IDOLS ) > $page) {
             $response['addMore'] = true;
         }
-        
+
         if ($page > 0) {
             $page--;
             $offset = self::LIMIT_LIST_IDOLS * $page;
         } else {
             $offset = 0;
         }
-        
+
         $idolships = $this->getRepository('Idolship')->findBy(array('author' => $user->getId()), array('createdAt' => 'desc'), self::LIMIT_LIST_IDOLS, $offset);
 
 
@@ -688,10 +688,10 @@ class UserController extends SiteController
                 'id' => $idol->getId()
             );
         }
-        
+
         return $this->jsonResponse($response);
     }
-    
+
     /**
      * @Route("/u/{username}/badges", name="user_badges")
      * @Template
@@ -699,24 +699,24 @@ class UserController extends SiteController
      */
     public function badgeTabAction($username)
     {
-    	$user = $this->getRepository('User')->findOneByUsername($username);
-    	if (!$user) {
-    		throw new HttpException(404, "No existe el usuario");
-    	}else
-    		$this->get('visitator')->visit($user);
-    
-    	$badges = $this->getRepository('BadgeStep')->byUser($user);
-    	//$idolshipsCount = $this->getRepository('Idolship')->countBy(array('author' => $user->getId()));
-    
-    	$return = array(
-    			'badges' => $badges,
-    			//'addMore' => $idolshipsCount > self::LIMIT_LIST_IDOLS ? true : false,
-    			'user' => $user
-    	);
-    
-    	return $return;
+        $user = $this->getRepository('User')->findOneByUsername($username);
+        if (!$user) {
+            throw new HttpException(404, "No existe el usuario");
+        }else
+            $this->get('visitator')->visit($user);
+
+        $badges = $this->getRepository('BadgeStep')->byUser($user);
+        //$idolshipsCount = $this->getRepository('Idolship')->countBy(array('author' => $user->getId()));
+
+        $return = array(
+            'badges' => $badges,
+            //'addMore' => $idolshipsCount > self::LIMIT_LIST_IDOLS ? true : false,
+            'user' => $user
+        );
+
+        return $return;
     }
-    
+
     /**
      * @Route("/u/{username}/fans", name="user_fans")
      * @Template
@@ -724,24 +724,24 @@ class UserController extends SiteController
      */
     public function fansTabAction($username)
     {
-    	$user = $this->getRepository('User')->findOneByUsername($username);
-    	if (!$user) {
-    		throw new HttpException(404, "No existe el usuario");
-    	}else
-    		$this->get('visitator')->visit($user);
-    
-    	
-    	$friends = $this->getRepository('User')->FriendUsers($user, null, SearchController::LIMIT_SEARCH, null);
-    
-    	$return = array(
-    			'friends' => $friends,
-    			//'addMore' => $idolshipsCount > self::LIMIT_LIST_IDOLS ? true : false,
-    			'user' => $user
-    	);
-    
-    	return $return;
+        $user = $this->getRepository('User')->findOneByUsername($username);
+        if (!$user) {
+            throw new HttpException(404, "No existe el usuario");
+        }else
+            $this->get('visitator')->visit($user);
+
+
+        $friends = $this->getRepository('User')->FriendUsers($user, null, SearchController::LIMIT_SEARCH, null);
+
+        $return = array(
+            'friends' => $friends,
+            //'addMore' => $idolshipsCount > self::LIMIT_LIST_IDOLS ? true : false,
+            'user' => $user
+        );
+
+        return $return;
     }
-    
+
     /**
      * User videos
      *
@@ -750,28 +750,28 @@ class UserController extends SiteController
      */
     public function videosTabAction($username)
     {
-    	$author = $this->getRepository('User')->findOneByUsername($username);
-    
-    	if (!$author) {
-    		throw new HttpException(404, "No existe el usuario");
-    	}else
-    		$this->get('visitator')->visit($author);
-    
-    	$user = $this->getUser();
-    
-    	$videoRepo = $this->getRepository('Video');
-    	$videoRepo instanceof VideoRepository;
-    
-    	$videos = $videoRepo->search(null, $user, self::LIMIT_VIDEOS, null, null, null, $author, null, $author);
-    	$countAll = $videoRepo->countSearch(null, $user, self::LIMIT_VIDEOS, null, null, null, $author, null, $author);
-    
-    	$addMore = $countAll > self::LIMIT_VIDEOS ? true : false;
-    
-    	return array(
-    			'usersVideos' => $videos,
-    			'addMore' => $addMore,
-    			'user' => $author
-    	);
+        $author = $this->getRepository('User')->findOneByUsername($username);
+
+        if (!$author) {
+            throw new HttpException(404, "No existe el usuario");
+        }else
+            $this->get('visitator')->visit($author);
+
+        $user = $this->getUser();
+
+        $videoRepo = $this->getRepository('Video');
+        $videoRepo instanceof VideoRepository;
+
+        $videos = $videoRepo->search(null, $user, self::LIMIT_VIDEOS, null, null, null, $author, null, $author);
+        $countAll = $videoRepo->countSearch(null, $user, self::LIMIT_VIDEOS, null, null, null, $author, null, $author);
+
+        $addMore = $countAll > self::LIMIT_VIDEOS ? true : false;
+
+        return array(
+            'videos' => $videos,
+            'addMore' => $addMore,
+            'user' => $author
+        );
     }
 
 }

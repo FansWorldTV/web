@@ -85,4 +85,37 @@ class IdolController extends SiteController
             'gotMore' => $viewMorePhotos
         );
     }
+    
+    /**
+     * Idol videos
+     * 
+     *  @Route("/i/{slug}/videos", name="video_idol")
+     *  @Template()
+     */
+    public function videosTabAction($slug)
+    {
+        $idol = $this->getRepository('Idol')->findOneBy(array('slug' => $slug));
+        
+        if(!$idol){
+            throw new HttpException(404, "No existe el ídolo");
+        }else{
+            $this->get('visitator')->visit($idol);
+        }
+        
+        $user = $this->getUser();
+        $videoRepo = $this->getRepository('Video');
+        $videoRepo instanceof VideoRepository;
+        
+        $videos = $videoRepo->search(null, $user, self::cantVideos, null, null, null, null, null, null, 'default', $idol);
+        $countAll = $videoRepo->countSearch(null, $user, self::cantVideos, null, null, null, null, null, $idol);
+        
+        $addMore = $countAll > self::cantVideos ? true : false;
+        
+        return array(
+            'videos' => $videos,
+            'addMore' => $addMore,
+            'user' => $user,
+            'idol' => $idol
+        );
+    }
 }
