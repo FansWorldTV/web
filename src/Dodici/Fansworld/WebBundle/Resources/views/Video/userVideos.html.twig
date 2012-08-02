@@ -1,47 +1,12 @@
-{% extends "DodiciFansworldWebBundle:Layout:three_column.html.twig" %}
+{% extends "DodiciFansworldWebBundle:User:base.html.twig" %}
 
-{% block title %}{{ parent() }} - TV{% endblock %}
+{% block title %}{{ parent() }} - Twitter{% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('bundles/dodicifansworldweb/js/videos.js') }}" type="text/javascript"></script>
+{% block profile_tabs %}
+	{% set active_tab = 'twitter' %}
+	{{ parent() }}
 {% endblock %}
 
-{% block relatedcolumn %}
-    <div class="col_468 left margin">
-        <div class="cont clearfix video-list-global">
-        {% if highlight %}
-            <div class="highlight-video">
-                <h2><a href="{{path('video_show', {id:highlight.id, slug:highlight.slug})}}">{{highlight}}</a></h2>
-
-                <div class="media_content">
-                    <iframe class="videoframe" src="{{ flumotiontwig.videoplayerurl(highlight) }}"></iframe>
-                </div>
-
-                {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: highlight} %}
-            </div>
-        {% endif %}
-        <h3>Videos</h3>
-        {% if usersVideos|length > 0  %}
-        <ul class="user-videos videos-small clearfix">
-                {% for video in usersVideos %}
-                        {% include 'DodiciFansworldWebBundle:Video:list_video_item.html.twig' with {video: video, showlikes: false} %}
-                {% endfor %}
-        </ul>
-        {% else %}
-            <span>No hay videos activos.</span>
-        {% endif %}
-        {% if addMore%}
-            <div class="morelink">
-                <a id="addMore" class="userVideos" href="">Ver más</a>
-            </div>
-        {% endif %}
-    </div>
-</div>
-    
-<script type="text/javascript">
-    $(document).ready(function(){
-        videos.init();
-    });
-</script>
+{% block profile_body %}
+    {% include 'DodiciFansworldWebBundle:Video:blocks/listMosaic.html.twig'  %}
 {% endblock %}
