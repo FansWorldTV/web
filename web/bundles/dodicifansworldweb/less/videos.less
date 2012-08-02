@@ -39,3 +39,33 @@ section.related_videos {
         margin-bottom: 15px;
     }
 }
+
+.am-container.list-mosaic {
+    a{
+        background-color: black;
+        text-decoration: none;
+        color: white;
+        .title{
+            display: none !important;
+            font-size: 21px;
+            line-height: 20px; 
+            margin-top: 10px; 
+            margin-left: 10px;
+        }
+    }
+}
+.am-container.list-mosaic a:hover{
+    img{
+        opacity: 0.5;
+    }
+    span{
+        display: block !important;
+    }
+}
+.am-container.list-mosaic a span, .am-container.list-mosaic a:hover span{
+    font-weight: bold;
+    position: absolute;
+    z-index: 1000;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+}

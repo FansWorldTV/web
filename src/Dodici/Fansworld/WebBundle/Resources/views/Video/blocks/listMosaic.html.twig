@@ -9,12 +9,11 @@
     
 <div class="row-fluid">
     {% if videos|length>0 %}
-        <div id="am-container" class="am-container">
+        <div id="am-container" class="am-container list-mosaic">
         {% for video in videos %}
                     <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
                         <span class="title">{{ video.title }}</span>
                         {% thumbnail video.image, 'medium'  with {"title": video.title}%}
-                        <button class="btn btn-primary">+</button>
                     </a>
         {% endfor %}
         </div>
