@@ -1,4 +1,6 @@
-{% extends "DodiciFansworldWebBundle:Layout:three_column.html.twig" %}
+{% extends "DodiciFansworldWebBundle:User:base.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_fullwidth.html.twig"  %}
 
 {% block title %}{{ parent() }} - TV{% endblock %}
 
@@ -10,16 +12,18 @@
 {% block relatedcolumn %}
     <div class="col_468 left margin">
         <div class="cont clearfix video-list-global">
-        {% if highlight %}
-            <div class="highlight-video">
-                <h2><a href="{{path('video_show', {id:highlight.id, slug:highlight.slug})}}">{{highlight}}</a></h2>
-
-                <div class="media_content">
-                    <iframe class="videoframe" src="{{ flumotiontwig.videoplayerurl(highlight) }}"></iframe>
-                </div>
-
-                {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: highlight} %}
-            </div>
+        {%  if highlight is defined %}
+			{% if highlight %}
+	            <div class="highlight-video">
+	                <h2><a href="{{path('video_show', {id:highlight.id, slug:highlight.slug})}}">{{highlight}}</a></h2>
+	
+	                <div class="media_content">
+	                    <iframe class="videoframe" src="{{ flumotiontwig.videoplayerurl(highlight) }}"></iframe>
+	                </div>
+	
+	                {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: highlight} %}
+	            </div>
+	        {% endif %}
         {% endif %}
         <h3>Videos</h3>
         {% if usersVideos|length > 0  %}

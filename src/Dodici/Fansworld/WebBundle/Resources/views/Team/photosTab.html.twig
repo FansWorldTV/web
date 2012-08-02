@@ -1,4 +1,6 @@
-{% extends "DodiciFansworldWebBundle:Team:team_base.html.twig" %}
+{% extends "DodiciFansworldWebBundle:Team:team.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_fullwidth.html.twig"  %}
 
 {% block title %}{{ parent() }} - {{ 'Photos'|trans }}{% endblock %}
 
@@ -8,6 +10,7 @@
 {% endblock %}
 
 {% block inner_content %}
+	{{ parent() }}
     <div class="row-fluid">
         <div class="am-container photos">
             {% for photo in photos %}

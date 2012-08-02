@@ -1,4 +1,6 @@
-{% extends "DodiciFansworldWebBundle:User:user_base.html.twig" %}
+{% extends "DodiciFansworldWebBundle:User:base.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_fullwidth.html.twig"  %}
 
 {% block title %}{{ parent() }} - Álbumes{% endblock %}
 
@@ -12,6 +14,7 @@
 {% endblock %}
 
 {% block inner_content %}
+	{{ parent() }}
     {% if (user == app.user) %}
         <div class="update clearfix"> 
             <span></span> 

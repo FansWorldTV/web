@@ -250,37 +250,7 @@ class VideoController extends SiteController
         return $this->jsonResponse($response);
     }
 
-    /**
-     * User videos
-     * 
-     * @Route("/u/{username}/videos", name="video_user") 
-     * @Template()
-     */
-    public function userVideosAction($username)
-    {
-        $author = $this->getRepository('User')->findOneByUsername($username);
-
-        if (!$author) {
-            throw new HttpException(404, "No existe el usuario");
-        }else
-            $this->get('visitator')->visit($author);
-
-        $user = $this->getUser();
-
-        $videoRepo = $this->getRepository('Video');
-        $videoRepo instanceof VideoRepository;
-
-        $videos = $videoRepo->search(null, $user, self::cantVideos, null, null, null, $author, null, $author);
-        $countAll = $videoRepo->countSearch(null, $user, self::cantVideos, null, null, null, $author, null, $author);
-
-        $addMore = $countAll > self::cantVideos ? true : false;
-
-        return array(
-            'videos' => $videos,
-            'addMore' => $addMore,
-            'user' => $author
-        );
-    }
+    
     
     /**
      * Idol videos

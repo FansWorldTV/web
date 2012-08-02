@@ -1,9 +1,13 @@
-{% extends "DodiciFansworldWebBundle::three_column.html.twig" %}
+{% extends "DodiciFansworldWebBundle:User:base.html.twig" %}
+
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_fullwidth.html.twig"  %}
+
 
 {% block title %}{{ parent() }} - Registro{% endblock %}
 
-{% block content %}
-
+{% block inner_content %}
+	{{ parent() }}
                 <div class="cont clearfix">
                     <h2>Registro </h2>
                     <form class="register clearfix">

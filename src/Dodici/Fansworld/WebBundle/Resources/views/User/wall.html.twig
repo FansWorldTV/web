@@ -1,4 +1,6 @@
-{% extends "DodiciFansworldWebBundle:User:user_base.html.twig" %}
+{% extends "DodiciFansworldWebBundle:User:base.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_rsidebar.html.twig"  %}
 
 {% block title %}{{ parent() }} - Muro{% endblock %}
 
@@ -7,8 +9,7 @@
 	{{ parent() }}
 {% endblock %}
 
-{% block profile_head %}
-	
+{% block profile_head %}	
 	{{ parent() }}
 	{% if selfWall %}
         <div class="update clearfix"> 
@@ -22,12 +23,14 @@
 {% endblock %}
 
 {% block inner_content %}
+	{{ parent() }}
 	<div class="cont">
     	{% include 'DodiciFansworldWebBundle:Comment:comment_block.html.twig' with {entity: user} %}
     </div>
 {% endblock %}
 
 {% block inner_sidebar %}
+	{{ parent() }}
     <img src="{{ asset("bundles/dodicifansworldweb/images/sidebar.png") }}"  style='width:100%' />
     TODO
 {% endblock %}

@@ -1,4 +1,6 @@
-{% extends "DodiciFansworldWebBundle::three_column.html.twig" %}
+{% extends "DodiciFansworldWebBundle:Layout:three_column.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_fullwidth.html.twig"  %}
 
 {% block title %}{{ parent() }} - Búsqueda{% endblock %}
 
@@ -7,28 +9,29 @@
     <script src="{{ asset('bundles/dodicifansworldweb/js/teams.js') }}" type="text/javascript"></script>
 {% endblock %}
 
-{% block content %}
-<div class="cont clearfix">
-    <h2>Listado de equipos</h2>
-    <div class="user_list">
-        <div class="mask">
-            <ul class="categories">
-                {% for category in categories %}
-                    <li categoryId = "{{ category.id }}">{{ category.title }}</li>
-                {% endfor %}
-            </ul>
-            <br/>
-            <ul class="listMosaic" style="display: block; ">
-            </ul>
-            <a href="#" id="addMore" class="loadmore hidden">Agregar más</a>
-        </div>
-    </div>
-</div>
-<input type="hidden" id="categoryId" value="{% if categoryId %} {{ categoryId }} {% else %} null {% endif %}"/>
-<script type="text/javascript">
-    $(document).ready(function(){
-        list.category = {% if categoryId %} {{ categoryId }} {% else %} null {% endif %};
-        list.init();
-    });
-</script>
+{% block inner_content %}
+	{{ parent() }}
+	<div class="cont clearfix">
+	    <h2>Listado de equipos</h2>
+	    <div class="user_list">
+	        <div class="mask">
+	            <ul class="categories">
+	                {% for category in categories %}
+	                    <li categoryId = "{{ category.id }}">{{ category.title }}</li>
+	                {% endfor %}
+	            </ul>
+	            <br/>
+	            <ul class="listMosaic" style="display: block; ">
+	            </ul>
+	            <a href="#" id="addMore" class="loadmore hidden">Agregar más</a>
+	        </div>
+	    </div>
+	</div>
+	<input type="hidden" id="categoryId" value="{% if categoryId %} {{ categoryId }} {% else %} null {% endif %}"/>
+	<script type="text/javascript">
+	    $(document).ready(function(){
+	        list.category = {% if categoryId %} {{ categoryId }} {% else %} null {% endif %};
+	        list.init();
+	    });
+	</script>
 {% endblock %}

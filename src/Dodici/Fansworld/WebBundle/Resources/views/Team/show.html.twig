@@ -1,28 +1,12 @@
-{% extends "DodiciFansworldWebBundle::three_column.html.twig" %}
+{% extends "DodiciFansworldWebBundle:Layout:three_column.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_fullwidth.html.twig"  %}
 
 {% block title %}{{ parent() }} - Detalle{% endblock %}
 
-{% block content %}
-	<header class="team_profile_head profile_head row-fluid">
-		{% block profile_head %}
-			{% set fship = appstate.teamshipwith(team) %}
-            {% if  fship is null %}
-				{% include 'DodiciFansworldWebBundle:Team/Profile:header_large.html.twig' with {entity: team} %}
-			{% else %}
-				{% if isHome is defined and isHome %}
-					{% include 'DodiciFansworldWebBundle:Team/Profile:header_large.html.twig'  with {entity: team} %}
-				{% else %}
-					{% include 'DodiciFansworldWebBundle:Team/Profile:header_small.html.twig'  with {entity: team} %}
-				{% endif %}				
-
-			{% endif %}
-		{% endblock %}
-		
-		{% block profile_tabs %}
-            {% include 'DodiciFansworldWebBundle:Team/Profile:header_navbar.html.twig' with {entity: team} %}
-		{% endblock %}
-		
-	</header>
+{% block inner_content %}
+	{{ parents() }}
+	
 
 
         <div class="cont clearfix">

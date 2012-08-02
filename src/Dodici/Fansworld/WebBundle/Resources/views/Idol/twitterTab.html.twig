@@ -1,4 +1,6 @@
-{% extends "DodiciFansworldWebBundle:Idol:idol_base.html.twig" %}
+{% extends "DodiciFansworldWebBundle:Idol:base.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_fullwidth.html.twig"  %}
 
 {% block title %}{{ parent() }} - Twitter{% endblock %}
 
@@ -8,5 +10,6 @@
 {% endblock %}
 
 {% block inner_content %}
+	{{ parent() }}
     {% render "DodiciFansworldWebBundle:Twitter:lastTweets" with { entity: idol } %}
 {% endblock %}

@@ -1,4 +1,6 @@
-{% extends "DodiciFansworldWebBundle::three_column.html.twig" %}
+{% extends "DodiciFansworldWebBundle:User:base.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_fullwidth.html.twig"  %}
 
 {% block javascripts %}
 	{{ parent() }}
@@ -7,7 +9,8 @@
 
 {% block title %}{{ parent() }} - Registro{% endblock %}
 
-{% block content %}
+{% block inner_content %}
+	{{ parent() }}
 	TODO: inviter
 	<br><br>
 	url:<br>

@@ -1,4 +1,6 @@
-{% extends "DodiciFansworldWebBundle:User:user_base.html.twig" %}
+{% extends "DodiciFansworldWebBundle:User:base.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_rsidebar.html.twig"  %}
 
 {% block title %}{{ parent() }} - {{ 'Badges'|trans }}{% endblock %}
 
@@ -9,6 +11,7 @@
 {% endblock %}
 
 {% block inner_content %}
+	{{ parent() }}
     <section class="badges-container">
         {% if badges|length > 0 %}
             <ul class="badges unstyled">
@@ -49,6 +52,7 @@
     </section>
 {% endblock %}
 {% block inner_sidebar %}
+	{{ parent() }}
 	<section class='badges-sidebar'>
 		<h3>Que son y como conseguirlos?</h3>
 		<p>

@@ -1,4 +1,4 @@
-{% extends "DodiciFansworldWebBundle::three_column.html.twig" %}
+{% extends "DodiciFansworldWebBundle:Layout:three_column.html.twig" %}
 
 
 {% block javascripts %}
@@ -38,20 +38,15 @@
         {% endblock %}
 	</header>
 	
-	{% block user_profile_body %}
-		{% if profile_body_class is not defined %}
-	        {% set profile_body_class = '' %}
-	    {% endif %}
-		<div class="{{ profile_body_class }} row-fluid">
-            <section class='inner-content span9'>
-                {% block inner_content %}
-            	{% endblock %}
-            </section>
-			<section class='inner-sidebar span3'>
-                {% block inner_sidebar %}
-                {% endblock %}
-            </section>
-		</div>
-	{% endblock %}
-
+	
+	
+	{% if profile_body_class is not defined %}
+        {% set profile_body_class = '' %}
+    {% endif %}
+	<div class="{{ profile_body_class }} row-fluid">
+		{% block profile_body %}
+		
+		{% endblock %}
+	</div>
+	
 {% endblock %}

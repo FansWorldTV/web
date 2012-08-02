@@ -21,6 +21,7 @@ class UserController extends SiteController
     const LIMIT_SEARCH = 20;
     const LIMIT_NOTIFICATIONS = 5;
     const LIMIT_PHOTOS = 8;
+    const LIMIT_VIDEOS = 10;
     const LIMIT_LIST_IDOLS = 15;
 
     /**
@@ -459,7 +460,7 @@ class UserController extends SiteController
      * @Route("/u/{username}/photos", name="user_photos")
      * @Template
      */
-    public function photosAction($username)
+    public function photosTabAction($username)
     {
         $user = $this->getRepository('User')->findOneByUsername($username);
 
@@ -621,7 +622,7 @@ class UserController extends SiteController
      * @Template
      * @Secure(roles="ROLE_USER")
      */
-    public function idolTabAction($username)
+    public function idolsTabAction($username)
     {
         $user = $this->getRepository('User')->findOneByUsername($username);
         if (!$user) {
@@ -739,6 +740,38 @@ class UserController extends SiteController
     	);
     
     	return $return;
+    }
+    
+    /**
+     * User videos
+     *
+     * @Route("/u/{username}/videos", name="video_user")
+     * @Template()
+     */
+    public function videosTabAction($username)
+    {
+    	$author = $this->getRepository('User')->findOneByUsername($username);
+    
+    	if (!$author) {
+    		throw new HttpException(404, "No existe el usuario");
+    	}else
+    		$this->get('visitator')->visit($author);
+    
+    	$user = $this->getUser();
+    
+    	$videoRepo = $this->getRepository('Video');
+    	$videoRepo instanceof VideoRepository;
+    
+    	$videos = $videoRepo->search(null, $user, self::LIMIT_VIDEOS, null, null, null, $author, null, $author);
+    	$countAll = $videoRepo->countSearch(null, $user, self::LIMIT_VIDEOS, null, null, null, $author, null, $author);
+    
+    	$addMore = $countAll > self::LIMIT_VIDEOS ? true : false;
+    
+    	return array(
+    			'usersVideos' => $videos,
+    			'addMore' => $addMore,
+    			'user' => $author
+    	);
     }
 
 }

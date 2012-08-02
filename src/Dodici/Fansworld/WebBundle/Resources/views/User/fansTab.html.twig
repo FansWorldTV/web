@@ -1,4 +1,6 @@
-{% extends "DodiciFansworldWebBundle:User:user_base.html.twig" %}
+{% extends "DodiciFansworldWebBundle:User:base.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_fullwidth.html.twig"  %}
 
 {% block title %}{{ parent() }} - {{ 'Fans'|trans }}{% endblock %}
 
@@ -8,12 +10,12 @@
 	{{ parent() }}
 {% endblock %}
 
-{% block user_profile_body %}
-	<div class="user_profile_body row-fluid">
+{% block inner_content %}
+	{{ parent() }}
 	    
-	    {% include "DodiciFansworldWebBundle:Friendship:fan_list_block.html.twig" with { block_title:  'Top Fans'|trans, friends: friends } %}
+	{% include "DodiciFansworldWebBundle:Friendship:fan_list_block.html.twig" with { block_title:  'Top Fans'|trans, friends: friends } %}
 	    
-	    {% include "DodiciFansworldWebBundle:Friendship:fan_list_block.html.twig" with { block_title:  'Otros Fans'|trans, friends: friends } %}
+	{% include "DodiciFansworldWebBundle:Friendship:fan_list_block.html.twig" with { block_title:  'Otros Fans'|trans, friends: friends } %}
 	    
-    </div>
+    
 {% endblock %}

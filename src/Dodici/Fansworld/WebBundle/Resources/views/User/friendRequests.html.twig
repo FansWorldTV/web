@@ -1,8 +1,11 @@
-{% extends "DodiciFansworldWebBundle::three_column.html.twig" %}
+{% extends "DodiciFansworldWebBundle:User:base.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_fullwidth.html.twig"  %}
 
 {% block title %}{{ parent() }} - Solicitudes{% endblock %}
 
-{% block content %}
+{% block inner_content %}
+{{ parent() }}
 <div class="cont clearfix">
     <h2>Solicitudes pendientes</h2>
     <div class="user_list">

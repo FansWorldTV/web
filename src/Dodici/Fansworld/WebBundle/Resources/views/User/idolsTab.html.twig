@@ -1,4 +1,6 @@
-{% extends "DodiciFansworldWebBundle:User:user_base.html.twig" %}
+{% extends "DodiciFansworldWebBundle:User:base.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_fullwidth.html.twig"  %}
 
 {% block title %}{{ parent() }} - {{ 'Idols'|trans }}{% endblock %}
 
@@ -16,6 +18,7 @@
 {% endblock %}
 
 {% block inner_content %}
+	{{ parent() }}
     <section class="row-fluid">
         {% if idolships|length > 0 %}
             <ul class="idolships unstyled">
