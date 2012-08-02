@@ -2,6 +2,7 @@
 
 namespace Dodici\Fansworld\WebBundle\Listener;
 
+use Dodici\Fansworld\WebBundle\Entity\EventIncident;
 use Dodici\Fansworld\WebBundle\Entity\Comment;
 use Dodici\Fansworld\WebBundle\Entity\Friendship;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,6 +52,11 @@ class MeteorPusher
         
         /* COMMENTS */
         if ($entity instanceof Comment) {
+            $this->container->get('meteor')->push($entity);
+        }
+        
+        /* EVENT INCIDENTS */
+        if ($entity instanceof EventIncident) {
             $this->container->get('meteor')->push($entity);
         }
     }

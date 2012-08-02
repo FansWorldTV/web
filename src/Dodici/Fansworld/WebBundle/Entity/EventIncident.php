@@ -74,6 +74,37 @@ class EventIncident
      */
     private $external;
     
+    /**
+     * @var Idol
+     *
+     * @ORM\ManyToOne(targetEntity="Idol")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idol_id", referencedColumnName="id")
+     * })
+     */
+    private $idol;
+    
+    /**
+     * @var string $playername
+     *
+     * @ORM\Column(name="playername", type="string", length=200, nullable=true)
+     */
+    private $playername;
+    
+    /**
+     * @var string $minute
+     *
+     * @ORM\Column(name="minute", type="string", length=50, nullable=true)
+     */
+    private $minute;
+    
+    /**
+     * @var string $half
+     *
+     * @ORM\Column(name="half", type="string", length=50, nullable=true)
+     */
+    private $half;
+    
     public function __construct() {
         $this->createdAt = new \DateTime();
     }
@@ -147,6 +178,26 @@ class EventIncident
     {
         return $this->external;
     }
+    
+	/**
+     * Set playername
+     *
+     * @param string $playername
+     */
+    public function setPlayername($playername)
+    {
+        $this->playername = $playername;
+    }
+
+    /**
+     * Get playername
+     *
+     * @return string 
+     */
+    public function getPlayername()
+    {
+        return $this->playername;
+    }
 
     /**
      * Set event
@@ -186,5 +237,65 @@ class EventIncident
     public function getTeam()
     {
         return $this->team;
+    }
+
+    /**
+     * Set minute
+     *
+     * @param string $minute
+     */
+    public function setMinute($minute)
+    {
+        $this->minute = $minute;
+    }
+
+    /**
+     * Get minute
+     *
+     * @return string 
+     */
+    public function getMinute()
+    {
+        return $this->minute;
+    }
+
+    /**
+     * Set half
+     *
+     * @param string $half
+     */
+    public function setHalf($half)
+    {
+        $this->half = $half;
+    }
+
+    /**
+     * Get half
+     *
+     * @return string 
+     */
+    public function getHalf()
+    {
+        return $this->half;
+    }
+
+    /**
+     * Set idol
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Idol $idol
+     */
+    public function setIdol(\Dodici\Fansworld\WebBundle\Entity\Idol $idol)
+    {
+        $this->idol = $idol;
+    }
+
+    /**
+     * Get idol
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Idol 
+     */
+    public function getIdol()
+    {
+        return $this->idol;
     }
 }

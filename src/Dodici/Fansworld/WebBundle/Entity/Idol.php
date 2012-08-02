@@ -136,6 +136,13 @@ class Idol implements SearchableInterface, VisitableInterface
     private $twitter;
     
     /**
+     * @var string $external
+     *
+     * @ORM\Column(name="external", type="string", length=100, nullable=true)
+     */
+    private $external;
+    
+    /**
      * @var integer $score
      * 
      * @ORM\Column(name="score", type="integer", nullable=false)
@@ -649,5 +656,25 @@ class Idol implements SearchableInterface, VisitableInterface
     public function getVisitCount()
     {
         return $this->visitCount;
+    }
+
+    /**
+     * Set external
+     *
+     * @param string $external
+     */
+    public function setExternal($external)
+    {
+        $this->external = $external;
+    }
+
+    /**
+     * Get external
+     *
+     * @return string 
+     */
+    public function getExternal()
+    {
+        return $this->external;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Extensions;
 
+use Dodici\Fansworld\WebBundle\Entity\EventIncident;
+
 use Dodici\Fansworld\WebBundle\Entity\Comment;
 
 use Dodici\Fansworld\WebBundle\Entity\Friendship;
@@ -68,7 +70,14 @@ class Meteor
     	    } else {
     	        throw new \Exception('Could not form wall channel name for comment - no owner entity found');
     	    }
-    	} else {
+    	} elseif ($entity instanceof EventIncident) {
+    	    $data = array(
+    	        't' => 'ei',
+    	        'id' => $entity->getId()
+    	    );
+        	    
+        	return $this->sendToSocket($data, 'event_'.$entity->getEvent()->getId());
+        } else {
     		return false;
     	}
     }

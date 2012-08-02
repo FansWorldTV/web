@@ -45,6 +45,7 @@ class EventMinuteFeeder {
     {
         $eventrepo = $this->em->getRepository('DodiciFansworldWebBundle:Event');
         $eventincrepo = $this->em->getRepository('DodiciFansworldWebBundle:EventIncident');
+        $idolrepo = $this->em->getRepository('DodiciFansworldWebBundle:Idol');
         
         $dfeventid = (string)$xml->fichapartido->attributes()->id;
         $event = $eventrepo->findOneByExternal($dfeventid);
@@ -59,11 +60,6 @@ class EventMinuteFeeder {
             }
             
             $incs = $xml->xpath('fichapartido/incidencias/incidencia');
-            $dfteams = $xml->xpath('fichapartido/equipo');
-            $teams = array();
-            foreach ($dfteams as $dfteam) {
-                $teams[(string)$dfteam->nombreCorto] = $teamsext[(string)$dfteam->id];
-            }
             
             foreach ($incs as $inc) {
                 // Asumiendo que ID es único, y no "tipo"
@@ -82,8 +78,23 @@ class EventMinuteFeeder {
                     
                     $incident->setType($type);
                     
-                    $team = $teams[(string)$inc->equiponomcorto];
-                    $incident->setTeam($team);
+                    if (isset($inc->key->attributes()->id) && isset($teamsext[(string)$inc->key->attributes()->id])) {
+                        $team = $teamsext[(string)$inc->key->attributes()->id];
+                        $incident->setTeam($team);
+                    }
+                    
+                    if (isset($inc->jugador->attributes()->id)) {
+                        $playerext = (string)$inc->jugador->attributes()->id;
+                        $idol = $idolrepo->findOneByExternal($playerext);
+                        if ($idol) {
+                            $incident->setIdol($idol);
+                        } else {
+                            $incident->setPlayername((string)$inc->jugador);
+                        }
+                    }
+                    
+                    $incident->setMinute((string)$inc->minuto);
+                    $incident->setHalf((string)$inc->tiempo);
                     
                     $event->addEventIncident($incident);
                     

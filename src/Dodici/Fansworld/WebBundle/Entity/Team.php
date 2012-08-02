@@ -12,7 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
 
 /**
- * Dodici\Fansworld\WebBundle\Entity\VideoCategory
+ * Dodici\Fansworld\WebBundle\Entity\Team
  *
  * @ORM\Table(name="team")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\TeamRepository")
