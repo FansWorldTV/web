@@ -118,4 +118,26 @@ class IdolController extends SiteController
             'idol' => $idol
         );
     }
+    
+    /**
+     *  @Route("/i/{slug}/biography", name="idol_biography")
+     *  @Template()
+     */
+    public function biographyTabAction($slug)
+    {
+        $idol = $this->getRepository('Idol')->findOneBy(array('slug' => $slug));
+        
+        if(!$idol){
+            throw new HttpException(404, "No existe el ídolo");
+        }else{
+            $this->get('visitator')->visit($idol);
+        }
+
+        $user = $this->getUser();
+        
+        return array(
+            'user' => $user,
+            'idol' => $idol
+        );
+    }
 }

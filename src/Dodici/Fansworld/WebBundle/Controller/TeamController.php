@@ -346,4 +346,26 @@ class TeamController extends SiteController
             'team' => $team
         );
     }
+    
+    /**
+     *  @Route("/{slug}/info", name="team_info")
+     *  @Template()
+     */
+    public function infoTabAction($slug)
+    {
+        $team = $this->getRepository('Team')->findOneBy(array('slug' => $slug));
+        
+        if(!$team){
+            throw new HttpException(404, "No existe el ídolo");
+        }else{
+            $this->get('visitator')->visit($team);
+        }
+
+        $user = $this->getUser();
+        
+        return array(
+            'user' => $user,
+            'team' => $team
+        );
+    }
 }

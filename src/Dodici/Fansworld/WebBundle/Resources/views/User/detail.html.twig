@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block inner_content %}
-	{{ parent() }}
+        {{ parent() }}
         {% if user == app.user %}
             {% set userLogged = true %}
         {% else %}
