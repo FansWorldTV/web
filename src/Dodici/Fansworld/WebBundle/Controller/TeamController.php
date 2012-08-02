@@ -316,7 +316,7 @@ class TeamController extends SiteController
     
     /**
      * team videos
-     * @Route("/team/{slug}/videos", name="video_team") 
+     * @Route("/{slug}/videos", name="video_team") 
      * @Template()
      */
     public function videosTabAction($slug)
@@ -334,10 +334,10 @@ class TeamController extends SiteController
 
         $user = $this->getUser();
 
-        $videos = $videoRepo->search(null, $user, self::cantVideos, null, null, null, null, null, null, 'default', $team);
-        $countAll = $videoRepo->countSearch(null, $user, self::cantVideos, null, null, null, null, null, null, $team);
+        $videos = $videoRepo->search(null, $user, self::LIMIT_ITEMS, null, null, null, null, null, null, 'default', $team);
+        $countAll = $videoRepo->countSearch(null, $user, self::LIMIT_ITEMS, null, null, null, null, null, null, $team);
 
-        $addMore = $countAll > self::cantVideos ? true : false;
+        $addMore = $countAll > self::LIMIT_ITEMS ? true : false;
 
         return array(
             'videos' => $videos,

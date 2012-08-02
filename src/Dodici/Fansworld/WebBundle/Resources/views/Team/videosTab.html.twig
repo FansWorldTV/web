@@ -1,5 +1,7 @@
 {% extends "DodiciFansworldWebBundle:Team:base.html.twig" %}
 
+{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_fullwidth.html.twig"  %}
+
 {% block title %}{{ parent() }} - Twitter{% endblock %}
 
 {% block profile_tabs %}
@@ -7,6 +9,6 @@
 	{{ parent() }}
 {% endblock %}
 
-{% block profile_body %}
+{% block inner_content %}
     {% include 'DodiciFansworldWebBundle:Video:blocks/listMosaic.html.twig'  %}
 {% endblock %}
