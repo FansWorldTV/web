@@ -396,4 +396,35 @@ class TeamController extends SiteController
     
         return $return;
     }
+    
+    
+    /**
+     * @Route("/{slug}/idols", name="team_idols")
+     * @Template
+     * @Secure(roles="ROLE_USER")
+     */
+    public function idolsTabAction($slug)
+    {
+        $team = $this->getRepository('Team')->findOneBy(array('slug' => $slug));
+        if (!$team) {
+            throw new HttpException(404, "No existe el Team");
+        }else
+            $this->get('visitator')->visit($team);
+    
+        $idolships     = array(
+                'ulClass' => 'idols',
+                'containerClass' => 'idol-container',
+                'list' => $this->getRepository('Idol')->byTeam($team),
+        );
+        //$idolshipsCount = $this->getRepository('Idolship')->countBy(array('author' => $user->getId()));
+        
+        $return = array(
+                'idolships' => $idolships,
+                //'addMore' => $idolshipsCount > self::LIMIT_LIST_IDOLS ? true : false,
+                'addMore' => false,
+                'team' => $team,
+        );
+    
+        return $return;
+    }
 }

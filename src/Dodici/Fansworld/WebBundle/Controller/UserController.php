@@ -653,7 +653,11 @@ class UserController extends SiteController
         }else
             $this->get('visitator')->visit($user);
 
-        $idolships = $this->getRepository('Idolship')->findBy(array('author' => $user->getId()), array('createdAt' => 'desc'), self::LIMIT_LIST_IDOLS);
+        $idolships     = array(
+            'ulClass' => 'idols',
+            'containerClass' => 'idol-container',
+            'list' => $this->getRepository('Idolship')->findBy(array('author' => $user->getId()), array('createdAt' => 'desc'), self::LIMIT_LIST_IDOLS),    
+        ); 
         $idolshipsCount = $this->getRepository('Idolship')->countBy(array('author' => $user->getId()));
 
         $return = array(
@@ -755,6 +759,8 @@ class UserController extends SiteController
 
 
         $friends = array( 
+            'ulClass' => 'fans',
+            'containerClass' => 'fan-container',
             'list' => $this->getRepository('User')->FriendUsers($user, null, SearchController::LIMIT_SEARCH, null)
         );
 

@@ -157,9 +157,10 @@ class IdolController extends SiteController
     
         $fans = array(
             'ulClass' => 'fans',
-            'containerClass' => 'fan-container'
+            'containerClass' => 'fan-container',
+            'list' => $this->getRepository('User')->byIdols($idol),
         );
-        $fans['list'] = $this->getRepository('User')->byIdols($idol);
+        
     
         $return = array(
                 'fans' => $fans,

@@ -8,22 +8,46 @@
 
 
 <section class="avatar-grid">
-	<header class='title'>
-		<h4>{{ block_title }} ( {{ avatars.list|length }} )</h4>
-	</header>
+    {% if block_title is defined %}
+    	<header class='title'>
+    		<h4>{{ block_title }} ( {{ avatars.list|length }} )</h4>
+    	</header>
+	{% endif %}
     {% if avatars|length > 0 %}
         <ul class="avatar-list {{ avatars.ulClass }}"> 
 			{% for avatar in avatars.list %}
+			    {% if avatar.idol is defined %}
+			        {% set avatar = avatar.idol %}
+			    {% endif %}
+			
+			    {% if avatar.username is defined %}
+			        {% set pathUrl = path('user_wall', {username: avatar.username})  %}
+		        {% elseif avatar.slug is defined %}
+		            {% set pathUrl = path('idol_wall', {slug: avatar.slug})  %}
+		        {% else %}
+		            {% set pathUrl = ''  %}
+		        {% endif %}
+		        
+		        {% if avatar.friendCount is defined %}
+		            {% set fanCount = avatar.friendCount %}
+		        {% elseif avatar.fanCount is defined %}
+		            {% set fanCount = avatar.fanCount %}
+		        {% endif %}
+
             	<li>
             		<div class='{{ avatars.containerClass }}'>
-            			<a href="{{ path('user_wall', {username: avatar.username}) }}">
+            			<a href="{{ pathUrl }}">
                         	<div class="avatar">
-                            	{% thumbnail avatar.image, 'big_square' %}
+                        	    {% if avatar.image %}
+                                    {% thumbnail avatar.image, 'big_square' %}
+                                {% else %}
+                                    <img src="{{ asset('bundles/dodicifansworldweb/images/profile_no_image.png' )}}" />
+                                {% endif %}
                             </div>
                             <span class="name">{{ avatar}}</span>
-                            <span class="friendCount">{{ avatar.friendCount }}</span>
+                            <span class="friendCount">{{ fanCount }}</span>
                             <div class="addFriend" targetId="{{ avatar.id }}">
-                            	<button class="btn btn_friendship add btn-success"> Ser fan{% if avatar.restricted %} (solicitar){% endif %}</button>
+                            	<button class="btn btn_friendship add btn-success"> Ser fan</button>
                         	</div>
                         </a>
             		</div>

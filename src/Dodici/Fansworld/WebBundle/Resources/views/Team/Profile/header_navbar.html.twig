@@ -26,15 +26,15 @@
             </li>
             
             <li {% if active_tab == 'fans' %}class="active"{% endif %}>
-                <a href="">Fans</a>
+                <a href="{{ path('team_fans', {slug: entity.slug}) }}">Fans</a>
             </li>
             
             <li {% if active_tab == 'eventos' %}class="active"{% endif %}>
                 <a href="">Eventos</a>
             </li>
             
-            <li {% if active_tab == 'idolos' %}class="active"{% endif %}>
-                <a href="">Idolos</a>
+            <li {% if active_tab == 'idols' %}class="active"{% endif %}>
+                <a href="{{ path('team_idols', {slug: entity.slug}) }}">Idolos</a>
             </li>
             
         </ul>
