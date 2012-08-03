@@ -1,5 +1,7 @@
 php app/console doctrine:schema:update --force
 php app/console assetic:dump --env=prod
+chmod -R 777 app/cache/*
 php app/console cache:clear --env=prod
 php app/console cache:warmup --env=prod
+chmod -R 777 app/cache/*
 php /usr/share/sami/sami.php update /usr/share/sami/projects/fansworld.php
