@@ -24,8 +24,8 @@
     {% endif %}
 {% endblock %}
                 
-{% block header_iship %}
-    
+{% block header_fship %}
+    {% set iship = appstate.idolshipWith(entity) %}
     {% if  iship is null %}
         <div class="addFriend" targetId="{{ entity.id }}">
             <button class="btn btn-large btn_friendship add btn-success"> Ser fan </button>
@@ -45,24 +45,20 @@
 						#}
         </div>
     {% else %}
-        {% if iship %}
-            {% if iship.active %}
-                <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ iship.id }}">Dejar de Seguir</a>
-            {% else %}
-                <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ iship.id }}">Cancelar Solicitud</a>
-            {% endif %}
-        {% endif %}
+        <div class="addFriend" targetId="{{ entity.id }}">
+            <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ iship.id }}">Dejar de Seguir</a>
+        </div>
     {% endif %}
 {% endblock %}
 	        
 {% block header_numbersinfo %}
     <section class='fotos-info'>
-        <div class='numero'>91</div>
+        <div class='numero'>{{ entity.photoCount }}</div>
         <div class='tipo'>Fotos</div>
         <div class='separador' />
     </section>
     <section class='videos-info'>
-        <div class='numero'>59</div>
+        <div class='numero'>{{ entity.videoCount }}</div>
         <div class='tipo'>Videos</div>
         <div class='separador' />
     </section>

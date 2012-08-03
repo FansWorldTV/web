@@ -35,7 +35,7 @@ class TeamController extends SiteController
      * @Route("/{id}/{slug}", name= "team_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
      * @Template()
      */
-    public function showAction($id)
+    public function wallAction($id)
     {
         $repo = $this->getRepository('Team');
         $team = $repo->findOneBy(array('id' => $id, 'active' => true));

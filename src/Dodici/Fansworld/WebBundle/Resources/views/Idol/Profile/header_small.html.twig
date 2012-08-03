@@ -34,10 +34,10 @@
 	
 	<div class='span2'>
         <div class='header-fship'>
-		    {% set fship = appstate.idolshipWith(entity) %}
-		    {% if fship is null %}
+		    {% set iship = appstate.idolshipWith(entity) %}
+		    {% if iship is null %}
 		        <div class="addFriend" targetId="{{ entity.id }}">
-		            <button class="btn btn-large btn_friendship add btn-success"> Ser fan{% if entity.restricted %} (solicitar){% endif %}</button>
+		            <button class="btn btn-large btn_friendship add btn-success"> Ser fan </button>
 		            			{#
 									{% if friendgroups|length > 0 %}
 			                            
@@ -54,9 +54,7 @@
 								#}
 		        </div>
 		    {% else %}
-		        {% if fship %}
-	                <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Dejar de Seguir</a>
-		        {% endif %}
+                <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ iship.id }}">Dejar de Seguir</a>
 		    {% endif %}
 		</div>
 	</div>
