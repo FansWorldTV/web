@@ -192,6 +192,18 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     private $fanCount;
     
     /**
+     * @var integer $photoCount
+     * @ORM\Column(name="photocount", type="bigint", nullable=false)
+     */
+    private $photoCount;
+    
+    /**
+     * @var integer $videoCount
+     * @ORM\Column(name="videocount", type="bigint", nullable=false)
+     */
+    private $videoCount;
+    
+    /**
      * @ORM\OneToMany(targetEntity="Visit", mappedBy="team", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $visits;
@@ -216,6 +228,14 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
         }
         if (null === $this->fanCount) {
         	$this->setFanCount(0);
+        }
+        
+        if (null === $this->photoCount) {
+            $this->setPhotoCount(0);
+        }
+        
+        if (null === $this->videoCount) {
+            $this->setVideoCount(0);
         }
     }
     public function __construct()
@@ -461,7 +481,47 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     {
         return $this->fanCount;
     }
-
+    
+    /**
+     * Set photoCount
+     *
+     * @param bigint $photoCount
+     */
+    public function setPhotoCount($photoCount)
+    {
+        $this->photoCount = $photoCount;
+    }
+    
+    /**
+     * Get photoCount
+     *
+     * @return bigint
+     */
+    public function getPhotoCount()
+    {
+        return $this->photoCount;
+    }
+    
+    /**
+     * Set videoCount
+     *
+     * @param bigint $videoCount
+     */
+    public function setVideoCount($videoCount)
+    {
+        $this->videoCount = $videoCount;
+    }
+    
+    /**
+     * Get videoCount
+     *
+     * @return bigint
+     */
+    public function getVideoCount()
+    {
+        return $this->videoCount;
+    }
+    
     /**
      * Add idols
      *
