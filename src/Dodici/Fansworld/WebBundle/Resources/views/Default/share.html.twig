@@ -7,21 +7,19 @@
 {% set type = appstate.type(entity) %}
 {% set share_url = url(type ~ "_show", {'id': entity.id, 'slug': entity.slug }) %}
 <div class="share_content clearfix">
-	<a target="_blank" href="http://www.facebook.com/sharer.php?u={{ share_url|url_encode }}"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/facebook.png') }}" alt="facebook"></a>
+	<!--a target="_blank" href="http://www.facebook.com/sharer.php?u={{ share_url|url_encode }}"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/facebook.png') }}" alt="facebook"></a>
 	<a target="_blank" href="https://twitter.com/share?url={{ share_url|url_encode }}"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/twitter.png') }}" alt="twitter"></a>
-	<g:plusone annotation="none"></g:plusone>
+	<g:plusone annotation="none"></g:plusone-->
 	
 	<div class="internal_buttons">
+                                    <a class="btn report" href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}"><i class="icon-flag"></i></a> 
 		{% if (type == 'photo' or type == 'video' or type == 'album') and entity.author == app.user %}
 			{% include 'DodiciFansworldWebBundle:Default:edit_button.html.twig' with {entity: entity, type: type} %}
-			{% include 'DodiciFansworldWebBundle:Default:delete_button.html.twig' with {entity: entity, type: type} %}
+			{#{% include 'DodiciFansworldWebBundle:Default:delete_button.html.twig' with {entity: entity, type: type} %}#}
 		{% endif %} 
+                                    {% include 'DodiciFansworldWebBundle:Default:share_button.html.twig' with {entity: entity} %}
 		{% if likebutton %}
-			{% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {entity: entity} %}
+			{% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {entity: entity, buttonmode: true} %}
 		{% endif %}
-		{% if sharebutton %}
-			{% include 'DodiciFansworldWebBundle:Default:share_button.html.twig' with {entity: entity} %}
-		{% endif %}
-		<a class="report" href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}">Denunciar</a> 
 	</div>
 </div>
