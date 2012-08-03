@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Model;
 
+use Dodici\Fansworld\WebBundle\Entity\Team;
+
 use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
@@ -165,4 +167,23 @@ class IdolRepository extends CountBaseRepository
         return $this->CountSearchFront($user, $text, null);
     }
 
+    /**
+     * Returns the Idols that have the team as a current career
+     * @param Team $team
+     */
+    public function byTeam(Team $team)
+    {
+        return $this->_em->createQuery('
+    	SELECT i
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Idol i
+    	INNER JOIN i.idolcareers ic
+    	WHERE i.active = true
+    	AND ic.active = true
+    	AND ic.actual = true
+    	AND ic.team = :team
+    	')
+            ->setParameter('team', $team->getId())
+            ->getResult();
+            
+    }
 }
