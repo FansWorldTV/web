@@ -9,7 +9,7 @@ use Gedmo\Translatable\Translatable;
 /**
  * Dodici\Fansworld\WebBundle\Entity\Country
  * 
- * Self-explanatory
+ * A selectable country for users' location, idols, etc. Each has many cities.
  *
  * @ORM\Table(name="country")
  * @ORM\Entity

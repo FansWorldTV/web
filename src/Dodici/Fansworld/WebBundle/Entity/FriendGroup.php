@@ -6,6 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\FriendGroup
+ * 
+ * Arbitrary groups created by a user, in which he can place the users he follows.
+ * A user can place a user he follows into more than one group at a time.
  *
  * @ORM\Table(name="friendgroup")
  * @ORM\Entity

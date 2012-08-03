@@ -13,6 +13,10 @@ use Gedmo\Translatable\Translatable;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\Team
+ * 
+ * A sports team or similar. Can be followed by users (become a fan, Teamship).
+ * Contents can be tagged with teams (HasTeam).
+ * Involved in Events. Belongs to a TeamCategory, and therefore a Sport.
  *
  * @ORM\Table(name="team")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\TeamRepository")

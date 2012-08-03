@@ -10,22 +10,33 @@ use Gedmo\Translatable\Translatable;
 /**
  * Dodici\Fansworld\WebBundle\Entity\Badge
  * 
- * Achievement badge
+ * Achievement badge, awarded in steps (BadgeStep) to the user for performing certain amounts of TYPE actions.
+ * One Badge per TYPE.
  *
  * @ORM\Table(name="badge")
  * @ORM\Entity
  */
 class Badge implements Translatable
 {
+    // Adds a certain amount of idols
     const TYPE_IDOLSHIP = 1;
+    // Adds a certain amount of teams
     const TYPE_TEAMSHIP = 2;
+    // Follows a certain amount of users
     const TYPE_FRIENDSHIP = 3;
+    // Uploads a certain amount of videos
     const TYPE_VIDEO = 4;
+    // Uploads a certain amount of photos
     const TYPE_PHOTO = 5;
+    // Checks into a certain amount of events
     const TYPE_EVENTSHIP = 6;
+    // Participates in a certain amount of contests
     const TYPE_CONTESTPARTICIPANT = 7;
+    // Answers a certain amount of quizzes
     const TYPE_QUIZANSWER = 8;
+    // Creates a certain amount of comments
     const TYPE_COMMENT = 9;
+    // Gets a certain amount of combined views on his profile, photos and videos
     const TYPE_PROFILEVIEWS = 10;
 
 	public static function getTypes()

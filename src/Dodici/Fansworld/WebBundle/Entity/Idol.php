@@ -11,7 +11,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Dodici\Fansworld\WebBundle\Entity\VideoCategory
+ * Dodici\Fansworld\WebBundle\Entity\Idol
+ * 
+ * A sports player or similar. Can be followed by users (become a fan, Idolship).
+ * Contents can be tagged with idols (HasIdol).
  *
  * @ORM\Table(name="idol")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\IdolRepository")

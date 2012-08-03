@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Dodici\Fansworld\WebBundle\Entity\HomeVideo
  * 
- * A video displayed in a global home, or a channel home
+ * A video displayed in a global home, or a channel home. Manually set in admin module.
  *
  * @ORM\Table(name="homevideo")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\HomeVideoRepository")
