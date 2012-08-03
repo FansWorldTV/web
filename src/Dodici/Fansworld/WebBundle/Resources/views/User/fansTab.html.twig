@@ -12,10 +12,8 @@
 
 {% block inner_content %}
 	{{ parent() }}
-	    
-	{% include "DodiciFansworldWebBundle:Friendship:fan_list_block.html.twig" with { block_title:  'Top Fans'|trans, friends: friends } %}
-	    
-	{% include "DodiciFansworldWebBundle:Friendship:fan_list_block.html.twig" with { block_title:  'Otros Fans'|trans, friends: friends } %}
-	    
+	{% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { block_title:'Top Fans'|trans, avatars: friends } %}    
+	
+	{% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { block_title: 'Otros Fans'|trans, avatars: friends } %}
     
 {% endblock %}

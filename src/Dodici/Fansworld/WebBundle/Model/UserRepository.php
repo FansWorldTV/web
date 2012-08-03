@@ -350,6 +350,31 @@ class UserRepository extends CountBaseRepository
                         ->setParameter('idarr', $idarr)
                         ->getResult();
     }
+    
+    
+    /**
+     * Get all users who have one or more of the given teams
+     * @param array_of_users|user $idols
+     */
+    public function byTeams($teams)
+    {
+        if (!is_array($teams))
+            $teams = array($teams);
+        $tmarr = array();
+        foreach ($teams as $team)
+            $tmarr[] = $team->getId();
+    
+        return $this->_em->createQuery('
+                SELECT DISTINCT u
+                FROM \Application\Sonata\UserBundle\Entity\User u
+                INNER JOIN u.teamships tms
+                WHERE u.enabled = true
+                AND tms.team IN (:tmarr)
+                ')
+                ->setParameter('tmarr', $tmarr)
+                ->getResult();
+    }
+    
 
     /**
      * Get all users who have posted in the thread

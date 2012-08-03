@@ -247,6 +247,12 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
      * @var ArrayCollection $idolships
      */
     protected $idolships;
+
+    /**
+     * @var ArrayCollection $teamships
+     */
+    protected $teamships;
+    
     
     /**
      * @var ArrayCollection $hasinterests
@@ -304,6 +310,7 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
     	$this->friendships = new ArrayCollection();
     	$this->friendgroups = new ArrayCollection();
     	$this->idolships = new ArrayCollection();
+    	$this->teamships = new ArrayCollection();
     	$this->hasinterests = new ArrayCollection();
     	$this->hasbadges = new ArrayCollection();
     	$this->privacy = Privacy::getDefaultFieldPrivacy();
@@ -1139,6 +1146,43 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
     {
         $this->idolships = $idolships;
     }
+    
+    
+    /**
+     * Add teamships
+     *
+     * @param \Dodici\Fansworld\WebBundle\Entity\Teamship $teamships
+     */
+    public function addTeamship(\Dodici\Fansworld\WebBundle\Entity\Teamship $teamships)
+    {
+        $this->teamships[] = $teamships;
+    }
+    
+    public function addTeamships(\Dodici\Fansworld\WebBundle\Entity\Teamship $teamships)
+    {
+        $this->addTeamships($teamships);
+    }
+    
+    /**
+     * Get teamships
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getTeamships()
+    {
+        return $this->teamships;
+    }
+    
+    /**
+     * Set teamships
+     *
+     * @param Doctrine\Common\Collections\Collection $teamships
+     */
+    public function setTeamships($teamships)
+    {
+        $this->teamships = $teamships;
+    }
+    
     
 	/**
      * Add friendgroups

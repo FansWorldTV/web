@@ -25,37 +25,12 @@
             </div>    
         </div>
     {% endif %}
-    <div class="row-fluid">
-        <h3>Albums ( {{ albums|length }} )</h3>
-        <div class="am-container albums">
-            {% for album in albums %}
-                    <a href="{{ path('album_show', { 'id': album.id, 'slug': album.slug } ) }}" >
-                        <span class="title">
-                            {{ album.title }}
-                            <br/>
-                            <span class="photos-quant">{{ album.photos|length }} fotos</span>
-                        </span>
-                        {% thumbnail album.image, 'medium' with {title: ''} %}
-                    </a>
-            {% endfor %}
-        </div>
-        {% if viewMoreAlbums %}
-            <div class="clearfix"></div>
-            <button class="loadmore albums">ver más</button>
-        {% endif %}
-    </div>
-    <div class="row-fluid">
-        <h3>Otras fotos ( {{ photos|length }} )</h3>
-        <div class="am-container photos">
-            {% for photo in photos %}
-                <a href="{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}">{% thumbnail photo.image, 'small' with {title: photo.title} %}</a>
-            {% endfor %}
-        </div>
-        {% if viewMorePhotos %}
-            <div class="clearfix"></div>
-            <a class="loadmore" href="{{ path('user_listphotos', {username: user.username}) }}">ver todas las imágenes</a>
-        {% endif %}
-    </div>
+    
+    {% include 'DodiciFansworldWebBundle:Photo:blocks/albums_montage.html.twig'  %}
+    
+    {% include 'DodiciFansworldWebBundle:Photo:blocks/montage.html.twig'  %}
+    
+    
     <input type="hidden" value="{{user.id}}" id="userid"/>
     <div id="templates" class="hidden">
         <a href="" >

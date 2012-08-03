@@ -1,0 +1,19 @@
+<div class="row-fluid">
+    <h3>Albums ( {{ albums|length }} )</h3>
+    <div class="am-container albums">
+        {% for album in albums %}
+                <a href="{{ path('user_showalbum', { 'id': album.id, 'username': user.username } ) }}" >
+                    <span class="title">
+                        {{ album.title }}
+                        <br/>
+                        <span class="photos-quant">{{ album.photos|length }} fotos</span>
+                    </span>
+                    {% thumbnail album.image, 'medium' with {title: ''} %}
+                </a>
+        {% endfor %}
+    </div>
+    {% if viewMoreAlbums %}
+        <div class="clearfix"></div>
+        <button class="loadmore albums">ver más</button>
+    {% endif %}
+</div>

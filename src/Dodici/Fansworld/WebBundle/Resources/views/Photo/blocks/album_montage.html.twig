@@ -1,0 +1,23 @@
+<div class="row-fluid album-detail">
+    <span class="title">
+        <h4>{{ album.title }} ({{ album.photos|length }}) <a class="more" href="{{ path('user_listalbums', {username: user.username}) }}"> {{'Albums'|trans}}</a></h4>
+    </span>
+        
+    <div class="am-container">
+        {% for photo in album.photos %}
+                {% if appstate.canview(photo) %}
+                        <a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">{% thumbnail photo.image, 'medium' %}</a>
+                {% endif %}
+        {% endfor %}
+    </div>
+        
+    <div class="clearfix"></div>
+        
+    <div class="content">
+        <p>{{ album.content }}</p>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="row-fluid">
+    {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: album} %}    
+</div>

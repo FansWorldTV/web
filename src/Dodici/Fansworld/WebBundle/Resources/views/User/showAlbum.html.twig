@@ -1,0 +1,38 @@
+{% extends "DodiciFansworldWebBundle:User:base.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_fullwidth.html.twig"  %}
+
+{% block title %}{{ parent() }} - {{ album.title }}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/dodicifansworldweb/js/albums.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block profile_tabs %}
+	{% set active_tab = 'photos' %}
+	{{ parent() }}
+{% endblock %}
+
+{% block inner_content %}
+{{ parent() }}
+{% if (user == app.user) %}
+    <div class="row-fluid update clearfix"> 
+        <span></span> 
+        <div class="upd_option clearfix"> 
+            <a class="btn_picture btn_upload_photo" href="{{ path('photo_fileupload') }}">{{'load image'|trans}}</a> 
+        </div>    
+    </div>
+{% endif %} 
+    
+{% include 'DodiciFansworldWebBundle:Photo:blocks/album_montage.html.twig'  %}
+
+{% include 'DodiciFansworldWebBundle:Default:comments_and_tags.html.twig' with {entity: album} %}
+    
+<script type="text/javascript">
+    site.startMosaic($('.am-container'), {margin : 0});
+    $(document).ready(function(){
+        albums.init();
+    });
+</script>
+{% endblock %}

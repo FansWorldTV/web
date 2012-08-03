@@ -1,0 +1,21 @@
+{% extends "DodiciFansworldWebBundle:Team:base.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_fullwidth.html.twig"  %}
+
+{% block title %}{{ parent() }} - {{ 'Fans'|trans }}{% endblock %}
+
+
+{% block profile_tabs %}
+	{% set active_tab = 'fans' %}
+	{{ parent() }}
+{% endblock %}
+
+{% block inner_content %}
+	{{ parent() }}
+	    
+	{% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { block_title:  'Top Fans'|trans, avatars: fans } %}
+	    
+	{% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { block_title:  'Otros Fans'|trans, avatars: fans } %}
+	    
+    
+{% endblock %}

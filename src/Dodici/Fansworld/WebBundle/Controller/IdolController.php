@@ -140,4 +140,32 @@ class IdolController extends SiteController
             'idol' => $idol
         );
     }
+    
+    /**
+     * @Route("/i/{slug}/fans", name="idol_fans")
+     * @Template
+     * @Secure(roles="ROLE_USER")
+     */
+    public function fansTabAction($slug)
+    {
+        $idol = $this->getRepository('Idol')->findOneBy(array('slug' => $slug));
+        if (!$idol) {
+            throw new HttpException(404, "No existe el ídolo");
+        }else
+            $this->get('visitator')->visit($idol);
+    
+    
+        $fans = array(
+            'ulClass' => 'fans',
+            'containerClass' => 'fan-container'
+        );
+        $fans['list'] = $this->getRepository('User')->byIdols($idol);
+    
+        $return = array(
+                'fans' => $fans,
+                'idol' => $idol
+        );
+    
+        return $return;
+    }
 }

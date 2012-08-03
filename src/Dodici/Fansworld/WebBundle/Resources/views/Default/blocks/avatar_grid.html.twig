@@ -1,0 +1,36 @@
+{% if avatars.containerClass is not defined %}
+    {% set avatars = avatars|merge({'containerClass': ''}) %}
+{% endif %}
+
+{% if avatars.ulClass is not defined %}
+    {% set avatars = avatars|merge({'ulClass': ''}) %}
+{% endif %}
+
+
+<section class="avatar-grid">
+	<header class='title'>
+		<h4>{{ block_title }} ( {{ avatars.list|length }} )</h4>
+	</header>
+    {% if avatars|length > 0 %}
+        <ul class="avatar-list {{ avatars.ulClass }}"> 
+			{% for avatar in avatars.list %}
+            	<li>
+            		<div class='{{ avatars.containerClass }}'>
+            			<a href="{{ path('user_wall', {username: avatar.username}) }}">
+                        	<div class="avatar">
+                            	{% thumbnail avatar.image, 'big_square' %}
+                            </div>
+                            <span class="name">{{ avatar}}</span>
+                            <span class="friendCount">{{ avatar.friendCount }}</span>
+                            <div class="addFriend" targetId="{{ avatar.id }}">
+                            	<button class="btn btn_friendship add btn-success"> Ser fan{% if avatar.restricted %} (solicitar){% endif %}</button>
+                        	</div>
+                        </a>
+            		</div>
+                </li>
+			{% endfor %}
+		</ul>
+    {% else %}
+        <h3>No posee Fans</h3>
+    {% endif %}
+</section>

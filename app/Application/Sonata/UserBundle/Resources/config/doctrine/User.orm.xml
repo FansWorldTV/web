@@ -112,6 +112,20 @@
         </one-to-many>
         
         <one-to-many
+                field="teamships"
+                target-entity="Dodici\Fansworld\WebBundle\Entity\Teamship"
+                mapped-by="author"
+                orphan-removal="true"
+                >
+                <cascade>
+                    <cascade-remove/>
+                    <cascade-persist/>
+                </cascade>
+                <orphan-removal>true</orphan-removal>
+
+        </one-to-many>
+        
+        <one-to-many
                 field="friendgroups"
                 target-entity="Dodici\Fansworld\WebBundle\Entity\FriendGroup"
                 mapped-by="author"

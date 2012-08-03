@@ -368,4 +368,32 @@ class TeamController extends SiteController
             'team' => $team
         );
     }
+    
+    /**
+     * @Route("/{slug}/fans", name="team_fans")
+     * @Template
+     * @Secure(roles="ROLE_USER")
+     */
+    public function fansTabAction($slug)
+    {
+        $team = $this->getRepository('Team')->findOneBy(array('slug' => $slug));
+        if (!$team) {
+            throw new HttpException(404, "No existe el Team");
+        }else
+            $this->get('visitator')->visit($team);
+    
+    
+        $fans = array(
+                'ulClass' => 'fans',
+                'containerClass' => 'fan-container'
+        );
+        $fans['list'] = $this->getRepository('User')->byTeams($team);
+    
+        $return = array(
+                'fans' => $fans,
+                'team' => $team
+        );
+    
+        return $return;
+    }
 }

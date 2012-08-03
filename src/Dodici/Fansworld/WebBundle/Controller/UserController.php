@@ -551,7 +551,30 @@ class UserController extends SiteController
             'viewMoreAlbums' => $viewMoreAlbums
         );
     }
-
+    
+    
+    /**
+     * @Route("/u/{username}/albums/{id}", name= "user_showalbum", requirements = {"id" = "\d+"})
+     * @Template()
+     */
+    public function showAlbumAction($id,$username)
+    {
+        $user = $this->getRepository('User')->findOneByUsername($username);
+        if (!$user) {
+            throw new HttpException(404, "No existe el usuario");
+        }else
+            $this->get('visitator')->visit($user);
+        
+        $album = $this->getRepository('Album')->findOneBy(array('id' => $id, 'active' => true));
+    
+        $this->securityCheck($album);
+    
+        return array(
+                'album' => $album,
+                'user' => $user
+        );
+    }
+    
     /**
      * @Route("/invite_users/", name = "user_invite")
      * @Secure(roles="ROLE_USER")
@@ -731,7 +754,9 @@ class UserController extends SiteController
             $this->get('visitator')->visit($user);
 
 
-        $friends = $this->getRepository('User')->FriendUsers($user, null, SearchController::LIMIT_SEARCH, null);
+        $friends = array( 
+            'list' => $this->getRepository('User')->FriendUsers($user, null, SearchController::LIMIT_SEARCH, null)
+        );
 
         $return = array(
             'friends' => $friends,
