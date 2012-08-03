@@ -89,7 +89,7 @@ class IdolController extends SiteController
     /**
      * Idol videos
      * 
-     *  @Route("/i/{slug}/videos", name="video_idol")
+     *  @Route("/i/{slug}/videos", name="idol_videos")
      *  @Template()
      */
     public function videosTabAction($slug)

@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block inner_content %}
-    <section id="personalData" class="row-fluid">
+    <section id="entity-data" class="row-fluid">
             <h4>Datos :</h4>
             <dl class="dl-horizontal">
                 {% if team.title %}
@@ -56,8 +56,8 @@
         </section>
 
         {% if team.content %}
-            <section id="aboutMe" class="row-fluid">
-                <h4>Sobre mi: </h4>
+            <section id="entity-content" class="row-fluid">
+                <h4>Sobre mi : </h4>
                 <p>{{ team.content|nl2br }}</p>
             </section>
         {% endif %}

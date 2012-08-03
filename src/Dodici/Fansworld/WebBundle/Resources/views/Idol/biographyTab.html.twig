@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block inner_content %}
-    <section id="personalData" class="row-fluid">
+    <section id="entity-data" class="row-fluid">
             <h4>Datos personales:</h4>
             <dl class="dl-horizontal">
                 {% if idol.firstname %}
@@ -56,7 +56,7 @@
         </section>
 
         {% if idol.content %}
-            <section id="aboutMe" class="row-fluid">
+            <section id="entity-content" class="row-fluid">
                 <h4>Sobre mi: </h4>
                 <p>{{ idol.content|nl2br }}</p>
             </section>
