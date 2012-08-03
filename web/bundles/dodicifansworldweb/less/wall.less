@@ -215,3 +215,44 @@ div.actualizacion{
         color: #808080;
     }
 }
+
+
+// Estilo del bloque que contiene tanto los tags de la entidad como los comentarios
+
+.comments-and-tags {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #a19e9f;
+    padding-top: 15px;
+
+    .tags{
+        border-top: 1px solid #b9b9b9;
+        text-align: right;
+        padding-top: 10px;
+    }
+
+    .tag-title{
+        text-align: right;
+    }
+
+    .form-container{
+        padding-top: 20px;
+        textarea{
+            width: 99%;
+        }
+    }
+    
+    section.subcomment-container{
+        overflow: hidden;
+        > *{
+            .pull-left();
+        }
+        margin-bottom: 15px;
+        div.subcomment-avatar{
+        
+        }
+        div.subcomment-content{
+            padding-left: 15px;
+        }
+    }
+}
