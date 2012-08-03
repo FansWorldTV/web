@@ -35,7 +35,9 @@
             {% for rel_video in related_videos %}
                 <div class="row-fluid">
                     <div class="span5">
-                        {% thumbnail rel_video.image , 'medium' %}
+                        <a href="{{ path('video_show', {id: rel_video.id, slug: rel_video.slug}) }}">
+                            {% thumbnail rel_video.image , 'medium' %}
+                        </a>
                     </div>
                     <div class="span7">
                         <p class="title">{{ rel_video.title }}</p>
