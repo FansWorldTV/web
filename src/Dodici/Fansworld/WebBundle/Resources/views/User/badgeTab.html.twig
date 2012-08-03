@@ -12,44 +12,7 @@
 
 {% block inner_content %}
 	{{ parent() }}
-    <section class="badges-container">
-        {% if badges|length > 0 %}
-            <ul class="badges unstyled">
-                {% for badge in badges %}
-                    <li>
-                    	<div class='row-fluid'>
-                    		<div class="span2">
-                    		
-                    			{% if badge.steps %}
-                    				 {% for step in badge.steps %}
-                    				 	{% if loop.last %}
-                    				 		{% thumbnail step.image, 'avatar' %}	
-                    					{% endif %}
-                    				 {% endfor %}
-		                            
-		                        {% else %}
-		                            <img src="{{ asset('bundles/dodicifansworldweb/images/profile_no_image.png' )}}" />
-		                        {% endif %}
-		                        
-                    		</div>
-                    		<div class="span10">
-                    			<span class="badge-label">{{ badge.badge.title }}</span>
-                    			<div class="row-fluid">
-                    				<div class="span10 badge-content">
-                    					{{ badge.badge.content }}
-                    				</div>
-                    			</div>
-                    		</div>
-                    	
-                    	</div>
-                        
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <h3>No posee badges</h3>
-        {% endif %}
-    </section>
+    {% include "DodiciFansworldWebBundle:Badge:blocks/list.html.twig" %}
 {% endblock %}
 {% block inner_sidebar %}
 	{{ parent() }}
