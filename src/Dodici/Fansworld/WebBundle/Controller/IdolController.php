@@ -34,11 +34,14 @@ class IdolController extends SiteController
             throw new HttpException(404, "No existe el ídolo");
         }else
             $this->get('visitator')->visit($idol);
+        
+        $highlights = $this->getRepository('video')->highlights($idol, 4);
 
-        $hasComments = $this->getRepository('Comment')->countBy(array('idol' => $idol->getId()));
-        $hasComments = $hasComments > 0 ? true : false;
-
-        return array('idol' => $idol, 'hasComments' => $hasComments, 'isHome' => true);
+        return array(
+            'idol' => $idol, 
+            'isHome' => true,
+            'highlights' => $highlights,
+        );
     }
 
     /**

@@ -28,8 +28,7 @@ list.getTeams = function(){
     function(r){
         for(i in r.teams){
             var element = r.teams[i];
-            $("ul.listMosaic").append("<li> <a href='"+ Routing.generate(appLocale +'_' +'team_show', {
-                'id': element.id, 
+            $("ul.listMosaic").append("<li> <a href='"+ Routing.generate(appLocale +'_' +'team_wall', {
                 'slug': element.slug
             })+"'>" + element.title + " </a></li>");
         }

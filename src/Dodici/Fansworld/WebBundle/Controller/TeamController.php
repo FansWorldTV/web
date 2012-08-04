@@ -32,20 +32,20 @@ class TeamController extends SiteController
     const LIMIT_ITEMS = 10;
 
     /**
-     * @Route("/{id}/{slug}", name= "team_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
+     * @Route("/{slug}", name= "team_wall", requirements = {"id" = "\d+"})
      * @Template()
      */
-    public function wallAction($id)
+    public function wallAction($slug)
     {
         $repo = $this->getRepository('Team');
-        $team = $repo->findOneBy(array('id' => $id, 'active' => true));
-        $highlights = $this->getRepository('video')->highlights($team, 4);
-
+        $team = $repo->findOneBy(array('slug' => $slug, 'active' => true));
         if (!$team)
             throw new HttpException(404, 'Equipo no encontrado');
         else
             $this->get('visitator')->visit($team);
-
+        
+        $highlights = $this->getRepository('video')->highlights($team, 4);
+        
         return array(
             'team' => $team,
             'isHome' => true,

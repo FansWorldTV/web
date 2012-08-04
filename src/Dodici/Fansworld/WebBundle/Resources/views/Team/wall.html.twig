@@ -1,4 +1,4 @@
-{% extends "DodiciFansworldWebBundle:Idol:base.html.twig" %}
+{% extends "DodiciFansworldWebBundle:Team:base.html.twig" %}
 
 {% use "DodiciFansworldWebBundle:Layout/Snippet:inner_rsidebar.html.twig"  %}
 
@@ -12,12 +12,12 @@
 {% block inner_content %}
 	{{ parent() }}
 	<div class="cont">
-    	{% include 'DodiciFansworldWebBundle:Comment/blocks:list.html.twig' with {entity: idol} %}
+    	{% include 'DodiciFansworldWebBundle:Comment/blocks:list.html.twig' with {entity: team} %}
     </div>
 {% endblock %}
 
 {% block inner_sidebar %}
 	{{ parent() }}
-    <img src="{{ asset("bundles/dodicifansworldweb/images/sidebar.png") }}"  style='width:100%' />
-    TODO
+	<img src="{{ asset("bundles/dodicifansworldweb/images/sidebar.png") }}"  style='width:100%' />
+	TODO
 {% endblock %}

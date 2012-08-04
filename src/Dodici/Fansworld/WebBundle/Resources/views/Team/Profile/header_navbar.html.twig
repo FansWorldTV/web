@@ -6,7 +6,7 @@
     <nav class='span12'>
        <ul class="nav nav-tabs-profile">
             <li {% if active_tab == 'wall' %}class="active"{% endif %}>
-                <a  href="{{ path('team_show', {id: entity.id}) }}">Muro</a>
+                <a  href="{{ path('team_wall', {slug: entity.slug}) }}">Muro</a>
             </li>
             
             <li {% if active_tab == 'info' %}class="active"{% endif %}>

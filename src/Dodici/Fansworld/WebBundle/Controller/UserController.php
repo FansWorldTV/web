@@ -37,12 +37,14 @@ class UserController extends SiteController
         }else
             $this->get('visitator')->visit($user);
 
-        $hasComments = $this->getRepository('Comment')->countBy(array('target' => $user->getId()));
-        $hasComments = $hasComments > 0 ? true : false;
         $loggedUser = $this->getUser();
         $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
 
-        return array('user' => $user, 'friendgroups' => $friendGroups, 'hasComments' => $hasComments, 'isHome' => true);
+        return array(
+            'user' => $user, 
+            'friendgroups' => $friendGroups, 
+            'isHome' => true
+        );
     }
 
     /**

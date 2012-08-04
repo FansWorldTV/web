@@ -25,7 +25,7 @@
 {% block inner_content %}
 	{{ parent() }}
 	<div class="cont">
-    	{% include 'DodiciFansworldWebBundle:Comment:comment_block.html.twig' with {entity: user} %}
+	    {% include 'DodiciFansworldWebBundle:Comment/blocks:list.html.twig' with {entity: user} %}
     </div>
 {% endblock %}
 
