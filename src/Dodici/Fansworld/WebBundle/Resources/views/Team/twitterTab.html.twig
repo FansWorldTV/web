@@ -1,4 +1,4 @@
-{% extends "DodiciFansworldWebBundle:Layout:three_column.html.twig" %}
+{% extends "DodiciFansworldWebBundle:Team:base.html.twig" %}
 
 {% use "DodiciFansworldWebBundle:Layout/Snippet:inner_fullwidth.html.twig"  %}
 
@@ -10,5 +10,6 @@
 {% endblock %}
 
 {% block inner_content %}
+    {{ parent() }}
     {% render "DodiciFansworldWebBundle:Twitter:lastTweets" with { entity: team } %}
 {% endblock %}
