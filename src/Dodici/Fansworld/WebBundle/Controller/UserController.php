@@ -826,7 +826,7 @@ class UserController extends SiteController
                 ),
             )
         );
-        
+
         return array(
             'sorts'   => $sorts, 
             'videos'  => $videos,

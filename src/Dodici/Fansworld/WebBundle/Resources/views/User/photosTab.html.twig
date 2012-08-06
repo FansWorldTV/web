@@ -20,9 +20,10 @@
 	{{ parent() }}
     {% if selfWall %}
         <div class="row-fluid update clearfix"> 
-            <div class="upd_option clearfix"> 
-                <a class="btn_picture btn_upload_photo" href="{{ path('photo_fileupload') }}">{{ 'upload photo'|trans }}</a> 
-            </div>    
+          <a class="btn btn_upload_photo pull-right" href="{{ path('photo_fileupload') }}">
+            <i class="icon-upload"></i>
+            {{ 'upload photo'|trans }}
+          </a> 
         </div>
     {% endif %}
     

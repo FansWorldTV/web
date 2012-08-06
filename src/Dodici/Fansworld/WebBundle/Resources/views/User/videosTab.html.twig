@@ -11,7 +11,19 @@
 
 {% block inner_content %}
     
-    {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %}
-
-    {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig'  %}
+    {% if selfWall %}
+        <div class="row-fluid update clearfix"> 
+          <span class="pull-left">
+            {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %}
+          </span>
+          <span class="pull-right">
+              <a class="btn btn_upload_photo" href="{{ path('video_fileupload') }}">
+                <i class="icon-upload"></i>
+                {{ 'upload video'|trans }}
+              </a> 
+          </span>
+        </div>
+    {% endif %}
+    
+    {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with {'entity-id': user.id, 'entity-type': 'User'} %}
 {% endblock %}

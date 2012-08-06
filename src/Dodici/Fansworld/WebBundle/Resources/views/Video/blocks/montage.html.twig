@@ -1,7 +1,7 @@
 <!-- Listado de videos para mostrar como montage -->
 <div class="row-fluid">
     {% if videos|length>0 %}
-        <div id="am-container" class="am-container list-mosaic">
+        <div id="am-container" class="am-container list-mosaic" data-entity-id="{{ entity-id }}" data-entity-type="{{ entity-type }}">
         {% for video in videos %}
                     <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
                         <span class="title">{{ video.title }}</span>
@@ -9,10 +9,12 @@
                     </a>
         {% endfor %}
         </div>
+        {% if addMore %}
+          <a href="#" class="loadmore">Cargar más</a>
+        {% endif %}
     {% else %}
         <h2>No se encontraron videos.</h2>
     {% endif %}
-    <input type="hidden" id="entityId" value="2"/> <!-- @todo cambiar esto por entity id y poner tambien un entity type -->
 </div>
     
 <!-- Template que se usa para clonar y editar por javascript -->
