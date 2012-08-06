@@ -1,9 +1,4 @@
-{% if appstate.mobile %}
-	{% set includename = "mobile" %}
-{% else %}
-	{% set includename = "web" %}
-{% endif %}
-{% extends 'DodiciFansworldWebBundle::' ~ includename ~ '.html.twig' %}
+{% extends 'DodiciFansworldWebBundle:Layout:three_column.html.twig' %}
 
 {% block title %}{{ parent() }} - Usuario{% endblock %}
 
