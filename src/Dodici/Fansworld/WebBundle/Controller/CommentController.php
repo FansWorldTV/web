@@ -66,7 +66,7 @@ class CommentController extends SiteController
             $translator = $this->get('translator');
             $appstate = $this->get('appstate');
 
-            if (!in_array($type, array('newspost', 'photo', 'video', 'album', 'contest', 'comment', 'user')))
+            if (!in_array($type, array('newspost', 'photo', 'video', 'album', 'contest', 'comment', 'user', 'team', 'idol')))
                 throw new \Exception('Invalid type');
 
             if (!$content)

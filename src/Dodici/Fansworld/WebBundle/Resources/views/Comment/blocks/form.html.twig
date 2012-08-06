@@ -1,0 +1,42 @@
+{% if shortform is not defined %}
+	{% set shortform = false %}
+{% endif %}
+
+{% if type is not defined %}
+	{% set type = appstate.type(entity) %}
+{% endif %}
+
+{% if shortform %}
+    <div class="status_comment commentform">
+    	<div class="shortcommentform">
+    		<textarea class="comment_message" cols="" rows="2" data-type="{{ type }}" data-id="{{ entity.id }}">comentar...</textarea>
+    		{% if entity.privacy is defined %}
+                <input class="post_privacidad" type="hidden" value="{{ entity.privacy }}" />
+    		{% endif %}
+    	</div> 
+    </div>
+{% else %}
+    <div class="update commentform"> 
+        <span class="deco"></span>
+        <div class="upd">
+            <div class='cam-container'>
+                <img alt="compartir" class='comment-cam' src="{{ asset('bundles/dodicifansworldweb/images/ico/cam.png' )}}">
+            </div>
+            
+            <textarea cols="" rows="3" class="comment_message"></textarea>
+        </div>
+        <div class="bottom clearfix row-fluid">
+            <div class='span2 icons-container'>
+                <img class='comment-facebook' src="{{ asset('bundles/dodicifansworldweb/images/ico/facebook.png' )}}" />
+                <img class='comment-twitter'  src="{{ asset('bundles/dodicifansworldweb/images/ico/twitter.png' )}}" />
+            </div>
+            <div class='span8 who-container'>
+                <input type="text" class='' value="Con quien lo quieres compartir?"/>
+            </div>
+            <div class='span2'>
+                <button class='btn btn-success comment_button' data-type="{{ type }}" data-id="{{ entity.id }}">Compartir</button>
+            </div>
+            
+        </div>
+    </div>
+{% endif %}

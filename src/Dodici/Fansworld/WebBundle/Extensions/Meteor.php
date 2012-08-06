@@ -49,7 +49,7 @@ class Meteor
     	} elseif ($entity instanceof Comment) {
     	    $possiblewalls = array(
     	        $entity->getTarget(), $entity->getVideo(), $entity->getPhoto(), $entity->getAlbum(), $entity->getContest(), $entity->getEvent(),
-    	        $entity->getMeeting(), $entity->getComment()
+    	        $entity->getMeeting(), $entity->getComment(), $entity->getTeam(), $entity->getIdol()
     	    );
     	    
     	    $wallname = null;
