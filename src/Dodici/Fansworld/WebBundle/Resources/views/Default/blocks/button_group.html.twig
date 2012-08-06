@@ -13,7 +13,7 @@
 
 {% if sorts is defined %}
     <!-- Button group de filtros -->
-    <section id="{{ sorts.id }}" class="row-fluid">
+    <section id="{{ sorts.id }}" class="row-fluid" data-sort>
         <div class="btn-group {{ sorts.class }}">
             {% if sorts.list|length>0 %}
                 {% for sort in sorts.list %}

@@ -10,6 +10,8 @@
 {% endblock %}
 
 {% block inner_content %}
-    {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %} 
-    {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig'  with {'entityId': idol.id, 'entityType': 'Idol'}%}
+    <div data-list data-entity-id="{{ idol.id }}" data-entity-type="idol">
+        {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %} 
+        {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig'  with {'entityId': idol.id, 'entityType': 'Idol'}%}
+    </div>
 {% endblock %} 

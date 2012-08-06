@@ -1,7 +1,7 @@
 <!-- Listado de videos para mostrar como montage -->
 <div class="row-fluid">
     {% if videos|length>0 %}
-        <div id="am-container" class="am-container list-mosaic" data-entity-id="{{ entityId }}" data-entity-type="{{ entityType }}">
+        <div id="am-container" class="am-container list-mosaic" data-list-result>
         {% for video in videos %}
                     <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
                         <span class="title">{{ video.title }}</span>
@@ -16,21 +16,6 @@
     {% endif %}
 </div>
     
-<!-- Template que se usa para clonar y editar por javascript -->
-<div id="templates" class="hidden">
-    <div class="video">
-        <a href="">
-            <span class="title"></span>
-            <img src="" title="" alt="" />
-        </a>
-    </div>
-</div>
-    
-<!-- Init del montage -->
 <script type="text/javascript">
         site.startMosaic($('#am-container'), {minw: 150, margin: 0, liquid: true, minsize: false});
-        {% if addMore %}
-            videos.searchMyVideos.canAddMore = true;
-        {% endif %}
-        videos.init();
 </script>
