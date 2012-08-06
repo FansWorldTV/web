@@ -27,7 +27,7 @@ class IdolController extends SiteController
      * @Route("/i/{slug}", name="idol_wall")
      * @Template
      */
-    public function wallAction($slug)
+    public function wallTabAction($slug)
     {
         $idol = $this->getRepository('Idol')->findOneBySlug($slug);
         if (!$idol) {

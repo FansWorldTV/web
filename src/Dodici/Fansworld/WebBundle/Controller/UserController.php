@@ -29,7 +29,7 @@ class UserController extends SiteController
      * @Template
      * @Secure(roles="ROLE_USER")
      */
-    public function wallAction($username)
+    public function wallTabAction($username)
     {
         $user = $this->getRepository('User')->findOneByUsername($username);
         if (!$user) {

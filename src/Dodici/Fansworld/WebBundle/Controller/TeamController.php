@@ -35,7 +35,7 @@ class TeamController extends SiteController
      * @Route("/{slug}", name= "team_wall", requirements = {"id" = "\d+"})
      * @Template()
      */
-    public function wallAction($slug)
+    public function wallTabAction($slug)
     {
         $repo = $this->getRepository('Team');
         $team = $repo->findOneBy(array('slug' => $slug, 'active' => true));
