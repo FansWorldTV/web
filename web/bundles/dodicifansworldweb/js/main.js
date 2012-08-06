@@ -41,7 +41,8 @@ var site = {
             innerHeight: 455
         });
         
-        $(".btn_upload_video").colorbox({
+        
+        $(".btn[data-upload='video']").colorbox({
             iframe: false, 
             innerWidth: 700, 
             innerHeight: 455,
@@ -51,7 +52,7 @@ var site = {
             }
         });
         
-        $(".btn_upload_photo").colorbox({
+        $(".btn[data-upload='photo']").colorbox({
             iframe: false, 
             innerWidth: 700, 
             innerHeight: 175,

@@ -114,11 +114,39 @@ class IdolController extends SiteController
         
         $addMore = $countAll > self::LIMIT_SEARCH ? true : false;
         
+        $sorts = array(
+            'id'   => 'toggle-video-types',
+            'class'=> 'list-videos',
+            'list' => array(
+                array(
+                    'name'     => 'destacados', 
+                    'dataType' => 0, 
+                    'class'    => '',
+                ),
+                array(
+                    'name'     => 'masVistos',
+                    'dataType' => 1,
+                    'class'    => '',
+                ),
+                array(
+                    'name'     => 'populares',
+                    'dataType' => 2,
+                    'class'    => 'active',
+                ),
+                array(
+                    'name' => 'masVistosDia',
+                    'dataType' => 3,
+                    'class'    => '',
+                ),
+            )
+        );
+        
         return array(
             'videos' => $videos,
             'addMore' => $addMore,
             'user' => $user,
-            'idol' => $idol
+            'idol' => $idol,
+            'sorts' => $sorts
         );
     }
     

@@ -9,28 +9,17 @@
 	{{ parent() }}
 {% endblock %}
 
-{% block profile_head %}	
-	{{ parent() }}
-	{% if selfWall %}
-        <div class="update clearfix"> 
-            <span></span> 
-            <div class="upd_option clearfix"> 
-                <a class="btn_picture btn_upload_photo" href="{{ path('photo_fileupload') }}">cargar imagen</a>
-                <a class="btn_picture btn_upload_video" href="{{ path('video_fileupload') }}">cargar video</a> 
-            </div>    
-        </div>
-    {% endif %}
-{% endblock %}
-
 {% block inner_content %}
-	{{ parent() }}
-	<div class="cont">
-	    {% include 'DodiciFansworldWebBundle:Comment/blocks:list.html.twig' with {entity: user} %}
+    {{ parent() }}
+    {% include 'DodiciFansworldWebBundle:Default:blocks/button_upload.html.twig'  with { 'type': 'video' }%}
+    {% include 'DodiciFansworldWebBundle:Default:blocks/button_upload.html.twig'  with { 'type': 'photo' }%}
+    <div class="cont">
+        {% include 'DodiciFansworldWebBundle:Comment/blocks:list.html.twig' with {entity: user} %}
     </div>
 {% endblock %}
 
 {% block inner_sidebar %}
-	{{ parent() }}
+    {{ parent() }}
     <img src="{{ asset("bundles/dodicifansworldweb/images/sidebar.png") }}"  style='width:100%' />
     TODO
 {% endblock %}

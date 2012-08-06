@@ -16,14 +16,9 @@
 
 {% block inner_content %}
 {{ parent() }}
-{% if (user == app.user) %}
-    <div class="row-fluid update clearfix"> 
-        <span></span> 
-        <div class="upd_option clearfix"> 
-            <a class="btn_picture btn_upload_photo" href="{{ path('photo_fileupload') }}">{{'load image'|trans}}</a> 
-        </div>    
-    </div>
-{% endif %} 
+<div class="pull-right">
+    {% include 'DodiciFansworldWebBundle:Default:blocks/button_upload.html.twig'  with { 'type': 'photo' }%}
+</div>
     
 {% include 'DodiciFansworldWebBundle:Photo:blocks/album_montage.html.twig'  %}
 

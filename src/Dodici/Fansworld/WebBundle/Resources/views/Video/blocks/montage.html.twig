@@ -1,7 +1,7 @@
 <!-- Listado de videos para mostrar como montage -->
 <div class="row-fluid">
     {% if videos|length>0 %}
-        <div id="am-container" class="am-container list-mosaic" data-entity-id="{{ entity-id }}" data-entity-type="{{ entity-type }}">
+        <div id="am-container" class="am-container list-mosaic" data-entity-id="{{ entityId }}" data-entity-type="{{ entityType }}">
         {% for video in videos %}
                     <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
                         <span class="title">{{ video.title }}</span>
@@ -9,9 +9,8 @@
                     </a>
         {% endfor %}
         </div>
-        {% if addMore %}
-          <a href="#" class="loadmore">Cargar más</a>
-        {% endif %}
+        <a href="#" class="loadmore {% if not addMore %}hidden{% endif %}">Cargar más</a>
+        
     {% else %}
         <h2>No se encontraron videos.</h2>
     {% endif %}
@@ -23,7 +22,6 @@
         <a href="">
             <span class="title"></span>
             <img src="" title="" alt="" />
-            <button class="btn btn-primary">+</button>
         </a>
     </div>
 </div>

@@ -17,15 +17,11 @@
 
 
 {% block inner_content %}
-	{{ parent() }}
-    {% if selfWall %}
-        <div class="row-fluid update clearfix"> 
-          <a class="btn btn_upload_photo pull-right" href="{{ path('photo_fileupload') }}">
-            <i class="icon-upload"></i>
-            {{ 'upload photo'|trans }}
-          </a> 
-        </div>
-    {% endif %}
+    {{ parent() }}
+    
+    <div class="pull-right">
+        {% include 'DodiciFansworldWebBundle:Default:blocks/button_upload.html.twig'  with { 'type': 'photo' }%}    
+    </div>
     
     {% include 'DodiciFansworldWebBundle:Photo:blocks/albums_montage.html.twig'  %}
     

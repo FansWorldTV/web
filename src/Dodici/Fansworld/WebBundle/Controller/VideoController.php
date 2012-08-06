@@ -469,4 +469,21 @@ class VideoController extends SiteController
         return $this->jsonResponse($response);
     }
 
+    
+    public function ajaxListAction()
+    {
+        $request = $this->getRequest();
+        
+        $entityId = $request->get('entityId', false);
+        $entityType = $request->get('entityType', false);
+        $page = $request->get('page', 1);
+        $sort = $request->get('sort');
+        
+        $offset = ( $page - 1 ) * self::cantVideos;
+        $limit = self::cantVideos;
+        
+        $entityRepo = $this->getRepository($entityType);
+        
+        
+    }
 }

@@ -10,20 +10,15 @@
 {% endblock %}
 
 {% block inner_content %}
-    
-    {% if selfWall %}
-        <div class="row-fluid update clearfix"> 
-          <span class="pull-left">
+    <div class="row-fluid update clearfix"> 
+        <span class="pull-left">
             {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %}
-          </span>
-          <span class="pull-right">
-              <a class="btn btn_upload_photo" href="{{ path('video_fileupload') }}">
-                <i class="icon-upload"></i>
-                {{ 'upload video'|trans }}
-              </a> 
-          </span>
-        </div>
-    {% endif %}
+        </span>
+        <span class="pull-right">
+            {% include 'DodiciFansworldWebBundle:Default:blocks/button_upload.html.twig'  with { 'type': 'video' }%}    
+        </span>
+    </div>
     
-    {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with {'entity-id': user.id, 'entity-type': 'User'} %}
+    
+    {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with {'entityId': user.id, 'entityType': 'User'} %}
 {% endblock %}

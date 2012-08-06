@@ -1,0 +1,6 @@
+{% if selfWall %}
+    <a class="btn" href="{{ path(type ~ '_fileupload') }}" data-upload="{{ type }}">
+        <i class="icon-upload"></i>
+        {{ 'upload ' ~ type|trans }}
+    </a>
+{% endif %}
