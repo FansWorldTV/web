@@ -126,7 +126,7 @@ class IdolController extends SiteController
      *  @Route("/i/{slug}/biography", name="idol_biography")
      *  @Template()
      */
-    public function biographyTabAction($slug)
+    public function infoTabAction($slug)
     {
         $idol = $this->getRepository('Idol')->findOneBy(array('slug' => $slug));
         

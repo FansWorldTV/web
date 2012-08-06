@@ -52,7 +52,7 @@ class UserController extends SiteController
      * @Template
      * @Secure(roles="ROLE_USER")
      */
-    public function detailAction($username)
+    public function infoTabAction($username)
     {
         $user = $this->getRepository('User')->findOneByUsername($username);
         if (!$user) {
