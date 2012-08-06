@@ -115,6 +115,29 @@ class CountBaseRepository extends EntityRepository
     	return (int)$query->getSingleScalarResult();
     }
     
+	/**
+     * Count entities tagged with the tagentity, of type
+     * DO NOT INVOKE DIRECTLY
+     * @param mixed $tagentity
+     * @param string $type
+     * 
+     * @return int
+     */
+    public function countTagged($tagentity, $type)
+    {
+        $tagtype = $this->getType($tagentity);
+        
+        return $this->_em->createQuery('
+    	SELECT COUNT(DISTINCT hse)
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Has'.ucfirst($tagtype).' hs
+    	INNER JOIN hs.'.$type.' hse
+    	WHERE hse.active = true
+    	AND hs.'.$tagtype.' = :tagentity
+    	')
+            ->setParameter('tagentity', $tagentity->getId())
+            ->getSingleScalarResult();
+    }
+    
     protected function getType($entity)
     {
         $name = $this->_em->getClassMetadata(get_class($entity))->getName();

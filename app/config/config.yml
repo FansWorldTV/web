@@ -487,12 +487,14 @@ services:
             - { name: doctrine.event_listener, event: postPersist }
         arguments:
             - "@service_container"
-    usercounter.listener.persist:
-        class: Dodici\Fansworld\WebBundle\Listener\UserCounter
+    photovideocounter.listener.persist:
+        class: Dodici\Fansworld\WebBundle\Listener\PhotoVideoCounter
         tags:
             - { name: doctrine.event_listener, event: postPersist }
-        arguments:
-            - "@service_container"        
+    photovideocounter.listener.remove:
+        class: Dodici\Fansworld\WebBundle\Listener\PhotoVideoCounter
+        tags:
+            - { name: doctrine.event_listener, event: postRemove }
     my.facebook.user:
         class: Dodici\Fansworld\WebBundle\Security\FacebookProvider
         arguments:
