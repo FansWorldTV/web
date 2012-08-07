@@ -181,7 +181,18 @@
 
         </one-to-many>
         
-        
+        <one-to-many
+                field="videocategorysubscriptions"
+                target-entity="Dodici\Fansworld\WebBundle\Entity\VideoCategorySubscription"
+                mapped-by="author"
+                orphan-removal="true"
+                >
+                <cascade>
+                    <cascade-remove/>
+                    <cascade-persist/>
+                </cascade>
+                <orphan-removal>true</orphan-removal>
+        </one-to-many>
         
     </entity>
 

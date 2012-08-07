@@ -10,6 +10,10 @@
 
 namespace Application\Sonata\UserBundle\Entity;
 
+use Dodici\Fansworld\WebBundle\Entity\VideoCategorySubscription;
+
+use Dodici\Fansworld\WebBundle\Entity\VideoCategory;
+
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
 
 use Dodici\Fansworld\WebBundle\Model\VisitableInterface;
@@ -280,6 +284,11 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
     protected $visits;
     
     /**
+     * @var ArrayCollection $videocategorysubscriptions
+     */
+    protected $videocategorysubscriptions;
+    
+    /**
      * @var integer $visitCount
      */
     private $visitCount;
@@ -320,6 +329,7 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
         $this->idolCount = 0;
         $this->friendCount = 0;
         $this->visits = new ArrayCollection();
+        $this->videocategorysubscriptions = new ArrayCollection();
         $this->visitCount = 0;
         $this->photoVisitCount = 0;
         $this->videoVisitCount = 0;
@@ -1412,6 +1422,37 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
     }
     
 	/**
+     * Add videocategorysubscriptions
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\VideoCategorySubscription $videocategorysubscriptions
+     */
+    public function addVideoCategorySubscription(\Dodici\Fansworld\WebBundle\Entity\VideoCategorySubscription $vcs)
+    {
+        $vcs->setAuthor($this);
+        $this->videocategorysubscriptions[] = $vcs;
+    }
+    
+	public function addVideocategorysubscriptions(\Dodici\Fansworld\WebBundle\Entity\VideoCategorySubscription $vcs)
+    {
+        $this->addVideoCategorySubscription($vcs);
+    }
+
+    /**
+     * Get videocategorysubscriptions
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getVideocategorysubscriptions()
+    {
+        return $this->videocategorysubscriptions;
+    }
+    
+	public function setVideocategorysubscriptions($vcs)
+    {
+        $this->videocategorysubscriptions = $vcs;
+    }
+    
+	/**
      * Set visitCount
      *
      * @param integer $visitCount
@@ -1477,5 +1518,40 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
     public function getFieldValue($fieldname)
     {
         return $this->{'get'.$fieldname}();
+    }
+    
+    /**
+     * Add VideoCategorySubscription to user
+     */
+    public function subscribeVideoCategory(VideoCategory $videocategory)
+    {
+        $vcs = $this->getVideocategorysubscriptions();
+        $contains = false;
+        foreach ($vcs as $vc) {
+            if ($vc->getVideoCategory() == $videocategory) {
+                $contains = true;
+                break;
+            }
+        }
+        
+        if (!$contains) {
+            $vcsusc = new VideoCategorySubscription();
+            $vcsusc->setVideocategory($videocategory);
+            $this->addVideoCategorySubscription($vcsusc);
+        }
+    }
+    
+	/**
+     * Remove VideoCategorySubscription from user
+     */
+    public function unsubscribeVideoCategory(VideoCategory $videocategory)
+    {
+        $vcs = $this->getVideocategorysubscriptions();
+        $newvcs = array();
+        foreach ($vcs as $vc) {
+            if ($vc->getVideoCategory() == $videocategory) {
+                return $vc;
+            }
+        }
     }
 }

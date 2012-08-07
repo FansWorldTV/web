@@ -7,6 +7,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 
+/**
+ * Get and set user preferences, stored in user, if available, and session
+ */
 class Preferences
 {
 	protected $request;
