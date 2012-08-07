@@ -415,6 +415,18 @@ services:
         class: Dodici\Fansworld\WebBundle\Listener\Notificator
         tags:
             - { name: doctrine.event_listener, event: postUpdate }
+    subscriptionnotificator.listener.persist:
+        class: Dodici\Fansworld\WebBundle\Listener\SubscriptionNotificator
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+        arguments:
+            - "@service_container"
+    subscriptionnotificator.listener.update:
+        class: Dodici\Fansworld\WebBundle\Listener\SubscriptionNotificator
+        tags:
+            - { name: doctrine.event_listener, event: postUpdate }
+        arguments:
+            - "@service_container"
     score.listener.persist:
         class: Dodici\Fansworld\WebBundle\Listener\ScoreHandler
         tags:

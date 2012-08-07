@@ -18,6 +18,7 @@ class Notification
     const TYPE_FORUM_CREATED = 4;
     const TYPE_FORUM_ANSWERED = 5;
     const TYPE_VIDEO_PROCESSED = 6;
+    const TYPE_VIDEO_SUBSCRIPTION = 7;
     
     // Artificial type for Friendship
     const TYPE_FRIENDSHIP_CREATED = 99;
@@ -157,6 +158,7 @@ class Notification
             self::TYPE_FRIENDSHIP_ACCEPTED => 'friendship_accepted',
             self::TYPE_USER_TAGGED => 'user_tagged',
             self::TYPE_VIDEO_PROCESSED => 'video_processed',
+            self::TYPE_VIDEO_SUBSCRIPTION => 'video_subscription',
             
             // Artificial type
             self::TYPE_FRIENDSHIP_CREATED => 'friendship_created',

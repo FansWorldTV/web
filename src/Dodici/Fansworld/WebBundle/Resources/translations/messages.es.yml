@@ -98,6 +98,7 @@ notification_comment_answered: "%author% respondió en un comentario que hiciste
 notification_friendship_accepted: "%author% te aceptó como fan"
 notification_user_tagged: "%author% te etiquetó en un contenido"
 notification_video_processed: "%video% se terminó de procesar"
+notification_video_subscription: "Nuevo vídeo: %video%"
 "email": "correo"
 "address": "dirección"
 "firstname": "nombre"

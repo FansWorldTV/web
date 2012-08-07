@@ -48,7 +48,7 @@ class FansworldMailer
 
             $html = $this->templating->render('DodiciFansworldWebBundle:Notification:Mail/' . $typename . '.html.twig', array('notification' => $entity, 'targetUser' => $entity->getTarget()));
             
-            if ($entity->getType() == Notification::TYPE_VIDEO_PROCESSED) {
+            if (in_array($entity->getType(), array(Notification::TYPE_VIDEO_PROCESSED, Notification::TYPE_VIDEO_SUBSCRIPTION))) {
                 $params['%video%'] = (string)$entity->getVideo();
             } else {
                 $params['%author%'] = (string)$entity->getAuthor();

@@ -63,4 +63,11 @@ class Subscriptions
         
         return false;
     }
+    
+    public function usersSubscribed(VideoCategory $videocategory)
+    {
+        return 
+            $this->em->getRepository('DodiciFansworldWebBundle:VideoCategorySubscription')
+            ->usersSubscribedTo($videocategory);
+    }
 }
