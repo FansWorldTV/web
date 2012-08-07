@@ -15,7 +15,14 @@
     
     function makeDraggable(el) {
         $(el)
-        .draggable({ revert: "invalid", cancel: "li", cursorAt: {top: 30, left: 30} });
+        .draggable({ 
+            revert: "invalid", 
+            cancel: "li", 
+            cursorAt: {top: 30, left: 30},
+            stop: function( event, ui ) {
+                $(this).removeAttr('style');
+            }
+        });
         
         var position = defaults.position;
         
