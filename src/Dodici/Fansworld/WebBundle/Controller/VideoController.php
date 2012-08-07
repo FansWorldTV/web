@@ -468,7 +468,7 @@ class VideoController extends SiteController
     }
 
     /**
-     * @Route("/video/ajax/populars", name="video_populars")
+     * @Route("/video/ajax/populars", name="video_popular")
      */
     public function popularVideosAction()
     {
@@ -513,8 +513,12 @@ class VideoController extends SiteController
                 'id' => $video->getId(),
                 'title' => $video->getTitle(),
                 'slug' => $video->getSlug(),
-                'image' => $this->getImageUrl($video->getImage(), 'medium'),
-                'visitCount' => $video->getVisitCount()
+                'imgsrc' => $this->getImageUrl($video->getImage(), 'medium'),
+                'visitCount' => $video->getVisitCount(),
+                'url' => $this->generateUrl('video_show', array(
+                    'id' => $video->getId(),
+                    'slug' => $video->getSlug()
+                ))
             );
         }
 

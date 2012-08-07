@@ -42,7 +42,7 @@
             ajax.genericAction(methodName, opts, function(r){
                 for(var i in r.elements){
                     var element = r.elements[i];
-                    templateHelper.renderTemplate(sort.entityType + "-list_element", element.viewData, "[data-list-result]");
+                    templateHelper.renderTemplate(sort.dataList + "-list_element", element, "[data-list-result]");
                 }
                 if(r.addMore){
                     window.endlessScrollPaused = false;
