@@ -166,9 +166,21 @@ class IdolController extends SiteController
 
         $user = $this->getUser();
         
+        $personalData = array(
+                'firstname',
+                'lastname',
+                'nicknames',
+                'birthday',
+                'country',
+                'origin',
+                'sex',
+                'idolcareers',
+        );
+        
         return array(
             'user' => $user,
-            'idol' => $idol
+            'idol' => $idol,
+            'personalData' => $personalData,
         );
     }
     

@@ -1,0 +1,62 @@
+{% if showEdit is not defined %}
+    {%  set showEdit = false %}
+{% endif %}
+
+{% if list_title is not defined %}
+    {%  set list_title = false %}
+{% endif %}
+
+{% if list_type is not defined %}
+    {% set list_type = false %}
+{% endif %}
+
+<section id="personalData" class="row-fluid">
+    {% if list_title %}
+        <h4>
+            {{ list_title }} 
+            {% if showEdit %}
+                <a href="{{ path('fos_user_profile_edit') }}" class="pull-right">Editar</a>
+            {% endif %}
+        </h4>
+    {% endif %}
+    
+    <dl class="dl-vertical">
+        {% for data in personalData %}     
+            {% if  ( list_type != 'user' ) or ( appstate.canviewfield(entity, data) ) %} 
+                {% if data == 'username' %}
+                    <dt>Usuario</dt>
+                    <dd>
+                        <strong>{{ entity.username }}</strong> ({{ path('user_wall', {'username': entity.username}) }})
+                    </dd>
+                {% elseif data == 'birthday' %}
+                    <dt>Fecha Nac.</dt>
+                    <dd>
+                        {{ entity.birthday|date() }}
+                    </dd>
+                {% elseif data == 'foundedAt' %}
+                    <dt>Fecha fund.</dt>
+                    <dd>
+                        {{ entity.foundedAt|date() }}
+                    </dd>    
+                {% elseif data == 'sex' %}
+                        <dt>Género</dt>
+                        <dd>
+                            <dd>{% if entity.sex == 'm' %}Hombre{% else %}Mujer{% endif %}</dd>
+                        </dd>
+                {% elseif data == 'idolcareers' %}
+                    <dt>Carrera</dt>
+                    <dd>
+                    {% for career in entity.idolcareers %}
+                        <dd>{{ career }}</dd>
+                    {% endfor %}
+                    </dd>    
+                {% else %}
+                    {% if attribute(entity, data)  %}
+                        <dt>{{ data }}</dt>
+                        <dd>{{ attribute(entity, data) }}</dd>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}  
+    </dl>
+</section>

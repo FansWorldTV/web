@@ -40,11 +40,12 @@ class UserController extends SiteController
         $loggedUser = $this->getUser();
         $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
 
+        
         return array(
             'user' => $user, 
             'friendgroups' => $friendGroups, 
-            'isHome' => true
-        );
+            'isHome' => true,
+       );
     }
 
     /**
@@ -77,8 +78,29 @@ class UserController extends SiteController
                 );
             }
         }
-
-        return array('user' => $user, 'friendgroups' => $friendGroups, 'interests' => $interests);
+        
+        $personalData = array(
+                'firstname',
+                'lastname',
+                'address',
+                'phone',
+                'twitter',
+                'sex',
+                'country',
+                'city',
+                'birthday',
+                'email',
+                'score',
+                'level',                   
+        );
+        
+        
+        return array(
+            'user' => $user, 
+            'friendgroups' => $friendGroups, 
+            'interests' => $interests,
+            'personalData' => $personalData,
+        );
     }
 
     /**

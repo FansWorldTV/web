@@ -1,6 +1,6 @@
 {% extends "DodiciFansworldWebBundle:User:base.html.twig" %}
 
-{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_fullwidth.html.twig"  %}
+{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_lsidebar.html.twig"  %}
 
 {% block title %}{{ parent() }} - Información{% endblock %}
 
@@ -9,66 +9,22 @@
 	{{ parent() }}
 {% endblock %}
 
-{% block inner_content %}
+{% block inner_sidebar %}
         {{ parent() }}
         {% if user == app.user %}
             {% set userLogged = true %}
         {% else %}
             {% set userLogged = false %}
         {% endif %}
+        {% include "DodiciFansworldWebBundle:Default:blocks/info_list.html.twig" with { entity:user, personalData: personalData, showEdit: userLogged, list_title: 'Tus Datos Personales:', list_type: 'user' } %}
+{% endblock %}
 
-        <section id="personalData" class="row-fluid">
-            <h4>Tus Datos Personales:{% if userLogged %}<a href="{{ path('fos_user_profile_edit') }}" class="pull-right">Editar</a>{% endif %}</h4>
-            <dl class="dl-horizontal">
-                {% if user.username %}
-                    <dt>Usuario</dt>
-                        <dd><strong>{{ user.username }}</strong> ({{ path('user_wall', {'username':user.username}) }})</dd>
-                {% endif %}
-                
-                {% if user.email %}
-                    <dt>Email</dt>
-                        <dd>{{ user.email }}</dd>
-                {% endif %}
-                
-                {% if user.address %}
-                    <dt>Dirección</dt>
-                        <dd>{{ user.address }}</dd>
-                {% endif %}
-                        
-                {% if user.firstname %}
-                    <dt>Nombre</dt>
-                        <dd>{{ user.firstname }}</dd>
-                {% endif %}
-                
-                {% if user.lastname %}
-                    <dt>Apellido</dt>
-                        <dd>{{ user.lastname }}</dd>
-                {% endif %}
-                
-                {% if user.sex %}
-                    <dt>Género</dt>
-                        <dd>{% if user.sex == 'm' %}Hombre{% else %}Mujer{% endif %}</dd>
-                {% endif %}
-                
-                {% if user.birthday %}
-                    <dt>Fecha Nac.</dt>
-                        <dd>{{ user.birthday|date() }}</dd>
-                {% endif %}
-                
-                {% if user.city and user.country %}
-                        <dt>Ciudad, Pais</dt>
-                            <dd>{{ user.city }}, {{ user.country }}</dd>
-                {% endif %}
-            </dl>
-        </section>
-
+{% block inner_content %}
+    {{ parent() }}
         {% if user.content %}
-            <section id="aboutMe" class="row-fluid">
-                <h4>Sobre mi: </h4>
-                <p>{{ user.content|nl2br }}</p>
-            </section>
+            {% include "DodiciFansworldWebBundle:Default:blocks/text_box.html.twig" with { box_title: 'Sobre mi:', box_content: user.content, box_class: 'aboutMe' } %}
         {% endif %}
-
+        {#
         <section id="myInterests">
             <dl>
                 {% for interest in interests %}
@@ -84,63 +40,5 @@
                 {% endfor %}
             </dl>
         </section>
-
-
-    <!--div class="row-fluid">
-        <div class="span2">
-            <dl>
-                <dt>Nombre</dt>
-                <dd>{{ user }}</dd>
-                
-                <dt>Sexo</dt>
-                <dd>{{ ('sex_' ~ user.sex)|trans }}</dd>
-                
-                <dt>Nacimiento</dt>
-                <dd>{{ user.birthday|date('d/m/Y') }}</dd>
-                
-                {% if user.country %}
-                    <dt>Pais</dt>
-                    <dd>{{ user.country }}</dd>
-                {% endif %}
-                
-                {% if user.city %}
-                    <dt>Provincia</dt>
-                    <dd>{{ user.city}}</dd>
-                {% endif %}
-                
-                {% if user.score %}
-                    <dt>Puntos</dt>
-                    <dd>{{ user.score }}</dd>
-                {% endif %}
-            </dl>
-        </div>
-        <div class="span6">
-            <div class="row">
-                {{ user.content|nl2br }}
-            </div>
-            <div class="row">
-                <span>Intereses</span>
-                        
-                        <table>
-                            {% for interest in interests %}
-                                {% if interest.interest is defined %}
-                                <tr>
-                                    <td class="dato">{{ interest.category }}</td>
-                                        <td>
-                                            <ul class="currentinterests clearfix">
-                                                {% for ele in interest.interest %}
-                                                    <li data-idinterest="1">
-                                                        <img alt="" src="{{ele.image}}"> 
-                                                        <span class="name">{{ele.title}}</span>
-                                                    </li>
-                                                {% endfor %}
-                                            </ul>
-                                        </td>
-                                </tr>
-                                {% endif %}
-                            {% endfor %}
-                        </table>
-            </div>
-        </div>
-    </div-->
+        #}
 {% endblock %}

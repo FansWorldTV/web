@@ -46,8 +46,12 @@ class TeamController extends SiteController
         
         $highlights = $this->getRepository('video')->highlights($team, 4);
         
+        
+        
+        
         return array(
             'team' => $team,
+            
             'isHome' => true,
             'highlights' => $highlights,
         );
@@ -362,9 +366,11 @@ class TeamController extends SiteController
         }
 
         $user = $this->getUser();
+        $teamData = array('title','shortname','letters', 'stadium', 'website', 'content', 'nicknames','foundedAt','country');
         
         return array(
             'user' => $user,
+            'teamData' => $teamData,
             'team' => $team
         );
     }

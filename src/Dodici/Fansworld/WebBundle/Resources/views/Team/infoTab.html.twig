@@ -1,6 +1,6 @@
 {% extends "DodiciFansworldWebBundle:Team:base.html.twig" %}
 
-{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_fullwidth.html.twig"  %}
+{% use "DodiciFansworldWebBundle:Layout/Snippet:inner_rlsidebar.html.twig"  %}
 
 {% block title %}{{ parent() }} - Datos{% endblock %}
 
@@ -9,56 +9,18 @@
 	{{ parent() }}
 {% endblock %}
 
-{% block inner_content %}
-    <section id="entity-data" class="row-fluid">
-            <h4>Datos :</h4>
-            <dl class="dl-horizontal">
-                {% if team.title %}
-                    <dt>Nombre</dt>
-                        <dd>{{ team.title }}</dd>
-                {% endif %}
-                
-                {% if team.shortname %}
-                    <dt>Nombre corto</dt>
-                        <dd>{{ team.shortname }}</dd>
-                {% endif %}
-                        
-                {% if team.letters %}
-                    <dt>Iniciales</dt>
-                        <dd>{{ team.letters }}</dd>
-                {% endif %}
-                
-                {% if team.stadium %}
-                    <dt>Estadio</dt>
-                        <dd>{{ team.stadium }}</dd>
-                {% endif %}
-                
-                {% if team.website %}
-                    <dt>Sitio web</dt>
-                        <dd>{{ team.website }}</dd>
-                {% endif %}
-                
-                {% if team.nicknames %}
-                        <dt>Apodos</dt>
-                            <dd>{{ team.nicknames }}</dd>
-                {% endif %}
-                            
-                {% if team.foundedAt %}
-                        <dt>Fundado</dt>
-                            <dd>{{ team.foundedAt|date() }}</dd>
-                {% endif %}
-                            
-                {% if team.country %}
-                        <dt>País</dt>
-                            <dd>{{ team.country }}</dd>
-                {% endif %}
-            </dl>
-        </section>
+{% block inner_left_sidebar %}
+    {{ parent() }}
+    {% include "DodiciFansworldWebBundle:Default:blocks/info_list.html.twig" with { entity:team, personalData: teamData,  list_title: 'Datos:' } %}
+{% endblock %}
 
+{% block inner_content %}
+    {{ parent() }}
         {% if team.content %}
-            <section id="entity-content" class="row-fluid">
-                <h4>Sobre mi : </h4>
-                <p>{{ team.content|nl2br }}</p>
-            </section>
+            {% include "DodiciFansworldWebBundle:Default:blocks/text_box.html.twig" with { box_title: 'Sobre mi:', box_content: team.content, box_class: 'entity-content' } %}
         {% endif %}
+{% endblock %}
+
+{% block inner_right_sidebar %}
+    TODO
 {% endblock %}
