@@ -10,6 +10,7 @@
 {% endblock %}
 
 {% block inner_content %}
+<div data-list="video" data-entity-type="user" data-entity-id="{{user.id}}">
     <div class="row-fluid update clearfix"> 
         <span class="pull-left">
             {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %}
@@ -21,4 +22,5 @@
     
     
     {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with {'entityId': user.id, 'entityType': 'User'} %}
+</div>
 {% endblock %}

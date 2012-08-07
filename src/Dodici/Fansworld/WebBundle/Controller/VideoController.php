@@ -353,9 +353,10 @@ class VideoController extends SiteController
         $response = array(
             'videos' => array()
         );
-
-        $authorId = $request->get('userId', false);
-        $author = $this->getRepository('User')->find($authorId);
+        
+        $entityId = $request->get('entityId');
+        $entityType = $request->get('entityType');
+        
         $user = $this->getUser();
 
         $page = $request->get('page', 1);
@@ -365,14 +366,30 @@ class VideoController extends SiteController
 
         $page = (int) $page;
         $offset = ($page - 1) * self::cantVideos;
+        
+        $taggedEntity = null;
+        if ($entityType == 'user') {
+            $author = $this->getRepository('User')->find($entityId);
+        } else {
+            $author = null;
+            
+            switch ($entityType) {
+                case 'team':
+                    $taggedEntity = $this->getRepository('Team')->find($entityId);
+                    break;
+                case 'idol':
+                    $taggedEntity = $this->getRepository('Idol')->find($entityId);
+                    break;
+            }
+        }
 
-        $videos = $repoVideos->search(null, $user, self::cantVideos, $offset, null, true, $author);
-        $countAll = $repoVideos->countSearch(null, $user, null, true, $author);
+        $videos = $repoVideos->search(null, $user, self::cantVideos, $offset, null, true, $author, null, null, 'default', $taggedEntity);
+        $countAll = $repoVideos->countSearch(null, $user, null, true, $author, null, null, $taggedEntity);
 
         $response['addMore'] = $countAll > self::cantVideos ? true : false;
 
         foreach ($videos as $video) {
-            $response['videos'][] = array(
+            $response['elements'][] = array(
                 'id' => $video->getId(),
                 'title' => $video->getTitle(),
                 'slug' => $video->getSlug(),
@@ -390,8 +407,9 @@ class VideoController extends SiteController
     {
         $request = $this->getRequest();
 
-        $authorId = $request->get('userId', false);
-        $author = $this->getRepository('User')->find($authorId);
+        $entityId = $request->get('entityId');
+        $entityType = $request->get('entityType');
+        
         $user = $this->getUser();
 
         $today = $request->get('today', false);
@@ -402,6 +420,22 @@ class VideoController extends SiteController
         $response = array(
             'visits' => array()
         );
+        
+        $taggedEntity = null;
+        if ($entityType == 'user') {
+            $author = $this->getRepository('User')->find($entityId);
+        } else {
+            $author = null;
+            
+            switch ($entityType) {
+                case 'team':
+                    $taggedEntity = $this->getRepository('Team')->find($entityId);
+                    break;
+                case 'idol':
+                    $taggedEntity = $this->getRepository('Idol')->find($entityId);
+                    break;
+            }
+        }
 
         $videoRepo = $this->getRepository('Video');
         $videoRepo instanceof VideoRepository;
@@ -411,17 +445,17 @@ class VideoController extends SiteController
             $datefrom = $date->format("Y-m-d 00:00:00");
             $dateto = $date->format("Y-m-d 23:59:59");
 
-            $videos = $videoRepo->search(null, $user, self::cantVideos, $offset, null, null, $author, $datefrom, $dateto);
-            $countAll = $videoRepo->countSearch(null, $user, null, null, $author, $datefrom, $dateto);
+            $videos = $videoRepo->search(null, $user, self::cantVideos, $offset, null, null, $author, $datefrom, $dateto, 'default', $taggedEntity);
+            $countAll = $videoRepo->countSearch(null, $user, null, null, $author, $datefrom, $dateto, $taggedEntity);
         } else {
-            $videos = $videoRepo->search(null, $user, self::cantVideos, $offset, null, null, $author, null, null, 'views');
-            $countAll = $videoRepo->countSearch(null, $user, null, null, $author);
+            $videos = $videoRepo->search(null, $user, self::cantVideos, $offset, null, null, $author, null, null, 'views', $taggedEntity);
+            $countAll = $videoRepo->countSearch(null, $user, null, null, $author, null, null, $taggedEntity);
         }
 
         $response['addMore'] = $countAll > self::cantVideos ? true : false;
 
         foreach ($videos as $video) {
-            $response['videos'][] = array(
+            $response['elements'][] = array(
                 'id' => $video->getId(),
                 'title' => $video->getTitle(),
                 'slug' => $video->getSlug(),
@@ -439,8 +473,10 @@ class VideoController extends SiteController
     public function popularVideosAction()
     {
         $request = $this->getRequest();
-        $authorId = $request->get('userid', false);
-        $author = $this->getRepository('User')->find($authorId);
+
+        $entityId = $request->get('entityId');
+        $entityType = $request->get('entityType');
+
         $user = $this->getUser();
 
         $page = $request->get('page', 1);
@@ -451,13 +487,29 @@ class VideoController extends SiteController
         $videoRepo = $this->getRepository('Video');
         $videoRepo instanceof VideoRepository;
 
-        $videos = $videoRepo->search(null, $user, self::cantVideos, $offset, null, null, $author);
-        $countAll = $videoRepo->countSearch(null, $user, null, null, $author);
+        $taggedEntity = null;
+        if ($entityType == 'user') {
+            $author = $this->getRepository('User')->find($entityId);
+        } else {
+            $author = null;
+            
+            switch ($entityType) {
+                case 'team':
+                    $taggedEntity = $this->getRepository('Team')->find($entityId);
+                    break;
+                case 'idol':
+                    $taggedEntity = $this->getRepository('Idol')->find($entityId);
+                    break;
+            }
+        }
+        
+        $videos = $videoRepo->search(null, $user, self::cantVideos, $offset, null, null, $author, null, null, 'default', $taggedEntity);
+        $countAll = $videoRepo->countSearch(null, $user, null, null, $author, null, null, $taggedEntity);
 
         $response['addMore'] = $countAll > self::cantVideos ? true : false;
 
         foreach ($videos as $video) {
-            $response['videos'][] = array(
+            $response['elements'][] = array(
                 'id' => $video->getId(),
                 'title' => $video->getTitle(),
                 'slug' => $video->getSlug(),
@@ -467,23 +519,5 @@ class VideoController extends SiteController
         }
 
         return $this->jsonResponse($response);
-    }
-
-    
-    public function ajaxListAction()
-    {
-        $request = $this->getRequest();
-        
-        $entityId = $request->get('entityId', false);
-        $entityType = $request->get('entityType', false);
-        $page = $request->get('page', 1);
-        $sort = $request->get('sort');
-        
-        $offset = ( $page - 1 ) * self::cantVideos;
-        $limit = self::cantVideos;
-        
-        $entityRepo = $this->getRepository($entityType);
-        
-        
     }
 }

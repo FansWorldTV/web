@@ -19,18 +19,49 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class TemplateController extends SiteController
 {
-	/**
-	 * Get Comment Teplate
-	 * @Route("/ajax/get/comment", name="template_comment")
-	 * @Template
-	 */
-	public function commentAction()
-	{
-		$request = $this->getRequest();
-		$type = $request->get('type');
-		
-		return array(
-				'typename' => $type
-		);
-	}   
+
+    /**
+     * Get Comment Template
+     * @Route("/ajax/get/comment", name="template_comment")
+     * @Template
+     */
+    public function commentAction()
+    {
+        $request = $this->getRequest();
+        $type = $request->get('type');
+
+        return array(
+            'typename' => $type
+        );
+    }
+    
+    /**
+     * Get Video Template
+     * @Route("/ajax/get/video", name="template_video")
+     * @Template
+     */
+    public function videoAction()
+    {
+        $request = $this->getRequest();
+        $type = $request->get('type');
+
+        return array(
+            'typename' => $type
+        );
+    }
+    
+    /**
+     * Get Photo Template
+     * @Route("/ajax/get/photo", name="template_photo")
+     * @Template
+     */
+    public function photoAction()
+    {
+        $request = $this->getRequest();
+        $type = $request->get('type');
+
+        return array(
+            'typename' => $type
+        );
+    }
 }
