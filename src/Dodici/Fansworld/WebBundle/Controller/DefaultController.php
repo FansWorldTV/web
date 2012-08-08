@@ -137,10 +137,10 @@ class DefaultController extends SiteController
     }
     
 	/**
-     * Leftbar controller action
+     * Toolbar controller action
      * @Template
      */
-    public function leftmenubarAction()
+    public function toolbarAction()
     {
         $user = $this->getUser();
         $request = $this->getRequest();
