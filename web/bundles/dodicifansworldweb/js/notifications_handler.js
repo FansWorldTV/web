@@ -21,9 +21,6 @@ notifications.listen = function(){
     
     if ((typeof Meteor != 'undefined') && (typeof notificationChannel != 'undefined')) {
         Meteor.registerEventCallback("process", handleData);
-        Meteor.mode = 'stream';
-        Meteor.debugmode = true;
-        Meteor.pingtimeout = 3600000;
         
         
         Meteor.joinChannel(notificationChannel);

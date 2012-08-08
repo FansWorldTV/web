@@ -532,7 +532,7 @@ services:
     
     meteor:
       class: Dodici\Fansworld\WebBundle\Extensions\Meteor
-      arguments: [@doctrine.orm.entity_manager, @appstate, %meteor.host%, %meteor.port%, %meteor.clientport%]
+      arguments: [@doctrine.orm.entity_manager, @appstate, %meteor.host%, %meteor.port%, %meteor.clientport%, %meteor.debugmode%, %meteor.enabled%]
     tagger:
       class: Dodici\Fansworld\WebBundle\Extensions\Tagger
       arguments: [@doctrine.orm.entity_manager, @appstate]

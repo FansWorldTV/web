@@ -26,15 +26,21 @@
             {% endblock %}
                 
             {% block javascripts %}
-            	{% if app.user %}
+            	{% if (meteor.enabled and meteor.ping) %}
 	                <script type="text/javascript" src="http://{{ meteor.host }}:{{ meteor.clientport }}/meteor.js"></script>
-	                <script type="text/javascript">
-		                var notificationChannel = '{{ meteor.encryptChannelName('notification', app.user) }}';
-		                var friendshipChannel = '{{ meteor.encryptChannelName('friendship', app.user) }}';
+                    <script type="text/javascript">
+                        {% if app.user %}
+                            var notificationChannel = '{{ meteor.encryptChannelName('notification', app.user) }}';
+		                    var friendshipChannel = '{{ meteor.encryptChannelName('friendship', app.user) }}';
+		                {% endif %}
+		                
 		                if (typeof Meteor != 'undefined') {
 			                Meteor.hostid = "{{ meteor.uniqid }}";
 			                Meteor.host = "{{ meteor.host }}";
 			                Meteor.port = "{{ meteor.clientport }}";
+			                Meteor.mode = "stream";
+			                Meteor.debugmode = {{ meteor.debugmode }};
+			                Meteor.pingtimeout = 3600000;
 		                }
 	                </script>
                 {% endif %}

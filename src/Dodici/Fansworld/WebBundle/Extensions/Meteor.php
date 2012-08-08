@@ -21,8 +21,10 @@ class Meteor
 	protected $port;
 	protected $clientport;
 	protected $socket;
+	protected $debugmode;
+	protected $enabled;
 
-    function __construct(EntityManager $em, $appstate, $host='127.0.0.1', $port='4671', $clientport='4670')
+    function __construct(EntityManager $em, $appstate, $host='127.0.0.1', $port='4671', $clientport='4670', $debugmode=true, $enabled=true)
     {
         $this->request = Request::createFromGlobals();
         $this->em = $em;
@@ -30,6 +32,8 @@ class Meteor
         $this->host = $host;
         $this->port = $port;
         $this->clientport = $clientport;
+        $this->debugmode = $debugmode;
+        $this->enabled = $enabled;
     }
 
     /**
@@ -105,6 +109,24 @@ class Meteor
     public function getUniqid()
     {
     	return uniqid();
+    }
+    
+    public function getPing()
+    {
+        $errno = null; $errstr = null;
+        $socket = @fsockopen($this->host, $this->clientport, $errno, $errstr, 0.5);
+        if ($socket) return true;
+        else return false;
+    }
+    
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+    
+    public function getDebugMode()
+    {
+        return $this->debugmode ? 'true' : 'false';
     }
     
     private function sendToSocket($message, $channel)
