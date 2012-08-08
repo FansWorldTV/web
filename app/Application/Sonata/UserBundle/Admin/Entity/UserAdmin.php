@@ -99,6 +99,12 @@ class UserAdmin extends Admin
                 	  'inline' => 'table', 
                     )
             	)
+            	->add('videocategorysubscriptions', 'sonata_type_collection', array ('label'=>'Susc. Canales', 'required' => false), 
+            	array(
+                      'edit' => 'inline',
+                	  'inline' => 'table', 
+                    )
+            	)
             ->end()
             ->with('Groups')
                 ->add('groups', 'sonata_type_model', array('required' => false))
@@ -123,6 +129,12 @@ class UserAdmin extends Admin
     	foreach ($user->getFriendships() as $qo) {
         	$qo->setAuthor($user);
         }
+        foreach ($user->getHasInterests() as $qo) {
+        	$qo->setAuthor($user);
+        }
+        foreach ($user->getVideocategorysubscriptions() as $qo) {
+        	$qo->setAuthor($user);
+        }
     }
 
     public function setUserManager(UserManagerInterface $userManager)
@@ -143,6 +155,9 @@ class UserAdmin extends Admin
         	$qo->setAuthor($user);
         }
         foreach ($user->getHasInterests() as $qo) {
+        	$qo->setAuthor($user);
+        }
+	    foreach ($user->getVideocategorysubscriptions() as $qo) {
         	$qo->setAuthor($user);
         }
 	}

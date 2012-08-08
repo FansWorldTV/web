@@ -390,6 +390,11 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: hasidol }
         arguments: [null, Dodici\Fansworld\WebBundle\Entity\HasIdol, DodiciFansworldAdminBundle:HasIdolAdmin]
+    dodici.fansworld.adminbundle.admin.videocategorysubscription:
+        class: Dodici\Fansworld\AdminBundle\Admin\VideoCategorySubscriptionAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: videocategorysubscription }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\VideoCategorySubscription, DodiciFansworldAdminBundle:VideoCategorySubscriptionAdmin]
     ### END ADMIN SERVICES ###
     liking.listener.persist:
         class: Dodici\Fansworld\WebBundle\Listener\LikingCountUpdater
