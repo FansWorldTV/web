@@ -58,7 +58,7 @@
                                       <pageSequence> a positive or negative value that represents the scroll direction sequence
                                       <scrollDirection> a string of either 'prev' or 'next'
 */
-if(typeof window[endlessScrollPaused] == 'undefined'){
+if(typeof window.endlessScrollPaused == 'undefined'){
 	 window.endlessScrollPaused = false;
 }
 var EndlessScroll;

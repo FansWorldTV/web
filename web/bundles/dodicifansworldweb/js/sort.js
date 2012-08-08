@@ -2,6 +2,7 @@
     $.fn.sort = function(criteria){
         var self = this;
         var sort = {};
+        var mosaicStarted = false;
         
         if(typeof(criteria)=='undefined'){
             sort.criteria = 'popular';
@@ -43,19 +44,21 @@
                 var c = 0;
                 for(var i in r.elements){
                     var element = r.elements[i];
-                    var callback = function(){};
+                    templateHelper.renderTemplate(sort.dataList + "-list_element", element, "[data-list-result]", false, function(){
+                        site.startMosaic($("[data-list-result]"), {
+                            minw: 150, 
+                            margin: 0, 
+                            liquid: true, 
+                            minsize: false
+                        });
+                        $("[data-new-element]").imagesLoaded(function(){
+                            if(c>0){
+                                $('[data-list-result]').montage('add', $("[data-new-element]"));
+                            }
+                            $("[data-new-element]").removeAttr('data-new-element');
+                        });
+                    });
                     c++;
-                    if(r.elements.length == c){
-                        callback = function(){
-                            site.startMosaic($("[data-list-result]"), {
-                                minw: 150, 
-                                margin: 0, 
-                                liquid: true, 
-                                minsize: false
-                            });
-                        };
-                    }
-                    templateHelper.renderTemplate(sort.dataList + "-list_element", element, "[data-list-result]", false, callback);
                 }
                 
                 if(r.addMore){
@@ -71,6 +74,12 @@
         
         sort.page = 1;
         self.find('[data-list-result]').html("");
+        site.startMosaic($("[data-list-result]"), {
+            minw: 150, 
+            margin: 0, 
+            liquid: true, 
+            minsize: false
+        });
         get();
         bindAddMore(function(){
             get();
