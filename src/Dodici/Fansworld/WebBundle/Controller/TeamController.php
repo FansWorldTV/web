@@ -343,11 +343,39 @@ class TeamController extends SiteController
 
         $addMore = $countAll > self::LIMIT_ITEMS ? true : false;
 
+        $sorts = array(
+            'id'   => 'toggle-video-types',
+            'class'=> 'list-videos',
+            'list' => array(
+                array(
+                    'name'     => 'destacados', 
+                    'dataType' => 0, 
+                    'class'    => '',
+                ),
+                array(
+                    'name'     => 'masVistos',
+                    'dataType' => 1,
+                    'class'    => '',
+                ),
+                array(
+                    'name'     => 'populares',
+                    'dataType' => 2,
+                    'class'    => 'active',
+                ),
+                array(
+                    'name' => 'masVistosDia',
+                    'dataType' => 3,
+                    'class'    => '',
+                ),
+            )
+        );
+        
         return array(
             'videos' => $videos,
             'addMore' => $addMore,
             'user' => $user,
-            'team' => $team
+            'team' => $team,
+            'sorts' => $sorts
         );
     }
     

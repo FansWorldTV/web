@@ -10,8 +10,17 @@
 {% endblock %}
 
 {% block inner_content %}
-    <div data-list data-entity-id="{{ idol.id }}" data-entity-type="idol">
-        {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %} 
-        {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig'  with {'entityId': idol.id, 'entityType': 'Idol'}%}
+<div data-list="video" data-entity-type="idol" data-entity-id="{{idol.id}}">
+    <div class="row-fluid update clearfix"> 
+        <span class="pull-left">
+            {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %}
+        </span>
+        <span class="pull-right">
+            {% include 'DodiciFansworldWebBundle:Default:blocks/button_upload.html.twig'  with { 'type': 'video' }%}    
+        </span>
     </div>
+    
+    
+    {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with {'entityId': idol.id, 'entityType': 'idol'} %}
+</div>
 {% endblock %} 

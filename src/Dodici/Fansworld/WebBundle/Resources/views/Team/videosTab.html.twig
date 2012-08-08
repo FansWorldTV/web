@@ -10,5 +10,9 @@
 {% endblock %}
 
 {% block inner_content %}
-    {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig'  %}
+    <div data-list="video" data-entity-type="team" data-entity-id="{{team.id}}">
+        {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %}
+
+        {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with {'entityId': team.id, 'entityType': 'team'} %}
+    </div>
 {% endblock %}
