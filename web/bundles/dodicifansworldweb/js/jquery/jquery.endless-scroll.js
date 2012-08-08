@@ -58,7 +58,9 @@
                                       <pageSequence> a positive or negative value that represents the scroll direction sequence
                                       <scrollDirection> a string of either 'prev' or 'next'
 */
-
+if(typeof window[endlessScrollPaused] == 'undefined'){
+	 window.endlessScrollPaused = false;
+}
 var EndlessScroll;
 
 EndlessScroll = (function() {
@@ -185,7 +187,9 @@ EndlessScroll = (function() {
     shouldTryOrNot = this.didScroll && this.firing === true;
     
     //fix jm
-    if(this.scrollDirection == 'prev')
+    if(window.endlessScrollPaused){
+    	shouldTryOrNot = false;
+    }else if(this.scrollDirection == 'prev')
     {
         if(!this.enableScrollTop){
             shouldTryOrNot = false;
@@ -194,8 +198,6 @@ EndlessScroll = (function() {
     
     if (shouldTryOrNot) {
         this.didScroll = false;
-            
-      
     }
     return shouldTryOrNot;
   };
