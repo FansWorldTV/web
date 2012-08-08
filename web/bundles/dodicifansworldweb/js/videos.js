@@ -263,127 +263,37 @@ var videos = {
     },
     
     searchMyVideos: {
-        type: null,
-        userid: null,
-        canAddMore: false,
-        pager: 1,
         
         init: function(){
-            videos.searchMyVideos.userid = $("#userId").val();
             videos.searchMyVideos.toggleType();
         },
         
-        appendVideo: function(ele){
-            var template = $("#templates .video").find('a').clone();
-            template.addClass('newimg').attr('href', Routing.generate( appLocale + "_video_show",{
-                'id': ele.id, 
-                'slug': ele.slug
-            }));
-            template.find('.title').html(ele.title);
-            template.find('img').attr('src', ele.image).attr('alt', ele.title);
-            $("#am-container").append(template); 
-        },
-        
-        addMore: function(){
-            var params = {};
-            params['userid'] = videos.searchMyVideos.userid;
-            params['page'] = videos.searchMyVideos.pager;
-                
-            switch(videos.searchMyVideos.type){
-                case 2:
-                    params['isPopular'] = true;
-                    break;
-                case 3:
-                    params['today'] = true;
-                    break;
-            }
-
-            var url = null;
-            if(videos.searchMyVideos.type == 0){
-                url = 'video_highlighted';
-            }else{
-                url = 'video_visited';
-            }
-            ajax.genericAction(url, params, function(r){
-                videos.searchMyVideos.canAddMore = r.addMore;
-                videos.searchMyVideos.pager++;
-                for(var i in r.videos) {
-                    var ele = r.videos[i];
-                    videos.searchMyVideos.appendVideo(ele);
-                }
-                $newImgs = $("#am-container .newimg");
-                $newImgs.imagesLoaded( function(){
-                    $("#am-container").montage('add', $("#am-container .newimg"));
-                });
-                $newImgs.removeClass('.newimg');
-            }, function(msg){
-                error(msg);
-            });
-        },
         
         toggleType: function(){
-            $("div.list-videos .btn:not('.active')").live('click', function(){
-                videos.searchMyVideos.pager = 1;
-                videos.searchMyVideos.type = $(this).attr('data-type');
-                $("div.list-videos .btn.active").removeClass('active');
+            $("[data-sort] .btn-group .btn:not('.active')").live('click', function(){
+                $(this).parent().find('.active').removeClass('active');
                 $(this).addClass('active');
-                
-                var url = null;
-                var params = {};
-                params['userid'] = videos.searchMyVideos.userid;
-                params['page'] = videos.searchMyVideos.pager = 1;
-                
-                switch(videos.searchMyVideos.type){
+                switch($(this).attr('data-type')){
                     case "0":
-                        url = "video_highlighted";
+                        $("[data-list]").sort('highlight');
                         break;
                     case "1":
-                        url = "video_visited";
+                        $("[data-list]").sort('most-visited');
                         break;
                     case "2":
-                        url = "video_populars";
-                        params['isPopular'] = true;
+                        $("[data-list]").sort('popular');
                         break;
                     case "3":
-                        url = "video_visited";
-                        params['today'] = true;
+                        $("[data-list]").sort('most-visited-today');
                         break;
                 }
-                
-                ajax.genericAction(url, params, function(r){
-                    videos.searchMyVideos.canAddMore = r.addMore;
-                    $("#am-container").html("");
-                    for(var i in r.videos) {
-                        var ele = r.videos[i];
-                        videos.searchMyVideos.appendVideo(ele);
-                    }
-                    $newImgs = $("#am-container .newimg");
-                    $newImgs.imagesLoaded( function(){
-                        $("#am-container").montage('add', $("#am-container .newimg"));
-                    });
-                    $newImgs.removeClass('.newimg');
-                }, function(msg){
-                    error(msg);
-                });
             });
-        },
-        
-        bindAddMore: function(){
-            $(window).endlessScroll({
-                fireOnce: true,
-                enableScrollTop: false,
-                inflowPixels: 100,
-                fireDelay: 250,
-                intervalFrequency: 2000,
-                ceaseFireOnEmpty: false,
-                loader: 'cargando',
-                callback: function(i, p, d) {
-                    if(videos.searchMyVideos.canAddMore){
-                        videos.searchMyVideos.addMore();
-                    }
-                }
-            });
+            $("[data-list]").sort('popular');
         }
+        
     }
     
 };
+$(document).ready(function(){
+    videos.init();
+});

@@ -10,7 +10,7 @@ var templateHelper = {
         var tplPart = templateId.split("-");
         params		=	{
             type: tplPart[1]
-            };	
+        };	
         return Routing.generate(appLocale + '_template_' + tplPart[0], params);
     },
 		
@@ -60,27 +60,26 @@ var templateHelper = {
         }
     },
 		
-    renderTemplate:	function(templateId,jsonData,destino,prepend)
+    renderTemplate:	function(templateId,jsonData,destino,prepend, callback)
     {
         var tplString	=	templateHelper.getTemplate(templateId);	
         if(tplString == true){
-            templateHelper.appendRenderedTemplate(templateId,jsonData,destino,prepend);	
+            templateHelper.appendRenderedTemplate(templateId,jsonData,destino,prepend, callback);	
         }else{
             tplString.done(function (data) { 
-                templateHelper.appendRenderedTemplate(templateId,jsonData,destino,prepend);
+                templateHelper.appendRenderedTemplate(templateId,jsonData,destino,prepend, callback);
             });
         }
     },
 		
-    appendRenderedTemplate: function(templateId,jsonData,destino,prepend)
+    appendRenderedTemplate: function(templateId,jsonData,destino,prepend, callback)
     {
         if(prepend == true){
             $( destino ).prepend( $.render[templateId]( jsonData ) );
         }else{
             $( destino ).append( $.render[templateId]( jsonData ) );
         }
-				
-			
+        callback();
     }
 		
 		

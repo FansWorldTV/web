@@ -1,6 +1,6 @@
 (function( $ ) {
     $.fn.sort = function(criteria){
-        
+        var self = this;
         var sort = {};
         
         if(typeof(criteria)=='undefined'){
@@ -10,9 +10,9 @@
         }
         
         sort.page = 1;
-        sort.entityId = $("[data-list]").attr('data-entity-id');
-        sort.entityType = $("[data-list]").attr('data-entity-type');
-        sort.dataList = $("[data-list]").attr('data-list');
+        sort.entityId = self.attr('data-entity-id');
+        sort.entityType = self.attr('data-entity-type');
+        sort.dataList = self.attr('data-list');
 
         function get(){
             var methodName = "";
@@ -40,18 +40,37 @@
             }
             window.endlessScrollPaused = true;
             ajax.genericAction(methodName, opts, function(r){
+                var c = 0;
                 for(var i in r.elements){
                     var element = r.elements[i];
-                    templateHelper.renderTemplate(sort.dataList + "-list_element", element, "[data-list-result]");
+                    var callback = function(){};
+                    c++;
+                    if(r.elements.length == c){
+                        callback = function(){
+                            site.startMosaic($("[data-list-result]"), {
+                                minw: 150, 
+                                margin: 0, 
+                                liquid: true, 
+                                minsize: false
+                            });
+                        };
+                    }
+                    templateHelper.renderTemplate(sort.dataList + "-list_element", element, "[data-list-result]", false, callback);
                 }
+                
                 if(r.addMore){
                     window.endlessScrollPaused = false;
+                }else{
+                    window.endlessScrollPaused = true;
                 }
             }, function(msg){
                 error(msg);
             });
+            sort.page++;
         }
         
+        sort.page = 1;
+        self.find('[data-list-result]').html("");
         get();
         bindAddMore(function(){
             get();
@@ -68,8 +87,8 @@ function bindAddMore(callback){
         intervalFrequency: 2000,
         ceaseFireOnEmpty: false,
         loader: 'cargando',
-        callback: function(i, p, d) {
-            callback(j, p, d);
+        callback: function() {
+            callback();
         }
     });
 }
