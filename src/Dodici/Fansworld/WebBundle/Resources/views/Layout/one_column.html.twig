@@ -1,0 +1,14 @@
+{% extends "DodiciFansworldWebBundle:Layout:base.html.twig" %}
+
+{% block main %}
+    <div id="main-content-frame" class="container-fluid {{ preferences.get('toolbar_pos')|default('top') }}">
+        <div class='row-fluid'>
+            {# fullwidth content #}
+            <section id="content" class="span12">            
+                {% block main_content %}  
+
+                {% endblock %}
+            </section>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,33 @@
+<section class='channels-widget row-fluid'>
+    <aside class='channels-list span2'>
+        <ul>
+            {% for key,channel in channels %}
+                {% if channel == 'active' %}
+                    <li class='active'>{{ key }}</li>
+                {% else %}
+                    <li >{{ channel }}</li>
+                {% endif %}
+                
+            {% endfor %}
+        </ul>
+    </aside>
+    <div class="content span10 row-fluid">
+        <div class='span4 videoplayer-container'>
+            {% include "DodiciFansworldWebBundle:Video:blocks/channels_widget_player.html.twig"  %}
+        </div>
+        
+        <div class="span8 content-container">
+            {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with{videos: videosDestacadosFW, thumbnailSize: 'video'} %}    
+        </div>
+        
+        
+    </div>
+</section>
+
+<script type="text/javascript">
+        site.startMosaic($('.am-container'), {
+            minsize: false,
+            liquid: true,
+            margin : 0
+        });
+    </script>

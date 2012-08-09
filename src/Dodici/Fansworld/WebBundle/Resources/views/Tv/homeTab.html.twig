@@ -1,0 +1,17 @@
+{% extends "DodiciFansworldWebBundle:Tv:base.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:tv_fullwidth.html.twig"  %}
+
+{% block title %}{{ parent() }} - Home{% endblock %}
+
+{% block profile_tabs %}
+	{% set active_tab = 'home' %}
+	{{ parent() }}
+{% endblock %}
+
+{% block inner_content %}
+    {{ parent() }}
+    {% include "DodiciFansworldWebBundle:Tv:blocks/channels_widget.html.twig"  %}
+    
+    {% include "DodiciFansworldWebBundle:Tv:blocks/ranking_widget.html.twig"  %}
+{% endblock %}

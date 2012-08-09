@@ -1,0 +1,13 @@
+{% extends "DodiciFansworldWebBundle:Layout:one_column.html.twig" %}
+
+
+{% block main_content %}
+	{% if tv_body_class is not defined %}
+        {% set tv_body_class = '' %}
+    {% endif %}
+	<div class="{{ tv_body_class }} row-fluid">
+		{% block home_body %}
+		
+		{% endblock %}
+	</div>
+{% endblock %}

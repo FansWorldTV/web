@@ -443,7 +443,7 @@ var site = {
         });
         $('div#login-widget #do-login').click(function(){
             $('form.login').submit();
-        })
+        });
          
     },
     
@@ -466,8 +466,8 @@ var site = {
             q.preventDefault();
             targetSlide = $(this).attr('data-to')-1;
             $('#myCarousel').carousel(targetSlide);
-        });​
-        
+        });
+            
     },
     
     startMosaic: function(container, options){

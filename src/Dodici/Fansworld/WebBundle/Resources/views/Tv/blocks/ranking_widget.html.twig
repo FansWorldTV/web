@@ -1,0 +1,15 @@
+<section class='ranking-widget'>
+    <header class="ranking-filters-container">
+        {% include "DodiciFansworldWebBundle:Tv:blocks/filters.html.twig"  %}
+    </header>
+    
+    <div class='content-container'>
+        <div class='tag-list-container'>
+            {% include "DodiciFansworldWebBundle:Tv:blocks/tag_list.html.twig"  %}
+        </div>
+        <div class='montage-container'>
+            {% include "DodiciFansworldWebBundle:Video:blocks/montage.html.twig"  with { videos: videosDestacadosFW } %}
+        </div>
+        
+    </div>
+</section>

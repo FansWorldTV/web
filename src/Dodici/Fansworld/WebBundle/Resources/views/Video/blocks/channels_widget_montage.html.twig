@@ -1,14 +1,11 @@
 <!-- Listado de videos para mostrar como montage -->
-{% if thumbnailSize is not defined %}
-    {% set thumbnailSize = 'medium' %}  
-{% endif %}
 <div class="row-fluid">
     {% if videos|length>0 %}
         <div id="am-container" class="am-container list-mosaic" data-list-result>
             {% for video in videos %}
                 <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
                     <span class="title">{{ video.title }}</span>
-                    {% thumbnail video.image, thumbnailSize  with {"title": video.title}%}
+                    {% thumbnail video.image, 'medium'  with {"title": video.title}%}
                 </a>
             {% endfor %}
         </div>
