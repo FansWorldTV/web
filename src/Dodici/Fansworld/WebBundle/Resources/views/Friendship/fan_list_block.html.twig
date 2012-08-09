@@ -13,7 +13,7 @@
 	                            	{% thumbnail friend.image, 'big_square' %}
 	                            </div>
 	                            <span class="name">{{ friend }}</span>
-	                            <span class="friendCount">{{ friend.friendCount }}</span>
+	                            <span class="friendCount">{{ friend.fanCount }}</span>
 	                            <div class="addFriend" targetId="{{ friend.id }}">
 	                            	<button class="btn btn_friendship add btn-success"> Ser fan{% if friend.restricted %} (solicitar){% endif %}</button>
                             	</div>

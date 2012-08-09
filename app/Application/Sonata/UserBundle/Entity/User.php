@@ -269,9 +269,9 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
     protected $hasbadges;
         
     /**
-     * @var integer $friendCount
+     * @var integer $fanCount
      */
-    private $friendCount;
+    private $fanCount;
     
     /**
      * @var integer $idolCount
@@ -327,7 +327,7 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
         $this->notifymail = array_keys(Notification::getTypeList());
         $this->preferences = array();
         $this->idolCount = 0;
-        $this->friendCount = 0;
+        $this->fanCount = 0;
         $this->visits = new ArrayCollection();
         $this->videocategorysubscriptions = new ArrayCollection();
         $this->visitCount = 0;
@@ -1305,24 +1305,24 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
     }
     
     /**
-     * Get friendCount
+     * Get fanCount
      *
      * @return integer
      */
-    public function getFriendCount()
+    public function getFanCount()
     {
-    	return $this->friendCount;
+    	return $this->fanCount;
     }
     
 	/**
-     * Set friendCount
+     * Set fanCount
      *
-     * @param integer $friendCount
+     * @param integer $fanCount
      */
-    public function setFriendCount($friendCount)
+    public function setFanCount($fanCount)
     {
-        if ($friendCount < 0) $friendCount = 0;
-    	$this->friendCount = $friendCount;
+        if ($fanCount < 0) $fanCount = 0;
+    	$this->fanCount = $fanCount;
     }
 
     /**

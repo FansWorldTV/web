@@ -28,9 +28,7 @@
 		            {% set pathUrl = ''  %}
 		        {% endif %}
 		        
-		        {% if avatar.friendCount is defined %}
-		            {% set fanCount = avatar.friendCount %}
-		        {% elseif avatar.fanCount is defined %}
+		        {% if avatar.fanCount is defined %}
 		            {% set fanCount = avatar.fanCount %}
 		        {% endif %}
 
@@ -45,7 +43,7 @@
                                 {% endif %}
                             </div>
                             <span class="name">{{ avatar}}</span>
-                            <span class="friendCount">{{ fanCount }}</span>
+                            <span class="friendCount">{% if fanCount is defined %}{{ fanCount }}{% endif %}</span>
                             <div class="addFriend" targetId="{{ avatar.id }}">
                             	<button class="btn btn_friendship add btn-success"> Ser fan</button>
                         	</div>

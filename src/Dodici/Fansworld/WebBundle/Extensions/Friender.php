@@ -150,7 +150,13 @@ class Friender
         $this->addScoreToUser($friendship->getTarget(), $remove ? -$scoreadd : $scoreadd);
         
         $target = $friendship->getTarget(); 
-        $target->setFriendCount($target->getFriendCount() + ($remove ? -1 : 1));
+        $fancount = $this->em->getRepository('DodiciFansworldWebBundle:Friendship')->countBy(array(
+            'target' => $target->getId(),
+            'active' => true
+        ));
+        if ($remove) $fancount--;
+        else $fancount++;
+        $target->setFanCount($fancount);
         $this->em->persist($target);
     }
         
