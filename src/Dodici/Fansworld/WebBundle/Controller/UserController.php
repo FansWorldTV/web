@@ -800,7 +800,7 @@ class UserController extends SiteController
     /**
      * User videos
      *
-     * @Route("/u/{username}/videos", name="video_user")
+     * @Route("/u/{username}/videos", name="user_videos")
      * @Template()
      */
     public function videosTabAction($username)

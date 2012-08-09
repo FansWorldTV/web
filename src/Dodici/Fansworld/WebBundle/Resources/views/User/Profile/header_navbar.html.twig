@@ -13,7 +13,7 @@
                 	<a  href="{{ path('user_detail', {username: user.username}) }}">Info</a>
             	</li>
 	            <li {% if active_tab == 'videos' %}class="active"{% endif %}>
-	                <a  href="{{ path('video_user', {username: user.username}) }}">Videos</a>
+	                <a  href="{{ path('user_videos', {username: user.username}) }}">Videos</a>
 	            </li>
 	            <li {% if active_tab == 'equipos' %}class="active"{% endif %}>
 	                <a href="">Equipos</a>

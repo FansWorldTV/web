@@ -14,7 +14,7 @@
             </li>
             
             <li {% if active_tab == 'videos' %}class="active"{% endif %}>
-                <a  href="{{ path('video_team', {slug: entity.slug}) }}">Videos</a>
+                <a  href="{{ path('team_videos', {slug: entity.slug}) }}">Videos</a>
             </li>
             
             <li {% if active_tab == 'photos' %}class="active"{% endif %}>

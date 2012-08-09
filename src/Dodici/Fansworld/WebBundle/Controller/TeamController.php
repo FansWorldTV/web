@@ -320,7 +320,7 @@ class TeamController extends SiteController
     
     /**
      * team videos
-     * @Route("/{slug}/videos", name="video_team") 
+     * @Route("/{slug}/videos", name="team_videos") 
      * @Template()
      */
     public function videosTabAction($slug)

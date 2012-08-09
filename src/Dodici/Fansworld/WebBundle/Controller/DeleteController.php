@@ -55,7 +55,7 @@ class DeleteController extends SiteController
 	        	
 	        	switch ($type) {
 	        		case 'photo': $redirect = $this->generateUrl('album_show', array('id' => $entity->getAlbum()->getId(), 'slug' => $entity->getAlbum()->getId())); break;
-	        		case 'video': $redirect = $this->generateUrl('video_user', array('username' => $user->getUsername())); break;
+	        		case 'video': $redirect = $this->generateUrl('user_videos', array('username' => $user->getUsername())); break;
 	        		case 'album': $redirect = $this->generateUrl('user_listalbums', array('username' => $user->getUsername())); break;
 	        	}
 	        	
