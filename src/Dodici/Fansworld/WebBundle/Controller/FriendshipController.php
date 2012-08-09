@@ -35,29 +35,17 @@ class FriendshipController extends SiteController
                 throw new \Exception('Debe iniciar sesión');
 
             $targetId = $request->get('target');
-            $friendgroups = $request->get('friendgroups', array());
+            $friendgroupids = $request->get('friendgroups', array());
 
             $target = $this->getRepository('User')->find($targetId);
-
-            if (!$this->get('appstate')->canFriend($target))
-                throw new \Exception('No puede agregar a esta persona');
-
-            $friendship = new Friendship;
-            $friendship->setAuthor($author);
-            $friendship->setTarget($target);
-            if ($target->getRestricted()) {
-            	$friendship->setActive(false);
-            }
-
-            foreach ($friendgroups as $id) {
+            
+            $friendgroups = array();
+            foreach ($friendgroupids as $id) {
                 $friendgroup = $this->getRepository('FriendGroup')->find($id);
-                $friendship->addFriendGroup($friendgroup);
+                $friendgroups[] = $friendgroup;
             }
 
-			
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($friendship);
-            $em->flush();
+			$friendship = $this->get('friender')->friend($target, $friendgroups);
             
             $trans = $this->get('translator');
             if ($friendship->getActive()) {
@@ -96,16 +84,10 @@ class FriendshipController extends SiteController
 
         $friendship = $this->getRepository('Friendship')->find($friendshipId);
 
-        if ($author == $friendship->getAuthor()) {
-            try {
-                $em = $this->getDoctrine()->getEntityManager();
-                $em->remove($friendship);
-                $em->flush();
-            } catch (\Exception $exc) {
-                $response['error'] = $exc->getMessage();
-            }
-        } else {
-            $response['error'] = 'User is not the author';
+        try {
+            $this->get('friender')->remove($friendship);
+        } catch (\Exception $exc) {
+            $response['error'] = $exc->getMessage();
         }
 
         return $this->jsonResponse($response);

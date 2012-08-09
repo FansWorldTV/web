@@ -61,18 +61,6 @@ class ContactImporter
     
     public function finalizeInvitation(User $inviter, User $target, $flush=true)
     {
-    	$em = $this->container->get('doctrine')->getEntityManager();
-        $friendship = new Friendship();
-        $friendship->setAuthor($target);
-        $friendship->setTarget($inviter);
-        $friendship->setActive(true);
-        $friendship->setInvitation(true);
-        $em->persist($friendship);
-        
-        if ($flush) {
-        	$em->flush();
-        }
-        
-        return $friendship;
+    	return $this->container->get('friender')->friend($inviter, null, $target, true);
     }
 }

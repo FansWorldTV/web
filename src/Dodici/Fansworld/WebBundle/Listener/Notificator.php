@@ -111,31 +111,6 @@ class Notificator
 		$entity = $eventArgs->getEntity();
 		$em = $eventArgs->getEntityManager();
 		
-    	if ($entity instanceof Friendship) {
-            if ($entity->getActive() == true  && $entity->getTarget()->getRestricted()) {
-                // notif: carlitos aceptó tu solicitud de amistad...
-                $notification = new Notification();
-	    		$notification->setType(Notification::TYPE_FRIENDSHIP_ACCEPTED);
-	    		$notification->setAuthor($entity->getTarget());
-	    		$notification->setTarget($entity->getAuthor());
-	    		$em->persist($notification);
-                // wall: juan es ahora amigo de carlitos
-                $comment = new Comment();
-				$comment->setType(Comment::TYPE_NEW_FRIEND);
-				$comment->setAuthor($entity->getTarget());
-				$comment->setTarget($entity->getAuthor());
-				$comment->setPrivacy(Privacy::FRIENDS_ONLY);
-				$em->persist($comment);
-				// wall: inverso
-				$comment = new Comment();
-				$comment->setType(Comment::TYPE_NEW_FRIEND);
-				$comment->setAuthor($entity->getAuthor());
-				$comment->setTarget($entity->getTarget());
-				$comment->setPrivacy(Privacy::FRIENDS_ONLY);
-				$em->persist($comment);
-				
-				$em->flush();
-            }
-        }
+    	
     }
 }

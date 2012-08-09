@@ -9,6 +9,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Dodici\Fansworld\WebBundle\Entity\Friendship
  * 
  * A user following another user. Non-reciprocal. Will need to be activated if the target user is in restricted mode.
+ * 
+ * Use the "friender" service to add, remove, and accept friendships
  *
  * @ORM\Table(name="friendship")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\FriendshipRepository")

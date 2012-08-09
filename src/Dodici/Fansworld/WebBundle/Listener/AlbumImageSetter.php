@@ -19,11 +19,10 @@ class AlbumImageSetter
 		$entity = $eventArgs->getEntity();
 		$em = $eventArgs->getEntityManager();
 		
-		if ($entity instanceof Photo) {
+		if ($entity instanceof Photo && $entity->getActive()) {
 			$album = $entity->getAlbum();
 			if ($album) {
-				$album->setImage($entity->getImage());
-				$album->setPhotoCount($album->getPhotoCount()+1);
+				$this->setAlbumImage($album);
 				$em->persist($album);
 				$em->flush();
 			}
@@ -39,9 +38,6 @@ class AlbumImageSetter
 			$album = $entity->getAlbum();
 			if ($album) {
 				$this->setAlbumImage($album);
-				if ($album->getPhotoCount() > 1) {
-					$album->setPhotoCount($album->getPhotoCount()-1);
-				}
 				$em->persist($album);
 				$em->flush();
 			}
@@ -57,9 +53,6 @@ class AlbumImageSetter
 			$album = $entity->getAlbum();
 			if ($album) {
 				$this->setAlbumImage($album);
-				if ($album->getPhotoCount() > 1) {
-					$album->setPhotoCount($album->getPhotoCount()-1);
-				}
 				$em->persist($album);
 				$em->flush();
 			}
@@ -69,14 +62,17 @@ class AlbumImageSetter
     private function setAlbumImage($album) {
     	$photos = $album->getPhotos();
 		$lastphoto = null;
+		$count = 0;
 		foreach ($photos as $ph) {
 			if ($ph->getActive()) {
 				$lastphoto = $ph;
+				$count++;
 			}
 		}
 		if ($lastphoto) {
 			$album->setImage($lastphoto->getImage());
 		}
+		$album->setPhotoCount($count);
     }
     
 }

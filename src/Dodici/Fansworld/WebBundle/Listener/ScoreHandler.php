@@ -110,22 +110,7 @@ class ScoreHandler
 				$this->addScore($likedthing->getAuthor(), self::SCORE_GET_LIKED);
 			}
 		}
-		
-		if ($entity instanceof Friendship && $entity->getActive()) {
-			//$this->addScore($entity->getAuthor(), self::SCORE_NEW_FRIENDSHIP);
-			$scoreadd = self::SCORE_NEW_FRIENDSHIP;
-			if ($entity->getInvitation()) $scoreadd += self::SCORE_INVITE_FRIEND;
-            $this->addScore($entity->getTarget(), $scoreadd);
-                
-            $author = $entity->getAuthor();
-            $target = $entity->getTarget(); 
-            $author->setFriendCount($author->getFriendCount() + 1);
-            $target->setFriendCount($target->getFriendCount() + 1);
-            $em->persist($author);
-            $em->persist($target);
-            $em->flush();
-		}
-		
+				
 		if ($entity instanceof HasTeam || $entity instanceof HasIdol) {
 		    if ($entity instanceof HasTeam) $thingname = 'team';
 		    else $thingname = 'idol';
@@ -157,21 +142,6 @@ class ScoreHandler
 		$em = $eventArgs->getEntityManager();
 		$this->em = $em;
 		
-    	if ($entity instanceof Friendship) {
-            if ($entity->getActive() == true && $entity->getTarget()->getRestricted()) {
-                //$this->addScore($entity->getAuthor(), self::SCORE_NEW_FRIENDSHIP);
-                $this->addScore($entity->getTarget(), self::SCORE_NEW_FRIENDSHIP);
-                
-                $author = $entity->getAuthor();
-                $target = $entity->getTarget(); 
-                $author->setFriendCount($author->getFriendCount() + 1);
-                $target->setFriendCount($target->getFriendCount() + 1);
-                $em->persist($author);
-                $em->persist($target);
-                $em->flush();
-            }
-        }
-        
     }
     
 	public function postRemove(LifecycleEventArgs $eventArgs)
@@ -192,20 +162,6 @@ class ScoreHandler
 			}
         }
         
-        if ($entity instanceof Friendship) {
-        	if ($entity->getActive() == true) {
-        		//$this->addScore($entity->getAuthor(), -self::SCORE_NEW_FRIENDSHIP);
-                $this->addScore($entity->getTarget(), -self::SCORE_NEW_FRIENDSHIP);
-        		
-        		$author = $entity->getAuthor();
-                $target = $entity->getTarget(); 
-                $author->setFriendCount($author->getFriendCount() - 1);
-                $target->setFriendCount($target->getFriendCount() - 1);
-                $em->persist($author);
-                $em->persist($target);
-                $em->flush();
-        	}
-        }
         
         if ($entity instanceof Idolship) {
         	$this->addScore($entity->getAuthor(), -self::SCORE_ADD_IDOL);

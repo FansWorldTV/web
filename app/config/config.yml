@@ -553,6 +553,9 @@ services:
     visitator:
       class: Dodici\Fansworld\WebBundle\Extensions\Visitator
       arguments: [@security.context, @doctrine.orm.entity_manager, @session, @appstate]
+    friender:
+      class: Dodici\Fansworld\WebBundle\Extensions\Friender
+      arguments: [@security.context, @doctrine.orm.entity_manager, @appstate]
     subscriptions:
       class: Dodici\Fansworld\WebBundle\Extensions\Subscriptions
       arguments: [@security.context, @doctrine.orm.entity_manager]
