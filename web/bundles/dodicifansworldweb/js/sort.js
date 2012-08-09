@@ -72,18 +72,20 @@
             sort.page++;
         }
         
-        sort.page = 1;
-        self.find('[data-list-result]').html("");
-        site.startMosaic($("[data-list-result]"), {
-            minw: 150, 
-            margin: 0, 
-            liquid: true, 
-            minsize: false
-        });
-        get();
-        bindAddMore(function(){
+        if(sort.dataList){
+            sort.page = 1;
+            self.find('[data-list-result]').html("");
+            site.startMosaic($("[data-list-result]"), {
+                minw: 150, 
+                margin: 0, 
+                liquid: true, 
+                minsize: false
+            });
             get();
-        });
+            bindAddMore(function(){
+                get();
+            });
+        }
     };
 })( jQuery );
 
