@@ -1,0 +1,43 @@
+{# Layout with breadcrumb & top, bottom #}
+{% block tv_body %}
+        {# breadcrumb?? #}
+        <section id='breadcrumb' class='row-fluid'>
+            {% block breadcrumb %}
+            
+            {% endblock %}
+        </section>
+    
+        {# top row#}
+        <div class=' top-container row-fluid'>
+            {% block topcontent %}
+                <section id="top-left" class="span7">            
+                    {% block top_left_content %}  
+    
+                    {% endblock %}
+                </section>
+                
+                <section id="top-right" class="span5">            
+                    {% block top_right_content %}  
+    
+                    {% endblock %}
+                </section>
+            {% endblock %}
+        </div>
+        {# bottom row#}
+        <div class='bottom-container row-fluid'>
+            {% block bottomcontent %}
+                <section id="bottom-left" class="span7">            
+                    {% block bottom_left_content %}  
+    
+                    {% endblock %}
+                </section>
+                
+                <section id="bottom-right" class="span5">            
+                    {% block bottom_right_content %}  
+    
+                    {% endblock %}
+                </section>
+            {% endblock %}
+        </div>
+    
+{% endblock %}

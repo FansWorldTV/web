@@ -1,0 +1,35 @@
+{% extends "DodiciFansworldWebBundle:Tv:base.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:tv_videodetail.html.twig"  %}
+
+{% block title %}{{ parent() }} - Home{% endblock %}
+
+
+{% block breadcrumb %}
+    {{ parent() }}
+    barra de navegacion?
+{% endblock %}
+
+{% block top_left_content %}
+    {{ parent() }}
+    aca videoplayer
+{% endblock %}
+
+{% block top_right_content %}
+    {{ parent() }}
+    aca button group<br>
+    aca video_grid asociada
+{% endblock %}
+
+{% block bottom_left_content %}
+    {{ parent() }}
+    aca lo estan viendo <br>
+    aca tags<br>
+    Aca description<br>
+    aca comment box
+{% endblock %}
+
+{% block bottom_right_content %}
+    {{ parent() }}
+    aca videogrid
+{% endblock %}

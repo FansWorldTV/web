@@ -61,5 +61,14 @@ class TvController extends SiteController
        );
        
     }
-
+    
+    /**
+     * @Route("/detail", name="tv_videodetail")
+     * @Template
+     * @Secure(roles="ROLE_USER")
+     */
+    public function videoDetailTabAction()
+    {
+        return array();
+    }
 }
