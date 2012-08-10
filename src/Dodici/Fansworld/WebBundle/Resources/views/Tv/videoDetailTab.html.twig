@@ -11,25 +11,49 @@
 {% endblock %}
 
 {% block top_left_content %}
-    {{ parent() }}
-    aca videoplayer
+    {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video} %}
+    <iframe style="width: 100%; height: 70%;" src="http://www.youtube.com/embed/A51uwpKaLY0" frameborder="0" allowfullscreen></iframe>
 {% endblock %}
 
 {% block top_right_content %}
-    {{ parent() }}
-    aca button group<br>
-    aca video_grid asociada
+    {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %}
+    <section id="videos-related-sort" data-grid>
+        {% for v in videosRelated %}
+            <div class="video">
+                {% thumbnail v.image, 'medium' %}
+                <span data-title>{{ v.title }}</span>
+                <p data-content>{{ v.content|truncate(55) }}</p>
+            </div>
+        {% endfor %}
+        {% for v in videosRelated %}
+            <div class="video">
+                {% thumbnail v.image, 'medium' %}
+                <span data-title>{{ v.title }}</span>
+                <p data-content>{{ v.content|truncate(55) }}</p>
+            </div>
+        {% endfor %}
+    </section>
 {% endblock %}
 
 {% block bottom_left_content %}
     {{ parent() }}
-    aca lo estan viendo <br>
-    aca tags<br>
-    Aca description<br>
-    aca comment box
+    <div>
+        <span>LO ESTA VIENDO</span>
+        <img src="" />
+    </div>
+    <p></p>
+    {% include 'DodiciFansworldWebBundle:Default:comments_and_tags.html.twig' with {entity: video} %}
 {% endblock %}
-
+    
 {% block bottom_right_content %}
     {{ parent() }}
-    aca videogrid
+    <section id="videos-related" data-grid>
+        {% for v in videosRelated %}
+            <div class="video">
+                {% thumbnail v.image, 'medium'%}
+                <span>{{ v.title }}</span>
+                <p>{{ v.content|truncate(55) }}</p>
+            </div>
+        {% endfor %}
+    </section>
 {% endblock %}

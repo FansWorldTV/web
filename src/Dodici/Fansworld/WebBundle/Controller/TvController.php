@@ -63,12 +63,48 @@ class TvController extends SiteController
     }
     
     /**
-     * @Route("/detail", name="tv_videodetail")
+     * @Route("/detail/{id}", name="tv_videodetail")
      * @Template
      * @Secure(roles="ROLE_USER")
      */
-    public function videoDetailTabAction()
+    public function videoDetailTabAction($id)
     {
-        return array();
+        $video = $this->getRepository('Video')->find($id);
+        $user = $this->getUser();
+        $videosRelated = $this->getRepository('Video')->findBy(array());
+        
+        $sorts = array(
+            'id'   => 'toggle-video-types',
+            'class'=> 'list-videos',
+            'list' => array(
+                array(
+                    'name'     => 'destacados', 
+                    'dataType' => 0, 
+                    'class'    => '',
+                ),
+                array(
+                    'name'     => 'masVistos',
+                    'dataType' => 1,
+                    'class'    => '',
+                ),
+                array(
+                    'name'     => 'populares',
+                    'dataType' => 2,
+                    'class'    => 'active',
+                ),
+                array(
+                    'name' => 'masVistosDia',
+                    'dataType' => 3,
+                    'class'    => '',
+                ),
+            )
+        );
+        
+        return array(
+            'video' => $video,
+            'user' => $user,
+            'videosRelated' => $videosRelated,
+            'sorts' => $sorts
+        );
     }
 }
