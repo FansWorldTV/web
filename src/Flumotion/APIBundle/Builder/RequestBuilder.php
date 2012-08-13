@@ -75,7 +75,7 @@ class RequestBuilder {
     
 	public function getStream($id)
     {
-        return json_decode($this->getCurl('/pods/'.$id.'/streams'));
+        return json_decode($this->getCurl('/pods/'.$id.'/streams?'.$this->getSignature()));
     }
     
     public function getPod($id)
