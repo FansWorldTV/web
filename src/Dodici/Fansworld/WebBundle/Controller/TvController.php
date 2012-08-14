@@ -71,32 +71,22 @@ class TvController extends SiteController
     {
         $video = $this->getRepository('Video')->find($id);
         $user = $this->getUser();
-        $videosRelated = $this->getRepository('Video')->findBy(array());
+        $videosRelated = $this->getRepository('Video')->related($video, $user, self::LIMIT_VIDEOS);
         
         $sorts = array(
             'id'   => 'toggle-video-types',
             'class'=> 'list-videos',
             'list' => array(
                 array(
-                    'name'     => 'destacados', 
+                    'name'     => 'Relacionados', 
                     'dataType' => 0, 
-                    'class'    => '',
-                ),
-                array(
-                    'name'     => 'masVistos',
-                    'dataType' => 1,
-                    'class'    => '',
-                ),
-                array(
-                    'name'     => 'populares',
-                    'dataType' => 2,
                     'class'    => 'active',
                 ),
                 array(
-                    'name' => 'masVistosDia',
-                    'dataType' => 3,
+                    'name'     => 'Más del usuario',
+                    'dataType' => 1,
                     'class'    => '',
-                ),
+                )
             )
         );
         
@@ -106,5 +96,39 @@ class TvController extends SiteController
             'videosRelated' => $videosRelated,
             'sorts' => $sorts
         );
+    }
+    
+    /**
+     * @Route("/ajax/sort/detail", name="tv_ajaxsortdetail")
+     */
+    public function videoDetailSort(){
+      $request = $this->getRequest();
+      $videoId = $request->get('video', false);
+      $sortType = $request->get('sort', 0);
+      $viewer = $this->getUser();
+      
+      $videoRelated = $this->getRepository('Video')->find($videoId);
+      
+      $response = array('videos' => array());
+      
+      switch ($sortType) {
+        case 0:
+          $videos = $this->getRepository('Video')->related($videoRelated, $viewer, self::LIMIT_VIDEOS);
+          break;
+        case 1:
+          $videos = $this->getRepository('Video')->moreFromUser($videoRelated->getAuthor(), $videoRelated, $viewer, self::LIMIT_VIDEOS);
+      }
+      
+      foreach($videos as $video){
+        $response['videos'][] = array(
+          'id' => $video->getId(),
+          'slug' => $video->getSlug(),
+          'title' => $video->getTitle(),
+          'content' => $video->getContent(),
+          'image' => $this->getImageUrl($video->getImage(), 'medium')
+        );
+      }
+      
+      return $this->jsonResponse($response);
     }
 }

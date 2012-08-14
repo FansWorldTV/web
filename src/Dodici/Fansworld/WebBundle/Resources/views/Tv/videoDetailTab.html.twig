@@ -12,27 +12,39 @@
 
 {% block top_left_content %}
     {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video} %}
-    <iframe style="width: 100%; height: 70%;" src="http://www.youtube.com/embed/A51uwpKaLY0" frameborder="0" allowfullscreen></iframe>
+    <iframe class="videoframe" src="{{ flumotiontwig.videoplayerurl(video) }}"></iframe>
 {% endblock %}
 
 {% block top_right_content %}
     {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %}
-    <section id="videos-related-sort" data-grid>
+    <section id="videos-related-sort" data-grid-related = '{{ video.id }}'>
         {% for v in videosRelated %}
             <div class="video">
-                {% thumbnail v.image, 'medium' %}
-                <span data-title>{{ v.title }}</span>
-                <p data-content>{{ v.content|truncate(55) }}</p>
-            </div>
-        {% endfor %}
-        {% for v in videosRelated %}
-            <div class="video">
-                {% thumbnail v.image, 'medium' %}
+                <a href="{{ path('tv_videodetail', {'id': v.id}) }}">{% thumbnail v.image, 'medium' with {'title': v.title} %}</a>
                 <span data-title>{{ v.title }}</span>
                 <p data-content>{{ v.content|truncate(55) }}</p>
             </div>
         {% endfor %}
     </section>
+    <h1>{{ path('tv_ajaxsortdetail')}}</h1>
+    <script type="text/javascript">
+      $("#toggle-video-types .btn:not('.active')").click(function(){
+        var self = $(this);
+        ajax.genericAction('tv_ajaxsortdetail', {
+          'video': $('[data-grid-related]').attr('data-grid-related'),
+          'sort': self.attr('data-type')
+        }, function(r){
+          $("#videos-related-sort").html("");
+          for(var i in r.videos){
+            var video = r.videos[i];
+            $("[data-grid-related]").append('<div class="video"></div>');
+          }
+          console.log(r);
+        }, function(e){
+          error(e);
+        });
+      });
+    </script>
 {% endblock %}
 
 {% block bottom_left_content %}
