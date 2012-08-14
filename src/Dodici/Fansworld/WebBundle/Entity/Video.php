@@ -23,6 +23,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     const WEIGHT_OUTDATE_FACTOR = 0.2;
     const WEIGHT_LIKES_FACTOR = 1.5;
     const WEIGHT_VIEWS_FACTOR = 1.0;
+    const WEIGHT_HIGHLIGHT_FACTOR = 1.1;
     
     /**
      * @var bigint $id
@@ -318,9 +319,11 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     {
     	$this->setWeight(
     	    round(
-        	    ($this->visitCount ? log($this->visitCount * self::WEIGHT_VIEWS_FACTOR, 10) : 0) +
+        	    (($this->visitCount ? log($this->visitCount * self::WEIGHT_VIEWS_FACTOR, 10) : 0) +
         	    ($this->likeCount ? log($this->likeCount * self::WEIGHT_LIKES_FACTOR, 10) : 0) +
-        	    $this->createdAt->format('U') / 86400 * self::WEIGHT_OUTDATE_FACTOR
+        	    $this->createdAt->format('U') / 86400 * self::WEIGHT_OUTDATE_FACTOR)
+        	    *
+        	    ($this->highlight ? self::WEIGHT_HIGHLIGHT_FACTOR : 1)
     	    )
     	);
     }

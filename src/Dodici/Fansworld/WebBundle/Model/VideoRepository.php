@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Model;
 
+use Dodici\Fansworld\WebBundle\Entity\Video;
+
 use Dodici\Fansworld\WebBundle\Entity\VideoCategory;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
 use Dodici\Fansworld\WebBundle\Entity\Tag;
@@ -28,6 +30,8 @@ class VideoRepository extends CountBaseRepository
      * @param DateTime|null $dateto
      * @param 'default'|'views'|'likes' $sortcriteria
      * @param User|Idol|Team|null $taggedentity
+     * @param array<Video|int>|Video|int|null $excludes
+     * @param Video|null $related
      */
     public function search(
         $searchterm = null,
@@ -40,7 +44,9 @@ class VideoRepository extends CountBaseRepository
         $datefrom = null,
         $dateto = null,
         $sortcriteria = 'default',
-        $taggedentity = null
+        $taggedentity = null,
+        $excludes = null,
+        $related = null
     )
     {
         $sortcriterias = array(
@@ -52,6 +58,17 @@ class VideoRepository extends CountBaseRepository
         
         if ($taggedentity) {
             $type = $this->getType($taggedentity);
+        }
+        
+        $excludeids = array();
+        if ($excludes) {
+            if (!is_array($excludes)) $excludes = array($excludes);
+            
+            foreach ($excludes as $exc) {
+                if ($exc instanceof Video) $excludeids[] = $exc->getId();
+                elseif (is_integer($exc)) $excludeids[] = $exc;
+                else throw new \Exception('Invalid $excludes value');
+            }
         }
 
         $query = $this->_em->createQuery('
@@ -104,6 +121,11 @@ class VideoRepository extends CountBaseRepository
     	( :datefrom IS NULL OR (v.createdAt >= :datefrom) )
     	AND
     	( :dateto IS NULL OR (v.createdAt <= :dateto) )
+    	'.
+    	($excludeids ? '
+    	AND (v.id NOT IN (:excludeids))
+    	' : '') 
+    	.'
     	
     	ORDER BY 
     	
@@ -123,6 +145,9 @@ class VideoRepository extends CountBaseRepository
                 
         if ($taggedentity)
             $query = $query->setParameter('taggedentity', $taggedentity->getId());
+            
+        if ($excludeids)
+            $query = $query->setParameter('excludeids', $excludeids);
 
         if ($limit !== null)
             $query = $query->setMaxResults((int) $limit);
@@ -307,4 +332,28 @@ class VideoRepository extends CountBaseRepository
         return $query->getResult();
     } 
 
+    /**
+     * Returns videos related to $video, privacy filtered by $viewer if provided
+     * @param Video $video
+     * @param User|null $viewer
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function related(Video $video, User $viewer=null, $limit=null, $offset=null)
+    {
+        return $this->search(null, $viewer, $limit, $offset, null, null, null, null, null, 'default', null, $video, $video);
+    }
+    
+    /**
+     * Get more videos authored by $author, excluding $video if provided
+     * @param User $author
+     * @param Video|null $video
+     * @param User $viewer
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function moreFromUser(User $author, Video $video=null, User $viewer=null, $limit=null, $offset=null)
+    {
+        return $this->search(null, $viewer, $limit, $offset, null, null, $author, null, null, 'default', null, $video);
+    }
 }
