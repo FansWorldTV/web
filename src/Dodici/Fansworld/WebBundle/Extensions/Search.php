@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Extensions;
 
+use Dodici\Fansworld\WebBundle\Model\SearchableInterface;
+
 use Dodici\Fansworld\WebBundle\Entity\Idol;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Application\Sonata\UserBundle\Entity\User;
@@ -56,13 +58,7 @@ class Search
         $this->appstate = $appstate;
     }
 
-    private function getRepositoryByType($type)
-    {
-        $types = self::getTypes();
-        if (!in_array($type, array_keys($types)))
-            throw new \Exception('Unsupported search type');
-        return $this->em->getRepository($types[$type]);
-    }
+    
 
     public function search($text, $type, $limit = null, $offset = null)
     {
@@ -76,7 +72,12 @@ class Search
         return $repo->countSearch($text, $this->user);
     }
 
-    public function getUrl($entity, $absolute = false)
+    /**
+     * Get url for a searchable entity
+     * @param SearchableInterface $entity
+     * @param boolean $absolute
+     */
+    public function getUrl(SearchableInterface $entity, $absolute = false)
     {
         $class = $this->appstate->getType($entity);
         switch ($class) {
@@ -91,5 +92,27 @@ class Search
                 break;
         }
     }
+    
+    /**
+     * Get top searched terms, for autocomplete, etc.
+     * @param string|null $match - String to match terms against, term%
+	 * @param User|null $user - filter by user
+	 * @param string|null $ip - filter by ip
+	 * @param (int)Extensions\Search::TYPE_*|null $type - filter by type of search
+	 * @param int|null $limit
+	 * @param int|null $offset
+     */
+    public function topTerms($match=null, $user=null, $ip=null, $type=null, $limit=null, $offset=null)
+    {
+        return $this->em->getRepository('DodiciFansworldWebBundle:SearchHistory')
+            ->topTerms($match, $user, $ip, $type, $limit, $offset);
+    }
 
+    private function getRepositoryByType($type)
+    {
+        $types = self::getTypes();
+        if (!in_array($type, array_keys($types)))
+            throw new \Exception('Unsupported search type');
+        return $this->em->getRepository($types[$type]);
+    }
 }
