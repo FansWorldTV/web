@@ -348,12 +348,24 @@ class VideoRepository extends CountBaseRepository
      * Get more videos authored by $author, excluding $video if provided
      * @param User $author
      * @param Video|null $video
-     * @param User $viewer
+     * @param User|null $viewer
      * @param int|null $limit
      * @param int|null $offset
      */
     public function moreFromUser(User $author, Video $video=null, User $viewer=null, $limit=null, $offset=null)
     {
         return $this->search(null, $viewer, $limit, $offset, null, null, $author, null, null, 'default', null, $video);
+    }
+    
+    /**
+     * Recommended videos, for a user or not, excluding a video or not
+     * @param User|null $viewer
+     * @param Video|null $video
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function recommended(User $viewer=null, Video $video=null, $limit=null, $offset=null)
+    {
+        return $this->search(null, $viewer, $limit, $offset, null, true, null, null, null, 'default', null, $video);
     }
 }
