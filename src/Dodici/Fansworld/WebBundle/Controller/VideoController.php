@@ -33,22 +33,6 @@ class VideoController extends SiteController
     const cantVideos = 10;
 
     /**
-     * @Route("/video/{id}/{slug}", name= "video_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
-     * @Template
-     */
-    public function showAction($id)
-    {
-        $video = $this->getRepository('Video')->findOneBy(array('id' => $id, 'active' => true));
-        $user = $this->getRepository('User')->find($video->getAuthor()->getId());
-        $videos = $this->getRepository('Video')->findBy(array('active' => true), array('createdAt' => 'desc'), self::cantVideos); //TODO NAHUEL
-
-        $this->securityCheck($video);
-
-        $this->get('visitator')->visit($video);
-        return array('video' => $video, 'user' => $user, 'related_videos' => $videos);
-    }
-
-    /**
      * rightbar
      * @Template
      */
@@ -395,7 +379,7 @@ class VideoController extends SiteController
                 'slug' => $video->getSlug(),
                 'imgsrc' => $this->getImageUrl($video->getImage(), 'medium'),
                 'visitCount' => $video->getVisitCount(),
-                'url' => $this->generateUrl('video_show', array(
+                'url' => $this->generateUrl('teve_videodetail', array(
                     'id' => $video->getId(),
                     'slug' => $video->getSlug()
                 ))
@@ -466,7 +450,7 @@ class VideoController extends SiteController
                 'slug' => $video->getSlug(),
                 'imgsrc' => $this->getImageUrl($video->getImage(), 'medium'),
                 'visitCount' => $video->getVisitCount(),
-                'url' => $this->generateUrl('video_show', array(
+                'url' => $this->generateUrl('teve_videodetail', array(
                     'id' => $video->getId(),
                     'slug' => $video->getSlug()
                 ))
@@ -524,7 +508,7 @@ class VideoController extends SiteController
                 'slug' => $video->getSlug(),
                 'imgsrc' => $this->getImageUrl($video->getImage(), 'medium'),
                 'visitCount' => $video->getVisitCount(),
-                'url' => $this->generateUrl('video_show', array(
+                'url' => $this->generateUrl('teve_videodetail', array(
                     'id' => $video->getId(),
                     'slug' => $video->getSlug()
                 ))

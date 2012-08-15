@@ -9,6 +9,8 @@ var videos = {
         videos.searchByTags.addMore();
         videos.searchMyVideos.init();
         videos.usersVideos.addMore();
+        
+        videos.detail.init();
     },
     
     addSearchContent: function(template, video, videoUrl){
@@ -68,7 +70,7 @@ var videos = {
                     for(var i in response.videos){
                         var video = response.videos[i];
                         var template = $("#templates ul.videos li").clone();
-                        var videoUrl = Routing.generate(appLocale + '_video_show', {
+                        var videoUrl = Routing.generate(appLocale + '_teve_videodetail', {
                             'id':video.id, 
                             'slug': video.slug
                         });
@@ -103,7 +105,7 @@ var videos = {
                     for(var i in response.videos){
                         var video = response.videos[i];
                         var template = $("#templates ul.videos li").clone();
-                        var videoUrl = Routing.generate(appLocale + '_video_show', {
+                        var videoUrl = Routing.generate(appLocale + '_teve_videodetail', {
                             'id':video.id, 
                             'slug': video.slug
                         });
@@ -244,7 +246,7 @@ var videos = {
                         for(var i in response.videos){
                             var video = response.videos[i];
                             var template = $("#templates ul.videos li").clone();
-                            var videoUrl = Routing.generate(appLocale + '_video_show', {
+                            var videoUrl = Routing.generate(appLocale + '_teve_videodetail', {
                                 'id':video.id, 
                                 'slug': video.slug
                             });
@@ -291,8 +293,44 @@ var videos = {
             $("[data-list]").sort('popular');
         }
         
-    }
+    },
     
+    detail: {
+        init: function(){
+            videos.detail.sort();
+        },
+        
+        sort: function(){
+            var ajaxActive = false;
+            $(".sort-videos .btn").on('click', function(){
+                if(!ajaxActive){
+                    var self = $(this);
+                    ajax.genericAction('teve_ajaxsortdetail', {
+                        'video': $('[data-grid-related]').attr('data-grid-related'),
+                        'sort': self.attr('data-type')
+                    }, function(r){
+                        $("#videos-related-sort").html("");
+                        for(var i in r.videos){
+                            var video = r.videos[i];
+                            $("[data-grid-related]").append('<div class="video"> \
+                                                                                        <a href="'+ Routing.generate(appLocale + '_teve_videodetail', {
+                                'id': video.id
+                                }) +'"><img src="' + video.image + '" alt="'+ video.title +'" title="'+ video.title +'"/></a>\
+                                                                                        <span data-title>'+ video.title +'</span>\
+                                                                                        <p data-content>'+ video.content +'</p>\
+                                                                                    </div>');
+                        }
+                        console.log(r);
+                        ajaxActive = false;
+                    }, function(e){
+                        error(e);
+                    });
+
+                    ajaxActive = true;
+                }
+            });
+        }
+    }
 };
 $(document).ready(function(){
     videos.init();

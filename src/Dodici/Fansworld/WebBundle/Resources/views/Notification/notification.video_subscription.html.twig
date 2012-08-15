@@ -6,6 +6,6 @@
 {% endblock %}
 
 {% block text %}
-    Hay un nuevo vídeo <a class="notice-link" href="{{ path('video_show', { id: notification.video.id, slug: notification.video.slug }) }}">{{ notification.video }}</a> 
+    Hay un nuevo vídeo <a class="notice-link" href="{{ path('teve_videodetail', { id: notification.video.id, slug: notification.video.slug }) }}">{{ notification.video }}</a> 
     <span class="notice-text">en el canal {{ notification.video.videocategory }}</span>
 {% endblock %}

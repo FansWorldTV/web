@@ -25,7 +25,7 @@ class TvController extends SiteController
     const LIMIT_VIDEOS = 6;
 
     /**
-     * @Route("", name="tv_home")
+     * @Route("", name="teve_home")
      * @Template
      * @Secure(roles="ROLE_USER")
      */
@@ -63,11 +63,11 @@ class TvController extends SiteController
     }
     
     /**
-     * @Route("/detail/{id}", name="tv_videodetail")
-     * @Template
+     * @Route("/{id}/{slug}", name="teve_videodetail", requirements = {"id"="\d+"})
+     * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function videoDetailTabAction($id)
+    public function videoDetailAction($id, $slug)
     {
         $video = $this->getRepository('Video')->find($id);
         $user = $this->getUser();
@@ -75,7 +75,7 @@ class TvController extends SiteController
         
         $sorts = array(
             'id'   => 'toggle-video-types',
-            'class'=> 'list-videos',
+            'class'=> 'sort-videos',
             'list' => array(
                 array(
                     'name'     => 'Relacionados', 
@@ -99,7 +99,7 @@ class TvController extends SiteController
     }
     
     /**
-     * @Route("/ajax/sort/detail", name="tv_ajaxsortdetail")
+     * @Route("/ajax/sort/detail", name="teve_ajaxsortdetail")
      */
     public function videoDetailSort(){
       $request = $this->getRequest();
@@ -124,7 +124,7 @@ class TvController extends SiteController
           'id' => $video->getId(),
           'slug' => $video->getSlug(),
           'title' => $video->getTitle(),
-          'content' => $video->getContent(),
+          'content' => substr($video->getContent(), 0, 52) . "...",
           'image' => $this->getImageUrl($video->getImage(), 'medium')
         );
       }

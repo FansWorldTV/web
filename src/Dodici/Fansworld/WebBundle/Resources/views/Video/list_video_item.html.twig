@@ -18,7 +18,7 @@
 {% endif %}
 <li class="greybox clearfix {{ extraclasses|join(' ') }}">
     <div class="thumb">
-    	<a href="{{path('video_show',{id:video.id, slug:video.slug})}}">
+    	<a href="{{path('teve_videodetail',{id:video.id, slug:video.slug})}}">
 			{% thumbnail video.image, 'video' %}
 		</a>
 	</div>

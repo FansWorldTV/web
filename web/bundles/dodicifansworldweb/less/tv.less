@@ -91,7 +91,7 @@ section.ranking-widget{
 .top-container{
     background-color: #1b1b1b;
     color: @white;
-    margin-bottom: 5px;
+    margin-bottom:  15px;
     padding-top: 13px;
 
     .share_content{
@@ -117,19 +117,21 @@ section#videos-related, section#videos-related-sort {
           margin-bottom: 5px;
         }
         p {
-          height: 25px;
+          height:  auto;
         }
         span, p {
             line-height: 12px;
             font-size: 11px;
             word-wrap: break-word;
+            text-overflow: ellipsis;
         }
     }
 }
 
 #top-left {
-  padding-bottom: 52px;
+  padding-bottom: 15px;
 }
+
 #top-left, #top-right{
     height: 100%;
 
@@ -138,7 +140,7 @@ section#videos-related, section#videos-related-sort {
       font-weight: bold;
     }
     .videoframe {
-      .size(inherit, 100%);
-      border: 0;
+      .size(453px, 100%);
+      border: 0 !important;
     }
 }
