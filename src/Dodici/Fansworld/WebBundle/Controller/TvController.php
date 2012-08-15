@@ -72,6 +72,7 @@ class TvController extends SiteController
         $video = $this->getRepository('Video')->find($id);
         $user = $this->getUser();
         $videosRelated = $this->getRepository('Video')->related($video, $user, self::LIMIT_VIDEOS);
+        $videosRecommended = $this->getRepository('Video')->recommended($user, $video, self::LIMIT_VIDEOS);
         
         $sorts = array(
             'id'   => 'toggle-video-types',
@@ -94,6 +95,7 @@ class TvController extends SiteController
             'video' => $video,
             'user' => $user,
             'videosRelated' => $videosRelated,
+            'videosRecommended' => $videosRecommended,
             'sorts' => $sorts
         );
     }
