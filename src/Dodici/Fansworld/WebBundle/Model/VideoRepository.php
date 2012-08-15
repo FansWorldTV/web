@@ -72,11 +72,22 @@ class VideoRepository extends CountBaseRepository
         }
 
         $query = $this->_em->createQuery('
-    	SELECT v, va
+    	SELECT v, va '.($related ? ', (COUNT(vhtag) + COUNT(vhteam) + COUNT(vhidol)) common' : '').'
     	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
     	LEFT JOIN v.author va
     	'.
-    	($taggedentity ? ' INNER JOIN v.has' . $type . 's vhh ' : '')
+    	
+        ($taggedentity ? ' INNER JOIN v.has' . $type . 's vhh ' : '').
+    	
+        ($related ? '
+        LEFT JOIN v.hastags vhtag
+			WITH (vhtag.tag IN (SELECT bshtag.id FROM \Dodici\Fansworld\WebBundle\Entity\HasTag hsbtag JOIN hsbtag.tag bshtag WHERE hsbtag.video = :related))
+		LEFT JOIN v.hasteams vhteam
+			WITH (vhteam.team IN (SELECT bshteam.id FROM \Dodici\Fansworld\WebBundle\Entity\HasTeam hsbteam JOIN hsbteam.team bshteam WHERE hsbteam.video = :related))
+		LEFT JOIN v.hasidols vhidol
+			WITH (vhidol.idol IN (SELECT bshidol.id FROM \Dodici\Fansworld\WebBundle\Entity\HasIdol hsbidol JOIN hsbidol.idol bshidol WHERE hsbidol.video = :related))
+        ' : '')
+        
     	.'
     	WHERE v.active = true
     	AND
@@ -96,7 +107,7 @@ class VideoRepository extends CountBaseRepository
     		OR
 	    	(v.privacy = :friendsonly AND (:user IS NOT NULL) AND (
 	    		(:user = v.author) OR
-	    		((SELECT COUNT(f.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.author = v.author AND f.target = :user) OR (f.target = v.author AND f.author = :user) AND f.active=true) >= 1)
+	    		((SELECT COUNT(f.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.target = v.author AND f.author = :user) AND f.active=true) >= 1)
 	    	))
     	)
     	AND
@@ -127,7 +138,17 @@ class VideoRepository extends CountBaseRepository
     	' : '') 
     	.'
     	
+    	'.
+    	($related ? '
+    	GROUP BY v
+        HAVING
+        common > 0
+    	' : '')
+    	.'
+    	
     	ORDER BY 
+    	
+    	' . ($related ? 'common DESC, ' : '') . '
     	
     	' . $sortcriterias[$sortcriteria] . '
     	
@@ -146,6 +167,9 @@ class VideoRepository extends CountBaseRepository
         if ($taggedentity)
             $query = $query->setParameter('taggedentity', $taggedentity->getId());
             
+        if ($related)
+            $query = $query->setParameter('related', $related->getId());
+            
         if ($excludeids)
             $query = $query->setParameter('excludeids', $excludeids);
 
@@ -154,7 +178,16 @@ class VideoRepository extends CountBaseRepository
         if ($offset !== null)
             $query = $query->setFirstResult((int) $offset);
 
-        return $query->getResult();
+        $res = $query->getResult();
+        
+        if ($related) {
+            $res = $query->getResult();
+            $arr = array();
+            foreach ($res as $r) $arr[] = $r[0];
+            return $arr;
+        } else {
+            return $res;
+        }
     }
 
     /**
