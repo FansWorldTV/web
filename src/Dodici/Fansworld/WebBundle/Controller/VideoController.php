@@ -108,23 +108,47 @@ class VideoController extends SiteController
 
         $page = $request->get('page');
         $query = $request->get('query', false);
-        $categoryId = $request->get('category', null);
-
+        $categorySlug = $request->get('category', null);
+        if($categorySlug != null && $categorySlug != 'all'){
+            $category = $this->getRepository('VideoCategory')->findBy(array('slug' => $categorySlug));
+        }else $category = null;
+        $filter = $request->get('filter', false);
         $user = $this->getUser();
 
         $page = (int) $page;
         $offset = ($page - 1) * self::cantVideos;
-
-        $response = array();
-
+        
+        $response = array('category' => $category);
+        $repoVideos = $this->getRepository('Video');
+        
         if (!$query) {
-            $videos = $this->getRepository('Video')->findBy(array('active' => true, 'videocategory' => $categoryId), array('createdAt' => 'DESC'), self::cantVideos, $offset);
-            $countAll = $this->getRepository('Video')->countBy(array('active' => true, 'videocategory' => $categoryId));
+            if($filter){
+                switch($filter){
+                    case 'week': 
+                        $datefrom = new \DateTime("-1 week");
+                        break;
+                    case 'day':
+                        $datefrom = new \DateTime("-1 day");
+                        break;
+                    default:
+                        $datefrom = null;
+                        break;
+                }
+            }else $datefrom = null;
+            
+            $videos = $repoVideos->search(null, null, self::cantVideos, $offset, $category, null, null, $datefrom,null,null, null);
+            $countAll = $repoVideos->countSearch(null, null, $category, true, null, $datefrom, null, null);
+            
+            
+            //$videos = $this->getRepository('Video')->findBy(array('active' => true, 'videocategory' => $categoryId), array('createdAt' => 'DESC'), self::cantVideos, $offset);
+            //$countAll = $this->getRepository('Video')->countBy(array('active' => true, 'videocategory' => $categoryId));
         } else {
+        
             $videos = $this->getRepository('Video')->search($query, $user, self::cantVideos, $offset, $categoryId);
             $countAll = $this->getRepository('Video')->countSearch($query, $user, $categoryId);
+            
         }
-
+        
         $response['addMore'] = $countAll > (($page) * self::cantVideos) ? true : false;
         foreach ($videos as $video) {
             $tags = array();
@@ -135,7 +159,7 @@ class VideoController extends SiteController
                         )
                 );
             }
-
+/*
             $response['videos'][] = array(
                 'id' => $video->getId(),
                 'title' => $video->getTitle(),
@@ -150,6 +174,22 @@ class VideoController extends SiteController
                 'slug' => $video->getSlug(),
                 'tags' => $tags
             );
+            */
+            
+            
+                $response['videos'][] = array(
+                        'id' => $video->getId(),
+                        'title' => $video->getTitle(),
+                        'slug' => $video->getSlug(),
+                        'imgsrc' => $this->getImageUrl($video->getImage(), 'medium'),
+                        'visitCount' => $video->getVisitCount(),
+                        'url' => $this->generateUrl('teve_videodetail', array(
+                                'id' => $video->getId(),
+                                'slug' => $video->getSlug()
+                        ))
+                );
+            
+            
         }
 
         return $this->jsonResponse($response);

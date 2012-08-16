@@ -32,32 +32,35 @@ class TvController extends SiteController
     public function homeTabAction()
     {
         $user = $this->getUser();
-        $channels = array(
-            'all' => 'active',
-            'lifestyle' ,
-            'interviews',
-            'tricks',
-            'fans',
-            'clubs',
-            'challenges',
-            'historys',
-        );
-        
         
         $videoRepo = $this->getRepository('Video');
-        $videoRepo instanceof VideoRepository;
+        $homeVideoRepo = $this->getRepository('HomeVideo');
         
         $videosDestacadosFW = $videoRepo->search(null, null, self::LIMIT_VIDEOS, null, null, null, null, null,null);
         
-        $videoPlayerUrl = $videoRepo->search(null, null, 1, null, null, null, null, null,null);
+        $videoDestacadoMain = $videoRepo->search(null, null, 1, null, null, null, null, null,null);
         $tags = array('tag1','otro tag diferente', 'shortag', 'dancing');
+        
+        
+        $videoCategoryRepo = $this->getRepository('VideoCategory');
+        $videoCategorys = $videoCategoryRepo->findBy(array());
+        
+        $channels = array();
+        
+        foreach ($videoCategorys as $key => $videoCategory){
+            $channels[$key] = array(
+                //'video' => $videoCategory->getVideos(),
+                'video' => $videoRepo->search(null, null, 1, null, $videoCategory, null, null, null,null),
+                'channelName' => $videoCategory->getTitle(),
+            );
+        }
         
         return array(
             'user' => $user, 
             'channels' => $channels,
-            'videoPlayerUrl' => $videoPlayerUrl,
+            'videoDestacadoMain' => $videoDestacadoMain,
             'videosDestacadosFW' => $videosDestacadosFW,
-            'tags' => $tags,        
+            'tags' => $tags, 
        );
        
     }

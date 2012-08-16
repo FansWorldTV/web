@@ -474,7 +474,7 @@ var site = {
         // initialize the plugin
         var $container 	= container,
         $imgs		= $container.find('img').hide(),
-        totalImgs                          = $imgs.length,
+        totalImgs   = $imgs.length,
         cnt			= 0;
 
         $imgs.each(function(i) {

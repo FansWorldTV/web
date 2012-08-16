@@ -5,14 +5,20 @@ section.channels-widget{
     overflow: hidden;
     aside.channels-list{
         
-        color: #7f7f7f;
+        
         ul{
             li{
                 padding: 3% 0 3% 25px;
+                cursor: pointer;
                 font-size: 15px;
-                &.active{
-                    color: @white;
+                &.active,&:hover{
                     background-color: #1E1E1E;
+                    a{
+                        color: @white;
+                    }
+                }
+                a{
+                    color: #7f7f7f;
                 }
             }
         }
@@ -21,6 +27,52 @@ section.channels-widget{
     
     div.content{
         margin-left: 0;
+        div.channel-highlight-container{
+            min-height: 300px;
+            position: relative;
+            > *{
+                position: absolute;
+            }
+            
+            .destacado{
+                color: @white;
+                top: 20px;
+            }
+            .channel-name{
+                color: #f1e602;
+                font-size: 40px;
+                line-height: 40px;
+                top: 40px;
+            }
+            .title{
+                color: @white;
+                font-size: 40px;
+                line-height: 40px;
+                max-height: 40px;
+                max-width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                top: 80px;
+                white-space: nowrap;
+            }
+            .description{
+                color: @white;
+                top: 130px;
+            }
+            .explorar{
+                .border-radius(4px);
+                border: 1px solid #444444;
+                background-color: #282828;
+                color: #e8ffe3;
+                bottom: 30px;
+                font-size: 16px;
+                padding: 15px 25px;
+            }
+            .subscribirse{
+                top: 20px;
+                right: 20px;
+            }
+        }
     }
 }
 
@@ -43,8 +95,8 @@ section.ranking-widget{
                 li{
                     line-height: 30px;
                     .pull-left();
-                    
-                    &.active{
+                    cursor: pointer;
+                    &.active,&:hover{
                         .border-radius(5px 5px 0 0);
                         #gradient > .vertical(@navbarBackgroundHighlight, @navbarBackground);
                         color: @white;
@@ -72,6 +124,7 @@ section.ranking-widget{
             margin: 5px 0;
             ul{
                 li{
+                    cursor: pointer;
                     .pull-left();
                     .border-radius(4px);
                     border: 1px solid #333333;
@@ -81,6 +134,14 @@ section.ranking-widget{
                     color: #c6c6c6;
                     
                 }
+            }
+        }
+        
+        div.montage-container{
+            min-height: 50px;
+            .loading{
+                min-height: 50px;
+                background-position: top center;
             }
         }
         

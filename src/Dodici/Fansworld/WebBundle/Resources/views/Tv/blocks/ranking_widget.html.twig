@@ -1,4 +1,4 @@
-<section class='ranking-widget'>
+<section class='ranking-widget' >
     <header class="ranking-filters-container">
         {% include "DodiciFansworldWebBundle:Tv:blocks/filters.html.twig"  %}
     </header>
@@ -8,8 +8,15 @@
             {% include "DodiciFansworldWebBundle:Tv:blocks/tag_list.html.twig"  %}
         </div>
         <div class='montage-container'>
-            {% include "DodiciFansworldWebBundle:Video:blocks/montage.html.twig"  with { videos: videosDestacadosFW } %}
+            
+                {% include "DodiciFansworldWebBundle:Video:blocks/montage.html.twig"  with { videos: null } %}
+            
         </div>
         
     </div>
 </section>
+<script>
+    $(function(){
+    	tv.init('.ranking-filters-container ul li','.channels-list',".ranking-widget [data-list-result]");
+    });
+</script>

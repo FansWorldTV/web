@@ -3,16 +3,16 @@
     {% set thumbnailSize = 'medium' %}  
 {% endif %}
 <div class="row-fluid">
-    {% if videos|length>0 %}
-        <div id="am-container" class="am-container list-mosaic" data-list-result>
+    <div id="am-container" class="am-container list-mosaic" data-list-result>
+        {% if videos|length>0 %}
             {% for video in videos %}
                 <a href="{{ path('teve_videodetail', {'id': video.id, 'slug': video.slug}) }}">
                     <span class="title">{{ video.title }}</span>
                     {% thumbnail video.image, thumbnailSize  with {"title": video.title}%}
                 </a>
             {% endfor %}
-        </div>
-    {% else %}
-        <h2>No se encontraron videos.</h2>
-    {% endif %}
+        {% else %}
+            <h2>No se encontraron videos.</h2>
+        {% endif %}
+    </div>
 </div>

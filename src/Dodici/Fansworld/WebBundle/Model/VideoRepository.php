@@ -49,6 +49,11 @@ class VideoRepository extends CountBaseRepository
         $related = null
     )
     {
+        if(!$sortcriteria)
+        {
+            $sortcriteria = 'default';
+        }
+        
         $sortcriterias = array(
             'default' => 'v.weight DESC',
             'views' => 'v.viewCount DESC',

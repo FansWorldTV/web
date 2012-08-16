@@ -2,7 +2,28 @@
 
 {% use "DodiciFansworldWebBundle:Layout/Snippet:tv_fullwidth.html.twig"  %}
 
-{% block title %}{{ parent() }} - Home{% endblock %}
+{% block title %}TV - Home{% endblock %}
+
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+    
+    $(function(){
+        /*
+        $('.am-container img').removeAttr('width').removeAttr('height')
+    	site.startMosaic($('.am-container'), {
+            minsize: false,
+            liquid: true,
+            margin : 0
+        });
+        */
+    	tv.init('.ranking-filters-container ul li','.channels-list',".ranking-widget [data-list-result]");
+    });
+    
+    
+    </script>
+{% endblock %}
 
 {% block inner_content %}
     {{ parent() }}
@@ -10,3 +31,4 @@
     
     {% include "DodiciFansworldWebBundle:Tv:blocks/ranking_widget.html.twig"  %}
 {% endblock %}
+

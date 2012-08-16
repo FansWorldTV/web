@@ -1,33 +1,64 @@
 <section class='channels-widget row-fluid'>
     <aside class='channels-list span2'>
-        <ul>
-            {% for key,channel in channels %}
-                {% if channel == 'active' %}
-                    <li class='active'>{{ key }}</li>
-                {% else %}
-                    <li >{{ channel }}</li>
-                {% endif %}
-                
+        <ul id="myTab">
+            <li class='active' ><a data-toggle="tab" data-target="#all">All</a></li>
+            {% for channel in channels %}
+                <li><a data-toggle="tab" data-target="#{{ channel.channelName }}">{{ channel.channelName }}</a></li>
             {% endfor %}
         </ul>
     </aside>
-    <div class="content span10 row-fluid">
-        <div class='span4 videoplayer-container'>
-            {% include "DodiciFansworldWebBundle:Video:blocks/channels_widget_player.html.twig"  %}
+    <div class="content span10  tab-content">
+        <div class="tab-pane active row-fluid" id="all">
+            <div class='span4 videoplayer-container'>
+                {% if videoDestacadoMain.image is defined %}
+                    {% if videoDestacadoMain.image is not null %}
+                        {% thumbnail videoDestacadoMain.image, 'big'  with {"title": videoDestacadoMain.title}%}
+                    {% endif %}
+                {% else %}
+                    sin imagen
+                {% endif %}
+            </div>
+            <div class="span8 content-container">
+                {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with{videos: videosDestacadosFW, thumbnailSize: 'video'} %}
+            </div>
         </div>
-        
-        <div class="span8 content-container">
-            {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with{videos: videosDestacadosFW, thumbnailSize: 'video'} %}    
-        </div>
-        
-        
+        {% for channel in channels %}
+            {% if channel.video[0] is defined %}
+                {% set channelVideo = channel.video[0] %}
+            {% else %}
+                {% set channelVideo = {'title' : 'sin video', 'content':  'que hacer?', 'image': null } %}
+            {% endif %}
+            <div class="tab-pane row-fluid" id="{{ channel.channelName }}">
+                <div class='span4 videoplayer-container'>
+                    
+                    {% if channelVideo.image is defined %}
+                        {% if channelVideo.image is not null %}
+                            {% thumbnail channelVideo.image, 'big'  with {"title": channelVideo.title}%}
+                        {% endif %}
+                    {% else %}
+                        sin imagen
+                    {% endif %}        
+                </div>
+                <div class="span8 content-container">
+                    <div class="channel-highlight-container">
+                        <div class="destacado">Destacado Fansworld</div>
+                        <div class="channel-name">{{ channel.channelName }}</div>
+                        
+                        <div class="title">{{ channelVideo.title }}</div>
+                        <div class="description">
+                            {{ channelVideo.content }}
+                        </div>
+                        
+                        <div class="explorar">Explorar ></div>
+                        <div class="subscribirse">
+                            <div class="btn-group">
+                              <button class="btn btn-success">/</button>
+                              <button class="btn  btn-success">Subscribirse</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 </section>
-
-<script type="text/javascript">
-        site.startMosaic($('.am-container'), {
-            minsize: false,
-            liquid: true,
-            margin : 0
-        });
-    </script>
