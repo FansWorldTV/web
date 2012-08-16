@@ -1,7 +1,18 @@
 <div class="tag-list">
     <ul>
     {% for tag in tags %}
-        <li>{{ tag }}</li>
+        {% if tag.type == 'tag' %}
+            {% set tag_url = '#pendiente' %}
+        {% elseif tag.type == 'idol' %}
+            {% set tag_url = '#pendiente' %}
+        {% elseif tag.type == 'team' %}
+            {% set tag_url = '#pendiente' %}
+        {% endif %}
+        <li>
+            <a href='{{ tag_url }}'>
+                {{ tag.title }}
+            </a>
+        </li>
     {% endfor %}
     </ul>
 </div>

@@ -1,0 +1,30 @@
+{% extends "DodiciFansworldWebBundle:Tv:base.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:tv_fullwidth.html.twig"  %}
+
+{% block title %}TV - Search Results{% endblock %}
+
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+    $(function(){
+        /*
+        $('.am-container img').removeAttr('width').removeAttr('height')
+    	site.startMosaic($('.am-container'), {
+            minsize: false,
+            liquid: true,
+            margin : 0
+        });
+        */
+    	
+    });
+    </script>
+{% endblock %}
+
+{% block inner_content %}
+    {{ parent() }}
+    
+{% include "DodiciFansworldWebBundle:Video:blocks/montage.html.twig"  with { videos: videos } %}
+{% endblock %}
+

@@ -23,6 +23,7 @@ class TvController extends SiteController
 {
 
     const LIMIT_VIDEOS = 6;
+    const LIMIT_SEARCH_VIDEOS = 10;
 
     /**
      * @Route("", name="teve_home")
@@ -39,8 +40,8 @@ class TvController extends SiteController
         $videosDestacadosFW = $videoRepo->search(null, null, self::LIMIT_VIDEOS, null, null, null, null, null,null);
         
         $videoDestacadoMain = $videoRepo->search(null, null, 1, null, null, null, null, null,null);
-        $tags = array('tag1','otro tag diferente', 'shortag', 'dancing');
-        
+
+        $tags = $this->get('tagger')->usedInVideos('popular');
         
         $videoCategoryRepo = $this->getRepository('VideoCategory');
         $videoCategorys = $videoCategoryRepo->findBy(array());
@@ -135,5 +136,28 @@ class TvController extends SiteController
       }
       
       return $this->jsonResponse($response);
+    }
+    
+    
+    
+    /**
+     * @Route("", name="teve_search")
+     * @Template
+     * @Secure(roles="ROLE_USER")
+     */
+    public function searchResultsAction()
+    {
+        $user = $this->getUser();
+        $videoRepo = $this->getRepository('Video');
+        
+    
+    
+        $videoDestacadoMain = $videoRepo->search(null, null, self::LIMIT_SEARCH_VIDEOS, null, null, null, null, null,null);
+        
+        return array(
+                'user' => $user,
+                'videos' => $videos,
+        );
+         
     }
 }

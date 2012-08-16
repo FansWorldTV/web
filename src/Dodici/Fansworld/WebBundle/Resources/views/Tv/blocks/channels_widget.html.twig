@@ -12,7 +12,9 @@
             <div class='span4 videoplayer-container'>
                 {% if videoDestacadoMain.image is defined %}
                     {% if videoDestacadoMain.image is not null %}
-                        {% thumbnail videoDestacadoMain.image, 'big'  with {"title": videoDestacadoMain.title}%}
+                        <a href="{{ path('teve_videodetail', {'id': videoDestacadoMain.id, 'slug': videoDestacadoMain.slug}) }}">
+                            {% thumbnail videoDestacadoMain.image, 'small'  with {"title": videoDestacadoMain.title}%}
+                        </a>
                     {% endif %}
                 {% else %}
                     sin imagen
@@ -33,7 +35,9 @@
                     
                     {% if channelVideo.image is defined %}
                         {% if channelVideo.image is not null %}
-                            {% thumbnail channelVideo.image, 'big'  with {"title": channelVideo.title}%}
+                            <a href="{{ path('teve_videodetail', {'id': channelVideo.id, 'slug': channelVideo.slug}) }}">
+                                {% thumbnail channelVideo.image, 'big'  with {"title": channelVideo.title}%}
+                            </a>
                         {% endif %}
                     {% else %}
                         sin imagen

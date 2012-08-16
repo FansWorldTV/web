@@ -54,4 +54,36 @@ class TagController extends SiteController
         return $this->jsonResponse($response);
     }
     
+    
+    /**
+     *  get params (all optional):
+     *   - text (partial match)
+     *   - page
+     *  @Route("/ajax/getUsedInVideos/", name="tag_ajaxgetusedinvideos")
+     */
+    public function ajaxTagsUsedInVideos()
+    {
+        $request = $this->getRequest();
+        
+        $filtertype    = $request->get('filtertype');
+        $videocategory = $request->get('videocategory');
+        $limit         = null; 
+        $offset       = null;
+         
+        
+        $tags = $this->get('tagger')->usedInVideos('popular');
+        
+        $response = array('tags' => $tags);
+        /*
+        foreach ($tags as $tag) {
+            $response['tags'][] = array(
+                    'id' => $tag['id'],
+                    'title' => $tag['title'],
+                    'type' => $tag['type'],
+            );
+        }
+        */
+        return $this->jsonResponse($response);
+    }
+    
 }

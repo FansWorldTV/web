@@ -64,4 +64,19 @@ class TemplateController extends SiteController
             'typename' => $type
         );
     }
+    
+    /**
+     * Get General Template
+     * @Route("/ajax/get/general", name="template_general")
+     * @Template
+     */
+    public function generalAction()
+    {
+        $request = $this->getRequest();
+        $type = $request->get('type');
+    
+        return array(
+                'typename' => $type
+        );
+    }
 }
