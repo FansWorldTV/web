@@ -121,4 +121,21 @@ class Tagger
     	$this->em->flush();
     }
     
+    /**
+     * Returns tags used in videos according to video filter type
+     * @param string $filtertype - see below
+     * @param VideoCategory|int|null $videocategory
+     * @param int|null $limit
+     * @param int|null $offset
+     * 
+     * filter types:
+     * popular: most popular tags of the moment, uses average weight
+     * latest: most recently applied tags
+     */
+    public function usedInVideos($filtertype, $videocategory=null, $limit=null, $offset=null)
+    {
+        $tagrepo = $this->em->getRepository('DodiciFansworldWebBundle:Tag');
+        return $tagrepo->usedInVideos($filtertype, $videocategory, $limit, $offset);
+    }
+    
 }
