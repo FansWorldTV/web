@@ -2,3 +2,34 @@
     <i class="icon-share"></i>
     Compartir
 </a>
+<div class="share-box hide">
+    <img class="arrow" src="{{ asset('bundles/dodicifansworldweb/images/arrow_nav.png') }}" />
+    <div class="top">
+        <h4 class="wywtsay"></h4>
+        <form action="">
+            <input type="text" placeholder="Que quieres decir..." class="wywtsay"/>
+        </form>
+    </div>
+    <div class="bottom">
+        <label style="float:left;">Tw:</label><input style="float:left;" type="checkbox" name="tw" />
+        <label style="float:left;">Fb:</label><input style="float:left;" type="checkbox" name="fb" />
+        <label style="float:left;">Fw:</label><input style="float:left;" type="checkbox" name="fw" />
+        
+        <div class="clearfix"></div>
+        <button class="btn btn-primary">Compartir</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(".btn.share").on('click', function(){
+        $(this).toggleClass('active');
+        $(".share-box").slideToggle();
+    });
+    $(".share-box").find('form').submit(function(){
+        var text = $(".share-box input.wywtsay").val();
+        $("h4.wywtsay").html($("input.wywtsay").val());
+        $(".top form").remove();
+        
+        return false;
+    });
+</script>
