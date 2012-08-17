@@ -11,9 +11,9 @@
         </form>
     </div>
     <div class="bottom">
-        <label style="float:left;">Tw:</label><input style="float:left;" type="checkbox" name="tw" />
-        <label style="float:left;">Fb:</label><input style="float:left;" type="checkbox" name="fb" />
-        <label style="float:left;">Fw:</label><input style="float:left;" type="checkbox" name="fw" />
+        <label style="float:left;">Tw:</label><input style="float:left;" type="checkbox" name="tw" id="publish_to_tw"/>
+        <label style="float:left;">Fb:</label><input style="float:left;" type="checkbox" name="fb" id="publish_to_fb"/>
+        <label style="float:left;">Fw:</label><input style="float:left;" type="checkbox" name="fw" id="publish_to_fw"/>
         
         <div class="clearfix"></div>
         <button class="btn btn-primary">Compartir</button>
@@ -31,5 +31,28 @@
         $(".top form").remove();
         
         return false;
+    });
+    
+    $('#publish_to_fb').live('change', function(){
+        console.log('acaaaaaaaaaaaaa');
+        if ($(this).attr('checked') == 'checked') {
+            FB.ui({
+                method: 'permissions.request',
+                'perms': 'email,user_birthday,user_location,publish_actions',
+                'display': 'popup',
+                'response_type': 'signed_request',
+                'fbconnect': 1,
+                'next': 'http://' + location.host + Routing.generate( appLocale + '_' + 'facebook_jstoken')
+            },
+            function(response) {
+                    console.log(response);
+            });
+        }
+    });
+
+    $('#fos_user_profile_form_user_linktwitter').live('change', function(){
+        if ($(this).attr('checked') == 'checked') {
+            window.open(Routing.generate(appLocale + '_' + 'twitter_redirect'), 'fw_twit_link', 'menubar=no,status=no,toolbar=no,width=500,height=300');
+        }
     });
 </script>

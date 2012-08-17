@@ -90,6 +90,12 @@ class AppFacebook
         return $this->api('/{uid}/'.$verb, $user, 'POST', $params);
     }
     
+   public function postFeed($message){
+        return $this->api('/me/feed', null, 'POST', array(
+            'message' => $message
+        ));
+    }
+    
     private function api($url, $user=null, $method='GET', $params=array())
     {
     	if (!$user) {
