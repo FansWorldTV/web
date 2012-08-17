@@ -1,37 +1,48 @@
-{% extends "DodiciFansworldWebBundle:User:base.html.twig" %}
-
+{% extends "DodiciFansworldWebBundle:Profile:base.html.twig" %}
+{#
 {% use "DodiciFansworldWebBundle:Layout/Snippet:profile_inner_fullwidth.html.twig"  %}
+#}
+{% if user == app.user %}
+    {% set userLogged = true %}
+{% else %}
+    {% set userLogged = false %}
+{% endif %}
 
+{% set profile_head_class 	= 'user_profile_head' %}
+{% set profile_body_class 	= 'user_profile_body' %}
+{% set entity_type 			= 'User' %}
+{% set entity 				= user %}
 
 {% block title %}{{ parent() }} - {{ user }}{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-<script src="{{ asset('bundles/dodicifansworldweb/js/friendship.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/dodicifansworldweb/js/friendship.js') }}" type="text/javascript"></script>
 {% endblock %}
 
-{% block inner_content %}
-    <header id="headerProfile" class="row-fluid">
+{% block profile_header_container %}
+
+	<header id="headerProfile" class="row-fluid">
+    
         <div id="avatar" class="span2">
             {% thumbnail user.image, 'small_square' %}
         </div>
+    
         <div class="span8">
             <a href="#">Configuración de Cuenta</a>
             <h1>{{ user }}</h1>
             {% block user_edit_toolbar %}
-            <nav>
-                <ul class="nav nav-tabs-profile">
-                    <li {% if current_edit_toolbar == 'account' %} class="active" {% endif %}><a href="{{ path('profile_account', {'username': user.username}) }}">Cuenta</a></li>
-                    <li {% if current_edit_toolbar == 'password' %} class="active" {% endif %}><a href="{{ path('fos_user_change_password') }}">Contraseña</a></li>
-                    <li {% if current_edit_toolbar == 'notifications' %} class="active" {% endif %}><a href="{{ path('notification_preferences') }}">Notificaciones</a></li>
-                    <li {% if current_edit_toolbar == 'interests' %} class="active" {% endif %}><a href="{{ path('interest_edit') }}">Intereses</a></li>
-                    <li {% if current_edit_toolbar == 'privacy' %} class="active" {% endif %}><a href="{{ path('profile_privacy') }}">Privacidad</a></li>
-                </ul>
-            </nav>
+                <nav>
+                    <ul class="nav nav-tabs-profile">
+                        <li {% if current_edit_toolbar == 'account' %} class="active" {% endif %}><a href="{{ path('profile_account', {'username': user.username}) }}">Cuenta</a></li>
+                        <li {% if current_edit_toolbar == 'password' %} class="active" {% endif %}><a href="{{ path('fos_user_change_password') }}">Contraseña</a></li>
+                        <li {% if current_edit_toolbar == 'notifications' %} class="active" {% endif %}><a href="{{ path('notification_preferences') }}">Notificaciones</a></li>
+                        <li {% if current_edit_toolbar == 'interests' %} class="active" {% endif %}><a href="{{ path('interest_edit') }}">Intereses</a></li>
+                        <li {% if current_edit_toolbar == 'privacy' %} class="active" {% endif %}><a href="{{ path('profile_privacy') }}">Privacidad</a></li>
+                    </ul>
+                </nav>
             {% endblock %}
         </div>
     </header>
 
-    {% block profile_edit_body %}
-    {% endblock %}
 {% endblock %}

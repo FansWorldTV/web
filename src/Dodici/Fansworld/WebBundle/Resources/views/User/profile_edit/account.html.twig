@@ -1,17 +1,15 @@
 {% extends "DodiciFansworldWebBundle:User:profile_edit_base.html.twig" %}
 
+{% use "DodiciFansworldWebBundle:Layout/Snippet:profile_inner_fullwidth.html.twig"  %}
+
 {% block user_edit_toolbar %}
 	{% set current_edit_toolbar = 'account' %}
 	{{ parent() }}
 {% endblock %}
 
 {# EDIT ACCOUNT #}
-{% block profile_edit_body %}
-        {% if user == app.user %}
-            {% set userLogged = true %}
-        {% else %}
-            {% set userLogged = false %}
-        {% endif %}
+{% block inner_content %}
+    {{ parent() }}
 
         <section id="personalData" class="row-fluid">
             <h4>Tus Datos Personales:{% if userLogged %}<a href="{{ path('fos_user_profile_edit') }}" class="pull-right">Editar</a>{% endif %}</h4>
@@ -67,25 +65,6 @@
         <section id="restrictedMode" class="row-fluid">
             <h5>Modo restringido: {% if user.restricted %}<span class="green">ON</span>{% else %}<span class="red">OFF</span>{% endif %}</h5>
         </section>
-
-        <!--section id="socialConnect" class="span7">
-            <section class="row">
-                <div class="span4">
-                    <img src="{{ asset("bundles/dodicifansworldweb/images/tw-logo.png") }}" alt="Twitter" />
-                    Vincular con twitter:
-                </div>
-                <div class="span2">
-                    @nahuerosso
-                </div>
-            </section>
-            <section class="row">
-                <div class="span4">
-                    <img src="{{ asset("bundles/dodicifansworldweb/images/tw-logo.png") }}" alt="Twitter" />
-                    Vincular con facebook:
-                </div>
-                <div class="span2">
-                    Nahuel Rosso
-                </div>
-            </section-->
-    </section>
+        
+   
 {% endblock %}

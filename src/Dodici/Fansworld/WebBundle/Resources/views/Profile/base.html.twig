@@ -23,21 +23,22 @@
     {% if profile_head_class is not defined %}
         {% set profile_head_class = '' %}
     {% endif %}
-
-    <header class="{{ profile_head_class }} profile_head {% if tplLarge %} large {% else %} small {% endif %}  row-fluid">
-		{% block profile_head %}
-            {% if tplLarge %}
-				{% include 'DodiciFansworldWebBundle:' ~ entity_type ~ '/Profile:header_large.html.twig' %}
-			{% else %}
-				{% include 'DodiciFansworldWebBundle:' ~ entity_type ~ '/Profile:header_small.html.twig' %}
-			{% endif %}
-		{% endblock %}
-		
-		{% block profile_tabs %}
-            {% include 'DodiciFansworldWebBundle:' ~ entity_type ~ '/Profile:header_navbar.html.twig' %}
-        {% endblock %}
-	</header>
-	
+    
+    {% block profile_header_container %}
+        <header class="{{ profile_head_class }} profile_head {% if tplLarge %} large {% else %} small {% endif %}  row-fluid">
+    		{% block profile_head %}
+                {% if tplLarge %}
+    				{% include 'DodiciFansworldWebBundle:' ~ entity_type ~ '/Profile:header_large.html.twig' %}
+    			{% else %}
+    				{% include 'DodiciFansworldWebBundle:' ~ entity_type ~ '/Profile:header_small.html.twig' %}
+    			{% endif %}
+    		{% endblock %}
+    		
+    		{% block profile_tabs %}
+                {% include 'DodiciFansworldWebBundle:' ~ entity_type ~ '/Profile:header_navbar.html.twig' %}
+            {% endblock %}
+    	</header>
+	{% endblock %}
 	
 	
 	{% if profile_body_class is not defined %}
