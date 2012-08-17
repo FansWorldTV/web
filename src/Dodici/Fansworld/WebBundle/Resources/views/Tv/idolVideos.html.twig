@@ -25,6 +25,8 @@
 {% block inner_content %}
     {{ parent() }}
     
-{% include "DodiciFansworldWebBundle:Video:blocks/montage.html.twig"  with { videos: videos } %}
+    {% include "DodiciFansworldWebBundle:Tv:blocks/breadcrumb.html.twig"  with { type: 'tag', term: term} %}
+    
+    {% include "DodiciFansworldWebBundle:Video:blocks/montage.html.twig"  with { videos: videos } %}
 {% endblock %}
 

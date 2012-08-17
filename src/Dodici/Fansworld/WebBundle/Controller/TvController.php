@@ -43,8 +43,8 @@ class TvController extends SiteController
 
         $tags = $this->get('tagger')->usedInVideos('popular');
         
-        $videoCategoryRepo = $this->getRepository('VideoCategory');
-        $videoCategorys = $videoCategoryRepo->findBy(array());
+        
+        $videoCategorys = $this->getRepository('VideoCategory')->findBy(array());
         
         $channels = array();
         
@@ -141,22 +141,63 @@ class TvController extends SiteController
     
     
     /**
-     * @Route("", name="teve_search")
+     * @Route("/tag/{term}", name="teve_taggedvideos")
      * @Template
      * @Secure(roles="ROLE_USER")
      */
-    public function searchResultsAction()
+    public function taggedVideosAction($term)
     {
         $user = $this->getUser();
         $videoRepo = $this->getRepository('Video');
-        
     
-    
-        $videoDestacadoMain = $videoRepo->search(null, null, self::LIMIT_SEARCH_VIDEOS, null, null, null, null, null,null);
+        $videos = $videoRepo->search($term, null, self::LIMIT_SEARCH_VIDEOS, null, null, null, null, null,null);
         
         return array(
                 'user' => $user,
                 'videos' => $videos,
+                'term' => $term,
+        );
+         
+    }
+    
+    /**
+     * @Route("/team/{term}", name="teve_teamvideos")
+     * @Template
+     * @Secure(roles="ROLE_USER")
+     */
+    public function teamVideosAction($term)
+    {
+        $user = $this->getUser();
+        $videoRepo = $this->getRepository('Video');
+        $team = $this->getRepository('Team')->findOneBy(array('slug' => $term, 'active' => true));
+        
+        $videos = $videoRepo->search(null, null, self::LIMIT_SEARCH_VIDEOS, null, null, null, $team, null,null);
+    
+        return array(
+                'user' => $user,
+                'videos' => $videos,
+                'term' => $term,
+        );
+         
+    }
+    
+    /**
+     * @Route("/idol/{term}", name="idolvideos")
+     * @Template
+     * @Secure(roles="ROLE_USER")
+     */
+    public function idolVideosAction($term)
+    {
+        $user = $this->getUser();
+        $videoRepo = $this->getRepository('Video');
+        $idol = $this->getRepository('Idol')->findOneBy(array('slug' => $term, 'active' => true));
+    
+        $videos = $videoRepo->search(null, null, self::LIMIT_SEARCH_VIDEOS, null, null, null, $idol, null,null);
+    
+        return array(
+                'user' => $user,
+                'videos' => $videos,
+                'term' => $term,
         );
          
     }

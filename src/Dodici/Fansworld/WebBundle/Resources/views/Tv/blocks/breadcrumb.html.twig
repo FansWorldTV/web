@@ -1,0 +1,20 @@
+{% if type is not defined %}
+    {% set type = 'tag' %}
+{% endif %}
+
+
+
+<nav class='breadcrumb'>
+    <ul>
+        <li class='tv'>TV</li>
+        <li class="pipe">|</li>
+        {% if type == 'channel' %}
+            {% for category in videoCategories %}
+                <li>{{ category.title }}</li>
+            {% endfor %}
+        {% else %}
+            <li class='term'>{{ term }}</li>
+        {% endif %}   
+         
+    </ul>
+</nav>

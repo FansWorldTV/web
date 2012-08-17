@@ -2,13 +2,12 @@
 
 {% use "DodiciFansworldWebBundle:Layout/Snippet:tv_fullwidth.html.twig"  %}
 
-{% block title %}TV - Home{% endblock %}
+{% block title %}TV - Search Results{% endblock %}
 
 
 {% block javascript %}
     {{ parent() }}
     <script>
-    
     $(function(){
         /*
         $('.am-container img').removeAttr('width').removeAttr('height')
@@ -18,17 +17,16 @@
             margin : 0
         });
         */
-    	//tv.init('.ranking-filters-container ul li','.channels-list',".ranking-widget [data-list-result]");
+    	
     });
-    
-    
     </script>
 {% endblock %}
 
 {% block inner_content %}
     {{ parent() }}
-    {% include "DodiciFansworldWebBundle:Tv:blocks/channels_widget.html.twig"  %}
     
-    {% include "DodiciFansworldWebBundle:Tv:blocks/ranking_widget.html.twig"  %}
+    {% include "DodiciFansworldWebBundle:Tv:blocks/breadcrumb.html.twig"  with { type: 'tag', term: term} %}
+    
+    {% include "DodiciFansworldWebBundle:Video:blocks/montage.html.twig"  with { videos: videos } %}
 {% endblock %}
 
