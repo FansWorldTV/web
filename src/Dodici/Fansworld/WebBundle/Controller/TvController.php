@@ -44,15 +44,16 @@ class TvController extends SiteController
         $tags = $this->get('tagger')->usedInVideos('popular');
         
         
-        $videoCategorys = $this->getRepository('VideoCategory')->findBy(array());
+        $videoCategories = $this->getRepository('VideoCategory')->findBy(array());
         
         $channels = array();
         
-        foreach ($videoCategorys as $key => $videoCategory){
+        foreach ($videoCategories as $key => $videoCategory){
             $channels[$key] = array(
                 //'video' => $videoCategory->getVideos(),
                 'video' => $videoRepo->search(null, null, 1, null, $videoCategory, null, null, null,null),
                 'channelName' => $videoCategory->getTitle(),
+                'slug' => $videoCategory->getSlug(),
             );
         }
         
@@ -182,7 +183,7 @@ class TvController extends SiteController
     }
     
     /**
-     * @Route("/idol/{term}", name="idolvideos")
+     * @Route("/idol/{term}", name="teve_idolvideos")
      * @Template
      * @Secure(roles="ROLE_USER")
      */
@@ -198,6 +199,34 @@ class TvController extends SiteController
                 'user' => $user,
                 'videos' => $videos,
                 'term' => $term,
+        );
+         
+    }
+    
+    /**
+     * @Route("/explore/{slug}", name="teve_explorechannel")
+     * @Template
+     * @Secure(roles="ROLE_USER")
+     */
+    public function exploreChannelAction($slug)
+    {
+        $user = $this->getUser();
+        $videoRepo = $this->getRepository('Video');
+        $activeCategory = $this->getRepository('VideoCategory')->findOneBySlug(array($slug));
+        
+        if(!$activeCategory){
+            throw new HttpException(404, "No existe el canal $slug");
+        }
+        
+        $videos = $videoRepo->search(null, null, self::LIMIT_SEARCH_VIDEOS, null,$activeCategory, null, null, null,null);
+        $videoCategories = $this->getRepository('VideoCategory')->findBy(array());
+        
+        
+        return array(
+                'user' => $user,
+                'videos' => $videos,
+                'channels' => $videoCategories,
+                'activeChannel' => $activeCategory,
         );
          
     }

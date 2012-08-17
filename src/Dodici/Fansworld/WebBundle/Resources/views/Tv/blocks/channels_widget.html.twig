@@ -53,7 +53,9 @@
                             {{ channelVideo.content }}
                         </div>
                         
-                        <div class="explorar">Explorar ></div>
+                        <div class="explorar">
+                            <a href="{{ path('teve_explorechannel', {'slug': channel.slug}) }}">Explorar ></a>
+                        </div>
                         <div class="subscribirse">
                             <div class="btn-group">
                               <button class="btn btn-success">/</button>
