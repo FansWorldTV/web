@@ -7,7 +7,7 @@
 
 {% block breadcrumb %}
     {{ parent() }}
-    barra de navegacion?
+    <span class="nav-bar tv">TV {% if video.videocategory %}| <a href="">{{ video.videocategory.title }}</a>{% endif %}</span>
 {% endblock %}
 
 {% block top_left_content %}
