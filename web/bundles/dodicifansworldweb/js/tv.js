@@ -4,6 +4,19 @@ var tv = {
 		tv.bindChannelsTab(filtersList,channelsList,targetDataList);
 	},
 	
+	bindChannelsExplorer: function(dropDown,targetDataList){
+
+		$(dropDown).find('ul.dropdown-menu li a').click(function(e){
+			
+			var activeChannel = {
+					slug: $(this).attr('channel-slug'),
+					title: $(this).text()
+			};
+			$(dropDown).find('.dropdown-toggle span').text(activeChannel.title);
+			tv.rankingUpdate.widget(activeChannel.slug,null,targetDataList,{});
+		});
+	},
+	
 	
 	
 	bindRankingFilters:	function(filtersList,channelsList,targetDataList){
@@ -55,6 +68,7 @@ var tv = {
 	        }, function(msg){
 	            error(msg);
 	        });
+	        
 		},
 		
 		tags: function(activeChannel,filter,targetDataList,opts){

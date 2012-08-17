@@ -2,6 +2,9 @@
     {% set type = 'tag' %}
 {% endif %}
 
+{% if activeChannel is not defined %}
+    {% set activeChannel = channels[0] %}
+{% endif %}
 
 
 <nav class='breadcrumb'>
@@ -9,9 +12,21 @@
         <li class='tv'>TV</li>
         <li class="pipe">|</li>
         {% if type == 'channel' %}
-            {% for category in videoCategories %}
-                <li>{{ category.title }}</li>
-            {% endfor %}
+            <li class="dropdown channels-dropdown" id="menu1">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
+                     <span>{{ activeChannel.title }}</span>
+                    <b class="caret"></b>
+                </a>
+            <ul class="dropdown-menu">
+                {% for channel in channels %}
+                    <li><a href="#" channel-slug='{{ channel.slug }}'>{{ channel.title }}</a></li>
+                {% endfor %}
+            </ul>
+          </li>
+        
+        
+        
+            
         {% else %}
             <li class='term'>{{ term }}</li>
         {% endif %}   

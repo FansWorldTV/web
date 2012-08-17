@@ -1,0 +1,24 @@
+{% extends "DodiciFansworldWebBundle:Tv:base.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:tv_fullwidth.html.twig"  %}
+
+{% block title %}TV - Search Results{% endblock %}
+
+
+
+{% block inner_content %}
+    {{ parent() }}
+    
+    {% include "DodiciFansworldWebBundle:Tv:blocks/breadcrumb.html.twig"  with { type: 'channel', activeChannel: activeChannel, channels: channels} %}
+    <section class='videoexplorer-container'>
+        {% include "DodiciFansworldWebBundle:Video:blocks/montage.html.twig"  with { videos: videos } %}
+    </section>
+    
+    
+    <script>
+        $(function(){
+            tv.bindChannelsExplorer('.breadcrumb .channels-dropdown','#am-container');
+        });
+    </script>
+{% endblock %}
+
