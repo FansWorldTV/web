@@ -3,11 +3,9 @@
 namespace Dodici\Fansworld\WebBundle\Services;
 
 use Dodici\Fansworld\WebBundle\Entity\Share;
-
 use Dodici\Fansworld\WebBundle\Entity\MessageTarget;
-
 use Dodici\Fansworld\WebBundle\Entity\Message;
-
+use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\EntityManager;

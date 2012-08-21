@@ -2,10 +2,9 @@
 
 namespace Dodici\Fansworld\WebBundle\Services;
 
+use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
 use Symfony\Component\HttpFoundation\Request;
-
 use Application\Sonata\UserBundle\Entity\User;
 use Dodici\Fansworld\WebBundle\Entity\Comment;
 use Dodici\Fansworld\WebBundle\Entity\Share;
