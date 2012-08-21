@@ -1,9 +1,11 @@
 <ul class='well sidebar-nav sidebar-nav-fixed' id='left-menu'>
+    {% if is_granted("IS_AUTHENTICATED_FULLY") %}
     <li>
-        <a class='icon' href="{{ path('user_wall', {'username': user.username}) }}">
+        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}">
             <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_alert.gif' )}}" />
         </a>
     </li>
+    {% endif %}
     <li>
         <a class='icon'>
             <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_notices.gif' )}}" />

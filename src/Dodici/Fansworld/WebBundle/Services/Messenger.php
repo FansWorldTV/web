@@ -41,7 +41,7 @@ class Messenger
     	if (!$author) $author = $this->user;
         if (!$author) throw new AccessDeniedException('Access denied');
         
-        if (!is_array($targets)) $targets = array($targets);
+        if ($targets && !is_array($targets)) $targets = array($targets);
         if (!$targets) throw new \Exception('No targets provided');
         
         $share = null;

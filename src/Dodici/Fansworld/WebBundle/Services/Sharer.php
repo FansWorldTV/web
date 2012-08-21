@@ -38,7 +38,7 @@ class Sharer
     {
         if (!$author) $author = $this->user;
         if (!$author) throw new AccessDeniedException('Access denied');
-        if (!is_array($targets)) $targets = array($targets);
+        if ($targets && !is_array($targets)) $targets = array($targets);
         
         if (!$targets) $targets = array($author);
         else $targets[] = $author;
@@ -46,10 +46,12 @@ class Sharer
         $userstomessage = array();
         
         foreach ($targets as $target) {
-            if (($target instanceof User) && ($target != $author)) {
-                $userstomessage[] = $target;
-            } else {
-                $this->shareToWall($sharedthing, $content, $target, $author);
+            if ($target) {
+                if (($target instanceof User) && ($target != $author)) {
+                    $userstomessage[] = $target;
+                } else {
+                    $this->shareToWall($sharedthing, $content, $target, $author);
+                }
             }
         }
         
