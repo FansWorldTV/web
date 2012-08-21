@@ -35,17 +35,17 @@
     
     $("#share_it").on('click', function(){
         var params = {};
-        params['fb'] = $("#publish_to_tw").val();
+        params['tw'] = $("#publish_to_tw").val();
         params['fw'] = $("#publish_to_fw").val();
         params['fb'] = $("#publish_to_fb").val();
-        params['message'] = $(".wywtsay").val();
+        params['message'] = $("input.wywtsay").val();
         
         ajax.genericAction('share_ajax', params, function(r){
             if(r){
                 if(r.error){
                     console.log(r.msg);
                 }else{
-                    success(msg);
+                    success(r.msg);
                 }
             }
         }, function(msg){
@@ -70,7 +70,7 @@
         }
     });
 
-    $('#fos_user_profile_form_user_linktwitter').live('change', function(){
+    $('#publish_to_tw').live('change', function(){
         if ($(this).attr('checked') == 'checked') {
             window.open(Routing.generate(appLocale + '_' + 'twitter_redirect'), 'fw_twit_link', 'menubar=no,status=no,toolbar=no,width=500,height=300');
         }
