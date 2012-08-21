@@ -30,7 +30,18 @@ var montageHelper = {
 				}
 			}).attr('src',$img.attr('src'));
 		});	
-    }
+    },
+    
+    addToMontage: function(newImages,container,opts)
+    {
+    	var $newimages = $( newImages );
+		$newimages.imagesLoaded( function(){
+			container.append( $newimages ).montage( 'add', $newimages );
+		});
+    	
+    },
+    
+    
     
     
 };

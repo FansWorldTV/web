@@ -13,7 +13,7 @@ var tv = {
 					title: $(this).text()
 			};
 			$(dropDown).find('.dropdown-toggle span').text(activeChannel.title);
-			tv.rankingUpdate.widget(activeChannel.slug,null,targetDataList,{});
+			tv.rankingUpdate.videos(activeChannel.slug,null,targetDataList,{});
 		});
 	},
 	
@@ -62,7 +62,10 @@ var tv = {
 		        	$(targetDataList).removeClass('loading');
 	                if(typeof r.videos != 'undefined'){
 	                    templateHelper.renderTemplate("video-list_element", r.videos, targetDataList, false, function(){
+	                    	montageHelper.doMontage($(targetDataList),{});
 	                    });
+	                }else{
+	                	$(targetDataList).html('No hay videos relacionados');
 	                }
 		        }
 	        }, function(msg){

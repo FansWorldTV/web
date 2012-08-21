@@ -45,7 +45,7 @@
     {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: album} %}    
 </div>
 
-{% include 'DodiciFansworldWebBundle:Default:comments_and_tags.html.twig' with {entity: album} %}
+{% include 'DodiciFansworldWebBundle:Comment:blocks/box.html.twig' with {entity: album} %}
     
 <script type="text/javascript">
     site.startMosaic($('.am-container'), {margin : 0});

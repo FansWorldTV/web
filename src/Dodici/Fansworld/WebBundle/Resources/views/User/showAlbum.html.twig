@@ -22,7 +22,7 @@
     
 {% include 'DodiciFansworldWebBundle:Photo:blocks/album_montage.html.twig'  %}
 
-{% include 'DodiciFansworldWebBundle:Default:comments_and_tags.html.twig' with {entity: album} %}
+{% include 'DodiciFansworldWebBundle:Comment:blocks/box.html.twig' with {entity: album} %}
     
 <script type="text/javascript">
     site.startMosaic($('.am-container'), {margin : 0});

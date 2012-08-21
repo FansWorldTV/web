@@ -2,7 +2,7 @@
 
 {% use "DodiciFansworldWebBundle:Layout/Snippet:tv_videodetail.html.twig"  %}
 
-{% block title %}{{ parent() }} - Home{% endblock %}
+{% block title %}{{ parent() }} - Video detail{% endblock %}
 
 
 {% block breadcrumb %}
@@ -17,15 +17,8 @@
 
 {% block top_right_content %}
     {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %}
-    <section id="videos-related-sort" data-grid-related = '{{ video.id }}'>
-        {% for v in videosRelated %}
-            <div class="video">
-                <a href="{{ path('video_show', {id: v.id, slug: v.slug}) }}">{% thumbnail v.image, 'medium' with {'title': v.title} %}</a>
-                <span data-title>{{ v.title }}</span>
-                <p data-content>{{ v.content|truncate(55) }}</p>
-            </div>
-        {% endfor %}
-    </section>
+    
+    {% include 'DodiciFansworldWebBundle:Video:blocks/grid.html.twig' with {videos: videosRelated, sectionId:'videos-related-sort',dataGridRelatedId: video.id} %}
 {% endblock %}
 
 {% block bottom_left_content %}
@@ -35,18 +28,10 @@
         <img src="" />
     </div>
     <p></p>
-    {% include 'DodiciFansworldWebBundle:Default:comments_and_tags.html.twig' with {entity: video} %}
+    {% include 'DodiciFansworldWebBundle:Comment:blocks/box.html.twig' with {entity: video} %}
 {% endblock %}
     
 {% block bottom_right_content %}
     {{ parent() }}
-    <section id="videos-related" data-grid>
-        {% for v in videosRecommended %}
-            <div class="video">
-                <a href="{{ path('video_show', {id: v.id, slug: v.slug}) }}">{% thumbnail v.image, 'medium' with {'title': v.title} %}</a>
-                <span>{{ v.title }}</span>
-                <p>{{ v.content|truncate(55) }}</p>
-            </div>
-        {% endfor %}
-    </section>
+    {% include 'DodiciFansworldWebBundle:Video:blocks/grid.html.twig' with {videos: videosRecommended, sectionId:'videos-related'} %}
 {% endblock %}

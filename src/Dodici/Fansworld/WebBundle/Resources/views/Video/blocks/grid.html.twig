@@ -1,0 +1,18 @@
+{% if dataGridRelatedId is defined %}
+    {% set dataGrid = 'data-grid-related=' ~ dataGridRelatedId  %}
+{% else %}
+    {% set dataGrid = 'data-grid' %}
+{% endif %}
+
+<section id="{{ sectionId }}" {{ dataGrid }}>
+    {% for video in videos %}
+        <div class="video">
+            <a href="{{ path('video_show', {id: video.id, slug: video.slug}) }}">{% thumbnail video.image, 'medium' with {'title': video.title} %}</a>
+            <span>{{ video.title }}</span>
+            <p>{{ video.content|truncate(55) }}</p>
+        </div>
+    {% endfor %}
+</section>
+
+
+

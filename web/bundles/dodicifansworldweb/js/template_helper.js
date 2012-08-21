@@ -5,6 +5,8 @@ var templateHelper = {
 			
     },
 		
+    isLoading: false,
+    
     getPath: function(templateId)
     {
         var tplPart = templateId.split("-");
@@ -32,21 +34,39 @@ var templateHelper = {
 		
     getTemplateString: function(templateId,params){
         var url = templateHelper.getPath(templateId);
-        return $.ajax({
-            url:		url,
-            data:		params,
-            type:		'GET',
-            dataType: 	"html",
-            success:	function(data)
-            {
-                $.templates( templateId, data );
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-            }
-        });
+        var alreadyLoaded = false;
+        	
+	        return $.ajaxQueue({
+	            url:		url,
+	            data:		params,
+	            type:		'GET',
+	            dataType: 	"html",
+	            cache: true,
+	            success:	function(data)
+	            {
+	                $.templates( templateId, data );
+	                templateHelper.isLoading = false;
+	            },
+	            error: function(jqXHR, textStatus, errorThrown){
+	                console.log(jqXHR);
+	                console.log(textStatus);
+	                console.log(errorThrown);
+	                templateHelper.isLoading = false;
+	            },
+	            beforeSend : function(){
+	            	if (typeof $.render[templateId] != 'undefined'){
+	            		alreadyLoaded = true;
+	            		return false;
+	                }else alreadyLoaded = false;
+	            },
+	            abort: function(){
+	            	if(alreadyLoaded){
+	            		console.log('ya ta carguetti');
+	            		//return true;
+	            	}
+	            }
+	        });
+
     },
     loadTemplate: function(templateId)
     {
@@ -79,7 +99,10 @@ var templateHelper = {
         }else{
             $( destino ).append( $.render[templateId]( jsonData ) );
         }
-        callback();
+        if(typeof callback == 'function'){
+        	callback();
+        }
+        
     }
 		
 		
