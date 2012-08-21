@@ -28,7 +28,6 @@ class TvController extends SiteController
     /**
      * @Route("", name="teve_home")
      * @Template
-     * @Secure(roles="ROLE_USER")
      */
     public function homeTabAction()
     {
@@ -70,7 +69,6 @@ class TvController extends SiteController
     /**
      * @Route("/{id}/{slug}", name="video_show", requirements = {"id"="\d+"})
      * @Template()
-     * @Secure(roles="ROLE_USER")
      */
     public function videoDetailAction($id, $slug)
     {
@@ -144,7 +142,6 @@ class TvController extends SiteController
     /**
      * @Route("/tag/{term}", name="teve_taggedvideos")
      * @Template
-     * @Secure(roles="ROLE_USER")
      */
     public function taggedVideosAction($term)
     {
@@ -164,7 +161,6 @@ class TvController extends SiteController
     /**
      * @Route("/team/{term}", name="teve_teamvideos")
      * @Template
-     * @Secure(roles="ROLE_USER")
      */
     public function teamVideosAction($term)
     {
@@ -185,7 +181,6 @@ class TvController extends SiteController
     /**
      * @Route("/idol/{term}", name="teve_idolvideos")
      * @Template
-     * @Secure(roles="ROLE_USER")
      */
     public function idolVideosAction($term)
     {
@@ -206,7 +201,6 @@ class TvController extends SiteController
     /**
      * @Route("/explore/{slug}", name="teve_explorechannel")
      * @Template
-     * @Secure(roles="ROLE_USER")
      */
     public function exploreChannelAction($slug)
     {
