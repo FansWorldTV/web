@@ -1,7 +1,7 @@
 <?php
 namespace Dodici\Fansworld\WebBundle\Extensions;
 
-use Dodici\Fansworld\WebBundle\Extensions\AppMedia;
+use Dodici\Fansworld\WebBundle\Services\AppMedia;
 
 class AppMediaExtension extends \Twig_Extension
 {

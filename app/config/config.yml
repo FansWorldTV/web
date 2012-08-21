@@ -520,56 +520,56 @@ services:
             validator: "@validator"
             container: "@service_container"
     appstate:
-      class: Dodici\Fansworld\WebBundle\Extensions\AppState
+      class: Dodici\Fansworld\WebBundle\Services\AppState
       arguments: [@security.context, @doctrine.orm.entity_manager]
     app.facebook:
-      class: Dodici\Fansworld\WebBundle\Extensions\AppFacebook
+      class: Dodici\Fansworld\WebBundle\Services\AppFacebook
       arguments: [@security.context, @doctrine.orm.entity_manager, @fos_facebook.api, @appstate, @router, @translator]
     app.twitter:
-      class: Dodici\Fansworld\WebBundle\Extensions\AppTwitter
+      class: Dodici\Fansworld\WebBundle\Services\AppTwitter
       arguments: [@security.context, @doctrine.orm.entity_manager, @fos_twitter.api, @appstate, @router, @translator]  
     fansworldmailer:
-      class: Dodici\Fansworld\WebBundle\Extensions\FansworldMailer
+      class: Dodici\Fansworld\WebBundle\Services\FansworldMailer
       arguments: [@mailer, @templating,@security.context, @translator]  
     search:
-      class: Dodici\Fansworld\WebBundle\Extensions\Search
+      class: Dodici\Fansworld\WebBundle\Services\Search
       arguments: [@security.context, @doctrine.orm.entity_manager, @router, @appstate]
     
     meteor:
-      class: Dodici\Fansworld\WebBundle\Extensions\Meteor
+      class: Dodici\Fansworld\WebBundle\Services\Meteor
       arguments: [@doctrine.orm.entity_manager, @appstate, %meteor.host%, %meteor.port%, %meteor.clientport%, %meteor.debugmode%, %meteor.enabled%]
     tagger:
-      class: Dodici\Fansworld\WebBundle\Extensions\Tagger
+      class: Dodici\Fansworld\WebBundle\Services\Tagger
       arguments: [@doctrine.orm.entity_manager, @appstate]
     sharer:
-      class: Dodici\Fansworld\WebBundle\Extensions\Sharer
+      class: Dodici\Fansworld\WebBundle\Services\Sharer
       arguments: [@doctrine.orm.entity_manager, @security.context, @appstate, @messenger]
     messenger:
-      class: Dodici\Fansworld\WebBundle\Extensions\Messenger
+      class: Dodici\Fansworld\WebBundle\Services\Messenger
       arguments: [@doctrine.orm.entity_manager, @security.context, @appstate]
     commenter:
-      class: Dodici\Fansworld\WebBundle\Extensions\Commenter
+      class: Dodici\Fansworld\WebBundle\Services\Commenter
       arguments: [@doctrine.orm.entity_manager, @appstate]
     complainer:
-      class: Dodici\Fansworld\WebBundle\Extensions\Complainer
+      class: Dodici\Fansworld\WebBundle\Services\Complainer
       arguments: [@doctrine.orm.entity_manager, @appstate]
     visitator:
-      class: Dodici\Fansworld\WebBundle\Extensions\Visitator
+      class: Dodici\Fansworld\WebBundle\Services\Visitator
       arguments: [@security.context, @doctrine.orm.entity_manager, @session, @appstate]
     friender:
-      class: Dodici\Fansworld\WebBundle\Extensions\Friender
+      class: Dodici\Fansworld\WebBundle\Services\Friender
       arguments: [@security.context, @doctrine.orm.entity_manager, @appstate]
     subscriptions:
-      class: Dodici\Fansworld\WebBundle\Extensions\Subscriptions
+      class: Dodici\Fansworld\WebBundle\Services\Subscriptions
       arguments: [@security.context, @doctrine.orm.entity_manager]
     preferences:
-      class: Dodici\Fansworld\WebBundle\Extensions\Preferences
+      class: Dodici\Fansworld\WebBundle\Services\Preferences
       arguments: [@security.context, @doctrine.orm.entity_manager, @session, @appstate]
     video.playlist:
-      class: Dodici\Fansworld\WebBundle\Extensions\VideoPlaylist
+      class: Dodici\Fansworld\WebBundle\Services\VideoPlaylist
       arguments: [@security.context, @doctrine.orm.entity_manager, @appstate]
     video.uploader:
-      class: Dodici\Fansworld\WebBundle\Extensions\VideoUploader
+      class: Dodici\Fansworld\WebBundle\Services\VideoUploader
       arguments: [@doctrine.orm.entity_manager, @flumotion.api.request, @flumotion.ftp, @appmedia, @security.context, %kernel.root_dir%/../web/uploads/videos]
     feeder.event:
       class: Dodici\Fansworld\WebBundle\Feeder\EventFeeder
@@ -578,10 +578,10 @@ services:
       class: Dodici\Fansworld\WebBundle\Feeder\EventMinuteFeeder
       arguments: [@doctrine.orm.entity_manager, @datafactory]
     user.location:
-      class: Dodici\Fansworld\WebBundle\Extensions\UserLocation
+      class: Dodici\Fansworld\WebBundle\Services\UserLocation
       arguments: [@doctrine.orm.entity_manager]
     contact.importer:
-      class: Dodici\Fansworld\WebBundle\Extensions\ContactImporter
+      class: Dodici\Fansworld\WebBundle\Services\ContactImporter
       arguments: [@service_container]
     twig.extension.appstate:
       class: Dodici\Fansworld\WebBundle\Extensions\AppStateExtension
@@ -608,7 +608,7 @@ services:
       tags:
           - { name: twig.extension }
     appmedia:
-      class: Dodici\Fansworld\WebBundle\Extensions\AppMedia
+      class: Dodici\Fansworld\WebBundle\Services\AppMedia
       arguments: [@sonata.media.pool, @sonata.media.manager.media]
     twig.extension.appmedia:
       class: Dodici\Fansworld\WebBundle\Extensions\AppMediaExtension

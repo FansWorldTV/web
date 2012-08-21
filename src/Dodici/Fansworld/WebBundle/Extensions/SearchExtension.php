@@ -1,7 +1,7 @@
 <?php
 namespace Dodici\Fansworld\WebBundle\Extensions;
 
-use Dodici\Fansworld\WebBundle\Extensions\Search;
+use Dodici\Fansworld\WebBundle\Services\Search;
 
 class SearchExtension extends \Twig_Extension
 {

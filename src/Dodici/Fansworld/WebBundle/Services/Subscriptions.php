@@ -1,6 +1,6 @@
 <?php
 
-namespace Dodici\Fansworld\WebBundle\Extensions;
+namespace Dodici\Fansworld\WebBundle\Services;
 
 use Dodici\Fansworld\WebBundle\Entity\VideoCategorySubscription;
 

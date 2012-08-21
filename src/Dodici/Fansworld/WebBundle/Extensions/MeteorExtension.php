@@ -1,7 +1,7 @@
 <?php
 namespace Dodici\Fansworld\WebBundle\Extensions;
 
-use Dodici\Fansworld\WebBundle\Extensions\Meteor;
+use Dodici\Fansworld\WebBundle\Services\Meteor;
 
 class MeteorExtension extends \Twig_Extension
 {

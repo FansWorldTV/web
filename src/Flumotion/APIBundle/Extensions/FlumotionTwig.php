@@ -1,7 +1,7 @@
 <?php
 namespace Flumotion\APIBundle\Extensions;
 
-use Dodici\Fansworld\WebBundle\Extensions\Visitator;
+use Dodici\Fansworld\WebBundle\Services\Visitator;
 use Symfony\Component\HttpFoundation\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;

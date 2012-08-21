@@ -1,6 +1,6 @@
 <?php
 
-namespace Dodici\Fansworld\WebBundle\Extensions;
+namespace Dodici\Fansworld\WebBundle\Services;
 
 use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Component\Security\Core\SecurityContext;

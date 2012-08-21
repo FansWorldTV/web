@@ -1,7 +1,7 @@
 <?php
 namespace Dodici\Fansworld\WebBundle\Extensions;
 
-use Dodici\Fansworld\WebBundle\Extensions\Preferences;
+use Dodici\Fansworld\WebBundle\Services\Preferences;
 
 class PreferencesExtension extends \Twig_Extension
 {

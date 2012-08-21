@@ -1,6 +1,6 @@
 <?php
 
-namespace Dodici\Fansworld\WebBundle\Extensions;
+namespace Dodici\Fansworld\WebBundle\Services;
 
 use Dodici\Fansworld\WebBundle\Model\SearchableInterface;
 
@@ -98,7 +98,7 @@ class Search
      * @param string|null $match - String to match terms against, term%
 	 * @param User|null $user - filter by user
 	 * @param string|null $ip - filter by ip
-	 * @param (int)Extensions\Search::TYPE_*|null $type - filter by type of search
+	 * @param (int)Services\Search::TYPE_*|null $type - filter by type of search
 	 * @param int|null $limit
 	 * @param int|null $offset
      */
