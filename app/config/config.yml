@@ -543,7 +543,10 @@ services:
       arguments: [@doctrine.orm.entity_manager, @appstate]
     sharer:
       class: Dodici\Fansworld\WebBundle\Extensions\Sharer
-      arguments: [@doctrine.orm.entity_manager, @appstate]
+      arguments: [@doctrine.orm.entity_manager, @security.context, @appstate, @messenger]
+    messenger:
+      class: Dodici\Fansworld\WebBundle\Extensions\Messenger
+      arguments: [@doctrine.orm.entity_manager, @security.context, @appstate]
     commenter:
       class: Dodici\Fansworld\WebBundle\Extensions\Commenter
       arguments: [@doctrine.orm.entity_manager, @appstate]
