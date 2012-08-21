@@ -258,7 +258,7 @@ var site = {
         }); 
     },
     likeButtons: function(){
-        $('.btn.like:not(.loading-small)').live('click',function(e){
+        $('.likebutton:not(.loading-small)').live('click',function(e){
             e.preventDefault();
             var el = $(this);
             var type = el.attr('data-type');
