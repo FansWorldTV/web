@@ -13,7 +13,7 @@
 	{% if video %}
 		<script type="text/javascript">
                                                      if(window.top.redirectColorbox){
-                                                         window.top.location.href = "{{ path('teve_videodetail', {id: video.id, slug: video.slug}) }}";
+                                                         window.top.location.href = "{{ path('video_show', {id: video.id, slug: video.slug}) }}";
                                                     }
                                                     
                                                     

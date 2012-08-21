@@ -12,7 +12,7 @@
             <div class="cont clearfix video-list-global">
             	{% if highlight %}
                 <div class="highlight-video">
-                	<h2><a href="{{path('teve_videodetail', {id:highlight.id, slug:highlight.slug})}}">{{highlight}}</a></h2>
+                	<h2><a href="{{path('video_show', {id:highlight.id, slug:highlight.slug})}}">{{highlight}}</a></h2>
                 
                 	<div class="media_content">
 			            <iframe class="videoframe" src="{{ flumotiontwig.videoplayerurl(highlight) }}"></iframe>

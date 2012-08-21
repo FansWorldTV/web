@@ -12,7 +12,7 @@
             <div class='span4 videoplayer-container'>
                 {% if videoDestacadoMain.image is defined %}
                     {% if videoDestacadoMain.image is not null %}
-                        <a href="{{ path('teve_videodetail', {'id': videoDestacadoMain.id, 'slug': videoDestacadoMain.slug}) }}">
+                        <a href="{{ path('video_show', {'id': videoDestacadoMain.id, 'slug': videoDestacadoMain.slug}) }}">
                             {% thumbnail videoDestacadoMain.image, 'small'  with {"title": videoDestacadoMain.title}%}
                         </a>
                     {% endif %}
@@ -35,7 +35,7 @@
                     
                     {% if channelVideo.image is defined %}
                         {% if channelVideo.image is not null %}
-                            <a href="{{ path('teve_videodetail', {'id': channelVideo.id, 'slug': channelVideo.slug}) }}">
+                            <a href="{{ path('video_show', {'id': channelVideo.id, 'slug': channelVideo.slug}) }}">
                                 {% thumbnail channelVideo.image, 'big'  with {"title": channelVideo.title}%}
                             </a>
                         {% endif %}

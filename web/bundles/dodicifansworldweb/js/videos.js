@@ -70,7 +70,7 @@ var videos = {
                     for(var i in response.videos){
                         var video = response.videos[i];
                         var template = $("#templates ul.videos li").clone();
-                        var videoUrl = Routing.generate(appLocale + '_teve_videodetail', {
+                        var videoUrl = Routing.generate(appLocale + '_video_show', {
                             'id':video.id, 
                             'slug': video.slug
                         });
@@ -105,7 +105,7 @@ var videos = {
                     for(var i in response.videos){
                         var video = response.videos[i];
                         var template = $("#templates ul.videos li").clone();
-                        var videoUrl = Routing.generate(appLocale + '_teve_videodetail', {
+                        var videoUrl = Routing.generate(appLocale + '_video_show', {
                             'id':video.id, 
                             'slug': video.slug
                         });
@@ -246,7 +246,7 @@ var videos = {
                         for(var i in response.videos){
                             var video = response.videos[i];
                             var template = $("#templates ul.videos li").clone();
-                            var videoUrl = Routing.generate(appLocale + '_teve_videodetail', {
+                            var videoUrl = Routing.generate(appLocale + '_video_show', {
                                 'id':video.id, 
                                 'slug': video.slug
                             });
@@ -313,7 +313,7 @@ var videos = {
                         for(var i in r.videos){
                             var video = r.videos[i];
                             $("[data-grid-related]").append('<div class="video"> \
-                                                                                        <a href="'+ Routing.generate(appLocale + '_teve_videodetail', {
+                                                                                        <a href="'+ Routing.generate(appLocale + '_video_show', {
                                 'id': video.id
                                 }) +'"><img src="' + video.image + '" alt="'+ video.title +'" title="'+ video.title +'"/></a>\
                                                                                         <span data-title>'+ video.title +'</span>\

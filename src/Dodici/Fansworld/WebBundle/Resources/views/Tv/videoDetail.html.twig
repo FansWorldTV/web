@@ -20,7 +20,7 @@
     <section id="videos-related-sort" data-grid-related = '{{ video.id }}'>
         {% for v in videosRelated %}
             <div class="video">
-                <a href="{{ path('teve_videodetail', {id: v.id, slug: v.slug}) }}">{% thumbnail v.image, 'medium' with {'title': v.title} %}</a>
+                <a href="{{ path('video_show', {id: v.id, slug: v.slug}) }}">{% thumbnail v.image, 'medium' with {'title': v.title} %}</a>
                 <span data-title>{{ v.title }}</span>
                 <p data-content>{{ v.content|truncate(55) }}</p>
             </div>
@@ -43,7 +43,7 @@
     <section id="videos-related" data-grid>
         {% for v in videosRecommended %}
             <div class="video">
-                <a href="{{ path('teve_videodetail', {id: v.id, slug: v.slug}) }}">{% thumbnail v.image, 'medium' with {'title': v.title} %}</a>
+                <a href="{{ path('video_show', {id: v.id, slug: v.slug}) }}">{% thumbnail v.image, 'medium' with {'title': v.title} %}</a>
                 <span>{{ v.title }}</span>
                 <p>{{ v.content|truncate(55) }}</p>
             </div>

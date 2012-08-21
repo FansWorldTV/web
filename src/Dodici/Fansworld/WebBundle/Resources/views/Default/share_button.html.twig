@@ -7,7 +7,7 @@
     <div class="top">
         <h4 class="wywtsay"></h4>
         <form action="">
-            <input type="text" placeholder="Que quieres decir..." class="wywtsay"/>
+            <input name="message" type="text" placeholder="Que quieres decir..." class="wywtsay"/>
         </form>
     </div>
     <div class="bottom">
@@ -16,7 +16,7 @@
         <label style="float:left;">Fw:</label><input style="float:left;" type="checkbox" name="fw" id="publish_to_fw"/>
         
         <div class="clearfix"></div>
-        <button class="btn btn-primary">Compartir</button>
+        <button id="share_it" class="btn btn-primary">Compartir</button>
     </div>
 </div>
 
@@ -31,6 +31,26 @@
         $(".top form").remove();
         
         return false;
+    });
+    
+    $("#share_it").on('click', function(){
+        var params = {};
+        params['fb'] = $("#publish_to_tw").val();
+        params['fw'] = $("#publish_to_fw").val();
+        params['fb'] = $("#publish_to_fb").val();
+        params['message'] = $(".wywtsay").val();
+        
+        ajax.genericAction('share_ajax', params, function(r){
+            if(r){
+                if(r.error){
+                    console.log(r.msg);
+                }else{
+                    success(msg);
+                }
+            }
+        }, function(msg){
+            error(msg);
+        });
     });
     
     $('#publish_to_fb').live('change', function(){

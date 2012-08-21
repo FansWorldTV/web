@@ -183,7 +183,7 @@ class VideoController extends SiteController
                         'slug' => $video->getSlug(),
                         'imgsrc' => $this->getImageUrl($video->getImage(), 'medium'),
                         'visitCount' => $video->getVisitCount(),
-                        'url' => $this->generateUrl('teve_videodetail', array(
+                        'url' => $this->generateUrl('video_show', array(
                                 'id' => $video->getId(),
                                 'slug' => $video->getSlug()
                         ))
@@ -419,7 +419,7 @@ class VideoController extends SiteController
                 'slug' => $video->getSlug(),
                 'imgsrc' => $this->getImageUrl($video->getImage(), 'medium'),
                 'visitCount' => $video->getVisitCount(),
-                'url' => $this->generateUrl('teve_videodetail', array(
+                'url' => $this->generateUrl('video_show', array(
                     'id' => $video->getId(),
                     'slug' => $video->getSlug()
                 ))
@@ -490,7 +490,7 @@ class VideoController extends SiteController
                 'slug' => $video->getSlug(),
                 'imgsrc' => $this->getImageUrl($video->getImage(), 'medium'),
                 'visitCount' => $video->getVisitCount(),
-                'url' => $this->generateUrl('teve_videodetail', array(
+                'url' => $this->generateUrl('video_show', array(
                     'id' => $video->getId(),
                     'slug' => $video->getSlug()
                 ))
@@ -548,7 +548,7 @@ class VideoController extends SiteController
                 'slug' => $video->getSlug(),
                 'imgsrc' => $this->getImageUrl($video->getImage(), 'medium'),
                 'visitCount' => $video->getVisitCount(),
-                'url' => $this->generateUrl('teve_videodetail', array(
+                'url' => $this->generateUrl('video_show', array(
                     'id' => $video->getId(),
                     'slug' => $video->getSlug()
                 ))

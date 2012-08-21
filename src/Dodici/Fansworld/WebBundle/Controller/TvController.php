@@ -68,7 +68,7 @@ class TvController extends SiteController
     }
     
     /**
-     * @Route("/{id}/{slug}", name="teve_videodetail", requirements = {"id"="\d+"})
+     * @Route("/{id}/{slug}", name="video_show", requirements = {"id"="\d+"})
      * @Template()
      * @Secure(roles="ROLE_USER")
      */

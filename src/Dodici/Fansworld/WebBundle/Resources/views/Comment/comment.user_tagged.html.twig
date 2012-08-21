@@ -11,7 +11,7 @@
 	{% set tag_item_url = path("photo_show", {'id': tag_item.id, 'slug': tag_item.slug }) %}	
 {% elseif comment.share.video is not null %}
 	{% set tag_item = comment.share.video %} 
-	{% set tag_item_url = path("teve_videodetail", {'id': tag_item.id, 'slug': tag_item.slug }) %}	
+	{% set tag_item_url = path("video_show", {'id': tag_item.id, 'slug': tag_item.slug }) %}	
 {% elseif comment.share.contest is not null %}
 	{% set tag_item = comment.share.contest %} 
 	{% set tag_item_url = path("contest_show", {'id': tag_item.id, 'slug': tag_item.slug })%}	
