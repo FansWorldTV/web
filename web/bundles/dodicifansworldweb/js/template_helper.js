@@ -56,7 +56,7 @@ var templateHelper = {
 	            beforeSend : function(){
 	            	if (typeof $.render[templateId] != 'undefined'){
 	            		alreadyLoaded = true;
-	            		return false;
+	            		return true;
 	                }else alreadyLoaded = false;
 	            },
 	            abort: function(){
