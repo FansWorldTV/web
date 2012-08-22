@@ -1,6 +1,8 @@
 {% set user = app.user %}
 {% extends "DodiciFansworldWebBundle:User:profile_edit_base.html.twig" %}
 
+{% use "DodiciFansworldWebBundle:Layout/Snippet:profile_inner_fullwidth.html.twig"  %}
+
 {% block title %}{{ parent() }} - Modificar Perfil{% endblock %}
 
 {% block javascripts %}
@@ -17,6 +19,7 @@
 	{{ parent() }}
 {% endblock %}
 
-{% block profile_edit_body %}
+{% block inner_content %}
+    {{ parent() }}
 	{% include "FOSUserBundle:Profile:edit_content.html.twig" %}
 {% endblock %}

@@ -26,9 +26,11 @@ class PrivacyController extends SiteController
         if (!is_object($user) || !$user instanceof User) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
-
+        
+        $privacyFields = array_merge(Privacy::getDefaultFieldPrivacy(),$user->getPrivacy());
+        
         return $this->get('templating')->renderResponse(
-                        'DodiciFansworldWebBundle:User:profile_edit/privacy.html.twig', array('user' => $user, 'privacyFields' => $user->getPrivacy())
+                        'DodiciFansworldWebBundle:User:profile_edit/privacy.html.twig', array('user' => $user, 'privacyFields' => $privacyFields)
         );
     }
 

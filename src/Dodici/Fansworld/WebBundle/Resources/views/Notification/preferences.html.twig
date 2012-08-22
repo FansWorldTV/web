@@ -1,6 +1,8 @@
 {% set user = app.user %}
 {% extends "DodiciFansworldWebBundle:User:profile_edit_base.html.twig" %}
 
+{% use "DodiciFansworldWebBundle:Layout/Snippet:profile_inner_fullwidth.html.twig"  %}
+
 {% form_theme form 'DodiciFansworldWebBundle::form.html.twig' %}
 
 {% block title %}{{ parent() }} - Preferencias{% endblock %}
@@ -20,7 +22,8 @@
 	{{ parent() }}
 {% endblock %}
 
-{% block profile_edit_body %}
+{% block inner_content %}
+    {{ parent() }}
 	<h1>Seleccione las opciones</h1>
 	<div class="row-fluid">
         <div class='span8'>

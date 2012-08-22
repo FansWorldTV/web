@@ -44,6 +44,8 @@ class Privacy
         $default['city'] = self::FRIENDS_ONLY;
         $default['facebook'] = self::FRIENDS_ONLY;
         $default['twitter'] = self::FRIENDS_ONLY;
+        
+        return $default;
     }
 
 }

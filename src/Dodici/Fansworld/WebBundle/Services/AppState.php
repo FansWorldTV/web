@@ -356,5 +356,11 @@ class AppState
         }
         return $this->repos[$repname];
     }
+    
+    public function getPrivacyName($privacyId)
+    {
+        $privacyOptions = Privacy::getOptions();
+        return $privacyOptions[$privacyId];
+    }
 
 }
