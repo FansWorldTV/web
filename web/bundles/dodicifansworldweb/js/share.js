@@ -40,9 +40,15 @@ share.it = function(){
         params['tw'] = $(".btn-checkbox.tw").hasClass('active');
         params['fw'] = $(".btn-checkbox.fw").hasClass('active');
         params['fb'] = $(".btn-checkbox.fb").hasClass('active');
+        
         params['message'] = $("input.wywtsay").val();
         params['entity-type'] = $("a.btn.share").attr('data-type');
         params['entity-id'] = $("a.btn.share").attr('data-id');
+        
+        if(!$(".btn-checkbox").hasClass('active')){
+            error("Seleccione un canal para compartir.");
+            return false;
+        }
         
         ajax.genericAction('share_ajax', params, function(r){
             if(r){
@@ -52,6 +58,9 @@ share.it = function(){
                     success("Contenido compartido!");
                     $(".share-box").slideToggle();
                     $(".btn.share").toggleClass('active');
+                    $("input.wywtsay").val("");
+                    $(".btn-checkbox").removeClass('active');
+                    $(".btn-checkbox.fw").addClass('active');
                 }
             }
         }, function(msg){
