@@ -68,7 +68,7 @@ class BatchController extends SiteController
      */
     public function videoAudienceCleanAction()
     {
-        $this->get('video.audience')->cleanUp();
+        $this->get('video.audience')->cleanup();
         
         return new Response('Ok');
     }

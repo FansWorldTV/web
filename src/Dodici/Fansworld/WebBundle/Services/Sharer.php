@@ -34,14 +34,16 @@ class Sharer
         }
     }
 
-    public function share($sharedthing, $targets=null, $content=null, User $author=null)
+    public function share($sharedthing, $targets=null, $content=null, User $author=null, $sharefansworld=true)
     {
         if (!$author) $author = $this->user;
         if (!$author) throw new AccessDeniedException('Access denied');
         if ($targets && !is_array($targets)) $targets = array($targets);
         
-        if (!$targets) $targets = array($author);
-        else $targets[] = $author;
+        if ($sharefansworld) {
+            if (!$targets) $targets = array($author);
+            else $targets[] = $author;
+        }
         
         $userstomessage = array();
         
