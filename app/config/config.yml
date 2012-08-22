@@ -71,6 +71,7 @@ fos_user:
     registration:
         form:
             type: app_user_registration
+            handler: app_user.registration.form.handler
         confirmation:
             enabled:    true
     profile:
@@ -622,6 +623,11 @@ services:
         arguments: [%fos_user.model.user.class%]
         tags:
             - { name: form.type, alias: app_user_registration }
+    app_user.registration.form.handler:
+        class: Application\Sonata\UserBundle\Form\Handler\RegistrationFormHandler
+        public: false
+        scope: request
+        arguments: [@fos_user.registration.form, @request, @fos_user.user_manager, @fos_user.mailer]
     app_user.profile.form.type:
         class: Application\Sonata\UserBundle\Form\Type\ProfileFormType
         arguments: [%fos_user.model.user.class%]

@@ -1,6 +1,6 @@
 //validate accept ToC and make url for username
 $(function() {
-	$('#fos_user_registration_form_username, #fos_user_profile_form_user_username')
+	$('#fos_user_profile_form_user_username')
 	.after(
 		$('<p>')
 		.addClass('fieldinfo help-block')

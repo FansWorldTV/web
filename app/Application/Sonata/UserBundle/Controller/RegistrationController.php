@@ -30,8 +30,8 @@ class RegistrationController extends BaseController
             $inviteuser = $request->get('inviter');
             $invitetoken = $request->get('token');
             $inviter = null;
+            $userrepo = $this->container->get('doctrine')->getRepository('Application\Sonata\UserBundle\Entity\User');
             if ($invitetoken && $inviteuser) {
-                $userrepo = $this->container->get('doctrine')->getRepository('Application\Sonata\UserBundle\Entity\User');
                 $inviter = $userrepo->findOneByUsername($inviteuser);
                 if (!$inviter)
                     throw new \Exception('No existe el usuario invitador');
@@ -50,7 +50,7 @@ class RegistrationController extends BaseController
             $process = $formHandler->process($confirmationEnabled);
             if ($process) {
                 $user = $form->getData();
-
+                
                 if ($confirmationEnabled) {
                     $this->container->get('session')->set('fos_user_send_confirmation_email/email', $user->getEmail());
                     $route = 'fos_user_registration_check_email';

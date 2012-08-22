@@ -26,7 +26,7 @@ class RegistrationFormType extends BaseType
             
             
             ->add('lastname',null,array('label'=>'Apellido','required'=>true))
-            ->add('username',null, array('max_length' => 30))
+            ->add('username','hidden', array('max_length' => 30))
             ->add('email', 'email')
             ->add('plainPassword', 'repeated', array('type' => 'password'))
             ->add('accept_toc', 'checkbox', array('property_path' => false,

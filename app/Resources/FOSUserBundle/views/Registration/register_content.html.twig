@@ -19,12 +19,14 @@
                 
                     <form action="" method="post" class="fos_user_registration_register form-2column">    
                         
+                            <div class="errors">
+                                {{ form_errors(form) }}
+                            </div>
                         
                             <div class="fields row-fluid">
                                 <div class='span6'>
                                     {{ form_row(form.firstname) }}
                                     {{ form_row(form.lastname) }}
-                                    {{ form_row(form.username) }}
                                     {{ form_row(form.email) }}
                                 </div>
                                 
@@ -38,6 +40,7 @@
                         <div class="actions clearfix">
                             <button id='submitRegister' name='submit' class='btn' type='submit' disabled='disabled'>Registrate</button>
                         </div>
+                        {{ form_row(form.username) }}
                         {{ form_rest(form) }}
                     </form>
                 
