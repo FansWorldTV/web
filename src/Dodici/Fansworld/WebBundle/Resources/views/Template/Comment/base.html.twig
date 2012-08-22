@@ -1,68 +1,71 @@
 {% block comment %}
-{% spaceless %}
-    <div class="{% block comment_block_class %}actualizacion comment_unit{% endblock %}" data-comment="{% raw %}{{>id}}{% endraw %}">
-    	{% block comment_content %}
-    		
-    		{% block comment_header %}
-            	<header class='comment-header'>
-                	{% block avatar %}
-                		<div class="avatar">
-							<img src='{% raw %}{{>authorAvatarUrl}}{% endraw %}' />
-						</div>
-                	{% endblock %}
-                	<div class='action_container'>
-                    	{% block action %}
-                            <span class="action_user"></span>
+    {% spaceless %}
+        <div class="{% block comment_block_class %}actualizacion comment_unit{% endblock %}" data-comment="{% raw %}{{>id}}{% endraw %}">
+            {% block comment_content %}
+                {% block comment_header %}
+                    <header class='comment-header'>
+                        {% block avatar %}
+                            <div class="avatar">
+                                {% raw %}
+                                    {{if authorAvatarUrl}}
+                                        <img src="{{>authorAvatarUrl}}" />
+                                    {{else}}
+                                        <img src="/bundles/dodicifansworldweb/images/profile_no_image_40x40.png" />
+                                    {{/if}}
+                                {% endraw %}
+                            </div>
                         {% endblock %}
-                        {% block date %}
-                        	( {% include 'DodiciFansworldWebBundle:Template:date.html.twig'  %} )
+                        <div class='action_container'>
+                            {% block action %}
+                                <span class="action_user"></span>
+                            {% endblock %}
+                            {% block date %}
+                                ( {% include 'DodiciFansworldWebBundle:Template:date.html.twig'  %} )
+                            {% endblock %}
+                        </div>
+                    </header>
+                {% endblock %}
+                {% block info %}
+                    <div class="{% block info_block_class %}status{% endblock %}">
+                        {% block info_text %}
+                            <header class='infotext-header'>
+                                {% block title %}
+                                    <span class="title"></span>
+                                {% endblock %}
+                                {% block comment_toolbar %}
+                                    {% include 'DodiciFansworldWebBundle:Template/Comment:toolbar.html.twig'  %}
+                                {% endblock %}
+                            </header>
+                            <div class='infotext-content'>
+                                <div class="content-container">
+                                    {% block info_commentcontent %}{% endblock %}
+                                    {% block description %}<p></p>{% endblock %}
+                                </div>
+                            </div>
+                            <div class="infotext-subcomments">
+                                {% block subcomments %}
+                                    <div class="comments">
+                                        <div class="subcomments-container" data-subcomments="{% raw %}{{>id}}{% endraw %}">     
+                                            {% raw %}
+                                                {{if subcomments}}
+                                                    {{for subcomments}}
+                                                        {% endraw %}
+                                                            {% include 'DodiciFansworldWebBundle:Template/Comment:subcomment.html.twig' %}
+                                                        {% raw %}
+                                                    {{/for}}
+                                                {{/if}}
+                                            {% endraw %}
+                                        </div>
+                                        <div class="form">
+                                            {% include 'DodiciFansworldWebBundle:Template/Comment:shortform.html.twig' %}
+                                        </div>
+                                    </div>
+                                {% endblock %}
+                            </div>
                         {% endblock %}
                     </div>
-        	   </header>
-        	{% endblock %}
-        	
-        	{% block info %}
-                <div class="{% block info_block_class %}status{% endblock %}">
-        			{% block info_text %}
-                        <header class='infotext-header'>
-                            {% block title %}
-                                <span class="title"></span>
-							{% endblock %}
-                            {% block comment_toolbar %}
-								{% include 'DodiciFansworldWebBundle:Template/Comment:toolbar.html.twig'  %}
-                            {% endblock %}
-		                </header>
-        				<div class='infotext-content'>
-                            <div class="content-container">
-                                {% block info_commentcontent %}{% endblock %}
-                                {% block description %}<p></p>{% endblock %}
-                            </div>
-                        </div>
-        				<div class="infotext-subcomments">
-                            {% block subcomments %}
-								<div class="comments">
-                                	<div class="subcomments-container" data-subcomments="{% raw %}{{>id}}{% endraw %}">     
-                                		{% raw %}
-                                			{{if subcomments}}
-												{{for subcomments}}
-													{% endraw %}
-														{% include 'DodiciFansworldWebBundle:Template/Comment:subcomment.html.twig'  %}
-													{% raw %}
-												{{/for}}
-											{{/if}}
-										{% endraw %}
-                                    </div>
-                                    <div class="form">
-                                    	{% include 'DodiciFansworldWebBundle:Template/Comment:shortform.html.twig'  %}
-									</div>
-								</div>
-                            {% endblock %}
-                        </div>
-        			{% endblock %}
-                </div>
-        	{% endblock %}
-        	
-    	{% endblock %}
-    </div>
-{% endspaceless %}
+                {% endblock %}
+            {% endblock %}
+        </div>
+    {% endspaceless %}
 {% endblock %}
