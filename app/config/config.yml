@@ -534,7 +534,6 @@ services:
     search:
       class: Dodici\Fansworld\WebBundle\Services\Search
       arguments: [@security.context, @doctrine.orm.entity_manager, @router, @appstate]
-    
     meteor:
       class: Dodici\Fansworld\WebBundle\Services\Meteor
       arguments: [@doctrine.orm.entity_manager, @appstate, %meteor.host%, %meteor.port%, %meteor.clientport%, %meteor.debugmode%, %meteor.enabled%]
@@ -565,6 +564,9 @@ services:
     preferences:
       class: Dodici\Fansworld\WebBundle\Services\Preferences
       arguments: [@security.context, @doctrine.orm.entity_manager, @session, @appstate]
+    video.audience:
+      class: Dodici\Fansworld\WebBundle\Services\VideoAudienceManager
+      arguments: [@security.context, @doctrine.orm.entity_manager, @meteor]
     video.playlist:
       class: Dodici\Fansworld\WebBundle\Services\VideoPlaylist
       arguments: [@security.context, @doctrine.orm.entity_manager, @appstate]

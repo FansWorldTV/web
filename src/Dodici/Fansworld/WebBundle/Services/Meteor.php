@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Services;
 
+use Dodici\Fansworld\WebBundle\Entity\Video;
+
 use Dodici\Fansworld\WebBundle\Entity\EventIncident;
 
 use Dodici\Fansworld\WebBundle\Entity\Comment;
@@ -84,6 +86,31 @@ class Meteor
         } else {
     		return false;
     	}
+    }
+    
+    public function addUserWatchingVideo(Video $video, User $user)
+    {
+        $data = array(
+            't' => 'va',
+            'a' => 'a',
+            'id' => $user->getId()
+        );
+        
+        return $this->sendToSocket($data, 'videoaudience_'.$video->getId());
+    }
+    
+    public function removeUsersWatchingVideo(Video $video, $users)
+    {
+        $userids = array();
+        foreach ($users as $user) $userids[] = $user->getId();
+        
+        $data = array(
+            't' => 'va',
+            'a' => 'r',
+            'id' => $userids
+        );
+        
+        return $this->sendToSocket($data, 'videoaudience_'.$video->getId());
     }
     
     public function encryptChannelName($channel, User $user)
