@@ -25,8 +25,6 @@ class RegistrationFormHandler extends BaseHandler
     public function process($confirmation = false)
     {
         $user = $this->userManager->createUser();
-        \Doctrine\Common\Util\Debug::dump($this->form->getErrors());
-        \Doctrine\Common\Util\Debug::dump($this->form->getData());
         
         $user->setUsername('abc'.uniqid());
         
