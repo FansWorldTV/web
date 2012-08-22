@@ -11,68 +11,14 @@
         </form>
     </div>
     <div class="bottom">
-        <label style="float:left;">Tw:</label><input style="float:left;" type="checkbox" name="tw" id="publish_to_tw"/>
-        <label style="float:left;">Fb:</label><input style="float:left;" type="checkbox" name="fb" id="publish_to_fb"/>
-        <label style="float:left;">Fw:</label><input style="float:left;" type="checkbox" name="fw" id="publish_to_fw"/>
+        <span class="pull-left">
+            <button class="btn-checkbox fb"></button>
+            <button class="btn-checkbox tw"></button>
+            <button class="btn-checkbox fw"></button>
+        </span>
         
-        <div class="clearfix"></div>
-        <button id="share_it" class="btn btn-primary">Compartir</button>
+        <span class="pull-right">
+            <button id="share_it" class="btn btn-primary">Compartir</button>
+        </span>
     </div>
 </div>
-
-<script type="text/javascript">
-    $(".btn.share").on('click', function(){
-        $(this).toggleClass('active');
-        $(".share-box").slideToggle();
-    });
-    $(".share-box").find('form').submit(function(){
-        var text = $(".share-box input.wywtsay").val();
-        $("h4.wywtsay").html($("input.wywtsay").val());
-        $(".top form").remove();
-        
-        return false;
-    });
-    
-    $("#share_it").on('click', function(){
-        var params = {};
-        params['tw'] = $("#publish_to_tw").val();
-        params['fw'] = $("#publish_to_fw").val();
-        params['fb'] = $("#publish_to_fb").val();
-        params['message'] = $("input.wywtsay").val();
-        
-        ajax.genericAction('share_ajax', params, function(r){
-            if(r){
-                if(r.error){
-                    console.log(r.msg);
-                }else{
-                    success(r.msg);
-                }
-            }
-        }, function(msg){
-            error(msg);
-        });
-    });
-    
-    $('#publish_to_fb').live('change', function(){
-        console.log('acaaaaaaaaaaaaa');
-        if ($(this).attr('checked') == 'checked') {
-            FB.ui({
-                method: 'permissions.request',
-                'perms': 'email,user_birthday,user_location,publish_actions',
-                'display': 'popup',
-                'response_type': 'signed_request',
-                'fbconnect': 1,
-                'next': 'http://' + location.host + Routing.generate( appLocale + '_' + 'facebook_jstoken')
-            },
-            function(response) {
-                    console.log(response);
-            });
-        }
-    });
-
-    $('#publish_to_tw').live('change', function(){
-        if ($(this).attr('checked') == 'checked') {
-            window.open(Routing.generate(appLocale + '_' + 'twitter_redirect'), 'fw_twit_link', 'menubar=no,status=no,toolbar=no,width=500,height=300');
-        }
-    });
-</script>

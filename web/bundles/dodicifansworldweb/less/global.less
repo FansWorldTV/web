@@ -35,6 +35,7 @@
 
     .top {
         color: @black;
+        height:  70px;
 
         input.wywtsay{
             border: 2px solid #e2e2e4;
@@ -58,6 +59,48 @@
     .bottom{
         border-top: 2px solid #e2e2e4;
         background-color: #f9f9f9;
+        height: 40px;
+        padding-left: 41px;
+        padding-right: 44px;
+        padding-top: 10px;
     }
 
+}
+
+.btn-checkbox{
+    background-image: url("../images/fw_sprite_share.png") !important;
+    background: transparent;
+    border: 0;
+    .square(30px);
+    background-repeat: none;
+
+    &:hover{
+        background: transparent;
+        border: 0;
+    }
+
+    &.fb{
+        background-position: -33px 63px !important;
+
+        &.active, &:hover{
+            background-position: -33px 35px !important;
+        }
+    }
+
+    &.tw{
+        background-position: -3px 63px !important;
+
+        &.active, &:hover{
+            background-position: -3px 35px !important;
+        }
+    }
+
+    &.fw{
+        width: 35px;
+        background-position: 41px 63px !important;
+
+        &.active, &:hover{
+            background-position: 41px 35px !important;
+        }
+    }
 }

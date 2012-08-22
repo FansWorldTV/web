@@ -32,6 +32,11 @@ class ShareController extends SiteController
     {
         $request = $this->getRequest();
 
+        $entityType = $request->get('entity-type', false);
+        $entityId = $request->get('entity-id', false);
+
+        $thingToShare = $this->getRepository($entityType)->find($entityId);
+
         $toFb = $request->get('fb', false);
         $toTw = $request->get('tw', false);
         $toFw = $request->get('fw', false);
@@ -39,10 +44,10 @@ class ShareController extends SiteController
         $defaultMsg = 'Mensaje por defecto enviado desde el backend :D';
         $message = $request->get('message', $defaultMsg);
 
-        if(strlen($message) < 1){
+        if (strlen($message) < 1) {
             $message = $defaultMsg;
         }
-        
+
         $response = array(
             'error' => false,
             'msg' => 'Sent...'
@@ -56,7 +61,7 @@ class ShareController extends SiteController
                 $facebook instanceof AppFacebook;
 
                 try {
-                    $facebook->postFeed($message);
+                    $facebook->entityShare($thingToShare, $message);
                 } catch (Exception $exc) {
                     $response['error'] = true;
                     $response['msg'] = $exc->getMessage();
@@ -68,7 +73,7 @@ class ShareController extends SiteController
                 $twitter instanceof AppTwitter;
 
                 try {
-                    $twitter->postFeed($message);
+                    $twitter->entityShare($thingToShare, $message);
                 } catch (Exception $exc) {
                     $response['error'] = true;
                     $response['msg'] = $exc->getMessage();
@@ -76,16 +81,9 @@ class ShareController extends SiteController
             }
 
             if ($toFw) {
+                $sharer = $this->get('sharer');
                 try {
-                    $em = $this->getDoctrine()->getEntityManager();
-                    $commentInMyWall = new Comment();
-                    $commentInMyWall->setAuthor($user);
-                    $commentInMyWall->setTarget($user);
-                    $commentInMyWall->setActive(true);
-                    $commentInMyWall->setContent($message);
-                    $commentInMyWall->setPrivacy(Privacy::FRIENDS_ONLY);
-                    $em->persist($commentInMyWall);
-                    $em->flush();
+                    $sharer->share($thingToShare, null, $message, $this->getUser());
                 } catch (Exception $exc) {
                     $response['error'] = true;
                     $response['msg'] = $exc->getMessage();

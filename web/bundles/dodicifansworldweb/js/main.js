@@ -13,6 +13,7 @@ var site = {
         $("#video-search-form").live('submit', function(){
             $(this).addClass('loading');
         });
+        
         $("ul.friendgroupsList").show();
         
         $("a.btn_picture").colorbox({
@@ -272,11 +273,11 @@ var site = {
                     //el.siblings('.likecount:first').text(response.likecount);
                     success(response.message);
                     if(response.liked){
-                            el.find('i').attr('class', '');
-                            el.find('i').addClass('icon-star');
+                        el.find('i').attr('class', '');
+                        el.find('i').addClass('icon-star');
                     }else{
-                            el.find('i').attr('class', '');
-                            el.find('i').addClass('icon-star-empty');
+                        el.find('i').attr('class', '');
+                        el.find('i').addClass('icon-star-empty');
                     }
                 },
                 function(responsetext){
@@ -329,7 +330,7 @@ var site = {
     	
         $('textarea.comment_message').live('keydown', function (e) {
             if ( e.keyCode == 13 ){
-            	var textAreaElement		= $(this);
+                var textAreaElement		= $(this);
                 var type 	= textAreaElement.attr('data-type');
                 var id 		= textAreaElement.attr('data-id');
                 var ispin 	= (textAreaElement.attr('data-pin') == 'true');
@@ -337,20 +338,20 @@ var site = {
                 var privacy = 1;
                 //var privacy = el.parents('.commentform').find('.post_privacidad').val();   
                 var elDestination = textAreaElement.closest('.comments').find('div.subcomments-container');
-            	site.postComment(textAreaElement,type,id,ispin,content,privacy,elDestination);
+                site.postComment(textAreaElement,type,id,ispin,content,privacy,elDestination);
                 return false;
             }
         });
     },
     
     postComment: function(textAreaElement,type,id,ispin,content,privacy,elDestination){
-    	textAreaElement.addClass('loadingSmall');
-    	textAreaElement.attr('disabled','disabled');
+        textAreaElement.addClass('loadingSmall');
+        textAreaElement.attr('disabled','disabled');
     	
-    	ajax.globalCommentAction(type, id, content, privacy, ispin,
+        ajax.globalCommentAction(type, id, content, privacy, ispin,
             function(response){
-    			textAreaElement.val('');
-    			textAreaElement.removeClass('loadingSmall');
+                textAreaElement.val('');
+                textAreaElement.removeClass('loadingSmall');
                 success(response.message);
                 
                
@@ -366,8 +367,8 @@ var site = {
                 textAreaElement.removeAttr('disabled');
             },
             function(responsetext){
-            	textAreaElement.removeClass('loadingSmall');
-            	textAreaElement.removeAttr('disabled');
+                textAreaElement.removeClass('loadingSmall');
+                textAreaElement.removeAttr('disabled');
                 error(responsetext);
             });
     },
