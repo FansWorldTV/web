@@ -243,6 +243,11 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
     protected $friendships;
     
     /**
+     * @var ArrayCollection $fanships
+     */
+    protected $fanships;
+    
+    /**
      * @var ArrayCollection $friendgroups
      */
     protected $friendgroups;
@@ -317,6 +322,7 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
     {
         parent::__construct();
     	$this->friendships = new ArrayCollection();
+    	$this->fanships = new ArrayCollection();
     	$this->friendgroups = new ArrayCollection();
     	$this->idolships = new ArrayCollection();
     	$this->teamships = new ArrayCollection();
@@ -1121,6 +1127,40 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
     public function setFriendships($friendships)
     {
         $this->friendships = $friendships;
+    }
+    
+	/**
+     * Add fanships
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Friendship $fanships
+     */
+    public function addFanship(\Dodici\Fansworld\WebBundle\Entity\Friendship $fanships)
+    {
+        $this->fanships[] = $fanships;
+    }
+	public function addFanships(\Dodici\Fansworld\WebBundle\Entity\Friendship $fanships)
+    {
+        $this->addFanship($fanships);
+    }
+
+    /**
+     * Get fanships
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getFanships()
+    {
+        return $this->fanships;
+    }
+    
+	/**
+     * Set fanships
+     *
+     * @param Doctrine\Common\Collections\Collection $fanships
+     */
+    public function setFanships($fanships)
+    {
+        $this->fanships = $fanships;
     }
     
 	/**

@@ -17,8 +17,8 @@ class EventAdmin extends Admin
             ->add('title', 'text', array ())
             ->add('content', 'textarea', array ())
             ->add('createdAt', 'datetime', array ())
-            ->add('from', 'datetime', array ())
-            ->add('to', 'datetime', array ())
+            ->add('fromtime', 'datetime', array ())
+            ->add('totime', 'datetime', array ())
             ->add('active', 'boolean', array ())
             ->add('type', 'integer', array ())
             ->add('userCount', 'integer', array ())
@@ -40,9 +40,9 @@ class EventAdmin extends Admin
             ->add('content', NULL, array (), array ())
             ->add('createdAt', 'date', array ('attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy HH:mm'), array ())
-            ->add('from', 'date', array ('attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',
+            ->add('fromtime', 'date', array ('attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy HH:mm'), array ())
-            ->add('to', 'date', array ('attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',
+            ->add('totime', 'date', array ('attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy HH:mm'), array ())
             ->add('active', NULL, array (), array ())
             ->add('type', 'choice', array ('choices' => $types), array ())
@@ -55,8 +55,8 @@ class EventAdmin extends Admin
         $listMapper
             ->addIdentifier('title', 'text', array ())
             ->add('createdAt', 'datetime', array ())
-            ->add('from', 'datetime', array ())
-            ->add('to', 'datetime', array ())
+            ->add('fromtime', 'datetime', array ())
+            ->add('totime', 'datetime', array ())
             ->add('active', 'boolean', array ())
         ;
     }

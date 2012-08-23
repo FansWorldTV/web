@@ -112,7 +112,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * @var Application\Sonata\MediaBundle\Entity\Media
      * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media")
-     * @ORM\JoinColumn(name="image", referencedColumnName="id")
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
      */
     private $image;
     
@@ -155,6 +155,11 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
      * @ORM\Column(name="twitter", type="string", length=100, nullable=true)
      */
     private $twitter;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Teamship", mappedBy="team", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $teamships;
     
     /**
      * @Gedmo\Slug(fields={"title"}, unique=false)

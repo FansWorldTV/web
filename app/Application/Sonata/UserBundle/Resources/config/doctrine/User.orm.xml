@@ -98,6 +98,21 @@
         </one-to-many>
         
         <one-to-many
+                field="fanships"
+                target-entity="Dodici\Fansworld\WebBundle\Entity\Friendship"
+                mapped-by="target"
+                orphan-removal="true"
+                >
+
+                <cascade>
+                    <cascade-remove/>
+                    <cascade-persist/>
+                </cascade>
+                <orphan-removal>true</orphan-removal>
+
+        </one-to-many>
+        
+        <one-to-many
                 field="idolships"
                 target-entity="Dodici\Fansworld\WebBundle\Entity\Idolship"
                 mapped-by="author"

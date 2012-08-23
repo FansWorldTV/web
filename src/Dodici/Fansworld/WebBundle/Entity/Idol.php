@@ -86,7 +86,7 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * @var Application\Sonata\MediaBundle\Entity\Media
      * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media")
-     * @ORM\JoinColumn(name="image", referencedColumnName="id")
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
      */
     private $image;
     
@@ -190,6 +190,11 @@ class Idol implements SearchableInterface, VisitableInterface
      * @ORM\Column(name="visitcount", type="integer", nullable=false)
      */
     private $visitCount;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Idolship", mappedBy="idol", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $idolships;
     
     public function __construct()
     {
