@@ -720,4 +720,24 @@ class Idol implements SearchableInterface, VisitableInterface
     {
         return $this->external;
     }
+
+    /**
+     * Add idolships
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Idolship $idolships
+     */
+    public function addIdolship(\Dodici\Fansworld\WebBundle\Entity\Idolship $idolships)
+    {
+        $this->idolships[] = $idolships;
+    }
+
+    /**
+     * Get idolships
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getIdolships()
+    {
+        return $this->idolships;
+    }
 }

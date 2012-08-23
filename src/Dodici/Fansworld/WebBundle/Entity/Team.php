@@ -181,9 +181,9 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
 	}
     
     /**
-     * @ORM\OneToMany(targetEntity="Application\Sonata\UserBundle\Entity\User", mappedBy="team")
+     * @ORM\OneToMany(targetEntity="IdolCareer", mappedBy="team")
      */
-    protected $idols;
+    protected $idolcareers;
     
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="team", cascade={"remove", "persist"}, orphanRemoval="true")
@@ -245,7 +245,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     }
     public function __construct()
     {
-        $this->idols = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idolcareers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->visits = new \Doctrine\Common\Collections\ArrayCollection();
         $this->teamcategories = new \Doctrine\Common\Collections\ArrayCollection();
@@ -448,26 +448,6 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     }
     
     /**
-     * Add idols
-     *
-     * @param Application\Sonata\UserBundle\Entity\User $idols
-     */
-    public function addIdol(\Dodici\Fansworld\WebBundle\Entity\Idol $idols)
-    {
-        $this->idols[] = $idols;
-    }
-
-    /**
-     * Get idols
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getIdols()
-    {
-        return $this->idols;
-    }
-
-    /**
      * Set fanCount
      *
      * @param bigint $fanCount
@@ -527,16 +507,6 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
         return $this->videoCount;
     }
     
-    /**
-     * Add idols
-     *
-     * @param Application\Sonata\UserBundle\Entity\User $idols
-     */
-    public function addUser(\Application\Sonata\UserBundle\Entity\User $idols)
-    {
-        $this->idols[] = $idols;
-    }
-
     /**
      * Set external
      *
@@ -787,5 +757,45 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     public function getVisitCount()
     {
         return $this->visitCount;
+    }
+
+    /**
+     * Add teamships
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Teamship $teamships
+     */
+    public function addTeamship(\Dodici\Fansworld\WebBundle\Entity\Teamship $teamships)
+    {
+        $this->teamships[] = $teamships;
+    }
+
+    /**
+     * Get teamships
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getTeamships()
+    {
+        return $this->teamships;
+    }
+
+    /**
+     * Add idolcareers
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\IdolCareer $idolcareers
+     */
+    public function addIdolCareer(\Dodici\Fansworld\WebBundle\Entity\IdolCareer $idolcareers)
+    {
+        $this->idolcareers[] = $idolcareers;
+    }
+
+    /**
+     * Get idolcareers
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getIdolcareers()
+    {
+        return $this->idolcareers;
     }
 }

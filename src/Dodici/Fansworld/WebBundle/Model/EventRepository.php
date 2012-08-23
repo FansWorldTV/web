@@ -48,11 +48,16 @@ class EventRepository extends CountBaseRepository
 	public function byIdol(Idol $idol, $limit=null, $offset=null)
 	{
 		$query = $this->_em->createQuery('
-    	SELECT e, hu
+    	SELECT e, ht, t, ic, i
     	FROM \Dodici\Fansworld\WebBundle\Entity\Event e
-    	JOIN e.hasidols hu
+    	JOIN e.hasteams ht
+    	JOIN ht.team t
+    	JOIN t.idolcareers ic
+    	JOIN ic.idol i
     	WHERE
-    	e.active = true AND hu.idol = :idol
+    	e.active = true
+    	GROUP BY e
+    	HAVING i = :idol AND ic.actual = true
     	ORDER BY e.userCount DESC, e.fromtime ASC
     	')
     		->setParameter('idol', $idol->getId());
