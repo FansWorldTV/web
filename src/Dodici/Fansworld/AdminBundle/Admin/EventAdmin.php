@@ -47,6 +47,12 @@ class EventAdmin extends Admin
             ->add('active', NULL, array (), array ())
             ->add('type', 'choice', array ('choices' => $types), array ())
             ->add('external', NULL, array (), array ())
+            ->add('hasteams', 'sonata_type_collection', array ('required' => false), 
+            	array(
+                      'edit' => 'inline',
+                	  'inline' => 'table', 
+                    )
+            )
         ;
     }
 
@@ -67,4 +73,16 @@ class EventAdmin extends Admin
             ->add('title', 'doctrine_orm_string', array (  'field_type' => 'text',  'field_options' =>   array (  ),  'options' =>   array (  ),  'field_name' => 'title',))
         ;
     }
+    
+    public function preUpdate($event) {
+	    foreach($event->getHasteams() as $qo) {
+	    	$qo->setEvent($event);
+	    }
+	}
+	
+	public function prePersist($event) {
+	    foreach($event->getHasteams() as $qo) {
+	    	$qo->setEvent($event);
+	    }
+	}
 }
