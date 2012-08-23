@@ -54,6 +54,7 @@ section.related_videos {
         }
     }
 }
+
 .am-container.list-mosaic a:hover{
     img{
         opacity: 0.5;
@@ -62,6 +63,7 @@ section.related_videos {
         display: block !important;
     }
 }
+
 .am-container.list-mosaic a span, .am-container.list-mosaic a:hover span{
     font-weight: bold;
     position: absolute;
@@ -69,3 +71,33 @@ section.related_videos {
     text-overflow: ellipsis;
     word-wrap: break-word;
 }
+
+.audience-list {
+    float: left;
+
+    .viewer {
+        float: left;
+    }
+
+    .audience-list-tab {
+        float: left;
+        background: @greenDark;
+        font-size: 11px;
+        color: @white;
+        height: 22px;
+        line-height: 22px;
+        padding: 0 5px 0 10px;
+        margin:0 2px 0 0;
+        position: relative;
+
+        span {
+            width: 19px;
+            height: 22px;
+            float: right;
+            background: url("../images/ui/audience-list-arrow.png") no-repeat;
+            position: absolute;
+            right: -19px;
+        }
+    }
+}
+
