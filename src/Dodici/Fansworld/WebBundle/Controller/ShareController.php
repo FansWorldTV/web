@@ -38,8 +38,17 @@ class ShareController extends SiteController
         $thingToShare = $this->getRepository($entityType)->find($entityId);
 
         $toFb = $request->get('fb', false);
-        $toTw = $request->get('tw', false);
+        $toTw =  $request->get('tw', false);
         $toFw = $request->get('fw', false);
+        
+        
+        function toBoolean(&$var){
+            $var = $var == 'true' ? true : false;
+        }
+        
+        toBoolean($toFb);
+        toBoolean($toFw);
+        toBoolean($toTw);
 
         $defaultMsg = 'Mensaje por defecto enviado desde el backend :D';
         $message = $request->get('message', $defaultMsg);
