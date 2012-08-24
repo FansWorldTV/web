@@ -24,9 +24,11 @@ class EventRepository extends CountBaseRepository
     public function byTeam(Team $team, $limit=null, $offset=null)
 	{
 		$query = $this->_em->createQuery('
-    	SELECT e, ht
+    	SELECT e, ht, t, ti
     	FROM \Dodici\Fansworld\WebBundle\Entity\Event e
     	JOIN e.hasteams ht
+    	JOIN ht.team t
+    	LEFT JOIN t.image ti
     	WHERE
     	e.active = true
     	AND
@@ -50,10 +52,11 @@ class EventRepository extends CountBaseRepository
 	public function byIdol(Idol $idol, $limit=null, $offset=null)
 	{
 		$query = $this->_em->createQuery('
-    	SELECT e, ht, t
+    	SELECT e, ht, t, ti
     	FROM \Dodici\Fansworld\WebBundle\Entity\Event e
     	JOIN e.hasteams ht
     	JOIN ht.team t
+    	LEFT JOIN t.image ti
     	WHERE
     	e.active = true
     	AND
