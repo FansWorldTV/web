@@ -28,7 +28,9 @@ class EventRepository extends CountBaseRepository
     	FROM \Dodici\Fansworld\WebBundle\Entity\Event e
     	JOIN e.hasteams ht
     	WHERE
-    	e.active = true AND ht.team = :team
+    	e.active = true
+    	AND
+    	(e.id IN (SELECT ex.id FROM \Dodici\Fansworld\WebBundle\Entity\Event ex JOIN ex.hasteams htx WITH htx.team = :team))
     	ORDER BY e.userCount DESC, e.fromtime ASC
     	')
     		->setParameter('team', $team->getId());
@@ -48,16 +50,14 @@ class EventRepository extends CountBaseRepository
 	public function byIdol(Idol $idol, $limit=null, $offset=null)
 	{
 		$query = $this->_em->createQuery('
-    	SELECT e, ht, t, ic, i
+    	SELECT e, ht, t
     	FROM \Dodici\Fansworld\WebBundle\Entity\Event e
     	JOIN e.hasteams ht
     	JOIN ht.team t
-    	JOIN t.idolcareers ic
-    	JOIN ic.idol i
     	WHERE
     	e.active = true
-    	GROUP BY e
-    	HAVING i = :idol AND ic.actual = true
+    	AND
+    	(e.id IN (SELECT ex.id FROM \Dodici\Fansworld\WebBundle\Entity\Event ex JOIN ex.hasteams htx JOIN htx.team tx JOIN tx.idolcareers icx WITH icx.active = true AND icx.idol = :idol ))
     	ORDER BY e.userCount DESC, e.fromtime ASC
     	')
     		->setParameter('idol', $idol->getId());
