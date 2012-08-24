@@ -23,14 +23,18 @@
                           console.log(r);
                           if(r){
                               $.each(r, function(index, value){
-                            	  templateHelper.renderTemplate(value.templateId,value,wallel);
+                            	  templateHelper.renderTemplate(value.templateId,value,wallel,true,function(){
+                            		  $("abbr.timeago").timeago();
+                            	  });
                               });
                               
                               wallel.removeClass('loading');
                               $('.comment-loading').hide();
                               wallel.attr('data-wall-loaded', 1);
+                              //$("abbr.timeago").timeago();
+                              
                               bindWallUpdate(wallel);
-                              $("abbr.timeago").timeago();
+                              
                               
                               if (typeof Meteor != 'undefined') {
                                   Meteor.joinChannel('wall_' + wallid);
