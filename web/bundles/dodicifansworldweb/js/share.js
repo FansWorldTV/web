@@ -30,8 +30,21 @@ share.init = function(){
             }
         }
     });
-    
+    share.autocomplete();
     share.it();
+};
+
+share.selectedList = [];
+share.autocomplete = function(){
+    $("div.sharewith input").tokenInput(Routing.generate(appLocale+'_share_ajaxwith'), {
+        theme: 'fansworld',
+        queryParam: 'term',
+        preventDuplicates: true,
+        propertyToSearch: 'label',
+        onAdd: function(item){
+            share.selectedList.push(item);
+        }
+    }); 
 };
 
 share.it = function(){
@@ -44,6 +57,16 @@ share.it = function(){
         params['message'] = $("input.wywtsay").val();
         params['entity-type'] = $("a.btn.share").attr('data-type');
         params['entity-id'] = $("a.btn.share").attr('data-id');
+   
+        var shareWith = $("div.sharewith input").tokenInput('get');
+
+        params['share-list'] = {};
+        for(var i in shareWith){
+            var ele = shareWith[i];
+            var finded = share.findIntoTheArray(ele.id, share.selectedList);
+            params['share-list'][finded.result.id] = finded.result.type;
+        }
+
         
         if(!$(".btn-checkbox").hasClass('active')){
             error("Seleccione un canal para compartir.");
@@ -69,15 +92,17 @@ share.it = function(){
     });
 };
 
-    
-//$(".share-box").find('form').submit(function(){
-//    var text = $(".share-box input.wywtsay").val();
-//    $("h4.wywtsay").html($("input.wywtsay").val());
-//    $(".top form").remove();
-//        
-//    return false;
-//});
-    
+share.findIntoTheArray = function(id, foo){
+    for(var i in foo){
+        obj = foo[i];
+        if(obj.id == id){
+            return obj;
+        }
+                
+        return false;
+    }
+};
+
 $(document).ready(function(){
     share.init();
 });
