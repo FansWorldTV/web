@@ -26,7 +26,7 @@
             {% endblock %}
                 
             {% block javascripts %}
-            	{% if (meteor.enabled and meteor.ping) %}
+            	{% if (meteor.enabled) %}
 	                <script type="text/javascript" src="http://{{ meteor.host }}:{{ meteor.clientport }}/meteor.js"></script>
                     <script type="text/javascript">
                         {% if app.user %}
@@ -54,27 +54,28 @@
                 {% javascripts
                     filter='?yui_js'
                     output='bundles/dodicifansworldweb/js/compiled/all.js'
-                    'bundles/fosjsrouting/js/router.js'
-                    'bundles/bazingaexposetranslation/js/translation.js'
-	                'bundles/dodicifansworldweb/js/jquery/*.js'
-	                'bundles/dodicifansworldweb/js/jquery-ui/*.js'
-	                'bundles/dodicifansworldweb/js/jquery-ui/localization/*.js'
-	                'bundles/dodicifansworldweb/js/bootstrap/bootstrap.min.js'
-                    'bundles/dodicifansworldweb/js/jsviews/jsrender.js'
-                    'bundles/dodicifansworldweb/js/jsviews/jquery.observable.js'
-                    'bundles/dodicifansworldweb/js/jsviews/jquery.views.js'
-	                'bundles/dodicifansworldweb/js/base.js'
-	                'bundles/dodicifansworldweb/js/wall.js'
-                    'bundles/dodicifansworldweb/js/toolbar.js'
-	                'bundles/dodicifansworldweb/js/main.js'
-	                'bundles/dodicifansworldweb/js/notifications_handler.js'
-	                'bundles/dodicifansworldweb/js/search_box.js'
-	                'bundles/dodicifansworldweb/js/template_helper.js'
-	                'bundles/dodicifansworldweb/js/sort.js'
-	                'bundles/dodicifansworldweb/js/videos.js'
-	                'bundles/dodicifansworldweb/js/tv.js'
-	                'bundles/dodicifansworldweb/js/montage_helper.js'
-	                'bundles/dodicifansworldweb/js/share.js'
+                           'bundles/fosjsrouting/js/router.js'
+                           'bundles/bazingaexposetranslation/js/translation.js'
+                           'bundles/dodicifansworldweb/js/jquery/*.js'
+                           'bundles/dodicifansworldweb/js/jquery-ui/*.js'
+                           'bundles/dodicifansworldweb/js/jquery-ui/localization/*.js'
+                           'bundles/dodicifansworldweb/js/bootstrap/bootstrap.min.js'
+                           'bundles/dodicifansworldweb/js/jsviews/jsrender.js'
+                           'bundles/dodicifansworldweb/js/jsviews/jquery.observable.js'
+                           'bundles/dodicifansworldweb/js/jsviews/jquery.views.js'
+                           'bundles/dodicifansworldweb/js/base.js'
+                           'bundles/dodicifansworldweb/js/wall.js'
+                           'bundles/dodicifansworldweb/js/toolbar.js'
+                           'bundles/dodicifansworldweb/js/main.js'
+                           'bundles/dodicifansworldweb/js/notifications_handler.js'
+                           'bundles/dodicifansworldweb/js/search_box.js'
+                           'bundles/dodicifansworldweb/js/template_helper.js'
+                           'bundles/dodicifansworldweb/js/sort.js'
+                           'bundles/dodicifansworldweb/js/videos.js'
+                           'bundles/dodicifansworldweb/js/tv.js'
+                           'bundles/dodicifansworldweb/js/montage_helper.js'
+                           'bundles/dodicifansworldweb/js/share.js'
+                           'bundles/dodicifansworldweb/js/video_audience.js'
 				%}
 				<script type="text/javascript" src="{{ asset_url }}"></script>
 				{% endjavascripts %}

@@ -23,13 +23,7 @@
 
 {% block bottom_left_content %}
     {{ parent() }}
-    <div class="audience-list">
-        <div class="audience-list-tab">LO ESTA VIENDO<span></span></div>
-        {% for audienceuser in audience %} 
-            <a href="{{ path('user_wall', {'username': audienceuser.username}) }}" class="viewer">{% thumbnail audienceuser.image, 'micro_square' with {title: audienceuser} %}</a>
-        {% endfor %} 
-    </div>
-    <p></p>
+    {% include 'DodiciFansworldWebBundle:Tv:blocks/now-watching.html.twig' with {entity: video} %}
     {% include 'DodiciFansworldWebBundle:Comment:blocks/box.html.twig' with {entity: video} %}
 {% endblock %}
     

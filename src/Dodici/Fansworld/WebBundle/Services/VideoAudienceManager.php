@@ -21,7 +21,7 @@ class VideoAudienceManager
     const TIMEOUT = '-5 min';
     
     protected $security_context;
-	protected $em;
+    protected $em;
     protected $user;
     protected $meteor;
 
@@ -102,6 +102,8 @@ class VideoAudienceManager
         } else {
             $this->join($video, $user);
         }
+        
+        return true;
     }
     
     /**

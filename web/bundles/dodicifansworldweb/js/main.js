@@ -82,6 +82,13 @@ var site = {
             stepMinute: 5
         });
         
+        if($('[data-video-now-watching]').length) {
+            $('[data-video-now-watching]').videoAudience({
+                ajaxUrl: Routing.generate(appLocale + '_teve_getaudience'),
+                keepAliveUrl: Routing.generate(appLocale + '_teve_keepalive')
+            });
+        }
+        
         site.parseTimes();
         site.denyFriendRequest();
         site.acceptFriendRequest();
