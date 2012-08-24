@@ -1,0 +1,21 @@
+{% extends "DodiciFansworldWebBundle:Idol:base.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:profile_inner_fullwidth.html.twig"  %}
+
+{% block title %}{{ parent() }} - {{ 'Eventos'|trans }}{% endblock %}
+
+
+{% block profile_tabs %}
+	{% set active_tab = 'eventos' %}
+	{{ parent() }}
+{% endblock %}
+
+{% block inner_content %}
+	{{ parent() }}
+	   
+	{% include "DodiciFansworldWebBundle:Event:blocks/grid.html.twig" with { events:  eventos} %}
+	    
+	
+	    
+    
+{% endblock %}

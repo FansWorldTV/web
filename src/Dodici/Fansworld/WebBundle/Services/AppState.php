@@ -8,6 +8,7 @@ use Dodici\Fansworld\WebBundle\Entity\Team;
 use Dodici\Fansworld\WebBundle\Entity\Photo;
 use Dodici\Fansworld\WebBundle\Entity\Comment;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
+use Dodici\Fansworld\WebBundle\Entity\Event;
 use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Session;
@@ -361,6 +362,12 @@ class AppState
     {
         $privacyOptions = Privacy::getOptions();
         return $privacyOptions[$privacyId];
+    }
+    
+    public function getEventTypeName($typeId)
+    {
+        $eventTypes = Event::getTypes();
+        return $eventTypes[$typeId];
     }
 
 }

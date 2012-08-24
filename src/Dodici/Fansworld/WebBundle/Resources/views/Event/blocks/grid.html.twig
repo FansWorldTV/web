@@ -1,0 +1,33 @@
+{% if events is not defined %}
+    {% set events = null %}
+{% endif %}
+
+
+<section class='eventgrid-container'>
+    <ul class='events-grid'>
+        {% for event in events %}
+            {% if appstate.EventTypeName(event.type) == 'Partido' %}
+                <li class='event'>
+                    <header>
+                        <span>{{ event.hasTeams[0].team.title }} vs {{ event.hasTeams[1].team.title }}</span>
+                        <button class='btn btn-danger'>Ahora</button>
+                    </header>
+                    <div class='row-fluid'>
+                        <div class="local span4 row-fluid">
+                            <div class='escudo span8'>{% thumbnail event.hasTeams[0].team.image, 'mini_square' with {title: event.hasTeams[0].team.title} %}</div>
+                            <div class='score span4'>{{ event.hasTeams[0].score }}</div>
+                        </div>
+                        <div class='data span4'>
+                            <div class="top">{{ event.title }}</div>
+                            <div class="bottom">{{ event.fromtime|date("d-m-Y") }}</div>
+                        </div>
+                        <div class="visitante span4 row-fluid">
+                            <div class='score span4'>{{ event.hasTeams[1].score }}</div>
+                            <div class='escudo span8'>{% thumbnail event.hasTeams[1].team.image, 'mini_square' with {title: event.hasTeams[1].team.title} %}</div>
+                        </div>
+                    </div>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</section>

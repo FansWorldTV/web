@@ -212,4 +212,27 @@ class IdolController extends SiteController
     
         return $return;
     }
+    
+    /**
+     * @Route("/i/{slug}/eventos", name="idol_eventos")
+     * @Template
+     * @Secure(roles="ROLE_USER")
+     */
+    public function eventosTabAction($slug)
+    {
+        $idol = $this->getRepository('Idol')->findOneBy(array('slug' => $slug));
+        if (!$idol) {
+            throw new HttpException(404, "No existe el ídolo");
+        }else
+            $this->get('visitator')->visit($idol);
+    
+        $eventos = $this->getRepository('Event')->ByIdol($idol);
+       
+        $return = array(
+                'eventos' => $eventos,
+                'idol' => $idol,
+        );
+    
+        return $return;
+    }
 }

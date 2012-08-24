@@ -24,7 +24,7 @@ use Dodici\Fansworld\WebBundle\Entity\Team;
 
 /**
  * Team controller.
- * @Route("/team")
+ * @Route("/t")
  */
 class TeamController extends SiteController
 {
@@ -456,6 +456,29 @@ class TeamController extends SiteController
                 'idolships' => $idolships,
                 //'addMore' => $idolshipsCount > self::LIMIT_LIST_IDOLS ? true : false,
                 'addMore' => false,
+                'team' => $team,
+        );
+    
+        return $return;
+    }
+    
+    /**
+     * @Route("/{slug}/eventos", name="team_eventos")
+     * @Template
+     * @Secure(roles="ROLE_USER")
+     */
+    public function eventosTabAction($slug)
+    {
+        $team = $this->getRepository('Team')->findOneBy(array('slug' => $slug));
+        if (!$team) {
+            throw new HttpException(404, "No existe el Team");
+        }else
+            $this->get('visitator')->visit($team);
+    
+        $eventos = $this->getRepository('Event')->ByTeam($team);
+         
+        $return = array(
+                'eventos' => $eventos,
                 'team' => $team,
         );
     
