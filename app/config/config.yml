@@ -119,6 +119,7 @@ sonata_media:
                 small: { width: 100 , quality: 70}
                 small_square: { width: 100, height: 100 , quality: 75}
                 mini_square: { width: 60, height: 60 , quality: 85}
+                micro_square: { width: 22, height: 22, quality: 60}
                 big_square: { width: 150, height: 150, quality: 85}
                 video: { width: 100, height: 75 , quality: 75}
                 medium: { width: 250 , quality: 80}
