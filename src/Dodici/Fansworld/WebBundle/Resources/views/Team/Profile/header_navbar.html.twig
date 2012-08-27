@@ -3,7 +3,7 @@
         {% set active_tab = 'wall' %}
     {% endif %}
     
-    <nav class='span12'>
+    <nav class='profilenavbar-container span12'>
        <ul class="nav nav-tabs-profile">
             <li {% if active_tab == 'wall' %}class="active"{% endif %}>
                 <a  href="{{ path('team_wall', {slug: entity.slug}) }}">Muro</a>

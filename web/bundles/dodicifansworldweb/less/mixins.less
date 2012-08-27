@@ -3,20 +3,36 @@
 
 .nav-stacked() {
     height: auto;
+
+    > li:first-child > a {
+        border-top: 1px solid @gray;
+        border-radius: 4px 4px 0 0;
+    }
+
     > li {
         float: none;
+        height: auto;
         .active{
             background: none;
         }      
         > a {
+            padding: 8px 12px 8px 12px;
+            line-height: 18px;
+            border: 1px solid @gray;
+            border-top: none;
             margin-right: 0; 
             .border-radius(0);
-        }  
+        }
+        
         
         > a:hover {
             border-color: #ddd;
             z-index: 2;
         }
+    }
+
+    > li:last-child > a {
+        border-radius: 0 0 4px 4px;
     }
 }
     
