@@ -2,12 +2,10 @@
 
 namespace Dodici\Fansworld\WebBundle\Services;
 
+use Dodici\Fansworld\WebBundle\Entity\Teamship;
 use Dodici\Fansworld\WebBundle\Entity\Idolship;
-
 use Dodici\Fansworld\WebBundle\Entity\Team;
-
 use Dodici\Fansworld\WebBundle\Entity\Idol;
-
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Application\Sonata\UserBundle\Entity\User;
@@ -87,7 +85,7 @@ class Fanmaker
     public function isFan($entity, User $user=null)
     {
     	if (!$user) $user = $this->user;
-        if (!$user) throw new AccessDeniedException('Access denied');
+        if (!$user) return false;
         
         if ($entity instanceof Idol) {
             return $this->em->getRepository('DodiciFansworldWebBundle:Idolship')->findOneBy(array('author' => $user->getId(), 'idol' => $entity->getId()));
