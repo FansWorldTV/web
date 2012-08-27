@@ -1,7 +1,5 @@
 {% extends "DodiciFansworldWebBundle:Team:base.html.twig" %}
 
-{% use "DodiciFansworldWebBundle:Layout/Snippet:profile_inner_fullwidth.html.twig"  %}
-
 {% block title %}{{ parent() }} - Twitter{% endblock %}
 
 {% block profile_tabs %}
@@ -9,7 +7,11 @@
 	{{ parent() }}
 {% endblock %}
 
-{% block inner_content %}
-    {{ parent() }}
-    {% render "DodiciFansworldWebBundle:Twitter:lastTweets" with { entity: team } %}
+
+{% block profile_body %}
+    {% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_fullwidth.html.twig" %}
+        {% block inner_content %}
+            {% render "DodiciFansworldWebBundle:Twitter:lastTweets" with { entity: team } %}
+        {% endblock %}
+    {% endembed %}		
 {% endblock %}

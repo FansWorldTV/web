@@ -30,7 +30,7 @@
             </li>
             
             <li {% if active_tab == 'eventos' %}class="active"{% endif %}>
-                <a href="">Eventos</a>
+                <a href="{{ path('idol_eventos', {slug: entity.slug}) }}">Eventos</a>
             </li>
             
             

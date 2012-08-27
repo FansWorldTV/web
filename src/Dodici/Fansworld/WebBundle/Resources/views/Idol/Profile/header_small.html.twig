@@ -1,8 +1,5 @@
 {% extends 'DodiciFansworldWebBundle:Profile:header_small_base.html.twig' %}
 	
-{% block header_title %}
-	{{ entity }}
-{% endblock %}
 
 {% block header_subtitle %}
     {% if entity.country %}
@@ -34,28 +31,7 @@
 	
 	<div class='span2'>
         <div class='header-fship'>
-		    {% set iship = appstate.idolshipWith(entity) %}
-		    {% if iship is null %}
-		        <div class="addFriend" targetId="{{ entity.id }}">
-		            <button class="btn btn-large btn_friendship add btn-success"> Ser fan </button>
-		            			{#
-									{% if friendgroups|length > 0 %}
-			                            
-			                            <ul class="friendgroupsList">
-			                                {% for friendgroup in friendgroups %}
-			                                    <li id="{{ friendgroup.id }}">
-			                                        <input type="checkbox" id="friendgroup[{{ friendgroup.id }}]" name="friendgroup[{{ friendgroup.id }}]" value="{{ friendgroup.id }}"/>
-			                                        <label for="friendgroup[{{ friendgroup.id }}]">{{ friendgroup.title }}</label>
-			                                    </li>
-			                                {% endfor %}
-			                            </ul>
-			                           
-			                        {% endif %}
-								#}
-		        </div>
-		    {% else %}
-                <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ iship.id }}">Dejar de Seguir</a>
-		    {% endif %}
+            {% include "DodiciFansworldWebBundle:Default:blocks/fan_button.html.twig" with { entity:  entity, buttonSize: 'btn-large', fType: 'idol' } %}
 		</div>
 	</div>
 	

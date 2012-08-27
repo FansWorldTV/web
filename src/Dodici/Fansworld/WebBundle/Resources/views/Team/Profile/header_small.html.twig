@@ -30,28 +30,7 @@
 	
 	<div class='span2'>
         <div class='header-fship'>
-		    {% set tship = appstate.teamshipwith(entity) %}
-		    {% if tship is null %}
-		        <div class="addFriend" targetId="{{ entity.id }}">
-		            <button class="btn btn-large btn_friendship add btn-success">Ser fan</button>
-		            			{#
-									{% if friendgroups|length > 0 %}
-			                            
-			                            <ul class="friendgroupsList">
-			                                {% for friendgroup in friendgroups %}
-			                                    <li id="{{ friendgroup.id }}">
-			                                        <input type="checkbox" id="friendgroup[{{ friendgroup.id }}]" name="friendgroup[{{ friendgroup.id }}]" value="{{ friendgroup.id }}"/>
-			                                        <label for="friendgroup[{{ friendgroup.id }}]">{{ friendgroup.title }}</label>
-			                                    </li>
-			                                {% endfor %}
-			                            </ul>
-			                           
-			                        {% endif %}
-								#}
-		        </div>
-		    {% else %}
-                <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ tship.id }}">Dejar de Seguir</a>
-		    {% endif %}
+            {% include "DodiciFansworldWebBundle:Default:blocks/fan_button.html.twig" with { entity:  entity, buttonSize: 'btn-large', fType: 'team' } %}
 		</div>
 	</div>
 	

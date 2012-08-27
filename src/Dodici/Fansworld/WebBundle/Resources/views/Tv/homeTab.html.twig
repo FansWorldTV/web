@@ -1,7 +1,5 @@
 {% extends "DodiciFansworldWebBundle:Tv:base.html.twig" %}
 
-{% use "DodiciFansworldWebBundle:Layout/Snippet:tv_fullwidth.html.twig"  %}
-
 {% block title %}TV - Home{% endblock %}
 
 
@@ -25,10 +23,13 @@
     </script>
 {% endblock %}
 
-{% block inner_content %}
-    {{ parent() }}
-    {% include "DodiciFansworldWebBundle:Tv:blocks/channels_widget.html.twig"  %}
-    
-    {% include "DodiciFansworldWebBundle:Tv:blocks/ranking_widget.html.twig"  %}
-{% endblock %}
 
+{% block tv_body %}
+    {% embed "DodiciFansworldWebBundle:Layout/Embed:tv_fullwidth.html.twig" %}
+        {% block inner_content %}
+            {% include "DodiciFansworldWebBundle:Tv:blocks/channels_widget.html.twig"  %}
+            
+            {% include "DodiciFansworldWebBundle:Tv:blocks/ranking_widget.html.twig"  %}
+        {% endblock %}
+    {% endembed %}		
+{% endblock %}

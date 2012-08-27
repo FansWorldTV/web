@@ -1,5 +1,4 @@
 {% extends 'DodiciFansworldWebBundle:Profile:header_large_base.html.twig' %}
-
 			
 {% block splash_container %}  
 	{% if highlights is defined and highlights is not null and highlights|length > 0 %}
@@ -10,10 +9,6 @@
         <img src="{{ asset('bundles/dodicifansworldweb/images/profile_cover_no_image.jpg' )}}" />
     {% endif %}
 {% endblock %}
-	         
-{% block header_title %}
-	{{ entity }}
-{% endblock %}
 	            
 {% block header_subtitle %}
     {% if entity.country %}
@@ -22,49 +17,4 @@
     {% if entity.team %}
         {{ entity.team }}
     {% endif %}
-{% endblock %}
-                
-{% block header_fship %}
-    {% set iship = appstate.idolshipWith(entity) %}
-    {% if  iship is null %}
-        <div class="addFriend" targetId="{{ entity.id }}">
-            <button class="btn btn-large btn_friendship add btn-success"> Ser fan </button>
-        				{#
-							{% if friendgroups|length > 0 %}
-	                            
-	                            <ul class="friendgroupsList">
-	                                {% for friendgroup in friendgroups %}
-	                                    <li id="{{ friendgroup.id }}">
-	                                        <input type="checkbox" id="friendgroup[{{ friendgroup.id }}]" name="friendgroup[{{ friendgroup.id }}]" value="{{ friendgroup.id }}"/>
-	                                        <label for="friendgroup[{{ friendgroup.id }}]">{{ friendgroup.title }}</label>
-	                                    </li>
-	                                {% endfor %}
-	                            </ul>
-	                           
-	                        {% endif %}
-						#}
-        </div>
-    {% else %}
-        <div class="addFriend" targetId="{{ entity.id }}">
-            <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ iship.id }}">Dejar de Seguir</a>
-        </div>
-    {% endif %}
-{% endblock %}
-	        
-{% block header_numbersinfo %}
-    <section class='fotos-info'>
-        <div class='numero'>{{ entity.photoCount }}</div>
-        <div class='tipo'>Fotos</div>
-        <div class='separador' />
-    </section>
-    <section class='videos-info'>
-        <div class='numero'>{{ entity.videoCount }}</div>
-        <div class='tipo'>Videos</div>
-        <div class='separador' />
-    </section>
-    <section class='fans-info'>
-        <div class='numero'>{{ entity.fanCount }}</div>
-        <div class='tipo'>Fans</div>
-        <div class='separador' />
-    </section>
 {% endblock %}

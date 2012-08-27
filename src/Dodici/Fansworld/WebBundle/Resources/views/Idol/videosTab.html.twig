@@ -1,7 +1,5 @@
 {% extends "DodiciFansworldWebBundle:Idol:base.html.twig" %}
 
-{% use "DodiciFansworldWebBundle:Layout/Snippet:profile_inner_fullwidth.html.twig"  %}
-
 {% block title %}{{ parent() }} - Mis Videos{% endblock %}
 
 {% block profile_tabs %}
@@ -9,18 +7,23 @@
 	{{ parent() }}
 {% endblock %}
 
-{% block inner_content %}
-<div data-list="video" data-entity-type="idol" data-entity-id="{{idol.id}}">
-    <div class="row-fluid update clearfix"> 
-        <span class="pull-left">
-            {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %}
-        </span>
-        <span class="pull-right">
-            {% include 'DodiciFansworldWebBundle:Default:blocks/button_upload.html.twig'  with { 'type': 'video' }%}    
-        </span>
-    </div>
-    
-    
-    {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with {'entityId': idol.id, 'entityType': 'idol'} %}
-</div>
-{% endblock %} 
+
+{% block profile_body %}
+    {% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_fullwidth.html.twig" %}
+        {% block inner_content %}
+        <div data-list="video" data-entity-type="idol" data-entity-id="{{idol.id}}">
+            <div class="row-fluid update clearfix"> 
+                <span class="pull-left">
+                    {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %}
+                </span>
+                <span class="pull-right">
+                    {% include 'DodiciFansworldWebBundle:Default:blocks/button_upload.html.twig'  with { 'type': 'video' }%}    
+                </span>
+            </div>
+            
+            
+            {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with {'entityId': idol.id, 'entityType': 'idol'} %}
+        </div>
+        {% endblock %} 
+    {% endembed %}		
+{% endblock %}

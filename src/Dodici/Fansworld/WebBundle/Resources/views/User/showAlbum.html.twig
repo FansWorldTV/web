@@ -1,7 +1,5 @@
 {% extends "DodiciFansworldWebBundle:User:base.html.twig" %}
 
-{% use "DodiciFansworldWebBundle:Layout/Snippet:profile_inner_fullwidth.html.twig"  %}
-
 {% block title %}{{ parent() }} - {{ album.title }}{% endblock %}
 
 {% block javascripts %}
@@ -14,20 +12,25 @@
 	{{ parent() }}
 {% endblock %}
 
-{% block inner_content %}
-{{ parent() }}
-<div class="pull-right">
-    {% include 'DodiciFansworldWebBundle:Default:blocks/button_upload.html.twig'  with { 'type': 'photo' }%}
-</div>
-    
-{% include 'DodiciFansworldWebBundle:Photo:blocks/album_montage.html.twig'  %}
 
-{% include 'DodiciFansworldWebBundle:Comment:blocks/box.html.twig' with {entity: album} %}
-    
-<script type="text/javascript">
-    site.startMosaic($('.am-container'), {margin : 0});
-    $(document).ready(function(){
-        albums.init();
-    });
-</script>
+{% block profile_body %}
+    {% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_fullwidth.html.twig" %}
+        {% block inner_content %}
+        <div class="pull-right">
+            {% include 'DodiciFansworldWebBundle:Default:blocks/button_upload.html.twig'  with { 'type': 'photo' }%}
+        </div>
+            
+        {% include 'DodiciFansworldWebBundle:Photo:blocks/album_montage.html.twig'  %}
+        
+        {% include 'DodiciFansworldWebBundle:Comment:blocks/box.html.twig' with {entity: album} %}
+            
+        <script type="text/javascript">
+            site.startMosaic($('.am-container'), {margin : 0});
+            $(document).ready(function(){
+                albums.init();
+            });
+        </script>
+        {% endblock %}
+    {% endembed %}		
 {% endblock %}
+    

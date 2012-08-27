@@ -1,13 +1,10 @@
 {% extends "DodiciFansworldWebBundle:User:base.html.twig" %}
 
-{% use "DodiciFansworldWebBundle:Layout/Snippet:profile_inner_fullwidth.html.twig"  %}
-
 {% block title %}{{ parent() }} - {{ 'Photos'|trans }}{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/dodicifansworldweb/js/albums.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/dodicifansworldweb/js/jquery/jquery.montage.min.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block profile_tabs %}
@@ -16,32 +13,35 @@
 {% endblock %}
 
 
-{% block inner_content %}
-    {{ parent() }}
-    
-    <div class="pull-right">
-        {% include 'DodiciFansworldWebBundle:Default:blocks/button_upload.html.twig'  with { 'type': 'photo' }%}    
-    </div>
-    
-    {% include 'DodiciFansworldWebBundle:Photo:blocks/albums_montage.html.twig'  %}
-    
-    {% include 'DodiciFansworldWebBundle:Photo:blocks/montage.html.twig'  %}
-    
-    
-    <input type="hidden" value="{{user.id}}" id="userid"/>
-    <div id="templates" class="hidden">
-        <a href="" >
-            <span class="title">
-                <br/>
-                <span class="photos-quant"></span>
-            </span>
-        </a>
-    </div>
-    <script type="text/javascript">
-        site.startMosaic($('.am-container'), {
-            minsize: false,
-            liquid: true,
-            margin : 0
-        });
-    </script>
+{% block profile_body %}
+    {% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_fullwidth.html.twig" %}
+        {% block inner_content %}
+            
+            <div class="pull-right">
+                {% include 'DodiciFansworldWebBundle:Default:blocks/button_upload.html.twig'  with { 'type': 'photo' }%}    
+            </div>
+            
+            {% include 'DodiciFansworldWebBundle:Photo:blocks/albums_montage.html.twig'  %}
+            
+            {% include 'DodiciFansworldWebBundle:Photo:blocks/montage.html.twig'  %}
+            
+            
+            <input type="hidden" value="{{user.id}}" id="userid"/>
+            <div id="templates" class="hidden">
+                <a href="" >
+                    <span class="title">
+                        <br/>
+                        <span class="photos-quant"></span>
+                    </span>
+                </a>
+            </div>
+            <script type="text/javascript">
+                site.startMosaic($('.am-container'), {
+                    minsize: false,
+                    liquid: true,
+                    margin : 0
+                });
+            </script>
+        {% endblock %}
+    {% endembed %}		
 {% endblock %}

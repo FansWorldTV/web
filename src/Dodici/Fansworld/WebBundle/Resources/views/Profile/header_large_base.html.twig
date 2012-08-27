@@ -23,7 +23,7 @@
 	        <div class='span9 user-info'>
 	            <h1>
 					{% block header_title %}
-        	                {{ entity }}
+    	                {{ entity }}
     	            {% endblock %}
 	            </h1>
 	            
@@ -35,14 +35,28 @@
                 
                 <div class='header-fship'>
     	            {% block header_fship %}
-    	                
+    	                {% include "DodiciFansworldWebBundle:Default:blocks/fan_button.html.twig" with { entity:  entity, buttonSize: 'btn-large', fType: appstate.type(entity) } %}
     	            {% endblock %}
 	            </div>
 	            
 	        </div>
 	        <div class='span3 numbers-info'>
 	        	{% block header_numbersinfo %}
-    	            
+    	            <section class='fotos-info'>
+                        <div class='numero'>{{ entity.photoCount }}</div>
+                        <div class='tipo'>Fotos</div>
+                        <div class='separador' />
+                    </section>
+                    <section class='videos-info'>
+                        <div class='numero'>{{ entity.videoCount }}</div>
+                        <div class='tipo'>Videos</div>
+                        <div class='separador' />
+                    </section>
+                    <section class='fans-info'>
+                        <div class='numero'>{{ entity.fanCount }}</div>
+                        <div class='tipo'>Fans</div>
+                        <div class='separador' />
+                    </section>
 	            {% endblock %}
 	        </div>
 	    </div>

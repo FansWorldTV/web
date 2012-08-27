@@ -1,7 +1,5 @@
 {% extends "DodiciFansworldWebBundle:User:base.html.twig" %}
 
-{% use "DodiciFansworldWebBundle:Layout/Snippet:profile_inner_fullwidth.html.twig"  %}
-
 {% block title %}{{ parent() }} - {{ 'Idols'|trans }}{% endblock %}
 
 
@@ -11,43 +9,46 @@
 {% endblock %}
 
 
-{% block inner_content %}
-    {{ parent() }}
-    {% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { avatars: idolships } %}
-
-    <div id="templates" class="hidden">
-        <li>
-            <img src="{{ asset('bundles/dodicifansworldweb/images/profile_no_image.png' )}}" />
-            <button class="btn btn-mini btn-success">SER FAN</button>
-            <span class="fan-quantity">2233</span>    
-            <span class="idol-name">idol</span>
-        </li>
-    </div>
-
-    <script type="text/javascript">
-        $(document).ready(function(){
-            var addMore = {% if addMore%} true {% else %} false {% endif %};
-
-            $(window).endlessScroll({
-                fireOnce: true,
-                loader: '<div class="loading">CARGANDO ;)<div>',
-                callback: function(p){
-                    if(addMore){
-                        ajax.genericAction('user_ajaxidols', {'page': p}, function(r){
-                            console.log(r);
-                            addMore = r.addMore;
-                            for(var i in r.idolship){
-                                var idol = r.idolship[i];
-                                var template = $("#templates li").clone();
-                                if(idol.avatar){
-                                    $(template).find('img').attr('src', idol.avatar);
-                                }
-                                $(template).find('.idol-name').html(idol.name);
+{% block profile_body %}
+    {% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_fullwidth.html.twig" %}
+        {% block inner_content %}
+            {% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { avatars: idolships } %}
+        
+            <div id="templates" class="hidden">
+                <li>
+                    <img src="{{ asset('bundles/dodicifansworldweb/images/profile_no_image.png' )}}" />
+                    <button class="btn btn-mini btn-success">SER FAN</button>
+                    <span class="fan-quantity">2233</span>    
+                    <span class="idol-name">idol</span>
+                </li>
+            </div>
+        
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    var addMore = {% if addMore%} true {% else %} false {% endif %};
+        
+                    $(window).endlessScroll({
+                        fireOnce: true,
+                        loader: '<div class="loading">CARGANDO ;)<div>',
+                        callback: function(p){
+                            if(addMore){
+                                ajax.genericAction('user_ajaxidols', {'page': p}, function(r){
+                                    console.log(r);
+                                    addMore = r.addMore;
+                                    for(var i in r.idolship){
+                                        var idol = r.idolship[i];
+                                        var template = $("#templates li").clone();
+                                        if(idol.avatar){
+                                            $(template).find('img').attr('src', idol.avatar);
+                                        }
+                                        $(template).find('.idol-name').html(idol.name);
+                                    }
+                                });
                             }
-                        });
-                    }
-                }
-            });
-        });
-    </script>
+                        }
+                    });
+                });
+            </script>
+        {% endblock %}
+    {% endembed %}		
 {% endblock %}

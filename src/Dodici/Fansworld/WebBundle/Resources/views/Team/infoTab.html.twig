@@ -1,7 +1,5 @@
 {% extends "DodiciFansworldWebBundle:Team:base.html.twig" %}
 
-{% use "DodiciFansworldWebBundle:Layout/Snippet:profile_inner_rlsidebar.html.twig"  %}
-
 {% block title %}{{ parent() }} - Datos{% endblock %}
 
 {% block profile_tabs %}
@@ -9,18 +7,21 @@
 	{{ parent() }}
 {% endblock %}
 
-{% block inner_left_sidebar %}
-    {{ parent() }}
-    {% include "DodiciFansworldWebBundle:Default:blocks/info_list.html.twig" with { entity:team, personalData: teamData,  list_title: 'Datos:' } %}
-{% endblock %}
 
-{% block inner_content %}
-    {{ parent() }}
-        {% if team.content %}
-            {% include "DodiciFansworldWebBundle:Default:blocks/text_box.html.twig" with { box_title: 'Sobre mi:', box_content: team.content, box_class: 'entity-content' } %}
-        {% endif %}
-{% endblock %}
-
-{% block inner_right_sidebar %}
-    TODO
+{% block profile_body %}
+    {% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_rlsidebar.html.twig" %}
+        {% block inner_left_sidebar %}
+            {% include "DodiciFansworldWebBundle:Default:blocks/info_list.html.twig" with { entity:team, personalData: teamData,  list_title: 'Datos:' } %}
+        {% endblock %}
+        
+        {% block inner_content %}
+                {% if team.content %}
+                    {% include "DodiciFansworldWebBundle:Default:blocks/text_box.html.twig" with { box_title: 'Sobre mi:', box_content: team.content, box_class: 'entity-content' } %}
+                {% endif %}
+        {% endblock %}
+        
+        {% block inner_right_sidebar %}
+            TODO
+        {% endblock %}
+    {% endembed %}		
 {% endblock %}

@@ -1,7 +1,5 @@
 {% extends "DodiciFansworldWebBundle:Tv:base.html.twig" %}
 
-{% use "DodiciFansworldWebBundle:Layout/Snippet:tv_fullwidth.html.twig"  %}
-
 {% block title %}TV - Search Results{% endblock %}
 
 
@@ -22,11 +20,14 @@
     </script>
 {% endblock %}
 
-{% block inner_content %}
-    {{ parent() }}
-    
-    {% include "DodiciFansworldWebBundle:Tv:blocks/breadcrumb.html.twig"  with { type: 'tag', term: term} %}
-    
-    {% include "DodiciFansworldWebBundle:Video:blocks/montage.html.twig"  with { videos: videos } %}
-{% endblock %}
 
+{% block tv_body %}
+    {% embed "DodiciFansworldWebBundle:Layout/Embed:tv_fullwidth.html.twig" %}
+        {% block inner_content %}
+            
+            {% include "DodiciFansworldWebBundle:Tv:blocks/breadcrumb.html.twig"  with { type: 'tag', term: term} %}
+            
+            {% include "DodiciFansworldWebBundle:Video:blocks/montage.html.twig"  with { videos: videos } %}
+        {% endblock %}
+    {% endembed %}		
+{% endblock %}

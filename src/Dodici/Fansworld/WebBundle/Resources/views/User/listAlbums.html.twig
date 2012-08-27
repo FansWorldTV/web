@@ -1,69 +1,67 @@
 {% extends "DodiciFansworldWebBundle:User:base.html.twig" %}
 
-{% use "DodiciFansworldWebBundle:Layout/Snippet:profile_inner_fullwidth.html.twig"  %}
-
-{% block title %}{{ parent() }} - Álbumes{% endblock %}
+{% block title %}{{ parent() }} - {{ 'Albumes'|trans }}{% endblock %}
 
 {% block profile_tabs %}
 	{% set active_tab = 'photos' %}
 	{{ parent() }}
 {% endblock %}
 
-{% block profile_head %}
-	{{ parent() }}
-{% endblock %}
-
-{% block inner_content %}
-    {{ parent() }}
-    <div class="pull-right">
-        {% include 'DodiciFansworldWebBundle:Default:blocks/button_upload.html.twig'  with { 'type': 'photo' }%}
-    </div>
-    
-    <div class="row-fluid">
-        <h3>Albums ( {{ albums|length }} )</h3>
-        <div class="am-container albums">
-            {% for album in albums %}
-                    <a href="{{ path('album_show', { 'id': album.id, 'slug': album.slug } ) }}" >
-                        <span class="title">
-                            {{ album.title }}
-                            <br/>
-                            <span class="photos-quant">{{ album.photos|length }} fotos</span>
-                        </span>
-                        {% thumbnail album.image, 'medium' with {title: ''} %}
-                    </a>
-            {% endfor %}
-        </div>
-        {% if viewMoreAlbums %}
-            <div class="clearfix"></div>
-            <button class="loadmore albums">ver más</button>
-        {% endif %}
-    </div>
-    <div class="row-fluid">
-        <h3>Otras fotos ( {{ photos|length }} )</h3>
-        <div class="am-container photos">
-            {% for photo in photos %}
-                <a href="{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}">{% thumbnail photo.image, 'small' with {title: photo.title} %}</a>
-            {% endfor %}
-        </div>
-        {% if viewMorePhotos %}
-            <div class="clearfix"></div>
-            <a class="loadmore" href="{{ path('user_listphotos', {username: user.username}) }}">ver todas las imágenes</a>
-        {% endif %}
-    </div>
-    <input type="hidden" value="{{user.id}}" id="userid"/>
-    <div id="templates" class="hidden">
-        <a href="" >
-            <span class="title">
-                <br/>
-                <span class="photos-quant"></span>
-            </span>
-        </a>
-    </div>
-    <script type="text/javascript">
-        site.startMosaic($('.am-container'), {
-            minsize: false,
-            liquid: true,
-            margin : 0
-        });
-    </script>
+{% block profile_body %}
+    {% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_fullwidth.html.twig" %}
+        {% block inner_content %}
+            
+            <div class="pull-right">
+                {% include 'DodiciFansworldWebBundle:Default:blocks/button_upload.html.twig'  with { 'type': 'photo' }%}
+            </div>
+            
+            <div class="row-fluid">
+                <h3>Albums ( {{ albums|length }} )</h3>
+                <div class="am-container albums">
+                    {% for album in albums %}
+                            <a href="{{ path('album_show', { 'id': album.id, 'slug': album.slug } ) }}" >
+                                <span class="title">
+                                    {{ album.title }}
+                                    <br/>
+                                    <span class="photos-quant">{{ album.photos|length }} fotos</span>
+                                </span>
+                                {% thumbnail album.image, 'medium' with {title: ''} %}
+                            </a>
+                    {% endfor %}
+                </div>
+                {% if viewMoreAlbums %}
+                    <div class="clearfix"></div>
+                    <button class="loadmore albums">ver más</button>
+                {% endif %}
+            </div>
+            <div class="row-fluid">
+                <h3>Otras fotos ( {{ photos|length }} )</h3>
+                <div class="am-container photos">
+                    {% for photo in photos %}
+                        <a href="{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}">{% thumbnail photo.image, 'small' with {title: photo.title} %}</a>
+                    {% endfor %}
+                </div>
+                {% if viewMorePhotos %}
+                    <div class="clearfix"></div>
+                    <a class="loadmore" href="{{ path('user_listphotos', {username: user.username}) }}">ver todas las imágenes</a>
+                {% endif %}
+            </div>
+            <input type="hidden" value="{{user.id}}" id="userid"/>
+            <div id="templates" class="hidden">
+                <a href="" >
+                    <span class="title">
+                        <br/>
+                        <span class="photos-quant"></span>
+                    </span>
+                </a>
+            </div>
+            <script type="text/javascript">
+                site.startMosaic($('.am-container'), {
+                    minsize: false,
+                    liquid: true,
+                    margin : 0
+                });
+            </script>
+        {% endblock %}
+    {% endembed %}		
 {% endblock %}

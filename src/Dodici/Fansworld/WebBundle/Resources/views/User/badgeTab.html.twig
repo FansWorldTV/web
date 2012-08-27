@@ -1,7 +1,5 @@
 {% extends "DodiciFansworldWebBundle:User:base.html.twig" %}
 
-{% use "DodiciFansworldWebBundle:Layout/Snippet:profile_inner_rsidebar.html.twig"  %}
-
 {% block title %}{{ parent() }} - {{ 'Badges'|trans }}{% endblock %}
 
 
@@ -10,17 +8,20 @@
 	{{ parent() }}
 {% endblock %}
 
-{% block inner_content %}
-	{{ parent() }}
-    {% include "DodiciFansworldWebBundle:Badge:blocks/list.html.twig" %}
-{% endblock %}
-{% block inner_sidebar %}
-	{{ parent() }}
-	<section class='badges-sidebar'>
-		<h3>Que son y como conseguirlos?</h3>
-		<p>
-			In id ligula sit amet nulla feugiat egestas. Aliquam erat volutpat. Praesent at metus ac massa consequat rutrum. Sed at enim justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer euismod, augue ac congue gravida, odio odio feugiat erat, quis commodo diam ligula ut diam. Proin at rhonc
-		</p>
-	</section>
-	
+
+{% block profile_body %}
+    {% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_rsidebar.html.twig" %}
+        {% block inner_content %}
+            {% include "DodiciFansworldWebBundle:Badge:blocks/list.html.twig" %}
+        {% endblock %}
+        {% block inner_sidebar %}
+        	<section class='badges-sidebar'>
+        		<h3>Que son y como conseguirlos?</h3>
+        		<p>
+        			In id ligula sit amet nulla feugiat egestas. Aliquam erat volutpat. Praesent at metus ac massa consequat rutrum. Sed at enim justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer euismod, augue ac congue gravida, odio odio feugiat erat, quis commodo diam ligula ut diam. Proin at rhonc
+        		</p>
+        	</section>
+        	
+        {% endblock %}
+    {% endembed %}		
 {% endblock %}

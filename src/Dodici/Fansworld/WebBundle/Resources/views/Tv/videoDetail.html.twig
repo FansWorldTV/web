@@ -1,33 +1,33 @@
 {% extends "DodiciFansworldWebBundle:Tv:base.html.twig" %}
 
-{% use "DodiciFansworldWebBundle:Layout/Snippet:tv_videodetail.html.twig"  %}
-
 {% block title %}{{ parent() }} - Video detail{% endblock %}
 
 
-{% block breadcrumb %}
-    {{ parent() }}
-    <span class="nav-bar tv">TV {% if video.videocategory %}| <a href="">{{ video.videocategory.title }}</a>{% endif %}</span>
-{% endblock %}
 
-{% block top_left_content %}
-    {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video} %}
-    <iframe class="videoframe" src="{{ flumotiontwig.videoplayerurl(video) }}"></iframe>
-{% endblock %}
-
-{% block top_right_content %}
-    {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %}
-    
-    {% include 'DodiciFansworldWebBundle:Video:blocks/grid.html.twig' with {videos: videosRelated, sectionId:'videos-related-sort',dataGridRelatedId: video.id} %}
-{% endblock %}
-
-{% block bottom_left_content %}
-    {{ parent() }}
-    {% include 'DodiciFansworldWebBundle:Tv:blocks/now-watching.html.twig' with {entity: video} %}
-    {% include 'DodiciFansworldWebBundle:Comment:blocks/box.html.twig' with {entity: video} %}
-{% endblock %}
-    
-{% block bottom_right_content %}
-    {{ parent() }}
-    {% include 'DodiciFansworldWebBundle:Video:blocks/grid.html.twig' with {videos: videosRecommended, sectionId:'videos-related'} %}
+{% block tv_body %}
+    {% embed "DodiciFansworldWebBundle:Layout/Embed:tv_videodetail.html.twig" %}
+        {% block breadcrumb %}
+            <span class="nav-bar tv">TV {% if video.videocategory %}| <a href="">{{ video.videocategory.title }}</a>{% endif %}</span>
+        {% endblock %}
+        
+        {% block top_left_content %}
+            {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video} %}
+            <iframe class="videoframe" src="{{ flumotiontwig.videoplayerurl(video) }}"></iframe>
+        {% endblock %}
+        
+        {% block top_right_content %}
+            {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %}
+            
+            {% include 'DodiciFansworldWebBundle:Video:blocks/grid.html.twig' with {videos: videosRelated, sectionId:'videos-related-sort',dataGridRelatedId: video.id} %}
+        {% endblock %}
+        
+        {% block bottom_left_content %}
+            {% include 'DodiciFansworldWebBundle:Tv:blocks/now-watching.html.twig' with {entity: video} %}
+            {% include 'DodiciFansworldWebBundle:Comment:blocks/box.html.twig' with {entity: video} %}
+        {% endblock %}
+            
+        {% block bottom_right_content %}
+            {% include 'DodiciFansworldWebBundle:Video:blocks/grid.html.twig' with {videos: videosRecommended, sectionId:'videos-related'} %}
+        {% endblock %}
+    {% endembed %}		
 {% endblock %}

@@ -1,5 +1,4 @@
 {% extends 'DodiciFansworldWebBundle:Profile:header_large_base.html.twig' %}
-
 			
 {% block splash_container %}  
 	{% if highlights is defined and highlights is not null %}
@@ -19,35 +18,4 @@
     {% if entity.country %}
         {{ entity.country }}
     {% endif %}
-{% endblock %}
-                
-{% block header_fship %}
-    {% set tship = appstate.teamshipwith(entity) %}
-    {% if  tship is null %}
-        <div class="addFriend" targetId="{{ entity.id }}">
-            <button class="btn btn-large btn_friendship add btn-success"> Ser fan </button>
-        </div>
-    {% else %}
-        <div class="addFriend" targetId="{{ entity.id }}">
-            <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ tship.id }}">Dejar de Seguir</a>
-        </div>
-    {% endif %}
-{% endblock %}
-	        
-{% block header_numbersinfo %}
-    <section class='fotos-info'>
-        <div class='numero'>{{ entity.photoCount }}</div>
-        <div class='tipo'>Fotos</div>
-        <div class='separador' />
-    </section>
-    <section class='videos-info'>
-        <div class='numero'>{{ entity.videoCount }}</div>
-        <div class='tipo'>Videos</div>
-        <div class='separador' />
-    </section>
-    <section class='fans-info'>
-        <div class='numero'>{{ entity.fanCount }}</div>
-        <div class='tipo'>Fans</div>
-        <div class='separador' />
-    </section>
 {% endblock %}

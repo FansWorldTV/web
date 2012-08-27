@@ -1,9 +1,5 @@
 {% extends 'DodiciFansworldWebBundle:Profile:header_small_base.html.twig' %}
 	
-{% block header_title %}
-	{{ entity }}
-{% endblock %}
-
 {% block header_subtitle %}
     {% if entity.level %}
         {{ entity.level.title }}
@@ -53,34 +49,7 @@
 		
 		<div class='span2'>
             <div class='header-fship'>
-			    {% set fship = appstate.friendshipwith(entity) %}
-			    {% if appstate.canfriend(entity) and fship is null %}
-			        <div class="addFriend" targetId="{{ entity.id }}">
-			            <button class="btn btn-large btn_friendship add btn-success"> Ser fan{% if entity.restricted %} (solicitar){% endif %}</button>
-			            			{#
-										{% if friendgroups|length > 0 %}
-				                            
-				                            <ul class="friendgroupsList">
-				                                {% for friendgroup in friendgroups %}
-				                                    <li id="{{ friendgroup.id }}">
-				                                        <input type="checkbox" id="friendgroup[{{ friendgroup.id }}]" name="friendgroup[{{ friendgroup.id }}]" value="{{ friendgroup.id }}"/>
-				                                        <label for="friendgroup[{{ friendgroup.id }}]">{{ friendgroup.title }}</label>
-				                                    </li>
-				                                {% endfor %}
-				                            </ul>
-				                           
-				                        {% endif %}
-									#}
-			        </div>
-			    {% else %}
-			        {% if fship %}
-			            {% if fship.active %}
-			                <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Dejar de Seguir</a>
-			            {% else %}
-			                <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Cancelar Solicitud</a>
-			            {% endif %}
-			        {% endif %}
-			    {% endif %}
+                {% include "DodiciFansworldWebBundle:Default:blocks/fan_button.html.twig" with { entity:  entity, buttonSize: 'btn-large', fType: 'user' } %}
 			</div>
 		</div>
 		

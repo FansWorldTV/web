@@ -1,7 +1,5 @@
 {% extends "DodiciFansworldWebBundle:Idol:base.html.twig" %}
 
-{% use "DodiciFansworldWebBundle:Layout/Snippet:profile_inner_rlsidebar.html.twig"  %}
-
 {% block title %}{{ parent() }} -  {{ 'Biography'|trans() }}{% endblock %}
 
 {% block profile_tabs %}
@@ -9,18 +7,21 @@
 	{{ parent() }}
 {% endblock %}
 
-{% block inner_left_sidebar %}
-    {{ parent() }}
-    {% include "DodiciFansworldWebBundle:Default:blocks/info_list.html.twig" with { entity:idol, personalData: personalData,  list_title: 'Datos Personales:' } %}
-{% endblock %}
 
-{% block inner_content %}
-    {{ parent() }}
-        {% if idol.content %}
-            {% include "DodiciFansworldWebBundle:Default:blocks/text_box.html.twig" with { box_title: 'Sobre mi:', box_content: idol.content, box_class: 'entity-content' } %}
-        {% endif %}
-{% endblock %}
-
-{% block inner_right_sidebar %}
-    TODO
+{% block profile_body %}
+    {% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_rlsidebar.html.twig" %}
+        {% block inner_left_sidebar %}
+            {% include "DodiciFansworldWebBundle:Default:blocks/info_list.html.twig" with { entity:idol, personalData: personalData,  list_title: 'Datos Personales:' } %}
+        {% endblock %}
+        
+        {% block inner_content %}
+                {% if idol.content %}
+                    {% include "DodiciFansworldWebBundle:Default:blocks/text_box.html.twig" with { box_title: 'Sobre mi:', box_content: idol.content, box_class: 'entity-content' } %}
+                {% endif %}
+        {% endblock %}
+        
+        {% block inner_right_sidebar %}
+            TODO
+        {% endblock %}
+    {% endembed %}		
 {% endblock %}

@@ -1,7 +1,5 @@
 {% extends "DodiciFansworldWebBundle:Idol:base.html.twig" %}
 
-{% use "DodiciFansworldWebBundle:Layout/Snippet:profile_inner_fullwidth.html.twig"  %}
-
 {% block title %}{{ parent() }} - {{ 'Photos'|trans }}{% endblock %}
 
 {% block profile_tabs %}
@@ -9,24 +7,29 @@
 	{{ parent() }}
 {% endblock %}
 
-{% block inner_content %}
-	{{ parent() }}
-    <div class="row-fluid">
-        <div class="am-container photos">
-            {% for photo in photos %}
-                <a href="{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}">{% thumbnail photo.image, 'small' with {title: photo.title} %}</a>
-            {% endfor %}
-        </div>
-        {% if gotMore %}
-            <a class="loadmore pictures" href="#1">ver más</a> 
-        {% endif %}
-    </div>
-    
-    <script type="text/javascript">
-        site.startMosaic($('.am-container'), {
-            minsize: false,
-            liquid: true,
-            margin : 0
-        });
-    </script>
+
+{% block profile_body %}
+    {% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_fullwidth.html.twig" %}
+        {% block inner_content %}
+        	
+            <div class="row-fluid">
+                <div class="am-container photos">
+                    {% for photo in photos %}
+                        <a href="{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}">{% thumbnail photo.image, 'small' with {title: photo.title} %}</a>
+                    {% endfor %}
+                </div>
+                {% if gotMore %}
+                    <a class="loadmore pictures" href="#1">ver más</a> 
+                {% endif %}
+            </div>
+            
+            <script type="text/javascript">
+                site.startMosaic($('.am-container'), {
+                    minsize: false,
+                    liquid: true,
+                    margin : 0
+                });
+            </script>
+        {% endblock %}
+    {% endembed %}		
 {% endblock %}

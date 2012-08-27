@@ -1,0 +1,39 @@
+{% if fType is not defined %}
+    {% set fType = appstate.type(entity) %}
+{% endif %}
+
+{% if buttonSize is not defined %}
+    {% set buttonSize = '' %}
+{% endif %}
+
+{% set solicitar = '' %}
+{% set canFriend = true %}
+
+{% if fType == 'user' %}
+    {% set fship     = appstate.friendshipwith(entity) %}
+    {% if selfWall != true %}
+        {% set canFriend = appstate.canfriend(entity) %}
+    {% endif %}
+    
+    {% if entity.restricted %} 
+        {% set solicitar =  '(solicitar)' %}
+    {% endif %}
+{% elseif fType == 'idol' %}
+    {% set fship     = appstate.idolshipWith(entity) %}
+{% elseif fType == 'team' %}
+    {% set fship     = appstate.teamshipwith(entity) %}
+{% endif %}
+
+
+{% if fship is defined %}
+    {% if canFriend and ((fship is null) or (fship == false)) %}
+        
+        <div class="addFriend" targetId="{{ entity.id }}">
+            <button class="btn {{ buttonSize }} btn_friendship add btn-success"> Ser fan {{ solicitar }}</button>
+        </div>
+    {% elseif (fship) %}
+        <div class="addFriend" ">
+            <button class="btn {{ buttonSize }} btn_friendship add btn-success"> ya sos fan</button>
+        </div>
+    {% endif %}
+{% endif %}

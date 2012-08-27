@@ -7,48 +7,9 @@
         <img src="{{ asset('bundles/dodicifansworldweb/images/profile_cover_no_image.jpg' )}}" />
     {% endif %}
 {% endblock %}
-	         
-{% block header_title %}
-	{{ entity }}
-{% endblock %}
 	            
 {% block header_subtitle %}
     {% if entity.level %}
         {{ entity.level.title }}
     {% endif %}
-{% endblock %}
-                
-{% block header_fship %}
-    {% set fship = appstate.friendshipwith(entity) %}
-    {% if appstate.canfriend(entity) and fship is null %}
-        <div class="addFriend" targetId="{{ user.id }}">
-            <button class="btn btn-large btn_friendship add btn-success"> Ser fan{% if entity.restricted %} (solicitar){% endif %}</button>
-        </div>
-    {% else %}
-        {% if fship %}
-            {% if fship.active %}
-                <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Dejar de Seguir</a>
-            {% else %}
-                <a class="btn btn_friendship remove" alt="Cancelar" href="#" friendshipId="{{ fship.id }}">Cancelar Solicitud</a>
-            {% endif %}
-        {% endif %}
-    {% endif %}
-{% endblock %}
-	        
-{% block header_numbersinfo %}
-    <section class='fotos-info'>
-        <div class='numero'>{{ entity.photoCount }}</div>
-        <div class='tipo'>Fotos</div>
-        <div class='separador' />
-    </section>
-    <section class='videos-info'>
-        <div class='numero'>{{ entity.videoCount }}</div>
-        <div class='tipo'>Videos</div>
-        <div class='separador' />
-    </section>
-    <section class='fans-info'>
-        <div class='numero'>{{ entity.fanCount }}</div>
-        <div class='tipo'>Fans</div>
-        <div class='separador' />
-    </section>
 {% endblock %}
