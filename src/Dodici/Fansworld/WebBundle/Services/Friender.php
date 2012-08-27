@@ -2,16 +2,12 @@
 
 namespace Dodici\Fansworld\WebBundle\Services;
 
+use Symfony\Component\Security\Core\SecurityContext;
 use Dodici\Fansworld\WebBundle\Listener\ScoreHandler;
-
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
-
 use Dodici\Fansworld\WebBundle\Entity\Comment;
-
 use Dodici\Fansworld\WebBundle\Entity\Notification;
-
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
 use Dodici\Fansworld\WebBundle\Entity\Friendship;
 use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\EntityManager;

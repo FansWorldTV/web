@@ -45,21 +45,14 @@ class Sharer
             else $targets[] = $author;
         }
         
-        $userstomessage = array();
-        
         foreach ($targets as $target) {
             if ($target) {
-                if (($target instanceof User) && ($target != $author)) {
-                    $userstomessage[] = $target;
-                } else {
+                if (!($target instanceof User) || (($target instanceof User) && ($target != $author))) {
                     $this->shareToWall($sharedthing, $content, $target, $author);
                 }
             }
         }
         
-        if ($userstomessage) {
-            $this->messenger->sendMessage($userstomessage, $content, $sharedthing, $author);
-        }
     }
     
     

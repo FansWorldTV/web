@@ -560,6 +560,9 @@ services:
     friender:
       class: Dodici\Fansworld\WebBundle\Services\Friender
       arguments: [@security.context, @doctrine.orm.entity_manager, @appstate]
+    fanmaker:
+      class: Dodici\Fansworld\WebBundle\Services\Fanmaker
+      arguments: [@security.context, @doctrine.orm.entity_manager]
     subscriptions:
       class: Dodici\Fansworld\WebBundle\Services\Subscriptions
       arguments: [@security.context, @doctrine.orm.entity_manager]
@@ -605,6 +608,11 @@ services:
     twig.extension.preferences:
       class: Dodici\Fansworld\WebBundle\Extensions\PreferencesExtension
       arguments: [@preferences]
+      tags:
+          - { name: twig.extension }
+    twig.extension.fanmaker:
+      class: Dodici\Fansworld\WebBundle\Extensions\FanmakerExtension
+      arguments: [@fanmaker]
       tags:
           - { name: twig.extension }
     twig.extension.text:
