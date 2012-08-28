@@ -18,10 +18,8 @@
     {% if entity.restricted %} 
         {% set solicitar =  '(solicitar)' %}
     {% endif %}
-{% elseif fType == 'idol' %}
-    {% set fship     = appstate.idolshipWith(entity) %}
-{% elseif fType == 'team' %}
-    {% set fship     = appstate.teamshipwith(entity) %}
+{% else %}
+    {% set fship     = fanmaker.isFan(entity) %}
 {% endif %}
 
 
@@ -33,7 +31,7 @@
         </div>
     {% elseif (fship) %}
         <div class="addFriend" ">
-            <button class="btn {{ buttonSize }} btn_friendship add btn-success"> ya sos fan</button>
+            <button class="btn {{ buttonSize }} btn_friendship btn-success"> ya sos fan</button>
         </div>
     {% endif %}
 {% endif %}

@@ -33,7 +33,7 @@
                 {% endif %}
                 <li>
                     <div class='{{ avatars.containerClass }}'>
-                        <a href="{{ pathUrl }}">
+                        
                             <div class="avatar">
                                         {% if avatar.image %}
                                     {% thumbnail avatar.image, 'big_square' %}
@@ -41,16 +41,11 @@
                                     <img src="{{ asset('bundles/dodicifansworldweb/images/profile_no_image.png' )}}" />
                                 {% endif %}
                                 </div>
-                                <span class="name">{{ avatar}}</span>
+                                <span class="name"><a href="{{ pathUrl }}">{{ avatar}}</a></span>
                                 <span class="friendCount">{% if fanCount is defined %}{{ fanCount }}{% endif %}</span>
 
                             {% include "DodiciFansworldWebBundle:Default:blocks/fan_button.html.twig" with { entity:  avatar } %}
-                            {#
-                            <div class="addFriend" targetId="{{ avatar.id }}">
-                                <button class="btn btn_friendship add btn-success"> Ser fan</button>
-                                </div>
-                                #}
-                            </a>
+                            
                         </div>
                     </li>
             {% endfor %}
