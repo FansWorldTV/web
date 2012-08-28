@@ -144,6 +144,13 @@ class Idol implements SearchableInterface, VisitableInterface
      * @ORM\Column(name="external", type="string", length=100, nullable=true)
      */
     private $external;
+    
+    /**
+     * @var string $jobname
+     *
+     * @ORM\Column(name="jobname", type="string", length=250, nullable=true)
+     */
+    private $jobname;
         
     /**
      * @ORM\OneToMany(targetEntity="IdolCareer", mappedBy="idol", cascade={"remove", "persist"}, orphanRemoval="true")
@@ -739,5 +746,25 @@ class Idol implements SearchableInterface, VisitableInterface
     public function getIdolships()
     {
         return $this->idolships;
+    }
+
+    /**
+     * Set jobname
+     *
+     * @param string $jobname
+     */
+    public function setJobname($jobname)
+    {
+        $this->jobname = $jobname;
+    }
+
+    /**
+     * Get jobname
+     *
+     * @return string 
+     */
+    public function getJobname()
+    {
+        return $this->jobname;
     }
 }

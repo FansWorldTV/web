@@ -569,6 +569,8 @@ services:
     preferences:
       class: Dodici\Fansworld\WebBundle\Services\Preferences
       arguments: [@security.context, @doctrine.orm.entity_manager, @session, @appstate]
+    fixture.csvtoyml:
+      class: Dodici\Fansworld\WebBundle\Services\FixtureCsvToYaml
     video.audience:
       class: Dodici\Fansworld\WebBundle\Services\VideoAudienceManager
       arguments: [@security.context, @doctrine.orm.entity_manager, @meteor]

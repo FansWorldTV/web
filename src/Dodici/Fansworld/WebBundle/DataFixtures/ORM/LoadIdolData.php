@@ -39,6 +39,7 @@ class LoadIdolData extends AbstractFixture implements FixtureInterface, Containe
 	        	$idol->setBirthday(\DateTime::createFromFormat('U', $ct['birthday']));
 	        	$idol->setNicknames($ct['nicknames']);
 	        	$idol->setTwitter($ct['twitter']);
+	        	$idol->setJobname($ct['jobname']);
 	        	$idol->setContent($ct['content']);
 	        	if (isset($ct['country'])) {
 	        		$country = $manager->merge($this->getReference('country-'.$ct['country']));
@@ -56,7 +57,7 @@ class LoadIdolData extends AbstractFixture implements FixtureInterface, Containe
 		        		} elseif (isset($cy['name'])) {
 		        			$career->setTeamname($cy['name']);
 		        		}
-		        		$career->setPosition($cy['position']);
+		        		$career->setManager($cy['manager']);
 		        		$career->setDebut($cy['debut']);
 		        		$career->setActual($cy['actual']);
 		        		$career->setHighlight($cy['highlight']);

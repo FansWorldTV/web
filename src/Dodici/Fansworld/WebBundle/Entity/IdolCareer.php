@@ -120,6 +120,13 @@ class IdolCareer implements Translatable
      * @ORM\Column(name="highlight", type="boolean", nullable=false)
      */
     private $highlight;
+    
+    /**
+     * @var boolean $manager
+     *
+     * @ORM\Column(name="manager", type="boolean", nullable=false)
+     */
+    private $manager;
             
 	/**
 	 * @Gedmo\Locale
@@ -154,6 +161,9 @@ class IdolCareer implements Translatable
         }
     	if (null === $this->actual) {
             $this->setActual(false);
+        }
+        if (null === $this->manager) {
+            $this->setManager(false);
         }
     	if (null === $this->highlight) {
             $this->setHighlight(false);
@@ -410,5 +420,25 @@ class IdolCareer implements Translatable
     public function getHighlight()
     {
         return $this->highlight;
+    }
+
+    /**
+     * Set manager
+     *
+     * @param boolean $manager
+     */
+    public function setManager($manager)
+    {
+        $this->manager = $manager;
+    }
+
+    /**
+     * Get manager
+     *
+     * @return boolean 
+     */
+    public function getManager()
+    {
+        return $this->manager;
     }
 }
