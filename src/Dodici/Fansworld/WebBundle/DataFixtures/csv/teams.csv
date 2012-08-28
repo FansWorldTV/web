@@ -1,0 +1,23 @@
+ID;Nombre;Fundación (dd/mm/aaaa);Apodo;Sigla;Nombre Corto;Estadio;Sitio oficial (http://www.sitio.com);Twitter (sin @);ID DataFactory;ID Liga;Descripción;ID Country
+4;Club Atlético All Boys;15/3/1913;El Albo;CAAB;All Boys;Islas Malvinas;http://www.caallboys.com.ar/;caallboys;668;1;;
+8;Club Atlético Vélez Sarsfield;01/01/1910;Fortinero, V azulada;CAVS;Vélez;"José Amalfitani, ""El Fortín""";http://www.velezsarsfield.com.ar/;Velez;20;1;;
+13;Club Atlético San Lorenzo de Almagro;01/04/1908;Ciclón, Cuervo, Santo, Azulgrana;CASLA;San Lorenzo ;"Pedro Bidegain, ""El Nuevo Gasómetro""";http://www.sanlorenzo.com.ar/;sanlorenzoclub;19;1;;
+17;Club Deportivo Godoy Cruz Antonio Tomba;01/06/1921;Tomba, Bodeguero, Expreso;GCAT;Godoy Cruz;Malvinas Argentinas;http://www.clubgodoycruz.com.ar/;clubgodoycruz;132;1;;
+19;Club Atlético River Plate;25/5/1901;Millonario, Gallinas, La Banda;CARP;River;"Antonio Vespucio Liberti, ""El Monumental""";http://www.cariverplate.com/;carpoficial;;1;;
+35;Club Atlético Huracán;11/01/1908;Globo, Quemeros;CAH;Huracán ;"Tomás Adolfo Ducó, ""El Palacio""";http://www.clubahuracan.com.ar/;HuracanOficial;;;;
+61;Fútbol Club Barcelona;29/9/1899;Barça, Blaugranas, Culés;FCB;Barcelona;Camp Nou;http://www.fcbarcelona.com;fcbarcelona;31;7;;
+64;Club Atlético de Madrid;26/4/1903;Colchoneros, Atleti, Rojiblancos;CAM;Atlético Madrid;Vicente Calderón;http://www.clubatleticodemadrid.com;atleti;29;7;;
+81;Paris Saint Germain Football Club;06/10/1970;Les Parisiens, Rouge et Bleu;PSG;Paris SG;Parc des Princes;http://www.psg.fr/;PSG_inside;1370;9;;
+89;Olympique de Marseille;1899;Les Olympiens, Les Phocéens;OM;Marseille;Vélodrome;http://www.om.net;OM_Officiel ;793;9;;
+100;Manchester City Football Club;1880;The Citizens;MCF;Manchester City;Etihad ;http://www.mcfc.co.uk/;mcfc;567;6;;
+101;Manchester United Football Club;1878;The Red Devils ;MUFC;Manchester United;Old Trafford;http://www.manutd.com/;MUFootballClub;568;6;;
+105;Chelsea Football Club;03/10/1905;The Blues;CFC;Chelsea;Stamford Bridge;http://www.chelseafc.com/;chelseafc;563;6;;
+107;Liverpool Football Club;3/6/1892;The Reds;LFC;Liverpool;Anfield;http://www.liverpoolfc.tv/;LFC;566;6;;
+119;West Ham United Football Club;1895;The Hammers ;WHUFC;West Ham ;Boleyn Ground;http://www.whufc.com/;whufc_official;;6;;
+122;Società Sportiva Calcio Napoli ;1904;Azzurri, Partenopei;SSCN;Napoli;San Paolo;http://www.sscnapoli.it/;SSCNapoli_it;726;4;;
+133;Unione Sportiva Città di Palermo ;11/01/1900;Rosanero, Aquile;USCP;Palermo;Renzo Barbera;http://www.palermocalcio.it/;US_Palermo;58;4;;
+140;Futebol Clube do Porto;28/09/1893;Dragões, Azuis e Brancos ;FCP;Porto;Do Dragão;http://www.fcporto.pt/;FC_Porto;797;8;;
+184;Sport Club Corinthians Paulista;09/01/1910;Timão, Coringão, Todo Poderoso;SCC;Corinthians;Pacaembú;http://www.corinthians.com.br/;sitecorinthians;107;2;;
+226;Club Sport Emelec;28/4/1929;El Bombillo, Eléctricos;CSE;Emelec;George Capwell;http://www.emelec.com.ec/;csemelec;;;;
+266;Danubio Fútbol Club;03/01/1932;Franja, Danu, Curva;DFC;Danubio;Jardines;http://www.danubio.org.uy/;DanubioFC;72;3;;
+284;Club de Fútbol Tigres de la Universidad Autónoma de Nuevo León;03/07/1967;Felinos, Auriazules;CFT;Tigres;Universitario;http://www.tigres.com.mx/;TigresOficial;;;;
