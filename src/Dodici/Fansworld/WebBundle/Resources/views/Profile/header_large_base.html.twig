@@ -35,7 +35,9 @@
                 
                 <div class='header-fship'>
     	            {% block header_fship %}
-    	                {% include "DodiciFansworldWebBundle:Default:blocks/fan_button.html.twig" with { entity:  entity, buttonSize: 'btn-large', fType: appstate.type(entity) } %}
+                                        {% if entity != app.user %}
+                                            {% include "DodiciFansworldWebBundle:Default:blocks/fan_button.html.twig" with { entity:  entity, buttonSize: 'btn-large', fType: appstate.type(entity) } %}
+                                        {% endif %}
     	            {% endblock %}
 	            </div>
 	            
