@@ -9,53 +9,52 @@
 
 <section class="avatar-grid">
     {% if block_title is defined %}
-    	<header class='title'>
-    		<h4>{{ block_title }} ( {{ avatars.list|length }} )</h4>
-    	</header>
+        <header class='title'>
+            <h4>{{ block_title }} ( {{ avatars.list|length }} )</h4>
+        </header>
 	{% endif %}
     {% if avatars|length > 0 %}
         <ul class="avatar-list {{ avatars.ulClass }}"> 
-			{% for avatar in avatars.list %}
-			    {% if avatar.idol is defined %}
-			        {% set avatar = avatar.idol %}
-			    {% endif %}
-			
-			    {% if avatar.username is defined %}
-			        {% set pathUrl = path('user_wall', {username: avatar.username})  %}
-		        {% elseif avatar.slug is defined %}
-		            {% set pathUrl = path('idol_wall', {slug: avatar.slug})  %}
-		        {% else %}
-		            {% set pathUrl = ''  %}
-		        {% endif %}
-		        
-		        {% if avatar.fanCount is defined %}
-		            {% set fanCount = avatar.fanCount %}
-		        {% endif %}
+            {% for avatar in avatars.list %}
+                {% if avatar.idol is defined %}
+                    {% set avatar = avatar.idol %}
+                {% endif %}
 
-            	<li>
-            		<div class='{{ avatars.containerClass }}'>
-            			<a href="{{ pathUrl }}">
-                        	<div class="avatar">
-                        	    {% if avatar.image %}
+                {% if avatar.username is defined %}
+                    {% set pathUrl = path('user_wall', {username: avatar.username})  %}
+                {% elseif avatar.slug is defined %}
+                    {% set pathUrl = path('idol_wall', {slug: avatar.slug})  %}
+                {% else %}
+                    {% set pathUrl = ''  %}
+                {% endif %}
+
+                {% if avatar.fanCount is defined %}
+                    {% set fanCount = avatar.fanCount %}
+                {% endif %}
+                <li>
+                    <div class='{{ avatars.containerClass }}'>
+                        <a href="{{ pathUrl }}">
+                            <div class="avatar">
+                                        {% if avatar.image %}
                                     {% thumbnail avatar.image, 'big_square' %}
                                 {% else %}
                                     <img src="{{ asset('bundles/dodicifansworldweb/images/profile_no_image.png' )}}" />
                                 {% endif %}
-                            </div>
-                            <span class="name">{{ avatar}}</span>
-                            <span class="friendCount">{% if fanCount is defined %}{{ fanCount }}{% endif %}</span>
-                            
+                                </div>
+                                <span class="name">{{ avatar}}</span>
+                                <span class="friendCount">{% if fanCount is defined %}{{ fanCount }}{% endif %}</span>
+
                             {% include "DodiciFansworldWebBundle:Default:blocks/fan_button.html.twig" with { entity:  avatar } %}
                             {#
                             <div class="addFriend" targetId="{{ avatar.id }}">
-                            	<button class="btn btn_friendship add btn-success"> Ser fan</button>
-                        	</div>
-                        	#}
-                        </a>
-            		</div>
-                </li>
-			{% endfor %}
-		</ul>
+                                <button class="btn btn_friendship add btn-success"> Ser fan</button>
+                                </div>
+                                #}
+                            </a>
+                        </div>
+                    </li>
+            {% endfor %}
+        </ul>
     {% else %}
         <h3>No posee Fans</h3>
     {% endif %}
