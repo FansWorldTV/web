@@ -23,7 +23,18 @@
             
             {% include 'DodiciFansworldWebBundle:Photo:blocks/albums_montage.html.twig'  %}
             
-            {% include 'DodiciFansworldWebBundle:Photo:blocks/montage.html.twig'  %}
+            
+            
+            
+            <div class="row-fluid">
+                <h3>Otras fotos ( {{ photos|length }} )</h3>
+                {% include 'DodiciFansworldWebBundle:Photo:blocks/montage.html.twig' with {photos: photos} %}
+                
+                {% if viewMorePhotos %}
+                    <div class="clearfix"></div>
+                    <a class="loadmore" href="{{ path('user_listphotos', {username: user.username}) }}">ver todas las imágenes</a>
+                {% endif %}
+            </div>
             
             
             <input type="hidden" value="{{user.id}}" id="userid"/>
@@ -35,6 +46,7 @@
                     </span>
                 </a>
             </div>
+            {#
             <script type="text/javascript">
                 site.startMosaic($('.am-container'), {
                     minsize: false,
@@ -42,6 +54,7 @@
                     margin : 0
                 });
             </script>
+            #}
         {% endblock %}
     {% endembed %}		
 {% endblock %}

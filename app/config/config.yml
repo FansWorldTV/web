@@ -526,7 +526,7 @@ services:
       arguments: [@security.context, @doctrine.orm.entity_manager]
     app.facebook:
       class: Dodici\Fansworld\WebBundle\Services\AppFacebook
-      arguments: [@security.context, @doctrine.orm.entity_manager, @fos_facebook.api, @appstate, @router, @translator]
+      arguments: [@security.context, @doctrine.orm.entity_manager, @fos_facebook.api, @appstate, @router, @translator,@appmedia]
     app.twitter:
       class: Dodici\Fansworld\WebBundle\Services\AppTwitter
       arguments: [@security.context, @doctrine.orm.entity_manager, @fos_twitter.api, @appstate, @router, @translator]  

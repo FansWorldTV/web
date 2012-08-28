@@ -1,12 +1,17 @@
+{% if photos is not defined %}
+    {% set photos = false %}
+{% endif %}
+{% if thumbnailSize is not defined %}
+    {% set thumbnailSize = 'small' %}  
+{% endif %}
+<!-- Listado de fotos para mostrar como montage -->
+
 <div class="row-fluid">
-    <h3>Otras fotos ( {{ photos|length }} )</h3>
     <div class="am-container photos">
         {% for photo in photos %}
-            <a href="{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}">{% thumbnail photo.image, 'small' with {title: photo.title} %}</a>
+            <a href="{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}">
+                {% thumbnail photo.image, thumbnailSize with {title: photo.title} %}
+            </a>
         {% endfor %}
     </div>
-    {% if viewMorePhotos %}
-        <div class="clearfix"></div>
-        <a class="loadmore" href="{{ path('user_listphotos', {username: user.username}) }}">ver todas las imágenes</a>
-    {% endif %}
 </div>

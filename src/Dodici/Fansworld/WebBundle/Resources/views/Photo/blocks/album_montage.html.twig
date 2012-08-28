@@ -1,23 +1,24 @@
+{% if album is not defined %}
+    {% set album = false %}
+{% endif %}
 <div class="row-fluid album-detail">
-    <span class="title">
-        <h4>{{ album.title }} ({{ album.photos|length }}) <a class="more" href="{{ path('user_listalbums', {username: user.username}) }}"> {{'Albums'|trans}}</a></h4>
-    </span>
-        
-    <div class="am-container">
-        {% for photo in album.photos %}
-                {% if appstate.canview(photo) %}
-                        <a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">{% thumbnail photo.image, 'medium' %}</a>
-                {% endif %}
-        {% endfor %}
-    </div>
-        
-    <div class="clearfix"></div>
-        
+    <header class="row-fluid">
+        <div class='span6'>
+            <span class="title">
+                <h4>{{ album.title }} ({{ album.photos|length }}) <a class="more" href="{{ path('user_listalbums', {username: user.username}) }}"> {{'Albums'|trans}}</a></h4>
+            </span>    
+        </div>
+        <div class="span2">
+            {% include 'DodiciFansworldWebBundle:Default:blocks/button_upload.html.twig'  with { 'type': 'photo' }%}
+        </div>
+        <div class="span4">
+            {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: album} %}    
+        </div>
+    </header>
+    
+    {% include 'DodiciFansworldWebBundle:Photo:blocks/montage.html.twig' with {photos: album.photos,thumbnailSize: 'medium'} %}
+
     <div class="content">
         <p>{{ album.content }}</p>
     </div>
-</div>
-<div class="clearfix"></div>
-<div class="row-fluid">
-    {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: album} %}    
 </div>

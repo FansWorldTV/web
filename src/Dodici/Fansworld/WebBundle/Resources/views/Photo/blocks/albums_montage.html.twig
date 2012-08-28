@@ -1,3 +1,10 @@
+{% if albums is not defined %}
+    {% set albums = false %}
+{% endif %}
+{% if thumbnailSize is not defined %}
+    {% set thumbnailSize = 'medium' %}  
+{% endif %}
+
 <div class="row-fluid">
     <h3>Albums ( {{ albums|length }} )</h3>
     <div class="am-container albums">
@@ -8,7 +15,7 @@
                         <br/>
                         <span class="photos-quant">{{ album.photos|length }} fotos</span>
                     </span>
-                    {% thumbnail album.image, 'medium' with {title: ''} %}
+                    {% thumbnail album.image, thumbnailSize with {title: ''} %}
                 </a>
         {% endfor %}
     </div>
