@@ -170,7 +170,8 @@ class TvController extends SiteController {
                 'slug' => $video->getSlug(),
                 'title' => $video->getTitle(),
                 'content' => substr($video->getContent(), 0, 52) . "...",
-                'image' => $this->getImageUrl($video->getImage(), 'medium')
+                'image' => $this->getImageUrl($video->getImage(), 'medium'),
+                'duration' => date("i:s", $video->getDuration())
             );
         }
 

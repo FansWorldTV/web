@@ -1,9 +1,19 @@
 {% if likebutton is not defined %}
 	{% set likebutton = true %}
 {% endif %}
+
 {% if sharebutton is not defined %}
 	{% set sharebutton = true %}
 {% endif %}
+
+{% if reportbutton is not defined %}
+	{% set reportbutton = true %}
+{% endif %}
+
+{% if editbutton is not defined %}
+	{% set editbutton = true %}
+{% endif %}
+
 {% set type = appstate.type(entity) %}
 {#{% set share_url = url(type ~ "_show", {'id': entity.id, 'slug': entity.slug }) %}#}
 <div class="share_content clearfix">
@@ -14,14 +24,21 @@
                         #}
 
 	<div class="internal_buttons">
-                                    <a class="btn report" href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}"><i class="icon-flag"></i></a> 
-                                    {% if (type == 'photo' or type == 'video' or type == 'album') and entity.author == app.user %}
-                                            {% include 'DodiciFansworldWebBundle:Default:edit_button.html.twig' with {entity: entity, type: type} %}
-                                            {#{% include 'DodiciFansworldWebBundle:Default:delete_button.html.twig' with {entity: entity, type: type} %}#}
-                                    {% endif %} 
-                                    {% include 'DodiciFansworldWebBundle:Default:share_button.html.twig' with {entity: entity} %}
-                                    {% if likebutton %}
-                                            {% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {entity: entity, buttonmode: true} %}
-                                    {% endif %}
+    {% if reportbutton %}
+      <a class="btn report" href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}"><i class="icon-flag"></i></a> 
+    {% endif %}
+    
+    {% if (type == 'photo' or type == 'video' or type == 'album') and entity.author == app.user and editbutton %}
+            {% include 'DodiciFansworldWebBundle:Default:edit_button.html.twig' with {entity: entity, type: type} %}
+            {#{% include 'DodiciFansworldWebBundle:Default:delete_button.html.twig' with {entity: entity, type: type} %}#}
+    {% endif %} 
+    
+    {% if sharebutton %}
+      {% include 'DodiciFansworldWebBundle:Default:share_button.html.twig' with {entity: entity} %}
+    {% endif %}
+    
+    {% if likebutton %}
+            {% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {entity: entity, buttonmode: true} %}
+    {% endif %}
 	</div>
 </div>

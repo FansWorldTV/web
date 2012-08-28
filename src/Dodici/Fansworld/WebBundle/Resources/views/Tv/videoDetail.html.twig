@@ -11,7 +11,7 @@
         {% endblock %}
         
         {% block top_left_content %}
-            {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video} %}
+            {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video, editbutton: false, reportbutton: false} %}
             <iframe class="videoframe" src="{{ flumotiontwig.videoplayerurl(video) }}"></iframe>
         {% endblock %}
         
@@ -22,7 +22,12 @@
         {% endblock %}
         
         {% block bottom_left_content %}
-            {% include 'DodiciFansworldWebBundle:Tv:blocks/now-watching.html.twig' with {entity: video} %}
+            <div>
+              {% include 'DodiciFansworldWebBundle:Tv:blocks/now-watching.html.twig' with {entity: video} %}
+            </div>
+            <div>
+              {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video, sharebutton: false, likebutton: false} %}
+            </div>
             {% include 'DodiciFansworldWebBundle:Comment:blocks/box.html.twig' with {entity: video} %}
         {% endblock %}
             

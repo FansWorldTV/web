@@ -194,8 +194,9 @@ section.ranking-widget{
 }
 
 section#videos-related, section#videos-related-sort {
+    margin-top: 15px;
     div.video { 
-        display: block;
+        position: relative;
         .size(37.5%, 30%);
         .pull-left();
         margin-right: 3%;
@@ -209,10 +210,24 @@ section#videos-related, section#videos-related-sort {
         span {
           font-weight: bold;
           margin-bottom: 5px;
+
+          &.title{
+            margin-top: 3px;
+          }
+          &.video-duration{
+            position: absolute;
+            top: 88px;
+            right: 7px;
+            font-size: 15px;
+            opacity: 0.7;
+            text-shadow: 0 0 0.2em black, 0 0 0.2e
+          }
         }
+
         p {
           height:  auto;
         }
+
         span, p {
             line-height: 12px;
             font-size: 11px;

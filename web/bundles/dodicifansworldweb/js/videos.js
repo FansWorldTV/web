@@ -305,6 +305,8 @@ var videos = {
             $(".sort-videos .btn").on('click', function(){
                 if(!ajaxActive){
                     var self = $(this);
+                    $("#videos-related-sort").addClass('loading');
+                    console.log($("#videos-related-sort"));
                     ajax.genericAction('teve_ajaxsortdetail', {
                         'video': $('[data-grid-related]').attr('data-grid-related'),
                         'sort': self.attr('data-type')
@@ -313,14 +315,16 @@ var videos = {
                         for(var i in r.videos){
                             var video = r.videos[i];
                             $("[data-grid-related]").append('<div class="video"> \
-                                                                                        <a href="'+ Routing.generate(appLocale + '_video_show', {
-                                'id': video.id
-                                }) +'"><img src="' + video.image + '" alt="'+ video.title +'" title="'+ video.title +'"/></a>\
-                                                                                        <span data-title>'+ video.title +'</span>\
-                                                                                        <p data-content>'+ video.content +'</p>\
-                                                                                    </div>');
+                                                                  <span class="video-duration">' + video.duration + '</span> \
+                                                                  <a href="'+ Routing.generate(appLocale + '_video_show', {'id': video.id}) +'">\
+                                                                    <img src="' + video.image + '" alt="'+ video.title +'" title="'+ video.title +'"/>\
+                                                                  </a>\
+                                                                  <span data-title class="title">'+ video.title + '</span>\
+                                                                  <p data-content>'+ video.content +'</p>\
+                                                              </div>');
                         }
-                        console.log(r);
+                        $("#videos-related-sort").removeClass('loading');
+                        console.log($("#videos-related-sort"));
                         ajaxActive = false;
                     }, function(e){
                         error(e);
