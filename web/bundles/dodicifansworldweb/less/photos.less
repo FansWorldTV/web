@@ -103,7 +103,24 @@ div.photo-show {
     .media_content{
         position: relative;
         display: block;
-        .media_img img{
+
+        &:hover {
+            &>i.fullscreen{
+                opacity: 1;
+            }
+        }
+
+        i.fullscreen {
+            background: url('../images/icon-fullscreen.png') no-repeat;
+            position: absolute;
+            .square(25px);
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            opacity: 0.5;
+        }
+
+        .media_img img {
             width: 100%;
         }
     }

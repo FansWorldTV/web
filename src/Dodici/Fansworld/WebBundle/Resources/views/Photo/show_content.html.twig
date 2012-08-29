@@ -3,13 +3,14 @@
     <div class="span">
         <div class="row-fluid">
             <div class="media_content">
+                <i class="fullscreen"></i>
                 <a class="media_img colorbox" href="{% path photo.image, 'huge' %}">{% thumbnail photo.image, 'big' %}</a>
             </div>
         </div>
         <div class="detail-photo row-fluid">
             <div class="span content">
                 {% if photo.content %}
-                    <p data-expandable>{{ photo.content }}</p>
+                    <p data-expandable data-slice-point="120">{{ photo.content }}</p>
                 {% endif %}
             </div>
             {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: photo} %}

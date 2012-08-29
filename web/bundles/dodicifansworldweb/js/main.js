@@ -410,20 +410,17 @@ var site = {
     },
     
     expander: function() {
-        $('.actualizacion .comments .status_comment .status_comment_user p, ' +
-            '.actualizacion .status p, ' +
-            '.pincomments .comment .message')
-        .not(':has(.read-more)')
-        .expander({
-            slicePoint: 100,
-            expandText: '[+]',
-            userCollapseText: '[-]'
+        $("[data-expandable]").each(function(index, element){
+            var slicePoint = 100;
+            if($(this).attr('data-slice-point') !== 'undefined'){
+                slicePoint = $(this).attr('data-slice-point');
+            }
+            $(this).expander({
+               slicePoint: slicePoint,
+               expandText: 'más',
+               userCollapseText: 'ocultar'
+            });
         });
-        console.log($("[data-expandable]").expander({
-            slicePoint: 75,
-            expandText: '... más',
-            userCollapseText: ' ocultar'
-        }));
     },
     
     BindLoginWidget: function(){
