@@ -315,9 +315,9 @@ var videos = {
                         for(var i in r.videos){
                             var video = r.videos[i];
                             $("[data-grid-related]").append('<div class="video"> \
-                                                                  <span class="video-duration">' + video.duration + '</span> \
                                                                   <a href="'+ Routing.generate(appLocale + '_video_show', {'id': video.id}) +'">\
                                                                     <img src="' + video.image + '" alt="'+ video.title +'" title="'+ video.title +'"/>\
+                                                                    <span class="video-duration">' + video.duration + '</span> \
                                                                   </a>\
                                                                   <span data-title class="title">'+ video.title + '</span>\
                                                                   <p data-content>'+ video.content +'</p>\

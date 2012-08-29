@@ -203,8 +203,20 @@ section#videos-related, section#videos-related-sort {
         margin-bottom: 3%;
         .clearfix();
 
-        * {
-            display: block;
+        * { display: block; }
+        p { height:  auto; }
+
+        a{
+            position: relative;
+            span.video-duration{
+                color: white;
+                position: absolute;
+                bottom: 5px;
+                right: 7px;
+                font-size: 15px;
+                opacity: 0.7;
+                text-shadow: 0 0 0.2em black, 0 0 0.2e
+            }
         }
 
         span {
@@ -214,19 +226,9 @@ section#videos-related, section#videos-related-sort {
           &.title{
             margin-top: 3px;
           }
-          &.video-duration{
-            position: absolute;
-            top: 88px;
-            right: 7px;
-            font-size: 15px;
-            opacity: 0.7;
-            text-shadow: 0 0 0.2em black, 0 0 0.2e
-          }
         }
 
-        p {
-          height:  auto;
-        }
+        
 
         span, p {
             line-height: 12px;

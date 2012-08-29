@@ -7,9 +7,12 @@
 <section id="{{ sectionId }}" {{ dataGrid }}>
     {% for video in videos %}
         <div class="video">
-            <a href="{{ path('video_show', {id: video.id, slug: video.slug}) }}">{% thumbnail video.image, 'medium' with {'title': video.title} %}</a>
-            <span>{{ video.title }}</span>
-            <p>{{ video.content|truncate(55) }}</p>
+            <a href="{{ path('video_show', {id: video.id, slug: video.slug}) }}">
+                {% thumbnail video.image, 'medium' with {'title': video.title} %}
+                <span class="video-duration">{{ video.duration|date("i:s") }}</span>
+            </a>
+            <span data-title class="title">{{ video.title }}</span>
+            <p data-content>{{ video.content|truncate(55) }}</p>
         </div>
     {% endfor %}
 </section>
