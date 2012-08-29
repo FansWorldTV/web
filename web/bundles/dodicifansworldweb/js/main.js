@@ -103,6 +103,7 @@ var site = {
         site.showCommentForm();
         searchBox.init();
         site.BindLoginWidget();
+        albums.init();
         
         $('[data-wall]').wall();
         site.bindCarousel();
@@ -418,6 +419,11 @@ var site = {
             expandText: '[+]',
             userCollapseText: '[-]'
         });
+        console.log($("[data-expandable]").expander({
+            slicePoint: 75,
+            expandText: '... más',
+            userCollapseText: ' ocultar'
+        }));
     },
     
     BindLoginWidget: function(){

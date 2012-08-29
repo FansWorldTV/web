@@ -2,6 +2,13 @@ var albums = {
     pager: 2,
     
     init: function(){
+        site.startMosaic($(".am-container.albums"), {
+            minw: 150, 
+            margin: 0, 
+            liquid: true, 
+            minsize: false
+        });
+        
         albums.get();  
         $(".relatedTags ul.tags").hide();
         $(".showOrHideTags").click(function(){

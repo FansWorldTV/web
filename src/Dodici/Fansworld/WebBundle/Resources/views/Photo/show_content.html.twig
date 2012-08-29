@@ -9,7 +9,7 @@
         <div class="detail-photo row-fluid">
             <div class="span content">
                 {% if photo.content %}
-                    <p>{{ photo.content|truncate(75) }}... <a href="#">más</a></p>
+                    <p data-expandable>{{ photo.content }}</p>
                 {% endif %}
             </div>
             {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: photo} %}
