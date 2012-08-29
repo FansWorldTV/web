@@ -36,7 +36,10 @@ class LoadIdolData extends AbstractFixture implements FixtureInterface, Containe
 	        	$idol = new Idol();
 	        	$idol->setFirstname($ct['firstname']);
 	        	$idol->setLastname($ct['lastname']);
-	        	$idol->setBirthday(\DateTime::createFromFormat('U', $ct['birthday']));
+	        	if (isset($ct['birthday']) && $ct['birthday']) {
+	        	    $date = \DateTime::createFromFormat('Y-m-d', $ct['birthday']);
+	        	    if ($date) $idol->setBirthday($date);
+	        	}
 	        	$idol->setNicknames($ct['nicknames']);
 	        	$idol->setTwitter($ct['twitter']);
 	        	$idol->setJobname($ct['jobname']);

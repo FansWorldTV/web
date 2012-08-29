@@ -86,11 +86,11 @@ class FixtureCsvToYaml
         if ($date) {
             if (strpos($date, '/') !== false) {
                 $xp = explode('/', $date);
-                $datestr = $xp[2].'-'.$xp[1].'-'.$xp[0];
+                $datestr = $xp[2].'-'.sprintf('%02d',$xp[1]).'-'.sprintf('%02d',$xp[0]);
             } else {
                 $datestr = $date.'-01-01';
             }
-            $yml .= "  foundedAt: "    . $datestr . "\n";
+            $yml .= "  foundedAt: \""    . $datestr . "\"\n";
         }
         
         $yml .= "  nicknames: " . utf8_encode($data[3]) . "\n";
@@ -107,7 +107,7 @@ class FixtureCsvToYaml
             $xp = explode("\n", $desc);
             $yml .= "  content: |\n"; 
             foreach ($xp as $x) {
-                $yml .= "  ".utf8_encode($x)."\n";
+                $yml .= "    ".utf8_encode($x)."\n";
             }
         }
         
@@ -131,11 +131,11 @@ class FixtureCsvToYaml
         if ($date) {
             if (strpos($date, '/') !== false) {
                 $xp = explode('/', $date);
-                $datestr = $xp[2].'-'.$xp[1].'-'.$xp[0];
+                $datestr = $xp[2].'-'.sprintf('%02d',$xp[1]).'-'.sprintf('%02d',$xp[0]);
             } else {
                 $datestr = $date.'-01-01';
             }
-            $yml .= "  birthday: "    . $datestr . "\n";
+            $yml .= "  birthday: \""    . $datestr . "\"\n";
         }
         
         if ($data[14]) $yml .= "  country: " . utf8_encode($data[14]) . "\n";
@@ -146,11 +146,53 @@ class FixtureCsvToYaml
             $xp = explode("\n", $desc);
             $yml .= "  content: |\n"; 
             foreach ($xp as $x) {
-                $yml .= "  ".utf8_encode($x)."\n";
+                $yml .= "    ".utf8_encode($x)."\n";
             }
         }
+                
+        $ic_ids['players'] = $data[3] ? explode("\n", $data[3]) : null;
+        $ic_debut['players'] = $data[4] ? explode("\n", $data[4]) : null;
+        $ic_actual['players'] = $data[5] ? explode("\n", $data[5]) : null;
+        $ic_highlight['players'] = $data[6] ? explode("\n", $data[6]) : null;
         
-        // TODO: idolcareers: 3 4 5 6, 7 8 9 10
+        $ic_ids['managers'] = $data[7] ? explode("\n", $data[7]) : null;
+        $ic_debut['managers'] = $data[8] ? explode("\n", $data[8]) : null;
+        $ic_actual['managers'] = $data[9] ? explode("\n", $data[9]) : null;
+        $ic_highlight['managers'] = $data[10] ? explode("\n", $data[10]) : null;
+        
+        $first = false;
+        
+        foreach ($ic_ids as $key => $vals) {
+            $manager = ($key == 'managers') ? true : false;
+            
+            if ($vals) {
+                foreach ($vals as $index => $id) {
+                    if ($id) {
+                        $debut = (($ic_debut[$key][$index] == 1) ? true : false);
+                        $actual = (($ic_actual[$key][$index] == 1) ? true : false);
+                        $highlight = (($ic_highlight[$key][$index] == 1) ? true : false);
+                        
+                        if (!$first) {
+                            $yml .= "  teams:\n";
+                            $first = true;
+                        }
+                        
+                        $yml .= "      -\n";
+                        
+                        if (is_numeric($id)) {
+                            $yml .= "        id: " . $id . "\n";
+                        } else {
+                            $yml .= "        name: " . $id . "\n";
+                        }
+                        
+                        $yml .= "        debut: " . ($debut ? 'true' : 'false') . "\n";
+                        $yml .= "        actual: " . ($actual ? 'true' : 'false') . "\n";
+                        $yml .= "        highlight: " . ($highlight ? 'true' : 'false') . "\n";
+                        $yml .= "        manager: " . ($manager ? 'true' : 'false') . "\n";
+                    }
+                }
+            }
+        }
         
         return $yml;
     }

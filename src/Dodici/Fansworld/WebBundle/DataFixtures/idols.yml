@@ -1,26 +1,665 @@
 -
-  id: 1
-  firstname: Javier
-  lastname: Pastore
-  birthday: 1986-10-19
-  twitter: jpastore
-  country: 1
-  nicknames: |
-    El Flaco
-    Il Fantasista
+  id: 4
+  firstname: Sergio Leonel 
+  lastname: Agüero
+  jobname: Delantero
+  nicknames: Kun
+  birthday: "1988-06-02"
+  country: 13
+  twitter: aguerosergiokun
   content: |
-    El Flaco es un jugador muy bueno
-    Le gustan los fideos
+    Un vecino amigo de su papá le puso <i>Kun</i>, debido a la simpatía de Sergio por un dibujo animado japonés caracterizado por un travieso niño de la edad de piedra el personaje original se llamaba <i>Kum Kum</i>-.
+    
+    Cuando llegó a las inferiores de Independiente tenía 10 años y desde ese entonces ya marcaba grandes diferencias. Su técnica y potencia, sumado a su personalidad lo convirtieron rápidamente en líder.
+    
+    Integrante de las selecciones juveniles desde la primera hora, en 2001 fue convocado para formar parte de la Sub-15. Su picardía para jugar llamaba la atención y su futuro parecía cada vez más prometedor.
+    
+    Poco tiempo tardó en llamar la atención de Oscar Ruggeri, entrenador por esos días del plantel profesional del <i>Rojo</i>, que luego de tenerlo en cuenta en varias prácticas decidió llevarlo al banco. Así, el 5 de julio de 2003 y contra San Lorenzo, el <i>Kun</i> debutaría en Primera con sólo 15 años y 33 días -récord en el fútbol argentino-.
+    
+    Luego llegarían los títulos con la Sub-20 -Holanda 2005 y Canadá 2007-, su pase al Atlético Madrid; y su estreno en la Selección Mayor el 3 de septiembre de 2006 contra Brasil en Londres.
+    
+    Ya instalado en Madrid, se ganó rápidamente el cariño del pueblo <i>colchonero<i/> a fuerza de excelentes rendimientos. En su estadía en el Atlético, anotó más de un centenar de goles y consiguió dos campeonatos -Europa League y Supercopa de Europa 2010 -.
+    
+    En 2011 llegó al Manchester City como el fichaje más caro de la historia del club y tardó sólo 10 minutos en marcar su primer tanto. Otro gol y una asistencia, terminaron de redondear un partido inolvidable en su presentación en Inglaterra. Siendo una de las figuras de los <i>Citizens</i>, en 2012 conquistaría la Premier y la Community Shield metiéndose en el corazón de la hinchada <i>Sky Blue</i>.
+    
+    Considerado uno de los mejores delanteros del mundo, con su talento y jerarquía Agüero se ha transformado en una pieza clave del Seleccionado Argentino.
   teams:
       -
-        name: Talleres de Córdoba
-        position: Volante Central
+        id: 4
         debut: true
         actual: false
-        highlight: false
+        highlight: true
+        manager: false
       -
-        id: 1
-        position: Delantero
+        id: 8
+        debut: false
+        actual: false
+        highlight: true
+        manager: false
+      -
+        id: 13
         debut: false
         actual: true
         highlight: true
+        manager: false
+
+-
+  id: 61
+  firstname: Edinson Roberto 
+  lastname: Cavani
+  jobname: Delantero
+  nicknames: Matador, Edi
+  birthday: "1987-02-14"
+  country: 228
+  twitter: ECavaniOfficial
+  content: |
+    Cavani se formó en el club Salto de su ciudad natal y a sus 17 años se marchó a Montevideo, para incorporarse a las inferiores de Danubio donde debutaría en 2006. Ese mismo año se coronaría con el título de campeón uruguayo y en 2007 emigraría al fútbol italiano.
+    
+    Su destino sería el Palermo y allí el <i>Matador</i> comenzaría a demostrar todo su potencial con excelentes actuaciones. Consolidado como uno de los mejores delanteros del <i>Calcio</i>, en julio de 2010 pasaría al Napoli para mostrar su mejor versión.
+    
+    El goleador se convertiría en la figura del equipo y a fines del 2011, se metería en la historia celeste como el máximo artillero en torneos internacionales. Consagrándose con la Copa Italia de 2012, Cavani terminó de recibirse de ídolo <i>Azzurri</i> y con sus goles conquistó todo el cariño de la hinchada napolitana.
+    
+    En cuanto a su trayectoria con Uruguay, <i>Edi</i> empezó a destacarse desde la Sub-20 disputando el Campeonato del Mundo de 2007 en Canadá. En febrero de 2008 tendría su estreno con la Selección Mayor enfrentando a Colombia; para posteriormente integrar el plantel mundialista de Sudáfrica 2010 y en 2011 ganar la Copa América.
+    
+    Siendo uno de los mejores centrodelanteros del mundo, el <i>Matador</i> busca continuar desplegando toda su jerarquía, para ser cada vez más referente en la elite del fútbol internacional.
+  teams:
+      -
+        id: 4
+        debut: true
+        actual: false
+        highlight: true
+        manager: false
+      -
+        id: 8
+        debut: false
+        actual: false
+        highlight: true
+        manager: false
+      -
+        id: 13
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+
+-
+  id: 85
+  firstname: Didier Yves 
+  lastname: Drogba
+  jobname: Delantero
+  nicknames: Didí, Tito, Drog
+  birthday: "1978-11-03"
+  country: 53
+  twitter: 
+  content: |
+    Drogba llegó con cinco años a Francia para vivir con su tío, aunque tres años después regresaría a Costa de Marfil para reunirse con su familia. Sin embargo, su estadía sería breve y debería retornar nuevamente al país galo donde en 1993 se juntaría con su familia.
+    
+    Establecidos en la localidad de Antony, <i>Tito</i> -como le puso su abuela- comenzó a jugar en las inferiores del Levallois con 12 años. Siempre destacándose como notable goleador, se mudaría a Le Mans donde tendría su estreno en la Ligue 2 en 1998. 
+    
+    Posteriormente pasaría en 2001 al Guingamp, donde con sus goles llamaría la atención del Olympique de Marsella que lo contrataría en 2003. Allí <i>Didí</i> se convertiría en un delantero de elite, siendo elegido como el mejor jugador del torneo francés y coronándose como el máximo artillero de la Copa UEFA.
+    
+    A mediados de 2004 daría un gran paso en su carrera y desembarcaría en el Chelsea, que lo compraría por 24 millones de euros. Con los <i>Blues</i> el marfileño ganaría todo -3 Ligas, 4 FA Cup, 2 Copas de la Liga, 2 Community Shield y 1 Champions- y así se transformaría en una leyenda del conjunto de Londres.
+    
+    El 19 de mayo de 2012 lograría la primera Champions League del Chelsea, para recibirse entonces como ídolo número uno del club. Luego de la consagración, <i>Drog</i> se marcharía al Shanghai Shenhua de China quedando como cuarto anotador <i>Blue</i> de todos los tiempos.
+    
+    Con el Seleccionado de Costa de Marfil, debutaría en septiembre de 2002 y desde ese momento, lideraría a su combinado nacional a participar de los Mundiales de 2006 y 2010. 
+    
+    Elegido como el mejor goleador del mundo del siglo XXI, Drogba ha marcado sin dudas una etapa en la historia de los centrodelanteros.
+  teams:
+      -
+        name: Le Mans
+        debut: true
+        actual: false
+        highlight: false
+        manager: false
+      -
+        name: Guingamp
+        debut: false
+        actual: false
+        highlight: false
+        manager: false
+      -
+        id: 17
+        debut: false
+        actual: false
+        highlight: true
+        manager: false
+      -
+        id: 19
+        debut: false
+        actual: false
+        highlight: true
+        manager: false
+      -
+        name: Shanghai Shenhua
+        debut: false
+        actual: true
+        highlight: false
+        manager: false
+
+-
+  id: 90
+  firstname: Radamel 
+  lastname: Falcao García
+  jobname: Delantero
+  nicknames: Tigre, Falca
+  birthday: "1986-10-02"
+  country: 47
+  twitter: FALCAO
+  content: |
+    Falcao debutó en el fútbol de su país con sólo 13 años, disputando el torneo de la Primera B para Lanceros Boyacá. Así, el 28 de agosto de 1999 se convirtió en el futbolista más joven en jugar profesionalmente en Colombia.
+    
+    Ya en 2001, el punta sería fichado por River y se uniría a la octava división del <i>Millonario</i>. Su estreno en la Primera División Argentina, llegaría en el Clausura 2005 de la mano de Astrada como entrenador.
+    
+    Meses después, el <i>Falca</i> sería la revelación del campeonato bajo las órdenes de <i>Mostaza</i> Merlo. Cuando comenzaba a ser la figura de la <i>Banda</i>, una lesión de ligamentos en su rodilla lo alejaría de las canchas por un tiempo prologando. Luego de su recuperación, el punta regresaría en el segundo semestre de 2006.
+    
+    Entonces en 2008 se alzaría con el Torneo Clausura, siendo el jugador más destacado del equipo dirigido por Simeone. Sus excelentes actuaciones le permitirían emigrar en junio de 2009 al Porto, donde mostraría todo su potencial marcando muchísimos goles. Logrando siete títulos -1 Liga, 3 Supercopas de Portugal, 1 Europa League y 2 Copas de Portugal-, en el Dragão se transformaría en goleador estrella y así se recibiría de ídolo.
+    
+    Consolidado como uno de los centrodelanteros más importantes del mundo, en agosto de 2011 se mudaría al Atlético Madrid por casi 40 millones de euros. En el <i>Colchonero</i> su rendimiento seguiría en alza y se consagraría con la Europa League 2012, donde sería el máximo anotador de la competencia y la figura de su equipo.
+    
+    En cuanto a su trayectoria con la Selección Colombiana, el <i>Tigre</i> comenzó ha vestir la casaca <i>cafetera</i> desde el la Sub-17. Posteriormente participaría del Mundial Sub-20 de Holanda 2005, para el 7 de febrero de 2007 debutar en la Mayor enfrentando en un amistoso a Uruguay. 
+    
+    Siendo uno de los mejores referentes de área de la actualidad, Falcao busca liderar a su Seleccionado hacia la clasificación al Mundial de Brasil 2014.
+  teams:
+      -
+        name: Lanceros
+        debut: true
+        actual: false
+        highlight: false
+        manager: false
+      -
+        id: 19
+        debut: false
+        actual: false
+        highlight: false
+        manager: false
+      -
+        id: 35
+        debut: false
+        actual: false
+        highlight: true
+        manager: false
+      -
+        id: 64
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+
+-
+  id: 119
+  firstname: Marek
+  lastname: Hamsik
+  jobname: Volante
+  nicknames: Marekiaro
+  birthday: "1987-07-27"
+  country: 66
+  twitter: 
+  content: |
+    Hamsik tuvo su estreno en 2004, jugando en la segunda división de Eslovaquia para el Slovan Bratislava. Sus notables condiciones hicieron que ese mismo año lo comprara el Brescia y así el talentoso volante emigró a Italia.
+    
+    Ya en 2007, el Napoli se haría con sus servicios pagándolo 5,5 millones de euros y en su debut, <i>Marekiaro</i> marcaría un gol por Copa Italia ante el Cesena. Sus grandes rendimientos lo convertirían en la revelación del <i>Calcio</i> y a principios de 2009 sería premiado con el mejor futbolista joven del campeonato. 
+    
+    Referente futbolístico del conjunto napolitano, en marzo de 2010 se transformó en el jugador de menor edad en lucir la cinta de capitán en la historia del club. Idolatrado por toda la hinchada <i>azzurri</i>, en 2012 conquistó la Copa Italia para seguir dejando su marca con la institución del sur de Italia.
+    
+    Con la Selección Eslovaca disputó su primer partido con 19 años, el 7 de febrero del 2007 en un amistoso contra Polonia. Posteriormente se consolidaría como la figura del equipo, liderándolo hacia la clasificación al Mundial de Sudáfrica 2010 donde sería el capitán.
+    
+    Siendo uno de los mediocampistas ofensivos más importantes del mundo, Hamsik es sin dudas una de las mayores apariciones eslovacas de todos los tiempos.
+  teams:
+      -
+        name: Slovan Bratislava
+        debut: true
+        actual: false
+        highlight: false
+        manager: false
+      -
+        name: Brescia
+        debut: false
+        actual: false
+        highlight: false
+        manager: false
+      -
+        id: 4
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+
+-
+  id: 113
+  firstname: Luis Oscar 
+  lastname: González 
+  jobname: Volante
+  nicknames: Lucho, Negro, Flaco, Comandante
+  birthday: "1981-01-19"
+  country: 13
+  twitter: 
+  content: |
+    <i>Lucho</i> comenzó su notable trayectoria en las inferiores de Huracán, para tener su estreno en la Primera de la Quema el 29 de abril de 1999 enfrentando a Racing. 
+    
+    Sus buenos rendimientos no lograron evitar el descenso del <i>Globo</i>, aunque sí fueron claves en la rápida vuelta a la máxima categoría. Con el título de la B Nacional alcanzado en 2000, el talentoso volante se ganó el cariño de los hinchas del club de Parque Patricios.
+    
+    Consolidado como uno de los mejores mediocampistas del torneo local, River lo contrató en 2002 y allí González mostraría un altísimo nivel. Con el equipo <i>Millonario</i> obtendría el Clausura 2003 y 2004; y entonces llegaría el momento de emigrar a Portugal.
+    
+    La llegada al Porto marcó indudablemente un punto de inflexión en su carrera y el <i>Comandante</i>  -como lo apodaron en tierras lusas- mostró una versión sobresaliente con la camiseta del <i>Dragão</i>. En 2006 conseguiría la triple corona Liga, Copa y Supercopa de Portugal- siendo figura y posicionándose como un jugador de élite. Luego vendrían más consagraciones Liga 2007, 2008 y 2009- para que <i>Lucho</i> se metiera en la historia grande del club, como ídolo máximo de los últimos tiempos. Capitán y referente azul y blanco, finalmente en julio de 2009 fue transferido al Olympique de Marsella por 18 millones de euros. 
+    
+    Acostumbrado a ganar campeonatos, el fútbol francés no fue la excepción y en su primera temporada consiguió el título local tras 18 años de sequía. Posteriormente, alcanzaría 3 Copas y 2 Supercopas de Francia para ser nuevamente idolatrado.
+    
+    En cuanto a su paso por la Selección Argentina, su debut llegó en un amistoso frente Honduras el 31 de Enero de 2003. Desde entonces, siempre fue tenido en cuenta por los entrenadores de turno participando de los Juegos de Atenas 2004 medalla de oro-, Copas América -2004 y 2007- y Mundial 2006. 
+    
+    Ya en 2012, González regresaría a su segunda casa y los fanáticos del Porto volverían a tenerlo entre sus filas para disfrutar de su jerarquía. Elegante como pocos y con un manejo asombroso, Lucho es indudablemente un futbolista de clase mundial que siempre logra nuevos objetivos.
+  teams:
+      -
+        id: 4
+        debut: true
+        actual: false
+        highlight: true
+        manager: false
+      -
+        id: 8
+        debut: false
+        actual: false
+        highlight: true
+        manager: false
+      -
+        id: 13
+        debut: false
+        actual: false
+        highlight: true
+        manager: false
+      -
+        id: 17
+        debut: false
+        actual: false
+        highlight: true
+        manager: false
+      -
+        id: 19
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+
+-
+  id: 178
+  firstname: Nicolás 
+  lastname: Otamendi
+  jobname: Defensor
+  nicknames: Nico, Ota
+  birthday: "1988-12-02"
+  country: 13
+  twitter: NicoOtamendi
+  content: |
+    En las inferiores de Vélez donde se formó, Otamendi ya sacaba grandes diferencias con su velocidad y capacidad atlética. Su notable concentración sumado a su potencia física, lo hacían por momentos impasable.
+    
+    Apoyándose en sus condiciones técnicas y su constante profesionalidad, fue recorriendo las juveniles <i>velezanas</i> hasta pasar a formar parte del plantel profesional en 2008. Finalmente, el 21 de febrero de 2009 debutaría en la primera con triunfo frente a Tigre.
+    
+    <i>Nic</i>o no necesitó mucho tiempo de adaptación y a los pocos meses se consolidó como figura de la defensa de la <i>V azulada</i>. Su mejor nivel lo alcanzó en Clausura 2009, donde fue clave en la obtención del campeonato siendo titular en todos los partidos.
+    
+    Su alto rendimiento en ese torneo hizo que le llegará el momento de vestir la camiseta argentina, para el 20 de Mayo tener su estreno <i>albiceleste</i> en un amistoso contra Panamá. Semanas más tarde jugaría su primer partido oficial por Eliminatorias en la derrota con Ecuador en Quito.
+    
+    El 2010 también sería un gran año para <i>Nico</i> y Maradona lo llevaría al Mundial de Sudáfrica. Tras la finalización de la Copa del Mundo, el Porto compraría la mitad de su pase en 4 millones de euros.
+    
+    De esta manera, Otamendi emigró a tierras europeas buscando continuar su carrera en alza en el club más importante de Portugal. Allí también conseguiría títulos -liga portuguesa 2010/11 y 2011/12, Europa League 2010/11, entre otros- y jugaría en gran manera.
+    
+    Así, este importante zaguero de gran potencial y mentalidad ganadora, sigue su trayectoria intentando transformarse en uno de los mejores en su puesto a nivel mundial.
+  teams:
+      -
+        id: 8
+        debut: true
+        actual: false
+        highlight: true
+        manager: false
+      -
+        id: 13
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+
+-
+  id: 183
+  firstname: Javier Matías 
+  lastname: Pastore
+  jobname: Volante
+  nicknames: Flaco, Javi, Fantasista
+  birthday: "1989-06-20"
+  country: 13
+  twitter: Javi_Pastore
+  content: |
+    Desde los 9 años que empezó a jugar en las inferiores de Talleres de su Córdoba natal, Pastore se destacaba por su habilidad y sacaba grandes diferencias en su categoría.
+    
+    Tras probarse en Saint Etienne y Villareal y no quedar pese a sus notables condiciones, el <i>Flaco</i> retornó a la <i>T</i> y meses más tarde tuvo su debut oficial. El 29 de enero de 2007 con tan sólo 17 años, Gareca lo puso en cancha contra Chacarita por el Nacional B. Éste sería uno de los cinco partidos de Pastore con la camiseta del <i>Matador</i>, que finalmente llegaría a Huracán a mediados de 2007. 
+    
+    Su arranque en el <i>Globo</i> no fue el soñado. Primero un problema contractual y después una lesión en el tobillo, hicieron que el ansiado debut en Primera llegara recién el 24 de mayo de 2008 nada menos que contra River.
+    
+    De la mano de Ángel Cappa como entrenador, logró continuidad y se consolidó como una de las figuras del campeonato argentino. Luego del subcampeonato del Clausura 2009 donde brilló con un excelente rendimiento,  se transformó en ídolo quemero quedando para siempre en la historia del club.
+    
+    Su vistoso estilo de juego combinando técnica y verticalidad, llamó la atención de varios clubes europeos que se interesaron por sus servicios. Aquí llegaría el momento de su pase al Palermo de Italia, su primer gran desafío internacional.
+    
+    Su estreno en el <i>Calcio</i> llegó el 15 de agosto por Copa Italia y en su primera temporada Javi tuvo buenos partidos. Si bien no logró afirmarse como titular, cada vez que ingresaba marcaba diferencias. 
+    
+    Tras considerar finalizada su etapa de adaptación, Delio Rossi fue el técnico que lo puso como titular indiscutido y el <i>Flaco</i> no lo defraudó. Palermo terminó quinto en la liga y se clasificó a la Europa League, en gran parte gracias a la notable performance de Pastore.
+    
+    Su labor durante la temporada 2009/2010 destacándose siempre en los partidos importantes, hizo que grandes equipos como Milan, Real Madrid y Chelsea posaran sus ojos sobre él. Aunque para suerte de los hinchas palermitanos, su estadía en tierras sicilianas se estiraría un tiempo más.
+    
+    Su gran actualidad en Italia le abrió las puertas del equipo argentino, dándole la oportunidad de vestir por primera vez la albiceleste a finales de 2009 frente a la selección de Cataluña. <i>Javi</i> convertiría un gol y comenzaría a ganar lugar en la consideración de Maradona, que finalmente lo llevaría al Mundial de Sudáfrica 2010.
+    
+    Ya en julio de 2011, el Paris Saint Germain decidió invertir en él 43 millones de euros con el objetivo de volver a los primeros planos. Así, el <i>Flaco</i> se transformó en el jugador más caro de la historia de la liga francesa. 
+    
+    Devenido en una de las máximas figuras del fútbol mundial y con un potencial todavía aún mayor, Pastore es un crack que cada día juega mejor. 
+  teams:
+      -
+        name: Talleres (Cba)
+        debut: true
+        actual: false
+        highlight: false
+        manager: false
+      -
+        id: 4
+        debut: false
+        actual: false
+        highlight: true
+        manager: false
+      -
+        id: 8
+        debut: false
+        actual: false
+        highlight: true
+        manager: false
+      -
+        id: 13
+        debut: false
+        actual: true
+        highlight: false
+        manager: false
+
+-
+  id: 149
+  firstname: Javier Alejandro 
+  lastname: Mascherano
+  jobname: Defensor/Volante
+  nicknames: Jefecito, Masche, León
+  birthday: "1984-08-06"
+  country: 13
+  twitter: Mascherano
+  content: |
+    Antes de que <i>Masche</i> se incorporara con 14 años a la escuela de Renato Cesarini, había comenzado a jugar en algunos equipos de su San Lorenzo natal. Dirigido en Barrio Vila por su padre quien le hizo cambiar de posición -jugaba de delantero-, Javier se destacaba desde muy chico por su despliegue y personalidad.
+    
+    La primera vez que Hugo Tocalli -en ese momento seleccionador de las juveniles argentinas- lo vio jugar, quedó asombrado con sus condiciones y lo convocó de inmediato para la sub-15.
+    
+    Entonces surgió el interés de River para incorporarlo a sus inferiores y el <i>Jefecito</i> se mudó a Buenos Aires, para jugar en la séptima del <i>Millonario</i>. Mientras tanto, continuaba siendo una fija en todos los seleccionados juveniles -sub 17 y sub 20- y se acostumbraba a portar la cinta de capitán, resaltando cada vez más sus habilidades de líder.
+    
+    En marzo de 2001, el Ajax quiso llevárselo pero Mascherano se quedó con la intención de jugar en River. La gran proyección del volante central y sus notables cualidades, hicieron que debutara con la Selección Mayor sin siquiera haber jugado en Primera. El 16 de julio de 2003, tendría su estreno enfrentando a Uruguay en la inauguración del Estadio Único de la Plata. 
+     
+    Un mes y medio después, debutaría en River donde sería figura consiguiendo el Clausura 2004 y se transformaría en ídolo, pese a jugar sólo dos temporadas en el equipo de Nuñez. Corinthians lo compraría por 15 millones de dólares y <i>Masche</i> emigraría a Brasil. Con el <i>Timão</i> también sería campeón -Brasilerao 2006-, aunque su estadía sería corta y tras poco más de una temporada se marcharía a la Premier League. 
+    
+    Sus primeros meses en el West Ham no fueron buenos y al no ser tenido en cuenta, cambió de rumbo a finales de 2006. Liverpool sería su nueva casa y allí el <i>León</i> volvería a su nivel como uno de los mejores volantes defensivos del mundo. Idolatrado por la toda afición de los <i>Reds</i>, se ganó el cariño de los hinchas con su entrega y sacrificio característicos.
+    
+    Ya consolidado como estrella mundial y con una importante experiencia en Europa, Barcelona lo adquirió por 24 millones de euros y <i>Masche</i> cumplió su sueño de vestir la casaca <i>Culé</i>. Con el <i>Barça</i> ganaría todos los títulos posibles y de la mano de Guardiola como entrenador, pasaría a jugar unos metros más siendo un zaguero central de categoría.
+    
+    Siempre considerado por todos sus técnicos y muy valorado por todos sus compañeros, Mascherano es sin dudas un símbolo sin importar cual sea el equipo que defienda. De jerarquía internacional, su profesionalismo y liderazgo lo posicionan en la elite del fútbol actual.
+  teams:
+      -
+        id: 4
+        debut: true
+        actual: false
+        highlight: true
+        manager: false
+      -
+        id: 8
+        debut: false
+        actual: false
+        highlight: true
+        manager: false
+      -
+        id: 13
+        debut: false
+        actual: false
+        highlight: false
+        manager: false
+      -
+        id: 17
+        debut: false
+        actual: false
+        highlight: true
+        manager: false
+      -
+        id: 19
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+
+-
+  id: 240
+  firstname: Carlos Alberto 
+  lastname: Tevez
+  jobname: Delantero
+  nicknames: Apache, Carlitos, Jugador del pueblo
+  birthday: "1984-05-02"
+  country: 13
+  twitter: 
+  content: |
+    El <i>Apache</i> fue el apodo que le puso el relator Marcelo Araujo refiriéndose a su lugar de crianza. Nacido en Ciudadela en el barrio Ejército de los Andes -el <i>Fuerte</i> como lo llama el propio <i>Carlitos</i>, a los diez meses de edad un accidente doméstico con agua hirviendo le generó quemaduras de tercer grado.
+    
+    Luego de dejar atrás una infancia complicada, sus indescifrables gambetas que lo destacaban en el potrero lo llevaron a ser figura en las infantiles de All Boys. Sus goles y guapeza para jugar, llamaron rápidamente la atención de los dirigentes Boca que fueron a buscarlo. Pero para que el gran sueño del <i>Apache</i> comenzara, llegaría el momento de cambiar de apellido buscando esquivar conflictos con el club de Floresta.
+    
+    El propio <i>Carlitos</i> siempre explicó que el cambio fue por motivos familiares. En definitiva Carlos Martínez pasó a ser Carlos Tevez -su apellido materno-, aunque lo que no se modificó fueron sus ganas de triunfar. Tras varios años en las inferiores xeneizes, el debut en Primera le llegó a sus 17 años contra Talleres de Córdoba en Octubre de 2001.
+    
+    Con Boca conquistó todo -campeonato local, Libertadores, Intercontinental y Sudamericana-, forjando ya en sus primeros años de carrera una mentalidad ganadora digna de un verdadero líder. 
+    
+    Integrante habitual de las juveniles de la Selección Argentina, el estreno en la mayor sería el 30 de marzo de 2004 contra Ecuador. Ese mismo año ganaría la medalla de oro en los Juegos Olímpicos de Atenas con el equipo de Bielsa, siendo figura y goleador. Este desempeño junto a su gran nivel en Boca, hicieron que el Corinthians no dudara en gastar una cifra récord -para un club sudamericano- por su pase.
+    
+    En Brasil también se convertiría en ídolo saliendo campeón del Brasileirao y siendo goleador; para luego desembarcar en la Premier League con el objetivo de salvar del descenso al West Ham. 
+    
+    Tras cumplir este nuevo desafío, uno de los clubes más poderosos del mundo sería su nuevo destino. Así, en el Manchester United el Apache volvería a su mejor nivel y ganaría varios títulos Champions, Mundial de Clubes, dos Premiers, entre otros-. 
+    
+    Sin embargo, cuando parecía haber encontrado su lugar en el mundo, su carácter tan valorado dentro de la cancha le volvió a jugar una mala pasada. Conflictos con el entrenador y la dirigencia, lo llevaron a cambiar de vereda pero no de ciudad. 
+    
+    En Manchester City se disfrazaría otra vez de héroe consiguiendo la FA Cup 2011, pero sus problemas de comportamiento nuevamente lo pondrían en el centro de la tormenta.
+    Luego de superar sus diferencias con Mancini, DT de los <i>Citizens</i>, <i>Carlitos</i> regresó al equipo para ser figura y en 2012 conquistó la Premier y la Community Shield.  
+    
+    Indisciplinado para algunos, amado por casi todos; Tevez es así. Respetado por su talento y entrega dentro de la cancha, el <i>Apache</i> es uno de los mejores delanteros del planeta.
+  teams:
+      -
+        id: 4
+        debut: true
+        actual: false
+        highlight: true
+        manager: false
+      -
+        id: 8
+        debut: false
+        actual: false
+        highlight: true
+        manager: false
+      -
+        id: 13
+        debut: false
+        actual: false
+        highlight: true
+        manager: false
+      -
+        id: 19
+        debut: false
+        actual: false
+        highlight: true
+        manager: false
+      -
+        id: 17
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+
+-
+  id: 15
+  firstname: Omar Andrés 
+  lastname: Asad
+  jobname: Entrenador
+  nicknames: Turco
+  birthday: "1971-04-09"
+  country: 13
+  twitter: 
+  content: |
+    Desde que llegó a la Primera de Vélez en 1992, el <i>Turco</i> fue ganándose a fuerza goles y sacrificio todo el cariño de la hinchada <i>fortinera</i>. 
+    
+    Considerado uno de los máximos ídolos de la <i>V azulada</i>, convirtió dos de los tantos de mayor trascendencia en la historia del club de Liniers frente a San Pablo en la ida de la final de la Libertadores ´94; y frente al Milan en la final de la Intercontinental del mismo año-.
+    
+    En su trayectoria como futbolista sólo vistió la camiseta <i>velezana</i> y con ésta ganó todo -4 torneos locales y 5 internacionales-. Recordado como una leyenda por el gol que convirtió en Japón ése 8 de diciembre, Asad también dejó su nombre en las páginas de la FIFA al ser fue elegido como el mejor jugador del partido.
+    
+    Tras despedirse del fútbol profesional por problemas en sus rodillas, el <i>Turco</i> inició su carrera como entrenador dirigiendo inferiores en el club de sus amores. Los buenos resultados lo llevaron a hacerse cargo de la reserva del Fortín y luego a tener su chance como técnico de Primera, aunque esta vez cambiaría de equipo.
+    
+    A finales de 2009, Asad llegaba a Godoy Cruz con el objetivo de alejarlo del descenso. Siempre fiel a su estilo, el <i>Tomba</i> del <i>Turco</i> mostró un gran fútbol y se clasificó por primera vez a la Copa Libertadores.
+    
+    En 2011 se mudó a Ecuador para entrenar al Emelec y tuvo una campaña aceptable, pero su paso fue breve. Ante la posibilidad de dirigir a San Lorenzo, Asad se desvinculó y el 24 de mayo desembarcó en el <i>Ciclón</i>. Sin embargo, su experiencia en el conjunto de Boedo no fue la esperada y en noviembre dejó el cargo debido a los malos resultados.
+    
+    Promediando el final del Clausura 2012, regresó a Godoy Cruz donde es muy valorado por su etapa anterior. Defensor del buen juego y el protagonismo ofensivo, Asad es respetado por sus importantes condiciones como líder de grupo.
+  teams:
+      -
+        id: 8
+        debut: true
+        actual: false
+        highlight: true
+        manager: false
+      -
+        id: 13
+        debut: true
+        actual: false
+        highlight: true
+        manager: true
+      -
+        id: 4
+        debut: false
+        actual: false
+        highlight: false
+        manager: true
+      -
+        id: 19
+        debut: false
+        actual: false
+        highlight: false
+        manager: true
+      -
+        id: 17
+        debut: false
+        actual: true
+        highlight: true
+        manager: true
+
+-
+  id: 211
+  firstname: José Santos
+  lastname: Romero
+  jobname: Entrenador
+  nicknames: Pepe
+  birthday: "1951-03-11"
+  country: 13
+  twitter: 
+  content: |
+    Romero se formó en las infantiles de All Boys, para con 16 años llegar a debutar en la Primera del <i>Albo</i> enfrentando a Excursionista en marzo de 1968.
+    
+    Tras lograr el ascenso a la máxima categoría del fútbol argentino en 1972, <i>Pepe</i> termina de consagrarse como figura del conjunto de Floresta. Así, el por entonces talentoso volante ofensivo continuaría en el equipo hasta 1976. 
+    
+    Luego pasaría a Temperley y en el <i>Celeste</i> jugaría hasta 1981, cuando volvería a All Boys para finalizar su carrera. Inmediatamente después de su retiro, comenzaría a trabajar en las inferiores del club de sus amores para tener su estreno como DT en 1986. 
+    
+    Posteriormente se marcharía a Estudiantes de Caseros y recién en 2003 regresaría al <i>Albo</i> para hacerse cargo del Selectivo. Un año más tarde, asumiría como técnico de la Primera aunque los resultados no lo acompañarían y retornaría al equipo juvenil.
+    
+    En 2006 agarraría nuevamente la conducción del plantel profesional y en 2008 se coronaría con el campeonato de la Primera B. Consolidado como uno de los mejores entrenadores del ascenso, su idolatría en Floresta llegó a su punto máximo con el triunfo en la Promoción 2010 ante Central.
+    
+    Luego de la gran victoria en 3 a 0 en Rosario, <i>Pepe</i> llevó a All Boys a Primera División tras 30 años. Devenido en uno de los personajes más gloriosos de la historia del <i>Albo</i>, Romero ha dejado indudablemente su marca como jugador y DT.
+  teams:
+      -
+        id: 4
+        debut: true
+        actual: false
+        highlight: true
+        manager: false
+      -
+        name: Temperley
+        debut: false
+        actual: false
+        highlight: false
+        manager: false
+      -
+        id: 4
+        debut: false
+        actual: false
+        highlight: true
+        manager: false
+      -
+        name: Estudiantes de Caseros
+        debut: true
+        actual: false
+        highlight: false
+        manager: true
+      -
+        id: 4
+        debut: false
+        actual: true
+        highlight: true
+        manager: true
+
+-
+  id: 67
+  firstname: Fabián
+  lastname: Cubero
+  jobname: Defensor
+  nicknames: Poroto
+  birthday: "1978-12-21"
+  country: 13
+  twitter: 
+  content: |
+    Cubero comenzó jugando al <i>baby</i> en el club Almagro de su Mar del Plata natal, para pasar a cancha de 11 y destacarse en las inferiores de Kimberley y Aldosivi.
+    
+    Con 16 años llegó a Rosario para ser parte de Renato Cesarini y posteriormente Carlos Bianchi dio su aprobación para que desembarcara en la cuarta de Vélez. 
+    
+    En 1996 tendría su estreno en Primera de la mano de Osvaldo Piazza y dos años más tarde sería campeón del Clausura. Con su temperamento y carisma, <i>Poroto</i> se convirtió en un referente <i>velezano</i> y en 2005 volvió a coronarse con la obtención de otro campeonato local.
+    
+    Siempre muy valorado por todos sus técnicos, en 2007 cambiaría de rumbo y sería transferido al Tigres de México. Aunque su experiencia por el fútbol azteca sería breve y a mediados de 2008 retornaría a Vélez.
+    
+    Devenido en símbolo y capitán <i>fortinero</i>, se alzaría con el Clausura 2009 y 2011 para continuar haciendo historia. Idolatrado por su entrega y sacrificio, su nombre quedará guardado para siempre en el club de Liniers, siendo el jugador que más veces vistió la <i>V azulada</i>.
+  teams:
+      -
+        id: 8
+        debut: true
+        actual: false
+        highlight: true
+        manager: false
+      -
+        id: 13
+        debut: false
+        actual: false
+        highlight: false
+        manager: false
+      -
+        id: 8
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+
+-
+  id: 145
+  firstname: Gonzalo
+  lastname: Martínez
+  jobname: Volante/Delantero
+  nicknames: Pity
+  birthday: "1993-06-13"
+  country: 13
+  twitter: 
+  content: |
+    Gonzalo Martínez es una de las nuevas promesas del fútbol argentino, que con su importante habilidad y técnica busca llevar a Huracán nuevamente a Primera.
+    
+    Este zurdo de gran pegada que debutó en agosto de 2011 frente Almirante Brown, llegó hace varios años de su Mendoza natal con el sueño de ser figura del equipo <i>quemero</i> y en muy poco tiempo ya lo logró.
+    
+    Desequilibrante y con proyección internacional, <i>Pity</i> es un volante ofensivo de categoría con capacidad para convertirse en líder futbolístico y devolver al <i>Globo</i> a los primeros planos.
+  teams:
+      -
+        id: 13
+        debut: true
+        actual: true
+        highlight: true
+        manager: false
+

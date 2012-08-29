@@ -1,17 +1,303 @@
 -
-  id: 1
+  id: 4
   teamcategory: 1
-  title: Boca
-  foundedAt: 1986-10-19
-  nicknames: Boquita, Boca
-  letters: CABJ
-  shortname: Boca
-  stadium: Bombonera
-  website: http://www.boca.com.ar
-  twitter: boca
-  country: 1
-  external: 1234
-  content: |
-    Boca es un club muy lindo
-    color azul y amarillo
-    es de fútbol
+  title: Club Atlético All Boys
+  foundedAt: "1913-03-15"
+  nicknames: El Albo
+  letters: CAAB
+  shortname: All Boys
+  stadium: Islas Malvinas
+  website: http://www.caallboys.com.ar/
+  twitter: caallboys
+  country: 13
+  external: 668
+
+-
+  id: 8
+  teamcategory: 1
+  title: Club Atlético Vélez Sarsfield
+  foundedAt: "1910-01-01"
+  nicknames: Fortinero, V azulada
+  letters: CAVS
+  shortname: Vélez
+  stadium: José Amalfitani, "El Fortín"
+  website: http://www.velezsarsfield.com.ar/
+  twitter: Velez
+  country: 13
+  external: 20
+
+-
+  id: 13
+  teamcategory: 1
+  title: Club Atlético San Lorenzo de Almagro
+  foundedAt: "1908-04-01"
+  nicknames: Ciclón, Cuervo, Santo, Azulgrana
+  letters: CASLA
+  shortname: San Lorenzo 
+  stadium: Pedro Bidegain, "El Nuevo Gasómetro"
+  website: http://www.sanlorenzo.com.ar/
+  twitter: sanlorenzoclub
+  country: 13
+  external: 19
+
+-
+  id: 17
+  teamcategory: 1
+  title: Club Deportivo Godoy Cruz Antonio Tomba
+  foundedAt: "1921-06-01"
+  nicknames: Tomba, Bodeguero, Expreso
+  letters: GCAT
+  shortname: Godoy Cruz
+  stadium: Malvinas Argentinas
+  website: http://www.clubgodoycruz.com.ar/
+  twitter: clubgodoycruz
+  country: 13
+  external: 132
+
+-
+  id: 19
+  teamcategory: 1
+  title: Club Atlético River Plate
+  foundedAt: "1901-05-25"
+  nicknames: Millonario, Gallinas, La Banda
+  letters: CARP
+  shortname: River
+  stadium: Antonio Vespucio Liberti, "El Monumental"
+  website: http://www.cariverplate.com/
+  twitter: carpoficial
+  country: 13
+
+-
+  id: 35
+  teamcategory: 
+  title: Club Atlético Huracán
+  foundedAt: "1908-01-11"
+  nicknames: Globo, Quemeros
+  letters: CAH
+  shortname: Huracán 
+  stadium: Tomás Adolfo Ducó, "El Palacio"
+  website: http://www.clubahuracan.com.ar/
+  twitter: HuracanOficial
+  country: 13
+
+-
+  id: 61
+  teamcategory: 7
+  title: Fútbol Club Barcelona
+  foundedAt: "1899-09-29"
+  nicknames: Barça, Blaugranas, Culés
+  letters: FCB
+  shortname: Barcelona
+  stadium: Camp Nou
+  website: http://www.fcbarcelona.com
+  twitter: fcbarcelona
+  country: 68
+  external: 31
+
+-
+  id: 64
+  teamcategory: 7
+  title: Club Atlético de Madrid
+  foundedAt: "1903-04-26"
+  nicknames: Colchoneros, Atleti, Rojiblancos
+  letters: CAM
+  shortname: Atlético Madrid
+  stadium: Vicente Calderón
+  website: http://www.clubatleticodemadrid.com
+  twitter: atleti
+  country: 68
+  external: 29
+
+-
+  id: 81
+  teamcategory: 9
+  title: Paris Saint Germain Football Club
+  foundedAt: "1970-10-06"
+  nicknames: Les Parisiens, Rouge et Bleu
+  letters: PSG
+  shortname: Paris SG
+  stadium: Parc des Princes
+  website: http://www.psg.fr/
+  twitter: PSG_inside
+  country: 75
+  external: 1370
+
+-
+  id: 89
+  teamcategory: 9
+  title: Olympique de Marseille
+  foundedAt: "1899-01-01"
+  nicknames: Les Olympiens, Les Phocéens
+  letters: OM
+  shortname: Marseille
+  stadium: Vélodrome
+  website: http://www.om.net
+  twitter: OM_Officiel 
+  country: 75
+  external: 793
+
+-
+  id: 100
+  teamcategory: 6
+  title: Manchester City Football Club
+  foundedAt: "1880-01-01"
+  nicknames: The Citizens
+  letters: MCF
+  shortname: Manchester City
+  stadium: Etihad 
+  website: http://www.mcfc.co.uk/
+  twitter: mcfc
+  country: 181
+  external: 567
+
+-
+  id: 101
+  teamcategory: 6
+  title: Manchester United Football Club
+  foundedAt: "1878-01-01"
+  nicknames: The Red Devils 
+  letters: MUFC
+  shortname: Manchester United
+  stadium: Old Trafford
+  website: http://www.manutd.com/
+  twitter: MUFootballClub
+  country: 181
+  external: 568
+
+-
+  id: 105
+  teamcategory: 6
+  title: Chelsea Football Club
+  foundedAt: "1905-10-03"
+  nicknames: The Blues
+  letters: CFC
+  shortname: Chelsea
+  stadium: Stamford Bridge
+  website: http://www.chelseafc.com/
+  twitter: chelseafc
+  country: 181
+  external: 563
+
+-
+  id: 107
+  teamcategory: 6
+  title: Liverpool Football Club
+  foundedAt: "1892-06-03"
+  nicknames: The Reds
+  letters: LFC
+  shortname: Liverpool
+  stadium: Anfield
+  website: http://www.liverpoolfc.tv/
+  twitter: LFC
+  country: 181
+  external: 566
+
+-
+  id: 119
+  teamcategory: 6
+  title: West Ham United Football Club
+  foundedAt: "1895-01-01"
+  nicknames: The Hammers 
+  letters: WHUFC
+  shortname: West Ham 
+  stadium: Boleyn Ground
+  website: http://www.whufc.com/
+  twitter: whufc_official
+  country: 181
+
+-
+  id: 122
+  teamcategory: 4
+  title: Società Sportiva Calcio Napoli 
+  foundedAt: "1904-01-01"
+  nicknames: Azzurri, Partenopei
+  letters: SSCN
+  shortname: Napoli
+  stadium: San Paolo
+  website: http://www.sscnapoli.it/
+  twitter: SSCNapoli_it
+  country: 118
+  external: 726
+
+-
+  id: 133
+  teamcategory: 4
+  title: Unione Sportiva Città di Palermo 
+  foundedAt: "1900-01-11"
+  nicknames: Rosanero, Aquile
+  letters: USCP
+  shortname: Palermo
+  stadium: Renzo Barbera
+  website: http://www.palermocalcio.it/
+  twitter: US_Palermo
+  country: 118
+  external: 58
+
+-
+  id: 140
+  teamcategory: 8
+  title: Futebol Clube do Porto
+  foundedAt: "1893-09-28"
+  nicknames: Dragões, Azuis e Brancos 
+  letters: FCP
+  shortname: Porto
+  stadium: Do Dragão
+  website: http://www.fcporto.pt/
+  twitter: FC_Porto
+  country: 178
+  external: 797
+
+-
+  id: 184
+  teamcategory: 2
+  title: Sport Club Corinthians Paulista
+  foundedAt: "1910-01-09"
+  nicknames: Timão, Coringão, Todo Poderoso
+  letters: SCC
+  shortname: Corinthians
+  stadium: Pacaembú
+  website: http://www.corinthians.com.br/
+  twitter: sitecorinthians
+  country: 31
+  external: 107
+
+-
+  id: 226
+  teamcategory: 
+  title: Club Sport Emelec
+  foundedAt: "1929-04-28"
+  nicknames: El Bombillo, Eléctricos
+  letters: CSE
+  shortname: Emelec
+  stadium: George Capwell
+  website: http://www.emelec.com.ec/
+  twitter: csemelec
+  country: 60
+
+-
+  id: 266
+  teamcategory: 3
+  title: Danubio Fútbol Club
+  foundedAt: "1932-01-03"
+  nicknames: Franja, Danu, Curva
+  letters: DFC
+  shortname: Danubio
+  stadium: Jardines
+  website: http://www.danubio.org.uy/
+  twitter: DanubioFC
+  country: 228
+  external: 72
+
+-
+  id: 284
+  teamcategory: 
+  title: Club de Fútbol Tigres de la Universidad Autónoma de Nuevo León
+  foundedAt: "1967-07-03"
+  nicknames: Felinos, Auriazules
+  letters: CFT
+  shortname: Tigres
+  stadium: Universitario
+  website: http://www.tigres.com.mx/
+  twitter: TigresOficial
+  country: 154
+
