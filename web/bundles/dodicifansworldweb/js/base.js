@@ -383,14 +383,35 @@ var ajax = {
         });
     },
   
-    genericAction: function(route, params, callback, errorCallback, type){
+    genericAction: function(route, params, callback, errorCallback, type,setGlobalCallback){
         if (typeof type == 'undefined') type = 'post';
-        ajax.setCallback(callback, errorCallback);
-        $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_' + route),
-            type: type,
-            data: params
-        });
+        if (typeof setGlobalCallback == 'undefined' || setGlobalCallback){
+        	ajax.setCallback(callback, errorCallback);
+        	$.ajax({
+                url: 'http://' + location.host + Routing.generate( appLocale + '_' + route),
+                type: type,
+                data: params
+            });
+        }else{
+        	$.ajax({
+                url: 'http://' + location.host + Routing.generate( appLocale + '_' + route),
+                type: type,
+                data: params,
+                success: function(r){
+                    if(typeof(callback) !== 'undefined'){
+                        callback(r);
+                    }
+                },
+                error: function(r){
+                    if(typeof(errorCallback) !== 'undefined'){
+                    	errorCallback(r);
+                    }
+                }
+            });
+        }
+        	
+        
+        
     }
 };
 
