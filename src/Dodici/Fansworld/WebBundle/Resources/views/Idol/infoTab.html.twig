@@ -9,9 +9,10 @@
 
 
 {% block profile_body %}
+    
     {% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_rlsidebar.html.twig" %}
         {% block inner_left_sidebar %}
-            {% include "DodiciFansworldWebBundle:Default:blocks/info_list.html.twig" with { entity:idol, personalData: personalData,  list_title: 'Datos Personales:' } %}
+            {% include "DodiciFansworldWebBundle:Default:blocks/info_list.html.twig" with { entity:idol, personalData: personalData} %}
         {% endblock %}
         
         {% block inner_content %}

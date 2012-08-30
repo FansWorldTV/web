@@ -10,7 +10,7 @@
     {% set list_type = false %}
 {% endif %}
 
-<section id="personalData" class="row-fluid">
+<section id="personal-data" class="row-fluid">
     {% if list_title %}
         <h4>
             {{ list_title }} 
@@ -40,19 +40,19 @@
                     </dd>    
                 {% elseif data == 'sex' %}
                         <dt>Género</dt>
-                        <dd>
-                            <dd>{% if entity.sex == 'm' %}Hombre{% else %}Mujer{% endif %}</dd>
-                        </dd>
+                        <dd>{% if entity.sex == 'm' %}Hombre{% else %}Mujer{% endif %}</dd>
                 {% elseif data == 'idolcareers' %}
                     <dt>Carrera</dt>
                     <dd>
-                    {% for career in entity.idolcareers %}
-                        <dd>{{ career }}</dd>
-                    {% endfor %}
+                        <ul>
+                            {% for career in entity.idolcareers %}
+                                <li>{{ career }}</li>
+                            {% endfor %}
+                        </ul>
                     </dd>    
                 {% else %}
                     {% if attribute(entity, data)  %}
-                        <dt>{{ data }}</dt>
+                        <dt>{{ data|trans }}</dt>
                         <dd>{{ attribute(entity, data) }}</dd>
                     {% endif %}
                 {% endif %}

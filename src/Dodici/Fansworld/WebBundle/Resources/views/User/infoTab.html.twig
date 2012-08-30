@@ -10,6 +10,12 @@
 
 
 {% block profile_body %}
+
+    {% if user == app.user%}
+        <a href="{{ path('fos_user_profile_edit') }}" class="pull-right" style="margin-right: 15px;">Editar</a>
+        <div class="clearfix"></div>
+    {% endif %}
+    
     {% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_lsidebar.html.twig" %}
         {% block inner_sidebar %}
                 {% if user == app.user %}
@@ -17,14 +23,14 @@
                 {% else %}
                     {% set userLogged = false %}
                 {% endif %}
-                {% include "DodiciFansworldWebBundle:Default:blocks/info_list.html.twig" with { entity:user, personalData: personalData, showEdit: userLogged, list_title: 'Tus Datos Personales:', list_type: 'user' } %}
+                {% include "DodiciFansworldWebBundle:Default:blocks/info_list.html.twig" with { entity:user, personalData: personalData, list_type: 'user' } %}
         {% endblock %}
         
         {% block inner_content %}
                 {% if user.content %}
-                    {% include "DodiciFansworldWebBundle:Default:blocks/text_box.html.twig" with { box_title: 'Sobre mi:', box_content: user.content, box_class: 'aboutMe' } %}
+                    {% include "DodiciFansworldWebBundle:Default:blocks/text_box.html.twig" with { box_content: user.content, box_class: 'aboutMe' } %}
                 {% endif %}
-                {#
+                
                 <section id="myInterests">
                     <dl>
                         {% for interest in interests %}
@@ -40,7 +46,7 @@
                         {% endfor %}
                     </dl>
                 </section>
-                #}
+                
         {% endblock %}
     {% endembed %}		
 {% endblock %}

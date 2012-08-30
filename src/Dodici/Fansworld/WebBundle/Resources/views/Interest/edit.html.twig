@@ -13,78 +13,71 @@
     {{ parent() }}
 {% endblock %}
 
-{% block profile_edit_body %}
+{% block profile_body %}
 <section class="row-fluid">
-    <div class="row">
-        {% set index = 1 %}
-        {% for sport in sports %}
-            <div class="span7">
-                    <h3>{{index}}. De que equipo de {{ sport.title }} eres hincha?</h4>
-                    <p>Ultricies nisl dignissim lobortis. Nunc eu tincidunt massa. Nullam mi ant</p>
-                    <input type="text" class="team-chooser" data-sport-id="{{sport.id}}"/>
-                    {% for team in sport.teams %}
-                        {% if sport.selected == team.id%}
-                            <div class="well selectedteam" data-team-id = "{{team.id}}">
-                                    <!--button class="close">&times;</button-->
-                                    <table>
-                                        <tr>
-                                            <td>
-                                                {% thumbnail team.image, 'avatar' %}
-                                            </td>
-                                            <td align="center" style="width:225px;">
-                                                <h4>{{ team }}</h4>
-                                                <a href="#"></a>
-                                            </td>
-                                        </tr>
-                                    </table>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-            </div>
-            {% set index = index+1 %}
-        {% endfor %}
+    {% set index = 1 %}
+    {% for sport in sports %}
+        <div class="span7">
+                <h3>{{index}}. De que equipo de {{ sport.title }} eres hincha?</h4>
+                <p>Ultricies nisl dignissim lobortis. Nunc eu tincidunt massa. Nullam mi ant</p>
+                <input type="text" class="team-chooser" data-sport-id="{{sport.id}}"/>
+                {% for team in sport.teams %}
+                    {% if sport.selected == team.id%}
+                        <div class="well selectedteam" data-team-id = "{{team.id}}">
+                                <!--button class="close">&times;</button-->
+                                <table>
+                                    <tr>
+                                        <td>
+                                            {% thumbnail team.image, 'avatar' %}
+                                        </td>
+                                        <td align="center" style="width:225px;">
+                                            <h4>{{ team }}</h4>
+                                            <a href="#"></a>
+                                        </td>
+                                    </tr>
+                                </table>
+                        </div>
+                    {% endif %}
+                {% endfor %}
         </div>
-        
-        <div class="well selectedteam template hidden" data-team-id = "">
-                <table>
-                    <tr>
-                        <td class="avatar">
-                        </td>
-                        <td align="center" style="width:225px;">
-                            <h4 class="title"></h4>
-                            <a href="#"></a>
-                        </td>
-                    </tr>
-                </table>
-        </div>
-    </section>
+        {% set index = index+1 %}
+    {% endfor %}
+    <div class="well selectedteam template hidden" data-team-id = "">
+        <table>
+            <tr>
+                <td class="avatar">
+                </td>
+                <td align="center" style="width:225px;">
+                    <h4 class="title"></h4>
+                    <a href="#"></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>
 
 
     <section class="row-fluid">
+        <h3>{{index}}. Tienes otros intereses?</h3>
         <div class="row">
-            <h3>{{index}}. Tienes otros intereses?</h3>
-        </div>
-        <div class="row">
-            <div class="span7">
-                <table class="table categories" data-iduser="{{ app.user.id }}">
-                    <tbody>
-                        {% for category in categories %}
-                            <tr>
-                                <td>{{ category }}</td>
-                                <td>
-                                    <input type="text" class="interest-chooser" data-idcategory="{{ category.id }}" />
-                                    <ul class="currentinterests list-labels">
-                                    </ul>
-                                </td>
-                            </tr>
-                        {% endfor %}
+            <table class="table categories" data-iduser="{{ app.user.id }}">
+                <tbody>
+                    {% for category in categories %}
                         <tr>
-                            <td></td>
-                            <td></td>
+                            <td>{{ category }}</td>
+                            <td>
+                                <input type="text" class="interest-chooser" data-idcategory="{{ category.id }}" />
+                                <ul class="currentinterests list-labels">
+                                </ul>
+                            </td>
                         </tr>
-                    </tbody>
-                </table>
-            </div>
+                    {% endfor %}
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </section>
 
