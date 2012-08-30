@@ -41,13 +41,16 @@ class ProfileController extends BaseController
     }
 
     /**
-     *  @Route("/u/{username}/account", name="profile_account")
+     *  @Route("/profile/account", name="profile_account")
      */
-    public function accountAction($username)
+    public function accountAction()
     {
-        $user = $this->container->get('Doctrine')->getRepository("ApplicationSonataUserBundle:User")->findOneBy(array('username' => $username));
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        if (!is_object($user) || !($user instanceof UserInterface)) {
+            throw new AccessDeniedException('This user does not have access to this section.');
+        }
         return $this->container->get('templating')->renderResponse(
-                        'DodiciFansworldWebBundle:User:profile_edit/account.html.twig', array('user' => $user)
+            'DodiciFansworldWebBundle:User:profile_edit/account.html.twig', array('user' => $user)
         );
     }
 
