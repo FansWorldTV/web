@@ -1,7 +1,7 @@
 <?php
 namespace Dodici\Fansworld\WebBundle\DataFixtures\ORM;
 
-use Dodici\Fansworld\WebBundle\Entity\Sport;
+use Dodici\Fansworld\WebBundle\Entity\VideoCategory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -10,9 +10,9 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Yaml\Yaml;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
-class LoadSportData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
+class LoadVideoCategoryData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
 {
-	const YAML_PATH = '../sports.yml';
+	const YAML_PATH = '../videocategories.yml';
 	
 	private $container;
 
@@ -27,21 +27,21 @@ class LoadSportData extends AbstractFixture implements FixtureInterface, Contain
 	    	$loader = Yaml::parse(__DIR__.'/'.self::YAML_PATH);
 	    	
 	        foreach ($loader as $ct) {
-	        	$sport = new Sport();
+	        	$videocategory = new VideoCategory();
 	        	
 	            if (is_array($ct['title'])) {
 	        		foreach ($ct['title'] as $locale => $title) {
-	        			$sport->setTranslatableLocale($locale);
-	        			$sport->setTitle($title);
-	        			$manager->persist($sport);
+	        			$videocategory->setTranslatableLocale($locale);
+	        			$videocategory->setTitle($title);
+	        			$manager->persist($videocategory);
 	        			$manager->flush();
 	        		}
 	        	} else {
-	        		$sport->setTitle($ct['title']);
-	        		$manager->persist($sport);
+	        		$videocategory->setTitle($ct['title']);
+	        		$manager->persist($videocategory);
 	        	}
 	        	
-		        $this->addReference('sport-'.$ct['id'], $sport);
+		        $this->addReference('videocategory-'.$ct['id'], $videocategory);
 	        }
 	        
 	        $manager->flush();
@@ -52,6 +52,6 @@ class LoadSportData extends AbstractFixture implements FixtureInterface, Contain
     
 	public function getOrder()
     {
-        return 3; // the order in which fixtures will be loaded
+        return 9; // the order in which fixtures will be loaded
     }
 }

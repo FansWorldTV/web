@@ -52,6 +52,7 @@ class BatchController extends SiteController
      */
     public function videoProcessingAction()
     {
+        set_time_limit(600);
         $videos = $this->getRepository('Video')->pendingProcessing(10);
         $uploader = $this->get('video.uploader');
         

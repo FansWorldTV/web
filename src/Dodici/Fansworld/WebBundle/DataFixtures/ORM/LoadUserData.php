@@ -59,8 +59,23 @@ class LoadUserData extends AbstractFixture implements FixtureInterface, Containe
 	                    $user->setImage($media);
 		        	}
 		        }
+		        
+	            if (isset($ct['splash']) && $ct['splash']) {
+		        	$splashpath = __DIR__.'/'.self::IMAGE_FILE_PATH.'/'.$ct['splash'];
+		        	if (is_file($splashpath)) {
+			        	$mediaManager = $this->container->get("sonata.media.manager.media");
+	                    $media = new Media();
+	                    $media->setBinaryContent($splashpath);
+	                    $media->setContext('default');
+	                    $media->setProviderName('sonata.media.provider.image');
+	                    $mediaManager->save($media);
+	                    
+	                    $user->setSplash($media);
+		        	}
+		        }
 		
 		        $manager->persist($user);
+		        $this->addReference('user-'.$ct['id'], $user);
 	        }
 	        
 	        $manager->flush();
