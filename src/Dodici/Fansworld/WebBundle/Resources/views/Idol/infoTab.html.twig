@@ -17,7 +17,7 @@
         
         {% block inner_content %}
                 {% if idol.content %}
-                    {% include "DodiciFansworldWebBundle:Default:blocks/text_box.html.twig" with { box_title: 'Sobre mi:', box_content: idol.content, box_class: 'entity-content' } %}
+                    {% include "DodiciFansworldWebBundle:Default:blocks/text_box.html.twig" with { box_content: idol.content, box_class: 'aboutMe', box_title: '' } %}
                 {% endif %}
         {% endblock %}
         
