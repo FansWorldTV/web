@@ -94,12 +94,12 @@ class UserController extends SiteController
                 'level',                   
         );
         
-        
         return array(
             'user' => $user, 
             'friendgroups' => $friendGroups, 
             'interests' => $interests,
             'personalData' => $personalData,
+            'categories' => $this->getRepository('InterestCategory')->findBy(array(), array('title' => 'ASC'))
         );
     }
 

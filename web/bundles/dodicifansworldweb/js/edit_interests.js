@@ -3,17 +3,21 @@ jQuery.fn.refreshCategory = function() {
     var idcategory = el.attr('data-idcategory');
     var iduser = el.parents('table.categories').attr('data-iduser');
 
+    console.log('ID CATEGORY:'+idcategory);
+    console.log('ID USER:'+iduser);
+
     var ul = el.parent().find('.currentinterests');
     ul.empty().addClass('loading');
 	
-	
+	console.log('empieza el ajax');
     ajax.genericAction('interest_ajaxget', {
         idcategory: idcategory, 
         iduser: iduser
     }, 
     function(data){
+        console.log('termino');
         $.each(data, function(){
-            formInterestItem(this)
+            formInterestItem(this, ul.attr('no-close-button'))
             .appendTo( ul );
         });
         ul.removeClass('loading');
@@ -150,9 +154,15 @@ $(function(){
     });
 });
 
-function formInterestItem(item) {
-    return $( "<li class='label'></li>" )
+function formInterestItem(item, cantClose) {
+    
+    var element = $( "<li class='label'></li>" )
     .attr('data-idinterest', item.id)
-    .append( "<img alt='' src='"+item.image+"' /> <span class='name'>" + item.title + "</span>" )
-    .append( "<a class='close deleteinterest' href='#'>&times;</a>" );
+    .append( "<img alt='' src='"+item.image+"' /> <span class='name'>" + item.title + "</span>" );
+    
+    if(typeof(cantClose) == 'undefined'){
+        element.append( "<a class='close deleteinterest' href='#'>&times;</a>" );
+    }
+    
+    return element;
 }

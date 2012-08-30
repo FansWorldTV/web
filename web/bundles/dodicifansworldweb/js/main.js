@@ -416,9 +416,9 @@ var site = {
                 slicePoint = $(this).attr('data-slice-point');
             }
             $(this).expander({
-               slicePoint: slicePoint,
-               expandText: 'más',
-               userCollapseText: 'ocultar'
+                slicePoint: slicePoint,
+                expandText: 'más',
+                userCollapseText: 'ocultar'
             });
         });
     },
