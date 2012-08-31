@@ -416,6 +416,12 @@ section.avatar-grid{
             margin-top: 15px;
         }
 
+        .fan-container:hover {
+            .name a, .friendCount {
+                display: block;
+            }
+        }
+
         >li{
             margin-right: 6px;
             margin-bottom: 8px;
@@ -425,6 +431,7 @@ section.avatar-grid{
                 
                 .name{
                     a{
+                        display: none;
                         color: @white;
                         font-size: 20px;
                         font-weight: bold;
@@ -460,6 +467,7 @@ section.avatar-grid{
                     position: absolute;
                     right: 10px;
                     text-shadow: 1px 1px 0 rgba(128,128,128,.5);
+                    display: none;
                 }
             }
             
