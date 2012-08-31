@@ -6,7 +6,6 @@
     {% set avatars = avatars|merge({'ulClass': ''}) %}
 {% endif %}
 
-
 <section class="avatar-grid">
     {% if block_title is defined %}
         <header class='title'>
@@ -35,14 +34,14 @@
                     <div class='{{ avatars.containerClass }}'>
                         
                             <div class="avatar">
-                                        {% if avatar.image %}
+                                {% if avatar.image %}
                                     {% thumbnail avatar.image, 'big_square' %}
                                 {% else %}
                                     <img src="{{ asset('bundles/dodicifansworldweb/images/profile_no_image.png' )}}" />
                                 {% endif %}
-                                </div>
-                                <span class="name"><a href="{{ pathUrl }}">{{ avatar}}</a></span>
-                                <span class="friendCount">{% if fanCount is defined %}{{ fanCount }}{% endif %}</span>
+                            </div>
+                            <span class="name"><a href="{{ pathUrl }}">{{ avatar}}</a></span>
+                            <span class="friendCount">{% if fanCount is defined %}{{ fanCount }}{% endif %}</span>
 
                             {% include "DodiciFansworldWebBundle:Default:blocks/fan_button.html.twig" with { entity:  avatar } %}
                             
