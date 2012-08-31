@@ -404,12 +404,18 @@ div.twitter-tab {
 section.avatar-grid{
     overflow: hidden;
     margin-bottom: 15px;
+
     header.title{
         h4{
             color: #4d4d4d;
         }
     }
+
     ul.avatar-list{
+        &.fans {
+            margin-top: 15px;
+        }
+
         >li{
             margin-right: 6px;
             margin-bottom: 8px;
@@ -425,6 +431,7 @@ section.avatar-grid{
                         position: absolute;
                         text-align: center;
                         top: 15px;
+                        left: 10px;
                         max-width: 100%;
                         overflow: hidden;
                         text-overflow: ellipsis;
@@ -438,6 +445,10 @@ section.avatar-grid{
                     .btn_friendship{
                         text-transform: uppercase;
                         font-weight: bold;
+                        width: 60px;
+                        font-size: 12px;
+                        padding: 0px;
+                        height: 25px;
                     }
                 }
                 
@@ -452,6 +463,9 @@ section.avatar-grid{
                 }
             }
             
+        }
+        >li:last-child {
+            margin-right: 0;
         }
     }
     
