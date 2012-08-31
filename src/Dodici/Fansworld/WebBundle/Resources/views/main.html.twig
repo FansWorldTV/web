@@ -47,6 +47,7 @@
                 
                 <script type="text/javascript">
                     var appLocale = '{{ app.request.locale }}';
+                    var isLoggedIn = {% if is_granted("IS_AUTHENTICATED_FULLY") %} true {% else %} false {% endif %};
                 </script>
                 
                 <script src="https://apis.google.com/js/plusone.js"></script>
@@ -78,6 +79,7 @@
                            'bundles/dodicifansworldweb/js/share.js'
                            'bundles/dodicifansworldweb/js/list.js'
                            'bundles/dodicifansworldweb/js/video_audience.js'
+                           'bundles/dodicifansworldweb/js/login_required.js'
 				%}
 				<script type="text/javascript" src="{{ asset_url }}"></script>
 				{% endjavascripts %}

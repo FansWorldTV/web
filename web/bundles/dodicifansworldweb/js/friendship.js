@@ -27,7 +27,7 @@ var friendship = {
             var self = $(this);
             self.addClass('loading-small');
             
-            var targetId = $(this).closest('div.addFriend').attr('targetId');
+            var targetId = $(this).closest('[data-add-fan]').attr('data-id');
             var friendgroups = [];
             
             $("ul.friendgroupsList li input:checkbox:checked").each(function(k, el){

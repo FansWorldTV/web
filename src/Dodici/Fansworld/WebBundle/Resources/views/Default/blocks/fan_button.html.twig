@@ -24,14 +24,13 @@
 
 
 {% if fship is defined %}
-    {% if canFriend and ((fship is null) or (fship == false)) %}
-        
-        <div class="addFriend" targetId="{{ entity.id }}">
-            <button class="btn {{ buttonSize }} btn_friendship add btn-success"> Ser fan {{ solicitar }}</button>
-        </div>
-    {% elseif (fship) %}
+    {% if is_granted("IS_AUTHENTICATED_FULLY") and (fship) %}
         <div class="addFriend" ">
             <button class="btn {{ buttonSize }} btn_friendship btn-success"> ya sos fan</button>
+        </div>
+    {% else %}
+        <div class="addFriend" data-type="{{ fType }}" data-id="{{ entity.id }}" data-add-fan data-login-required >
+            <button class="btn {{ buttonSize }} btn_friendship add btn-success"> Ser fan {{ solicitar }}</button>
         </div>
     {% endif %}
 {% endif %}
