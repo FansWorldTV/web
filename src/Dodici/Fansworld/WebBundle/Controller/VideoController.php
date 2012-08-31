@@ -30,7 +30,7 @@ use Dodici\Fansworld\WebBundle\Model\VideoRepository;
 class VideoController extends SiteController
 {
 
-    const cantVideos = 10;
+    const cantVideos = 20;
 
     /**
      * rightbar

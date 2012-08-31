@@ -2,8 +2,26 @@
 {% if thumbnailSize is not defined %}
     {% set thumbnailSize = 'medium' %}  
 {% endif %}
+
+{% if dataListFilters is not defined %}
+    {% set dataListFilters = '#list-filters' %}  
+
+{% endif %}
+
+{% if dataListResult is not defined %}
+    {% set dataListResult = 'data-list-result' %}
+{% else %}
+    {% set dataListResult = 'data-list-result="' ~ dataListResult ~ '"' %}
+{% endif %}
+
+{% if dataListScrollable is not defined %}
+    {% set dataListScrollable = '' %}
+{% else %}
+    {% set dataListScrollable = 'data-list-scrollable' %}
+{% endif %}
+
 <div class="row-fluid">
-    <div id="am-container" class="am-container list-mosaic" data-list-result>
+    <div id="am-container" class="am-container list-mosaic" data-list data-list-entity="video" {{dataListResult}} {{dataListScrollable}} data-list-filters="{{ dataListFilters }}">
         {% if videos|length>0 %}
             {% for video in videos %}
                 <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">

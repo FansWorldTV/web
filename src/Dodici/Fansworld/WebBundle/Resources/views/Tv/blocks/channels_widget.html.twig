@@ -1,6 +1,6 @@
 <section class='channels-widget row-fluid'>
     <aside class='channels-list span2'>
-        <ul id="myTab">
+        <ul id="filter-channels">
             <li class='active' ><a data-toggle="tab" data-target="#all">All</a></li>
             {% for channel in channels %}
                 <li><a data-toggle="tab" data-target="#{{ channel.channelName }}">{{ channel.channelName }}</a></li>
@@ -21,7 +21,7 @@
                 {% endif %}
             </div>
             <div class="span8 content-container">
-                {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with{videos: videosDestacadosFW, thumbnailSize: 'video'} %}
+                {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with{videos: videosDestacadosFW, thumbnailSize: 'video', dataListFilters: '#filter-channels'} %}
             </div>
         </div>
         {% for channel in channels %}

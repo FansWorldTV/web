@@ -107,6 +107,8 @@ var site = {
         
         $('[data-wall]').wall();
         site.bindCarousel();
+        
+        $('[data-list]').list();
     },
     
     parseTimes: function(){
