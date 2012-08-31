@@ -56,7 +56,6 @@
                 ceaseFireOnEmpty: false,
                 loader: 'cargando',
                 callback: function() {
-                    console.log('endlessScroll callback() called');
                     if(typeof callback != "undefined") {
                         callback();
                     }
@@ -100,8 +99,6 @@
             window.endlessScrollPaused = true;
             
             ajax.genericAction(methodName, opts, function(response) {
-                console.log(response);
-                
                 if(!response.elements || !response.elements.length) {
                     settings.result.html("<h2>No se encontraron videos.</h2>");
                     $list.data('fetchLock', false)
