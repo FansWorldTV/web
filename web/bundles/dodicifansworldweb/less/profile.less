@@ -578,23 +578,26 @@ section.eventgrid-container{
 
 div.change-password {
 
-    .actual-password {
-        input:not([type='checkbox']) {
-            width: 100% !important;
+    .actual-password, .new-password {
+        label {
+            float: left;
+            width: 20%;
         }
-    }
-    .new-password {
         input:not([type='checkbox']) {
-            width: 100% !important;
+            float: left;
+            width: 70% !important;
         }
-        
-        .accept-terms {
-            p {
-                width: 200px;
-            }
+        button {
+            margin-left: 20%;
         }
     }
 
+    .errors.row{
+        color: red;
+        font-weight: bold;
+        padding-left: 20%;
+        padding-bottom: 5px;
+    }
 }
 
 section#personal-data {
