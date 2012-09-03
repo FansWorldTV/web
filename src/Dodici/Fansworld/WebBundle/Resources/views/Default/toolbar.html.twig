@@ -1,5 +1,5 @@
 <ul class='well sidebar-nav sidebar-nav-fixed' id='left-menu'>
-    {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
     <li>
         <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}">
             <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_alert.gif' )}}" />

@@ -24,7 +24,7 @@
 
 
 {% if fship is defined %}
-    {% if is_granted("IS_AUTHENTICATED_FULLY") and (fship) %}
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and (fship) %}
         <div class="addFriend" ">
             <button class="btn {{ buttonSize }} btn_friendship btn-success"> ya sos fan</button>
         </div>

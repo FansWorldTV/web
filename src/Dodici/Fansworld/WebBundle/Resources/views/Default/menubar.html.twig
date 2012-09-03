@@ -57,7 +57,7 @@
                 
             </form>
             
-            {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 
             </div>
         
@@ -98,7 +98,7 @@
     </div>
 </nav>
 
-{% if not is_granted("IS_AUTHENTICATED_FULLY") %}
+{% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
                 <div id='login-widget'>
                     <div class='arrow-up'></div>

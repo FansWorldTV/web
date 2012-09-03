@@ -50,6 +50,7 @@ security:
             anonymous:          true
             remember_me:
                 key:      hAjImSA8637
+                always_remember_me: true
         main:
             switch_user:        true
             context:            user
