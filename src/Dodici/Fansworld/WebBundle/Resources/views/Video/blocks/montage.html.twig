@@ -1,32 +1,40 @@
 <!-- Listado de videos para mostrar como montage -->
 {% if thumbnailSize is not defined %}
-    {% set thumbnailSize = 'medium' %}  
+    {% set thumbnailSize = 'medium' %}
 {% endif %}
 
-{% if dataListFilters is not defined %}
-    {% set dataListFilters = '#list-filters' %}  
-
-{% endif %}
-
-{% if dataListResult is not defined %}
-    {% set dataListResult = 'data-list-result' %}
+{% if listFilters is not defined %}
+    {% set listFilters = '' %}
 {% else %}
-    {% set dataListResult = 'data-list-result="' ~ dataListResult ~ '"' %}
+    {% set listFilters = ' data-list-filters="' ~ listFilters ~ '"' %}
 {% endif %}
 
-{% if dataListScrollable is not defined %}
-    {% set dataListScrollable = '' %}
+{% if listResult is not defined %}
+    {% set listResult = '' %}
 {% else %}
-    {% set dataListScrollable = 'data-list-scrollable' %}
+    {% set listResult = ' data-list-result="' ~ listResult ~ '"' %}
 {% endif %}
 
+{% if listScrollable is not defined %}
+    {% set listScrollable = '' %}
+{% else %}
+    {% set listScrollable = ' data-list-scrollable' %}
+{% endif %}
+
+{% if listFetchMoreButton is not defined %}
+    {% set listFetchMoreButton = '' %}
+{% else %}
+    {% set listFetchMoreButton = ' data-list-fetch-more-button' %}
+{% endif %}
+
+{% set listParams = 'data-list data-list-entity="video"' ~ listFilters ~ listResult ~ listScrollable ~ listFetchMoreButton %}
 <div class="row-fluid">
-    <div id="am-container" class="am-container list-mosaic" data-list data-list-entity="video" {{dataListResult}} {{dataListScrollable}} data-list-filters="{{ dataListFilters }}">
+    <div class="am-container list-mosaic" {{listParams|raw}}>
         {% if videos|length>0 %}
             {% for video in videos %}
                 <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
                     <span class="title">{{ video.title }}</span>
-                    {% thumbnail video.image, thumbnailSize  with {"title": video.title}%}
+                    {% thumbnail video.image, thumbnailSize with {"title": video.title} %}
                 </a>
             {% endfor %}
         {% else %}

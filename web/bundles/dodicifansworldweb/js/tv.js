@@ -29,7 +29,7 @@ var tv = {
 		    
 		    var filter = $(this).attr('filter-type');
 	        
-	        tv.rankingUpdate.widget(activeChannel,filter,targetDataList,{});
+//	        tv.rankingUpdate.widget(activeChannel,filter,targetDataList,{});
 		});
 	},
 	

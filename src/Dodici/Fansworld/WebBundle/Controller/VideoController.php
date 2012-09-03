@@ -149,7 +149,7 @@ class VideoController extends SiteController
             
         }
         
-        $response['addMore'] = $countAll > (($page) * self::cantVideos) ? true : false;
+        $response['addMore'] = $countAll > ($page * self::cantVideos) ? true : false;
         foreach ($videos as $video) {
             $tags = array();
             foreach ($video->getHastags() as $tag) {
@@ -481,7 +481,7 @@ class VideoController extends SiteController
             $countAll = $videoRepo->countSearch(null, $user, null, null, $author, null, null, $taggedEntity);
         }
 
-        $response['addMore'] = $countAll > self::cantVideos ? true : false;
+        $response['addMore'] = $countAll > (self::cantVideos * $page) ? true : false;
 
         foreach ($videos as $video) {
             $response['elements'][] = array(
@@ -539,8 +539,7 @@ class VideoController extends SiteController
         $videos = $videoRepo->search(null, $user, self::cantVideos, $offset, null, null, $author, null, null, 'default', $taggedEntity);
         $countAll = $videoRepo->countSearch(null, $user, null, null, $author, null, null, $taggedEntity);
 
-        $response['addMore'] = $countAll > self::cantVideos ? true : false;
-
+        $response['addMore'] = $countAll > (self::cantVideos * $page) ? true : false;
         foreach ($videos as $video) {
             $response['elements'][] = array(
                 'id' => $video->getId(),
