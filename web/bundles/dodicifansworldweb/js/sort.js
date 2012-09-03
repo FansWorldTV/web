@@ -2,7 +2,6 @@
     $.fn.sort = function(criteria){
         var self = this;
         var sort = {};
-        var mosaicStarted = false;
         
         if(typeof(criteria) =='undefined'){
             sort.criteria	= 'popular';
@@ -27,27 +26,14 @@
                 minsize: false
             });
             get(sort);
-            bindAddMore(function(){
+            /*
+            montageHelper.bindAddMore(function(){
                 get(sort);
             });
+            */
         }
     };
 })( jQuery );
-
-function bindAddMore(callback){
-    $(window).endlessScroll({
-        fireOnce: true,
-        enableScrollTop: false,
-        inflowPixels: 100,
-        fireDelay: 250,
-        intervalFrequency: 2000,
-        ceaseFireOnEmpty: false,
-        loader: 'cargando',
-        callback: function() {
-            callback();
-        }
-    });
-}
 
 
 function get(sort){
@@ -76,27 +62,24 @@ function get(sort){
     }
     window.endlessScrollPaused = true;
     ajax.genericAction(methodName, opts, function(r){
-        var c = 0;
-        
-        for(var i in r.elements){
-            var element = r.elements[i];
-            templateHelper.renderTemplate(sort.dataList + "-list_element", element, "[data-list-result]", false, function(){
-                site.startMosaic($("[data-list-result]"), {
-                    minw: 150, 
-                    margin: 0, 
-                    liquid: true, 
-                    minsize: false
-                });
-                $("[data-new-element]").imagesLoaded(function(){
-                    if(c>0){
-                        $('[data-list-result]').montage('add', $("[data-new-element]"));
-                    }
-                    $("[data-new-element]").removeAttr('data-new-element');
-                });
+    	
+    	templateHelper.renderTemplate(sort.dataList + "-list_element", r.elements, "[data-list-result]", false, function(){
+    		montageHelper.doMontage($("[data-list-result]"), {
+                minw: 150, 
+                margin: 0, 
+                liquid: true, 
+                minsize: false
             });
-            c++;
-        }
-        
+            
+            $("[data-new-element]").imagesLoaded(function(){
+                
+            	console.log( $('[data-list-result]').montage);
+                //$('[data-list-result]').montage('add', $("[data-new-element]"));
+                
+                $("[data-new-element]").removeAttr('data-new-element');
+            });
+        });
+    	
         if(r.addMore){
             window.endlessScrollPaused = false;
         }else{

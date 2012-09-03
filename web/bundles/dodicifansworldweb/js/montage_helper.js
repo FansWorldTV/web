@@ -41,6 +41,21 @@ var montageHelper = {
     	
     },
     
+    bindAddMore: function(callback){
+    	$(window).endlessScroll({
+            fireOnce: true,
+            enableScrollTop: false,
+            inflowPixels: 100,
+            fireDelay: 250,
+            intervalFrequency: 2000,
+            ceaseFireOnEmpty: false,
+            loader: 'cargando',
+            callback: function(r) {
+                callback(r);
+            }
+        });
+    }
+    
     
     
     
