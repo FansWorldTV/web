@@ -28,6 +28,13 @@
             <div>
               {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video, sharebutton: false, likebutton: false} %}
             </div>
+            
+            <div class="content">
+                {% if video.content %}
+                    <p data-expandable data-slice-point="120">{{ video.content }}</p>
+                {% endif %}
+            </div>
+            
             {% include 'DodiciFansworldWebBundle:Comment:blocks/box.html.twig' with {entity: video} %}
         {% endblock %}
             
