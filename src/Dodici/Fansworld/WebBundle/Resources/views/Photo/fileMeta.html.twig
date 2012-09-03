@@ -38,7 +38,7 @@
     
                         <li class="clearfix">
                             <label for="form_tagtext">Tags</label>
-                            <div class="field">
+                            <div class="control-group">
                                 <input class="completer" type="text" id="form_tagtextac" data-route="tag_ajaxget" data-field="form_tagtext" />
                                 <ul class="selectedtags"></ul>
                             </div>
@@ -46,7 +46,7 @@
                         
                         <li class="clearfix">
                             <label for="form_tagtext">Fans / Idolos</label>
-                            <div class="field">
+                            <div class="control-group">
                                 <input class="completer" type="text" id="form_taguserac" data-route="user_ajaxmatching" data-field="form_taguser" />
                                 <ul class="selectedtags">
                                     {% if idolToTag %}
@@ -64,7 +64,7 @@
             </form>
         </div>
         <div class="templateFieldAlbumName hidden">
-            <div class="field" style="display:none;"><input type="text" name="album_new_name" /></div>
+            <div class="control-group" style="display:none;"><input type="text" name="album_new_name" /></div>
         </div>
     {% endif %}
  

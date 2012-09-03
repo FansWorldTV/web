@@ -8,13 +8,14 @@ $(function(){
         if (el.val() == 'NEW') {
             spawnNewAlbumField(el);
         } else {
-            $('#form_album_new_name').parents('.field').slideUp('fast',function(){
+            $('#form_album_new_name').parents('.control-group').slideUp('fast',function(){
                 $(this).remove();
                 resizePopup();
             });
         }
     });
 });
+
 
 function bindAlbumActions(){
     if ($('#form_album').val() == 'NEW') {
@@ -26,16 +27,16 @@ function bindAlbumActions(){
         if (el.val() == 'NEW') {
             spawnNewAlbumField(el);
         } else {
-            $('#form_album_new_name').parents('.field').remove();
+            $('#form_album_new_name').parents('.control-group').remove();
         }
     });
 }
 
 function spawnNewAlbumField(el) {
-	var newfield = $(".templateFieldAlbumName .field").clone();
+	var newfield = $(".templateFieldAlbumName .control-group").clone();
 	newfield.find('input').attr('id', 'form_album_new_name');
-	el.parents('.field').after(newfield);
-	$('#form_album_new_name').parents('.field').slideDown('fast', function(){
+	el.parents('.control-group').after(newfield);
+	$('#form_album_new_name').parents('.control-group').slideDown('fast', function(){
 		resizePopup();
 	});
 }
@@ -47,15 +48,19 @@ function bindFormSubmit(){
 
         $.colorbox({        
             href: href ,
-            data: data
+            data: data,
+            onComplete: function(){
+                bindFormActions();
+                resizePopup();
+            }
         });
         return false;
     });
 }
 
 function bindFormActions(){
-    bindFormSubmit()
-    bindAlbumActions()
+    bindFormSubmit();
+    bindAlbumActions();
 }
 
 function createUploader(){            
@@ -84,15 +89,13 @@ function createUploader(){
             resizePopup();
         },
         onProgress: function(id, fileName, loaded, total){
-            if (loaded != total){
-                $( "#progressbar" ).progressbar({
-                    value: Math.round(loaded / total * 100)
-                });
+            
+        	if (loaded != total){
+                $( "#progressbar .bar" ).css('width',Math.round(loaded / total * 100)+'%');
             } else {                                   
-                $( "#progressbar" ).progressbar({
-                    value: 100
-                });
+                $( "#progressbar .bar" ).css('width','100%');
             }  
+            
             resizePopup();
             
         }

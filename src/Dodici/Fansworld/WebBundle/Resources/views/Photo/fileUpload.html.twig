@@ -7,16 +7,23 @@
 {% endblock %}
     
 {% block javascripts %}
-	<script src="{{ asset('bundles/dodicifansworldweb/js/base.js') }}" type="text/javascript"></script>
-	<script src="{{ asset('bundles/dodicifansworldweb/js/popup_upload_photo.js') }}" type="text/javascript"></script>
-	<script src="{{ asset('bundles/dodicifansworldweb/js/file-uploader/fileuploader.js') }}" type="text/javascript"></script>
+	
 	<script src="{{ asset('bundles/dodicifansworldweb/js/popup.js') }}" type="text/javascript"></script>
+	
+	
+	<script src="{{ asset('bundles/dodicifansworldweb/js/file-uploader/fileuploader.js') }}" type="text/javascript"></script>
+	
+	
+	<script src="{{ asset('bundles/dodicifansworldweb/js/popup_upload_photo.js') }}" type="text/javascript"></script>
+	
 {% endblock %}
 
 {% block content %} 
-    	<div class="greybox">
-    		<div id="file-uploader">        
-            </div>
-            <div id="progressbar"></div>
+	<div class="greybox">
+		<div id="file-uploader">        
         </div>
+        <div id='progressbar' class="progress progress-striped active">
+            <div class="bar" style="width:0%;"></div>
+        </div>
+    </div>
 {% endblock %}
