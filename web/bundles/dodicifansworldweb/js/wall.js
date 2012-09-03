@@ -4,47 +4,26 @@
 (function( $ ) {
   $.fn.wall = function() {
       var commentsLimit = 10;
-      
       return this.each(function() 
       {
           var wallel = $(this);
           var wallid = wallel.attr('data-wall');
-          
           if (wallid) {
               if (!wallel.attr('data-wall-loaded')) {
                   wallel.addClass('loading');
                   $('.comment-loading').show();
+                  
                   ajax.genericAction('comment_ajaxget', {
                           wall : wallid,
                           limit: commentsLimit,
                           usejson: true
                       },
                       function(r){
-                          console.log(r);
-                          if(r){
-                              $.each(r, function(index, value){
-                            	  templateHelper.renderTemplate(value.templateId,value,wallel,true,function(){
-                            		  $("abbr.timeago").timeago();
-                            	  });
-                              });
-                              
-                              wallel.removeClass('loading');
-                              $('.comment-loading').hide();
-                              wallel.attr('data-wall-loaded', 1);
-                              //$("abbr.timeago").timeago();
-                              
-                              bindWallUpdate(wallel);
-                              
-                              
-                              if (typeof Meteor != 'undefined') {
-                                  Meteor.joinChannel('wall_' + wallid);
-                              }
-                              
-                             
-                          }
+                    	  callbackAction(r,wallel);
                       },
                       function(){},
-                      'get'
+                      'get',
+                      false
                   );
               }
           }
@@ -72,7 +51,7 @@
                   usejson: true
                   },
                   function(r){
-                      console.log(r);
+                      
                       if(r){
                           $.each(r, function(index, value){
                         	  templateHelper.renderTemplate(value.templateId,value,wallel);
@@ -86,14 +65,11 @@
                           if (typeof Meteor != 'undefined') {
                               Meteor.joinChannel('wall_' + wallid);
                           }
-                          
                       }
-                     
-                      
-                      
                   },
                   function(){},
-                  'get'
+                  'get',
+                  false
               );
           }
       });
@@ -114,7 +90,6 @@
               'id': id
           },
           function(r){
-              console.log(r);
               if(r){
                   if (!(wallel.find('[data-comment="'+id+'"]').length)) {
                       container.prepend(r.toString());
@@ -126,6 +101,28 @@
           );
       }
   };
+  
+  function callbackAction(r,wallel){
+	  if(r){
+          $.each(r, function(index, value){
+        	  
+        	  templateHelper.renderTemplate(value.templateId,value,wallel,true,function(){
+        		  $("abbr.timeago").timeago();
+        	  });
+          });
+          
+          wallel.removeClass('loading');
+          $('.comment-loading').hide();
+          wallel.attr('data-wall-loaded', 1);
+          
+          bindWallUpdate(wallel);
+          
+          if (typeof Meteor != 'undefined') {
+              Meteor.joinChannel('wall_' + wallid);
+          }
+      }
+  };
+  
 })( jQuery );
 
 function bindWallUpdate(wallel){
