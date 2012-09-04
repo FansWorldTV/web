@@ -20,6 +20,7 @@ var tv = {
 	
 	
 	bindRankingFilters:	function(filtersList,channelsList,targetDataList){
+            return false; // temp
 		$(filtersList).click(function(e){
 			e.stopImmediatePropagation();
 			$(filtersList).removeClass('active');
@@ -29,11 +30,12 @@ var tv = {
 		    
 		    var filter = $(this).attr('filter-type');
 	        
-//	        tv.rankingUpdate.widget(activeChannel,filter,targetDataList,{});
+	        tv.rankingUpdate.widget(activeChannel,filter,targetDataList,{});
 		});
 	},
 	
 	bindChannelsTab:	function(filtersList,channelsList,targetDataList){
+            return false; // temp
 		$(channelsList + ' ul li a').click(function(e){
 			var activeChannel = $(this).attr('data-target').slice(1);
 			var filter = $(filtersList+' li.active').attr('filter-type');

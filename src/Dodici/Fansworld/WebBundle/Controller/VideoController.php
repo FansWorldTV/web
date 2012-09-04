@@ -69,7 +69,6 @@ class VideoController extends SiteController
           'categories' => $categories,
           'popularTags' => $popularTags
           ); */
-
         $request = $this->getRequest();
         $query = $request->get('query', null);
         $user = $this->getUser();

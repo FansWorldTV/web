@@ -9,6 +9,18 @@
     {% set listFilters = ' data-list-filters="' ~ listFilters ~ '"' %}
 {% endif %}
 
+{% if listFiltersElement is not defined %}
+    {% set listFiltersElement = '' %}
+{% else %}
+    {% set listFiltersElement = ' data-list-filters-element="' ~ listFiltersElement ~ '"' %}
+{% endif %}
+
+{% if listChannels is not defined %}
+    {% set listChannels = '' %}
+{% else %}
+    {% set listChannels = ' data-list-channels' %}
+{% endif %}
+
 {% if listResult is not defined %}
     {% set listResult = '' %}
 {% else %}
@@ -27,7 +39,7 @@
     {% set listFetchMoreButton = ' data-list-fetch-more-button' %}
 {% endif %}
 
-{% set listParams = 'data-list data-list-entity="video"' ~ listFilters ~ listResult ~ listScrollable ~ listFetchMoreButton %}
+{% set listParams = 'data-list data-list-entity="video"' ~ listFilters ~ listFiltersElement ~ listChannels ~ listResult ~ listScrollable ~ listFetchMoreButton %}
 <div class="row-fluid">
     <div class="am-container list-mosaic" {{listParams|raw}}>
         {% if videos|length>0 %}
