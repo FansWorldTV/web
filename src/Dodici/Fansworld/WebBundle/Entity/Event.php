@@ -21,6 +21,10 @@ class Event implements SearchableInterface
 {
     const TYPE_MATCH = 1;
     
+    const WEIGHT_OUTDATE_FACTOR = 0.2;
+    const WEIGHT_FINISHED_OUTDATE_FACTOR = 0.6;
+    const WEIGHT_EVENTSHIPS_FACTOR = 1.0;
+    
     public static function getTypes()
     {
     	return array(
@@ -80,6 +84,13 @@ class Event implements SearchableInterface
     private $active;
     
     /**
+     * @var boolean $finished
+     *
+     * @ORM\Column(name="finished", type="boolean", nullable=false)
+     */
+    private $finished;
+    
+    /**
      * @var integer $type
      *
      * @ORM\Column(name="type", type="integer", nullable=false)
@@ -106,6 +117,13 @@ class Event implements SearchableInterface
      * @ORM\Column(name="commentcount", type="integer", nullable=false)
      */
     private $commentCount;
+    
+    /**
+     * @var integer $weight
+     *
+     * @ORM\Column(name="weight", type="integer", nullable=false)
+     */
+    private $weight;
     
     /**
      * @Gedmo\Slug(fields={"title"}, unique=false)
@@ -148,6 +166,7 @@ class Event implements SearchableInterface
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->incidents = new \Doctrine\Common\Collections\ArrayCollection();
         $this->setActive(true);
+        $this->setFinished(false);
         $this->setType(self::TYPE_MATCH);
     }
     
@@ -170,8 +189,30 @@ class Event implements SearchableInterface
         if (null === $this->commentCount) {
         	$this->setCommentCount(0);
         }
+        if (null === $this->weight) {
+        	$this->calculateWeight();
+        }
     }
     
+	/**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->calculateWeight();
+    }
+    
+    public function calculateWeight()
+    {
+    	$factor = $this->finished ? self::WEIGHT_FINISHED_OUTDATE_FACTOR : self::WEIGHT_OUTDATE_FACTOR;
+    	
+    	$wa = ($this->fromtime->format('U') / 86400 * $factor);
+    	$wb = ($this->userCount ? log($this->userCount * self::WEIGHT_EVENTSHIPS_FACTOR, 10) : 0);
+    	
+    	$w = $this->finished ? ($wa - $wb) : ($wa + $wb);
+    	
+        $this->setWeight(round($w));
+    }
 
     /**
      * Add comments
@@ -442,6 +483,26 @@ class Event implements SearchableInterface
     {
         return $this->active;
     }
+    
+	/**
+     * Set finished
+     *
+     * @param boolean $finished
+     */
+    public function setFinished($finished)
+    {
+        $this->finished = $finished;
+    }
+
+    /**
+     * Get finished
+     *
+     * @return boolean 
+     */
+    public function getFinished()
+    {
+        return $this->finished;
+    }
 
     /**
      * Set type
@@ -562,5 +623,25 @@ class Event implements SearchableInterface
     public function getIncidents()
     {
         return $this->incidents;
+    }
+
+    /**
+     * Set weight
+     *
+     * @param integer $weight
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+    }
+
+    /**
+     * Get weight
+     *
+     * @return integer 
+     */
+    public function getWeight()
+    {
+        return $this->weight;
     }
 }

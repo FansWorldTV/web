@@ -21,7 +21,7 @@ class EventIncident
             'gol' => self::TYPE_GOAL
         );
         
-        return $types[$dftype];
+        return isset($types[$dftype]) ? $types[$dftype] : false;
     }
     
     /**

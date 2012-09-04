@@ -71,4 +71,85 @@ class EventRepository extends CountBaseRepository
     	return $query->getResult();
 	}
 	
+	/**
+	 * Get events for calendar according to criteria/sort 
+	 * @param User|null $user
+	 * @param boolean|null $finished - only finished/unfinished events
+	 * @param boolean|null $checkedin - ($user required, whether to select checked in events only, or non-checked-in)
+	 * @param DateTime|null $datefrom
+	 * @param DateTime|null $dateto
+	 * @param array|null $sort - see below
+	 * @param int|null $limit
+	 * @param int|null $offset
+	 * @throws \Exception
+	 * 
+	 * sort types (can use an array as parameter, e.g. array('isfan', 'popular')):
+	 * isfan - show the events that involve a team of which the user is fan first
+	 * popular - show most popular (and upcoming) events first
+	 * upcoming - show most impending events first, regardless of popularity (note that mixing popular and upcoming makes no sense)
+	 */
+	public function calendar(User $user=null, $finished=null, $checkedin=null, $datefrom=null, $dateto=null, 
+	    $sort=null, $limit=null, $offset=null)
+	{
+	    if ($sort && !is_array($sort)) $sort = array($sort);
+	    if (!$sort) {
+	        $sort = array();
+	        if ($user) $sort[] = 'isfan';
+	        $sort[] = 'popular';
+	    }
+	    
+	    $orders = array(
+	        'isfan' => 'isfan DESC',
+	        'popular' => (($finished === true) ? 'e.weight DESC' : 'e.weight ASC'),
+	        'upcoming' => 'e.fromtime ASC'
+	    );
+	    
+	    if (in_array('isfan', $sort) && !$user) throw new \Exception('Need a user to sort by fandom');
+	    
+	    $dql = 
+	    'SELECT e, ht, t, ti '. (($user && in_array('isfan', $sort)) ? ', COUNT(tts) isfan' : '') .'
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Event e
+    	LEFT JOIN e.hasteams ht
+    	LEFT JOIN ht.team t
+    	LEFT JOIN t.image ti
+    	'
+    	.
+    	(($user && in_array('isfan', $sort)) ? 'LEFT JOIN t.teamships tts WITH tts.author = :user' : '')
+    	.
+    	'
+    	WHERE
+    	e.active = true';
+	    
+	    if ($datefrom) $dql .= ' AND e.fromtime >= :datefrom ';
+	    if ($dateto) $dql .= ' AND e.fromtime <= :dateto ';
+	    
+	    if ($user && ($checkedin !== null)) $dql .= ' AND e.id ' . ($checkedin ?: 'NOT') . ' IN (SELECT esx.event FROM \Dodici\Fansworld\WebBundle\Entity\Eventship esx WHERE esx.author = :user) ';
+	    if ($finished !== null) $dql .= ' AND e.finished = :finished ';
+	    
+	    $dql .= ' GROUP BY e, ht, t ORDER BY ';
+	    
+	    $ordersdql = array();
+	    foreach ($sort as $s) $ordersdql[] = $orders[$s];
+	    
+	    $dql .= join(', ', $ordersdql);
+	    var_dump($dql);
+	    $query = $this->_em->createQuery($dql);
+
+	    if ($user !== null) $query = $query->setParameter('user', $user->getId());
+	    if ($finished !== null) $query = $query->setParameter('finished', $finished);
+	    if ($datefrom !== null) $query = $query->setParameter('datefrom', $datefrom);
+	    if ($dateto !== null) $query = $query->setParameter('dateto', $dateto);
+	    
+    	if ($limit !== null) $query = $query->setMaxResults($limit);
+    	if ($offset !== null) $query = $query->setFirstResult($offset);
+    	
+    	if ($user && in_array('isfan', $sort)) {
+        	$results = array();
+        	$qr = $query->getResult();
+        	foreach ($qr as $r) $results[] = $r[0];
+        	return $results;
+    	} else {
+    	    return $query->getResult();
+    	}
+	}
 }

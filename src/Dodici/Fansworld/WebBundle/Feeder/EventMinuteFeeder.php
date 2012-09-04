@@ -14,6 +14,8 @@ class EventMinuteFeeder {
     /** @var \Symfony\Bundle\DoctrineBundle\Registry */
     private $em;
     private $datafactory;
+    
+    const STATE_FINISHED = 2;
 
     public function __construct($em, $datafactory)
     {
@@ -63,6 +65,7 @@ class EventMinuteFeeder {
             }
             
             $incs = $xml->xpath('fichapartido/incidencias/incidencia');
+            $state = (string)$xml->fichapartido->estadoEvento->attributes()->idestado;
             
             foreach ($incs as $inc) {
                 // Asumiendo que ID es único, y no "tipo"
@@ -72,6 +75,8 @@ class EventMinuteFeeder {
                 $incident = $eventincrepo->findOneBy(array('event' => $event->getId(), 'external' => $dfincid));
                 
                 $type = EventIncident::translateType($dfinctype);
+                
+                
                 
                 if (!$incident && $type) {
                     $incident = new EventIncident();
@@ -109,6 +114,12 @@ class EventMinuteFeeder {
                         $this->em->persist($ht);
                     }
                 }
+            }
+            
+            if ($state == self::STATE_FINISHED) {
+                $event->setFinished(true);
+                if (!$event->getTotime()) $event->setTotime(new \DateTime());
+                $this->em->persist($event);
             }
             
             $this->em->flush();

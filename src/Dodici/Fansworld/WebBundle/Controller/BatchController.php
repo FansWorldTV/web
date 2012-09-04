@@ -26,6 +26,7 @@ class BatchController extends SiteController
      */
     public function eventFeedingAction()
     {
+        set_time_limit(600);
         $df = $this->get('feeder.event');
         $df->feed();
 		$df->pending();
