@@ -1,0 +1,68 @@
+div.team-home {
+    section.bottom {
+        div.title-and-dropdown {
+            h4 {
+                .square(auto);
+                float: left;
+            }
+            div.select-league {
+                float: right;
+            }
+        }
+        div.list-teams {
+            dl {
+                dt.team {
+                    width: 40%;
+                    text-align: left;
+                    
+                    p {
+                        width: auto;
+                        float: left;
+                        margin-left: 15px;
+                        margin-top: 5px;
+
+                        span {
+                            &.name  {
+                                font-size: 20px;
+                            }
+                            &.idols {
+                                font-size: 10px;
+                                color: @grayDark;
+                            }
+                        }
+                    }
+                    img {
+                        .square(50px);
+                        float: left;
+                    }
+                }
+                dd {
+                    width: 25px;
+                    button {
+                        float: left;
+                    }
+
+                    ul {
+                        width: 22%;
+                        float: left;
+
+                        li {
+                            float: left;
+                            border-right: 1px solid @gray;
+                            padding-right: 5px;
+                            padding-left: 5px;
+                            text-align: center;
+                        }
+                        li:first-child {
+                            padding-left: 0;
+                        }
+                        li:last-child {
+                            border: none;
+                            padding-right: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

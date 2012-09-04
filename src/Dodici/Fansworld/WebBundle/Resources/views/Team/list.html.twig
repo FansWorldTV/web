@@ -1,7 +1,5 @@
 {% extends "DodiciFansworldWebBundle:Layout:three_column.html.twig" %}
 
-{% use "DodiciFansworldWebBundle:Layout/Snippet:profile_inner_fullwidth.html.twig"  %}
-
 {% block title %}{{ parent() }} - Búsqueda{% endblock %}
 
 {% block javascripts %}
@@ -9,8 +7,59 @@
     <script src="{{ asset('bundles/dodicifansworldweb/js/teams.js') }}" type="text/javascript"></script>
 {% endblock %}
 
-{% block inner_content %}
-	{{ parent() }}
+{% block content %}
+    <div class="team-home">
+        <span class="nav-bar team">{{ 'Equipos'|trans }}</span>
+
+        <section class="row-fluid top">
+        </section>
+
+        <section class="row-fluid middle">
+        </section>
+
+        <section class="row-fluid bottom">
+            <div class="span12 title-league">
+                <div class="row-fluid title-and-dropdown">
+                    <h4>Otros Destacados</h4>
+                    <div class="btn-group select-league">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                          Seleccione una liga
+                          <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% for category in categories %}
+                                <li><a href="#">{{ category }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="row-fluid list-teams">
+                    <dl class="dl-horizontal">
+                        {% for team in teamList %}
+                            <dt class="team">
+                                {% thumbnail team.image, 'small' %}
+                                <p>
+                                    <span class="name">{{ team }}</span>
+                                    <br/>
+                                    <span class="idols">Idolos: Cacho Fontana, Curu Paiti</span>
+                                </p>
+                            </dt>
+                                <dd>
+                                    <button class="btn btn_friendship add btn-success">Ser fan</button>
+                                    <ul>
+                                        <li><span>{{ team.fanCount }}</span><br/> fans</li>
+                                        <li><span>{{ team.videoCount }}</span><br/> videos</li>
+                                        <li><span>{{ team.photoCount }}</span><br/> fotos</li>
+                                    </ul>
+                                </dd>
+                        {% endfor %}
+                    </dl>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    {#
 	<div class="cont clearfix">
 	    <h2>Listado de equipos</h2>
 	    <div class="user_list">
@@ -34,4 +83,5 @@
 	        list.init();
 	    });
 	</script>
+    #}
 {% endblock %}
