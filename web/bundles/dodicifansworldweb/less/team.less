@@ -2,8 +2,11 @@ div.team-home {
     section.bottom {
         div.title-and-dropdown {
             h4 {
+                font-size: 20px;
+                font-weight: normal;
                 .square(auto);
                 float: left;
+                color: @green;
             }
             div.select-league {
                 float: right;
@@ -12,9 +15,10 @@ div.team-home {
         div.list-teams {
             dl {
                 dt.team {
-                    width: 40%;
+                    .size(70px, initial);
                     text-align: left;
-                    
+                    font-weight: normal;
+
                     p {
                         width: auto;
                         float: left;
@@ -37,13 +41,18 @@ div.team-home {
                     }
                 }
                 dd {
-                    width: 25px;
+                    .size(70px, initial);
+                    float: right;
+                    clear: right;
+                    padding: 5px 0 9px 15px;
+
                     button {
                         float: left;
+                        margin-right: 10px;
                     }
 
                     ul {
-                        width: 22%;
+                        width: auto;
                         float: left;
 
                         li {
@@ -52,6 +61,11 @@ div.team-home {
                             padding-right: 5px;
                             padding-left: 5px;
                             text-align: center;
+                            font-size: 10px;
+                            
+                            span {
+                                font-size: 20px;
+                            }
                         }
                         li:first-child {
                             padding-left: 0;
