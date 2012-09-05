@@ -1,0 +1,13 @@
+{% extends "DodiciFansworldWebBundle:Layout:three_column.html.twig" %}
+
+
+{% block content %}
+	{% if event_body_class is not defined %}
+        {% set event_body_class = '' %}
+    {% endif %}
+	<div class="{{ event_body_class }} row-fluid">
+		{% block event_body %}
+		
+		{% endblock %}
+	</div>
+{% endblock %}

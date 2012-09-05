@@ -20,7 +20,8 @@ use Dodici\Fansworld\WebBundle\Entity\Eventship;
  */
 class EventController extends SiteController
 {
-
+    const LIMIT_EVENTS = 12;
+    
     /**
      * @Route("/{id}/{slug}", name= "event_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
      */
@@ -33,7 +34,25 @@ class EventController extends SiteController
 
         return new Response('TODO');
     }
-
+    
+    
+    
+    /**
+     * @Route("", name= "event_home" )
+     * @Template
+     */
+    public function homeTabAction()
+    {
+        //TODO: todo
+        $events = $this->getRepository('Event')->findBy(array(), array('fromtime' => 'desc'),self::LIMIT_EVENTS,1);
+        $eventoDestacado = $this->getRepository('Event')->findOneBy(array(), array('fromtime' => 'desc'));
+        
+        return array(
+            'eventoDestacado' => $eventoDestacado,
+            'events' => $events,        
+        );
+    }
+    
     /**
      * @Route("/checkin/{id}", name="event_checkin", requirements = {"id" = "\d+"}) 
      * @Template

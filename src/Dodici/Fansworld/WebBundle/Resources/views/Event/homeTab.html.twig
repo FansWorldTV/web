@@ -1,0 +1,31 @@
+{% extends "DodiciFansworldWebBundle:Event:base.html.twig" %}
+
+{% block title %}Eventos - Home{% endblock %}
+
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+    
+    $(function(){
+       
+    });
+    
+    
+    </script>
+{% endblock %}
+
+
+{% block event_body %}
+    {% embed "DodiciFansworldWebBundle:Layout/Embed:event_fullwidth.html.twig" %}
+        {% block inner_content %}
+            {% include "DodiciFansworldWebBundle:Event:blocks/destacado.html.twig" with { 'evento': eventoDestacado } %}
+            
+            {% include "DodiciFansworldWebBundle:Event:blocks/filters.html.twig"  %}
+            
+            {% include "DodiciFansworldWebBundle:Event:blocks/grid.html.twig"  %}
+            
+        {% endblock %}
+        
+    {% endembed %}		
+{% endblock %}

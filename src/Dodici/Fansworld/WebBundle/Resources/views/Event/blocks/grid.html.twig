@@ -9,7 +9,7 @@
             {% if appstate.EventTypeName(event.type) == 'Partido' %}
                 <li class='event'>
                     <header>
-                        <span>{{ event.hasTeams[0].team.title }} vs {{ event.hasTeams[1].team.title }}</span>
+                        <span>{{ event.hasTeams[0].team.shortname }} vs {{ event.hasTeams[1].team.shortname }}</span>
                         <button class='btn btn-danger'>Ahora</button>
                     </header>
                     <div class='row-fluid'>
