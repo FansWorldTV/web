@@ -44,7 +44,7 @@ class PhotoVideoCounter
 			if ($entity->getVideo() || $entity->getPhoto()) {
 			    $tagtype = ($entity instanceof HasTeam) ? 'Team' : 'Idol';
 			    $taggedtype = ($entity->getPhoto()) ? 'Photo' : 'Video';
-			    $taggedentity = $entity->getTeam() ?: $entity->getIdol();
+			    $taggedentity = ($entity instanceof HasTeam ? $entity->getTeam() : $entity->getIdol());
 			    $setcountmethodname = 'set'.$taggedtype.'Count';
 			    
 			    $counts =  $em->getRepository('DodiciFansworldWebBundle:'.$tagtype)->countTagged(

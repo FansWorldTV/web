@@ -89,6 +89,13 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     private $processed;
     
     /**
+     * @var boolean $notified
+     *
+     * @ORM\Column(name="notified", type="boolean", nullable=false)
+     */
+    private $notified;
+    
+    /**
      * @var integer $duration
      *
      * @ORM\Column(name="duration", type="integer", nullable=true)
@@ -262,6 +269,9 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
         }
     	if (null === $this->active) {
             $this->setActive(true);
+        }
+        if (null === $this->notified) {
+            $this->setNotified(false);
         }
         if (null === $this->likeCount) {
         	$this->setLikeCount(0);
@@ -507,6 +517,26 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     public function getProcessed()
     {
         return $this->processed;
+    }
+    
+	/**
+     * Set notified
+     *
+     * @param boolean $notified
+     */
+    public function setNotified($notified)
+    {
+        $this->notified = $notified;
+    }
+
+    /**
+     * Get notified
+     *
+     * @return boolean 
+     */
+    public function getNotified()
+    {
+        return $this->notified;
     }
 
     /**
@@ -837,6 +867,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
      */
     public function addHasTeam(\Dodici\Fansworld\WebBundle\Entity\HasTeam $hasteams)
     {
+        $hasteams->setVideo($this);
         $this->hasteams[] = $hasteams;
     }
 
@@ -906,6 +937,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
      */
     public function addHasIdol(\Dodici\Fansworld\WebBundle\Entity\HasIdol $hasidols)
     {
+        $hasidols->setVideo($this);
         $this->hasidols[] = $hasidols;
     }
     

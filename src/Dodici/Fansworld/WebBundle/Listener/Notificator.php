@@ -90,7 +90,7 @@ class Notificator
 			$em->flush();
 		}
 		
-    	if ($entity instanceof Video && $entity->getAuthor()) {
+    	if ($entity instanceof Video && $entity->getAuthor() && !$entity->getHighlight()) {
 			$comment = new Comment();
 			$comment->setType(Comment::TYPE_NEW_VIDEO);
 			$comment->setAuthor($entity->getAuthor());
@@ -102,6 +102,11 @@ class Notificator
     		$comment->setShare($share);
 			$em->persist($comment);
 			$em->flush();
+		} elseif ($entity instanceof Video && $entity->getHighlight() && $entity->getProcessed() && $entity->getActive() && !$entity->getNotified()) {
+		    $this->notifyNewIdolTeamVideo($entity, $em);
+		    $entity->setNotified(true);
+			$em->persist($entity);
+			$em->flush();
 		}
 		
     }
@@ -111,6 +116,43 @@ class Notificator
 		$entity = $eventArgs->getEntity();
 		$em = $eventArgs->getEntityManager();
 		
-    	
+        if ($entity instanceof Video && $entity->getHighlight() && $entity->getProcessed() && $entity->getActive() && !$entity->getNotified()) {
+		    $this->notifyNewIdolTeamVideo($entity, $em);
+            
+			$entity->setNotified(true);
+			$em->persist($entity);
+			
+			$em->flush();
+		}
+    }
+    
+    private function notifyNewIdolTeamVideo($video, $em)
+    {
+        $teams = array();
+        $idols = array();
+        
+        $hasteams = $video->getHasteams();
+        $hasidols = $video->getHasidols();
+        
+        foreach ($hasteams as $ht) $teams[] = $ht->getTeam();
+        foreach ($hasidols as $ht) $idols[] = $ht->getIdol();
+        $users = array();
+        
+        $usersteams = $em->getRepository('ApplicationSonataUserBundle:User')->byTeams($teams);
+        $usersidols = $em->getRepository('ApplicationSonataUserBundle:User')->byIdols($idols);
+        
+        foreach ($usersteams as $u) $users[$u->getId()] = $u;
+        foreach ($usersidols as $u) $users[$u->getId()] = $u;
+        
+        foreach ($users as $user) {
+            // notif: ha respondido tu comentario...
+			$notification = new Notification();
+			$notification->setType(Notification::TYPE_VIDEO_NEW_FROM_IDOL_TEAM);
+			$notification->setAuthor($user);
+			$notification->setTarget($user);
+			$notification->setVideo($video);
+			
+			$em->persist($notification);
+        }
     }
 }

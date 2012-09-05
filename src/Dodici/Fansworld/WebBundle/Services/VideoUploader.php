@@ -88,7 +88,7 @@ class VideoUploader
         if ($pod) {
             $thumburl = $pod->video_image_url;
             
-            if ($thumburl) {
+            if ($thumburl && !$video->getImage()) {
                 try {
                     $image = $this->appmedia->createImageFromUrl($thumburl);
                     if ($image) {
@@ -100,14 +100,16 @@ class VideoUploader
                         }
                         $this->em->persist($video);
                         
-                        // notify the user his video finished processing
-                        $notification = new Notification();
-        	    		$notification->setType(Notification::TYPE_VIDEO_PROCESSED);
-        	    		$notification->setAuthor($video->getAuthor());
-        	    		$notification->setTarget($video->getAuthor());
-        	    		$notification->setVideo($video);
-        	    		$this->em->persist($notification);
-                        
+                        if ($video->getAuthor()) {
+                            // notify the user his video finished processing
+                            $notification = new Notification();
+            	    		$notification->setType(Notification::TYPE_VIDEO_PROCESSED);
+            	    		$notification->setAuthor($video->getAuthor());
+            	    		$notification->setTarget($video->getAuthor());
+            	    		$notification->setVideo($video);
+            	    		$this->em->persist($notification);
+                        }
+        	    		
                         $this->em->flush();
                     }
                 } catch (\Exception $e) {

@@ -1,0 +1,21 @@
+{% extends 'DodiciFansworldWebBundle:Notification:notification.base.html.twig' %}
+
+{% block avatar %}
+    {% set image = notification.video.image %}
+    {{ parent() }}
+{% endblock %}
+
+{% block text %}
+    Hay un nuevo vídeo de Fansworld <a class="notice-link" href="{{ path('video_show', { id: notification.video.id, slug: notification.video.slug }) }}">{{ notification.video }}</a>  
+    <span class="notice-text">taggeado con: <br />
+    
+    {% for ht in notification.video.hasteams %}
+        {{ ht.team }} <br />
+    {% endfor %}
+    
+    {% for ht in notification.video.hasidols %}
+        {{ ht.idol }} <br />
+    {% endfor %}
+    
+    </span>
+{% endblock %}
