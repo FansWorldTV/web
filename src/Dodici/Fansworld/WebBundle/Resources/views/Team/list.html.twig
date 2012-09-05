@@ -12,7 +12,9 @@
         <span class="nav-bar team">{{ 'Equipos'|trans }}</span>
 
         <section class="row-fluid top">
+            {% include 'DodiciFansworldWebBundle:Default/blocks:carousel.html.twig' with {carouselitems: videoHighlights} %}
         </section>
+        <div class="clearfix"></div>
 
         <section class="row-fluid middle">
         </section>
