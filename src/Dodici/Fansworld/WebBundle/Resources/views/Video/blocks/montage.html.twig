@@ -39,7 +39,13 @@
     {% set listFetchMoreButton = ' data-list-fetch-more-button' %}
 {% endif %}
 
-{% set listParams = 'data-list data-list-entity="video"' ~ listFilters ~ listFiltersElement ~ listChannels ~ listResult ~ listScrollable ~ listFetchMoreButton %}
+{% if listIsMontage is not defined %}
+    {% set listIsMontage = '' %}
+{% else %}
+    {% set listIsMontage = ' data-list-montage' %}
+{% endif %}
+
+{% set listParams = 'data-list data-list-entity="video"' ~ listFilters ~ listFiltersElement ~ listChannels ~ listResult ~ listScrollable ~ listFetchMoreButton ~ listIsMontage %}
 <div class="row-fluid">
     <div class="am-container list-mosaic" {{listParams|raw}}>
         {% if videos|length>0 %}

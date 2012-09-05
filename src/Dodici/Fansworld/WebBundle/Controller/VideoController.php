@@ -254,18 +254,18 @@ class VideoController extends SiteController
             $offset = 0;
         }
         $vidRepo = $this->getRepository('Video');
-        $response = array('gotMore' => false, 'vids' => null);
+        $response = array('addMore' => false, 'elements' => null);
 
         $categoryVids = $vidRepo->search($query, $user, 12, $offset, $categoryId);
         $countAll = $vidRepo->countSearch($query, $user, $categoryId);
 
 
         if (($countAll / 12) > $page) {
-            $response['gotMore'] = true;
+            $response['addMore'] = true;
         }
-
+        
         foreach ($categoryVids as $vid) {
-            $response['vids'][] = array(
+            $response['elements'][] = array(
                 'view' => $this->renderView('DodiciFansworldWebBundle:Video:list_video_item.html.twig', array('video' => $vid))
             );
         }
@@ -374,7 +374,7 @@ class VideoController extends SiteController
         $request = $this->getRequest();
 
         $response = array(
-            'videos' => array()
+            'elements' => array()
         );
         
         $entityId = $request->get('entityId');
