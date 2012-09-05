@@ -31,7 +31,7 @@
             
             <div class="content">
                 {% if video.content %}
-                    <p data-expandable data-slice-point="120">{{ video.content }}</p>
+                    <p data-expandable data-slice-point="120">{{ video.content|striptags|nl2br }}</p>
                 {% endif %}
             </div>
             
