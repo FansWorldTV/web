@@ -21,8 +21,9 @@ class AppFacebook
     protected $router;
     protected $translator;
     protected $appmedia;
+    protected $scope;
 
-    function __construct(SecurityContext $security_context, EntityManager $em, $facebook, $appstate, $router, $translator, $appmedia)
+    function __construct(SecurityContext $security_context, EntityManager $em, $facebook, $appstate, $router, $translator, $appmedia, $scope=array())
     {
         $this->security_context = $security_context;
         $this->request = Request::createFromGlobals();
@@ -34,6 +35,7 @@ class AppFacebook
         $this->translator = $translator;
         $this->appmedia = $appmedia;
         $this->appmedia instanceof AppMedia;
+        $this->scope = $scope;
     }
 
     /**
@@ -110,6 +112,11 @@ class AppFacebook
                     'picture' => $picture,
                     'description' => $entity->getContent()
                 ));
+    }
+    
+    public function getScope()
+    {
+        return $this->scope;
     }
 
     private function api($url, $user = null, $method = 'GET', $params = array())

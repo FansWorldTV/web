@@ -526,7 +526,7 @@ services:
       arguments: [@security.context, @doctrine.orm.entity_manager]
     app.facebook:
       class: Dodici\Fansworld\WebBundle\Services\AppFacebook
-      arguments: [@security.context, @doctrine.orm.entity_manager, @fos_facebook.api, @appstate, @router, @translator,@appmedia]
+      arguments: [@security.context, @doctrine.orm.entity_manager, @fos_facebook.api, @appstate, @router, @translator,@appmedia, %fos_facebook.permissions%]
     app.twitter:
       class: Dodici\Fansworld\WebBundle\Services\AppTwitter
       arguments: [@security.context, @doctrine.orm.entity_manager, @fos_twitter.api, @appstate, @router, @translator]  
@@ -627,6 +627,11 @@ services:
     twig.extension.appmedia:
       class: Dodici\Fansworld\WebBundle\Extensions\AppMediaExtension
       arguments: [@appmedia]
+      tags:
+          - { name: twig.extension }
+    twig.extension.appfacebook:
+      class: Dodici\Fansworld\WebBundle\Extensions\AppFacebookExtension
+      arguments: [@app.facebook]
       tags:
           - { name: twig.extension }
     app_user.registration.form.type:

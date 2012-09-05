@@ -13,7 +13,7 @@ share.init = function(){
             if($(this).hasClass('active')){
                 FB.ui({
                     method: 'permissions.request',
-                    'perms': 'email,user_birthday,user_location,publish_actions',
+                    'perms': window.FBperms,
                     'display': 'popup',
                     'response_type': 'signed_request',
                     'fbconnect': 1,

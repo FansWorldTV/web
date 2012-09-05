@@ -48,6 +48,7 @@
                 <script type="text/javascript">
                     var appLocale = '{{ app.request.locale }}';
                     var isLoggedIn = {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} true {% else %} false {% endif %};
+                    var FBperms = '{{ appfacebook.scope|join(',') }}';
                 </script>
                 
                 <script src="https://apis.google.com/js/plusone.js"></script>
