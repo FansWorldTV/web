@@ -2,6 +2,52 @@ div.team-home {
     section.top {
         .size(309px, auto);
         margin-bottom: 4%;
+
+        .carousel .item > img {
+            .square(100%);
+        }
+    }
+    section.middle {
+        div.team {
+            position: relative;
+            border: 1px solid @gray;
+            width: 30% !important;
+            display: block;
+            height: auto;
+            float: left;
+            margin-right: 5%;
+            
+            .splash {
+                height: 90px;
+                overflow: hidden;
+            }
+
+            .logo {
+                height: 50px;
+                background-color: white;
+                box-shadow: 0 0 5px #888;
+                position: absolute;
+                right: 10px;
+                top: 64px;
+                img {
+                    height: 50px;
+                    width: initial;
+                }
+            }
+            
+            p {
+                margin-top: 10px;
+                margin-left: 15px;
+                .name {
+                    font-size: 20px;
+                }
+            }
+        }
+        div.team:last-child {
+            margin-right: 0;
+        }
+
+        margin-bottom: 10px;
     }
     section.bottom {
         div.title-and-dropdown {
