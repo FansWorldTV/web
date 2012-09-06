@@ -146,6 +146,20 @@ div.actualizacion{
                     .loading(@loadingImageSmall, 0 3px);
                 }
             }
+
+            .delete {
+                width:11px;
+                height:11px;
+                margin:2px 4px 0 0;
+                border:5px solid #fff;
+                float:right;
+                cursor:pointer;
+                background:url("../images/ui/delete_post.gif") top no-repeat;
+            }
+
+            .delete:hover {
+                background-position:bottom;
+            }
         }
         
         div.infotext-content{
@@ -196,6 +210,10 @@ div.actualizacion{
         div.subcomment-content{
             padding-left: 15px;
         }
+    }
+    
+    .ajaxdelete-preloader {
+        float:right;
     }
 }
 

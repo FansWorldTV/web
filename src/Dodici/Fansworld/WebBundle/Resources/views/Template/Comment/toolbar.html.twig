@@ -1,11 +1,17 @@
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    {% raw %}
+        {{if canDelete }}
+            <a class="delete" ajax-delete data-entity-type="{{>entityType}}" data-entity-id="{{>id}}" title="Borrar Comentario"></a>
+        {{/if}}
+    {% endraw %}
+{% endif %}
 <div class="comment-toolbar">
     <span class="toolbar-comentarios">{% raw %}{{>shareCommentCount}}{% endraw %}</span>
     <!--img class='toolbar-comentarios'  src="{{ asset("bundles/dodicifansworldweb/images/ico/comentarios.png") }}" alt="Comentarios" /-->
-    
     <img class='toolbar-compartir' src="{{ asset("bundles/dodicifansworldweb/images/ico/compartir.png") }}" alt="Compartir" />
     {% raw %}
         <div class="like-container toolbar-favoritos likebutton {{>shareLikeClass}}" data-id="{{>shareId}}" data-type="{{>shareType}}">
-            {{>shareLikeCount}}		
+            {{>shareLikeCount}}
         </div>
     {% endraw %}
 </div>

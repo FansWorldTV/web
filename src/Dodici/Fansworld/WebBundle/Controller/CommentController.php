@@ -189,6 +189,7 @@ class CommentController extends SiteController
         $commentArray = array(
             'id' => $comment->getId(),
             'canDelete' => $appstate->canDelete($comment),
+            'entityType' => 'comment',
             'content' => $comment->getContent(),
             'time' => $comment->getCreatedAt()->format('c'),
             'commentCount' => $comment->getCommentCount(),

@@ -68,6 +68,7 @@ class DeleteController extends SiteController
 	        }
 	
 	        $response = new Response(json_encode(array(
+	        	'deleted' => true,
 	        	'message' => $message,
 	        	'redirect' => $redirect
 	        )));
