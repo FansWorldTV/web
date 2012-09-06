@@ -1,13 +1,40 @@
 div.team-home {
     section.top {
         .size(309px, auto);
-        margin-bottom: 4%;
 
-        .carousel .item > img {
-            .square(100%);
+        .carousel {
+            .size(100%, 70%);
+            float: left;
+            .item > img {
+                .square(100%);
+            }
+        }
+
+        .info-detail-carousel {
+            .show();
+            visibility: initial;
+            background-color: @black;
+            float: left;
+            .size(100%, 30%);
+            text-overflow: ellipsis;
+            color: @white;
+            box-sizing: border-box;
+            padding: 20px;
+
+            h1 {
+                color: @orange;
+                font-weight: normal;
+                margin-bottom: 20px;
+            }
+
+            p {
+                font-size: 13px;
+            }
         }
     }
     section.middle {
+        margin-top: 20px;
+        margin-bottom: 20px;
         div.team {
             position: relative;
             border: 1px solid @gray;
@@ -16,6 +43,7 @@ div.team-home {
             height: auto;
             float: left;
             margin-right: 5%;
+            box-sizing: border-box;
             
             .splash {
                 height: 90px;
