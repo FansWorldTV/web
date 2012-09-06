@@ -1,51 +1,42 @@
 var templateHelper = {
 
-    init: function(){},
-		
-    isLoading: false,
-    
-    getPath: function(templateId) {
+    'getPath': function(templateId) {
         var tplPart = templateId.split("-");
-        params = {
+        return Routing.generate(appLocale + '_template_' + tplPart[0], {
             type: tplPart[1]
-        };	
-        return Routing.generate(appLocale + '_template_' + tplPart[0], params);
-    },
+        });
+    }, 
 		
-    preLoadTemplates: function(templates) {
+    'preLoadTemplates': function(templates) {
         $.each(templates, function(index, value) { 
             templateHelper.loadTemplate(value);
         });
-    },
+    }, 
 		
-    getTemplate: function(templateId,params) {
+    'getTemplate': function(templateId, params) {
         if (typeof $.render[templateId] != 'undefined') {
             return true;
         } else {
-            return templateHelper.getTemplateString(templateId,params);
+            return templateHelper.getTemplateString(templateId, params);
         } 
-    },
+    }, 
 	
-    getTemplateString: function(templateId,params) {
-        var url = templateHelper.getPath(templateId);
-        var alreadyLoaded = false;
+    'getTemplateString': function(templateId, params) {
+        var url = templateHelper.getPath(templateId), 
+             alreadyLoaded = false;
         	
-        return $.ajaxQueue({
-            url: url,
-            data: params,
-            type: 'GET',
-            dataType: "html",
-            cache: true,
+        return $.ajaxQueue( {
+            url: url, 
+            data: params, 
+            type: 'GET', 
+            dataType: "html", 
+            cache: true, 
             success: function(data) {
-                $.templates( templateId, data );
-                templateHelper.isLoading = false;
-            },
+                $.templates(templateId, data);
+            }, 
             error: function(jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-                templateHelper.isLoading = false;
-            },
+                console.log(jqXHR, textStatus, errorThrown);
+            }, 
             beforeSend : function() {
                 if (typeof $.render[templateId] != 'undefined') {
                     alreadyLoaded = true;
@@ -53,7 +44,7 @@ var templateHelper = {
                 } else {
                     alreadyLoaded = false;
                 }
-            },
+            }, 
             abort: function() {
                 if(alreadyLoaded) {
                     console.log('ya ta carguetti');
@@ -62,8 +53,9 @@ var templateHelper = {
             }
         });
 
-    },
-    loadTemplate: function(templateId) {
+    }, 
+    
+    'loadTemplate': function(templateId) {
         var tplString	= templateHelper.getTemplate(templateId);	
         if(tplString == true) {
             return true;
@@ -72,24 +64,24 @@ var templateHelper = {
                 return true;
             });
         }
-    },
+    }, 
 		
-    renderTemplate: function(templateId,jsonData,destino,prepend, callback) {
+    'renderTemplate': function(templateId, jsonData, destino, prepend, callback) {
         var tplString	= templateHelper.getTemplate(templateId);	
         if(tplString == true) {
-            templateHelper.appendRenderedTemplate(templateId,jsonData,destino,prepend, callback);	
+            templateHelper.appendRenderedTemplate(templateId, jsonData, destino, prepend, callback);	
         } else {
             tplString.done(function (data) { 
-                templateHelper.appendRenderedTemplate(templateId,jsonData,destino,prepend, callback);
+                templateHelper.appendRenderedTemplate(templateId, jsonData, destino, prepend, callback);
             });
         }
-    },
+    }, 
 		
-    appendRenderedTemplate: function(templateId,jsonData,destino,prepend, callback) {
+    'appendRenderedTemplate': function(templateId, jsonData, destino, prepend, callback) {
         if(prepend == true) {
-            $( destino ).prepend( $.render[templateId]( jsonData ) );
+            $(destino).prepend($.render[templateId](jsonData));
         } else {
-            $( destino ).append( $.render[templateId]( jsonData ) );
+            $(destino).append($.render[templateId](jsonData));
         }
         
         if(typeof callback == 'function') {
