@@ -3,9 +3,8 @@
 namespace Dodici\Fansworld\WebBundle\Entity;
 
 use Dodici\Fansworld\WebBundle\Model\VisitableInterface;
-
 use Dodici\Fansworld\WebBundle\Model\SearchableInterface;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -168,6 +167,8 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     
     /**
      * @var VideoCategory
+     * 
+     * @Assert\NotNull()
      *
      * @ORM\ManyToOne(targetEntity="VideoCategory")
      * @ORM\JoinColumns({
@@ -343,6 +344,10 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
         $this->visits = new \Doctrine\Common\Collections\ArrayCollection();
         $this->visitCount = 0;
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->hasteams = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->hasidols = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->hastags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->hasusers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->processed = false;
         $this->privacy = Privacy::EVERYONE;
     }

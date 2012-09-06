@@ -539,6 +539,9 @@ services:
     meteor:
       class: Dodici\Fansworld\WebBundle\Services\Meteor
       arguments: [@doctrine.orm.entity_manager, @appstate, %meteor.host%, %meteor.port%, %meteor.clientport%, %meteor.debugmode%, %meteor.enabled%]
+    applepush:
+      class: Dodici\Fansworld\WebBundle\Services\ApplePush
+      arguments: [%applepush.url%, %applepush.certificate%, %applepush.password%]
     tagger:
       class: Dodici\Fansworld\WebBundle\Services\Tagger
       arguments: [@doctrine.orm.entity_manager, @appstate]
