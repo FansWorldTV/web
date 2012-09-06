@@ -299,13 +299,11 @@ class VideoRepository extends CountBaseRepository
         $query = $this->_em->createQuery('
     	SELECT v, va
     	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
-    	JOIN v.author va
+    	LEFT JOIN v.author va
     	WHERE
     	v.processed = false
     	AND
     	v.stream IS NOT NULL
-    	AND
-    	v.author IS NOT NULL
     	ORDER BY v.createdAt ASC
     	');
 
