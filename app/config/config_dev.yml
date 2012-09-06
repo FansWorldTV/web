@@ -27,3 +27,9 @@ services:
         class: Twig_Extensions_Extension_Debug
         tags:
             - { name: 'twig.extension' } 
+            
+swiftmailer:
+    spool:
+        type: file
+        path: "%kernel.root_dir%/spool"
+        
