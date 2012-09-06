@@ -114,6 +114,7 @@ class VideoUploader
                     }
                 } catch (\Exception $e) {
                     // might be 404, thumb not ready yet
+                    echo $e->getMessage();
                 }
             }
         }

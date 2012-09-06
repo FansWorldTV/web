@@ -330,7 +330,7 @@ class UserRepository extends CountBaseRepository
 
     /**
      * Get all users who have one or more of the given idols
-     * @param array_of_users|user $idols
+     * @param array_of_idols|idol $idols
      */
     public function byIdols($idols)
     {
@@ -339,6 +339,8 @@ class UserRepository extends CountBaseRepository
         $idarr = array();
         foreach ($idols as $idol)
             $idarr[] = $idol->getId();
+            
+        if (!$idarr) throw new \Exception('No idols provided for byIdols');
 
         return $this->_em->createQuery('
     	SELECT DISTINCT u
@@ -354,7 +356,7 @@ class UserRepository extends CountBaseRepository
     
     /**
      * Get all users who have one or more of the given teams
-     * @param array_of_users|user $idols
+     * @param array_of_teams|team $teams
      */
     public function byTeams($teams)
     {
@@ -363,6 +365,8 @@ class UserRepository extends CountBaseRepository
         $tmarr = array();
         foreach ($teams as $team)
             $tmarr[] = $team->getId();
+            
+        if (!$tmarr) throw new \Exception('No teams provided for byTeams');
     
         return $this->_em->createQuery('
                 SELECT DISTINCT u

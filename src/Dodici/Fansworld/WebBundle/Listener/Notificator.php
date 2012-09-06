@@ -138,8 +138,14 @@ class Notificator
         foreach ($hasidols as $ht) $idols[] = $ht->getIdol();
         $users = array();
         
-        $usersteams = $em->getRepository('ApplicationSonataUserBundle:User')->byTeams($teams);
-        $usersidols = $em->getRepository('ApplicationSonataUserBundle:User')->byIdols($idols);
+        $usersteams = array(); $usersidols = array();
+        
+        if ($teams) {
+            $usersteams = $em->getRepository('ApplicationSonataUserBundle:User')->byTeams($teams);
+        }
+        if ($idols) {
+            $usersidols = $em->getRepository('ApplicationSonataUserBundle:User')->byIdols($idols);
+        }
         
         foreach ($usersteams as $u) $users[$u->getId()] = $u;
         foreach ($usersidols as $u) $users[$u->getId()] = $u;
