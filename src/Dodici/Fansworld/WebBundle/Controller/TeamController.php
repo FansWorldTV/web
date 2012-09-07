@@ -69,7 +69,7 @@ class TeamController extends SiteController
             $categoryId = $category->getId();
         }
         $categories = $this->getRepository('TeamCategory')->findBy(array(), array('title' => 'desc'));
-        $videoHighlights = $this->getRepository('Video')->findBy(array(), array('createdAt' => 'desc'), 4);
+        $videoHighlights = $this->getRepository('Video')->findBy(array('highlight' => true), array('createdAt' => 'desc'), 4);
         $popularTeams = $this->getRepository('Team')->findBy(array(), array('fanCount' => 'desc'), 3);
         
         return array(

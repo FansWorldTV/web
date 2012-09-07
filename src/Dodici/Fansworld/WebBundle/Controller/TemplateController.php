@@ -34,7 +34,7 @@ class TemplateController extends SiteController
             'typename' => $type
         );
     }
-    
+
     /**
      * Get Video Template
      * @Route("/ajax/get/video", name="template_video")
@@ -49,7 +49,7 @@ class TemplateController extends SiteController
             'typename' => $type
         );
     }
-    
+
     /**
      * Get Photo Template
      * @Route("/ajax/get/photo", name="template_photo")
@@ -64,7 +64,7 @@ class TemplateController extends SiteController
             'typename' => $type
         );
     }
-    
+
     /**
      * Get General Template
      * @Route("/ajax/get/general", name="template_general")
@@ -74,9 +74,25 @@ class TemplateController extends SiteController
     {
         $request = $this->getRequest();
         $type = $request->get('type');
-    
+
         return array(
-                'typename' => $type
+            'typename' => $type
         );
     }
+
+    /**
+     * Get Team Template
+     * @Route("/ajax/get/team", name="template_team")
+     * @Template
+     */
+    public function teamAction()
+    {
+        $request = $this->getRequest();
+        $type = $request->get('type');
+
+        return array(
+            'typename' => $type
+        );
+    }
+
 }

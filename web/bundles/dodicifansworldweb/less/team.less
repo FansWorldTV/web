@@ -11,8 +11,6 @@ div.team-home {
         }
 
         .info-detail-carousel {
-            .show();
-            visibility: initial;
             background-color: @black;
             float: left;
             .size(100%, 30%);
@@ -20,22 +18,37 @@ div.team-home {
             color: @white;
             box-sizing: border-box;
             padding: 20px;
+            box-sizing: border-box;
 
-            h1 {
-                color: @orange;
-                font-weight: normal;
-                margin-bottom: 20px;
-            }
+            div {
+                margin: 20px;
 
-            p {
-                font-size: 13px;
+                h1 {
+                    color: @orange;
+                    font-weight: normal;
+                    margin-bottom: 20px;
+                }
+
+                p {
+                    font-size: 13px;
+                }
+
+                span {
+                    text-transform: uppercase;
+                }
             }
         }
     }
     section.middle {
-        margin-top: 20px;
+        border-top: 2px solid #dddddd;
+        border-bottom: 2px solid #dddddd;
+        margin: 0;
+        background-color: #f9f9f9;
+        padding: 15px 0 15px 0;
         margin-bottom: 20px;
+
         div.team {
+            background-color: @white;
             position: relative;
             border: 1px solid @gray;
             width: 30% !important;
@@ -74,8 +87,6 @@ div.team-home {
         div.team:last-child {
             margin-right: 0;
         }
-
-        margin-bottom: 10px;
     }
     section.bottom {
         div.title-and-dropdown {

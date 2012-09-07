@@ -12,40 +12,10 @@
         <span class="nav-bar team">{{ 'Equipos'|trans }}</span>
 
         <section class="row-fluid top">
-            {% include 'DodiciFansworldWebBundle:Default/blocks:carousel.html.twig' with {carouselitems: videoHighlights, showCaption: false} %}
+            {% include 'DodiciFansworldWebBundle:Default/blocks:carousel.html.twig' with {carouselitems: videoHighlights, showCaption: false, rightCaption: true} %}
         </section>
 
         <section class="row-fluid middle">
-            {% for team in popularTeams %}
-                <div class="team">
-                    <div class="splash">
-                        {% thumbnail team.splash, 'big' %}
-                    </div>
-                    <div class="logo">
-                        {% thumbnail team.image, 'small' %}
-                    </div>
-                    <p>
-                        <span class="name">{{ team }}</span>
-                        <br/>
-                        <span data-expandable data-slice-point="70">{{ team.content }}</span>
-                    </p>
-                </div>
-            {% endfor %}
-            {% for team in popularTeams %}
-                <div class="team">
-                    <div class="splash">
-                        {% thumbnail team.splash, 'big' %}
-                    </div>
-                    <div class="logo">
-                        {% thumbnail team.image, 'small' %}
-                    </div>
-                    <p>
-                        <span class="name">{{ team }}</span>
-                        <br/>
-                        <span data-expandable data-slice-point="70">{{ team.content }}</span>
-                    </p>
-                </div>
-            {% endfor %}
             {% for team in popularTeams %}
                 <div class="team">
                     <div class="splash">
@@ -72,9 +42,9 @@
                           Seleccione una liga
                           <span class="caret"></span>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu categories">
                             {% for category in categories %}
-                                <li><a href="#">{{ category }}</a></li>
+                                <li data-category-id="{{ category.id }}" ><a href="#">{{ category }}</a></li>
                             {% endfor %}
                         </ul>
                     </div>

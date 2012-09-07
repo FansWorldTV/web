@@ -440,11 +440,19 @@ var site = {
     },
     
     bindCarousel: function(){
+        $("div.info-detail-carousel div:not('.active')").hide();
+        
         $('.carousel').carousel({
             interval: 5000
         }).bind('slid', function() {
             // Get currently selected item
             var item = $('#myCarousel .carousel-inner .item.active');
+            
+            var itemId = $(item).attr('data-video');
+            $('div.info-detail-carousel div.active').fadeOut(function(){
+                $(this).removeClass('active');
+                $('div.info-detail-carousel div[data-video='+itemId+']').fadeIn().addClass('active');
+            });
 
             // Deactivate all nav links
             $('#carousel-nav a').removeClass('active');
