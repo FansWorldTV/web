@@ -1,0 +1,22 @@
+{% raw %}
+    <li class='event'>
+        <header>
+            <span>{{>team1Shortname}} vs {{>team2Shortname}}</span>
+            <button class='btn btn-danger'>Ahora</button>
+        </header>
+        <div class='row-fluid'>
+            <div class="local span4 row-fluid">
+                <div class='escudo span8'><img src="{{>team1Image}}" /></div>
+                <div class='score span4'>{{>team1Score}}</div>
+            </div>
+            <div class='data span4'>
+                <div class="top">{{>title}}</div>
+                <div class="bottom">{{>date}}</div>
+            </div>
+            <div class="visitante span4 row-fluid">
+                <div class='score span4'>{{>team2Score}}</div>
+                <div class='escudo span8'><img src="{{>team2Image}}" /></div>
+            </div>
+        </div>
+    </li>
+{% endraw %}

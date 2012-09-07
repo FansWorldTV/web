@@ -79,6 +79,21 @@ class TemplateController extends SiteController
             'typename' => $type
         );
     }
+    
+    /**
+     * Get Event Template
+     * @Route("/ajax/get/event", name="template_event")
+     * @Template
+     */
+    public function eventAction()
+    {
+        $request = $this->getRequest();
+        $type = $request->get('type');
+    
+        return array(
+                'typename' => $type
+        );
+    }
 
     /**
      * Get Team Template

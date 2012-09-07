@@ -35,7 +35,75 @@ class EventController extends SiteController
         return new Response('TODO');
     }
     
+    /**
+     * @Route("/ajax/getday", name= "event_getday")
+     */
+    public function getDayEventsAction()
+    {
+        $request = $this->getRequest();
+        $appMedia = $this->get('appmedia');
+        
+        $date    = $request->get('date', false);
+        
+        $dateFrom = \DateTime::createFromFormat('d/m/Y',$date);
+        $dateTo = \DateTime::createFromFormat('d/m/Y',$date);
+        $dateFrom->setTime(0, 0);
+        $dateTo->setTime(23, 59);
+        /*
+        $response['dateFrom'] = $dateFrom;
+        $response['dateTo'] = $dateTo;
+        */
+        $response = array();
+        
+        $events  = $this->getRepository('Event')->calendar(null,null,null,$dateFrom,$dateTo,null,null,null);
+        foreach ($events as $event) {
+            
+            $teams = array();
+            foreach ($event->getHasteams() as $hasTeam) {
+                $teams[] = array(
+                    'hasTeam' => $hasTeam,
+                    'team'    => $hasTeam->getTeam()         
+                ); 
+            }
+            
+            $response[] = array(
+                    'title' => $event->getTitle(),
+                    'date'  => $event->getFromtime()->format('d-m-Y'),
+                    'team1Score' => $teams[0]['hasTeam']->getScore(),
+                    'team1Shortname' => $teams[0]['team']->getShortname(),
+                    'team1Title' => $teams[0]['team']->getTitle(),
+                    'team1Image' => $appMedia->getImageUrl($teams[0]['team']->getImage(), 'mini_square'),
+                    
+                    'team2Score' => $teams[1]['hasTeam']->getScore(),
+                    'team2Shortname' => $teams[1]['team']->getShortname(),
+                    'team2Title' => $teams[1]['team']->getTitle(),
+                    'team2Image' => $appMedia->getImageUrl($teams[1]['team']->getImage(), 'mini_square'),
+            );
+        }
+        return $this->jsonResponse($response);
+    }
     
+    
+    /**
+     * @Route("/ajax/getmonth", name= "event_getmonth")
+     */
+    public function getMonthEventsAction()
+    {
+        $request = $this->getRequest();
+        $year    = $request->get('year', false);
+        $month   = $request->get('month', false);
+        $dateFrom = new \DateTime("-1 year");
+        $dateTo = new \DateTime("+1 year");
+        $response = array();
+        $events  = $this->getRepository('Event')->calendar(null,null,null,$dateFrom,$dateTo,null,null,null);
+        foreach ($events as $event) {
+            $response[] = array(
+                'id' => $event->getId(),
+                'fecha' => $event->getFromtime()->format('d-m-Y')
+            );
+        }
+        return $this->jsonResponse($response);
+    }
     
     /**
      * @Route("", name= "event_home" )

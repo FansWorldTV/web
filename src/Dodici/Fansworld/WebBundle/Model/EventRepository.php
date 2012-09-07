@@ -132,7 +132,7 @@ class EventRepository extends CountBaseRepository
 	    foreach ($sort as $s) $ordersdql[] = $orders[$s];
 	    
 	    $dql .= join(', ', $ordersdql);
-	    var_dump($dql);
+	    //var_dump($dql);
 	    $query = $this->_em->createQuery($dql);
 
 	    if ($user !== null) $query = $query->setParameter('user', $user->getId());

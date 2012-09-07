@@ -7,14 +7,16 @@
     <ul class='events-grid'>
         {% for event in events %}
             {% if appstate.EventTypeName(event.type) == 'Partido' %}
+                {% set team1 = event.hasTeams[0].team %}
+                {% set team2 = event.hasTeams[1].team %}
                 <li class='event'>
                     <header>
-                        <span>{{ event.hasTeams[0].team.shortname }} vs {{ event.hasTeams[1].team.shortname }}</span>
+                        <span>{{ team1.shortname }} vs {{ team2.shortname }}</span>
                         <button class='btn btn-danger'>Ahora</button>
                     </header>
                     <div class='row-fluid'>
                         <div class="local span4 row-fluid">
-                            <div class='escudo span8'>{% thumbnail event.hasTeams[0].team.image, 'mini_square' with {title: event.hasTeams[0].team.title} %}</div>
+                            <div class='escudo span8'>{% thumbnail team1.image, 'mini_square' with {title: team1.title} %}</div>
                             <div class='score span4'>{{ event.hasTeams[0].score }}</div>
                         </div>
                         <div class='data span4'>
@@ -23,7 +25,7 @@
                         </div>
                         <div class="visitante span4 row-fluid">
                             <div class='score span4'>{{ event.hasTeams[1].score }}</div>
-                            <div class='escudo span8'>{% thumbnail event.hasTeams[1].team.image, 'mini_square' with {title: event.hasTeams[1].team.title} %}</div>
+                            <div class='escudo span8'>{% thumbnail team2.image, 'mini_square' with {title: team2.title} %}</div>
                         </div>
                     </div>
                 </li>
