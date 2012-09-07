@@ -1,6 +1,7 @@
 var list = {};
 list.category = null;
 list.activePage = 1;
+list.addMore = true;
     
 list.init = function(){
     list.getTeams();
@@ -10,6 +11,21 @@ list.init = function(){
         list.activePage = 1;
         $(".list-teams dl").html('');
         list.getTeams();
+    });
+
+    $(window).endlessScroll({
+        fireOnce: true,
+        enableScrollTop: false,
+        inflowPixels: 100,
+        fireDelay: 250,
+        intervalFrequency: 2000,
+        ceaseFireOnEmpty: false,
+        loader: 'cargando',
+        callback: function(i, p, d) {
+            if(list.addMore){
+                list.getTeams();
+            }
+        }
     });
 };
     
@@ -30,7 +46,7 @@ list.getTeams = function(){
                 $("div.list-teams").removeClass('loading');
             });
         }
-            
+        list.addMore = r.gotMore;
         list.activePage++;
     },
     function(r){

@@ -100,9 +100,15 @@ class TeamController extends SiteController
 
         $teamRepo = $this->getRepository('Team');
 
-        $teams = $teamRepo->matching($category, null, $limit, $offset);
-        $countAll = $teamRepo->countMatching($category);
-        $response['gotMore'] = $countAll > $limit ? true : false;
+        if (is_null($category)) {
+            $teams = $teamRepo->findBy(array('active' => true), array('title' => 'desc'), $limit, $offset);
+            $countAll = $teamRepo->countBy(array('active' => true));
+        } else {
+            $teams = $teamRepo->matching($category, null, $limit, $offset);
+            $countAll = $teamRepo->countMatching($category);
+        }
+
+        $response['gotMore'] = $countAll > ($limit * $page) ? true : false;
 
         foreach ($teams as $team) {
             $team instanceof Team;
