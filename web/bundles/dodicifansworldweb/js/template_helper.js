@@ -17,7 +17,7 @@ var templateHelper = {
                     url: templateHelper.getPath(templateId),
                     type: 'get',
                     dataType: "html",
-                    cache: false,  ///////////////////////////////////////////////////////////////////////////// poner en true
+                    cache: true,
                     success: function (data) {
                         if (!data) {
                             templateHelper.queue.next(true);
