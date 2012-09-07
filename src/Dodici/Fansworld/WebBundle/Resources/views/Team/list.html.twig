@@ -51,49 +51,11 @@
                 </div>
                 <div class="row-fluid list-teams">
                     <dl class="dl-horizontal">
-                        {% for team in teamList %}
-                            <dt class="team">
-                                {% thumbnail team.image, 'small' %}
-                                <p>
-                                    <span class="name">{{ team }}</span>
-                                    <br/>
-                                    <span class="idols">Idolos: Cacho Fontana, Curu Paiti</span>
-                                </p>
-                            </dt>
-                                <dd>
-                                    <button class="btn btn_friendship add btn-success">Ser fan</button>
-                                    <ul>
-                                        <li><span>{{ team.fanCount }}</span><br/> fans</li>
-                                        <li><span>{{ team.videoCount }}</span><br/> videos</li>
-                                        <li><span>{{ team.photoCount }}</span><br/> fotos</li>
-                                    </ul>
-                                </dd>
-                        {% endfor %}
                     </dl>
                 </div>
             </div>
         </section>
     </div>
-    
-    {#
-	<div class="cont clearfix">
-	    <h2>Listado de equipos</h2>
-	    <div class="user_list">
-	        <div class="mask">
-	            <ul class="categories">
-	                {% for category in categories %}
-	                    <li categoryId = "{{ category.id }}">{{ category.title }}</li>
-	                {% endfor %}
-	            </ul>
-	            <br/>
-	            <ul class="listMosaic" style="display: block; ">
-	            </ul>
-	            <a href="#" id="addMore" class="loadmore hidden">Agregar más</a>
-	        </div>
-	    </div>
-	</div>
-	<input type="hidden" id="categoryId" value="{% if categoryId %} {{ categoryId }} {% else %} null {% endif %}"/>
-    #}
     <script type="text/javascript">
 	    $(document).ready(function(){
 	        list.init();

@@ -74,7 +74,6 @@ class TeamController extends SiteController
         return array(
             'categoryId' => $categoryId,
             'categories' => $categories,
-            'teamList' => $this->getRepository('Team')->findBy(array(), array('title' => 'desc')),
             'videoHighlights' => $videoHighlights,
             'popularTeams' => $popularTeams
         );
@@ -89,6 +88,9 @@ class TeamController extends SiteController
 
         $page = (int) $request->get('page', 1);
         $category = $request->get('category', null);
+        if ($category == 'null') {
+            $category = null;
+        }
 
         $limit = self::LIMIT_ITEMS;
 

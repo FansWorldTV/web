@@ -7,12 +7,14 @@
         <span class="idols">Idolos: cacam, cacona, pororeta</span>
     </p>
 </dt>
+{% endraw %}
     <dd>
-        <button class="btn btn_friendship add btn-success">Ser fan</button>
+        <button class="btn btn_friendship {% if isFan %}remove{% else %}add{% endif %} btn-success">Ser fan</button>
         <ul>
-            <li><span>{{>fanCount}}</span><br/> fans</li>
-            <li><span>{{>videoCount}}</span><br/> videos</li>
-            <li><span>{{>photoCount}}</span><br/> fotos</li>
+            {% raw %}
+                <li><span>{{>fanCount}}</span><br/> fans</li>
+                <li><span>{{>videoCount}}</span><br/> videos</li>
+                <li><span>{{>photoCount}}</span><br/> fotos</li>
+            {% endraw %}
         </ul>
     </dd>
-{% endraw %}
