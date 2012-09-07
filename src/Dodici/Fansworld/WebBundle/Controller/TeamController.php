@@ -43,15 +43,14 @@ class TeamController extends SiteController
             throw new HttpException(404, 'Equipo no encontrado');
         else
             $this->get('visitator')->visit($team);
-        
+
         $highlights = $this->getRepository('video')->highlights($team, 4);
-        
-        
-        
-        
+
+
+
+
         return array(
             'team' => $team,
-            
             'isHome' => true,
             'highlights' => $highlights,
         );
@@ -71,7 +70,7 @@ class TeamController extends SiteController
         $categories = $this->getRepository('TeamCategory')->findBy(array(), array('title' => 'desc'));
         $videoHighlights = $this->getRepository('Video')->findBy(array('highlight' => true), array('createdAt' => 'desc'), 4);
         $popularTeams = $this->getRepository('Team')->findBy(array(), array('fanCount' => 'desc'), 3);
-        
+
         return array(
             'categoryId' => $categoryId,
             'categories' => $categories,
@@ -89,53 +88,30 @@ class TeamController extends SiteController
         $request = $this->getRequest();
 
         $page = (int) $request->get('page', 1);
+        $category = $request->get('category', null);
 
         $limit = self::LIMIT_ITEMS;
 
-        $page--;
-        $offset = $page * $limit;
+        $offset = ($page - 1) * $limit;
 
         $response = array();
-        $params = array();
-        $params['active'] = true;
 
-        /*
-          TODO: arreglar esto para que funcione con el m/m
+        $teamRepo = $this->getRepository('Team');
 
-          $teamcategory = $request->get('category', null);
-          if($teamcategory == 'null'){
-          $teamcategory = null;
-          }
-          if ($teamcategory)
-          $params['teamcategories'] = array($teamcategory);
-         */
+        $teams = $teamRepo->matching($category, null, $limit, $offset);
+        $countAll = $teamRepo->countMatching($category);
+        $response['gotMore'] = $countAll > $limit ? true : false;
 
-        if ($page == 0) {
-            $teams = $this->getRepository('Team')->findBy($params, array('title' => 'DESC'));
-
-            foreach ($teams as $team) {
-                $response['teams'][] = array(
-                    'id' => $team->getId(),
-                    'title' => (string) $team
-                );
-            }
-        } else {
-            $teams = $this->getRepository('Team')->findBy($params, array('fanCount' => 'DESC'), $limit, $offset);
-            foreach ($teams as $team) {
-                $response['images'][] = array(
-                    'id' => $team->getId(),
-                    'image' => $this->getImageUrl($team->getImage()),
-                    'slug' => $team->getSlug(),
-                    'title' => $team->getTitle()
-                );
-            }
-
-            $countTotal = $this->getRepository('Team')->countBy($params);
-            if ($countTotal > (($page + 1) * $limit)) {
-                $response['gotMore'] = true;
-            } else {
-                $response['gotMore'] = false;
-            }
+        foreach ($teams as $team) {
+            $team instanceof Team;
+            $response['teams'][] = array(
+                'title' => $team->getTitle(),
+                'fanCount' => $team->getFanCount(),
+                'videoCount' => $team->getVideoCount(),
+                'photoCount' => $team->getPhotoCount(),
+                'isFan' => $this->get('fanmaker')->isFan($team, $this->getUser()),
+                'image' => $this->getImageUrl($team->getImage())
+            );
         }
 
         return $this->jsonResponse($response);
@@ -211,7 +187,7 @@ class TeamController extends SiteController
                 throw new HttpException(404, 'Equipo sin twitter');
             $this->get('visitator')->visit($team);
         }
-        
+
         return array('team' => $team);
     }
 
@@ -323,7 +299,7 @@ class TeamController extends SiteController
             'gotMore' => $viewMorePhotos
         );
     }
-    
+
     /**
      * team videos
      * @Route("/{slug}/videos", name="team_videos") 
@@ -350,32 +326,32 @@ class TeamController extends SiteController
         $addMore = $countAll > self::LIMIT_ITEMS ? true : false;
 
         $sorts = array(
-            'id'   => 'toggle-video-types',
-            'class'=> 'list-videos',
+            'id' => 'toggle-video-types',
+            'class' => 'list-videos',
             'list' => array(
                 array(
-                    'name'     => 'destacados', 
-                    'dataType' => 0, 
-                    'class'    => '',
+                    'name' => 'destacados',
+                    'dataType' => 0,
+                    'class' => '',
                 ),
                 array(
-                    'name'     => 'masVistos',
+                    'name' => 'masVistos',
                     'dataType' => 1,
-                    'class'    => '',
+                    'class' => '',
                 ),
                 array(
-                    'name'     => 'populares',
+                    'name' => 'populares',
                     'dataType' => 2,
-                    'class'    => 'active',
+                    'class' => 'active',
                 ),
                 array(
                     'name' => 'masVistosDia',
                     'dataType' => 3,
-                    'class'    => '',
+                    'class' => '',
                 ),
             )
         );
-        
+
         return array(
             'videos' => $videos,
             'addMore' => $addMore,
@@ -384,7 +360,7 @@ class TeamController extends SiteController
             'sorts' => $sorts
         );
     }
-    
+
     /**
      *  @Route("/{slug}/info", name="team_info")
      *  @Template()
@@ -392,23 +368,23 @@ class TeamController extends SiteController
     public function infoTabAction($slug)
     {
         $team = $this->getRepository('Team')->findOneBy(array('slug' => $slug));
-        
-        if(!$team){
+
+        if (!$team) {
             throw new HttpException(404, "No existe el ídolo");
-        }else{
+        } else {
             $this->get('visitator')->visit($team);
         }
 
         $user = $this->getUser();
-        $teamData = array('title','shortname','letters', 'stadium', 'website', 'content', 'nicknames','foundedAt','country');
-        
+        $teamData = array('title', 'shortname', 'letters', 'stadium', 'website', 'content', 'nicknames', 'foundedAt', 'country');
+
         return array(
             'user' => $user,
             'teamData' => $teamData,
             'team' => $team
         );
     }
-    
+
     /**
      * @Route("/{slug}/fans", name="team_fans")
      * @Template
@@ -421,23 +397,22 @@ class TeamController extends SiteController
             throw new HttpException(404, "No existe el Team");
         }else
             $this->get('visitator')->visit($team);
-    
-    
+
+
         $fans = array(
-                'ulClass' => 'fans',
-                'containerClass' => 'fan-container'
+            'ulClass' => 'fans',
+            'containerClass' => 'fan-container'
         );
         $fans['list'] = $this->getRepository('User')->byTeams($team);
-    
+
         $return = array(
-                'fans' => $fans,
-                'team' => $team
+            'fans' => $fans,
+            'team' => $team
         );
-    
+
         return $return;
     }
-    
-    
+
     /**
      * @Route("/{slug}/idols", name="team_idols")
      * @Template
@@ -450,24 +425,24 @@ class TeamController extends SiteController
             throw new HttpException(404, "No existe el Team");
         }else
             $this->get('visitator')->visit($team);
-    
-        $idolships     = array(
-                'ulClass' => 'idols',
-                'containerClass' => 'idol-container',
-                'list' => $this->getRepository('Idol')->byTeam($team),
+
+        $idolships = array(
+            'ulClass' => 'idols',
+            'containerClass' => 'idol-container',
+            'list' => $this->getRepository('Idol')->byTeam($team),
         );
         //$idolshipsCount = $this->getRepository('Idolship')->countBy(array('author' => $user->getId()));
-        
+
         $return = array(
-                'idolships' => $idolships,
-                //'addMore' => $idolshipsCount > self::LIMIT_LIST_IDOLS ? true : false,
-                'addMore' => false,
-                'team' => $team,
+            'idolships' => $idolships,
+            //'addMore' => $idolshipsCount > self::LIMIT_LIST_IDOLS ? true : false,
+            'addMore' => false,
+            'team' => $team,
         );
-    
+
         return $return;
     }
-    
+
     /**
      * @Route("/{slug}/eventos", name="team_eventos")
      * @Template
@@ -480,14 +455,15 @@ class TeamController extends SiteController
             throw new HttpException(404, "No existe el Team");
         }else
             $this->get('visitator')->visit($team);
-    
+
         $eventos = $this->getRepository('Event')->ByTeam($team);
-         
+
         $return = array(
-                'eventos' => $eventos,
-                'team' => $team,
+            'eventos' => $eventos,
+            'team' => $team,
         );
-    
+
         return $return;
     }
+
 }

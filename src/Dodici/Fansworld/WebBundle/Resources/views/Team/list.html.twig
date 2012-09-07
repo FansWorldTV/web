@@ -93,11 +93,10 @@
 	    </div>
 	</div>
 	<input type="hidden" id="categoryId" value="{% if categoryId %} {{ categoryId }} {% else %} null {% endif %}"/>
-	<script type="text/javascript">
+    #}
+    <script type="text/javascript">
 	    $(document).ready(function(){
-	        list.category = {% if categoryId %} {{ categoryId }} {% else %} null {% endif %};
 	        list.init();
 	    });
 	</script>
-    #}
 {% endblock %}

@@ -5,16 +5,16 @@ list.activePage = 1;
 list.init = function(){
     list.getTeams();
         
-    $("ul.categories li").live('click', function(){
+    $("ul.categories li :not('div.list-teams.loading')").on('click', function(){
         list.category = $(this).attr('data-category-id');
         list.activePage = 1;
-        $("ul.listMosaic").html('');
+        $(".list-teams dl").html('');
         list.getTeams();
     });
 };
     
 list.getTeams = function(){
-    $("div.mask").addClass('loading');
+    $("dv.list-teams").addClass('loading');
         
     ajax.genericAction('team_get',
     {
@@ -22,24 +22,19 @@ list.getTeams = function(){
         'page': list.activePage
     },
     function(r){
+        console.log(r);
         for(i in r.teams){
             var element = r.teams[i];
             
-            template_helper.renderTemplate('team-list_element', element, $(".list-teams dl"), false, function(){
-                
+            templateHelper.renderTemplate('team-list_element', element, $(".list-teams dl"), false, function(){
+                $("div.list-teams").removeClass('loading');
             });
-            /*
-            $("ul.listMosaic").append("<li> <a href='"+ Routing.generate(appLocale +'_' +'team_wall', {
-                'slug': element.slug
-            })+"'>" + element.title + " </a></li>");*/
         }
             
         list.activePage++;
-        $("div.mask").removeClass('loading');
-        console.log(r);
     },
     function(r){
         console.log(r);
-        $("div.mask").removeClass('loading');
+        $("div.list-teams").removeClass('loading');
     });
 }
