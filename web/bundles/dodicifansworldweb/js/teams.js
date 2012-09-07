@@ -4,12 +4,20 @@ list.activePage = 1;
 list.addMore = true;
     
 list.init = function(){
+    if($("div.list-teams").attr('data-got-more')){
+        list.addMore = true;
+    }else{
+        list.addMore = false;
+    }
     list.getTeams();
         
-    $("ul.categories li :not('div.list-teams.loading')").on('click', function(){
-        list.category = $(this).attr('data-category-id');
+    $("ul.categories li a").on('click', function(e){
+        //e.preventDefault();
+        list.category = $(this).parent().attr('data-category-id');
         list.activePage = 1;
-        $(".list-teams dl").html('');
+        
+        $(".list-teams dl").html(' ');
+        
         list.getTeams();
     });
 
@@ -27,6 +35,7 @@ list.init = function(){
             }
         }
     });
+    
 };
     
 list.getTeams = function(){
@@ -38,7 +47,6 @@ list.getTeams = function(){
         'page': list.activePage
     },
     function(r){
-        console.log(r);
         for(i in r.teams){
             var element = r.teams[i];
             
@@ -54,3 +62,7 @@ list.getTeams = function(){
         $("div.list-teams").removeClass('loading');
     });
 }
+
+$(function(){
+   list.init(); 
+});

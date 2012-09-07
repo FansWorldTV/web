@@ -49,16 +49,11 @@
                         </ul>
                     </div>
                 </div>
-                <div class="row-fluid list-teams">
+                <div class="row-fluid list-teams" {% if gotMore %} data-got-more="true" {% endif %}>
                     <dl class="dl-horizontal">
                     </dl>
                 </div>
             </div>
         </section>
     </div>
-    <script type="text/javascript">
-	    $(document).ready(function(){
-	        list.init();
-	    });
-	</script>
 {% endblock %}

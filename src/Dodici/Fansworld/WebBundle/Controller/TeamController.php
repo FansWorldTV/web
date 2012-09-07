@@ -70,12 +70,14 @@ class TeamController extends SiteController
         $categories = $this->getRepository('TeamCategory')->findBy(array(), array('title' => 'desc'));
         $videoHighlights = $this->getRepository('Video')->findBy(array('highlight' => true), array('createdAt' => 'desc'), 4);
         $popularTeams = $this->getRepository('Team')->findBy(array(), array('fanCount' => 'desc'), 3);
+        $countAll = $this->getRepository('Team')->countBy(array('active' => true));
 
         return array(
             'categoryId' => $categoryId,
             'categories' => $categories,
             'videoHighlights' => $videoHighlights,
-            'popularTeams' => $popularTeams
+            'popularTeams' => $popularTeams,
+            'gotMore' => $countAll > self::LIMIT_ITEMS ? true : false
         );
     }
 
