@@ -9,6 +9,8 @@ var events = {
 	initEventHome: function(calendarDestination,eventGridDestination){
 		events.eventGridDestination = eventGridDestination;
 		events.initCalendar(calendarDestination);
+		events.bindSportDropdown($('.eventfilters-container .sports'),$('.eventfilters-container .leagues'));
+		events.bindTeamcategoriesDropdown($('.eventfilters-container .leagues'));
 	},
 	
 	initCalendar: function(calendarDestination){
@@ -101,7 +103,54 @@ var events = {
 		templateHelper.renderTemplate("event-grid_element", eventsList, events.eventGridDestination, false, function(){
 			//console.log('done');
 		});
-	}
+	},
+	
+	bindSportDropdown: function(sportDropdown,teamcategoriesDropdown){
+		events.sportDropdown = sportDropdown;
+		events.teamcategoriesDropdown = teamcategoriesDropdown;
+		
+		events.sportDropdown.on('click','ul.dropdown-menu li a',function(e){
+			events.sportDropdown.find('.active').removeClass('active');
+			$(this).parent().addClass('active');
+			
+			var sportId = $(this).attr('sport-id');
+			ajax.genericAction('sport_getteamcategories', 
+				{
+					sportId: sportId
+				}, 
+				function(r){
+			        if(typeof r != 'undefined'){
+			        	events.loadTeamcategories(r.categories);
+			        	
+			        	if(typeof callback != 'undefined')
+		        		{
+			        		callback();
+		        		}
+			        }
+		        }, function(msg){
+		            error(msg);
+		            events.eventGridDestination.removeClass('loading');
+		        },'get');		
+			
+			
+		});
+	},
+	
+	loadTeamcategories: function(categories){
+		events.teamcategoriesDropdown.find('ul.dropdown-menu').empty();
+		$.each(categories,function(i,value){
+			events.teamcategoriesDropdown.find('ul.dropdown-menu').append("<li><a sport-id='"+value.id+"' tabindex='-1' href='#'>"+value.title+"</a></li>");
+    	});
+	},
+	
+	bindTeamcategoriesDropdown: function(teamcategoriesDropdown){
+		events.teamcategoriesDropdown = teamcategoriesDropdown;
+		
+		events.teamcategoriesDropdown.on('click','ul.dropdown-menu li a',function(e){
+			events.teamcategoriesDropdown.find('.active').removeClass('active');
+			$(this).parent().addClass('active');
+		});
+	},
 	
 	
 };

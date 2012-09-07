@@ -112,12 +112,20 @@ class EventController extends SiteController
     public function homeTabAction()
     {
         //TODO: todo
-        $events = $this->getRepository('Event')->findBy(array(), array('fromtime' => 'desc'),self::LIMIT_EVENTS,1);
-        $eventoDestacado = $this->getRepository('Event')->findOneBy(array(), array('fromtime' => 'desc'));
+        $eventRepo = $this->getRepository('Event');
+        $events = $eventRepo->findBy(array(), array('fromtime' => 'desc'),self::LIMIT_EVENTS,1);
+        $eventoDestacado = $eventRepo->findOneBy(array(), array('fromtime' => 'desc'));
+        
+        $sports = $this->getRepository('Sport')->findBy(array());
+        $leagues = true;
+        $orderBy = true;
         
         return array(
             'eventoDestacado' => $eventoDestacado,
             'events' => $events,        
+            'sports' => $sports,
+            'leagues' => $leagues,
+            'orderBy' => $orderBy,    
         );
     }
     

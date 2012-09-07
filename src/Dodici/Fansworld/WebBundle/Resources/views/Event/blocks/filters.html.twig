@@ -1,17 +1,87 @@
+{% if sports is not defined %}
+    {% set sports = null %}
+    {% set leagues = null %}
+{% else %}
+    {% if leagues is not defined %}
+        {% set leagues = null %}
+    {% endif %}    
+{% endif %}
+
+{% if orderBy is not defined %}
+    {% set orderBy = null %}
+    {% set closest = null %}
+    {% set popular = null %}
+{% else %}
+    {% if closest is not defined %}
+        {% set closest = true %}
+    {% endif %}
+    
+    {% if popular is not defined %}
+        {% set popular = true %}
+    {% endif %}    
+{% endif %}
+
+
 
 
 <section class='eventfilters-container'>
-    <div class="btn-group">
-        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-            Action
-            <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a tabindex="-1" href="#">Action</a></li>
-            <li><a tabindex="-1" href="#">Another action</a></li>
-            <li><a tabindex="-1" href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a tabindex="-1" href="#">Separated link</a></li>
-        </ul>
-    </div>
+    {% if orderBy %}
+        <div class="btn-group order-by">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                {{ 'OrderBy'|trans }}
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                {% if closest %}
+                    <li><a tabindex="-1" href="#">{{ 'closest'|trans }}</a></li>
+                {% endif %}
+                
+                {% if popular %}
+                    <li><a tabindex="-1" href="#">{{ 'popular'|trans }}</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+    
+     {% if leagues %}
+        <div class="btn-group leagues">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                {{ 'Leagues'|trans }}
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                {% if leagues|length>0 %}
+                    {% for league in leagues %}
+                        <li><a tabindex="-1" href="#">{{ league }}</a></li>
+                    {% endfor %}
+                {% else %}
+                    <li><a tabindex="-1" href=""> - </a></li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if sports %}
+        <div class="btn-group sports">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                {{ 'Sports'|trans }}
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                {% if sports|length>0 %}
+                    {% for sport in sports %}
+                        <li><a sport-id='{{ sport.id }}' tabindex="-1" href="#">{{ sport }}</a></li>
+                    {% endfor %}
+                {% else %}
+                    <li><a tabindex="-1" href=""> - </a></li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+    
+   
+    
+    
 </section>
+
+

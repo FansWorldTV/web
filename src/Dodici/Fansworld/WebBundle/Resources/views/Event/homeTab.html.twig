@@ -17,7 +17,7 @@
 
 
 {% block event_body %}
-    {% embed "DodiciFansworldWebBundle:Layout/Embed:event_fullwidth.html.twig" %}
+    {% embed "DodiciFansworldWebBundle:Layout/Embed:event_fullwidth.html.twig" with {'leagues': true } %}
         {% block inner_content %}
             {% include "DodiciFansworldWebBundle:Event:blocks/destacado.html.twig" with { 'evento': eventoDestacado } %}
             
