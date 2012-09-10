@@ -301,61 +301,68 @@ var site = {
         });
     },
     globalCommentButtons: function(){
-        $('.comment_button:not(.loading)').live('click',function(e){
+        $('.comment_button:not(.loading)').live('click', function(e) {
             e.preventDefault();
-            var el = $(this);
-            var type = el.attr('data-type');
-            var id = el.attr('data-id');
-            var ispin = (el.attr('data-pin') == 'true');
-            var content = el.parents('.commentform').find('.comment_message').val();
-            //var privacy = el.parents('.commentform').find('.post_privacidad').val();
-            var privacy = 1;
-            var textAreaElement = el.closest('.commentform').find('textarea.comment_message');
-            var elDestination = '[data-wall]';
+            var el = $(this),
+                 type = el.attr('data-type'),
+                 id = el.attr('data-id'),
+                 ispin = (el.attr('data-pin') == 'true'),
+                 content = el.parents('.commentform').find('.comment_message').val();
+                 privacy = textAreaElement.parents('.commentform,.shortcommentform').find('.post_privacidad').val() || 1,
+                 textAreaElement = el.closest('.commentform').find('textarea.comment_message'),
+                 elDestination = '[data-wall]';
+                 
+            if(!textAreaElement.attr('is-subcomment')) {
+                elDestination = textAreaElement.parents('.comments,.comments-and-tags').find('.comments-container');
+            }
+                
             site.postComment(textAreaElement,type,id,ispin,content,privacy,elDestination);
             return false;
-     
         });
     	
         $('textarea.comment_message').live('keydown', function (e) {
-            if ( e.keyCode == 13 ){
-                var textAreaElement		= $(this);
-                var type 	= textAreaElement.attr('data-type');
-                var id 		= textAreaElement.attr('data-id');
-                var ispin 	= (textAreaElement.attr('data-pin') == 'true');
-                var content = textAreaElement.val();
-                var privacy = 1;
-                //var privacy = el.parents('.commentform').find('.post_privacidad').val();   
-                var elDestination = textAreaElement.closest('.comments').find('div.subcomments-container');
-                site.postComment(textAreaElement,type,id,ispin,content,privacy,elDestination);
+            if (e.keyCode == 13) {
+                var textAreaElement = $(this),
+                     type = textAreaElement.attr('data-type'),
+                     id = textAreaElement.attr('data-id'),
+                     ispin = (textAreaElement.attr('data-pin') == 'true'),
+                     content = textAreaElement.val(),
+                     privacy = textAreaElement.parents('.commentform,.shortcommentform').find('.post_privacidad').val() || 1,
+                     elDestination = textAreaElement.closest('.comments,.comments-and-tags').find('.subcomments-container');
+                     
+                if(!textAreaElement.attr('is-subcomment')) {
+                    elDestination = textAreaElement.parents('.comments,.comments-and-tags').find('.comments-container');
+                }
+                
+                site.postComment(textAreaElement, type, id, ispin, content, privacy, elDestination);
                 return false;
             }
         });
     },
     
-    postComment: function(textAreaElement,type,id,ispin,content,privacy,elDestination){
+    postComment: function (textAreaElement,type,id,ispin,content,privacy,elDestination) {
         textAreaElement.addClass('loadingSmall');
         textAreaElement.attr('disabled','disabled');
     	
         ajax.globalCommentAction(type, id, content, privacy, ispin,
-            function(response){
+            function (response) {
                 textAreaElement.val('');
                 textAreaElement.removeClass('loadingSmall');
                 success(response.message);
                 
-               
-                templateHelper.renderTemplate(response.jsonComment.templateId,response.jsonComment,elDestination,true);
+                templateHelper.renderTemplate(response.jsonComment.templateId,response.jsonComment,elDestination, false);
                 
-                $('.timeago').each(function(){
+                $('.timeago').each(function () {
                     $(this).html($.timeago($(this).attr('data-time')));
                 });
+                
                 if (ispin) {
                     $('.masonbricks').isotope().resize();
                 }
                 site.expander();
                 textAreaElement.removeAttr('disabled');
             },
-            function(responsetext){
+            function (responsetext) {
                 textAreaElement.removeClass('loadingSmall');
                 textAreaElement.removeAttr('disabled');
                 error(responsetext);

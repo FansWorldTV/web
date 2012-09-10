@@ -289,7 +289,6 @@ var ajax = {
     },
     
     globalCommentAction: function(type, id, content, privacy, ispin, callback, errorcallback){
-        ajax.setCallback(callback, errorcallback);
         $.ajax({
             url: 'http://' + location.host + Routing.generate( appLocale + '_comment_ajaxpost'),
             type: 'POST',
@@ -299,6 +298,12 @@ var ajax = {
                 'content' : content,
                 'privacy' : privacy,
                 'ispin' : ispin
+            },
+            success: function(response) {
+                callback(response);
+            },
+            error: function(response) {
+                errorcallback(response);
             }
         });
     },

@@ -122,8 +122,6 @@
             window.endlessScrollPaused = true;
 
             ajax.genericAction(methodName, opts, function (response) {
-                console.log(response);
-               
                 if (!response.elements || !response.elements.length) {
                     preloader.hide();
                     settings.result.html("<h2>No se encontraron videos.</h2>");
@@ -156,8 +154,7 @@
         function renderMontage(response) {
             for (var i in response.elements) {
                 var element = response.elements[i];
-                console.log(element);
-             
+4             
                 templateHelper.renderTemplate(settings.entity + "-list_element", element, settings.result, false, function () {
                     site.startMosaic(settings.result, {
                         minw: 150,
@@ -199,7 +196,6 @@
         }
         
         function renderRawList(response) {
-            console.log('------------------', settings.result, response);return;
             settings.result.hmtl("");
             for(var i in response.elements) {
                 settings.result.append(response.elements[i].view);
