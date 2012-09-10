@@ -8,8 +8,6 @@
 {% endblock %}
 
 {% block content %}
-    {% set tship = false %}
-    
     <div class="team-home">
         <span class="nav-bar team">{{ 'Equipos'|trans }}</span>
 
@@ -19,6 +17,8 @@
 
         <section class="row-fluid middle">
             {% for team in popularTeams %}
+                {% set tship = appstate.teamshipwith(team) %}
+                
                 <div class="team">
                     <div class="splash">
                         {% thumbnail team.splash, 'big' %}
