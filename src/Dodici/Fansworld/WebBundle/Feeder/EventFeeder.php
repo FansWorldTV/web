@@ -49,6 +49,9 @@ class EventFeeder {
     {
         $result = $xml->xpath('fecha/partido');
         $teamrepo = $this->em->getRepository('Dodici\Fansworld\WebBundle\Entity\Team');
+        
+        $teamcatext = (string)$xml->categoria->attributes()->canal;
+        
         foreach ($result as $xp) {
             $state = (string)$xp->estado->attributes()->id;
             
@@ -67,7 +70,7 @@ class EventFeeder {
                         $date = \DateTime::createFromFormat('Ymd' . ($rawhour ? ' H:i:s' : ''), $rawdate . ($rawhour ? (' ' . $rawhour) : ''));
                     }
                     $xpexternal = (string)$xp->attributes()->id;
-                    $event = $this->createEvent($date, $localteam, $awayteam, $xpexternal);
+                    $event = $this->createEvent($date, $localteam, $awayteam, $xpexternal, $teamcatext);
                     if ($event) $this->em->persist($event);
                     \Doctrine\Common\Util\Debug::dump($event);
                 }
@@ -76,15 +79,19 @@ class EventFeeder {
         $this->em->flush();
     }
     
-    private function createEvent($date, $localteam, $awayteam, $external)
+    private function createEvent($date, $localteam, $awayteam, $external, $teamcatext)
     {
         $eventrepo = $this->em->getRepository('Dodici\Fansworld\WebBundle\Entity\Event');
         $event = $eventrepo->findOneByExternal($external);
         
         if (!$event) {
+            $teamcategory = $this->em->getRepository('DodiciFansworldWebBundle:TeamCategory')->findOneByExternal($teamcatext);
+            
             $event = new Event();
             $event->setExternal($external);
             $event->setTitle((string)$localteam . ' VS ' . (string)$awayteam);
+            
+            if ($teamcategory) $event->setTeamCategory($teamcategory);
             
             $htl = new HasTeam();
             $htl->setTeam($localteam);

@@ -43,6 +43,13 @@ class TeamCategory implements Translatable
     private $sport;
     
     /**
+     * @var string $external
+     *
+     * @ORM\Column(name="external", type="string", length=100, nullable=true)
+     */
+    private $external;
+    
+    /**
      * @Gedmo\Slug(fields={"title"}, unique=true)
      * @Gedmo\Translatable
      * @ORM\Column(length=128)
@@ -134,5 +141,25 @@ class TeamCategory implements Translatable
     public function getSport()
     {
         return $this->sport;
+    }
+
+    /**
+     * Set external
+     *
+     * @param string $external
+     */
+    public function setExternal($external)
+    {
+        $this->external = $external;
+    }
+
+    /**
+     * Get external
+     *
+     * @return string 
+     */
+    public function getExternal()
+    {
+        return $this->external;
     }
 }

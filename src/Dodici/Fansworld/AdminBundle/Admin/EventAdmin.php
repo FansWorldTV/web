@@ -47,6 +47,7 @@ class EventAdmin extends Admin
             ->add('active', NULL, array (), array ())
             ->add('type', 'choice', array ('choices' => $types), array ())
             ->add('external', NULL, array (), array ())
+            ->add('teamcategory', NULL, array (), array ())
             ->add('hasteams', 'sonata_type_collection', array ('required' => false), 
             	array(
                       'edit' => 'inline',

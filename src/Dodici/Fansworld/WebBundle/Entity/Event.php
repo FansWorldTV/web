@@ -103,6 +103,16 @@ class Event implements SearchableInterface
      * @ORM\Column(name="external", type="string", length=100, nullable=true)
      */
     private $external;
+    
+    /**
+     * @var TeamCategory
+     *
+     * @ORM\ManyToOne(targetEntity="TeamCategory")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="teamcategory_id", referencedColumnName="id")
+     * })
+     */
+    private $teamcategory;
         
     /**
      * @var integer $userCount
@@ -643,5 +653,25 @@ class Event implements SearchableInterface
     public function getWeight()
     {
         return $this->weight;
+    }
+
+    /**
+     * Set teamcategory
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\TeamCategory $teamcategory
+     */
+    public function setTeamcategory(\Dodici\Fansworld\WebBundle\Entity\TeamCategory $teamcategory)
+    {
+        $this->teamcategory = $teamcategory;
+    }
+
+    /**
+     * Get teamcategory
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\TeamCategory 
+     */
+    public function getTeamcategory()
+    {
+        return $this->teamcategory;
     }
 }

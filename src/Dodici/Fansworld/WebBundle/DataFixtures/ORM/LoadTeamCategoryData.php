@@ -29,6 +29,7 @@ class LoadTeamCategoryData extends AbstractFixture implements FixtureInterface, 
 	        foreach ($loader as $ct) {
 	        	$teamcategory = new TeamCategory();
 	        	$teamcategory->setTitle($ct['title']);
+	        	if (isset($ct['external']) && $ct['external']) $teamcategory->setExternal($ct['external']);
 	        	
 	        	$sport = $manager->merge($this->getReference('sport-'.$ct['sport']));
 	        	$teamcategory->setSport($sport);

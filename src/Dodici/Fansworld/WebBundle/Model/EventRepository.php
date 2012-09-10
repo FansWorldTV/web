@@ -78,6 +78,8 @@ class EventRepository extends CountBaseRepository
 	 * @param boolean|null $checkedin - ($user required, whether to select checked in events only, or non-checked-in)
 	 * @param DateTime|null $datefrom
 	 * @param DateTime|null $dateto
+	 * @param Sport|null $sport
+	 * @param TeamCategory|null $teamcategory
 	 * @param array|null $sort - see below
 	 * @param int|null $limit
 	 * @param int|null $offset
@@ -88,8 +90,8 @@ class EventRepository extends CountBaseRepository
 	 * popular - show most popular (and upcoming) events first
 	 * upcoming - show most impending events first, regardless of popularity (note that mixing popular and upcoming makes no sense)
 	 */
-	public function calendar(User $user=null, $finished=null, $checkedin=null, $datefrom=null, $dateto=null, 
-	    $sort=null, $limit=null, $offset=null)
+	public function calendar(User $user=null, $finished=null, $checkedin=null, $datefrom=null, $dateto=null,
+	    $sport=null, $teamcategory=null, $sort=null, $limit=null, $offset=null)
 	{
 	    if ($sort && !is_array($sort)) $sort = array($sort);
 	    if (!$sort) {
@@ -107,12 +109,15 @@ class EventRepository extends CountBaseRepository
 	    if (in_array('isfan', $sort) && !$user) throw new \Exception('Need a user to sort by fandom');
 	    
 	    $dql = 
-	    'SELECT e, ht, t, ti '. (($user && in_array('isfan', $sort)) ? ', COUNT(tts) isfan' : '') .'
+	    'SELECT e, ht, t, ti '. 
+	    (($user && in_array('isfan', $sort)) ? ', COUNT(tts) isfan' : '') .'
     	FROM \Dodici\Fansworld\WebBundle\Entity\Event e
     	LEFT JOIN e.hasteams ht
     	LEFT JOIN ht.team t
     	LEFT JOIN t.image ti
     	'
+    	.
+    	($sport ? ' JOIN e.teamcategory tc JOIN tc.sport sp WITH sp = :sport ' : '')
     	.
     	(($user && in_array('isfan', $sort)) ? 'LEFT JOIN t.teamships tts WITH tts.author = :user' : '')
     	.
@@ -122,6 +127,7 @@ class EventRepository extends CountBaseRepository
 	    
 	    if ($datefrom) $dql .= ' AND e.fromtime >= :datefrom ';
 	    if ($dateto) $dql .= ' AND e.fromtime <= :dateto ';
+	    if ($teamcategory) $dql .= ' AND e.teamcategory = :teamcategory ';
 	    
 	    if ($user && ($checkedin !== null)) $dql .= ' AND e.id ' . ($checkedin ?: 'NOT') . ' IN (SELECT esx.event FROM \Dodici\Fansworld\WebBundle\Entity\Eventship esx WHERE esx.author = :user) ';
 	    if ($finished !== null) $dql .= ' AND e.finished = :finished ';
@@ -139,6 +145,8 @@ class EventRepository extends CountBaseRepository
 	    if ($finished !== null) $query = $query->setParameter('finished', $finished);
 	    if ($datefrom !== null) $query = $query->setParameter('datefrom', $datefrom);
 	    if ($dateto !== null) $query = $query->setParameter('dateto', $dateto);
+	    if ($sport !== null) $query = $query->setParameter('sport', $sport->getId());
+	    if ($teamcategory !== null) $query = $query->setParameter('teamcategory', $teamcategory->getId());
 	    
     	if ($limit !== null) $query = $query->setMaxResults($limit);
     	if ($offset !== null) $query = $query->setFirstResult($offset);
