@@ -106,7 +106,7 @@ class TeamController extends SiteController
             $teams = $teamRepo->findBy(array('active' => true), array('title' => 'desc'), $limit, $offset);
             $countAll = $teamRepo->countBy(array('active' => true));
         } else {
-            $teams = $teamRepo->matching($category, null, $limit, $offset);
+            $teams = $teamRepo->matching($category, null, $this->getUser(), $limit, $offset);
             $countAll = $teamRepo->countMatching($category);
         }
 
@@ -114,13 +114,28 @@ class TeamController extends SiteController
 
         foreach ($teams as $team) {
             $team instanceof Team;
+            $idols = array();
+
+            $c = 0;
+            foreach ($team->getIdolCareers() as $ic) {
+                $c++;
+                $idol = $ic->getIdol();
+                $idols[] = array(
+                    'name' => (string) $idol,
+                    'url' => $this->generateUrl('idol_wall', array('slug' => $idol->getSlug()))
+                );
+                if ($c == 2) {
+                    break;
+                }
+            }
             $response['teams'][] = array(
                 'title' => $team->getTitle(),
                 'fanCount' => $team->getFanCount(),
                 'videoCount' => $team->getVideoCount(),
                 'photoCount' => $team->getPhotoCount(),
                 'isFan' => $this->get('fanmaker')->isFan($team, $this->getUser()),
-                'image' => $this->getImageUrl($team->getImage())
+                'image' => $this->getImageUrl($team->getImage()),
+                'idols' => $idols
             );
         }
 

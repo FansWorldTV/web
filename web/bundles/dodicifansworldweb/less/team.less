@@ -17,7 +17,7 @@ div.team-home {
             text-overflow: ellipsis;
             color: @white;
             padding: 20px;
-            box-sizing: border-box;
+            .box-sizing(border-box);
 
             div {
                 h1 {
@@ -53,7 +53,7 @@ div.team-home {
             height: auto;
             float: left;
             margin-right: 5%;
-            box-sizing: border-box;
+            .box-sizing(border-box);
             
             .splash {
                 height: 90px;
@@ -68,8 +68,7 @@ div.team-home {
                 right: 10px;
                 top: 64px;
                 img {
-                    height: 50px;
-                    width: initial;
+                    .size(50px, auto);
                 }
             }
             

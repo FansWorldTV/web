@@ -4,7 +4,13 @@
     <p>
         <span class="name">{{>title}}</span>
         <br/>
-        <span class="idols">Idolos: cacam, cacona, pororeta</span>
+        {{if idols}}
+        <span class="idols">Idolos: 
+            {{for idols}}
+                <a href="{{>url}}">{{>name}}</a>, 
+            {{/for}}
+        </span>
+        {{/if}}
     </p>
 </dt>
 {% endraw %}
