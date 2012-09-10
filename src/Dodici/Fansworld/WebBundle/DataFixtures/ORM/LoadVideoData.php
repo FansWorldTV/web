@@ -77,11 +77,13 @@ class LoadVideoData extends AbstractFixture implements FixtureInterface, Contain
 	        
 	        $x = 0;
 	        $cnt = count($toprocess);
+	        /*
 	        foreach ($toprocess as $vidp) {
 	            $x++;
 	            echo "Processing video $x / $cnt ... \n";
 	            $uploader->process($vidp);
-	        }
+	        }*/
+	        if ($cnt) echo "Please run /batch/videoprocessing \n";
         } else {
         	throw new \Exception('Fixture file does not exist');
         }
