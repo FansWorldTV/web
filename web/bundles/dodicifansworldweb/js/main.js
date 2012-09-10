@@ -320,7 +320,7 @@ var site = {
             return false;
         });
     	
-        $('textarea.comment_message').live('keydown', function (e) {
+        $('textarea.comment_message:not(.loading)').live('keydown', function (e) {
             if (e.keyCode == 13) {
                 var textAreaElement = $(this),
                      type = textAreaElement.attr('data-type'),
@@ -328,7 +328,7 @@ var site = {
                      ispin = (textAreaElement.attr('data-pin') == 'true'),
                      content = textAreaElement.val(),
                      privacy = textAreaElement.parents('.commentform,.shortcommentform').find('.post_privacidad').val() || 1,
-                     elDestination = textAreaElement.closest('.comments,.comments-and-tags').find('.subcomments-container');
+                     elDestination = textAreaElement.closest('.comments,.comments-and-tags').find('.subcomment-container');
                      
                 if(!textAreaElement.attr('is-subcomment')) {
                     elDestination = textAreaElement.parents('.comments,.comments-and-tags').find('.comments-container');

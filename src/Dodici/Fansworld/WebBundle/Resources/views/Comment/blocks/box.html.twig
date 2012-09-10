@@ -30,7 +30,7 @@
             {% block comments %}
 
             {% for comment in entity.comments %}
-                {% include 'DodiciFansworldWebBundle:Comment:comment.subcomment.html.twig' with {comment: comment} %}
+                {% include 'DodiciFansworldWebBundle:Comment:comment.comment.html.twig' with {comment: comment} %}
             {% endfor %}
 
             {% endblock %}
