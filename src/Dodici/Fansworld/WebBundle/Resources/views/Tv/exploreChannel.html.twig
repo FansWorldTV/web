@@ -1,7 +1,5 @@
 {% extends "DodiciFansworldWebBundle:Tv:base.html.twig" %}
-
 {% block title %}TV - Search Results{% endblock %}
-
 {% block tv_body %}
     {% embed "DodiciFansworldWebBundle:Layout/Embed:tv_fullwidth.html.twig" %}
         {% block inner_content %}
@@ -9,11 +7,9 @@
             <section class='videoexplorer-container'>
                 {% include "DodiciFansworldWebBundle:Video:blocks/montage.html.twig"  with { videos: videos } %}
             </section>
-            
-            
             <script>
                 $(function(){
-                    tv.bindChannelsExplorer('.breadcrumb .channels-dropdown','.am-container');
+                    tv.init();
                 });
             </script>
         {% endblock %}

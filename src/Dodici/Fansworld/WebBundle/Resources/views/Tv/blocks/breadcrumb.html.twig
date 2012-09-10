@@ -7,37 +7,30 @@
         {% set activeChannel = channels[0] %}
     {% endif %}
 {% endif %}
-
 <nav class='breadcrumb'>
     <ul>
         <li class='tv'><a href="{{ path('teve_home') }}">TV</a></li>
         <li class="pipe">|</li>
         {% if type == 'channel' %}
-            <li class="dropdown channels-dropdown" id="menu1">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
-                     <span>{{ activeChannel.title }}</span>
-                    <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                    {% for channel in channels %}
-                        <li><a href="#" channel-slug='{{ channel.slug }}'>{{ channel.title }}</a></li>
-                    {% endfor %}
-                </ul>
-            </li>
-          
-          
-            <li class='subscribirse'>
-                <div class="btn-group">
-                    <button class="btn btn-small btn-success"><i class="icon-ok"></i></button>
-                    <button class="btn btn-small btn-success">Subscribirse</button>
-                </div>
-            </li>
-          
+        <li class="dropdown channels-dropdown" id="menu1">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
+                <span>{{ activeChannel.title }}</span>
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                {% for channel in channels %}
+                    <li><a href="#" channel-slug='{{ channel.slug }}'>{{ channel.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+        <li class='subscribirse'>
+            <div class="btn-group">
+                <button class="btn btn-small btn-success"><i class="icon-ok"></i></button>
+                <button class="btn btn-small btn-success js-subscribe" data-active-channel="{{ activeChannel }}">Subscribirse</button>
+            </div>
+        </li>
         {% else %}
             <li class='term'>{{ term }}</li>
         {% endif %}   
-        
-        
-         
     </ul>
 </nav>

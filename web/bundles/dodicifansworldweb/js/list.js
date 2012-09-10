@@ -46,7 +46,6 @@
             var $filterItems = $(list.settings.filters).find(list.settings.filtersElement);
             $filterItems.each(function () {
                 $(this).click(function () {
-                    console.log('click!');
                     var $btn = $(this);
                     if (!list.$list.data('fetchLock') && !$btn.hasClass('active')) {
                         list.page = 1;
@@ -54,10 +53,11 @@
                         list.preloader.show();
                         if (list.settings.channels) {
                             list.target =  $btn.attr('data-list-target');
+                            $('.js-subscribe').attr('data-active-channel', list.target);
                             // showing highlight panels
                             $('.tab-pane').hide();
                             $('.tab-pane#' + list.target).show();
-                            
+
                             // updating bottom list
                             var relatedList = $('#montage-video-list').data('list');
                             relatedList.settings.target = list.target;
@@ -119,8 +119,8 @@
                 list.methodName = list.settings.entity + '_highlighted';
                 list.methodName = 'video_ajaxcategory';
             }
-            
-            if(list.target !== null) {
+
+            if (list.target !== null) {
                 opts.category = list.target;
             }
 
