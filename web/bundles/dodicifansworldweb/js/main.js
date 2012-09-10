@@ -104,6 +104,7 @@ var site = {
         searchBox.init();
         site.BindLoginWidget();
         albums.init();
+        teamship.init();
         
         $('[data-wall]').wall();
         site.bindCarousel();

@@ -56,6 +56,7 @@ list.getTeams = function(){
         }
         list.addMore = r.gotMore;
         list.activePage++;
+        teamship.init();
     },
     function(r){
         console.log(r);

@@ -13,14 +13,14 @@
         {{/if}}
     </p>
 </dt>
-{% endraw %}
     <dd>
-        <button class="btn btn_friendship add btn-success">Ser fan</button>
+        <button class="btn btn-success {{if teamship}}disabled{{else}}btn_teamship add{{/if}}" data-team-id="{{>id}}">Ser fan</button>
+        
         <ul>
-            {% raw %}
                 <li><span>{{>fanCount}}</span><br/> fans</li>
                 <li><span>{{>videoCount}}</span><br/> videos</li>
                 <li><span>{{>photoCount}}</span><br/> fotos</li>
-            {% endraw %}
+            
         </ul>
     </dd>
+{% endraw %}

@@ -87,7 +87,7 @@ class TeamController extends SiteController
     public function ajaxGetTeams()
     {
         $request = $this->getRequest();
-
+        $user = $this->getUser();
         $page = (int) $request->get('page', 1);
         $category = $request->get('category', null);
         if ($category == 'null') {
@@ -106,7 +106,7 @@ class TeamController extends SiteController
             $teams = $teamRepo->findBy(array('active' => true), array('title' => 'desc'), $limit, $offset);
             $countAll = $teamRepo->countBy(array('active' => true));
         } else {
-            $teams = $teamRepo->matching($category, null, $this->getUser(), $limit, $offset);
+            $teams = $teamRepo->matching($category, null, $user, $limit, $offset);
             $countAll = $teamRepo->countMatching($category);
         }
 
@@ -128,14 +128,23 @@ class TeamController extends SiteController
                     break;
                 }
             }
+
+            if ($user) {
+                $teamship = $this->getRepository('Teamship')->findOneBy(array('author' => $user->getId(), 'team' => $team->getId())) ? true : false;
+            } else {
+                $teamship = false;
+            }
+
             $response['teams'][] = array(
+                'id' => $team->getId(),
                 'title' => $team->getTitle(),
                 'fanCount' => $team->getFanCount(),
                 'videoCount' => $team->getVideoCount(),
                 'photoCount' => $team->getPhotoCount(),
                 'isFan' => $this->get('fanmaker')->isFan($team, $this->getUser()),
                 'image' => $this->getImageUrl($team->getImage()),
-                'idols' => $idols
+                'idols' => $idols,
+                'teamship' => $teamship
             );
         }
 
