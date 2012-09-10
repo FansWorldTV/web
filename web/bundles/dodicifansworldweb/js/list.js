@@ -3,84 +3,87 @@
     "use strict";
 
     var List = function ($element, options) {
-
-        // initialization and settings
-        var $list = $element,
-        settings = $.extend({
+        var list = this;
+        list.$list = $element;
+        list.settings = $.extend({
             // options that may be overriden by html attributes
-            'entity': $list.attr('data-list-entity'),
-            'entityType': $list.attr('data-list-entity-type') || null,
-            'entityId': $list.attr('data-list-entity-id') || null,
-            'filters': $list.attr('data-list-filters') || null,
-            'filtersElement': $list.attr('data-list-filters-element') || 'li',
-            'channels': typeof $list.attr('data-list-channels') === "undefined" ? false : true,
-            'fetchMoreButton': typeof $list.attr('data-list-fetch-more-button') === "undefined" ? false : true,
-            'fetchMoreButtonClass': $list.attr('data-list-fetch-more-button-class') || 'data-list-fetch-more-button',
-            'result': !$list.attr('data-list-result') ? $list : $($list.attr('data-list-result')),
-            'scrollable': typeof $list.attr('data-list-scrollable') === "undefined" ? false : true,
-            'montage': typeof $list.attr('data-list-montage') === "undefined" ? false : true,
+            'entity': list.$list.attr('data-list-entity'),
+            'entityType': list.$list.attr('data-list-entity-type') || null,
+            'entityId': list.$list.attr('data-list-entity-id') || null,
+            'filters': list.$list.attr('data-list-filters') || null,
+            'filtersElement': list.$list.attr('data-list-filters-element') || 'li',
+            'channels': typeof list.$list.attr('data-list-channels') === "undefined" ? false : true,
+            'fetchMoreButton': typeof list.$list.attr('data-list-fetch-more-button') === "undefined" ? false : true,
+            'fetchMoreButtonClass': list.$list.attr('data-list-fetch-more-button-class') || 'data-list-fetch-more-button',
+            'result': !list.$list.attr('data-list-result') ? list.$list : $(list.$list.attr('data-list-result')),
+            'scrollable': typeof list.$list.attr('data-list-scrollable') === "undefined" ? false : true,
+            'montage': typeof list.$list.attr('data-list-montage') === "undefined" ? false : true,
             // other options
             'preloaderImage': '/bundles/dodicifansworldweb/images/ajax-loader-small.gif'
-        }, options || {}),
-        filter = null,
-        target = null,
-        methodName = null,
-        fetchedCount = 0,
-        page = 1,
-        preloader = {
+        }, options || {});
+        list.filter = $('[data-list-filter-type].active').attr('data-list-filter-type') || null;
+        list.target = null;
+        list.methodName = null;
+        list.fetchedCount = null;
+        list.page = 1;
+        list.preloader = {
             'show': function () {
-                preloader.hide();
-                var $preloader = $('<img src="' + settings.preloaderImage + '" class="list-preloader" />');
-                $(settings.filters).append($preloader);
+                list.preloader.hide();
+                var $preloader = $('<img src="' + list.settings.preloaderImage + '" class="list-preloader" />');
+                $(list.settings.filters).append($preloader);
             },
             'hide': function () {
                 $('.list-preloader').remove();
             }
         };
 
-        function init() {
-            if(settings.montage) {
-                montageHelper.doMontage($list, {});
+        list.init = function () {
+            if (list.settings.montage) {
+                montageHelper.doMontage(list.$list, {});
             }
-            
-            // set filters handling
-            var $filterItems = $(settings.filters).find(settings.filtersElement);
-            $filterItems.each(function () {
 
+            // set filters handling
+            var $filterItems = $(list.settings.filters).find(list.settings.filtersElement);
+            $filterItems.each(function () {
                 $(this).click(function () {
+                    console.log('click!');
                     var $btn = $(this);
-                    if (!$list.data('fetchLock') && !$btn.hasClass('active')) {
-                        page = 1;
-                        settings.result.html("");
-                        preloader.show();
-                        if (settings.channels) {
-                            target =  $btn.attr('data-list-target');
-                        //                            $('#list-filters .active').removeClass('active').click();
+                    if (!list.$list.data('fetchLock') && !$btn.hasClass('active')) {
+                        list.page = 1;
+                        list.settings.result.html("");
+                        list.preloader.show();
+                        if (list.settings.channels) {
+                            // updating bottom list
+                            list.target =  $btn.attr('data-list-target');
+                            var relatedList = $('#montage-video-list').data('list');
+                            relatedList.settings.target = list.target;
+                            relatedList.$list.data('fetchLock', true);
+                            relatedList.page = 1;
+                            relatedList.fetchList();
                         } else {
-                            filter =  $btn.attr('data-list-filter-type');
+                            list.filter =  $btn.attr('data-list-filter-type');
                         }
-                        $list.data('fetchLock', true);
+                        list.$list.data('fetchLock', true);
                         $filterItems.removeClass('active');
                         $btn.addClass('active');
 
-                        fetchList();
+                        list.fetchList();
 
                     } else {
                         return false;
                     }
-
                 });
             });
 
-            if (settings.scrollable) {
-                setScrollable(function () {
-                    fetchList();
+            if (list.settings.scrollable) {
+                list.setScrollable(function () {
+                    list.fetchList();
                 });
             }
 
-        }
+        };
 
-        function setScrollable(callback) {
+        list.setScrollable = function (callback) {
             $(window).endlessScroll({
                 fireOnce: true,
                 enableScrollTop: false,
@@ -88,52 +91,54 @@
                 fireDelay: 250,
                 intervalFrequency: 2000,
                 ceaseFireOnEmpty: false,
-                loader: '<img src="' + settings.preloaderImage + '" class="list-preloader" />',
+                loader: '<img src="' + list.settings.preloaderImage + '" class="list-preloader" />',
                 callback: function () {
                     if (typeof callback !== "undefined") {
-                        preloader.show();
+                        list.preloader.show();
                         callback();
                     }
                 }
             });
-        }
+        };
 
         // fetch items list via ajax, and render the template
-        function fetchList() {
-            fetchedCount = 0;
-            methodName = settings.entity + '_' + filter;
+        list.fetchList = function () {
+            list.fetchedCount = 0;
+            list.methodName = list.settings.entity + '_' + list.filter;
 
             var opts = {
-                'page': page,
-                'entity': settings.entity
+                'page': list.page,
+                'entity': list.settings.entity
             };
 
-            if (settings.channels) {
-                methodName = settings.entity + '_highlighted';
-                methodName = 'video_ajaxcategory';
-                opts.category = target;
+            if (list.settings.channels) {
+                list.methodName = list.settings.entity + '_highlighted';
+                list.methodName = 'video_ajaxcategory';
+            }
+            
+            if(list.target !== null) {
+                opts.category = list.target;
             }
 
-            if (settings.entityType && settings.entityId) {
-                opts.entityType = settings.entityType;
-                opts.entityId = settings.entityId;
+            if (list.settings.entityType && list.settings.entityId) {
+                opts.entityType = list.settings.entityType;
+                opts.entityId = list.settings.entityId;
             }
 
             window.endlessScrollPaused = true;
-
-            ajax.genericAction(methodName, opts, function (response) {
+            ajax.genericAction(list.methodName, opts, function (response) {
                 if (!response.elements || !response.elements.length) {
-                    preloader.hide();
-                    settings.result.html("<h2>No se encontraron videos.</h2>");
-                    $list.data('fetchLock', false);
+                    list.preloader.hide();
+                    list.settings.result.html("<h2>No se encontraron videos.</h2>");
+                    list.$list.data('fetchLock', false);
 
                     return false;
                 }
 
-                if (settings.montage) {
-                    renderMontage(response);
+                if (list.settings.montage) {
+                    list.renderMontage(response);
                 } else {
-                    renderRawList(response);
+                    list.renderRawList(response);
                 }
 
                 if (response.addMore) {
@@ -148,15 +153,15 @@
                 console.error(msg);
             });
 
-            page++;
-        }
+            list.page++;
+        };
 
-        function renderMontage(response) {
+        list.renderMontage = function (response) {
             for (var i in response.elements) {
                 var element = response.elements[i];
-4             
-                templateHelper.renderTemplate(settings.entity + "-list_element", element, settings.result, false, function () {
-                    site.startMosaic(settings.result, {
+
+                templateHelper.renderTemplate(list.settings.entity + "-list_element", element, list.settings.result, false, function () {
+                    site.startMosaic(list.settings.result, {
                         minw: 150,
                         margin: 0,
                         liquid: true,
@@ -164,46 +169,47 @@
                     });
 
                     $("[data-new-element]").imagesLoaded(function () {
-                        fetchedCount++;
-                        if (response.elements.length === fetchedCount) {
-                            preloader.hide();
+                        list.fetchedCount++;
+                        if (response.elements.length === list.fetchedCount) {
+                            list.preloader.hide();
                         }
 
                         if (i > 0) {
-                            settings.result.montage('add', $("[data-new-element]"));
+                            list.settings.result.montage('add', $("[data-new-element]"));
                         }
                         $("[data-new-element]").removeAttr('data-new-element');
                     });
 
-                    $list.data('fetchLock', false);
+                    list.$list.data('fetchLock', false);
 
-                    if (response.addMore && settings.fetchMoreButton) {
-                        $('.' + settings.fetchMoreButtonClass).remove();
+                    if (response.addMore && list.settings.fetchMoreButton) {
+                        $('.' + list.settings.fetchMoreButtonClass).remove();
 
                         var $button = $('<a>Ver m&aacute;s</a>');
-                        $button.addClass(settings.fetchMoreButtonClass);
+                        $button.addClass(list.settings.fetchMoreButtonClass);
 
                         $button.click(function () {
-                            fetchList();
+                            list.fetchList();
                         });
 
-                        $list.after($button);
+                        list.$list.after($button);
                     } else {
-                        $('.' + settings.fetchMoreButtonClass).remove();
+                        $('.' + list.settings.fetchMoreButtonClass).remove();
                     }
                 });
             }
         }
         
-        function renderRawList(response) {
-            settings.result.hmtl("");
+        list.renderRawList = function (response) {
+            list.settings.result.html("");
             for(var i in response.elements) {
-                settings.result.append(response.elements[i].view);
+                list.settings.result.append(response.elements[i].view);
             }
-            preloader.hide();
+            list.$list.data('fetchLock', false);
+            list.preloader.hide();
         }
         
-        init();
+        list.init();
 
     };
 

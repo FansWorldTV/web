@@ -266,7 +266,7 @@ class VideoController extends SiteController
         
         foreach ($categoryVids as $vid) {
             $response['elements'][] = array(
-                'view' => $this->renderView('DodiciFansworldWebBundle:Video:list_video_item.html.twig', array('video' => $vid))
+                'view' => $this->renderView('DodiciFansworldWebBundle:Video:list_video_item_raw.html.twig', array('video' => $vid))
             );
         }
 

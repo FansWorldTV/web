@@ -45,9 +45,15 @@
     {% set listIsMontage = ' data-list-montage' %}
 {% endif %}
 
+{% if listId is not defined %}
+    {% set listId = '' %}
+{% else %}
+    {% set listId = ' id="' ~ listId ~ '"' %}
+{% endif %}
+
 {% set listParams = 'data-list data-list-entity="video"' ~ listFilters ~ listFiltersElement ~ listChannels ~ listResult ~ listScrollable ~ listFetchMoreButton ~ listIsMontage %}
 <div class="row-fluid">
-    <div class="am-container list-mosaic" {{listParams|raw}}>
+    <div {{ listId|raw }} class="am-container list-mosaic" {{ listParams|raw }}>
         {% if videos|length>0 %}
             {% for video in videos %}
                 <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
