@@ -8,6 +8,8 @@
 {% endblock %}
 
 {% block content %}
+    {% set tship = false %}
+    
     <div class="team-home">
         <span class="nav-bar team">{{ 'Equipos'|trans }}</span>
 
@@ -29,6 +31,10 @@
                         <br/>
                         <span data-expandable data-slice-point="70">{{ team.content }}</span>
                     </p>
+                    <div class="fanned">
+                        <span>{{ team.fanCount }}</span>
+                        <button class="btn btn-success {% if tship %} disabled {% else %} btn_teamship add {% endif %}" data-team-id="{{ team.id }}">Ser fan</button>
+                    </div>
                 </div>
             {% endfor %}
         </section>

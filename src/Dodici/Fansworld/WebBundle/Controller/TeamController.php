@@ -62,18 +62,12 @@ class TeamController extends SiteController
      */
     public function listAction($categorySlug)
     {
-        $category = $this->getRepository('TeamCategory')->findOneBy(array('slug' => $categorySlug));
-        $categoryId = null;
-        if ($category) {
-            $categoryId = $category->getId();
-        }
         $categories = $this->getRepository('TeamCategory')->findBy(array(), array('title' => 'desc'));
         $videoHighlights = $this->getRepository('Video')->findBy(array('highlight' => true), array('createdAt' => 'desc'), 4);
         $popularTeams = $this->getRepository('Team')->findBy(array(), array('fanCount' => 'desc'), 3);
         $countAll = $this->getRepository('Team')->countBy(array('active' => true));
 
         return array(
-            'categoryId' => $categoryId,
             'categories' => $categories,
             'videoHighlights' => $videoHighlights,
             'popularTeams' => $popularTeams,
