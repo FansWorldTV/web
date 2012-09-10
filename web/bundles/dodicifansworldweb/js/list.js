@@ -53,8 +53,12 @@
                         list.settings.result.html("");
                         list.preloader.show();
                         if (list.settings.channels) {
-                            // updating bottom list
                             list.target =  $btn.attr('data-list-target');
+                            // showing highlight panels
+                            $('.tab-pane').hide();
+                            $('.tab-pane#' + list.target).show();
+                            
+                            // updating bottom list
                             var relatedList = $('#montage-video-list').data('list');
                             relatedList.settings.target = list.target;
                             relatedList.$list.data('fetchLock', true);
