@@ -546,6 +546,7 @@ class UserController extends SiteController
     /**
      * @Route("/u/{username}/albums", name="user_listalbums")
      * @Template
+     * @Secure(roles="ROLE_USER")
      */
     public function listAlbumsAction($username)
     {
