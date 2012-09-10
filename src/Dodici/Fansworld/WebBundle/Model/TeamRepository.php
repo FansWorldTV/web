@@ -10,23 +10,31 @@ use Doctrine\ORM\EntityRepository;
 class TeamRepository extends CountBaseRepository
 {
     /**
-     * Get matching
+     * Get matching, also returns idolcareers -> idol if $user is provided:
+     * idols the user is a fan of, having an actual career in the team
      * 
      * @param TeamCategory|null $category
      * @param string|null $text
+     * @param User|null $user (joins idols)
      * @param int|null $limit
      * @param int|null $offset
      */
-    public function matching($category = null, $text = null, $limit = null, $offset = null)
+    public function matching($category = null, $text = null, $user = null, $limit = null, $offset = null)
     {
         /* FIXME: does not return all teamcategories properly when filtering by one */
         
         $dql = '
-    	SELECT t, tc, ti, ts
+    	SELECT t, tc, ti, ts'. ($user ? ', ic, i' : '') . '
     	FROM \Dodici\Fansworld\WebBundle\Entity\Team t
         LEFT JOIN t.teamcategories tc
         LEFT JOIN t.image ti
         LEFT JOIN t.splash ts
+        '.
+        ($user ? ('
+        LEFT JOIN t.idolcareers ic WITH ic.actual = true AND ic.idol IN (SELECT ix.id FROM \Dodici\Fansworld\WebBundle\Entity\Idolship isx JOIN isx.idol ix WHERE isx.author = :user)
+        LEFT JOIN ic.idol i
+        ') : '')
+        .'
         WHERE t.active = true
         ';
         
@@ -37,13 +45,14 @@ class TeamRepository extends CountBaseRepository
             
         $dql .= ' GROUP BY t, tc ';
         
-        if ($category)
-            $dql .= '
-            HAVING tc = :category
-            ';
+        $havings = array();
+        
+        if ($category) $havings[] = ' tc = :category ';
+        
+        if ($havings) $dql .= ' HAVING ' . join(' AND ', $havings);
         
         $dql .= ' ORDER BY t.fanCount DESC ';
-            
+        
         $query = $this->_em->createQuery($dql);
         
         if ($category)
@@ -51,6 +60,9 @@ class TeamRepository extends CountBaseRepository
                 
         if ($text)
             $query = $query->setParameter('textlike', '%' . $text . '%');
+            
+        if ($user)
+            $query = $query->setParameter('user', $user->getId());
 
         if ($limit !== null)
             $query = $query->setMaxResults($limit);
