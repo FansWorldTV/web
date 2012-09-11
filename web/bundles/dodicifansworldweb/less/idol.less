@@ -1,4 +1,5 @@
-div.team-home {
+div.idol-home {
+
     section.top {
         .size(309px, auto);
 
@@ -36,6 +37,7 @@ div.team-home {
             }
         }
     }
+
     section.middle {
         border-top: 2px solid #dddddd;
         border-bottom: 2px solid #dddddd;
@@ -44,7 +46,7 @@ div.team-home {
         padding: 15px 0 15px 0;
         margin-bottom: 20px;
 
-        div.team {
+        div.idol {
             background-color: @white;
             position: relative;
             border: 1px solid @gray;
@@ -103,26 +105,20 @@ div.team-home {
                 }
             }
         }
-        div.team:last-child {
+        div.idol:last-child {
             margin-right: 0;
         }
     }
+
     section.bottom {
         div.title-and-dropdown {
-            h4 {
-                font-size: 20px;
-                font-weight: normal;
-                .square(auto);
-                float: left;
-                color: @green;
-            }
             div.select-league {
-                float: right;
+                float: left;
             }
         }
-        div.list-teams {
+        div.list-idols {
             dl {
-                dt.team {
+                dt.idol {
                     .size(70px, auto);
                     text-align: left;
                     font-weight: normal;
@@ -186,4 +182,5 @@ div.team-home {
             }
         }
     }
+
 }

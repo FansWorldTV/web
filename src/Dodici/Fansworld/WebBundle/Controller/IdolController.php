@@ -24,6 +24,23 @@ class IdolController extends SiteController
     const LIMIT_PHOTOS = 8;
 
     /**
+     * @Route("/i", name="idol_home")
+     * @Template
+     */
+    public function homeAction()
+    {
+        $videosHighlighted = $this->getRepository('Video')->search(null, null, 4, null, null, true, null, null, null, 'likes');
+        $topIdols = $this->getRepository('Idol')->findBy(array('active' => true), array('fanCount' => 'desc'), 3);
+        $listIdols = $this->getRepository('Idol')->findBy(array('active' => true), array('fanCount' => 'desc'));
+
+        return array(
+            'videosHighlighted' => $videosHighlighted,
+            'topIdols' => $topIdols,
+            'listIdols' => $listIdols
+        );
+    }
+
+    /**
      * @Route("/i/{slug}", name="idol_wall")
      * @Template
      */
@@ -34,11 +51,11 @@ class IdolController extends SiteController
             throw new HttpException(404, "No existe el ídolo");
         }else
             $this->get('visitator')->visit($idol);
-        
+
         $highlights = $this->getRepository('video')->highlights($idol, 4);
 
         return array(
-            'idol' => $idol, 
+            'idol' => $idol,
             'isHome' => true,
             'highlights' => $highlights,
         );
@@ -88,7 +105,7 @@ class IdolController extends SiteController
             'gotMore' => $viewMorePhotos
         );
     }
-    
+
     /**
      * Idol videos
      * 
@@ -98,49 +115,49 @@ class IdolController extends SiteController
     public function videosTabAction($slug)
     {
         $idol = $this->getRepository('Idol')->findOneBy(array('slug' => $slug));
-        
-        if(!$idol){
+
+        if (!$idol) {
             throw new HttpException(404, "No existe el ídolo");
-        }else{
+        } else {
             $this->get('visitator')->visit($idol);
         }
-        
+
         $user = $this->getUser();
         $videoRepo = $this->getRepository('Video');
         $videoRepo instanceof VideoRepository;
-        
+
         $videos = $videoRepo->search(null, $user, self::LIMIT_SEARCH, null, null, null, null, null, null, 'default', $idol);
         $countAll = $videoRepo->countSearch(null, $user, null, null, null, null, null, $idol);
-        
+
         $addMore = $countAll > self::LIMIT_SEARCH ? true : false;
-        
+
         $sorts = array(
-            'id'   => 'toggle-video-types',
-            'class'=> 'list-videos',
+            'id' => 'toggle-video-types',
+            'class' => 'list-videos',
             'list' => array(
                 array(
-                    'name'     => 'destacados', 
-                    'dataType' => 0, 
-                    'class'    => '',
+                    'name' => 'destacados',
+                    'dataType' => 0,
+                    'class' => '',
                 ),
                 array(
-                    'name'     => 'masVistos',
+                    'name' => 'masVistos',
                     'dataType' => 1,
-                    'class'    => '',
+                    'class' => '',
                 ),
                 array(
-                    'name'     => 'populares',
+                    'name' => 'populares',
                     'dataType' => 2,
-                    'class'    => 'active',
+                    'class' => 'active',
                 ),
                 array(
                     'name' => 'masVistosDia',
                     'dataType' => 3,
-                    'class'    => '',
+                    'class' => '',
                 ),
             )
         );
-        
+
         return array(
             'videos' => $videos,
             'addMore' => $addMore,
@@ -149,7 +166,7 @@ class IdolController extends SiteController
             'sorts' => $sorts
         );
     }
-    
+
     /**
      *  @Route("/i/{slug}/biography", name="idol_biography")
      *  @Template()
@@ -157,33 +174,33 @@ class IdolController extends SiteController
     public function infoTabAction($slug)
     {
         $idol = $this->getRepository('Idol')->findOneBy(array('slug' => $slug));
-        
-        if(!$idol){
+
+        if (!$idol) {
             throw new HttpException(404, "No existe el ídolo");
-        }else{
+        } else {
             $this->get('visitator')->visit($idol);
         }
 
         $user = $this->getUser();
-        
+
         $personalData = array(
-                'firstname',
-                'lastname',
-                'nicknames',
-                'birthday',
-                'country',
-                'origin',
-                'sex',
-                'idolcareers',
+            'firstname',
+            'lastname',
+            'nicknames',
+            'birthday',
+            'country',
+            'origin',
+            'sex',
+            'idolcareers',
         );
-        
+
         return array(
             'user' => $user,
             'idol' => $idol,
             'personalData' => $personalData,
         );
     }
-    
+
     /**
      * @Route("/i/{slug}/fans", name="idol_fans")
      * @Template
@@ -196,23 +213,23 @@ class IdolController extends SiteController
             throw new HttpException(404, "No existe el ídolo");
         }else
             $this->get('visitator')->visit($idol);
-    
-    
+
+
         $fans = array(
             'ulClass' => 'fans',
             'containerClass' => 'fan-container',
             'list' => $this->getRepository('User')->byIdols($idol),
         );
-        
-    
+
+
         $return = array(
-                'fans' => $fans,
-                'idol' => $idol
+            'fans' => $fans,
+            'idol' => $idol
         );
-    
+
         return $return;
     }
-    
+
     /**
      * @Route("/i/{slug}/eventos", name="idol_eventos")
      * @Template
@@ -225,14 +242,15 @@ class IdolController extends SiteController
             throw new HttpException(404, "No existe el ídolo");
         }else
             $this->get('visitator')->visit($idol);
-    
+
         $eventos = $this->getRepository('Event')->ByIdol($idol);
-       
+
         $return = array(
-                'eventos' => $eventos,
-                'idol' => $idol,
+            'eventos' => $eventos,
+            'idol' => $idol,
         );
-    
+
         return $return;
     }
+
 }
