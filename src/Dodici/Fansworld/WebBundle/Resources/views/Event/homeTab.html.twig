@@ -25,6 +25,12 @@
             
             {% include "DodiciFansworldWebBundle:Event:blocks/grid.html.twig"  %}
             
+            
+            <script>
+                $(function(){
+                	events.initEventHome($(".eventcalendar-container .calendar"),$('section.eventgrid-container ul.events-grid') );
+                })
+            </script>
         {% endblock %}
         
     {% endembed %}		

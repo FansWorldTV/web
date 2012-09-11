@@ -1,9 +1,7 @@
 <section class="eventcalendar-container">
     <div class="calendar"></div>
+    <div class="resetdate-container">
+        <button class="btn resetdate">{{ 'reset'|trans }}</button>
+    </div>
 </section>
 
-<script>
-    $(function(){
-    	events.initEventHome($(".eventcalendar-container .calendar"),$('section.eventgrid-container ul.events-grid') );
-    })
-</script>

@@ -4,13 +4,30 @@ var events = {
 	calendarDestination: null,
 	eventGridDestination: null,
 	selectedDates: {},
-	seletedText:   {},
+	filterLoading: null,
+	sortByDropdown: null,
+	sportDropdown: null,
+	teamcategoriesDropdown :null,
+	searchOptions: {},
+	resetFiltersButton: null,
+	resetDateButton: null,
+	dateSelected: false,
 	
 	initEventHome: function(calendarDestination,eventGridDestination){
 		events.eventGridDestination = eventGridDestination;
+		events.filterLoading = $('.eventfilters-container .loading-container');
+		events.sortByDropdown = $('.eventfilters-container .order-by');
+		
+		events.sportDropdown = $('.eventfilters-container .sports');
+		events.teamcategoriesDropdown = $('.eventfilters-container .leagues');
+		events.resetFiltersButton = $('.eventfilters-container .resetfilters');
+		events.resetDateButton = $('.eventcalendar-container .resetdate');
+		
 		events.initCalendar(calendarDestination);
-		events.bindSportDropdown($('.eventfilters-container .sports'),$('.eventfilters-container .leagues'));
-		events.bindTeamcategoriesDropdown($('.eventfilters-container .leagues'));
+		events.bindSportDropdown();
+		events.bindTeamcategoriesDropdown();
+		events.bindSortbyDropdown();
+		events.bindResets();
 	},
 	
 	initCalendar: function(calendarDestination){
@@ -25,7 +42,7 @@ var events = {
     		},
 	 	   beforeShowDay: function(date)
 	 	   {
-	 		  
+	 		   
     	 	  var tmpDate = $.datepicker.formatDate('dd-mm-yy', date);
 	 	      
     	 	  var Highlight = events.selectedDates[tmpDate];
@@ -38,31 +55,18 @@ var events = {
 	 	      }
 	 	   },
 	 	  onSelect: function(dateText, inst) {
+	 		  events.dateSelected = true;
 	 	      events.getDayEvents(dateText);
 	 	   }
 	 	});
 	},
 	
 	getDayEvents: function(dateText, callback){
-		events.eventGridDestination.empty().addClass('loading');
-		ajax.genericAction('event_getday', 
-			{
-				date: dateText
-			}, 
-			function(r){
-		        if(typeof r != 'undefined'){
-		        	events.loadEvents(r);
-		        	
-		        	if(typeof callback != 'undefined')
-	        		{
-		        		callback();
-	        		}
-		        	events.eventGridDestination.removeClass('loading');
-		        }
-	        }, function(msg){
-	            error(msg);
-	            events.eventGridDestination.removeClass('loading');
-	        },'get',true);
+		events.updateOptions();
+		events.searchOptions.dateFrom = dateText;
+		events.searchOptions.dateTo   = dateText;
+			
+		events.loadEvents();
 	},
 	
 	
@@ -76,20 +80,13 @@ var events = {
 		function(r){
 	        if(typeof r != 'undefined'){
 	        	$.each(r,function(index,value){
-	        		/*
-	        		var tempDate = value.fecha.date.split(' ');
-	        		var tmpdt = $.datepicker.formatDate('yy-mm-dd', new Date(tempDate[0] ));
-	        		*/
 	        		events.selectedDates[value.fecha] = true;
-	        		//events.seletedText[new Date(tmpdt)] = 'demo text';//value.id;
-	        		
 	        	});
 	        	if(typeof callback != 'undefined')
         		{
 	        		callback();
         		}
 	        	events.calendarDestination.find('ui-datepicker-title ').removeClass('loading-small');
-	        	
 	        }
         }, function(msg){
             error(msg);
@@ -97,21 +94,38 @@ var events = {
         });
 	},
 	
-	loadEvents:	function(eventsList){
-		//calendarDestination
+	loadEvents:	function(updateOptions){
+		if(updateOptions){
+			events.updateOptions();
+		}
 		
-		templateHelper.renderTemplate("event-grid_element", eventsList, events.eventGridDestination, false, function(){
-			//console.log('done');
-		});
+		events.eventGridDestination.empty().addClass('loading');
+		ajax.genericAction('event_get', 
+			events.searchOptions, 
+			function(r){
+		        if(typeof r != 'undefined'){
+		        	templateHelper.renderTemplate("event-grid_element", r, events.eventGridDestination, false, function(){
+		        		$('[text-height=ellipsis]').ellipsis();
+		        		if(typeof callback != 'undefined')
+		        		{
+			        		callback();
+		        		}
+		    		});
+		        }
+		        events.eventGridDestination.removeClass('loading');
+		        
+	        }, function(msg){
+	            error(msg);
+	            events.eventGridDestination.removeClass('loading');
+	        },'get',true);
 	},
 	
-	bindSportDropdown: function(sportDropdown,teamcategoriesDropdown){
-		events.sportDropdown = sportDropdown;
-		events.teamcategoriesDropdown = teamcategoriesDropdown;
+	bindSportDropdown: function(){
 		
 		events.sportDropdown.on('click','ul.dropdown-menu li a',function(e){
 			events.sportDropdown.find('.active').removeClass('active');
 			$(this).parent().addClass('active');
+			events.filterLoading.addClass('loading-small');
 			
 			var sportId = $(this).attr('sport-id');
 			ajax.genericAction('sport_getteamcategories', 
@@ -121,15 +135,16 @@ var events = {
 				function(r){
 			        if(typeof r != 'undefined'){
 			        	events.loadTeamcategories(r.categories);
-			        	
+			        	events.loadEvents(true);
 			        	if(typeof callback != 'undefined')
 		        		{
 			        		callback();
 		        		}
 			        }
+			        events.filterLoading.removeClass('loading-small');
 		        }, function(msg){
 		            error(msg);
-		            events.eventGridDestination.removeClass('loading');
+		            events.filterLoading.removeClass('loading-small');
 		        },'get');		
 			
 			
@@ -139,18 +154,90 @@ var events = {
 	loadTeamcategories: function(categories){
 		events.teamcategoriesDropdown.find('ul.dropdown-menu').empty();
 		$.each(categories,function(i,value){
-			events.teamcategoriesDropdown.find('ul.dropdown-menu').append("<li><a sport-id='"+value.id+"' tabindex='-1' href='#'>"+value.title+"</a></li>");
+			events.teamcategoriesDropdown.find('ul.dropdown-menu').append("<li><a category-id='"+value.id+"' tabindex='-1' >"+value.title+"</a></li>");
     	});
 	},
 	
-	bindTeamcategoriesDropdown: function(teamcategoriesDropdown){
-		events.teamcategoriesDropdown = teamcategoriesDropdown;
-		
+	bindTeamcategoriesDropdown: function(){
 		events.teamcategoriesDropdown.on('click','ul.dropdown-menu li a',function(e){
 			events.teamcategoriesDropdown.find('.active').removeClass('active');
 			$(this).parent().addClass('active');
+			events.loadEvents(true);
 		});
 	},
 	
+	bindSortbyDropdown: function(){
+		events.sortByDropdown.on('click','ul.dropdown-menu li a',function(e){
+			events.sortByDropdown.find('.active').removeClass('active');
+			$(this).parent().addClass('active');
+			events.loadEvents();
+		});
+	},
+	
+	updateOptions: function(){
+		if(!events.dateSelected){
+			events.calendarDestination.datepicker( "setDate", null);
+		}
+		var tmpDate = events.calendarDestination.datepicker( "getDate" );
+		if(tmpDate != null){
+			tmpDate = $.datepicker.formatDate('dd/mm/yy', tmpDate);
+		}
+		
+		events.searchOptions.dateFrom = tmpDate;
+		events.searchOptions.dateTo = tmpDate;
+		events.searchOptions.sortBy = events.getSortBy();
+		events.searchOptions.sport  = events.getSport();
+		events.searchOptions.teamcategory  = events.getTeamcategory();
+	},
+	
+	getSortBy: function(){
+		return events.sortByDropdown.find('.dropdown-menu li.active a').attr('sort-by');
+	},
+	
+	getSport: function(){
+		return events.sportDropdown.find('.dropdown-menu li.active a').attr('sport-id');
+	},
+	
+	getTeamcategory: function(){
+		return events.teamcategoriesDropdown.find('.dropdown-menu li.active a').attr('category-id');
+	},
+	
+	resetFilters: function(){
+		events.searchOptions.sortBy = null;
+		
+		events.searchOptions.sport  = null;
+		events.sportDropdown.find('.active').removeClass('active');
+		
+		events.searchOptions.teamcategory  = null;
+		events.teamcategoriesDropdown.find('.active').removeClass('active');
+		events.teamcategoriesDropdown.find('ul.dropdown-menu').empty();
+		
+		success('filtros resetados');
+	},
+	
+	resetDate: function(){
+		events.calendarDestination.datepicker( "setDate", null );
+		events.searchOptions.dateFrom = null;
+		events.searchOptions.dateTo = null;
+		
+		success('fecha resetada');
+	},
+	
+	bindResets: function(){
+		events.bindResetFilters();
+		events.bindResetDate();
+	},
+	
+	bindResetFilters: function(){
+		events.resetFiltersButton.on('click',function(e){
+			events.resetFilters();
+		});
+	},
+	
+	bindResetDate: function(){
+		events.resetDateButton.on('click',function(e){
+			events.resetDate();
+		});
+	}
 	
 };

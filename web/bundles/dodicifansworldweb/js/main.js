@@ -110,6 +110,10 @@ var site = {
         site.bindCarousel();
         
         $('[data-list]').list();
+
+        // TODO check & fix live update whit removed elements
+        //$('[text-height=ellipsis]').ellipsis('',{live: true});
+        $('[text-height=ellipsis]').ellipsis();
     },
     
     parseTimes: function(){

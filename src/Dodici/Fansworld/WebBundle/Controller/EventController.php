@@ -36,26 +36,44 @@ class EventController extends SiteController
     }
     
     /**
-     * @Route("/ajax/getday", name= "event_getday")
+     * @Route("/ajax/get", name= "event_get")
      */
-    public function getDayEventsAction()
+    public function getAjaxEventsAction()
     {
         $request = $this->getRequest();
         $appMedia = $this->get('appmedia');
         
-        $date    = $request->get('date', false);
+        $dateFrom    = $request->get('dateFrom', null);
+        if($dateFrom != null && $dateFrom != 'null'){
+            $dateFrom = \DateTime::createFromFormat('d/m/Y',$dateFrom);
+            $dateFrom->setTime(0, 0);
+        }else{
+            $dateFrom = null;
+        }
         
-        $dateFrom = \DateTime::createFromFormat('d/m/Y',$date);
-        $dateTo = \DateTime::createFromFormat('d/m/Y',$date);
-        $dateFrom->setTime(0, 0);
-        $dateTo->setTime(23, 59);
-        /*
-        $response['dateFrom'] = $dateFrom;
-        $response['dateTo'] = $dateTo;
-        */
+        $dateTo    = $request->get('dateTo', null);
+        if($dateTo != null && $dateTo != 'null'){
+            $dateTo = \DateTime::createFromFormat('d/m/Y',$dateTo);
+            $dateTo->setTime(23, 59);
+        }else{
+            $dateTo = null;
+        }
+        
+        $sortBy    = $request->get('sortBy', null);
+        
+        $sport     = $request->get('sport', null);
+        if($sport){
+            $sport = $this->getRepository('Sport')->findOneBy(array('id' => $sport));
+        }
+        
+        $teamcategory     = $request->get('teamcategory', null);
+        if($teamcategory){
+            $teamcategory = $this->getRepository('TeamCategory')->findOneBy(array('id' => $teamcategory));
+        }
+        
         $response = array();
-        
-        $events  = $this->getRepository('Event')->calendar(null,null,null,$dateFrom,$dateTo,null,null,null);
+       
+        $events  = $this->getRepository('Event')->calendar(null,null,null,$dateFrom,$dateTo,$sport,$teamcategory,$sortBy,null,null);
         foreach ($events as $event) {
             
             $teams = array();
@@ -80,6 +98,7 @@ class EventController extends SiteController
                     'team2Image' => $appMedia->getImageUrl($teams[1]['team']->getImage(), 'mini_square'),
             );
         }
+        
         return $this->jsonResponse($response);
     }
     

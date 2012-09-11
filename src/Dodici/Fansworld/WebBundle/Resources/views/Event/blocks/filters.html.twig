@@ -9,22 +9,16 @@
 
 {% if orderBy is not defined %}
     {% set orderBy = null %}
-    {% set closest = null %}
-    {% set popular = null %}
-{% else %}
-    {% if closest is not defined %}
-        {% set closest = true %}
-    {% endif %}
-    
-    {% if popular is not defined %}
-        {% set popular = true %}
-    {% endif %}    
 {% endif %}
 
 
 
 
 <section class='eventfilters-container'>
+    <div class="btn-group resetfilters-container">
+        <button class="btn resetfilters">{{ 'reset'|trans }}</button>
+    </div>
+
     {% if orderBy %}
         <div class="btn-group order-by">
             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -32,13 +26,8 @@
                 <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-                {% if closest %}
-                    <li><a tabindex="-1" href="#">{{ 'closest'|trans }}</a></li>
-                {% endif %}
-                
-                {% if popular %}
-                    <li><a tabindex="-1" href="#">{{ 'popular'|trans }}</a></li>
-                {% endif %}
+                <li class="active"><a tabindex="-1" sort-by="upcoming">{{ 'closest'|trans }}</a></li>
+                <li><a tabindex="-1" sort-by="popular">{{ 'popular'|trans }}</a></li>
             </ul>
         </div>
     {% endif %}
@@ -79,6 +68,7 @@
         </div>
     {% endif %}
     
+    <div class='btn-group loading-container'></div>
    
     
     
