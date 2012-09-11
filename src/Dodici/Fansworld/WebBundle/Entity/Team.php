@@ -254,7 +254,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     
     public function __toString()
     {
-    	return $this->getTitle();
+    	return $this->getShortname() ?: $this->getTitle();
     }
     
 	/**
