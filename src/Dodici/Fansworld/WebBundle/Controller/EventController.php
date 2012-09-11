@@ -85,6 +85,7 @@ class EventController extends SiteController
             }
             
             $response[] = array(
+                    'text' =>  $this->get('appstate')->getEventText($event->getId()),
                     'title' => $event->getTitle(),
                     'date'  => $event->getFromtime()->format('d-m-Y'),
                     'team1Score' => $teams[0]['hasTeam']->getScore(),
@@ -132,7 +133,8 @@ class EventController extends SiteController
     {
         //TODO: todo
         $eventRepo = $this->getRepository('Event');
-        $events = $eventRepo->findBy(array(), array('fromtime' => 'desc'),self::LIMIT_EVENTS,1);
+        //$events = $eventRepo->findBy(array(), array('fromtime' => 'desc'),self::LIMIT_EVENTS,1);
+        $events = null;
         $eventoDestacado = $eventRepo->findOneBy(array(), array('fromtime' => 'desc'));
         
         $sports = $this->getRepository('Sport')->findBy(array());

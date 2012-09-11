@@ -2,11 +2,11 @@
     <li class='event'>
         <header>
             <span>{{>team1Shortname}} vs {{>team2Shortname}}</span>
-            <button class='btn btn-danger'>Ahora</button>
+            <button class='btn btn-danger'>{{>text}}</button>
         </header>
         <div class='row-fluid'>
             <div class="local span4 row-fluid">
-                <div class='escudo span8'><img src="{{>team1Image}}" /></div>
+                <div class='escudo span8'>{{if team1Image}}<img src="{{>team1Image}}" />{{/if}}</div>
                 <div class='score span4'>{{>team1Score}}</div>
             </div>
             <div class='data span4'>
@@ -15,7 +15,7 @@
             </div>
             <div class="visitante span4 row-fluid">
                 <div class='score span4'>{{>team2Score}}</div>
-                <div class='escudo span8'><img src="{{>team2Image}}" /></div>
+                <div class='escudo span8'>{{if team2Image}}<img src="{{>team2Image}}" />{{/if}}</div>
             </div>
         </div>
     </li>

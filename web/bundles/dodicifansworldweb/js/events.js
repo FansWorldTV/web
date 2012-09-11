@@ -28,6 +28,7 @@ var events = {
 		events.bindTeamcategoriesDropdown();
 		events.bindSortbyDropdown();
 		events.bindResets();
+		events.loadEvents();
 	},
 	
 	initCalendar: function(calendarDestination){

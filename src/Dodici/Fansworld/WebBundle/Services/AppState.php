@@ -369,5 +369,26 @@ class AppState
         $eventTypes = Event::getTypes();
         return $eventTypes[$typeId];
     }
+    
+    public function getEventText($eventId)
+    {
+        $rep = $this->getRepository('DodiciFansworldWebBundle:Event');
+        $event = $rep->findOneBy(array('id' => $eventId));
+        $fromTime = $event->getFromtime();
+        $toTime = $event->getTotime();
+        $finished = $event->getFinished();
+        $now =  new \DateTime();
+        $text = '';
+        
+        if($finished){
+            $text = 'finalizado';
+        }else if($fromTime <= $now && $now <= $toTime){
+            $text = 'Ahora';
+        }else{
+            $text = 'check in';
+        }
+        
+        return $text;
+    }
 
 }
