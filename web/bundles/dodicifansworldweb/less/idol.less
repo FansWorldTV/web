@@ -5,7 +5,7 @@ div.idol-home {
 
         .carousel {
             .size(100%, 70%);
-            float: left;
+            .pull-left();
             .item > img {
                 .square(100%);
             }
@@ -13,7 +13,7 @@ div.idol-home {
 
         .info-detail-carousel {
             background-color: @black;
-            float: left;
+            .pull-left();
             .size(100%, 30%);
             text-overflow: ellipsis;
             color: @white;
@@ -88,7 +88,7 @@ div.idol-home {
             }
 
             div.fanned {
-                float: right;
+                .pull-right();
                 margin-top: 10px;
 
                 span {
@@ -113,7 +113,7 @@ div.idol-home {
     section.bottom {
         div.title-and-dropdown {
             div.select-league {
-                float: left;
+                .pull-left();
             }
         }
         div.list-idols {

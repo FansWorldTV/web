@@ -22,6 +22,7 @@ class IdolController extends SiteController
     const LIMIT_SEARCH = 20;
     const LIMIT_NOTIFICATIONS = 5;
     const LIMIT_PHOTOS = 8;
+    const LIMIT_LIST_IDOL = 10;
 
     /**
      * @Route("/i", name="idol_home")
@@ -38,6 +39,19 @@ class IdolController extends SiteController
             'topIdols' => $topIdols,
             'listIdols' => $listIdols
         );
+    }
+
+    /**
+     * @Route("/i/ajax/list", name="idol_ajaxlist")
+     */
+    public function ajaxListAction()
+    {
+        $request = $this->getRequest();
+        $page = $request->get('page', 1);
+        $offset = ($page - 1 ) * self::LIMIT_LIST_IDOL;
+        $response = array();
+        
+        return $this->jsonResponse($response);
     }
 
     /**

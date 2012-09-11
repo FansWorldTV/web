@@ -27,7 +27,7 @@
                         {% thumbnail idol.image, 'small' %}
                     </div>
                     <p>
-                        <span class="name">{{ idol }}</span>
+                        <span class="name"><a href="{{ path('idol_wall', {'slug': idol.slug}) }}">{{ idol }}</a></span>
                         <br/>
                         <span data-expandable data-slice-point="70">{{ idol.content }}</span>
                     </p>
