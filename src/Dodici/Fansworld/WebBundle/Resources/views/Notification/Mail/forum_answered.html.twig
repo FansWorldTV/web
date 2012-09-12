@@ -1,4 +1,4 @@
-{% extends 'DodiciFansworldWebBundle:Mail:base.html.twig' %}
+{% extends 'DodiciFansworldWebBundle:Mail:notification_base.html.twig' %}
 
 {% block title %}
     <title>Fansworld - {{ "notification_comment_answered"|trans({'%author%': notification.author}) }}</title>
@@ -6,6 +6,6 @@
     
 {% block text %}
     <p style="margin-bottom: 10px;">
-        <a href="">{{ notification.author }}</a> respondió en <a href="{{ path('forum_thread', {'id': notification.forumthread.id, 'slug': notification.forumthread.slug}) }}">{{ notification.forumthread }}</a>
+        <a href="">{{ notification.author }}</a> respondió en <a href="{{ url('forum_thread', {'id': notification.forumthread.id, 'slug': notification.forumthread.slug}) }}">{{ notification.forumthread }}</a>
     </p>
 {% endblock %}

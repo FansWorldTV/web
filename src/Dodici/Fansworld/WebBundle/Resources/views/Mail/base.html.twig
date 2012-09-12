@@ -33,7 +33,7 @@
             <table cellpadding="0" cellspacing="0" style="background-color: #ffffff; border: 1px solid #c9c9c9; border-radius: 3px; height: 270px; width: 500px;">
                 <tr style="height: 50px;">
                     <td style="border-bottom: 1px solid #c9c9c9; width: 290px;">
-                        <img src="{{ asset('bundles/dodicifansworldweb/images/mail/logoBlanco.jpg') }}" alt="Comparti tu pasion" style="margin-top: 20px; margin-left: 28px; margin-bottom: 15px;"/>
+                        <img src="{{ app.request.scheme ~  '://' ~  app.request.host ~ asset('bundles/dodicifansworldweb/images/mail/logoBlanco.jpg') }}" alt="Comparti tu pasion" style="margin-top: 20px; margin-left: 28px; margin-bottom: 15px;"/>
                     </td>
                     {% if targetUser is defined %}
                         <td style="border-bottom: 1px solid #c9c9c9; width: 273px;" align="right">
@@ -77,18 +77,17 @@
                                 </div>
                             </div>
                             <div style="clear: both;"></div>
-                            <p style="font-size: 11px; color: #c0c0c0; margin-top: 60px;"><a href="{{ path('notification_preferences') }}">Ajustar tus preferencias de las notificaciones que recíbes</a></p>
+                            {% block extratext %}{% endblock %}
                             </div>
                         </td>
                     </tr>
             </table>
             <div style="width: 500px; margin-top: 10px;">
                     <div style="float: left; font-size: 11px; color: #c0c0c0;">
-                        <p>Copyright 2012, todos los derechos reservados</p>
-                        <p>Echeverria 5438, Buenos Aires 1431,</p>
-                        <p>Argentina</p>
+                        <p>Copyright {{ 'now'|date('Y') }}, todos los derechos reservados</p>
+                        <p>Fansworld.tv</p>
                     </div>
-                    <img style="float:right;" src="{{ asset('bundles/dodicifansworldweb/images/mail/fwGris.jpg') }}" alt="" />
+                    <img style="float:right;" src="{{ app.request.scheme ~  '://' ~  app.request.host ~ asset('bundles/dodicifansworldweb/images/mail/fwGris.jpg') }}" alt="" />
             </div>
         </body>
 </html>

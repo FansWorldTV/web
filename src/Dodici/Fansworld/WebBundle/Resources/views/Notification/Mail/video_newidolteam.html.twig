@@ -1,4 +1,4 @@
-{% extends 'DodiciFansworldWebBundle:Mail:base.html.twig' %}
+{% extends 'DodiciFansworldWebBundle:Mail:notification_base.html.twig' %}
 
 {% block title %}
     <title>Fansworld - {{ "notification_video_newidolteam"|trans({'%video%': notification.video}) }}</title>
@@ -21,8 +21,5 @@
                 {% endfor %}
             </p>
         </div>
-    </div>
-    <div style="clear: both;"></div>
-    <p style="font-size: 11px; color: #c0c0c0; margin-top: 60px;">Ajustar tus preferencias de las notificaciones que recíbes</p>
     </div>
 {% endblock %}
