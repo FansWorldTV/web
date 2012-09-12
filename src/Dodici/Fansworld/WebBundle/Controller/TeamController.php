@@ -24,7 +24,7 @@ use Dodici\Fansworld\WebBundle\Entity\Team;
 
 /**
  * Team controller.
- * @Route("/t")
+ * @Route("/team")
  */
 class TeamController extends SiteController
 {
@@ -32,7 +32,7 @@ class TeamController extends SiteController
     const LIMIT_ITEMS = 10;
 
     /**
-     * @Route("/{slug}", name= "team_wall", requirements = {"id" = "\d+"})
+     * @Route("/{slug}", name= "team_wall")
      * @Template()
      */
     public function wallTabAction($slug)

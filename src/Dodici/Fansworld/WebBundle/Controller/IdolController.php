@@ -16,6 +16,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Sonata\UserBundle\Entity\User;
 use Application\Sonata\UserBundle\Entity\Notification;
 
+/**
+ * Idol controller
+ * @Route("/idol")
+ */
 class IdolController extends SiteController
 {
 
@@ -25,7 +29,7 @@ class IdolController extends SiteController
     const LIMIT_LIST_IDOL = 10;
 
     /**
-     * @Route("/i", name="idol_home")
+     * @Route("/", name="idol_home")
      * @Template
      */
     public function homeAction()
@@ -42,7 +46,7 @@ class IdolController extends SiteController
     }
 
     /**
-     * @Route("/i/ajax/list", name="idol_ajaxlist")
+     * @Route("/ajax/list", name="idol_ajaxlist")
      */
     public function ajaxListAction()
     {
@@ -55,7 +59,7 @@ class IdolController extends SiteController
     }
 
     /**
-     * @Route("/i/{slug}", name="idol_wall")
+     * @Route("/{slug}", name="idol_wall")
      * @Template
      */
     public function wallTabAction($slug)
@@ -76,7 +80,7 @@ class IdolController extends SiteController
     }
 
     /**
-     * @Route("/i/{slug}/twitter", name= "idol_twitter")
+     * @Route("/{slug}/twitter", name= "idol_twitter")
      * @Template()
      */
     public function twitterTabAction($slug)
@@ -96,7 +100,7 @@ class IdolController extends SiteController
     }
 
     /**
-     * @Route("/i/{slug}/photos", name="idol_photos")
+     * @Route("/{slug}/photos", name="idol_photos")
      * @Template
      */
     public function photosTabAction($slug)
@@ -123,7 +127,7 @@ class IdolController extends SiteController
     /**
      * Idol videos
      * 
-     *  @Route("/i/{slug}/videos", name="idol_videos")
+     *  @Route("/{slug}/videos", name="idol_videos")
      *  @Template()
      */
     public function videosTabAction($slug)
@@ -182,7 +186,7 @@ class IdolController extends SiteController
     }
 
     /**
-     *  @Route("/i/{slug}/biography", name="idol_biography")
+     *  @Route("/{slug}/biography", name="idol_biography")
      *  @Template()
      */
     public function infoTabAction($slug)
@@ -216,7 +220,7 @@ class IdolController extends SiteController
     }
 
     /**
-     * @Route("/i/{slug}/fans", name="idol_fans")
+     * @Route("/{slug}/fans", name="idol_fans")
      * @Template
      * @Secure(roles="ROLE_USER")
      */
@@ -245,7 +249,7 @@ class IdolController extends SiteController
     }
 
     /**
-     * @Route("/i/{slug}/eventos", name="idol_eventos")
+     * @Route("/{slug}/eventos", name="idol_eventos")
      * @Template
      * @Secure(roles="ROLE_USER")
      */

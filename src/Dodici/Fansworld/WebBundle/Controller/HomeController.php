@@ -2,31 +2,13 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
-use Dodici\Fansworld\WebBundle\Entity\HasUser;
-
-use Dodici\Fansworld\WebBundle\Entity\Idolship;
-
-use Dodici\Fansworld\WebBundle\Entity\Album;
-
-use Symfony\Component\HttpFoundation\File\File;
-
-use Application\Sonata\MediaBundle\Entity\Media;
-
-use Dodici\Fansworld\WebBundle\Entity\ForumPost;
-
-use Dodici\Fansworld\WebBundle\Entity\Liking;
-
-use Doctrine\ORM\EntityManager;
-
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Dodici\Fansworld\WebBundle\Controller\SiteController;
-
-
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Home controller.
@@ -36,12 +18,21 @@ class HomeController extends SiteController
     /**
      * Site's home
      * @Template
+     * @Cache(smaxage="60")
      */
     public function indexAction()
     {
-		
+		$users = $this->getRepository('User')->findBy(array('enabled' => true));
+		$teams = $this->getRepository('Team')->findBy(array('active' => true));
+		$idols = $this->getRepository('Idol')->findBy(array('active' => true));
+		$videos = $this->getRepository('Video')->findBy(array('active' => true));
+        
         return array(
-            );
+            'users' => $users,
+            'teams' => $teams,
+            'idols' => $idols,
+            'videos' => $videos
+        );
     }
     
 }
