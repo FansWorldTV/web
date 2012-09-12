@@ -32,7 +32,7 @@
                     <p>
                         <span class="name">{{ team }}</span>
                         <br/>
-                        <span data-expandable data-slice-point="70">{{ team.content|raw }}</span>
+                        <span data-expandable data-slice-point="70">{{ team.content|striptags|raw }}</span>
                     </p>
                     
                     <div class="fanned">

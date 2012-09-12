@@ -29,7 +29,7 @@
                     <p>
                         <span class="name"><a href="{{ path('idol_wall', {'slug': idol.slug}) }}">{{ idol }}</a></span>
                         <br/>
-                        <span data-expandable data-slice-point="70">{{ idol.content|raw }}</span>
+                        <span data-expandable data-slice-point="70">{{ idol.content|striptags|raw }}</span>
                     </p>
                     <div class="fanned">
                         <span>{{ idol.fanCount }}</span>
