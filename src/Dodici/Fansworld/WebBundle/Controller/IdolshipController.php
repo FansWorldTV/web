@@ -27,7 +27,7 @@ class IdolshipController extends SiteController
     {
     	try {
 	    	$request = $this->getRequest();
-	    	$ididol = intval($request->get('iduser'));
+	    	$ididol = intval($request->get('idol-id'));
 	    	$user = $this->getUser();
 	    	
 	    	if (!$user instanceof User) throw new \Exception('Debe iniciar sesión');

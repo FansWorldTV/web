@@ -20,21 +20,26 @@
                 {% set tship = appstate.teamshipwith(team) %}
                 
                 <div class="team">
+                    
                     <div class="splash">
                         {% thumbnail team.splash, 'big' %}
                     </div>
+                    
                     <div class="logo">
                         {% thumbnail team.image, 'small' %}
                     </div>
+                    
                     <p>
                         <span class="name">{{ team }}</span>
                         <br/>
-                        <span data-expandable data-slice-point="70">{{ team.content }}</span>
+                        <span data-expandable data-slice-point="70">{{ team.content|raw }}</span>
                     </p>
+                    
                     <div class="fanned">
                         <span>{{ team.fanCount }}</span>
                         <button class="btn btn-success {% if tship %} disabled {% else %} btn_teamship add {% endif %}" data-team-id="{{ team.id }}">Ser fan</button>
                     </div>
+                    
                 </div>
             {% endfor %}
         </section>

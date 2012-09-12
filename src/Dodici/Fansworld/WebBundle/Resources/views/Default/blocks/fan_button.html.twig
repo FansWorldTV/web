@@ -10,6 +10,7 @@
 {% set canFriend = true %}
 
 {% if fType == 'user' %}
+    {% set btnType = 'friendship' %}
     {% set fship     = appstate.friendshipwith(entity) %}
     {% if selfWall != true %}
         {% set canFriend = appstate.canfriend(entity) %}
@@ -20,17 +21,18 @@
     {% endif %}
 {% else %}
     {% set fship     = fanmaker.isFan(entity) %}
+    {% set btnType = fType~'ship' %}
 {% endif %}
 
 
 {% if fship is defined %}
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and (fship) %}
         <div class="addFriend" ">
-            <button class="btn {{ buttonSize }} btn_friendship btn-success"> ya sos fan</button>
+            <button class="btn {{ buttonSize }} btn_{{ btnType }} remove btn-success"> ya sos fan</button>
         </div>
     {% else %}
         <div class="addFriend" data-type="{{ fType }}" data-id="{{ entity.id }}" data-add-fan data-login-required >
-            <button class="btn {{ buttonSize }} btn_friendship add btn-success"> Ser fan {{ solicitar }}</button>
+            <button class="btn {{ buttonSize }} btn_{{ btnType }} add btn-success"> Ser fan {{ solicitar }}</button>
         </div>
     {% endif %}
 {% endif %}

@@ -1,17 +1,17 @@
-var teamship = {
+var idolship = {
     init: function(){
-        teamship.add();
+        idolship.add();
     },
     
     add: function(){
-        $(".btn_teamship.add:not('.loading-small')").on('click', function(e){
+        $(".btn_idolship.add:not('.loading-small')").on('click', function(e){
             var self = $(this);
             self.addClass('loading-small');
             
-            var teamId = self.attr('data-team-id');
+            var idolId = self.attr('data-idol-id');
             
-            ajax.genericAction('teamship_ajaxtoggle', {
-                'team': teamId
+            ajax.genericAction('idolship_ajaxtoggle', {
+                'idol-id': idolId
             }, function(r){
                 if(r){
                     if(r.isFan){
@@ -30,6 +30,7 @@ var teamship = {
     }
 };
 
+
 $(function(){
-    teamship.init();
+    idolship.init();
 });
