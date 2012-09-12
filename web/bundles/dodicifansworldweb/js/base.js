@@ -302,8 +302,8 @@ var ajax = {
             success: function(response) {
                 callback(response);
             },
-            error: function(response) {
-                errorcallback(response);
+            error: function(response, text, error) {
+                errorcallback(response, text, error);
             }
         });
     },

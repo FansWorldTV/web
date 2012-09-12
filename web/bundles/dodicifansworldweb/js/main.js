@@ -312,9 +312,10 @@ var site = {
                  id = el.attr('data-id'),
                  ispin = (el.attr('data-pin') == 'true'),
                  content = el.parents('.commentform').find('.comment_message').val();
-                 privacy = textAreaElement.parents('.commentform,.shortcommentform').find('.post_privacidad').val() || 1,
                  textAreaElement = el.closest('.commentform').find('textarea.comment_message'),
+                 privacy = textAreaElement.parents('.commentform,.shortcommentform').find('.post_privacidad').val() || 1,
                  elDestination = '[data-wall]';
+                
                  
             if(!textAreaElement.attr('is-subcomment')) {
                 elDestination = textAreaElement.parents('.comments,.comments-and-tags').find('.comments-container');
@@ -366,10 +367,10 @@ var site = {
                 site.expander();
                 textAreaElement.removeAttr('disabled');
             },
-            function (responsetext) {
+            function (response,text, errorThrown) {
                 textAreaElement.removeClass('loadingSmall');
                 textAreaElement.removeAttr('disabled');
-                error(responsetext);
+                error(text);
             });
     },
     

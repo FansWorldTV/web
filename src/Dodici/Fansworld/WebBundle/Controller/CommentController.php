@@ -21,18 +21,6 @@ class CommentController extends SiteController
 {
 
     /**
-     * @Route("/hola") 
-     */
-    public function holaAction()
-    {
-        $entity = $this->getRepository('Notification')->find(4);
-        $em = $this->getDoctrine()->getEntityManager();
-        $html = $this->renderView('DodiciFansworldWebBundle:Notification:Mail/notification.mail.html.twig', array('notification' => $entity));
-        echo $html;
-        exit;
-    }
-
-    /**
      * @Route("/show/{id}", name= "comment_show", requirements = {"id" = "\d+"})
      * @Template
      */
