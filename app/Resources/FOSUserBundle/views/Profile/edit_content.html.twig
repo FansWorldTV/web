@@ -6,7 +6,7 @@
 
     <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register form-2column">
         {{ form_errors(form) }}
-        <div class="column span6">
+        <div class="column">
         {% for key, val in form %}
             {% if key == 'user' %}
                 {% for k,row in val %}
@@ -20,7 +20,7 @@
                         </div-->
                         {{ form_row(row) }}
         </div>
-        <div class="column span6">
+        <div class="column">
                     {% else %}
                         {{ form_row(row) }}
                     {% endif %}
