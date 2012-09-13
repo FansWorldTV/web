@@ -18,7 +18,6 @@ class HomeController extends SiteController
     /**
      * Site's home
      * @Template
-     * @Cache(smaxage="60")
      */
     public function indexAction()
     {
