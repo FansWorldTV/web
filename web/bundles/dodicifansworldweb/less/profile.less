@@ -506,18 +506,22 @@ section#entity-content {
 
 
 div.change-password {
+    div.row div {
+        clear: both;
+    }
 
     .actual-password, .new-password {
         label {
             float: left;
-            width: 20%;
+            width: 140px;
+            display: block;
         }
         input:not([type='checkbox']) {
             float: left;
-            width: 70% !important;
+            width: 250px !important;
         }
         button {
-            margin-left: 20%;
+            margin-left: 140px;
         }
     }
 
@@ -526,6 +530,10 @@ div.change-password {
         font-weight: bold;
         padding-left: 20%;
         padding-bottom: 5px;
+    }
+
+    section.ayuda { 
+        padding-left: 35px;
     }
 }
 
