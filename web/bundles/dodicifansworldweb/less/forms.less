@@ -2,33 +2,60 @@
 // --------------------------
 
 .form-2column {
-  
-  // Float the labels left
-  .control-label {
-    float: left;
-    width: 100px;
-    [for='fos_user_registration_form_accept_toc']{
-        width: 180px;
+
+    // Float the labels left
+    /*.control-label {
+      float: left;
+      width: 100px;
+      [for='fos_user_registration_form_accept_toc']{
+          width: 180px;
+      }
+    }*/
+
+    // set padding for labels
+    .help-block {
+       //padding-left: 100px;
     }
-  }
-  
-  // set padding for labels
-  .help-block {
-     padding-left: 100px;
-  }
-  
-  
-  //set error color
-  p.error{
-    color: #CC3333;
-  }
-  
-  //set inputs width
-  input[type='text'],
-  input[type='password'], 
-  input[type='email']{
-    width: 65%;
-  }
+
+
+    //set error color
+    p.error{
+      color: #CC3333;
+    }
+
+    //set inputs width
+    /*
+    input[type='text'],
+    input[type='password'], 
+    input[type='email']{
+      width: 65%;
+    }
+    */
+    input, textarea, select {
+      width: inherit;
+    }
+    
+    .control-group {
+        display: block;
+        clear: both;
+        margin-bottom: 10px;
+
+        label {
+            float: left;
+            width: 30%;
+        }
+        div.controls {
+            float: left;
+            width: 70%;
+            margin-bottom: 10px;
+            
+            input,
+            textarea,
+            select {
+                width: inherit;
+            }
+        }
+    }
 }
 
 //General help-block
