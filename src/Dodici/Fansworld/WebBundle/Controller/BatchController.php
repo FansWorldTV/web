@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
+use Dodici\Fansworld\WebBundle\Entity\EventTweet;
+
 use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Doctrine\ORM\EntityManager;
@@ -43,6 +45,61 @@ class BatchController extends SiteController
         $df = $this->get('feeder.event.minute');
         $df->feed();
 		$df->pending();
+		
+		return new Response('Ok');
+    }
+    
+	/**
+     * Retrieve event tweets
+     * @Route("/eventtweets", name= "admin_batch_eventtweets")
+     */
+    public function eventTweetsAction()
+    {
+        $teams = $this->getRepository('Team')->withEvents(5);
+        $eventtweetrepo = $this->getRepository('EventTweet');
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        $topush = array();
+        
+        foreach ($teams as $t) {
+            $team = $t['team'];
+            $event = $t['event'];
+            
+            $maxtweetid = $eventtweetrepo->maxExternal($team);
+            $twitter = $team->getTwitter();
+            
+            $apptwitter = $this->get('app.twitter');
+            
+            $latest = $apptwitter->latestSinceId($twitter, $maxtweetid);
+            
+            foreach ($latest as $l) {
+                if ($l && is_object($l)) {
+                    $date = new \DateTime($l->created_at);
+                    $external = $l->id_str;
+                    $content = $l->text;
+                    
+                    $exists = $eventtweetrepo->countBy(array('external' => $external));
+                    
+                    if (!$exists) {
+                        $et = new EventTweet();
+                        $et->setTeam($team);
+                        $et->setEvent($event);
+                        $et->setCreatedAt($date);
+                        $et->setExternal($external);
+                        $et->setContent($content);
+                        
+                        $em->persist($et);
+                        
+                        $topush[] = $et;
+                    }
+                }
+            }
+            
+            $em->flush();
+        }
+        
+        $meteor = $this->get('meteor');
+        foreach ($topush as $tp) $meteor->push($tp);
 		
 		return new Response('Ok');
     }

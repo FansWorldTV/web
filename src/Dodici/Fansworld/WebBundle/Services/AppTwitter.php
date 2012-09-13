@@ -109,6 +109,23 @@ class AppTwitter
                     'status' => $status
                 ));
     }
+    
+    public function latestSinceId($twitter, $lastid)
+    {
+        $params = array(
+            'screen_name' => $twitter,    
+            'include_rts' => false,
+            'trim_user' => true
+        );
+        
+        if ($lastid) {
+            $params['since_id'] = $lastid;
+        } else {
+            $params['count'] = 1;
+        }
+        
+        return $this->twitter->get('statuses/user_timeline', $params);
+    }
 
     private function api($url, $user = null, $method = 'GET', $params = array())
     {

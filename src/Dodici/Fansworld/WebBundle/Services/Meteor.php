@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Services;
 
+use Dodici\Fansworld\WebBundle\Entity\EventTweet;
+
 use Dodici\Fansworld\WebBundle\Entity\Video;
 
 use Dodici\Fansworld\WebBundle\Entity\EventIncident;
@@ -79,6 +81,13 @@ class Meteor
     	} elseif ($entity instanceof EventIncident) {
     	    $data = array(
     	        't' => 'ei',
+    	        'id' => $entity->getId()
+    	    );
+        	    
+        	return $this->sendToSocket($data, 'event_'.$entity->getEvent()->getId());
+    	} elseif ($entity instanceof EventTweet) {
+    	    $data = array(
+    	        't' => 'et',
     	        'id' => $entity->getId()
     	    );
         	    

@@ -108,4 +108,37 @@ class TeamRepository extends CountBaseRepository
 
         return $query->getSingleScalarResult();
     }
+    
+	/**
+     * Get teams that have active, non-finished events going, and have a twitter set
+     * 
+     * @param int|null $daysadvance - amount of days before the event since we're open for tweets
+     */
+    public function withEvents($daysadvance = 2)
+    {
+        if ($daysadvance)
+            $daysbefore = new \DateTime('+'.$daysadvance.' days');
+        
+        $dql = '
+    	SELECT ht, t, e
+    	FROM \Dodici\Fansworld\WebBundle\Entity\HasTeam ht
+        JOIN ht.team t
+        JOIN ht.event e
+        WHERE e.active = true AND e.finished = false AND t.active = true AND (t.twitter IS NOT NULL)
+        '. ($daysadvance ? 'AND e.fromtime < :daysbefore' : '') .'
+        ORDER BY e.fromtime DESC
+        ';
+        
+        $query = $this->_em->createQuery($dql);
+        if ($daysadvance) $query = $query->setParameter('daysbefore', $daysbefore);
+            
+        $result = $query->getResult();
+        
+        $teams = array();
+        foreach ($result as $r) {
+            $teams[$r->getTeam()->getId()] = array('team' => $r->getTeam(), 'event' => $r->getEvent());
+        }
+        
+        return $teams;
+    }
 }

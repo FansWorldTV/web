@@ -1,6 +1,15 @@
+{% if raw is not defined %}
+    {% set raw = false %}
+{% endif %}
 <section class='text-box {{ box_class }}'>
-    <h4>{{ box_title }}</h4>
+    {% if box_title %}
+        <h4>{{ box_title }}</h4>
+    {% endif %}
     <p>
-        {{ box_content|nl2br }}
+        {% if raw %}
+            {{ box_content|raw|nl2br }}
+        {% else %}
+            {{ box_content|nl2br }}
+        {% endif %}
     </p>
 </section>

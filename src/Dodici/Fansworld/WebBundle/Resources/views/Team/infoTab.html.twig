@@ -16,7 +16,7 @@
         
         {% block inner_content %}
                 {% if team.content %}
-                    {% include "DodiciFansworldWebBundle:Default:blocks/text_box.html.twig" with { box_title: 'Sobre mi:', box_content: team.content, box_class: 'entity-content' } %}
+                    {% include "DodiciFansworldWebBundle:Default:blocks/text_box.html.twig" with { box_title: 'Sobre mi:', box_content: team.content, box_class: 'entity-content', raw: true } %}
                 {% endif %}
         {% endblock %}
         
