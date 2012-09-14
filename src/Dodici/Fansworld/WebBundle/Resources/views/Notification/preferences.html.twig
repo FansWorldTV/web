@@ -25,7 +25,7 @@
 {% block inner_content %}
     {{ parent() }}
 	<h1>Seleccione las opciones</h1>
-	<div class="row-fluid">
+	<section class="row-fluid user-preferences">
         <div class='span8'>
     		<form action="{{ path('notification_preferences') }}" method="post" enctype="multipart/form-data" class="notify-prefs">
     			<div class="form-notifyprefs fieldcontainer">
@@ -60,6 +60,6 @@
                 </p>
             </section>
 		</div>
-	</div>
+	</section>
 	
 {% endblock %}
