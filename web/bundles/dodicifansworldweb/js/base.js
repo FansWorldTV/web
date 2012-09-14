@@ -303,7 +303,7 @@ var ajax = {
                 callback(response);
             },
             error: function(response, text, error) {
-                errorcallback(response, text, error);
+                errorcallback(response.responseText, text, error);
             }
         });
     },

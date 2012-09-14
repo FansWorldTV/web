@@ -225,9 +225,11 @@ class TeamController extends SiteController
     public function ajaxTeams()
     {
         $request = $this->getRequest();
-        $idcategory = $request->get('idcategory');
+        $idcategory = $request->get('idcategory', null);
+        $sport = $request->get('idsport', null);
         $text = $request->get('text');
         $page = $request->get('page');
+        $user = $this->getUser();
 
         $limit = null;
         $offset = null;
@@ -238,7 +240,7 @@ class TeamController extends SiteController
             $offset = $limit * $page;
         }
 
-        $teams = $this->getRepository('Team')->matching($idcategory, $text, $limit, $offset);
+        $teams = $this->getRepository('Team')->matching($idcategory, $text, $user, $limit, $offset, $sport);
 
         $response = array();
         foreach ($teams as $team) {

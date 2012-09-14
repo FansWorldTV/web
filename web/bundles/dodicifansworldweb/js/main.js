@@ -365,10 +365,10 @@ var site = {
                 site.expander();
                 textAreaElement.removeAttr('disabled');
             },
-            function (response,text, errorThrown) {
+            function (response) {
                 textAreaElement.removeClass('loadingSmall');
                 textAreaElement.removeAttr('disabled');
-                error(text);
+                error(response);
             });
     },
     

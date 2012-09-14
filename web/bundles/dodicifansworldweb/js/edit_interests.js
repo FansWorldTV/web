@@ -9,7 +9,7 @@ jQuery.fn.refreshCategory = function() {
     var ul = el.parent().find('.currentinterests');
     ul.empty().addClass('loading');
 	
-	console.log('empieza el ajax');
+    console.log('empieza el ajax');
     ajax.genericAction('interest_ajaxget', {
         idcategory: idcategory, 
         iduser: iduser
@@ -34,12 +34,12 @@ jQuery.fn.refreshCategory = function() {
 $(function(){
     $(".team-chooser").each(function(){
         var ele = $(this);
-        var category = $(this).attr('data-sport-id');
+        var sport = $(this).attr('data-sport-id');
         
         ele.autocomplete({
             source: function(request, response){
             ajax.genericAction('team_ajaxsearch', {
-                'idcategory': category,
+                'idsport': sport,
                 'text': request.term
                 }, function(data){
                 response(data);
