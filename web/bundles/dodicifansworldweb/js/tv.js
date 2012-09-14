@@ -3,6 +3,8 @@ var tv = {
     'init': function (filtersList, channelsList, targetDataList) {
         "use strict";
 
+        $('[data-list]').list();
+
         $('.js-subscribe').click(function () {
             tv.subscribe($(this));
         });
@@ -13,12 +15,20 @@ var tv = {
     'subscribe': function ($button) {
         "use strict";
 
-        var channel = $button.attr('data-active-channel');
+        var channel = $button.attr('data-active-channel'),
+            params = {};
 
         if (!channel || channel === 'all') {
             return alert('Por favor elija un canal antes de suscribirse.');
         }
-        console.log(channel);
+
+        params.channel = channel;
+
+        ajax.genericAction('teve_channelsubscribe', params, function (response) {
+            console.log(response);
+        }, function (msg) {
+            console.error(msg);
+        });
 
     },
 
@@ -50,7 +60,7 @@ var tv = {
         "use strict";
 
         var dropDown = '.breadcrumb .channels-dropdown',
-             targetDataList = '.am-container';
+            targetDataList = '.am-container';
 
         $(dropDown).find('ul.dropdown-menu li a').click(function (e) {
 

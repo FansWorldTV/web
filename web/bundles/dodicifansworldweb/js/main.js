@@ -107,8 +107,6 @@ var site = {
         
         $('[data-wall]').wall();
         site.bindCarousel();
-        
-        $('[data-list]').list();
 
         // TODO check & fix live update whit removed elements
         //$('[text-height=ellipsis]').ellipsis('',{live: true});
