@@ -67,5 +67,34 @@ class CommentRepository extends CountBaseRepository
         return $query->getResult();
 	}
 	
-	
+	/**
+	 * Get comments for event wall
+	 * @param Event|int $event
+	 * @param DateTime|null $maxdate
+	 * @param DateTime|null $mindate
+	 */
+	public function eventWall($event, $maxdate=null, $mindate=null)
+	{
+		$dql = '
+		SELECT c, a, t, ai
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Comment c
+    	LEFT JOIN c.team t
+    	LEFT JOIN c.author a
+		LEFT JOIN a.image ai
+		WHERE c.event = :event
+		';
+	    
+		if ($maxdate) $dql .= ' AND c.createdAt < :maxdate ';
+		if ($mindate) $dql .= ' AND c.createdAt >= :mindate ';
+		
+		$dql .= ' ORDER BY c.createdAt DESC';
+		
+	    $query = $this->_em->createQuery($dql)
+    		->setParameter('event', ($event instanceof Event) ? $event->getId() : $event);
+    		
+    	if ($maxdate) $query = $query->setParameter('maxdate', $maxdate);
+    	if ($mindate) $query = $query->setParameter('mindate', $mindate);
+    	
+    	return $query->getResult();
+	}
 }

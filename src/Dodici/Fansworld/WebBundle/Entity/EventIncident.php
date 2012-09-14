@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * An incident in a DF-enabled event (goal, card, etc)
  *
  * @ORM\Table(name="event_incident")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\EventIncidentRepository")
  */
 class EventIncident
 {

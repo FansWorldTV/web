@@ -2,6 +2,10 @@
 
 namespace Dodici\Fansworld\WebBundle\Model;
 
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
+
+use Dodici\Fansworld\WebBundle\Entity\Event;
+
 use Dodici\Fansworld\WebBundle\Entity\Idol;
 
 use Application\Sonata\UserBundle\Entity\User;
@@ -159,5 +163,31 @@ class EventRepository extends CountBaseRepository
     	} else {
     	    return $query->getResult();
     	}
+	}
+	
+	/**
+	 * Gets min date from comments, incidents and tweets associated to event
+	 * @param int|Event $event
+	 */
+	public function minWallDate($event)
+	{
+	    $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addScalarResult('min_created_at', 'min_created_at');
+	    
+	    $result = $this->_em->createNativeQuery('
+            SELECT MIN(created_at) AS min_created_at from comment WHERE event_id = :event
+            UNION
+            SELECT MIN(created_at) AS min_created_at from event_incident WHERE event_id = :event
+            UNION
+            SELECT MIN(created_at) AS min_created_at from event_tweet WHERE event_id = :event
+            ORDER BY (min_created_at IS NOT NULL) DESC, min_created_at ASC
+            LIMIT 1
+	    ', $rsm)
+	    ->setParameter('event', ($event instanceof Event) ? $event->getId() : $event)
+	    ->getResult();
+	    
+	    $date = $result[0]['min_created_at'];
+	    
+	    return $date ? (new \DateTime($date)) : null;
 	}
 }
