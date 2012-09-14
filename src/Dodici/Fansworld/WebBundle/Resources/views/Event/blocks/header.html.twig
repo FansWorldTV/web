@@ -1,0 +1,77 @@
+{% if event is not defined %}
+    {% set event = null %}
+{% endif %}
+
+
+{% if event %}
+    {% if appstate.EventTypeName(event.type) == 'Partido' %}
+        {% set team1 = event.hasTeams[0].team %}
+        {% set team2 = event.hasTeams[1].team %}
+        
+        <header class="eventdetail row-fluid">
+            <section class="breadcrum">
+                <div class="type">
+                    Partido
+                </div>
+                <div class="title">
+                    {{ team1.shortname }} vs {{ team2.shortname }}
+                </div>
+            </section>
+            
+            <section class="header row-fluid">
+                <div class="span6 local row-fluid">
+                    <div class="backimage">
+                        {% thumbnail team1.splash, 'big_square' with {width: ''} %}
+                        
+                    </div>
+                    <div class="span2 goles">
+                        {% if event.hasTeams[0].score == '' %}
+                            -
+                        {% else %}
+                            {{ event.hasTeams[0].score }}
+                        {% endif %}
+                    </div>
+                    <div class="span3 escudo">
+                        {% thumbnail team1.image, 'small_square' with {title: team1.title} %}
+                    </div>
+                    <div class="span6 texto">
+                        <div class='clubname'>
+                            {{ team1.shortname }}
+                        </div>
+                        <div class="fancount">
+                            y {{ team1.fancount }} fans online
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="span6 visitante row-fluid">
+                    <div class="backimage">
+                        {% thumbnail team1.splash, 'big_square' with {width: ''} %}
+                        
+                    </div>
+                    <div class="span6 texto">
+                        <div class='clubname'>
+                            {{ team2.shortname }}
+                        </div>
+                        <div class="fancount">
+                            y {{ team2.fancount }} fans online
+                        </div>
+                    </div>
+                    <div class="span3 escudo">
+                        {% thumbnail team2.image, 'small_square' with {title: team2.title} %}
+                    </div>
+                    <div class="span2 goles">
+                        {% if event.hasTeams[1].score == '' %}
+                            -
+                        {% else %}
+                            {{ event.hasTeams[1].score }}
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+        </header>
+    {% endif %}
+{% endif %}
+
+Y por ultimo tags, filtros y herramientas
+<br />

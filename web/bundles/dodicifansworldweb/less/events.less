@@ -143,3 +143,258 @@ section.eventcalendar-container{
         }
     }
 }
+
+//Estilos del muro de detalle de eventos
+section.eventwall-container{
+    .doublegradient(#282828, #373737, #434242, #4d4c4c );
+    padding: 2%;
+    div.minute-container{
+        width: 100%;
+        overflow: hidden;
+        
+        .comment{
+            &:after{
+                clear: both;
+            }
+            background-color: @white;
+            min-height: 40px;
+            margin-bottom: 10px;
+            .border-radius(5px);
+            padding: 5px;
+            //position: relative;
+            overflow: hidden;
+            .img-container{
+                width: 10%;
+            }
+            .content{
+                width: 90%;
+            }
+            .flechita {
+                display: block;
+                height: 15px;
+                margin-top: 8px;
+                vertical-align: top;
+                width: 13px;
+                z-index:2;
+                position: absolute;
+            }
+        }
+        
+        .tweet{
+            overflow: hidden;
+            margin-bottom: 10px;
+            .border-radius(5px);
+            background-color: #121212;
+            font-style: italic;
+            padding: 5px;
+            color: @white;
+            min-height: 40px;
+            .username{
+                font-weight: bold;
+            }
+            a{
+                color: #17c5d0;
+            }
+            .flechita {
+                display: block;
+                height: 15px;
+                margin-top: 8px;
+                vertical-align: top;
+                width: 13px;
+                z-index:2;
+                position: absolute;
+            }
+        }
+        
+        .local-container{
+            .pull-left();
+             position: relative;
+            margin-left: 3%;
+            width: 45%;
+            .comment{
+                padding-left: 10px;
+                .img-container{
+                    .pull-right();
+                }
+                .content{
+                    .pull-left();
+                    
+                }
+                .flechita {
+                    background-image: url("images/right.png");
+                    right: -13px;
+                    padding: 0;
+                    
+                }
+            }
+            .tweet{
+                .flechita {
+                    background-image: url("images/rightblack.png");
+                    right: -13px;
+                    padding: 0;
+                    
+                }
+            }
+        }
+        .visitante-container{
+            .pull-right();
+            width: 45%;
+            margin-right: 3%;
+            .comment{
+                padding-right: 10px;
+                .img-container{
+                    .pull-left();
+                }
+                .content{
+                    .pull-right();
+                    
+                }
+                .flechita{
+                    background-image: url("images/left.png");
+                    margin-left: -18px;
+                }
+            }
+            .tweet{
+                .flechita {
+                    background-image: url("images/leftblack.png");
+                    margin-left: -18px;
+                    
+                }
+            }
+        }
+        .fullwidth-container{
+            clear: both;
+            width: 100%;
+            margin-bottom: 10px;
+            .circle{
+                background-color: @green;
+                color: @white;
+                font-weight: bold;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                text-align: center;
+                margin: 0 auto;
+                
+                width: 150px;
+                height: 150px;
+                .border-radius(75px); 
+                line-height: 150px;
+                    
+                .texto1{
+                    font-size: 40px;
+                    line-height: 40px;
+                    margin-top: 25px;
+                    width: 100%
+                }    
+                
+                .texto2{
+                    font-size: 14px;
+                    font-weight: bold;
+                    line-height: 14px;
+                    margin-top: 4px;
+                    height: 28px;
+                    width: 100%;
+                }
+                
+                .texto3{
+                    font-size: 14px;
+                    line-height: 28px;
+                    width: 100%;
+                }
+                                
+                &.circle-local{
+                    background-color: #8fb603;
+                }
+                
+                &.circle-visitante{
+                    background-color: #fb8c00;
+                }
+                
+                &.circle-small{
+                    .border-radius(50px);    
+                    width: 100px;
+                    font-size: 30px;
+                    height: 100px;
+                    line-height: 100px;
+                }
+            }
+        }
+    }
+}
+
+//estilos del header de detalles de eventos
+header.eventdetail{
+    section.breadcrum{
+        margin-top: 5px;
+        margin-bottom: 10px;
+        overflow: hidden;
+        .type{
+            .pull-left();
+             padding-right: 10px;
+             border-right: 1px solid #dcdcdc;
+        }
+        .title{
+            .pull-left();
+             padding-left: 10px;
+             color: #7b7b7b;
+        }
+    }
+    section.header{
+        overflow: hidden;
+        background-color: @black;
+        color: @white;
+        height: 150px;
+        position: relative;
+        z-index: -2;
+        .escudo{
+            line-height: 150px;
+            z-index: 1;
+        }
+        
+        .texto{
+            .clubname{
+                font-size: 25px;
+                font-weight: bold;
+                margin-top: 45px;
+            }
+            .fancount{
+                font-size: 15px;
+                margin-top: 5px;
+            }
+        }
+        
+        .goles{
+            font-size: 60px;
+            text-shadow: 0 1px 1px rgba(255,255,255,.75);
+            text-align: center;
+            line-height: 150px;
+            font-weight: bold;
+            z-index: 1;
+        }
+        
+        .local{
+            position: relative;
+            
+            .backimage{
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                .opacity(50)
+            }
+        }
+        
+        .visitante{
+            position: relative;
+            .backimage{
+                position: absolute;
+                top: 0;
+                right: 0;
+                z-index: -1;
+                .opacity(50)
+            }
+        }
+    }
+    
+    
+}

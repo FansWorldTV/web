@@ -3,19 +3,6 @@
 {% block title %}Eventos - Home{% endblock %}
 
 
-{% block javascript %}
-    {{ parent() }}
-    <script>
-    
-    $(function(){
-       
-    });
-    
-    
-    </script>
-{% endblock %}
-
-
 {% block event_body %}
     {% embed "DodiciFansworldWebBundle:Layout/Embed:event_fullwidth.html.twig" with {'leagues': true } %}
         {% block inner_content %}

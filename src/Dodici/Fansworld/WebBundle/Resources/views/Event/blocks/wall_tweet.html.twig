@@ -1,0 +1,16 @@
+{% if second is not defined %}
+    {% set second = 0 %}
+{% endif %}
+
+{% if username is not defined %}
+    {% set username = '' %}
+{% endif %}
+
+{% if content is not defined %}
+    {% set content = '' %}
+{% endif %}
+
+<div class="tweet" second='{{ second }}'>
+    <span class="flechita"></span>
+    <span class="username">@{{ username }}</span> {{ content|raw }}</a>
+</div>

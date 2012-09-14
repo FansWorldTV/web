@@ -1,0 +1,23 @@
+{% if second is not defined %}
+    {% set second = 0 %}
+{% endif %}
+
+{% if image is not defined %}
+    {% set image = false %}
+{% endif %}
+
+{% if content is not defined %}
+    {% set content = '' %}
+{% endif %}
+
+<div class="comment" second='{{ second }}'>
+    <span class="flechita"></span>
+    <div class="img-container">
+        {% if image %}
+            {% thumbnail image, 'headeravatar' %}
+        {% endif %}
+    </div>
+    <div class="content">
+        {{ content|raw }}
+    </div>
+</div>

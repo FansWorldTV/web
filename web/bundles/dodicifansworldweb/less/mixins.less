@@ -46,3 +46,33 @@
     }
 }
 
+// Gradients de dos colores
+.doublegradient (@startColor1: #555, @endColor1: #333,@startColor2: #555, @endColor2: #333,@size1: 50%, @size2: 50%) {
+    background-color: mix(@startColor1, @endColor1, 60%);
+    background-image: -moz-linear-gradient(top, @startColor1, @endColor1),-moz-linear-gradient(top, @startColor2, @endColor2); // FF 3.6+
+    background-image: -ms-linear-gradient(top, @startColor1, @endColor1),-ms-linear-gradient(top, @startColor2, @endColor2); // IE10
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@startColor1), to(@endColor1)),-webkit-gradient(linear, 0 0, 0 100%, from(@startColor2), to(@endColor2)); // Safari 4+, Chrome 2+
+    background-image: -webkit-linear-gradient(top, @startColor1, @endColor1),-webkit-linear-gradient(top, @startColor2, @endColor2); // Safari 5.1+, Chrome 10+
+    background-image: -o-linear-gradient(top, @startColor1, @endColor1),-o-linear-gradient(top, @startColor2, @endColor2); // Opera 11.10
+    background-image: linear-gradient(top, @startColor1, @endColor1),linear-gradient(top, @startColor2, @endColor2); // The standard
+    background-repeat: repeat-y, repeat;
+    background-size: @size1,@size2;
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColor1str='%d', endColor1str='%d', GradientType=0)",@startColor1,@endColor1)); // IE9 and down
+}
+
+//Flecha
+#flecha{
+    .derecha(@tamano,@color){
+        &:after {
+            @tamanotop: @tamano - 2;
+            border-bottom: @tamano solid transparent;
+            border-left: @tamano solid  @color;
+            border-top: @tamano  solid transparent;
+            content: "";
+            position: absolute;
+            right: @tamano *-1;
+            top: @tamanotop;
+        } 
+    }
+    
+}

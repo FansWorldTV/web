@@ -24,15 +24,16 @@ class EventController extends SiteController
     
     /**
      * @Route("/{id}/{slug}", name= "event_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
+     * @Template
      */
     public function showAction($id)
     {
         //TODO: todo
-        $event = $this->getRepository('Event')->find($id);
-
+        $event = $this->getRepository('Event')->findOneBy(array('id' => $id));
+        $user = $this->getUser();
         $this->securityCheck($event);
 
-        return new Response('TODO');
+        return array('user' => $user, 'event' => $event);
     }
     
     /**
@@ -160,7 +161,7 @@ class EventController extends SiteController
         $event = $this->getRepository('Event')->find($id);
         $teams = array();
         foreach ($event->getHasteams() as $team) {
-            array_push($teams, array($team->getId() => (string) $team));
+            array_push($teams, array($team->getId() => (string) $team->getTeam()));
         }
         return array('event' => $id, 'teams' => $teams);
     }
