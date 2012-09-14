@@ -81,6 +81,7 @@ class UserAdmin extends Admin
 				->add('score',null,array('label'=>'Puntaje','required'=>false))
 				->add('level',null,array('label'=>'Nivel','required'=>false))
 				->add('image', 'sonata_type_model', array(), array('edit' => 'list', 'link_parameters' => array('context' => 'default', 'provider' => 'sonata.media.provider.image')))
+				->add('splash', 'sonata_type_model', array(), array('edit' => 'list', 'link_parameters' => array('context' => 'default', 'provider' => 'sonata.media.provider.image')))
 				->add('friendships', 'sonata_type_collection', array ('label'=>'Amistades', 'required' => false), 
             	array(
                       'edit' => 'inline',
