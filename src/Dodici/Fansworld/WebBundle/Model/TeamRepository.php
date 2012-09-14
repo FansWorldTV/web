@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Model;
 
+use Dodici\Fansworld\WebBundle\Entity\Sport;
+
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -18,8 +20,9 @@ class TeamRepository extends CountBaseRepository
      * @param User|null $user (joins idols)
      * @param int|null $limit
      * @param int|null $offset
+     * @param Sport|int|null $sport
      */
-    public function matching($category = null, $text = null, $user = null, $limit = null, $offset = null)
+    public function matching($category = null, $text = null, $user = null, $limit = null, $offset = null, $sport = null)
     {
         /* FIXME: does not return all teamcategories properly when filtering by one */
         
@@ -48,6 +51,7 @@ class TeamRepository extends CountBaseRepository
         $havings = array();
         
         if ($category) $havings[] = ' tc = :category ';
+        if ($sport) $havings[] = ' tc.sport = :sport ';
         
         if ($havings) $dql .= ' HAVING ' . join(' AND ', $havings);
         
@@ -63,6 +67,9 @@ class TeamRepository extends CountBaseRepository
             
         if ($user)
             $query = $query->setParameter('user', $user->getId());
+            
+        if ($sport)
+            $query = $query->setParameter('sport', ($sport instanceof Sport) ? $sport->getId() : $sport);
 
         if ($limit !== null)
             $query = $query->setMaxResults($limit);
@@ -78,8 +85,9 @@ class TeamRepository extends CountBaseRepository
      * 
      * @param TeamCategory|null $category
      * @param string|null $text
+     * @param Sport|int|null $sport
      */
-    public function countMatching($category = null, $text = null)
+    public function countMatching($category = null, $text = null, $sport = null)
     {
         $dql = '
     	SELECT COUNT(t)
@@ -88,6 +96,12 @@ class TeamRepository extends CountBaseRepository
         ($category ? '
         	JOIN t.teamcategories tc WITH tc = :category
         ' : '')
+        .
+        ($sport ? 
+        
+        ($category ? ' AND tc.sport = :sport ' : ' JOIN t.teamcategories tc WITH tc.sport = :sport ')
+        
+        : '')
         .'
         WHERE t.active = true
         ';
@@ -102,6 +116,9 @@ class TeamRepository extends CountBaseRepository
         
         if ($category)
             $query = $query->setParameter('category', $category);
+            
+        if ($sport)
+            $query = $query->setParameter('sport', ($sport instanceof Sport) ? $sport->getId() : $sport);
                 
         if ($text)
             $query = $query->setParameter('textlike', '%' . $text . '%');
