@@ -2,8 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Model;
 
+use Dodici\Fansworld\WebBundle\Entity\TeamCategory;
 use Dodici\Fansworld\WebBundle\Entity\Team;
-
 use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
@@ -185,5 +185,31 @@ class IdolRepository extends CountBaseRepository
             ->setParameter('team', $team->getId())
             ->getResult();
             
+    }
+    
+	/**
+     * Returns the Idols that have a team belonging to a $teamcategory as a current career
+     * @param TeamCategory $teamcategory
+     */
+    public function byTeamCategory(TeamCategory $teamcategory, $limit=null, $offset=null)
+    {
+        $query = $this->_em->createQuery('
+    	SELECT i
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Idol i
+    	INNER JOIN i.idolcareers ic
+    	INNER JOIN ic.team t
+    	INNER JOIN t.teamcategories tc WITH tc = :teamcategory
+    	WHERE i.active = true
+    	AND ic.active = true
+    	AND ic.actual = true
+    	')
+            ->setParameter('teamcategory', $teamcategory->getId());
+        
+        if ($limit !== null)
+            $query = $query->setMaxResults($limit);
+        if ($offset !== null)
+            $query = $query->setFirstResult($offset);
+
+        return $query->getResult();
     }
 }
