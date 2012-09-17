@@ -48,7 +48,7 @@
                     <div {% if loop.first %}class="active"{% endif %} data-video="{{ carouselitem.id }}">
                         <span>{{ appstate.type(carouselitem)|trans }}</span>
                         <h1>{{ carouselitem.title }}</h1>
-                        <p>{{ carouselitem.content }}</p>
+                        <p>{{ carouselitem.content|striptags|truncate(128) }}</p>
                     </div>
                 {% endfor %}
             {% endif %}

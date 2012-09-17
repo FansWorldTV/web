@@ -1,8 +1,30 @@
+@media(max-width: 1051px){
+    div.team-home {
+        section.top {
+            div.info-detail-carousel {
+                div:not(.active){
+                    display: none;
+                }
+            }
+        }
+    }
+}
 @media(max-width: 1050px){
     nav.profilenavbar-container{
         .nav-tabs-profile{
             li {
                 font-size: 15px !important;
+            }
+        }
+    }
+
+    div.team-home {
+        section.top {
+            div.info-detail-carousel {
+                .hidden;
+            }
+            .carousel {
+                width: 100%;
             }
         }
     }
@@ -22,13 +44,19 @@
             }
         }
     }
+
     div.team-home {
-        section.top {
-            div.info-detail-carousel {
+        section.middle {
+            div.team:last-child {
                 .hidden;
             }
-            .carousel {
-                width: 100%;
+            div.team {
+                width: 50%;
+                margin: 0;
+                &:first-child {
+                    width: 49% !important;
+                    margin-right: 1%;
+                }
             }
         }
     }

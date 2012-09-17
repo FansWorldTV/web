@@ -129,16 +129,23 @@ class TeamController extends SiteController
                 $teamship = false;
             }
 
+            if(strlen($team->getTitle())>70){
+                $teamTitle = substr($team->getTitle(), 0, 21) . "...";
+            }else{
+                $teamTitle = $team->getTitle();
+            }
+            
             $response['teams'][] = array(
                 'id' => $team->getId(),
-                'title' => $team->getTitle(),
+                'title' => $teamTitle,
                 'fanCount' => $team->getFanCount(),
                 'videoCount' => $team->getVideoCount(),
                 'photoCount' => $team->getPhotoCount(),
                 'isFan' => $this->get('fanmaker')->isFan($team, $this->getUser()),
                 'image' => $this->getImageUrl($team->getImage()),
                 'idols' => $idols,
-                'teamship' => $teamship
+                'teamship' => $teamship,
+                'url' => $this->generateUrl('team_wall', array('slug' => $team->getSlug()))
             );
         }
 

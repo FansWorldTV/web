@@ -39,7 +39,7 @@ list.init = function(){
 };
     
 list.getTeams = function(){
-    $("dv.list-teams").addClass('loading');
+    $("div.list-teams").addClass('loading');
         
     ajax.genericAction('team_get',
     {

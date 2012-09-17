@@ -30,9 +30,11 @@
                     </div>
                     
                     <p>
-                        <span class="name">{{ team }}</span>
+                        <a href="{{ path('team_wall', {'slug': team.slug}) }}" class="name">{{ team }}</a>
                         <br/>
-                        <span data-expandable data-slice-point="70">{{ team.content|striptags|raw }}</span>
+                        {% if team.content %}
+                            <span>{{ team.content|striptags|truncate(70) }} <a href="{{ path('team_info', {'slug': team.slug}) }}">más</a></span>
+                        {% endif %}
                     </p>
                     
                     <div class="fanned">
