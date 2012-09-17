@@ -1,20 +1,21 @@
 div.idol-home {
 
     section.top {
-        .size(309px, auto);
+        .square(auto);
+        background-color: @black;
 
         .carousel {
             .size(100%, 70%);
             .pull-left();
             .item > img {
-                .square(100%);
+                .size(auto, 100%);
             }
         }
 
         .info-detail-carousel {
             background-color: @black;
             .pull-left();
-            .size(100%, 30%);
+            .size(auto, 30%);
             text-overflow: ellipsis;
             color: @white;
             padding: 20px;
