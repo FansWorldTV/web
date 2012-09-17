@@ -51,7 +51,7 @@
                         </ul>
                     </dd>    
                 {% else %}
-                    {% if attribute(entity, data)  %}
+                    {% if attribute(entity, data) and data != 'content'  %}
                         <dt>{{ data|trans }}</dt>
                         <dd>{{ attribute(entity, data) }}</dd>
                     {% endif %}
