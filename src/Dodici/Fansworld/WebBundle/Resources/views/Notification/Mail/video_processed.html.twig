@@ -5,9 +5,10 @@
 {% endblock %}
     
 {% block text %}
-    <p style="margin-bottom: 15px;margin-top: 15px;">Hola {{ notification.target }},</p>
     <div style="margin-bottom: 20px;">
-        <span style="float: left;margin-right: 15px;"><img src="{{ appmedia.imageurl(notification.target.image, 'avatar') }}" style="width: 45px;height: 45px;"/></span>    
+        {% if (notification.video.image) %}
+            <span style="float: left;margin-right: 15px;"><img src="{{ appmedia.imageurl(notification.video.image, 'avatar') }}" style="width: 45px;height: 45px;"/></span>
+        {% endif %}    
         <div>
             <p style="margin-bottom: 10px;">
                 <a href="{{ url('video_show', { id: notification.video.id, slug: notification.video.slug }) }}">{{ notification.video }}</a> se terminó de procesar

@@ -68,9 +68,6 @@
                                 <p style="margin-bottom: 15px;margin-top: 15px;">Hola {{ targetUser }},</p>
                             {% endif %}
                             <div style="margin-bottom: 20px;">
-                                {% if targetUser is defined %}
-                                    <span style="float: left;margin-right: 15px;"><img src="{{ appmedia.imageurl(targetUser.image, 'avatar') }}" style="width: 45px;height: 45px;"/></span>    
-                                {% endif %}
                                 <div>
                                     {% block text %}
                                     {% endblock %}
