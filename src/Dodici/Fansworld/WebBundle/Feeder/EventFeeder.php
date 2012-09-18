@@ -72,7 +72,6 @@ class EventFeeder {
                     $xpexternal = (string)$xp->attributes()->id;
                     $event = $this->createEvent($date, $localteam, $awayteam, $xpexternal, $teamcatext);
                     if ($event) $this->em->persist($event);
-                    \Doctrine\Common\Util\Debug::dump($event);
                 }
             }
         }
