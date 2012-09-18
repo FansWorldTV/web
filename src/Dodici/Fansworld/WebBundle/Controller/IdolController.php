@@ -62,7 +62,7 @@ class IdolController extends SiteController
         $offset = ($page - 1 ) * self::LIMIT_LIST_IDOL;
         $response = array(
             'gotMore' => false,
-            'idols' => null
+            'idols' => array()
         );
 
         $idolsRepo = $this->getRepository('Idol');

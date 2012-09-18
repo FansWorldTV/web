@@ -47,16 +47,21 @@ idolHome.getIdols = function(){
         'page': idolHome.activePage
     },
     function(r){
-        for(i in r.idols){
-            var element = r.idols[i];
-            
-            templateHelper.renderTemplate('idol-list_element', element, $(".list-idols dl"), false, function(){
-                $("div.list-idols").removeClass('loading');
-            });
+        if(r.idols.length>0){
+            for(i in r.idols){
+                var element = r.idols[i];
+
+                templateHelper.renderTemplate('idol-list_element', element, $(".list-idols dl"), false, function(){
+                    $("div.list-idols").removeClass('loading');
+                });
+            }
+        }else{
+            $("div.list-idols").removeClass('loading');
         }
+        
         idolHome.addMore = r.gotMore;
         idolHome.activePage++;
-        teamship.init();
+        idolship.init();
     },
     function(r){
         console.log(r);
