@@ -1,0 +1,15 @@
+<div class="modal-video-player">
+    <div class="left">
+        {% if video.content %}
+            <p data-expandable data-slice-point="120">{{ video.content|striptags|nl2br }}</p>
+        {% endif %}
+        {% include 'DodiciFansworldWebBundle:Comment:blocks/box.html.twig' with {entity: video} %}
+    </div>
+    <div class="right">
+        {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video, editbutton: false, reportbutton: false} %}
+        <iframe class="videoframe" src="{{ flumotiontwig.videoplayerurl(video) }}"></iframe>
+        <!--{% include 'DodiciFansworldWebBundle:Tv:blocks/now-watching.html.twig' with {entity: video} %}-->
+        {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %}
+        {% include 'DodiciFansworldWebBundle:Video:blocks/grid.html.twig' with {videos: videosRelated, sectionId:'videos-related-sort',dataGridRelatedId: video.id} %}
+    </div>
+</div>

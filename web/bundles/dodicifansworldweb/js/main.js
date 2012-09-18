@@ -501,7 +501,9 @@ var site = {
 }
 
 function resizeColorbox(options) {
-    $.colorbox.resize(options);
+    if (typeof $.colorbox.resize === "function") {
+        $.colorbox.resize(options);
+    }
 }
 
 function askText(callback) {

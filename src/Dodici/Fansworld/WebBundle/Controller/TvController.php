@@ -99,6 +99,42 @@ class TvController extends SiteController {
             'sorts' => $sorts
         );
     }
+    
+    /**
+     * @Route("/modal/{id}/{slug}", name="video_show", requirements = {"id"="\d+"})
+     * @Template()
+     */
+    public function videoDetailModalAction($id, $slug) {
+        $video = $this->getRepository('Video')->find($id);
+        $user = $this->getUser();
+        $videosRelated = $this->getRepository('Video')->related($video, $user, self::LIMIT_VIDEOS);
+        $videosRecommended = $this->getRepository('Video')->recommended($user, $video, self::LIMIT_VIDEOS);
+
+        $sorts = array(
+            'id' => 'toggle-video-types',
+            'class' => 'sort-videos',
+            'list' => array(
+                array(
+                    'name' => 'Relacionados',
+                    'dataType' => 0,
+                    'class' => 'active',
+                ),
+                array(
+                    'name' => 'Más del usuario',
+                    'dataType' => 1,
+                    'class' => '',
+                )
+            )
+        );
+
+        return array(
+            'video' => $video,
+            'user' => $user,
+            'videosRelated' => $videosRelated,
+            'videosRecommended' => $videosRecommended,
+            'sorts' => $sorts
+        );
+    }
 
     /**
      * @Route("/ajax/tv/get_audience", name="teve_getaudience")
@@ -254,6 +290,25 @@ class TvController extends SiteController {
             'channels' => $videoCategories,
             'activeChannel' => $activeCategory,
         );
+    }
+    
+    /**
+     * @Route("/channel/subscribe", name="teve_channelsubscribe")
+     * @Template
+     */
+    public function channelSubscribeAction() {
+        $request = $this->getRequest();
+        $channel = $request->get('channel', false);
+        
+        $service = $this->get('Subscriptions');
+        $entity = $this->getRepository('VideoCategory')->find(1);
+        $user = $this->getUser();
+        $subscribe = $service->subscribe($entity, $user);
+//        var_dump($entity);
+        
+        return $this->jsonResponse(array(
+            'error' => !(bool)$subscribe
+        ));
     }
 
 }

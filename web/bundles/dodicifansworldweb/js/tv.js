@@ -3,12 +3,18 @@ var tv = {
     'init': function (filtersList, channelsList, targetDataList) {
         "use strict";
 
+        // lists
         $('[data-list]').list();
 
+        // modal
+        $('#montage-video-list a').modal();
+
+        // subscribe buttons
         $('.js-subscribe').click(function () {
             tv.subscribe($(this));
         });
 
+        // channels explore
         tv.explore();
     },
 
