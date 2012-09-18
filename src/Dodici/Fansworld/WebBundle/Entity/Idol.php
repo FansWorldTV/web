@@ -183,10 +183,6 @@ class Idol implements SearchableInterface, VisitableInterface
     private $videoCount;
     
     /**
-     * @ORM\OneToMany(targetEntity="Visit", mappedBy="team", cascade={"remove", "persist"}, orphanRemoval="true")
-     */
-    
-    /**
      * @ORM\OneToMany(targetEntity="Visit", mappedBy="idol", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $visits;

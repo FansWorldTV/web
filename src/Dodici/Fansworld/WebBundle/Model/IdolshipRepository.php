@@ -20,12 +20,12 @@ class IdolshipRepository extends CountBaseRepository
     public function rankedUsersScore(Idol $idol, $limit = null, $offset = null)
     {
         $query = $this->_em->createQuery('
-    	SELECT is, u
-    	FROM \Dodici\Fansworld\WebBundle\Entity\Idolship is
-    	JOIN is.author u
+    	SELECT iship, u
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Idolship iship
+    	JOIN iship.author u
     	WHERE
-    	u.enabled = true AND is.idol = :idol
-    	ORDER BY is.score DESC, u.score DESC
+    	u.enabled = true AND iship.idol = :idol
+    	ORDER BY iship.score DESC, u.score DESC
     	')
                 ->setParameter('idol', $idol->getId());
 

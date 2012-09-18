@@ -37,11 +37,17 @@ class IdolController extends SiteController
         $videosHighlighted = $this->getRepository('Video')->search(null, null, 4, null, null, true, null, null, null, 'likes');
         $topIdols = $this->getRepository('Idol')->findBy(array('active' => true), array('fanCount' => 'desc'), 3);
         $listIdols = $this->getRepository('Idol')->findBy(array('active' => true), array('fanCount' => 'desc'));
+        $categories = $this->getRepository('TeamCategory')->findBy(array(), array('title' => 'desc'));
+
+        $count = $this->getRepository('Idol')->countBy(array());
+        $gotMore = $count > self::LIMIT_LIST_IDOL ? true : false;
 
         return array(
             'videosHighlighted' => $videosHighlighted,
             'topIdols' => $topIdols,
-            'listIdols' => $listIdols
+            'listIdols' => $listIdols,
+            'categories' => $categories,
+            'gotMore' => $gotMore
         );
     }
 
@@ -52,9 +58,65 @@ class IdolController extends SiteController
     {
         $request = $this->getRequest();
         $page = $request->get('page', 1);
+        $tcId = $request->get('tc', null);
         $offset = ($page - 1 ) * self::LIMIT_LIST_IDOL;
-        $response = array();
-        
+        $response = array(
+            'gotMore' => false,
+            'idols' => null
+        );
+
+        $idolsRepo = $this->getRepository('Idol');
+        $idolsRepo instanceof Idol;
+
+        $tc = $this->getRepository('TeamCategory')->find($tcId);
+
+        if (!$tc) {
+            $idols = $idolsRepo->findBy(array(), array('fanCount' => 'desc'), self::LIMIT_LIST_IDOL, $offset);
+            $count = $idolsRepo->countBy(array());
+        } else {
+            $idols = $idolsRepo->byTeamCategory($tc, self::LIMIT_LIST_IDOL, $offset);
+            $count = $idolsRepo->countByTeamCategory($tc);
+        }
+
+        $response['gotMore'] = ($count / $page) > self::LIMIT_LIST_IDOL ? true : false;
+
+        foreach ($idols as $idol) {
+            $idolship = $this->getRepository('Idolship')->findBy(array('author' => $this->getUser()->getId(), 'idol' => $idol->getId()));
+            $rankedFans = $this->getRepository('Idolship')->rankedUsersScore($idol, 1);
+
+            $topFans = array();
+
+            foreach ($rankedFans as $iship) {
+                $topFans = array(
+                    'name' => (string) $iship->getAuthor(),
+                    'url' => $this->generateUrl('user_wall', array('username' => $iship->getAuthor()->getUsername()))
+                );
+            }
+
+            $idolUrl = $this->generateUrl('idol_wall', array('slug' => $idol->getSlug()));
+
+            if ($idol->getTeam()) {
+                $teamUrl = $this->generateUrl('team_wall', array('slug' => $idol->getTeam()->getSlug()));
+            } else {
+                $teamUrl = "";
+            }
+
+            $response['idols'][] = array(
+                'id' => $idol->getId(),
+                'name' => (string) $idol,
+                'avatar' => $this->getImageUrl($idol->getImage(), 'small'),
+                'idolUrl' => $idolUrl,
+                'teamUrl' => $teamUrl,
+                'team' => (string) $idol->getTeam(),
+                'fanCount' => $idol->getFanCount(),
+                'videoCount' => $idol->getVideoCount(),
+                'photoCount' => $idol->getPhotoCount(),
+                'isFan' => $idolship ? true : false,
+                'topFan' => isset($topFans['name']) ? $topFans['name'] : false,
+                'topFanUrl' => isset($topFans['url']) ? $topFans['url'] : false
+            );
+        }
+
         return $this->jsonResponse($response);
     }
 

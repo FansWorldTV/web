@@ -212,4 +212,25 @@ class IdolRepository extends CountBaseRepository
 
         return $query->getResult();
     }
+    
+    /**
+     * Count the Idols that have a team belonging to a $teamcategory as a current career
+     * @param TeamCategory $teamcategory
+     */
+    public function countByTeamCategory(TeamCategory $teamcategory)
+    {
+        $query = $this->_em->createQuery('
+    	SELECT COUNT(i)
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Idol i
+    	INNER JOIN i.idolcareers ic
+    	INNER JOIN ic.team t
+    	INNER JOIN t.teamcategories tc WITH tc = :teamcategory
+    	WHERE i.active = true
+    	AND ic.active = true
+    	AND ic.actual = true
+    	')
+            ->setParameter('teamcategory', $teamcategory->getId());
+        
+        return $query->getSingleScalarResult();
+    }
 }

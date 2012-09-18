@@ -5,6 +5,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/dodicifansworldweb/js/idolship.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/dodicifansworldweb/js/idols.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
@@ -48,9 +49,19 @@
                           <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu categories">
+                            {% for category in categories %}
+                                <li data-category-id="{{ category.id }}" ><a href="#">{{ category }}</a></li>
+                            {% endfor %}
                         </ul>
                     </div>
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <a href="{{ path('user_idols', {'username': app.user.username}) }}" class="pull-right"><button class="btn">Mis idolos ></button></a>
+                    {% endif %}
                 </div>
+            </div>
+            <div class="row-fluid list-idols" {% if gotMore %} data-got-more="true" {% endif %}>
+                <dl class="dl-horizontal">
+                </dl>
             </div>
         </section>
     </div>

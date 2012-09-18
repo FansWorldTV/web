@@ -109,5 +109,20 @@ class TemplateController extends SiteController
             'typename' => $type
         );
     }
+    
+    /**
+     * Get Idol Template
+     * @Route("/ajax/get/idol", name="template_idol")
+     * @Template
+     */
+    public function idolAction()
+    {
+        $request = $this->getRequest();
+        $type = $request->get('type');
+
+        return array(
+            'typename' => $type
+        );
+    }
 
 }
