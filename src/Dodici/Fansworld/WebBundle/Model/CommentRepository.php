@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Model;
 
+use Dodici\Fansworld\WebBundle\Entity\Event;
+
 use Doctrine\DBAL\Types\Type;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
 
@@ -39,7 +41,10 @@ class CommentRepository extends CountBaseRepository
     	WHERE c.'.$classname.' = :entity 
     	AND c.active = true
     	AND c.comment IS NULL
-    	AND (:lastId IS NULL OR ( c.id < :lastId ))    	
+    	AND (:lastId IS NULL OR ( c.id < :lastId ))
+    	'.
+		(($classname == 'team') ? ' AND c.event IS NULL ' : '')
+		.'
     	AND
     	(
     		(c.author = :user)
