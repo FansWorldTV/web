@@ -101,7 +101,7 @@ class TvController extends SiteController {
     }
     
     /**
-     * @Route("/modal/{id}/{slug}", name="video_show", requirements = {"id"="\d+"})
+     * @Route("/modal/{id}/{slug}", name="video_modal_show", requirements = {"id"="\d+"})
      * @Template()
      */
     public function videoDetailModalAction($id, $slug) {
