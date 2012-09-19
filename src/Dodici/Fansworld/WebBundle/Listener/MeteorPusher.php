@@ -2,6 +2,7 @@
 
 namespace Dodici\Fansworld\WebBundle\Listener;
 
+use Dodici\Fansworld\WebBundle\Entity\EventTweet;
 use Dodici\Fansworld\WebBundle\Entity\EventIncident;
 use Dodici\Fansworld\WebBundle\Entity\Comment;
 use Dodici\Fansworld\WebBundle\Entity\Friendship;
@@ -53,15 +54,14 @@ class MeteorPusher
             }
         }
         
-        /* COMMENTS */
-        if ($entity instanceof Comment) {
+        /* COMMENTS, EVENT INCIDENTS, EVENT TWEETS */
+        if ($entity instanceof Comment ||
+            $entity instanceof EventIncident ||
+            $entity instanceof EventTweet) 
+        {
             $this->container->get('meteor')->push($entity);
         }
         
-        /* EVENT INCIDENTS */
-        if ($entity instanceof EventIncident) {
-            $this->container->get('meteor')->push($entity);
-        }
     }
 
 }
