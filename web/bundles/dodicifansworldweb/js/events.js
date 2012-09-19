@@ -12,17 +12,16 @@ var events = {
 	resetFiltersButton: null,
 	resetDateButton: null,
 	dateSelected: false,
+	wallDestination: null,
 	
 	initEventHome: function(calendarDestination,eventGridDestination){
 		events.eventGridDestination = eventGridDestination;
 		events.filterLoading = $('.eventfilters-container .loading-container');
 		events.sortByDropdown = $('.eventfilters-container .order-by');
-		
 		events.sportDropdown = $('.eventfilters-container .sports');
 		events.teamcategoriesDropdown = $('.eventfilters-container .leagues');
 		events.resetFiltersButton = $('.eventfilters-container .resetfilters');
 		events.resetDateButton = $('.eventcalendar-container .resetdate');
-		
 		events.initCalendar(calendarDestination);
 		events.bindSportDropdown();
 		events.bindTeamcategoriesDropdown();
@@ -66,7 +65,6 @@ var events = {
 		events.updateOptions();
 		events.searchOptions.dateFrom = dateText;
 		events.searchOptions.dateTo   = dateText;
-			
 		events.loadEvents();
 	},
 	
@@ -183,7 +181,6 @@ var events = {
 		if(tmpDate != null){
 			tmpDate = $.datepicker.formatDate('dd/mm/yy', tmpDate);
 		}
-		
 		events.searchOptions.dateFrom = tmpDate;
 		events.searchOptions.dateTo = tmpDate;
 		events.searchOptions.sortBy = events.getSortBy();
@@ -205,14 +202,11 @@ var events = {
 	
 	resetFilters: function(){
 		events.searchOptions.sortBy = null;
-		
 		events.searchOptions.sport  = null;
 		events.sportDropdown.find('.active').removeClass('active');
-		
 		events.searchOptions.teamcategory  = null;
 		events.teamcategoriesDropdown.find('.active').removeClass('active');
 		events.teamcategoriesDropdown.find('ul.dropdown-menu').empty();
-		
 		success('filtros resetados');
 	},
 	
@@ -239,6 +233,166 @@ var events = {
 		events.resetDateButton.on('click',function(e){
 			events.resetDate();
 		});
+	},
+	
+	initDetail: function(wallDestination,eventId){
+		events.wallDestination = wallDestination;
+		events.listen(eventId);
+	},
+	
+	listen: function(eventId){
+		function handleData(response){
+	        response = JSON.parse(response);
+	        console.log(response);
+	        if(response){
+	            if(response.t == 'c'){
+	            	events.handleComment(response.id);
+	            }else if(response.t == 'et'){
+	            	events.handleEventTweet(response.id);
+	            }else if(response.t == 'ei'){
+	            	events.handleEventIncident(response.id);
+	            }
+	        }
+	    }
+	    
+	    if ((typeof Meteor != 'undefined') && (typeof notificationChannel != 'undefined')) {
+	        Meteor.registerEventCallback("process", handleData);
+	        
+	        Meteor.joinChannel('event_'+eventId);
+	        Meteor.joinChannel('wall_event_'+eventId);
+	        
+	        Meteor.connect();
+	                                       	            
+	        // Start streaming!
+	        console.log('Escuchando notifications...');
+	    }else console.log('no hay meteor');
+	},
+	
+	handleComment: function(id) {
+		var opts = {
+			commentid: id
+		};		
+		ajax.genericAction('event_getcomment', opts, function (r) {
+            if (typeof r !== "undefined") {
+            	var twitterCommentContainer = events.getTwitterCommentContainer(r.minute,r.teamid);            		
+            	templateHelper.renderTemplate("event-wall_comment", r, twitterCommentContainer, false, function () {
+                
+                });
+            }
+        }, function (msg) {
+            console.error(msg);
+        },'get');
+	    
+	},
+	
+	handleEventIncident: function(id) {
+		var opts = {
+			incidentid: id
+		};		
+		ajax.genericAction('event_getincident', opts, function (r) {
+            if (typeof r !== "undefined") {
+            	var incidentContainer = events.getIncidentContainer(r.minute);            		
+            	templateHelper.renderTemplate("event-wall_incident", r, incidentContainer, false, function () {
+                
+                });
+            }
+        }, function (msg) {
+            console.error(msg);
+        },'get');
+	},
+	
+	handleEventTweet: function(id) {
+		var opts = {
+			tweetid: id
+		};		
+		ajax.genericAction('event_gettweet', opts, function (r) {
+            if (typeof r !== "undefined") {
+            	var twitterCommentContainer = events.getTwitterCommentContainer(r.minute,r.teamid);            		
+            	templateHelper.renderTemplate("event-wall_tweet", r, twitterCommentContainer, false, function () {
+                
+                });
+            }
+        }, function (msg) {
+            console.error(msg);
+        },'get');
+	},
+	
+	getLocalVisitante: function(teamId){
+		var localId = events.wallDestination.attr('local-id');
+		var VisitanteId = events.wallDestination.attr('visitante-id');
+		var localVisitante = 'error';
+		if(teamId == localId){
+			localVisitante = 'local';
+		}else if(teamId == VisitanteId){
+			localVisitante = 'visitante';
+		}
+		return localVisitante;
+	},
+	
+	getMinuteDestination: function(minute){
+		var minuteDestination = events.wallDestination.find('.minute-container[minute='+minute+']');
+    	if(minuteDestination.size() == 0){
+    		events.wallDestination.find('.minute-container[minute]').filter(function() {
+    		    return  $(this).attr("minute") < minute;
+    		}).slice(0, 1).before("<div class='minute-container' minute='"+minute+"'>");
+    		
+    		minuteDestination = events.wallDestination.find('.minute-container[minute='+minute+']');
+    		if(minuteDestination.size() == 0){
+    			events.wallDestination.append("<div class='minute-container' minute='"+minute+"'>");
+    			minuteDestination = events.wallDestination.find('.minute-container[minute='+minute+']');
+    		}
+    	}
+    	return minuteDestination;
+	},
+	
+	getIncidentContainer: function(minute){
+		var minuteDestination = events.getMinuteDestination(minute);
+    	var incidentContainer = minuteDestination.find('fullwidth-container');
+    	if(incidentContainer.size() == 0){
+    		minuteDestination.append($("<div class='fullwidth-container'>") );
+    		incidentContainer = minuteDestination.find('.fullwidth-container');
+    	}
+    	return incidentContainer;
+	},
+	
+	getTwitterCommentContainer: function(minute,teamId){
+		var minuteDestination = events.getMinuteDestination(minute);
+		var tweetCommentContainer = null;
+		var localVisitante = events.getLocalVisitante(teamId);
+		if(localVisitante != 'error' ){
+			tweetCommentContainer = minuteDestination.find('.'+localVisitante+'-container');
+	    	if(tweetCommentContainer.size() == 0){
+	    		minuteDestination.append($("<div class='"+localVisitante+"-container'>") );
+	    		tweetCommentContainer = minuteDestination.find('.'+localVisitante+'-container');
+	    	}
+		}
+		return tweetCommentContainer;
+	},
+	
+	loadWall: function(eventId){
+		var opts = {
+				eventid: eventId
+			};		
+			ajax.genericAction('event_getwall', opts, function (r) {
+	            if (typeof r !== "undefined") {
+	            	$.each(r,function(index,element){
+	            		if(element.t == 'c'){
+	    	            	events.handleComment(element.id);
+	    	            }else if(element.t == 'et'){
+	    	            	events.handleEventTweet(element.id);
+	    	            }else if(element.t == 'ei'){
+	    	            	events.handleEventIncident(element.id);
+	    	            }
+	            	} );
+	            }
+	        }, function (msg) {
+	            console.error(msg);
+	        },'get');
 	}
+	
+	
+	
+	
+	
 	
 };

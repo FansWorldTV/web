@@ -12,7 +12,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dodici\Fansworld\WebBundle\Controller\SiteController;
 use Symfony\Component\HttpFoundation\Request;
+use Dodici\Fansworld\WebBundle\Entity\Comment;
 use Dodici\Fansworld\WebBundle\Entity\Eventship;
+use Dodici\Fansworld\WebBundle\Entity\EventIncident;
+use Dodici\Fansworld\WebBundle\Entity\EventTweet;
 
 /**
  * Event controller.
@@ -35,6 +38,8 @@ class EventController extends SiteController
 
         return array('user' => $user, 'event' => $event);
     }
+    
+    
     
     /**
      * @Route("/ajax/get", name= "event_get")
@@ -210,5 +215,152 @@ class EventController extends SiteController
 
         return $this->jsonResponse($response);
     }
-
+    
+    
+    /**
+     * @Route("/getincident", name= "event_getincident")
+     * @Template
+     */
+    public function getIncidentAction()
+    {
+        $request = $this->getRequest();
+        $incidentid = $request->get('incidentid', false);
+        
+        //TODO: todo
+        $incident = $this->getRepository('EventIncident')->findOneBy(array('id' => $incidentid));
+        $response = array(
+            'team' => $incident->getTeam()->getId(),
+            'minute' => $this->get('appstate')->getMinuteFromTimestamp($incident->getCreatedAt()),
+            'texto1' => "GOL!",
+            'texto2' => $incident->getName(),
+            'texto3' => $incident->getMinute().'\' '.$incident->getHalf(),
+        );
+        return $this->jsonResponse($response);
+    }
+    
+    /**
+     * @Route("/gettweet", name= "event_gettweet")
+     * @Template
+     */
+    public function getTweetAction()
+    {
+        $request = $this->getRequest();
+        $tweetid = $request->get('tweetid', false);
+    
+        //TODO: todo
+        $tweet = $this->getRepository('EventTweet')->findOneBy(array('id' => $tweetid));
+        $response = array(
+            'teamid' => $tweet->getTeam()->getId(),
+            'teamname' => $tweet->getTeam()->getTwitter(),
+            'minute' => $this->get('appstate')->getMinuteFromTimestamp($tweet->getCreatedAt()),
+            'content' =>  $tweet->getContent(),
+        );
+        return $this->jsonResponse($response);
+    }
+    
+    /**
+     * @Route("/getcomment", name= "event_getcomment")
+     * @Template
+     */
+    public function getCommentAction()
+    {
+        $request = $this->getRequest();
+        $commentId = $request->get('commentid', false);
+    
+        //TODO: todo
+        $comment = $this->getRepository('Comment')->findOneBy(array('id' => $commentId));
+        $response = array(
+            'teamid' => $comment->getTeam()->getId(),
+            'avatar' => $this->getImageUrl($comment->getAuthor()->getImage()),
+            'minute' => $this->get('appstate')->getMinuteFromTimestamp($comment->getCreatedAt()),
+            'content' =>  $comment->getContent(),
+        );
+        return $this->jsonResponse($response);
+    }
+    
+    
+    /*
+      borrar cuando no se necesiten mas
+      
+    */
+    
+    
+    /**
+     * @Route("/addincident/{eventid}/{teamid}", name= "event_addincident")
+     * @Template
+     */
+    public function addIncidentAction($eventid,$teamid)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        //TODO: todo
+        $event = $this->getRepository('Event')->findOneBy(array('id' => $eventid));
+        $team = $this->getRepository('Team')->findOneBy(array('id' => $teamid));
+        $user = $this->getUser();
+        $this->securityCheck($event);
+    
+        $incident = new EventIncident();
+        $incident->setExternal('sdfsdfsdf');
+        $incident->setType(1);
+        $incident->setTeam($team);
+        $incident->setPlayername('negro drogba');
+        $incident->setMinute('5');
+        $incident->setHalf('pt');
+    
+        $event->addEventIncident($incident);
+    
+        $em->persist($event);
+        $em->flush();
+        return $this->jsonResponse(array());
+    }
+    
+    /**
+     * @Route("/addtwincident/{eventid}/{teamid}", name= "event_addtwincident")
+     * @Template
+     */
+    public function addTwIncidentAction($eventid,$teamid)
+    {
+       // new EventTweet(), setevent, setteam, setcontent. external es el id del tweet
+        
+        $em = $this->getDoctrine()->getEntityManager();
+        //TODO: todo
+        $event = $this->getRepository('Event')->findOneBy(array('id' => $eventid));
+        $team = $this->getRepository('Team')->findOneBy(array('id' => $teamid));
+        $et = new EventTweet();
+        $et->setTeam($team);
+        $et->setEvent($event);
+        //$et->setCreatedAt($date);
+        $et->setExternal('1232132131');
+        $et->setContent('bla bla bla bla balblabla bla balb alab');
+        $em->persist($et);
+        $em->flush();
+        
+        return $this->jsonResponse(array());
+        
+    }
+    
+    /**
+     * @Route("/addcomment/{eventid}/{teamid}", name= "event_addcomment")
+     * @Template
+     */
+    public function addCommentAction($eventid,$teamid)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        //TODO: todo
+        $event = $this->getRepository('Event')->findOneBy(array('id' => $eventid));
+        $team = $this->getRepository('Team')->findOneBy(array('id' => $teamid));
+        
+        $user = $this->getUser();
+        
+    
+        $comment = new Comment();
+        $comment->setTeam($team);
+        $comment->setEvent($event);
+        $comment->setAuthor($user);
+        $comment->setContent('negro drogba meta meta');
+        
+        $event->addComments($comment);
+        $em->persist($event);
+        $em->flush();
+        return $this->jsonResponse(array());
+    }
 }

@@ -1,0 +1,19 @@
+{% raw %}
+    <div class="circle {{if circleClass}} {{>circleClass}} {{/if}}">
+        {{if texto}}
+            {{>texto}}
+        {{/if}}
+        
+        {{if texto1}}
+            <div class="texto1">{{>texto1}}</div>
+        {{/if}}
+        
+        {{if texto2}}
+            <div class="texto2">{{>texto2}}</div>
+        {{/if}}
+        
+        {{if texto3}}
+            <div class="texto3">{{>texto3}}</div>
+        {{/if}}
+    </div>
+{% endraw %}

@@ -298,4 +298,21 @@ class EventIncident
     {
         return $this->idol;
     }
+    
+    /**
+     * Get name (idol if exist else playername)
+     *
+     * @return string
+     */
+    public function getname()
+    {
+        
+        if($this->idol)
+        {
+            return $this->idol->getSlug();
+                
+        }else return $this->playername;
+        
+        return $this->half;
+    }
 }

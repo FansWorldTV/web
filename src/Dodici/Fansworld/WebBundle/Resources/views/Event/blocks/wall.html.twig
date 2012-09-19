@@ -1,75 +1,9 @@
-<section class='eventwall-container'>
+<section class='eventwall-container' event-wall='event-wall' local-id='{{ event.hasTeams[0].team.id }}' visitante-id='{{ event.hasTeams[1].team.id }}'>
     
-    
-    <div class='minute-container' minute='47'>
-        <div class="visitante-container">
-            {% include "DodiciFansworldWebBundle:Event:blocks/wall_tweet.html.twig" with {second: 20, image: user.image, content: 'Goooooooooooooooooolll!!'  } %}
-        </div>
-    </div>
-    
-    <div class='minute-container' minute='46'>
-        <div class="visitante-container">
-            
-            {% include "DodiciFansworldWebBundle:Event:blocks/wall_comment.html.twig" with {second: 45, image: user.image, content: 'Goooooooooooooooooool'  } %}
-        
-            {% include "DodiciFansworldWebBundle:Event:blocks/wall_tweet.html.twig" with {second: 20, username: 'fansworld.tv', content: 'Este tiempo es nuestro'  } %}
-            
-            
-        </div>
-        <div class='fullwidth-container'>
-            {% include "DodiciFansworldWebBundle:Event:blocks/wall_fullwidth.html.twig" with {type: 'gol', texto1: "GOL!",texto2: 'Lucas Barrios',texto3: "0' 15'' ST", circleClass:  'circle-visitante'  } %}
-        </div>
-    </div>
-    
-    <div class='minute-container' minute='46'>
-        <div class="visitante-container">
-            {% include "DodiciFansworldWebBundle:Event:blocks/wall_comment.html.twig" with {second: 45, image: user.image, content: "En FansWorld TV vas a poder disfrutar de los mejores contenidos sobre tus ídolos y clubes! <a href='pic.twitter.com/2of9tRF6'>pic.twitter.com/2of9tRF6</a>"  } %}
-        </div>
-        <div class='fullwidth-container'>
-        {% include "DodiciFansworldWebBundle:Event:blocks/wall_fullwidth.html.twig" with {type: 'evento', texto1: "ST"  } %}
-           
-        </div>
-    </div>
-    
-    
-    <div class='minute-container' minute='12'>
-        <div class="local-container">
-            {% include "DodiciFansworldWebBundle:Event:blocks/wall_comment.html.twig" with {second: 15, image: user.image, content: 'In your face!!'  } %}
-            
-            {% include "DodiciFansworldWebBundle:Event:blocks/wall_comment.html.twig" with {second: 08, image: user.image, content: 'LTA!!'  } %}
-        </div>
-    </div>
-
-
-    <div class='minute-container' minute='8'>
-        <div class="visitante-container">
-            {% include "DodiciFansworldWebBundle:Event:blocks/wall_tweet.html.twig" with {second: 45, username: 'fansworld.tv', content: "En FansWorld TV vas a poder disfrutar de los mejores contenidos sobre tus ídolos y clubes! <a href='pic.twitter.com/2of9tRF6'>pic.twitter.com/2of9tRF6</a>"  } %}
-            
-        </div>
-        <div class='fullwidth-container'>
-            {% include "DodiciFansworldWebBundle:Event:blocks/wall_fullwidth.html.twig" with {type: 'gol', texto1: "GOL!",texto2: 'Martin Heidegger',texto3: "7' 23'' PT", circleClass:  'circle-local'  } %}
-        </div>
-    </div>
-    
-    <div class='minute-container' minute='2'>
-        <div class="visitante-container">
-            {% include "DodiciFansworldWebBundle:Event:blocks/wall_comment.html.twig" with {second: 15, image: user.image, content: 'Ya nos estan inclinando la cancha, dejen de robar'  } %}
-            
-            {% include "DodiciFansworldWebBundle:Event:blocks/wall_comment.html.twig" with {second: 08, image: user.image, content: 'Vamos magic'  } %}
-        </div>
-    </div>
-    
-    <div class='minute-container' minute='0'>
-        <div class='local-container'>
-            {% include "DodiciFansworldWebBundle:Event:blocks/wall_comment.html.twig" with {second: 22, image: user.image, content: 'Vamos a ganar'  } %}    
-        
-            {% include "DodiciFansworldWebBundle:Event:blocks/wall_comment.html.twig" with {second: 15, image: user.image, content: 'Pongan huevoooo'  } %}
-        </div>
-        <div class="visitante-container">
-            {% include "DodiciFansworldWebBundle:Event:blocks/wall_comment.html.twig" with {second: 23, image: user.image, content: 'Hoy no podemos perder'  } %}
-        </div>
-        <div class='fullwidth-container'>
-            {% include "DodiciFansworldWebBundle:Event:blocks/wall_fullwidth.html.twig" with {type: 'evento', texto1: "PT"  } %}
-        </div>
-    </div>
 </section>
+
+<script>
+    $(document).ready(function(){
+        events.initDetail($('[event-wall]'),{{ event.id }});
+    });
+</script>

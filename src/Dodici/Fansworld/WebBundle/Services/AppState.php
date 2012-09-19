@@ -390,5 +390,16 @@ class AppState
         
         return $text;
     }
+    
+    public function getMinuteFromTimestamp($timestamp){
+        $minute = 0;
+        if ( \get_class($timestamp) == 'DateTime' ){
+            $timestamp = $timestamp->getTimestamp(); 
+        }
+        $minute = \floor($timestamp/60);
+        
+        
+        return $minute;
+    }
 
 }

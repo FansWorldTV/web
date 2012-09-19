@@ -1,0 +1,31 @@
+{% if type is not defined %}
+    {% set type = 'gol' %}
+{% endif %}
+
+
+{% if type == 'gol' %}
+    {% if texto1 is not defined %}
+        {% set texto1 = 'Gol!' %}
+    {% endif %}
+    
+    {% if texto2 is not defined %}
+        {% set texto2 = '' %}
+    {% endif %}
+    
+    {% if circleClass is not defined %}
+        {% set circleClass = '' %}
+    {% endif %}
+    
+    <div class="circle {{ circleClass }}">
+        <div class="texto1">{{ texto1 }}</div>
+        <div class="texto2">{{ texto2 }}</div>
+        <div class="texto3">{{ texto3 }}</div>
+    </div>
+{% elseif type == 'evento' %}
+    {% if texto1 is not defined %}
+        {% set texto1 = '' %}
+    {% endif %}
+    <div class="circle circle-small">
+        {{ texto1 }}
+    </div>
+{% endif %}
