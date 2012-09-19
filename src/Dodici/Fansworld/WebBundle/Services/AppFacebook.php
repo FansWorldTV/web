@@ -22,8 +22,9 @@ class AppFacebook
     protected $translator;
     protected $appmedia;
     protected $scope;
+    protected $feedenabled;
 
-    function __construct(SecurityContext $security_context, EntityManager $em, $facebook, $appstate, $router, $translator, $appmedia, $scope=array())
+    function __construct(SecurityContext $security_context, EntityManager $em, $facebook, $appstate, $router, $translator, $appmedia, $scope=array(), $feedenabled)
     {
         $this->security_context = $security_context;
         $this->request = Request::createFromGlobals();
@@ -36,6 +37,7 @@ class AppFacebook
         $this->appmedia = $appmedia;
         $this->appmedia instanceof AppMedia;
         $this->scope = $scope;
+        $this->feedenabled = $feedenabled;
     }
 
     /**
@@ -74,6 +76,8 @@ class AppFacebook
 
     public function upload($entity)
     {
+        if (!$this->feedenabled) return false;
+        
         if (!property_exists($entity, 'author'))
             throw new \Exception('La entidad no es compatible');
         $user = $entity->getAuthor();
@@ -93,12 +97,15 @@ class AppFacebook
 
     public function verb($verb, $params, $user)
     {
+        if (!$this->feedenabled) return false;
         //return $this->api('/{uid}/fansworld:'.$verb, $user, 'POST', $params);
         return $this->api('/{uid}/' . $verb, $user, 'POST', $params);
     }
 
     public function entityShare($entity, $message)
     {
+        if (!$this->feedenabled) return false;
+        
         $type = $this->appstate->getType($entity);
         $url = $this->router->generate($type . '_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()), true);
         $picture = $this->appmedia->getImageUrl($entity->getImage(), 'medium');

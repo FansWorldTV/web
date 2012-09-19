@@ -13,8 +13,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dodici\Fansworld\WebBundle\Controller\SiteController;
 use Dodici\Fansworld\WebBundle\Entity\Share;
 use Symfony\Component\HttpFoundation\Request;
-use Dodici\Fansworld\WebBundle\Extensions\AppFacebook;
-use Dodici\Fansworld\WebBundle\Extensions\AppTwitter;
+use Dodici\Fansworld\WebBundle\Services\AppFacebook;
+use Dodici\Fansworld\WebBundle\Services\AppTwitter;
 use Dodici\Fansworld\WebBundle\Entity\Comment;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
 
@@ -72,7 +72,7 @@ class ShareController extends SiteController
 
                 try {
                     $facebook->entityShare($thingToShare, $message);
-                } catch (Exception $exc) {
+                } catch (\Exception $exc) {
                     $response['error'] = true;
                     $response['msg'] = $exc->getMessage();
                 }
@@ -84,7 +84,7 @@ class ShareController extends SiteController
 
                 try {
                     $twitter->entityShare($thingToShare, $message);
-                } catch (Exception $exc) {
+                } catch (\Exception $exc) {
                     $response['error'] = true;
                     $response['msg'] = $exc->getMessage();
                 }
@@ -100,7 +100,7 @@ class ShareController extends SiteController
                 
                 try {
                     $sharer->share($thingToShare, $entities, $message, $this->getUser());
-                } catch (Exception $exc) {
+                } catch (\Exception $exc) {
                     $response['error'] = true;
                     $response['msg'] = $exc->getMessage();
                 }

@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Dodici\Fansworld\WebBundle\Controller\SiteController;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
-use Dodici\Fansworld\WebBundle\Extensions\Search;
+use Dodici\Fansworld\WebBundle\Services\Search;
 use Symfony\Component\HttpFoundation\Request;
 use Application\Sonata\UserBundle\Entity\User;
 

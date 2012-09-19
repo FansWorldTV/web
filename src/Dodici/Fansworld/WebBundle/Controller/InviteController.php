@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Sonata\UserBundle\Entity\User;
-use Dodici\Fansworld\WebBundle\Extensions\ContactImporter;
+use Dodici\Fansworld\WebBundle\Services\ContactImporter;
 
 /**
  * @Route("/inviter") 

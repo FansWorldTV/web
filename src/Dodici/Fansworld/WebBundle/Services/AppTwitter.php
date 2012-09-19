@@ -20,8 +20,9 @@ class AppTwitter
     protected $appstate;
     protected $router;
     protected $translator;
+    protected $feedenabled;
 
-    function __construct(SecurityContext $security_context, EntityManager $em, $twitter, $appstate, $router, $translator)
+    function __construct(SecurityContext $security_context, EntityManager $em, $twitter, $appstate, $router, $translator, $feedenabled)
     {
         $this->security_context = $security_context;
         $this->request = Request::createFromGlobals();
@@ -31,6 +32,7 @@ class AppTwitter
         $this->appstate = $appstate;
         $this->router = $router;
         $this->translator = $translator;
+        $this->feedenabled = $feedenabled;
     }
 
     /**
@@ -79,6 +81,8 @@ class AppTwitter
 
     public function upload($entity)
     {
+        if (!$this->feedenabled) return false;
+        
         if (!property_exists($entity, 'author'))
             throw new \Exception('La entidad no es compatible');
         $user = $entity->getAuthor();
@@ -104,6 +108,8 @@ class AppTwitter
 
     public function entityShare($entity, $message)
     {
+        if (!$this->feedenabled) return false;
+        
         $status = 'Entidad: ' . $entity->getId() . "; " . $message;
         return $this->api('statuses/update', null, 'POST', array(
                     'status' => $status
