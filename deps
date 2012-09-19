@@ -159,3 +159,7 @@
 [ExposeTranslationBundle]
     git=http://github.com/willdurand/BazingaExposeTranslationBundle.git
     target=/bundles/Bazinga/ExposeTranslationBundle
+    
+[JMSDebuggingBundle]
+    git=git://github.com/schmittjoh/JMSDebuggingBundle.git
+    target=/bundles/JMS/DebuggingBundle
