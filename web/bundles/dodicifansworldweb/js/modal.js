@@ -26,14 +26,16 @@
             $content;
 
         function load() {
+            $overlay.addClass('loading');
             $.ajax({
                 'url': settings.href,
                 'dataType': 'html',
                 'error': function (a, b, c) {
                     console.error(a, b, c);
+                    $overlay.removeClass('loading');
                 },
                 'success': function (response) {
-                    console.log($content, response);
+                    $overlay.removeClass('loading');
                     $content.html(response);
                     settings.onload();
                 }
