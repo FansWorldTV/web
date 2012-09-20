@@ -9,7 +9,7 @@
             {% set tag_url = '#pendiente' %}
         {% endif %}
         <li>
-            <a href='{{ tag_url }}'>
+            <a href='{{ path('teve_taggedvideos', {'term': tag.title}) }}'>
                 {{ tag.title }}
             </a>
         </li>

@@ -20,7 +20,8 @@ use Dodici\Fansworld\WebBundle\Services\VideoAudienceManager;
  * Tv controller.
  * @Route("/tv")
  */
-class TvController extends SiteController {
+class TvController extends SiteController
+{
 
     const LIMIT_VIDEOS = 6;
     const LIMIT_SEARCH_VIDEOS = 10;
@@ -29,7 +30,8 @@ class TvController extends SiteController {
      * @Route("", name="teve_home")
      * @Template
      */
-    public function homeTabAction() {
+    public function homeTabAction()
+    {
         $user = $this->getUser();
 
         $videoRepo = $this->getRepository('Video');
@@ -68,7 +70,8 @@ class TvController extends SiteController {
      * @Route("/{id}/{slug}", name="video_show", requirements = {"id"="\d+"})
      * @Template()
      */
-    public function videoDetailAction($id, $slug) {
+    public function videoDetailAction($id, $slug)
+    {
         $video = $this->getRepository('Video')->find($id);
         $user = $this->getUser();
         $videosRelated = $this->getRepository('Video')->related($video, $user, self::LIMIT_VIDEOS);
@@ -84,7 +87,7 @@ class TvController extends SiteController {
                     'class' => 'active',
                 ),
                 array(
-                    'name' => 'Más del usuario',
+                    'name' => $video->getAuthor() ? 'Más de ' . (string) $video->getAuthor() : 'Más de Fansword',
                     'dataType' => 1,
                     'class' => '',
                 )
@@ -99,12 +102,13 @@ class TvController extends SiteController {
             'sorts' => $sorts
         );
     }
-    
+
     /**
      * @Route("/modal/{id}/{slug}", name="video_modal_show", requirements = {"id"="\d+"})
      * @Template()
      */
-    public function videoDetailModalAction($id, $slug) {
+    public function videoDetailModalAction($id, $slug)
+    {
         $video = $this->getRepository('Video')->find($id);
         $user = $this->getUser();
         $videosRelated = $this->getRepository('Video')->related($video, $user, self::LIMIT_VIDEOS);
@@ -139,7 +143,8 @@ class TvController extends SiteController {
     /**
      * @Route("/ajax/tv/get_audience", name="teve_getaudience")
      */
-    public function getVideoAudience() {
+    public function getVideoAudience()
+    {
         $manager = $this->get('video.audience');
 
         $request = $this->getRequest();
@@ -166,23 +171,25 @@ class TvController extends SiteController {
     /**
      * @Route("/ajax/tv/keepalive", name="teve_keepalive")
      */
-    public function keepAlive() {
+    public function keepAlive()
+    {
         $manager = $this->get('video.audience');
-        
+
         $request = $this->getRequest();
         $videoId = $request->get('video', false);
         $video = $this->getRepository('Video')->find($videoId);
         $user = $this->getUser();
-        
+
         $alive = $manager->keepalive($video, $user);
-        
+
         return $this->jsonResponse($alive);
     }
 
     /**
      * @Route("/ajax/sort/detail", name="teve_ajaxsortdetail")
      */
-    public function videoDetailSort() {
+    public function videoDetailSort()
+    {
         $request = $this->getRequest();
         $videoId = $request->get('video', false);
         $sortType = $request->get('sort', 0);
@@ -192,12 +199,14 @@ class TvController extends SiteController {
 
         $response = array('videos' => array());
 
-        switch ($sortType) {
-            case 0:
-                $videos = $this->getRepository('Video')->related($videoRelated, $viewer, self::LIMIT_VIDEOS);
-                break;
-            case 1:
-                $videos = $this->getRepository('Video')->moreFromUser($videoRelated->getAuthor(), $videoRelated, $viewer, self::LIMIT_VIDEOS);
+        if ($videoRelated) {
+            switch ($sortType) {
+                case 0:
+                    $videos = $this->getRepository('Video')->related($videoRelated, $viewer, self::LIMIT_VIDEOS);
+                    break;
+                case 1:
+                    $videos = $this->getRepository('Video')->moreFromUser($videoRelated->getAuthor(), $videoRelated, $viewer, self::LIMIT_VIDEOS);
+            }
         }
 
         foreach ($videos as $video) {
@@ -218,7 +227,8 @@ class TvController extends SiteController {
      * @Route("/tag/{term}", name="teve_taggedvideos")
      * @Template
      */
-    public function taggedVideosAction($term) {
+    public function taggedVideosAction($term)
+    {
         $user = $this->getUser();
         $videoRepo = $this->getRepository('Video');
 
@@ -235,7 +245,8 @@ class TvController extends SiteController {
      * @Route("/team/{term}", name="teve_teamvideos")
      * @Template
      */
-    public function teamVideosAction($term) {
+    public function teamVideosAction($term)
+    {
         $user = $this->getUser();
         $videoRepo = $this->getRepository('Video');
         $team = $this->getRepository('Team')->findOneBy(array('slug' => $term, 'active' => true));
@@ -253,7 +264,8 @@ class TvController extends SiteController {
      * @Route("/idol/{term}", name="teve_idolvideos")
      * @Template
      */
-    public function idolVideosAction($term) {
+    public function idolVideosAction($term)
+    {
         $user = $this->getUser();
         $videoRepo = $this->getRepository('Video');
         $idol = $this->getRepository('Idol')->findOneBy(array('slug' => $term, 'active' => true));
@@ -271,7 +283,8 @@ class TvController extends SiteController {
      * @Route("/explore/{slug}", name="teve_explorechannel")
      * @Template
      */
-    public function exploreChannelAction($slug) {
+    public function exploreChannelAction($slug)
+    {
         $user = $this->getUser();
         $videoRepo = $this->getRepository('Video');
         $activeCategory = $this->getRepository('VideoCategory')->findOneBySlug(array($slug));
@@ -291,24 +304,25 @@ class TvController extends SiteController {
             'activeChannel' => $activeCategory,
         );
     }
-    
+
     /**
      * @Route("/channel/subscribe", name="teve_channelsubscribe")
      * @Template
      */
-    public function channelSubscribeAction() {
+    public function channelSubscribeAction()
+    {
         $request = $this->getRequest();
         $channel = $request->get('channel', false);
-        
+
         $service = $this->get('Subscriptions');
         $entity = $this->getRepository('VideoCategory')->find(1);
         $user = $this->getUser();
         $subscribe = $service->subscribe($entity, $user);
 //        var_dump($entity);
-        
+
         return $this->jsonResponse(array(
-            'error' => !(bool)$subscribe
-        ));
+                    'error' => !(bool) $subscribe
+                ));
     }
 
 }

@@ -13,6 +13,14 @@ var tv = {
         $('.js-subscribe').click(function () {
             tv.subscribe($(this));
         });
+        
+        // top mosaic
+        /*site.startMosaic($(".content-container.montage .list-mosaic"), {
+            minw: 100,
+            margin: 0,
+            liquid: true,
+            minsize: true
+        });*/
 
         // channels explore
         tv.explore();
