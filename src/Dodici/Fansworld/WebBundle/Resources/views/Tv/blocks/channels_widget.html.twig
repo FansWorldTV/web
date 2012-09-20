@@ -20,8 +20,8 @@
                     sin imagen
                 {% endif %}
             </div>
-            <div class="span8 content-container montage">
-                {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with{videos: videosDestacadosFW, thumbnailSize: 'medium', listFilters: "#filter-channels", listChannels: true} %}
+            <div class="span8 content-container">
+                {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with{videos: null, thumbnailSize: 'medium', listFilters: "#filter-channels", listChannels: true} %}
             </div>
         </div>
         {% for channel in channels %}

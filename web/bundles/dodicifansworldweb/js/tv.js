@@ -15,12 +15,13 @@ var tv = {
         });
         
         // top mosaic
-        /*site.startMosaic($(".content-container.montage .list-mosaic"), {
+        site.startMosaic($(".content-container .list-mosaic"), {
             minw: 100,
             margin: 0,
             liquid: true,
-            minsize: true
-        });*/
+            minsize: false,
+            fillLastRow: false
+        });
 
         // channels explore
         tv.explore();
