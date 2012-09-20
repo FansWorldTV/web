@@ -25,7 +25,7 @@ class VideoRepository extends CountBaseRepository
      * @param int|null $offset
      * @param VideoCategory|null $category
      * @param boolean|null $highlighted
-     * @param User|null $author
+     * @param User|false|null $author (false = site videos)
      * @param DateTime|null $datefrom
      * @param DateTime|null $dateto
      * @param 'default'|'views'|'likes' $sortcriteria
@@ -131,8 +131,14 @@ class VideoRepository extends CountBaseRepository
     			(v.highlight = :highlighted)
     		)
     	)
-    	AND
-    	( :author IS NULL OR (v.author = :author) )
+    	'.
+    	(($author !== null) ? 
+    	(
+    	    ' AND ' .
+    	    (($author === false) ? ' v.author IS NULL ' : 
+    	    ' v.author = :author ')
+    	) : '')
+    	.'
     	AND
     	( :datefrom IS NULL OR (v.createdAt >= :datefrom) )
     	AND
@@ -166,8 +172,10 @@ class VideoRepository extends CountBaseRepository
                 ->setParameter('category', ($category instanceof VideoCategory) ? $category->getId() : $category)
                 ->setParameter('datefrom', $datefrom)
                 ->setParameter('dateto', $dateto)
-                ->setParameter('highlighted', $highlighted)
-                ->setParameter('author', ($author instanceof User) ? $author->getId() : null);
+                ->setParameter('highlighted', $highlighted);
+                
+        if ($author)
+            $query = $query->setParameter('author', ($author instanceof User) ? $author->getId() : $author);
                 
         if ($taggedentity)
             $query = $query->setParameter('taggedentity', $taggedentity->getId());
@@ -382,13 +390,14 @@ class VideoRepository extends CountBaseRepository
     
     /**
      * Get more videos authored by $author, excluding $video if provided
-     * @param User $author
+     * $author=false : site videos
+     * @param User|false $author
      * @param Video|null $video
      * @param User|null $viewer
      * @param int|null $limit
      * @param int|null $offset
      */
-    public function moreFromUser(User $author, Video $video=null, User $viewer=null, $limit=null, $offset=null)
+    public function moreFromUser($author, Video $video=null, User $viewer=null, $limit=null, $offset=null)
     {
         return $this->search(null, $viewer, $limit, $offset, null, null, $author, null, null, 'default', null, $video);
     }
