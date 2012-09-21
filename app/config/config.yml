@@ -626,7 +626,7 @@ services:
           - { name: twig.extension }
     appmedia:
       class: Dodici\Fansworld\WebBundle\Services\AppMedia
-      arguments: [@sonata.media.pool, @sonata.media.manager.media]
+      arguments: [@sonata.media.pool, @sonata.media.manager.media, %appmedia.absoluteaux%]
     twig.extension.appmedia:
       class: Dodici\Fansworld\WebBundle\Extensions\AppMediaExtension
       arguments: [@appmedia]

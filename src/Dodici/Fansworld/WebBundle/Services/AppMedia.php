@@ -10,12 +10,14 @@ class AppMedia
     protected $request;
     protected $mediapool;
     protected $manager;
+    protected $absoluteaux;
 
-    function __construct($mediapool, $manager)
+    function __construct($mediapool, $manager, $absoluteaux)
     {
         $this->mediapool = $mediapool;
         $this->manager = $manager;
         $this->request = Request::createFromGlobals();
+        $this->absoluteaux = $absoluteaux;
     }
 
     public function getImageUrl($media, $sizeFormat = 'small')
@@ -76,5 +78,16 @@ class AppMedia
         } else {
             throw new \Exception('No binary image content');
         }
+    }
+    
+    public function getAbsolute($url)
+    {
+        $host = $this->request->getHost();
+        $scheme = $this->request->getScheme();
+        
+        if ($scheme && $host) $prefix = $scheme.'://'.$host;
+        else $prefix = $this->absoluteaux;
+        
+        return $prefix.$url;
     }
 }

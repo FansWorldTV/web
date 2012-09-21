@@ -11,7 +11,7 @@ var templateHelper = {
             delay: -1,
             batch: 1,
             callback: function (templateId) {
-                var item = templateHelper.items[templateId];
+                var items = templateHelper.items[templateId];
 
                 $.ajax({
                     url: templateHelper.getPath(templateId),
@@ -24,9 +24,11 @@ var templateHelper = {
                         }
 
                         $.templates(templateId, data);
-                        if (typeof item.callback === "function") {
-                            item.callback();
-                        }
+                        $.each(items, function(i, item) {
+                            if (typeof item.callback === "function") {
+                                item.callback();
+                            }
+                        });
 
                         templateHelper.queue.next();
                     },
@@ -78,8 +80,10 @@ var templateHelper = {
         };
 
         if (typeof templateHelper.items[templateId] === "undefined") {
-            templateHelper.items[templateId] = item;
+            templateHelper.items[templateId] = [item];
             templateHelper.queue.add(templateId);
+        } else {
+            templateHelper.items[templateId].push(item);
         }
     },
 
