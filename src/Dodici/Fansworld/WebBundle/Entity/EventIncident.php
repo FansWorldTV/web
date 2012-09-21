@@ -16,6 +16,13 @@ class EventIncident
 {
     const TYPE_GOAL = 1;
     
+    public static function getTypes()
+    {
+        return array(
+                self::TYPE_GOAL => 'gol'
+        );
+    }
+    
     public static function translateType($dftype) {
         $types = array(
             'gol' => self::TYPE_GOAL

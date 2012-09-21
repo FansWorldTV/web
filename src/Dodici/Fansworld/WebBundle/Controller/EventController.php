@@ -137,9 +137,7 @@ class EventController extends SiteController
      */
     public function homeTabAction()
     {
-        //TODO: todo
         $eventRepo = $this->getRepository('Event');
-        //$events = $eventRepo->findBy(array(), array('fromtime' => 'desc'),self::LIMIT_EVENTS,1);
         $events = null;
         $eventoDestacado = $eventRepo->findOneBy(array(), array('fromtime' => 'desc'));
         
@@ -216,6 +214,84 @@ class EventController extends SiteController
         return $this->jsonResponse($response);
     }
     
+    /**
+     * @Route("/getwallelements", name= "event_getwallelements")
+     * @Template
+     */
+    public function getWallElementsAction()
+    {
+        $request = $this->getRequest();
+        $eventId = $request->get('eventid', false);
+        $event = $this->getRepository('Event')->findOneBy(array('id' => $eventId));
+        $response = array();
+        
+        $fromMinute = $request->get('fromMinute', null);
+        if($fromMinute != null && $fromMinute != 'null'){
+            $mindate = $this->get('appstate')->getDatetimeFromMinute($fromMinute);
+        }else{
+            $mindate = null;
+        }
+        
+        $toMinute = $request->get('toMinute', false);
+        if($toMinute != null && $toMinute != 'null'){
+            $maxdate = $this->get('appstate')->getDatetimeFromMinute($toMinute);
+        }else{
+            $maxdate = null;
+        }
+        
+        
+        $eventComments  = $this->getRepository('Comment')->eventWall($event,$mindate,$maxdate);
+        foreach( $eventComments as $comment ){
+            $response[] = $this->formatJson($comment);
+        }
+        
+        $eventTweets    = $this->getRepository('EventTweet')->eventWall($event,$mindate,$maxdate);
+        foreach( $eventTweets as $tweet ){
+            $response[] = $this->formatJson($tweet);
+        }
+        
+        $eventIncidents  = $this->getRepository('EventIncident')->eventWall($event,$mindate,$maxdate);
+        foreach( $eventIncidents as $incident ){
+            $response[] = $this->formatJson($incident);
+        }
+        return $this->jsonResponse($response);
+    }
+    
+    private function formatJson($entity){
+        $appState = $this->get('appstate');
+        $type = $appState->getType($entity);
+        $response = array(); 
+        
+        if($type == 'comment' ){
+            $response = array(
+                'type'   => 'c',
+                'teamid' => $entity->getTeam()->getId(),
+                'avatar' => $this->getImageUrl($entity->getAuthor()->getImage()),
+                'minute' => $this->get('appstate')->getMinuteFromTimestamp($entity->getCreatedAt()),
+                'content' =>  $entity->getContent(),
+            );
+        }else if($type == 'eventtweet'){
+            $response = array(
+                'type'   => 'et',
+                'teamid' => $entity->getTeam()->getId(),
+                'teamname' => $entity->getTeam()->getTwitter(),
+                'minute' => $this->get('appstate')->getMinuteFromTimestamp($entity->getCreatedAt()),
+                'content' =>  $entity->getContent(),
+            );
+        }else if($type == 'eventincident'){
+            $response = array(
+                'type'   => 'ei',
+                'team' => $entity->getTeam()->getId(),
+                'minute' => $appState->getMinuteFromTimestamp($entity->getCreatedAt()),
+                'texto1' => $appState->getEventIncidentTypeName($entity->getType()),
+                'texto2' => $entity->getName(),
+                'texto3' => $entity->getMinute().'\' '.$entity->getHalf(),
+            );
+        }
+        
+        return $response;
+        
+    }
     
     /**
      * @Route("/getincident", name= "event_getincident")
@@ -226,15 +302,8 @@ class EventController extends SiteController
         $request = $this->getRequest();
         $incidentid = $request->get('incidentid', false);
         
-        //TODO: todo
         $incident = $this->getRepository('EventIncident')->findOneBy(array('id' => $incidentid));
-        $response = array(
-            'team' => $incident->getTeam()->getId(),
-            'minute' => $this->get('appstate')->getMinuteFromTimestamp($incident->getCreatedAt()),
-            'texto1' => "GOL!",
-            'texto2' => $incident->getName(),
-            'texto3' => $incident->getMinute().'\' '.$incident->getHalf(),
-        );
+        $response = $this->formatJson($incident);
         return $this->jsonResponse($response);
     }
     
@@ -247,14 +316,9 @@ class EventController extends SiteController
         $request = $this->getRequest();
         $tweetid = $request->get('tweetid', false);
     
-        //TODO: todo
+
         $tweet = $this->getRepository('EventTweet')->findOneBy(array('id' => $tweetid));
-        $response = array(
-            'teamid' => $tweet->getTeam()->getId(),
-            'teamname' => $tweet->getTeam()->getTwitter(),
-            'minute' => $this->get('appstate')->getMinuteFromTimestamp($tweet->getCreatedAt()),
-            'content' =>  $tweet->getContent(),
-        );
+        $this->formatJson($tweet);
         return $this->jsonResponse($response);
     }
     
@@ -267,20 +331,15 @@ class EventController extends SiteController
         $request = $this->getRequest();
         $commentId = $request->get('commentid', false);
     
-        //TODO: todo
+
         $comment = $this->getRepository('Comment')->findOneBy(array('id' => $commentId));
-        $response = array(
-            'teamid' => $comment->getTeam()->getId(),
-            'avatar' => $this->getImageUrl($comment->getAuthor()->getImage()),
-            'minute' => $this->get('appstate')->getMinuteFromTimestamp($comment->getCreatedAt()),
-            'content' =>  $comment->getContent(),
-        );
+        $this->formatJson($comment);
         return $this->jsonResponse($response);
     }
     
     
     /*
-      borrar cuando no se necesiten mas
+      borrar cuando no se necesiten mas metodos hardcode para testear meteor
       
     */
     
@@ -292,7 +351,7 @@ class EventController extends SiteController
     public function addIncidentAction($eventid,$teamid)
     {
         $em = $this->getDoctrine()->getEntityManager();
-        //TODO: todo
+
         $event = $this->getRepository('Event')->findOneBy(array('id' => $eventid));
         $team = $this->getRepository('Team')->findOneBy(array('id' => $teamid));
         $user = $this->getUser();
@@ -322,7 +381,6 @@ class EventController extends SiteController
        // new EventTweet(), setevent, setteam, setcontent. external es el id del tweet
         
         $em = $this->getDoctrine()->getEntityManager();
-        //TODO: todo
         $event = $this->getRepository('Event')->findOneBy(array('id' => $eventid));
         $team = $this->getRepository('Team')->findOneBy(array('id' => $teamid));
         $et = new EventTweet();
@@ -345,7 +403,6 @@ class EventController extends SiteController
     public function addCommentAction($eventid,$teamid)
     {
         $em = $this->getDoctrine()->getEntityManager();
-        //TODO: todo
         $event = $this->getRepository('Event')->findOneBy(array('id' => $eventid));
         $team = $this->getRepository('Team')->findOneBy(array('id' => $teamid));
         

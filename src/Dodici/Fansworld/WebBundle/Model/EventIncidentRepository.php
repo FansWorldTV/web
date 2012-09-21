@@ -20,7 +20,7 @@ class EventIncidentRepository extends CountBaseRepository
 	{
 		$dql = '
 		SELECT ei, t
-    	FROM \Dodici\Fansworld\WebBundle\Entity\EventTweet ei
+    	FROM \Dodici\Fansworld\WebBundle\Entity\EventIncident ei
     	LEFT JOIN ei.team t
 		WHERE ei.event = :event
 		';

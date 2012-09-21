@@ -9,6 +9,7 @@ use Dodici\Fansworld\WebBundle\Entity\Photo;
 use Dodici\Fansworld\WebBundle\Entity\Comment;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
 use Dodici\Fansworld\WebBundle\Entity\Event;
+use Dodici\Fansworld\WebBundle\Entity\EventIncident;
 use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Session;
@@ -391,6 +392,12 @@ class AppState
         return $text;
     }
     
+    public function getEventIncidentTypeName($typeId)
+    {
+        $eventIncidentTypes = EventIncident::getTypes();
+        return $eventIncidentTypes[$typeId];
+    }
+    
     public function getMinuteFromTimestamp($timestamp){
         $minute = 0;
         if ( \get_class($timestamp) == 'DateTime' ){
@@ -401,5 +408,11 @@ class AppState
         
         return $minute;
     }
-
+    
+    public function getDatetimeFromMinute($minute){
+        $dateTime =  new \DateTime();
+        $timestamp = $minute * 60;
+        $dateTime->setTimestamp($timestamp);
+        return $dateTime;
+    }
 }

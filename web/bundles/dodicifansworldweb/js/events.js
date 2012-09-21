@@ -13,6 +13,7 @@ var events = {
 	resetDateButton: null,
 	dateSelected: false,
 	wallDestination: null,
+	eventId: null,
 	
 	initEventHome: function(calendarDestination,eventGridDestination){
 		events.eventGridDestination = eventGridDestination;
@@ -237,7 +238,12 @@ var events = {
 	
 	initDetail: function(wallDestination,eventId){
 		events.wallDestination = wallDestination;
+		events.eventId = eventId;
 		events.listen(eventId);
+		var toLoad	=	['event-wall_comment','event-wall_incident','event-wall_tweet'];
+	    //templateHelper.preLoadTemplates(toLoad);
+	    events.loadWallElements(eventId);
+		
 	},
 	
 	listen: function(eventId){
@@ -369,25 +375,44 @@ var events = {
 		return tweetCommentContainer;
 	},
 	
-	loadWall: function(eventId){
+	loadWallElements: function(eventId,fromMinute,toMinute){
+		if(typeof fromMinute == 'undefined'){
+			fromMinute = null;
+		}
+		
+		if(typeof toMinute == 'undefined'){
+			toMinute = null;
+		}
+		
 		var opts = {
-				eventid: eventId
-			};		
-			ajax.genericAction('event_getwall', opts, function (r) {
-	            if (typeof r !== "undefined") {
-	            	$.each(r,function(index,element){
-	            		if(element.t == 'c'){
-	    	            	events.handleComment(element.id);
-	    	            }else if(element.t == 'et'){
-	    	            	events.handleEventTweet(element.id);
-	    	            }else if(element.t == 'ei'){
-	    	            	events.handleEventIncident(element.id);
-	    	            }
-	            	} );
-	            }
-	        }, function (msg) {
-	            console.error(msg);
-	        },'get');
+			eventid: eventId,
+			fromMinute: fromMinute,
+			toMinute: toMinute
+		};		
+		ajax.genericAction('event_getwallelements', opts, function (r) {
+            if (typeof r !== "undefined") {
+            	$.each(r,function(index,element){
+            		if(element.type == 'c'){
+            			var twitterCommentContainer = events.getTwitterCommentContainer(element.minute,element.teamid);            		
+                    	templateHelper.renderTemplate("event-wall_comment", element, twitterCommentContainer, false, function () {
+                    		console.log('appendeando comment');
+                        });
+    	            }else if(element.type == 'et'){
+    	            	var twitterCommentContainer = events.getTwitterCommentContainer(element.minute,element.teamid);            		
+    	            	templateHelper.renderTemplate("event-wall_tweet", element, twitterCommentContainer, false, function () {
+    	                
+    	                });
+    	            }else if(element.type == 'ei'){
+    	            	var incidentContainer = events.getIncidentContainer(element.minute);            		
+    	            	templateHelper.renderTemplate("event-wall_incident", element, incidentContainer, false, function () {
+    	                
+    	                });
+    	            }
+            	} );
+            }
+        }, function (msg) {
+            console.error(msg);
+        },'get');
 	}
 	
 	

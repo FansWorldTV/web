@@ -50,7 +50,7 @@ var templateHelper = {
         });
     },
 
-    'preLoadTemplates': function (templates) {
+    'preLoadTemplates': function (templates,callback) {
         "use strict";
 
         if (!templateHelper.queue) {
@@ -58,7 +58,7 @@ var templateHelper = {
         }
 
         $.each(templates, function (index, value) {
-            templateHelper.getTemplate(value);
+            templateHelper.getTemplate(value,callback);
         });
     },
 
