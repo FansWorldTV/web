@@ -9,19 +9,18 @@
     </aside>
     <div class="content span10 tab-content">
         <div class="tab-pane active row-fluid" id="all">
-            <div class='span4 videoplayer-container'>
-                {% if videoDestacadoMain.image is defined %}
-                    {% if videoDestacadoMain.image is not null %}
-                        <a href="{{ path('video_show', {'id': videoDestacadoMain.id, 'slug': videoDestacadoMain.slug}) }}">
-                            {% thumbnail videoDestacadoMain.image, 'small' with {"title": videoDestacadoMain.title}%}
-                        </a>
-                    {% endif %}
-                {% else %}
-                    sin imagen
-                {% endif %}
-            </div>
+            {% if videoDestacadoMain.image is defined %}
+                <div class='span4 videoplayer-container'>
+                    <a href="{{ path('video_show', {'id': videoDestacadoMain.id, 'slug': videoDestacadoMain.slug}) }}">
+                        <i class="play-video"></i>
+                    </a>
+                    <span class="highlight-text">Destacado fansworld</span>
+                    <span class="video-title">{{ videoDestacadoMain.title|truncate(15) }}</span>
+                    {% thumbnail videoDestacadoMain.image, 'big' with {"title": videoDestacadoMain.title}%}
+                </div>
+            {% endif %}
             <div class="span8 content-container">
-                {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with{videos: null, thumbnailSize: 'medium', listFilters: "#filter-channels", listChannels: true} %}
+                {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with{videos: videosDestacadosFW, thumbnailSize: 'medium', listFilters: "#filter-channels", listChannels: true} %}
             </div>
         </div>
         {% for channel in channels %}

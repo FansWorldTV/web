@@ -109,6 +109,8 @@
         list.fetchList = function () {
             list.fetchedCount = 0;
             list.methodName = list.settings.entity + '_' + list.filter;
+            
+            console.log(list);
 
             var opts = {
                 'page': list.page,
@@ -116,8 +118,7 @@
             };
 
             if (list.settings.channels) {
-                list.methodName = list.settings.entity + '_highlighted';
-                list.methodName = 'video_ajaxcategory';
+                list.methodName = list.settings.entity + '_ajaxcategory';
             }
 
             if (list.target !== null) {

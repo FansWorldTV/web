@@ -34,9 +34,49 @@ section.videoexplorer-container{
 
 //Channel's widget styles
 section.channels-widget{
+    height: 315px;
     margin-bottom: 20px;
     #gradient > .vertical(@navbarBackgroundHighlight, @navbarBackground);
     overflow: hidden;
+
+    div.videoplayer-container {
+        position: relative;
+        i.play-video {
+            background-image: url('../images/ui/play_video.png');
+            .square(80px);
+            position: absolute;
+            left: 42%;
+            top: 32%;
+            opacity: 0.5;
+            
+            &:hover{
+                opacity: 1;
+            }
+        }
+
+        span {
+            position: absolute;
+            z-index: top;
+
+            &.highlight-text {
+                font-size: 15px;
+                color: @gray;
+                opacity: 0.7;
+                text-shadow: @black 3px 1px 7px;
+                top: 245px;
+                left: 20px;
+            }
+            &.video-title {
+                font-size: 30px;
+                color: gold;
+                text-shadow: @black 3px 1px 7px;
+                top: 276px;
+                left: 20px;
+            }
+        }
+
+    }
+
     aside.channels-list{
         
         

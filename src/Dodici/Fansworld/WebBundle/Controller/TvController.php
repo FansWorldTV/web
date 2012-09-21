@@ -37,9 +37,12 @@ class TvController extends SiteController
         $videoRepo = $this->getRepository('Video');
         $homeVideoRepo = $this->getRepository('HomeVideo');
 
-        $videosDestacadosFW = $videoRepo->search(null, null, self::LIMIT_VIDEOS, null, null, null, null, null, null);
+        $videosDestacadosFW = $videoRepo->search(null, $this->getUser(), 12, 1);
 
-        $videoDestacadoMain = $videoRepo->search(null, null, 1, null, null, null, null, null, null);
+        $videoDestacadoMain = $videoRepo->search(null, $this->getUser(), 1);
+        foreach($videoDestacadoMain as $v){
+            $videoDestacadoMain = $v;
+        }
 
         $tags = $this->get('tagger')->usedInVideos('popular');
 

@@ -17,7 +17,7 @@ var tv = {
         // top mosaic
         site.startMosaic($(".content-container .list-mosaic"), {
             minw: 100,
-            margin: 0,
+            margin: 3,
             liquid: true,
             minsize: false,
             fillLastRow: false
