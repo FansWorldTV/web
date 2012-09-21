@@ -2,7 +2,7 @@
 
 {% block action %}
 	<span class="action_user">
-		<a href="{% raw %}{{>authorWallUrl}}{% endraw %}">{% raw %}{{>authorUsername}}{% endraw %}</a> 
+		<a href="{% raw %}{{>authorWallUrl}}{% endraw %}">{% raw %}{{>authorName}}{% endraw %}</a> 
 		{% block share_action_text %}{% raw %}{{>shareActiontext}}{% endraw %}{% endblock %}
 		{#
 		{% if comment.share.author is not null and comment.author.id != comment.share.author.id %}

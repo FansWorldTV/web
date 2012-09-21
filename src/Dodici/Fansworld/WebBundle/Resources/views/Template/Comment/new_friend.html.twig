@@ -10,11 +10,11 @@
 	<span class="action_user">
 		{% block share_action_text %}
 			{% raw %}
-				<a href="{{>targetWallUrl}}">{{>targetUsername}}</a>
+				<a href="{{>targetWallUrl}}">{{>targetName}}</a>
 			{% endraw %}
 			{{ 'and'|trans }} 
 			{% raw %}
-				<a href="{{>authorWallUrl}}">{{>authorUsername}}</a>
+				<a href="{{>authorWallUrl}}">{{>authorName}}</a>
 			{% endraw %}
 			{{ 'are now friends'|trans }}
 		{% endblock %}

@@ -3,7 +3,7 @@
 
 {% block action %}
 	<span class="action_user">
-		<a href="{% raw %}{{>authorWallUrl}}{% endraw %}">{% raw %}{{>authorUsername}}{% endraw %}</a> 
+		<a href="{% raw %}{{>authorWallUrl}}{% endraw %}">{% raw %}{{>authorName}}{% endraw %}</a> 
 		{% block share_action_text %}{{ 'says'|trans }}{% endblock %}
 	</span>
 {% endblock %}

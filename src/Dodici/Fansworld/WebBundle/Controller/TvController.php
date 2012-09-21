@@ -159,7 +159,7 @@ class TvController extends SiteController
         foreach ($videoAudience as $viewer) {
             array_push($response, array(
                 'id' => $viewer->getId(),
-                'username' => $viewer->getUsername(),
+                'username' => (string) $viewer,
                 'wall' => $this->generateUrl('user_wall', array('username' => $viewer->getUsername())),
                 'image' => $this->getImageUrl($viewer->getImage(), 'micro_square')
             ));

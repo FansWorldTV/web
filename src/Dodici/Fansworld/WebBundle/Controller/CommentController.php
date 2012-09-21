@@ -159,7 +159,7 @@ class CommentController extends SiteController
 
         $author = array(
             'authorId' => $comment->getAuthor()->getId(),
-            'authorUsername' => $comment->getAuthor()->getUsername(),
+            'authorName' => (string) $comment->getAuthor(),
             'authorAvatarUrl' => $appMedia->getImageUrl($comment->getAuthor()->getImage(), 'headeravatar'),
             'authorWallUrl' => $this->generateUrl('user_wall', array('username' => $comment->getAuthor()->getUsername())),
         );
@@ -205,7 +205,7 @@ class CommentController extends SiteController
         } else {
             $targetData = array(
                 'targetId' => $target->getId(),
-                'targetUsername' => $target->getUsername(),
+                'targetName' => (string) $target,
                 'targetAvatarUrl' => $this->get('appmedia')->getImageUrl($target->getImage(), 'headeravatar'),
                 'targetWallUrl' => $this->generateUrl('user_wall', array('username' => $target->getUsername())),
             );
