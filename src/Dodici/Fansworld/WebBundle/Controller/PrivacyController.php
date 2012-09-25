@@ -2,6 +2,7 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Doctrine\ORM\EntityManager;
@@ -27,7 +28,12 @@ class PrivacyController extends SiteController
             throw new AccessDeniedException('This user does not have access to this section.');
         }
         
-        $privacyFields = array_merge(Privacy::getDefaultFieldPrivacy(),$user->getPrivacy());
+        $privacyFields = array();
+        $merge = array_merge(Privacy::getDefaultFieldPrivacy(),$user->getPrivacy());
+        $possiblekeys = Privacy::getFields();
+        foreach ($merge as $k => $v) {
+            if (in_array($k, $possiblekeys)) $privacyFields[$k] = $v;
+        }
         
         return $this->get('templating')->renderResponse(
                         'DodiciFansworldWebBundle:User:profile_edit/privacy.html.twig', array('user' => $user, 'privacyFields' => $privacyFields)
@@ -51,7 +57,7 @@ class PrivacyController extends SiteController
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($user);
             $em->flush();
-        } catch (Exception $exc) {
+        } catch (\Exception $exc) {
             $error = $exc->getMessage();
         }
         

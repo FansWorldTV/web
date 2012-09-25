@@ -57,7 +57,7 @@ class ComplaintController extends SiteController
                 $em->flush();
                 
                 $response['error'] = false;
-            } catch (Exception $exc) {
+            } catch (\Exception $exc) {
                 $response['error'] = true;
                 $response['message'] = $exc->getMessage();
             }

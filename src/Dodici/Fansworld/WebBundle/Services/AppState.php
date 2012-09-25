@@ -172,6 +172,9 @@ class AppState
         $viewer = $this->user;
         $privacies = $user->getPrivacy();
         
+        $privacyablefields = Privacy::getFields();
+        if (!in_array($fieldname, $privacyablefields)) return true;
+        
         if (isset($privacies[$fieldname])) {
             $privacy = $privacies[$fieldname];
             

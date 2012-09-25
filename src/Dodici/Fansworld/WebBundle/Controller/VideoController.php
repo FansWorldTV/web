@@ -143,8 +143,8 @@ class VideoController extends SiteController
             //$countAll = $this->getRepository('Video')->countBy(array('active' => true, 'videocategory' => $categoryId));
         } else {
         
-            $videos = $this->getRepository('Video')->search($query, $user, self::cantVideos, $offset, $categoryId);
-            $countAll = $this->getRepository('Video')->countSearch($query, $user, $categoryId);
+            $videos = $this->getRepository('Video')->search($query, $user, self::cantVideos, $offset, $category);
+            $countAll = $this->getRepository('Video')->countSearch($query, $user, $category);
             
         }
         

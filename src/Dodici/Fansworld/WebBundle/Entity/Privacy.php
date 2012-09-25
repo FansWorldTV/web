@@ -21,7 +21,7 @@ class Privacy
     public static function getFields()
     {
         return array(
-            'email', 'address', 'firstname', 'lastname', 'sex', 'birthday', 'country', 'city', 'phone', 'content', 'facebook', 'twitter'
+            'email', 'address', 'sex', 'birthday', 'country', 'city', 'phone', 'content', 'facebook', 'twitter'
         );
     }
 
@@ -34,8 +34,6 @@ class Privacy
             $default[$f] = self::ONLY_ME;
         }
 
-        $default['firstname'] = self::EVERYONE;
-        $default['lastname'] = self::EVERYONE;
         $default['sex'] = self::EVERYONE;
         $default['content'] = self::EVERYONE;
 
