@@ -5,6 +5,8 @@ namespace Dodici\Fansworld\WebBundle\Model;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
 use Application\Sonata\MediaBundle\Entity\Media;
 use Doctrine\ORM\EntityRepository;
+use Application\Sonata\UserBundle\Entity\User;
+use Dodici\Fansworld\WebBundle\Entity\Album;
 
 /**
  * PhotoRepository
@@ -16,16 +18,18 @@ class PhotoRepository extends CountBaseRepository
      * Get the next active Photo by id
      * @param int $id
      */
-    public function getNextActive($id)
+    public function getNextActive($id, User $author, Album $album)
     {
         $qb = $this->_em->createQueryBuilder();
 
         $qb
                 ->add('select', 'p')
                 ->add('from', $this->_entityName . ' p')
-                ->add('where', 'p.id > ?1 AND p.active=1')
+                ->add('where', 'p.id > ?1 AND p.active=1 AND p.author = ?2 AND p.album = ?3')
                 ->setMaxResults(1)
-                ->setParameter(1, $id);
+                ->setParameter(1, $id)
+                ->setParameter(2, $author)
+                ->setParameter(3, $album);
 
         $query = $qb->getQuery();
 
@@ -36,17 +40,19 @@ class PhotoRepository extends CountBaseRepository
      * Get the previous active Photo by id
      * @param int $id
      */
-    public function getPrevActive($id)
+    public function getPrevActive($id, User $author, Album $album)
     {
         $qb = $this->_em->createQueryBuilder();
 
         $qb
                 ->add('select', 'p')
                 ->add('from', $this->_entityName . ' p')
-                ->add('where', 'p.id < ?1 AND p.active=1')
+                ->add('where', 'p.id < ?1 AND p.active=1 AND p.author = ?2 AND p.album = ?3')
                 ->add('orderBy', 'p.id DESC')
                 ->setMaxResults(1)
-                ->setParameter(1, $id);
+                ->setParameter(1, $id)
+                ->setParameter(2, $author)
+                ->setParameter(3, $album);
 
         $query = $qb->getQuery();
 

@@ -44,8 +44,8 @@ class PhotoController extends SiteController
         $user = $this->getRepository('User')->find($photo->getAuthor()->getId());
         
 
-        $next = $repo->getNextActive($id);
-        $prev = $repo->getPrevActive($id);
+        $next = $repo->getNextActive($id, $photo->getAuthor(), $photo->getAlbum());
+        $prev = $repo->getPrevActive($id, $photo->getAuthor(), $photo->getAlbum());
 
         $this->securityCheck($photo);
 
