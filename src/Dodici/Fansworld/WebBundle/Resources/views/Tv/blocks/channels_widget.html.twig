@@ -9,16 +9,14 @@
     </aside>
     <div class="content span10 tab-content">
         <div class="tab-pane active row-fluid" id="all">
-            {% if videoDestacadoMain.image is defined %}
-                <div class='span4 videoplayer-container'>
-                    <a href="{{ path('video_show', {'id': videoDestacadoMain.id, 'slug': videoDestacadoMain.slug}) }}">
-                        <i class="play-video"></i>
-                    </a>
-                    <span class="highlight-text">Destacado fansworld</span>
-                    <span class="video-title">{{ videoDestacadoMain.title|truncate(15) }}</span>
-                    {% thumbnail videoDestacadoMain.image, 'big' with {"title": videoDestacadoMain.title}%}
-                </div>
-            {% endif %}
+            <div class='span4 videoplayer-container'>
+                <a href="{{ path('video_show', {'id': videoDestacadoMain.id, 'slug': videoDestacadoMain.slug}) }}">
+                    <i class="play-video"></i>
+                </a>
+                <span class="highlight-text">Destacado Fansworld</span>
+                <span class="video-title">{{ videoDestacadoMain.title|truncate(15) }}</span>
+                {% thumbnail videoDestacadoMain.image, 'big' with {"title": videoDestacadoMain.title}%}
+            </div>
             <div class="span8 content-container">
                 {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with{videos: videosDestacadosFW, thumbnailSize: 'medium', listFilters: "#filter-channels", listChannels: true} %}
             </div>
@@ -30,18 +28,20 @@
                 {% set channelVideo = {'title' : 'sin video', 'content': 'que hacer?', 'image': null } %}
             {% endif %}
             <div class="tab-pane row-fluid" id="{{ channel.channelName }}">
-                <div class='span4 videoplayer-container'>
-                    
-                    {% if channelVideo.image is defined %}
-                        {% if channelVideo.image is not null %}
+                
+                {% if channelVideo.image is defined %}
+                    {% if channelVideo.image is not null %}
+                        <div class='span4 videoplayer-container'>
+                            <span class="highlight-text">Destacado Fansworld</span>
+                            <span class="video-title">{{ channelVideo.title|truncate(15) }}</span>
                             <a href="{{ path('video_show', {'id': channelVideo.id, 'slug': channelVideo.slug}) }}">
-                                {% thumbnail channelVideo.image, 'big' with {"title": channelVideo.title}%}
+                                <i class="play-video"></i>
                             </a>
-                        {% endif %}
-                    {% else %}
-                        sin imagen
+                            {% thumbnail channelVideo.image, 'big' with {"title": channelVideo.title}%}
+                        </div>
                     {% endif %}
-                </div>
+                {% endif %}
+                
                 <div class="span8 content-container">
                     <div class="channel-highlight-container">
                         <div class="destacado">Destacado Fansworld</div>
