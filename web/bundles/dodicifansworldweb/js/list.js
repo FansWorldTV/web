@@ -28,12 +28,16 @@
         list.page = 1;
         list.preloader = {
             'show': function () {
-                list.preloader.hide();
-                var $preloader = $('<img src="' + list.settings.preloaderImage + '" class="list-preloader" />');
-                $(list.settings.filters).append($preloader);
+                //list.preloader.hide();
+                //var $preloader = $('<img src="' + list.settings.preloaderImage + '" class="list-preloader" />');
+                //$(list.settings.filters).append($preloader);
+                $("[data-list-montage]").find('*').hide();
+                $("[data-list-montage]").addClass('loading');
             },
             'hide': function () {
-                $('.list-preloader').remove();
+                //$('.list-preloader').remove();
+                $("[data-list-montage]").removeClass('loading');
+                $("[data-list-montage]").find('*').show();
             }
         };
 
@@ -41,7 +45,7 @@
             if (list.settings.montage) {
                 montageHelper.doMontage(list.$list, {});
             }
-
+            
             // set filters handling
             var $filterItems = $(list.settings.filters).find(list.settings.filtersElement);
             $filterItems.each(function () {
@@ -62,11 +66,13 @@
                             var relatedList = $('#montage-video-list').data('list');
                             relatedList.settings.target = list.target;
                             relatedList.$list.data('fetchLock', true);
+                            
                             relatedList.page = 1;
                             relatedList.fetchList();
                         } else {
                             list.filter =  $btn.attr('data-list-filter-type');
                         }
+                        console.log(list.$list);
                         list.$list.data('fetchLock', true);
                         $filterItems.removeClass('active');
                         $btn.addClass('active');
@@ -110,8 +116,6 @@
             list.fetchedCount = 0;
             list.methodName = list.settings.entity + '_' + list.filter;
             
-            console.log(list);
-
             var opts = {
                 'page': list.page,
                 'entity': list.settings.entity
@@ -132,6 +136,7 @@
 
             window.endlessScrollPaused = true;
             ajax.genericAction(list.methodName, opts, function (response) {
+                
                 if (!response.elements || !response.elements.length) {
                     list.preloader.hide();
                     list.settings.result.html("<h2>No se encontraron videos.</h2>");
