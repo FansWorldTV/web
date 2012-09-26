@@ -133,6 +133,7 @@
                                         <a href='{{ path('fos_user_resetting_request') }}'>Olvido su contrase&ntilde;a</a>
                                     </div>
                                     
+                                    <input type="hidden" name="_target_path" value="{{ app.request.uri }}" />
                                     <button type='submit' class='btn btn-success'>Ingresar</button>
                                     
                                 </div>

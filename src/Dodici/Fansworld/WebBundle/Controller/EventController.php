@@ -118,8 +118,22 @@ class EventController extends SiteController
         $request = $this->getRequest();
         $year    = $request->get('year', false);
         $month   = $request->get('month', false);
-        $dateFrom = new \DateTime("-1 year");
-        $dateTo = new \DateTime("+1 year");
+        
+        if (!$year || !$month) throw new \Exception('Must provide year and month');
+        if (!is_numeric($year) || !is_numeric($month)) throw new \Exception('Invalid month/year');
+        
+        $dateFrom = new \DateTime($year.'-'.sprintf('%02d',$month).'-'.'01');
+        if (!$dateFrom) throw new \Exception('Invalid month/year');
+        
+        // DateInterval adding is a bit buggy, so let's do it by hand
+        $newmonth = $month + 1;
+        $newyear = $year;
+        if ($newmonth > 12) {
+            $newyear++;
+            $newmonth -= 12;
+        }
+        $dateTo = new \DateTime($newyear.'-'.sprintf('%02d', $newmonth).'-'.'01');
+        
         $response = array();
         $events  = $this->getRepository('Event')->calendar(null,null,null,$dateFrom,$dateTo,null,null,null);
         foreach ($events as $event) {
@@ -206,7 +220,7 @@ class EventController extends SiteController
             $em->flush();
 
             $response['error'] = false;
-        } catch (Exception $exc) {
+        } catch (\Exception $exc) {
             $response['error'] = true;
             $response['msg'] = $exc->getMessage();
         }
