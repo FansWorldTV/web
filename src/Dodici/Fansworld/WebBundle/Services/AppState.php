@@ -116,7 +116,7 @@ class AppState
                     if ($user == $entity->getAuthor())
                         return false;
                     $frep = $this->getRepository('DodiciFansworldWebBundle:Friendship');
-                    if (!$frep->UsersAreFriends($user, $entity->getAuthor()))
+                    if (!$frep->usersAreFriends($user, $entity->getAuthor()))
                         return false;
                 }
             }
@@ -246,8 +246,8 @@ class AppState
                 return true;
 
             $frep = $this->getRepository('DodiciFansworldWebBundle:Friendship');
-            if (!$frep->UsersAreFriends($user, $entity))
-                return false;
+            if ($frep->usersAreFriends($user, $entity))
+                return true;
         } else {
             if ($entity instanceof Comment) {
                 if ($entity->getComment() !== null)
@@ -268,7 +268,7 @@ class AppState
         if ($user == $target)
             return false;
         $frep = $this->getRepository('DodiciFansworldWebBundle:Friendship');
-        if ($frep->UsersAreFriends($user, $target))
+        if ($frep->betweenUsers($user, $target))
             return false;
 
         return true;
@@ -283,7 +283,7 @@ class AppState
         if ($user == $target)
             return false;
         $frep = $this->getRepository('DodiciFansworldWebBundle:Friendship');
-        return $frep->BetweenUsers($user, $target);
+        return $frep->betweenUsers($user, $target);
     }
 
     public function idolshipWith(Idol $target)

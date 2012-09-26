@@ -250,7 +250,7 @@ class UserController extends SiteController
 
         $user = $this->getUser();
         if ($user instanceof User) {
-            $countTotal = $friendRepo->CountPending($user);
+            $countTotal = $friendRepo->countPending($user);
 
             $response = array('number' => $countTotal);
         }
@@ -320,8 +320,8 @@ class UserController extends SiteController
         $user = $this->getUser();
         if ($user instanceof User) {
             $response = array();
-            $pending = $friendRepo->Pending($user, $limit, $offset);
-            $countTotal = $friendRepo->CountPending($user);
+            $pending = $friendRepo->pending($user, $limit, $offset);
+            $countTotal = $friendRepo->countPending($user);
 
             $response['total'] = $countTotal;
 
@@ -442,7 +442,7 @@ class UserController extends SiteController
 
         $friendsRequest = false;
         if ($user instanceof User) {
-            $pending = $this->getRepository('Friendship')->Pending($user);
+            $pending = $this->getRepository('Friendship')->pending($user);
             foreach ($pending as $element) {
                 $media = $element->getAuthor()->getImage();
                 $friendsRequest[] = array(

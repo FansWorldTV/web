@@ -60,9 +60,8 @@ class CommentController extends SiteController
             if (!$content)
                 throw new \Exception('You must enter a message');
 
-            $repo = $this->getRepository($type);
+            $repo = $this->getRepository(ucfirst($type));
             $entity = $repo->find($id);
-
 
             if (!$entity)
                 throw new \Exception('Entity does not exist');
