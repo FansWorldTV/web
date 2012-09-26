@@ -2,16 +2,14 @@
 
 namespace Dodici\Fansworld\WebBundle\Model;
 
+use Dodici\Fansworld\WebBundle\Entity\Sport;
+use Dodici\Fansworld\WebBundle\Entity\TeamCategory;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
-
 use Dodici\Fansworld\WebBundle\Entity\Event;
-
 use Dodici\Fansworld\WebBundle\Entity\Idol;
-
 use Application\Sonata\UserBundle\Entity\User;
-
 use Dodici\Fansworld\WebBundle\Entity\Team;
-
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -189,5 +187,62 @@ class EventRepository extends CountBaseRepository
 	    $date = $result[0]['min_created_at'];
 	    
 	    return $date ? (new \DateTime($date)) : null;
+	}
+	
+	/**
+	 * Gets event count grouped by date in range
+	 * @param DateTime|null $datefrom
+	 * @param DateTime|null $dateto
+	 * @param Sport|int|null $sport
+	 * @param TeamCategory|int|null $teamcategory
+	 */
+	public function countByDate($datefrom=null, $dateto=null, $sport=null, $teamcategory=null)
+	{
+	    $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('fromtime', 'date');
+        $rsm->addScalarResult('eventcount', 'count');
+	    
+	    $query = $this->_em->createNativeQuery('
+            SELECT DATE(e.fromtime) as fromtime, COUNT(e.id) as eventcount
+            FROM
+            event e
+            '
+            .($sport ? 
+                ('LEFT JOIN teamcategory tc ON tc.id = e.teamcategory_id')
+            : '').
+            '
+            WHERE
+            e.active = true
+            '.
+            ($datefrom ? ' AND e.fromtime >= :datefrom ' : '').
+            ($dateto ? ' AND e.fromtime < :dateto ' : '').
+            ($sport ? ' AND tc.sport_id = :sport ' : '').
+            ($teamcategory ? ' AND e.teamcategory_id = :teamcategory ' : '').
+            '
+            GROUP BY DATE(e.fromtime)
+            ORDER BY DATE(e.fromtime) ASC
+	    ', $rsm);
+	    
+        if ($datefrom) 
+            $query = $query->setParameter('datefrom', $datefrom);
+            
+        if ($dateto) 
+            $query = $query->setParameter('dateto', $dateto);
+            
+        if ($sport) {
+            $query = $query->setParameter(
+            	'sport', 
+                ($sport instanceof Sport) ? $sport->getId() : $sport
+            );
+        }
+            
+        if ($teamcategory) {
+            $query = $query->setParameter(
+            	'teamcategory', 
+                ($teamcategory instanceof TeamCategory) ? $teamcategory->getId() : $teamcategory
+            );
+        }
+            
+	    return $query->getResult();
 	}
 }
