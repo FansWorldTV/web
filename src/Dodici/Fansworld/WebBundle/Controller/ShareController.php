@@ -133,7 +133,7 @@ class ShareController extends SiteController
                 'value' => (string) $user,
                 'result' => array(
                     'id' => $user->getId(),
-                    'slug' => $user->getSlug(),
+                    'slug' => $user->getUsername(),
                     'type' => 'user'
                 )
             );
