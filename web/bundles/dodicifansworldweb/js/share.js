@@ -1,8 +1,8 @@
 var share = {};
 
 share.init = function(){
-    $(".btn.share").on('click', function(){
-        $(this).toggleClass('active');
+    $(".btn.share, i.close-share").on('click', function(){
+        $(".btn.share").toggleClass('active');
         $(".share-box").slideToggle();
     });
     

@@ -44,6 +44,22 @@
         color: @black;
         height:  70px;
 
+        i.close-share {
+          display: block;
+          z-index: 99999999999999;
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          background-image: url("../images/ui/closealert.png") !important;
+          .square(14px);
+          background-position: top;
+          cursor: pointer;
+
+          &:hover {
+            background-position: bottom;
+          }
+        }
+
         input.wywtsay{
             border: 2px solid #e2e2e4;
             background-color: @white;
