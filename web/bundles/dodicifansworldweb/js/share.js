@@ -36,7 +36,7 @@ share.init = function(){
 
 share.selectedList = [];
 share.autocomplete = function(){
-    $("div.sharewith input").tokenInput(Routing.generate(appLocale+'_share_ajaxwith'), {
+    $("input[data-token-input]").tokenInput(Routing.generate(appLocale+'_share_ajaxwith'), {
         theme: 'fansworld',
         queryParam: 'term',
         preventDuplicates: true,
@@ -58,7 +58,7 @@ share.it = function(){
         params['entity-type'] = $("a.btn.share").attr('data-type');
         params['entity-id'] = $("a.btn.share").attr('data-id');
    
-        var shareWith = $("div.sharewith input").tokenInput('get');
+        var shareWith = $("input[data-token-input]").tokenInput('get');
 
         params['share-list'] = {};
         for(var i in shareWith){
