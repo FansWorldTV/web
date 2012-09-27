@@ -250,7 +250,7 @@ var site = {
         }); 
     },
     likeButtons: function(){
-        $('.likebutton:not(.loading-small)').live('click',function(e){
+        $('.btn.like:not(.loading-small)').live('click',function(e){
             e.preventDefault();
             var el = $(this);
             var type = el.attr('data-type');
@@ -261,7 +261,7 @@ var site = {
                 function(response){
                     el.removeClass('loading-small');
                     el.find('.likecount').text(response.likecount);
-                    //el.siblings('.likecount:first').text(response.likecount);
+                    el.siblings('.likecount:first').text(response.likecount);
                     success(response.message);
                     if(response.liked){
                         el.find('i').attr('class', '');
