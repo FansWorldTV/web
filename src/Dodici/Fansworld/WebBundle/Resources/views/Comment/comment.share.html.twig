@@ -57,7 +57,7 @@
 		{% if tag_item_type == 'video' %}
 			<div class="video">
 				<span></span>
-				<a href="{{ tag_item_url }}">{% thumbnail tag_item.image, 'wall' %}</a>
+				<a data-video-player-inline="{{ tag_item.id }}" href="{{ tag_item_url }}">{% thumbnail tag_item.image, 'wall' %}</a>
 			</div>
 		{% else %}
 			<div class="share-image">

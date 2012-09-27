@@ -555,4 +555,21 @@ class VideoController extends SiteController
 
         return $this->jsonResponse($response);
     }
+    
+    /**
+     * @Route("/video/ajax/playerurl", name="video_player_url")
+     */
+    public function playerUrlAction()
+    {
+        $request = $this->getRequest();
+        $id = $request->get('id');
+        
+        $video = $this->getRepository('Video')->find($id);
+        
+        $this->securityCheck($video);
+        
+        return $this->jsonResponse(
+            $this->get('flumotiontwig')->getVideoPlayerUrl($video, true)
+        );
+    }
 }

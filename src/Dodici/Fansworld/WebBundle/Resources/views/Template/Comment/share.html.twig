@@ -22,7 +22,7 @@
 {% block info_commentcontent %}
 	{% raw %}
 		{{if shareImage}}
-			<div class="{{>shareType}}">
+			<div class="{{>shareType}}" {{if shareType == 'video'}}data-video-player-inline="{{>shareId}}"{{/if}}>
 				<a href="{{>shareUrl}}"><img src='{{>shareImage}}' alt='{{>shareTitle}}'/></a>
 			</div>
 		{{/if}}

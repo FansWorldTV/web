@@ -11,7 +11,7 @@
 {% block info_commentcontent %}
     <div class="video">
         {% if tag_item.image is defined and tag_item.image is not null %}
-            <a href="{{ tag_item_url }}">{% thumbnail tag_item.image, 'wall'   %}</a>
+            <a data-video-player-inline="{{ tag_item.id }}" href="{{ tag_item_url }}">{% thumbnail tag_item.image, 'wall'   %}</a>
         {% endif %}
     </div>
 {% endblock %}    

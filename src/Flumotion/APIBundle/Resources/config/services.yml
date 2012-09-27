@@ -7,7 +7,7 @@ services:
       arguments: [ @flumotion.api.request, %flumotion.ftp_host%, %flumotion.ftp_path%, %flumotion.ftp_file%, %flumotion.ftp_user%, %flumotion.ftp_pass% ]
     flumotiontwig:
       class: Flumotion\APIBundle\Extensions\FlumotionTwig
-      arguments: [@session, @doctrine.orm.entity_manager, @flumotion.api.request, @visitator, %flumotion.player_baseurl%, %flumotion.player_video_baseurl%]
+      arguments: [@session, @doctrine.orm.entity_manager, @flumotion.api.request, @visitator, %flumotion.player_baseurl%, %flumotion.player_video_baseurl%, %flumotion.player_video_small%]
     twig.extension.flumotiontwig:
       class: Flumotion\APIBundle\Extensions\FlumotionTwigExtension
       arguments: [@flumotiontwig]

@@ -17,9 +17,10 @@ class FlumotionTwig
     
     protected $playerbaseurl;
     protected $videoplayerbaseurl;
+    protected $videoplayersmallurl;
     
 
-    function __construct(Session $session, EntityManager $em, $api, Visitator $visitator, $playerbaseurl, $videoplayerbaseurl)
+    function __construct(Session $session, EntityManager $em, $api, Visitator $visitator, $playerbaseurl, $videoplayerbaseurl, $videoplayersmallurl)
     {
         $this->session = $session;
         $this->request = Request::createFromGlobals();
@@ -29,9 +30,10 @@ class FlumotionTwig
         
         $this->playerbaseurl = $playerbaseurl;
         $this->videoplayerbaseurl = $videoplayerbaseurl;
+        $this->videoplayersmallurl = $videoplayersmallurl;
     }
     
-	public function getVideoPlayerUrl(Video $video)
+	public function getVideoPlayerUrl(Video $video, $small=false)
     {
     	$this->visitator->visit($video);
     	if ($video->getYoutube()) {
@@ -39,7 +41,7 @@ class FlumotionTwig
     	} elseif ($video->getVimeo()) {
     	    return sprintf('http://player.vimeo.com/video/%1$s', $video->getVimeo());
     	} else {
-    		return sprintf($this->videoplayerbaseurl, $video->getStream());
+    		return sprintf($small ? $this->videoplayersmallurl : $this->videoplayerbaseurl, $video->getStream());
     	}
     }
 }
