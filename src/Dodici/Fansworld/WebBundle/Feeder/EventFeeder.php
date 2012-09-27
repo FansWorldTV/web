@@ -54,6 +54,7 @@ class EventFeeder {
         
         foreach ($result as $xp) {
             $state = (string)$xp->estado->attributes()->id;
+            $stadium = (string)$xp->attributes()->nombreEstadio;
             
             if ($state == 0) {
                 $idlocal = (string)$xp->local->attributes()->id;
@@ -70,7 +71,7 @@ class EventFeeder {
                         $date = \DateTime::createFromFormat('Ymd' . ($rawhour ? ' H:i:s' : ''), $rawdate . ($rawhour ? (' ' . $rawhour) : ''));
                     }
                     $xpexternal = (string)$xp->attributes()->id;
-                    $event = $this->createEvent($date, $localteam, $awayteam, $xpexternal, $teamcatext);
+                    $event = $this->createEvent($date, $localteam, $awayteam, $xpexternal, $teamcatext, $stadium);
                     if ($event) $this->em->persist($event);
                 }
             }
@@ -78,7 +79,7 @@ class EventFeeder {
         $this->em->flush();
     }
     
-    private function createEvent($date, $localteam, $awayteam, $external, $teamcatext)
+    private function createEvent($date, $localteam, $awayteam, $external, $teamcatext, $stadium)
     {
         $eventrepo = $this->em->getRepository('Dodici\Fansworld\WebBundle\Entity\Event');
         $event = $eventrepo->findOneByExternal($external);
@@ -91,6 +92,7 @@ class EventFeeder {
             $event->setTitle((string)$localteam . ' VS ' . (string)$awayteam);
             
             if ($teamcategory) $event->setTeamCategory($teamcategory);
+            if ($stadium) $event->setStadium($stadium);
             
             $htl = new HasTeam();
             $htl->setTeam($localteam);

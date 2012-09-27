@@ -105,6 +105,13 @@ class Event implements SearchableInterface
     private $external;
     
     /**
+     * @var string $stadium
+     *
+     * @ORM\Column(name="stadium", type="string", length=250, nullable=true)
+     */
+    private $stadium;
+    
+    /**
      * @var TeamCategory
      *
      * @ORM\ManyToOne(targetEntity="TeamCategory")
@@ -653,6 +660,26 @@ class Event implements SearchableInterface
     public function getWeight()
     {
         return $this->weight;
+    }
+    
+	/**
+     * Set stadium
+     *
+     * @param integer $stadium
+     */
+    public function setStadium($stadium)
+    {
+        $this->stadium = $stadium;
+    }
+
+    /**
+     * Get stadium
+     *
+     * @return integer 
+     */
+    public function getStadium()
+    {
+        return $this->stadium;
     }
 
     /**
