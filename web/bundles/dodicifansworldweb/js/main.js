@@ -306,54 +306,58 @@ var site = {
         $('.comment_button:not(.loading)').live('click', function(e) {
             e.preventDefault();
             var el = $(this),
-                 type = el.attr('data-type'),
-                 id = el.attr('data-id'),
-                 ispin = (el.attr('data-pin') == 'true'),
-                 content = el.parents('.commentform').find('.comment_message').val();
-                 textAreaElement = el.closest('.commentform').find('textarea.comment_message'),
-                 privacy = textAreaElement.parents('.commentform,.shortcommentform').find('.post_privacidad').val() || 1,
-                 elDestination = '[data-wall]';
+            textAreaElement = el.parent().closest('.commentform').find('textarea.comment_message'),
+            type = textAreaElement.attr('data-type'),
+            id = textAreaElement.attr('data-id'),
+            ispin = (textAreaElement.attr('data-pin') == 'true'),
+            content = textAreaElement.val();
+            privacy = textAreaElement.parents('.commentform,.shortcommentform').find('.post_privacidad').val() || 1,
+            elDestination = '[data-wall]';
                 
-                 
-            if(!textAreaElement.attr('is-subcomment')) {
-                elDestination = textAreaElement.parents('.comments,.comments-and-tags').find('.comments-container');
+                
+            var prepend = true;
+            if(textAreaElement.attr('is-subcomment')) {
+                elDestination = textAreaElement.parents('.comments, .comments-and-tags').find('.subcomments-container');
+                prepend = false;
             }
-                
-            site.postComment(textAreaElement,type,id,ispin,content,privacy,elDestination);
+            
+            site.postComment(textAreaElement,type,id,ispin,content,privacy,elDestination, prepend);
             return false;
         });
     	
         $('textarea.comment_message:not(.loading)').live('keydown', function (e) {
             if (e.keyCode == 13) {
                 var textAreaElement = $(this),
-                     type = textAreaElement.attr('data-type'),
-                     id = textAreaElement.attr('data-id'),
-                     ispin = (textAreaElement.attr('data-pin') == 'true'),
-                     content = textAreaElement.val(),
-                     privacy = textAreaElement.parents('.commentform,.shortcommentform').find('.post_privacidad').val() || 1,
-                     elDestination = textAreaElement.closest('.comments,.comments-and-tags').find('.subcomment-container');
+                type = textAreaElement.attr('data-type'),
+                id = textAreaElement.attr('data-id'),
+                ispin = (textAreaElement.attr('data-pin') == 'true'),
+                content = textAreaElement.val(),
+                privacy = textAreaElement.parents('.commentform,.shortcommentform').find('.post_privacidad').val() || 1,
+                elDestination = '[data-wall]';
                      
-                if(!textAreaElement.attr('is-subcomment')) {
-                    elDestination = textAreaElement.parents('.comments,.comments-and-tags').find('.comments-container');
+                var prepend = true;
+                if(textAreaElement.attr('is-subcomment')) {
+                    elDestination = textAreaElement.parents('.comments, .comments-and-tags').find('.subcomments-container');
+                    prepend = false;
                 }
-                
-                site.postComment(textAreaElement, type, id, ispin, content, privacy, elDestination);
+                site.postComment(textAreaElement, type, id, ispin, content, privacy, elDestination, prepend);
                 return false;
             }
         });
     },
     
-    postComment: function (textAreaElement,type,id,ispin,content,privacy,elDestination) {
-        textAreaElement.addClass('loadingSmall');
+    postComment: function (textAreaElement,type,id,ispin,content,privacy,elDestination, prepend) {
+        textAreaElement.addClass('loading-small');
         textAreaElement.attr('disabled','disabled');
-    	
+
         ajax.globalCommentAction(type, id, content, privacy, ispin,
             function (response) {
                 textAreaElement.val('');
                 textAreaElement.removeClass('loadingSmall');
-                success(response.message);
                 
-                templateHelper.renderTemplate(response.jsonComment.templateId,response.jsonComment,elDestination, false);
+                success(response.message);
+
+                templateHelper.renderTemplate(response.jsonComment.templateId,response.jsonComment,elDestination, prepend);
                 
                 $('.timeago').each(function () {
                     $(this).html($.timeago($(this).attr('data-time')));
@@ -363,10 +367,11 @@ var site = {
                     $('.masonbricks').isotope().resize();
                 }
                 site.expander();
+                textAreaElement.removeClass('loading-small');
                 textAreaElement.removeAttr('disabled');
             },
             function (response) {
-                textAreaElement.removeClass('loadingSmall');
+                textAreaElement.removeClass('loading-small');
                 textAreaElement.removeAttr('disabled');
                 error(response);
             });

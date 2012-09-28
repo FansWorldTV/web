@@ -23,7 +23,7 @@
                 <img alt="compartir" class='comment-cam' src="{{ asset('bundles/dodicifansworldweb/images/ico/cam.png' )}}">
             </div>
             
-            <textarea cols="" rows="3" class="comment_message"></textarea>
+            <textarea cols="" rows="3" class="comment_message" data-type="{{ type }}" data-id="{{ entity.id }}"></textarea>
         </div>
         <div class="bottom clearfix row-fluid">
             <div class='span2 icons-container'>
@@ -34,7 +34,7 @@
                 <input type="text" class='' value="" placeholder="Con quien lo quieres compartir?"/>
             </div>
             <div class='span2'>
-                <button class='btn btn-success comment_button' data-type="{{ type }}" data-id="{{ entity.id }}">Compartir</button>
+                <button class='btn btn-success comment_button'>Compartir</button>
             </div>
             
         </div>

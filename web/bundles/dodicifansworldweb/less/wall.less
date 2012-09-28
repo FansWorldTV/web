@@ -24,11 +24,21 @@
 
 //Estilos formulario commentarios
 //formulario principal del wall
+div.shortcommentform{
+    .comment_message {
+        resize: none;
+
+        &.loading-small{
+            width: auto;
+        }
+    }
+}
 .commentform.update{
     width: 100%;
     border: 2px solid #D3D3D3;
     .border-radius(5px);
     margin-bottom: 20px;
+    
     .upd{
         position: relative;
         padding-right: 1%;
@@ -44,7 +54,11 @@
             margin-bottom: 0;
             resize: none;
         }
+        .comment_message.loading-small {
+            background-position: center center !important;
+        }
     }
+
     .bottom{
         padding-top: 10px;
         div.icons-container{
