@@ -18,6 +18,7 @@ var idolship = {
                         self.addClass('disabled');
                         self.removeClass('add');
                         success(r.message);
+                        self.html(r.buttontext);
                     }
                 }
                 

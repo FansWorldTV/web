@@ -23,11 +23,11 @@ var friendship = {
     
     add: function(){
         $(".btn_friendship.add:not('.loading-small')").live('click', function(e){
-        	e.stopImmediatePropagation();
+            e.stopImmediatePropagation();
             var self = $(this);
             self.addClass('loading-small');
             
-            var targetId = $(this).closest('[data-add-fan]').attr('data-id');
+            var targetId = self.attr('data-user-id');
             var friendgroups = [];
             
             $("ul.friendgroupsList li input:checkbox:checked").each(function(k, el){
@@ -37,10 +37,9 @@ var friendship = {
             ajax.addFriendAction(targetId, friendgroups, function(response){
                 if(!response.error){
                     if (response.active) {
-                        //self.removeClass('add').removeClass('btn-success').addClass('remove').attr('friendshipId', response.friendship).text('Dejar de Seguir');
-                    	self.removeClass('add').attr('friendshipId', response.friendship).text('Ya eres fan');
+                        self.removeClass('add').attr('friendshipId', response.friendship).text(response.buttontext);
                     } else {
-                        self.removeClass('add').removeClass('btn-success').addClass('remove').attr('friendshipId', response.friendship).text('Cancelar Solicitud');
+                        self.removeClass('add').removeClass('btn-success').addClass('remove').attr('friendshipId', response.friendship).text(response.buttontext);
                     }
                     success(response.message);
                 }else{
@@ -52,11 +51,11 @@ var friendship = {
     },
     
     cancel: function(){
-        $(".btn_friendship.remove:not('.loading')").live('click', function(e){
-        	e.stopImmediatePropagation();
+        $(".btn_friendship.remove:not('.loading-small')").live('click', function(e){
+            e.stopImmediatePropagation();
             var self = $(this);
-            var friendshipId = $(this).attr('friendshipId');
-            if(confirm('Seguro deseas dejar de seguir a este fan?')){
+            var friendshipId = self.attr('data-friendship-id');
+            if(confirm('Seguro deseas dejar de seguir a este usuario?')){
                 self.addClass('loading-small');
                 ajax.cancelFriendAction(friendshipId, function(response){
                     if(!response.error) {

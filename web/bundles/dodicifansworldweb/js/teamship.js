@@ -15,9 +15,10 @@ var teamship = {
             }, function(r){
                 if(r){
                     if(r.isFan){
-                        self.addClass('disabled');
+                        //self.addClass('disabled');
                         self.removeClass('add');
                         success(r.message);
+                        self.html(r.buttontext);
                     }
                 }
                 

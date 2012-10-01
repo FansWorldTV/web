@@ -28,11 +28,11 @@
 {% if fship is defined %}
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and (fship) %}
         <div class="addFriend" ">
-            <button class="btn {{ buttonSize }} btn_{{ btnType }} remove btn-success"> ya sos fan</button>
+            <button class="btn {{ buttonSize }} btn_{{ btnType }} remove btn-success {% if btnType == 'idolship' %} disabled {% endif %}" data-{{ btnType }}-id="{{ fship.id }}">{{ 'remove_idol'|trans }}</button>
         </div>
     {% else %}
-        <div class="addFriend" data-type="{{ fType }}" data-id="{{ entity.id }}" data-add-fan data-login-required >
-            <button class="btn {{ buttonSize }} btn_{{ btnType }} add btn-success"> Ser fan {{ solicitar }}</button>
+        <div class="addFriend"  data-add-fan data-login-required >
+            <button class="btn {{ buttonSize }} btn_{{ btnType }} add btn-success" data-{{ fType }}-id="{{ entity.id }}"> {{ 'add_idol'|trans }}</button>
         </div>
     {% endif %}
 {% endif %}
