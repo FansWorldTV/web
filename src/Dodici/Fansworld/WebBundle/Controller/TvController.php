@@ -283,17 +283,17 @@ class TvController extends SiteController
     }
 
     /**
-     * @Route("/explore/{slug}", name="teve_explorechannel")
+     * @Route("/explore/{id}/{slug}", requirements={"id"="\d+"}, name="teve_explorechannel")
      * @Template
      */
-    public function exploreChannelAction($slug)
+    public function exploreChannelAction($id)
     {
         $user = $this->getUser();
         $videoRepo = $this->getRepository('Video');
-        $activeCategory = $this->getRepository('VideoCategory')->findOneBySlug(array($slug));
+        $activeCategory = $this->getRepository('VideoCategory')->find($id);
 
         if (!$activeCategory) {
-            throw new HttpException(404, "No existe el canal $slug");
+            throw new HttpException(404, "No existe el canal id $id");
         }
 
         $videos = $videoRepo->search(null, null, self::LIMIT_SEARCH_VIDEOS, null, $activeCategory, null, null, null, null);

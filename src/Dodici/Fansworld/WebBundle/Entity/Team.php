@@ -162,8 +162,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     protected $teamships;
     
     /**
-     * @Gedmo\Slug(fields={"title"}, unique=false)
-     * @Gedmo\Translatable
+     * @Gedmo\Slug(fields={"title"}, unique=true)
      * @ORM\Column(length=128)
      */
     private $slug;
