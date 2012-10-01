@@ -21,9 +21,11 @@
                 <a href="{{ path('idol_photos', {slug: entity.slug}) }}">{{ 'Photos'|trans }}</a>
             </li>
             
+            {% if entity.twitter %}
             <li {% if active_tab == 'tweets' %}class="active"{% endif %}>
                 <a href="{{ path('idol_twitter', {slug: entity.slug}) }}">Tweets</a>
             </li>
+            {% endif %}
             
             <li {% if active_tab == 'fans' %}class="active"{% endif %}>
                 <a href="{{ path('idol_fans', {slug: entity.slug}) }}">Fans</a>
