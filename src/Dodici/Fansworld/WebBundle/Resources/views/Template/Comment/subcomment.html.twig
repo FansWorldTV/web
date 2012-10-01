@@ -2,17 +2,27 @@
 	<div class='subcomment-avatar'>
 	    {% block avatar %}
 	        <div class="avatar">
-				<img src='{% raw %}{{>authorAvatarUrl}}{% endraw %}' />
-			</div>
+                    {% raw %}
+                    <a href="{{>authorProfileUrl}}">
+                            {{if authorAvatarUrl}}
+                                <img src='{{>authorAvatarUrl}}' />
+                            {{else}}
+                        {% endraw %}
+                                <img src='{{ asset('bundles/dodicifansworldweb/images/profile_no_image_40x40.png' )}}' />
+                        {% raw %}
+                            {{/if}}
+                        {% endraw %}
+                    </a>
+                </div>
 	    {% endblock %}
 	 </div>
 	 <div class='subcomment-content'>
 	    {% raw %}
-			{{if content}}
-				<div class="share-desc">
-					<p>{{>content}}</p>
-				</div>
-			{{/if}}
-		{% endraw %}
+                {{if content}}
+                    <div class="share-desc">
+                        <p>{{>content}}</p>
+                    </div>
+                {{/if}}
+            {% endraw %}
 	 </div>
 </section>	 

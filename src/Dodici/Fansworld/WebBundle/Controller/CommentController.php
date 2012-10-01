@@ -17,15 +17,13 @@ use Symfony\Component\HttpFoundation\Request;
  * Comment controller.
  * @Route("/comment")
  */
-class CommentController extends SiteController
-{
+class CommentController extends SiteController {
 
     /**
      * @Route("/show/{id}", name= "comment_show", requirements = {"id" = "\d+"})
      * @Template
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         // TODO: comment show action, list all responses (nested comments), allow answering root comment
         $comment = $this->getRepository('Comment')->find($id);
         $this->securityCheck($comment);
@@ -41,8 +39,7 @@ class CommentController extends SiteController
      * 
      * @Route("/ajax/post", name="comment_ajaxpost")
      */
-    public function ajaxPostAction()
-    {
+    public function ajaxPostAction() {
         try {
 
             $request = $this->getRequest();
@@ -83,12 +80,12 @@ class CommentController extends SiteController
             $templatename = ($ispin ? 'pin_comment.html.twig' : 'comment.html.twig');
             $jsonComment = $this->jsonComment($comment, 'true');
 
-            $response = new Response(json_encode(array(
-                                'jsonComment' => $jsonComment,
-                                'message' => $message
-                            )));
-            $response->headers->set('Content-Type', 'application/json');
-            return $response;
+            return $this->jsonResponse(array(
+                        'jsonComment' => $jsonComment,
+                        'message' => $message,
+                        'authorAvatarUrl' => $this->getImageUrl($user->getImage(), 'small'),
+                        'authorProfileUrl' => $this->generateUrl('user_wall', array('username' => $user->getUsername()))
+                    ));
         } catch (\Exception $e) {
             return new Response($e->getMessage(), 400);
         }
@@ -97,8 +94,7 @@ class CommentController extends SiteController
     /**
      *  @Route("/ajax/get/", name="comment_ajaxget")
      */
-    public function ajaxGetAction()
-    {
+    public function ajaxGetAction() {
         $request = $this->getRequest();
 
         $commentId = $request->get('id', false);
@@ -147,8 +143,7 @@ class CommentController extends SiteController
         return $this->jsonResponse($response);
     }
 
-    private function jsonComment(Comment $comment, $useJson)
-    {
+    private function jsonComment(Comment $comment, $useJson) {
         $appMedia = $this->get('appmedia');
         if ($useJson != true) {
             return $this->renderView('DodiciFansworldWebBundle:Comment:comment.html.twig', array('comment' => $comment));
@@ -195,8 +190,7 @@ class CommentController extends SiteController
         return $commentArray;
     }
 
-    private function getTarget(Comment $comment)
-    {
+    private function getTarget(Comment $comment) {
         $target = $comment->getTarget();
         $targetData = array();
         if (is_null($target)) {
@@ -213,8 +207,7 @@ class CommentController extends SiteController
         return $targetData;
     }
 
-    private function getTagItem(Comment $comment)
-    {
+    private function getTagItem(Comment $comment) {
         $appMedia = $this->get('appmedia');
         $tag = array();
         $share = $comment->getShare();
