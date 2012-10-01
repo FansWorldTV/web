@@ -6,7 +6,8 @@
             keepAliveInterval: 120, // seconds
             videoId: null, // video id, this can be set as an data-video-id attribute in the list
             ajaxUrl: null, // url where to fetch the first list
-            keepAliveUrl: null // url where to post the keep alive request
+            keepAliveUrl: null, // url where to post the keep alive request
+            placeholderAvatar: null
         };
     
         var $list = $(this),
@@ -24,10 +25,14 @@
                 options.videoId = $list.attr('data-video-id');
             }
             
+            if(!options.placeholderAvatar) {
+                options.placeholderAvatar = $list.attr('data-placeholder');
+            }
+            
             var mandatoryOpts = ['videoId', 'ajaxUrl', 'keepAliveUrl'];
             $.each(mandatoryOpts, function(key, val) {
                 if(!options[val]) {
-                    throw 'Expected mandatOory ' + val + ' option.'
+                    throw 'Expected mandatory ' + val + ' option.'
                 }
             });
             
@@ -71,7 +76,25 @@
         function list(audience) {
             $list.find('li').remove();
             $.each(audience, function(key, val) {
-                $list.append($('<li user_id="' + val.id + '"><a title="' + val.username + '" href="' + val.wall + '"><img src="' + val.image + '" /></a></li>'));
+                if (!val.image && options.placeholderAvatar) {
+                    val.image = options.placeholderAvatar;
+                }
+                if (!val.image) {
+                    var extraClass = ' class="noimage"';
+                } else {
+                    var extraClass = '';
+                }
+                var html = '' +
+                    '<li user_id="' + val.id + '">' +
+                    '<a title="' + val.username + '" href="' + val.wall + '"'+ extraClass +'>';
+                
+                if (val.image) {
+                    html += '<img src="' + val.image + '" />';
+                }
+                
+                html += '</a></li>';
+                
+                $list.append($(html));
             });
         }
         
