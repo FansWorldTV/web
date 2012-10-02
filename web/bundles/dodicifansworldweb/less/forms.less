@@ -93,3 +93,94 @@ input[type="color"],
     color: @gray;
   }
 }
+
+
+//Login form
+div.formshadow {
+    .size(auto, 350px);
+    .box-shadow(1px -1px 19px 3px @gray);
+    margin: auto;
+    .border-radius(5px);
+    display: block;
+    margin-top: 10%;
+}
+div.loginformbig {
+    .border-radius(5px);
+    padding: 20px;
+    font-weight: normal;
+
+    &.top {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        padding-bottom: 0;
+    }
+
+    &.bottom {
+        border-top: 1px solid #ebeaea;
+        background-color: #f4f3f3;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+
+        div.fb {
+            width: 208px;
+            margin: auto;
+            display: block;
+        }
+    }
+
+    h1 {    
+        font-size: 20px;
+        font-family: "Open Sans";
+        color: @green;
+        margin-bottom: 20px;
+        font-weight: normal;
+    }
+
+    div.form-login {
+        ul.fields   {
+            #username, #password {
+                width: 290px;
+                height: 39px;
+                font-size: 13px;
+                padding-left: 14px;
+                margin-bottom: 15px;
+
+                &#password {
+                    margin-bottom: 20px;
+                }
+            }
+
+            li{
+                .remember_me{ 
+                    width: 40%;
+                    display: block;
+                    .pull-left();
+                    padding-top: 8px;
+                    
+                    label {
+                        font-size: 12px;
+                        color: @green;
+                        .pull-left();
+                        margin-left: 13px; 
+                    }
+                    input {
+                        .pull-left();
+                        width: 12px;
+                    }
+                }
+                
+                .btn_action {
+                    .pull-right();
+                }
+            }
+        }
+    }
+}
+
+a.link-register {
+    width: 350px;
+    display: block;
+    text-align: center;
+    margin: auto;
+    margin-top: 20px;
+}

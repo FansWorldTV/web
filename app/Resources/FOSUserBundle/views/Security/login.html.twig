@@ -5,48 +5,48 @@
 {% endblock %}
 
 {% block fos_user_content %}
-<div class="loginformbig">
-	<h1>Ingreso</h1>
-	<div class="greybox">
-	<form action="{{ path("fos_user_security_check") }}" method="post" class="bigform" >
-		<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-		{% if error %}
-            <div class="errors">
-                <span class="bold">Error: </span>{{ error|trans({}, 'FOSUserBundle') }}
-                
-                <a class="link-reset" href="{{ path('fos_user_resetting_request') }}">¿Olvidaste tu contraseña? Hacé click aquí</a>
+    <div class="formshadow">
+        <div class="loginformbig top">
+            <h1>Ingresá a Fansworld</h1>
+            <div class="greybox">
+                <form action="{{ path("fos_user_security_check") }}" method="post" class="bigform" >
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                    {% if error %}
+                        <div class="errors">
+                            <span class="bold">Error: </span>{{ error|trans({}, 'FOSUserBundle') }}
+
+                            <a class="link-reset" href="{{ path('fos_user_resetting_request') }}">¿Olvidaste tu contraseña? Hacé click aquí</a>
+                        </div>
+                    {% endif %}
+                    <div class="form-login fieldcontainer">
+                        <ul class="fields">
+                            <li class="username clearfix">
+                                <input type="text" id="username" name="_username" value="{{ last_username }}" placeholder="Usuario"/>
+                            </li>
+
+                            <li class="password clearfix">
+                                <input type="password" id="password" name="_password" placeholder="Contraseña"/>
+                            </li>
+
+                            <li class="clearfix">
+                                <span class="remember_me">
+                                    <input type="checkbox" id="remember_me" name="_remember_me" value="on" class="checkboxRemember"/>
+                                    <label for="remember_me" >{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
+                                </span>
+                                <input type="submit" name="submit" value="Ingresar" class="btn_action" />
+                            </li>
+                        </ul>
+                    </div>
+                </form>
             </div>
-        {% endif %}
-    	<div class="form-login fieldcontainer">
-			<ul class="fields">
-        		<li class="clearfix">
-	                <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
-	                <input type="text" id="username" name="_username" value="{{ last_username }}" />
-	            </li>
-	            
-	            <li class="clearfix">
-	                <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
-	                <input type="password" id="password" name="_password" />
-	            </li>
-	            
-	            <li class="clearfix">
-	                <label for="remember_me" class="pull-left">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
-	                <div class="rememberfield pull-left">
-	                	<input type="checkbox" id="remember_me" name="_remember_me" value="on" class="checkboxRemember"/>
-	                </div>
-	            </li>
-        	</ul>
-		</div>
-		
-        <div class="actions clearfix">
-        	{{ facebook_login_button({'autologoutlink': false, label: 'facebook_login_long'|trans }) }}
-            <input type="submit" name="submit" value="Ingresar" class="btn_action" />
         </div>
-        
-        <div class="registerlink">
-        	<a class="link-register" href="{{ path('fos_user_registration_register') }}">¿No tenés cuenta? ¡Registrate, es gratis!</a>
+        <div class="loginformbig bottom">
+            <div class="fb">
+                {{ facebook_login_button({'autologoutlink': false, label: 'facebook_login_long'|trans, 'width': '208px' }) }}
+            </div>
         </div>
-    </form>
     </div>
-</div>
+    
+    <a class="link-register" href="{{ path('fos_user_registration_register') }}">¿No tenés cuenta? ¡Registrate, es gratis!</a>
+
 {% endblock fos_user_content %}
