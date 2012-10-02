@@ -11,13 +11,6 @@
             <div class="greybox">
                 <form action="{{ path("fos_user_security_check") }}" method="post" class="bigform" >
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-                    {% if error %}
-                        <div class="errors">
-                            <span class="bold">Error: </span>{{ error|trans({}, 'FOSUserBundle') }}
-
-                            <a class="link-reset" href="{{ path('fos_user_resetting_request') }}">¿Olvidaste tu contraseña? Hacé click aquí</a>
-                        </div>
-                    {% endif %}
                     <div class="form-login fieldcontainer">
                         <ul class="fields">
                             <li class="username clearfix">
@@ -46,7 +39,17 @@
             </div>
         </div>
     </div>
-    
-    <a class="link-register" href="{{ path('fos_user_registration_register') }}">¿No tenés cuenta? ¡Registrate, es gratis!</a>
+
+    {% if error %}
+        <div class="errors login">
+            <span>{{ error|trans({}, 'FOSUserBundle') }}</span>
+        </div>
+    {% endif %}
+
+    <div class="actions login">
+        <a class="link-register" href="{{ path('fos_user_registration_register') }}">¿No tenés cuenta? ¡Registrate, es gratis!</a>
+        <br/>
+        <a class="link-reset" href="{{ path('fos_user_resetting_request') }}">¿Olvidaste tu contraseña? Hacé click aquí</a>
+    </div>
 
 {% endblock fos_user_content %}
