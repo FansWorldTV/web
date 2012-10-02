@@ -31,53 +31,73 @@ jQuery.fn.refreshCategory = function() {
     return this;
 };
 
-$(function(){
-    $(".team-chooser").each(function(){
+$(function () {
+    
+    $(".team-chooser").each(function () {
         var ele = $(this);
         var sport = $(this).attr('data-sport-id');
         
         ele.autocomplete({
-            source: function(request, response){
+            source: function (request, response) {
             ajax.genericAction('team_ajaxsearch', {
                 'idsport': sport,
                 'text': request.term
                 }, function(data){
-                response(data);
+                    response(data);
                 },function(text){
-                error(text);
+                    error(text);
                 });
             },
-            select: function(event, ui){
+            select: function( event, ui) {
             var actualTeam = $(".well.selectedteam").attr('data-team-id');
             var selectedTeam = ui.item.id;
+            
             ajax.genericAction('team_ajaxfavorite', {
                 'actual': actualTeam, 
                 'selected': selectedTeam
-                }, function(r){
-                if(!r.error){
-                var tpl = $(".well.template.hidden").clone();
-                $(tpl).removeClass('template');
-                $(tpl).attr('data-team-id', ui.item.id);
-                $(tpl).find('.avatar').html("<img src='"+ui.item.image+"' alt='"+ui.item.title+"' />");
-                $(tpl).find('.title').html(ui.item.title);
-                var toAppend = $(ele).parent();
-                $(toAppend).find('.well.selectedteam').remove();
-                $(toAppend).append(tpl.removeClass('hidden'));
-                }
-                }, function(err){
-                error(err);
+                }, function (r) {
+                    if (!r.error) {
+                        var tpl = $(".well.template.hidden").clone(),
+                             toAppend = $(ele).parent();
+
+                        $(tpl).removeClass('template');
+                        $(tpl).attr('data-team-id', ui.item.id);
+                        $(tpl).find('.avatar').html("<img src='"+ui.item.image+"' alt='"+ui.item.title+"' />");
+                        $(tpl).find('.title').html(ui.item.title);
+                        $(toAppend).find('.well.selectedteam').remove();
+                        $(toAppend).append(tpl.removeClass('hidden'));
+                    }
+                }, function (err) {
+                    error(err);
                 });
             },
             minLength:0
             })
-        .data( "autocomplete" )._renderItem = function( ul, item ) {
-            return $( "<li></li>" )
-            .data( "item.autocomplete", item )
-            .append( "<a><img alt='' src='"+item.image+"' /> <span class='name'>" + item.title + "</span></a>" )
-            .appendTo( ul );
-        };
-        
+            .data( "autocomplete" )._renderItem = function( ul, item ) {
+                return $( "<li></li>" )
+                .data( "item.autocomplete", item )
+                .append( "<a><img alt='' src='"+item.image+"' /> <span class='name'>" + item.title + "</span></a>" )
+                .appendTo( ul );
+            };
+            
     });
+    
+    $(document).on('click', '.selectedteam:not(.hidden) .delete', function() {
+        var $target = $(this).closest('.selectedteam');
+        ajax.genericAction('team_ajaxfavorite', {
+            'actual': $target.attr('data-team-id'), 
+            'remove': true
+        }, function (r) {
+            if(!r  || r.error) {
+                error(r.error);
+            }
+            $target.remove();
+            $('input.team-chooser').focus();
+        }, function (err) {
+            error(error);
+        });
+    });
+    
     $( ".interest-chooser" ).each(function(){
         var el = $(this);
         var iduser = el.parents('ul.categories').attr('data-iduser');

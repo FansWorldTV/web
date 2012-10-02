@@ -253,7 +253,7 @@ class TeamController extends SiteController
         foreach ($teams as $team) {
             $response[] = array(
                 'id' => $team->getId(),
-                'title' => $team->getTitle(),
+                'title' => $team->getShortName(),
                 'image' => $this->getImageUrl($team->getImage(), 'avatar')
             );
         }
@@ -270,6 +270,7 @@ class TeamController extends SiteController
         $request = $this->getRequest();
         $actualTeamId = $request->get('actual', false);
         $selectedTeamId = $request->get('selected', false);
+        $isRemove = $request->get('remove', false);
 
         $user = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
@@ -281,6 +282,19 @@ class TeamController extends SiteController
         $selectedTeam = $teamRepo->find($selectedTeamId);
 
         $response = array('error' => false);
+        
+        if($isRemove) {
+            try {
+                $teamship = $teamshipRepo->findOneBy(array('author' => $user->getId(), 'team' => $actualTeam->getId()));
+                $teamship->setFavorite(false);
+                $em->persist($teamship);
+                $em->flush();
+            } catch (Exception $e) {
+                $response = array('error', $e->getMessage());
+            }
+            
+            return $this->jsonResponse($response);
+        }
 
         try {
             if ($actualTeam) {

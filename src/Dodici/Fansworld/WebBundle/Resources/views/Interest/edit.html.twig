@@ -24,7 +24,7 @@
                 {% for team in sport.teams %}
                     {% if sport.selected == team.id%}
                         <div class="well selectedteam" data-team-id = "{{team.id}}">
-                                <!--button class="close">&times;</button-->
+                                <a class="delete"></a>
                                 <table>
                                     <tr>
                                         <td>
@@ -43,6 +43,7 @@
         {% set index = index+1 %}
     {% endfor %}
     <div class="well selectedteam template hidden" data-team-id = "">
+        <a class="delete"></a>
         <table>
             <tr>
                 <td class="avatar">
