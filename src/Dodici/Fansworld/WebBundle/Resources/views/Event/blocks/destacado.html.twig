@@ -7,18 +7,17 @@
 
         <section class='evento-destacado row-fluid' >
             <div class="span5 row-fluid escudos-container">
-                <div class="span6 escudo">
-                    {% thumbnail evento.hasTeams[0].team.image, 'big_square' with {title: evento.hasTeams[0].team.title} %}
-                </div>
-                <div class="span6 escudo">
-                    {% thumbnail evento.hasTeams[1].team.image, 'big_square' with {title: evento.hasTeams[1].team.title} %}
-                </div>
+                {% for hasteam in evento.hasteams %}
+                    <div class="span6 escudo">
+                        {% thumbnail hasteam.team.image, 'big_square' with {title: hasteam.team.title} %}
+                    </div>
+                {% endfor %}
             </div>
 
             <div class="span7 datos-container">
-                <div class='titulo'>{{ evento.hasTeams[0].team.shortname }} vs {{ evento.hasTeams[1].team.shortname }}</div>
-                <div class='subtitulo'>{{ evento.title }}</div>
-                <div class='fecha'>{{ evento.fromtime|date("d-m-Y") }}</div>
+                <div class='titulo'>{{ evento }}</div>
+                <div class='subtitulo'>{{ evento.stadium }}</div>
+                <div class='fecha'>{{ evento.fromtime|date("d/m/Y H:i") }}</div>
                 <div class='checkin-container'>
                     <button class='btn btn-large btn-danger'>Ahora</button>
                 </div>

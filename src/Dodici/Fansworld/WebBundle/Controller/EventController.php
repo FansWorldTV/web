@@ -78,31 +78,32 @@ class EventController extends SiteController
         }
         
         $response = array();
+        $now = new \DateTime();
        
         $events  = $this->getRepository('Event')->calendar(null,null,null,$dateFrom,$dateTo,$sport,$teamcategory,$sortBy,null,null);
         foreach ($events as $event) {
             
             $teams = array();
             foreach ($event->getHasteams() as $hasTeam) {
+                $team = $hasTeam->getTeam();
                 $teams[] = array(
-                    'hasTeam' => $hasTeam,
-                    'team'    => $hasTeam->getTeam()         
+                    'title' => (string)$team,
+                    'image' => $appMedia->getImageUrl($team->getImage(), 'mini_square'),
+                    'score' => $hasTeam->getScore()
                 ); 
             }
             
+            $started = ($event->getFromtime() <= $now);
+            
             $response[] = array(
                     'text' =>  $this->get('appstate')->getEventText($event->getId()),
-                    'title' => $event->getTitle(),
+                    'stadium' => $event->getStadium(),
                     'date'  => $event->getFromtime()->format('d-m-Y'),
-                    'team1Score' => $teams[0]['hasTeam']->getScore(),
-                    'team1Shortname' => $teams[0]['team']->getShortname(),
-                    'team1Title' => $teams[0]['team']->getTitle(),
-                    'team1Image' => $appMedia->getImageUrl($teams[0]['team']->getImage(), 'mini_square'),
-                    
-                    'team2Score' => $teams[1]['hasTeam']->getScore(),
-                    'team2Shortname' => $teams[1]['team']->getShortname(),
-                    'team2Title' => $teams[1]['team']->getTitle(),
-                    'team2Image' => $appMedia->getImageUrl($teams[1]['team']->getImage(), 'mini_square'),
+            		'showdate'  => $event->getFromtime()->format('d/m/Y H:i'),
+                    'started' => $started,
+                    'finished' => $event->getFinished(),
+            
+                    'teams' => $teams
             );
         }
         

@@ -1,22 +1,59 @@
 {% raw %}
+    
     <li class='event'>
         <header>
-            <span>{{>team1Shortname}} vs {{>team2Shortname}}</span>
+            <span>
+                {{for teams}}
+                    {{if #index > 0}}
+                     vs 
+                    {{/if}}
+                    {{>title}}
+                {{/for}}
+            </span>
             <button class='btn btn-danger'>{{>text}}</button>
         </header>
         <div class='row-fluid'>
-            <div class="local span4 row-fluid">
-                <div class='escudo span8'>{{if team1Image}}<img src="{{>team1Image}}" />{{/if}}</div>
-                <div class='score span4'>{{>team1Score}}</div>
-            </div>
-            <div class='data span4'>
-                <div class="top" text-height='ellipsis'>{{>title}}</div>
-                <div class="bottom">{{>date}}</div>
-            </div>
-            <div class="visitante span4 row-fluid">
-                <div class='score span4'>{{>team2Score}}</div>
-                <div class='escudo span8'>{{if team2Image}}<img src="{{>team2Image}}" />{{/if}}</div>
-            </div>
+            {{for teams ~stadium=stadium ~showdate=showdate ~started=started}}
+                {{if #index === 1}}
+                    <div class='data span4'>
+                        <div class="top" text-height='ellipsis'>{{>~stadium}}</div>
+                        <div class="bottom">{{>~showdate}}</div>
+                    </div>
+                {{/if}}
+            
+                {{if #index === 0}}
+                    <div class="local span4 row-fluid">
+                        <div class='escudo span8'>{{if image}}<img src="{{>image}}" />{{/if}}</div>
+                        <div class='score span4'>
+                            {{if score}}
+                                {{>score}}
+                            {{else}}
+                                {{if ~started}}
+                                0
+                                {{else}}
+                                -
+                                {{/if}}
+                            {{/if}}
+                        </div>
+                    </div>
+                {{else}}
+                    <div class="visitante span4 row-fluid">
+                        <div class='score span4'>
+                            {{if score}}
+                                {{>score}}
+                            {{else}}
+                                {{if ~started}}
+                                0
+                                {{else}}
+                                -
+                                {{/if}}
+                            {{/if}}
+                        </div>
+                        <div class='escudo span8'>{{if image}}<img src="{{>image}}" />{{/if}}</div>
+                    </div>
+                {{/if}}
+            {{/for}}
+            
         </div>
     </li>
 {% endraw %}
