@@ -1,7 +1,7 @@
 {% if entity is defined %}
 {% set entityType =  appstate.type(entity) %}
 
-    <div class="entityBlock">
+    <div class="entityBlock {% if third %} third {% endif %}">
         <div class="splash">
             {% thumbnail entity.splash, 'big' with {'title': ''}%}
         </div>
