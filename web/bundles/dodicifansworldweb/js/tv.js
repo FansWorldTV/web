@@ -73,19 +73,19 @@ var tv = {
 
     'explore': function () {
         "use strict";
-
+        /*
         var dropDown = '.breadcrumb .channels-dropdown',
             targetDataList = '.am-container';
 
         $(dropDown).find('ul.dropdown-menu li a').click(function (e) {
-
+            e.preventDefault();
             var activeChannel = {
                 slug: $(this).attr('channel-slug'),
                 title: $(this).text()
             };
             $(dropDown).find('.dropdown-toggle span').text(activeChannel.title);
             tv.rankingUpdate.videos(activeChannel.slug, null, targetDataList, {});
-        });
+        });*/
     }
 
 };

@@ -19,14 +19,14 @@
             </a>
             <ul class="dropdown-menu">
                 {% for channel in channels %}
-                    <li><a href="#" channel-slug='{{ channel.slug }}'>{{ channel.title }}</a></li>
+                    <li><a href="{{ path('teve_explorechannel', {id: channel.id, slug: channel.slug}) }}">{{ channel.title }}</a></li>
                 {% endfor %}
             </ul>
         </li>
         <li class='subscribirse'>
             <div class="btn-group">
                 <button class="btn btn-small btn-success"><i class="icon-ok"></i></button>
-                <button class="btn btn-small btn-success js-subscribe" data-active-channel="{{ activeChannel }}">Subscribirse</button>
+                <button class="btn btn-small btn-success js-subscribe" data-active-channel="{{ activeChannel }}" data-login-required>Subscribirse</button>
             </div>
         </li>
         {% else %}
