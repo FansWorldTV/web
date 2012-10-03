@@ -35,9 +35,9 @@
                         
                             <div class="avatar">
                                 {% if avatar.image %}
-                                    {% thumbnail avatar.image, 'big_square' %}
+                                    <a href="{{ pathUrl }}">{% thumbnail avatar.image, 'big_square' %}</a>
                                 {% else %}
-                                    <img src="{{ asset('bundles/dodicifansworldweb/images/profile_no_image.png' )}}" />
+                                    <a href="{{ pathUrl }}"><img src="{{ asset('bundles/dodicifansworldweb/images/profile_no_image.png' )}}" /></a>
                                 {% endif %}
                             </div>
                             <span class="name"><a href="{{ pathUrl }}">{{ avatar}}</a></span>

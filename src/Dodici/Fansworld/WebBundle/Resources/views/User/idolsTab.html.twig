@@ -16,7 +16,7 @@
         
             <div id="templates" class="hidden">
                 <li>
-                    <img src="{{ asset('bundles/dodicifansworldweb/images/profile_no_image.png' )}}" />
+                    <a href=""><img src="{{ asset('bundles/dodicifansworldweb/images/profile_no_image.png' )}}" /></a>
                     <button class="btn btn-mini btn-success">SER FAN</button>
                     <span class="fan-quantity">2233</span>    
                     <span class="idol-name">idol</span>
@@ -41,6 +41,7 @@
                                         if(idol.avatar){
                                             $(template).find('img').attr('src', idol.avatar);
                                         }
+                                        $(template).find('a').attr('href', Routing.generate(appLocale+'_idol_wall', {'slug': idol.slug}));
                                         $(template).find('.idol-name').html(idol.name);
                                     }
                                 });

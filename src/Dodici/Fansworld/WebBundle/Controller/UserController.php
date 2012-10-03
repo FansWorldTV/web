@@ -760,7 +760,8 @@ class UserController extends SiteController
             $response['idolship'][] = array(
                 'name' => (string) $idol,
                 'avatar' => $this->getImageUrl($idol->getImage()),
-                'id' => $idol->getId()
+                'id' => $idol->getId(),
+                'slug' => $idols->getSlug()
             );
         }
 
