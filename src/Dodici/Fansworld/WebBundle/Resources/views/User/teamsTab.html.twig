@@ -1,0 +1,20 @@
+{% extends "DodiciFansworldWebBundle:User:base.html.twig" %}
+
+{% block title %}{{ parent() }} - Información{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/dodicifansworldweb/js/edit_interests.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block profile_tabs %}
+	{% set active_tab = 'teams' %}
+	{{ parent() }}
+{% endblock %}
+
+{% block profile_body %}
+    {% for ts in userTeams %}
+        {% set team = ts.team %}
+        {% include 'DodiciFansworldWebBundle:Default:blocks/entity_widget.html.twig' with {'entity': team} %}
+    {% endfor %}
+{% endblock %}

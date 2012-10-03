@@ -40,12 +40,36 @@ class UserController extends SiteController
         $loggedUser = $this->getUser();
         $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
 
-        
+
         return array(
-            'user' => $user, 
-            'friendgroups' => $friendGroups, 
+            'user' => $user,
+            'friendgroups' => $friendGroups,
             'isHome' => true,
-       );
+        );
+    }
+
+    /**
+     * @Route("/u/{username}/teams", name="user_teams")
+     * @Template
+     */
+    public function teamsTabAction($username)
+    {
+        $user = $this->getRepository('User')->findOneByUsername($username);
+        if (!$user) {
+            throw new HttpException(404, "No existe el usuario");
+        } else {
+            $this->get('visitator')->visit($user);
+        }
+
+        $loggedUser = $this->getUser();
+        $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
+        $userTeams = $this->getRepository('Teamship')->byUser($user);
+
+        return array(
+            'user' => $user,
+            'friendgroups' => $friendGroups,
+            'userTeams' => $userTeams
+        );
     }
 
     /**
@@ -78,25 +102,25 @@ class UserController extends SiteController
                 );
             }
         }
-        
+
         $personalData = array(
-                'firstname',
-                'lastname',
-                'address',
-                'phone',
-                'twitter',
-                'sex',
-                'country',
-                'city',
-                'birthday',
-                'email',
-                'score',
-                'level',                   
+            'firstname',
+            'lastname',
+            'address',
+            'phone',
+            'twitter',
+            'sex',
+            'country',
+            'city',
+            'birthday',
+            'email',
+            'score',
+            'level',
         );
-        
+
         return array(
-            'user' => $user, 
-            'friendgroups' => $friendGroups, 
+            'user' => $user,
+            'friendgroups' => $friendGroups,
             'interests' => $interests,
             'personalData' => $personalData,
             'categories' => $this->getRepository('InterestCategory')->findBy(array(), array('title' => 'ASC'))
@@ -576,30 +600,29 @@ class UserController extends SiteController
             'viewMoreAlbums' => $viewMoreAlbums
         );
     }
-    
-    
+
     /**
      * @Route("/u/{username}/albums/{id}", name= "user_showalbum", requirements = {"id" = "\d+"})
      * @Template()
      */
-    public function showAlbumAction($id,$username)
+    public function showAlbumAction($id, $username)
     {
         $user = $this->getRepository('User')->findOneByUsername($username);
         if (!$user) {
             throw new HttpException(404, "No existe el usuario");
         }else
             $this->get('visitator')->visit($user);
-        
+
         $album = $this->getRepository('Album')->findOneBy(array('id' => $id, 'active' => true));
-    
+
         $this->securityCheck($album);
-    
+
         return array(
-                'album' => $album,
-                'user' => $user
+            'album' => $album,
+            'user' => $user
         );
     }
-    
+
     /**
      * @Route("/invite_users/", name = "user_invite")
      * @Secure(roles="ROLE_USER")
@@ -678,11 +701,11 @@ class UserController extends SiteController
         }else
             $this->get('visitator')->visit($user);
 
-        $idolships     = array(
+        $idolships = array(
             'ulClass' => 'idols',
             'containerClass' => 'idol-container',
-            'list' => $this->getRepository('Idolship')->findBy(array('author' => $user->getId()), array('createdAt' => 'desc'), self::LIMIT_LIST_IDOLS),    
-        ); 
+            'list' => $this->getRepository('Idolship')->findBy(array('author' => $user->getId()), array('createdAt' => 'desc'), self::LIMIT_LIST_IDOLS),
+        );
         $idolshipsCount = $this->getRepository('Idolship')->countBy(array('author' => $user->getId()));
 
         $return = array(
@@ -783,7 +806,7 @@ class UserController extends SiteController
             $this->get('visitator')->visit($user);
 
 
-        $friends = array( 
+        $friends = array(
             'ulClass' => 'fans',
             'containerClass' => 'fan-container',
             'list' => $this->getRepository('User')->FriendUsers($user, null, SearchController::LIMIT_SEARCH, null)
@@ -816,45 +839,45 @@ class UserController extends SiteController
         $user = $this->getUser();
 
         $videoRepo = $this->getRepository('Video');
-        
-        $videos = $videoRepo->search(null, $user, self::LIMIT_VIDEOS, null, null, null, $author, null,null,null, null);
+
+        $videos = $videoRepo->search(null, $user, self::LIMIT_VIDEOS, null, null, null, $author, null, null, null, null);
         //$videos = $videoRepo->search(null, null, self::LIMIT_VIDEOS, null, null, null, null, null, null);
         $countAll = $videoRepo->countSearch(null, $user, null, null, $author, null, null, $author);
 
         $addMore = $countAll > self::LIMIT_VIDEOS ? true : false;
-        
+
         $sorts = array(
-            'id'   => 'toggle-video-types',
-            'class'=> 'list-videos',
+            'id' => 'toggle-video-types',
+            'class' => 'list-videos',
             'list' => array(
                 array(
-                    'name'     => 'destacados', 
-                    'dataType' => 0, 
-                    'class'    => '',
+                    'name' => 'destacados',
+                    'dataType' => 0,
+                    'class' => '',
                 ),
                 array(
-                    'name'     => 'masVistos',
+                    'name' => 'masVistos',
                     'dataType' => 1,
-                    'class'    => '',
+                    'class' => '',
                 ),
                 array(
-                    'name'     => 'populares',
+                    'name' => 'populares',
                     'dataType' => 2,
-                    'class'    => 'active',
+                    'class' => 'active',
                 ),
                 array(
                     'name' => 'masVistosDia',
                     'dataType' => 3,
-                    'class'    => '',
+                    'class' => '',
                 ),
             )
         );
 
         return array(
-            'sorts'   => $sorts, 
-            'videos'  => $videos,
+            'sorts' => $sorts,
+            'videos' => $videos,
             'addMore' => $addMore,
-            'user'    => $author
+            'user' => $author
         );
     }
 

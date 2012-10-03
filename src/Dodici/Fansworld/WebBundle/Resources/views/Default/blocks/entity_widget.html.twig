@@ -1,0 +1,21 @@
+{% if entity is defined %}
+{% set entityType =  appstate.type(entity) %}
+
+    <div class="entityBlock">
+        <div class="splash">
+            {% thumbnail entity.splash, 'big' with {'title': ''}%}
+        </div>
+
+        <div class="logo">
+            {% thumbnail entity.image, 'small' with {'title': ''} %}
+        </div>
+
+        <a href="{{ path( entityType ~ '_wall', {'slug': entity.slug}) }}" class="name">{{ entity }}</a>
+        
+        <ul>
+            <li><span>{{entity.fanCount}}</span><br/> fans</li>
+            <li><span>{{entity.videoCount}}</span><br/> videos</li>
+            <li><span>{{entity.photoCount}}</span><br/> fotos</li>
+        </ul>
+    </div>
+{% endif %}

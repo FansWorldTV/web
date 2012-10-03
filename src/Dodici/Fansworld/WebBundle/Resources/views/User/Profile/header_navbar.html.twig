@@ -3,34 +3,31 @@
         {% set active_tab = 'wall' %}
     {% endif %}
     <nav class='span12 profilenavbar-container'>
-    	
-
-			<ul class="nav nav-tabs-profile ">
-				<li {% if active_tab == 'wall' %}class="active"{% endif %}>
-                	<a  href="{{ path('user_wall', {username: user.username}) }}">Muro</a>
-            	</li>
-            	<li {% if active_tab == 'detail' %}class="active"{% endif %}>
-                	<a  href="{{ path('user_detail', {username: user.username}) }}">Info</a>
-            	</li>
-	            <li {% if active_tab == 'videos' %}class="active"{% endif %}>
-	                <a  href="{{ path('user_videos', {username: user.username}) }}">Videos</a>
-	            </li>
-	            <li {% if active_tab == 'equipos' %}class="active"{% endif %}>
-	                <a href="">Equipos</a>
-	            </li>
-	            <li {% if active_tab == 'photos' %}class="active"{% endif %}>
-	                <a href="{{ path('user_photos', {username: user.username}) }}">{{ 'Photos'|trans }}</a>
-	            </li>
-	            <li {% if active_tab == 'idols' %}class="active"{% endif %}>
-	                <a href="{{ path('user_idols', {'username': user.username}) }}">Idolos</a>
-	            </li>
-	            <li {% if active_tab == 'fans' %}class="active"{% endif %}>
-	                <a href="{{ path('user_fans', {'username': user.username}) }}">Fans</a>
-	            </li>
-            	<li {% if active_tab == 'badges' %}class="active"{% endif %}>
-                	<a href="{{ path('user_badges', {'username': user.username}) }}">Badges</a>
-	            </li>
-	        </ul>
-
+        <ul class="nav nav-tabs-profile ">
+            <li {% if active_tab == 'wall' %}class="active"{% endif %}>
+                <a  href="{{ path('user_wall', {username: user.username}) }}">Muro</a>
+            </li>
+            <li {% if active_tab == 'detail' %}class="active"{% endif %}>
+                <a  href="{{ path('user_detail', {username: user.username}) }}">Info</a>
+            </li>
+            <li {% if active_tab == 'videos' %}class="active"{% endif %}>
+                <a  href="{{ path('user_videos', {username: user.username}) }}">Videos</a>
+            </li>
+            <li {% if active_tab == 'teams' %}class="active"{% endif %}>
+                <a href="{{ path('user_teams', {username: user.username}) }}">Equipos</a>
+            </li>
+            <li {% if active_tab == 'photos' %}class="active"{% endif %}>
+                <a href="{{ path('user_photos', {username: user.username}) }}">{{ 'Photos'|trans }}</a>
+            </li>
+            <li {% if active_tab == 'idols' %}class="active"{% endif %}>
+                <a href="{{ path('user_idols', {'username': user.username}) }}">Idolos</a>
+            </li>
+            <li {% if active_tab == 'fans' %}class="active"{% endif %}>
+                <a href="{{ path('user_fans', {'username': user.username}) }}">Fans</a>
+            </li>
+            <li {% if active_tab == 'badges' %}class="active"{% endif %}>
+                    <a href="{{ path('user_badges', {'username': user.username}) }}">Badges</a>
+            </li>
+        </ul>
     </nav>
 {% endblock %}
