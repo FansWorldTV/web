@@ -52,14 +52,20 @@ class TvController extends SiteController
         $channels = array();
 
         foreach ($videoCategories as $key => $videoCategory) {
+            $search = $videoRepo->search(null, null, 1, null, $videoCategory, null, null, null, null);
+            $cvideo = $search ? $search[0] : null;
+            
+            
             $channels[$key] = array(
                 //'video' => $videoCategory->getVideos(),
-                'video' => $videoRepo->search(null, null, 1, null, $videoCategory, null, null, null, null),
+                'video' => $cvideo,
                 'channelName' => $videoCategory->getTitle(),
                 'slug' => $videoCategory->getSlug(),
+                'id' => $videoCategory->getId()
             );
         }
 
+        
         return array(
             'user' => $user,
             'channels' => $channels,

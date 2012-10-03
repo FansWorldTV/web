@@ -22,47 +22,45 @@
             </div>
         </div>
         {% for channel in channels %}
-            {% if channel.video[0] is defined %}
-                {% set channelVideo = channel.video[0] %}
-            {% else %}
-                {% set channelVideo = {'title' : 'sin video', 'content': 'que hacer?', 'image': null } %}
-            {% endif %}
             <div class="tab-pane row-fluid" id="{{ channel.channelName }}">
-                
-                {% if channelVideo.image is defined %}
-                    {% if channelVideo.image is not null %}
-                        <div class='span4 videoplayer-container'>
-                            <span class="highlight-text">Destacado Fansworld</span>
-                            <span class="video-title">{{ channelVideo.title|truncate(15) }}</span>
-                            <a href="{{ path('video_show', {'id': channelVideo.id, 'slug': channelVideo.slug}) }}">
-                                <i class="play-video"></i>
-                            </a>
-                            {% thumbnail channelVideo.image, 'big' with {"title": channelVideo.title}%}
-                        </div>
+                {% if channel.video is not null %}
+                    {% if channel.video.image is defined %}
+                        {% if channel.video.image is not null %}
+                            <div class='span4 videoplayer-container'>
+                                <span class="highlight-text">Destacado Fansworld</span>
+                                <span class="video-title">{{ channel.video.title|truncate(15) }}</span>
+                                <a href="{{ path('video_show', {'id': channel.video.id, 'slug': channel.video.slug}) }}">
+                                    <i class="play-video"></i>
+                                </a>
+                                {% thumbnail channel.video.image, 'big' with {"title": channel.video.title}%}
+                            </div>
+                        {% endif %}
                     {% endif %}
-                {% endif %}
-                
-                <div class="span8 content-container">
-                    <div class="channel-highlight-container">
-                        <div class="destacado">Destacado Fansworld</div>
-                        <div class="channel-name">{{ channel.channelName }}</div>
-                        
-                        <div class="title">{{ channelVideo.title }}</div>
-                        <div class="description">
-                            {{ channelVideo.content }}
-                        </div>
-                        
-                        <div class="explorar">
-                            <a href="{{ path('teve_explorechannel', {id: channel.id, slug: channel.slug}) }}">Explorar ></a>
-                        </div>
-                        <div class="subscribirse">
-                            <div class="btn-group">
-                              <button class="btn btn-success"><i class="icon-ok"></i></button>
-                              <button class="btn btn-success  js-subscribe">Subscribirse</button>
+                    
+                    <div class="span8 content-container">
+                        <div class="channel-highlight-container">
+                            <div class="destacado">Destacado Fansworld</div>
+                            <div class="channel-name">{{ channel.channelName }}</div>
+                            
+                            <div class="title">{{ channel.video.title }}</div>
+                            <div class="description">
+                                {{ channel.video.content }}
+                            </div>
+                            
+                            <div class="explorar">
+                                <a href="{{ path('teve_explorechannel', {id: channel.id, slug: channel.slug}) }}">Explorar ></a>
+                            </div>
+                            <div class="subscribirse">
+                                <div class="btn-group">
+                                  <button class="btn btn-success"><i class="icon-ok"></i></button>
+                                  <button class="btn btn-success js-subscribe">Subscribirse</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                {% else %}
+                    -- Canal sin video --
+                {% endif %}
             </div>
         {% endfor %}
     </div>
