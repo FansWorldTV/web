@@ -30,8 +30,7 @@
             $.ajax({
                 'url': settings.href,
                 'dataType': 'html',
-                'error': function (a, b, c) {
-                    console.error(a, b, c);
+                'error': function () {
                     $overlay.removeClass('loading');
                 },
                 'success': function (response) {
