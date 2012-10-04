@@ -2,6 +2,7 @@
  * Plugin to handle wall blocks
  */
 (function( $ ) {
+    var lastId = null;
     $.fn.wall = function() {
         var commentsLimit = 10;
         return this.each(function() 
@@ -40,27 +41,33 @@
             var wallid = wallel.attr('data-wall');
           
             if (wallid) {
-                var lastid = wallel.find('[data-comment]').last().attr('data-comment');
+                //var lastid = wallel.find('[data-comment]').last().attr('data-comment');
                 wallel.addClass('loading');
                 $('.comment-loading').show();
               
                 ajax.genericAction('comment_ajaxget', {
                     wall : wallid,
                     limit: commentsLimit,
-                    lastid: lastid,
+                    lastid: lastId,
                     usejson: true
                 },
                 function(r){
                       
                     if(r){
+                        var c = 1;
                         $.each(r, function(index, value){
-                            templateHelper.renderTemplate(value.templateId,value,wallel);
+                            templateHelper.renderTemplate(value.templateId,value,wallel, false, function(){
+                                if(c == r.length){
+                                    $("abbr.timeago").timeago();
+                                    wallel.removeClass('loading');
+                                    $('.comment-loading').hide();
+                                    wallel.attr('data-wall-loaded', 1);
+                                    window.endlessScrollPaused = false;
+                                }
+                                c++;
+                            });
+                            lastId = value.id;
                         });
-                        $("abbr.timeago").timeago();
-                        wallel.removeClass('loading');
-                        $('.comment-loading').hide();
-                        wallel.attr('data-wall-loaded', 1);
-                        window.endlessScrollPaused = false;
                           
                         if (typeof Meteor != 'undefined') {
                             Meteor.joinChannel('wall_' + wallid);
@@ -104,6 +111,7 @@
   
     function callbackAction(r,wallel){
         if(r){
+            var c = 1;
             $.each(r, function(index, value){
                 templateHelper.renderTemplate(value.templateId,value,wallel,true,function(){
                     switch(value.templateId) {
@@ -113,14 +121,18 @@
                     }
                       
                     $("abbr.timeago").timeago();
+                    if(c == r.length){
+                        wallel.removeClass('loading');
+                        $('.comment-loading').hide();
+                        wallel.attr('data-wall-loaded', 1);
+          
+                        bindWallUpdate(wallel);
+                    }
+                    c++;
                 });
+                lastId = value.id;
             });
           
-            wallel.removeClass('loading');
-            $('.comment-loading').hide();
-            wallel.attr('data-wall-loaded', 1);
-          
-            bindWallUpdate(wallel);
           
             if (typeof Meteor != 'undefined') {
                 Meteor.joinChannel('wall_' + wallid);
@@ -140,8 +152,9 @@ function bindWallUpdate(wallel){
         ceaseFireOnEmpty: false,
         loader: 'cargando',
         callback: function(i, p, d) {
-            wallel.wallUpdate();
-            
+            if(!window.endlessScrollPaused){
+                wallel.wallUpdate();
+            }
         }
     });
 }
