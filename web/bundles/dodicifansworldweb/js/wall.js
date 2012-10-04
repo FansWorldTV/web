@@ -2,7 +2,6 @@
  * Plugin to handle wall blocks
  */
 (function( $ ) {
-    var lastId = null;
     $.fn.wall = function() {
         var commentsLimit = 10;
         return this.each(function() 
@@ -41,14 +40,14 @@
             var wallid = wallel.attr('data-wall');
           
             if (wallid) {
-                //var lastid = wallel.find('[data-comment]').last().attr('data-comment');
+                
                 wallel.addClass('loading');
                 $('.comment-loading').show();
               
                 ajax.genericAction('comment_ajaxget', {
                     wall : wallid,
                     limit: commentsLimit,
-                    lastid: lastId,
+                    lastid: wallel.attr('data-last-id'),
                     usejson: true
                 },
                 function(r){
@@ -66,7 +65,7 @@
                                 }
                                 c++;
                             });
-                            lastId = value.id;
+                            wallel.attr('data-last-id', value.id);
                         });
                           
                         if (typeof Meteor != 'undefined') {
@@ -112,6 +111,7 @@
     function callbackAction(r,wallel){
         if(r){
             var c = 1;
+            var wallid = wallel.attr('data-wall');
             $.each(r, function(index, value){
                 templateHelper.renderTemplate(value.templateId,value,wallel,true,function(){
                     switch(value.templateId) {
@@ -130,7 +130,7 @@
                     }
                     c++;
                 });
-                lastId = value.id;
+                wallel.attr('data-last-id', value.id);
             });
           
           

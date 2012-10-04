@@ -26,14 +26,6 @@
             {% include 'DodiciFansworldWebBundle:Comment:comment_form.html.twig' with {shortform: true, entity: entity} %}
         </section>
 
-        <section class="comments-container">
-            {% block comments %}
-
-            {% for comment in entity.comments %}
-                {% include 'DodiciFansworldWebBundle:Comment:comment.comment.html.twig' with {comment: comment} %}
-            {% endfor %}
-
-            {% endblock %}
-        </section>	
+        {% include 'DodiciFansworldWebBundle:Comment/blocks:wall.html.twig' with {entity: entity} %}
     </div>
 </div>

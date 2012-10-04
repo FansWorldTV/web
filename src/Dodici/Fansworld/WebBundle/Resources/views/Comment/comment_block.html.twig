@@ -4,8 +4,5 @@
 		{% include 'DodiciFansworldWebBundle:Comment:comment_form.html.twig' with {entity: entity} %}
 	{% endif %}
 	
-	<div data-wall="{{ appstate.type(entity) ~ '_' ~ entity.id }}">
-		
-	</div>
-	{% include 'DodiciFansworldWebBundle:Comment:loading.html.twig'  %}
+	{% include 'DodiciFansworldWebBundle:Comment/blocks:wall.html.twig' with {entity: entity} %}
 </div>
