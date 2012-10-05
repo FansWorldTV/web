@@ -96,17 +96,7 @@ class Idol implements SearchableInterface, VisitableInterface
      * @ORM\JoinColumn(name="splash", referencedColumnName="id")
      */
     private $splash;
-    
-    /**
-     * @var Team
-     *
-     * @ORM\ManyToOne(targetEntity="Team")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="team_id", referencedColumnName="id")
-     * })
-     */
-    private $team;
-    
+        
     /**
      * @var string $origin
      *
@@ -468,26 +458,6 @@ class Idol implements SearchableInterface, VisitableInterface
     public function getImage()
     {
         return $this->image;
-    }
-
-    /**
-     * Set team
-     *
-     * @param Dodici\Fansworld\WebBundle\Entity\Team $team
-     */
-    public function setTeam(\Dodici\Fansworld\WebBundle\Entity\Team $team)
-    {
-        $this->team = $team;
-    }
-
-    /**
-     * Get team
-     *
-     * @return Dodici\Fansworld\WebBundle\Entity\Team 
-     */
-    public function getTeam()
-    {
-        return $this->team;
     }
     
 	/**
