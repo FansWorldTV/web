@@ -284,7 +284,6 @@ class IdolController extends SiteController
     /**
      * @Route("/{slug}/fans", name="idol_fans")
      * @Template
-     * @Secure(roles="ROLE_USER")
      */
     public function fansTabAction($slug)
     {
@@ -313,7 +312,6 @@ class IdolController extends SiteController
     /**
      * @Route("/{slug}/eventos", name="idol_eventos")
      * @Template
-     * @Secure(roles="ROLE_USER")
      */
     public function eventosTabAction($slug)
     {
@@ -324,7 +322,8 @@ class IdolController extends SiteController
             $this->get('visitator')->visit($idol);
 
         $eventos = $this->getRepository('Event')->ByIdol($idol);
-
+        
+        
         $return = array(
             'eventos' => $eventos,
             'idol' => $idol,
