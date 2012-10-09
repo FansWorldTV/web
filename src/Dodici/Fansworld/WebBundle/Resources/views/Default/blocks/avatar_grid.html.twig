@@ -12,7 +12,7 @@
             <h4>{{ block_title }} ( {{ avatars.list|length }} )</h4>
         </header>
 	{% endif %}
-    {% if avatars|length > 0 %}
+    {% if avatars.list is defined and avatars.list|length > 0 %}
         <ul class="avatar-list {{ avatars.ulClass }}"> 
             {% for avatar in avatars.list %}
                 {% if avatar.idol is defined %}

@@ -13,11 +13,8 @@
     {% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_fullwidth.html.twig" %}
         {% block inner_content %}
         	    
-        	{% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { block_title:  'Top Fans'|trans, avatars: fans } %}
-        	    
-        	{% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { block_title:  'Otros Fans'|trans, avatars: fans } %}
-        	    
-            
+        	{% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { avatars: fans } %}
+        	   
         {% endblock %}
     {% endembed %}		
 {% endblock %}
