@@ -7,5 +7,5 @@
 
 {% block text %}
 	<a class="notice-link" href="{{ path('user_wall', {username: notification.author.username }) }}">{{ notification.author }}</a> 
-	<span class="notice-text">respondió en <a href="{{ path('comment_show', {'id': notification.comment.comment.id }) }}">{{ notification.comment|truncate(15) }}</a></span>
+	<span class="notice-text">respondió en <a href="{{ path('comment_show', {'id': notification.comment.comment.id }) }}">{{ notification.comment.comment|truncate(15) }}</a></span>
 {% endblock %}
