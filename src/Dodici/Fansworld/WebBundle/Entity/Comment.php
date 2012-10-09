@@ -17,8 +17,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Comment
 {
     // Normal comment
-	const TYPE_COMMENT = 1;
-	// X and Y are now friends
+    const TYPE_COMMENT = 1;
+    // X and Y are now friends
     const TYPE_NEW_FRIEND = 2;
     // X has been labelled in content Y
     const TYPE_LABELLED = 3;
@@ -34,7 +34,7 @@ class Comment
     const TYPE_NEW_PHOTO = 8;
     // X has uploaded a new video
     const TYPE_NEW_VIDEO = 9;
-    
+
     /**
      * @var bigint $id
      *
@@ -67,14 +67,14 @@ class Comment
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     private $createdAt;
-        
+
     /**
      * @var boolean $active
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
     private $active;
-    
+
     /**
      * @var integer $privacy
      * Privacy::EVERYONE|Privacy::FRIENDS_ONLY
@@ -82,34 +82,34 @@ class Comment
      * @ORM\Column(name="privacy", type="integer", nullable=false)
      */
     private $privacy;
-    
+
     /**
      * @var integer $type
      *
      * @ORM\Column(name="type", type="integer", nullable=false)
      */
     private $type;
-    
+
     /**
      * @var integer $likeCount
      *
      * @ORM\Column(name="likecount", type="integer", nullable=false)
      */
     private $likeCount;
-    
+
     /**
      * @var integer $commentCount
      *
      * @ORM\Column(name="commentcount", type="integer", nullable=false)
      */
     private $commentCount;
-    
+
     /**
-	 * @ORM\OneToOne(targetEntity="Share", cascade={"remove", "persist"}, orphanRemoval="true")
-	 * @ORM\JoinColumn(name="share_id", referencedColumnName="id")
-	 */
+     * @ORM\OneToOne(targetEntity="Share", cascade={"remove", "persist"}, orphanRemoval="true")
+     * @ORM\JoinColumn(name="share_id", referencedColumnName="id")
+     */
     private $share;
-    
+
     /**
      * @var NewsPost
      *
@@ -119,7 +119,7 @@ class Comment
      * })
      */
     private $newspost;
-    
+
     /**
      * @var Application\Sonata\UserBundle\Entity\User
      *
@@ -129,7 +129,7 @@ class Comment
      * })
      */
     private $target;
-    
+
     /**
      * @var Video
      *
@@ -139,7 +139,7 @@ class Comment
      * })
      */
     private $video;
-    
+
     /**
      * @var Photo
      *
@@ -149,7 +149,7 @@ class Comment
      * })
      */
     private $photo;
-    
+
     /**
      * @var Album
      *
@@ -159,7 +159,7 @@ class Comment
      * })
      */
     private $album;
-    
+
     /**
      * @var Interest
      *
@@ -169,8 +169,8 @@ class Comment
      * })
      */
     private $interest;
-	
-	/**
+
+    /**
      * @var Contest
      *
      * @ORM\ManyToOne(targetEntity="Contest")
@@ -179,7 +179,7 @@ class Comment
      * })
      */
     private $contest;
-    
+
     /**
      * @var Proposal
      *
@@ -189,7 +189,7 @@ class Comment
      * })
      */
     private $proposal;
-    
+
     /**
      * @var Team
      *
@@ -199,7 +199,7 @@ class Comment
      * })
      */
     private $team;
-    
+
     /**
      * @var Event
      *
@@ -209,7 +209,7 @@ class Comment
      * })
      */
     private $event;
-    
+
     /**
      * @var Meeting
      *
@@ -219,7 +219,7 @@ class Comment
      * })
      */
     private $meeting;
-    
+
     /**
      * @var Idol
      *
@@ -229,7 +229,7 @@ class Comment
      * })
      */
     private $idol;
-    
+
     /**
      * @var Comment
      *
@@ -239,32 +239,32 @@ class Comment
      * })
      */
     private $comment;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="comment", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $comments;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Liking", mappedBy="comment", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $likings;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="HasTag", mappedBy="comment", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $hastags;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="HasUser", mappedBy="comment", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $hasusers;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="HasTeam", mappedBy="comment", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $hasteams;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="HasIdol", mappedBy="comment", cascade={"remove", "persist"}, orphanRemoval="true")
      */
@@ -272,10 +272,10 @@ class Comment
 
     public function __toString()
     {
-    	return (string)$this->getContent();
+        return (string) $this->getContent();
     }
 
-	/**
+    /**
      * @ORM\PrePersist()
      */
     public function prePersist()
@@ -284,48 +284,51 @@ class Comment
             $this->setCreatedAt(new \DateTime());
         }
         if (null === $this->likeCount) {
-        	$this->setLikeCount(0);
+            $this->setLikeCount(0);
         }
         if (null === $this->commentCount) {
-        	$this->setCommentCount(0);
+            $this->setCommentCount(0);
         }
         if (null === $this->type) {
-        	$this->setType(self::TYPE_COMMENT);
+            $this->setType(self::TYPE_COMMENT);
         }
         if (null === $this->active) {
-        	$this->setActive(true);
+            $this->setActive(true);
         }
         if (null === $this->privacy) {
             $this->setPrivacy(Privacy::EVERYONE);
         }
     }
-	
+
     public function likeUp()
     {
-    	$this->setLikeCount($this->getLikeCount() + 1);
+        $this->setLikeCount($this->getLikeCount() + 1);
     }
+
     public function likeDown()
     {
-    	if ($this->getLikeCount() > 0) {
-    		$this->setLikeCount($this->getLikeCount() - 1);
-    	}
+        if ($this->getLikeCount() > 0) {
+            $this->setLikeCount($this->getLikeCount() - 1);
+        }
     }
-    
-    public static function getTypeList() {
-    	return array(
-    		self::TYPE_COMMENT => 'comment',
-    		self::TYPE_NEW_FRIEND => 'new_friend',
-    		self::TYPE_LABELLED => 'user_tagged',
-    		self::TYPE_SHARE => 'share',
-    		self::TYPE_LIKES => 'likes',
-    		self::TYPE_NEW_THREAD => 'forum_created',
-    		self::TYPE_THREAD_ANSWERED => 'forum_answered',
-    		self::TYPE_NEW_PHOTO => 'new_photo',
-    		self::TYPE_NEW_VIDEO => 'new_video'
-    	);
+
+    public static function getTypeList()
+    {
+        return array(
+            self::TYPE_COMMENT => 'comment',
+            self::TYPE_NEW_FRIEND => 'new_friend',
+            self::TYPE_LABELLED => 'user_tagged',
+            self::TYPE_SHARE => 'share',
+            self::TYPE_LIKES => 'likes',
+            self::TYPE_NEW_THREAD => 'forum_created',
+            self::TYPE_THREAD_ANSWERED => 'forum_answered',
+            self::TYPE_NEW_PHOTO => 'new_photo',
+            self::TYPE_NEW_VIDEO => 'new_video'
+        );
     }
-    
-    public function getTypeName() {
+
+    public function getTypeName()
+    {
         if ($this->comment) {
             return 'subcomment';
         } else {
@@ -333,8 +336,8 @@ class Comment
             return $arr[$this->type];
         }
     }
-    
-	/**
+
+    /**
      * Get content, truncated to length
      *
      * @return text
@@ -343,13 +346,12 @@ class Comment
     {
         $cont = $this->content;
         if (mb_strlen($cont) > $length) {
-        	$cont = substr($cont, 0, $length) . '...';
+            $cont = substr($cont, 0, $length) . '...';
         }
-        if(is_null($cont) || $cont === '')
+        if (is_null($cont) || $cont === '')
             $cont = 'empty';
         return $cont;
     }
-
 
     /**
      * Get id
@@ -600,12 +602,13 @@ class Comment
     {
         return $this->contest;
     }
+
     public function __construct()
     {
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->likings = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->likings = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Set comment
      *
@@ -725,29 +728,31 @@ class Comment
     {
         return $this->hasusers;
     }
-    
-	/**
+
+    /**
      * Admin methods
      */
     public function setHastags($hastags)
     {
         $this->hastags = $hastags;
     }
-	public function addHastags($hastags)
+
+    public function addHastags($hastags)
     {
         $this->addHasTag($hastags);
     }
-    
-	public function setHasusers($hasusers)
+
+    public function setHasusers($hasusers)
     {
         $this->hasusers = $hasusers;
     }
-	public function addHasusers($hasusers)
+
+    public function addHasusers($hasusers)
     {
         $this->addHasUser($hasusers);
     }
 
-	/**
+    /**
      * Add hasteams
      *
      * @param Dodici\Fansworld\WebBundle\Entity\HasTeam $hasteams
@@ -766,16 +771,17 @@ class Comment
     {
         return $this->hasteams;
     }
-    
-	public function setHasteams($hasteams)
+
+    public function setHasteams($hasteams)
     {
         $this->hasteams = $hasteams;
     }
-	public function addHasteams($hasteams)
+
+    public function addHasteams($hasteams)
     {
         $this->addHasTeam($hasteams);
     }
-    
+
     /**
      * Set share
      *
@@ -955,4 +961,5 @@ class Comment
     {
         return $this->proposal;
     }
+
 }
