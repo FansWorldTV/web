@@ -17,26 +17,27 @@ $(function(){
         });
     });
     
-    $("dl.privacies button.btn").click(function(){
+    $("table[data-edit-privacy] button.btn").click(function(){
         var privacies = {};
+        var self = $(this);
 
-        $(".privacies button").addClass('disabled');
+        self.parent().addClass('disabled');
 
-        $(".privacies dd").each(function(i, element){
+        $("table[data-edit-privacy] td.btn-group").each(function(i, element){
             var field = $(element).find('.active').attr('data-field');
             var value = $(element).find('.active').attr('data-value');
             privacies[field] = value;
         });
 
-        var clickedField = $(this).attr('data-field');
-        var clickedValue = $(this).attr('data-value');
+        var clickedField = self.attr('data-field');
+        var clickedValue = self.attr('data-value');
         privacies[clickedField] = clickedValue;
 
         ajax.genericAction('profile_ajaxprivacy', {
-            'privacy' : privacies,
+            'privacy' : privacies
         }, function(response){
-            success(response.error);
-            $(".privacies button").removeClass('disabled');
+            success('Preferencias de privacidad guardadas');
+            self.parent().removeClass('disabled');
         }, function(e){
             error(e);
         });

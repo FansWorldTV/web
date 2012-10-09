@@ -12,7 +12,7 @@
     {{ parent() }} 
     <div class="row-fluid">
         <h3>Ajustes de privacidad</h3>
-        <table class="table">
+        <table class="table" data-edit-privacy>
             <tbody>
                 {% for field, value in privacyFields %}
                         {% if field == 'facebook' or field == 'twitter' %}
@@ -28,9 +28,9 @@
                                         {% endif %}
                                     </td>
                                     <td class="btn-group" data-toggle="buttons-radio">
-                                            <button class="btn {% if appstate.PrivacyName(value) == 'everyone' %}active{% endif %}" data-field="{{field}}" data-value="everyone">Público</button>
-                                            <button class="btn {% if appstate.PrivacyName(value) =='friends_only' %}active{% endif %}" data-field="{{field}}" data-value="friends_only">Solo Fans</button>
-                                            <button class="btn {% if appstate.PrivacyName(value) =='only_me' %}active{% endif %}" data-field="{{field}}" data-value="only_me">Privado</button>
+                                        <button class="btn {% if value == 'everyone' %}active{% endif %}" data-field="{{field}}" data-value="everyone">Público</button>
+                                        <button class="btn {% if value =='friends_only' %}active{% endif %}" data-field="{{field}}" data-value="friends_only">Solo Fans</button>
+                                        <button class="btn {% if value =='only_me' %}active{% endif %}" data-field="{{field}}" data-value="only_me">Privado</button>
                                     </td>
                                 </tr>
                             {% endif %}
