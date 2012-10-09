@@ -208,6 +208,7 @@ var events = {
 		events.searchOptions.teamcategory  = null;
 		events.teamcategoriesDropdown.find('.active').removeClass('active');
 		events.teamcategoriesDropdown.find('ul.dropdown-menu').empty();
+		events.loadEvents();
 		success('filtros resetados');
 	},
 	
@@ -215,7 +216,7 @@ var events = {
 		events.calendarDestination.datepicker( "setDate", null );
 		events.searchOptions.dateFrom = null;
 		events.searchOptions.dateTo = null;
-		
+		events.loadEvents();
 		success('fecha resetada');
 	},
 	

@@ -188,6 +188,11 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="team", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $comments;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="HasTeam", mappedBy="team", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $hasteams;
 
     /**
      * @var integer $fanCount
@@ -704,6 +709,36 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     public function getCountry()
     {
         return $this->country;
+    }
+    
+	/**
+     * Add hasteams
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\HasTeam $hasteams
+     */
+    public function addHasTeam(\Dodici\Fansworld\WebBundle\Entity\HasTeam $hasteams)
+    {
+        $hasteams->setTeam($this);
+        $this->hasteams[] = $hasteams;
+    }
+
+    /**
+     * Get hasteams
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getHasteams()
+    {
+        return $this->hasteams;
+    }
+    
+	public function setHasteams($hasteams)
+    {
+        $this->hasteams = $hasteams;
+    }
+	public function addHasteams($hasteams)
+    {
+        $this->addHasTeam($hasteams);
     }
     
 	/**

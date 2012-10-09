@@ -66,13 +66,16 @@ class EventController extends SiteController
         }
         
         $sortBy    = $request->get('sortBy', null);
+        if ($sortBy == 'null') $sortBy = null;
         
         $sport     = $request->get('sport', null);
+        if ($sport == 'null') $sport = null;
         if($sport){
             $sport = $this->getRepository('Sport')->findOneBy(array('id' => $sport));
         }
         
         $teamcategory     = $request->get('teamcategory', null);
+        if ($teamcategory == 'null') $teamcategory = null;
         if($teamcategory){
             $teamcategory = $this->getRepository('TeamCategory')->findOneBy(array('id' => $teamcategory));
         }
