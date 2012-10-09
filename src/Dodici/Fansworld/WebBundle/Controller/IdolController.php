@@ -204,7 +204,6 @@ class IdolController extends SiteController
 
         $user = $this->getUser();
         $videoRepo = $this->getRepository('Video');
-        $videoRepo instanceof VideoRepository;
 
         $videos = $videoRepo->search(null, $user, self::LIMIT_SEARCH, null, null, null, null, null, null, 'default', $idol);
         $countAll = $videoRepo->countSearch(null, $user, null, null, null, null, null, $idol);

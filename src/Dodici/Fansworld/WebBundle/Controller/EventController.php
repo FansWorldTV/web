@@ -336,7 +336,7 @@ class EventController extends SiteController
     
 
         $tweet = $this->getRepository('EventTweet')->findOneBy(array('id' => $tweetid));
-        $this->formatJson($tweet);
+        $response = $this->formatJson($tweet);
         return $this->jsonResponse($response);
     }
     
@@ -351,7 +351,7 @@ class EventController extends SiteController
     
 
         $comment = $this->getRepository('Comment')->findOneBy(array('id' => $commentId));
-        $this->formatJson($comment);
+        $response = $this->formatJson($comment);
         return $this->jsonResponse($response);
     }
     

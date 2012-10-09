@@ -283,20 +283,19 @@ class TeamController extends SiteController
 
         $response = array('error' => false);
         
-        if($isRemove) {
-            try {
+        try {
+        
+            if($isRemove) {
                 $teamship = $teamshipRepo->findOneBy(array('author' => $user->getId(), 'team' => $actualTeam->getId()));
                 $teamship->setFavorite(false);
                 $em->persist($teamship);
                 $em->flush();
-            } catch (Exception $e) {
                 $response = array('error', $e->getMessage());
+                
+                return $this->jsonResponse($response);
             }
-            
-            return $this->jsonResponse($response);
-        }
 
-        try {
+        
             if ($actualTeam) {
                 $actual = $teamshipRepo->findOneBy(array('author' => $user->getId(), 'team' => $actualTeam->getId()));
                 if ($actual) {
@@ -319,7 +318,7 @@ class TeamController extends SiteController
                 }
                 $em->flush();
             }
-        } catch (Exception $exc) {
+        } catch (\Exception $exc) {
             $response['error'] = $exc->getMessage();
         }
 
@@ -367,7 +366,6 @@ class TeamController extends SiteController
         }
 
         $videoRepo = $this->getRepository('Video');
-        $videoRepo instanceof VideoRepository;
 
         $user = $this->getUser();
 

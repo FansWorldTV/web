@@ -761,7 +761,7 @@ class UserController extends SiteController
                 'name' => (string) $idol,
                 'avatar' => $this->getImageUrl($idol->getImage()),
                 'id' => $idol->getId(),
-                'slug' => $idols->getSlug()
+                'slug' => $idol->getSlug()
             );
         }
 
