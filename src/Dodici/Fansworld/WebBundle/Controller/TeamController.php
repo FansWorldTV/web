@@ -290,7 +290,6 @@ class TeamController extends SiteController
                 $teamship->setFavorite(false);
                 $em->persist($teamship);
                 $em->flush();
-                $response = array('error', $e->getMessage());
                 
                 return $this->jsonResponse($response);
             }
