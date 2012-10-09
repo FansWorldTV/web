@@ -113,7 +113,8 @@
             var c = 1;
             var wallid = wallel.attr('data-wall');
             $.each(r, function(index, value){
-                templateHelper.renderTemplate(value.templateId,value,wallel,true,function(){
+                console.log(value.id);
+                templateHelper.renderTemplate(value.templateId,value,wallel,false,function(){
                     switch(value.templateId) {
                         case 'comment-comment':
                             $('[ajax-delete]').ajaxdelete();
