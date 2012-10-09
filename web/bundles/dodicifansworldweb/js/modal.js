@@ -6,7 +6,7 @@
 
         // initialization and settings
         var settings = $.extend({
-            'href': $button.attr('href') || '#',
+            'href': $button.attr('data-modal-url') || '#',
             'target': 'body',
             'duration': 1000,
             // ids
@@ -54,8 +54,11 @@
         }
 
         function close() {
-            $container.fadeOut();
-            settings.onclose();
+            $container.fadeOut(function(){
+                $(settings.container).remove();
+                init();
+                settings.onclose();
+            });
         }
 
         function init() {
@@ -82,8 +85,8 @@
             });
 
             $button.on('click', function (e) {
-                open();
                 e.preventDefault();
+                open();
                 return false;
             });
         }

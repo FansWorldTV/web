@@ -51,12 +51,18 @@
     {% set listId = ' id="' ~ listId ~ '"' %}
 {% endif %}
 
+{% if listWithModal is not defined %}
+    {% set listWithModal = '' %}
+{% else %}
+    {% set listWithModal = 'data-is-modal' %}
+{% endif %}
+
 {% set listParams = 'data-list data-list-entity="video"' ~ listFilters ~ listFiltersElement ~ listChannels ~ listResult ~ listScrollable ~ listFetchMoreButton ~ listIsMontage %}
 <div class="row-fluid">
     <div {{ listId|raw }} class="am-container list-mosaic" {{ listParams|raw }}>
         {% if videos|length>0 %}
             {% for video in videos %}
-                <a href="{{ path('video_modal_show', {'id': video.id, 'slug': video.slug}) }}">
+                <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}" {{ listWithModal }} data-modal-url = "{{ path('video_modal_show', {'id': video.id, 'slug': video.slug}) }}" >
                     <span class="title">{{ video.title }}</span>
                     {% thumbnail video.image, thumbnailSize with {"title": video.title} %}
                 </a>

@@ -11,6 +11,8 @@ var videos = {
         videos.usersVideos.addMore();
         
         videos.detail.init();
+        
+        $("[data-is-modal]").modal();
     },
     
     addSearchContent: function(template, video, videoUrl){
