@@ -1,4 +1,27 @@
 (function ($) {
+    
+    /*
+     
+    OPTIONS:
+    
+    {
+                         KEY  : DEFUALT VALUE                                              // DATA TYPE         DESCRIPTION
+    
+                      'entity': null,                                                      // (string)          specify entity name
+                  'entityType': null,                                                      // (string)          specify entity type
+                    'entityId': null,                                                      // (int)             specify entity id
+                     'filters': null,                                                      // (css3 selector)   the list of filters
+              'filtersElement': 'li',                                                      // (string)          the element of the filters list which toggles the list
+                    'channels': false,                                                     // (bool)            tells if this is a channels list
+             'fetchMoreButton': false,                                                     // (bool)            whether to include a the fetchMore button
+        'fetchMoreButtonClass': 'data-list-fetch-more-button',                             // (string)          a class for the fetchMore button
+                      'result': $list,                                                     // (css3 selector)   the target div where the list is appended
+                  'scrollable': false,                                                     // (bool)            tells if endless scroll should be binded or not
+                     'montage': false,                                                     // (bool)            tells if list should be created as a montage or as a raw list
+              'preloaderImage': '/bundles/dodicifansworldweb/images/ajax-loader-small.gif' // (string)          path to the preloader image
+    }
+     
+    */
 
     "use strict";
 
@@ -7,7 +30,7 @@
         list.$list = $element;
         list.settings = $.extend({
             // options that may be overriden by html attributes
-            'entity': list.$list.attr('data-list-entity'),
+            'entity': list.$list.attr('data-list-entity') || null,
             'entityType': list.$list.attr('data-list-entity-type') || null,
             'entityId': list.$list.attr('data-list-entity-id') || null,
             'filters': list.$list.attr('data-list-filters') || null,
@@ -18,7 +41,6 @@
             'result': !list.$list.attr('data-list-result') ? list.$list : $(list.$list.attr('data-list-result')),
             'scrollable': typeof list.$list.attr('data-list-scrollable') === "undefined" ? false : true,
             'montage': typeof list.$list.attr('data-list-montage') === "undefined" ? false : true,
-            // other options
             'preloaderImage': '/bundles/dodicifansworldweb/images/ajax-loader-small.gif'
         }, options || {});
         list.filter = $('[data-list-filter-type].active').attr('data-list-filter-type') || null;
