@@ -48,7 +48,7 @@ class FriendshipController extends SiteController {
             $trans = $this->get('translator');
             if ($friendship->getActive()) {
                 $message = $trans->trans('Ahora sigues a ' . $target . '.');
-                $buttontext = $trans->trans('add_idol');
+                $buttontext = $trans->trans('YA ERES FAN');
             } else {
                 $message = $trans->trans('Le has enviado una solicitud a ' . $target . ', deberá aprobarla para que puedas seguirlo.');
                 $buttontext = $trans->trans('CANCELAR SOLICITUD');
