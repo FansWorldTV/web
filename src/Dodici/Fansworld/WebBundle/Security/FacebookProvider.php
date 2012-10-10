@@ -41,6 +41,11 @@ class FacebookProvider implements UserProviderInterface
     {
         return $this->userManager->findUserBy(array('facebookId' => $fbId));
     }
+    
+    public function findUserByEmail($email)
+    {
+        return $this->userManager->findUserBy(array('email' => $email));
+    }
 
     public function loadUserByUsername($username)
     {
@@ -53,6 +58,23 @@ class FacebookProvider implements UserProviderInterface
         }
         
         if (!empty($fbdata)) {
+            if (isset($fbdata['email']) && empty($user)) {
+                $user = $this->findUserByEmail($fbdata['email']);
+                
+                // TODO: maybe set a session so we can ask the user 
+                // whether he wants to link his account to fb or not, or send a mail
+                
+                $user->setLinkfacebook(true);
+                $user->setFacebookId($fbdata['id']);
+                $user->addRole('ROLE_FACEBOOK');
+                // let's confirm them, just in case
+                $user->setEnabled(true);
+                $user->setConfirmationToken(null);
+                $this->userManager->updateUser($user);
+                
+                return $user;
+            }
+            
         	if (empty($user)) {
                 $user = $this->userManager->createUser();
                 $user->setEnabled(true);
