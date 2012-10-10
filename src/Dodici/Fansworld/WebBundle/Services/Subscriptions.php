@@ -41,10 +41,11 @@ class Subscriptions
         if (!$user) $user = $this->user;
         if (!$user) throw new AccessDeniedException('Access denied');
 
-        if ($entity instanceof VideoCategory) {
+        if ($entity instanceof VideoCategory && !($this->isSubscribed($entity, $user))) {
             $user->subscribeVideoCategory($entity);
             $this->em->persist($user);
             $this->em->flush();
+            return true;
         }
         
         return false;
@@ -54,11 +55,14 @@ class Subscriptions
     {
         if (!$user) $user = $this->user;
         if (!$user) throw new AccessDeniedException('Access denied');
-
+        
         if ($entity instanceof VideoCategory) {
             $vc = $user->unsubscribeVideoCategory($entity);
-            $this->em->remove($vc);
-            $this->em->flush();
+            if ($vc) {
+                $this->em->remove($vc);
+                $this->em->flush();
+                return true;
+            }
         }
         
         return false;
@@ -69,5 +73,15 @@ class Subscriptions
         return 
             $this->em->getRepository('DodiciFansworldWebBundle:VideoCategorySubscription')
             ->usersSubscribedTo($videocategory);
+    }
+    
+    public function isSubscribed(VideoCategory $videocategory, User $user=null)
+    {
+        if (!$user) $user = $this->user;
+        if (!$user) throw new AccessDeniedException('Access denied');
+        
+        return 
+            $this->em->getRepository('DodiciFansworldWebBundle:VideoCategorySubscription')
+            ->findOneBy(array('author' => $user->getId(), 'videocategory' => $videocategory->getId()));
     }
 }

@@ -615,6 +615,11 @@ services:
       arguments: [@preferences]
       tags:
           - { name: twig.extension }
+    twig.extension.subscriptions:
+      class: Dodici\Fansworld\WebBundle\Extensions\SubscriptionsExtension
+      arguments: [@subscriptions]
+      tags:
+          - { name: twig.extension }
     twig.extension.fanmaker:
       class: Dodici\Fansworld\WebBundle\Extensions\FanmakerExtension
       arguments: [@fanmaker]

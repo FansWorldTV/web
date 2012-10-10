@@ -24,10 +24,7 @@
             </ul>
         </li>
         <li class='subscribirse'>
-            <div class="btn-group">
-                <button class="btn btn-small btn-success"><i class="icon-ok"></i></button>
-                <button class="btn btn-small btn-success js-subscribe" data-active-channel="{{ activeChannel }}" data-login-required>Subscribirse</button>
-            </div>
+            {% include 'DodiciFansworldWebBundle:Tv:blocks/button_subscribe.html.twig' with {channel: activeChannel} %}
         </li>
         {% else %}
             <li class='term'>{{ term }}</li>

@@ -3,7 +3,7 @@
         <ul id="filter-channels">
             <li class="active" data-list-target="all"><a>All</a></li>
             {% for channel in channels %}
-                <li data-list-target="{{ channel.channelName }}"><a>{{ channel.channelName }}</a></li>
+                <li data-list-target="{{ channel.channelName }}" data-channel-id="{{ channel.id }}"><a>{{ channel.channelName }}</a></li>
             {% endfor %}
         </ul>
     </aside>
@@ -48,13 +48,10 @@
                             </div>
                             
                             <div class="explorar">
-                                <a href="{{ path('teve_explorechannel', {id: channel.id, slug: channel.slug}) }}">Explorar ></a>
+                                <a href="{{ path('teve_explorechannel', {id: channel.id, slug: channel.slug}) }}">Explorar &gt;</a>
                             </div>
                             <div class="subscribirse">
-                                <div class="btn-group">
-                                  <button class="btn btn-success"><i class="icon-ok"></i></button>
-                                  <button class="btn btn-success js-subscribe">Subscribirse</button>
-                                </div>
+                                {% include 'DodiciFansworldWebBundle:Tv:blocks/button_subscribe.html.twig' with {channel: channel.channelEntity} %}
                             </div>
                         </div>
                     </div>

@@ -79,7 +79,7 @@
                         list.preloader.show();
                         if (list.settings.channels) {
                             list.target =  $btn.attr('data-list-target');
-                            $('.js-subscribe').attr('data-active-channel', list.target);
+                            $('[data-subscribe-channel]').attr('data-subscribe-channel', $btn.attr('data-channel-id'));
                             // showing highlight panels
                             $('.tab-pane').hide();
                             $('.tab-pane#' + list.target).show();

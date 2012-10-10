@@ -1,0 +1,9 @@
+<button class="btn btn-small btn-success" data-subscribe-channel="{{ channel.id }}" data-login-required>
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and (subscriptions.subscribed(channel)) %}
+        <i class="icon-remove"></i> 
+        {{ 'unsubscribe'|trans }}
+    {% else %}
+        <i class="icon-ok"></i> 
+        {{ 'subscribe'|trans }}
+    {% endif %}
+</button>

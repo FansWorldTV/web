@@ -1593,5 +1593,7 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
                 return $vc;
             }
         }
+        
+        return false;
     }
 }

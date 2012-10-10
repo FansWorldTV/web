@@ -61,7 +61,8 @@ class TvController extends SiteController
                 'video' => $cvideo,
                 'channelName' => $videoCategory->getTitle(),
                 'slug' => $videoCategory->getSlug(),
-                'id' => $videoCategory->getId()
+                'id' => $videoCategory->getId(),
+                'channelEntity' => $videoCategory
             );
         }
 
@@ -313,25 +314,49 @@ class TvController extends SiteController
             'activeChannel' => $activeCategory,
         );
     }
-
-    /**
-     * @Route("/channel/subscribe", name="teve_channelsubscribe")
-     * @Template
+    
+	/**
+     * @Route("/channel/subscribe/toggle", name="teve_channelsubscribe")
      */
-    public function channelSubscribeAction()
-    {
-        $request = $this->getRequest();
-        $channel = $request->get('channel', false);
+    public function ajaxToggleAction() {
+        try {
+            $request = $this->getRequest();
+            $idvideocat = intval($request->get('channel'));
+            $user = $this->getUser();
+            
+            $t = $this->get('translator');
 
-        $service = $this->get('Subscriptions');
-        $entity = $this->getRepository('VideoCategory')->find(1);
-        $user = $this->getUser();
-        $subscribe = $service->subscribe($entity, $user);
-//        var_dump($entity);
+            if (!$user instanceof User)
+                throw new \Exception($t->trans('must_login'));
 
-        return $this->jsonResponse(array(
-                    'error' => !(bool) $subscribe
-                ));
+            $videocategory = $this->getRepository('VideoCategory')->find($idvideocat);
+            if (!$videocategory)
+                throw new \Exception($t->trans('channel_not_found'));
+
+            $subscriptions = $this->get('subscriptions');
+            
+            if ($subscriptions->isSubscribed($videocategory)) {
+                $state = $subscriptions->unsubscribe($videocategory) ? false : null;
+
+                $message = $t->trans('unsubscribed_to_channel') . ' "' . (string) $videocategory . '"';
+                $buttontext = $t->trans('subscribe');
+            } else {
+                $state = $subscriptions->subscribe($videocategory) ? true : null;
+
+                $message = $t->trans('subscribed_to_channel') . ' "' . (string) $videocategory . '"';
+                $buttontext = $t->trans('unsubscribe');
+            }
+
+            $response = new Response(json_encode(array(
+                                'buttontext' => $buttontext,
+                                'message' => $message,
+                                'state' => $state
+                            )));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+        } catch (\Exception $e) {
+            return new Response($e->getMessage(), 400);
+        }
     }
 
 }

@@ -10,7 +10,7 @@ var tv = {
         $('#montage-video-list a').modal();
 
         // subscribe buttons
-        $('.js-subscribe').click(function () {
+        $('[data-subscribe-channel]').click(function () {
             tv.subscribe($(this));
         });
         
@@ -30,7 +30,7 @@ var tv = {
     'subscribe': function ($button) {
         "use strict";
 
-        var channel = $button.attr('data-active-channel'),
+        var channel = $button.attr('data-subscribe-channel'),
             params = {};
 
         if (!channel || channel === 'all') {
@@ -38,11 +38,24 @@ var tv = {
         }
 
         params.channel = channel;
+        
+        $button.addClass('loading');
 
         ajax.genericAction('teve_channelsubscribe', params, function (response) {
-            console.log(response);
+            success(response.message);
+            $button.text(response.buttontext);
+            
+            if (response.state == true) {
+                $button.prepend($('<i>').attr('class', 'icon-remove').after(' '));
+            } else if (response.state == false) {
+                $button.prepend($('<i>').attr('class', 'icon-ok').after(' '));
+            }
+            
+            $button.removeClass('loading');
         }, function (msg) {
-            console.error(msg);
+            error(msg);
+            
+            $button.removeClass('loading');
         });
 
     },
