@@ -37,40 +37,45 @@ class LoadVideoData extends AbstractFixture implements FixtureInterface, Contain
 	    	
 	        foreach ($loader as $ct) {
 	            $x++;
-	            echo "Creating video $x / $cnt ... \n";
+	            echo "Creating video $x / $cnt ... ";
 	            
-	            $user = null;
-	            if (isset($ct['author'])) {
-	        		$user = $manager->merge($this->getReference('user-'.$ct['author']));
-	        	}
-	            if ($user && isset($ct['url']) && $ct['url']) {
-	        	    $video = $uploader->createVideoFromUrl($ct['url'], $user);
-	        	} else {
-	        	    $video = new Video();
-	        	}
-	        	if ($user) $video->setAuthor($user);
-	        	
-	        	$videocategory = $manager->merge($this->getReference('videocategory-'.$ct['videocategory']));
-	        	$video->setVideocategory($videocategory);
-	        	if (isset($ct['title']) && $ct['title']) $video->setTitle($ct['title']);
-	        	if (isset($ct['content']) && $ct['content']) $video->setContent($ct['content']);
-	        	
-	        	if (isset($ct['createdAt']) && $ct['createdAt']) {
-	        	    $date = \DateTime::createFromFormat('Y-m-d', $ct['createdAt']);
-	        	    if ($date) $video->setCreatedAt($date);
-	        	}
-	        	
-	        	$video->setPrivacy(Privacy::EVERYONE);
-	        	$video->setHighlight($ct['highlight']);
-	        	
-	        	if (isset($ct['stream']) && $ct['stream']) {
-	        	    $video->setStream($ct['stream']);
-	        	    $video->setActive(false);
-	        	}
-	            
-		        $manager->persist($video);
-		        
-		        if ($video->getStream()) $toprocess[] = $video;
+	            try {
+    	            $user = null;
+    	            if (isset($ct['author'])) {
+    	        		$user = $manager->merge($this->getReference('user-'.$ct['author']));
+    	        	}
+    	            if ($user && isset($ct['url']) && $ct['url']) {
+    	        	    $video = $uploader->createVideoFromUrl($ct['url'], $user);
+    	        	} else {
+    	        	    $video = new Video();
+    	        	}
+    	        	if ($user) $video->setAuthor($user);
+    	        	
+    	        	$videocategory = $manager->merge($this->getReference('videocategory-'.$ct['videocategory']));
+    	        	$video->setVideocategory($videocategory);
+    	        	if (isset($ct['title']) && $ct['title']) $video->setTitle($ct['title']);
+    	        	if (isset($ct['content']) && $ct['content']) $video->setContent($ct['content']);
+    	        	
+    	        	if (isset($ct['createdAt']) && $ct['createdAt']) {
+    	        	    $date = \DateTime::createFromFormat('Y-m-d', $ct['createdAt']);
+    	        	    if ($date) $video->setCreatedAt($date);
+    	        	}
+    	        	
+    	        	$video->setPrivacy(Privacy::EVERYONE);
+    	        	$video->setHighlight($ct['highlight']);
+    	        	
+    	        	if (isset($ct['stream']) && $ct['stream']) {
+    	        	    $video->setStream($ct['stream']);
+    	        	    $video->setActive(false);
+    	        	}
+    	            
+    		        $manager->persist($video);
+    		        
+    		        if ($video->getStream()) $toprocess[] = $video;
+	            } catch(\Exception $e) {
+	                echo "(error!)";
+	            }
+	            echo "\n";
 	        }
 	        
 	        $manager->flush();
