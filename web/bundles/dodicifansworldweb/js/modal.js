@@ -2,7 +2,7 @@
 
     "use strict";
 
-    var Modal = function ($button, options) {
+    var ModalPopup = function ($button, options) {
 
         // initialization and settings
         var settings = $.extend({
@@ -45,6 +45,7 @@
             var documentHeight = $(document).height();
             $container.css('height', documentHeight + 'px');
             $overlay.css('height', documentHeight + 'px');
+            
             $container.animate({
                 opacity: 'show'
             }, settings.duration, function () {
@@ -54,9 +55,9 @@
         }
 
         function close() {
-            $container.fadeOut(function(){
-                $(settings.container).remove();
-                init();
+            $container.fadeOut(function() {
+                $content.html('');
+                $container.fadeOut();
                 settings.onclose();
             });
         }
@@ -96,14 +97,14 @@
     };
 
     // plugin creation
-    $.fn.modal = function (options) {
+    $.fn.modalPopup = function (options) {
         $(this).each(function () {
             var $button = $(this);
 
-            if ($button.data('modal')) {
+            if ($button.data('modalPopup')) {
                 return;
             }
-            $button.data('modal', new Modal($button, options));
+            $button.data('modalPopup', new ModalPopup($button, options));
         });
 
     };

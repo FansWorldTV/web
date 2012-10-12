@@ -6,8 +6,8 @@ var tv = {
         // lists
         $('[data-list]').list();
 
-        // modal
-        $('#montage-video-list a').modal();
+        // modalPopup
+        $('#montage-video-list a').modalPopup();
 
         // subscribe buttons
         $('[data-subscribe-channel]').click(function () {
