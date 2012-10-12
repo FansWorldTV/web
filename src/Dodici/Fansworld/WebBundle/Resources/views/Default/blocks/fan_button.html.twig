@@ -30,6 +30,7 @@
         <!--div class="addFriend" ">
             <button class="btn {{ buttonSize }} btn_{{ btnType }} remove btn-success {% if btnType == 'idolship' %} disabled {% endif %}" data-{{ btnType }}-id="{{ fship.id }}">{{ 'remove_idol'|trans }}</button>
         </div-->
+        <label class="label">YA ERES FAN</label>
     {% else %}
         {% if app.user != entity %}
             <div class="addFriend"  data-add-fan data-login-required >
