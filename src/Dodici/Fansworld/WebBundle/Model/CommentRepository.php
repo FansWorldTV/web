@@ -71,6 +71,19 @@ class CommentRepository extends CountBaseRepository
             
         return $query->getResult();
 	}
+        
+    public function getCommentSubcomments($entity) {
+        $classname = $this->getType($entity);
+
+        $query = $this->_em->createQuery('
+            SELECT c FROM \Dodici\Fansworld\WebBundle\Entity\Comment c
+            WHERE c.'.$classname.' = :entity 
+            ORDER BY c.id ASC
+    	')
+            ->setParameter('entity', $entity->getId(), Type::BIGINT);
+
+        return $query->getResult();
+    }
 	
 	/**
 	 * Get comments for event wall

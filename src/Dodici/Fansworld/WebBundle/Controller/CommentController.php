@@ -142,6 +142,37 @@ class CommentController extends SiteController {
 
         return $this->jsonResponse($response);
     }
+    /**
+     *  @Route("/ajax/get/subcomments/", name="subcomment_ajaxget")
+     */
+    public function ajaxGetSubcommentsAction() {
+        $request = $this->getRequest();
+        $commentIds = $request->get('wallCommentIds', false);
+        $repo = $this->getRepository('Comment');
+        $response = array();
+        
+        if(empty($commentIds)) {
+            return $this->jsonResponse($response);
+        }
+        
+        if(!is_array($commentIds)) {
+            $commentIds = array($commentIds);
+        }
+        
+        foreach($commentIds as $commentId) {
+            $entity = $repo->find($commentId);
+            $subcomments = $repo->getCommentSubcomments($entity);
+            if(!empty($subcomments)) {
+                foreach($subcomments as $subcomment) {
+                    $response[(string) $commentId][] = array(
+                        'content' => $subcomment->getContent()
+                    );
+                }
+            }
+        }
+        
+        return $this->jsonResponse($response);
+    }
 
     private function jsonComment(Comment $comment, $useJson) {
         $appMedia = $this->get('appmedia');
@@ -179,13 +210,6 @@ class CommentController extends SiteController {
         );
 
         $commentArray = array_merge($commentArray, $tag, $type, $author, $target);
-
-        $subcomments = $comment->getComments();
-        if ($subcomments) {
-            foreach ($subcomments as $subcomment) {
-                $commentArray['subcomments'][] = $this->jsonComment($subcomment, $useJson);
-            }
-        }
 
         return $commentArray;
     }

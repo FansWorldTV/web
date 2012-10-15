@@ -1,13 +1,15 @@
 /**
  * Plugin to handle wall blocks
  */
+var wallCommentIds = [],
+     SUBCOMMENTS_TO_SHOW = 5;
+     
 (function( $ ) {
     $.fn.wall = function() {
-        var commentsLimit = 10;
-        return this.each(function() 
-        {
-            var wallel = $(this);
-            var wallid = wallel.attr('data-wall');
+        return this.each(function() {
+            var wallel = $(this),
+                 wallid = wallel.attr('data-wall');
+            
             if (wallid) {
                 if (!wallel.attr('data-wall-loaded')) {
                     wallel.addClass('loading');
@@ -15,16 +17,17 @@
                   
                     ajax.genericAction('comment_ajaxget', {
                         wall : wallid,
-                        limit: commentsLimit,
+                        limit: 10,
                         usejson: true
                     },
-                    function(r){
+                    function(r) {
                         callbackAction(r,wallel);
                     },
-                    function(){},
-                        'get',
-                        false
-                        );
+                    function() {
+                        
+                    },
+                    'get',
+                    false);
                 }
             }
         });
@@ -32,29 +35,25 @@
   
   
     $.fn.wallUpdate = function() {
-        var commentsLimit = 10;
         window.endlessScrollPaused = true;
-        return this.each(function() 
-        {
+        return this.each(function() {
             var wallel = $(this);
             var wallid = wallel.attr('data-wall');
           
             if (wallid) {
-                
                 wallel.addClass('loading');
                 $('.comment-loading').show();
               
                 ajax.genericAction('comment_ajaxget', {
                     wall : wallid,
-                    limit: commentsLimit,
+                    limit: 10,
                     lastid: wallel.attr('data-last-id'),
                     usejson: true
                 },
-                function(r){
-                      
-                    if(r){
+                function(r) {
+                    if(r) {
                         var c = 1;
-                        $.each(r, function(index, value){
+                        $.each(r, function(index, value) {
                             templateHelper.renderTemplate(value.templateId,value,wallel, false, function(){
                                 if(c == r.length){
                                     $("abbr.timeago").timeago();
@@ -73,10 +72,11 @@
                         }
                     }
                 },
-                function(){},
-                    'get',
-                    false
-                    );
+                function() {
+                    
+                },
+                'get',
+                false);
             }
         });
     };
@@ -95,26 +95,29 @@
             ajax.genericAction('comment_ajaxget', {
                 'id': id
             },
-            function(r){
-                if(r){
+            function(r) {
+                if(r) {
                     if (!(wallel.find('[data-comment="'+id+'"]').length)) {
                         container.prepend(r.toString());
                     }
                 }
             },
-            function(){},
-                'get'
-                );
+            function() {
+                
+            },
+            'get');
         }
     };
   
-    function callbackAction(r,wallel){
-        if(r){
+    function callbackAction(r, wallel) {
+        if(r) {
             var c = 1;
             var wallid = wallel.attr('data-wall');
-            $.each(r, function(index, value){
-                console.log(value.id);
-                templateHelper.renderTemplate(value.templateId,value,wallel,false,function(){
+            
+            $.each(r, function(index, value) {
+                templateHelper.renderTemplate(value.templateId, value, wallel, false, function() {
+                    wallCommentIds.push(value.id);
+                    
                     switch(value.templateId) {
                         case 'comment-comment':
                             $('[ajax-delete]').ajaxdelete();
@@ -122,15 +125,51 @@
                     }
                       
                     $("abbr.timeago").timeago();
-                    if(c == r.length){
+                    
+                    if(c == r.length) {
                         wallel.removeClass('loading');
                         $('.comment-loading').hide();
                         wallel.attr('data-wall-loaded', 1);
           
-                        bindWallUpdate(wallel);
+                        if(wallCommentIds.length) {
+                            ajax.genericAction('subcomment_ajaxget', {
+                                'wallCommentIds' : wallCommentIds,
+                                'usejson': true
+                            },
+                            function(r) {
+                                var count = 1;
+                                
+                                $.each(r, function(index, value) {
+                                    var $target = $('[data-subcomments="' + index + '"]');
+                                    
+                                    templateHelper.renderTemplate('comment-subcomment', value, $target, false, function() {
+                                        if(count == Object.keys(r).length) {
+                                            $('[data-subcomments]').each(function(index, value) {
+                                                $target = $(this);
+                                                var $toHide = $target.find('.subcomment-container:lt(' + ($target.find('.subcomment-container').length - SUBCOMMENTS_TO_SHOW) + ')');
+                                            
+                                                if($toHide.length) {
+                                                    $toHide.hide();
+                                                    $('<a class="js-subcomments-open toggleLink">Ver comentarios anteriores</a>').on('click', function() {
+                                                        $(this).parent().find('.subcomment-container:hidden').fadeIn('slow');
+                                                        $(this).hide();
+                                                    }).prependTo($target);
+                                                }
+                                            });
+                                        }
+                                    });
+                                    
+                                    count++;
+                                });
+                                
+                                bindWallUpdate(wallel);
+                            });
+                        }
                     }
+                    
                     c++;
                 });
+                
                 wallel.attr('data-last-id', value.id);
             });
           
@@ -140,7 +179,7 @@
             }
         }
     }
-  
+    
 })( jQuery );
 
 function bindWallUpdate(wallel){
@@ -161,6 +200,6 @@ function bindWallUpdate(wallel){
 }
 
 $(function(){
-    var toLoad	=	['comment-new_video','comment-new_photo','comment-likes','comment-new_friend','comment-subcomment','comment-comment'];
+    var toLoad	= ['comment-new_video','comment-new_photo','comment-likes','comment-new_friend','comment-subcomment','comment-comment'];
     templateHelper.preLoadTemplates(toLoad);
 });

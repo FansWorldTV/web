@@ -526,8 +526,19 @@ function askText(callback) {
 
 function removeArrayElement(array, element){
     var idx = array.indexOf(element); // Find the index
-    console.log(idx);
     if(idx!=-1) array.splice(idx, 1); // Remove it if really found!
 
     return array;
+}
+
+if (!Object.keys) {
+    Object.keys = function (obj) {
+        var keys = [], k;
+        for (k in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, k)) {
+                keys.push(k);
+            }
+        }
+        return keys;
+    };
 }
