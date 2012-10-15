@@ -23,8 +23,9 @@ use Dodici\Fansworld\WebBundle\Entity\EventTweet;
  */
 class EventController extends SiteController
 {
+
     const LIMIT_EVENTS = 12;
-    
+
     /**
      * @Route("/{id}/{slug}", name= "event_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
      * @Template
@@ -32,15 +33,13 @@ class EventController extends SiteController
     public function showAction($id)
     {
         //TODO: todo
-        $event = $this->getRepository('Event')->findOneBy(array('id' => $id));
+        $event = $this->getRepository('Event')->find($id);
         $user = $this->getUser();
         $this->securityCheck($event);
 
-        return array('user' => $user, 'event' => $event);
+        return array('user' => $user, 'entity' => $event);
     }
-    
-    
-    
+
     /**
      * @Route("/ajax/get", name= "event_get")
      */
@@ -48,71 +47,118 @@ class EventController extends SiteController
     {
         $request = $this->getRequest();
         $appMedia = $this->get('appmedia');
-        
-        $dateFrom    = $request->get('dateFrom', null);
-        if($dateFrom != null && $dateFrom != 'null'){
-            $dateFrom = \DateTime::createFromFormat('d/m/Y',$dateFrom);
+
+        $dateFrom = $request->get('dateFrom', null);
+        if ($dateFrom != null && $dateFrom != 'null') {
+            $dateFrom = \DateTime::createFromFormat('d/m/Y', $dateFrom);
             $dateFrom->setTime(0, 0);
-        }else{
+        } else {
             $dateFrom = null;
         }
-        
-        $dateTo    = $request->get('dateTo', null);
-        if($dateTo != null && $dateTo != 'null'){
-            $dateTo = \DateTime::createFromFormat('d/m/Y',$dateTo);
+
+        $dateTo = $request->get('dateTo', null);
+        if ($dateTo != null && $dateTo != 'null') {
+            $dateTo = \DateTime::createFromFormat('d/m/Y', $dateTo);
             $dateTo->setTime(23, 59);
-        }else{
+        } else {
             $dateTo = null;
         }
-        
-        $sortBy    = $request->get('sortBy', null);
-        if ($sortBy == 'null') $sortBy = null;
-        
-        $sport     = $request->get('sport', null);
-        if ($sport == 'null') $sport = null;
-        if($sport){
+
+        $sortBy = $request->get('sortBy', null);
+        if ($sortBy == 'null')
+            $sortBy = null;
+
+        $sport = $request->get('sport', null);
+        if ($sport == 'null')
+            $sport = null;
+        if ($sport) {
             $sport = $this->getRepository('Sport')->findOneBy(array('id' => $sport));
         }
-        
-        $teamcategory     = $request->get('teamcategory', null);
-        if ($teamcategory == 'null') $teamcategory = null;
-        if($teamcategory){
+
+        $teamcategory = $request->get('teamcategory', null);
+        if ($teamcategory == 'null')
+            $teamcategory = null;
+        if ($teamcategory) {
             $teamcategory = $this->getRepository('TeamCategory')->findOneBy(array('id' => $teamcategory));
         }
-        
+
         $response = array();
         $now = new \DateTime();
-       
-        $events  = $this->getRepository('Event')->calendar(null,null,null,$dateFrom,$dateTo,$sport,$teamcategory,$sortBy,null,null);
+
+        $events = $this->getRepository('Event')->calendar(null, null, null, $dateFrom, $dateTo, $sport, $teamcategory, $sortBy, null, null);
         foreach ($events as $event) {
-            
+
             $teams = array();
             foreach ($event->getHasteams() as $hasTeam) {
                 $team = $hasTeam->getTeam();
                 $teams[] = array(
-                    'title' => (string)$team,
+                    'title' => (string) $team,
                     'image' => $appMedia->getImageUrl($team->getImage(), 'mini_square'),
                     'score' => $hasTeam->getScore()
-                ); 
+                );
             }
-            
+
             $started = ($event->getFromtime() <= $now);
-            
+
             $response[] = array(
-                    'text' =>  $this->get('appstate')->getEventText($event->getId()),
-                    'stadium' => $event->getStadium(),
-                    'date'  => $event->getFromtime()->format('d-m-Y'),
-            		'showdate'  => $event->getFromtime()->format('d/m/Y H:i'),
-                    'started' => $started,
-                    'finished' => $event->getFinished(),
-            
-                    'teams' => $teams
+                'text' => $this->get('appstate')->getEventText($event->getId()),
+                'stadium' => $event->getStadium(),
+                'date' => $event->getFromtime()->format('d-m-Y'),
+                'showdate' => $event->getFromtime()->format('d/m/Y H:i'),
+                'started' => $started,
+                'finished' => $event->getFinished(),
+                'teams' => $teams,
+                'url' => $this->generateUrl('event_show', array('id' => $event->getId(), 'slug' => $event->getSlug()))
             );
         }
+
+        return $this->jsonResponse($response);
+    }
+
+    /**
+     * @Route("/ajax/comment", name="event_ajaxcomment")
+     */
+    public function ajaxCommentAction(){
+        $request = $this->getRequest();
+        
+        $response = array(
+            'error' => false,
+            'msg' => null
+        );
+        
+        $eventId = $request->get('event-id', false);
+        $teamId = $request->get('team-id', false);
+        $text = $request->get('text', false);
+
+        if(!$eventId || !$teamId || !$text){
+            $response['error'] = true;
+            $response['msg'] = "Empty field";
+        }else{
+            try {
+                $em = $this->getDoctrine()->getEntityManager();
+                $event = $this->getRepository('Event')->find($eventId);
+                $team = $this->getRepository('Team')->find($teamId);
+
+                $user = $this->getUser();
+
+                $comment = new Comment();
+                $comment->setTeam($team);
+                $comment->setEvent($event);
+                $comment->setAuthor($user);
+                $comment->setContent($text);
+
+                $event->addComments($comment);
+                $em->persist($event);
+                $em->flush();
+            } catch (Exception $exc) {
+                $response['error'] = true;
+                $response['msg'] = $exc->getMessage();
+            }
+        }
+        
         
         return $this->jsonResponse($response);
     }
-    
     
     /**
      * @Route("/ajax/getmonth", name= "event_getmonth")
@@ -120,15 +166,18 @@ class EventController extends SiteController
     public function getMonthEventsAction()
     {
         $request = $this->getRequest();
-        $year    = $request->get('year', false);
-        $month   = $request->get('month', false);
-        
-        if (!$year || !$month) throw new \Exception('Must provide year and month');
-        if (!is_numeric($year) || !is_numeric($month)) throw new \Exception('Invalid month/year');
-        
-        $dateFrom = new \DateTime($year.'-'.sprintf('%02d',$month).'-'.'01');
-        if (!$dateFrom) throw new \Exception('Invalid month/year');
-        
+        $year = $request->get('year', false);
+        $month = $request->get('month', false);
+
+        if (!$year || !$month)
+            throw new \Exception('Must provide year and month');
+        if (!is_numeric($year) || !is_numeric($month))
+            throw new \Exception('Invalid month/year');
+
+        $dateFrom = new \DateTime($year . '-' . sprintf('%02d', $month) . '-' . '01');
+        if (!$dateFrom)
+            throw new \Exception('Invalid month/year');
+
         // DateInterval adding is a bit buggy, so let's do it by hand
         $newmonth = $month + 1;
         $newyear = $year;
@@ -136,10 +185,10 @@ class EventController extends SiteController
             $newyear++;
             $newmonth -= 12;
         }
-        $dateTo = new \DateTime($newyear.'-'.sprintf('%02d', $newmonth).'-'.'01');
-        
+        $dateTo = new \DateTime($newyear . '-' . sprintf('%02d', $newmonth) . '-' . '01');
+
         $response = array();
-        $events  = $this->getRepository('Event')->calendar(null,null,null,$dateFrom,$dateTo,null,null,null);
+        $events = $this->getRepository('Event')->calendar(null, null, null, $dateFrom, $dateTo, null, null, null);
         foreach ($events as $event) {
             $response[] = array(
                 'id' => $event->getId(),
@@ -148,7 +197,7 @@ class EventController extends SiteController
         }
         return $this->jsonResponse($response);
     }
-    
+
     /**
      * @Route("", name= "event_home" )
      * @Template
@@ -158,20 +207,20 @@ class EventController extends SiteController
         $eventRepo = $this->getRepository('Event');
         $events = null;
         $eventoDestacado = $eventRepo->findOneBy(array(), array('fromtime' => 'desc'));
-        
+
         $sports = $this->getRepository('Sport')->findBy(array());
         $leagues = true;
         $orderBy = true;
-        
+
         return array(
             'eventoDestacado' => $eventoDestacado,
-            'events' => $events,        
+            'events' => $events,
             'sports' => $sports,
             'leagues' => $leagues,
-            'orderBy' => $orderBy,    
+            'orderBy' => $orderBy,
         );
     }
-    
+
     /**
      * @Route("/checkin/{id}", name="event_checkin", requirements = {"id" = "\d+"}) 
      * @Template
@@ -200,7 +249,7 @@ class EventController extends SiteController
         $type = (int) $type;
         $author = $this->getUser();
         $event = $this->getRepository('Event')->find($eventId);
-        
+
         if ($teamId) {
             $teamId = (int) $teamId;
             $team = $this->getRepository('Team')->find($teamId);
@@ -214,8 +263,8 @@ class EventController extends SiteController
             $eventShip->setAuthor($author);
             $eventShip->setEvent($event);
             $eventShip->setType($type);
-            
-            if($teamId){
+
+            if ($teamId) {
                 $eventShip->setTeam($team);
             }
 
@@ -231,7 +280,7 @@ class EventController extends SiteController
 
         return $this->jsonResponse($response);
     }
-    
+
     /**
      * @Route("/getwallelements", name= "event_getwallelements")
      * @Template
@@ -242,75 +291,75 @@ class EventController extends SiteController
         $eventId = $request->get('eventid', false);
         $event = $this->getRepository('Event')->findOneBy(array('id' => $eventId));
         $response = array();
-        
+
         $fromMinute = $request->get('fromMinute', null);
-        if($fromMinute != null && $fromMinute != 'null'){
+        if ($fromMinute != null && $fromMinute != 'null') {
             $mindate = $this->get('appstate')->getDatetimeFromMinute($fromMinute);
-        }else{
+        } else {
             $mindate = null;
         }
-        
+
         $toMinute = $request->get('toMinute', false);
-        if($toMinute != null && $toMinute != 'null'){
+        if ($toMinute != null && $toMinute != 'null') {
             $maxdate = $this->get('appstate')->getDatetimeFromMinute($toMinute);
-        }else{
+        } else {
             $maxdate = null;
         }
-        
-        
-        $eventComments  = $this->getRepository('Comment')->eventWall($event,$mindate,$maxdate);
-        foreach( $eventComments as $comment ){
+
+
+        $eventComments = $this->getRepository('Comment')->eventWall($event, $mindate, $maxdate);
+        foreach ($eventComments as $comment) {
             $response[] = $this->formatJson($comment);
         }
-        
-        $eventTweets    = $this->getRepository('EventTweet')->eventWall($event,$mindate,$maxdate);
-        foreach( $eventTweets as $tweet ){
+
+        $eventTweets = $this->getRepository('EventTweet')->eventWall($event, $mindate, $maxdate);
+        foreach ($eventTweets as $tweet) {
             $response[] = $this->formatJson($tweet);
         }
-        
-        $eventIncidents  = $this->getRepository('EventIncident')->eventWall($event,$mindate,$maxdate);
-        foreach( $eventIncidents as $incident ){
+
+        $eventIncidents = $this->getRepository('EventIncident')->eventWall($event, $mindate, $maxdate);
+        foreach ($eventIncidents as $incident) {
             $response[] = $this->formatJson($incident);
         }
         return $this->jsonResponse($response);
     }
-    
-    private function formatJson($entity){
+
+    private function formatJson($entity)
+    {
         $appState = $this->get('appstate');
         $type = $appState->getType($entity);
-        $response = array(); 
-        
-        if($type == 'comment' ){
+        $response = array();
+
+        if ($type == 'comment') {
             $response = array(
-                'type'   => 'c',
+                'type' => 'c',
                 'teamid' => $entity->getTeam()->getId(),
                 'avatar' => $this->getImageUrl($entity->getAuthor()->getImage()),
                 'minute' => $this->get('appstate')->getMinuteFromTimestamp($entity->getCreatedAt()),
-                'content' =>  $entity->getContent(),
+                'content' => $entity->getContent(),
             );
-        }else if($type == 'eventtweet'){
+        } else if ($type == 'eventtweet') {
             $response = array(
-                'type'   => 'et',
+                'type' => 'et',
                 'teamid' => $entity->getTeam()->getId(),
                 'teamname' => $entity->getTeam()->getTwitter(),
                 'minute' => $this->get('appstate')->getMinuteFromTimestamp($entity->getCreatedAt()),
-                'content' =>  $entity->getContent(),
+                'content' => $entity->getContent(),
             );
-        }else if($type == 'eventincident'){
+        } else if ($type == 'eventincident') {
             $response = array(
-                'type'   => 'ei',
+                'type' => 'ei',
                 'team' => $entity->getTeam()->getId(),
                 'minute' => $appState->getMinuteFromTimestamp($entity->getCreatedAt()),
                 'texto1' => $appState->getEventIncidentTypeName($entity->getType()),
                 'texto2' => $entity->getName(),
-                'texto3' => $entity->getMinute().'\' '.$entity->getHalf(),
+                'texto3' => $entity->getMinute() . '\' ' . $entity->getHalf(),
             );
         }
-        
+
         return $response;
-        
     }
-    
+
     /**
      * @Route("/getincident", name= "event_getincident")
      * @Template
@@ -319,12 +368,12 @@ class EventController extends SiteController
     {
         $request = $this->getRequest();
         $incidentid = $request->get('incidentid', false);
-        
+
         $incident = $this->getRepository('EventIncident')->findOneBy(array('id' => $incidentid));
         $response = $this->formatJson($incident);
         return $this->jsonResponse($response);
     }
-    
+
     /**
      * @Route("/gettweet", name= "event_gettweet")
      * @Template
@@ -333,13 +382,13 @@ class EventController extends SiteController
     {
         $request = $this->getRequest();
         $tweetid = $request->get('tweetid', false);
-    
+
 
         $tweet = $this->getRepository('EventTweet')->findOneBy(array('id' => $tweetid));
         $response = $this->formatJson($tweet);
         return $this->jsonResponse($response);
     }
-    
+
     /**
      * @Route("/getcomment", name= "event_getcomment")
      * @Template
@@ -348,25 +397,23 @@ class EventController extends SiteController
     {
         $request = $this->getRequest();
         $commentId = $request->get('commentid', false);
-    
+
 
         $comment = $this->getRepository('Comment')->findOneBy(array('id' => $commentId));
         $response = $this->formatJson($comment);
         return $this->jsonResponse($response);
     }
-    
-    
+
     /*
       borrar cuando no se necesiten mas metodos hardcode para testear meteor
-      
-    */
-    
-    
+
+     */
+
     /**
      * @Route("/addincident/{eventid}/{teamid}", name= "event_addincident")
      * @Template
      */
-    public function addIncidentAction($eventid,$teamid)
+    public function addIncidentAction($eventid, $teamid)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
@@ -374,7 +421,7 @@ class EventController extends SiteController
         $team = $this->getRepository('Team')->findOneBy(array('id' => $teamid));
         $user = $this->getUser();
         $this->securityCheck($event);
-    
+
         $incident = new EventIncident();
         $incident->setExternal('sdfsdfsdf');
         $incident->setType(1);
@@ -382,22 +429,22 @@ class EventController extends SiteController
         $incident->setPlayername('negro drogba');
         $incident->setMinute('5');
         $incident->setHalf('pt');
-    
+
         $event->addEventIncident($incident);
-    
+
         $em->persist($event);
         $em->flush();
         return $this->jsonResponse(array());
     }
-    
+
     /**
      * @Route("/addtwincident/{eventid}/{teamid}", name= "event_addtwincident")
      * @Template
      */
-    public function addTwIncidentAction($eventid,$teamid)
+    public function addTwIncidentAction($eventid, $teamid)
     {
-       // new EventTweet(), setevent, setteam, setcontent. external es el id del tweet
-        
+        // new EventTweet(), setevent, setteam, setcontent. external es el id del tweet
+
         $em = $this->getDoctrine()->getEntityManager();
         $event = $this->getRepository('Event')->findOneBy(array('id' => $eventid));
         $team = $this->getRepository('Team')->findOneBy(array('id' => $teamid));
@@ -409,30 +456,29 @@ class EventController extends SiteController
         $et->setContent('bla bla bla bla balblabla bla balb alab');
         $em->persist($et);
         $em->flush();
-        
+
         return $this->jsonResponse(array());
-        
     }
-    
+
     /**
      * @Route("/addcomment/{eventid}/{teamid}", name= "event_addcomment")
      * @Template
      */
-    public function addCommentAction($eventid,$teamid)
+    public function addCommentAction($eventid, $teamid)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $event = $this->getRepository('Event')->findOneBy(array('id' => $eventid));
         $team = $this->getRepository('Team')->findOneBy(array('id' => $teamid));
-        
+
         $user = $this->getUser();
-        
-    
+
+
         $comment = new Comment();
         $comment->setTeam($team);
         $comment->setEvent($event);
         $comment->setAuthor($user);
         $comment->setContent('negro drogba meta meta');
-        
+
         $event->addComments($comment);
         $em->persist($event);
         $em->flush();

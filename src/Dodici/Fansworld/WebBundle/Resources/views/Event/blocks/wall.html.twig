@@ -1,9 +1,29 @@
-<section class='eventwall-container' event-wall='event-wall' local-id='{{ event.hasTeams[0].team.id }}' visitante-id='{{ event.hasTeams[1].team.id }}'>
-    
-</section>
+<div class="eventwall" data-event-id = "{{ entity.id }}" data-local-id='{{ entity.hasTeams[0].team.id }}' data-guest-id='{{ entity.hasTeams[1].team.id }}'>
+    <section class="eventwall-form" >
+        <div class="local">
+            <span class="arrow"></span>
+            <div class="cont">
+                <form data-event-wall="local">
+                    <input type="text" placeholder="Alienta a tu equipo!" />
+                </form>
+            </div>
+        </div>
+        <div class="guest">
+            <span class="arrow"></span>
+            <div class="cont">
+                <form data-event-wall="guest">
+                    <input type="text" placeholder="Alienta a tu equipo!" />
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class='eventwall-container' event-wall='event-wall'>
+    </section>
+</div>
 
 <script>
     $(document).ready(function(){
-        events.initDetail($('[event-wall]'),{{ event.id }});
+        events.initDetail($('[event-wall]'));
     });
 </script>

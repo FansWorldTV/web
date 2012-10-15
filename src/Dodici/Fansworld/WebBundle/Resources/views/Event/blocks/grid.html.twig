@@ -26,7 +26,7 @@
                     <li class='event'>
                         <header>
                             <span>
-                                {{ eventteams|join(' vs ') }}
+                                <a href="{{ path('event_show', {'id': event.id, 'slug': event.slug}) }}">{{ eventteams|join(' vs ') }}</a>
                             </span>
                             <button class='btn btn-danger'>{{ appstate.EventText(event.id) }}</button>
                         </header>

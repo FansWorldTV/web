@@ -156,8 +156,65 @@ section.eventcalendar-container{
 }
 
 //Estilos del muro de detalle de eventos
-section.eventwall-container{
+div.eventwall {
     .doublegradient(#282828, #373737, #434242, #4d4c4c );
+}
+section.eventwall-form{
+    padding: 2%;
+    padding-bottom: 50px;
+    
+    div.local, div.guest {
+        width: 40%;
+        position: relative;
+
+        .cont {
+            background-color: @white;
+            .border-radius(5px);
+            input {
+                border: 0;
+                height: 30px;
+                margin: 0;
+                width: 98%;
+            }
+        }
+        
+        input.loading-small {
+            background-position: right center;
+        }
+
+        &.local {
+            float: left;
+            padding-left: 3%;
+
+            .arrow {
+                background-image: url("images/right.png");
+                .size(15px, 13px);
+                display: block;
+                position: absolute;
+                z-index: 3;
+                right: -13px;
+                top: 11px;
+            }
+        }
+
+        &.guest {
+            float: right;
+            padding-right: 3%;
+
+            .arrow {
+                background-image: url("images/left.png");
+                .size(15px, 13px);
+                display: block;
+                position: absolute;
+                z-index: 3;
+                left: -13px;
+                top: 11px;
+            }
+        }
+    }
+}
+
+section.eventwall-container{
     padding: 2%;
     div.minute-container{
         width: 100%;

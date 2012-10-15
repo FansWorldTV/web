@@ -3,12 +3,14 @@
     <li class='event'>
         <header>
             <span>
-                {{for teams}}
-                    {{if #index > 0}}
-                     vs 
-                    {{/if}}
-                    {{>title}}
-                {{/for}}
+                <a href="{{>url}}">
+                    {{for teams}}
+                        {{if #index > 0}}
+                         vs 
+                        {{/if}}
+                        {{>title}}
+                    {{/for}}
+                </a>
             </span>
             <button class='btn btn-danger'>{{>text}}</button>
         </header>
