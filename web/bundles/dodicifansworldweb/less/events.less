@@ -170,11 +170,25 @@ section.eventwall-form{
         .cont {
             background-color: @white;
             .border-radius(5px);
+            position: relative;
+
             input {
                 border: 0;
                 height: 30px;
                 margin: 0;
                 width: 98%;
+            }
+
+            .upload-photo {
+                background-image: url("../images/ico/cam.png");
+                background-color: white;
+                cursor: pointer;
+                display: block;
+                position: absolute;
+                .size(23px,31px);
+                z-index: 3;
+                top: 6px;
+                right: 5px;
             }
         }
         

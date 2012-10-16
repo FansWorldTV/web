@@ -6,6 +6,7 @@
                 <form data-event-wall="local">
                     <input type="text" placeholder="Alienta a tu equipo!" />
                 </form>
+                <a class="upload-photo cboxElement" data-upload="photo" data-upload-type="event" data-event-id="{{ entity.id }}" data-team-id="{{ entity.hasTeams[0].team.id }}" href="{{ path('photo_fileupload') }}"></a>
             </div>
         </div>
         <div class="guest">
@@ -14,6 +15,7 @@
                 <form data-event-wall="guest">
                     <input type="text" placeholder="Alienta a tu equipo!" />
                 </form>
+                <a class="upload-photo cboxElement" data-upload="photo" data-upload-type="event" data-event-id="{{ entity.id }}" data-team-id="{{ entity.hasTeams[1].team.id }}" href="{{ path('photo_fileupload') }}"></a>
             </div>
         </div>
     </section>
