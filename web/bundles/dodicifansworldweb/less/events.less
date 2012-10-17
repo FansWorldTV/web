@@ -219,7 +219,7 @@ section.eventwall-form{
                 border: 0;
                 height: 30px;
                 margin: 0;
-                width: 98%;
+                width: 85%;
             }
 
             .upload-photo {
@@ -230,8 +230,6 @@ section.eventwall-form{
                 position: absolute;
                 .size(23px,31px);
                 z-index: 3;
-                top: 6px;
-                right: 5px;
             }
         }
         
@@ -252,6 +250,11 @@ section.eventwall-form{
                 right: -13px;
                 top: 11px;
             }
+
+            .upload-photo {
+                top: 6px;
+                right: 5px;
+            }
         }
 
         &.guest {
@@ -266,6 +269,15 @@ section.eventwall-form{
                 z-index: 3;
                 left: -13px;
                 top: 11px;
+            }
+
+            .upload-photo {
+                top: 6px;
+                left: 5px;
+            }
+            input {
+                margin-left: 40px;
+                text-align: right;
             }
         }
     }
@@ -372,6 +384,7 @@ section.eventwall-container{
                 }
                 .content{
                     .pull-right();
+                    text-align: right;
                     
                 }
                 .flechita{
