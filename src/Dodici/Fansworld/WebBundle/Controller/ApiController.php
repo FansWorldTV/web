@@ -51,6 +51,7 @@ class ApiController extends SiteController
      * [signed] Login
      * 
      * @Route("/login", name="api_login")
+     * @Method({"POST"})
      *
      * Get params:
      * - username/email: string
@@ -72,45 +73,49 @@ class ApiController extends SiteController
      */
     public function loginAction()
     {
-        if ($this->hasValidSignature()) {
-            $request = $this->getRequest();
-            $username = $request->get('username');
-            $email = $request->get('email');
-            $password = $request->get('password');
-            
-            if (!$username && !$email) throw new HttpException(400, 'Requires username or email');
-            if (!$password) throw new HttpException(400, 'Requires password');
-            
-            $user = $this->authUser($username ?: $email, $password);
-            
-            if ($user) {
-                $token = $this->generateUserApiToken($user, $this->getApiKey());
+        try {
+            if ($this->hasValidSignature()) {
+                $request = $this->getRequest();
+                $username = $request->get('username');
+                $email = $request->get('email');
+                $password = $request->get('password');
                 
-                $imageurl = null;
-                if ($user->getImage()) {
-                    $imageurl = $this->get('appmedia')->getImageUrl($user->getImage());
+                if (!$username && !$email) throw new HttpException(400, 'Requires username or email');
+                if (!$password) throw new HttpException(400, 'Requires password');
+                
+                $user = $this->authUser($username ?: $email, $password);
+                
+                if ($user) {
+                    $token = $this->generateUserApiToken($user, $this->getApiKey());
+                    
+                    $imageurl = null;
+                    if ($user->getImage()) {
+                        $imageurl = $this->get('appmedia')->getImageUrl($user->getImage());
+                    }
+                    
+                    $return = array(
+                        'token' => $token,
+                        'user' => array(
+                            'id' => $user->getId(),
+                            'username' => $user->getUsername(),
+                            'email' => $user->getEmail(),
+                            'firstname' => $user->getFirstname(),
+                            'lastname' => $user->getLastname(),
+                            'image' => $imageurl
+                        )
+                    );
+                    
+                    return $this->jsonResponse($return);
+                    
+                } else {
+                    // Bad username/mail
+                    throw new HttpException(401, 'Invalid username or password');
                 }
-                
-                $return = array(
-                    'token' => $token,
-                    'user' => array(
-                        'id' => $user->getId(),
-                        'username' => $user->getUsername(),
-                        'email' => $user->getEmail(),
-                        'firstname' => $user->getFirstname(),
-                        'lastname' => $user->getLastname(),
-                        'image' => $imageurl
-                    )
-                );
-                
-                return $this->jsonResponse($return);
-                
             } else {
-                // Bad username/mail
-                throw new HttpException(401, 'Invalid username or password');
+                throw new HttpException(401, 'Invalid signature');
             }
-        } else {
-            throw new HttpException(401, 'Invalid signature');
+        } catch (\Exception $e) {
+            return $this->plainException($e);
         }
     }
     
@@ -125,32 +130,35 @@ class ApiController extends SiteController
      */
     public function testTokenAction()
     {
-        if ($this->hasValidSignature()) {
-            $request = $this->getRequest();
-            $userid = $request->get('user_id');
-            $usertoken = $request->get('user_token');
-            
-            if (!$userid || !$usertoken) throw new HttpException(400, 'User id and token required');
-            
-            $user = $this->getRepository('User')->find($userid);
-            if (!$user) throw new HttpException(400, 'Invalid user id');
-            
-            $realtoken = $this->generateUserApiToken($user, $this->getApiKey());
-            
-            if ($usertoken === $realtoken) {
-                return new Response('valid user token');
-            } else {
-                $txt = 'invalid user token<br>';
-                $txt .= 'user id: ' . $userid . '<br>';
-                $txt .= 'user token: ' . $usertoken . '<br><br>';
-                $txt .= 'expected token: ' . $realtoken;
+        try {
+            if ($this->hasValidSignature()) {
+                $request = $this->getRequest();
+                $userid = $request->get('user_id');
+                $usertoken = $request->get('user_token');
                 
-                return new Response($txt);
+                if (!$userid || !$usertoken) throw new HttpException(400, 'User id and token required');
+                
+                $user = $this->getRepository('User')->find($userid);
+                if (!$user) throw new HttpException(400, 'Invalid user id');
+                
+                $realtoken = $this->generateUserApiToken($user, $this->getApiKey());
+                
+                if ($usertoken === $realtoken) {
+                    return new Response('valid user token');
+                } else {
+                    $txt = 'invalid user token<br>';
+                    $txt .= 'user id: ' . $userid . '<br>';
+                    $txt .= 'user token: ' . $usertoken . '<br><br>';
+                    $txt .= 'expected token: ' . $realtoken;
+                    
+                    return new Response($txt);
+                }
+            } else {
+                throw new HttpException(401, 'Invalid signature');
             }
-        } else {
-            throw new HttpException(401, 'Invalid signature');
+        } catch (\Exception $e) {
+            return $this->plainException($e);
         }
-        
     }
     
     /**
@@ -164,30 +172,33 @@ class ApiController extends SiteController
      */
     public function testSignatureAction()
     {
-        if ($this->hasValidSignature()) {
-            return new Response('valid signed request');
-        } else {
-            $request = $this->getRequest();
-            $key = $request->get('api_key');
-            $timestamp = $request->get('api_timestamp');
-            $signature = $request->get('api_signature');
-            $apikey = $this->getApiKeyByKey($key);
-            
-            $txt = 'invalid signed request<br>';
-            $txt .= 'key: ' . $key . '<br>';
-            $txt .= 'timestamp: ' . $timestamp . '<br>';
-            $txt .= 'signature: ' . $signature . '<br>';
-            $txt .= '<br>';
-            
-            if ($apikey) {
-                $txt .= 'expected sig: ' . $this->createSignature($key, $timestamp, $apikey->getSecret());
+        try {
+            if ($this->hasValidSignature()) {
+                return new Response('valid signed request');
             } else {
-                $txt .= 'no apikey found for key';
+                $request = $this->getRequest();
+                $key = $request->get('api_key');
+                $timestamp = $request->get('api_timestamp');
+                $signature = $request->get('api_signature');
+                $apikey = $this->getApiKeyByKey($key);
+                
+                $txt = 'invalid signed request<br>';
+                $txt .= 'key: ' . $key . '<br>';
+                $txt .= 'timestamp: ' . $timestamp . '<br>';
+                $txt .= 'signature: ' . $signature . '<br>';
+                $txt .= '<br>';
+                
+                if ($apikey) {
+                    $txt .= 'expected sig: ' . $this->createSignature($key, $timestamp, $apikey->getSecret());
+                } else {
+                    $txt .= 'no apikey found for key';
+                }
+                
+                return new Response($txt);
             }
-            
-            return new Response($txt);
+        } catch (\Exception $e) {
+            return $this->plainException($e);
         }
-        
     }
     
     /**
@@ -211,7 +222,8 @@ class ApiController extends SiteController
      */
     private function validateSignature($key, $timestamp, $signature)
     {
-		$apikey = $this->getApiKeyByKey($key);
+		if (!$timestamp || !is_numeric($timestamp)) throw new HttpException(400, 'Bad timestamp');
+        $apikey = $this->getApiKeyByKey($key);
 		$now = new \DateTime();
 		$currentts = $now->format('U');
 		$tsdiff = abs($timestamp - $currentts);
@@ -294,5 +306,16 @@ class ApiController extends SiteController
             // Bad username/mail
             throw new HttpException(401, 'Invalid username or password');
         }
+    }
+    
+    private function plainException(\Exception $e)
+    {
+        if ($e instanceof HttpException) {
+            $code = $e->getStatusCode();
+        } else {
+            $code = 400;
+        }
+        
+        return new Response($e->getMessage(), $code);
     }
 }
