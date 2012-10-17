@@ -39,7 +39,7 @@ var tv = {
 
         params.channel = channel;
         
-        $button.addClass('loading');
+        $button.addClass('loading-small');
 
         ajax.genericAction('teve_channelsubscribe', params, function (response) {
             success(response.message);
@@ -51,11 +51,12 @@ var tv = {
                 $button.prepend($('<i>').attr('class', 'icon-ok').after(' '));
             }
             
-            $button.removeClass('loading');
+            $button.removeClass('loading-small');
+            
         }, function (msg) {
             error(msg);
             
-            $button.removeClass('loading');
+            $button.removeClass('loading-small');
         });
 
     },

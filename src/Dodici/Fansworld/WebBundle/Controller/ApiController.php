@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
+use Dodici\Fansworld\WebBundle\Entity\Apikey;
+use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,10 +19,23 @@ use Dodici\Fansworld\WebBundle\Controller\SiteController;
  * REST, json
  * 
  * @Route("/api")
+ * 
+ * How to construct a signature hash:
+ * 
+ * Each unique API consumer (Apikey) has a key and a secret, both unique to them
+ * /api/sync provides current server timestamp. TIMESTAMP_MARGIN is the late limit of the GET provided ts
+ * 
+ * Concatenate: 'api_key=' + <key> + '&api_timestamp=' + <timestamp> + <secret>
+ * sha1 the result, this is the <signature string>
+ * To sign a request, add the GET params:
+ * api_key = <key>
+ * api_timestamp = <timestamp>
+ * api_signature = <signature string>
  */
 class ApiController extends SiteController
 {
     const TIMESTAMP_MARGIN = 120;
+    const TOKEN_SECRET = 'gafd7u8adf9';
     
     /**
      * Get server timestamp
@@ -33,10 +48,121 @@ class ApiController extends SiteController
     }
     
     /**
-     * test method
-     * @Route("/test", name="api_test")
+     * [signed] Login
+     * 
+     * @Route("/login", name="api_login")
+     *
+     * Get params:
+     * - username/email: string
+     * - password: string, plain text
+     * - [signature params]
+     * 
+     * @return 
+     * array (
+     * 		token: hash used in other requests - string,
+     * 		user: array (
+     * 			id: int,
+     * 			username: string,
+     * 			email: string,
+     * 			firstname: string,
+     * 			lastname: string,
+     * 			image: string (avatar url) | null
+     * 		)
+     * )
      */
-    public function testAction()
+    public function loginAction()
+    {
+        if ($this->hasValidSignature()) {
+            $request = $this->getRequest();
+            $username = $request->get('username');
+            $email = $request->get('email');
+            $password = $request->get('password');
+            
+            if (!$username && !$email) throw new HttpException(400, 'Requires username or email');
+            if (!$password) throw new HttpException(400, 'Requires password');
+            
+            $user = $this->authUser($username ?: $email, $password);
+            
+            if ($user) {
+                $token = $this->generateUserApiToken($user, $this->getApiKey());
+                
+                $imageurl = null;
+                if ($user->getImage()) {
+                    $imageurl = $this->get('appmedia')->getImageUrl($user->getImage());
+                }
+                
+                $return = array(
+                    'token' => $token,
+                    'user' => array(
+                        'id' => $user->getId(),
+                        'username' => $user->getUsername(),
+                        'email' => $user->getEmail(),
+                        'firstname' => $user->getFirstname(),
+                        'lastname' => $user->getLastname(),
+                        'image' => $imageurl
+                    )
+                );
+                
+                return $this->jsonResponse($return);
+                
+            } else {
+                // Bad username/mail
+                throw new HttpException(401, 'Invalid username or password');
+            }
+        } else {
+            throw new HttpException(401, 'Invalid signature');
+        }
+    }
+    
+	/**
+     * [signed] test method (user token)
+     * @Route("/test/token", name="api_test_token")
+     * 
+     * Get params:
+     * - user_id: int
+     * - user_token: string
+     * - [signature params]
+     */
+    public function testTokenAction()
+    {
+        if ($this->hasValidSignature()) {
+            $request = $this->getRequest();
+            $userid = $request->get('user_id');
+            $usertoken = $request->get('user_token');
+            
+            if (!$userid || !$usertoken) throw new HttpException(400, 'User id and token required');
+            
+            $user = $this->getRepository('User')->find($userid);
+            if (!$user) throw new HttpException(400, 'Invalid user id');
+            
+            $realtoken = $this->generateUserApiToken($user, $this->getApiKey());
+            
+            if ($usertoken === $realtoken) {
+                return new Response('valid user token');
+            } else {
+                $txt = 'invalid user token<br>';
+                $txt .= 'user id: ' . $userid . '<br>';
+                $txt .= 'user token: ' . $usertoken . '<br><br>';
+                $txt .= 'expected token: ' . $realtoken;
+                
+                return new Response($txt);
+            }
+        } else {
+            throw new HttpException(401, 'Invalid signature');
+        }
+        
+    }
+    
+    /**
+     * test method (signature)
+     * @Route("/test/signature", name="api_test_signature")
+     * 
+     * Get params:
+     * - api_key: string (your unique api consumer identifier)
+     * - api_timestamp: int (must be within sync method compliance)
+     * - api_signature: string (signature hash)
+     */
+    public function testSignatureAction()
     {
         if ($this->hasValidSignature()) {
             return new Response('valid signed request');
@@ -112,6 +238,18 @@ class ApiController extends SiteController
     }
     
     /**
+     * Get the current apikey in use
+     * 
+     * @return Apikey
+     */
+    private function getApiKey()
+    {
+        $request = $this->getRequest();
+        $key = $request->get('api_key');
+        return $this->getApiKeyByKey($key);
+    }
+        
+    /**
      * Returns Apikey entity corresponding to $key
      * @param string $key
      */
@@ -119,5 +257,42 @@ class ApiController extends SiteController
     {
         $apikey = $this->getRepository('Apikey')->findOneBy(array('apikey' => $key));
         return $apikey;
+    }
+    
+    /**
+     * Generate a semi-permanent hash token for a user under an api
+     * @param User $user
+     */
+    private function generateUserApiToken(User $user, Apikey $apikey)
+    {
+        return sha1(
+            $user->getId().'|'.
+            $user->getEmail().'|'.
+            $user->getUsername().'|'.
+            $apikey->getApikey().'|'.
+            $user->getPassword().'|'.
+            self::TOKEN_SECRET
+        );
+    }
+    
+    private function authUser($username, $password)
+    {
+        $usermanager = $this->get('app_user.user_manager');
+        $user = $usermanager->findUserByUsernameOrEmail($username);
+        if ($user) {
+            $encoder_service = $this->get('security.encoder_factory');
+            $encoder = $encoder_service->getEncoder($user);
+            $encoded_pass = $encoder->encodePassword($password, $user->getSalt());
+            
+            if ($user->getPassword() == $encoded_pass) {
+                return $user;
+            } else {
+                // Bad password
+                throw new HttpException(401, 'Invalid username or password');
+            }
+        } else {
+            // Bad username/mail
+            throw new HttpException(401, 'Invalid username or password');
+        }
     }
 }
