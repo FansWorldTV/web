@@ -156,8 +156,51 @@ section.eventcalendar-container{
 }
 
 //Estilos del muro de detalle de eventos
-div.eventwall {
+div.eventwall, div.eventsupporters {
     .doublegradient(#282828, #373737, #434242, #4d4c4c );
+    padding-bottom: 10px;
+}
+div.eventsupporters {
+    h4 {
+        color: white;
+        margin: 10px;
+    }
+
+    .local, .guest {
+        ul { 
+            padding-left: 10px;
+            li {
+                width: 50px;
+                height: 50px;
+                overflow: hidden;
+                margin: 5px;
+
+                img {   
+                    width: 50px !important;
+                }
+            }
+        }
+    }
+    .local{
+        h4 {
+            .pull-left();
+        }
+        ul {
+            li {
+                .pull-left();
+            }
+        }
+    }
+    .guest {
+        h4 {
+            .pull-right();
+        }
+        ul {
+            li {
+                .pull-right();
+            }
+        }
+    }
 }
 section.eventwall-form{
     padding: 2%;
@@ -407,6 +450,7 @@ section.eventwall-container{
 //estilos del header de detalles de eventos
 header.eventdetail{
     section.breadcrum{
+        font-size: 20px;
         margin-top: 5px;
         margin-bottom: 10px;
         overflow: hidden;
@@ -426,57 +470,71 @@ header.eventdetail{
         background-color: @black;
         color: @white;
         height: 150px;
+        max-height: 150px;
         position: relative;
         z-index: -2;
-        .escudo{
-            line-height: 150px;
-            z-index: 1;
-        }
-        
-        .texto{
-            .clubname{
-                font-size: 25px;
-                font-weight: bold;
-                margin-top: 45px;
-            }
-            .fancount{
-                font-size: 15px;
-                margin-top: 5px;
-            }
-        }
-        
-        .goles{
-            font-size: 60px;
-            text-shadow: 0 1px 1px rgba(255,255,255,.75);
-            text-align: center;
-            line-height: 150px;
-            font-weight: bold;
-            z-index: 1;
-        }
-        
-        .local{
-            position: relative;
-            
-            .backimage{
-                position: absolute;
-                top: 0;
-                left: 0;
-                z-index: -1;
-                .opacity(50)
-            }
-        }
-        
-        .visitante{
-            position: relative;
-            .backimage{
-                position: absolute;
-                top: 0;
+
+
+        .local, .visitante{
+            &.visitante .backimage {
                 right: 0;
-                z-index: -1;
-                .opacity(50)
+            }
+            .backimage {
+                position: absolute !important;
+                z-index: 0;
+            }
+
+            .escudo{
+                position: relative;
+                display: block;
+                line-height: 150px;
+                z-index: 1;
+            }
+
+            .texto{
+                position: relative;
+                display: block;
+                z-index: 1;
+                .clubname{
+                    font-size: 25px;
+                    font-weight: bold;
+                    margin-top: 45px;
+                }
+                .fancount{
+                    font-size: 15px;
+                    margin-top: 5px;
+                }
+            }
+
+            .goles{
+                font-size: 60px;
+                text-shadow: 0 1px 1px rgba(255,255,255,.75);
+                text-align: center;
+                line-height: 150px;
+                font-weight: bold;
+                position: relative;
+                display: block;
+                z-index: 1;
             }
         }
     }
-    
-    
+}
+
+section.eventdetail-togglebar {
+    .clearfix;
+
+    div.tabs {
+        width: 50%;
+        .pull-left();
+
+        .btn-group {
+            margin-top: 8px;
+        }
+    }
+
+    div.filters {
+        width: 50%;
+        .pull-right();
+        text-align: right;
+    }
 }

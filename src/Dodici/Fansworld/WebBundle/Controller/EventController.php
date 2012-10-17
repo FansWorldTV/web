@@ -36,8 +36,20 @@ class EventController extends SiteController
         $event = $this->getRepository('Event')->find($id);
         $user = $this->getUser();
         $this->securityCheck($event);
+        
+        $local = null;
+        $guest = null;
+        foreach($event->getHasteams() as $team){
+            if(is_null($local)){
+                $local = $team->getTeam();
+            }else{
+                $guest = $team->getTeam();
+            }
+        }
+        $eshipsLocal = $this->getRepository('Eventship')->findBy(array('team' => $local->getId(), 'event' => $event->getId()));
+        $eshipsGuest = $this->getRepository('Eventship')->findBy(array('team' => $guest->getId(), 'event' => $event->getId()));
 
-        return array('user' => $user, 'entity' => $event);
+        return array('user' => $user, 'entity' => $event, 'eshipsLocal' => $eshipsLocal, 'eshipsGuest' => $eshipsGuest);
     }
 
     /**
@@ -118,22 +130,23 @@ class EventController extends SiteController
     /**
      * @Route("/ajax/comment", name="event_ajaxcomment")
      */
-    public function ajaxCommentAction(){
+    public function ajaxCommentAction()
+    {
         $request = $this->getRequest();
-        
+
         $response = array(
             'error' => false,
             'msg' => null
         );
-        
+
         $eventId = $request->get('event-id', false);
         $teamId = $request->get('team-id', false);
         $text = $request->get('text', false);
 
-        if(!$eventId || !$teamId || !$text){
+        if (!$eventId || !$teamId || !$text) {
             $response['error'] = true;
             $response['msg'] = "Empty field";
-        }else{
+        } else {
             try {
                 $em = $this->getDoctrine()->getEntityManager();
                 $event = $this->getRepository('Event')->find($eventId);
@@ -155,11 +168,11 @@ class EventController extends SiteController
                 $response['msg'] = $exc->getMessage();
             }
         }
-        
-        
+
+
         return $this->jsonResponse($response);
     }
-    
+
     /**
      * @Route("/ajax/getmonth", name= "event_getmonth")
      */
@@ -484,4 +497,46 @@ class EventController extends SiteController
         $em->flush();
         return $this->jsonResponse(array());
     }
+
+    /**
+     * @Route("/addeventship/{eventid}/{authorid}", name="event_eventship")
+     */
+    public function addEventshipAction($eventid, $authorid)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $event = $this->getRepository('Event')->find($eventid);
+        $author = $this->getRepository('User')->find($authorid);
+
+        try {
+            $eventship = new Eventship();
+            $eventship->setAuthor($author);
+            $eventship->setEvent($event);
+            $eventship->setType(Eventship::TYPE_WEB);
+
+            $em->persist($eventship);
+            $em->flush();
+        } catch (Exception $exc) {
+            die($exc->getMessage());
+        }
+
+        echo "Dale que va ;)";
+    }
+
+    /**
+     * @Route("/deleventship/{eventid}/{authorid}", name="event_deleventship")
+     */
+    public function delEventshipAction($eventid, $authorid)
+    {
+        try {
+            $eventship = $this->getRepository('Eventship')->findBy(array('event' => $eventid, 'author' => $authorid));
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->remove($eventship);
+            $em->flush();
+        } catch (Exception $exc) {
+            die($exc->getMessage());
+        }
+        
+        echo "Dale que va! ;)";
+    }
+
 }

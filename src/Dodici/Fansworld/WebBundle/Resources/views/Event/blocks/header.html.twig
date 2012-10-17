@@ -1,12 +1,12 @@
-{% if event is not defined %}
-    {% set event = null %}
+{% if entity is not defined %}
+    {% set entity = null %}
 {% endif %}
 
 
-{% if event %}
-    {% if appstate.EventTypeName(event.type) == 'Partido' %}
-        {% set team1 = event.hasTeams[0].team %}
-        {% set team2 = event.hasTeams[1].team %}
+{% if entity %}
+    {% if appstate.EventTypeName(entity.type) == 'Partido' %}
+        {% set team1 = entity.hasTeams[0].team %}
+        {% set team2 = entity.hasTeams[1].team %}
         
         <header class="eventdetail row-fluid">
             <section class="breadcrum">
@@ -25,10 +25,10 @@
                         
                     </div>
                     <div class="span2 goles">
-                        {% if event.hasTeams[0].score == '' %}
+                        {% if entity.hasTeams[0].score == '' %}
                             -
                         {% else %}
-                            {{ event.hasTeams[0].score }}
+                            {{ entity.hasTeams[0].score }}
                         {% endif %}
                     </div>
                     <div class="span3 escudo">
@@ -61,10 +61,10 @@
                         {% thumbnail team2.image, 'small_square' with {title: team2.title} %}
                     </div>
                     <div class="span2 goles">
-                        {% if event.hasTeams[1].score == '' %}
+                        {% if entity.hasTeams[1].score == '' %}
                             -
                         {% else %}
-                            {{ event.hasTeams[1].score }}
+                            {{ entity.hasTeams[1].score }}
                         {% endif %}
                     </div>
                 </div>
@@ -73,5 +73,33 @@
     {% endif %}
 {% endif %}
 
-Y por ultimo tags, filtros y herramientas
-<br />
+<section class="eventdetail-togglebar">
+    <div class="tabs">
+        <div class="btn-group" data-toggle="buttons-radio">
+            <button type="button" class="btn active" data-tab = "wall" >Tribuna</button>
+            <button type="button" class="btn" data-tab = "supporters" >Hinchada</button>
+        </div>
+    </div>
+        
+    <div class="filters">
+        <span class="dropdown">
+            <button class="btn dropdown-toggle" id="drop4" role="button" data-toggle="dropdown" >Filtrar <icon class="caret"></icon></button>
+            <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="drop4">
+                <li><a tabindex="-1" href="#">Action</a></li>
+                <li><a tabindex="-1" href="#">Another action</a></li>
+                <li><a tabindex="-1" href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a tabindex="-1" href="#">Separated link</a></li>
+            </ul>
+        </span>
+        <span class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><img src="{{ asset('bundles/dodicifansworldweb/images/checkIn/tv.png') }}" width="50" height="45"/></a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                <li><a href=""><img src="{{ asset('bundles/dodicifansworldweb/images/checkIn/live.png') }}" width="50" height="45"/></a></li>
+                <li><a href=""><img src="{{ asset('bundles/dodicifansworldweb/images/checkIn/online.png') }}" width="50" height="45"/></a></li>
+                <li><a href=""><img src="{{ asset('bundles/dodicifansworldweb/images/checkIn/radio.png') }}" width="50" height="45"/></a></li>
+            </ul>
+        </span>
+        <button class="btn">Compartir Partido</button>
+    </div>
+</section>

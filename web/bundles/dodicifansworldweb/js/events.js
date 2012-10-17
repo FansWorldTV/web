@@ -287,6 +287,18 @@ var events = {
            
             return false;
         });
+        
+        $(".eventsupporters").hide();
+        $(".eventdetail-togglebar .tabs button").click(function(){
+           var section = $(this).attr('data-tab');
+           var sectionActive = $(this).parent().find('.active').attr('data-tab');
+           
+            if(section != sectionActive ){
+                $(".event"+sectionActive).fadeOut('fast',function(){
+                    $(".event"+section).fadeIn("fast");
+                });
+            }
+        });
     },
 	
     listen: function(eventId){

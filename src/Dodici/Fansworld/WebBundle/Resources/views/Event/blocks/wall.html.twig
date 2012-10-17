@@ -1,4 +1,7 @@
-<div class="eventwall" data-event-id = "{{ entity.id }}" data-local-id='{{ entity.hasTeams[0].team.id }}' data-guest-id='{{ entity.hasTeams[1].team.id }}'>
+{% set teamLocal = entity.hasTeams[0] %} 
+{% set teamGuest = entity.hasTeams[1] %}
+
+<div class="eventwall" data-event-id = "{{ entity.id }}" data-local-id='{{ teamLocal.team.id }}' data-guest-id='{{ teamGuest.team.id }}'>
     <section class="eventwall-form" >
         <div class="local">
             <span class="arrow"></span>
@@ -6,7 +9,7 @@
                 <form data-event-wall="local">
                     <input type="text" placeholder="Alienta a tu equipo!" />
                 </form>
-                <a class="upload-photo cboxElement" data-upload="photo" data-upload-type="event" data-event-id="{{ entity.id }}" data-team-id="{{ entity.hasTeams[0].team.id }}" href="{{ path('photo_fileupload') }}"></a>
+                <a class="upload-photo cboxElement" data-upload="photo" data-upload-type="event" data-event-id="{{ entity.id }}" data-team-id="{{ teamLocal.team.id }}" href="{{ path('photo_fileupload') }}"></a>
             </div>
         </div>
         <div class="guest">
@@ -15,7 +18,7 @@
                 <form data-event-wall="guest">
                     <input type="text" placeholder="Alienta a tu equipo!" />
                 </form>
-                <a class="upload-photo cboxElement" data-upload="photo" data-upload-type="event" data-event-id="{{ entity.id }}" data-team-id="{{ entity.hasTeams[1].team.id }}" href="{{ path('photo_fileupload') }}"></a>
+                <a class="upload-photo cboxElement" data-upload="photo" data-upload-type="event" data-event-id="{{ entity.id }}" data-team-id="{{ teamGuest.team.id }}" href="{{ path('photo_fileupload') }}"></a>
             </div>
         </div>
     </section>
@@ -24,7 +27,43 @@
     </section>
 </div>
 
-<script>
+<div class="eventsupporters row-fluid">
+    <div class="local span6">
+        <h4>Fans ( {{ eshipsLocal|length }} )</h4>
+        <div class="clearfix"></div>
+        <ul>
+            {% for eshipLocal in eshipsLocal %}
+                <li>{% thumbnail eshipLocal.author.image, 'small' with {'title': eshipLocal.author } %}</li>
+            {% endfor %}
+            {% for eshipLocal in eshipsLocal %}
+                <li>{% thumbnail eshipLocal.author.image, 'small' with {'title': eshipLocal.author } %}</li>
+            {% endfor %}
+            {% for eshipLocal in eshipsLocal %}
+                <li>{% thumbnail eshipLocal.author.image, 'small' with {'title': eshipLocal.author } %}</li>
+            {% endfor %}
+            {% for eshipLocal in eshipsLocal %}
+                <li>{% thumbnail eshipLocal.author.image, 'small' with {'title': eshipLocal.author } %}</li>
+            {% endfor %}
+            {% for eshipLocal in eshipsLocal %}
+                <li>{% thumbnail eshipLocal.author.image, 'small' with {'title': eshipLocal.author } %}</li>
+            {% endfor %}
+            {% for eshipLocal in eshipsLocal %}
+                <li>{% thumbnail eshipLocal.author.image, 'small' with {'title': eshipLocal.author } %}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="guest span6">
+        <h4>Fans ( {{ eshipsGuest|length }} )</h4>
+        <div class="clearfix"></div>
+        <ul>
+            {% for eshipGuest in eshipsGuest %}
+                <li>{% thumbnail eshipGuest.author.image, 'small' with {'title': eshipGuest.author } %}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
     $(document).ready(function(){
         events.initDetail($('[event-wall]'));
     });
