@@ -64,6 +64,8 @@ class AppState
             if (!$entity->getActive())
                 return false;
         }
+        
+        if (!property_exists($entity, 'likecount')) return false;
 
         $rep = $this->getRepository('DodiciFansworldWebBundle:Liking');
         $liking = $rep->byUserAndEntity($user, $entity);
@@ -84,6 +86,8 @@ class AppState
             if (!$entity->getActive())
                 return false;
         }
+        
+        if (!property_exists($entity, 'likecount')) return false;
 
         $rep = $this->getRepository('DodiciFansworldWebBundle:Liking');
         $liking = $rep->byUserAndEntity($user, $entity);
