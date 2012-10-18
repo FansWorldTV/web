@@ -28,6 +28,10 @@
 	{% set tag_item = comment.share.proposal %} 
 	{% set tag_item_url = path("proposal_show", {'id': tag_item.id, 'slug': tag_item.slug }) %}
 	{% set tag_item_type = 'proposal' %}	
+{% elseif comment.share.event is not null %}
+    {% set tag_item = comment.share.event %} 
+    {% set tag_item_url = path("event_show", {'id': tag_item.id, 'slug': tag_item.slug }) %}
+    {% set tag_item_type = 'event' %}    
 {% endif %}
 
 {% block avatar %}

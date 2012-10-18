@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
+use Dodici\Fansworld\WebBundle\Entity\Share;
+
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Response;
@@ -258,7 +260,7 @@ class CommentController extends SiteController {
         }
 
 
-        $validTypes = array('comment', 'album', 'photo', 'video', 'contest', 'newpost', 'proposal', 'forumthread');
+        $validTypes = Share::getTypes();
 
         foreach ($validTypes as $type) {
             $getType = 'get' . ucfirst($type);
@@ -273,7 +275,7 @@ class CommentController extends SiteController {
                         'id' => $tag_item->getId(),
                         'slug' => $tag_item->getSlug()
                             ));
-                    if (!is_null($tag_item->getImage())) {
+                    if (property_exists($tag_item, 'image') && $tag_item->getImage()) {
                         $tag['shareImage'] = $appMedia->getImageUrl($tag_item->getImage(), 'wall');
                     }
                 }

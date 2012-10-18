@@ -112,7 +112,31 @@ class Share
      * })
      */
     private $proposal;
+    
+    /**
+     * @var Event
+     *
+     * @ORM\ManyToOne(targetEntity="Event")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     * })
+     */
+    private $event;
 
+    public static function getTypes()
+    {
+        return array(
+        	'comment', 
+        	'album', 
+        	'photo', 
+        	'video', 
+        	'contest', 
+        	'newspost', 
+        	'proposal', 
+        	'forumthread',
+            'event');
+    }
+    
     /**
      * Get id
      *
@@ -301,5 +325,25 @@ class Share
     public function getProposal()
     {
         return $this->proposal;
+    }
+    
+	/**
+     * Set event
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Event $event
+     */
+    public function setEvent(\Dodici\Fansworld\WebBundle\Entity\Event $event)
+    {
+        $this->event = $event;
+    }
+
+    /**
+     * Get event
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Event 
+     */
+    public function getEvent()
+    {
+        return $this->event;
     }
 }

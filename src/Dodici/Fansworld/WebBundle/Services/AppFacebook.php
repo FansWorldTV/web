@@ -108,17 +108,24 @@ class AppFacebook
         
         $type = $this->appstate->getType($entity);
         $url = $this->router->generate($type . '_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()), true);
-        $picture = $this->appmedia->getImageUrl($entity->getImage(), 'medium');
+        
+        $picture = null;
+        if (property_exists($entity, 'image')) {
+            $picture = $this->appmedia->getImageUrl($entity->getImage(), 'medium');
+        }
+        
+        $data = array(
+            'message' => $message,
+            'name' => 'Fansworld ' . ucfirst($type),
+            'redirect_uri' => $url,
+            'caption' => 'Fansworld TV',
+            'link' => $url,
+            'description' => $entity->getContent()
+        );
+        
+        if ($picture) $data['picture'] = $picture;
 
-        return $this->api('/me/feed', null, 'POST', array(
-                    'message' => $message,
-                    'name' => 'Fansworld ' . ucfirst($type),
-                    'redirect_uri' => $url,
-                    'caption' => 'Fansworld TV',
-                    'link' => $url,
-                    'picture' => $picture,
-                    'description' => $entity->getContent()
-                ));
+        return $this->api('/me/feed', null, 'POST', $data);
     }
     
     public function getScope()
