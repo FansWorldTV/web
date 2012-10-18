@@ -47,9 +47,7 @@ class Sharer
         
         foreach ($targets as $target) {
             if ($target) {
-                if (!($target instanceof User) || (($target instanceof User) && ($target != $author))) {
-                    $this->shareToWall($sharedthing, $content, $target, $author);
-                }
+                $this->shareToWall($sharedthing, $content, $target, $author);
             }
         }
         

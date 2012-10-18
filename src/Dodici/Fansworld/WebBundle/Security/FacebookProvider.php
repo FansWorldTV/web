@@ -47,10 +47,14 @@ class FacebookProvider implements UserProviderInterface
         return $this->userManager->findUserBy(array('email' => $email));
     }
 
-    public function loadUserByUsername($username)
+    public function loadUserByUsername($username, $token=null)
     {
         $user = $this->findUserByFbId($username);
 
+        if ($token) {
+            $this->facebook->setAccessToken($token);
+        }
+        
         try {
             $fbdata = $this->facebook->api('/me');
         } catch (FacebookApiException $e) {
@@ -133,15 +137,16 @@ class FacebookProvider implements UserProviderInterface
 	        			$this->container->get('contact.importer')->finalizeInvitation($inviter, $user, false);
 	        		}
         		}
+        		
+        		// TODO use http://developers.facebook.com/docs/api/realtime
+                
+                if (count($this->validator->validate($user, 'Facebook'))) {
+                    // TODO: the user was found obviously, but doesnt match our expectations, do something smart
+                    throw new UsernameNotFoundException('The facebook user could not be stored');
+                }
+                $this->userManager->updateUser($user);
             }
 
-            // TODO use http://developers.facebook.com/docs/api/realtime
-            
-            if (count($this->validator->validate($user, 'Facebook'))) {
-                // TODO: the user was found obviously, but doesnt match our expectations, do something smart
-                throw new UsernameNotFoundException('The facebook user could not be stored');
-            }
-            $this->userManager->updateUser($user);
         }
 
         if (empty($user)) {

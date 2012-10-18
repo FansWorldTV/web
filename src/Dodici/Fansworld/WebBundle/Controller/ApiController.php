@@ -1,5 +1,6 @@
 <?php
 
+use Dodici\Fansworld\WebBundle\Controller\ApiController;
 namespace Dodici\Fansworld\WebBundle\Controller;
 
 use Dodici\Fansworld\WebBundle\Entity\Apikey;
@@ -48,14 +49,45 @@ class ApiController extends SiteController
     }
     
     /**
+     * [signed] Register
+     * 
+     * @Route("/register", name="api_register")
+     * @Method({"POST"})
+     * 
+     * Post params:
+     * - username: string
+     * - email: string
+     * - password: string
+     * - firstname: string
+     * - lastname: string
+     * - <optional> follow: array(
+     * 		idol: <id>
+     * 		team: <id>
+     * 		...
+     * )
+     * - <optional> device_id: string (iphone device id for APNS)
+     * - [signature params]
+     * 
+     * @return
+     *
+     * on success:
+     * @see ApiController::loginAction()
+     */
+    public function registerAction()
+    {
+        // TODO
+    }
+        
+    /**
      * [signed] Login
      * 
      * @Route("/login", name="api_login")
      * @Method({"POST"})
      *
-     * Get params:
+     * Post params:
      * - username/email: string
      * - password: string, plain text
+     * - <optional> device_id: string (iphone device id for APNS)
      * - [signature params]
      * 
      * @return 
@@ -88,21 +120,9 @@ class ApiController extends SiteController
                 if ($user) {
                     $token = $this->generateUserApiToken($user, $this->getApiKey());
                     
-                    $imageurl = null;
-                    if ($user->getImage()) {
-                        $imageurl = $this->get('appmedia')->getImageUrl($user->getImage());
-                    }
-                    
                     $return = array(
                         'token' => $token,
-                        'user' => array(
-                            'id' => $user->getId(),
-                            'username' => $user->getUsername(),
-                            'email' => $user->getEmail(),
-                            'firstname' => $user->getFirstname(),
-                            'lastname' => $user->getLastname(),
-                            'image' => $imageurl
-                        )
+                        'user' => $this->userArray($user)
                     );
                     
                     return $this->jsonResponse($return);
@@ -115,6 +135,55 @@ class ApiController extends SiteController
                 throw new HttpException(401, 'Invalid signature');
             }
         } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
+    
+	/**
+     * [signed] Facebook Connect
+     * 
+     * @Route("/connect/facebook", name="api_connect_facebook")
+     * 
+     * - If user already exists and is linked to FB: regular login
+     * - If user with same email already exists, but is not linked to FB, links account to FB
+     * - If user does not exist, registers the account
+     * 
+     * Get params:
+     * - facebook_id: int
+     * - access_token: string (facebook's access token for verification purposes)
+     * - <optional> device_id: string (iphone device id for APNS)
+     * - [signature params]
+     * 
+     * @return
+     * @see ApiController::loginAction()
+     */
+    public function facebookLoginAction()
+    {
+        try {
+            if ($this->hasValidSignature()) {
+                $request = $this->getRequest();
+                $fbid = $request->get('facebook_id');
+                $accesstoken = $request->get('access_token');
+                
+                $fbdata = $this->authFacebook($fbid, $accesstoken);
+                
+                $fbmanager = $this->get('my.facebook.user');
+                $user = $fbmanager->loadUserByUsername($fbid, $accesstoken);
+                
+                if (!$user) throw new HttpException(401, 'Could not authenticate');
+                
+                $token = $this->generateUserApiToken($user, $this->getApiKey());
+                
+                $return = array(
+                    'token' => $token,
+                    'user' => $this->userArray($user)
+                );
+                
+                return $this->jsonResponse($return);
+            } else {
+                throw new HttpException(401, 'Invalid signature');
+            }
+        } catch(\Exception $e) {
             return $this->plainException($e);
         }
     }
@@ -306,6 +375,38 @@ class ApiController extends SiteController
             // Bad username/mail
             throw new HttpException(401, 'Invalid username or password');
         }
+    }
+    
+    private function authFacebook($fbid, $accesstoken)
+    {
+        if (!$fbid || !$accesstoken) throw new HttpException(400, 'Requires facebook_id and access_token');
+        if (!is_numeric($fbid)) throw new HttpException(400, 'Invalid facebook_id');
+        
+        $facebook = $this->get('fos_facebook.api');
+        $facebook->setAccessToken($accesstoken);
+        $data = $facebook->api('/me');
+        
+        if (!$data || !(isset($data['verified']) && $data['verified']))
+            throw new HttpException(401, 'Invalid facebook_id or access_token');
+        
+        return $data;
+    }
+    
+    private function userArray(User $user)
+    {
+        $imageurl = null;
+        if ($user->getImage()) {
+            $imageurl = $this->get('appmedia')->getImageUrl($user->getImage());
+        }
+        
+        return array(
+            'id' => $user->getId(),
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+            'firstname' => $user->getFirstname(),
+            'lastname' => $user->getLastname(),
+            'image' => $imageurl
+        );
     }
     
     private function plainException(\Exception $e)
