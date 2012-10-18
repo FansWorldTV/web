@@ -100,6 +100,6 @@
                 <li><a href=""><img src="{{ asset('bundles/dodicifansworldweb/images/checkIn/radio.png') }}" width="50" height="45"/></a></li>
             </ul>
         </span>
-        <button class="btn">Compartir Partido</button>
+        {% include 'DodiciFansworldWebBundle:Default:share_button.html.twig' with {entity: entity, 'type': 'event'} %}
     </div>
 </section>

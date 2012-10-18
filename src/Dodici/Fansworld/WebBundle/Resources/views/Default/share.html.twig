@@ -23,22 +23,22 @@
 	<g:plusone annotation="none"></g:plusone-->
                         #}
 
-	<div class="internal_buttons">
+        <div class="internal_buttons">
     {% if reportbutton %}
-      <a class="btn report" href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}"><i class="icon-flag"></i></a> 
+                <a class="btn report" href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}"><i class="icon-flag"></i></a> 
     {% endif %}
-    
+
     {% if (type == 'photo' or type == 'video' or type == 'album') and entity.author == app.user and editbutton %}
             {% include 'DodiciFansworldWebBundle:Default:edit_button.html.twig' with {entity: entity, type: type} %}
             {#{% include 'DodiciFansworldWebBundle:Default:delete_button.html.twig' with {entity: entity, type: type} %}#}
     {% endif %} 
-    
+
     {% if sharebutton %}
       {% include 'DodiciFansworldWebBundle:Default:share_button.html.twig' with {entity: entity} %}
     {% endif %}
-    
+
     {% if likebutton %}
             {% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {entity: entity, buttonmode: true} %}
     {% endif %}
-	</div>
-</div>
+            </div>
+        </div>

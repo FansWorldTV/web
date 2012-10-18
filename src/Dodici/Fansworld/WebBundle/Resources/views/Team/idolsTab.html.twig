@@ -13,7 +13,7 @@
 {% block profile_body %}
     {% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_fullwidth.html.twig" %}
         {% block inner_content %}
-            {% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { avatars: idolships } %}
+            {% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { avatars: idolships, type: 'idols' } %}
         
             <div id="templates" class="hidden">
                 <li>
