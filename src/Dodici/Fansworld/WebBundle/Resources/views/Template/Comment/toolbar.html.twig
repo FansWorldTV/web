@@ -10,8 +10,8 @@
     <!--img class='toolbar-comentarios'  src="{{ asset("bundles/dodicifansworldweb/images/ico/comentarios.png") }}" alt="Comentarios" /-->
     <img class='toolbar-compartir' src="{{ asset("bundles/dodicifansworldweb/images/ico/compartir.png") }}" alt="Compartir" />
     {% raw %}
-        <div class="like-container toolbar-favoritos likebutton {{>shareLikeClass}}" data-id="{{>shareId}}" data-type="{{>shareType}}">
-            {{>shareLikeCount}}
-        </div>
+        {{if shareLikeCount !== false }}
+            <span class="like-container toolbar-favoritos likebutton {{>shareLikeClass}}" data-id="{{>shareId}}" data-type="{{>shareType}}">{{>shareLikeCount}}</span>
+        {{/if}}
     {% endraw %}
 </div>

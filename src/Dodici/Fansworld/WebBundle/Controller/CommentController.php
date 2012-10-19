@@ -3,7 +3,6 @@
 namespace Dodici\Fansworld\WebBundle\Controller;
 
 use Dodici\Fansworld\WebBundle\Entity\Share;
-
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,13 +18,15 @@ use Symfony\Component\HttpFoundation\Request;
  * Comment controller.
  * @Route("/comment")
  */
-class CommentController extends SiteController {
+class CommentController extends SiteController
+{
 
     /**
      * @Route("/show/{id}", name= "comment_show", requirements = {"id" = "\d+"})
      * @Template
      */
-    public function showAction($id) {
+    public function showAction($id)
+    {
         // TODO: comment show action, list all responses (nested comments), allow answering root comment
         $comment = $this->getRepository('Comment')->find($id);
         $this->securityCheck($comment);
@@ -41,7 +42,8 @@ class CommentController extends SiteController {
      * 
      * @Route("/ajax/post", name="comment_ajaxpost")
      */
-    public function ajaxPostAction() {
+    public function ajaxPostAction()
+    {
         try {
 
             $request = $this->getRequest();
@@ -96,7 +98,8 @@ class CommentController extends SiteController {
     /**
      *  @Route("/ajax/get/", name="comment_ajaxget")
      */
-    public function ajaxGetAction() {
+    public function ajaxGetAction()
+    {
         $request = $this->getRequest();
 
         $commentId = $request->get('id', false);
@@ -144,39 +147,42 @@ class CommentController extends SiteController {
 
         return $this->jsonResponse($response);
     }
+
     /**
      *  @Route("/ajax/get/subcomments/", name="subcomment_ajaxget")
      */
-    public function ajaxGetSubcommentsAction() {
+    public function ajaxGetSubcommentsAction()
+    {
         $request = $this->getRequest();
         $commentIds = $request->get('wallCommentIds', false);
         $repo = $this->getRepository('Comment');
         $response = array();
-        
-        if(empty($commentIds)) {
+
+        if (empty($commentIds)) {
             return $this->jsonResponse($response);
         }
-        
-        if(!is_array($commentIds)) {
+
+        if (!is_array($commentIds)) {
             $commentIds = array($commentIds);
         }
-        
-        foreach($commentIds as $commentId) {
+
+        foreach ($commentIds as $commentId) {
             $entity = $repo->find($commentId);
             $subcomments = $repo->getCommentSubcomments($entity);
-            if(!empty($subcomments)) {
-                foreach($subcomments as $subcomment) {
+            if (!empty($subcomments)) {
+                foreach ($subcomments as $subcomment) {
                     $response[(string) $commentId][] = array(
                         'content' => $subcomment->getContent()
                     );
                 }
             }
         }
-        
+
         return $this->jsonResponse($response);
     }
 
-    private function jsonComment(Comment $comment, $useJson) {
+    private function jsonComment(Comment $comment, $useJson)
+    {
         $appMedia = $this->get('appmedia');
         if ($useJson != true) {
             return $this->renderView('DodiciFansworldWebBundle:Comment:comment.html.twig', array('comment' => $comment));
@@ -216,7 +222,8 @@ class CommentController extends SiteController {
         return $commentArray;
     }
 
-    private function getTarget(Comment $comment) {
+    private function getTarget(Comment $comment)
+    {
         $target = $comment->getTarget();
         $targetData = array();
         if (is_null($target)) {
@@ -233,31 +240,32 @@ class CommentController extends SiteController {
         return $targetData;
     }
 
-    private function getTagItem(Comment $comment) {
+    private function getTagItem(Comment $comment)
+    {
         $appMedia = $this->get('appmedia');
         $tag = array();
         $share = $comment->getShare();
 
-        if (is_null($share)) {
-            if ($this->get('appstate')->getType($comment) == 'comment') {
-                $type = 'comment';
-                $tag['shareUrl'] = $this->generateUrl($type . '_show', array(
-                    'id' => $comment->getId()
-                        ));
-                $tag['shareType'] = $type;
-                $tag['shareId'] = $comment->getId();
-                $tag['shareTitle'] = $comment->__toString();
-                $tag['shareActiontext'] = $this->trans('shared_' . $type);
-                $tag['shareLikeCount'] = $comment->getLikeCount();
-                $tag['shareCommentCount'] = $comment->getCommentCount();
-                if ($this->get('appstate')->canDislike($comment)) {
-                    $tag['shareLikeClass'] = 'liked';
-                }else
-                    $tag['shareLikeClass'] = '';
-            }
+        /* if (is_null($share)) {
+          if ($this->get('appstate')->getType($comment) == 'comment') {
+          $type = 'comment';
+          $tag['shareUrl'] = $this->generateUrl($type . '_show', array(
+          'id' => $comment->getId()
+          ));
+          $tag['shareType'] = $type;
+          $tag['shareId'] = $comment->getId();
+          $tag['shareTitle'] = $comment->__toString();
+          $tag['shareActiontext'] = $this->trans('shared_' . $type);
+          $tag['shareLikeCount'] = $comment->getLikeCount();
+          $tag['shareCommentCount'] = $comment->getCommentCount();
+          if ($this->get('appstate')->canDislike($comment)) {
+          $tag['shareLikeClass'] = 'liked';
+          }else
+          $tag['shareLikeClass'] = '';
+          }
 
-            return $tag;
-        }
+          return $tag;
+          } */
 
 
         $validTypes = Share::getTypes();
@@ -283,7 +291,7 @@ class CommentController extends SiteController {
                 $tag['shareId'] = $tag_item->getId();
                 $tag['shareTitle'] = $tag_item->__toString();
                 $tag['shareActiontext'] = $this->trans('shared_' . $type);
-                $tag['shareLikeCount'] = $tag_item->getLikeCount();
+                $tag['shareLikeCount'] = method_exists($tag_item, 'getLikeCount') ? $tag_item->getLikeCount() : null;
                 $tag['shareCommentCount'] = $comment->getCommentCount();
                 if ($this->get('appstate')->canDislike($tag_item)) {
                     $tag['shareLikeClass'] = 'liked';
