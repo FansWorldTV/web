@@ -36,6 +36,7 @@ class RegistrationFormHandler extends BaseHandler
             if ($this->form->isValid()) {
                 // generate username
                 $username = $user->getFirstname().'.'.$user->getLastname();
+                $username = str_replace(' ', '.', $username);
                 $exists = $this->userManager->findUserByUsername($username);
                 if ($exists) $username .= '.' . uniqid();
                 $user->setUsername($username);

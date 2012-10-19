@@ -1,6 +1,5 @@
 <?php
 
-use Dodici\Fansworld\WebBundle\Controller\ApiController;
 namespace Dodici\Fansworld\WebBundle\Controller;
 
 use Dodici\Fansworld\WebBundle\Entity\Apikey;
@@ -55,16 +54,12 @@ class ApiController extends SiteController
      * @Method({"POST"})
      * 
      * Post params:
-     * - username: string
      * - email: string
      * - password: string
      * - firstname: string
      * - lastname: string
-     * - <optional> follow: array(
-     * 		idol: <id>
-     * 		team: <id>
-     * 		...
-     * )
+     * - <optional> idol[] : array (int, ...)
+     * - <optional> team[] : array (int, ...)
      * - <optional> device_id: string (iphone device id for APNS)
      * - [signature params]
      * 
@@ -75,7 +70,89 @@ class ApiController extends SiteController
      */
     public function registerAction()
     {
-        // TODO
+        try {
+            if ($this->hasValidSignature()) {
+                $request = $this->getRequest();
+                
+                $username = null; $email = null; $password = null; $firstname = null; $lastname = null;
+                $rfields = array('username', 'email', 'password', 'firstname', 'lastname');
+                foreach ($rfields as $rf) {
+                    ${$rf} = $request->get($rf);
+                    if (!${$rf}) throw new HttpException(400, 'Required parameters: ' . join(', ', $rfields));
+                }
+                
+                $usermanager = $this->get('app_user.user_manager');
+                $confirmationEnabled = $this->container->getParameter('fos_user.registration.confirmation.enabled');
+                
+                $user = $usermanager->createUser();
+                $user->setFirstname($firstname);
+                $user->setLastname($lastname);
+                $user->setEmail($email);
+                $user->setPlainPassword($password);
+                
+                $existsmail = $usermanager->findUserByEmail($user->getEmail());
+                if ($existsmail) throw new HttpException(400, 'User with email '.$user->getEmail().' already exists');
+                
+                $username = $user->getFirstname().'.'.$user->getLastname();
+                $username = str_replace(' ', '.', $username);
+                $exists = $usermanager->findUserByUsername($username);
+                if ($exists) $username .= '.' . uniqid();
+                $user->setUsername($username);
+                
+                if ($confirmationEnabled) {
+                    $user->setEnabled(false);
+                } else {
+                    $user->setConfirmationToken(null);
+                    $user->setEnabled(true);
+                }
+                
+                $validator = $this->get('validator');
+                $errors = $validator->validate($user, array('Registration'));
+            
+                if (count($errors) > 0) {
+                    $errorstr = (string)$errors;
+                    $errorstr = str_replace('Application\Sonata\UserBundle\Entity\User.', '', $errorstr);
+                    throw new HttpException(400, $user->getUsername() . ' ' .$errorstr);
+                }
+        
+                $usermanager->updateUser($user);
+                
+                if ($confirmationEnabled) {
+                    $this->get('fos_user.mailer')->sendConfirmationEmailMessage($user);
+                }
+                
+                if ($user->getId()) {
+                    $token = $this->generateUserApiToken($user, $this->getApiKey());
+                    
+                    $return = array(
+                        'token' => $token,
+                        'user' => $this->userArray($user)
+                    );
+                    
+                    $idols = $request->get('idol');
+                    $teams = $request->get('team');
+                    $fanmaker = $this->get('fanmaker');
+                    
+                    foreach ($idols as $i) {
+                        $idol = $this->getRepository('Idol')->find($i);
+                        $fanmaker->addFan($idol, $user);
+                    }
+                    foreach ($teams as $t) {
+                        $team = $this->getRepository('Team')->find($t);
+                        $fanmaker->addFan($team, $user);
+                    }
+                    
+                    return $this->jsonResponse($return);
+                    
+                } else {
+                    throw new HttpException(500, 'Something went wrong');
+                }
+            } else {
+                throw new HttpException(401, 'Invalid signature');
+            }
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
     }
         
     /**
