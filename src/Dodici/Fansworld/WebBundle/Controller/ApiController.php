@@ -129,18 +129,7 @@ class ApiController extends SiteController
                         'user' => $this->userArray($user)
                     );
                     
-                    $idols = $request->get('idol');
-                    $teams = $request->get('team');
-                    $fanmaker = $this->get('fanmaker');
-                    
-                    foreach ($idols as $i) {
-                        $idol = $this->getRepository('Idol')->find($i);
-                        $fanmaker->addFan($idol, $user);
-                    }
-                    foreach ($teams as $t) {
-                        $team = $this->getRepository('Team')->find($t);
-                        $fanmaker->addFan($team, $user);
-                    }
+                    $this->addIdolsTeams($user);
                     
                     return $this->jsonResponse($return);
                     
@@ -228,6 +217,8 @@ class ApiController extends SiteController
      * Get params:
      * - facebook_id: int
      * - access_token: string (facebook's access token for verification purposes)
+     * - <optional> idol[] : array (int, ...)
+     * - <optional> team[] : array (int, ...)
      * - <optional> device_id: string (iphone device id for APNS)
      * - [signature params]
      * 
@@ -250,6 +241,8 @@ class ApiController extends SiteController
                 if (!$user) throw new HttpException(401, 'Could not authenticate');
                 
                 $token = $this->generateUserApiToken($user, $this->getApiKey());
+                
+                $this->addIdolsTeams($user);
                 
                 $return = array(
                     'token' => $token,
@@ -484,6 +477,25 @@ class ApiController extends SiteController
             'lastname' => $user->getLastname(),
             'image' => $imageurl
         );
+    }
+    
+    private function addIdolsTeams(User $user)
+    {
+        $request = $this->getRequest();
+        $fanmaker = $this->get('fanmaker');
+        
+        $idols = $request->get('idol');
+        $teams = $request->get('team');
+        
+        foreach ($idols as $i) {
+            $idol = $this->getRepository('Idol')->find($i);
+            $fanmaker->addFan($idol, $user);
+        }
+        
+        foreach ($teams as $t) {
+            $team = $this->getRepository('Team')->find($t);
+            $fanmaker->addFan($team, $user);
+        }
     }
     
     private function plainException(\Exception $e)
