@@ -55,7 +55,7 @@ class BatchController extends SiteController
      */
     public function eventTweetsAction()
     {
-        $teams = $this->getRepository('Team')->withEvents(5);
+        $teams = $this->getRepository('Team')->withEvents(1);
         $eventtweetrepo = $this->getRepository('EventTweet');
         $em = $this->getDoctrine()->getEntityManager();
         
