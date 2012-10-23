@@ -181,7 +181,7 @@ class CommentController extends SiteController
         return $this->jsonResponse($response);
     }
 
-    private function jsonComment(Comment $comment, $useJson)
+    private function jsonComment(Comment $comment, $useJson = true)
     {
         $appMedia = $this->get('appmedia');
         if ($useJson != true) {

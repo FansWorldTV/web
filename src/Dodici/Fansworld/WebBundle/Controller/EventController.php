@@ -36,13 +36,13 @@ class EventController extends SiteController
         $event = $this->getRepository('Event')->find($id);
         $user = $this->getUser();
         $this->securityCheck($event);
-        
+
         $local = null;
         $guest = null;
-        foreach($event->getHasteams() as $team){
-            if(is_null($local)){
+        foreach ($event->getHasteams() as $team) {
+            if (is_null($local)) {
                 $local = $team->getTeam();
-            }else{
+            } else {
                 $guest = $team->getTeam();
             }
         }
@@ -319,25 +319,30 @@ class EventController extends SiteController
             $maxdate = null;
         }
 
-
         $eventComments = $this->getRepository('Comment')->eventWall($event, $mindate, $maxdate);
         foreach ($eventComments as $comment) {
-            $response[] = $this->formatJson($comment);
+            $this->addEntityResponse($comment, $event, $response);
         }
 
         $eventTweets = $this->getRepository('EventTweet')->eventWall($event, $mindate, $maxdate);
         foreach ($eventTweets as $tweet) {
-            $response[] = $this->formatJson($tweet);
+            $this->addEntityResponse($tweet, $event, $response);
         }
 
         $eventIncidents = $this->getRepository('EventIncident')->eventWall($event, $mindate, $maxdate);
         foreach ($eventIncidents as $incident) {
-            $response[] = $this->formatJson($incident);
+            $this->addEntityResponse($incident, $event, $response);
         }
         return $this->jsonResponse($response);
     }
 
-    private function formatJson($entity)
+    private function addEntityResponse($entity, $event, &$to)
+    {
+        $eventship = $this->getRepository('Eventship')->findOneBy(array('author' => $entity->getAuthor()->getId(), 'event' => $event->getId()));
+        $to[] = $this->formatJson($entity, $eventship);
+    }
+
+    private function formatJson($entity, $eventship = false)
     {
         $appState = $this->get('appstate');
         $type = $appState->getType($entity);
@@ -349,7 +354,7 @@ class EventController extends SiteController
                 'teamid' => $entity->getTeam()->getId(),
                 'avatar' => $this->getImageUrl($entity->getAuthor()->getImage()),
                 'minute' => $this->get('appstate')->getMinuteFromTimestamp($entity->getCreatedAt()),
-                'content' => $entity->getContent(),
+                'content' => $entity->getContent()
             );
         } else if ($type == 'eventtweet') {
             $response = array(
@@ -368,6 +373,10 @@ class EventController extends SiteController
                 'texto2' => $entity->getName(),
                 'texto3' => $entity->getMinute() . '\' ' . $entity->getHalf(),
             );
+        }
+
+        if ($eventship) {
+            $response['eventship'] = $eventship->getType();
         }
 
         return $response;
@@ -413,7 +422,8 @@ class EventController extends SiteController
 
 
         $comment = $this->getRepository('Comment')->findOneBy(array('id' => $commentId));
-        $response = $this->formatJson($comment);
+        $eventship = $this->getRepository('Eventship')->findOneBy(array('author' => $comment->getAuthor()->getId(), 'event' => $comment->getEvent()->getId()));
+        $response = $this->formatJson($comment, $eventship);
         return $this->jsonResponse($response);
     }
 
@@ -474,17 +484,17 @@ class EventController extends SiteController
     }
 
     /**
-     * @Route("/addcomment/{eventid}/{teamid}", name= "event_addcomment")
+     * @Route("/addcomment/{eventid}/{teamid}/{user}", name= "event_addcomment")
      * @Template
      */
-    public function addCommentAction($eventid, $teamid)
+    public function addCommentAction($eventid, $teamid, $user)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $event = $this->getRepository('Event')->findOneBy(array('id' => $eventid));
         $team = $this->getRepository('Team')->findOneBy(array('id' => $teamid));
 
-        $user = $this->getUser();
-
+        //$user = $this->getUser();
+        $user = $this->getRepository('User')->find($user);
 
         $comment = new Comment();
         $comment->setTeam($team);
@@ -535,7 +545,7 @@ class EventController extends SiteController
         } catch (Exception $exc) {
             die($exc->getMessage());
         }
-        
+
         echo "Dale que va! ;)";
     }
 

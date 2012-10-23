@@ -83,8 +83,8 @@
         
     <div class="filters">
         <span class="dropdown">
-            <button class="btn dropdown-toggle" id="drop4" role="button" data-toggle="dropdown" >Filtrar <icon class="caret"></icon></button>
-            <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="drop4">
+            <button class="btn dropdown-toggle" role="button" data-toggle="dropdown" >Filtrar <icon class="caret"></icon></button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="drop4">
                 <li><a tabindex="-1" href="#">Action</a></li>
                 <li><a tabindex="-1" href="#">Another action</a></li>
                 <li><a tabindex="-1" href="#">Something else here</a></li>
@@ -92,12 +92,14 @@
                 <li><a tabindex="-1" href="#">Separated link</a></li>
             </ul>
         </span>
-        <span class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><img src="{{ asset('bundles/dodicifansworldweb/images/checkIn/tv.png') }}" width="50" height="45"/></a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                <li><a href=""><img src="{{ asset('bundles/dodicifansworldweb/images/checkIn/live.png') }}" width="50" height="45"/></a></li>
-                <li><a href=""><img src="{{ asset('bundles/dodicifansworldweb/images/checkIn/online.png') }}" width="50" height="45"/></a></li>
-                <li><a href=""><img src="{{ asset('bundles/dodicifansworldweb/images/checkIn/radio.png') }}" width="50" height="45"/></a></li>
+        <span class="dropdown" data-filter-channel>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/checkin/live.jpg') }}" /></a>
+            <ul class="dropdown-menu" role="menu">
+                <li data-eventship-type = "all" class="active"><a href=""><img src="{{ asset('bundles/dodicifansworldweb/images/ico/checkin/live.jpg') }}" /></a></li>
+                <li data-eventship-type = "1"><a href=""><img src="{{ asset('bundles/dodicifansworldweb/images/ico/checkin/live.jpg') }}" /></a></li>
+                <li data-eventship-type = "2"><a href=""><img src="{{ asset('bundles/dodicifansworldweb/images/ico/checkin/live.jpg') }}" /></a></li>
+                <li data-eventship-type = "3"><a href=""><img src="{{ asset('bundles/dodicifansworldweb/images/ico/checkin/radio.jpg') }}" /></a></li>
+                <li data-eventship-type = "4"><a href=""><img src="{{ asset('bundles/dodicifansworldweb/images/ico/checkin/live.jpg') }}" /></a></li>
             </ul>
         </span>
         {% include 'DodiciFansworldWebBundle:Default:share_button.html.twig' with {entity: entity, 'type': 'event'} %}

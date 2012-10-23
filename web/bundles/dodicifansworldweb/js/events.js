@@ -290,8 +290,8 @@ var events = {
         
         $(".eventsupporters").hide();
         $(".eventdetail-togglebar .tabs button").click(function(){
-           var section = $(this).attr('data-tab');
-           var sectionActive = $(this).parent().find('.active').attr('data-tab');
+            var section = $(this).attr('data-tab');
+            var sectionActive = $(this).parent().find('.active').attr('data-tab');
            
             if(section != sectionActive ){
                 $(".event"+sectionActive).fadeOut('fast',function(){
@@ -299,12 +299,50 @@ var events = {
                 });
             }
         });
+        
+        events.filterChannel();
+    },
+    
+    filterChannel: function(p){
+        var dropdownRoot = $("span.dropdown[data-filter-channel]");
+        var selected = dropdownRoot.find('.active');
+
+        if(p == 'get'){
+            return selected;
+        } else if( p == 'filter') {
+            eventshipType = selected.attr('data-eventship-type');
+            if(eventshipType == 'all'){
+                $("[event-wall]").find("[data-eventship-type]").parent().fadeIn();
+            }else{
+                $("[event-wall]").find("[data-eventship-type][data-eventship-type!='" + eventshipType + "']").parent().fadeOut();
+                $("[event-wall]").find("[data-eventship-type][data-eventship-type='" + eventshipType + "']").parent().fadeIn();
+            }
+        }
+
+        dropdownRoot.find('ul.dropdown-menu li a').click(function(e){
+            e.preventDefault();
+          
+            var clickedSrc = $(this).find('img').attr('src');
+          
+            dropdownRoot.find('a.dropdown-toggle img').attr('src', clickedSrc);
+            dropdownRoot.find('.active').removeClass('active');
+            $(this).parent().addClass('active');
+          
+            selected = $(this);
+            eventshipType = $(this).parent().attr('data-eventship-type');
+            if(eventshipType == 'all'){
+                $("[event-wall]").find("[data-eventship-type]").parent().fadeIn();
+            }else{
+                $("[event-wall]").find("[data-eventship-type][data-eventship-type!='" + eventshipType + "']").parent().fadeOut();
+                $("[event-wall]").find("[data-eventship-type][data-eventship-type='" + eventshipType + "']").parent().fadeIn();
+            }
+        });
+      
     },
 	
     listen: function(eventId){
         function handleData(response){
             response = JSON.parse(response);
-            console.log(response);
             if(response){
                 if(response.t == 'c'){
                     events.handleComment(response.id);
@@ -337,8 +375,8 @@ var events = {
             if (typeof r !== "undefined") {
                 var twitterCommentContainer = events.getTwitterCommentContainer(r.minute,r.teamid);            		
                 templateHelper.renderTemplate("event-wall_comment", r, twitterCommentContainer, false, function () {
-                
-                    });
+                    events.filterChannel('filter');
+                });
             }
         }, function (msg) {
             console.error(msg);
@@ -354,8 +392,8 @@ var events = {
             if (typeof r !== "undefined") {
                 var incidentContainer = events.getIncidentContainer(r.minute);            		
                 templateHelper.renderTemplate("event-wall_incident", r, incidentContainer, false, function () {
-                
-                    });
+                    events.filterChannel('filter');
+                });
             }
         }, function (msg) {
             console.error(msg);
@@ -370,8 +408,8 @@ var events = {
             if (typeof r !== "undefined") {
                 var twitterCommentContainer = events.getTwitterCommentContainer(r.minute,r.teamid);            		
                 templateHelper.renderTemplate("event-wall_tweet", r, twitterCommentContainer, false, function () {
-                
-                    });
+                    events.filterChannel('filter');
+                });
             }
         }, function (msg) {
             console.error(msg);
@@ -428,7 +466,6 @@ var events = {
             }
         }
         
-        console.log(tweetCommentContainer);
         return tweetCommentContainer;
     },
 	
@@ -453,8 +490,7 @@ var events = {
                     if(element.type == 'c'){
                         var twitterCommentContainer = events.getTwitterCommentContainer(element.minute,element.teamid);            		
                         templateHelper.renderTemplate("event-wall_comment", element, twitterCommentContainer, false, function () {
-                            console.log('appendeando comment');
-                        });
+                            });
                     }else if(element.type == 'et'){
                         var twitterCommentContainer = events.getTwitterCommentContainer(element.minute,element.teamid);            		
                         templateHelper.renderTemplate("event-wall_tweet", element, twitterCommentContainer, false, function () {});
