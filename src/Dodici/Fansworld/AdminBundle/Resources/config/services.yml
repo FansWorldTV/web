@@ -1,0 +1,218 @@
+services:
+    ### BEGIN ADMIN SERVICES ###
+    dodici.fansworld.adminbundle.admin.country:
+        class: Dodici\Fansworld\AdminBundle\Admin\CountryAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: country }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Country, DodiciFansworldAdminBundle:CountryAdmin]
+    dodici.fansworld.adminbundle.admin.city:
+        class: Dodici\Fansworld\AdminBundle\Admin\CityAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: city }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\City, DodiciFansworldAdminBundle:CityAdmin]
+    dodici.fansworld.adminbundle.admin.friendship:
+        class: Dodici\Fansworld\AdminBundle\Admin\FriendshipAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: friendship }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Friendship, DodiciFansworldAdminBundle:FriendshipAdmin]
+    dodici.fansworld.adminbundle.admin.newscategory:
+        class: Dodici\Fansworld\AdminBundle\Admin\NewsCategoryAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: newscategory }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\NewsCategory, DodiciFansworldAdminBundle:NewsCategoryAdmin]
+    dodici.fansworld.adminbundle.admin.newspost:
+        class: Dodici\Fansworld\AdminBundle\Admin\NewsPostAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: newspost }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\NewsPost, DodiciFansworldAdminBundle:NewsPostAdmin]
+    dodici.fansworld.adminbundle.admin.video:
+        class: Dodici\Fansworld\AdminBundle\Admin\VideoAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: video }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Video, DodiciFansworldAdminBundle:VideoAdmin]
+    dodici.fansworld.adminbundle.admin.videocategory:
+        class: Dodici\Fansworld\AdminBundle\Admin\VideoCategoryAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: videocategory }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\VideoCategory, DodiciFansworldAdminBundle:VideoCategoryAdmin]
+    dodici.fansworld.adminbundle.admin.comment:
+        class: Dodici\Fansworld\AdminBundle\Admin\CommentAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: comment }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Comment, DodiciFansworldAdminBundle:CommentAdmin]
+    dodici.fansworld.adminbundle.admin.photo:
+        class: Dodici\Fansworld\AdminBundle\Admin\PhotoAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: photo }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Photo, DodiciFansworldAdminBundle:PhotoAdmin]
+    dodici.fansworld.adminbundle.admin.album:
+        class: Dodici\Fansworld\AdminBundle\Admin\AlbumAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: album }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Album, DodiciFansworldAdminBundle:AlbumAdmin]
+    dodici.fansworld.adminbundle.admin.interestcategory:
+        class: Dodici\Fansworld\AdminBundle\Admin\InterestCategoryAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: interestcategory }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\InterestCategory, DodiciFansworldAdminBundle:InterestCategoryAdmin]
+    dodici.fansworld.adminbundle.admin.interest:
+        class: Dodici\Fansworld\AdminBundle\Admin\InterestAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: interest }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Interest, DodiciFansworldAdminBundle:InterestAdmin]
+    dodici.fansworld.adminbundle.admin.contest:
+        class: Dodici\Fansworld\AdminBundle\Admin\ContestAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: contest }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Contest, DodiciFansworldAdminBundle:ContestAdmin]
+    dodici.fansworld.adminbundle.admin.contestparticipant:
+        class: Dodici\Fansworld\AdminBundle\Admin\ContestParticipantAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: contestparticipant }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\ContestParticipant, DodiciFansworldAdminBundle:ContestParticipantAdmin]
+    dodici.fansworld.adminbundle.admin.idolship:
+        class: Dodici\Fansworld\AdminBundle\Admin\IdolshipAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: idolship }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Idolship, DodiciFansworldAdminBundle:IdolshipAdmin]
+    dodici.fansworld.adminbundle.admin.idol:
+        class: Dodici\Fansworld\AdminBundle\Admin\IdolAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: idol }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Idol, DodiciFansworldAdminBundle:IdolAdmin]
+    dodici.fansworld.adminbundle.admin.level:
+        class: Dodici\Fansworld\AdminBundle\Admin\LevelAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: level }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Level, DodiciFansworldAdminBundle:LevelAdmin]
+    dodici.fansworld.adminbundle.admin.friendgroup:
+        class: Dodici\Fansworld\AdminBundle\Admin\FriendGroupAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: friendgroup }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\FriendGroup, DodiciFansworldAdminBundle:FriendGroupAdmin]
+    dodici.fansworld.adminbundle.admin.complaint:
+        class: Dodici\Fansworld\AdminBundle\Admin\ComplaintAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: complaint }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Complaint, DodiciFansworldAdminBundle:ComplaintAdmin]
+    dodici.fansworld.adminbundle.admin.complaintcategory:
+        class: Dodici\Fansworld\AdminBundle\Admin\ComplaintCategoryAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: complaintcategory }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\ComplaintCategory, DodiciFansworldAdminBundle:ComplaintCategoryAdmin]
+    dodici.fansworld.adminbundle.admin.hasinterest:
+        class: Dodici\Fansworld\AdminBundle\Admin\HasInterestAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: hasinterest }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\HasInterest, DodiciFansworldAdminBundle:HasInterestAdmin]
+    dodici.fansworld.adminbundle.admin.tag:
+        class: Dodici\Fansworld\AdminBundle\Admin\TagAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: tag }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Tag, DodiciFansworldAdminBundle:TagAdmin]
+    dodici.fansworld.adminbundle.admin.hastag:
+        class: Dodici\Fansworld\AdminBundle\Admin\HasTagAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: hastag }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\HasTag, DodiciFansworldAdminBundle:HasTagAdmin]
+    dodici.fansworld.adminbundle.admin.hasuser:
+        class: Dodici\Fansworld\AdminBundle\Admin\HasUserAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: hasuser }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\HasUser, DodiciFansworldAdminBundle:HasUserAdmin]
+    dodici.fansworld.adminbundle.admin.team:
+        class: Dodici\Fansworld\AdminBundle\Admin\TeamAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: team }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Team, DodiciFansworldAdminBundle:TeamAdmin]
+    dodici.fansworld.adminbundle.admin.teamcategory:
+        class: Dodici\Fansworld\AdminBundle\Admin\TeamCategoryAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: teamcategory }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\TeamCategory, DodiciFansworldAdminBundle:TeamCategoryAdmin]
+    dodici.fansworld.adminbundle.admin.idolcareer:
+        class: Dodici\Fansworld\AdminBundle\Admin\IdolCareerAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: idolcareer }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\IdolCareer, DodiciFansworldAdminBundle:IdolCareerAdmin]
+    dodici.fansworld.adminbundle.admin.hasteam:
+        class: Dodici\Fansworld\AdminBundle\Admin\HasTeamAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: hasteam }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\HasTeam, DodiciFansworldAdminBundle:HasTeamAdmin]
+    dodici.fansworld.adminbundle.admin.teamship:
+        class: Dodici\Fansworld\AdminBundle\Admin\TeamshipAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: teamship }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Teamship, DodiciFansworldAdminBundle:TeamshipAdmin]
+    dodici.fansworld.adminbundle.admin.sport:
+        class: Dodici\Fansworld\AdminBundle\Admin\SportAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: sport }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Sport, DodiciFansworldAdminBundle:SportAdmin]
+    dodici.fansworld.adminbundle.admin.event:
+        class: Dodici\Fansworld\AdminBundle\Admin\EventAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: event }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Event, DodiciFansworldAdminBundle:EventAdmin]
+    dodici.fansworld.adminbundle.admin.eventship:
+        class: Dodici\Fansworld\AdminBundle\Admin\EventshipAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: eventship }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Eventship, DodiciFansworldAdminBundle:EventshipAdmin]
+    dodici.fansworld.adminbundle.admin.meeting:
+        class: Dodici\Fansworld\AdminBundle\Admin\MeetingAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: meeting }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Meeting, DodiciFansworldAdminBundle:MeetingAdmin]
+    dodici.fansworld.adminbundle.admin.meetingship:
+        class: Dodici\Fansworld\AdminBundle\Admin\MeetingshipAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: meetingship }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Meetingship, DodiciFansworldAdminBundle:MeetingshipAdmin]
+    dodici.fansworld.adminbundle.admin.proposal:
+        class: Dodici\Fansworld\AdminBundle\Admin\ProposalAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: proposal }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Proposal, DodiciFansworldAdminBundle:ProposalAdmin]
+    dodici.fansworld.adminbundle.admin.badge:
+        class: Dodici\Fansworld\AdminBundle\Admin\BadgeAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: badge }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\Badge, DodiciFansworldAdminBundle:BadgeAdmin]
+    dodici.fansworld.adminbundle.admin.badgestep:
+        class: Dodici\Fansworld\AdminBundle\Admin\BadgeStepAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: badgestep }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\BadgeStep, DodiciFansworldAdminBundle:BadgeStepAdmin]
+    dodici.fansworld.adminbundle.admin.quizquestion:
+        class: Dodici\Fansworld\AdminBundle\Admin\QuizQuestionAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: quizquestion }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\QuizQuestion, DodiciFansworldAdminBundle:QuizQuestionAdmin]
+    dodici.fansworld.adminbundle.admin.quizoption:
+        class: Dodici\Fansworld\AdminBundle\Admin\QuizOptionAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: quizoption }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\QuizOption, DodiciFansworldAdminBundle:QuizOptionAdmin]
+    dodici.fansworld.adminbundle.admin.quizanswer:
+        class: Dodici\Fansworld\AdminBundle\Admin\QuizAnswerAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: quizanswer }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\QuizAnswer, DodiciFansworldAdminBundle:QuizAnswerAdmin]
+    dodici.fansworld.adminbundle.admin.homevideo:
+        class: Dodici\Fansworld\AdminBundle\Admin\HomeVideoAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: homevideo }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\HomeVideo, DodiciFansworldAdminBundle:HomeVideoAdmin]
+    dodici.fansworld.adminbundle.admin.hasidol:
+        class: Dodici\Fansworld\AdminBundle\Admin\HasIdolAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: hasidol }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\HasIdol, DodiciFansworldAdminBundle:HasIdolAdmin]
+    dodici.fansworld.adminbundle.admin.videocategorysubscription:
+        class: Dodici\Fansworld\AdminBundle\Admin\VideoCategorySubscriptionAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: dodicifansworldadminbundle, label: videocategorysubscription }
+        arguments: [null, Dodici\Fansworld\WebBundle\Entity\VideoCategorySubscription, DodiciFansworldAdminBundle:VideoCategorySubscriptionAdmin]
+    ### END ADMIN SERVICES ###
