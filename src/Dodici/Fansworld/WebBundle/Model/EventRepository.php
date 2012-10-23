@@ -267,5 +267,29 @@ class EventRepository extends CountBaseRepository
 
         return $query->getResult();
     }
+    
+	/**
+     * Get possibly expired events
+     * 
+     * @param int|null $days - amount of days before the event is considered finished
+     */
+    public function expired($days = 2)
+    {
+        $daysbefore = new \DateTime('+'.$days.' days');
+        
+        $dql = '
+    	SELECT e
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Event e
+        WHERE e.active = true AND e.finished = false
+        AND e.fromtime < :daysbefore
+        AND e.type = :typematch
+        ';
+        
+        $query = $this->_em->createQuery($dql);
+        $query = $query->setParameter('daysbefore', $daysbefore);
+        $query = $query->setParameter('typematch', Event::TYPE_MATCH);
+            
+        return $query->getResult();
+    }
 
 }

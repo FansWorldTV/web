@@ -24,7 +24,7 @@ class BatchController extends SiteController
 
     /**
      * Feed the Event fixture
-     * @Route("/eventfeeding", name= "admin_batch_eventfeeding")
+     * @Route("/eventfeeding", name="admin_batch_eventfeeding")
      */
     public function eventFeedingAction()
     {
@@ -38,7 +38,7 @@ class BatchController extends SiteController
     
 	/**
      * Feed event incidents
-     * @Route("/eventminutefeeding", name= "admin_batch_eventminutefeeding")
+     * @Route("/eventminutefeeding", name="admin_batch_eventminutefeeding")
      */
     public function eventMinuteFeedingAction()
     {
@@ -49,9 +49,30 @@ class BatchController extends SiteController
 		return new Response('Ok');
     }
     
+    /**
+     * Finish open, expired events (sanity check)
+     * @Route("/eventfinishing", name="admin_batch_eventfinishing")
+     */
+    public function eventFinishingAction()
+    {
+        $events = $this->getRepository('Event')->expired();
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        if ($events) {
+            foreach ($events as $event) {
+                $event->setFinished(true);
+                $em->persist($event);
+            }
+            
+            $em->flush();
+        }
+        
+        return new Response('Ok');
+    }
+    
 	/**
      * Retrieve event tweets
-     * @Route("/eventtweets", name= "admin_batch_eventtweets")
+     * @Route("/eventtweets", name="admin_batch_eventtweets")
      */
     public function eventTweetsAction()
     {
@@ -106,7 +127,7 @@ class BatchController extends SiteController
 
 	/**
      * Process pending videos (thumbnail, upload, etc)
-     * @Route("/videoprocessing", name= "admin_batch_videoprocessing")
+     * @Route("/videoprocessing", name="admin_batch_videoprocessing")
      */
     public function videoProcessingAction()
     {
@@ -123,7 +144,7 @@ class BatchController extends SiteController
     
 	/**
      * Clean up timed out users from "watching video" lists
-     * @Route("/videoaudienceclean", name= "admin_batch_videoaudienceclean")
+     * @Route("/videoaudienceclean", name="admin_batch_videoaudienceclean")
      */
     public function videoAudienceCleanAction()
     {
