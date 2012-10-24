@@ -12,7 +12,7 @@
                     {{/for}}
                 </a>
             </span>
-            <button class='btn btn-danger'>{{>text}}</button>
+            <button class='btn btn-danger' data-event-id='{{>id}}' data-event-check-in>{{>text}}</button>
         </header>
         <div class='row-fluid'>
             {{for teams ~stadium=stadium ~showdate=showdate ~started=started}}

@@ -28,7 +28,7 @@
                             <span>
                                 <a href="{{ path('event_show', {'id': event.id, 'slug': event.slug}) }}">{{ eventteams|join(' vs ') }}</a>
                             </span>
-                            <button class='btn btn-danger'>{{ appstate.EventText(event.id) }}</button>
+                            <button class='btn btn-danger' data-event-id="{{ event.id }}" data-event-check-in>{{ appstate.EventText(event.id) }}</button>
                         </header>
                         <div class='row-fluid'>
                         {% for hasteam in hasteams %}

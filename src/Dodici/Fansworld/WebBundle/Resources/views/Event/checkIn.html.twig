@@ -1,15 +1,7 @@
-{% extends "DodiciFansworldWebBundle::popup.html.twig" %}
-
 {% block content %}
     <script type="text/javascript">checkIn.init();</script>
-    <div class="cont checkin">
-        <h1>¿Como estas siguiendo el evento?</h1>
-        <ul class="selectFrom" eventId = "{{ event }}">
-            <li type="1"><img src="{{ asset('bundles/dodicifansworldweb/images/checkIn/online.png') }}" /></li>
-            <li type="2"><img src="{{ asset('bundles/dodicifansworldweb/images/checkIn/tv.png') }}" /></li>
-            <li type="3"><img src="{{ asset('bundles/dodicifansworldweb/images/checkIn/radio.png') }}" /></li>
-            <li type="4"><img src="{{ asset('bundles/dodicifansworldweb/images/checkIn/live.png') }}" /></li>
-        </ul>
+    <div class="checkin">
+        <h1>Check in a partido...</h1>
         {% if teams|length > 0 %}
             <span>
                 <label>Equipo: </label>

@@ -114,6 +114,7 @@ class EventController extends SiteController
 
             $response[] = array(
                 'text' => $this->get('appstate')->getEventText($event->getId()),
+                'id' => $event->getId(),
                 'stadium' => $event->getStadium(),
                 'date' => $event->getFromtime()->format('d-m-Y'),
                 'showdate' => $event->getFromtime()->format('d/m/Y H:i'),
