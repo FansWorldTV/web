@@ -22,9 +22,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Idol implements SearchableInterface, VisitableInterface
 {
-	const SEX_MALE = 'm';
-	const SEX_FEMALE = 'f';
-	
+    const SEX_MALE = 'm';
+    const SEX_FEMALE = 'f';
+    
     /**
      * @var bigint $id
      *
@@ -196,7 +196,7 @@ class Idol implements SearchableInterface, VisitableInterface
         $this->idolcareers = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
-	/**
+    /**
      * @ORM\PrePersist()
      */
     public function prePersist()
@@ -204,11 +204,11 @@ class Idol implements SearchableInterface, VisitableInterface
         if (null === $this->createdAt) {
             $this->setCreatedAt(new \DateTime());
         }
-    	if (null === $this->active) {
+        if (null === $this->active) {
             $this->setActive(true);
         }
         if (null === $this->fanCount) {
-        	$this->setFanCount(0);
+            $this->setFanCount(0);
         }
         if (null === $this->photoCount) {
             $this->setPhotoCount(0);
@@ -222,12 +222,26 @@ class Idol implements SearchableInterface, VisitableInterface
     
     public function __toString()
     {
-    	return $this->getFirstname() . ' ' . $this->getLastname();
+        return $this->getFirstname() . ' ' . $this->getLastname();
+    }
+
+    /**
+     * Get TeamName
+     * Return the actual idol career
+     * @return Dodici\Fansworld\WebBundle\Entity\IdolCareer
+     */
+    public function getTeamName()
+    {
+        foreach ($this->idolcareers as $team) {
+            if ($team->getActual()) {
+                return $team;
+            }
+        }
     }
     
     public function getTitle()
     {
-    	return (string)$this;
+        return (string)$this;
     }
 
     /**
@@ -460,7 +474,7 @@ class Idol implements SearchableInterface, VisitableInterface
         return $this->image;
     }
     
-	/**
+    /**
      * Add idolcareers
      *
      * @param \Dodici\Fansworld\WebBundle\Entity\IdolCareer $idolcareers
@@ -470,7 +484,7 @@ class Idol implements SearchableInterface, VisitableInterface
         $this->addIdolcareer($idolcareers);
     }
     
-	/**
+    /**
      * Add idolcareers
      *
      * @param Dodici\Fansworld\WebBundle\Entity\IdolCareer $idolcareers
@@ -478,7 +492,7 @@ class Idol implements SearchableInterface, VisitableInterface
     public function addIdolCareer(\Dodici\Fansworld\WebBundle\Entity\IdolCareer $idolcareers)
     {
         $idolcareers->setIdol($this);
-    	$this->idolcareers[] = $idolcareers;
+        $this->idolcareers[] = $idolcareers;
     }
 
     /**
@@ -491,7 +505,7 @@ class Idol implements SearchableInterface, VisitableInterface
         return $this->idolcareers;
     }
     
-	/**
+    /**
      * Set idolcareers
      *
      * @param Doctrine\Common\Collections\Collection $idolcareers
@@ -622,7 +636,7 @@ class Idol implements SearchableInterface, VisitableInterface
         return $this->country;
     }
     
-	/**
+    /**
      * Add visits
      *
      * @param Dodici\Fansworld\WebBundle\Entity\Visit $visits
@@ -634,7 +648,7 @@ class Idol implements SearchableInterface, VisitableInterface
         $this->visits[] = $visits;
     }
     
-	public function addVisits(\Dodici\Fansworld\WebBundle\Entity\Visit $visits)
+    public function addVisits(\Dodici\Fansworld\WebBundle\Entity\Visit $visits)
     {
         $this->addVisit($visits);
     }
@@ -649,7 +663,7 @@ class Idol implements SearchableInterface, VisitableInterface
         return $this->visits;
     }
     
-	public function setVisits($visits)
+    public function setVisits($visits)
     {
         $this->visits = $visits;
     }

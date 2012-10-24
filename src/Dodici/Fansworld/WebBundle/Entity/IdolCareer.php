@@ -142,7 +142,7 @@ class IdolCareer implements Translatable
     
     public function __toString()
     {
-    	return ($this->getTeam() ? (string)$this->getTeam() : $this->getTeamName()) . ' - ' . $this->getPosition();
+    	return ($this->getTeam() ? (string)$this->getTeam() : $this->getTeamName()) . ($this->getPosition() ? '-'. $this->getPosition() : '');
     }
     
 	/**
