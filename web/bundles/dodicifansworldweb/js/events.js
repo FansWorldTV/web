@@ -108,6 +108,7 @@ var events = {
                 if(typeof r != 'undefined'){
                     templateHelper.renderTemplate("event-grid_element", r, events.eventGridDestination, false, function(){
                         $('[text-height=ellipsis]').ellipsis();
+                        events.bindCheckInButtons();
                         if(typeof callback != 'undefined')
                         {
                             callback();
@@ -486,28 +487,53 @@ var events = {
         ajax.genericAction('event_getwallelements', opts, function (r) {
             if (typeof r !== "undefined") {
                 events.wallDestination.removeClass('loading');
-                $.each(r,function(index,element){
-                    if(element.type == 'c'){
-                        var twitterCommentContainer = events.getTwitterCommentContainer(element.minute,element.teamid);            		
-                        templateHelper.renderTemplate("event-wall_comment", element, twitterCommentContainer, false, function () {
-                            });
-                    }else if(element.type == 'et'){
-                        var twitterCommentContainer = events.getTwitterCommentContainer(element.minute,element.teamid);            		
-                        templateHelper.renderTemplate("event-wall_tweet", element, twitterCommentContainer, false, function () {});
-                    }else if(element.type == 'ei'){
-                        var incidentContainer = events.getIncidentContainer(element.minute);            		
-                        templateHelper.renderTemplate("event-wall_incident", element, incidentContainer, false, function () {});
+                $.each(r,function(index,element) {
+                    var twitterCommentContainer;
+                    
+                    if (element.type == 'c') {
+                        twitterCommentContainer = events.getTwitterCommentContainer(element.minute,element.teamid);
+                        templateHelper.renderTemplate("event-wall_comment", element, twitterCommentContainer, false);
+                    } else if (element.type == 'et') {
+                        twitterCommentContainer = events.getTwitterCommentContainer(element.minute,element.teamid);
+                        templateHelper.renderTemplate("event-wall_tweet", element, twitterCommentContainer, false);
+                    } else if (element.type == 'ei') {
+                        var incidentContainer = events.getIncidentContainer(element.minute);
+                        templateHelper.renderTemplate("event-wall_incident", element, incidentContainer, false);
                     }
                 } );
             }
         }, function (msg) {
             console.error(msg);
         },'get');
+    },
+
+    bindCheckInButtons: function () {
+        $('[data-event-check-in]').each(function () {
+            var $btn = $(this);
+            $btn.modalPopup({
+                'href': '/event/checkin/' + $btn.attr('data-event-id'),
+                'width': 360,
+                'height': 265
+            });
+        });
+    },
+
+    checkIn: function (eventId) {
+//        $.modalPopup({
+//            
+//        });
+        /*
+        var opts = {
+            'event': eventId
+        };
+        
+        ajax.genericAction('event_checkinajax', opts, function (r) {
+            console.log(r);
+        }, function (msg) {
+            console.error(msg);
+        },'get');
+        */
     }
-	
-	
-	
-	
 	
 	
 };
