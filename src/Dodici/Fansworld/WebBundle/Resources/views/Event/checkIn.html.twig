@@ -13,7 +13,7 @@
                             <div class="crop">{% thumbnail teams[0].splash, 'medium' with {'class': 'splash'} %}</div>
                             {% thumbnail teams[0].image, 'small' with {'class': 'logo'} %}
                         </div>
-                        <span class="online">37 fans online</span>
+                        <span class="online">{{ eventshipLocal }} fans</span>
                         <span class="team-name">{{ teams[0] }}</span>
                     </div>
                     <div class="team" data-team-id="{{ teams[1].id }}">
@@ -21,7 +21,7 @@
                             <div class="crop">{% thumbnail teams[1].splash, 'medium' with {'class': 'splash'} %}</div>
                             {% thumbnail teams[1].image, 'small' with {'class': 'logo'} %}
                         </div>
-                        <span class="online">37 fans online</span>
+                        <span class="online">{{ eventshipGuest }} fans</span>
                         <span class="team-name">{{ teams[1] }}</span>
                     </div>
             {% endif %}

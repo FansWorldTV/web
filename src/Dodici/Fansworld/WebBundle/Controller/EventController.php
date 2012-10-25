@@ -247,7 +247,9 @@ class EventController extends SiteController
         foreach ($event->getHasteams() as $hasTeam) {
             array_push($teams, $hasTeam->getTeam());
         }
-        return array('event' => $id, 'teams' => $teams);
+        $eventshipLocal = $this->getRepository('Eventship')->countBy(array('event' => $event->getId(), 'team' => $teams[0]->getId()));
+        $eventshipGuest = $this->getRepository('Eventship')->countBy(array('event' => $event->getId(), 'team' => $teams[1]->getId()));
+        return array('event' => $id, 'teams' => $teams, 'eventshipLocal' => $eventshipLocal, 'eventshipGuest' => $eventshipGuest);
     }
 
     /**
