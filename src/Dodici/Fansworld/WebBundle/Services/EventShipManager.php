@@ -37,19 +37,29 @@ class EventShipManager
      * Add a event to the list of events
      * @param Event $event
      * @param User $author
+     * @param Int $eventType
      */
-    public function createEventShip(Event $event, User $author)
+    public function createEventShip(Event $event,  User $author, $eventType)
     {
+        $eventship = new Eventship();
+        $eventship->setAuthor($author);
+        $eventship->setEvent($event);
+        $eventship->setType($eventType);
+
+        $this->em->persist($eventship);
+        $this->em->flush();
+
         $this->meteor->addCreateEvent($event, $author);
     }
 
     /**
      * Remove an event to the list of events
-     * @param $eventid
-     * @param $authorid
+     * @param Eventship $eventShip
      */
-    public function removeEventShip($eventid, $authorid)
+    public function removeEventShip(Eventship $eventShip)
     {
-        $this->meteor->removeEventShip($eventid, $authorid);
+        $this->meteor->removeEventShip($eventShip);
+        $this->em->remove($eventShip);
+        $this->em->flush();
     }  
 }

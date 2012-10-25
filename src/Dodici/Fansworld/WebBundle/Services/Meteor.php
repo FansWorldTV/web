@@ -108,15 +108,15 @@ class Meteor
         return $this->sendToSocket($data, 'eventship_'.$event->getId());
     }
 
-    public function removeEventShip($eventid, $authorid)
+    public function removeEventShip($eventShip)
     {
         $data = array(
             't' => 'ea',
             'a' => 'r',
-            'id' => $authorid
+            'id' => $eventShip->getAuthor()->getId()
         );
         
-        return $this->sendToSocket($data, 'eventship_'.$eventid);
+        return $this->sendToSocket($data, 'eventship_'.$eventShip->getEvent()->getId());
     }
     
     public function addUserWatchingVideo(Video $video, User $user)

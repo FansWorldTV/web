@@ -510,49 +510,45 @@ class EventController extends SiteController
     }
 
     /**
-     * @Route("/addeventship/{eventid}/{authorid}", name="event_eventship")
+     * @Route("/addeventship", name="event_eventship")
      */
-    public function addEventshipAction($eventid, $authorid)
+    public function addEventshipAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $event = $this->getRepository('Event')->find($eventid);
-        $author = $this->getRepository('User')->find($authorid);
+        $request = $this->getRequest();
+        $eventId = $request->get('eventid', false);
+        $authorId = $request->get('authorid', false);
+        $eventType = $request->get('eventtype', false);
 
         try {
-            $eventship = new Eventship();
-            $eventship->setAuthor($author);
-            $eventship->setEvent($event);
-            $eventship->setType(Eventship::TYPE_WEB);
+            $event = $this->getRepository('Event')->find($eventId);
+            $author = $this->getRepository('User')->find($authorId);
 
             $manager = $this->get('eventship');
-            $manager->createEventShip($event, $author);
-
-            $em->persist($eventship);
-            $em->flush();
+            $manager->createEventShip($event, $author, $eventType);
         } catch (Exception $exc) {
             die($exc->getMessage());
         }
-
         echo "Dale que va ;)";
     }
 
     /**
-     * @Route("/deleventship/{eventid}/{authorid}", name="event_deleventship")
+     * @Route("/deleventship", name="event_deleventship")
      */
-    public function delEventshipAction($eventid, $authorid)
+    public function delEventshipAction()
     {
+        $request = $this->getRequest();
+        $eventId = $request->get('eventid', false);
+        $authorId = $request->get('authorid', false);
+
+        $eventship = $this->getRepository('Eventship')->findBy(array('event' => $eventId, 'author' => $authorId));
+        
         try {
-            $eventship = $this->getRepository('Eventship')->findBy(array('event' => $eventid, 'author' => $authorid));
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->remove($eventship);
-            $em->flush();
             $manager = $this->get('eventship');
-            $manager->removeEventShip($eventid, $authorid);
+            $manager->removeEventShip($eventship);
         } catch (Exception $exc) {
             die($exc->getMessage());
         }
 
         echo "Dale que va! ;)";
     }
-
 }
