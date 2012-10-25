@@ -100,7 +100,7 @@ var events = {
         if(updateOptions){
             events.updateOptions();
         }
-		
+
         events.eventGridDestination.empty().addClass('loading');
         ajax.genericAction('event_get', 
             events.searchOptions, 
@@ -509,11 +509,11 @@ var events = {
 
     bindCheckInButtons: function () {
         $('[data-event-check-in]').each(function () {
+            console.log($(this));
             var $btn = $(this);
             $btn.modalPopup({
-                'href': '/event/checkin/' + $btn.attr('data-event-id'),
-                'width': 360,
-                'height': 265
+                'href': Routing.generate( appLocale + '_event_checkin', {'id': $btn.attr('data-event-id') }),
+                'width': 600
             });
         });
     },

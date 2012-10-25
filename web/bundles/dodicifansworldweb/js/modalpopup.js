@@ -106,6 +106,7 @@
             });
         }
 
+        init();
     };
 
     // plugin creation

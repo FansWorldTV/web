@@ -244,8 +244,8 @@ class EventController extends SiteController
         $id = (int) $id;
         $event = $this->getRepository('Event')->find($id);
         $teams = array();
-        foreach ($event->getHasteams() as $team) {
-            array_push($teams, array($team->getId() => (string) $team->getTeam()));
+        foreach ($event->getHasteams() as $hasTeam) {
+            array_push($teams, $hasTeam->getTeam());
         }
         return array('event' => $id, 'teams' => $teams);
     }

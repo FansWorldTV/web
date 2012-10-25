@@ -555,3 +555,122 @@ section.eventdetail-togglebar {
         }
     }
 }
+
+div.checkin-modal {
+    display: block;
+    background-color: @white;
+    .border-radius(10px);
+    color: @black;
+
+    .headerbar{
+        display: block;
+        .size(50px, 100%);
+        #gradient > .vertical(@gray, @black);
+        color: @white;
+        font-size: 20px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        
+        h1 {
+            margin: 10px 0 10px 10px;
+            font-size: 20px;
+            line-height: 46px;
+        }
+    }
+
+    span.title {
+        display: block;
+        margin-left: 20px;
+        margin-top: 15px;
+        margin-bottom: 20px;
+        font-size: 20px;
+        color: @black;
+    }
+
+    .teamvsteam {
+        background: url('../images/back-nasty.jpg');
+        .size(180px, auto);
+
+        div.team {
+            .size(inherit, 250px);
+
+            div.images {
+                position: relative;
+
+                div.crop {
+                    overflow: hidden;
+                    height: 75px;
+                }
+            }
+
+            &:first-child {
+                .pull-left();
+
+                img.logo {
+                    position: absolute;
+                    bottom: -45px;
+                    right: -45px;
+                }
+
+                span.online, span.team-name {
+                    margin-left: 20px;
+                    .pull-left();
+                }
+            }
+            &:last-child {
+                .pull-right();
+
+                img.logo {
+                    position: absolute;
+                    bottom: -45px;
+                    left: -45px;
+                }
+
+                span.online, span.team-name {
+                    margin-right: 20px;
+                    .pull-right();
+                }
+            }
+
+            span {
+                color: @white;
+                display: block;
+
+                &.online {
+                    font-size: 15px;
+                    margin-top: 30px;
+                }
+                &.team-name {
+                    font-size: 25px;
+                    margin-top: 5px;
+                    clear: both;
+                }
+            }
+        }
+    }
+
+    .selecttype {
+        margin-bottom: 20px;
+        ul {
+            display: block;
+            height: 110px;
+            margin-left: 20px;
+
+            li {
+                height: 110px;
+                float: left;
+                display: block;
+                margin-right: 45px;
+                margin-top: 8px;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+
+                &:first-child {
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+}
