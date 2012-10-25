@@ -96,6 +96,28 @@ class Meteor
     		return false;
     	}
     }
+
+    public function addCreateEventShip(Event $event, User $author)
+    {
+        $data = array(
+            't' => 'ea',
+            'a' => 'a',
+            'id' => $author->getId()
+        );
+        
+        return $this->sendToSocket($data, 'eventship_'.$event->getId());
+    }
+
+    public function removeEventShip($eventid, $authorid)
+    {
+        $data = array(
+            't' => 'ea',
+            'a' => 'r',
+            'id' => $authorid
+        );
+        
+        return $this->sendToSocket($data, 'eventship_'.$eventid);
+    }
     
     public function addUserWatchingVideo(Video $video, User $user)
     {

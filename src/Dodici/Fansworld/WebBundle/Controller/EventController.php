@@ -524,6 +524,9 @@ class EventController extends SiteController
             $eventship->setEvent($event);
             $eventship->setType(Eventship::TYPE_WEB);
 
+            $manager = $this->get('eventship');
+            $manager->createEventShip($event, $author);
+
             $em->persist($eventship);
             $em->flush();
         } catch (Exception $exc) {
@@ -543,6 +546,8 @@ class EventController extends SiteController
             $em = $this->getDoctrine()->getEntityManager();
             $em->remove($eventship);
             $em->flush();
+            $manager = $this->get('eventship');
+            $manager->removeEventShip($eventid, $authorid);
         } catch (Exception $exc) {
             die($exc->getMessage());
         }

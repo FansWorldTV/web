@@ -181,6 +181,9 @@ parameters:
     sonata.media.thumbnail.format: Application\Sonata\MediaBundle\Thumbnail\FormatThumbnail
         
 services:
+    eventship:
+      class: Dodici\Fansworld\WebBundle\Services\EventShipManager
+      arguments: [@security.context, @doctrine.orm.entity_manager, @meteor]
     liking.listener.persist:
         class: Dodici\Fansworld\WebBundle\Listener\LikingCountUpdater
         tags:
