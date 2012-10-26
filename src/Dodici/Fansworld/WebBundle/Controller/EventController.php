@@ -273,25 +273,32 @@ class EventController extends SiteController
 
         $response = array();
 
-        try {
-            $eventShip = new Eventship();
+        $eventship = $this->getRepository('Eventship')->findBy(array('event' => $eventId, 'author' => $author->getId()));
 
-            $eventShip->setAuthor($author);
-            $eventShip->setEvent($event);
-            $eventShip->setType($type);
+        if (!$eventship) {
+            try {
+                $eventShip = new Eventship();
 
-            if ($teamId) {
-                $eventShip->setTeam($team);
+                $eventShip->setAuthor($author);
+                $eventShip->setEvent($event);
+                $eventShip->setType($type);
+
+                if ($teamId) {
+                    $eventShip->setTeam($team);
+                }
+
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($eventShip);
+                $em->flush();
+
+                $response['error'] = false;
+            } catch (\Exception $exc) {
+                $response['error'] = true;
+                $response['msg'] = $exc->getMessage();
             }
-
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($eventShip);
-            $em->flush();
-
-            $response['error'] = false;
-        } catch (\Exception $exc) {
+        }else{
             $response['error'] = true;
-            $response['msg'] = $exc->getMessage();
+            $response['msg'] = "Ya estas participando.";
         }
 
         return $this->jsonResponse($response);
@@ -543,7 +550,7 @@ class EventController extends SiteController
         $authorId = $request->get('authorid', false);
 
         $eventship = $this->getRepository('Eventship')->findBy(array('event' => $eventId, 'author' => $authorId));
-        
+
         try {
             $manager = $this->get('eventship');
             $manager->removeEventShip($eventship);
@@ -553,4 +560,5 @@ class EventController extends SiteController
 
         echo "Dale que va! ;)";
     }
+
 }

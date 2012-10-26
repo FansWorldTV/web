@@ -554,6 +554,8 @@ var events = {
                
                $(".checkin-modal *").show();
                $(".checkin-modal").removeClass('loading');
+               location.href = Routing.generate(appLocale + "_event_show", {'id': eventId});
+               $("[data-event-check-in][data-event-id="+eventId+"]").modalPopup('close');
            }, function(e){
                error(e);
            });

@@ -4,8 +4,10 @@
 
     var ModalPopup = function ($button, options) {
 
-        // initialization and settings
-        var settings = $.extend({
+        var self = this;
+
+        // initialization and self.settings
+        self.settings = $.extend({
             'href': $button.attr('data-modal-url') || '#',
             'target': 'body',
             'duration': 1000,
@@ -20,7 +22,8 @@
             'onopen': function () {},
             'onload': function () {},
             'onclose': function () {}
-        }, options || {}),
+        }, options || {});
+        var
         $target,
         $container,
         $overlay,
@@ -31,7 +34,7 @@
         function load() {
             $overlay.addClass('loading');
             $.ajax({
-                'url': settings.href,
+                'url': self.settings.href,
                 'dataType': 'html',
                 'error': function () {
                     $overlay.removeClass('loading');
@@ -39,7 +42,7 @@
                 'success': function (response) {
                     $overlay.removeClass('loading');
                     $content.html(response);
-                    settings.onload(settings);
+                    self.settings.onload(self.settings);
                 }
             });
         }
@@ -51,8 +54,8 @@
             
             $container.animate({
                 opacity: 'show'
-            }, settings.duration, function () {
-                settings.onopen();
+            }, self.settings.duration, function () {
+                self.settings.onopen();
                 load();
             });
         }
@@ -61,37 +64,40 @@
             $container.fadeOut(function() {
                 $content.html('');
                 $container.fadeOut();
-                settings.onclose();
+                self.settings.onclose();
             });
         }
 
         function init() {
-            $target = $(settings.target);
+            if ($button.data('modalPopup')) {
+                self.settings = $button.data('modalPopup').settings;
+            }
+            $target = $(self.settings.target);
             
-            if (!$(settings.container).length) {
+            if (!$(self.settings.container).length) {
                 var markup = '',
                 inlineStyle = '';
                 
-                if(settings.width) {
-                    inlineStyle += 'width:' + settings.width + 'px;left:50%;margin-left:-' + Math.ceil(settings.width/2) + 'px;';
+                if(self.settings.width) {
+                    inlineStyle += 'width:' + self.settings.width + 'px;left:50%;margin-left:-' + Math.ceil(self.settings.width/2) + 'px;';
                 }
                 
-                if(settings.height) {
-                    inlineStyle += 'height:' + settings.height + 'px;top:50%;margin-top:-' + Math.ceil(settings.height/2) + 'px;';
+                if(self.settings.height) {
+                    inlineStyle += 'height:' + self.settings.height + 'px;top:50%;margin-top:-' + Math.ceil(self.settings.height/2) + 'px;';
                 }
                 
-                markup += '<div id="' + settings.container.replace('#', '') + '">';
-                markup += '  <div id="' + settings.overlay.replace('#', '') + '"></div>';
-                markup += '  <div id="' + settings.close.replace('#', '') + '"></div>';
-                markup += '  <div id="' + settings.content.replace('#', '') + '" style="' + inlineStyle + '"></div>';
+                markup += '<div id="' + self.settings.container.replace('#', '') + '">';
+                markup += '  <div id="' + self.settings.overlay.replace('#', '') + '"></div>';
+                markup += '  <div id="' + self.settings.close.replace('#', '') + '"></div>';
+                markup += '  <div id="' + self.settings.content.replace('#', '') + '" style="' + inlineStyle + '"></div>';
                 markup += '</div>';
                 $target.append(markup);
             }
 
-            $container = $(settings.container);
-            $overlay = $(settings.overlay);
-            $close = $(settings.close);
-            $content = $(settings.content);
+            $container = $(self.settings.container);
+            $overlay = $(self.settings.overlay);
+            $close = $(self.settings.close);
+            $content = $(self.settings.content);
             
             $close.on('click', function (e) {
                 close();
@@ -104,18 +110,19 @@
                 open();
                 return false;
             });
+            
         }
-
+        
         init();
+        if(options == 'close'){
+            close();
+        }
     };
 
     // plugin creation
     window.$.fn.modalPopup = function (options) {
         $(this).each(function () {
             var $button = $(this);
-            if ($button.data('modalPopup')) {
-                return;
-            }
             $button.data('modalPopup', new ModalPopup($button, options));
         });
     };
