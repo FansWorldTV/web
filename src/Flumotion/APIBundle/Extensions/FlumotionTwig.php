@@ -41,7 +41,12 @@ class FlumotionTwig
     	} elseif ($video->getVimeo()) {
     	    return sprintf('http://player.vimeo.com/video/%1$s', $video->getVimeo());
     	} else {
-    		return sprintf($small ? $this->videoplayersmallurl : $this->videoplayerbaseurl, $video->getStream());
+    		return $this->rawPlayerUrl($video->getStream(), $small=false);
     	}
+    }
+    
+    public function rawPlayerUrl($id, $small=false)
+    {
+        return sprintf($small ? $this->videoplayersmallurl : $this->videoplayerbaseurl, $id);
     }
 }
