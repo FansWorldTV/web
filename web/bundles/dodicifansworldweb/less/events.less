@@ -608,7 +608,16 @@ div.checkin-modal {
         .size(180px, auto);
 
         div.team {
-            .size(inherit, 250px);
+            .size(inherit, 300px);
+            opacity: 0.6;
+            cursor: pointer;
+
+            &:hover {   
+                opacity: 1;
+            }
+            &.active {
+                opacity: 1;
+            }
 
             div.images {
                 position: relative;
@@ -624,8 +633,8 @@ div.checkin-modal {
 
                 img.logo {
                     position: absolute;
-                    bottom: -45px;
-                    right: -45px;
+                    top: 20px;
+                    right: 10px;
                 }
 
                 span.online, span.team-name {
@@ -636,10 +645,14 @@ div.checkin-modal {
             &:last-child {
                 .pull-right();
 
+                img.splash{
+                    .pull-right();
+                }
+
                 img.logo {
                     position: absolute;
-                    bottom: -45px;
-                    left: -45px;
+                    top: 20px;
+                    left: 10px;
                 }
 
                 span.online, span.team-name {
@@ -677,7 +690,7 @@ div.checkin-modal {
                 float: left;
                 display: block;
                 margin-right: 45px;
-                margin-top: 8px;
+                margin-top: 11px;
 
                 &:last-child {
                     margin-right: 0;
@@ -685,6 +698,10 @@ div.checkin-modal {
 
                 &:first-child {
                     margin-top: 0;
+                }
+
+                img {
+                    cursor: pointer;
                 }
             }
         }

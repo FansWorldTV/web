@@ -521,26 +521,43 @@ var events = {
                             $(settings.content).html('');
                         });
                     });
+                    
+                    events.checkIn();
                 }
             });
         });
     },
 
-    checkIn: function (eventId) {
-//        $.modalPopup({
-//            
-//        });
-        /*
-        var opts = {
-            'event': eventId
-        };
-        
-        ajax.genericAction('event_checkinajax', opts, function (r) {
-            console.log(r);
-        }, function (msg) {
-            console.error(msg);
-        },'get');
-        */
+    checkIn: function () {
+        $(".checkin-modal .team:not('.active')").click(function(){
+            $(".checkin-modal .team").removeClass('active');
+            $(this).addClass('active');
+        });
+        $(".checkin-modal [data-checkin-channel]").click(function(){
+           var channel = $(this).attr('data-checkin-channel');
+           var eventId = $(this).parents('.checkin-modal').attr('data-event-id');
+           var selectedTeam = $(this).parents('.checkin-modal').find('.team.active').attr('data-team-id');
+           
+           if(!selectedTeam){
+               return error("Seleccione un equipo");
+           }
+           
+           $(".checkin-modal *").hide();
+           $(".checkin-modal").addClass('loading');
+           
+           ajax.genericAction('event_checkinajax', {'event': eventId, 'type': channel, 'teamId': selectedTeam}, function(r){
+               if(r.error){
+                   error(r.msg);
+               }else{
+                   success('Te has adjuntado al evento!');
+               }
+               
+               $(".checkin-modal *").show();
+               $(".checkin-modal").removeClass('loading');
+           }, function(e){
+               error(e);
+           });
+        });
     }
 	
 	

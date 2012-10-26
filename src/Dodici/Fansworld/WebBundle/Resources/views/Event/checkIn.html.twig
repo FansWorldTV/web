@@ -1,5 +1,5 @@
 {% block content %}
-    <div class="checkin-modal">
+    <div class="checkin-modal" data-event-id="{{ event }}">
         <span class="headerbar">
             <h1>Check in a partido...</h1>
             <span class="close-button"></span>
@@ -30,10 +30,10 @@
         <span class="title">2. ¿Por donde lo vas a seguir?</span>
         <div class="selecttype">
             <ul>
-                <li><img title="Radio" src="{{ asset('bundles/dodicifansworldweb/images/checkIn/radio.jpg') }}"/></li>
-                <li><img title="TV" src="{{ asset('bundles/dodicifansworldweb/images/checkIn/tv.jpg') }}"/></li>
-                <li><img title="Web" src="{{ asset('bundles/dodicifansworldweb/images/checkIn/web.jpg') }}"/></li>
-                <li><img title="En vivo" src="{{ asset('bundles/dodicifansworldweb/images/checkIn/online.jpg') }}"/></li>
+                <li><img data-checkin-channel="0" title="Radio" src="{{ asset('bundles/dodicifansworldweb/images/checkIn/radio.jpg') }}"/></li>
+                <li><img data-checkin-channel="1" title="TV" src="{{ asset('bundles/dodicifansworldweb/images/checkIn/tv.jpg') }}"/></li>
+                <li><img data-checkin-channel="2" title="Web" src="{{ asset('bundles/dodicifansworldweb/images/checkIn/web.jpg') }}"/></li>
+                <li><img data-checkin-channel="3" title="En vivo" src="{{ asset('bundles/dodicifansworldweb/images/checkIn/online.jpg') }}"/></li>
             </ul>
         </div>
     </div>
