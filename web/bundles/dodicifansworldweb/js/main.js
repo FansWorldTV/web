@@ -22,7 +22,7 @@ var site = {
             'innerHeight': 200
         });
         
-        $('[title]').tooltip();
+        $('[data-title]').tooltip();
         
         $('.change_image').colorbox({
             iframe: true, 

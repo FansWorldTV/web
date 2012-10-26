@@ -3,11 +3,11 @@
 
     <div class="entityBlock {% if third %} third {% endif %}">
         <div class="splash">
-            {% thumbnail entity.splash, 'big' with {'title': ''}%}
+            {% thumbnail entity.splash, 'big' %}
         </div>
 
         <div class="logo">
-            {% thumbnail entity.image, 'small' with {'title': ''} %}
+            {% thumbnail entity.image, 'small' %}
         </div>
 
         <a href="{{ path( entityType ~ '_wall', {'slug': entity.slug}) }}" class="name">{{ entity }}</a>

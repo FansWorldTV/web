@@ -8,9 +8,9 @@
                             <div class="avatar">
                                 {% raw %}
                                     {{if authorAvatarUrl}}
-                                        <img src="{{>authorAvatarUrl}}" />
+                                        <img src="{{>authorAvatarUrl}}" data-title="{{>authorName}}" alt="avatar" />
                                     {{else}}
-                                        <img src="/bundles/dodicifansworldweb/images/profile_no_image_40x40.png" />
+                                        <img src="/bundles/dodicifansworldweb/images/profile_no_image_40x40.png" data-title="{{>authorName}}" alt="avatar" />
                                     {{/if}}
                                 {% endraw %}
                             </div>
