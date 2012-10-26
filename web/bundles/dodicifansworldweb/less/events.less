@@ -570,11 +570,27 @@ div.checkin-modal {
         font-size: 20px;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
+        position: relative;
         
         h1 {
             margin: 10px 0 10px 10px;
             font-size: 20px;
             line-height: 46px;
+        }
+
+        span.close-button {
+            width: 29px;
+            height: 29px;
+            background: url("../images/modal/close.png") no-repeat top;
+            float: right;
+            cursor: pointer;
+            position: absolute;
+            z-index: 5;
+            top: 10px;
+            right: 10px;
+            &:hover {
+                background-position:bottom;
+            }
         }
     }
 

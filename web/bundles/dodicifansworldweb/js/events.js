@@ -513,7 +513,15 @@ var events = {
             var $btn = $(this);
             $btn.modalPopup({
                 'href': Routing.generate( appLocale + '_event_checkin', {'id': $btn.attr('data-event-id') }),
-                'width': 600
+                'width': 600,
+                'close': '.checkin-modal .headerbar .close-button',
+                'onload': function(settings){
+                    $(settings.close).click(function(){
+                        $(settings.container).fadeOut(function(){
+                            $(settings.content).html('');
+                        });
+                    });
+                }
             });
         });
     },

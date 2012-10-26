@@ -39,7 +39,7 @@
                 'success': function (response) {
                     $overlay.removeClass('loading');
                     $content.html(response);
-                    settings.onload();
+                    settings.onload(settings);
                 }
             });
         }
@@ -92,7 +92,7 @@
             $overlay = $(settings.overlay);
             $close = $(settings.close);
             $content = $(settings.content);
-
+            
             $close.on('click', function (e) {
                 close();
                 e.preventDefault();
