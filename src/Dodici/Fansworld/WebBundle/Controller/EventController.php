@@ -522,32 +522,34 @@ class EventController extends SiteController
     }
 
     /**
-     * @Route("/addeventship", name="event_eventship")
+     * @Route("/eventship/add", name="event_eventship_add")
+     * @Method({"POST"})
      */
     public function addEventshipAction()
     {
         $request = $this->getRequest();
-        $eventId = $request->get('eventid', false);
-        $authorId = $request->get('authorid', false);
-        $eventType = $request->get('eventtype', false);
+        $eventId = $request->get('eventid');
+        $authorId = $request->get('authorid');
+        $eventshipType = $request->get('eventtype', Eventship::TYPE_WEB);
 
         $event = $this->getRepository('Event')->find($eventId);
         $author = $this->getRepository('User')->find($authorId);
 
         $manager = $this->get('eventship.manager');
-        $manager->createEventship($event, $author, $eventType);
+        $manager->createEventship($event, $author, $eventshipType);
         
         return new Response('Added user to event');
     }
 
     /**
-     * @Route("/deleventship", name="event_deleventship")
+     * @Route("/eventship/remove", name="event_eventship_remove")
+     * @Method({"POST"})
      */
     public function delEventshipAction()
     {
         $request = $this->getRequest();
-        $eventId = $request->get('eventid', false);
-        $authorId = $request->get('authorid', false);
+        $eventId = $request->get('eventid');
+        $authorId = $request->get('authorid');
 
         $eventship = $this->getRepository('Eventship')->findBy(array('event' => $eventId, 'author' => $authorId));
 

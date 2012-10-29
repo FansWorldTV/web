@@ -35,14 +35,14 @@ class EventshipManager
      * Add a event to the list of events
      * @param Event $event
      * @param User $author
-     * @param Int $eventType
+     * @param Int $eventshipType
      */
-    public function createEventship(Event $event,  User $author, $eventType)
+    public function createEventship(Event $event,  User $author, $eventshipType)
     {
         $eventship = new Eventship();
         $eventship->setAuthor($author);
         $eventship->setEvent($event);
-        $eventship->setType($eventType);
+        $eventship->setType($eventshipType);
 
         $this->em->persist($eventship);
         $this->em->flush();
