@@ -3,10 +3,8 @@
 namespace Dodici\Fansworld\WebBundle\Services;
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
 use Dodici\Fansworld\WebBundle\Entity\Event;
 use Dodici\Fansworld\WebBundle\Entity\Eventship;
-
 use Symfony\Component\Security\Core\SecurityContext;
 use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
@@ -14,7 +12,7 @@ use Doctrine\ORM\EntityManager;
 /**
  * Handles Event, create, removal and pushing to Meteor
  */
-class EventShipManager
+class EventshipManager
 {    
     protected $security_context;
     protected $em;
@@ -39,7 +37,7 @@ class EventShipManager
      * @param User $author
      * @param Int $eventType
      */
-    public function createEventShip(Event $event,  User $author, $eventType)
+    public function createEventship(Event $event,  User $author, $eventType)
     {
         $eventship = new Eventship();
         $eventship->setAuthor($author);
@@ -49,17 +47,18 @@ class EventShipManager
         $this->em->persist($eventship);
         $this->em->flush();
 
-        $this->meteor->addCreateEvent($event, $author);
+        $this->meteor->addEventship($event, $author);
     }
 
     /**
      * Remove an event to the list of events
      * @param Eventship $eventShip
      */
-    public function removeEventShip(Eventship $eventShip)
+    public function removeEventship(Eventship $eventship)
     {
-        $this->meteor->removeEventShip($eventShip);
-        $this->em->remove($eventShip);
+        $this->em->remove($eventship);
         $this->em->flush();
+        
+        $this->meteor->removeEventship($eventship);
     }  
 }

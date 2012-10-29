@@ -2,14 +2,11 @@
 
 namespace Dodici\Fansworld\WebBundle\Services;
 
+use Dodici\Fansworld\WebBundle\Entity\Eventship;
 use Dodici\Fansworld\WebBundle\Entity\EventTweet;
-
 use Dodici\Fansworld\WebBundle\Entity\Video;
-
 use Dodici\Fansworld\WebBundle\Entity\EventIncident;
-
 use Dodici\Fansworld\WebBundle\Entity\Comment;
-
 use Dodici\Fansworld\WebBundle\Entity\Friendship;
 use Dodici\Fansworld\WebBundle\Entity\Notification;
 use Symfony\Component\HttpFoundation\Request;
@@ -97,7 +94,7 @@ class Meteor
     	}
     }
 
-    public function addCreateEventShip(Event $event, User $author)
+    public function addEventship(Event $event, User $author)
     {
         $data = array(
             't' => 'ea',
@@ -108,15 +105,15 @@ class Meteor
         return $this->sendToSocket($data, 'eventship_'.$event->getId());
     }
 
-    public function removeEventShip($eventShip)
+    public function removeEventship(Eventship $eventship)
     {
         $data = array(
             't' => 'ea',
             'a' => 'r',
-            'id' => $eventShip->getAuthor()->getId()
+            'id' => $eventship->getAuthor()->getId()
         );
         
-        return $this->sendToSocket($data, 'eventship_'.$eventShip->getEvent()->getId());
+        return $this->sendToSocket($data, 'eventship_'.$eventship->getEvent()->getId());
     }
     
     public function addUserWatchingVideo(Video $video, User $user)

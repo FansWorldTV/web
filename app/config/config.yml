@@ -181,9 +181,6 @@ parameters:
     sonata.media.thumbnail.format: Application\Sonata\MediaBundle\Thumbnail\FormatThumbnail
         
 services:
-    eventship:
-      class: Dodici\Fansworld\WebBundle\Services\EventShipManager
-      arguments: [@security.context, @doctrine.orm.entity_manager, @meteor]
     liking.listener.persist:
         class: Dodici\Fansworld\WebBundle\Listener\LikingCountUpdater
         tags:
@@ -360,6 +357,9 @@ services:
       arguments: [@security.context, @doctrine.orm.entity_manager, @session, @appstate]
     fixture.csvtoyml:
       class: Dodici\Fansworld\WebBundle\Services\FixtureCsvToYaml
+    eventship.manager:
+      class: Dodici\Fansworld\WebBundle\Services\EventshipManager
+      arguments: [@security.context, @doctrine.orm.entity_manager, @meteor]
     video.audience:
       class: Dodici\Fansworld\WebBundle\Services\VideoAudienceManager
       arguments: [@security.context, @doctrine.orm.entity_manager, @meteor]

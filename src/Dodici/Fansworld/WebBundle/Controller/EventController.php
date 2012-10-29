@@ -167,7 +167,7 @@ class EventController extends SiteController
                 $event->addComments($comment);
                 $em->persist($event);
                 $em->flush();
-            } catch (Exception $exc) {
+            } catch (\Exception $exc) {
                 $response['error'] = true;
                 $response['msg'] = $exc->getMessage();
             }
@@ -531,16 +531,13 @@ class EventController extends SiteController
         $authorId = $request->get('authorid', false);
         $eventType = $request->get('eventtype', false);
 
-        try {
-            $event = $this->getRepository('Event')->find($eventId);
-            $author = $this->getRepository('User')->find($authorId);
+        $event = $this->getRepository('Event')->find($eventId);
+        $author = $this->getRepository('User')->find($authorId);
 
-            $manager = $this->get('eventship');
-            $manager->createEventShip($event, $author, $eventType);
-        } catch (Exception $exc) {
-            die($exc->getMessage());
-        }
-        echo "Dale que va ;)";
+        $manager = $this->get('eventship.manager');
+        $manager->createEventship($event, $author, $eventType);
+        
+        return new Response('Added user to event');
     }
 
     /**
@@ -554,14 +551,10 @@ class EventController extends SiteController
 
         $eventship = $this->getRepository('Eventship')->findBy(array('event' => $eventId, 'author' => $authorId));
 
-        try {
-            $manager = $this->get('eventship');
-            $manager->removeEventShip($eventship);
-        } catch (Exception $exc) {
-            die($exc->getMessage());
-        }
-
-        echo "Dale que va! ;)";
+        $manager = $this->get('eventship.manager');
+        $manager->removeEventship($eventship);
+        
+        return new Response('Removed user from event');
     }
 
 }
