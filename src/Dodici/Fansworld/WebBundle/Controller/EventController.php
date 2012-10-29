@@ -112,6 +112,8 @@ class EventController extends SiteController
 
             $started = ($event->getFromtime() <= $now);
 
+            $checked = $this->getRepository('Eventship')->findOneBy(array('author' => $this->getUser()->getId(), 'event' => $event->getId())) ? true : false;
+            
             $response[] = array(
                 'text' => $this->get('appstate')->getEventText($event->getId()),
                 'id' => $event->getId(),
@@ -121,7 +123,8 @@ class EventController extends SiteController
                 'started' => $started,
                 'finished' => $event->getFinished(),
                 'teams' => $teams,
-                'url' => $this->generateUrl('event_show', array('id' => $event->getId(), 'slug' => $event->getSlug()))
+                'url' => $this->generateUrl('event_show', array('id' => $event->getId(), 'slug' => $event->getSlug())),
+                'checked' => $checked
             );
         }
 
