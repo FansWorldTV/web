@@ -529,14 +529,22 @@ class EventController extends SiteController
     {
         $request = $this->getRequest();
         $eventId = $request->get('eventid');
-        $authorId = $request->get('authorid');
+        $teamId = $request->get('teamid');
         $eventshipType = $request->get('eventtype', Eventship::TYPE_WEB);
 
+        $user = $this->getUser();
+        if (!$user) throw new HttpException(401, 'Must login');
+        
         $event = $this->getRepository('Event')->find($eventId);
-        $author = $this->getRepository('User')->find($authorId);
-
+        $this->securityCheck($event);
+        
+        $team = $this->getRepository('Team')->find($teamId);
+        
+        if (!$event) throw new HttpException(404, 'Event not found');
+        if (!$team) throw new HttpException(404, 'Team not found');
+        
         $manager = $this->get('eventship.manager');
-        $manager->createEventship($event, $author, $eventshipType);
+        $manager->addEventship($event, $user, $team, $eventshipType);
         
         return new Response('Added user to event');
     }
@@ -545,14 +553,17 @@ class EventController extends SiteController
      * @Route("/eventship/remove", name="event_eventship_remove")
      * @Method({"POST"})
      */
-    public function delEventshipAction()
+    public function removeEventshipAction()
     {
         $request = $this->getRequest();
         $eventId = $request->get('eventid');
-        $authorId = $request->get('authorid');
+        $user = $this->getUser();
+        if (!$user) throw new HttpException(401, 'Must login');
 
-        $eventship = $this->getRepository('Eventship')->findBy(array('event' => $eventId, 'author' => $authorId));
+        $eventship = $this->getRepository('Eventship')->findBy(array('event' => $eventId, 'author' => $user->getId()));
 
+        if (!$eventship) throw new HttpException(404, 'Eventship not found');
+        
         $manager = $this->get('eventship.manager');
         $manager->removeEventship($eventship);
         

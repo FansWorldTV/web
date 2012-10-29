@@ -94,15 +94,16 @@ class Meteor
     	}
     }
 
-    public function addEventship(Event $event, User $author)
+    public function addEventship(Eventship $eventship)
     {
         $data = array(
             't' => 'ea',
             'a' => 'a',
-            'id' => $author->getId()
+            'id' => $eventship->getAuthor()->getId(),
+            'team' => $eventship->getTeam()->getId()
         );
         
-        return $this->sendToSocket($data, 'eventship_'.$event->getId());
+        return $this->sendToSocket($data, 'eventship_'.$eventship->getEvent()->getId());
     }
 
     public function removeEventship(Eventship $eventship)

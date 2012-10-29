@@ -2,6 +2,7 @@
 
 namespace Dodici\Fansworld\WebBundle\Services;
 
+use Dodici\Fansworld\WebBundle\Entity\Team;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Dodici\Fansworld\WebBundle\Entity\Event;
 use Dodici\Fansworld\WebBundle\Entity\Eventship;
@@ -37,17 +38,18 @@ class EventshipManager
      * @param User $author
      * @param Int $eventshipType
      */
-    public function createEventship(Event $event,  User $author, $eventshipType)
+    public function addEventship(Event $event,  User $author, Team $team, $eventshipType)
     {
         $eventship = new Eventship();
         $eventship->setAuthor($author);
         $eventship->setEvent($event);
+        $eventship->setTeam($team);
         $eventship->setType($eventshipType);
 
         $this->em->persist($eventship);
         $this->em->flush();
 
-        $this->meteor->addEventship($event, $author);
+        $this->meteor->addEventship($eventship);
     }
 
     /**
