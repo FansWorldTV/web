@@ -48,8 +48,10 @@ class EventController extends SiteController
         }
         $eshipsLocal = $this->getRepository('Eventship')->findBy(array('team' => $local->getId(), 'event' => $event->getId()));
         $eshipsGuest = $this->getRepository('Eventship')->findBy(array('team' => $guest->getId(), 'event' => $event->getId()));
+        
+        $userChecked = $this->getRepository('Eventship')->findOneBy(array('event' => $event->getId(), 'author'=> $user->getId()));
 
-        return array('user' => $user, 'entity' => $event, 'eshipsLocal' => $eshipsLocal, 'eshipsGuest' => $eshipsGuest);
+        return array('user' => $user, 'entity' => $event, 'eshipsLocal' => $eshipsLocal, 'eshipsGuest' => $eshipsGuest, 'checked' => $userChecked);
     }
 
     /**
@@ -224,6 +226,7 @@ class EventController extends SiteController
         $eventRepo = $this->getRepository('Event');
         $events = null;
         $eventoDestacado = $eventRepo->findOneBy(array(), array('fromtime' => 'desc'));
+        $eventoDestacadoChecked = $this->getRepository('Eventship')->findOneBy(array('event' => $eventoDestacado->getId(), 'author' => $this->getUser()->getId())) ? true : false;
 
         $sports = $this->getRepository('Sport')->findBy(array());
         $leagues = true;
@@ -231,6 +234,7 @@ class EventController extends SiteController
 
         return array(
             'eventoDestacado' => $eventoDestacado,
+            'eventoDestacadoChecked' => $eventoDestacadoChecked,
             'events' => $events,
             'sports' => $sports,
             'leagues' => $leagues,

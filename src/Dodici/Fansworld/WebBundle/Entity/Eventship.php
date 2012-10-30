@@ -16,21 +16,22 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Eventship
 {
+
     const TYPE_WEB = 1;
     const TYPE_TV = 2;
     const TYPE_RADIO = 3;
     const TYPE_LIVE = 4;
 
-	public static function getTypes()
+    public static function getTypes()
     {
-    	return array(
-    		self::TYPE_WEB => 'Web',
-    		self::TYPE_TV => 'TV',
-    		self::TYPE_RADIO => 'Radio',
-    		self::TYPE_LIVE => 'En persona',
-    	);
+        return array(
+            self::TYPE_WEB => 'Web',
+            self::TYPE_TV => 'TV',
+            self::TYPE_RADIO => 'Radio',
+            self::TYPE_LIVE => 'En persona',
+        );
     }
-    
+
     /**
      * @var bigint $id
      *
@@ -49,7 +50,7 @@ class Eventship
      * })
      */
     private $author;
-    
+
     /**
      * @var Event
      *
@@ -59,7 +60,7 @@ class Eventship
      * })
      */
     private $event;
-    
+
     /**
      * @var Team
      *
@@ -69,23 +70,22 @@ class Eventship
      * })
      */
     private $team;
-    
+
     /**
      * @var integer $type
      *
      * @ORM\Column(name="type", type="integer", nullable=false)
      */
     private $type;
-    
+
     /**
      * @var datetime $createdAt
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     private $createdAt;
-    
-        
-	/**
+
+    /**
      * @ORM\PrePersist()
      */
     public function prePersist()
@@ -94,11 +94,9 @@ class Eventship
             $this->setCreatedAt(new \DateTime());
         }
         if (null === $this->type) {
-        	$this->setType(self::TYPE_WEB);
+            $this->setType(self::TYPE_WEB);
         }
     }
-    
-
 
     /**
      * Get id
@@ -209,4 +207,5 @@ class Eventship
     {
         return $this->team;
     }
+
 }

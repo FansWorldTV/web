@@ -19,7 +19,11 @@
                 <div class='subtitulo'>{{ evento.stadium }}</div>
                 <div class='fecha'>{{ evento.fromtime|date("d/m/Y H:i") }}</div>
                 <div class='checkin-container'>
-                    <button class='btn btn-large btn-danger'>CHECK IN</button>
+                    {% if eventoDestacadoChecked %}
+                        <a href="{{ path('event_show', {'id': evento.id}) }}"><button class='btn btn-large btn-danger'>IR</button></a>
+                    {% else %}
+                        <button class='btn btn-large btn-danger' data-event-id='{{ evento.id }}' data-event-check-in>CHECK IN</button>
+                    {% endif %}
                 </div>
             </div>
         </section>   

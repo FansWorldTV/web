@@ -241,7 +241,11 @@ var events = {
     },
 
     /* Event wall init */
-    initDetail: function(wallDestination){
+    initDetail: function(wallDestination, notChecked){
+        if(notChecked){
+           
+        }
+        
         events.wallDestination = wallDestination;
         events.eventId = $(".eventwall").attr('data-event-id');
         events.localId = $(".eventwall").attr('data-local-id');
@@ -344,8 +348,6 @@ var events = {
     listen: function(eventId){
         function handleData(response){
             response = JSON.parse(response);
-            console.log('ACAAAAAAAAAAAAAAAAAAAAA');
-            console.log(response);
             if(response){
                 switch(response.t){
                     case 'c':
@@ -550,9 +552,13 @@ var events = {
                 'close': '.checkin-modal .headerbar .close-button',
                 'onload': function(settings){
                     $(settings.close).click(function(){
-                        $(settings.container).fadeOut(function(){
-                            $(settings.content).html('');
-                        });
+                        if($btn.attr('data-close-to')){
+                            location.href = $btn.attr('data-close-to');
+                        }else{
+                            $(settings.container).fadeOut(function(){
+                                $(settings.content).html('');
+                            });
+                        }
                     });
                     
                     events.checkIn();

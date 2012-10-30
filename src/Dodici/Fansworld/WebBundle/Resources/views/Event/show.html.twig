@@ -6,4 +6,12 @@
     {% include "DodiciFansworldWebBundle:Event:blocks/header.html.twig"  %}
 
     {% include "DodiciFansworldWebBundle:Event:blocks/wall.html.twig"  %}
+
+    {% if not checked %}
+        <button class="hidden" data-event-check-in data-event-id="{{entity.id}}" data-close-to="{{ path('event_home', {}) }}"></button>
+        <script type="text/javascript">
+            events.bindCheckInButtons();
+            $("button[data-event-check-in][data-event-id={{entity.id}}]").click();
+        </script>
+    {% endif %}
 {% endblock %}
