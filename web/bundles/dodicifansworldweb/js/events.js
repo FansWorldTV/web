@@ -419,7 +419,7 @@ var events = {
         ajax.genericAction('event_ajaxeventship', opts, function(r){
             if(r){
                 var teamContainer = $("div[data-eventships]").find('div[data-team-id="'+r.team.id+'"]');
-                var element2Append = "<a href='"+r.author.url+"'><img src='"+r.author.image+"' title='"+r.author.name+"' /></a>";
+                var element2Append = "<a href='"+r.author.url+"'><img rel='tooltip' src='"+r.author.image+"' title='"+r.author.name+"' /></a>";
                 teamContainer.find('ul').append('<li>'+element2Append+'</li>');
                 
                 var fansCount = teamContainer.find("span[data-eventships-count]").html();

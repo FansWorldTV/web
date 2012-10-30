@@ -23,7 +23,7 @@ var site = {
         });
         
         $('body').tooltip({
-            selector:'[data-title]'
+            selector:'[rel="tooltip"]'
         });
         
         $('.change_image').colorbox({
