@@ -344,13 +344,23 @@ var events = {
     listen: function(eventId){
         function handleData(response){
             response = JSON.parse(response);
+            console.log('ACAAAAAAAAAAAAAAAAAAAAA');
+            console.log(response);
             if(response){
-                if(response.t == 'c'){
-                    events.handleComment(response.id);
-                }else if(response.t == 'et'){
-                    events.handleEventTweet(response.id);
-                }else if(response.t == 'ei'){
-                    events.handleEventIncident(response.id);
+                switch(response.t){
+                    case 'c':
+                        events.handleComment(response.id);
+                        break;
+                    case 'et':
+                        events.handleEventTweet(response.id);
+                        break;
+                    case 'ei':
+                        events.handleEventIncident(response.id);
+                        break;
+                    case 'ea':
+                        events.handleEventship(response.id);
+                        break;
+                    
                 }
             }
         }
@@ -360,11 +370,12 @@ var events = {
 	        
             Meteor.joinChannel('event_'+eventId);
             Meteor.joinChannel('wall_event_'+eventId);
+            Meteor.joinChannel('eventship_'+eventId);
 	        
             Meteor.connect();
 	                                       	            
             // Start streaming!
-            console.log('Escuchando notifications...');
+            console.log('Escuchando notifications de event...');
         }else console.log('no hay meteor');
     },
 	
@@ -399,6 +410,26 @@ var events = {
         }, function (msg) {
             console.error(msg);
         },'get');
+    },
+    
+    handleEventship: function(id) {
+        var opts = {
+            eventship: id
+        };
+        ajax.genericAction('event_ajaxeventship', opts, function(r){
+            if(r){
+                var teamContainer = $("div[data-eventships]").find('div[data-team-id="'+r.team.id+'"]');
+                var element2Append = "<a href='"+r.author.url+"'><img src='"+r.author.image+"' title='"+r.author.name+"' /></a>";
+                teamContainer.find('ul').append('<li>'+element2Append+'</li>');
+                
+                var fansCount = teamContainer.find("span[data-eventships-count]").html();
+                fansCount = parseInt(fansCount);
+                
+                teamContainer.find("span[data-eventships-count]").html(fansCount+1);
+            }
+        }, function(e){
+            error(e);
+        });
     },
 	
     handleEventTweet: function(id) {
@@ -512,7 +543,9 @@ var events = {
             console.log($(this));
             var $btn = $(this);
             $btn.modalPopup({
-                'href': Routing.generate( appLocale + '_event_checkin', {'id': $btn.attr('data-event-id') }),
+                'href': Routing.generate( appLocale + '_event_checkin', {
+                    'id': $btn.attr('data-event-id')
+                }),
                 'width': 600,
                 'close': '.checkin-modal .headerbar .close-button',
                 'onload': function(settings){
@@ -534,31 +567,37 @@ var events = {
             $(this).addClass('active');
         });
         $(".checkin-modal [data-checkin-channel]").click(function(){
-           var channel = $(this).attr('data-checkin-channel');
-           var eventId = $(this).parents('.checkin-modal').attr('data-event-id');
-           var selectedTeam = $(this).parents('.checkin-modal').find('.team.active').attr('data-team-id');
+            var channel = $(this).attr('data-checkin-channel');
+            var eventId = $(this).parents('.checkin-modal').attr('data-event-id');
+            var selectedTeam = $(this).parents('.checkin-modal').find('.team.active').attr('data-team-id');
            
-           if(!selectedTeam){
-               return error("Seleccione un equipo");
-           }
+            if(!selectedTeam){
+                return error("Seleccione un equipo");
+            }
            
-           $(".checkin-modal *").hide();
-           $(".checkin-modal").addClass('loading');
+            $(".checkin-modal *").hide();
+            $(".checkin-modal").addClass('loading');
            
-           ajax.genericAction('event_checkinajax', {'event': eventId, 'type': channel, 'teamId': selectedTeam}, function(r){
-               if(r.error){
-                   error(r.msg);
-               }else{
-                   success('Te has adjuntado al evento!');
-               }
+            ajax.genericAction('event_checkinajax', {
+                'event': eventId, 
+                'type': channel, 
+                'teamId': selectedTeam
+            }, function(r){
+                if(r.error){
+                    error(r.msg);
+                }else{
+                    success('Te has adjuntado al evento!');
+                }
                
-               $(".checkin-modal *").show();
-               $(".checkin-modal").removeClass('loading');
-               location.href = Routing.generate(appLocale + "_event_show", {'id': eventId});
-               $("[data-event-check-in][data-event-id="+eventId+"]").modalPopup('close');
-           }, function(e){
-               error(e);
-           });
+                $(".checkin-modal *").show();
+                $(".checkin-modal").removeClass('loading');
+                location.href = Routing.generate(appLocale + "_event_show", {
+                    'id': eventId
+                });
+                $("[data-event-check-in][data-event-id="+eventId+"]").modalPopup('close');
+            }, function(e){
+                error(e);
+            });
         });
     }
 	

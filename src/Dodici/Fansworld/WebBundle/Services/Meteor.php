@@ -99,7 +99,7 @@ class Meteor
         $data = array(
             't' => 'ea',
             'a' => 'a',
-            'id' => $eventship->getAuthor()->getId(),
+            'id' => $eventship->getId(),
             'team' => $eventship->getTeam()->getId()
         );
         

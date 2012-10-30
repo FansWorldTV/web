@@ -3,14 +3,12 @@
     <li class='event'>
         <header>
             <span>
-                <a href="{{>url}}">
-                    {{for teams}}
-                        {{if #index > 0}}
-                         vs 
-                        {{/if}}
-                        {{>title}}
-                    {{/for}}
-                </a>
+                {{for teams}}
+                    {{if #index > 0}}
+                     vs 
+                    {{/if}}
+                    {{>title}}
+                {{/for}}
             </span>
             {{if checked === false}}
                 <button class='btn btn-danger' data-event-id='{{>id}}' data-event-check-in>{{>text}}</button>

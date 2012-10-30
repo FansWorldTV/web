@@ -113,7 +113,7 @@ class EventController extends SiteController
             $started = ($event->getFromtime() <= $now);
 
             $checked = $this->getRepository('Eventship')->findOneBy(array('author' => $this->getUser()->getId(), 'event' => $event->getId())) ? true : false;
-            
+
             $response[] = array(
                 'text' => $this->get('appstate')->getEventText($event->getId()),
                 'id' => $event->getId(),
@@ -299,7 +299,7 @@ class EventController extends SiteController
                 $response['error'] = true;
                 $response['msg'] = $exc->getMessage();
             }
-        }else{
+        } else {
             $response['error'] = true;
             $response['msg'] = "Ya estas participando.";
         }
@@ -568,6 +568,49 @@ class EventController extends SiteController
         $manager->removeEventship($eventship);
         
         return new Response('Removed user from event');
+    }
+
+    /**
+     * @Route("/eventship/get", name="event_ajaxeventship")
+     */
+    public function getAjaxEventship()
+    {
+        $request = $this->getRequest();
+        $eventshipId = $request->get('eventship', false);
+
+        $eventship = $this->getRepository('Eventship')->find($eventshipId);
+
+        return $this->jsonResponse(array(
+                    'author' => array(
+                        'name' => (string) $eventship->getAuthor(),
+                        'image' => $this->getImageUrl($eventship->getAuthor()->getImage(), 'small'),
+                        'url' => $this->generateUrl('user_wall', array('username' => $eventship->getAuthor()->getUsername()))
+                    ),
+                    'team' => array(
+                        'id' => $eventship->getTeam()->getId(),
+                        'name' => (string) $eventship->getTeam()
+                    )
+                ));
+    }
+    
+    /**
+     * @Route("/test/addeventship", name="event_addeventship")
+     */
+    
+    public function testAddEventship(){
+        $request= $this->getRequest();
+        $eventId = $request->get('event');
+        $authorId = $request->get('author');
+        $teamId = $request->get('team');
+
+        $event = $this->getRepository('Event')->find($eventId);
+        $author = $this->getRepository('User')->find($authorId);
+        $team = $this->getRepository('Team')->find($teamId);
+        
+        $manager = $this->get('eventship.manager');
+        $manager->addEventship($event,  $author, $team, 1);
+        
+        return $this->jsonResponse(array('ok'));
     }
 
 }

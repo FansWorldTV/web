@@ -27,22 +27,22 @@
     </section>
 </div>
 
-<div class="eventsupporters row-fluid">
-    <div class="local span6">
-        <h4>Fans ( {{ eshipsLocal|length }} )</h4>
+<div class="eventsupporters row-fluid" data-eventships>
+    <div class="local span6" data-team-id="{{ teamLocal.team.id }}">
+        <h4>Fans ( <span data-eventships-count>{{ eshipsLocal|length }}</span> )</h4>
         <div class="clearfix"></div>
         <ul>
             {% for eshipLocal in eshipsLocal %}
-                <li>{% thumbnail eshipLocal.author.image, 'small' with {'data-title': eshipLocal.author } %}</li>
+                <li><a href="{{ path('user_wall',{'username': eshipLocal.author.username}) }}">{% thumbnail eshipLocal.author.image, 'small' with {'title': eshipLocal.author } %}</a></li>
             {% endfor %}
         </ul>
     </div>
-    <div class="guest span6">
-        <h4>Fans ( {{ eshipsGuest|length }} )</h4>
+    <div class="guest span6" data-team-id="{{ teamGuest.team.id }}">
+        <h4>Fans ( <span data-eventships-count>{{ eshipsGuest|length }}</span> )</h4>
         <div class="clearfix"></div>
         <ul>
             {% for eshipGuest in eshipsGuest %}
-                <li>{% thumbnail eshipGuest.author.image, 'small' with {'data-title': eshipGuest.author } %}</li>
+                <li><a href="{{ path('user_wall',{'username': eshipGuest.author.username}) }}">{% thumbnail eshipGuest.author.image, 'small' with {'title': eshipGuest.author } %}</a></li>
             {% endfor %}
         </ul>
     </div>
