@@ -456,7 +456,7 @@ class ApiController extends SiteController
         $facebook->setAccessToken($accesstoken);
         $data = $facebook->api('/me');
         
-        if (!$data || !(isset($data['verified']) && $data['verified']))
+        if (!$data || !(isset($data['id']) && ($data['id'] == $fbid)))
             throw new HttpException(401, 'Invalid facebook_id or access_token');
         
         return $data;
@@ -487,14 +487,18 @@ class ApiController extends SiteController
         $idols = $request->get('idol');
         $teams = $request->get('team');
         
-        foreach ($idols as $i) {
-            $idol = $this->getRepository('Idol')->find($i);
-            $fanmaker->addFan($idol, $user);
+        if ($idols && is_array($idols)) {
+            foreach ($idols as $i) {
+                $idol = $this->getRepository('Idol')->find($i);
+                $fanmaker->addFan($idol, $user);
+            }
         }
         
-        foreach ($teams as $t) {
-            $team = $this->getRepository('Team')->find($t);
-            $fanmaker->addFan($team, $user);
+        if ($teams && is_array($teams)) {
+            foreach ($teams as $t) {
+                $team = $this->getRepository('Team')->find($t);
+                $fanmaker->addFan($team, $user);
+            }
         }
     }
     
