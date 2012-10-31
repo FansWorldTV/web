@@ -554,6 +554,29 @@ section.eventdetail-togglebar {
         ul.dropdown-menu {
             min-width: initial;
         }
+
+        img.iconfilter{
+            .square(31px);
+            background: url('../images/checkIn/small_sprite.png');
+            border: 0;
+
+            &.all {
+                background-position: 0 36px;
+            }
+            &.web {
+                background-position: 0 0;
+            }
+            &.tv {
+                background-position: -1px -32px;
+            }
+            &.radio {
+                background-position: 0 98px;
+                padding: 0;
+            }
+            &.live {
+                background-position: 0 66px;
+            }
+        }
     }
 }
 

@@ -93,13 +93,14 @@
             </ul>
         </span>
         <span class="dropdown" data-filter-channel>
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/checkin/live.jpg') }}" /></a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><img class="iconfilter all" /></a>
             <ul class="dropdown-menu" role="menu">
-                <li data-eventship-type = "all" class="active"><a href=""><img src="{{ asset('bundles/dodicifansworldweb/images/ico/checkin/live.jpg') }}" /></a></li>
-                <li data-eventship-type = "1"><a href=""><img src="{{ asset('bundles/dodicifansworldweb/images/ico/checkin/live.jpg') }}" /></a></li>
-                <li data-eventship-type = "2"><a href=""><img src="{{ asset('bundles/dodicifansworldweb/images/ico/checkin/live.jpg') }}" /></a></li>
-                <li data-eventship-type = "3"><a href=""><img src="{{ asset('bundles/dodicifansworldweb/images/ico/checkin/radio.jpg') }}" /></a></li>
-                <li data-eventship-type = "4"><a href=""><img src="{{ asset('bundles/dodicifansworldweb/images/ico/checkin/live.jpg') }}" /></a></li>
+                <li data-eventship-type = "all" class="active"><a href="#"><img class="iconfilter all" /></a></li>
+                <li data-eventship-type = "1"><a href="#"><img class="iconfilter web" /></a>
+                </li>
+                <li data-eventship-type = "2"><a href="#"><img class="iconfilter tv" /></a></li>
+                <li data-eventship-type = "3"><a href="#"><img class="iconfilter radio" /></a></li>
+                <li data-eventship-type = "4"><a href="#"><img class="iconfilter live" /></a></li>
             </ul>
         </span>
         {% include 'DodiciFansworldWebBundle:Default:share_button.html.twig' with {entity: entity, 'type': 'event'} %}
