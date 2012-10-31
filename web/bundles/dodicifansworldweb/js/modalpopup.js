@@ -1,6 +1,7 @@
 (function ($) {
 
     "use strict";
+    var publicMethod;
 
     var ModalPopup = function ($button, options) {
 
@@ -18,18 +19,20 @@
             'overlay': '#modal-overlay',
             'close': '#modal-close',
             'content': '#modal-content',
+            // Optionals for open without button
             // callbacks
             'onopen': function () {},
             'onload': function () {},
             'onclose': function () {}
         }, options || {});
+        
         var
-        $target,
-        $container,
-        $overlay,
-        $close,
-        $content
-        publicMethod;
+            $target,
+            $container,
+            $overlay,
+            $close,
+            $content
+            publicMethod;
 
         function load() {
             $overlay.addClass('loading');
@@ -105,11 +108,15 @@
                 return false;
             });
 
-            $button.on('click', function (e) {
-                e.preventDefault();
+            if($button.attr('data-open-modal')){
                 open();
-                return false;
-            });
+            }else{
+                $button.on('click', function (e) {
+                    e.preventDefault();
+                    open();
+                    return false;
+                });
+            }
             
         }
         
@@ -119,15 +126,15 @@
         }
     };
 
+    publicMethod = $.fn['modalPopup'] = $['modalPopup'] = function(options){
+        new ModalPopup($('body').attr('data-open-modal', 'true'), options);
+    };
+
     // plugin creation
     window.$.fn.modalPopup = function (options) {
         $(this).each(function () {
             var $button = $(this);
             $button.data('modalPopup', new ModalPopup($button, options));
         });
-    };
-
-    window.$.fn.modalPopup.close = function () {
-        console.log('close');
     };
 }(jQuery, window));

@@ -8,10 +8,20 @@
     {% include "DodiciFansworldWebBundle:Event:blocks/wall.html.twig"  %}
 
     {% if not checked %}
-        <button class="hidden" data-event-check-in data-event-id="{{entity.id}}" data-close-to="{{ path('event_home', {}) }}"></button>
         <script type="text/javascript">
-            events.bindCheckInButtons();
-            $("button[data-event-check-in][data-event-id={{entity.id}}]").click();
+            $.modalPopup({
+                'href': Routing.generate( appLocale + '_event_checkin', {
+                    'id': {{ entity.id }}
+                }),
+                'width': 600,
+                'close': '.checkin-modal .headerbar .close-button',
+                'onload': function(settings){
+                    events.checkIn();
+                    $(settings.close).click(function(){
+                            location.href = "{{ path('event_home',{}) }}";
+                    });
+                }
+            });
         </script>
     {% endif %}
 {% endblock %}
