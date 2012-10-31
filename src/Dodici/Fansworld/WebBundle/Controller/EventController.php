@@ -226,7 +226,12 @@ class EventController extends SiteController
         $eventRepo = $this->getRepository('Event');
         $events = null;
         $eventoDestacado = $eventRepo->findOneBy(array(), array('fromtime' => 'desc'));
-        $eventoDestacadoChecked = $this->getRepository('Eventship')->findOneBy(array('event' => $eventoDestacado->getId(), 'author' => $this->getUser()->getId())) ? true : false;
+        
+        if($this->getUser() instanceof User){
+            $eventoDestacadoChecked = $this->getRepository('Eventship')->findOneBy(array('event' => $eventoDestacado->getId(), 'author' => $this->getUser()->getId())) ? true : false;
+        }else{
+            $eventoDestacadoChecked = false;
+        }
 
         $sports = $this->getRepository('Sport')->findBy(array());
         $leagues = true;
