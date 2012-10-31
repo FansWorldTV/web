@@ -62,9 +62,11 @@ class FacebookProvider implements UserProviderInterface
         }
         
         if (!empty($fbdata)) {
-            if (isset($fbdata['email']) && empty($user)) {
+            if (isset($fbdata['email'])) {
                 $user = $this->findUserByEmail($fbdata['email']);
-                
+            }
+            
+            if ($user) {
                 // TODO: maybe set a session so we can ask the user 
                 // whether he wants to link his account to fb or not, or send a mail
                 
