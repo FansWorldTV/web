@@ -16,6 +16,7 @@ use Dodici\Fansworld\WebBundle\Entity\Comment;
 use Dodici\Fansworld\WebBundle\Entity\Eventship;
 use Dodici\Fansworld\WebBundle\Entity\EventIncident;
 use Dodici\Fansworld\WebBundle\Entity\EventTweet;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 /**
  * Event controller.
@@ -28,11 +29,11 @@ class EventController extends SiteController
 
     /**
      * @Route("/{id}/{slug}", name= "event_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
+     * @Secure(roles="ROLE_USER")
      * @Template
      */
     public function showAction($id)
     {
-        //TODO: todo
         $event = $this->getRepository('Event')->find($id);
         $user = $this->getUser();
         $this->securityCheck($event);
@@ -114,7 +115,11 @@ class EventController extends SiteController
 
             $started = ($event->getFromtime() <= $now);
 
-            $checked = $this->getRepository('Eventship')->findOneBy(array('author' => $this->getUser()->getId(), 'event' => $event->getId())) ? true : false;
+            if($this->getUser() instanceof User){
+                $checked = $this->getRepository('Eventship')->findOneBy(array('author' => $this->getUser()->getId(), 'event' => $event->getId())) ? true : false;
+            }else{
+                $checked = null;
+            }
 
             $response[] = array(
                 'text' => $this->get('appstate')->getEventText($event->getId()),
@@ -230,7 +235,7 @@ class EventController extends SiteController
         if($this->getUser() instanceof User){
             $eventoDestacadoChecked = $this->getRepository('Eventship')->findOneBy(array('event' => $eventoDestacado->getId(), 'author' => $this->getUser()->getId())) ? true : false;
         }else{
-            $eventoDestacadoChecked = false;
+            $eventoDestacadoChecked = null;
         }
 
         $sports = $this->getRepository('Sport')->findBy(array());

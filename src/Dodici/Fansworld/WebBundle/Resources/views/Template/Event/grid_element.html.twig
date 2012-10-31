@@ -12,7 +12,7 @@
             </span>
             {{if checked === false}}
                 <button class='btn btn-danger' data-event-id='{{>id}}' data-event-check-in>{{>text}}</button>
-            {{else}}
+            {{else if checked != null}}
                 <a href='{{>url}}'><button class='btn btn-danger'>Ir</button></a>
             {{/if}}
         </header>

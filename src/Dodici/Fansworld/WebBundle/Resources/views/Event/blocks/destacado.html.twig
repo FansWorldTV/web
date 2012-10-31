@@ -21,7 +21,7 @@
                 <div class='checkin-container'>
                     {% if eventoDestacadoChecked %}
                         <a href="{{ path('event_show', {'id': evento.id}) }}"><button class='btn btn-large btn-danger'>IR</button></a>
-                    {% else %}
+                    {% elseif eventoDestacadoChecked is not null%}
                         <button class='btn btn-large btn-danger' data-event-id='{{ evento.id }}' data-event-check-in>CHECK IN</button>
                     {% endif %}
                 </div>
