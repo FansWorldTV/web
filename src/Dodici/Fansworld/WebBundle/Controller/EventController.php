@@ -237,7 +237,7 @@ class EventController extends SiteController
         }else{
             $eventoDestacadoChecked = null;
         }
-
+        
         $sports = $this->getRepository('Sport')->findBy(array());
         $leagues = true;
         $orderBy = true;
