@@ -555,10 +555,23 @@ section.eventdetail-togglebar {
             min-width: initial;
         }
 
-        img.iconfilter{
+        span.dropdown, .btn.share, a.dropdown-toggle.iconfilter {
+            display: inline-block;
+            top: -7px;
+
+            &[data-filter-channel]{
+                top: 6px;
+            }
+            &.share{
+                margin-top: -13px;
+            }
+        }
+
+        span.iconfilter{
             .square(31px);
             background: url('../images/checkIn/small_sprite.png');
             border: 0;
+            display: inline-block;
 
             &.all {
                 background-position: 0 36px;

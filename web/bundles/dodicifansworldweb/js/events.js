@@ -241,11 +241,7 @@ var events = {
     },
 
     /* Event wall init */
-    initDetail: function(wallDestination, notChecked){
-        if(notChecked){
-           
-        }
-        
+    initDetail: function(wallDestination){
         events.wallDestination = wallDestination;
         events.eventId = $(".eventwall").attr('data-event-id');
         events.localId = $(".eventwall").attr('data-local-id');
@@ -327,9 +323,9 @@ var events = {
         dropdownRoot.find('ul.dropdown-menu li a').click(function(e){
             e.preventDefault();
           
-            var clickedSrc = $(this).find('img').attr('src');
+            var clickedSrc = $(this).find('span.iconfilter').attr('class');
           
-            dropdownRoot.find('a.dropdown-toggle img').attr('src', clickedSrc);
+            dropdownRoot.find('a.dropdown-toggle span.iconfilter').addClass(clickedSrc);
             dropdownRoot.find('.active').removeClass('active');
             $(this).parent().addClass('active');
           
