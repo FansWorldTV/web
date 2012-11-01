@@ -209,6 +209,7 @@ class ApiController extends SiteController
      * [signed] Facebook Connect
      * 
      * @Route("/connect/facebook", name="api_connect_facebook")
+     * @Method({"POST"})
      * 
      * - If user already exists and is linked to FB: regular login
      * - If user with same email already exists, but is not linked to FB, links account to FB
@@ -250,6 +251,120 @@ class ApiController extends SiteController
                 );
                 
                 return $this->jsonResponse($return);
+            } else {
+                throw new HttpException(401, 'Invalid signature');
+            }
+        } catch(\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
+    
+	/**
+     * [signed] Reset password
+     * 
+     * @Route("/password/reset", name="api_password_reset")
+     * @Method({"POST"})
+     * 
+     * Sends an email with a reset password link to the user
+     * 
+     * Get params:
+     * - username/email: string
+     * - [signature params]
+     * 
+     * @return
+     * array(
+     * 		sent => true
+     * )
+     */
+    public function resetPasswordAction()
+    {
+        try {
+            if ($this->hasValidSignature()) {
+                $request = $this->getRequest();
+                $username = $request->get('username');
+                $email = $request->get('email');
+                
+                if (!$username && !$email) throw new HttpException(400, 'Requires username or email');
+                
+                $usermanager = $this->get('app_user.user_manager');
+                $user = $usermanager->findUserByUsernameOrEmail($username ?: $email);
+                
+                if (!$user) throw new HttpException(404, 'User not found');
+                
+                if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
+                    throw new HttpException(403, 'User has already requested a reset');
+                }
+                
+                $user->generateConfirmationToken();
+                $this->get('fos_user.mailer')->sendResettingEmailMessage($user);
+                $user->setPasswordRequestedAt(new \DateTime());
+                $usermanager->updateUser($user);
+                
+                $return = array(
+                    'sent' => true
+                );
+                
+                return $this->jsonResponse($return);
+                
+            } else {
+                throw new HttpException(401, 'Invalid signature');
+            }
+        } catch(\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
+    
+	/**
+     * [signed] Change password
+     * 
+     * @Route("/password/change", name="api_password_change")
+     * @Method({"POST"})
+     * 
+     * Changes a user's password
+     * 
+     * Get params:
+     * - username/email: string
+     * - password: string, plain text
+     * - new_password: string, plain text
+     * - [signature params]
+     * 
+     * @return
+     * @see ApiController::loginAction()
+     */
+    public function changePasswordAction()
+    {
+        try {
+            if ($this->hasValidSignature()) {
+                $request = $this->getRequest();
+                $username = $request->get('username');
+                $email = $request->get('email');
+                $password = $request->get('password');
+                $newpassword = $request->get('new_password');
+                
+                if (!$username && !$email) throw new HttpException(400, 'Requires username or email');
+                if (!$password) throw new HttpException(400, 'Requires password');
+                if (!$newpassword) throw new HttpException(400, 'Requires new_password');
+                
+                $user = $this->authUser($username ?: $email, $password);
+                
+                if ($user) {
+                    $user->setPlainPassword($newpassword);
+                    $usermanager = $this->get('app_user.user_manager');
+                    $usermanager->updateUser($user);
+                    
+                    $token = $this->generateUserApiToken($user, $this->getApiKey());
+                    
+                    $return = array(
+                        'token' => $token,
+                        'user' => $this->userArray($user)
+                    );
+                    
+                    return $this->jsonResponse($return);
+                    
+                } else {
+                    // Bad username/mail
+                    throw new HttpException(401, 'Invalid username or password');
+                }
             } else {
                 throw new HttpException(401, 'Invalid signature');
             }
@@ -361,15 +476,16 @@ class ApiController extends SiteController
      */
     private function validateSignature($key, $timestamp, $signature)
     {
-		if (!$timestamp || !is_numeric($timestamp)) throw new HttpException(400, 'Bad timestamp');
+		if (!$timestamp) throw new HttpException(400, 'Requires timestamp');
+        if (!is_numeric($timestamp)) throw new HttpException(400, 'Invalid timestamp');
         $apikey = $this->getApiKeyByKey($key);
 		$now = new \DateTime();
 		$currentts = $now->format('U');
 		$tsdiff = abs($timestamp - $currentts);
 		if ($tsdiff > self::TIMESTAMP_MARGIN) throw new HttpException(400, 'Timestamp is too old');
 		
-		if (!$apikey) throw new HttpException(400, 'Bad api key');
-		if (!$signature) throw new HttpException(400, 'Bad signature');
+		if (!$apikey) throw new HttpException(400, 'Invalid api key');
+		if (!$signature) throw new HttpException(400, 'Requires signature');
 		
 		$sig = $this->createSignature($key, $timestamp, $apikey->getSecret());
 		
@@ -439,11 +555,11 @@ class ApiController extends SiteController
                 return $user;
             } else {
                 // Bad password
-                throw new HttpException(401, 'Invalid username or password');
+                throw new HttpException(401, 'Invalid password');
             }
         } else {
             // Bad username/mail
-            throw new HttpException(401, 'Invalid username or password');
+            throw new HttpException(401, 'Invalid username or email');
         }
     }
     
@@ -510,6 +626,11 @@ class ApiController extends SiteController
             $code = 400;
         }
         
-        return new Response($e->getMessage(), $code);
+        $return = array(
+            'code' => $code,
+            'message' => $e->getMessage()
+        );
+        
+        return $this->jsonResponse($return, $code);
     }
 }

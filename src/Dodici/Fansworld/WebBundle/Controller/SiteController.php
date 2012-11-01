@@ -44,9 +44,9 @@ class SiteController extends Controller
         return $this->get('appmedia')->getImageUrl($media, $sizeFormat);
     }
     
-    public function jsonResponse($response)
+    public function jsonResponse($response, $code = 200)
     {
-        $response = new Response(json_encode($response));
+        $response = new Response(json_encode($response), $code);
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
