@@ -1,10 +1,11 @@
 // TODO: login required modal
 
 $(function(){
-    $('[data-login-required]').on('click',function(e){
+    $('body').on('click', '[data-login-required]', function(e){
         if (!isLoggedIn) {
             e.preventDefault();
             e.stopImmediatePropagation();
+            e.stopPropagation();
             alert('TODO: login required');
             return false;
         }
