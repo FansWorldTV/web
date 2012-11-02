@@ -48,8 +48,8 @@ class SecurityController extends BaseController
             if ($this->hasValidSignature()) {
                 $request = $this->getRequest();
                 
-                $username = null; $email = null; $password = null; $firstname = null; $lastname = null;
-                $rfields = array('username', 'email', 'password', 'firstname', 'lastname');
+                $email = null; $password = null; $firstname = null; $lastname = null;
+                $rfields = array('email', 'password', 'firstname', 'lastname');
                 foreach ($rfields as $rf) {
                     ${$rf} = $request->get($rf);
                     if (!${$rf}) throw new HttpException(400, 'Required parameters: ' . join(', ', $rfields));
