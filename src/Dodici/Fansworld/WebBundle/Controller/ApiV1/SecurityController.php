@@ -1,6 +1,6 @@
 <?php
 
-namespace Dodici\Fansworld\WebBundle\Controller;
+namespace Dodici\Fansworld\WebBundle\Controller\ApiV1;
 
 use Dodici\Fansworld\WebBundle\Entity\Apikey;
 use Application\Sonata\UserBundle\Entity\User;
@@ -8,49 +8,23 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Dodici\Fansworld\WebBundle\Controller\SiteController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Dodici\Fansworld\WebBundle\Controller\SiteController;
+use Dodici\Fansworld\WebBundle\Controller\ApiV1\BaseController;
 
 /**
- * API controller
- * REST, json
- * 
- * @Route("/api")
- * 
- * How to construct a signature hash:
- * 
- * Each unique API consumer (Apikey) has a key and a secret, both unique to them
- * /api/sync provides current server timestamp. TIMESTAMP_MARGIN is the late limit of the GET provided ts
- * 
- * Concatenate: 'api_key=' + <key> + '&api_timestamp=' + <timestamp> + <secret>
- * sha1 the result, this is the <signature string>
- * To sign a request, add the GET params:
- * api_key = <key>
- * api_timestamp = <timestamp>
- * api_signature = <signature string>
+ * API controller - Security
+ * V1
+ * @Route("/api_v1")
  */
-class ApiController extends SiteController
+class SecurityController extends BaseController
 {
-    const TIMESTAMP_MARGIN = 120;
-    const TOKEN_SECRET = 'gafd7u8adf9';
-    
-    /**
-     * Get server timestamp
-     * @Route("/sync", name="api_sync")
-     */
-    public function syncAction()
-    {
-        $now = new \DateTime();
-        return $this->jsonResponse($now->format('U'));
-    }
-    
-    /**
+	/**
      * [signed] Register
      * 
-     * @Route("/register", name="api_register")
+     * @Route("/register", name="api_v1_register")
      * @Method({"POST"})
      * 
      * Post params:
@@ -147,7 +121,7 @@ class ApiController extends SiteController
     /**
      * [signed] Login
      * 
-     * @Route("/login", name="api_login")
+     * @Route("/login", name="api_v1_login")
      * @Method({"POST"})
      *
      * Post params:
@@ -208,7 +182,7 @@ class ApiController extends SiteController
 	/**
      * [signed] Facebook Connect
      * 
-     * @Route("/connect/facebook", name="api_connect_facebook")
+     * @Route("/connect/facebook", name="api_v1_connect_facebook")
      * @Method({"POST"})
      * 
      * - If user already exists and is linked to FB: regular login
@@ -262,7 +236,7 @@ class ApiController extends SiteController
 	/**
      * [signed] Reset password
      * 
-     * @Route("/password/reset", name="api_password_reset")
+     * @Route("/password/reset", name="api_v1_password_reset")
      * @Method({"POST"})
      * 
      * Sends an email with a reset password link to the user
@@ -317,7 +291,7 @@ class ApiController extends SiteController
 	/**
      * [signed] Change password
      * 
-     * @Route("/password/change", name="api_password_change")
+     * @Route("/password/change", name="api_v1_password_change")
      * @Method({"POST"})
      * 
      * Changes a user's password
@@ -371,266 +345,5 @@ class ApiController extends SiteController
         } catch(\Exception $e) {
             return $this->plainException($e);
         }
-    }
-    
-	/**
-     * [signed] test method (user token)
-     * @Route("/test/token", name="api_test_token")
-     * 
-     * Get params:
-     * - user_id: int
-     * - user_token: string
-     * - [signature params]
-     */
-    public function testTokenAction()
-    {
-        try {
-            if ($this->hasValidSignature()) {
-                $request = $this->getRequest();
-                $userid = $request->get('user_id');
-                $usertoken = $request->get('user_token');
-                
-                if (!$userid || !$usertoken) throw new HttpException(400, 'User id and token required');
-                
-                $user = $this->getRepository('User')->find($userid);
-                if (!$user) throw new HttpException(400, 'Invalid user id');
-                
-                $realtoken = $this->generateUserApiToken($user, $this->getApiKey());
-                
-                if ($usertoken === $realtoken) {
-                    return new Response('valid user token');
-                } else {
-                    $txt = 'invalid user token<br>';
-                    $txt .= 'user id: ' . $userid . '<br>';
-                    $txt .= 'user token: ' . $usertoken . '<br><br>';
-                    $txt .= 'expected token: ' . $realtoken;
-                    
-                    return new Response($txt);
-                }
-            } else {
-                throw new HttpException(401, 'Invalid signature');
-            }
-        } catch (\Exception $e) {
-            return $this->plainException($e);
-        }
-    }
-    
-    /**
-     * test method (signature)
-     * @Route("/test/signature", name="api_test_signature")
-     * 
-     * Get params:
-     * - api_key: string (your unique api consumer identifier)
-     * - api_timestamp: int (must be within sync method compliance)
-     * - api_signature: string (signature hash)
-     */
-    public function testSignatureAction()
-    {
-        try {
-            if ($this->hasValidSignature()) {
-                return new Response('valid signed request');
-            } else {
-                $request = $this->getRequest();
-                $key = $request->get('api_key');
-                $timestamp = $request->get('api_timestamp');
-                $signature = $request->get('api_signature');
-                $apikey = $this->getApiKeyByKey($key);
-                
-                $txt = 'invalid signed request<br>';
-                $txt .= 'key: ' . $key . '<br>';
-                $txt .= 'timestamp: ' . $timestamp . '<br>';
-                $txt .= 'signature: ' . $signature . '<br>';
-                $txt .= '<br>';
-                
-                if ($apikey) {
-                    $txt .= 'expected sig: ' . $this->createSignature($key, $timestamp, $apikey->getSecret());
-                } else {
-                    $txt .= 'no apikey found for key';
-                }
-                
-                return new Response($txt);
-            }
-        } catch (\Exception $e) {
-            return $this->plainException($e);
-        }
-    }
-    
-    /**
-     * Does this request have a valid signature behind it?
-     */
-    private function hasValidSignature()
-    {
-        $request = $this->getRequest();
-        $key = $request->get('api_key');
-        $timestamp = $request->get('api_timestamp');
-        $signature = $request->get('api_signature');
-        
-        return $this->validateSignature($key, $timestamp, $signature);
-    }
-    
-    /**
-     * Validate a signature
-     * @param string $key
-     * @param int $timestamp
-     * @param string $signature
-     */
-    private function validateSignature($key, $timestamp, $signature)
-    {
-		if (!$timestamp) throw new HttpException(400, 'Requires timestamp');
-        if (!is_numeric($timestamp)) throw new HttpException(400, 'Invalid timestamp');
-        $apikey = $this->getApiKeyByKey($key);
-		$now = new \DateTime();
-		$currentts = $now->format('U');
-		$tsdiff = abs($timestamp - $currentts);
-		if ($tsdiff > self::TIMESTAMP_MARGIN) throw new HttpException(400, 'Timestamp is too old');
-		
-		if (!$apikey) throw new HttpException(400, 'Invalid api key');
-		if (!$signature) throw new HttpException(400, 'Requires signature');
-		
-		$sig = $this->createSignature($key, $timestamp, $apikey->getSecret());
-		
-		return ($sig == $signature);
-    }
-    
-    /**
-     * Create a signature from parameters
-     * @param string $key
-     * @param int $timestamp
-     * @param string $secret
-     */
-    private function createSignature($key, $timestamp, $secret)
-    {
-        $str = 'api_key='.$key.'&api_timestamp='.$timestamp.$secret;
-        return sha1($str);
-    }
-    
-    /**
-     * Get the current apikey in use
-     * 
-     * @return Apikey
-     */
-    private function getApiKey()
-    {
-        $request = $this->getRequest();
-        $key = $request->get('api_key');
-        return $this->getApiKeyByKey($key);
-    }
-        
-    /**
-     * Returns Apikey entity corresponding to $key
-     * @param string $key
-     */
-    private function getApiKeyByKey($key)
-    {
-        $apikey = $this->getRepository('Apikey')->findOneBy(array('apikey' => $key));
-        return $apikey;
-    }
-    
-    /**
-     * Generate a semi-permanent hash token for a user under an api
-     * @param User $user
-     */
-    private function generateUserApiToken(User $user, Apikey $apikey)
-    {
-        return sha1(
-            $user->getId().'|'.
-            $user->getEmail().'|'.
-            $user->getUsername().'|'.
-            $apikey->getApikey().'|'.
-            $user->getPassword().'|'.
-            self::TOKEN_SECRET
-        );
-    }
-    
-    private function authUser($username, $password)
-    {
-        $usermanager = $this->get('app_user.user_manager');
-        $user = $usermanager->findUserByUsernameOrEmail($username);
-        if ($user) {
-            $encoder_service = $this->get('security.encoder_factory');
-            $encoder = $encoder_service->getEncoder($user);
-            $encoded_pass = $encoder->encodePassword($password, $user->getSalt());
-            
-            if ($user->getPassword() == $encoded_pass) {
-                return $user;
-            } else {
-                // Bad password
-                throw new HttpException(401, 'Invalid password');
-            }
-        } else {
-            // Bad username/mail
-            throw new HttpException(401, 'Invalid username or email');
-        }
-    }
-    
-    private function authFacebook($fbid, $accesstoken)
-    {
-        if (!$fbid || !$accesstoken) throw new HttpException(400, 'Requires facebook_id and access_token');
-        if (!is_numeric($fbid)) throw new HttpException(400, 'Invalid facebook_id');
-        
-        $facebook = $this->get('fos_facebook.api');
-        $facebook->setAccessToken($accesstoken);
-        $data = $facebook->api('/me');
-        
-        if (!$data || !(isset($data['id']) && ($data['id'] == $fbid)))
-            throw new HttpException(401, 'Invalid facebook_id or access_token');
-        
-        return $data;
-    }
-    
-    private function userArray(User $user)
-    {
-        $imageurl = null;
-        if ($user->getImage()) {
-            $imageurl = $this->get('appmedia')->getImageUrl($user->getImage());
-        }
-        
-        return array(
-            'id' => $user->getId(),
-            'username' => $user->getUsername(),
-            'email' => $user->getEmail(),
-            'firstname' => $user->getFirstname(),
-            'lastname' => $user->getLastname(),
-            'image' => $imageurl
-        );
-    }
-    
-    private function addIdolsTeams(User $user)
-    {
-        $request = $this->getRequest();
-        $fanmaker = $this->get('fanmaker');
-        
-        $idols = $request->get('idol');
-        $teams = $request->get('team');
-        
-        if ($idols && is_array($idols)) {
-            foreach ($idols as $i) {
-                $idol = $this->getRepository('Idol')->find($i);
-                $fanmaker->addFan($idol, $user);
-            }
-        }
-        
-        if ($teams && is_array($teams)) {
-            foreach ($teams as $t) {
-                $team = $this->getRepository('Team')->find($t);
-                $fanmaker->addFan($team, $user);
-            }
-        }
-    }
-    
-    private function plainException(\Exception $e)
-    {
-        if ($e instanceof HttpException) {
-            $code = $e->getStatusCode();
-        } else {
-            $code = 400;
-        }
-        
-        $return = array(
-            'code' => $code,
-            'message' => $e->getMessage()
-        );
-        
-        return $this->jsonResponse($return, $code);
     }
 }
