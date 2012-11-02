@@ -56,14 +56,18 @@ class TeamController extends BaseController
             $countryid = $request->get('country');
             $limit = $request->get('limit', self::LIMIT_DEFAULT);
             $offset = $request->get('offset');
+            $page = $request->get('page');
             $sort = $request->get('sort', 'fanCount');
             $sortorder = $request->get('sort_order', 'DESC');
             $sortorder = strtoupper($sortorder);
                         
+            if ($offset && $page) throw new HttpException(400, 'Cannot specify both offset and page at the same time');
             if (!in_array($sort, $allowedsorts)) throw new HttpException(400, 'Invalid sort');
             if (!in_array($sortorder, $allowedorders)) throw new HttpException(400, 'Invalid sort_order');
             if ($limit && !is_numeric($limit)) throw new HttpException(400, 'Invalid limit');
             if ($offset && !is_numeric($offset)) throw new HttpException(400, 'Invalid offset');
+            
+            if ($page) $offset = $page * $limit;
             
             $filters = array('active' => true);
             
