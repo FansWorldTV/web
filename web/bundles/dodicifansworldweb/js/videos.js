@@ -12,7 +12,7 @@ var videos = {
         
         videos.detail.init();
         
-        $("[data-is-modal]").modal();
+        $("[data-is-modal]").modalPopup();
     },
     
     addSearchContent: function(template, video, videoUrl){
