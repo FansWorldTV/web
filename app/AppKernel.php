@@ -40,6 +40,7 @@ class AppKernel extends Kernel
             new FOS\TwitterBundle\FOSTwitterBundle(),
             new DataFactory\FeedBundle\DataFactoryFeedBundle(),
             new Bazinga\ExposeTranslationBundle\BazingaExposeTranslationBundle(),
+            new Kaltura\APIBundle\KalturaAPIBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

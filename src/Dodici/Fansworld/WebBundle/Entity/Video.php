@@ -102,9 +102,9 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     private $duration;
     
     /**
-     * @var integer $stream
+     * @var string $stream
      *
-     * @ORM\Column(name="stream", type="integer", nullable=true)
+     * @ORM\Column(name="stream", type="string", length=250, nullable=true)
      */
     private $stream;
     

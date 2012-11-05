@@ -31,6 +31,7 @@ $loader->registerNamespaces(array(
 	'BaseFacebook'     => __DIR__.'/../vendor/facebook/src',
 	'Artseld' => __DIR__.'/../vendor/bundles',
 	'Bazinga' => __DIR__.'/../vendor/bundles',
+    'Kaltura' => __DIR__.'/../src',
 ));
 $loader->registerPrefixes(array(
     'Twig_Extensions_' => __DIR__.'/../vendor/twig-extensions/lib',

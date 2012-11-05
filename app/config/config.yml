@@ -325,9 +325,6 @@ services:
     applepush:
       class: Dodici\Fansworld\WebBundle\Services\ApplePush
       arguments: [%applepush.url%, %applepush.certificate%, %applepush.password%]
-    kaltura:
-      class: Dodici\Fansworld\WebBundle\Services\Kaltura
-      arguments: [%kaltura.partner_id%, %kaltura.user_secret%, %kaltura.admin_secret%, %kaltura.username%]
     tagger:
       class: Dodici\Fansworld\WebBundle\Services\Tagger
       arguments: [@doctrine.orm.entity_manager, @appstate]
