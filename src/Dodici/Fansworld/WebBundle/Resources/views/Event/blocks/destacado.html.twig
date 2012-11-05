@@ -20,7 +20,7 @@
                 <div class='fecha'>{{ evento.fromtime|date("d/m/Y H:i") }}</div>
                 <div class='checkin-container'>
                     {% if eventoDestacadoChecked or eventoDestacadoChecked is null %}
-                        <a href="{{ path('event_show', {'id': evento.id}) }}" data-login-require><button class='btn btn-large btn-danger'>IR</button></a>
+                        <a href="{{ path('event_show', {'id': evento.id}) }}" data-login-required><button class='btn btn-large btn-danger'>IR</button></a>
                     {% else %}
                         <button class='btn btn-large btn-danger' data-event-id='{{ evento.id }}' data-event-check-in>CHECK IN</button>
                     {% endif %}

@@ -103,7 +103,6 @@ var site = {
         site.globalDeleteButtons();
         site.expander();
         site.showCommentForm();
-        searchBox.init();
         site.BindLoginWidget();
         albums.init();
         

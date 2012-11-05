@@ -21,12 +21,46 @@ class SearchController extends SiteController
     const LIMIT_SEARCH = 20;
 
     /**
-     * Site's home
+     * @Route("/search", name = "search_home")
      * @Template()
      */
     public function indexAction()
     {
+        $videoRepo = $this->getRepository('Video');
+        $idolRepo = $this->getRepository('Idol');
+        $fanRepo = $this->getRepository('User');
+        $photoRepo = $this->getRepository('Photo');
+        $eventRepo = $this->getRepository('Event');
+        $teamRepo = $this->getRepository('Team');
+
+        $videoCount = $videoRepo->countBy(array('active' => true));
+        $idolCount = $idolRepo->countBy(array('active' => true));
+        $fanCount = $fanRepo->countBy();
+        $photoCount = $photoRepo->countBy(array('active' => true));
+        $eventCount = $eventRepo->countBy(array('active' => true));
+        $teamCount = $teamRepo->countBy(array('active' => true));
+
+        $todo = $videoCount + $idolCount + $fanCount + $photoCount + $eventCount;
+
+        $idols = array(
+            'ulClass' => 'idols',
+            'containerClass' => 'idol-container',
+            'list' => $idolRepo->findBy(array('active' => true), array('createdAt' => 'desc'))
+        );
+
         return array(
+            'todoCount' => $todo,
+            'videoCount' => $videoCount,
+            'idolCount' => $idolCount,
+            'fanCount' => $fanCount,
+            'photoCount' => $photoCount,
+            'eventCount' => $eventCount,
+            'teamCount' => $teamCount,
+            'idols' => $idols,
+            'events' => $eventRepo->findBy(array('active' => true), array('createdAt' => 'desc')),
+            'photos' => $photoRepo->findBy(array('active' => true), array('createdAt' => 'desc')),
+            'fans' => $fanRepo->findBy(array(), array('createdAt' => 'desc')),
+            'videos' => $videoRepo->findBy(array(), array('createdAt' => 'desc'))
         );
     }
 
@@ -225,7 +259,7 @@ class SearchController extends SiteController
             $response = array();
             $searchIdol = $this->getRepository('Idol')->SearchFront($user, $query, $isIdol, self::LIMIT_SEARCH, $offset);
             $countTotal = $this->getRepository('Idol')->CountSearchFront($user, $query, $isIdol);
-            
+
             if ($countTotal > 0) {
                 $response['gotMore'] = ($countTotal / self::LIMIT_SEARCH) > $page ? true : false;
 
@@ -255,9 +289,9 @@ class SearchController extends SiteController
         $offset = $page * self::LIMIT_SEARCH;
 
         $type = (int) $type;
-        
+
         $types = $searcher->getTypes();
-        
+
         $search = $searcher->search($query, $type, self::LIMIT_SEARCH, $offset);
         $countAll = $searcher->count($query, $type);
 

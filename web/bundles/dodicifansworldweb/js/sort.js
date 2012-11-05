@@ -73,8 +73,8 @@ function get(sort){
             
             $("[data-new-element]").imagesLoaded(function(){
                 
-            	console.log( $('[data-list-result]').montage);
-                //$('[data-list-result]').montage('add', $("[data-new-element]"));
+            	//console.log( $('[data-list-result]').montage);
+                $('[data-list-result]').montage('add', $("[data-new-element]"));
                 
                 $("[data-new-element]").removeAttr('data-new-element');
             });
