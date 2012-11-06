@@ -86,4 +86,44 @@ class TagController extends SiteController
         return $this->jsonResponse($response);
     }
     
+	/**
+     *  get params:
+     *   - text
+     *   - limit
+     *  @Route("/ajax/matchall/", name="tag_ajaxmatch")
+     */
+    public function matchAll()
+    {
+        $request = $this->getRequest();
+    	$text = $request->get('text');
+    	$limit = $request->get('limit', 4);
+    	
+    	$tags = $this->getRepository('Tag')->matchAll($text, $this->getUser(), $limit);
+        
+        $response = array();
+        
+        $c = 0;
+        foreach ($tags as $type => $ents) {
+            foreach ($ents as $ent) {
+                $r = array(
+                    'id' => $c,
+                    'label' => (string) $ent,
+                    'value' => (string) $ent,
+                );
+                
+                $entjson = array(
+                    'id' => $ent->getId(),
+                    'type' => $type
+                );
+                if (property_exists($ent, 'slug')) $entjson['slug'] = $ent->getSlug();
+                if (property_exists($ent, 'username')) $entjson['username'] = $ent->getUsername();
+                $r['result'] = $entjson;
+                $response[] = $r;
+                $c++;
+            }
+        }
+        
+        return $this->jsonResponse($response);
+    }
+    
 }

@@ -76,7 +76,7 @@ class TagRepository extends CountBaseRepository
                 '.$type.'.id as id,
                 '.
                 (($type == 'idol') ?
-                ('CONCAT(idol.firstname, \' \', idol.lastname) AS title,') :
+                ('CONCAT('.$type.'.firstname, \' \', '.$type.'.lastname) AS title,') :
                 ($type.'.title as title,'))
                 .'
                 '.$type.'.slug as slug,
@@ -190,83 +190,90 @@ class TagRepository extends CountBaseRepository
     	
     	return $results;
     	
-        /*
-        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
-        $rsm->addScalarResult('id', 'id');
-        $rsm->addScalarResult('title', 'title');
-        $rsm->addScalarResult('slug', 'slug');
-        $rsm->addScalarResult('type', 'type');
-        $rsm->addRootEntityFromClassMetadata('Application\\Sonata\\MediaBundle\\Entity\\Media', 'img');
+	}
+	
+	/**
+	 * Matches against a string for user/team/idol/tag entities, for tagging autocomplete, etc
+	 * all entities found, except for user, which shows only friends
+	 * 
+     * @param string $match
+     * @param User|null $user
+	 * @param int|null $limit
+	 */
+    public function matchAll($match, User $user=null, $limit=null)
+	{
         
-        $columns = $this->_em->getClassMetadata('Application\\Sonata\\MediaBundle\\Entity\\Media')->getColumnNames();
-        
-        var_dump($columns);
-        
-        $columns = array('id', 'name', 'description', 'enabled', 'width', 'height', 'length', 'context', 'provider_status');
-        
-        $columnmaps = array();
-        foreach ($columns as $c) {
-            $rsm->addFieldResult('img', 'img_'.$c, $c);
-            $columnmaps[] = 'img.'.$c.' as img_'.$c;
-        }
-        
-        
+	    $results = array();
+        $classtypes = array(
+            'user' => '\Application\Sonata\UserBundle\Entity\User',
+            'idol' => '\Dodici\Fansworld\WebBundle\Entity\Idol',
+            'team' => '\Dodici\Fansworld\WebBundle\Entity\Team',
+            'tag' => '\Dodici\Fansworld\WebBundle\Entity\Tag',
+        );
+        $likefields = array(
+            'user' => array('firstname', 'lastname'),
+            'idol' => array('firstname', 'lastname'),
+            'team' => array('title'),
+            'tag' => array('title')
+        );
+        $orderings = array(
+            'user' => array('lastname' => 'ASC', 'firstname' => 'ASC'),
+            'idol' => array('lastname' => 'ASC', 'firstname' => 'ASC'),
+            'team' => array('fanCount' => 'DESC'),
+            'tag' => array('useCount' => 'DESC')
+        );
         
         $joins = array(
             'user' => 
-                'RIGHT JOIN friendship ON
-                friendship.active = true AND 
-                ((friendship.author_id = :userid AND
-                friendship.target_id = user.id)
-                OR
-                (friendship.target_id = :userid AND
-                friendship.author_id = user.id))',
-            'idol' => 
-            	'RIGHT JOIN idolship ON (idolship.idol_id = idol.id AND idolship.author_id = :userid)',
-        	'team' => 
-        	    'RIGHT JOIN teamship ON (teamship.team_id = team.id AND teamship.author_id = :userid)'
+                'LEFT JOIN user.friendships uffr WITH uffr.target = :user
+                LEFT JOIN user.fanships uffn WITH uffn.author = :user'
         );
+	    
+        $types = array();
+        if ($user) $types[] = 'user';
+        $types[] = 'idol';
+        $types[] = 'team';
+        $types[] = 'tag';
         
-        $sqls = array();
-        foreach (array('user', 'idol', 'team') as $type) {
-            $sql = '
-                SELECT
-                '.$type.'.id as id,
-                '.
-                ((in_array($type, array('idol', 'user'))) ?
-                ('CONCAT('.$type.'.firstname, \' \', '.$type.'.lastname) AS title,') :
-                ($type.'.title as title,'))
-                .'
-                '.(($type == 'user') ? 'user.username' : ($type.'.slug')).' as slug,
-                \''.$type.'\' as type,
-                img.*
-                FROM
-                '.(($type == 'user') ? 'fos_user_user as user' : $type).'
-                INNER JOIN media__media img ON '.$type.'.image_id = img.id
-                '.$joins[$type].'
-                
-                ';
-
+        foreach ($types as $type) {
+    	    $likes = array();
+    	    foreach ($likefields[$type] as $lf) {
+    	        $likes[] = $type.'.'.$lf . ' LIKE :textlike';
+    	    }
+    	    $ordering = array();
+    	    foreach ($orderings[$type] as $fo => $or) {
+    	        $ordering[] = $type.'.'.$fo.' '.$or;
+    	    }
             
+    	    $dql = '
+        	SELECT '.$type. (($type=='tag') ? '' : ', img') . '
+        	FROM '.$classtypes[$type].' '.$type.'
+        	'. (($type=='tag') ? '' : 'LEFT JOIN '.$type.'.image img') .'
+        	'. (isset($joins[$type]) ? $joins[$type] : '') .'
+        	GROUP BY '.$type.'
+        	HAVING
+        	('.join(' AND ', $likes).')
+        	'.(($type=='user') ? '
+        		AND (COUNT(uffr) > 0 OR COUNT(uffn) > 0)
+        	' : '').'
+        	ORDER BY
+        	'.join(', ', $ordering).'
+        	';
+    	    
+    	        	    
+            $query = $this->_em->createQuery($dql)
+        		->setParameter('textlike', '%'.$match.'%');
+           
+        	if ($user)
+        		$query = $query->setParameter('user', $user->getId());
+        		
+        	if ($limit !== null)
+        	    $query = $query->setMaxResults($limit);
             
-            $sql .= ' GROUP BY '.$type.'.id HAVING title LIKE :titlelike';
-            
-            $sqls[] = $sql;
+        	$results[$type] = $query->getResult();
         }
-        
-        $query = $this->_em->createNativeQuery(
-            join(' UNION ', $sqls) .'
-            
-            '.
-            (($limit !== null) ? ' LIMIT :limit ' : '')
-            , $rsm
-        )
-        ->setParameter('titlelike', '%'.$match.'%', Type::STRING)
-        ->setParameter('userid', $user->getId(), Type::BIGINT);
-          
-        if ($limit !== null)
-            $query = $query->setParameter('limit', (int)$limit, Type::INTEGER);
-            
-        return $query->getResult();*/
-	} 
+    	
+    	return $results;
+    	
+	}
 }
