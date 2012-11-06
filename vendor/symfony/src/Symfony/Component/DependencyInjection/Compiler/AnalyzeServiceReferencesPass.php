@@ -74,6 +74,9 @@ class AnalyzeServiceReferencesPass implements RepeatablePassInterface
             if (!$this->onlyConstructorArguments) {
                 $this->processArguments($definition->getMethodCalls());
                 $this->processArguments($definition->getProperties());
+                if ($definition->getConfigurator()) {
+                    $this->processArguments(array($definition->getConfigurator()));
+                }
             }
         }
 
@@ -113,7 +116,7 @@ class AnalyzeServiceReferencesPass implements RepeatablePassInterface
      *
      * @param string $id A full id or alias for a service definition.
      *
-     * @return Definition The definition related to the supplied id
+     * @return Definition|null The definition related to the supplied id
      */
     private function getDefinition($id)
     {

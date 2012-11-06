@@ -72,6 +72,8 @@ class Translator implements TranslatorInterface
     public function addResource($format, $resource, $locale, $domain = 'messages')
     {
         $this->resources[$locale][] = array($format, $resource, $domain);
+
+        unset($this->catalogues[$locale]);
     }
 
     /**
@@ -172,7 +174,7 @@ class Translator implements TranslatorInterface
 
     protected function computeFallbackLocale($locale)
     {
-        if (strlen($locale) > 3) {
+        if (strrchr($locale, '_') !== false) {
             return substr($locale, 0, -strlen(strrchr($locale, '_')));
         } else {
             return $this->fallbackLocale;

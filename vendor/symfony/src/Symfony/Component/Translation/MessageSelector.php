@@ -38,13 +38,13 @@ class MessageSelector
      * The two methods can also be mixed:
      *     {0} There are no apples|one: There is one apple|more: There are %count% apples
      *
-     * @param  string  $message The message being translated
-     * @param  integer $number  The number of items represented for the message
-     * @param  string  $locale  The locale to use for choosing
+     * @param string  $message The message being translated
+     * @param integer $number  The number of items represented for the message
+     * @param string  $locale  The locale to use for choosing
      *
      * @return string
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      *
      * @api
      */

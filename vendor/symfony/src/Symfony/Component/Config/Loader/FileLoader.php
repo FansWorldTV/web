@@ -22,7 +22,7 @@ use Symfony\Component\Config\Exception\FileLoaderImportCircularReferenceExceptio
  */
 abstract class FileLoader extends Loader
 {
-    static protected $loading = array();
+    protected static $loading = array();
 
     protected $locator;
 
@@ -72,7 +72,7 @@ abstract class FileLoader extends Loader
             }
             self::$loading[$resource] = true;
 
-            $ret = $loader->load($resource);
+            $ret = $loader->load($resource, $type);
 
             unset(self::$loading[$resource]);
 

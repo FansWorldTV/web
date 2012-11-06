@@ -131,11 +131,11 @@ class Container implements ContainerInterface
     /**
      * Gets a parameter.
      *
-     * @param  string $name The parameter name
+     * @param string $name The parameter name
      *
      * @return mixed  The parameter value
      *
-     * @throws  \InvalidArgumentException if the parameter is not defined
+     * @throws \InvalidArgumentException if the parameter is not defined
      *
      * @api
      */
@@ -147,7 +147,7 @@ class Container implements ContainerInterface
     /**
      * Checks if a parameter exists.
      *
-     * @param  string $name The parameter name
+     * @param string $name The parameter name
      *
      * @return Boolean The presence of parameter in container
      *
@@ -178,6 +178,9 @@ class Container implements ContainerInterface
      * @param object $service The service instance
      * @param string $scope   The scope of the service
      *
+     * @throws \RuntimeException When trying to set a service in an inactive scope
+     * @throws \InvalidArgumentException When trying to set a service in the prototype scope
+     *
      * @api
      */
     public function set($id, $service, $scope = self::SCOPE_CONTAINER)
@@ -202,7 +205,7 @@ class Container implements ContainerInterface
     /**
      * Returns true if the given service is defined.
      *
-     * @param  string  $id      The service identifier
+     * @param string $id The service identifier
      *
      * @return Boolean true if the service is defined, false otherwise
      *
@@ -218,15 +221,16 @@ class Container implements ContainerInterface
     /**
      * Gets a service.
      *
-     * If a service is both defined through a set() method and
-     * with a set*Service() method, the former has always precedence.
+     * If a service is defined both through a set() method and
+     * with a get{$id}Service() method, the former has always precedence.
      *
-     * @param  string  $id              The service identifier
-     * @param  integer $invalidBehavior The behavior when the service does not exist
+     * @param string  $id              The service identifier
+     * @param integer $invalidBehavior The behavior when the service does not exist
      *
      * @return object The associated service
      *
-     * @throws \InvalidArgumentException if the service is not defined
+     * @throws ServiceCircularReferenceException When a circular reference is detected
+     * @throws ServiceNotFoundException When the service is not defined
      *
      * @see Reference
      *
@@ -274,7 +278,7 @@ class Container implements ContainerInterface
         $ids = array();
         $r = new \ReflectionClass($this);
         foreach ($r->getMethods() as $method) {
-            if (preg_match('/^get(.+)Service$/', $method->getName(), $match)) {
+            if (preg_match('/^get(.+)Service$/', $method->name, $match)) {
                 $ids[] = self::underscore($match[1]);
             }
         }
@@ -287,7 +291,8 @@ class Container implements ContainerInterface
      *
      * @param string $name
      *
-     * @return void
+     * @throws \RuntimeException When the parent scope is inactive
+     * @throws \InvalidArgumentException When the scope does not exist
      *
      * @api
      */
@@ -333,8 +338,6 @@ class Container implements ContainerInterface
      *
      * @param string $name The name of the scope to leave
      *
-     * @return void
-     *
      * @throws \InvalidArgumentException if the scope is not active
      *
      * @api
@@ -374,7 +377,7 @@ class Container implements ContainerInterface
      *
      * @param ScopeInterface $scope
      *
-     * @return void
+     * @throws \InvalidArgumentException When the scope is invalid
      *
      * @api
      */
@@ -440,7 +443,7 @@ class Container implements ContainerInterface
      *
      * @return string The camelized string
      */
-    static public function camelize($id)
+    public static function camelize($id)
     {
         return preg_replace_callback('/(^|_|\.)+(.)/', function ($match) { return ('.' === $match[1] ? '_' : '').strtoupper($match[2]); }, $id);
     }
@@ -452,7 +455,7 @@ class Container implements ContainerInterface
      *
      * @return string The underscored string
      */
-    static public function underscore($id)
+    public static function underscore($id)
     {
         return strtolower(preg_replace(array('/([A-Z]+)([A-Z][a-z])/', '/([a-z\d])([A-Z])/'), array('\\1_\\2', '\\1_\\2'), strtr($id, '_', '.')));
     }

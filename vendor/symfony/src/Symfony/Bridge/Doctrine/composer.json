@@ -1,4 +1,4 @@
-{
+ {
     "name": "symfony/doctrine-bridge",
     "type": "symfony-bridge",
     "description": "Symfony Doctrine Bridge",
@@ -17,13 +17,11 @@
     ],
     "require": {
         "php": ">=5.3.2",
-        "doctrine/common": "2.1.*"
-    },
-    "recommend": {
-        "doctrine/dbal": ">=2.1",
-        "doctrine/orm": ">=2.1"
+        "doctrine/common": ">=2.1,<2.3-dev"
     },
     "suggest": {
+        "doctrine/dbal": ">=2.1,<2.3",
+        "doctrine/orm": ">=2.1,<2.3",
         "symfony/form": "self.version",
         "symfony/validator": "self.version"
     },

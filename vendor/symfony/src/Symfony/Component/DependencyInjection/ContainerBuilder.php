@@ -33,7 +33,6 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
     private $aliases          = array();
     private $resources        = array();
     private $extensionConfigs = array();
-    private $injectors        = array();
     private $compiler;
 
     /**
@@ -58,6 +57,8 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
      * @param string $name An alias or a namespace
      *
      * @return ExtensionInterface An extension instance
+     *
+     * @throws \LogicException if the extension is not registered
      *
      * @api
      */
@@ -150,6 +151,8 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
      * @param array  $values    An array of values that customizes the extension
      *
      * @return ContainerBuilder The current instance
+     *
+     * @throws \LogicException if the container is frozen
      *
      * @api
      */
@@ -248,7 +251,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
      * @param object $service The service instance
      * @param string $scope   The scope
      *
-     * @throws BadMethodCallException
+     * @throws \BadMethodCallException if the container is frozen
      *
      * @api
      */
@@ -280,7 +283,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
     /**
      * Returns true if the given service is defined.
      *
-     * @param  string  $id      The service identifier
+     * @param string $id The service identifier
      *
      * @return Boolean true if the service is defined, false otherwise
      *
@@ -296,8 +299,8 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
     /**
      * Gets a service.
      *
-     * @param  string  $id              The service identifier
-     * @param  integer $invalidBehavior The behavior when the service does not exist
+     * @param string  $id              The service identifier
+     * @param integer $invalidBehavior The behavior when the service does not exist
      *
      * @return object The associated service
      *
@@ -481,8 +484,11 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
     /**
      * Sets an alias for an existing service.
      *
-     * @param string $alias The alias to create
-     * @param mixed  $id    The service to alias
+     * @param string        $alias The alias to create
+     * @param string|Alias  $id    The service to alias
+     *
+     * @throws \InvalidArgumentException if the id is not a string or an Alias
+     * @throws \InvalidArgumentException if the alias is for itself
      *
      * @api
      */
@@ -520,7 +526,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
     /**
      * Returns true if an alias exists under the given identifier.
      *
-     * @param  string  $id The service identifier
+     * @param string $id The service identifier
      *
      * @return Boolean true if the alias exists, false otherwise
      *
@@ -534,7 +540,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
     /**
      * Gets all defined aliases.
      *
-     * @return array An array of aliases
+     * @return Alias[] An array of aliases
      *
      * @api
      */
@@ -546,9 +552,9 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
     /**
      * Gets an alias.
      *
-     * @param  string  $id The service identifier
+     * @param string $id The service identifier
      *
-     * @return string The aliased service identifier
+     * @return Alias An Alias instance
      *
      * @throws \InvalidArgumentException if the alias does not exist
      *
@@ -571,8 +577,8 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
      * This methods allows for simple registration of service definition
      * with a fluid interface.
      *
-     * @param  string $id    The service identifier
-     * @param  string $class The service class
+     * @param string $id    The service identifier
+     * @param string $class The service class
      *
      * @return Definition A Definition instance
      *
@@ -613,7 +619,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
     /**
      * Gets all service definitions.
      *
-     * @return array An array of Definition instances
+     * @return Definition[] An array of Definition instances
      *
      * @api
      */
@@ -625,10 +631,12 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
     /**
      * Sets a service definition.
      *
-     * @param  string     $id         The service identifier
-     * @param  Definition $definition A Definition instance
+     * @param string     $id         The service identifier
+     * @param Definition $definition A Definition instance
      *
-     * @throws BadMethodCallException
+     * @return Definition the service definition
+     *
+     * @throws \BadMethodCallException if the container is frozen
      *
      * @api
      */
@@ -648,7 +656,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
     /**
      * Returns true if a service definition exists under the given identifier.
      *
-     * @param  string  $id The service identifier
+     * @param string $id The service identifier
      *
      * @return Boolean true if the service definition exists, false otherwise
      *
@@ -662,7 +670,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
     /**
      * Gets a service definition.
      *
-     * @param  string  $id The service identifier
+     * @param string $id The service identifier
      *
      * @return Definition A Definition instance
      *
@@ -686,7 +694,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
      *
      * The method "unaliases" recursively to return a Definition instance.
      *
-     * @param  string  $id The service identifier or alias
+     * @param string $id The service identifier or alias
      *
      * @return Definition A Definition instance
      *
@@ -706,11 +714,13 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
     /**
      * Creates a service for a service definition.
      *
-     * @param  Definition $definition A service definition instance
-     * @param  string     $id         The service identifier
+     * @param Definition $definition A service definition instance
+     * @param string     $id         The service identifier
      *
-     * @return object              The service described by the service definition
+     * @return object The service described by the service definition
      *
+     * @throws \RuntimeException When the scope is inactive
+     * @throws \RuntimeException When the factory definition is incomplete
      * @throws \InvalidArgumentException When configure callable is not callable
      */
     private function createService(Definition $definition, $id)
@@ -790,7 +800,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
     /**
      * Replaces service references by the real service instance.
      *
-     * @param  mixed $value A value
+     * @param mixed $value A value
      *
      * @return mixed The same value with all service references replaced by the real service instances
      */
@@ -837,7 +847,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
      *
      * @return array An array of Service conditionals
      */
-    static public function getServiceConditionals($value)
+    public static function getServiceConditionals($value)
     {
         $services = array();
 

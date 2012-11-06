@@ -42,8 +42,8 @@ class Processor
     /**
      * Processes an array of configurations.
      *
-     * @param ConfigurationInterface $configuration  The configuration class
-     * @param array                  $configs        An array of configuration items to process
+     * @param ConfigurationInterface $configuration The configuration class
+     * @param array                  $configs       An array of configuration items to process
      *
      * @return array The processed configuration
      */
@@ -65,7 +65,7 @@ class Processor
      *
      * @return array the config with normalized keys
      */
-    static public function normalizeKeys(array $config)
+    public static function normalizeKeys(array $config)
     {
         foreach ($config as $key => $value) {
             if (is_array($value)) {
@@ -89,14 +89,14 @@ class Processor
      *
      * Here is an example.
      *
-     * The configuration is XML:
+     * The configuration in XML:
      *
-     * <twig:extension id="twig.extension.foo" />
-     * <twig:extension id="twig.extension.bar" />
+     * <twig:extension>twig.extension.foo</twig:extension>
+     * <twig:extension>twig.extension.bar</twig:extension>
      *
      * And the same configuration in YAML:
      *
-     * twig.extensions: ['twig.extension.foo', 'twig.extension.bar']
+     * extensions: ['twig.extension.foo', 'twig.extension.bar']
      *
      * @param array  $config A config array
      * @param string $key    The key to normalize
@@ -104,7 +104,7 @@ class Processor
      *
      * @return array
      */
-    static public function normalizeConfig($config, $key, $plural = null)
+    public static function normalizeConfig($config, $key, $plural = null)
     {
         if (null === $plural) {
             $plural = $key.'s';

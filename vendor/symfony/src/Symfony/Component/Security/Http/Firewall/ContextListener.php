@@ -20,7 +20,7 @@ use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -37,7 +37,7 @@ class ContextListener implements ListenerInterface
     private $logger;
     private $userProviders;
 
-    public function __construct(SecurityContext $context, array $userProviders, $contextKey, LoggerInterface $logger = null, EventDispatcherInterface $dispatcher = null)
+    public function __construct(SecurityContextInterface $context, array $userProviders, $contextKey, LoggerInterface $logger = null, EventDispatcherInterface $dispatcher = null)
     {
         if (empty($contextKey)) {
             throw new \InvalidArgumentException('$contextKey must not be empty.');
@@ -66,19 +66,26 @@ class ContextListener implements ListenerInterface
 
         if (null === $session || null === $token = $session->get('_security_'.$this->contextKey)) {
             $this->context->setToken(null);
-        } else {
-            if (null !== $this->logger) {
-                $this->logger->debug('Read SecurityContext from the session');
-            }
-
-            $token = unserialize($token);
-
-            if (null !== $token) {
-                $token = $this->refreshUser($token);
-            }
-
-            $this->context->setToken($token);
+            return;
         }
+
+        $token = unserialize($token);
+
+        if (null !== $this->logger) {
+            $this->logger->debug('Read SecurityContext from the session');
+        }
+
+        if ($token instanceof TokenInterface) {
+            $token = $this->refreshUser($token);
+        } elseif (null !== $token) {
+            if (null !== $this->logger) {
+                $this->logger->warn(sprintf('Session includes a "%s" where a security token is expected', is_object($token) ? get_class($token) : gettype($token)));
+            }
+
+            $token = null;
+        }
+
+        $this->context->setToken($token);
     }
 
     /**

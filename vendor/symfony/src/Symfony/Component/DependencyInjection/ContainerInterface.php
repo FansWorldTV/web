@@ -11,6 +11,9 @@
 
 namespace Symfony\Component\DependencyInjection;
 
+use Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
+
 /**
  * ContainerInterface is the interface implemented by service container classes.
  *
@@ -36,58 +39,59 @@ interface ContainerInterface
      *
      * @api
      */
-    function set($id, $service, $scope = self::SCOPE_CONTAINER);
+    public function set($id, $service, $scope = self::SCOPE_CONTAINER);
 
     /**
      * Gets a service.
      *
-     * @param  string $id              The service identifier
-     * @param  int    $invalidBehavior The behavior when the service does not exist
+     * @param string $id              The service identifier
+     * @param int    $invalidBehavior The behavior when the service does not exist
      *
      * @return object The associated service
      *
-     * @throws \InvalidArgumentException if the service is not defined
+     * @throws ServiceCircularReferenceException When a circular reference is detected
+     * @throws ServiceNotFoundException When the service is not defined
      *
      * @see Reference
      *
      * @api
      */
-    function get($id, $invalidBehavior = self::EXCEPTION_ON_INVALID_REFERENCE);
+    public function get($id, $invalidBehavior = self::EXCEPTION_ON_INVALID_REFERENCE);
 
     /**
      * Returns true if the given service is defined.
      *
-     * @param  string  $id      The service identifier
+     * @param string $id The service identifier
      *
      * @return Boolean true if the service is defined, false otherwise
      *
      * @api
      */
-    function has($id);
+    public function has($id);
 
     /**
      * Gets a parameter.
      *
-     * @param  string $name The parameter name
+     * @param string $name The parameter name
      *
      * @return mixed  The parameter value
      *
-     * @throws  \InvalidArgumentException if the parameter is not defined
+     * @throws \InvalidArgumentException if the parameter is not defined
      *
      * @api
      */
-    function getParameter($name);
+    public function getParameter($name);
 
     /**
      * Checks if a parameter exists.
      *
-     * @param  string $name The parameter name
+     * @param string $name The parameter name
      *
      * @return Boolean The presence of parameter in container
      *
      * @api
      */
-    function hasParameter($name);
+    public function hasParameter($name);
 
     /**
      * Sets a parameter.
@@ -97,40 +101,34 @@ interface ContainerInterface
      *
      * @api
      */
-    function setParameter($name, $value);
+    public function setParameter($name, $value);
 
     /**
      * Enters the given scope
      *
      * @param string $name
      *
-     * @return void
-     *
      * @api
      */
-    function enterScope($name);
+    public function enterScope($name);
 
     /**
      * Leaves the current scope, and re-enters the parent scope
      *
      * @param string $name
      *
-     * @return void
-     *
      * @api
      */
-    function leaveScope($name);
+    public function leaveScope($name);
 
     /**
      * Adds a scope to the container
      *
      * @param ScopeInterface $scope
      *
-     * @return void
-     *
      * @api
      */
-    function addScope(ScopeInterface $scope);
+    public function addScope(ScopeInterface $scope);
 
     /**
      * Whether this container has the given scope
@@ -141,7 +139,7 @@ interface ContainerInterface
      *
      * @api
      */
-    function hasScope($name);
+    public function hasScope($name);
 
     /**
      * Determines whether the given scope is currently active.
@@ -154,5 +152,5 @@ interface ContainerInterface
      *
      * @api
      */
-    function isScopeActive($name);
+    public function isScopeActive($name);
 }

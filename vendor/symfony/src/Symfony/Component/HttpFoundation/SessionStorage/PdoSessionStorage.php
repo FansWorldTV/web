@@ -74,8 +74,8 @@ class PdoSessionStorage extends NativeSessionStorage
     /**
      * Opens a session.
      *
-     * @param  string $path  (ignored)
-     * @param  string $name  (ignored)
+     * @param string $path (ignored)
+     * @param string $name (ignored)
      *
      * @return Boolean true, if the session was opened, otherwise an exception is thrown
      */
@@ -98,7 +98,7 @@ class PdoSessionStorage extends NativeSessionStorage
     /**
      * Destroys a session.
      *
-     * @param  string $id  A session ID
+     * @param string $id A session ID
      *
      * @return Boolean   true, if the session was destroyed, otherwise an exception is thrown
      *
@@ -127,7 +127,7 @@ class PdoSessionStorage extends NativeSessionStorage
     /**
      * Cleans up old sessions.
      *
-     * @param  int $lifetime  The lifetime of a session
+     * @param int $lifetime The lifetime of a session
      *
      * @return Boolean true, if old sessions have been cleaned, otherwise an exception is thrown
      *
@@ -156,7 +156,7 @@ class PdoSessionStorage extends NativeSessionStorage
     /**
      * Reads a session.
      *
-     * @param  string $id  A session ID
+     * @param string $id A session ID
      *
      * @return string      The session data if the session was read or created, otherwise an exception is thrown
      *
@@ -173,7 +173,7 @@ class PdoSessionStorage extends NativeSessionStorage
             $sql = "SELECT $dbDataCol FROM $dbTable WHERE $dbIdCol = :id";
 
             $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':id', $id, \PDO::PARAM_STR, 255);
+            $stmt->bindParam(':id', $id, \PDO::PARAM_STR);
 
             $stmt->execute();
             // it is recommended to use fetchAll so that PDO can close the DB cursor
@@ -181,7 +181,8 @@ class PdoSessionStorage extends NativeSessionStorage
             $sessionRows = $stmt->fetchAll(\PDO::FETCH_NUM);
 
             if (count($sessionRows) == 1) {
-                return base64_decode($sessionRows[0][0]);
+                $session = is_resource($sessionRows[0][0]) ? stream_get_contents($sessionRows[0][0]) : $sessionRows[0][0];
+                return base64_decode($session);
             }
 
             // session does not exist, create it
@@ -196,8 +197,8 @@ class PdoSessionStorage extends NativeSessionStorage
     /**
      * Writes session data.
      *
-     * @param  string $id    A session ID
-     * @param  string $data  A serialized chunk of session data
+     * @param string $id   A session ID
+     * @param string $data A serialized chunk of session data
      *
      * @return Boolean true, if the session was written, otherwise an exception is thrown
      *

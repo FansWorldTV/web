@@ -31,7 +31,7 @@ class Response
     protected $statusText;
     protected $charset;
 
-    static public $statusTexts = array(
+    public static $statusTexts = array(
         100 => 'Continue',
         101 => 'Switching Protocols',
         200 => 'OK',
@@ -134,7 +134,7 @@ class Response
         $charset = $this->charset ?: 'UTF-8';
         if (!$this->headers->has('Content-Type')) {
             $this->headers->set('Content-Type', 'text/html; charset='.$charset);
-        } elseif ('text/' === substr($this->headers->get('Content-Type'), 0, 5) && false === strpos($this->headers->get('Content-Type'), 'charset')) {
+        } elseif (0 === strpos($this->headers->get('Content-Type'), 'text/') && false === strpos($this->headers->get('Content-Type'), 'charset')) {
             // add the charset
             $this->headers->set('Content-Type', $this->headers->get('Content-Type').'; charset='.$charset);
         }
@@ -254,7 +254,10 @@ class Response
      * Sets the response status code.
      *
      * @param integer $code HTTP status code
-     * @param string  $text HTTP status text
+     * @param mixed   $text HTTP status text
+     *
+     * If the status text is null it will be automatically populated for the known
+     * status codes and left empty otherwise.
      *
      * @throws \InvalidArgumentException When the HTTP status code is not valid
      *
@@ -262,12 +265,24 @@ class Response
      */
     public function setStatusCode($code, $text = null)
     {
-        $this->statusCode = (int) $code;
+        $this->statusCode = $code = (int) $code;
         if ($this->isInvalid()) {
             throw new \InvalidArgumentException(sprintf('The HTTP status code "%s" is not valid.', $code));
         }
 
-        $this->statusText = false === $text ? '' : (null === $text ? self::$statusTexts[$this->statusCode] : $text);
+        if (null === $text) {
+            $this->statusText = isset(self::$statusTexts[$code]) ? self::$statusTexts[$code] : '';
+
+            return;
+        }
+
+        if (false === $text) {
+            $this->statusText = '';
+
+            return;
+        }
+
+        $this->statusText = $text;
     }
 
     /**
@@ -401,7 +416,7 @@ class Response
      */
     public function mustRevalidate()
     {
-        return $this->headers->hasCacheControlDirective('must-revalidate') || $this->headers->has('must-proxy-revalidate');
+        return $this->headers->hasCacheControlDirective('must-revalidate') || $this->headers->has('proxy-revalidate');
     }
 
     /**
@@ -415,7 +430,7 @@ class Response
      */
     public function getDate()
     {
-        return $this->headers->getDate('Date');
+        return $this->headers->getDate('Date', new \DateTime());
     }
 
     /**
@@ -672,7 +687,7 @@ class Response
     public function setCache(array $options)
     {
         if ($diff = array_diff(array_keys($options), array('etag', 'last_modified', 'max_age', 's_maxage', 'private', 'public'))) {
-            throw new \InvalidArgumentException(sprintf('Response does not support the following options: "%s".', implode('", "', array_keys($diff))));
+            throw new \InvalidArgumentException(sprintf('Response does not support the following options: "%s".', implode('", "', array_values($diff))));
         }
 
         if (isset($options['etag'])) {
@@ -732,7 +747,7 @@ class Response
     /**
      * Returns true if the response includes a Vary header.
      *
-     * @return true if the response includes a Vary header, false otherwise
+     * @return Boolean true if the response includes a Vary header, false otherwise
      *
      * @api
      */
@@ -802,6 +817,8 @@ class Response
 
     // http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
     /**
+     * @return Boolean
+     *
      * @api
      */
     public function isInvalid()
@@ -810,6 +827,8 @@ class Response
     }
 
     /**
+     * @return Boolean
+     *
      * @api
      */
     public function isInformational()
@@ -818,6 +837,8 @@ class Response
     }
 
     /**
+     * @return Boolean
+     *
      * @api
      */
     public function isSuccessful()
@@ -826,6 +847,8 @@ class Response
     }
 
     /**
+     * @return Boolean
+     *
      * @api
      */
     public function isRedirection()
@@ -834,6 +857,8 @@ class Response
     }
 
     /**
+     * @return Boolean
+     *
      * @api
      */
     public function isClientError()
@@ -842,6 +867,8 @@ class Response
     }
 
     /**
+     * @return Boolean
+     *
      * @api
      */
     public function isServerError()
@@ -850,6 +877,8 @@ class Response
     }
 
     /**
+     * @return Boolean
+     *
      * @api
      */
     public function isOk()
@@ -858,6 +887,8 @@ class Response
     }
 
     /**
+     * @return Boolean
+     *
      * @api
      */
     public function isForbidden()
@@ -866,6 +897,8 @@ class Response
     }
 
     /**
+     * @return Boolean
+     *
      * @api
      */
     public function isNotFound()
@@ -874,6 +907,10 @@ class Response
     }
 
     /**
+     * @param string $location
+     *
+     * @return Boolean
+     *
      * @api
      */
     public function isRedirect($location = null)
@@ -882,6 +919,8 @@ class Response
     }
 
     /**
+     * @return Boolean
+     *
      * @api
      */
     public function isEmpty()

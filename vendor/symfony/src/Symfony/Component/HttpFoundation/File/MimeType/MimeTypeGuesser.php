@@ -36,7 +36,7 @@ class MimeTypeGuesser implements MimeTypeGuesserInterface
      * The singleton instance
      * @var MimeTypeGuesser
      */
-    static private $instance = null;
+    private static $instance = null;
 
     /**
      * All registered MimeTypeGuesserInterface instances
@@ -49,7 +49,7 @@ class MimeTypeGuesser implements MimeTypeGuesserInterface
      *
      * @return MimeTypeGuesser
      */
-    static public function getInstance()
+    public static function getInstance()
     {
         if (null === self::$instance) {
             self::$instance = new self();
@@ -96,7 +96,7 @@ class MimeTypeGuesser implements MimeTypeGuesserInterface
      * returns a value that is not NULL, this method terminates and returns the
      * value.
      *
-     * @param  string $path   The path to the file
+     * @param string $path The path to the file
      *
      * @return string         The mime type or NULL, if none could be guessed
      *
