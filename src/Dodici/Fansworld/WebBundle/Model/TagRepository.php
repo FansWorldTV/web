@@ -264,12 +264,14 @@ class TagRepository extends CountBaseRepository
             $query = $this->_em->createQuery($dql)
         		->setParameter('textlike', '%'.$match.'%');
            
-        	if ($user)
+        	if ($user && $type == 'user')
         		$query = $query->setParameter('user', $user->getId());
         		
         	if ($limit !== null)
         	    $query = $query->setMaxResults($limit);
             
+        	
+        	    
         	$results[$type] = $query->getResult();
         }
     	
