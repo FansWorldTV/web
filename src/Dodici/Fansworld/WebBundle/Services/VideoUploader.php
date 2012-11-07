@@ -78,44 +78,40 @@ class VideoUploader
     	}
     }
     
-    public function process(Video $video)
+    public function process(Video $video, $thumburl, $duration)
     {
         if (!$video->getStream()) throw new \Exception('Video has no Stream ID');
         if ($video->getProcessed()) throw new \Exception('Video has already been processed');
         
-        $pod = $this->api->getPod($video->getStream());
-        
-        if ($pod) {
-            $thumburl = $pod->video_image_url;
-            
-            if ($thumburl && !$video->getImage()) {
-                try {
-                    $image = $this->appmedia->createImageFromUrl($thumburl);
-                    if ($image) {
-                        $video->setImage($image);
-                        $video->setProcessed(true);
-                        $video->setActive(true);
-                        if (isset($pod->duration) && $pod->duration) {
-                            $video->setDuration(intval($pod->duration));
-                        }
-                        $this->em->persist($video);
-                        
-                        if ($video->getAuthor()) {
-                            // notify the user his video finished processing
-                            $notification = new Notification();
-            	    		$notification->setType(Notification::TYPE_VIDEO_PROCESSED);
-            	    		$notification->setAuthor($video->getAuthor());
-            	    		$notification->setTarget($video->getAuthor());
-            	    		$notification->setVideo($video);
-            	    		$this->em->persist($notification);
-                        }
-        	    		
-                        $this->em->flush();
+        if ($thumburl && !$video->getImage()) {
+            try {
+                $image = $this->appmedia->createImageFromUrl($thumburl);
+                if ($image) {
+                    $video->setImage($image);
+                    $video->setProcessed(true);
+                    $video->setActive(true);
+                    if ($duration) {
+                        $video->setDuration(ceil($duration / 1000));
                     }
-                } catch (\Exception $e) {
-                    // might be 404, thumb not ready yet
-                    echo $e->getMessage();
+                    $this->em->persist($video);
+                    
+                    if ($video->getAuthor()) {
+                        // notify the user his video finished processing
+                        $notification = new Notification();
+        	    		$notification->setType(Notification::TYPE_VIDEO_PROCESSED);
+        	    		$notification->setAuthor($video->getAuthor());
+        	    		$notification->setTarget($video->getAuthor());
+        	    		$notification->setVideo($video);
+        	    		$this->em->persist($notification);
+                    }
+    	    		
+                    $this->em->flush();
+                    return true;
                 }
+            } catch (\Exception $e) {
+                // might be 404, thumb not ready yet
+                echo $e->getMessage();
+                return false;
             }
         }
     }

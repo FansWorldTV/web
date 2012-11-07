@@ -11,6 +11,25 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class NotificationManager
 {
+    // The entry_add notification is being sent to notify that a new entry has been successfully added and ready for use.
+    const ENTRY_ADD	= 'entry_add';
+    // The entry_block notification is sent to notify that an entry has been blocked by a moderator or admin user.
+    const ENTRY_BLOCK = 'entry_block';
+    // The entry_delete notification is being sent to notify that an entry has been deleted.
+    const ENTRY_DELETE = 'entry_delete';
+    // The entry_update notification is being sent to notify that an entry has been updated.
+    const ENTRY_UPDATE = 'entry_update';
+    // The entry_update_moderation notification is being sent to notify that the moderation status of an entry has been updated.
+    const ENTRY_UPDATE_MODERATION = 'entry_update_moderation';
+    // The entry_update_thumbnail notification is being sent to notify that thumbnail of an entry has been updated.
+    const ENTRY_UPDATE_THUMBNAIL = 'entry_update_thumbnail';
+    // The entry_update_permissions notification is being sent to notify that the privacy settings of an entry have changed.
+    const ENTRY_UPDATE_PERMISSIONS = 'entry_update_permissions';
+    // The user_add notification is being sent to notify that a specific user was added to the Kaltura DB.
+    const USER_ADD = 'user_add';
+    // The user_banned notification is being sent to notify that a specific user was banned.
+    const USER_BANNED = 'user_banned';
+    
     protected $kaltura;
     protected $logger;
     protected $em;
@@ -22,6 +41,10 @@ class NotificationManager
         $this->em = $em;
     }
 
+    /**
+     * Validate the signature, save notification if new, call processing callback
+     * @param Request $request
+     */
     public function process(Request $request) 
     {
         $notification_params = $request->request->all();
@@ -33,8 +56,9 @@ class NotificationManager
                 
                 $notification = $this->exists($id);
                 if (!$notification) {
-                    $this->save($id, $notification_data);
-                    // TODO: do something with data
+                    if ($this->callback($notification_data)) {
+                        $this->save($id, $notification_data);
+                    }
                 } else {
                     $this->log('This notification ('. $id .') was already processed ('.$notification->getId().')');
                 }
@@ -44,10 +68,23 @@ class NotificationManager
             throw new \Exception('Invalid Kaltura notification signature');
         }
     }
+    
+    /**
+     * Override in your bundle
+     * @param array $notification_data
+     */
+    public function callback($notification_data)
+    {
+        return true;
+    }
 
+    /**
+     * Persist the notification
+     * @param int $id
+     * @param array $data
+     */
     public function save($id, $data)
     {
-        // TODO: persist to db
         $notification = new Notification();
         $notification->setExternal($id);
         $notification->setData($data);
@@ -69,6 +106,10 @@ class NotificationManager
         return $exists;
     }
     
+    /**
+     * Output to logger
+     * @param string $message
+     */
     public function log($message)
     {
         $this->logger->info('[KALTURA-NOT] '.$message);
@@ -99,13 +140,17 @@ class NotificationManager
     	    }
     	    $str .= $k.$v;
         }
-        if(md5($admin_secret . $str) == $notification_params['sig']) {
+        if(md5($adminsecret . $str) == $notification_params['sig']) {
             return true;
         } else {
             return false;
         }
     }
     
+    /**
+     * Parse multinotifications, etc
+     * @param array $data
+     */
     private function parseParams($data)
     {
         $res = array();

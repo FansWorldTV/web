@@ -121,8 +121,8 @@ class UtilController extends BaseController
      */
     public function testKalturaAction()
     {
-        $kn = $this->get('kaltura.notification');
-        $kn->process($this->getRequest());
+        $kf = $this->get('fansworld.kaltura.notification');
+        $kf->process($this->getRequest());
         
         return new Response('OK');
     }
