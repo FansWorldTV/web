@@ -121,6 +121,7 @@ sonata_media:
                 mini_square: { width: 60, height: 60 , quality: 90}
                 micro_square: { width: 22, height: 22, quality: 80}
                 big_square: { width: 150, height: 150, quality: 90}
+                huge_square: { width: 250, height: 250, quality: 90 }
                 video: { width: 100, height: 75 , quality: 90}
                 medium: { width: 250 , quality: 90}
                 splash:   { width: 500 , height: 225, quality: 90}
@@ -431,6 +432,10 @@ services:
       arguments: [@app.facebook]
       tags:
           - { name: twig.extension }
+    twig.extension.debug:
+        class:        Twig_Extensions_Extension_Debug
+        tags:
+             - { name: twig.extension }
     app_user.registration.form.type:
         class: Application\Sonata\UserBundle\Form\Type\RegistrationFormType
         arguments: [%fos_user.model.user.class%]

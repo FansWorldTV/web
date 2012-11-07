@@ -42,14 +42,14 @@
                             </div>
                             <span class="name"><a href="{{ pathUrl }}">{{ avatar}}</a></span>
                             <span class="friendCount">{% if fanCount is defined %}{{ fanCount }}{% endif %}</span>
-
+{#
                             {% include "DodiciFansworldWebBundle:Default:blocks/fan_button.html.twig" with { entity:  avatar } %}
-                            
+  #}                          
                         </div>
                     </li>
             {% endfor %}
         </ul>
     {% else %}
-        <h3>No posee Fans</h3>
+        <h3>No {{ type }}</h3>
     {% endif %}
 </section>

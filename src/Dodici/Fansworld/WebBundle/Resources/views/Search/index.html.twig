@@ -1,0 +1,46 @@
+{% extends "DodiciFansworldWebBundle:Layout:one_column.html.twig" %}
+
+{% block main_content %}
+    <div class="row-fluid search-home">
+        <div class="span10">
+            <div class="btn-group" data-toggle="buttons-radio">
+                <button type="button" class="btn">Todo <span class="badge">{{ todoCount }}</span></button>
+                <button type="button" class="btn">Tv <span class="badge">{{ videoCount }}</span></button>
+                <button type="button" class="btn">Idolos <span class="badge">{{ idolCount }}</span></button>
+                <button type="button" class="btn">Fans <span class="badge">{{ fanCount }}</span></button>
+                <button type="button" class="btn">Equipos <span class="badge">{{ teamCount }}</span></button>
+                <button type="button" class="btn">Fotos <span class="badge">{{ photoCount }}</span></button>
+            </div>
+
+            {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'videos'} %}
+                {% block roller %}
+                    {% include "DodiciFansworldWebBundle:Search:blocks/video_element_list.html.twig"  with { videos: videos } %}
+                {% endblock %}
+            {% endembed %}
+
+            {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'idolos'} %}
+                {% block roller %}
+                    {% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { avatars: idols, type: 'idols' } %}
+                {% endblock %}
+            {% endembed %}
+
+            {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'fans'} %}
+                {% block roller %}
+                    {% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { avatars: fans, type: 'fans' } %}
+                {% endblock %}
+            {% endembed %}
+
+            {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'fotos'} %}
+                {% block roller %}
+                    {% include 'DodiciFansworldWebBundle:Photo:blocks/montage.html.twig' with {photos: photos} %}
+                {% endblock %}
+            {% endembed %}
+
+            {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'partidos'} %}
+                {% block roller %}
+                    {% include "DodiciFansworldWebBundle:Event:blocks/grid.html.twig" with {'event': events} %}
+                {% endblock %}
+            {% endembed %}
+        </div>
+    </div>
+{% endblock %}

@@ -6,12 +6,12 @@
     <ul class='events-grid'>
         {% if events|length > 0 %}
             {% for event in events %}
-                {% set hasteams = [] %}
-                {% set eventteams = [] %}
+                {% set hasteams = {} %}
+                {% set eventteams = {} %}
                 {% for hasteam in event.hasteams %}
                     {% set loopi = loop.index0 %}
-                    {% set hasteams = hasteams|merge({loopi: hasteam}) %}
-                    {% set eventteams = eventteams|merge({loopi: hasteam.team}) %}
+                    {% set hasteams = hasteams|merge({(loopi): hasteam}) %}
+                    {% set eventteams = eventteams|merge({(loopi): hasteam.team}) %}
                 {% endfor %}
                 
                 {% if date(event.fromtime) >= date() %}

@@ -26,6 +26,10 @@ class SearchController extends SiteController
      */
     public function indexAction()
     {
+        $user = $this->getUser();
+        $request = $this->getRequest();
+        $query = $request->get('query', false);
+        
         $videoRepo = $this->getRepository('Video');
         $idolRepo = $this->getRepository('Idol');
         $fanRepo = $this->getRepository('User');
@@ -33,21 +37,44 @@ class SearchController extends SiteController
         $eventRepo = $this->getRepository('Event');
         $teamRepo = $this->getRepository('Team');
 
-        $videoCount = $videoRepo->countBy(array('active' => true));
-        $idolCount = $idolRepo->countBy(array('active' => true));
-        $fanCount = $fanRepo->countBy();
-        $photoCount = $photoRepo->countBy(array('active' => true));
-        $eventCount = $eventRepo->countBy(array('active' => true));
-        $teamCount = $teamRepo->countBy(array('active' => true));
+        $videoSearch = $videoRepo->search($query, $user, 14);
+        $videoCount = $videoRepo->countSearch($query, $user);
+        
+        $idolSearch = $idolRepo->SearchFront($user, $query, null, 9);
+        $idolCount = $idolRepo->CountSearchFront($user, $query, null);
+        
+        $fanSearch = $fanRepo->SearchFront(null, $query, null, 9);
+        $fanCount = $fanRepo->CountSearchFront(null, $query);
+        
+        $photoSearch = $photoRepo->search($query, $user, 10);
+        $photoCount = $photoRepo->countSearch($query, $user);
+        
+        $eventSearch = $eventRepo->search($query, $user);
+        $eventCount = $eventRepo->countSearch($query, $user);
+        
+        $teamSearch = $teamRepo->search($query, $user);
+        $teamCount = $teamRepo->countSearch($query, $user);
 
         $todo = $videoCount + $idolCount + $fanCount + $photoCount + $eventCount;
 
         $idols = array(
             'ulClass' => 'idols',
             'containerClass' => 'idol-container',
-            'list' => $idolRepo->findBy(array('active' => true), array('createdAt' => 'desc'))
+            'list' => $idolSearch
         );
 
+        
+        
+        $fans = array(
+            'ulClass' => 'fans',
+            'containerClass' => 'fan-container',
+            'list' => array()
+        );
+        
+        foreach($fanSearch as $fan){
+            $fans['list'][] = $fan[0];
+        }
+        
         return array(
             'todoCount' => $todo,
             'videoCount' => $videoCount,
@@ -57,10 +84,11 @@ class SearchController extends SiteController
             'eventCount' => $eventCount,
             'teamCount' => $teamCount,
             'idols' => $idols,
-            'events' => $eventRepo->findBy(array('active' => true), array('createdAt' => 'desc')),
-            'photos' => $photoRepo->findBy(array('active' => true), array('createdAt' => 'desc')),
-            'fans' => $fanRepo->findBy(array(), array('createdAt' => 'desc')),
-            'videos' => $videoRepo->findBy(array(), array('createdAt' => 'desc'))
+            'events' => $eventSearch,
+            'photos' => $photoSearch,
+            'fans' => $fans,
+            'videos' => $videoSearch,
+            'teams' => $teamSearch
         );
     }
 

@@ -285,7 +285,7 @@ class UserRepository extends CountBaseRepository
      * @param boolean $isfriend (null|true|false)
      * @param string $filtername
      */
-    public function CountSearchFront(\Application\Sonata\UserBundle\Entity\User $user = null, $filtername = null, $isfriend = null)
+    public function CountSearchFront(\Application\Sonata\UserBundle\Entity\User $user = null, $filtername = null, $isfriend = null, $limit = null, $offset = null)
     {
         $rsm = new ResultSetMapping;
         $rsm->addScalarResult('countusers', 'count');
@@ -324,6 +324,11 @@ class UserRepository extends CountBaseRepository
         if ($filtername)
             $query = $query->setParameter('filtername', '%' . $filtername . '%');
 
+        if ($limit !== null)
+            $query = $query->setMaxResults($limit);
+        if ($offset !== null)
+            $query = $query->setFirstResult($offset);
+        
         $res = $query->getResult();
         return intval($res[0]['count']);
     }
@@ -507,9 +512,9 @@ class UserRepository extends CountBaseRepository
      * current logged in user, or null:
      * @param User|null $user
      */
-    public function countSearch($text = null, $user = null)
+    public function countSearch($text = null, $user = null, $limit = null, $offset = null)
     {
-        return $this->CountSearchFront($user, $text, null);
+        return $this->CountSearchFront($user, $text, null, $limit, $offset);
     }
 
 }

@@ -24,9 +24,8 @@ class IdolRepository extends CountBaseRepository
     public function SearchFront(\Application\Sonata\UserBundle\Entity\User $user = null, $filtername = null, $isidol = null, $limit = null, $offset = null)
     {
         $querystring = '
-    	SELECT i, it
+    	SELECT i
     	FROM \Dodici\Fansworld\WebBundle\Entity\Idol i
-    	JOIN i.team it
     	WHERE
     	i.active = true
     	';
@@ -43,8 +42,6 @@ class IdolRepository extends CountBaseRepository
     		(i.nicknames LIKE :filtername)
     		OR
     		(i.content LIKE :filtername)
-    		OR
-    		(it.title LIKE :filtername)
     	)
     	';
 
@@ -86,12 +83,11 @@ class IdolRepository extends CountBaseRepository
      * @param boolean $isfriend (null|true|false)
      * @param string $filtername
      */
-    public function CountSearchFront(\Application\Sonata\UserBundle\Entity\User $user = null, $filtername = null, $isidol = null)
+    public function CountSearchFront(\Application\Sonata\UserBundle\Entity\User $user = null, $filtername = null, $isidol = null, $limit = null, $offset = null)
     {
         $querystring = '
     	SELECT COUNT(i)
     	FROM \Dodici\Fansworld\WebBundle\Entity\Idol i
-    	JOIN i.team it
     	WHERE
     	i.active = true
     	';
@@ -108,8 +104,6 @@ class IdolRepository extends CountBaseRepository
     		(i.nicknames LIKE :filtername)
     		OR
     		(i.content LIKE :filtername)
-    		OR
-    		(it.title LIKE :filtername)
     	)
     	';
 
@@ -132,6 +126,11 @@ class IdolRepository extends CountBaseRepository
 
         if ($filtername)
             $query = $query->setParameter('filtername', '%' . $filtername . '%');
+        
+        if ($limit !== null)
+            $query = $query->setMaxResults($limit);
+        if ($offset !== null)
+            $query = $query->setFirstResult($offset);
 
         return $query->getSingleScalarResult();
     }
@@ -162,9 +161,9 @@ class IdolRepository extends CountBaseRepository
      * current logged in user, or null:
      * @param User|null $user
      */
-    public function countSearch($text = null, $user = null)
+    public function countSearch($text = null, $user = null, $limit = null, $offset = null)
     {
-        return $this->CountSearchFront($user, $text, null);
+        return $this->CountSearchFront($user, $text, null, $limit, $offset);
     }
 
     /**
