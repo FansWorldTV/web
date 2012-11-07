@@ -119,7 +119,7 @@ class UtilController extends BaseController
      * 
      * ???
      */
-    public function testSignatureAction()
+    public function testKalturaAction()
     {
         $kn = $this->get('kaltura.notification');
         $kn->process($this->getRequest());
