@@ -3,13 +3,13 @@
 namespace Kaltura\APIBundle\Services;
 
 use Kaltura\APIBundle\Services\Kaltura as Kaltura;
-use Kaltura\APIBundle\Entity\Notification as Notification;
+use Kaltura\APIBundle\Entity\Notification;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Kaltura server notifications parser
  */
-class Notification
+class NotificationManager
 {
     protected $kaltura;
     protected $logger;
