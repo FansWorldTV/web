@@ -2,6 +2,9 @@ services:
     kaltura:
       class: Kaltura\APIBundle\Services\Kaltura
       arguments: [%kaltura.partner_id%, %kaltura.subpartner_id%, %kaltura.user_secret%, %kaltura.admin_secret%, %kaltura.username%]
+    kaltura.notification:
+      class: Kaltura\APIBundle\Services\Notification
+      arguments: [@kaltura, @logger, @doctrine.orm.entity_manager]
     kalturatwig:
       class: Kaltura\APIBundle\Services\KalturaTwig
       arguments: [@kaltura, @visitator, @service_container, %kaltura.player_id%]

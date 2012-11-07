@@ -112,4 +112,18 @@ class UtilController extends BaseController
             return $this->plainException($e);
         }
     }
+    
+    /**
+     * test method (kaltura)
+     * @Route("/test/kaltura", name="api_v1_test_kaltura")
+     * 
+     * ???
+     */
+    public function testSignatureAction()
+    {
+        $kn = $this->get('kaltura.notification');
+        $kn->process($this->getRequest());
+        
+        return new Response('OK');
+    }
 }

@@ -70,4 +70,14 @@ class Kaltura
     {
         return $this->subpartnerid;
     }
+    
+    public function getAdminSecret()
+    {
+        return $this->adminsecret;
+    }
+    
+    public function getUserSecret()
+    {
+        return $this->usersecret;
+    }
 }
