@@ -172,7 +172,7 @@ class TagRepository extends CountBaseRepository
         	'.$joins[$type].'
         	GROUP BY '.$type.'
         	HAVING
-        	('.join(' AND ', $likes).')
+        	('.join(' OR ', $likes).')
         	'.(($type=='user') ? '
         		AND (COUNT(uffr) > 0 OR COUNT(uffn) > 0)
         	' : '').'
@@ -252,7 +252,7 @@ class TagRepository extends CountBaseRepository
         	'. (isset($joins[$type]) ? $joins[$type] : '') .'
         	GROUP BY '.$type.'
         	HAVING
-        	('.join(' AND ', $likes).')
+        	('.join(' OR ', $likes).')
         	'.(($type=='user') ? '
         		AND (COUNT(uffr) > 0 OR COUNT(uffn) > 0)
         	' : '').'
