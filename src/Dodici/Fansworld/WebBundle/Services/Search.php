@@ -60,16 +60,16 @@ class Search
 
     
 
-    public function search($text, $type, $limit = null, $offset = null)
+    public function search($text, $type, $user = null, $limit = null, $offset = null)
     {
         $repo = $this->getRepositoryByType($type);
-        return $repo->search($text, $this->user, $limit, $offset);
+        return $repo->search($text, $user, $limit, $offset);
     }
 
-    public function count($text, $type)
+    public function count($text, $type, $user = null)
     {
         $repo = $this->getRepositoryByType($type);
-        return $repo->countSearch($text, $this->user);
+        return $repo->countSearch($text, $user);
     }
 
     /**

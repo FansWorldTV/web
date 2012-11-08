@@ -21,6 +21,8 @@
 
                 {% if avatar.username is defined %}
                     {% set pathUrl = path('user_wall', {username: avatar.username})  %}
+                {% elseif avatars.ulClass == 'teams' %}
+                    {% set pathUrl = path('team_wall', {slug: avatar.slug})  %}
                 {% elseif avatar.slug is defined %}
                     {% set pathUrl = path('idol_wall', {slug: avatar.slug})  %}
                 {% else %}
@@ -42,9 +44,9 @@
                             </div>
                             <span class="name"><a href="{{ pathUrl }}">{{ avatar}}</a></span>
                             <span class="friendCount">{% if fanCount is defined %}{{ fanCount }}{% endif %}</span>
-{#
+
                             {% include "DodiciFansworldWebBundle:Default:blocks/fan_button.html.twig" with { entity:  avatar } %}
-  #}                          
+                            
                         </div>
                     </li>
             {% endfor %}

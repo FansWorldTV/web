@@ -12,7 +12,7 @@
 {% if fType == 'user' %}
     {% set btnType = 'friendship' %}
     {% set fship     = appstate.friendshipwith(entity) %}
-    {% if selfWall != true %}
+    {% if selfWall is not defined or selfWall != true %}
         {% set canFriend = appstate.canfriend(entity) %}
     {% endif %}
     

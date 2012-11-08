@@ -425,7 +425,7 @@ section.avatar-grid{
             margin-top: 15px;
         }
 
-        .fan-container:hover, .idol-container:hover {
+        .fan-container:hover, .idol-container:hover, .team-container:hover {
             .name a, .friendCount {
                 display: block;
             }
@@ -435,7 +435,9 @@ section.avatar-grid{
             margin-right: 6px;
             margin-bottom: 8px;
             .pull-left();
-            .fan-container, .idol-container{
+            line-height: 24px;
+
+            .fan-container, .idol-container, .team-container{
                 position: relative;
                 
                 .name{
@@ -451,7 +453,7 @@ section.avatar-grid{
                         max-width: 100%;
                         overflow: hidden;
                         text-overflow: ellipsis;
-                        text-shadow: 1px 1px 0 rgba(128,128,128,.5);
+                        text-shadow: 1px 2px 0 rgba(0, 0, 0, 0.4);
                     }
                 }
                 .addFriend{
