@@ -101,9 +101,8 @@ class NotificationManager
      */
     public function exists($id)
     {
-        $id = $request->get('notification_id');
         $notification = $this->em->getRepository('KalturaAPIBundle:Notification')->findOneByExternal($id);
-        return $exists;
+        return $notification;
     }
     
     /**
