@@ -4,6 +4,7 @@ namespace Dodici\Fansworld\WebBundle\Services;
 
 use Kaltura\Client\Enum\EntryStatus;
 use Kaltura\APIBundle\Services\NotificationManager;
+use Kaltura\APIBundle\Services\Kaltura;
 
 /**
  * Process Kaltura notifications in Fansworld
