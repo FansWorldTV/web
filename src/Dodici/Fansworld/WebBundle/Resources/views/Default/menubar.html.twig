@@ -50,10 +50,11 @@
                 </li>
             </ul>
            
-            <form class="navbar-search pull-left" name="search" method="post" data-search-box>
+            <form class="navbar-search pull-left" name="search" method="post" data-search-box action="{{ path('search_home', {}) }}"> 
                 <div class="input-append">
-                    <input type="text" class="search-query" id="appendedInput" placeholder="Buscar..." data-search-input>
-                    <span class="add-on" data-search-action><i class="icon-search"></i></span>
+                    <input name="query" type="text" class="search-query" id="appendedInput" placeholder="Buscar..." data-search-input>
+                    <input type="submit" class="add-on search-button" data-search-action value=""/>
+                    <i class="icon-search"></i>
                 </div>
             </form>
             
