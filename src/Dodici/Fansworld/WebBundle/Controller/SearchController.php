@@ -33,8 +33,8 @@ class SearchController extends SiteController
     {
         $user = $this->getUser();
         $request = $this->getRequest();
-        $query = $request->get('query', false);
-        
+        $query = $request->get('query', null);
+
         $videoRepo = $this->getRepository('Video');
         $idolRepo = $this->getRepository('Idol');
         $fanRepo = $this->getRepository('User');
@@ -44,19 +44,19 @@ class SearchController extends SiteController
 
         $videoSearch = $videoRepo->search($query, $user, self::LIMIT_SEARCH_VIDEO);
         $videoCount = $videoRepo->countSearch($query);
-        
+
         $idolSearch = $idolRepo->search($query, null, self::LIMIT_SEARCH_IDOL);
         $idolCount = $idolRepo->countSearch($query);
-        
+
         $fanSearch = $fanRepo->search($query, null, self::LIMIT_SEARCH_USER);
         $fanCount = $fanRepo->countSearch($query);
-        
+
         $photoSearch = $photoRepo->search($query, null, self::LIMIT_SEARCH_PHOTO);
         $photoCount = $photoRepo->countSearch($query);
-        
+
         $eventSearch = $eventRepo->search($query, null, self::LIMIT_SEARCH_EVENT);
         $eventCount = $eventRepo->countSearch($query);
-        
+
         $teamSearch = $teamRepo->search($query, null, self::LIMIT_SEARCH_TEAM);
         $teamCount = $teamRepo->countSearch($query);
 
@@ -67,23 +67,23 @@ class SearchController extends SiteController
             'containerClass' => 'idol-container',
             'list' => $idolSearch
         );
-        
+
         $fans = array(
             'ulClass' => 'fans',
             'containerClass' => 'fan-container',
             'list' => array()
         );
-        
+
         $teams = array(
             'ulClass' => 'teams',
             'containerClass' => 'team-container',
             'list' => $teamSearch
         );
-        
-        foreach($fanSearch as $fan){
+
+        foreach ($fanSearch as $fan) {
             $fans['list'][] = $fan[0];
         }
-        
+
         return array(
             'todoCount' => $todo,
             'videoCount' => $videoCount,
@@ -97,7 +97,8 @@ class SearchController extends SiteController
             'photos' => $photoSearch,
             'fans' => $fans,
             'videos' => $videoSearch,
-            'teams' => $teams
+            'teams' => $teams,
+            'query' => $query
         );
     }
 
@@ -111,10 +112,10 @@ class SearchController extends SiteController
         $query = $request->get('query', null);
         $page = $request->get('page', 1);
         $type = $request->get('type', false);
-        
-        if($type){
-            $limit = constant('self::'.strtoupper($type));
-        }else{
+
+        if ($type) {
+            $limit = constant('self::LIMIT_SEARCH_' . strtoupper($type));
+        } else {
             $limit = null;
         }
 
@@ -125,24 +126,25 @@ class SearchController extends SiteController
 
         $searcher = $this->get('search');
         $searcher instanceof Search;
-        $search = $searcher->search($query, $type, null, $limit, $offset);
-
-        $countAll = $searcher->count($query, $type);
+        
+        $searchType = constant('Dodici\Fansworld\WebBundle\Services\Search::'.strtoupper('TYPE_' . $type));
+        
+        $search = $searcher->search($query, $searchType, null, $limit, $offset);
+                
+        $countAll = $searcher->count($query, $searchType);
+        
         $response['addMore'] = $countAll > ($limit * $page) ? true : false;
 
         foreach ($search as $element) {
             $response['search'][] = array(
-                'title' => $element->getTitle(),
-                'content' => $element->getContent()
+                'id' => $element->getId(),
+                'title' => $element->getTitle()
             );
         }
 
         return $this->jsonResponse($response);
     }
-    
-    
-    
-    
+
 //     METODOS EN DESUSO
 //    /**
 //     * @Route("/search/fans", name = "search_search")
