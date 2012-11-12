@@ -455,3 +455,15 @@ services:
         class: Application\Sonata\UserBundle\Entity\UserManager
         public: false
         arguments: [@security.encoder_factory, @fos_user.util.username_canonicalizer, @fos_user.util.email_canonicalizer, @fos_user.entity_manager, %fos_user.model.user.class%]
+    serializer:
+        class: Dodici\Fansworld\WebBundle\Serializer\Serializer
+        arguments: [@service_container]
+    serializer.idol:
+        class: Dodici\Fansworld\WebBundle\Serializer\Idol
+    serializer.team:
+        class: Dodici\Fansworld\WebBundle\Serializer\Team
+    serializer.video:
+        class: Dodici\Fansworld\WebBundle\Serializer\Video
+        arguments: [@serializer]
+    serializer.user:
+        class: Dodici\Fansworld\WebBundle\Serializer\User
