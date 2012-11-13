@@ -126,4 +126,26 @@ class UtilController extends BaseController
         
         return new Response('OK');
     }
+    
+	/**
+     * test method (user)
+     * @Route("/test/user", name="api_v1_test_user")
+     * 
+     * ???
+     */
+    public function testUserAction()
+    {
+        try {
+            $request = $this->getRequest();
+            $userid = $request->get('user_id');
+            
+            $user = $this->getRepository('User')->find($userid);
+            if (!$user) throw new HttpException(400, 'Invalid user id');
+            
+            return $this->jsonResponse($this->userArray($user));
+            
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
 }

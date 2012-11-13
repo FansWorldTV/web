@@ -162,13 +162,18 @@ class BaseController extends SiteController
             $imageurl = $this->get('appmedia')->getImageUrl($user->getImage());
         }
         
+        $idolcount = $this->getRepository('Idolship')->countBy(array('author' => $user->getId()));
+        $teamcount = $this->getRepository('Teamship')->countBy(array('author' => $user->getId()));
+        
         return array(
             'id' => $user->getId(),
             'username' => $user->getUsername(),
             'email' => $user->getEmail(),
             'firstname' => $user->getFirstname(),
             'lastname' => $user->getLastname(),
-            'image' => $imageurl
+            'image' => $imageurl,
+            'idolcount' => $idolcount,
+            'teamcount' => $teamcount
         );
     }
     

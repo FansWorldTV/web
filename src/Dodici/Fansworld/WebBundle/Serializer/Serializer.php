@@ -4,6 +4,9 @@ namespace Dodici\Fansworld\WebBundle\Serializer;
 
 /**
  * Serializer base class
+ * 
+ * To add extra fields for a class, create a "serializer.xxx" service (e.g. serializer.video in Serializer\Video)
+ * with a public "values" method that returns the key/value pairs for merging
  */
 class Serializer
 {
@@ -14,11 +17,21 @@ class Serializer
         $this->container = $container;
     }
     
+    /**
+     * Return json-encoded serialization of entity
+     * @param mixed $entity
+     * @param string $imageformat
+     */
     public function json($entity, $imageformat = 'small')
     {
         return json_encode($this->values($entity, $imageformat));
     }
     
+    /**
+     * Return key/value array for an entity, or array of entities
+     * @param mixed $entity
+     * @param string $imageformat
+     */
     public function values($entity, $imageformat = 'small')
     {
         if (!$entity) return null;
