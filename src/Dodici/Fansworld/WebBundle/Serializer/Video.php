@@ -23,6 +23,7 @@ class Video
             'commentCount' => $entity->getCommentCount(),
             'videocategory' => $entity->getVideocategory() ? (int)$entity->getVideocategory()->getId() : null,
             'weight' => $entity->getWeight(),
+            'duration' => $entity->getDuration()
         );
     }
 }

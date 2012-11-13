@@ -121,7 +121,7 @@ sonata_media:
                 mini_square: { width: 60, height: 60 , quality: 90}
                 micro_square: { width: 22, height: 22, quality: 80}
                 big_square: { width: 150, height: 150, quality: 90}
-                huge_square: { width: 250, height: 250, quality: 90 }
+                huge_square: { width: 300, height: 300, quality: 90 }
                 video: { width: 100, height: 75 , quality: 90}
                 medium: { width: 250 , quality: 90}
                 splash:   { width: 500 , height: 225, quality: 90}
@@ -464,6 +464,9 @@ services:
         class: Dodici\Fansworld\WebBundle\Serializer\Team
     serializer.video:
         class: Dodici\Fansworld\WebBundle\Serializer\Video
+        arguments: [@serializer]
+    serializer.event:
+        class: Dodici\Fansworld\WebBundle\Serializer\Event
         arguments: [@serializer]
     serializer.user:
         class: Dodici\Fansworld\WebBundle\Serializer\User

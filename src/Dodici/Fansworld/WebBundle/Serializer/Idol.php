@@ -1,6 +1,7 @@
 <?php
 
 namespace Dodici\Fansworld\WebBundle\Serializer;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
  * Idol serializer

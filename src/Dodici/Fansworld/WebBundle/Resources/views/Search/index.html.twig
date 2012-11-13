@@ -10,6 +10,7 @@
                 <button type="button" class="btn" data-filter-type="user">Fans <span class="badge">{{ fanCount }}</span></button>
                 <button type="button" class="btn" data-filter-type="team">Equipos <span class="badge">{{ teamCount }}</span></button>
                 <button type="button" class="btn" data-filter-type="photo">Fotos <span class="badge">{{ photoCount }}</span></button>
+                <button type="button" class="btn" data-filter-type="event">Partidos <span class="badge">{{ eventCount }}</span></button>
             </div>
 
             {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'video', 'title': 'videos'} %}

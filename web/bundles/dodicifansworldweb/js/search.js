@@ -12,13 +12,18 @@ search.init = function(query){
     search.query = $("input[data-search-input]").val();
     search.endless();
     search.filter();
+    
+    var toLoad	= [
+    'search-video'
+    ];
+    templateHelper.preLoadTemplates(toLoad);
 };
 
 search.it = function(){
     var params = {
-      'query': search.query,
-      'page': search.page,
-      'type': search.active
+        'query': search.query,
+        'page': search.page,
+        'type': search.active
     };
     ajax.genericAction('search_ajaxsearch', params, function(r){
         if(r){
@@ -26,14 +31,31 @@ search.it = function(){
             search.addMore = r.addMore;
             for(var i in r.search) {
                 var entity = r.search[i];
+                var destiny = null;
+                
                 switch(search.active){
                     case 'video':
-                        var template = section.find('.video-element').first().clone();
-                        template.find('.title').html(entity.title);
-                        template.attr('data-added-element');
+                        destiny = 'ul.video-list';
+                        entity.duration = secToMinutes(entity.duration);
+                        break;
+                    case 'idol':
+                        destiny = "ul.avatar-list.idols";
+                        break;
+                    case 'user':
+                        destiny = "ul.avatar-list.fans";
+                        break;
+                    case 'team':
+                        destiny = "ul.avatar-list.teams";
+                        break;
+                    case 'photo':
+                        destiny = ".am-container.photos";
+                        break;
+                    case 'event':
+                        destiny = "ul.events-grid";
+                        break;
+                        
                 }
-                
-                section.find('ul.video-list').append(template);
+                templateHelper.renderTemplate('search-'+search.active, entity, destiny);
             }
             search.page++;
         }
@@ -52,6 +74,9 @@ search.filter = function(){
         params['query'] = search.query;
         
         search.active = params['type'];
+        
+        $('[data-added-element]').remove();
+        //search.page = 2;
         
         if(params['type'] == 'all'){
             $("section.search").fadeIn().addClass('active');
@@ -81,3 +106,11 @@ search.endless = function(){
         }
     });
 };
+
+function secToMinutes(sec){
+    var min = Math.floor(sec/60);
+    sec = sec % 60;
+    if(sec<10) sec = "0" + sec;
+    if(min<10) min = "0" + min;
+    return min + ":" + sec;
+}

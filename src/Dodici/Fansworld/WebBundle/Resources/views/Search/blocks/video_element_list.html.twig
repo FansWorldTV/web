@@ -3,7 +3,7 @@
         <li class="video-element">
             {% thumbnail video.image, 'huge_square' %}
             <span class="title">{{ video.title|truncate(24) }}</span>
-            <span class="duration">{{ video.duration }}</span>
+            <span class="duration">{{ video.duration|date("i:s") }}</span>
             <span class="overlay"></span>
             <span class="ico-play"></span>
         </li>

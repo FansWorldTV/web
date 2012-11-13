@@ -79,7 +79,7 @@ class TemplateController extends SiteController
             'typename' => $type
         );
     }
-    
+
     /**
      * Get Event Template
      * @Route("/ajax/get/event", name="template_event")
@@ -89,9 +89,9 @@ class TemplateController extends SiteController
     {
         $request = $this->getRequest();
         $type = $request->get('type');
-    
+
         return array(
-                'typename' => $type
+            'typename' => $type
         );
     }
 
@@ -109,13 +109,28 @@ class TemplateController extends SiteController
             'typename' => $type
         );
     }
-    
+
     /**
      * Get Idol Template
      * @Route("/ajax/get/idol", name="template_idol")
      * @Template
      */
     public function idolAction()
+    {
+        $request = $this->getRequest();
+        $type = $request->get('type');
+
+        return array(
+            'typename' => $type
+        );
+    }
+
+    /**
+     * Get Search template
+     * @Route("/ajax/get/search", name="template_search")
+     * @Template
+     */
+    public function searchAction()
     {
         $request = $this->getRequest();
         $type = $request->get('type');

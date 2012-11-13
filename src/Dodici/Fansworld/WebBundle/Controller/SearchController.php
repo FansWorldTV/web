@@ -126,21 +126,35 @@ class SearchController extends SiteController
 
         $searcher = $this->get('search');
         $searcher instanceof Search;
-        
-        $searchType = constant('Dodici\Fansworld\WebBundle\Services\Search::'.strtoupper('TYPE_' . $type));
-        
-        $search = $searcher->search($query, $searchType, null, $limit, $offset);
-                
-        $countAll = $searcher->count($query, $searchType);
-        
-        $response['addMore'] = $countAll > ($limit * $page) ? true : false;
 
-        foreach ($search as $element) {
-            $response['search'][] = array(
-                'id' => $element->getId(),
-                'title' => $element->getTitle()
-            );
+        $searchType = constant('Dodici\Fansworld\WebBundle\Services\Search::' . strtoupper('TYPE_' . $type));
+
+        $search = $searcher->search($query, $searchType, null, $limit, $offset);
+
+        $countAll = $searcher->count($query, $searchType);
+
+        $serializer = $this->get('serializer');
+
+        switch ($type) {
+            case 'video':
+                $imageSize = "huge_square";
+                break;
+            default :
+                $imageSize = "medium";
+                break;
         }
+
+        $response['search'] = $serializer->values($search, $imageSize);
+
+        if ($response['search']) {
+            foreach ($response['search'] as $el) {
+                if (array_key_exists('duration', $el)) {
+                    $el['duration'] = date('i:s', $el['duration']);
+                }
+            }
+        }
+
+        $response['addMore'] = $countAll > ($limit * $page) ? true : false;
 
         return $this->jsonResponse($response);
     }
