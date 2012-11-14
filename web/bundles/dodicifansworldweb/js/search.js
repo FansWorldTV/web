@@ -36,7 +36,7 @@ search.it = function(){
                 switch(search.active){
                     case 'video':
                         destiny = 'ul.video-list';
-                        entity.duration = secToMinutes(entity.duration);
+                        //entity.duration = secToMinutes(entity.duration);
                         break;
                     case 'idol':
                         destiny = "ul.avatar-list.idols";
