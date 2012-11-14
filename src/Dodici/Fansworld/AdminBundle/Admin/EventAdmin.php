@@ -38,6 +38,7 @@ class EventAdmin extends Admin
     	$formMapper
             ->add('title', NULL, array (), array ())
             ->add('content', NULL, array (), array ())
+            ->add('stadium', NULL, array (), array ())
             ->add('createdAt', 'date', array ('attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy HH:mm'), array ())
             ->add('fromtime', 'date', array ('attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',

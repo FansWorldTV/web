@@ -3,5 +3,6 @@
 */15 * * * * wget -O /dev/null http://fansworld.svn.dodici.com.ar/batch/eventfeeding
 * * * * * wget -O /dev/null http://fansworld.svn.dodici.com.ar/batch/eventminutefeeding
 * * * * * wget -O /dev/null http://fansworld.svn.dodici.com.ar/batch/eventtweets
+1 */2 * * * wget -O /dev/null http://fansworld.svn.dodici.com.ar/batch/eventfinishing
 */3 * * * * wget -O /dev/null http://fansworld.svn.dodici.com.ar/batch/videoaudienceclean
 */2 * * * * php /usr/share/fansworld/app/console swiftmailer:spool:send
