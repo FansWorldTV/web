@@ -7,11 +7,19 @@ namespace Dodici\Fansworld\WebBundle\Serializer;
  */
 class Team
 {
+    protected $appmedia;
+    
+    function __construct($appmedia)
+    {
+        $this->appmedia = $appmedia;
+    }
+    
     public function values($entity)
     {
         return array(
             'id' => $entity->getId(),
-            'fanCount' => $entity->getFanCount()
+            'fanCount' => $entity->getFanCount(),
+            'image' => $this->appmedia->getImageUrl($entity->getImage(), 'small')
         );
     }
 }

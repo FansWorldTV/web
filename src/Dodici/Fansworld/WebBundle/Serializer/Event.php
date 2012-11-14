@@ -17,7 +17,8 @@ class Event
     public function values($entity)
     {
         $collection = array(
-            
+            'stadium' => $entity->getStadium(),
+            'finished' => $entity->getFinished()
         );
         
         foreach($entity->getHasTeams() as $ht){

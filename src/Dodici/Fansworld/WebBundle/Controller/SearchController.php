@@ -147,13 +147,30 @@ class SearchController extends SiteController
         $response['search'] = $serializer->values($search, $imageSize);
 
         if ($response['search']) {
-            foreach ($response['search'] as $el) {
+            foreach ($response['search'] as $key=>$el) {
                 if (array_key_exists('duration', $el)) {
-                    $el['duration'] = date('i:s', $el['duration']);
+                    $response['search'][$key]['duration'] = date('i:s', $el['duration']);
+                }
+                if($type == 'event'){
+                    
+                    if($this->getUser() instanceof User){
+                        $response['search'][$key]['checked'] = $this->getRepository('Eventship')->findOneBy(array('author' => $this->getUser()->getId(), 'event' => $el['id'] )) ? true : false;
+                    }else{
+                        $response['search'][$key]['checked'] = null;
+                    }
+                    $event = $this->getRepository('Event')->find($el['id']);
+                    $now = new \DateTime();
+                    $started = ($event->getFromtime() <= $now);
+                    
+                    $response['search'][$key]['text'] = $this->get('appstate')->getEventText($el['id']);
+                    $response['search'][$key]['date'] = $event->getFromtime()->format('d-m-Y');
+                    $response['search'][$key]['showdate'] = $event->getFromtime()->format('d/m/Y H:i');
+                    $response['search'][$key]['url'] = $this->generateUrl('event_show', array('id' => $event->getId(), 'slug' => $event->getSlug()));
+                    $response['search'][$key]['started'] = $started;
                 }
             }
         }
-
+        
         $response['addMore'] = $countAll > ($limit * $page) ? true : false;
 
         return $this->jsonResponse($response);

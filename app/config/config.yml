@@ -462,6 +462,7 @@ services:
         class: Dodici\Fansworld\WebBundle\Serializer\Idol
     serializer.team:
         class: Dodici\Fansworld\WebBundle\Serializer\Team
+        arguments: [@appmedia]
     serializer.video:
         class: Dodici\Fansworld\WebBundle\Serializer\Video
         arguments: [@serializer]

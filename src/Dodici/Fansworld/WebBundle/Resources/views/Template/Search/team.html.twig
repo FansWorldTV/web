@@ -1,0 +1,23 @@
+{% raw %}
+    <li data-added-element>
+        <div class='team-container'>
+            <div class="avatar">
+                {{if image}}
+                    <a href="#"><img title="{{>title}}" width="150" src="{{>image}}"></a>
+                {{else}}
+                    <a href="#">
+{% endraw %}
+                            <img src="{{ asset('bundles/dodicifansworldweb/images/profile_no_image.png' )}}" alt="avatar" />
+{% raw %}
+                    </a>
+                {{/if}}
+            </div>
+            <span class="name"><a href="#">{{>title}}</a></span>
+            <span class="friendCount">{{>fanCount}}</span>
+
+            <div class="addFriend" data-add-fan="" data-login-required="">
+                <button class="btn  btn_teamship add btn-success" data-team-id="{{>id}}"> Ser fan</button>
+            </div>
+        </div>
+    </li>
+{% endraw %}

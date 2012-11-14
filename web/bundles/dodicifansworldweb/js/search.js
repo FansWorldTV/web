@@ -76,7 +76,7 @@ search.filter = function(){
         search.active = params['type'];
         
         $('[data-added-element]').remove();
-        //search.page = 2;
+        search.page = 2;
         
         if(params['type'] == 'all'){
             $("section.search").fadeIn().addClass('active');
