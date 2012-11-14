@@ -1,8 +1,12 @@
 <ul class="video-list">
     {% for video in videos %}
         <li class="video-element">
-            {% thumbnail video.image, 'huge_square' %}
-            <span class="title">{{ video.title|truncate(24) }}</span>
+            <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                {% thumbnail video.image, 'huge_square' %}
+            </a>
+            <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                <span class="title">{{ video.title|truncate(24) }}</span>
+            </a>
             <span class="duration">{{ video.duration|date("i:s") }}</span>
             <span class="overlay"></span>
             <span class="ico-play"></span>

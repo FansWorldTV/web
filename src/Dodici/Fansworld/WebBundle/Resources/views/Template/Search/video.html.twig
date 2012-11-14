@@ -1,7 +1,11 @@
 {% raw %}
     <li class="video-element" data-added-element>
-        <img title="{{>title}}" width="250" src="{{>image}}">            
-        <span class="title">{{>title}}</span>
+        <a href="{{>url}}">
+            <img title="{{>title}}" width="250" src="{{>image}}">            
+        </a>
+        <a href="{{>url}}">
+            <span class="title">{{>title}}</span>
+        </a>
         <span class="duration">{{>duration}}</span>
         <span class="overlay"></span>
         <span class="ico-play"></span>

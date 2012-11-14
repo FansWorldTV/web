@@ -147,30 +147,55 @@ class SearchController extends SiteController
         $response['search'] = $serializer->values($search, $imageSize);
 
         if ($response['search']) {
-            foreach ($response['search'] as $key=>$el) {
+            foreach ($response['search'] as $key => $el) {
                 if (array_key_exists('duration', $el)) {
                     $response['search'][$key]['duration'] = date('i:s', $el['duration']);
                 }
-                if($type == 'event'){
+
+                $entity = $this->getRepository(ucfirst($type))->find($el['id']);
+                
+                switch ($type) {
+                    case 'event':
+                        if ($this->getUser() instanceof User) {
+                            $response['search'][$key]['checked'] = $this->getRepository('Eventship')->findOneBy(array('author' => $this->getUser()->getId(), 'event' => $el['id'])) ? true : false;
+                        } else {
+                            $response['search'][$key]['checked'] = null;
+                        }
+                        $now = new \DateTime();
+                        $started = ($entity->getFromtime() <= $now);
+
+                        $response['search'][$key]['text'] = $this->get('appstate')->getEventText($el['id']);
+                        $response['search'][$key]['date'] = $entity->getFromtime()->format('d-m-Y');
+                        $response['search'][$key]['showdate'] = $entity->getFromtime()->format('d/m/Y H:i');
+                        $response['search'][$key]['url'] = $this->generateUrl('event_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()));
+                        $response['search'][$key]['started'] = $started;
+                        
+                        break;
+
+                    case 'video':
+                        $response['search'][$key]['url'] = $this->generateUrl('video_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()));
+                        break;
                     
-                    if($this->getUser() instanceof User){
-                        $response['search'][$key]['checked'] = $this->getRepository('Eventship')->findOneBy(array('author' => $this->getUser()->getId(), 'event' => $el['id'] )) ? true : false;
-                    }else{
-                        $response['search'][$key]['checked'] = null;
-                    }
-                    $event = $this->getRepository('Event')->find($el['id']);
-                    $now = new \DateTime();
-                    $started = ($event->getFromtime() <= $now);
+                    case 'idol':
+                        $response['search'][$key]['url'] = $this->generateUrl('idol_wall', array('slug' => $entity->getSlug()));
+                        break;
                     
-                    $response['search'][$key]['text'] = $this->get('appstate')->getEventText($el['id']);
-                    $response['search'][$key]['date'] = $event->getFromtime()->format('d-m-Y');
-                    $response['search'][$key]['showdate'] = $event->getFromtime()->format('d/m/Y H:i');
-                    $response['search'][$key]['url'] = $this->generateUrl('event_show', array('id' => $event->getId(), 'slug' => $event->getSlug()));
-                    $response['search'][$key]['started'] = $started;
+                    case 'user':
+                        $response['search'][$key]['url'] = $this->generateUrl('user_wall', array('slug' => $entity->getUsername()));
+                        break;
+                    
+                    case 'photo':
+                        $response['search'][$key]['url'] = $this->generateUrl('photo_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()));
+                        break;
+                    
+                    case 'team':
+                        $response['search'][$key]['url'] = $this->generateUrl('team_wall', array('slug' => $entity->getSlug()));
+                        break;
+                    
                 }
             }
         }
-        
+
         $response['addMore'] = $countAll > ($limit * $page) ? true : false;
 
         return $this->jsonResponse($response);
