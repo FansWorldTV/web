@@ -13,6 +13,13 @@ search.init = function(query){
     search.endless();
     search.filter();
     
+    console.log('hola');
+    site.startMosaic($(".am-container.photos"), {
+        margin: 0, 
+        liquid: true, 
+        minsize: false
+    });
+    
     var toLoad	= [
     'search-video'
     ];
@@ -27,8 +34,10 @@ search.it = function(){
     };
     ajax.genericAction('search_ajaxsearch', params, function(r){
         if(r){
+            var callback = function(){};
             var section = $("section.search."+search.active);
             search.addMore = r.addMore;
+            
             for(var i in r.search) {
                 var entity = r.search[i];
                 var destiny = null;
@@ -49,13 +58,19 @@ search.it = function(){
                         break;
                     case 'photo':
                         destiny = ".am-container.photos";
+                        
+                        callback = function(){
+                            $("[data-added-element]").imagesLoaded(function () {
+                                $('.am-container.photos').montage('add', $("[data-added-element]"));
+                            }); 
+                        }
                         break;
                     case 'event':
                         destiny = "ul.events-grid";
                         break;
                         
                 }
-                templateHelper.renderTemplate('search-'+search.active, entity, destiny);
+                templateHelper.renderTemplate('search-'+search.active, entity, destiny, false, callback);
             }
             search.page++;
         }
