@@ -208,8 +208,3 @@ function bindWallUpdate(wallel){
         }
     });
 }
-
-$(function(){
-    var toLoad	= ['comment-new_video','comment-new_photo','comment-likes','comment-new_friend','comment-subcomment','comment-comment'];
-    templateHelper.preLoadTemplates(toLoad);
-});

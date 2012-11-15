@@ -251,10 +251,6 @@ var events = {
         
         events.listen(events.eventId);
         
-        var toLoad	=	['event-wall_comment','event-wall_incident','event-wall_tweet'];
-        
-        templateHelper.preLoadTemplates(toLoad);
-        
         events.loadWallElements(events.eventId);
         
         $("form[data-event-wall]").submit(function(e){

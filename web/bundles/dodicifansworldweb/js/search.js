@@ -18,16 +18,6 @@ search.init = function(query){
         liquid: true, 
         minsize: false
     });
-    
-    var toLoad	= [
-    'search-event',
-    'search-idol',
-    'search-photo',
-    'search-team',
-    'search-user',
-    'search-video'
-    ];
-    templateHelper.preLoadTemplates(toLoad);
 };
 
 search.it = function(){
