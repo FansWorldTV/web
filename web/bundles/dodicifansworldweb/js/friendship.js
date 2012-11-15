@@ -71,3 +71,8 @@ var friendship = {
         });
     }
 };
+
+
+$(function(){
+    friendship.init();
+});

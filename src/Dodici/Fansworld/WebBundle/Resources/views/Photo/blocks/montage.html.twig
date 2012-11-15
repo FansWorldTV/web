@@ -9,7 +9,7 @@
 <div class="row-fluid">
     <div class="am-container photos">
         {% for photo in photos %}
-            <a href="{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}">
+            <a href="{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}" rel="tooltip" title="{{ photo.title }}">
                 {% thumbnail photo.image, thumbnailSize with {title: photo.title} %}
             </a>
         {% endfor %}
