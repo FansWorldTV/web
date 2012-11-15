@@ -153,4 +153,42 @@ class VideoController extends BaseController
             return $this->plainException($e);
         }
     }
+    
+    /**
+     * Video - categories
+     * 
+     * @Route("/video/categories", name="api_video_categories")
+     * @Method({"GET"})
+     *
+     * Get params: none
+     * 
+     * @return 
+     * array (
+     * 		array (
+     * 			id: int,
+     * 			title: string
+     * 		),
+     * 		...
+     * 		)
+     * 
+     */
+    public function categoriesAction()
+    {
+    try {
+            $categories = $this->getRepository('VideoCategory')->findAll();
+            
+            $return = array();
+            
+            foreach ($categories as $category) {
+                $return[] = array(
+                    'id' => $category->getId(),
+                    'title' => $category->getTitle()
+                );
+            }
+            
+            return $this->jsonResponse($return);
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
 }
