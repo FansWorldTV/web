@@ -13,7 +13,6 @@ search.init = function(query){
     search.endless();
     search.filter();
     
-    console.log('hola');
     site.startMosaic($(".am-container.photos"), {
         margin: 0, 
         liquid: true, 
@@ -21,6 +20,11 @@ search.init = function(query){
     });
     
     var toLoad	= [
+    'search-event',
+    'search-idol',
+    'search-photo',
+    'search-team',
+    'search-user',
     'search-video'
     ];
     templateHelper.preLoadTemplates(toLoad);
