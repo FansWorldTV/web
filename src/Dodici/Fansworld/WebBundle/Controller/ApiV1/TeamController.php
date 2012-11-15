@@ -49,25 +49,8 @@ class TeamController extends BaseController
     public function listAction()
     {
         try {
-            $allowedsorts = array('fanCount', 'title');
-            $allowedorders = array('ASC', 'DESC');
-            
             $request = $this->getRequest();
             $countryid = $request->get('country');
-            $limit = $request->get('limit', self::LIMIT_DEFAULT);
-            $offset = $request->get('offset');
-            $page = $request->get('page');
-            $sort = $request->get('sort', 'fanCount');
-            $sortorder = $request->get('sort_order', 'DESC');
-            $sortorder = strtoupper($sortorder);
-                        
-            if ($offset && $page) throw new HttpException(400, 'Cannot specify both offset and page at the same time');
-            if (!in_array($sort, $allowedsorts)) throw new HttpException(400, 'Invalid sort');
-            if (!in_array($sortorder, $allowedorders)) throw new HttpException(400, 'Invalid sort_order');
-            if ($limit && !is_numeric($limit)) throw new HttpException(400, 'Invalid limit');
-            if ($offset && !is_numeric($offset)) throw new HttpException(400, 'Invalid offset');
-            
-            if ($page) $offset = $page * $limit;
             
             $filters = array('active' => true);
             
@@ -77,13 +60,16 @@ class TeamController extends BaseController
                 $filters['country'] = $country->getId();
             }
             
+            $pagination = $this->pagination(array('fanCount', 'title'), 'fanCount');
+            $sort = $pagination['sort'];
+            
             if ($sort == 'title') $sort = 'shortname';
             
             $teams = $this->getRepository('Team')->findBy(
                 $filters, 
-                array($sort => $sortorder),
-                $limit,
-                $offset);
+                array($sort => $pagination['sort_order']),
+                $pagination['limit'],
+                $pagination['offset']);
                 
             $return = array();
             

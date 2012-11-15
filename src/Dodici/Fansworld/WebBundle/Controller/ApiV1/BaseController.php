@@ -215,4 +215,53 @@ class BaseController extends SiteController
         
         return $this->jsonResponse($return, $code);
     }
+    
+    protected function pagination($allowedsorts = array(), $defaultsort = null, $allowedorders = array('ASC', 'DESC'))
+    {
+        $request = $this->getRequest();
+        $limit = $request->get('limit', self::LIMIT_DEFAULT);
+        $offset = $request->get('offset');
+        $page = $request->get('page');
+        $sort = $request->get('sort', $defaultsort);
+        $sortorder = $request->get('sort_order', 'DESC');
+        $sortorder = ($sortorder ? strtoupper($sortorder) : null);
+        
+        if ($offset && $page) throw new HttpException(400, 'Cannot specify both offset and page at the same time');
+        if ($limit && !is_numeric($limit)) throw new HttpException(400, 'Invalid limit');
+        if ($offset && !is_numeric($offset)) throw new HttpException(400, 'Invalid offset');
+        
+        if ($sort) {
+            if (!in_array($sort, $allowedsorts)) throw new HttpException(400, 'Invalid sort');
+            if (!in_array($sortorder, $allowedorders)) throw new HttpException(400, 'Invalid sort_order');
+        }
+        
+        if ($page) $offset = $page * $limit;
+        
+        $return = array(
+            'limit' => $limit,
+            'offset' => $offset
+        );
+        
+        if ($sort) {
+            $return['sort'] = $sort;
+            $return['sort_order'] = $sortorder;
+        }
+        
+        return $return;
+    }
+    
+    protected function checkUserToken($userid, $token)
+    {
+        $user = $this->getRepository('User')->findOneBy(array('id' => $userid, 'enabled' => true));
+        if (!$user) throw new HttpException(404, 'User not found');
+        if (!$token) throw new HttpException(400, 'Requires user_token');
+        if (!$this->hasValidSignature()) throw new HttpException(401, 'Invalid signature');
+        
+        $apikey = $this->getApiKey();
+        $realtoken = $this->generateUserApiToken($user, $apikey);
+        
+        if ($realtoken != $token) throw new HttpException(401, 'Invalid user token');
+        
+        return $user;
+    }
 }

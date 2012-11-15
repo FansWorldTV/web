@@ -50,25 +50,10 @@ class IdolController extends BaseController
     public function listAction()
     {
         try {
-            $allowedsorts = array('fanCount', 'name');
-            $allowedorders = array('ASC', 'DESC');
-            
             $request = $this->getRequest();
             $countryid = $request->get('country');
-            $limit = $request->get('limit', self::LIMIT_DEFAULT);
-            $offset = $request->get('offset');
-            $page = $request->get('page');
-            $sort = $request->get('sort', 'fanCount');
-            $sortorder = $request->get('sort_order', 'DESC');
-            $sortorder = strtoupper($sortorder);
             
-            if ($offset && $page) throw new HttpException(400, 'Cannot specify both offset and page at the same time');
-            if (!in_array($sort, $allowedsorts)) throw new HttpException(400, 'Invalid sort');
-            if (!in_array($sortorder, $allowedorders)) throw new HttpException(400, 'Invalid sort_order');
-            if ($limit && !is_numeric($limit)) throw new HttpException(400, 'Invalid limit');
-            if ($offset && !is_numeric($offset)) throw new HttpException(400, 'Invalid offset');
-            
-            if ($page) $offset = $page * $limit;
+            $pagination = $this->pagination(array('fanCount', 'name'), 'fanCount');
                         
             $filters = array('active' => true);
             
@@ -78,14 +63,17 @@ class IdolController extends BaseController
                 $filters['country'] = $country->getId();
             }
             
-            $sortarray = array($sort => $sortorder);
-            if ($sort == 'name') $sortarray = array('lastname' => $sortorder, 'firstname' => $sortorder);
+            $sortarray = array($pagination['sort'] => $pagination['sort_order']);
+            if ($pagination['sort'] == 'name') $sortarray = array(
+            	'lastname' => $pagination['sort_order'],
+            	'firstname' => $pagination['sort_order']
+            );
             
             $idols = $this->getRepository('Idol')->findBy(
                 $filters, 
                 $sortarray,
-                $limit,
-                $offset);
+                $pagination['limit'],
+                $pagination['offset']);
                 
             $return = array();
             

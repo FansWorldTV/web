@@ -40,7 +40,7 @@ class SecurityController extends BaseController
      * @return
      *
      * on success:
-     * @see ApiController::loginAction()
+     * @see SecurityController::loginAction()
      */
     public function registerAction()
     {
@@ -198,7 +198,7 @@ class SecurityController extends BaseController
      * - [signature params]
      * 
      * @return
-     * @see ApiController::loginAction()
+     * @see SecurityController::loginAction()
      */
     public function facebookLoginAction()
     {
@@ -303,7 +303,7 @@ class SecurityController extends BaseController
      * - [signature params]
      * 
      * @return
-     * @see ApiController::loginAction()
+     * @see SecurityController::loginAction()
      */
     public function changePasswordAction()
     {

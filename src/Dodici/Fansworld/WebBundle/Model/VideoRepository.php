@@ -46,19 +46,24 @@ class VideoRepository extends CountBaseRepository
         $sortcriteria = 'default',
         $taggedentity = null,
         $excludes = null,
-        $related = null
+        $related = null,
+        $recommended = null,
+        $sortorder = 'DESC'
     )
     {
+        if ($recommended && !$user) throw new \Exception('You must provide a user to get recommended videos');
+        if ($recommended && $related) throw new \Exception('Related and recommended are mutually exclusive');
+        
         if(!$sortcriteria)
         {
             $sortcriteria = 'default';
         }
         
         $sortcriterias = array(
-            'default' => 'v.weight DESC',
-            'views' => 'v.viewCount DESC',
-            'likes' => 'v.likeCount DESC',
-            'date' => 'v.createdAt DESC'
+            'default' => 'v.weight '.$sortorder,
+            'views' => 'v.viewCount '.$sortorder,
+            'likes' => 'v.likeCount '.$sortorder,
+            'date' => 'v.createdAt '.$sortorder
         );
         
         if ($taggedentity) {
@@ -77,7 +82,11 @@ class VideoRepository extends CountBaseRepository
         }
 
         $query = $this->_em->createQuery('
-    	SELECT v, va '.($related ? ', (COUNT(vhtag) + COUNT(vhteam) + COUNT(vhidol)) common' : '').'
+    	SELECT v, va '.
+        
+        ($related ? ', (COUNT(vhtag) + COUNT(vhteam) + COUNT(vhidol)) common' : '') .
+        ($recommended ? ', (COUNT(vhrecteam) + COUNT(vhrecidol)) commonrec' : '')
+        .'
     	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
     	LEFT JOIN v.author va
     	'.
@@ -92,6 +101,16 @@ class VideoRepository extends CountBaseRepository
 		LEFT JOIN v.hasidols vhidol
 			WITH (vhidol.idol IN (SELECT bshidol.id FROM \Dodici\Fansworld\WebBundle\Entity\HasIdol hsbidol JOIN hsbidol.idol bshidol WHERE hsbidol.video = :related))
         ' : '')
+        
+        .
+        
+        ($recommended ? '
+        LEFT JOIN v.hasteams vhrecteam
+            WITH (vhrecteam.team IN (SELECT recishteam.id FROM \Dodici\Fansworld\WebBundle\Entity\Teamship rectship JOIN rectship.team recishteam WHERE rectship.author = :user))
+        LEFT JOIN v.hasidols vhrecidol
+            WITH (vhrecidol.idol IN (SELECT recishidol.id FROM \Dodici\Fansworld\WebBundle\Entity\Idolship reciship JOIN reciship.idol recishidol WHERE reciship.author = :user))
+        ' : '')
+        
         
     	.'
     	WHERE v.active = true
@@ -155,12 +174,20 @@ class VideoRepository extends CountBaseRepository
         HAVING
         common > 0
     	' : '')
+    	
+    	.
+    	($recommended ? '
+    	GROUP BY v
+    	HAVING
+    	commonrec > 0
+    	' : '')
+    	
     	.'
     	
     	ORDER BY 
     	
     	' . ($related ? 'common DESC, ' : '') . '
-    	
+    	' . ($recommended ? 'commonrec DESC, ' : '') . '
     	' . $sortcriterias[$sortcriteria] . '
     	
     	')
@@ -168,7 +195,7 @@ class VideoRepository extends CountBaseRepository
                 ->setParameter('searchlike', '%' . $searchterm . '%')
                 ->setParameter('everyone', Privacy::EVERYONE)
                 ->setParameter('friendsonly', Privacy::FRIENDS_ONLY)
-                ->setParameter('user', ($user instanceof User) ? $user->getId() : null)
+                ->setParameter('user', ($user instanceof User) ? $user->getId() : $user)
                 ->setParameter('category', ($category instanceof VideoCategory) ? $category->getId() : $category)
                 ->setParameter('datefrom', $datefrom)
                 ->setParameter('dateto', $dateto)
@@ -193,7 +220,7 @@ class VideoRepository extends CountBaseRepository
 
         $res = $query->getResult();
         
-        if ($related) {
+        if ($related || $recommended) {
             $res = $query->getResult();
             $arr = array();
             foreach ($res as $r) $arr[] = $r[0];
