@@ -264,4 +264,24 @@ class BaseController extends SiteController
         
         return $user;
     }
+    
+    protected function getExtraFields($allowedfields)
+    {
+        $request = $this->getRequest();
+        $extrafieldsstr = $request->get('extra_fields');
+        $extrafields = array();
+        if ($extrafieldsstr) {
+            $exp = explode(',', $extrafieldsstr);
+            foreach ($exp as $x) {
+                if ($x && in_array($x, $allowedfields)) {
+                    if (in_array($x, $extrafields)) throw new HttpException(400, 'Duplicate extra field: "'.$x.'"');
+                    $extrafields[] = $x;
+                } else {
+                    throw new HttpException(400, 'Invalid extra field: "'.$x.'"');
+                }
+            }
+        }
+        
+        return $extrafields;
+    }
 }

@@ -81,20 +81,7 @@ class VideoController extends BaseController
             }
             
             $allowedfields = array('author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount');
-            
-            $extrafieldsstr = $request->get('extra_fields');
-            $extrafields = array();
-            if ($extrafieldsstr) {
-                $exp = explode(',', $extrafieldsstr);
-                foreach ($exp as $x) {
-                    if ($x && in_array($x, $allowedfields)) {
-                        if (in_array($x, $extrafields)) throw new HttpException(400, 'Duplicate extra field: "'.$x.'"');
-                        $extrafields[] = $x;
-                    } else {
-                        throw new HttpException(400, 'Invalid extra field: "'.$x.'"');
-                    }
-                }
-            }
+            $extrafields = $this->getExtraFields($allowedfields);
             
             $pagination = $this->pagination(array('weight', 'createdAt'), 'weight');
             $sortcriteria = $pagination['sort'];
@@ -146,6 +133,205 @@ class VideoController extends BaseController
                 }
                 
                 $return[] = $rv;
+            }
+            
+            return $this->jsonResponse($return);
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
+    
+	/**
+     * Video - show
+     * 
+     * @Route("/video/{id}", name="api_video_show", requirements = {"id" = "\d+"})
+     * @Method({"GET"})
+     *
+     * Get params:
+	 * - <optional> extra_fields: comma-separated extra fields to return (see below)
+     * 
+     * @return 
+     * array (
+     * 			id: int,
+     * 			title: string,
+     * 			image: string (url of image),
+     * 			highlight: boolean,
+     * 			category_id: int,
+     * 			
+     * 			// extra fields
+     * 			author: @see SecurityController::loginAction() - without token,
+     * 			content: string,
+     * 			createdAt: int (timestamp UTC),
+     * 			duration: int (seconds),
+     * 			visitCount: int,
+     * 			likeCount: int,
+     * 			commentCount: int,
+     * 
+     * 			// extra fields, tagged entities
+     * 			tagged_idols: array (
+     * 				id: int,
+     * 				firstname: string,
+     * 				lastname: string,
+     * 				image: string (url)
+     * 			),
+     * 			tagged_teams: array (
+     * 				id: int,
+     * 				title: string,
+     * 				image: string (url)
+     * 			),
+     * 			tagged_tags: array (
+     * 				id: int,
+     * 				title: string
+     * 			),
+     * 			tagged_users: array (
+     * 				id: int,
+     *				username: string,
+     *				email: string,
+     *				firstname: string,
+     *				lastname: string,
+     *				image: string (avatar url)
+     * 			)
+     * 		)
+     * 
+     */
+    public function showAction($id)
+    {
+        try {
+            $video = $this->getRepository('Video')->find($id);
+            if (!$video) throw new HttpException(404, 'Video not found');
+            
+            $return = array(
+                'id' => $video->getId(),
+                'title' => (string)$video,
+                'image' => $video->getImage() ? $this->get('appmedia')->getImageUrl($video->getImage()) : null,
+                'highlight' => $video->getHighlight(),
+                'category_id' => $video->getVideocategory()->getId()
+            );
+            
+            $allowedfields = array(
+            	'author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount',
+                'tagged_idols', 'tagged_teams', 'tagged_tags', 'tagged_users'
+            );
+            $extrafields = $this->getExtraFields($allowedfields);
+            
+            foreach ($extrafields as $x) {
+                switch ($x) {
+                    case 'author':
+                        $return['author'] = $video->getAuthor() ? $this->userArray($video->getAuthor()) : null;
+                        break;
+                    case 'createdAt':
+                        $return['createdAt'] = $video->getCreatedAt()->format('U');
+                        break;
+                    case 'tagged_idols':
+                        $has = $video->getHasidols();
+                        $t = array();
+                        foreach ($has as $h) {
+                            $ent = $h->getIdol();
+                            $t[] = array(
+                                'id' => $ent->getId(),
+                                'firstname' => $ent->getFirstname(),
+                                'lastname' => $ent->getLastname(),
+                                'image' => $ent->getImage() ? $this->get('appmedia')->getImageUrl($ent->getImage()) : null
+                            );
+                        }
+                        $return[$x] = $t;
+                        break;
+                    case 'tagged_teams':
+                        $has = $video->getHasteams();
+                        $t = array();
+                        foreach ($has as $h) {
+                            $ent = $h->getTeam();
+                            $t[] = array(
+                                'id' => $ent->getId(),
+                                'title' => (string)$ent,
+                                'image' => $ent->getImage() ? $this->get('appmedia')->getImageUrl($ent->getImage()) : null
+                            );
+                        }
+                        $return[$x] = $t;
+                        break;
+                    case 'tagged_tags':
+                        $has = $video->getHastags();
+                        $t = array();
+                        foreach ($has as $h) {
+                            $ent = $h->getTag();
+                            $t[] = array(
+                                'id' => $ent->getId(),
+                                'title' => (string)$ent
+                            );
+                        }
+                        $return[$x] = $t;
+                        break;
+                    case 'tagged_users':
+                        $has = $video->getHasusers();
+                        $t = array();
+                        foreach ($has as $h) {
+                            $ent = $h->getTarget();
+                            $t[] = $this->userArray($ent);
+                        }
+                        $return[$x] = $t;
+                        break;
+                    default:
+                        $methodname = 'get'.ucfirst($x);
+                        $return[$x] = $video->$methodname();
+                        break;
+                }
+            }
+            
+            return $this->jsonResponse($return);
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
+    
+	/**
+     * Video - streams
+     * 
+     * @Route("/video/{id}/streams", name="api_video_streams", requirements = {"id" = "\d+"})
+     * @Method({"GET"})
+     *
+     * Get params: none
+     * 
+     * @return 
+     * array (
+     * 			provider: 'youtube'|'vimeo'|'kaltura',
+     * 			streams:
+	 *              - youtube/vimeo id string, or
+	 *              - array(
+     * 					url: string (stream url),
+     *                  format: array(
+     *                      id: stream format id,
+     *                      name: string (stream format's name),
+     *                      description: string (stream format's description)
+     *                  ),
+     *                  bitrate: int (kb),
+     *                  size: int (file size in kb),
+     *                  width: int (px),
+     *                  height: int (px)
+     *				)
+     * 		)
+     * 
+     */
+    public function streamsAction($id)
+    {
+        try {
+            $video = $this->getRepository('Video')->find($id);
+            if (!$video) throw new HttpException(404, 'Video not found');
+            
+            if ($video->getYoutube()) {
+                $return = array(
+                    'provider' => 'youtube',
+                    'streams' => $video->getYoutube()
+                );
+            } elseif ($video->getVimeo()) {
+                $return = array(
+                    'provider' => 'vimeo',
+                    'streams' => $video->getVimeo()
+                );
+            } else {
+                $return = array(
+                    'provider' => 'kaltura',
+                    'streams' => $this->get('kaltura')->streams($video->getStream())
+                );
             }
             
             return $this->jsonResponse($return);

@@ -19,8 +19,9 @@ class Kaltura
     protected $usersecret;
     protected $adminsecret;
     protected $username;
+    protected $urlpattern;
 
-    function __construct($partnerid, $subpartnerid, $usersecret, $adminsecret, $username)
+    function __construct($partnerid, $subpartnerid, $usersecret, $adminsecret, $username, $urlpattern)
     {
         // init kaltura configuration
         $config = new KalturaConfiguration($partnerid);
@@ -33,6 +34,7 @@ class Kaltura
         $this->usersecret = $usersecret;
         $this->adminsecret = $adminsecret;
         $this->username = $username;
+        $this->urlpattern = $urlpattern;
     }
 
     /**
@@ -53,12 +55,65 @@ class Kaltura
     }
     
     /**
+     * Return an entry's streams in its available flavors
+     * @param string $entryId
+     */
+    public function streams($entryId)
+    {
+        $fas = $this->getClient()->getFlavorAssetService();
+        $flavors = $fas->getFlavorAssetsWithParams($entryId);
+        
+        $ext = 'mp4';
+        
+        $streams = array();
+        
+        if ($flavors) {
+            foreach ($flavors as $flavor) {
+                $asset = $flavor->flavorAsset;
+                
+                if ($asset) {
+                    $params = $flavor->flavorParams;
+                    $width = $asset->width;
+                    $height = $asset->height;
+                    $bitrate = $asset->bitrate;
+                    $flavorId = $asset->flavorParamsId;
+                    $partnerId = $asset->partnerId;
+                    $size = $asset->size;
+                    
+                    $name = $params->name;
+                    $desc = $params->description;
+                    
+                    $streamurl = sprintf($this->urlpattern, $partnerId, $entryId, $flavorId, $ext);
+                    
+                    $streams[] = array(
+                        'url' => $streamurl,
+                        'format' => array(
+                            'id' => $flavorId,
+                            'name' => $name,
+                            'description' => $desc
+                        ),
+                        'bitrate' => $bitrate,
+                        'size' => $size,
+                        'width' => $width,
+                        'height' => $height
+                    );
+                }
+            }
+        }
+        
+        return $streams;
+    }
+    
+    /**
      * Get client
      * @param boolean $admin
      */
     public function getClient($admin = true)
     {
-        return $this->client->setKs($this->getKs($admin));
+        if (!$this->client->getKs()) {
+            $this->client->setKs($this->getKs($admin));
+        }
+        return $this->client;
     }
     
     public function getPartnerId()
