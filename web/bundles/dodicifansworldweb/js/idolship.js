@@ -15,10 +15,13 @@ var idolship = {
             }, function(r){
                 if(r){
                     if(r.isFan){
-                        self.addClass('disabled');
-                        self.removeClass('add');
-                        success(r.message);
-                        self.html(r.buttontext);
+//                        self.addClass('disabled');
+//                        self.removeClass('add');
+//                        success(r.message);
+//                        self.html(r.buttontext);
+                        var parent = self.parent();
+                        self.remove();
+                        parent.html('<span class="label">YA ERES FAN</span>');
                     }
                 }
                 
