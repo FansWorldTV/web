@@ -87,4 +87,94 @@ class TeamController extends BaseController
             return $this->plainException($e);
         }
     }
+    
+	/**
+     * Team - show
+     * 
+     * @Route("/team/{id}", name="api_team_show", requirements = {"id" = "\d+"})
+     * @Method({"GET"})
+     *
+     * Get params:
+	 * - <optional> extra_fields: comma-separated extra fields to return (see below)
+     * 
+     * @return 
+     * array (
+     * 			id: int,
+     * 			title: string,
+     * 			image: string (url of image)
+     * 			fanCount: int
+     * 			
+     * 			// extra fields
+     * 			content: string,
+     * 			foundedAt: int (ts UTC),
+     * 			splash: string (url of image),
+     * 			categories: array(
+     * 				array(
+     * 					id: int,
+     * 					title: string,
+     * 					sport: int (id)
+     * 				),
+     * 				...
+     * 			),
+     * 			country: int (id),
+     * 			twitter: string,
+     * 			photoCount: int,
+     * 			videoCount: int,
+     * 			visitCount: int
+     * 		)
+     * 
+     */
+    public function showAction($id)
+    {
+        try {
+            $team = $this->getRepository('Team')->find($id);
+            if (!$team) throw new HttpException(404, 'Team not found');
+            
+            $return = array(
+                'id' => $team->getId(),
+                'title' => (string)$team,
+                'image' => $team->getImage() ? $this->get('appmedia')->getImageUrl($team->getImage()) : null,
+                'fanCount' => $team->getFanCount()
+            );
+            
+            $allowedfields = array(
+            	'content', 'foundedAt', 'splash', 'categories', 'country', 'twitter', 'photoCount', 'videoCount', 'visitCount'
+            );
+            $extrafields = $this->getExtraFields($allowedfields);
+            
+            foreach ($extrafields as $x) {
+                switch ($x) {
+                    case 'foundedAt':
+                        $return['foundedAt'] = $team->getFoundedAt() ? $team->getFoundedAt()->format('U') : null;
+                        break;
+                    case 'splash':
+                        $return['splash'] = $team->getSplash() ? $this->get('appmedia')->getImageUrl($team->getSplash()) : null;
+                        break;
+                    case 'country':
+                        $return['country'] = $team->getCountry() ? $team->getCountry()->getId() : null;
+                        break;
+                    case 'categories':
+                        $cats = $team->getTeamcategories();
+                        $t = array();
+                        foreach ($cats as $c) {
+                            $t[] = array(
+                                'id' => $c->getId(),
+                                'title' => $c->getTitle(),
+                                'sport' => $c->getSport()->getId()
+                            );
+                        }
+                        $return[$x] = $t;
+                        break;
+                    default:
+                        $methodname = 'get'.ucfirst($x);
+                        $return[$x] = $team->$methodname();
+                        break;
+                }
+            }
+            
+            return $this->jsonResponse($return);
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
 }
