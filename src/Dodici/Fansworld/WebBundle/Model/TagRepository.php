@@ -278,4 +278,80 @@ class TagRepository extends CountBaseRepository
     	return $results;
     	
 	}
+	
+	/**
+	 * Returns latest trending tags
+	 * Please use Tagger service if possible
+	 * 
+     * @param int|null $limit
+     * @param null|'video'|'photo'|'event' $taggedtype - filter by tagged entity type
+     * @param null|'tag'|'idol'|'team' $resulttype - filter by result tag type
+     * @param int $daysbefore
+	 */
+    public function trending($limit=20, $taggedtype=null, $resulttype=null, $daysbefore=7)
+	{
+        $taggedtypes = array('video', 'photo', 'event');
+        $resulttypes = array('tag', 'idol', 'team');
+        
+        if ($taggedtype && !in_array($taggedtype, $taggedtypes)) throw new \InvalidArgumentException('Invalid tagged type');
+        if ($resulttype && !in_array($resulttype, $resulttypes)) throw new \InvalidArgumentException('Invalid result type');
+        
+        $datebefore = new \DateTime('-'.$daysbefore.' days');
+        
+	    $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('id', 'id');
+        $rsm->addScalarResult('title', 'title');
+        $rsm->addScalarResult('slug', 'slug');
+        $rsm->addScalarResult('type', 'type');
+        $rsm->addScalarResult('usecount', 'count');
+        
+        $typearray = array('tag', 'idol', 'team');
+        if ($resulttype) {
+            $typearray = array($resulttype);
+        }
+
+        $sqls = array();
+        foreach ($typearray as $type) {
+            $sqls[] = '
+                SELECT
+                '.$type.'.id as id,
+                '.
+                (($type == 'idol') ?
+                ('CONCAT('.$type.'.firstname, \' \', '.$type.'.lastname) AS title,') :
+                ($type.'.title as title,'))
+                .'
+                '.$type.'.slug as slug,
+                COUNT(has'.$type.'.id) AS usecount,
+                \''.$type.'\' as type
+                FROM
+                has'.$type.'
+                INNER JOIN '.$type.' ON has'.$type.'.'.$type.'_id = '.$type.'.id
+                WHERE has'.$type.'.created_at > :datebefore
+                '.
+                ($taggedtype ? '
+                	AND has'.$type.'.'.$taggedtype.'_id IS NOT NULL
+                ' : '')
+                .'
+                GROUP BY '.$type.'.id
+                ';
+        }
+        
+                
+        $query = $this->_em->createNativeQuery(
+            join(' UNION ', $sqls) .'
+            ORDER BY 
+            usecount DESC
+            '.
+            (($limit !== null) ? ' LIMIT :limit ' : '')
+            , $rsm
+        );
+        
+        $query = $query->setParameter('datebefore', $datebefore);
+        
+        if ($limit !== null)
+            $query = $query->setParameter('limit', (int)$limit, Type::INTEGER);
+            
+            
+        return $query->getResult();
+	} 
 }

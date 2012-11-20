@@ -138,4 +138,17 @@ class Tagger
         return $tagrepo->usedInVideos($filtertype, $videocategory, $limit, $offset);
     }
     
+	/**
+     * Returns latest trending tags
+     * 
+     * @param int|null $limit
+     * @param null|'video'|'photo'|'event' $taggedtype - filter by tagged entity type
+     * @param null|'tag'|'idol'|'team' $resulttype - filter by result tag type
+     * @param int $daysbefore
+     */
+    public function trending($limit=20, $taggedtype=null, $resulttype=null, $daysbefore=7)
+    {
+        $tagrepo = $this->em->getRepository('DodiciFansworldWebBundle:Tag');
+        return $tagrepo->trending($limit, $taggedtype, $resulttype, $daysbefore);
+    }
 }

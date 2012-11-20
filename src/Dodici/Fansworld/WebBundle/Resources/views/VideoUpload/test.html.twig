@@ -5,23 +5,56 @@
         <script src="{{ asset('bundles/dodicifansworldweb/js/file-uploader/fileuploader.js') }}" type="text/javascript"></script>
     </head>
     <body>
-        <div>1. upload file</div>
+        <div>1. get upload token</div>
+        <div id="upload-process">
+            <input type="text" name="uploadtoken" id="uploadtoken" />
+            <input type="button" name="gettoken" id="gettoken" value="Get" />
+        </div>
+        
+        <div>2. upload file</div>
         <div id="file-uploader">
             <noscript>
                 <p>Please enable JavaScript to use file uploader.</p>
             </noscript>
         </div>
         
-        <div>2. add entry</div>
-        <div id="upload-process">
-            <input type="text" name="uploadtoken" id="uploadtoken" />
-            <input type="button" name="addentry" id="addentry" value="GO!" />
+        <div>3. add media entry</div>
+        <div id="media-entry">
+            <input type="text" name="title" id="title" />
+            <input type="button" name="addentry" id="addentry" value="add" />
+        </div>
+        
+        <div>4. add content to media entry</div>
+        <div id="add-content">
+            <input type="text" name="entryid" id="entryid" />
+            <input type="button" name="addcontent" id="addcontent" value="add" />
         </div>
         
         
         <script type="text/javascript">
         $(function(){
-            // upload the file, get the upload token
+            // get upload token
+            $('#gettoken').on('click', function(){
+                $.ajax({
+                    url: '{{url}}',
+                    data: {
+                        service: 'uploadToken',
+                        action: 'add',
+                        ks: '{{ks}}',
+                        'uploadToken:fileName': '5seconds.avi',
+                        'uploadToken:objectType': 'KalturaUploadToken'
+                    },
+                    dataType: 'xml',
+                    success: function(r) {
+                        var uploadtoken = $(r).find('id').text();
+                        // set this as a Video's "external"
+                        $('#uploadtoken').val(uploadtoken);
+                        uploader.setParams({uploadTokenId: $('#uploadtoken').val()});
+                    }
+                });
+            });
+            
+            // upload the file with the upload token
             var uploader = new qq.FileUploader({
                 element: $('#file-uploader')[0],
                 multiple: false,
@@ -30,19 +63,40 @@
                 responsePassthrough: true,
                 debug: true,
                 action: '{{url}}',
+                
+                /*
+                // upload by token
                 inputName: 'fileData',
                 failedUploadTextDisplay: {mode: 'none'},
-                params: {
-                    service: 'media',
-                    action: 'upload',
-                    ks: '{{ks}}',
-                    partnerId: '{{partnerid}}'
+                onSubmit : function(file, ext){
+                    uploader.setParams({
+                        service: 'uploadToken',
+                        action: 'upload',
+                        ks: '{{ks}}',
+                        uploadTokenId: $('#uploadtoken').val()
+                    });
                 },
+                */
+                
+                
+                // upload directo
+                inputName: 'resource:fileData',
+                failedUploadTextDisplay: {mode: 'none'},
+                onSubmit : function(file, ext){
+                    uploader.setParams({
+                        service: 'media',
+                        action: 'addContent',
+                        entryId: $('#entryid').val(),
+                        ks: '{{ks}}',
+                        'resource:objectType': 'KalturaUploadedFileResource'
+                    });
+                },
+                
+                
                 onComplete: function(id, fileName, xml){
                     var xmlDoc = $.parseXML(xml);
                     var $xml = $( xmlDoc );
-                    var result = $xml.find( "result" );
-                    $('#uploadtoken').val(result.text());
+                    //var result = $xml.find( "result" );
                 }
             }); 
             
@@ -52,17 +106,39 @@
                     url: '{{url}}',
                     data: {
                         service: 'media',
-                        action: 'addfromuploadedfile',
+                        action: 'add',
                         ks: '{{ks}}',
-                        uploadTokenId: $('#uploadtoken').val(),
-                        'mediaEntry:name': 'tetetest',
-                        'mediaEntry:mediaType': 1
+                        'entry:name': $('#title').val(),
+                        'entry:objectType': 'KalturaMediaEntry',
+                        'entry:mediaType': 1
                     },
                     dataType: 'xml',
                     success: function(r) {
                         var external_id = $(r).find('id').text();
                         // set this as a Video's "external"
-                        alert(external_id);
+                        $('#entryid').val(external_id);
+                    }
+                });
+            });
+            
+            // add content the entry, link upload token and entry id
+            $('#addcontent').on('click', function(){
+                $.ajax({
+                    url: '{{url}}',
+                    data: {
+                        service: 'media',
+                        action: 'addContent',
+                        ks: '{{ks}}',
+                        entryId: $('#entryid').val(),
+                        'resource:token': $('#uploadtoken').val(),
+                        'resource:objectType': 'KalturaUploadedFileTokenResource'
+                    },
+                    dataType: 'xml',
+                    success: function(r) {
+                        //var external_id = $(r).find('id').text();
+                        // set this as a Video's "external"
+                        //$('#entryid').val(external_id);
+                        alert('done?');
                     }
                 });
             });
