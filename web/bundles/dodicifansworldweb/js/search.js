@@ -29,6 +29,8 @@ search.init = function(query){
 };
 
 search.it = function(seeAll){
+    $("section.search."+search.active).addClass('loading');
+    
     search.running = true;
     var params = {
         'query': search.query,
@@ -91,18 +93,14 @@ search.it = function(seeAll){
             search.page++;
         }
         
-        console.log('seeAll:'.seeAll);
         if(seeAll){
-            console.log(search.addMore);
-            console.log(endless.haveScroll());
             if(search.addMore && !endless.haveScroll()){
-                console.log('uepa ue');
-                
                 search.it(true);
             }
         }
         
         search.running = false;
+        $("section.search."+search.active).removeClass('loading');
     }, function(r){
         console.log(r);
     });
@@ -121,100 +119,16 @@ search.filter = function(){
         if(search.active == 'all'){
             $("section.search").fadeIn().addClass('active');
         }else{
-            var executed = false;
-            $("section.search").not( '.' + search.active ).fadeOut('fast',function(){
-                if(!executed){
+            $("section.search").not( '.' + search.active ).fadeOut('fast').last().fadeOut(function(){
+                $("section.search." + search.active).fadeIn('fast',function(){
+                    $(this).addClass('active');  
                     $(this).removeClass('active');
-                    console.log('buscando...');
                     search.it(true);
-                    executed = true;
-                }
-            });
-            $("section.search." + search.active).fadeIn('fast',function(){
-                $(this).addClass('active');  
+                });
             });
         }
     });
 };
-
-
-endless = {
-    callback : null,
-    tolerance : 10
-};
-
-endless.init = function(tolerance, callback){
-    if(typeof(tolerance) != 'undefined' ){
-        endless.tolerance = tolerance;
-    }
-    if(typeof(callback) != 'undefined'){
-        endless.callback = callback;
-    }
-    
-    endless.bindMyScroll();
-}
-
-endless.haveScroll = function(){
-    return $(document).height() != $(window).height();
-};
-    
-endless.scrollBottom = function(){
-    var scrollSize = $(window).scrollTop() + $(window).height();
-        
-    percentScrollSize = (scrollSize * 100) / $(document).height();
-        
-    return percentScrollSize >= ( 100 - endless.tolerance );
-    
-};
-endless.bindMyScroll = function(){
-    $(window).bind('scroll', function(){
-        console.log(endless.scrollBottom(), endless.haveScroll());
-        if(endless.haveScroll() && endless.scrollBottom()){
-            endless.callback();
-        }
-    });
-};
-
-//search.endless = function(callback, tolerance){
-//    var self = this;
-//    
-//    self.callback = null;
-//    self.tolerance = 10;
-//    
-//    self.construct = function(callback, tolerance){
-//        if(typeof(tolerance)!='undefined'){
-//            self.tolerance = tolerance;
-//        }
-//        self.callback = callback;
-//        self.bindMyScroll();
-//    };
-//    
-//    self.haveScroll = function(){
-//        return $(document).height() != $(window).height();
-//    };
-//    
-//    self.scrollBottom = function(){
-//        var scrollSize = $(window).scrollTop() + $(window).height();
-//        
-//        tolerated = (scrollSize * 100) / $(document).height();
-//        
-//        return tolerated>=(100-self.tolerance);
-//    };
-//    
-//    self.bindMyScroll = function(){
-//        $(window).bind('scroll', function(){
-//            console.log(self.scrollBottom(), self.haveScroll());
-//            if(self.haveScroll() && self.scrollBottom()){
-//                console.log(search.endless().callback);
-//                search.endless().callback();
-//            }
-//        });
-//    };
-//    
-//    self.construct(callback, tolerance);
-//    
-//    return self;
-//};
 
 function secToMinutes(sec){
     var min = Math.floor(sec/60);
@@ -223,20 +137,3 @@ function secToMinutes(sec){
     if(min<10) min = "0" + min;
     return min + ":" + sec;
 }
-
-
-
-/*$(window).endlessScroll({
-        fireOnce: true,
-        enableScrollTop: false,
-        inflowPixels: 100,
-        fireDelay: 250,
-        intervalFrequency: 2000,
-        ceaseFireOnEmpty: false,
-        loader: 'cargando',
-        callback: function() {
-            if(search.addMore){
-                search.it();
-            }
-        }
-    });*/
