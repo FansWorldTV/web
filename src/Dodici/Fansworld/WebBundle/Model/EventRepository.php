@@ -2,6 +2,7 @@
 
 namespace Dodici\Fansworld\WebBundle\Model;
 
+use Dodici\Fansworld\WebBundle\Entity\Tag;
 use Dodici\Fansworld\WebBundle\Entity\Sport;
 use Dodici\Fansworld\WebBundle\Entity\TeamCategory;
 use Doctrine\ORM\Query\ResultSetMapping;
@@ -290,6 +291,100 @@ class EventRepository extends CountBaseRepository
         $query = $query->setParameter('typematch', Event::TYPE_MATCH);
             
         return $query->getResult();
+    }
+    
+    /**
+     * Search events
+     * 
+     * @param string $text - term to search for
+     * @param User|null $user - current logged in user, or null
+     * @param int|null $limit
+     * @param int|null $offset
+     * @param string|Tag|null $tag - Tag slug, or entity, to search by
+     */
+    public function search($text=null, $user=null, $limit=null, $offset=null, $tag=null)
+    {
+        $dql = '
+    	SELECT e
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Event e
+    	LEFT JOIN e.hastags eht
+    	LEFT JOIN eht.tag ehtag
+        WHERE e.active = true
+        AND
+        (
+        	(e.title LIKE :textlike)
+        	OR
+        	(ehtag.title LIKE :textlike)
+        )
+        '.
+    	($tag ? '
+    	AND '.
+    	(($tag instanceof Tag) ? '
+    		ehtag = :tag
+    	' : '
+    		ehtag.slug = :tag
+    	')
+    	.'
+    	' : '')
+    	.' 
+        ORDER BY e.weight DESC
+        ';
+        
+        $query = $this->_em->createQuery($dql);
+        $query = $query->setParameter('textlike', '%'.$text.'%');
+        if ($limit !== null) $query = $query->setMaxResults($limit);
+    	if ($offset !== null) $query = $query->setFirstResult($offset);
+    	if ($tag) $query = $query->setParameter('tag', ($tag instanceof Tag) ? $tag->getId() : $tag);
+            
+        return $query->getResult();
+    }
+    
+	/**
+     * Count search events
+     * 
+     * @param string $text - term to search for
+     * @param User|null $user - current logged in user, or null
+     * @param string|Tag|null $tag - Tag slug, or entity, to search by
+     */
+    public function countSearch($text=null, $user=null, $tag=null)
+    {
+        $dql = '
+    	SELECT COUNT(e.id)
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Event e
+    	'.
+        ($tag ? 
+    	('
+    	JOIN e.hastags eht
+    	JOIN eht.tag ehtag WITH
+    	' .
+        (($tag instanceof Tag) ? '
+    		ehtag = :tag
+    	' : '
+    		ehtag.slug = :tag
+    	')) : '')
+        .'
+    	WHERE e.active = true
+        AND
+        (
+        	(e.title LIKE :textlike)
+        	OR
+        	(
+        		e.id IN (
+        			SELECT ex.id
+    				FROM \Dodici\Fansworld\WebBundle\Entity\Event ex
+    				JOIN ex.hastags exht
+    				JOIN exht.tag exhtag WITH exhtag.title LIKE :textlike
+        		)
+        	)
+        )
+        '
+    	;
+        
+        $query = $this->_em->createQuery($dql);
+        $query = $query->setParameter('textlike', '%'.$text.'%');
+    	if ($tag) $query = $query->setParameter('tag', ($tag instanceof Tag) ? $tag->getId() : $tag);
+            
+        return $query->getSingleScalarResult();
     }
 
 }

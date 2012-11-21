@@ -2,6 +2,7 @@
 
 namespace Dodici\Fansworld\WebBundle\Model;
 
+use Dodici\Fansworld\WebBundle\Entity\Tag;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
 use Application\Sonata\MediaBundle\Entity\Media;
 use Doctrine\ORM\EntityRepository;
@@ -133,5 +134,102 @@ class PhotoRepository extends CountBaseRepository
         
         return $query->getSingleScalarResult();
     }
+    
+	/**
+     * Search photos
+     * 
+     * @param string $text - term to search for
+     * @param User|null $user - current logged in user, or null
+     * @param int|null $limit
+     * @param int|null $offset
+     * @param string|Tag|null $tag - Tag slug, or entity, to search by
+     */
+    public function search($text=null, $user=null, $limit=null, $offset=null, $tag=null)
+    {
+        $dql = '
+    	SELECT p
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Photo p
+    	LEFT JOIN p.hastags pht
+    	LEFT JOIN pht.tag phtag
+        WHERE p.active = true
+        AND
+        (
+        	(p.title LIKE :textlike)
+        	OR
+        	(p.content LIKE :textlike)
+        	OR
+        	(phtag.title LIKE :textlike)
+        )
+        '.
+    	($tag ? '
+    	AND '.
+    	(($tag instanceof Tag) ? '
+    		phtag = :tag
+    	' : '
+    		phtag.slug = :tag
+    	')
+    	.'
+    	' : '')
+    	.' 
+        ORDER BY p.weight DESC
+        ';
+        
+        $query = $this->_em->createQuery($dql);
+        $query = $query->setParameter('textlike', '%'.$text.'%');
+        if ($limit !== null) $query = $query->setMaxResults($limit);
+    	if ($offset !== null) $query = $query->setFirstResult($offset);
+    	if ($tag) $query = $query->setParameter('tag', ($tag instanceof Tag) ? $tag->getId() : $tag);
+            
+        return $query->getResult();
+    }
 
+	/**
+     * Count search photos
+     * 
+     * @param string $text - term to search for
+     * @param User|null $user - current logged in user, or null
+     * @param string|Tag|null $tag - Tag slug, or entity, to search by
+     */
+    public function countSearch($text=null, $user=null, $tag=null)
+    {
+        $dql = '
+    	SELECT COUNT(e.id)
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Photo e
+    	'.
+        ($tag ? 
+    	('
+    	JOIN e.hastags eht
+    	JOIN eht.tag ehtag WITH
+    	' .
+        (($tag instanceof Tag) ? '
+    		ehtag = :tag
+    	' : '
+    		ehtag.slug = :tag
+    	')) : '')
+        .'
+    	WHERE e.active = true
+        AND
+        (
+        	(e.title LIKE :textlike)
+        	OR
+        	(e.content LIKE :textlike)
+        	OR
+        	(
+        		e.id IN (
+        			SELECT ex.id
+    				FROM \Dodici\Fansworld\WebBundle\Entity\Photo ex
+    				JOIN ex.hastags exht
+    				JOIN exht.tag exhtag WITH exhtag.title LIKE :textlike
+        		)
+        	)
+        )
+        '
+    	;
+        
+        $query = $this->_em->createQuery($dql);
+        $query = $query->setParameter('textlike', '%'.$text.'%');
+    	if ($tag) $query = $query->setParameter('tag', ($tag instanceof Tag) ? $tag->getId() : $tag);
+            
+        return $query->getSingleScalarResult();
+    }
 }

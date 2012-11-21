@@ -90,7 +90,7 @@ class CountBaseRepository extends EntityRepository
      * current logged in user, or null:
      * @param User|null $user
      */
-    public function countSearch($text, $user=null, $limit = null, $offset = null)
+    public function countSearch($text, $user=null)
     {
     	if (!($user instanceof User)) $user = null;
         
@@ -111,8 +111,6 @@ class CountBaseRepository extends EntityRepository
     	
     	$query = $this->_em->createQuery($querystring);
         
-        if ($limit !== null) $query = $query->setMaxResults($limit);
-        if ($offset !== null) $query = $query->setFirstResult($offset);
         
     	if ($conditions) $query = $query->setParameter('textlike', '%'.$text.'%');
     	

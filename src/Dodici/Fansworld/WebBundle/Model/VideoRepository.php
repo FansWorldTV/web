@@ -28,10 +28,13 @@ class VideoRepository extends CountBaseRepository
      * @param User|false|null $author (false = site videos)
      * @param DateTime|null $datefrom
      * @param DateTime|null $dateto
-     * @param 'default'|'views'|'likes' $sortcriteria
+     * @param 'default'(weight)|'views'|'likes'|null $sortcriteria
      * @param User|Idol|Team|null $taggedentity
      * @param array<Video|int>|Video|int|null $excludes
      * @param Video|null $related
+     * @param boolean|null $recommended - if true, show videos recommended via followed team/idols to user
+     * @param 'ASC'|'DESC'|null $sortorder
+     * @param string|Tag|null $tag - Tag slug, or entity, to search by
      */
     public function search(
         $searchterm = null,
@@ -43,12 +46,13 @@ class VideoRepository extends CountBaseRepository
         $author = null,
         $datefrom = null,
         $dateto = null,
-        $sortcriteria = 'default',
+        $sortcriteria = null,
         $taggedentity = null,
         $excludes = null,
         $related = null,
         $recommended = null,
-        $sortorder = 'DESC'
+        $sortorder = null,
+        $tag = null
     )
     {
         if ($recommended && !$user) throw new \Exception('You must provide a user to get recommended videos');
@@ -58,6 +62,8 @@ class VideoRepository extends CountBaseRepository
         {
             $sortcriteria = 'default';
         }
+        
+        if (!$sortorder) $sortorder = 'DESC';
         
         $sortcriterias = array(
             'default' => 'v.weight '.$sortorder,
@@ -110,6 +116,17 @@ class VideoRepository extends CountBaseRepository
         LEFT JOIN v.hasidols vhrecidol
             WITH (vhrecidol.idol IN (SELECT recishidol.id FROM \Dodici\Fansworld\WebBundle\Entity\Idolship reciship JOIN reciship.idol recishidol WHERE reciship.author = :user))
         ' : '')
+        
+        .
+        
+        ($tag ? '
+        JOIN v.hastags vsrchht
+    	JOIN vsrchht.tag vsrchhtag WITH '.
+    	(($tag instanceof Tag) ? '
+    		vsrchhtag = :tag
+    	' : '
+    		vsrchhtag.slug = :tag
+    	') : '')
         
         
     	.'
@@ -212,6 +229,9 @@ class VideoRepository extends CountBaseRepository
             
         if ($excludeids)
             $query = $query->setParameter('excludeids', $excludeids);
+            
+        if ($tag)
+            $query = $query->setParameter('tag', ($tag instanceof Tag) ? $tag->getId() : $tag);
 
         if ($limit !== null)
             $query = $query->setMaxResults((int) $limit);
@@ -241,6 +261,10 @@ class VideoRepository extends CountBaseRepository
      * @param DateTime|null $datefrom
      * @param DateTime|null $dateto
      * @param User|Idol|Team|null $taggedentity
+     * @param array<Video|int>|Video|int|null $excludes
+     * @param Video|null $related
+     * @param boolean|null $recommended - if true, show videos recommended via followed team/idols to user
+     * @param string|Tag|null $tag - Tag slug, or entity, to search by
      */
     public function countSearch(
         $searchterm = null, 
@@ -250,19 +274,51 @@ class VideoRepository extends CountBaseRepository
         $author = null,
         $datefrom = null,
         $dateto = null,
-        $taggedentity = null
+        $taggedentity = null,
+        $excludes = null,
+        $related = null,
+        $recommended = null,
+        $tag = null
     )
     {
 
+        if ($recommended && !$user) throw new \Exception('You must provide a user to get recommended videos');
+        if ($recommended && $related) throw new \Exception('Related and recommended are mutually exclusive');
+        
         if ($taggedentity) {
             $type = $this->getType($taggedentity);
         }
         
+        $excludeids = array();
+        if ($excludes) {
+            if (!is_array($excludes)) $excludes = array($excludes);
+            
+            foreach ($excludes as $exc) {
+                if ($exc instanceof Video) $excludeids[] = $exc->getId();
+                elseif (is_integer($exc)) $excludeids[] = $exc;
+                else throw new \Exception('Invalid $excludes value');
+            }
+        }
+        
         $query = $this->_em->createQuery('
-    	SELECT COUNT(v.id)
+    	SELECT COUNT(v.id)'
+    	
+        .'
     	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
     	'.
-    	($taggedentity ? ' INNER JOIN v.has' . $type . 's vhh ' : '')
+    	($taggedentity ? ' INNER JOIN v.has' . $type . 's vhh ' : '') .
+    	
+    	
+        
+        ($tag ? '
+        JOIN v.hastags vsrchht
+    	JOIN vsrchht.tag vsrchhtag WITH '.
+    	(($tag instanceof Tag) ? '
+    		vsrchhtag = :tag
+    	' : '
+    		vsrchhtag.slug = :tag
+    	') : '')
+    	
     	.'
     	WHERE v.active = true
     	AND
@@ -307,7 +363,54 @@ class VideoRepository extends CountBaseRepository
     	( :datefrom IS NULL OR (v.createdAt >= :datefrom) )
     	AND
     	( :dateto IS NULL OR (v.createdAt <= :dateto) )
-    	')
+    	
+    	'.
+    	($excludeids ? '
+    	AND (v.id NOT IN (:excludeids))
+    	' : '') 
+    	.'
+    	
+    	'.
+    	
+    	($related ? '
+        AND
+    	(
+    		v.id IN
+        	(
+        	SELECT vxrel.id FROM \Dodici\Fansworld\WebBundle\Entity\Video vxrel
+        	LEFT JOIN vxrel.hastags vhtag
+    			WITH (vhtag.tag IN (SELECT bshtag.id FROM \Dodici\Fansworld\WebBundle\Entity\HasTag hsbtag JOIN hsbtag.tag bshtag WHERE hsbtag.video = :related))
+    		LEFT JOIN vxrel.hasteams vhteam
+    			WITH (vhteam.team IN (SELECT bshteam.id FROM \Dodici\Fansworld\WebBundle\Entity\HasTeam hsbteam JOIN hsbteam.team bshteam WHERE hsbteam.video = :related))
+    		LEFT JOIN vxrel.hasidols vhidol
+    			WITH (vhidol.idol IN (SELECT bshidol.id FROM \Dodici\Fansworld\WebBundle\Entity\HasIdol hsbidol JOIN hsbidol.idol bshidol WHERE hsbidol.video = :related))
+    		GROUP BY vxrel.id
+    		HAVING (COUNT(vhtag) + COUNT(vhteam) + COUNT(vhidol)) > 0
+    	    )
+		)	
+		
+        ' : '')
+        
+        .
+        
+        ($recommended ? '
+        AND
+        (
+            v.id IN
+            (
+            SELECT vxrec.id FROM \Dodici\Fansworld\WebBundle\Entity\Video vxrec
+        	LEFT JOIN vxrec.hasteams vhrecteam
+                WITH (vhrecteam.team IN (SELECT recishteam.id FROM \Dodici\Fansworld\WebBundle\Entity\Teamship rectship JOIN rectship.team recishteam WHERE rectship.author = :user))
+            LEFT JOIN vxrec.hasidols vhrecidol
+                WITH (vhrecidol.idol IN (SELECT recishidol.id FROM \Dodici\Fansworld\WebBundle\Entity\Idolship reciship JOIN reciship.idol recishidol WHERE reciship.author = :user))
+            GROUP BY vxrec.id
+            HAVING (COUNT(vhrecteam) + COUNT(vhrecidol)) > 0
+            )
+        )
+        ' : '')
+        
+    	
+    	)
                 ->setParameter('searchterm', $searchterm)
                 ->setParameter('searchlike', '%' . $searchterm . '%')
                 ->setParameter('everyone', Privacy::EVERYONE)
@@ -321,6 +424,15 @@ class VideoRepository extends CountBaseRepository
                 
         if ($taggedentity)
             $query = $query->setParameter('taggedentity', $taggedentity->getId());
+            
+        if ($related)
+            $query = $query->setParameter('related', $related->getId());
+            
+        if ($excludeids)
+            $query = $query->setParameter('excludeids', $excludeids);
+            
+        if ($tag)
+            $query = $query->setParameter('tag', ($tag instanceof Tag) ? $tag->getId() : $tag);
 
         return $query->getSingleScalarResult();
     }
@@ -439,5 +551,36 @@ class VideoRepository extends CountBaseRepository
     public function recommended(User $viewer=null, Video $video=null, $limit=null, $offset=null)
     {
         return $this->search(null, $viewer, $limit, $offset, null, true, null, null, null, 'default', null, $video);
+    }
+    
+    /**
+     * Search videos by tag
+     * 
+     * @param string $text - term to search for
+     * @param User|null $user - current logged in user, or null
+     * @param int|null $limit
+     * @param int|null $offset
+     * @param string|Tag|null $tag - Tag slug, or entity, to search by
+     */
+    public function searchByTag($text=null, $user=null, $limit=null, $offset=null, $tag=null)
+    {
+        return $this->search(
+            $text, $user, $limit, $offset, $category = null, null, null, null,
+            null, 'default', null, null, null, null, 'DESC', $tag
+        );
+    }
+    
+	/**
+     * Count videos by tag
+     * 
+     * @param string $text - term to search for
+     * @param User|null $user - current logged in user, or null
+     * @param string|Tag|null $tag - Tag slug, or entity, to search by
+     */
+    public function countByTag($text=null, $user=null, $tag=null)
+    {
+        return $this->countSearch(
+            $text, $user, null, null, null, null, null, null, null, null, null, $tag
+        );
     }
 }
