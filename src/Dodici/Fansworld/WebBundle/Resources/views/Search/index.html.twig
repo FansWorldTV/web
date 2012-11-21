@@ -49,11 +49,31 @@
                 {% endblock %}
             {% endembed %}
         </div>
+        <div class="span2 trending-sidebar">
+            
+        </div>
     </div>
 
     <script type="text/javascript">
         $(function(){
             search.init('{{ query }}'); 
+            
+            var word_array = [
+                {% for tag in trending %}
+                    {% set link = '' %}
+                    {% if tag.type == 'team' or tag.type == 'idol' %}
+                        {% set link = path( tag.type ~ '_wall', {'slug': tag.slug}) %}
+                    {% endif %}
+                    {% if tag.type == 'user' %}
+                        {% set link = path('user_wall', {'username': tag.username}) %}
+                    {% endif %}
+                    {% if tag.type == 'photo' or tag.type == 'video' %}
+                        {% set link = path( tag.type ~ '_show', {'id': tag.id, 'slug': tag.slug}) %}
+                    {% endif %}
+                        
+                    {text: "{{ tag.title }}", weight: {{ tag.count }}, link: "{{ link }}",
+                {% endfor %}
+            ];
          });
     </script>
 {% endblock %}

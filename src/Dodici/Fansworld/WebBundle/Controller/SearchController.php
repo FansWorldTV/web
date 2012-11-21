@@ -34,7 +34,7 @@ class SearchController extends SiteController
         $user = $this->getUser();
         $request = $this->getRequest();
         $query = $request->get('query', null);
-
+        
         $videoRepo = $this->getRepository('Video');
         $idolRepo = $this->getRepository('Idol');
         $fanRepo = $this->getRepository('User');
@@ -83,6 +83,9 @@ class SearchController extends SiteController
         foreach ($fanSearch as $fan) {
             $fans['list'][] = $fan[0];
         }
+        
+        $trending = $this->get('tagger')->trending();
+        $videosHighlighted = $this->getRepository('Video')->findBy(array('highlight' => true), array('weight' => 'desc'), 2);
 
         return array(
             'todoCount' => $todo,
@@ -98,7 +101,9 @@ class SearchController extends SiteController
             'fans' => $fans,
             'videos' => $videoSearch,
             'teams' => $teams,
-            'query' => $query
+            'query' => $query,
+            'trending' => $trending,
+            'videosHighlighted' => $videosHighlighted
         );
     }
 
