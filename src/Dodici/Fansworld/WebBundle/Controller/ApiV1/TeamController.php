@@ -82,7 +82,7 @@ class TeamController extends BaseController
                 );
             }
             
-            return $this->jsonResponse($return);
+            return $this->result($return, $pagination);
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
@@ -172,7 +172,7 @@ class TeamController extends BaseController
                 }
             }
             
-            return $this->jsonResponse($return);
+            return $this->result($return);
         } catch (\Exception $e) {
             return $this->plainException($e);
         }

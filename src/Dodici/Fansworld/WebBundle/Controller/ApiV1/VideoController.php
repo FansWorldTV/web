@@ -135,7 +135,7 @@ class VideoController extends BaseController
                 $return[] = $rv;
             }
             
-            return $this->jsonResponse($return);
+            return $this->result($return, $pagination);
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
@@ -277,7 +277,7 @@ class VideoController extends BaseController
                 }
             }
             
-            return $this->jsonResponse($return);
+            return $this->result($return);
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
@@ -334,7 +334,7 @@ class VideoController extends BaseController
                 );
             }
             
-            return $this->jsonResponse($return);
+            return $this->result($return);
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
@@ -372,7 +372,7 @@ class VideoController extends BaseController
                 );
             }
             
-            return $this->jsonResponse($return);
+            return $this->result($return);
         } catch (\Exception $e) {
             return $this->plainException($e);
         }

@@ -237,9 +237,12 @@ class BaseController extends SiteController
         
         if ($page) $offset = $page * $limit;
         
+        if (!$page) $page = floor($offset / $limit);
+        
         $return = array(
             'limit' => $limit,
-            'offset' => $offset
+            'offset' => $offset,
+            'page' => $page
         );
         
         if ($sort) {
@@ -283,5 +286,26 @@ class BaseController extends SiteController
         }
         
         return $extrafields;
+    }
+    
+    protected function result($array, $pagination = null)
+    {
+        $metadata = array();
+        $request = $this->getRequest();
+        $metadata['uri'] = $request->getUri();
+        $metadata['method'] = $request->getMethod();
+        $getparams = $request->query->all();
+        $postparams = $request->request->all();
+        $metadata['parameters'] = array('query' => $getparams, 'request' => $postparams);
+        
+        if ($pagination) {
+            $metadata['pagination'] = $pagination;
+            $metadata['pagination']['count'] = count($array);
+        }
+        
+        return $this->jsonResponse(array(
+            'result' => $array,
+            'metadata' => $metadata
+        ));
     }
 }

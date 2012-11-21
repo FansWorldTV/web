@@ -105,7 +105,7 @@ class SecurityController extends BaseController
                     
                     $this->addIdolsTeams($user);
                     
-                    return $this->jsonResponse($return);
+                    return $this->result($return);
                     
                 } else {
                     throw new HttpException(500, 'Something went wrong');
@@ -165,7 +165,7 @@ class SecurityController extends BaseController
                         'user' => $this->userArray($user)
                     );
                     
-                    return $this->jsonResponse($return);
+                    return $this->result($return);
                     
                 } else {
                     // Bad username/mail
@@ -224,7 +224,7 @@ class SecurityController extends BaseController
                     'user' => $this->userArray($user)
                 );
                 
-                return $this->jsonResponse($return);
+                return $this->result($return);
             } else {
                 throw new HttpException(401, 'Invalid signature');
             }
@@ -278,7 +278,7 @@ class SecurityController extends BaseController
                     'sent' => true
                 );
                 
-                return $this->jsonResponse($return);
+                return $this->result($return);
                 
             } else {
                 throw new HttpException(401, 'Invalid signature');
@@ -333,7 +333,7 @@ class SecurityController extends BaseController
                         'user' => $this->userArray($user)
                     );
                     
-                    return $this->jsonResponse($return);
+                    return $this->result($return);
                     
                 } else {
                     // Bad username/mail
