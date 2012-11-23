@@ -49,8 +49,8 @@ class EventController extends SiteController
         }
         $eshipsLocal = $this->getRepository('Eventship')->findBy(array('team' => $local->getId(), 'event' => $event->getId()));
         $eshipsGuest = $this->getRepository('Eventship')->findBy(array('team' => $guest->getId(), 'event' => $event->getId()));
-        
-        $userChecked = $this->getRepository('Eventship')->findOneBy(array('event' => $event->getId(), 'author'=> $user->getId()));
+
+        $userChecked = $this->getRepository('Eventship')->findOneBy(array('event' => $event->getId(), 'author' => $user->getId()));
 
         return array('user' => $user, 'entity' => $event, 'eshipsLocal' => $eshipsLocal, 'eshipsGuest' => $eshipsGuest, 'checked' => $userChecked);
     }
@@ -115,9 +115,9 @@ class EventController extends SiteController
 
             $started = ($event->getFromtime() <= $now);
 
-            if($this->getUser() instanceof User){
+            if ($this->getUser() instanceof User) {
                 $checked = $this->getRepository('Eventship')->findOneBy(array('author' => $this->getUser()->getId(), 'event' => $event->getId())) ? true : false;
-            }else{
+            } else {
                 $checked = null;
             }
 
@@ -231,13 +231,13 @@ class EventController extends SiteController
         $eventRepo = $this->getRepository('Event');
         $events = null;
         $eventoDestacado = $eventRepo->findOneBy(array(), array('fromtime' => 'desc'));
-        
-        if($this->getUser() instanceof User){
+
+        if ($this->getUser() instanceof User) {
             $eventoDestacadoChecked = $this->getRepository('Eventship')->findOneBy(array('event' => $eventoDestacado->getId(), 'author' => $this->getUser()->getId())) ? true : false;
-        }else{
+        } else {
             $eventoDestacadoChecked = null;
         }
-        
+
         $sports = $this->getRepository('Sport')->findBy(array());
         $leagues = true;
         $orderBy = true;
@@ -346,22 +346,22 @@ class EventController extends SiteController
             $maxdate = null;
         }
 
-        
+
         $eventComments = $this->getRepository('Comment')->eventWall($event, $mindate, $maxdate);
         foreach ($eventComments as $comment) {
             $this->addEntityResponse($comment, $event, $response);
         }
-        
+
         $eventTweets = $this->getRepository('EventTweet')->eventWall($event, $mindate, $maxdate);
         foreach ($eventTweets as $tweet) {
             $this->addEntityResponse($tweet, $event, $response);
         }
-        
+
         $eventIncidents = $this->getRepository('EventIncident')->eventWall($event, $mindate, $maxdate);
         foreach ($eventIncidents as $incident) {
             $this->addEntityResponse($incident, $event, $response);
         }
-        
+
         return $this->jsonResponse($response);
     }
 
@@ -369,9 +369,9 @@ class EventController extends SiteController
     {
         $appState = $this->get('appstate');
         $type = $appState->getType($entity);
-        if($type != 'eventtweet' && $type != 'eventincident'){
+        if ($type != 'eventtweet' && $type != 'eventincident') {
             $eventship = $this->getRepository('Eventship')->findOneBy(array('author' => $entity->getAuthor()->getId(), 'event' => $event->getId()));
-        }else{
+        } else {
             $eventship = false;
         }
         $to[] = $this->formatJson($entity, $eventship);
@@ -388,6 +388,7 @@ class EventController extends SiteController
                 'type' => 'c',
                 'teamid' => $entity->getTeam()->getId(),
                 'avatar' => $this->getImageUrl($entity->getAuthor()->getImage()),
+                'profile' => $this->generateUrl('user_wall', array('username' => $entity->getAuthor()->getUsername())),
                 'minute' => $this->get('appstate')->getMinuteFromTimestamp($entity->getCreatedAt()),
                 'content' => $entity->getContent()
             );
@@ -555,19 +556,22 @@ class EventController extends SiteController
         $eventshipType = $request->get('eventtype', Eventship::TYPE_WEB);
 
         $user = $this->getUser();
-        if (!$user) throw new HttpException(401, 'Must login');
-        
+        if (!$user)
+            throw new HttpException(401, 'Must login');
+
         $event = $this->getRepository('Event')->find($eventId);
         $this->securityCheck($event);
-        
+
         $team = $this->getRepository('Team')->find($teamId);
-        
-        if (!$event) throw new HttpException(404, 'Event not found');
-        if (!$team) throw new HttpException(404, 'Team not found');
-        
+
+        if (!$event)
+            throw new HttpException(404, 'Event not found');
+        if (!$team)
+            throw new HttpException(404, 'Team not found');
+
         $manager = $this->get('eventship.manager');
         $manager->addEventship($event, $user, $team, $eventshipType);
-        
+
         return new Response('Added user to event');
     }
 
@@ -580,15 +584,17 @@ class EventController extends SiteController
         $request = $this->getRequest();
         $eventId = $request->get('eventid');
         $user = $this->getUser();
-        if (!$user) throw new HttpException(401, 'Must login');
+        if (!$user)
+            throw new HttpException(401, 'Must login');
 
         $eventship = $this->getRepository('Eventship')->findBy(array('event' => $eventId, 'author' => $user->getId()));
 
-        if (!$eventship) throw new HttpException(404, 'Eventship not found');
-        
+        if (!$eventship)
+            throw new HttpException(404, 'Eventship not found');
+
         $manager = $this->get('eventship.manager');
         $manager->removeEventship($eventship);
-        
+
         return new Response('Removed user from event');
     }
 
@@ -614,13 +620,13 @@ class EventController extends SiteController
                     )
                 ));
     }
-    
+
     /**
      * @Route("/test/addeventship", name="event_addeventship")
      */
-    
-    public function testAddEventship(){
-        $request= $this->getRequest();
+    public function testAddEventship()
+    {
+        $request = $this->getRequest();
         $eventId = $request->get('event');
         $authorId = $request->get('author');
         $teamId = $request->get('team');
@@ -628,10 +634,10 @@ class EventController extends SiteController
         $event = $this->getRepository('Event')->find($eventId);
         $author = $this->getRepository('User')->find($authorId);
         $team = $this->getRepository('Team')->find($teamId);
-        
+
         $manager = $this->get('eventship.manager');
-        $manager->addEventship($event,  $author, $team, 1);
-        
+        $manager->addEventship($event, $author, $team, 1);
+
         return $this->jsonResponse(array('ok'));
     }
 

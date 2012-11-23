@@ -2,7 +2,15 @@
 <div class="comment" data-eventship-type = "{{>eventship}}">
     <span class="flechita"></span>
     <div class="img-container">
-        {{if avatar}}<img src="{{>avatar}}" />{{/if}}
+        <a href="{{>profile}}">
+            {{if avatar}}
+                <img src="{{>avatar}}" />
+            {{else}}
+{% endraw %}
+                <img src="{{ asset('bundles/dodicifansworldweb/images/profile_no_image_40x40.png') }}" />
+{% raw %}
+            {{/if}}
+        </a>
     </div>
     <div class="content">
         {{>content}}
