@@ -367,7 +367,8 @@ class EventController extends SiteController
 
     private function addEntityResponse($entity, $event, &$to)
     {
-        if($entity != 'eventtweet' && $entity != 'eventincident'){
+        $type = $appState->getType($entity);
+        if($type != 'eventtweet' && $type != 'eventincident'){
             $eventship = $this->getRepository('Eventship')->findOneBy(array('author' => $entity->getAuthor()->getId(), 'event' => $event->getId()));
         }else{
             $eventship = false;
