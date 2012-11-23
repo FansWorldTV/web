@@ -85,7 +85,8 @@ class SearchController extends SiteController
         }
         
         $trending = $this->get('tagger')->trending();
-        $videosHighlighted = $this->getRepository('Video')->findBy(array('highlight' => true), array('weight' => 'desc'), 2);
+        
+        $videosHighlighted = $this->getRepository('Video')->findBy(array('highlight' => true, 'active' => true), array('weight' => 'desc'), 2);
 
         return array(
             'todoCount' => $todo,
