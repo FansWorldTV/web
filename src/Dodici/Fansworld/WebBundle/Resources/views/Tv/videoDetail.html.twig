@@ -12,7 +12,7 @@
         
         {% block top_left_content %}
             {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video, editbutton: false, reportbutton: false} %}
-            <iframe class="videoframe" src="{{ flumotiontwig.videoplayerurl(video) }}"></iframe>
+            {{ kalturatwig.player(video)|raw }}
         {% endblock %}
         
         {% block top_right_content %}

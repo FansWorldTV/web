@@ -15,7 +15,7 @@
                 	<h2><a href="{{path('video_show', {id:highlight.id, slug:highlight.slug})}}">{{highlight}}</a></h2>
                 
                 	<div class="media_content">
-			            <iframe class="videoframe" src="{{ flumotiontwig.videoplayerurl(highlight) }}"></iframe>
+			            {{ kalturatwig.player(highlight)|raw }}
 			        </div>
 			        
 					{% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: highlight} %}
