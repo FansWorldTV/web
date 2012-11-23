@@ -346,26 +346,32 @@ class EventController extends SiteController
             $maxdate = null;
         }
 
+        
         $eventComments = $this->getRepository('Comment')->eventWall($event, $mindate, $maxdate);
         foreach ($eventComments as $comment) {
             $this->addEntityResponse($comment, $event, $response);
         }
-
+        
         $eventTweets = $this->getRepository('EventTweet')->eventWall($event, $mindate, $maxdate);
         foreach ($eventTweets as $tweet) {
             $this->addEntityResponse($tweet, $event, $response);
         }
-
+        
         $eventIncidents = $this->getRepository('EventIncident')->eventWall($event, $mindate, $maxdate);
         foreach ($eventIncidents as $incident) {
             $this->addEntityResponse($incident, $event, $response);
         }
+        
         return $this->jsonResponse($response);
     }
 
     private function addEntityResponse($entity, $event, &$to)
     {
-        $eventship = $this->getRepository('Eventship')->findOneBy(array('author' => $entity->getAuthor()->getId(), 'event' => $event->getId()));
+        if($entity != 'eventtweet' && $entity != 'eventincident'){
+            $eventship = $this->getRepository('Eventship')->findOneBy(array('author' => $entity->getAuthor()->getId(), 'event' => $event->getId()));
+        }else{
+            $eventship = false;
+        }
         $to[] = $this->formatJson($entity, $eventship);
     }
 
