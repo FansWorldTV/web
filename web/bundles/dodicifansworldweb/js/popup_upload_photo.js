@@ -2,7 +2,6 @@ $(function(){
     if ($('#form_album').val() == 'NEW') {
         spawnNewAlbumField($('#form_album'));
     }
-    
     $('#form_album').change(function(e){
         var el = $(this);
         if (el.val() == 'NEW') {
@@ -16,12 +15,10 @@ $(function(){
     });
 });
 
-
-function bindAlbumActions(){
+function bindAlbumActions() {
     if ($('#form_album').val() == 'NEW') {
         spawnNewAlbumField($('#form_album'));
     }
-    
     $('#form_album').change(function(e){
         var el = $(this);
         if (el.val() == 'NEW') {
@@ -41,11 +38,10 @@ function spawnNewAlbumField(el) {
 	});
 }
 
-function bindFormSubmit(){
+function bindFormSubmit() {
     $("form.upload-photo").submit(function(){
         var data = $('form.upload-photo').serializeArray();
         var href = $('form.upload-photo').attr('action');
-
         $.colorbox({        
             href: href ,
             data: data,
@@ -58,12 +54,12 @@ function bindFormSubmit(){
     });
 }
 
-function bindFormActions(){
+function bindFormActions() {
     bindFormSubmit();
     bindAlbumActions();
 }
 
-function createUploader(){            
+function createUploader() {            
     var uploader = new qq.FileUploader({
         element: $("#file-uploader")[0],
         action: Routing.generate( appLocale + '_photo_fileupload'),
@@ -72,9 +68,10 @@ function createUploader(){
         maxConnections: 1,
         allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
         onComplete: function(id, fileName, responseJSON){
-            if(responseJSON.success){
+            if(responseJSON.success) {
                 $.colorbox({
-                    href: Routing.generate( appLocale + '_photo_filemeta') + '/' + responseJSON.mediaId,
+                    href: Routing.generate(appLocale + '_photo_filemeta', 
+                        {'tempFile':responseJSON.tempFile, 'originalFile': responseJSON.originalFile, 'ext': responseJSON.ext}),
                     iframe: false, 
                     innerWidth: 700, 
                     innerHeight: 700,
@@ -85,19 +82,16 @@ function createUploader(){
                 });
             }
         },
-        onUpload: function(){
+        onUpload: function() {
             resizePopup();
         },
-        onProgress: function(id, fileName, loaded, total){
-            
+        onProgress: function(id, fileName, loaded, total) {
         	if (loaded != total){
-                $( "#progressbar .bar" ).css('width',Math.round(loaded / total * 100)+'%');
+                $( "#progressbar .bar" ).css('width', Math.round(loaded / total * 100)+'%');
             } else {                                   
                 $( "#progressbar .bar" ).css('width','100%');
             }  
-            
             resizePopup();
-            
         }
     });           
 }

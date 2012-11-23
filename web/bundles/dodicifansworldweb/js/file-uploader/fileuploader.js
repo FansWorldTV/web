@@ -607,31 +607,30 @@ qq.FileUploader = function(o){
         element: null,
         // if set, will be used instead of qq-upload-list in template
         listElement: null,
-        dragText: 'Drop files here to upload',
+        dragText: 'Suelte archivo aqui',
         extraDropzones : [],
         hideDropzones : true,
         disableDefaultDropzone: false,
-        uploadButtonText: 'Upload a file',
-        cancelButtonText: 'Cancel',
+        uploadButtonText: 'seleccione desde su PC',
+        cancelButtonText: 'Cancelar',
         failUploadText: 'Upload failed',
 
         template: '<div class="qq-uploader">' +
             (!this._options.disableDefaultDropzone ? '<div class="qq-upload-drop-area"><span>{dragText}</span></div>' : '') +
-            (!this._options.button ? '<div class="qq-upload-button">{uploadButtonText}</div>' : '') +
+            (!this._options.button ? 'Arrastre archivo aqui o <div class="qq-upload-button">{uploadButtonText}</div>' : '') +
             (!this._options.listElement ? '<ul class="qq-upload-list"></ul>' : '') +
             '</div>',
 
         // template for one item in file list
+        //  '<span class="qq-upload-spinner"></span>' +
         fileTemplate: '<li>' +
             '<div class="qq-progress-bar"></div>' +
-            '<span class="qq-upload-spinner"></span>' +
             '<span class="qq-upload-finished"></span>' +
             '<span class="qq-upload-file"></span>' +
             '<span class="qq-upload-size"></span>' +
             '<a class="qq-upload-cancel" href="#">{cancelButtonText}</a>' +
             '<span class="qq-upload-failed-text">{failUploadtext}</span>' +
             '</li>',
-
         classes: {
             // used to get elements from templates
             button: 'qq-upload-button',
@@ -715,7 +714,7 @@ qq.extend(qq.FileUploader.prototype, {
     _storeFileForLater: function(id) {
         qq.FileUploaderBasic.prototype._storeFileForLater.apply(this, arguments);
         var item = this._getItemByFileId(id);
-        this._find(item, 'spinner').style.display = "none";
+        // this._find(item, 'spinner').style.display = "none";
     },
     /**
      * Gets one of the elements listed in this._options.classes
@@ -839,7 +838,7 @@ qq.extend(qq.FileUploader.prototype, {
         }
 
         // Update progress bar <span> tag
-        this._find(item, 'progressBar').style.width = percent + '%';
+        // this._find(item, 'progressBar').style.width = percent + '%';
 
         qq.setText(size, text);
     },
@@ -853,7 +852,7 @@ qq.extend(qq.FileUploader.prototype, {
         if (!this._options.disableCancelForFormUploads || qq.UploadHandlerXhr.isSupported()) {
             qq.remove(this._find(item, 'cancel'));
         }
-        qq.remove(this._find(item, 'spinner'));
+        // qq.remove(this._find(item, 'spinner'));
 
         if (this._options.responsePassthrough || result.success){
             qq.addClass(item, this._classes.success);
@@ -879,10 +878,10 @@ qq.extend(qq.FileUploader.prototype, {
             this._find(item, 'progressBar').style.display = "block";
         }
 
-        var spinnerEl = this._find(item, 'spinner');
-        if (spinnerEl.style.display == "none") {
-            spinnerEl.style.display = "inline-block";
-        }
+        //var spinnerEl = this._find(item, 'spinner');
+        //if (spinnerEl.style.display == "none") {
+          //  spinnerEl.style.display = "inline-block";
+        //}
     },
     _addToList: function(id, fileName){
         var item = qq.toElement(this._options.fileTemplate);
