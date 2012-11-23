@@ -272,12 +272,12 @@ var events = {
            
             ajax.genericAction('event_ajaxcomment', params, function(r){
                 if(!r.error){
-                    input.removeClass('loading-small');
                     input.val("");
                     success('Comentario enviado');
                 }else{
                     error(r.msg);
                 }
+                input.removeClass('loading-small');
             }, function(e) {
                 error(e);
             });

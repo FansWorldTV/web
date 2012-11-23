@@ -7,7 +7,7 @@
 
     {% include "DodiciFansworldWebBundle:Event:blocks/wall.html.twig"  %}
 
-    {% if not checked %}
+    {% if not checked and not entity.finished %}
         <script type="text/javascript">
             $.modalPopup({
                 'href': Routing.generate( appLocale + '_event_checkin', {
@@ -22,6 +22,19 @@
                     });
                 }
             });
+        </script>
+    {% else %}
+        <script type="text/javascript">
+            {% if checked  %}
+                var checkedTeam = {{ checked.team.id }};
+                if(events.getLocalVisitante(checkedTeam) == 'local'){
+                    $("form[data-event-wall='guest']").parents('.guest').hide();
+                }else{
+                    $("form[data-event-wall='local']").parents('.local').hide();
+                }
+            {% else %}
+                $(".eventwall-form").hide();
+            {% endif %}
         </script>
     {% endif %}
 {% endblock %}
