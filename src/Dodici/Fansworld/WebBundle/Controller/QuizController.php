@@ -34,7 +34,7 @@ class QuizController extends SiteController
 
     /**
      *
-     * @Route("/vote", name="quiz_vote")
+     * @Route("/vote/", name="quiz_vote")
      */
     public function voteAction()
     {
@@ -81,7 +81,7 @@ class QuizController extends SiteController
     }
 
     /**
-     * @Route("/results", name="quiz_results")
+     * @Route("/results/", name="quiz_results")
      */
     public function seeResultsAction()
     {

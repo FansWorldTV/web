@@ -24,7 +24,7 @@ class LikeController extends SiteController
 
     /**
      * 
-     * @Route("/ajax/like/toggle", name="like_ajaxtoggle")
+     * @Route("/ajax/like/toggle/", name="like_ajaxtoggle")
      */
     public function ajaxToggleAction()
     {

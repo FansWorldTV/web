@@ -22,7 +22,7 @@ class CityController extends SiteController
 
     /**
      * 
-     * @Route("/ajax/cities", name="cities_ajax")
+     * @Route("/ajax/cities/", name="cities_ajax")
      */
     public function ajaxGetCitiesAction()
     {

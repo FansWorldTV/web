@@ -35,7 +35,7 @@ class PhotoController extends SiteController
     const LIMIT_PHOTOS_PIN = 9;
 
     /**
-     * @Route("/{id}/{slug}", name= "photo_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
+     * @Route("/{id}/{slug}/", name= "photo_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
      * @Template()
      */
     public function showAction($id)
@@ -70,7 +70,7 @@ class PhotoController extends SiteController
     }
 
     /**
-     * @Route("/upload", name="photo_upload")
+     * @Route("/upload/", name="photo_upload")
      * @Secure(roles="ROLE_USER")
      * @Template
      */
@@ -188,7 +188,7 @@ class PhotoController extends SiteController
     }
 
     /**
-     *  @Route("/ajax/get", name = "photo_get") 
+     *  @Route("/ajax/get/", name = "photo_get") 
      */
     public function ajaxGetPhotos()
     {
@@ -238,7 +238,7 @@ class PhotoController extends SiteController
     }
 
     /**
-     * @Route("/fileupload", name="photo_fileupload")
+     * @Route("/fileupload/", name="photo_fileupload")
      * @Secure(roles="ROLE_USER")
      * @Template
      */
@@ -275,7 +275,7 @@ class PhotoController extends SiteController
     }
 
     /**
-     * @Route("/fileupload/{tempFile}/{originalFile}/{ext}", name="photo_filemeta")
+     * @Route("/fileupload/{tempFile}/{originalFile}/{ext}/", name="photo_filemeta")
      * @Secure(roles="ROLE_USER")
      * @Template
      */

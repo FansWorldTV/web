@@ -36,7 +36,7 @@ class SportController extends SiteController
     
 
     /**
-     *  @Route("/ajax/get", name = "sport_getteamcategories") 
+     *  @Route("/ajax/get/", name = "sport_getteamcategories") 
      */
     public function ajaxGetTeamcategories()
     {

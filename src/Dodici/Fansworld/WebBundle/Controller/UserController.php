@@ -25,7 +25,7 @@ class UserController extends SiteController
     const LIMIT_LIST_IDOLS = 15;
 
     /**
-     * @Route("/u/{username}", name="user_wall")
+     * @Route("/u/{username}/", name="user_wall")
      * @Template
      * @Secure(roles="ROLE_USER")
      */
@@ -49,7 +49,7 @@ class UserController extends SiteController
     }
 
     /**
-     * @Route("/u/{username}/teams", name="user_teams")
+     * @Route("/u/{username}/teams/", name="user_teams")
      * @Template
      */
     public function teamsTabAction($username)
@@ -73,7 +73,7 @@ class UserController extends SiteController
     }
 
     /**
-     * @Route("/u/{username}/info", name="user_detail")
+     * @Route("/u/{username}/info/", name="user_detail")
      * @Template
      * @Secure(roles="ROLE_USER")
      */
@@ -456,7 +456,7 @@ class UserController extends SiteController
     }
 
     /**
-     * @Route("/user/requests", name="user_friendrequests")
+     * @Route("/user/requests/", name="user_friendrequests")
      * @Secure(roles="ROLE_USER")
      * @Template
      */
@@ -488,7 +488,7 @@ class UserController extends SiteController
     }
 
     /**
-     * @Route("/user/notifications", name="user_notifications")
+     * @Route("/user/notifications/", name="user_notifications")
      * @Secure(roles="ROLE_USER")
      * @Template
      */
@@ -505,7 +505,7 @@ class UserController extends SiteController
     }
 
     /**
-     * @Route("/u/{username}/photos", name="user_photos")
+     * @Route("/u/{username}/photos/", name="user_photos")
      * @Template
      */
     public function photosTabAction($username)
@@ -544,7 +544,7 @@ class UserController extends SiteController
     }
 
     /**
-     * @Route("/u/{username}/photos/list", name="user_listphotos")
+     * @Route("/u/{username}/photos/list/", name="user_listphotos")
      * @Template
      */
     public function listPhotosAction($username)
@@ -568,7 +568,7 @@ class UserController extends SiteController
     }
 
     /**
-     * @Route("/u/{username}/albums", name="user_listalbums")
+     * @Route("/u/{username}/albums/", name="user_listalbums")
      * @Template
      * @Secure(roles="ROLE_USER")
      */
@@ -602,7 +602,7 @@ class UserController extends SiteController
     }
 
     /**
-     * @Route("/u/{username}/albums/{id}", name= "user_showalbum", requirements = {"id" = "\d+"})
+     * @Route("/u/{username}/albums/{id}/", name= "user_showalbum", requirements = {"id" = "\d+"})
      * @Template()
      */
     public function showAlbumAction($id, $username)
@@ -638,7 +638,7 @@ class UserController extends SiteController
     }
 
     /**
-     * @Route("/user/change_image", name="user_change_image")
+     * @Route("/user/change_image/", name="user_change_image")
      * @Secure(roles="ROLE_USER")
      * @Template
      */
@@ -689,7 +689,7 @@ class UserController extends SiteController
     }
 
     /**
-     * @Route("/u/{username}/idols", name="user_idols")
+     * @Route("/u/{username}/idols/", name="user_idols")
      * @Template
      * @Secure(roles="ROLE_USER")
      */
@@ -769,7 +769,7 @@ class UserController extends SiteController
     }
 
     /**
-     * @Route("/u/{username}/badges", name="user_badges")
+     * @Route("/u/{username}/badges/", name="user_badges")
      * @Template
      * @Secure(roles="ROLE_USER")
      */
@@ -794,7 +794,7 @@ class UserController extends SiteController
     }
 
     /**
-     * @Route("/u/{username}/fans", name="user_fans")
+     * @Route("/u/{username}/fans/", name="user_fans")
      * @Template
      * @Secure(roles="ROLE_USER")
      */
@@ -825,7 +825,7 @@ class UserController extends SiteController
     /**
      * User videos
      *
-     * @Route("/u/{username}/videos", name="user_videos")
+     * @Route("/u/{username}/videos/", name="user_videos")
      * @Template()
      */
     public function videosTabAction($username)

@@ -19,7 +19,7 @@ class PrivacyController extends SiteController
 {
 
     /**
-     *  @Route("/edit/privacy", name="profile_privacy") 
+     *  @Route("/edit/privacy/", name="profile_privacy") 
      */
     public function privacyAction()
     {
@@ -41,7 +41,7 @@ class PrivacyController extends SiteController
     }
 
     /**
-     * @Route("/ajax/edit/privacy",  name="profile_ajaxprivacy") 
+     * @Route("/ajax/edit/privacy/",  name="profile_ajaxprivacy") 
      */
     public function ajaxPrivacyAction()
     {

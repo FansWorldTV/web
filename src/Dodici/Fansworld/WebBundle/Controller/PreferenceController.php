@@ -21,7 +21,7 @@ class PreferenceController extends SiteController
 {
     /**
      * Set key with value
-     * @Route("/set", name="preference_set")
+     * @Route("/set/", name="preference_set")
      */
     public function setAction()
     {
@@ -37,7 +37,7 @@ class PreferenceController extends SiteController
 
     /**
      * Get value of key
-     * @Route("/get", name="preference_get")
+     * @Route("/get/", name="preference_get")
      */
     public function getAction()
     {

@@ -36,7 +36,7 @@ class EditController extends SiteController
     
     /**
      * 
-     * @Route("/popup/{type}/{id}", name="edit_popup")
+     * @Route("/popup/{type}/{id}/", name="edit_popup")
      * @Template
      */
     public function popupAction($type, $id)

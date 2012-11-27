@@ -23,7 +23,7 @@ class NotificationController extends SiteController
 {
 
     /**
-     * @Route("/preferences", name="notification_preferences")
+     * @Route("/preferences/", name="notification_preferences")
      * @Secure(roles="ROLE_USER")
      * @Template
      */

@@ -14,7 +14,7 @@ class DefaultController extends SiteController
 {
 
     /**
-     * @Route("/hello/{name}")
+     * @Route("/hello/{name}/")
      * @Template()
      */
     public function indexAction($name)
@@ -33,7 +33,7 @@ class DefaultController extends SiteController
 
     /**
      * Popup asks text
-     * @Route("/popup/asktext", name="popup_asktext")
+     * @Route("/popup/asktext/", name="popup_asktext")
      * @Template
      */
     public function askTextAction()
@@ -95,7 +95,7 @@ class DefaultController extends SiteController
     /**
      * force mobile
      * 
-     * @Route("/mobile/{value}", requirements={"value"="yes|no"}, name="force_mobile")
+     * @Route("/mobile/{value}/", requirements={"value"="yes|no"}, name="force_mobile")
      */
     public function forcemobileAction($value)
     {
@@ -126,7 +126,7 @@ class DefaultController extends SiteController
     /**
      * force mobile
      * 
-     * @Route("/gethost", name="gethost")
+     * @Route("/gethost/", name="gethost")
      */
     public function hostAction()
     {

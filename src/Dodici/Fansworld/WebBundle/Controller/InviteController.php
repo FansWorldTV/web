@@ -30,7 +30,7 @@ class InviteController extends SiteController
     }
 
     /**
-     * @Route("/ajax/import", name="invite_ajaximport")
+     * @Route("/ajax/import/", name="invite_ajaximport")
      */
     public function ajaxImportAction()
     {
@@ -58,7 +58,7 @@ class InviteController extends SiteController
     }
 
     /**
-     * @Route ("/ajax/generate-invitation", name="invite_generateInvitation")
+     * @Route("/ajax/generate-invitation/", name="invite_generateInvitation")
      */
     public function ajaxGenerateInvitation()
     {

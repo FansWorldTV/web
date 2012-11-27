@@ -28,7 +28,7 @@ class InterestController extends SiteController
     const LIMIT_AJAX_GET = 6;
 
     /**
-     * @Route("/edit", name="interest_edit")
+     * @Route("/edit/", name="interest_edit")
      * @Template
      * @Secure(roles="ROLE_USER")
      */

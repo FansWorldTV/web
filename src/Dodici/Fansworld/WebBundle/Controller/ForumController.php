@@ -41,7 +41,7 @@ class ForumController extends SiteController
     }
 
     /**
-     * @Route("/thread/{id}/{slug}", name= "forumthread_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
+     * @Route("/thread/{id}/{slug}/", name= "forumthread_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
      * @Template
      */
     public function threadAction($id)
@@ -59,7 +59,7 @@ class ForumController extends SiteController
     }
 
     /**
-     * @Route("/ajax/thread/posts", name= "forum_ajaxposts")
+     * @Route("/ajax/thread/posts/", name= "forum_ajaxposts")
      */
     public function ajaxThreadPostsAction()
     {
@@ -92,7 +92,7 @@ class ForumController extends SiteController
     }
 
     /**
-     * @Route("/ajax/thread/comment", name="forum_ajaxcomment") 
+     * @Route("/ajax/thread/comment/", name="forum_ajaxcomment") 
      */
     public function ajaxThreadComment()
     {
@@ -131,7 +131,7 @@ class ForumController extends SiteController
     }
 
     /**
-     * @Route("/u/{username}", name= "forum_user")
+     * @Route("/u/{username}/", name= "forum_user")
      * @Template
      */
     public function userThreadsAction($username)
@@ -153,7 +153,7 @@ class ForumController extends SiteController
     }
 
     /**
-     * @Route("/ajax/search-threads", name="forum_ajaxsearchthreads")
+     * @Route("/ajax/search-threads/", name="forum_ajaxsearchthreads")
      */
     public function ajaxSearchThreadsAction()
     {
@@ -195,7 +195,7 @@ class ForumController extends SiteController
     }
 
     /**
-     * @Route("/ajax/thread-response", name="forum_ajaxthreadresponse")
+     * @Route("/ajax/thread-response/", name="forum_ajaxthreadresponse")
      */
     public function ajaxThreadResponseAction()
     {

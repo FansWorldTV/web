@@ -23,7 +23,7 @@ class UtilController extends BaseController
 {
 	/**
      * Get server timestamp
-     * @Route("/sync", name="api_v1_sync")
+     * @Route("/sync/", name="api_v1_sync")
      */
     public function syncAction()
     {
@@ -33,7 +33,7 @@ class UtilController extends BaseController
     
 	/**
      * [signed] test method (user token)
-     * @Route("/test/token", name="api_v1_test_token")
+     * @Route("/test/token/", name="api_v1_test_token")
      * 
      * Get params:
      * - user_id: int
@@ -75,7 +75,7 @@ class UtilController extends BaseController
     
     /**
      * test method (signature)
-     * @Route("/test/signature", name="api_v1_test_signature")
+     * @Route("/test/signature/", name="api_v1_test_signature")
      * 
      * Get params:
      * - api_key: string (your unique api consumer identifier)
@@ -115,7 +115,7 @@ class UtilController extends BaseController
     
     /**
      * test method (kaltura)
-     * @Route("/test/kaltura", name="api_v1_test_kaltura")
+     * @Route("/test/kaltura/", name="api_v1_test_kaltura")
      * 
      * ???
      */
@@ -129,7 +129,7 @@ class UtilController extends BaseController
     
 	/**
      * test method (user)
-     * @Route("/test/user", name="api_v1_test_user")
+     * @Route("/test/user/", name="api_v1_test_user")
      * 
      * ???
      */

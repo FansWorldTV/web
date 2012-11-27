@@ -22,7 +22,7 @@ class CommentController extends SiteController
 {
 
     /**
-     * @Route("/show/{id}", name= "comment_show", requirements = {"id" = "\d+"})
+     * @Route("/show/{id}/", name= "comment_show", requirements = {"id" = "\d+"})
      * @Template
      */
     public function showAction($id)
@@ -40,7 +40,7 @@ class CommentController extends SiteController
 
     /**
      * 
-     * @Route("/ajax/post", name="comment_ajaxpost")
+     * @Route("/ajax/post/", name="comment_ajaxpost")
      */
     public function ajaxPostAction()
     {
