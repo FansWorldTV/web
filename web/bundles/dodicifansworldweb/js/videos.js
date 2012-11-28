@@ -270,6 +270,7 @@ var videos = {
         
         init: function(){
             videos.searchMyVideos.toggleType();
+            console.log('seee');
         },
         
         

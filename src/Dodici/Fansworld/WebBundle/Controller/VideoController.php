@@ -481,6 +481,7 @@ class VideoController extends SiteController
         }
 
         $response['addMore'] = $countAll > (self::cantVideos * $page) ? true : false;
+        $response['elements'] = array();
 
         foreach ($videos as $video) {
             $response['elements'][] = array(
@@ -539,6 +540,8 @@ class VideoController extends SiteController
         $countAll = $videoRepo->countSearch(null, $user, null, null, $author, null, null, $taggedEntity);
 
         $response['addMore'] = $countAll > (self::cantVideos * $page) ? true : false;
+        $response['elements'] = array();
+        
         foreach ($videos as $video) {
             $response['elements'][] = array(
                 'id' => $video->getId(),
