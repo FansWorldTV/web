@@ -9,7 +9,7 @@
             sort.criteria 	= criteria;
         }
         
-        sort.page 		= 1;
+        sort.page       = 1;
         sort.entityId 	= self.attr('data-entity-id');
         sort.entityType = self.attr('data-entity-type');
         sort.dataList 	= self.attr('data-list');
@@ -18,13 +18,13 @@
         
         if(sort.dataList){
             sort.page = 1;
-            self.find('[data-list-result]').html("");
             site.startMosaic($("[data-list-result]"), {
                 minw: 150, 
                 margin: 0, 
                 liquid: true, 
                 minsize: false
             });
+            self.find('[data-list-result]').html("");
             get(sort);
             /*
             montageHelper.bindAddMore(function(){
