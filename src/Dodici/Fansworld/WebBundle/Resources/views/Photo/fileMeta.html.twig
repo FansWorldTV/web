@@ -46,7 +46,7 @@
             <div class="uploadPhotoVideoForm">
                 <form action="{{ path('photo_filemeta', {'tempFile': tempFile, 'originalFile': originalFile, 'ext' : ext }) }}" method="post" enctype="multipart/form-data" class="bigform upload-photo" name="frmUpload">
                     <div class="title-upload">Subir foto</div>
-                     <img src="../../../uploads/temp/{{tempFile}}" id="cropbox" />
+                     <img src="../../../../uploads/temp/{{tempFile}}" id="cropbox" />
                         <p class="filename"><small></small></p>
                             {{ form_errors(form) }}
                             <div class="row-fluid">
@@ -85,7 +85,7 @@
             </div>
         </div>  
         <div class="templateFieldAlbumName hidden">
-            <div class="control-group" style="display:none;"><input type="text" name="album_new_name" /></div>
+            <div class="control-group" style="display:none;"><input type="text" name="album_new_name" required="required" /></div>
         </div>
     {% endif %}
 {% endblock %}

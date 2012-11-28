@@ -106,7 +106,7 @@ class PhotoController extends SiteController
                 ));
 
         $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
-                ->add('title', 'text', array('required' => true, 'label' => 'Título'))
+                ->add('title', 'text', array('required' => true, 'label' => 'Títuloooooooooooooooooooooooooooo'))
                 ->add('album', 'choice', array('required' => true, 'choices' => $albumchoices, 'label' => 'Album'))
                 ->add('content', 'textarea', array('required' => false, 'label' => 'Descripción'))
                 ->add('file', 'file', array('required' => true, 'label' => 'Archivo'))
@@ -392,10 +392,10 @@ class PhotoController extends SiteController
             ->add('fb', 'hidden', array('required' => false))
             ->add('tw', 'hidden', array('required' => false))
             ->add('fw', 'hidden', array('required' => false))
-            ->add('x', 'hidden', array('required' => false))
-            ->add('y', 'hidden', array('required' => false))
-            ->add('w', 'hidden', array('required' => false))
-            ->add('h', 'hidden', array('required' => false))
+            ->add('x', 'hidden', array('required' => false, 'data' => 0))
+            ->add('y', 'hidden', array('required' => false, 'data' => 0))
+            ->add('w', 'hidden', array('required' => false, 'data' => 0))
+            ->add('h', 'hidden', array('required' => false, 'data' => 0))
             ->getForm();
         return $form;
     }
@@ -419,8 +419,14 @@ class PhotoController extends SiteController
 
     private function _GenerateMediaCrop(array $options) {
         $imagine = new Imagine();
-        $imageStream = $imagine->open("uploads/temp/".$options['tempFile'])
+
+        if (0 == $options['cropW'] || 0 ==   $options['cropH']) {
+            $imageStream = $imagine->open("uploads/temp/".$options['tempFile']);
+        } else {
+            $imageStream = $imagine->open("uploads/temp/".$options['tempFile'])
             ->crop(new Point($options['cropX'], $options['cropY']), new Box($options['cropW'], $options['cropH']));
+        }
+
         $metaData = array('name' => $options['originalFile'].'.'.$options['extension']);
         return $this->get('appmedia')->createImageFromBinary($imageStream, $metaData);
     }
