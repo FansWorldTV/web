@@ -63,7 +63,7 @@ class ContestController extends SiteController
 
     /**
      * 
-     * @Route("/ajax/contest/comments/", name="contest_ajaxcomments")
+     * @Route("/ajax/contest/comments", name="contest_ajaxcomments")
      */
     public function ajaxCommentsAction()
     {
@@ -84,7 +84,7 @@ class ContestController extends SiteController
     }
 
     /**
-     * @Route("/ajax/contest/add_comment/", name = "contest_ajaxaddcomment") 
+     * @Route("/ajax/contest/add_comment", name = "contest_ajaxaddcomment") 
      */
     public function ajaxAddCommentAction()
     {
@@ -132,7 +132,7 @@ class ContestController extends SiteController
     }
 
     /**
-     * @Route("/ajax/contest/participate/", name="contest_ajaxparticipate")
+     * @Route("/ajax/contest/participate", name="contest_ajaxparticipate")
      */
     public function ajaxParticipateAction()
     {
@@ -187,7 +187,7 @@ class ContestController extends SiteController
     }
 
     /**
-     * @Route("/contests/", name="contest_list")
+     * @Route("/contests", name="contest_list")
      * 
      * @Template
      */
@@ -210,7 +210,7 @@ class ContestController extends SiteController
     }
 
     /**
-     * @Route("/ajax/contest/list/", name="contest_ajaxlist")
+     * @Route("/ajax/contest/list", name="contest_ajaxlist")
      */
     public function ajaxListAction()
     {
@@ -258,7 +258,7 @@ class ContestController extends SiteController
     }
 
     /**
-     * @Route("/contest/{id}/{slug}/", name= "contest_show", defaults = {"id" = 0}, requirements={"id"="\d+"})
+     * @Route("/contest/{id}/{slug}", name= "contest_show", defaults = {"id" = 0}, requirements={"id"="\d+"})
      * @Template
      * @Secure(roles="ROLE_USER")
      */
@@ -324,7 +324,7 @@ class ContestController extends SiteController
     }
 
     /**
-     * @Route("/ajax/contest/participants/", name="contest_pagerParticipants") 
+     * @Route("/ajax/contest/participants", name="contest_pagerParticipants") 
      */
     public function pagerParticipants()
     {
@@ -383,7 +383,7 @@ class ContestController extends SiteController
     }
 
     /**
-     * @Route("/ajax/contest/participant/vote/", name="contest_voteParticipant")
+     * @Route("/ajax/contest/participant/vote", name="contest_voteParticipant")
      */
     public function voteParticipant()
     {

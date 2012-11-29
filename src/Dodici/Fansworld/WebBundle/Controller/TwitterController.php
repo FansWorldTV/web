@@ -23,7 +23,7 @@ class TwitterController extends SiteController
 
     /**
      * Set access token
-     * @Route("/tokenize/", name="twitter_tokenize")
+     * @Route("/tokenize", name="twitter_tokenize")
      * @Secure(roles="ROLE_USER")
      * @Template
      */
@@ -53,7 +53,7 @@ class TwitterController extends SiteController
 
     /**
      * Redirect to Twitter with callback
-     * @Route("/redirect/", name="twitter_redirect")
+     * @Route("/redirect", name="twitter_redirect")
      * @Secure(roles="ROLE_USER")
      */
     public function redirectAction()

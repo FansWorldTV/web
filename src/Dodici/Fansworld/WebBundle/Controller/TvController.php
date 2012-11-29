@@ -27,7 +27,7 @@ class TvController extends SiteController
     const LIMIT_SEARCH_VIDEOS = 10;
 
     /**
-     * @Route("/", name="teve_home")
+     * @Route("", name="teve_home")
      * @Template
      */
     public function homeTabAction()
@@ -77,7 +77,7 @@ class TvController extends SiteController
     }
 
     /**
-     * @Route("/{id}/{slug}/", name="video_show", requirements = {"id"="\d+"})
+     * @Route("/{id}/{slug}", name="video_show", requirements = {"id"="\d+"})
      * @Template()
      */
     public function videoDetailAction($id, $slug)
@@ -114,7 +114,7 @@ class TvController extends SiteController
     }
 
     /**
-     * @Route("/modal/{id}/{slug}/", name="video_modal_show", requirements = {"id"="\d+"})
+     * @Route("/modal/{id}/{slug}", name="video_modal_show", requirements = {"id"="\d+"})
      * @Template()
      */
     public function videoDetailModalAction($id, $slug)
@@ -151,7 +151,7 @@ class TvController extends SiteController
     }
 
     /**
-     * @Route("/ajax/tv/get_audience/", name="teve_getaudience")
+     * @Route("/ajax/tv/get_audience", name="teve_getaudience")
      */
     public function getVideoAudience()
     {
@@ -179,7 +179,7 @@ class TvController extends SiteController
     }
 
     /**
-     * @Route("/ajax/tv/keepalive/", name="teve_keepalive")
+     * @Route("/ajax/tv/keepalive", name="teve_keepalive")
      */
     public function keepAlive()
     {
@@ -196,7 +196,7 @@ class TvController extends SiteController
     }
 
     /**
-     * @Route("/ajax/sort/detail/", name="teve_ajaxsortdetail")
+     * @Route("/ajax/sort/detail", name="teve_ajaxsortdetail")
      */
     public function videoDetailSort()
     {
@@ -234,7 +234,7 @@ class TvController extends SiteController
     }
 
     /**
-     * @Route("/tag/{term}/", name="teve_taggedvideos")
+     * @Route("/tag/{term}", name="teve_taggedvideos")
      * @Template
      */
     public function taggedVideosAction($term)
@@ -252,7 +252,7 @@ class TvController extends SiteController
     }
 
     /**
-     * @Route("/team/{term}/", name="teve_teamvideos")
+     * @Route("/team/{term}", name="teve_teamvideos")
      * @Template
      */
     public function teamVideosAction($term)
@@ -271,7 +271,7 @@ class TvController extends SiteController
     }
 
     /**
-     * @Route("/idol/{term}/", name="teve_idolvideos")
+     * @Route("/idol/{term}", name="teve_idolvideos")
      * @Template
      */
     public function idolVideosAction($term)
@@ -290,7 +290,7 @@ class TvController extends SiteController
     }
 
     /**
-     * @Route("/explore/{id}/{slug}/", requirements={"id"="\d+"}, name="teve_explorechannel")
+     * @Route("/explore/{id}/{slug}", requirements={"id"="\d+"}, name="teve_explorechannel")
      * @Template
      */
     public function exploreChannelAction($id)
@@ -316,7 +316,7 @@ class TvController extends SiteController
     }
     
 	/**
-     * @Route("/channel/subscribe/toggle/", name="teve_channelsubscribe")
+     * @Route("/channel/subscribe/toggle", name="teve_channelsubscribe")
      */
     public function ajaxToggleAction() {
         try {

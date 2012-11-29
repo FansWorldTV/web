@@ -25,7 +25,7 @@ class TagController extends SiteController
      *  get params (all optional):
      *   - text (partial match)
      *   - page
-     *  @Route("/ajax/get/", name="tag_ajaxget")
+     *  @Route("/ajax/get", name="tag_ajaxget")
      */
     public function ajaxTags()
     {
@@ -59,7 +59,7 @@ class TagController extends SiteController
      *  get params (all optional):
      *   - text (partial match)
      *   - page
-     *  @Route("/ajax/getUsedInVideos/", name="tag_ajaxgetusedinvideos")
+     *  @Route("/ajax/getUsedInVideos", name="tag_ajaxgetusedinvideos")
      */
     public function ajaxTagsUsedInVideos()
     {
@@ -90,7 +90,7 @@ class TagController extends SiteController
      *  get params:
      *   - text
      *   - limit
-     *  @Route("/ajax/matchall/", name="tag_ajaxmatch")
+     *  @Route("/ajax/matchall", name="tag_ajaxmatch")
      */
     public function matchAll()
     {

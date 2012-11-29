@@ -25,7 +25,7 @@ class FacebookController extends SiteController
 	
 	/**
      * Set access token by client js from uri hash
-     * @Route("/jstoken/", name="facebook_jstoken")
+     * @Route("/jstoken", name="facebook_jstoken")
      * @Template
      */
     public function jsTokenAction()
@@ -38,7 +38,7 @@ class FacebookController extends SiteController
     
 	/**
      * Set access token
-     * @Route("/settoken/", name="facebook_settoken")
+     * @Route("/settoken", name="facebook_settoken")
      */
     public function setTokenAction()
     {
@@ -73,7 +73,7 @@ class FacebookController extends SiteController
      *  get friends in common
      *  get params (all optional):
      *   - page
-     *  @Route("/ajax/getcommonfriends/", name="facebook_commonfriends")
+     *  @Route("/ajax/getcommonfriends", name="facebook_commonfriends")
      */
     public function ajaxCommonFriends()
     {

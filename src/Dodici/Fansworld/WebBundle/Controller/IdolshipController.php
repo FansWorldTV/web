@@ -20,7 +20,7 @@ class IdolshipController extends SiteController {
     /**
      * Toggle idolship
      * 
-     *  @Route("/ajax/toggle/", name="idolship_ajaxtoggle")
+     *  @Route("/ajax/toggle", name="idolship_ajaxtoggle")
      */
     public function ajaxToggleAction() {
         try {

@@ -31,33 +31,10 @@ class TeamController extends SiteController
 
     const LIMIT_ITEMS = 10;
 
-    /**
-     * @Route("/{slug}/", name= "team_wall")
-     * @Template()
-     */
-    public function wallTabAction($slug)
-    {
-        $repo = $this->getRepository('Team');
-        $team = $repo->findOneBy(array('slug' => $slug, 'active' => true));
-        if (!$team)
-            throw new HttpException(404, 'Equipo no encontrado');
-        else
-            $this->get('visitator')->visit($team);
-
-        $highlights = $this->getRepository('video')->highlights($team, 4);
-
-
-
-
-        return array(
-            'team' => $team,
-            'isHome' => true,
-            'highlights' => $highlights,
-        );
-    }
+    
 
     /**
-     * @Route("/{categorySlug}/", name= "team_list", defaults = {"categorySlug" = null})
+     * @Route("/list/{categorySlug}", name= "team_list", defaults = {"categorySlug" = null})
      * @Template()
      */
     public function listAction($categorySlug)
@@ -76,7 +53,7 @@ class TeamController extends SiteController
     }
 
     /**
-     *  @Route("/ajax/get/", name = "team_get") 
+     *  @Route("/ajax/get", name = "team_get") 
      */
     public function ajaxGetTeams()
     {
@@ -155,7 +132,7 @@ class TeamController extends SiteController
     /**
      * Toggle teamship
      * 
-     *  @Route("/ajax/toggle/", name="teamship_ajaxtoggle")
+     *  @Route("/ajax/toggle", name="teamship_ajaxtoggle")
      */
     public function ajaxToggleAction()
     {
@@ -208,7 +185,7 @@ class TeamController extends SiteController
     }
 
     /**
-     * @Route("/{slug}/twitter/", name= "team_twitter")
+     * @Route("/{slug}/twitter", name= "team_twitter")
      * @Template()
      */
     public function twitterTabAction($slug)
@@ -227,7 +204,7 @@ class TeamController extends SiteController
     }
 
     /**
-     *  @Route("/ajax/search/", name="team_ajaxsearch")
+     *  @Route("/ajax/search", name="team_ajaxsearch")
      */
     public function ajaxTeams()
     {
@@ -263,7 +240,7 @@ class TeamController extends SiteController
 
     /**
      *
-     * @Route("/ajax/favorite/", name="team_ajaxfavorite")
+     * @Route("/ajax/favorite", name="team_ajaxfavorite")
      */
     public function ajaxFavorite()
     {
@@ -325,7 +302,7 @@ class TeamController extends SiteController
     }
 
     /**
-     * @Route("/{slug}/photos/", name= "team_photos")
+     * @Route("/{slug}/photos", name= "team_photos")
      * @Template()
      */
     public function photosTabAction($slug)
@@ -351,7 +328,7 @@ class TeamController extends SiteController
 
     /**
      * team videos
-     * @Route("/{slug}/videos/", name="team_videos") 
+     * @Route("/{slug}/videos", name="team_videos") 
      * @Template()
      */
     public function videosTabAction($slug)
@@ -410,7 +387,7 @@ class TeamController extends SiteController
     }
 
     /**
-     *  @Route("/{slug}/info/", name="team_info")
+     *  @Route("/{slug}/info", name="team_info")
      *  @Template()
      */
     public function infoTabAction($slug)
@@ -434,7 +411,7 @@ class TeamController extends SiteController
     }
 
     /**
-     * @Route("/{slug}/fans/", name="team_fans")
+     * @Route("/{slug}/fans", name="team_fans")
      * @Template
      * @Secure(roles="ROLE_USER")
      */
@@ -462,7 +439,7 @@ class TeamController extends SiteController
     }
 
     /**
-     * @Route("/{slug}/idols/", name="team_idols")
+     * @Route("/{slug}/idols", name="team_idols")
      * @Template
      * @Secure(roles="ROLE_USER")
      */
@@ -492,7 +469,7 @@ class TeamController extends SiteController
     }
 
     /**
-     * @Route("/{slug}/eventos/", name="team_eventos")
+     * @Route("/{slug}/eventos", name="team_eventos")
      * @Template
      * @Secure(roles="ROLE_USER")
      */
@@ -512,6 +489,31 @@ class TeamController extends SiteController
         );
 
         return $return;
+    }
+    
+	/**
+     * @Route("/{slug}", name= "team_wall")
+     * @Template()
+     */
+    public function wallTabAction($slug)
+    {
+        $repo = $this->getRepository('Team');
+        $team = $repo->findOneBy(array('slug' => $slug, 'active' => true));
+        if (!$team)
+            throw new HttpException(404, 'Equipo no encontrado');
+        else
+            $this->get('visitator')->visit($team);
+
+        $highlights = $this->getRepository('video')->highlights($team, 4);
+
+
+
+
+        return array(
+            'team' => $team,
+            'isHome' => true,
+            'highlights' => $highlights,
+        );
     }
 
 }

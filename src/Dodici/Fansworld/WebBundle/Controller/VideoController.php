@@ -52,7 +52,7 @@ class VideoController extends SiteController
     /**
      * video list
      * 
-     * @Route("/video/list/", name="video_list")
+     * @Route("/video/list", name="video_list")
      * @Template
      */
     public function listAction()
@@ -99,7 +99,7 @@ class VideoController extends SiteController
     }
 
     /**
-     * @Route("/video/ajax/search/", name="video_ajaxsearch") 
+     * @Route("/video/ajax/search", name="video_ajaxsearch") 
      */
     public function ajaxSearchAction()
     {
@@ -197,7 +197,7 @@ class VideoController extends SiteController
     /**
      * video category page
      * 
-     * @Route("/video/category/{id}/{slug}/", name="video_category", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
+     * @Route("/video/category/{id}/{slug}", name="video_category", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
      * @Template
      */
     public function categoryAction($id)
@@ -235,7 +235,7 @@ class VideoController extends SiteController
 
     /**
      * get category videos
-     *  @Route("/video/ajax/category/", name="video_ajaxcategory") 
+     *  @Route("/video/ajax/category", name="video_ajaxcategory") 
      */
     public function ajaxCategoryVidsAction()
     {
@@ -276,7 +276,7 @@ class VideoController extends SiteController
     /**
      * Show by tag
      * 
-     * @Route("/video/tag/{slug}/", name = "video_tags")
+     * @Route("/video/tag/{slug}", name = "video_tags")
      * @Template()
      */
     public function tagsAction($slug)
@@ -314,7 +314,7 @@ class VideoController extends SiteController
     /**
      * search videos by tag
      * 
-     * @Route("/video/ajax/search-by-tag/", name="video_ajaxsearchbytag") 
+     * @Route("/video/ajax/search-by-tag", name="video_ajaxsearchbytag") 
      */
     public function ajaxSearchByTagAction()
     {
@@ -367,7 +367,7 @@ class VideoController extends SiteController
     }
 
     /**
-     * @Route("/video/ajax/highlighted-videos/", name="video_highlighted")
+     * @Route("/video/ajax/highlighted-videos", name="video_highlighted")
      */
     public function ajaxHighlightVideosAction()
     {
@@ -429,7 +429,7 @@ class VideoController extends SiteController
     }
 
     /**
-     * @Route("/video/ajax/visited-videos/", name="video_visited")
+     * @Route("/video/ajax/visited-videos", name="video_visited")
      */
     public function ajaxVisitVideosAction()
     {
@@ -501,7 +501,7 @@ class VideoController extends SiteController
     }
 
     /**
-     * @Route("/video/ajax/populars/", name="video_popular")
+     * @Route("/video/ajax/populars", name="video_popular")
      */
     public function popularVideosAction()
     {
@@ -560,7 +560,7 @@ class VideoController extends SiteController
     }
     
     /**
-     * @Route("/video/ajax/playerurl/", name="video_player_url")
+     * @Route("/video/ajax/playerurl", name="video_player_url")
      */
     public function playerUrlAction()
     {

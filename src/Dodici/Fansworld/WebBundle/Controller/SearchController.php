@@ -26,7 +26,7 @@ class SearchController extends SiteController
     const LIMIT_SEARCH_TEAM = 4;
 
     /**
-     * @Route("/search/", name = "search_home")
+     * @Route("/search", name = "search_home")
      * @Template()
      */
     public function indexAction()
@@ -109,7 +109,7 @@ class SearchController extends SiteController
     }
 
     /**
-     *  @Route("/ajax/search/", name="search_ajaxsearch")
+     *  @Route("/ajax/search", name="search_ajaxsearch")
      */
     public function ajaxSearchAction()
     {
@@ -209,7 +209,7 @@ class SearchController extends SiteController
 
 //     METODOS EN DESUSO
 //    /**
-//     * @Route("/search/fans/", name = "search_search")
+//     * @Route("/search/fans", name = "search_search")
 //     * @Template
 //     */
 //    public function searchAction()
@@ -238,7 +238,7 @@ class SearchController extends SiteController
 //    }
 //
 //    /**
-//     *  @Route("/ajax/search/", name = "search_ajaxsearch")
+//     *  @Route("/ajax/search", name = "search_ajaxsearch")
 //     *  
 //     */
 //    public function ajaxSearchAction()
@@ -291,7 +291,7 @@ class SearchController extends SiteController
 //    }
 //
 //    /**
-//     * @Route("/search/friends/", name="search_friends")
+//     * @Route("/search/friends", name="search_friends")
 //     * @Template
 //     */
 //    public function friendsAction()
@@ -309,7 +309,7 @@ class SearchController extends SiteController
 //    }
 //
 //    /**
-//     *  @Route("/ajax/friends/", name="search_ajaxfriends") 
+//     *  @Route("/ajax/friends", name="search_ajaxfriends") 
 //     */
 //    public function ajaxFriendsAction()
 //    {
@@ -367,7 +367,7 @@ class SearchController extends SiteController
 //    /**
 //     * Search Idols View
 //     * 
-//     * @Route("/search/idols/", name = "search_idols")
+//     * @Route("/search/idols", name = "search_idols")
 //     * @Template()
 //     */
 //    public function idolsAction()
@@ -376,7 +376,7 @@ class SearchController extends SiteController
 //    }
 //        
 //   /**
-//     * @Route("/search_box/{type}/{query}/{page}/", defaults={"type" =  false, "query" = false, "page" = 1}, name="search_box")
+//     * @Route("/search_box/{type}/{query}/{page}", defaults={"type" =  false, "query" = false, "page" = 1}, name="search_box")
 //     * @Template()
 //     */
 //    public function searchBoxAction($type, $query, $page)
@@ -403,7 +403,7 @@ class SearchController extends SiteController
 //    
 //    /**
 //     * Search Idols Ajax method
-//     * @Route("/search/idols/ajax/", name = "search_ajaxidols")
+//     * @Route("/search/idols/ajax", name = "search_ajaxidols")
 //     */
 //    public function ajaxIdolsAction()
 //    {

@@ -29,7 +29,7 @@ class IdolController extends SiteController
     const LIMIT_LIST_IDOL = 10;
 
     /**
-     * @Route("/", name="idol_home")
+     * @Route("", name="idol_home")
      * @Template
      */
     public function homeAction()
@@ -52,7 +52,7 @@ class IdolController extends SiteController
     }
 
     /**
-     * @Route("/ajax/list/", name="idol_ajaxlist")
+     * @Route("/ajax/list", name="idol_ajaxlist")
      */
     public function ajaxListAction()
     {
@@ -121,7 +121,7 @@ class IdolController extends SiteController
     }
 
     /**
-     * @Route("/{slug}/", name="idol_wall")
+     * @Route("/{slug}", name="idol_wall")
      * @Template
      */
     public function wallTabAction($slug)
@@ -142,7 +142,7 @@ class IdolController extends SiteController
     }
 
     /**
-     * @Route("/{slug}/twitter/", name= "idol_twitter")
+     * @Route("/{slug}/twitter", name= "idol_twitter")
      * @Template()
      */
     public function twitterTabAction($slug)
@@ -162,7 +162,7 @@ class IdolController extends SiteController
     }
 
     /**
-     * @Route("/{slug}/photos/", name="idol_photos")
+     * @Route("/{slug}/photos", name="idol_photos")
      * @Template
      */
     public function photosTabAction($slug)
@@ -189,7 +189,7 @@ class IdolController extends SiteController
     /**
      * Idol videos
      * 
-     *  @Route("/{slug}/videos/", name="idol_videos")
+     *  @Route("/{slug}/videos", name="idol_videos")
      *  @Template()
      */
     public function videosTabAction($slug)
@@ -247,7 +247,7 @@ class IdolController extends SiteController
     }
 
     /**
-     *  @Route("/{slug}/biography/", name="idol_biography")
+     *  @Route("/{slug}/biography", name="idol_biography")
      *  @Template()
      */
     public function infoTabAction($slug)
@@ -281,7 +281,7 @@ class IdolController extends SiteController
     }
 
     /**
-     * @Route("/{slug}/fans/", name="idol_fans")
+     * @Route("/{slug}/fans", name="idol_fans")
      * @Template
      */
     public function fansTabAction($slug)
@@ -309,7 +309,7 @@ class IdolController extends SiteController
     }
 
     /**
-     * @Route("/{slug}/eventos/", name="idol_eventos")
+     * @Route("/{slug}/eventos", name="idol_eventos")
      * @Template
      */
     public function eventosTabAction($slug)

@@ -22,7 +22,7 @@ class ComplaintController extends SiteController
     const LIMIT_LIST = 10;
 
     /**
-     * @Route("/ajax/report/", name= "complaint_make")
+     * @Route("/ajax/report", name= "complaint_make")
      * @Template
      */
     public function ajaxReportAction()
@@ -68,7 +68,7 @@ class ComplaintController extends SiteController
     
     /**
      * report form view
-     * @Route("/report/{entityType}/{entityId}/", name= "complaint_form")
+     * @Route("/report/{entityType}/{entityId}", name= "complaint_form")
      * @Template
      */
     public function reportAction($entityType, $entityId)
@@ -94,7 +94,7 @@ class ComplaintController extends SiteController
     
     /**
      * list complaints
-     * @Route("/reports/", name="complaint_list" )
+     * @Route("/reports", name="complaint_list" )
      * @Template
      * @Secure("ROLE_ADMIN")
      */
@@ -110,7 +110,7 @@ class ComplaintController extends SiteController
     
     /**
      * ajax list complaints 
-     * @Route("/ajax/reports/", name="complaint_ajaxlist")
+     * @Route("/ajax/reports", name="complaint_ajaxlist")
      */
     public function ajaxListComplaintsAction()
     {

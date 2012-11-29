@@ -28,7 +28,7 @@ class InterestController extends SiteController
     const LIMIT_AJAX_GET = 6;
 
     /**
-     * @Route("/edit/", name="interest_edit")
+     * @Route("/edit", name="interest_edit")
      * @Template
      * @Secure(roles="ROLE_USER")
      */
@@ -83,7 +83,7 @@ class InterestController extends SiteController
      *   - iduser
      *   - excludeuser (boolean)
      *   - page
-     *  @Route("/ajax/get/", name="interest_ajaxget")
+     *  @Route("/ajax/get", name="interest_ajaxget")
      */
     public function ajaxInterests()
     {
@@ -124,7 +124,7 @@ class InterestController extends SiteController
      *   - position (optional, string)
      *   - datefrom (optional)
      *   - dateto (optional)
-     *  @Route("/ajax/add/", name="interest_ajaxadd")
+     *  @Route("/ajax/add", name="interest_ajaxadd")
      */
     public function ajaxAdd()
     {
@@ -172,7 +172,7 @@ class InterestController extends SiteController
      *  remove an interest
      *  get params:
      *   - id (interest)
-     *  @Route("/ajax/delete/", name="interest_ajaxdelete")
+     *  @Route("/ajax/delete", name="interest_ajaxdelete")
      */
     public function ajaxDelete()
     {

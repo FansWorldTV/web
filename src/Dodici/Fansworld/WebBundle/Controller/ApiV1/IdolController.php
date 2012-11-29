@@ -24,7 +24,7 @@ class IdolController extends BaseController
 	/**
      * Idol - list
      * 
-     * @Route("/idol/list/", name="api_idol_list")
+     * @Route("/idol/list", name="api_idol_list")
      * @Method({"GET"})
      *
      * Get params:
@@ -96,7 +96,7 @@ class IdolController extends BaseController
 	/**
      * Idol - show
      * 
-     * @Route("/idol/{id}/", name="api_idol_show", requirements = {"id" = "\d+"})
+     * @Route("/idol/{id}", name="api_idol_show", requirements = {"id" = "\d+"})
      * @Method({"GET"})
      *
      * Get params:

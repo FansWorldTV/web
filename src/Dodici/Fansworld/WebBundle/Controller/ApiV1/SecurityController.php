@@ -24,7 +24,7 @@ class SecurityController extends BaseController
 	/**
      * [signed] Register
      * 
-     * @Route("/register/", name="api_v1_register")
+     * @Route("/register", name="api_v1_register")
      * @Method({"POST"})
      * 
      * Post params:
@@ -121,7 +121,7 @@ class SecurityController extends BaseController
     /**
      * [signed] Login
      * 
-     * @Route("/login/", name="api_v1_login")
+     * @Route("/login", name="api_v1_login")
      * @Method({"POST"})
      *
      * Post params:
@@ -182,7 +182,7 @@ class SecurityController extends BaseController
 	/**
      * [signed] Facebook Connect
      * 
-     * @Route("/connect/facebook/", name="api_v1_connect_facebook")
+     * @Route("/connect/facebook", name="api_v1_connect_facebook")
      * @Method({"POST"})
      * 
      * - If user already exists and is linked to FB: regular login
@@ -236,7 +236,7 @@ class SecurityController extends BaseController
 	/**
      * [signed] Reset password
      * 
-     * @Route("/password/reset/", name="api_v1_password_reset")
+     * @Route("/password/reset", name="api_v1_password_reset")
      * @Method({"POST"})
      * 
      * Sends an email with a reset password link to the user
@@ -291,7 +291,7 @@ class SecurityController extends BaseController
 	/**
      * [signed] Change password
      * 
-     * @Route("/password/change/", name="api_v1_password_change")
+     * @Route("/password/change", name="api_v1_password_change")
      * @Method({"POST"})
      * 
      * Changes a user's password

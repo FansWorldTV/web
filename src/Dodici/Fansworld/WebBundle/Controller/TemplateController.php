@@ -22,7 +22,7 @@ class TemplateController extends SiteController
 
     /**
      * Get Comment Template
-     * @Route("/ajax/get/comment/", name="template_comment")
+     * @Route("/ajax/get/comment", name="template_comment")
      * @Template
      */
     public function commentAction()
@@ -37,7 +37,7 @@ class TemplateController extends SiteController
 
     /**
      * Get Video Template
-     * @Route("/ajax/get/video/", name="template_video")
+     * @Route("/ajax/get/video", name="template_video")
      * @Template
      */
     public function videoAction()
@@ -52,7 +52,7 @@ class TemplateController extends SiteController
 
     /**
      * Get Photo Template
-     * @Route("/ajax/get/photo/", name="template_photo")
+     * @Route("/ajax/get/photo", name="template_photo")
      * @Template
      */
     public function photoAction()
@@ -67,7 +67,7 @@ class TemplateController extends SiteController
 
     /**
      * Get General Template
-     * @Route("/ajax/get/general/", name="template_general")
+     * @Route("/ajax/get/general", name="template_general")
      * @Template
      */
     public function generalAction()
@@ -82,7 +82,7 @@ class TemplateController extends SiteController
 
     /**
      * Get Event Template
-     * @Route("/ajax/get/event/", name="template_event")
+     * @Route("/ajax/get/event", name="template_event")
      * @Template
      */
     public function eventAction()
@@ -97,7 +97,7 @@ class TemplateController extends SiteController
 
     /**
      * Get Team Template
-     * @Route("/ajax/get/team/", name="template_team")
+     * @Route("/ajax/get/team", name="template_team")
      * @Template
      */
     public function teamAction()
@@ -112,7 +112,7 @@ class TemplateController extends SiteController
 
     /**
      * Get Idol Template
-     * @Route("/ajax/get/idol/", name="template_idol")
+     * @Route("/ajax/get/idol", name="template_idol")
      * @Template
      */
     public function idolAction()
@@ -127,7 +127,7 @@ class TemplateController extends SiteController
 
     /**
      * Get Search template
-     * @Route("/ajax/get/search/", name="template_search")
+     * @Route("/ajax/get/search", name="template_search")
      * @Template
      */
     public function searchAction()

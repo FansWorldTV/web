@@ -26,7 +26,7 @@ class ShareController extends SiteController
 
     /**
      * 
-     * @Route("/ajax/share/", name="share_ajax")
+     * @Route("/ajax/share", name="share_ajax")
      */
     public function ajaxShareAction()
     {
@@ -114,7 +114,7 @@ class ShareController extends SiteController
     }
 
     /**
-     *  @Route("/ajax/sharewith/", name="share_ajaxwith") 
+     *  @Route("/ajax/sharewith", name="share_ajaxwith") 
      */
     public function ajaxShareWithAction()
     {

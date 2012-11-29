@@ -24,7 +24,7 @@ class DeleteController extends SiteController
 
     /**
      * 
-     * @Route("/ajax/delete/", name="delete_ajax")
+     * @Route("/ajax/delete", name="delete_ajax")
      */
     public function ajaxDeleteAction()
     {

@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ProposalController extends SiteController
 {
 	/**
-     * @Route("/{id}/{slug}/", name= "proposal_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
+     * @Route("/{id}/{slug}", name= "proposal_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
      */
     public function showAction($id)
     {

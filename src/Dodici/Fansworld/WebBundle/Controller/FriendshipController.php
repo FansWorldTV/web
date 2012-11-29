@@ -21,7 +21,7 @@ class FriendshipController extends SiteController {
     /**
      * Add friend
      * 
-     *  @Route("/ajax/add-friend/", name="friendship_ajaxaddfriend")
+     *  @Route("/ajax/add-friend", name="friendship_ajaxaddfriend")
      */
     public function ajaxAddFriendAction() {
         try {
@@ -73,7 +73,7 @@ class FriendshipController extends SiteController {
     /**
      * Delete friendship
      * 
-     * @Route("/ajax/cancel-friend/", name="friendship_ajaxcancelfriend")
+     * @Route("/ajax/cancel-friend", name="friendship_ajaxcancelfriend")
      */
     public function ajaxCancelFriendshipAction() {
         $response = array('error' => false);
@@ -96,7 +96,7 @@ class FriendshipController extends SiteController {
     /**
      *  User friendships
      * 
-     *  @Route("/su/{username}/fans/", name="friendship_user")
+     *  @Route("/su/{username}/fans", name="friendship_user")
      *  @Template
      */
     public function userFriendshipsAction($username) {

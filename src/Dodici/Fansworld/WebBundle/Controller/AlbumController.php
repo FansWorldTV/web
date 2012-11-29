@@ -28,7 +28,7 @@ class AlbumController extends SiteController
     const LIMIT_ALBUMS = 8;
 
     /**
-     * @Route("/{id}/{slug}/", name= "album_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
+     * @Route("/{id}/{slug}", name= "album_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
      * @Template()
      */
     public function showAction($id)
@@ -44,7 +44,7 @@ class AlbumController extends SiteController
     }
 
     /**
-     * @Route("/{id}/", name= "album_comments", requirements = {"id" = "\d+"})
+     * @Route("/{id}", name= "album_comments", requirements = {"id" = "\d+"})
      */
     public function commentsAction($id)
     {
@@ -53,7 +53,7 @@ class AlbumController extends SiteController
     }
 
     /**
-     * @Route("/create/", name="album_create")
+     * @Route("/create", name="album_create")
      * @Secure(roles="ROLE_USER")
      * @Template
      */
@@ -104,7 +104,7 @@ class AlbumController extends SiteController
     }
 
     /**
-     *  @Route("/ajax/get/", name = "album_get") 
+     *  @Route("/ajax/get", name = "album_get") 
      */
     public function ajaxGetAlbums()
     {

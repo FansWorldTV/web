@@ -18,7 +18,7 @@ class AboutController extends SiteController
 {
     /**
      * terms and condition's view
-     * @Route("/terms/", name="about_terms")
+     * @Route("/terms", name="about_terms")
      * @Template
      */
     public function termsAction()

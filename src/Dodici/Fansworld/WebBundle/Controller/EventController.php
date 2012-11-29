@@ -28,7 +28,7 @@ class EventController extends SiteController
     const LIMIT_EVENTS = 12;
 
     /**
-     * @Route("/{id}/{slug}/", name= "event_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
+     * @Route("/{id}/{slug}", name= "event_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
      * @Secure(roles="ROLE_USER")
      * @Template
      */
@@ -56,7 +56,7 @@ class EventController extends SiteController
     }
 
     /**
-     * @Route("/ajax/get/", name= "event_get")
+     * @Route("/ajax/get", name= "event_get")
      */
     public function getAjaxEventsAction()
     {
@@ -139,7 +139,7 @@ class EventController extends SiteController
     }
 
     /**
-     * @Route("/ajax/comment/", name="event_ajaxcomment")
+     * @Route("/ajax/comment", name="event_ajaxcomment")
      */
     public function ajaxCommentAction()
     {
@@ -185,7 +185,7 @@ class EventController extends SiteController
     }
 
     /**
-     * @Route("/ajax/getmonth/", name= "event_getmonth")
+     * @Route("/ajax/getmonth", name= "event_getmonth")
      */
     public function getMonthEventsAction()
     {
@@ -223,7 +223,7 @@ class EventController extends SiteController
     }
 
     /**
-     * @Route("/", name= "event_home" )
+     * @Route("", name= "event_home" )
      * @Template
      */
     public function homeTabAction()
@@ -253,7 +253,7 @@ class EventController extends SiteController
     }
 
     /**
-     * @Route("/checkin/{id}/", name="event_checkin", requirements = {"id" = "\d+"}) 
+     * @Route("/checkin/{id}", name="event_checkin", requirements = {"id" = "\d+"}) 
      * @Template
      */
     public function checkInAction($id)
@@ -270,7 +270,7 @@ class EventController extends SiteController
     }
 
     /**
-     *  @Route("/ajax/checkin/", name="event_checkinajax")
+     *  @Route("/ajax/checkin", name="event_checkinajax")
      */
     public function doCheckInAction()
     {
@@ -322,7 +322,7 @@ class EventController extends SiteController
     }
 
     /**
-     * @Route("/getwallelements/", name= "event_getwallelements")
+     * @Route("/getwallelements", name= "event_getwallelements")
      * @Template
      */
     public function getWallElementsAction()
@@ -419,7 +419,7 @@ class EventController extends SiteController
     }
 
     /**
-     * @Route("/getincident/", name= "event_getincident")
+     * @Route("/getincident", name= "event_getincident")
      * @Template
      */
     public function getIncidentAction()
@@ -433,7 +433,7 @@ class EventController extends SiteController
     }
 
     /**
-     * @Route("/gettweet/", name= "event_gettweet")
+     * @Route("/gettweet", name= "event_gettweet")
      * @Template
      */
     public function getTweetAction()
@@ -448,7 +448,7 @@ class EventController extends SiteController
     }
 
     /**
-     * @Route("/getcomment/", name= "event_getcomment")
+     * @Route("/getcomment", name= "event_getcomment")
      * @Template
      */
     public function getCommentAction()
@@ -469,7 +469,7 @@ class EventController extends SiteController
      */
 
     /**
-     * @Route("/addincident/{eventid}/{teamid}/", name= "event_addincident")
+     * @Route("/addincident/{eventid}/{teamid}", name= "event_addincident")
      * @Template
      */
     public function addIncidentAction($eventid, $teamid)
@@ -497,7 +497,7 @@ class EventController extends SiteController
     }
 
     /**
-     * @Route("/addtwincident/{eventid}/{teamid}/", name= "event_addtwincident")
+     * @Route("/addtwincident/{eventid}/{teamid}", name= "event_addtwincident")
      * @Template
      */
     public function addTwIncidentAction($eventid, $teamid)
@@ -520,7 +520,7 @@ class EventController extends SiteController
     }
 
     /**
-     * @Route("/addcomment/{eventid}/{teamid}/{user}/", name= "event_addcomment")
+     * @Route("/addcomment/{eventid}/{teamid}/{user}", name= "event_addcomment")
      * @Template
      */
     public function addCommentAction($eventid, $teamid, $user)
@@ -545,7 +545,7 @@ class EventController extends SiteController
     }
 
     /**
-     * @Route("/eventship/add/", name="event_eventship_add")
+     * @Route("/eventship/add", name="event_eventship_add")
      * @Method({"POST"})
      */
     public function addEventshipAction()
@@ -576,7 +576,7 @@ class EventController extends SiteController
     }
 
     /**
-     * @Route("/eventship/remove/", name="event_eventship_remove")
+     * @Route("/eventship/remove", name="event_eventship_remove")
      * @Method({"POST"})
      */
     public function removeEventshipAction()
@@ -599,7 +599,7 @@ class EventController extends SiteController
     }
 
     /**
-     * @Route("/eventship/get/", name="event_ajaxeventship")
+     * @Route("/eventship/get", name="event_ajaxeventship")
      */
     public function getAjaxEventship()
     {
@@ -622,7 +622,7 @@ class EventController extends SiteController
     }
 
     /**
-     * @Route("/test/addeventship/", name="event_addeventship")
+     * @Route("/test/addeventship", name="event_addeventship")
      */
     public function testAddEventship()
     {
