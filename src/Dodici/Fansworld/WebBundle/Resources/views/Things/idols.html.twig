@@ -1,8 +1,30 @@
-{% extends "DodiciFansworldWebBundle:Things:base.html.twig" %}
+{% extends "DodiciFansworldWebBundle:Layout:one_column.html.twig" %}
 
 
-{% block content %}
-{% endblock %}
+{% block main_content %}
+    {% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_rsidebar.html.twig" %}
+            {% block inner_content %}
+                <header class="user_profile_head profile_head  small   row-fluid">
+                    {% include 'DodiciFansworldWebBundle:User/Profile:header_small.html.twig' with {'entity': user}%}
+                </header>
+                <div class="row-fluid">
+                    {% set c = 0 %}
+                    {% for idol in idols %}
+                        {% set c = c+1 %}
+                        {% if c == 3 %}
+                            {% set c = 0 %}
+                            {% set third = true %}
+                        {% else %}
+                            {% set third = false %}
+                        {% endif %}
 
-{% block sidebar %}
+                        {% include 'DodiciFansworldWebBundle:Default:blocks/entity_widget.html.twig' with {'entity': idol, 'third': third} %}
+                    {% endfor %}
+                </div>
+            {% endblock %}
+
+            {% block inner_sidebar %}
+                cacaaaaaaaaaaaaa
+            {% endblock %}
+    {% endembed %}		
 {% endblock %}

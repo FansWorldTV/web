@@ -39,7 +39,7 @@ class ThingsController extends SiteController
         foreach ($idolships as $idolship) {
             array_push($idols, $idolship->getIdol());
         }
-
+        
         return array(
             'user' => $user,
             'idols' => $idols,

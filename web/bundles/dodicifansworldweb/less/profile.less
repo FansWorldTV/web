@@ -568,11 +568,13 @@ div.entityBlock {
     margin-right: 5%;
     margin-bottom: 15px;
     .box-sizing(border-box);
-    .border-radius(3px);
+    .border-radius(10px);
 
     .splash {
         height: 100px;
         overflow: hidden;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
     }
 
     .logo {
@@ -582,10 +584,18 @@ div.entityBlock {
         position: absolute;
         right: 10px;
         top: 64px;
-        padding: 3px;
+        padding: 1px;
 
         img {
-            .size(70px, initial);
+            .border-radius(5px);
+            .size(75px, auto);
+            background: -moz-linear-gradient(-45deg,  rgba(15,15,15,0.65) 0%, rgba(3,3,3,0) 50%, rgba(0,0,0,0) 63%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(15,15,15,0.65)), color-stop(50%,rgba(3,3,3,0)), color-stop(63%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(-45deg,  rgba(15,15,15,0.65) 0%,rgba(3,3,3,0) 50%,rgba(0,0,0,0) 63%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(-45deg,  rgba(15,15,15,0.65) 0%,rgba(3,3,3,0) 50%,rgba(0,0,0,0) 63%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(-45deg,  rgba(15,15,15,0.65) 0%,rgba(3,3,3,0) 50%,rgba(0,0,0,0) 63%); /* IE10+ */
+            background: linear-gradient(135deg,  rgba(15,15,15,0.65) 0%,rgba(3,3,3,0) 50%,rgba(0,0,0,0) 63%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a60f0f0f', endColorstr='#00000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
         }
     }
 
