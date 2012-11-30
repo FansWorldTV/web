@@ -123,7 +123,7 @@ class VideoController extends BaseController
                             $rv['author'] = $video->getAuthor() ? $this->userArray($video->getAuthor()) : null;
                             break;
                         case 'createdAt':
-                            $rv['createdAt'] = $video->getCreatedAt()->format('U');
+                            $rv['createdAt'] = (int)$video->getCreatedAt()->format('U');
                             break;
                         default:
                             $methodname = 'get'.ucfirst($x);
@@ -220,7 +220,7 @@ class VideoController extends BaseController
                         $return['author'] = $video->getAuthor() ? $this->userArray($video->getAuthor()) : null;
                         break;
                     case 'createdAt':
-                        $return['createdAt'] = $video->getCreatedAt()->format('U');
+                        $return['createdAt'] = (int)$video->getCreatedAt()->format('U');
                         break;
                     case 'tagged_idols':
                         $has = $video->getHasidols();

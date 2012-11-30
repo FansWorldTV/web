@@ -28,7 +28,7 @@ class UtilController extends BaseController
     public function syncAction()
     {
         $now = new \DateTime();
-        return $this->jsonResponse($now->format('U'));
+        return $this->jsonResponse((int)$now->format('U'));
     }
     
 	/**

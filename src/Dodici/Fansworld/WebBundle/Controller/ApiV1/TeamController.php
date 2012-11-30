@@ -145,7 +145,7 @@ class TeamController extends BaseController
             foreach ($extrafields as $x) {
                 switch ($x) {
                     case 'foundedAt':
-                        $return['foundedAt'] = $team->getFoundedAt() ? $team->getFoundedAt()->format('U') : null;
+                        $return['foundedAt'] = $team->getFoundedAt() ? (int)$team->getFoundedAt()->format('U') : null;
                         break;
                     case 'splash':
                         $return['splash'] = $team->getSplash() ? $this->get('appmedia')->getImageUrl($team->getSplash()) : null;

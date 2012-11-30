@@ -57,7 +57,7 @@ class BaseController extends SiteController
         if (!is_numeric($timestamp)) throw new HttpException(400, 'Invalid timestamp');
         $apikey = $this->getApiKeyByKey($key);
 		$now = new \DateTime();
-		$currentts = $now->format('U');
+		$currentts = (int)$now->format('U');
 		$tsdiff = abs($timestamp - $currentts);
 		if ($tsdiff > self::TIMESTAMP_MARGIN) throw new HttpException(400, 'Timestamp is too old');
 		
