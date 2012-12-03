@@ -88,13 +88,14 @@ class VideoRepository extends CountBaseRepository
         }
 
         $query = $this->_em->createQuery('
-    	SELECT v, va '.
+    	SELECT v, vi, va '.
         
         ($related ? ', (COUNT(vhtag) + COUNT(vhteam) + COUNT(vhidol)) common' : '') .
         ($recommended ? ', (COUNT(vhrecteam) + COUNT(vhrecidol)) commonrec' : '')
         .'
     	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
     	LEFT JOIN v.author va
+    	LEFT JOIN v.image vi
     	'.
     	
         ($taggedentity ? ' INNER JOIN v.has' . $type . 's vhh ' : '').
@@ -582,5 +583,66 @@ class VideoRepository extends CountBaseRepository
         return $this->countSearch(
             $text, $user, null, null, null, null, null, null, null, null, null, $tag
         );
+    }
+    
+    /**
+     * Return videos that have been tagged with a team that the user is a fan of
+     * @param User $user
+     * @param int|null $limit
+     */
+    public function commonTeams(User $user, $limit=null)
+    {
+        $query = $this->_em->createQuery('
+    	SELECT v, vi, va, COUNT(vhfavteam) as favcnt
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
+    	LEFT JOIN v.image vi
+    	LEFT JOIN v.author va
+    	JOIN v.hasteams vhrecteam
+            WITH (vhrecteam.team IN (SELECT recishteam.id FROM \Dodici\Fansworld\WebBundle\Entity\Teamship rectship JOIN rectship.team recishteam WHERE rectship.author = :user))
+        LEFT JOIN v.hasteams vhfavteam
+        	WITH (vhfavteam.team IN (SELECT favishteam.id FROM \Dodici\Fansworld\WebBundle\Entity\Teamship favtship JOIN favtship.team favishteam WHERE favtship.author = :user AND favtship.favorite = true))
+    	WHERE
+    	v.active = true
+    	GROUP BY v
+    	ORDER BY favcnt DESC, v.weight DESC
+    	')
+        ->setParameter('user', $user->getId())
+        ;
+
+        if ($limit !== null)
+            $query = $query->setMaxResults((int) $limit);
+
+        $videos = array();
+        $res = $query->getResult();
+        foreach ($res as $r) $videos[] = $r[0];
+        return $videos;
+    }
+    
+    /**
+     * Return videos that have been tagged with an idol that the user is a fan of
+     * @param User $user
+     * @param int|null $limit
+     */
+    public function commonIdols(User $user, $limit=null)
+    {
+        $query = $this->_em->createQuery('
+    	SELECT v, vi, va
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
+    	LEFT JOIN v.image vi
+    	LEFT JOIN v.author va
+    	JOIN v.hasidols vhrecidol
+            WITH (vhrecidol.idol IN (SELECT recishidol.id FROM \Dodici\Fansworld\WebBundle\Entity\Idolship reciship JOIN reciship.idol recishidol WHERE reciship.author = :user))
+    	WHERE
+    	v.active = true
+    	GROUP BY v
+    	ORDER BY v.weight DESC
+    	')
+        ->setParameter('user', $user->getId())
+        ;
+
+        if ($limit !== null)
+            $query = $query->setMaxResults((int) $limit);
+
+        return $query->getResult();
     }
 }
