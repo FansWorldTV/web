@@ -216,14 +216,14 @@ class BaseController extends SiteController
         return $this->jsonResponse($return, $code);
     }
     
-    protected function pagination($allowedsorts = array(), $defaultsort = null, $allowedorders = array('ASC', 'DESC'))
+    protected function pagination($allowedsorts = array(), $defaultsort = null, $defaultorder = null, $allowedorders = array('ASC', 'DESC'))
     {
         $request = $this->getRequest();
         $limit = $request->get('limit', self::LIMIT_DEFAULT);
         $offset = $request->get('offset');
         $page = $request->get('page');
         $sort = $request->get('sort', $defaultsort);
-        $sortorder = $request->get('sort_order', 'DESC');
+        $sortorder = $request->get('sort_order', $defaultorder ?: 'DESC');
         $sortorder = ($sortorder ? strtoupper($sortorder) : null);
         
         if ($offset && $page) throw new HttpException(400, 'Cannot specify both offset and page at the same time');

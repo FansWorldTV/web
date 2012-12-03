@@ -346,7 +346,11 @@ class VideoController extends BaseController
      * @Route("/video/categories", name="api_video_categories")
      * @Method({"GET"})
      *
-     * Get params: none
+     * Get params:
+     * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
+     * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
+     * - <optional> sort: 'title' (default: title)
+     * - <optional> sort_order: 'asc'|'desc' (default: desc)
      * 
      * @return 
      * array (
@@ -361,7 +365,14 @@ class VideoController extends BaseController
     public function categoriesAction()
     {
     try {
-            $categories = $this->getRepository('VideoCategory')->findAll();
+            $pagination = $this->pagination(array('title'), 'title', 'ASC');
+            
+            $categories = $this->getRepository('VideoCategory')->findBy(
+                array(),
+                array($pagination['sort'] => $pagination['sort_order']),
+                $pagination['limit'],
+                $pagination['offset']
+            );
             
             $return = array();
             
@@ -372,7 +383,7 @@ class VideoController extends BaseController
                 );
             }
             
-            return $this->result($return);
+            return $this->result($return, $pagination);
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
