@@ -39,11 +39,21 @@ class ThingsController extends SiteController
         foreach ($idolships as $idolship) {
             array_push($idols, $idolship->getIdol());
         }
-        
+
+        $ranking = array();
+        $idolsRank = $this->getRepository('Idol')->findBy(array(), array('fanCount' => 'desc'), 10);
+        foreach ($idolsRank as $idol) {
+            array_push($ranking, $idol);
+        }
+
+        $lastVideos = $this->getRepository('Video')->commonIdols($user, 4);
+
         return array(
             'user' => $user,
             'idols' => $idols,
-            'selfWall' => true
+            'selfWall' => true,
+            'ranking' => $ranking,
+            'lastVideos' => $lastVideos
         );
     }
 
@@ -56,6 +66,7 @@ class ThingsController extends SiteController
     public function teamsAction()
     {
         $user = $this->getUser();
+        $teamRepo = $this->getRepository('Team');
         $teamshipRepo = $this->getRepository('Teamship');
         $teamships = $teamshipRepo->findBy(array('author' => $user->getId()), array('favorite' => 'desc', 'score' => 'desc', 'createdAt' => 'desc'), self::TEAMS_LIMIT);
 
@@ -64,10 +75,21 @@ class ThingsController extends SiteController
             array_push($teams, $teamship->getTeam());
         }
 
+        $ranking = array();
+        $teamsRank = $teamRepo->findBy(array(), array('fanCount' => 'desc'), 10);
+        foreach ($teamsRank as $team) {
+            array_push($ranking, $team);
+        }
+
+        $lastTeamsSearch = $this->getRepository('Video')->commonTeams($user, 4);
+
+
         return array(
             'user' => $user,
             'teams' => $teams,
-            'selfWall' => true
+            'selfWall' => true,
+            'lastTeams' => $lastTeamsSearch,
+            'teamsRank' => $ranking
         );
     }
 

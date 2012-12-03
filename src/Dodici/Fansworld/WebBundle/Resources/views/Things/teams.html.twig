@@ -2,29 +2,85 @@
 
 
 {% block main_content %}
-    {% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_rsidebar.html.twig" %}
-            {% block inner_content %}
-                <header class="user_profile_head profile_head  small   row-fluid">
-                    {% include 'DodiciFansworldWebBundle:User/Profile:header_small.html.twig' with {'entity': user}%}
-                </header>
-                <div class="row-fluid">
-                    {% set c = 0 %}
-                    {% for team in teams %}
-                        {% set c = c+1 %}
-                        {% if c == 3 %}
-                            {% set c = 0 %}
-                            {% set third = true %}
+    <div class="row-fluid">
+        <div class="span9">
+            <header class="user_profile_head profile_head  small   row-fluid">
+                {% include 'DodiciFansworldWebBundle:User/Profile:header_small.html.twig' with {'entity': user}%}
+            </header>
+            <div class="row-fluid">
+                {% set c = 0 %}
+                {% for team in teams %}
+                    {% set c = c+1 %}
+                    {% if c == 3 %}
+                        {% set c = 0 %}
+                        {% set third = true %}
+                    {% else %}
+                        {% set third = false %}
+                    {% endif %}
+
+                    {% include 'DodiciFansworldWebBundle:Default:blocks/entity_widget.html.twig' with {'entity': team, 'third': third} %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="span3 things-sidebar">
+            <section class="notification">
+                <h4>NOTIFICACIONES <span class="midline"></span></h4>
+            </section>
+            
+            <section class="ranking">
+                <h4>RANKING DE EQUIPOS <span class="midline"></span></h4>
+                
+                {% for team in teamsRank %}
+                    {% if loop.first %}
+                        <div class="block">
+                            {% thumbnail team.image, 'avatar' %}
+                            <span class="title">{{ team }}</span>
+                            <ul>
+                                <li class="fan-count">
+                                    {{ team.fanCount }}
+                                    <br/>
+                                    <span>fans</span>
+                                </li>
+                                <li class="video-count">
+                                    {{ team.videoCount }}
+                                    <br/>
+                                    <span>videos</span>
+                                </li>
+                                <li class="photo-count">
+                                    {{ team.photoCount }}
+                                    <br/>
+                                    <span>photos</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="clearfix"></div>
+                    {% else %}
+                        {% thumbnail team.image, 'headeravatar' %}
+                    {% endif %}
+                {% endfor %}
+                <div class="clearfix"></div>
+            </section>
+            
+            {% if lastTeams|length > 0 %}
+                <section class="news">
+                    <h4>ULTIMOS DE EQUIPOS <span class="midline"></span></h4>
+                    {% for video in lastTeams %}
+                        {% if loop.first %}
+                            <div class="video-element first">
+                                <span class="title">{{ video.title }}</span>
+                                <span class="duration">{{ video.duration|date("i:s") }}</span>
+                                <img src="{{ asset('bundles/dodicifansworldweb/images/play_icon.png') }}" alt="Play" class="play"/>
+                                {% thumbnail video.image, 'medium' %}
+                            </div>
                         {% else %}
-                            {% set third = false %}
+                            <div class="video-element">
+                                <img src="{{ asset('bundles/dodicifansworldweb/images/play_icon.png') }}" alt="Play" class="play"/>
+                                {% thumbnail video.image, 'small' %}
+                            </div>
                         {% endif %}
-
-                        {% include 'DodiciFansworldWebBundle:Default:blocks/entity_widget.html.twig' with {'entity': team, 'third': third} %}
                     {% endfor %}
-                </div>
-            {% endblock %}
-
-            {% block inner_sidebar %}
-                cacaaaaaaaaaaaaa
-            {% endblock %}
-    {% endembed %}		
+                </section>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
