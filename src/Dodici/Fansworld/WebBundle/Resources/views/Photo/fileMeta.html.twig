@@ -67,8 +67,15 @@
                 <form action="{{ path('photo_filemeta', {'tempFile': tempFile, 'originalFile': originalFile, 'ext' : ext }) }}" method="post" enctype="multipart/form-data" class="bigform upload-photo" name="frmUpload">
 
                     <div class="title-upload">Subir foto</div>
-                    <button class="btn btn-mini" id="cropButton" type="button"><i class="icon-resize-small"></i>Recortar</button>
-                    <img src="../../../../uploads/temp/{{tempFile}}" id="cropbox" />
+
+                    <div class="row-fluid">
+                        <section class="span2">
+                            <img src="../../../../uploads/temp/{{tempFile}}" id="cropbox" />
+                        </section>
+                        <aside class="span3">
+                            <button class="btn btn-mini" id="cropButton" type="button"><i class="icon-resize-small"></i>Recortar</button>
+                        </aside>
+                    </div>
 
                         <p class="filename"><small></small></p>
                             {{ form_errors(form) }}
