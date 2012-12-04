@@ -364,7 +364,7 @@ class VideoController extends BaseController
      */
     public function categoriesAction()
     {
-    try {
+        try {
             $pagination = $this->pagination(array('title'), 'title', 'ASC');
             
             $categories = $this->getRepository('VideoCategory')->findBy(

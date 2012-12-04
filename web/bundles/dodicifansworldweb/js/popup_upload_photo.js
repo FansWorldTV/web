@@ -57,6 +57,7 @@ function bindFormSubmit() {
 function bindFormActions() {
     bindFormSubmit();
     bindAlbumActions();
+    setTimeout(function(){ resizePopup(); }, 1000);
 }
 
 function createUploader() {            
@@ -71,7 +72,7 @@ function createUploader() {
             if(responseJSON.success) {
                 $.colorbox({
                     href: Routing.generate(appLocale + '_photo_filemeta', 
-                        {'tempFile':responseJSON.tempFile, 'originalFile': responseJSON.originalFile, 'ext': responseJSON.ext}),
+                        {'originalFile': responseJSON.originalFile, 'tempFile':responseJSON.tempFile}),
                     iframe: false, 
                     innerWidth: 700, 
                     innerHeight: 700,

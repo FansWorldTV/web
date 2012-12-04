@@ -248,24 +248,20 @@ class PhotoController extends SiteController
 
         if ($request->getMethod() == 'POST') {
             $originalFileName = $request->get('qqfile');
-            $originalFile = substr($originalFileName, 0, -4);
-            $ext = substr($originalFileName, -3);
 
             $response = array('error' => 'Could not save uploaded file.' . 'The upload was cancelled, or server error encountered');
             $image = null;
 
             $input = fopen("php://input", "r");
             $imagecontent = stream_get_contents($input);
-            $tempFile = tempnam("uploads/temp", 'IMG');
+            $tempFile = tempnam("/tmp", 'IMG');
+            
             file_put_contents($tempFile, $imagecontent);
             fclose($input);
 
             if (file_exists($tempFile)) {
-                $pathinfo = pathinfo($tempFile);
-                $filename = $pathinfo['filename'];
-                $ext = $pathinfo['extension'];
-                $tmpFileName =  $filename . '.' . $ext;
-                $response = array('success' => true, 'tempFile' => $tmpFileName, 'originalFile' => $originalFile, 'ext' => $ext);
+                $tmpFileName = basename($tempFile);
+                $response = array('success' => true, 'tempFile' => $tmpFileName, 'originalFile' => $originalFileName);
             } else {
                 $response = array('success' => false, 'tempFile' => '');
             }
@@ -275,13 +271,21 @@ class PhotoController extends SiteController
     }
 
     /**
-     * @Route("/fileupload/{tempFile}/{originalFile}/{ext}", name="photo_filemeta")
+     * @Route("/filemeta", name="photo_filemeta")
      * @Secure(roles="ROLE_USER")
      * @Template
      */
-    public function fileMetaAction($tempFile, $originalFile, $ext)
+    public function fileMetaAction()
     {
         $request = $this->getRequest();
+        
+        $tempFile = $request->get('tempFile');
+        $originalFileName = $request->get('originalFile');
+        
+        $lastdot = strrpos($originalFileName, '.');
+        $originalFile = substr($originalFileName, 0, $lastdot);
+        $ext = substr($originalFileName, $lastdot);
+        
         $redirectColorBox = false;
     
         $user = $this->getUser();
@@ -310,7 +314,7 @@ class PhotoController extends SiteController
                         "cropW" => $data['w'],
                         "cropH" => $data['h'],
                         "tempFile" => $tempFile,
-                        "originalFile" => $originalFile,
+                        "originalFile" => $originalFileName,
                         "extension" => $ext
                     );
                     $media = $this->_GenerateMediaCrop($cropOptions);
@@ -345,7 +349,7 @@ class PhotoController extends SiteController
                 $form->addError(new FormError($this->trans('upload_error')));
             }
         }
-        return array('photo' => $photo, 'form' => $form->createView(), 'idolToTag' => $idolToTag, 'tempFile' => $tempFile, 'originalFile' => $originalFile, 'ext' => $ext, 'redirectColorBox' => $redirectColorBox);
+        return array('photo' => $photo, 'form' => $form->createView(), 'idolToTag' => $idolToTag, 'tempFile' => $tempFile, 'originalFile' => $originalFileName, 'ext' => $ext, 'redirectColorBox' => $redirectColorBox);
     }
 
     private function _createForm ($userId) {
@@ -419,16 +423,18 @@ class PhotoController extends SiteController
 
     private function _GenerateMediaCrop(array $options) {
         $imagine = new Imagine();
+        $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $options['tempFile'];
+        $format = $this->get('appmedia')->getType($path);
+        
+        $imageStream = $imagine->open($path);
 
-        if (0 == $options['cropW'] || 0 ==   $options['cropH']) {
-            $imageStream = $imagine->open("uploads/temp/".$options['tempFile']);
-        } else {
-            $imageStream = $imagine->open("uploads/temp/".$options['tempFile'])
+        if ($options['cropW'] && $options['cropH']) {
+            $imageStream = $imageStream
             ->crop(new Point($options['cropX'], $options['cropY']), new Box($options['cropW'], $options['cropH']));
         }
 
-        $metaData = array('name' => $options['originalFile'].'.'.$options['extension']);
-        return $this->get('appmedia')->createImageFromBinary($imageStream, $metaData);
+        $metaData = array('filename' => $options['originalFile']);
+        return $this->get('appmedia')->createImageFromBinary($imageStream->get($format), $metaData);
     }
 
     private function _tagEntity ($tagtexts, $tagidols, $tagteams, $tagusers, $user, $photo) {

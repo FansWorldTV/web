@@ -2,8 +2,11 @@
 
 namespace Dodici\Fansworld\WebBundle\Services;
 
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Application\Sonata\MediaBundle\Entity\Media;
 use Symfony\Component\HttpFoundation\Request;
+use Imagine\Gd\Imagine;
+use Imagine\Gd\Image;
 
 class AppMedia
 {
@@ -11,6 +14,16 @@ class AppMedia
     protected $mediapool;
     protected $manager;
     protected $absoluteaux;
+    
+    private $types = array(
+        IMAGETYPE_GIF      => 'gif',
+        IMAGETYPE_JPEG     => 'jpeg',
+        IMAGETYPE_JPEG2000 => 'jpeg',
+        IMAGETYPE_PNG      => 'png',
+        IMAGETYPE_UNKNOWN  => 'unknown',
+        IMAGETYPE_WBMP     => 'wbmp',
+        IMAGETYPE_XBM      => 'xbm'
+    );
 
     function __construct($mediapool, $manager, $absoluteaux)
     {
@@ -89,5 +102,36 @@ class AppMedia
         else $prefix = $this->absoluteaux;
         
         return $prefix.$url;
+    }
+    
+    public function temphash($tempfile)
+    {
+        return sha1($tempfile.'xSkh78d');
+    }
+    
+    public function getType($path)
+    {
+        $info = getimagesize($path);
+
+        if (false === $info) {
+            throw new \RuntimeException('Could not collect image metadata');
+        }
+
+        list($width, $height, $type) = $info;
+
+        $format = $this->types[$type];
+        
+        return $format;
+    }
+    
+    public function show($path)
+    {
+        if (!file_exists($path)) throw new FileNotFoundException($path);
+        
+        $imagine = new Imagine();
+        $image = $imagine->open($path);
+        $type = $this->getType($path);
+        
+        $image->show($type);
     }
 }
