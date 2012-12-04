@@ -2,27 +2,8 @@
 
 
 {% block main_content %}
-    <div class="row-fluid">
-        <div class="span9">
-            <header class="user_profile_head profile_head  small   row-fluid">
-                {% include 'DodiciFansworldWebBundle:User/Profile:header_small.html.twig' with {'entity': user}%}
-            </header>
-            <div class="row-fluid">
-                {% set c = 0 %}
-                {% for team in teams %}
-                    {% set c = c+1 %}
-                    {% if c == 3 %}
-                        {% set c = 0 %}
-                        {% set third = true %}
-                    {% else %}
-                        {% set third = false %}
-                    {% endif %}
-
-                    {% include 'DodiciFansworldWebBundle:Default:blocks/entity_widget.html.twig' with {'entity': team, 'third': third} %}
-                {% endfor %}
-            </div>
-        </div>
-        <div class="span3 things-sidebar">
+    <div class="my-things teams">
+        <div class="things-sidebar">
             <section class="notification">
                 <h4>NOTIFICACIONES <span class="midline"></span></h4>
             </section>
@@ -35,7 +16,7 @@
                         <div class="block" rel="tooltip" title="{{ team }}">
                             <a href="{{ path('team_wall', {'slug': team.slug}) }}" >
                                 {% thumbnail team.image, 'avatar' %}
-                                <span class="title">{{ team }}</span>
+                                <span class="title">{{ team|truncate(5) }}</span>
                                 <ul>
                                     <li class="fan-count">
                                         {{ team.fanCount }}
@@ -89,6 +70,25 @@
                     {% endfor %}
                 </section>
             {% endif %}
+        </div>
+        <div class="fluid-content">
+            <header class="user_profile_head profile_head  small   row-fluid">
+                {% include 'DodiciFansworldWebBundle:User/Profile:header_small.html.twig' with {'entity': user}%}
+            </header>
+            <div class="row-fluid">
+                {% set c = 0 %}
+                {% for team in teams %}
+                    {% set c = c+1 %}
+                    {% if c == 3 %}
+                        {% set c = 0 %}
+                        {% set third = true %}
+                    {% else %}
+                        {% set third = false %}
+                    {% endif %}
+
+                    {% include 'DodiciFansworldWebBundle:Default:blocks/entity_widget.html.twig' with {'entity': team, 'third': third} %}
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}
