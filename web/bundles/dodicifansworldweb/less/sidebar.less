@@ -107,7 +107,9 @@ div.things-sidebar {
             div.video-element {
                 position: relative;
                 display: block;
-                
+                .box-shadow(1px 2px 17px black);
+                width: 100px;
+                cursor: pointer;
 
                 .title, .duration {
                     position: absolute;
@@ -131,11 +133,14 @@ div.things-sidebar {
                 .play {
                     position: absolute;
                     width: 20px;
-                    left: 12%;
-                    top: 34%;
+                    left: 40%;
+                    top: 40%;
                 }
                 
                 &.first {
+                    margin-bottom: 15px;
+                    width: 100% !important;
+
                     img {
                         width: 100%;
                     }

@@ -2,29 +2,93 @@
 
 
 {% block main_content %}
-    {% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_rsidebar.html.twig" %}
-            {% block inner_content %}
-                <header class="user_profile_head profile_head  small   row-fluid">
-                    {% include 'DodiciFansworldWebBundle:User/Profile:header_small.html.twig' with {'entity': user}%}
-                </header>
-                <div class="row-fluid">
-                    {% set c = 0 %}
-                    {% for idol in idols %}
-                        {% set c = c+1 %}
-                        {% if c == 3 %}
-                            {% set c = 0 %}
-                            {% set third = true %}
+    <div class="row-fluid">
+        <div class="span9">
+            <header class="user_profile_head profile_head  small   row-fluid">
+                {% include 'DodiciFansworldWebBundle:User/Profile:header_small.html.twig' with {'entity': user}%}
+            </header>
+            <div class="row-fluid">
+                {% set c = 0 %}
+                {% for idol in idols %}
+                    {% set c = c+1 %}
+                    {% if c == 3 %}
+                        {% set c = 0 %}
+                        {% set third = true %}
+                    {% else %}
+                        {% set third = false %}
+                    {% endif %}
+
+                    {% include 'DodiciFansworldWebBundle:Default:blocks/entity_widget.html.twig' with {'entity': idol, 'third': third} %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="span3 things-sidebar">
+            <section class="notification">
+                <h4>NOTIFICACIONES <span class="midline"></span></h4>
+            </section>
+            
+            <section class="ranking">
+                <h4>RANKING DE IDOLOS <span class="midline"></span></h4>
+                
+                {% for idol in ranking %}
+                    {% if loop.first %}
+                        <div class="block" rel="tooltip" title="{{ idol }}">
+                            <a href="{{ path('idol_wall', {'slug': idol.slug}) }}">
+                                {% thumbnail idol.image, 'avatar' %}
+                                <span class="title">{{ idol.lastname }}</span>
+                                <ul>
+                                    <li class="fan-count">
+                                        {{ idol.fanCount }}
+                                        <br/>
+                                        <span>fans</span>
+                                    </li>
+                                    <li class="video-count">
+                                        {{ idol.videoCount }}
+                                        <br/>
+                                        <span>videos</span>
+                                    </li>
+                                    <li class="photo-count">
+                                        {{ idol.photoCount }}
+                                        <br/>
+                                        <span>photos</span>
+                                    </li>
+                                </ul>
+                            </a>
+                        </div>
+                        <div class="clearfix"></div>
+                    {% else %}
+                        <a href="{{ path('idol_wall', {'slug': idol.slug}) }}" rel="tooltip" title="{{ idol }}">
+                            {% thumbnail idol.image, 'headeravatar' %}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+                <div class="clearfix"></div>
+            </section>
+            
+            {% if lastVideos|length > 0 %}
+                <section class="news">
+                    <h4>ULTIMOS DE IDOLOS <span class="midline"></span></h4>
+                    {% for video in lastVideos %}
+                        {% if loop.first %}
+                            <div class="video-element first">
+                                <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                                    <span class="title">{{ video.title }}</span>
+                                    <span class="duration">{{ video.duration|date("i:s") }}</span>
+                                    <img src="{{ asset('bundles/dodicifansworldweb/images/play_icon.png') }}" alt="Play" class="play"/>
+                                    {% thumbnail video.image, 'medium' %}
+                                </a>
+                            </div>
                         {% else %}
-                            {% set third = false %}
+                            <div class="video-element" rel="tooltip" title="{{ video.title }}">
+                                <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                                    <img src="{{ asset('bundles/dodicifansworldweb/images/play_icon.png') }}" alt="Play" class="play"/>
+                                    {% thumbnail video.image, 'small' %}
+                                </a>
+                            </div>
                         {% endif %}
-
-                        {% include 'DodiciFansworldWebBundle:Default:blocks/entity_widget.html.twig' with {'entity': idol, 'third': third} %}
                     {% endfor %}
-                </div>
-            {% endblock %}
-
-            {% block inner_sidebar %}
-                cacaaaaaaaaaaaaa
-            {% endblock %}
-    {% endembed %}		
+                </section>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
