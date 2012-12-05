@@ -137,3 +137,7 @@ function secToMinutes(sec){
     if(min<10) min = "0" + min;
     return min + ":" + sec;
 }
+
+$(document).ready(function(){
+   search.init(); 
+});

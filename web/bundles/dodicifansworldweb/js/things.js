@@ -6,9 +6,6 @@ things.init = function(){
         $(".eventgrid-container").addClass('loading');
         $(".events-grid").html("");
         
-        $("[data-filter-matchs] button").removeClass('active');
-        $(this).addClass('active');
-        
         var type = $(this).attr('data-type');
         things.filter(type);
     });

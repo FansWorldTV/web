@@ -1,0 +1,68 @@
+<div class="things-sidebar">
+    <section class="notification">
+        <h4>NOTIFICACIONES <span class="midline"></span></h4>
+    </section>
+
+    <section class="ranking">
+        <h4>RANKING DE EQUIPOS <span class="midline"></span></h4>
+
+        {% for team in teamsRank %}
+            {% if loop.first %}
+                <div class="block" rel="tooltip" title="{{ team }}">
+                    <a href="{{ path('team_wall', {'slug': team.slug}) }}" >
+                        {% thumbnail team.image, 'avatar' %}
+                        <span class="title">{{ team|truncate(5) }}</span>
+                        <ul>
+                            <li class="fan-count">
+                                {{ team.fanCount }}
+                                <br/>
+                                <span>fans</span>
+                            </li>
+                            <li class="video-count">
+                                {{ team.videoCount }}
+                                <br/>
+                                <span>videos</span>
+                            </li>
+                            <li class="photo-count">
+                                {{ team.photoCount }}
+                                <br/>
+                                <span>photos</span>
+                            </li>
+                        </ul>
+                    </a>
+                </div>
+                <div class="clearfix"></div>
+            {% else %}
+                <a href="{{ path('team_wall', {'slug': team.slug}) }}" rel="tooltip" title="{{ team.title }}">
+                    {% thumbnail team.image, 'headeravatar' %}
+                </a>
+            {% endif %}
+        {% endfor %}
+        <div class="clearfix"></div>
+    </section>
+
+    {% if lastTeams|length > 0 %}
+        <section class="news">
+            <h4>ULTIMOS DE EQUIPOS <span class="midline"></span></h4>
+            {% for video in lastTeams %}
+                {% if loop.first %}
+                    <div class="video-element first">
+                        <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                            <span class="title">{{ video.title }}</span>
+                            <span class="duration">{{ video.duration|date("i:s") }}</span>
+                            <img src="{{ asset('bundles/dodicifansworldweb/images/play_icon.png') }}" alt="Play" class="play"/>
+                            {% thumbnail video.image, 'medium' %}
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="video-element" rel="tooltip" title="{{ video.title }}">
+                        <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                            <img src="{{ asset('bundles/dodicifansworldweb/images/play_icon.png') }}" alt="Play" class="play"/>
+                            {% thumbnail video.image, 'small' %}
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </section>
+    {% endif %}
+</div>
