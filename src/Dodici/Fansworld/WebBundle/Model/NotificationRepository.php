@@ -67,4 +67,27 @@ class NotificationRepository extends CountBaseRepository
     		
     	return (int)$query->getSingleScalarResult();
     }
+    
+	/**
+	 * Count notifications for user grouped by type
+	 * @param User $user
+	 * @param boolean|null $readed
+	 */
+    public function typeCounts(\Application\Sonata\UserBundle\Entity\User $user, $readed = null)
+    {
+    	$query = $this->_em->createQuery('
+    	SELECT n.type, COUNT(n.id) AS cnt
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Notification n
+    	WHERE
+    	n.target = :userid AND n.active=true '
+    	. ($readed !== null ? ' AND n.readed = :readed ' : '') .
+    	'GROUP BY n.type'
+    	)
+    		->setParameter('userid', $user->getId(), Type::BIGINT);
+    		
+    	if ($readed !== null)
+		$query = $query->setParameter('readed', $readed, Type::BOOLEAN);
+    		
+    	return $query->getResult();
+    }
 }
