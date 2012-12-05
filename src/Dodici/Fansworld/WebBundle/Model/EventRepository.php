@@ -386,5 +386,146 @@ class EventRepository extends CountBaseRepository
             
         return $query->getSingleScalarResult();
     }
+    
+    /**
+     * Get events where the user is a fan of at least one of the teams involved
+     * 
+     * @param User $user
+     * @param boolean|null $checkedin
+     *  - if true, only get events where the user checked in
+     *  - if false, only get events where the user hasn't checked in 
+     * @param boolean|null $finished - if set, only get events where finished=val
+     * @param int|null $limit
+     */
+    public function commonTeams(User $user, $checkedin=null, $finished=null, $limit=null)
+    {
+        $query = $this->_em->createQuery('
+    	SELECT e, COUNT(ehtshipfan) as favcnt, COUNT(ehtship) AS common 
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Event e
+    	LEFT JOIN e.hasteams eht
+    	LEFT JOIN eht.team ehtt
+    	LEFT JOIN ehtt.teamships ehtship
+            WITH (ehtship.author = :user)
+        LEFT JOIN ehtt.teamships ehtshipfan
+        	WITH (ehtshipfan.author = :user AND ehtshipfan.favorite = true)
+    	WHERE
+    	e.active = true
+    	'.
+            (($checkedin !== null) ? '
+            	AND e.id '.($checkedin === false ? 'NOT' : '').' IN (SELECT exev.id FROM \Dodici\Fansworld\WebBundle\Entity\Eventship ex JOIN ex.event exev WHERE ex.author = :user)
+            ' : '')
+        .
+            (($finished !== null) ? '
+            	AND e.finished = :finished
+            ' : '')
+        .
+        '
+    	GROUP BY e
+    	HAVING common > 0
+    	ORDER BY favcnt DESC, e.weight DESC
+    	')
+        ->setParameter('user', $user->getId())
+        ;
+        
+        if ($finished !== null)
+            $query = $query->setParameter('finished', $finished);
+
+        if ($limit !== null)
+            $query = $query->setMaxResults((int) $limit);
+
+        $events = array();
+        $res = $query->getResult();
+        foreach ($res as $r) $events[] = $r[0];
+        return $events;
+    }
+    
+    /**
+     * Get events where the user is a fan of at least one of the idols involved
+     * 
+     * @param User $user
+     * @param boolean|null $checkedin
+     *  - if true, only get events where the user checked in
+     *  - if false, only get events where the user hasn't checked in 
+     * @param boolean|null $finished - if set, only get events where finished=val
+     * @param int|null $limit
+     */
+    public function commonIdols(User $user, $checkedin=null, $finished=null, $limit=null)
+    {
+        $query = $this->_em->createQuery('
+    	SELECT e, COUNT(ehtship) AS common 
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Event e
+    	LEFT JOIN e.hasidols eht
+    	LEFT JOIN eht.idol ehtt
+    	LEFT JOIN ehtt.idolships ehtship
+            WITH (ehtship.author = :user)
+    	WHERE
+    	e.active = true
+    	'.
+            (($checkedin !== null) ? '
+            	AND e.id '.($checkedin === false ? 'NOT' : '').' IN (SELECT exev.id FROM \Dodici\Fansworld\WebBundle\Entity\Eventship ex JOIN ex.event exev WHERE ex.author = :user)
+            ' : '')
+        .
+            (($finished !== null) ? '
+            	AND e.finished = :finished
+            ' : '')
+        .
+        '
+    	GROUP BY e
+    	HAVING common > 0
+    	ORDER BY common DESC, e.weight DESC
+    	')
+        ->setParameter('user', $user->getId())
+        ;
+        
+        if ($finished !== null)
+            $query = $query->setParameter('finished', $finished);
+
+        if ($limit !== null)
+            $query = $query->setMaxResults((int) $limit);
+
+        $events = array();
+        $res = $query->getResult();
+        foreach ($res as $r) $events[] = $r[0];
+        return $events;
+    }
+    
+    /**
+     * Get events into which the user has checked in
+     * 
+     * @param User $user
+     * @param boolean|null $finished - if set, only get events where finished=val
+     * @param int|null $limit
+     */
+    public function checkedInto(User $user, $finished=null, $limit=null)
+    {
+        $query = $this->_em->createQuery('
+    	SELECT es, e
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Eventship es
+    	JOIN es.event e
+    	WHERE
+    	e.active = true
+    	AND es.author = :user
+    	'.
+            (($finished !== null) ? '
+            	AND e.finished = :finished
+            ' : '')
+        .
+        '
+    	ORDER BY e.weight DESC
+    	')
+        ->setParameter('user', $user->getId())
+        ;
+        
+        if ($finished !== null)
+            $query = $query->setParameter('finished', $finished);
+
+        if ($limit !== null)
+            $query = $query->setMaxResults((int) $limit);
+
+        $events = array();
+        $res = $query->getResult();
+        foreach ($res as $r) $events[] = $r->getEvent();
+        return $events;
+    }
 
 }

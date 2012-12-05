@@ -74,7 +74,7 @@ class Eventship
     /**
      * @var integer $type
      *
-     * @ORM\Column(name="type", type="integer", nullable=false)
+     * @ORM\Column(name="type", type="integer", nullable=true)
      */
     private $type;
 
