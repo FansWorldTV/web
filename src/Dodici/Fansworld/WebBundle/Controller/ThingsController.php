@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Dodici\Fansworld\WebBundle\Controller\SiteController;
 use Symfony\Component\HttpFoundation\Request;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 /**
  * My things controller controller.
@@ -90,6 +91,118 @@ class ThingsController extends SiteController
             'selfWall' => true,
             'lastTeams' => $lastTeamsSearch,
             'teamsRank' => $ranking
+        );
+    }
+
+    /**
+     * My matchs
+     * @Route("/matchs", name="things_matchs")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function matchsAction()
+    {
+        $user = $this->getUser();
+        $eventships = $this->getRepository('Eventship')->findBy(array('author' => $user->getId()), array('createdAt' => 'desc'));
+
+        $events = array();
+        foreach ($eventships as $eventship) {
+            if (!$eventship->getEvent()->getFinished()) {
+                array_push($events, $eventship->getEvent());
+            }
+        }
+
+        $ranking = array();
+        $teamsRank = $this->getRepository('Team')->findBy(array(), array('fanCount' => 'desc'), 10);
+        foreach ($teamsRank as $team) {
+            array_push($ranking, $team);
+        }
+
+        $lastTeamsSearch = $this->getRepository('Video')->commonTeams($user, 4);
+
+        return array(
+            'user' => $user,
+            'events' => $events,
+            'selfWall' => true,
+            'lastTeams' => $lastTeamsSearch,
+            'teamsRank' => $ranking
+        );
+    }
+
+    /**
+     * filter matchs
+     * @Route("/matchs/ajax", name="things_ajaxmatchs")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function matchsAjaxAction()
+    {
+        $user = $this->getUser();
+        $request = $this->getRequest();
+        $type = $request->get('type', 0);
+        $response = array(
+            'events' => array()
+        );
+
+        switch ($type) {
+            case 0:
+                $eventships = $this->getRepository('Eventship')->findBy(array('author' => $user->getId()), array('createdAt' => 'desc'));
+                foreach ($eventships as $eventship) {
+                    if (!$eventship->getEvent()->getFinished()) {
+                        array_push($response['events'], $this->serializeEvent($eventship->getEvent()));
+                    }
+                }
+                break;
+            case 1:
+                $events = $this->getRepository('Event')->commonTeams($user, null, false);
+                foreach ($events as $event){
+                    array_push($response['events'], $this->serializeEvent($event));
+                }
+                break;
+            case 2:
+                $eventships = $this->getRepository('Eventship')->findBy(array('author' => $user->getId()), array('createdAt' => 'desc'));
+                foreach ($eventships as $eventship) {
+                    if ($eventship->getEvent()->getFinished()) {
+                        array_push($response['events'], $this->serializeEvent($eventship->getEvent()));
+                    }
+                }
+                break;
+        }
+
+        return $this->jsonResponse($response);
+    }
+
+    private function serializeEvent($event)
+    {
+        $now = new \DateTime();
+        $teams = array();
+        foreach ($event->getHasteams() as $hasTeam) {
+            $team = $hasTeam->getTeam();
+            $teams[] = array(
+                'title' => (string) $team,
+                'image' => $this->getImageUrl($team->getImage(), 'mini_square'),
+                'score' => $hasTeam->getScore()
+            );
+        }
+
+        $started = ($event->getFromtime() <= $now);
+
+        if ($this->getUser() instanceof User) {
+            $checked = $this->getRepository('Eventship')->findOneBy(array('author' => $this->getUser()->getId(), 'event' => $event->getId())) ? true : false;
+        } else {
+            $checked = null;
+        }
+
+        return array(
+            'text' => $this->get('appstate')->getEventText($event->getId()),
+            'id' => $event->getId(),
+            'stadium' => $event->getStadium(),
+            'date' => $event->getFromtime()->format('d-m-Y'),
+            'showdate' => $event->getFromtime()->format('d/m/Y H:i'),
+            'started' => $started,
+            'finished' => $event->getFinished(),
+            'teams' => $teams,
+            'url' => $this->generateUrl('event_show', array('id' => $event->getId(), 'slug' => $event->getSlug())),
+            'checked' => $checked
         );
     }
 
