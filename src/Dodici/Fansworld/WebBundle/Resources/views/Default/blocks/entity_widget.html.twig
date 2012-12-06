@@ -12,10 +12,50 @@
 
         <a href="{{ path( entityType ~ '_wall', {'slug': entity.slug}) }}" class="name">{{ entity }}</a>
         
-        <ul>
+        <ul class="stats">
             <li><span>{{entity.fanCount}}</span><br/> fans</li>
             <li><span>{{entity.videoCount}}</span><br/> videos</li>
             <li><span>{{entity.photoCount}}</span><br/> fotos</li>
         </ul>
+        {% if dropdown is defined and dropdown == true %}
+            <div class="btn-group">
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                  <span class="caret"></span>
+                </a>
+                {% if entityType == 'team' %}
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ path('team_eventos', {'slug': entity.slug}) }}">Ver partidos</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('team_idols', {'slug': entity.slug}) }}">Ver idolos</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#" class="btn_teamship remove" data-team-id="{{ entity.id }}">Dejar de ser fan</a>
+                        </li>
+                    </ul>
+                {% elseif entityType == 'idol' %}
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ path('idol_biography', {'slug': entity.slug}) }}">Ver perfil</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('idol_photos', {'slug': entity.slug}) }}">Ver fotos</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('idol_wall', {'slug': entity.slug}) }}">Ver muro</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('idol_videos', {'slug': entity.slug}) }}">Ver videos</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#" class="btn_idolship remove" data-idol-id="{{ entity.id }}">Dejar de ser fan</a>
+                        </li>
+                    </ul>
+                {% endif %}
+            </div>
+        {% endif %}
     </div>
 {% endif %}

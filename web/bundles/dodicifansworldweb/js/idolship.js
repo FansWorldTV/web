@@ -1,6 +1,7 @@
 var idolship = {
     init: function(){
         idolship.add();
+        idolship.remove();
     },
     
     add: function(){
@@ -23,6 +24,29 @@ var idolship = {
                         self.remove();
                         parent.html('<span class="label">YA ERES FAN</span>');
                     }
+                }
+                
+                self.removeClass('loading-small');
+            }, function(e){
+                error(e);
+                self.removeClass('loading-small');
+            });
+        });
+    },
+    
+    remove: function(){
+        $(".btn_idolship.remove:not('.loading-small')").on('click', function(e){
+            e.preventDefault();
+            var self = $(this);
+            self.addClass('loading-small');
+            
+            var idolId = self.attr('data-idol-id');
+            
+            ajax.genericAction('idolship_ajaxtoggle', {
+                'idol-id': idolId
+            }, function(r){
+                if(r){
+                    self.parents('.entityBlock').remove();
                 }
                 
                 self.removeClass('loading-small');

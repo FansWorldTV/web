@@ -1,6 +1,7 @@
 var teamship = {
     init: function(){
         teamship.add();
+        teamship.remove();
     },
     
     add: function(){
@@ -20,6 +21,29 @@ var teamship = {
                         success(r.message);
                         self.html(r.buttontext);
                     }
+                }
+                
+                self.removeClass('loading-small');
+            }, function(e){
+                error(e);
+                self.removeClass('loading-small');
+            });
+        });
+    },
+    
+    remove: function(){
+        $(".btn_teamship.remove:not('.loading-small')").on('click', function(e){
+            e.preventDefault();
+            var self = $(this);
+            self.addClass('loading-small');
+            
+            var teamId = self.attr('data-team-id');
+            
+            ajax.genericAction('teamship_ajaxtoggle', {
+                'team': teamId
+            }, function(r){
+                if(r){
+                    self.parents('.entityBlock').remove();
                 }
                 
                 self.removeClass('loading-small');

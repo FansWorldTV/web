@@ -86,7 +86,7 @@
                         {% set third = false %}
                     {% endif %}
 
-                    {% include 'DodiciFansworldWebBundle:Default:blocks/entity_widget.html.twig' with {'entity': team, 'third': third} %}
+                    {% include 'DodiciFansworldWebBundle:Default:blocks/entity_widget.html.twig' with {'entity': team, 'third': third, 'dropdown': true} %}
                 {% endfor %}
             </div>
         </div>
