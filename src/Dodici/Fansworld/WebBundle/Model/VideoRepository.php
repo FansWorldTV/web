@@ -645,4 +645,34 @@ class VideoRepository extends CountBaseRepository
 
         return $query->getResult();
     }
+    
+	/**
+     * Return highlight videos belonging to a category that the user is subscribed to
+     * @param User $user
+     * @param int|null $limit
+     */
+    public function commonCategories(User $user, $limit=null)
+    {
+        $query = $this->_em->createQuery('
+    	SELECT v, vi, va
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
+    	LEFT JOIN v.image vi
+    	LEFT JOIN v.author va
+    	JOIN v.videocategory vc
+    	JOIN vc.videocategorysubscriptions vcs
+            WITH (vcs.author = :user)
+    	WHERE
+    	v.active = true
+    	AND v.highlight = true
+    	GROUP BY v
+    	ORDER BY v.createdAt DESC
+    	')
+        ->setParameter('user', $user->getId())
+        ;
+
+        if ($limit !== null)
+            $query = $query->setMaxResults((int) $limit);
+
+        return $query->getResult();
+    }
 }

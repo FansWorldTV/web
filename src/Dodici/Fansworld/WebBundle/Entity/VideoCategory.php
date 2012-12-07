@@ -59,9 +59,15 @@ class VideoCategory implements Translatable
      */
     protected $videos;
     
+    /**
+     * @ORM\OneToMany(targetEntity="VideoCategorySubscription", mappedBy="videocategory", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $videocategorysubscriptions;
+    
     public function __construct()
     {
         $this->videos = new ArrayCollection();
+        $this->videocategorysubscriptions = new ArrayCollection();
     }
 
     public function __toString()
@@ -138,6 +144,26 @@ class VideoCategory implements Translatable
     public function getVideos()
     {
         return $this->videos;
+    }
+
+    /**
+     * Add videocategorysubscriptions
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\VideoCategorySubscription $videocategorysubscriptions
+     */
+    public function addVideoCategorySubscription(\Dodici\Fansworld\WebBundle\Entity\VideoCategorySubscription $vcs)
+    {
+        $this->videocategorysubscriptions[] = $vcs;
+    }
+
+    /**
+     * Get videocategorysubscriptions
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getVideocategorysubscriptions()
+    {
+        return $this->videocategorysubscriptions;
     }
     
 }
