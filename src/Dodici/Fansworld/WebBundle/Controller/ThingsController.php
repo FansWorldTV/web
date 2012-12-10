@@ -59,6 +59,71 @@ class ThingsController extends SiteController
     }
 
     /**
+     *  My Videos
+     * @Route("/videos", name="things_videos")
+     * @Template()
+     */
+    public function videosAction()
+    {
+        $user = $this->getUser();
+        $videos = $this->getRepository('Video')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'desc'));
+        $lastVideos = $this->getRepository('Video')->findBy(array('highlight' => true), array('createdAt' => 'desc'), 4);
+
+        return array(
+            'user' => $user,
+            'videos' => $videos,
+            'selfWall' => true,
+            'lastVideos' => $lastVideos
+        );
+    }
+
+    /**
+     * Videos filters
+     * @Route("/videos/filter/ajax", name="things_videosajax")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function videosAjaxAction()
+    {
+        $user = $this->getUser();
+        $request = $this->getRequest();
+        $type = $request->get('type', 0);
+        $type = (int) $type;
+        $serializer = $this->get('serializer');
+
+        $response = array(
+            'videos' => array(),
+            'error' => false
+        );
+
+        switch ($type) {
+            case 0:
+                $videos = $this->getRepository('Video')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'desc'));
+                break;
+
+            case 1:
+                $videos = $this->getRepository('Video')->commonIdols($user);
+                break;
+
+            case 2:
+                $videos = $this->getRepository('Video')->commonTeams($user);
+                break;
+
+            case 3:
+                $videos = $this->getRepository('Video')->commonCategories($user);
+                break;
+
+            case 4:
+                $playlist = $this->get('video.playlist');
+                $videos = $playlist->get($user);
+                break;
+        }
+        
+        $response['videos'] = $serializer->values($videos, 'medium');
+
+        return $this->jsonResponse($response);
+    }
+
+    /**
      * My teams
      * 
      * @Route("/teams", name="things_teams")
@@ -154,7 +219,7 @@ class ThingsController extends SiteController
                 break;
             case 1:
                 $events = $this->getRepository('Event')->commonTeams($user, null, false);
-                foreach ($events as $event){
+                foreach ($events as $event) {
                     array_push($response['events'], $this->serializeEvent($event));
                 }
                 break;
