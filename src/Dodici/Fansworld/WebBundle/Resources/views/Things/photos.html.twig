@@ -1,0 +1,54 @@
+{% extends "DodiciFansworldWebBundle:Layout:one_column.html.twig" %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/dodicifansworldweb/js/things.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block main_content %}
+<div class="my-things videos">
+    <div class="things-sidebar">
+        <section class="notification">
+            <h4>NOTIFICACIONES <span class="midline"></span></h4>
+        </section>
+
+        {% if lastVideos|length > 0 %}
+            <section class="news">
+                <h4>ULTIMOS DE FANSWORLD <span class="midline"></span></h4>
+                {% for video in lastVideos %}
+                    {% if loop.first %}
+                        <div class="video-element first">
+                            <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                                <span class="title">{{ video.title }}</span>
+                                <span class="duration">{{ video.duration|date("i:s") }}</span>
+                                <img src="{{ asset('bundles/dodicifansworldweb/images/play_icon.png') }}" alt="Play" class="play"/>
+                                {% thumbnail video.image, 'medium' %}
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="video-element" rel="tooltip" title="{{ video.title }}">
+                            <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                                <img src="{{ asset('bundles/dodicifansworldweb/images/play_icon.png') }}" alt="Play" class="play"/>
+                                {% thumbnail video.image, 'small' %}
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </section>
+        {% endif %}
+    </div>
+    <div class="fluid-content">
+        {% include 'DodiciFansworldWebBundle:Photo:blocks/albums_montage.html.twig'  %}
+            
+        <div class="row-fluid">
+            <h3>Fotos ( {{ photos|length }} )</h3>
+            {% include 'DodiciFansworldWebBundle:Photo:blocks/montage.html.twig' with {photos: photos} %}
+
+            {% if viewMorePhotos %}
+                <div class="clearfix"></div>
+                <a class="loadmore" href="{{ path('user_listphotos', {username: user.username}) }}">ver todas las imágenes</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -23,12 +23,15 @@ class ThingsController extends SiteController
 
     const IDOLS_LIMIT = null;
     const TEAMS_LIMIT = null;
+    const ALBUMS_LIMIT = 6;
+    const PHOTOS_LIMIT = 15;
 
     /**
      * My Idols
      * 
      * @Route("/idols", name="things_idols")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function idolsAction()
     {
@@ -62,6 +65,7 @@ class ThingsController extends SiteController
      *  My Videos
      * @Route("/videos", name="things_videos")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function videosAction()
     {
@@ -121,6 +125,37 @@ class ThingsController extends SiteController
         $response['videos'] = $serializer->values($videos, 'medium');
 
         return $this->jsonResponse($response);
+    }
+    
+    /**
+     * My Photos
+     * @Route("/photos", name="things_photos")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function photosAction()
+    {
+        $user = $this->getUser();
+        
+        $photos = $this->getRepository('Photo')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::PHOTOS_LIMIT);
+        $albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::ALBUMS_LIMIT);
+
+        $photosTotalCount = $this->getRepository('Photo')->countBy(array('author' => $user->getId(), 'active' => true));
+        $albumsTotalCount = $this->getRepository('Album')->countBy(array('author' => $user->getId(), 'active' => true));
+
+        $viewMorePhotos = $photosTotalCount > self::PHOTOS_LIMIT ? true : false;
+        $viewMoreAlbums = $albumsTotalCount > self::ALBUMS_LIMIT ? true : false;
+        
+        $lastVideos = $this->getRepository('Video')->findBy(array('highlight' => true), array('createdAt' => 'desc'), 4);
+        
+        return array(
+            'user' => $user,
+            'lastVideos' => $lastVideos,
+            'photos' => $photos,
+            'albums' => $albums,
+            'viewMorePhotos' => $viewMorePhotos,
+            'viewMoreAlbums' => $viewMoreAlbums
+        );
     }
 
     /**
