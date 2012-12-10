@@ -1,15 +1,67 @@
 <ul class='well sidebar-nav sidebar-nav-fixed' id='left-menu'>
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
     <li>
-        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}">
-            <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_alert.gif' )}}" />
+        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}" id="toolbar-notification" title="Notificaciones">
+          
+            <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_notifications.png' )}}" />
         </a>
     </li>
-    {% endif %}
+
+
     <li>
-        <a class='icon'>
-            <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_notices.gif' )}}" />
+        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}" id="toolbar-message" title="Mensajes">
+          
+            <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_messages.png' )}}" />
         </a>
     </li>
     
+
+    <li>
+        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}" id="toolbar-fan" title="Mis fans">
+          
+            <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_fans.png' )}}" />
+        </a>
+    </li>
+    
+
+    <li>
+        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}" id="toolbar-photo" title="Mis fotos">
+       
+            <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_photos.png' )}}" />
+        </a>
+    </li>
+    
+
+    <li>
+        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}" id="toolbar-video" title="Mis videos">
+     
+            <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_videos.png' )}}" />
+        </a>
+    </li>
+
+
+    <li>
+        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}" id="toolbar-idol" title="Mis idolos">
+    
+            <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_idols.png' )}}" />
+        </a>
+    </li>
+
+
+    <li>
+        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}" id="toolbar-team" title="Mis equipos">
+          
+            <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_teams.png' )}}" />
+        </a>
+    </li>
+    
+
+    <li>
+        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}"  id="toolbar-badge" title="Mis badges">
+
+            <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_badges.png' )}}" />
+        </a>
+    </li>
+    {% endif %}
 </ul>
