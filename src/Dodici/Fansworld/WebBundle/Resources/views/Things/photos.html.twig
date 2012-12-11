@@ -25,30 +25,62 @@
                                 {% thumbnail video.image, 'medium' %}
                             </a>
                         </div>
-                    {% else %}
-                        <div class="video-element" rel="tooltip" title="{{ video.title }}">
+                        <div class="video-element first">
                             <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                                <span class="title">{{ video.title }}</span>
+                                <span class="duration">{{ video.duration|date("i:s") }}</span>
                                 <img src="{{ asset('bundles/dodicifansworldweb/images/play_icon.png') }}" alt="Play" class="play"/>
-                                {% thumbnail video.image, 'small' %}
+                                {% thumbnail video.image, 'medium' %}
                             </a>
                         </div>
+                    {% else %}
+                        {% if video.image %}
+                            <div class="video-element" rel="tooltip" title="{{ video.title }}">
+                                <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                                    <img src="{{ asset('bundles/dodicifansworldweb/images/play_icon.png') }}" alt="Play" class="play"/>
+                                    {% thumbnail video.image, 'small' %}
+                                </a>
+                            </div>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
             </section>
         {% endif %}
     </div>
     <div class="fluid-content">
-        {% include 'DodiciFansworldWebBundle:Photo:blocks/albums_montage.html.twig'  %}
-            
-        <div class="row-fluid">
-            <h3>Fotos ( {{ photos|length }} )</h3>
-            {% include 'DodiciFansworldWebBundle:Photo:blocks/montage.html.twig' with {photos: photos} %}
-
-            {% if viewMorePhotos %}
+            <section>
+                <h3>Albums ( {{ albums|length }} )</h3>
+                <div class="am-container albums">
+                    {% for album in albums %}
+                                <a href="{{ path('user_showalbum', { 'id': album.id, 'username': user.username } ) }}" >
+                                    <span class="title">
+                                        {{ album.title }}
+                                        <br/>
+                                        <span class="photos-quant">{{ album.photos|length }} fotos</span>
+                                    </span>
+                                    {% if album.image %}
+                                        {% thumbnail album.image, thumbnailSize with {title: ''} %}
+                                    {% else %}
+                                        <img src="{{ asset('bundles/dodicifansworldweb/images/no-image.png' )}}" />
+                                    {% endif %}
+                                </a>
+                        {% endfor %}
+                </div>
+                {% if viewMoreAlbums %}
+                {% endif %}
                 <div class="clearfix"></div>
-                <a class="loadmore" href="{{ path('user_listphotos', {username: user.username}) }}">ver todas las imágenes</a>
-            {% endif %}
-        </div>
+            </section>
+            
+            <section>
+                <h3>Albums ( {{ albums|length }} )</h3>
+                <div class="am-container photos">
+                    {% for photo in photos %}
+                        <a href="{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}" rel="tooltip" title="{{ photo.title }}">
+                            {% thumbnail photo.image, 'small' with {title: photo.title} %}
+                        </a>
+                    {% endfor %}
+                </div>
+            </section>
     </div>
 </div>
 {% endblock %}
