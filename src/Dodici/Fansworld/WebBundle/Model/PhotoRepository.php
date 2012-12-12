@@ -232,4 +232,56 @@ class PhotoRepository extends CountBaseRepository
             
         return $query->getSingleScalarResult();
     }
+    
+	/**
+     * Get photos where the user has been tagged
+     * 
+     * @param User $user - tagged user
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function userTagged(User $user=null, $limit=null, $offset=null)
+    {
+        $dql = '
+    	SELECT p
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Photo p
+    	JOIN p.hasusers phu WITH phu.target = :user
+    	WHERE p.active = true
+        
+        ORDER BY phu.createdAt DESC
+        ';
+        
+        $query = $this->_em->createQuery($dql);
+        $query = $query->setParameter('user', $user->getId());
+        if ($limit !== null) $query = $query->setMaxResults($limit);
+    	if ($offset !== null) $query = $query->setFirstResult($offset);
+        
+        return $query->getResult();
+    }
+    
+	/**
+     * Get photos liked by the user lately
+     * 
+     * @param User $user - tagged user
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function userLiked(User $user=null, $limit=null, $offset=null)
+    {
+        $dql = '
+    	SELECT p
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Photo p
+    	JOIN p.likings pl WITH pl.author = :user
+    	WHERE p.active = true
+        
+        ORDER BY pl.createdAt DESC
+        ';
+        
+        $query = $this->_em->createQuery($dql);
+        $query = $query->setParameter('user', $user->getId());
+        if ($limit !== null) $query = $query->setMaxResults($limit);
+    	if ($offset !== null) $query = $query->setFirstResult($offset);
+        
+        return $query->getResult();
+    }
 }
