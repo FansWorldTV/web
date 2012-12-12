@@ -284,4 +284,44 @@ class PhotoRepository extends CountBaseRepository
         
         return $query->getResult();
     }
+    
+	/**
+     * Count photos where the user has been tagged
+     * 
+     * @param User $user - tagged user
+     */
+    public function countUserTagged(User $user=null)
+    {
+        $dql = '
+    	SELECT COUNT(p)
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Photo p
+    	JOIN p.hasusers phu WITH phu.target = :user
+    	WHERE p.active = true
+        ';
+        
+        $query = $this->_em->createQuery($dql);
+        $query = $query->setParameter('user', $user->getId());
+        
+        return (int)$query->getSingleScalarResult();
+    }
+    
+	/**
+     * Count photos liked by the user lately
+     * 
+     * @param User $user - tagged user
+     */
+    public function countUserLiked(User $user=null)
+    {
+        $dql = '
+    	SELECT COUNT(p)
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Photo p
+    	JOIN p.likings pl WITH pl.author = :user
+    	WHERE p.active = true
+        ';
+        
+        $query = $this->_em->createQuery($dql);
+        $query = $query->setParameter('user', $user->getId());
+        
+        return (int)$query->getSingleScalarResult();
+    }
 }
