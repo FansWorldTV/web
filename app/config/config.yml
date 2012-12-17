@@ -471,3 +471,6 @@ services:
         arguments: [@serializer]
     serializer.user:
         class: Dodici\Fansworld\WebBundle\Serializer\User
+    serializer.album:
+        class: Dodici\Fansworld\WebBundle\Serializer\Album
+        arguments: [@appmedia, @router]

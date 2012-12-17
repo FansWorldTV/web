@@ -54,7 +54,7 @@ var site = {
                 resizePopup();
             }
         });
-        
+
         $(".btn[data-upload='photo']").colorbox({
             iframe: false, 
             innerWidth: 700, 
@@ -65,7 +65,14 @@ var site = {
             }
         });
         
+        $(".btn[data-create-album]").colorbox({
+            iframe: true, 
+            innerWidth: 300, 
+            innerHeight: 600
+        });
+
         $.datepicker.setDefaults($.datepicker.regional[appLocale]);
+        
         $('.datepicker').datepicker({
             dateFormat: 'dd/mm/yy',
             changeMonth: true,

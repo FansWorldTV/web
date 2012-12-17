@@ -103,10 +103,11 @@ nav.leftmenubar{
 // main content frame padding for toolbar
 #main-content-frame {
     &.top {
-        padding: 60px 10px 0;
+        padding: 60px 0 0 10px;
     }
     &.bottom {
         padding: 0 10px 70px;
+        padding-bottom: 63px;
     }
     
     @media (max-width: 767px) {
@@ -117,7 +118,8 @@ nav.leftmenubar{
     
     @media (min-width: 768px) {
         &.left, &.right {
-            padding-bottom: 50px;
+            //padding-bottom: 50px;
+            padding-bottom: 36px;
         }
     }
     
@@ -149,7 +151,8 @@ nav.leftmenubar{
             .pull-right;
         }
         &.right {
-            width: 95%;
+            padding-left: 20px;
+            width: 96%;
             .pull-left;
         }
     }

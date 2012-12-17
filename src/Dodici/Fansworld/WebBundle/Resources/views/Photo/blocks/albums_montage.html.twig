@@ -6,7 +6,7 @@
 {% endif %}
 
 <div class="row-fluid">
-    <h3>Albums ( {{ albums|length }} )</h3>
+    <h3>Albums ( {% if albumsTotalCount is defined %} {{ albumsTotalCount }} {% else %} {{ albums|length }} {% endif %} )</h3>
     <div class="am-container albums">
         {% for album in albums %}
                 <a href="{{ path('user_showalbum', { 'id': album.id, 'username': user.username } ) }}" >

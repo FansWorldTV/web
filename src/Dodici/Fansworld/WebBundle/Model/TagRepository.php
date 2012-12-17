@@ -5,11 +5,8 @@ namespace Dodici\Fansworld\WebBundle\Model;
 use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Doctrine\ORM\Query\ResultSetMapping;
-
 use Doctrine\DBAL\Types\Type;
-
 use Dodici\Fansworld\WebBundle\Entity\VideoCategory;
-
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -17,15 +14,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class TagRepository extends CountBaseRepository
 {
-	/**
-	 * Get matching
-	 * @param string $text
-	 * @param int|null $limit
-	 * @param int|null $offset
-	 */
-	public function matching($text=null, $limit=null, $offset=null)
-	{
-		$query = $this->_em->createQuery('
+
+    /**
+     * Get matching
+     * @param string $text
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function matching($text = null, $limit = null, $offset = null)
+    {
+        $query = $this->_em->createQuery('
     	SELECT t
     	FROM \Dodici\Fansworld\WebBundle\Entity\Tag t
     	WHERE
@@ -34,34 +32,35 @@ class TagRepository extends CountBaseRepository
     	)
     	ORDER BY t.useCount DESC
     	')
-    		->setParameter('text', $text)
-    		->setParameter('textlike', '%'.$text.'%');
-    		
-    	if ($limit !== null)
-    	$query = $query->setMaxResults($limit);
-    	
-    	if ($offset !== null)
-    	$query = $query->setFirstResult($offset);
-    		
-    	return $query->getResult();
-	}
-	
-	/**
-	 * Returns most popular/latest tags used in videos lately
-	 * Please use Tagger service if possible
-	 * 
+                ->setParameter('text', $text)
+                ->setParameter('textlike', '%' . $text . '%');
+
+        if ($limit !== null)
+            $query = $query->setMaxResults($limit);
+
+        if ($offset !== null)
+            $query = $query->setFirstResult($offset);
+
+        return $query->getResult();
+    }
+
+    /**
+     * Returns most popular/latest tags used in videos lately
+     * Please use Tagger service if possible
+     * 
      * @param 'popular'|'latest' $filtertype
-	 * @param VideoCategory|null $videocategory - filter by video category
-	 * @param int|null $limit
-	 * @param int|null $offset
-	 */
-    public function usedInVideos($filtertype, $videocategory=null, $limit=null, $offset=null)
-	{
+     * @param VideoCategory|null $videocategory - filter by video category
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function usedInVideos($filtertype, $videocategory = null, $limit = null, $offset = null)
+    {
         $filtertypes = array('popular', 'latest');
-        
-        if (!in_array($filtertype, $filtertypes)) throw new \InvalidArgumentException('Invalid filter type');
-        
-	    $rsm = new ResultSetMapping();
+
+        if (!in_array($filtertype, $filtertypes))
+            throw new \InvalidArgumentException('Invalid filter type');
+
+        $rsm = new ResultSetMapping();
         $rsm->addScalarResult('id', 'id');
         $rsm->addScalarResult('title', 'title');
         $rsm->addScalarResult('slug', 'slug');
@@ -73,71 +72,71 @@ class TagRepository extends CountBaseRepository
         foreach (array('tag', 'idol', 'team') as $type) {
             $sqls[] = '
                 SELECT
-                '.$type.'.id as id,
-                '.
-                (($type == 'idol') ?
-                ('CONCAT('.$type.'.firstname, \' \', '.$type.'.lastname) AS title,') :
-                ($type.'.title as title,'))
-                .'
-                '.$type.'.slug as slug,
-                COUNT(has'.$type.'.id) AS usecount,
+                ' . $type . '.id as id,
+                ' .
+                    (($type == 'idol') ?
+                            ('CONCAT(' . $type . '.firstname, \' \', ' . $type . '.lastname) AS title,') :
+                            ($type . '.title as title,'))
+                    . '
+                ' . $type . '.slug as slug,
+                COUNT(has' . $type . '.id) AS usecount,
                 AVG(video.weight) AS avgweight,
-                MAX(has'.$type.'.created_at) as latest,
-                \''.$type.'\' as type
+                MAX(has' . $type . '.created_at) as latest,
+                \'' . $type . '\' as type
                 FROM
-                has'.$type.'
-                INNER JOIN '.$type.' ON has'.$type.'.'.$type.'_id = '.$type.'.id
-                INNER JOIN video ON has'.$type.'.video_id = video.id
-                '.
-                (($videocategory) ? 
-                'WHERE
+                has' . $type . '
+                INNER JOIN ' . $type . ' ON has' . $type . '.' . $type . '_id = ' . $type . '.id
+                INNER JOIN video ON has' . $type . '.video_id = video.id
+                ' .
+                    (($videocategory) ?
+                            'WHERE
                 (:videocategory IS NULL OR (video.videocategory_id = :videocategory))' : '')
-                .'
-                GROUP BY '.$type.'.id
+                    . '
+                GROUP BY ' . $type . '.id
                 ';
         }
-        
+
         $order = null;
-        if ($filtertype == 'popular') $order = 'avgweight DESC';
-        if ($filtertype == 'latest') $order = 'latest DESC';
-                
+        if ($filtertype == 'popular')
+            $order = 'avgweight DESC';
+        if ($filtertype == 'latest')
+            $order = 'latest DESC';
+
         $query = $this->_em->createNativeQuery(
-            join(' UNION ', $sqls) .'
+                join(' UNION ', $sqls) . '
             ORDER BY 
-            '.$order.'
-            '.
-            (($limit !== null) ? ' LIMIT :limit ' : '').
-            (($offset !== null) ? ' OFFSET :offset ' : '')
-            , $rsm
+            ' . $order . '
+            ' .
+                (($limit !== null) ? ' LIMIT :limit ' : '') .
+                (($offset !== null) ? ' OFFSET :offset ' : '')
+                , $rsm
         );
-          
+
         if ($videocategory) {
             $query = $query->setParameter(
-               	'videocategory', 
-                ($videocategory instanceof VideoCategory) ? $videocategory->getId() : $videocategory, 
-                Type::BIGINT
+                    'videocategory', ($videocategory instanceof VideoCategory) ? $videocategory->getId() : $videocategory, Type::BIGINT
             );
         }
 
         if ($limit !== null)
-            $query = $query->setParameter('limit', (int)$limit, Type::INTEGER);
+            $query = $query->setParameter('limit', (int) $limit, Type::INTEGER);
         if ($offset !== null)
-            $query = $query->setParameter('offset', (int)$offset, Type::INTEGER);
+            $query = $query->setParameter('offset', (int) $offset, Type::INTEGER);
         return $query->getResult();
-	} 
-	
-	/**
-	 * Matches against a string for user/team/idol entities, for autocomplete, etc
-	 * entities of which the user is a fan
-	 * 
+    }
+
+    /**
+     * Matches against a string for user/team/idol entities, for autocomplete, etc
+     * entities of which the user is a fan
+     * 
      * @param string $match
      * @param User|null $user
-	 * @param int|null $limit
-	 */
-    public function matchEntities($match, User $user, $limit=null)
-	{
-        
-	    $results = array();
+     * @param int|null $limit
+     */
+    public function matchEntities($match, User $user, $limit = null)
+    {
+
+        $results = array();
         $classtypes = array(
             'user' => '\Application\Sonata\UserBundle\Entity\User',
             'idol' => '\Dodici\Fansworld\WebBundle\Entity\Idol',
@@ -148,62 +147,61 @@ class TagRepository extends CountBaseRepository
             'idol' => array('firstname', 'lastname'),
             'team' => array('title'),
         );
-        
+
         $joins = array(
-            'user' => 
-                'LEFT JOIN user.friendships uffr WITH uffr.target = :user
+            'user' =>
+            'LEFT JOIN user.friendships uffr WITH uffr.target = :user
                 LEFT JOIN user.fanships uffn WITH uffn.author = :user',
-            'idol' => 
-            	'JOIN idol.idolships idshps WITH idshps.author = :user',
-        	'team' => 
-        	    'JOIN team.teamships tmshps WITH tmshps.author = :user'
+            'idol' =>
+            'JOIN idol.idolships idshps WITH idshps.author = :user',
+            'team' =>
+            'JOIN team.teamships tmshps WITH tmshps.author = :user'
         );
-	    
+
         foreach (array('user', 'idol', 'team') as $type) {
-    	    $likes = array();
-    	    foreach ($likefields[$type] as $lf) {
-    	        $likes[] = $type.'.'.$lf . ' LIKE :textlike';
-    	    }
-            
-    	    $dql = '
-        	SELECT '.$type.', img
-        	FROM '.$classtypes[$type].' '.$type.'
-        	LEFT JOIN '.$type.'.image img
-        	'.$joins[$type].'
-        	GROUP BY '.$type.'
+            $likes = array();
+            foreach ($likefields[$type] as $lf) {
+                $likes[] = $type . '.' . $lf . ' LIKE :textlike';
+            }
+
+            $dql = '
+        	SELECT ' . $type . ', img
+        	FROM ' . $classtypes[$type] . ' ' . $type . '
+        	LEFT JOIN ' . $type . '.image img
+        	' . $joins[$type] . '
+        	GROUP BY ' . $type . '
         	HAVING
-        	('.join(' OR ', $likes).')
-        	'.(($type=='user') ? '
+        	(' . join(' OR ', $likes) . ')
+        	' . (($type == 'user') ? '
         		AND (COUNT(uffr) > 0 OR COUNT(uffn) > 0)
-        	' : '').'
+        	' : '') . '
         	';
-    	        	    
+
             $query = $this->_em->createQuery($dql)
-        		->setParameter('textlike', '%'.$match.'%')
-        		->setParameter('user', $user->getId());
-        		
-        	if ($limit !== null)
-        	    $query = $query->setMaxResults($limit);
-            
-        	$results[$type] = $query->getResult();
+                    ->setParameter('textlike', '%' . $match . '%')
+                    ->setParameter('user', $user->getId());
+
+            if ($limit !== null)
+                $query = $query->setMaxResults($limit);
+
+            $results[$type] = $query->getResult();
         }
-    	
-    	return $results;
-    	
-	}
-	
-	/**
-	 * Matches against a string for user/team/idol/tag entities, for tagging autocomplete, etc
-	 * all entities found, except for user, which shows only friends
-	 * 
+
+        return $results;
+    }
+
+    /**
+     * Matches against a string for user/team/idol/tag entities, for tagging autocomplete, etc
+     * all entities found, except for user, which shows only friends
+     * 
      * @param string $match
      * @param User|null $user
-	 * @param int|null $limit
-	 */
-    public function matchAll($match, User $user=null, $limit=null)
-	{
-        
-	    $results = array();
+     * @param int|null $limit
+     */
+    public function matchAll($match, User $user = null, $limit = null)
+    {
+
+        $results = array();
         $classtypes = array(
             'user' => '\Application\Sonata\UserBundle\Entity\User',
             'idol' => '\Dodici\Fansworld\WebBundle\Entity\Idol',
@@ -222,89 +220,91 @@ class TagRepository extends CountBaseRepository
             'team' => array('fanCount' => 'DESC'),
             'tag' => array('useCount' => 'DESC')
         );
-        
+
         $joins = array(
-            'user' => 
-                'LEFT JOIN user.friendships uffr WITH uffr.target = :user
+            'user' =>
+            'LEFT JOIN user.friendships uffr WITH uffr.target = :user
                 LEFT JOIN user.fanships uffn WITH uffn.author = :user'
         );
-	    
+
         $types = array();
-        if ($user) $types[] = 'user';
+        if ($user)
+            $types[] = 'user';
         $types[] = 'idol';
         $types[] = 'team';
         $types[] = 'tag';
-        
+
         foreach ($types as $type) {
-    	    $likes = array();
-    	    foreach ($likefields[$type] as $lf) {
-    	        $likes[] = $type.'.'.$lf . ' LIKE :textlike';
-    	    }
-    	    $ordering = array();
-    	    foreach ($orderings[$type] as $fo => $or) {
-    	        $ordering[] = $type.'.'.$fo.' '.$or;
-    	    }
-            
-    	    $dql = '
-        	SELECT '.$type. (($type=='tag') ? '' : ', img') . '
-        	FROM '.$classtypes[$type].' '.$type.'
-        	'. (($type=='tag') ? '' : 'LEFT JOIN '.$type.'.image img') .'
-        	'. (isset($joins[$type]) ? $joins[$type] : '') .'
-        	GROUP BY '.$type.'
+            $likes = array();
+            foreach ($likefields[$type] as $lf) {
+                $likes[] = $type . '.' . $lf . ' LIKE :textlike';
+            }
+            $ordering = array();
+            foreach ($orderings[$type] as $fo => $or) {
+                $ordering[] = $type . '.' . $fo . ' ' . $or;
+            }
+
+            $dql = '
+        	SELECT ' . $type . (($type == 'tag') ? '' : ', img') . '
+        	FROM ' . $classtypes[$type] . ' ' . $type . '
+        	' . (($type == 'tag') ? '' : 'LEFT JOIN ' . $type . '.image img') . '
+        	' . (isset($joins[$type]) ? $joins[$type] : '') . '
+        	GROUP BY ' . $type . '
         	HAVING
-        	('.join(' OR ', $likes).')
-        	'.(($type=='user') ? '
+        	(' . join(' OR ', $likes) . ')
+        	' . (($type == 'user') ? '
         		AND (COUNT(uffr) > 0 OR COUNT(uffn) > 0)
-        	' : '').'
+        	' : '') . '
         	ORDER BY
-        	'.join(', ', $ordering).'
+        	' . join(', ', $ordering) . '
         	';
-    	    
-    	        	    
+
+
             $query = $this->_em->createQuery($dql)
-        		->setParameter('textlike', '%'.$match.'%');
-           
-        	if ($user && $type == 'user')
-        		$query = $query->setParameter('user', $user->getId());
-        		
-        	if ($limit !== null)
-        	    $query = $query->setMaxResults($limit);
-            
-        	
-        	    
-        	$results[$type] = $query->getResult();
+                    ->setParameter('textlike', '%' . $match . '%');
+
+            if ($user && $type == 'user')
+                $query = $query->setParameter('user', $user->getId());
+
+            if ($limit !== null)
+                $query = $query->setMaxResults($limit);
+
+
+
+            $results[$type] = $query->getResult();
         }
-    	
-    	return $results;
-    	
-	}
-	
-	/**
-	 * Returns latest trending tags
-	 * Please use Tagger service if possible
-	 * 
+
+        return $results;
+    }
+
+    /**
+     * Returns latest trending tags
+     * Please use Tagger service if possible
+     * 
      * @param int|null $limit
      * @param null|'video'|'photo'|'event' $taggedtype - filter by tagged entity type
      * @param null|'tag'|'idol'|'team' $resulttype - filter by result tag type
      * @param int $daysbefore
-	 */
-    public function trending($limit=20, $taggedtype=null, $resulttype=null, $daysbefore=7)
-	{
+     */
+    public function trending($limit = 20, $taggedtype = null, $resulttype = null, $daysbefore = 7)
+    {
         $taggedtypes = array('video', 'photo', 'event');
         $resulttypes = array('tag', 'idol', 'team');
-        
-        if ($taggedtype && !in_array($taggedtype, $taggedtypes)) throw new \InvalidArgumentException('Invalid tagged type');
-        if ($resulttype && !in_array($resulttype, $resulttypes)) throw new \InvalidArgumentException('Invalid result type');
-        
-        $datebefore = new \DateTime('-'.$daysbefore.' days');
-        
-	    $rsm = new ResultSetMapping();
+
+        if ($taggedtype && !in_array($taggedtype, $taggedtypes))
+            throw new \InvalidArgumentException('Invalid tagged type');
+        if ($resulttype && !in_array($resulttype, $resulttypes))
+            throw new \InvalidArgumentException('Invalid result type');
+
+        $datebefore = new \DateTime('-' . $daysbefore . ' days');
+
+        $rsm = new ResultSetMapping();
         $rsm->addScalarResult('id', 'id');
         $rsm->addScalarResult('title', 'title');
         $rsm->addScalarResult('slug', 'slug');
         $rsm->addScalarResult('type', 'type');
         $rsm->addScalarResult('usecount', 'count');
-        
+
         $typearray = array('tag', 'idol', 'team');
         if ($resulttype) {
             $typearray = array($resulttype);
@@ -314,44 +314,45 @@ class TagRepository extends CountBaseRepository
         foreach ($typearray as $type) {
             $sqls[] = '
                 SELECT
-                '.$type.'.id as id,
-                '.
-                (($type == 'idol') ?
-                ('CONCAT('.$type.'.firstname, \' \', '.$type.'.lastname) AS title,') :
-                ($type.'.title as title,'))
-                .'
-                '.$type.'.slug as slug,
-                COUNT(has'.$type.'.id) AS usecount,
-                \''.$type.'\' as type
+                ' . $type . '.id as id,
+                ' .
+                    (($type == 'idol') ?
+                            ('CONCAT(' . $type . '.firstname, \' \', ' . $type . '.lastname) AS title,') :
+                            ($type . '.title as title,'))
+                    . '
+                ' . $type . '.slug as slug,
+                COUNT(has' . $type . '.id) AS usecount,
+                \'' . $type . '\' as type
                 FROM
-                has'.$type.'
-                INNER JOIN '.$type.' ON has'.$type.'.'.$type.'_id = '.$type.'.id
-                WHERE has'.$type.'.created_at > :datebefore
-                '.
-                ($taggedtype ? '
-                	AND has'.$type.'.'.$taggedtype.'_id IS NOT NULL
+                has' . $type . '
+                INNER JOIN ' . $type . ' ON has' . $type . '.' . $type . '_id = ' . $type . '.id
+                WHERE has' . $type . '.created_at > :datebefore
+                ' .
+                    ($taggedtype ? '
+                	AND has' . $type . '.' . $taggedtype . '_id IS NOT NULL
                 ' : '')
-                .'
-                GROUP BY '.$type.'.id
+                    . '
+                GROUP BY ' . $type . '.id
                 ';
         }
-        
-                
+
+
         $query = $this->_em->createNativeQuery(
-            join(' UNION ', $sqls) .'
+                join(' UNION ', $sqls) . '
             ORDER BY 
             usecount DESC
-            '.
-            (($limit !== null) ? ' LIMIT :limit ' : '')
-            , $rsm
+            ' .
+                (($limit !== null) ? ' LIMIT :limit ' : '')
+                , $rsm
         );
-        
+
         $query = $query->setParameter('datebefore', $datebefore);
-        
+
         if ($limit !== null)
-            $query = $query->setParameter('limit', (int)$limit, Type::INTEGER);
-            
-            
+            $query = $query->setParameter('limit', (int) $limit, Type::INTEGER);
+
+
         return $query->getResult();
-	} 
+    }
+
 }

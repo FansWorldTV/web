@@ -1,18 +1,26 @@
 var things = {};
-
+things.matchs = {};
+things.photos = {};
+things.videos = {};
+things.albums = {};
 
 things.init = function(){
+    things.matchs.init();
+    things.videos.init();
+    things.photos.init();
+};
+
+
+things.matchs.init = function(){
     $("[data-filter-matchs] button").click(function(){
         $(".eventgrid-container").addClass('loading');
         $(".events-grid").html("");
         
         var type = $(this).attr('data-type');
-        things.filter(type);
+        things.matchs.filter(type);
     });
-    things.videos.init();
 };
-
-things.filter = function(type, callback){
+things.matchs.filter = function(type){
     var params = {};
     params['type'] = type;
     
@@ -31,7 +39,6 @@ things.filter = function(type, callback){
     });
 };
 
-things.videos = {};
 things.videos.init = function(){
     site.startMosaic($(".am-container"), {
         minw: 150, 
@@ -67,6 +74,118 @@ things.videos.init = function(){
             }
         }, function(er){
             error(er);
+        });
+    });
+};
+
+things.photos.page = 1;
+things.albums.page = 1;
+things.photos.init = function(){
+    $("[data-tagged-and-activity]").hide();
+    things.photos.filter();
+};
+
+things.photos.filter = function(){
+    $(".controllers-section .btn-group button[data-type]").on('click', function(){
+        things.photos.page = 1;
+        things.albums.page = 1;
+        type = $(this).attr('data-type');
+        
+        ajax.genericAction('things_photosajax', {
+            'type': type, 
+            'page': 1
+        }, function(r){
+            if(type != 0){
+                $("[data-my-photos]").hide(function(){
+                    $("[data-tagged-and-activity]").show();
+                });
+                $('[data-tagged-and-activity] .am-container.photos').html("");
+                for(var i in r.photos){
+                    var photo = r.photos[i];
+                    templateHelper.renderTemplate("search-photo", photo, "[data-tagged-and-activity] .am-container.photos", false, function(){
+                        $("[data-tagged-and-activity] .am-container.photos img").attr('width', '');
+                    });
+                }
+                $("[data-photo-length]").html(r.photosTotalCount);
+                
+                if(r.viewMorePhotos){
+                    endless.init(10, function(){
+                        things.photos.page++;
+                        ajax.genericAction('things_photosajax', {
+                            'type': type, 
+                            'page': things.photos.page
+                        }, function(r){
+                            for(var i in r.photos){
+                                var photo = r.photos[i];
+                                templateHelper.renderTemplate('search-photo', photo, "[data-my-photos] .am-container.photos", false, function(){
+                                    $("[data-new-element]").imagesLoaded(function () {
+                                        $('.am-container').montage('add', $("[data-new-element]"));
+                                        $("[data-new-element]").removeAttr('data-new-element');
+                                    });
+                                })
+                            }
+                        }, function(e){
+                            error(e);
+                        });
+                    });
+                }else{
+                    endless.init(1, function(){});
+                }
+            }else{
+                $("[data-tagged-and-activity]").hide(function(){
+                    $("[data-my-photos]").show();
+                });
+                
+                if(r.viewMoreAlbums){
+                    $("[data-my-photos] .am-container.albums").parent().append('<button class="loadmore albums">ver más</button>');
+                    $("button.loadmore.albums").click(function(){
+                        things.albums.page++;
+                        ajax.genericAction('things_photosajax', {
+                            'page': things.albums.page, 
+                            'type': 0
+                        }, function(r){
+                            for(var i in r.albums){
+                                var album = r.albums[i];
+                                templateHelper.renderTemplate('photo-album', album, "[data-my-photos] .am-container.albums", false, function(){
+                                    $("[data-new-element]").imagesLoaded(function () {
+                                        $('.am-container').montage('add', $("[data-new-element]"));
+                                        $("[data-new-element]").removeAttr('data-new-element');
+                                    });
+                                });
+                            }
+                        }, function(e){
+                            error(e);
+                        });
+                    });
+                }else{
+                    $("[data-my-photos] .am-container.albums .loadmore.albums").remove();
+                }
+                if(r.viewMorePhotos){
+                    endless.init(10, function(){
+                        things.photos.page++;
+                        ajax.genericAction('things_photosajax', {
+                            'type': 0, 
+                            'page': things.photos.page
+                        }, function(r){
+                            for(var i in r.photos){
+                                var photo = r.photos[i];
+                                templateHelper.renderTemplate('search-photo', photo, "[data-my-photos] .am-container.photos", false, function(){
+                                    $("[data-new-element]").imagesLoaded(function () {
+                                        $('.am-container').montage('add', $("[data-new-element]"));
+                                        $("[data-new-element]").removeAttr('data-new-element');
+                                    });
+                                })
+                            }
+                        }, function(e){
+                            error(e);
+                        });
+                    });
+                }else{
+                    endless.init(1, function(){});
+                }
+            }
+        }, function(e){
+            error(e);
         });
     });
 };

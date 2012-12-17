@@ -121,12 +121,12 @@ class ThingsController extends SiteController
                 $videos = $playlist->get($user);
                 break;
         }
-        
+
         $response['videos'] = $serializer->values($videos, 'medium');
 
         return $this->jsonResponse($response);
     }
-    
+
     /**
      * My Photos
      * @Route("/photos", name="things_photos")
@@ -136,7 +136,7 @@ class ThingsController extends SiteController
     public function photosAction()
     {
         $user = $this->getUser();
-        
+
         $photos = $this->getRepository('Photo')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::PHOTOS_LIMIT);
         $albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::ALBUMS_LIMIT);
 
@@ -145,17 +145,93 @@ class ThingsController extends SiteController
 
         $viewMorePhotos = $photosTotalCount > self::PHOTOS_LIMIT ? true : false;
         $viewMoreAlbums = $albumsTotalCount > self::ALBUMS_LIMIT ? true : false;
-        
+
         $lastVideos = $this->getRepository('Video')->findBy(array('highlight' => true), array('createdAt' => 'desc'), 4);
-        
+
         return array(
             'user' => $user,
             'lastVideos' => $lastVideos,
             'photos' => $photos,
             'albums' => $albums,
+            'photosTotalCount' => $photosTotalCount,
+            'albumsTotalCount' => $albumsTotalCount,
             'viewMorePhotos' => $viewMorePhotos,
             'viewMoreAlbums' => $viewMoreAlbums
         );
+    }
+
+    /**
+     * Photos filter
+     * @Route("/photos/filter/ajax", name="things_photosajax")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function photosAjaxAction()
+    {
+        $user = $this->getUser();
+        $request = $this->getRequest();
+        $serializer = $this->get('serializer');
+
+        $page = $request->get('page', 1);
+        $offsetAlbums = ($page - 1) * self::ALBUMS_LIMIT;
+        $offsetPhotos = ($page - 1) * self::PHOTOS_LIMIT;
+
+        $type = $request->get('type', 0);
+        $type = (int) $type;
+
+        $photoRepo = $this->getRepository('Photo');
+        $albumRepo = $this->getRepository('Album');
+
+        $response = array(
+            'photos' => array(),
+            'albums' => array(),
+            'viewMorePhotos' => null,
+            'viewMoreAlbums' => null
+        );
+
+        $albums = null;
+        $albumsTotalCount = 0;
+
+        switch ($type) {
+            case 0:
+                $photos = $photoRepo->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::PHOTOS_LIMIT, $offsetPhotos);
+                $albums = $albumRepo->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::ALBUMS_LIMIT, $offsetAlbums);
+
+                $photosTotalCount = $photoRepo->countBy(array('author' => $user->getId(), 'active' => true));
+                $albumsTotalCount = $albumRepo->countBy(array('author' => $user->getId(), 'active' => true));
+                
+                $photos = $serializer->values($photos, 'small');
+                break;
+            case 1:
+                $photos = $photoRepo->userTagged($user, self::PHOTOS_LIMIT, $offsetPhotos);
+                $photosTotalCount = $photoRepo->countUserTagged($user);
+                $photos = $serializer->values($photos, 'medium');
+                break;
+            case 2:
+                $photos = $photoRepo->userLiked($user, self::PHOTOS_LIMIT, $offsetPhotos);
+                $photosTotalCount = $photoRepo->countUserLiked($user);
+                $photos = $serializer->values($photos, 'medium');
+                break;
+        }
+
+        if ($photosTotalCount == 0) {
+            $viewMorePhotos = false;
+        }else{
+            $viewMorePhotos = ( ($page + 1) * self::PHOTOS_LIMIT ) < $photosTotalCount ? true : false;
+        }
+        
+        if($albumsTotalCount==0){
+            $viewMoreAlbums = false;
+        }else{
+            $viewMoreAlbums = ( ($page + 1) * self::PHOTOS_LIMIT ) < $albumsTotalCount ? true : false;
+        }
+        
+        return $this->jsonResponse(array(
+                    'albums' => $serializer->values($albums, 'medium'),
+                    'photos' => $photos,
+                    'viewMorePhotos' => $viewMorePhotos,
+                    'viewMoreAlbums' => $viewMoreAlbums,
+                    'photosTotalCount' => $photosTotalCount
+                ));
     }
 
     /**

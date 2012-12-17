@@ -70,7 +70,7 @@ class Serializer
         } elseif (is_array($entity)) {
             $arr = array();
             foreach ($entity as $e) {
-                $arr[] = $this->values($e);
+                $arr[] = $this->values($e, $imageformat);
             }
             return $arr;
         } else {

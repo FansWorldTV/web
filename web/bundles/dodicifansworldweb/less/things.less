@@ -17,6 +17,27 @@ div.my-things {
             }
         }
     }
+
+    &.photos{
+        header {
+            .title-section {
+                width: 50%;
+                .pull-left();
+            }
+            .controllers-section {
+                width: 50%;
+                .pull-right();
+                
+                .create-album, .upload-photo, .btn-group {
+                    .pull-right();
+                }
+
+                .btn-group, .upload-photo {
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
 }
 
 div.things-sidebar {

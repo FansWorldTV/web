@@ -6,8 +6,38 @@
 {% endblock %}
 
 {% block main_content %}
-<div class="my-things videos">
-    <div class="things-sidebar">
+<div class="row-fluid my-things photos">
+    <div class="span9">
+        <header>
+            <h2 class="title-section">Mis fotos</h2>
+            <div class="controllers-section">
+                <button type="button" class="btn btn-primary create-album" href="{{ path('album_create') }}" data-create-album>Crear album</button>
+                <button type="button" class="btn btn-primary upload-photo" href="{{ path('photo_fileupload') }}" data-upload="photo">Subir foto</button>
+                <div class="btn-group" data-toggle="buttons-radio">
+                    <button type="button" class="btn active" data-type="0">Mis fotos</button>
+                    <button type="button" class="btn" data-type="1">Taggeado</button>
+                    <button type="button" class="btn" data-type="2">Actividad</button>
+                </div>
+            </div>
+        </header>
+        
+        <div class="clearfix"></div>
+        
+        <div data-my-photos>
+            {% include 'DodiciFansworldWebBundle:Photo:blocks/albums_montage.html.twig' with {'albumsTotalCount': albumsTotalCount} %}
+            
+            <div class="row-fluid">
+                <h3>Fotos ( {{ photosTotalCount }} )</h3>
+                {% include 'DodiciFansworldWebBundle:Photo:blocks/montage.html.twig' with {photos: photos} %}
+            </div>
+        </div>
+        <div data-tagged-and-activity>
+            <h3>Fotos ( <span data-photo-length></span> )</h3>
+            <div class="am-container photos">
+            </div>
+        </div>
+    </div>
+    <div class="span3 things-sidebar">
         <section class="notification">
             <h4>NOTIFICACIONES <span class="midline"></span></h4>
         </section>
@@ -47,40 +77,16 @@
             </section>
         {% endif %}
     </div>
-    <div class="fluid-content">
-            <section>
-                <h3>Albums ( {{ albums|length }} )</h3>
-                <div class="am-container albums">
-                    {% for album in albums %}
-                                <a href="{{ path('user_showalbum', { 'id': album.id, 'username': user.username } ) }}" >
-                                    <span class="title">
-                                        {{ album.title }}
-                                        <br/>
-                                        <span class="photos-quant">{{ album.photos|length }} fotos</span>
-                                    </span>
-                                    {% if album.image %}
-                                        {% thumbnail album.image, thumbnailSize with {title: ''} %}
-                                    {% else %}
-                                        <img src="{{ asset('bundles/dodicifansworldweb/images/no-image.png' )}}" />
-                                    {% endif %}
-                                </a>
-                        {% endfor %}
-                </div>
-                {% if viewMoreAlbums %}
-                {% endif %}
-                <div class="clearfix"></div>
-            </section>
-            
-            <section>
-                <h3>Albums ( {{ albums|length }} )</h3>
-                <div class="am-container photos">
-                    {% for photo in photos %}
-                        <a href="{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}" rel="tooltip" title="{{ photo.title }}">
-                            {% thumbnail photo.image, 'small' with {title: photo.title} %}
-                        </a>
-                    {% endfor %}
-                </div>
-            </section>
-    </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var height = $("#main-content-frame").height();
+        $(window).resize(function(){
+            if($("#main-content-frame").height() != height){
+                height = $("#main-content-frame").height();
+                $(".things-sidebar").height(height+20);
+            }
+        });
+    });
+</script>
 {% endblock %}

@@ -1,0 +1,16 @@
+{% raw %}
+<a href="{{>url }}" >
+    <span class="title">
+        {{>title }}
+        <br/>
+        <span class="photos-quant">{{>photoCount }} fotos</span>
+    </span>
+    {{if image}}
+        <img src="{{>image}}" />
+    {{else}}
+{% endraw %}
+        <img src="{{ asset('bundles/dodicifansworldweb/images/no-image.png' )}}" />
+{% raw %}
+    {{/if}}
+</a>
+{% endraw %}
