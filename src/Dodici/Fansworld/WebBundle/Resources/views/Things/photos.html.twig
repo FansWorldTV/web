@@ -24,7 +24,10 @@
         <div class="clearfix"></div>
         
         <div data-my-photos>
-            {% include 'DodiciFansworldWebBundle:Photo:blocks/albums_montage.html.twig' with {'albumsTotalCount': albumsTotalCount} %}
+            {% include 'DodiciFansworldWebBundle:Photo:blocks/albums_montage.html.twig' with {'albumsTotalCount': albumsTotalCount, 'viewMoreAlbums': false} %}
+            {% if viewMoreAlbums %}
+                <button class="loadmore" data-entity-type="album">ver más</button>
+            {% endif %}
             
             <div class="row-fluid">
                 <h3>Fotos ( {{ photosTotalCount }} )</h3>
@@ -47,14 +50,6 @@
                 <h4>ULTIMOS DE FANSWORLD <span class="midline"></span></h4>
                 {% for video in lastVideos %}
                     {% if loop.first %}
-                        <div class="video-element first">
-                            <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
-                                <span class="title">{{ video.title }}</span>
-                                <span class="duration">{{ video.duration|date("i:s") }}</span>
-                                <img src="{{ asset('bundles/dodicifansworldweb/images/play_icon.png') }}" alt="Play" class="play"/>
-                                {% thumbnail video.image, 'medium' %}
-                            </a>
-                        </div>
                         <div class="video-element first">
                             <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
                                 <span class="title">{{ video.title }}</span>

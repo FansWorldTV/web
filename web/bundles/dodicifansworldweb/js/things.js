@@ -83,6 +83,56 @@ things.albums.page = 1;
 things.photos.init = function(){
     $("[data-tagged-and-activity]").hide();
     things.photos.filter();
+    $("button.loadmore[data-entity-type='album']").click(function(){
+        console.log('yeah');
+        things.albums.page++;
+        things.albums.addMore(0);
+    });
+};
+
+things.photos.addMore = function(type){
+    ajax.genericAction('things_photosajax', {
+        'type': type, 
+        'page': things.photos.page
+    }, function(r){
+        for(var i in r.photos){
+            var photo = r.photos[i];
+            templateHelper.renderTemplate('search-photo', photo, "[data-my-photos] .am-container.photos", false, function(){
+                $("[data-new-element]").imagesLoaded(function () {
+                    $('.am-container').montage('add', $("[data-new-element]"));
+                    $("[data-new-element]").removeAttr('data-new-element');
+                });
+            })
+        }
+        
+        if(!r.viewMorePhotos){
+            endless.init(1, function(){});
+        }
+    }, function(e){
+        error(e);
+    });
+};
+
+things.albums.addMore = function(type){
+    ajax.genericAction('things_photosajax', {
+        'page': things.albums.page, 
+        'type': type
+    }, function(r){
+        for(var i in r.albums){
+            var album = r.albums[i];
+            templateHelper.renderTemplate('photo-album', album, "[data-my-photos] .am-container.albums", false, function(){
+                $("[data-new-element]").imagesLoaded(function () {
+                    $('.am-container').montage('add', $("[data-new-element]"));
+                    $("[data-new-element]").removeAttr('data-new-element');
+                });
+            });
+        }
+        if(!r.viewMoreAlbums){
+            $("button.loadmore[data-entity-type='album']").remove();
+        }
+    }, function(e){
+        error(e);
+    });
 };
 
 things.photos.filter = function(){
@@ -111,22 +161,7 @@ things.photos.filter = function(){
                 if(r.viewMorePhotos){
                     endless.init(10, function(){
                         things.photos.page++;
-                        ajax.genericAction('things_photosajax', {
-                            'type': type, 
-                            'page': things.photos.page
-                        }, function(r){
-                            for(var i in r.photos){
-                                var photo = r.photos[i];
-                                templateHelper.renderTemplate('search-photo', photo, "[data-my-photos] .am-container.photos", false, function(){
-                                    $("[data-new-element]").imagesLoaded(function () {
-                                        $('.am-container').montage('add', $("[data-new-element]"));
-                                        $("[data-new-element]").removeAttr('data-new-element');
-                                    });
-                                })
-                            }
-                        }, function(e){
-                            error(e);
-                        });
+                        things.photos.addMore(type);
                     });
                 }else{
                     endless.init(1, function(){});
@@ -137,48 +172,18 @@ things.photos.filter = function(){
                 });
                 
                 if(r.viewMoreAlbums){
-                    $("[data-my-photos] .am-container.albums").parent().append('<button class="loadmore albums">ver más</button>');
-                    $("button.loadmore.albums").click(function(){
+                    //$("[data-my-photos] .am-container.albums").parent().append('<button class="loadmore" data-entity-type="albums">ver más</button>');
+                 /*   $("button.loadmore[data-entity-type='album']").click(function(){
                         things.albums.page++;
-                        ajax.genericAction('things_photosajax', {
-                            'page': things.albums.page, 
-                            'type': 0
-                        }, function(r){
-                            for(var i in r.albums){
-                                var album = r.albums[i];
-                                templateHelper.renderTemplate('photo-album', album, "[data-my-photos] .am-container.albums", false, function(){
-                                    $("[data-new-element]").imagesLoaded(function () {
-                                        $('.am-container').montage('add', $("[data-new-element]"));
-                                        $("[data-new-element]").removeAttr('data-new-element');
-                                    });
-                                });
-                            }
-                        }, function(e){
-                            error(e);
-                        });
-                    });
+                        things.albums.addMore(0);
+                    });*/
                 }else{
-                    $("[data-my-photos] .am-container.albums .loadmore.albums").remove();
+                    $("button.loadmore[data-entity-type='album']").remove();
                 }
                 if(r.viewMorePhotos){
                     endless.init(10, function(){
                         things.photos.page++;
-                        ajax.genericAction('things_photosajax', {
-                            'type': 0, 
-                            'page': things.photos.page
-                        }, function(r){
-                            for(var i in r.photos){
-                                var photo = r.photos[i];
-                                templateHelper.renderTemplate('search-photo', photo, "[data-my-photos] .am-container.photos", false, function(){
-                                    $("[data-new-element]").imagesLoaded(function () {
-                                        $('.am-container').montage('add', $("[data-new-element]"));
-                                        $("[data-new-element]").removeAttr('data-new-element');
-                                    });
-                                })
-                            }
-                        }, function(e){
-                            error(e);
-                        });
+                        things.photos.addMore(0);
                     });
                 }else{
                     endless.init(1, function(){});
