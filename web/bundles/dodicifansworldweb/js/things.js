@@ -84,22 +84,21 @@ things.photos.init = function(){
     $("[data-tagged-and-activity]").hide();
     things.photos.filter();
     $("button.loadmore[data-entity-type='album']").click(function(){
-        console.log('yeah');
         things.albums.page++;
         things.albums.addMore(0);
     });
 };
 
-things.photos.addMore = function(type){
+things.photos.addMore = function(type, destiny){
     ajax.genericAction('things_photosajax', {
         'type': type, 
         'page': things.photos.page
     }, function(r){
         for(var i in r.photos){
             var photo = r.photos[i];
-            templateHelper.renderTemplate('search-photo', photo, "[data-my-photos] .am-container.photos", false, function(){
+            templateHelper.renderTemplate('search-photo', photo, destiny, false, function(){
                 $("[data-new-element]").imagesLoaded(function () {
-                    $('.am-container').montage('add', $("[data-new-element]"));
+                    $(destiny).montage('add', $("[data-new-element]"));
                     $("[data-new-element]").removeAttr('data-new-element');
                 });
             })
@@ -146,14 +145,14 @@ things.photos.filter = function(){
             'page': 1
         }, function(r){
             if(type != 0){
-                $("[data-my-photos]").hide(function(){
-                    $("[data-tagged-and-activity]").show();
-                });
+                $("[data-my-photos]").hide();
+                $("[data-tagged-and-activity]").show();
                 $('[data-tagged-and-activity] .am-container.photos').html("");
+                
                 for(var i in r.photos){
                     var photo = r.photos[i];
-                    templateHelper.renderTemplate("search-photo", photo, "[data-tagged-and-activity] .am-container.photos", false, function(){
-                        $("[data-tagged-and-activity] .am-container.photos img").attr('width', '');
+                    templateHelper.renderTemplate("search-photo", photo, "[data-tagged-and-activity] .am-container[data-type='photos']", false, function(){
+                        $("[data-tagged-and-activity] .am-container[data-type='photos'] img").attr('width', '250');
                     });
                 }
                 $("[data-photo-length]").html(r.photosTotalCount);
@@ -161,15 +160,14 @@ things.photos.filter = function(){
                 if(r.viewMorePhotos){
                     endless.init(10, function(){
                         things.photos.page++;
-                        things.photos.addMore(type);
+                        things.photos.addMore(type, "[data-tagged-and-activity] .am-container[data-type='photos']");
                     });
                 }else{
                     endless.init(1, function(){});
                 }
             }else{
-                $("[data-tagged-and-activity]").hide(function(){
-                    $("[data-my-photos]").show();
-                });
+                $("[data-tagged-and-activity]").hide();
+                $("[data-my-photos]").show();
                 
                 if(r.viewMoreAlbums){
                     //$("[data-my-photos] .am-container.albums").parent().append('<button class="loadmore" data-entity-type="albums">ver más</button>');
@@ -183,7 +181,7 @@ things.photos.filter = function(){
                 if(r.viewMorePhotos){
                     endless.init(10, function(){
                         things.photos.page++;
-                        things.photos.addMore(0);
+                        things.photos.addMore(0, ".am-container.photos");
                     });
                 }else{
                     endless.init(1, function(){});
