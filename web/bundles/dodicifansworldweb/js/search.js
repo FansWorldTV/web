@@ -103,7 +103,7 @@ search.it = function(seeAll){
         $("section.search."+search.active).removeClass('loading');
     }, function(r){
         console.log(r);
-    });
+    }, 'get');
 };
 
 search.filter = function(){

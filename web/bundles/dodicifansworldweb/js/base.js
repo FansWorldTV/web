@@ -399,9 +399,8 @@ var ajax = {
         });
     },
   
-    genericAction: function(route, params, callback, errorCallback, type,async){
+    genericAction: function(route, params, callback, errorCallback, type){
         if (typeof type == 'undefined') type = 'post';
-        if (typeof async == 'undefined') async = false;
         
     	$.ajax({
             url: 'http://' + location.host + Routing.generate( appLocale + '_' + route),
@@ -416,8 +415,7 @@ var ajax = {
                 if(typeof(errorCallback) !== 'undefined'){
                 	errorCallback(r);
                 }
-            },
-            async: async
+            }
         });
         
         	
