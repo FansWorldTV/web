@@ -6,6 +6,12 @@
 var ajax = {
     active: false,
   
+    /*
+    
+    !!! THIS WOULD END UP OVERRIDING EVERY AJAX REQUEST !!!
+    
+    !!! REFACTOR THIS ENTIRE SCRIPT WITHOUT USING AJAXSETUP, OR SO MANY DIFFERENT METHODS !!!
+    
     init: function(){
         $.ajaxSetup({
             type: 'post',
@@ -27,6 +33,11 @@ var ajax = {
             }  
         });
     },
+    */
+    
+    init: function(){},
+    
+    setCallback: function(callback, errorcallback){},
     
     search: function(method, params, callback){
         if(!ajax.active) {
