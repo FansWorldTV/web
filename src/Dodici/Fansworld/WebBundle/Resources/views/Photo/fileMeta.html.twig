@@ -33,33 +33,28 @@
 
             var jcrop_api;
             var jcrop_state = true;
-            $(function(){$('#cropbox').Jcrop({onSelect: updateCoords, boxWidth: 300, boxHeight: 300},function(){jcrop_api = this;});});
+            $(function(){$('#cropbox').Jcrop({
+                onSelect: updateCoords, 
+                boxWidth: 300, 
+                boxHeight: 300,
+                onRelease: function(){
+                    $('#form_x').val(0); 
+                    $('#form_y').val(0); 
+                    $('#form_w').val(0); 
+                    $('#form_h').val(0);
+                },
+                trueSize: [{{realWidth}},{{realHeight}}]
+            },function(){jcrop_api = this;});});
             function updateCoords(c) { $('#form_x').val(c.x); $('#form_y').val(c.y); $('#form_w').val(c.w); $('#form_h').val(c.h);};
             function checkCoords() {
                 if (parseInt($('#form_w').val())) return true;
                 alert('Please select a crop region then press submit.');
                 return false;
             };
-            function jqstatus () {
-                if (jcrop_state) {
-                    jcrop_api.disable();
-                    jcrop_state = false;
-                    $("#cropButton").html("<i class='icon-remove-sign'></i> Cancelar seleccion");
-                } else {
-                    jcrop_api.enable();
-                    jcrop_api.release();
-                    jcrop_state = true;
-                    $('#form_x').val(0); 
-                    $('#form_y').val(0); 
-                    $('#form_w').val(0); 
-                    $('#form_h').val(0);
-                    $("#cropButton").html("<i class='icon-resize-small'></i>Recortar");
-                }
-            };
+            
             shareEngine.init();
             tagEngine.bindTokenizer();
             $('#share_it').click(function() {$('#submitPhoto').click();});
-            $('#cropButton').click(function() {jqstatus();});
         </script>
 
         <div class="greybox">
@@ -72,9 +67,6 @@
                         <section class="span2">
                             <img src="{{ path('media_temp', {tempfile: tempFile, hash: appmedia.temphash(tempFile) } )}}" id="cropbox" />
                         </section>
-                        <aside class="span3">
-                            <button class="btn btn-mini" id="cropButton" type="button"><i class="icon-resize-small"></i>Recortar</button>
-                        </aside>
                     </div>
 
                         <p class="filename"><small></small></p>

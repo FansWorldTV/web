@@ -44,7 +44,7 @@ var site = {
             innerHeight: 455
         });
         
-        
+        /*
         $(".btn[data-upload='video']").colorbox({
             iframe: false, 
             innerWidth: 700, 
@@ -53,14 +53,13 @@ var site = {
                 createUploader();
                 resizePopup();
             }
-        });
+        });*/
 
-        $(".btn[data-upload='photo']").colorbox({
-            iframe: false, 
+        $("[data-upload='photo']").colorbox({
             innerWidth: 700, 
             innerHeight: 175,
             onComplete: function() {
-                createUploader();
+                createPhotoUploader();
                 resizePopup();
             }
         });

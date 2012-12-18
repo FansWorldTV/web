@@ -245,11 +245,11 @@ class PhotoController extends SiteController
     public function fileUploadAction()
     {
         $request = $this->getRequest();
+        $originalFileName = $request->get('qqfile');
 
         if ($request->getMethod() == 'POST') {
-            $originalFileName = $request->get('qqfile');
-
             $response = array('error' => 'Could not save uploaded file.' . 'The upload was cancelled, or server error encountered');
+            if (!$originalFileName) return $response;
             $image = null;
 
             $input = fopen("php://input", "r");
@@ -261,7 +261,16 @@ class PhotoController extends SiteController
 
             if (file_exists($tempFile)) {
                 $tmpFileName = basename($tempFile);
-                $response = array('success' => true, 'tempFile' => $tmpFileName, 'originalFile' => $originalFileName);
+                
+                $properties = $this->get('appmedia')->getProperties($tempFile);
+                
+                $response = array(
+                	'success' => true, 
+                	'tempFile' => $tmpFileName, 
+                	'originalFile' => $originalFileName, 
+                	'width' => $properties['width'],
+                	'height' => $properties['height']
+                );
             } else {
                 $response = array('success' => false, 'tempFile' => '');
             }
@@ -281,6 +290,8 @@ class PhotoController extends SiteController
         
         $tempFile = $request->get('tempFile');
         $originalFileName = $request->get('originalFile');
+        $realWidth = $request->get('width');
+        $realHeight = $request->get('height');
         
         $lastdot = strrpos($originalFileName, '.');
         $originalFile = substr($originalFileName, 0, $lastdot);
@@ -349,7 +360,17 @@ class PhotoController extends SiteController
                 $form->addError(new FormError($this->trans('upload_error')));
             }
         }
-        return array('photo' => $photo, 'form' => $form->createView(), 'idolToTag' => $idolToTag, 'tempFile' => $tempFile, 'originalFile' => $originalFileName, 'ext' => $ext, 'redirectColorBox' => $redirectColorBox);
+        return array(
+        	'photo' => $photo, 
+        	'form' => $form->createView(), 
+        	'idolToTag' => $idolToTag, 
+        	'tempFile' => $tempFile, 
+        	'originalFile' => $originalFileName, 
+        	'ext' => $ext, 
+        	'redirectColorBox' => $redirectColorBox,
+            'realWidth' => $realWidth,
+            'realHeight' => $realHeight
+        );
     }
 
     private function _createForm ($userId) {

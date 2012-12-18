@@ -109,7 +109,7 @@ class AppMedia
         return sha1($tempfile.'xSkh78d');
     }
     
-    public function getType($path)
+    public function getProperties($path)
     {
         $info = getimagesize($path);
 
@@ -119,8 +119,18 @@ class AppMedia
 
         list($width, $height, $type) = $info;
 
+        return array(
+            'width' => $width,
+            'height' => $height,
+            'type' => $type
+        );
+    }
+    
+    public function getType($path)
+    {
+        $props = $this->getProperties($path);
+        $type = $props['type'];
         $format = $this->types[$type];
-        
         return $format;
     }
     

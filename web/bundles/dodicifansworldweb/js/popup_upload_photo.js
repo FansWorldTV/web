@@ -1,20 +1,3 @@
-$(function(){
-    if ($('#form_album').val() == 'NEW') {
-        spawnNewAlbumField($('#form_album'));
-    }
-    $('#form_album').change(function(e){
-        var el = $(this);
-        if (el.val() == 'NEW') {
-            spawnNewAlbumField(el);
-        } else {
-            $('#form_album_new_name').parents('.control-group').slideUp('fast',function(){
-                $(this).remove();
-                resizePopup();
-            });
-        }
-    });
-});
-
 function bindAlbumActions() {
     if ($('#form_album').val() == 'NEW') {
         spawnNewAlbumField($('#form_album'));
@@ -57,10 +40,10 @@ function bindFormSubmit() {
 function bindFormActions() {
     bindFormSubmit();
     bindAlbumActions();
-    setTimeout(function(){ resizePopup(); }, 1000);
+    setTimeout(function(){ resizePopup(); }, 2000);
 }
 
-function createUploader() {            
+function createPhotoUploader() {            
     var uploader = new qq.FileUploader({
         element: $("#file-uploader")[0],
         action: Routing.generate( appLocale + '_photo_fileupload'),
@@ -72,7 +55,12 @@ function createUploader() {
             if(responseJSON.success) {
                 $.colorbox({
                     href: Routing.generate(appLocale + '_photo_filemeta', 
-                        {'originalFile': responseJSON.originalFile, 'tempFile':responseJSON.tempFile}),
+                        {   
+                            'originalFile': responseJSON.originalFile, 
+                            'tempFile':responseJSON.tempFile,
+                            'width': responseJSON.width,
+                            'height': responseJSON.height
+                        }),
                     iframe: false, 
                     innerWidth: 700, 
                     innerHeight: 700,
