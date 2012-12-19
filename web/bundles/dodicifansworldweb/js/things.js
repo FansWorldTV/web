@@ -145,14 +145,25 @@ things.photos.filter = function(){
             'page': 1
         }, function(r){
             if(type != 0){
+                var $containerMontage = $("[data-tagged-and-activity] [data-montage-container][data-type='photos']");
                 $("[data-my-photos]").hide();
                 $("[data-tagged-and-activity]").show();
-                $('[data-tagged-and-activity] .am-container.photos').html("");
+                $containerMontage.html("");
                 
                 for(var i in r.photos){
                     var photo = r.photos[i];
-                    templateHelper.renderTemplate("search-photo", photo, "[data-tagged-and-activity] .am-container[data-type='photos']", false, function(){
-                        $("[data-tagged-and-activity] .am-container[data-type='photos'] img").attr('width', '250');
+                    templateHelper.renderTemplate("search-photo", photo, "[data-tagged-and-activity] [data-montage-container][data-type='photos']", false, function(){
+                        $containerMontage.find('img').attr('width', '250');
+                        $containerMontage.montage({
+                            minw: 200, 
+                            alternateHeight : true,
+                            fillLastRow : true
+                        });
+                        var $newImages = $("[data-new-element]");
+                        $newImages.imagesLoaded(function () {
+                            $containerMontage.montage('add', $newImages);
+                            $newImages.removeAttr('data-new-element');
+                        });
                     });
                 }
                 $("[data-photo-length]").html(r.photosTotalCount);
@@ -160,7 +171,7 @@ things.photos.filter = function(){
                 if(r.viewMorePhotos){
                     endless.init(10, function(){
                         things.photos.page++;
-                        things.photos.addMore(type, "[data-tagged-and-activity] .am-container[data-type='photos']");
+                        things.photos.addMore(type, "[data-tagged-and-activity] [data-montage-container][data-type='photos']");
                     });
                 }else{
                     endless.init(1, function(){});
@@ -171,7 +182,7 @@ things.photos.filter = function(){
                 
                 if(r.viewMoreAlbums){
                     //$("[data-my-photos] .am-container.albums").parent().append('<button class="loadmore" data-entity-type="albums">ver más</button>');
-                 /*   $("button.loadmore[data-entity-type='album']").click(function(){
+                    /*   $("button.loadmore[data-entity-type='album']").click(function(){
                         things.albums.page++;
                         things.albums.addMore(0);
                     });*/
