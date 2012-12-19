@@ -39,6 +39,19 @@
             <div data-montage-container data-type="photos">
             </div>
         </div>
+        
+        {% if viewMorePhotos %}
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    console.log('endless');
+                    endless.init(10, function(){
+                        console.log('endless');
+                        things.photos.page++;
+                        things.photos.addMore(0, ".am-container.photos");
+                    });
+                });
+            </script>
+        {% endif %}
     </div>
     <div class="span3 things-sidebar">
         <section class="notification">

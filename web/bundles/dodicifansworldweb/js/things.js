@@ -40,7 +40,7 @@ things.matchs.filter = function(type){
 };
 
 things.videos.init = function(){
-    site.startMosaic($(".am-container"), {
+    site.startMosaic($(".videos-container .am-container"), {
         minw: 150, 
         margin: 4, 
         liquid: true, 
@@ -81,8 +81,11 @@ things.videos.init = function(){
 things.photos.page = 1;
 things.albums.page = 1;
 things.photos.init = function(){
-    $("[data-tagged-and-activity]").hide();
-    things.photos.filter();
+    things.photos.filter(0);
+    $(".controllers-section .btn-group button[data-type]").on('click', function(){
+        var type = $(this).attr('data-type');
+        things.photos.filter(type);
+    });
     $("button.loadmore[data-entity-type='album']").click(function(){
         things.albums.page++;
         things.albums.addMore(0);
@@ -121,7 +124,7 @@ things.albums.addMore = function(type){
             var album = r.albums[i];
             templateHelper.renderTemplate('photo-album', album, "[data-my-photos] .am-container.albums", false, function(){
                 $("[data-new-element]").imagesLoaded(function () {
-                    $('.am-container').montage('add', $("[data-new-element]"));
+                    $('.am-container.albums').montage('add', $("[data-new-element]"));
                     $("[data-new-element]").removeAttr('data-new-element');
                 });
             });
@@ -134,73 +137,92 @@ things.albums.addMore = function(type){
     });
 };
 
-things.photos.filter = function(){
-    $(".controllers-section .btn-group button[data-type]").on('click', function(){
-        things.photos.page = 1;
-        things.albums.page = 1;
-        type = $(this).attr('data-type');
+things.photos.filter = function(type){
+    things.photos.page = 1;
+    things.albums.page = 1;
         
-        ajax.genericAction('things_photosajax', {
-            'type': type, 
-            'page': 1
-        }, function(r){
-            if(type != 0){
-                var $containerMontage = $("[data-tagged-and-activity] [data-montage-container][data-type='photos']");
-                $("[data-my-photos]").hide();
-                $("[data-tagged-and-activity]").show();
-                $containerMontage.html("");
+    ajax.genericAction('things_photosajax', {
+        'type': type, 
+        'page': 1
+    }, function(r){
+        if(type != 0){
+            var $containerMontage = $("[data-tagged-and-activity] [data-montage-container][data-type='photos']");
+            $("[data-my-photos]").hide();
+            $("[data-tagged-and-activity]").show();
+            $containerMontage.html("");
                 
-                for(var i in r.photos){
-                    var photo = r.photos[i];
-                    templateHelper.renderTemplate("search-photo", photo, "[data-tagged-and-activity] [data-montage-container][data-type='photos']", false, function(){
-                        $containerMontage.find('img').attr('width', '250');
-                        $containerMontage.montage({
-                            minw: 200, 
-                            alternateHeight : true,
-                            fillLastRow : true
-                        });
-                        var $newImages = $("[data-new-element]");
-                        $newImages.imagesLoaded(function () {
-                            $containerMontage.montage('add', $newImages);
-                            $newImages.removeAttr('data-new-element');
-                        });
+            for(var i in r.photos){
+                var photo = r.photos[i];
+                templateHelper.renderTemplate("search-photo", photo, "[data-tagged-and-activity] [data-montage-container][data-type='photos']", false, function(){
+                    $containerMontage.find('img').attr('width', '250');
+                    $containerMontage.montage({
+                        minw: 200, 
+                        alternateHeight : true,
+                        fillLastRow : true
                     });
-                }
-                $("[data-photo-length]").html(r.photosTotalCount);
+                    var $newImages = $("[data-new-element]");
+                    $newImages.imagesLoaded(function () {
+                        $containerMontage.montage('add', $newImages);
+                        $newImages.removeAttr('data-new-element');
+                    });
+                });
+            }
+            $("[data-photo-length]").html(r.photosTotalCount);
                 
-                if(r.viewMorePhotos){
-                    endless.init(10, function(){
-                        things.photos.page++;
-                        things.photos.addMore(type, "[data-tagged-and-activity] [data-montage-container][data-type='photos']");
-                    });
-                }else{
-                    endless.init(1, function(){});
-                }
+            if(r.viewMorePhotos){
+                endless.init(10, function(){
+                    things.photos.page++;
+                    things.photos.addMore(type, "[data-tagged-and-activity] [data-montage-container][data-type='photos']");
+                });
             }else{
-                $("[data-tagged-and-activity]").hide();
-                $("[data-my-photos]").show();
+                endless.init(1, function(){});
+            }
+        }else{
+            $("[data-tagged-and-activity]").hide();
+            $("[data-my-photos]").show();
+            $containerMontage = $("[data-my-photos] .am-container.photos");
+            $containerMontage.data('montage', null);
+            $containerMontage.html("");
                 
-                if(r.viewMoreAlbums){
-                    //$("[data-my-photos] .am-container.albums").parent().append('<button class="loadmore" data-entity-type="albums">ver más</button>');
-                    /*   $("button.loadmore[data-entity-type='album']").click(function(){
+            for(var i in r.photos){
+                var photo = r.photos[i];
+                templateHelper.renderTemplate("search-photo", photo, "[data-my-photos] .am-container.photos", false, function(){
+                    site.startMosaic($containerMontage, {
+                        minw: 150, 
+                        margin: 4, 
+                        liquid: true, 
+                        minsize: false
+                    });
+                    var $newImages = $("[data-new-element]");
+                    $newImages.imagesLoaded(function () {
+                        $containerMontage.montage('add', $newImages);
+                        $newImages.removeAttr('data-new-element');
+                    });
+                });
+            }
+                
+            if(r.viewMoreAlbums){
+            //$("[data-my-photos] .am-container.albums").parent().append('<button class="loadmore" data-entity-type="albums">ver más</button>');
+            /*   $("button.loadmore[data-entity-type='album']").click(function(){
                         things.albums.page++;
                         things.albums.addMore(0);
                     });*/
-                }else{
-                    $("button.loadmore[data-entity-type='album']").remove();
-                }
-                if(r.viewMorePhotos){
-                    endless.init(10, function(){
-                        things.photos.page++;
-                        things.photos.addMore(0, ".am-container.photos");
-                    });
-                }else{
-                    endless.init(1, function(){});
-                }
+            }else{
+                $("button.loadmore[data-entity-type='album']").remove();
             }
-        }, function(e){
-            error(e);
-        });
+            if(r.viewMorePhotos){
+                console.log('endless');
+                endless.init(10, function(){
+                    console.log('endless');
+                    things.photos.page++;
+                    things.photos.addMore(0, "[data-my-photos] .am-container.photos");
+                });
+            }else{
+                endless.init(1, function(){});
+            }
+        }
+    }, function(e){
+        error(e);
     });
 };
 

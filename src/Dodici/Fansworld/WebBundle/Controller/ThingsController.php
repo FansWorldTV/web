@@ -198,7 +198,7 @@ class ThingsController extends SiteController
 
                 $photosTotalCount = $photoRepo->countBy(array('author' => $user->getId(), 'active' => true));
                 $albumsTotalCount = $albumRepo->countBy(array('author' => $user->getId(), 'active' => true));
-                
+
                 $photos = $serializer->values($photos, 'small');
                 break;
             case 1:
@@ -215,16 +215,16 @@ class ThingsController extends SiteController
 
         if ($photosTotalCount == 0) {
             $viewMorePhotos = false;
-        }else{
-            $viewMorePhotos = ( ($page + 1) * self::PHOTOS_LIMIT ) < $photosTotalCount ? true : false;
+        } else {
+            $viewMorePhotos = ( $page * self::PHOTOS_LIMIT ) < $photosTotalCount ? true : false;
         }
-        
-        if($albumsTotalCount==0){
+
+        if ($albumsTotalCount == 0) {
             $viewMoreAlbums = false;
-        }else{
-            $viewMoreAlbums = ( ($page + 1) * self::PHOTOS_LIMIT ) < $albumsTotalCount ? true : false;
+        } else {
+            $viewMoreAlbums = ( $page * self::ALBUMS_LIMIT ) < $albumsTotalCount ? true : false;
         }
-        
+
         return $this->jsonResponse(array(
                     'albums' => $serializer->values($albums, 'medium'),
                     'photos' => $photos,
