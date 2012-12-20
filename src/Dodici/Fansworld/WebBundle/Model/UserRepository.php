@@ -2,6 +2,7 @@
 
 namespace Dodici\Fansworld\WebBundle\Model;
 
+use Dodici\Fansworld\WebBundle\Entity\Friendship;
 use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
@@ -516,5 +517,314 @@ class UserRepository extends CountBaseRepository
     {
         return $this->CountSearchFront($user, $text, null, $limit, $offset);
     }
+    
+	/**
+     * Get fans of the user
+     * 
+     * @param User $user
+     * @param true|false|null $direction - true: user follows them; false: they follow user; null: both ways
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function fans(User $user, $direction = null, $limit = null, $offset = null)
+    {
+        $query = $this->_em->createQuery('
+    	SELECT u
+    	FROM \Application\Sonata\UserBundle\Entity\User u
+    	WHERE u.enabled = true
+    	AND
+    	u.id <> :user
+    	AND
+    	'.$this->getDirectionCondition($direction).'
+    	
+    	ORDER BY u.lastname ASC, u.firstname ASC
+    	')
+                ->setParameter('user', $user->getId())
+        ;
 
+        if ($limit !== null)
+            $query = $query->setMaxResults($limit);
+        if ($offset !== null)
+            $query = $query->setFirstResult($offset);
+
+        return $query->getResult();
+    }
+    
+    /**
+     * Get fans of the user that share his location
+     * 
+     * @param User $user
+     * @param true|false|null $direction - true: user follows them; false: they follow user; null: both ways
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function fansNearby(User $user, $direction = null, $limit = null, $offset = null)
+    {
+        $query = $this->_em->createQuery('
+    	SELECT u
+    	FROM \Application\Sonata\UserBundle\Entity\User u
+    	WHERE u.enabled = true
+    	AND
+    	u.id <> :user
+    	AND
+    	((u.city = :usercity) OR (u.country = :usercountry))
+    	AND
+    	'.$this->getDirectionCondition($direction).'
+    	
+    	ORDER BY u.lastname ASC, u.firstname ASC
+    	')
+                ->setParameter('user', $user->getId())
+                ->setParameter('usercountry', $user->getCountry() ? $user->getCountry()->getId() : null)
+                ->setParameter('usercity', $user->getCity() ? $user->getCity()->getId() : null)
+        ;
+
+        if ($limit !== null)
+            $query = $query->setMaxResults($limit);
+        if ($offset !== null)
+            $query = $query->setFirstResult($offset);
+
+        return $query->getResult();
+    }
+    
+    /**
+     * Get fans of the user that share his choice(s) of favorite team
+     * 
+     * @param User $user
+     * @param true|false|null $direction - true: user follows them; false: they follow user; null: both ways
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function fansSameFavoriteTeam(User $user, $direction = null, $limit = null, $offset = null)
+    {
+        $query = $this->_em->createQuery('
+    	SELECT u, uts
+    	FROM \Application\Sonata\UserBundle\Entity\User u
+    	JOIN u.teamships uts WITH uts.favorite = true
+    	AND uts.team IN 
+    	(
+    		SELECT utx.id FROM \Dodici\Fansworld\WebBundle\Entity\Teamship utsx JOIN utsx.team utx
+    		WHERE utsx.author = :user AND utsx.favorite = true
+    	)
+    	WHERE u.enabled = true
+    	AND
+    	u.id <> :user
+    	AND
+    	'.$this->getDirectionCondition($direction).'
+    	
+    	ORDER BY u.lastname ASC, u.firstname ASC
+    	')
+                ->setParameter('user', $user->getId())
+        ;
+
+        if ($limit !== null)
+            $query = $query->setMaxResults($limit);
+        if ($offset !== null)
+            $query = $query->setFirstResult($offset);
+
+        return $query->getResult();
+    }
+    
+    /**
+     * Get fans of the user that share the most teamships and idolships
+     * 
+     * @param User $user
+     * @param true|false|null $direction - true: user follows them; false: they follow user; null: both ways
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function fansMostSimilar(User $user, $direction = null, $limit = null, $offset = null)
+    {
+        $query = $this->_em->createQuery('
+    	SELECT u, COUNT(u) as common, COUNT(uts) as commonteams, COUNT(uis) as commonidols
+    	FROM \Application\Sonata\UserBundle\Entity\User u
+    	
+    	LEFT JOIN u.teamships uts
+    	WITH uts.team IN 
+    	(
+    		SELECT utx.id FROM \Dodici\Fansworld\WebBundle\Entity\Teamship utsx JOIN utsx.team utx
+    		WHERE utsx.author = :user
+    	)
+    	
+    	LEFT JOIN u.idolships uis
+    	WITH uis.idol IN 
+    	(
+    		SELECT uix.id FROM \Dodici\Fansworld\WebBundle\Entity\Idolship uisx JOIN uisx.idol uix
+    		WHERE uisx.author = :user
+    	)
+    	
+    	WHERE u.enabled = true
+    	AND
+    	u.id <> :user
+    	AND
+    	'.$this->getDirectionCondition($direction).'
+    	
+    	GROUP BY u.id
+    	HAVING (commonteams > 0 OR commonidols > 0)
+    	
+    	ORDER BY common DESC
+    	')
+                ->setParameter('user', $user->getId())
+        ;
+
+        if ($limit !== null)
+            $query = $query->setMaxResults($limit);
+        if ($offset !== null)
+            $query = $query->setFirstResult($offset);
+
+        $res = $query->getResult();
+        $users = array();
+        foreach ($res as $r) $users[] = $r[0];
+        return $users;
+    }
+    
+	/**
+     * Get count of fans of the user
+     * 
+     * @param User $user
+     * @param true|false|null $direction - true: user follows them; false: they follow user; null: both ways
+     */
+    public function countFans(User $user, $direction = null)
+    {
+        $query = $this->_em->createQuery('
+    	SELECT COUNT(u)
+    	FROM \Application\Sonata\UserBundle\Entity\User u
+    	WHERE u.enabled = true
+    	AND
+    	u.id <> :user
+    	AND
+    	'.$this->getDirectionCondition($direction).'
+    	
+    	')
+                ->setParameter('user', $user->getId())
+        ;
+
+        return (int)$query->getSingleScalarResult();
+    }
+    
+    /**
+     * Get count of fans of the user that share his location
+     * 
+     * @param User $user
+     * @param true|false|null $direction - true: user follows them; false: they follow user; null: both ways
+     */
+    public function countFansNearby(User $user, $direction = null)
+    {
+        $query = $this->_em->createQuery('
+    	SELECT COUNT(u)
+    	FROM \Application\Sonata\UserBundle\Entity\User u
+    	WHERE u.enabled = true
+    	AND
+    	u.id <> :user
+    	AND
+    	((u.city = :usercity) OR (u.country = :usercountry))
+    	AND
+    	'.$this->getDirectionCondition($direction).'
+    	
+    	')
+                ->setParameter('user', $user->getId())
+                ->setParameter('usercountry', $user->getCountry() ? $user->getCountry()->getId() : null)
+                ->setParameter('usercity', $user->getCity() ? $user->getCity()->getId() : null)
+        ;
+
+        return (int)$query->getSingleScalarResult();
+    }
+    
+    /**
+     * Get count of fans of the user that share his choice(s) of favorite team
+     * 
+     * @param User $user
+     * @param true|false|null $direction - true: user follows them; false: they follow user; null: both ways
+     */
+    public function countFansSameFavoriteTeam(User $user, $direction = null)
+    {
+        $query = $this->_em->createQuery('
+    	SELECT COUNT(u)
+    	FROM \Application\Sonata\UserBundle\Entity\User u
+    	JOIN u.teamships uts WITH uts.favorite = true
+    	AND uts.team IN 
+    	(
+    		SELECT utx.id FROM \Dodici\Fansworld\WebBundle\Entity\Teamship utsx JOIN utsx.team utx
+    		WHERE utsx.author = :user AND utsx.favorite = true
+    	)
+    	WHERE u.enabled = true
+    	AND
+    	u.id <> :user
+    	AND
+    	'.$this->getDirectionCondition($direction).'
+    	
+    	')
+                ->setParameter('user', $user->getId())
+        ;
+
+        return (int)$query->getSingleScalarResult();
+    }
+    
+    /**
+     * Get count of fans of the user that share teamships and idolships
+     * 
+     * @param User $user
+     * @param true|false|null $direction - true: user follows them; false: they follow user; null: both ways
+     */
+    public function countFansMostSimilar(User $user, $direction = null)
+    {
+        $query = $this->_em->createQuery('
+    	SELECT COUNT(u)
+    	FROM \Application\Sonata\UserBundle\Entity\User u
+    	
+    	WHERE
+    	(
+        	u IN (
+        		SELECT uxi.id FROM \Dodici\Fansworld\WebBundle\Entity\Teamship uxits
+        		JOIN uxits.author uxi
+        		WHERE uxits.team IN
+        		(
+            		SELECT utx.id FROM \Dodici\Fansworld\WebBundle\Entity\Teamship utsx JOIN utsx.team utx
+            		WHERE utsx.author = :user
+        		)
+        	)
+        	
+        	OR
+        	    	
+        	u IN (
+        		SELECT uxib.id FROM \Dodici\Fansworld\WebBundle\Entity\Idolship uxiis
+        		JOIN uxiis.author uxib
+        		WHERE uxiis.idol IN
+        		(
+            		SELECT uix.id FROM \Dodici\Fansworld\WebBundle\Entity\Idolship uisx JOIN uisx.idol uix
+            		WHERE uisx.author = :user
+        		)
+        	)
+    	)
+    	
+    	AND u.enabled = true
+    	AND
+    	u.id <> :user
+    	AND
+    	'.$this->getDirectionCondition($direction).'
+    	
+    	')
+                ->setParameter('user', $user->getId())
+        ;
+
+        return (int)$query->getSingleScalarResult();
+    }
+
+    private function getDirectionCondition($direction)
+    {
+        $conditions = array();
+        if ($direction || $direction === null) {
+            $conditions[] = '
+            u.id IN (SELECT fsua.id FROM \Dodici\Fansworld\WebBundle\Entity\Friendship fsa JOIN fsa.target fsua WHERE fsa.author = :user)
+            ';
+        }
+        if (!$direction || $direction === null) {
+            $conditions[] = '
+            u.id IN (SELECT fsub.id FROM \Dodici\Fansworld\WebBundle\Entity\Friendship fsb JOIN fsb.author fsub WHERE fsb.target = :user)
+            ';
+        }
+        
+        $condition = '(' . join(' OR ', $conditions) . ')';
+        
+        return $condition;
+    }
 }
