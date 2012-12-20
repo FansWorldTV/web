@@ -1,9 +1,9 @@
 {% extends 'DodiciFansworldWebBundle:Notification:notification.base.html.twig' %}
 
-{% block avatar %}
-    {% set image = notification.video.image %}
-    {{ parent() }}
-{% endblock %}
+	{% block avatar %}
+	    {% set image = notification.video.image %}
+	    {{ parent() }}
+	{% endblock %}
 
 {% block text %}
     Tu vídeo <a class="notice-link" href="{{ path('video_show', { id: notification.video.id, slug: notification.video.slug }) }}">{{ notification.video }}</a>  

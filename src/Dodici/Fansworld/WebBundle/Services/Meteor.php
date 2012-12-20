@@ -47,7 +47,8 @@ class Meteor
 	    	return $this->sendToSocket(
 	    	    array(
 	    	    	't' => (($entity instanceof Notification) ? 'n' : 'f'), 
-	    	    	'id' => $entity->getId()
+	    	    	'id' => $entity->getId(),
+                    'p' => $entity->getTypeParent()
 	    	    ), 
 	    	    $this->encryptChannelName('notification', $entity->getTarget())
 	    	);

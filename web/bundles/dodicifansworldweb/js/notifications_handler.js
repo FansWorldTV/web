@@ -1,37 +1,66 @@
 var notifications = {};
+notifications.total = 0;
 
-notifications.init = function(){
+notifications.init = function() {
+    notifications.initCounts();
     notifications.listen();
 };
 
-notifications.listen = function(){
-    function handleData(response){
+notifications.listen = function() {
+    function handleData(response) {
         response = JSON.parse(response);
         console.log(response);
-        if(response){
-            if(response.t == 'n'){
-                notifications.handleNotification(response.id);
-            }else if(response.t == 'f'){
+        if (response) {
+            if (response.t == 'n') {
+                notifications.handleNewNotification(response);
+            } else if (response.t == 'f') {
                 notifications.handleFriendship(response.id);
-            }else if(response.t == 'c'){
+            } else if (response.t == 'c') {
                 notifications.handleComment(response.w, response.id, response.p)
             }
         }
     }
-    
     if ((typeof Meteor != 'undefined') && (typeof notificationChannel != 'undefined')) {
-        Meteor.registerEventCallback("process", handleData);
-        
-        
+        Meteor.registerEventCallback("process", handleData);   
         Meteor.joinChannel(notificationChannel);
         Meteor.connect();
-                                       	            
-        // Start streaming!
-        console.log('Escuchando notifications...');
+        console.log('Escuchando notifications..');
     }
 };
 
-notifications.handleNotification = function(id){
+notifications.handleNewNotification = function(response) {
+    id = response.id; entity = response.p;
+    
+    newCant = $('[data-notif-' + entity + ']').data('notif-' + entity).count += 1;
+    notifications.showCounts(entity, newCant);
+    notifications.total += 1;
+    notifications.showCounts("total", notifications.total);
+    
+    $('[data-notif-' + entity + '] span').effect("highlight", {color: "#a0c882"}, 2000);
+    $('[data-notif-' + entity + ']').effect("bounce", { times: 4 }, 1200);
+
+    ajax.getNotification(id, function(response) {
+        if (response) {
+            domObject = "#relatedcolumn";
+            if ($('.alert.alert-success').size() >= 4) $('.alert.alert-success:last').fadeOut("slow").remove();
+            $(domObject).prepend(getClassicNotificationTemplate(response));
+            $('.alert.alert-success:first').effect("bounce", {times:2}, 300);
+            notice(getBubbleNotificationTemplate(response));
+            console.log(response);
+        }
+    });
+
+    function getBubbleNotificationTemplate(htmlResponse) {
+        return '<div class="bubbleNotification">' + htmlResponse + '</div>';
+    };
+
+    function getClassicNotificationTemplate(htmlResponse) {
+        btnClose = '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+        return '<div class="alert alert-success">'+ btnClose + htmlResponse + '</div>';
+    };
+};
+
+notifications.handleNotification_Old = function(id) {
     console.log(id);
     var classes = 'clearfix notification loading';
     if(site.isClosedNotificationess){
@@ -72,7 +101,7 @@ notifications.handleNotification = function(id){
     });
 };
 
-notifications.handleFriendship = function(id){
+notifications.handleFriendship = function(id) {
     var actualNumber = $("li.alerts_user a span").html();
     parseInt(actualNumber);
     if(actualNumber == ''){
@@ -100,7 +129,7 @@ notifications.handleFriendship = function(id){
                 $("li.alerts_user ul li.more").before(template);
             }
             actualNumber++;
-                        
+
             $("li.alerts_user a span").html(actualNumber).removeClass('hidden');
             $(".alerts_user a:first span").effect("highlight",{},3000);
             $(".alerts_user a:first").effect("bounce",{
@@ -114,6 +143,43 @@ notifications.handleComment = function(wallname, id, parent) {
     $('[data-wall="'+wallname+'"]').addWallComment(id, parent);
 };
 
-$(document).ready(function(){
+notifications.showCounts = function(entity, value) {
+    if (value > 0) {
+        if ($('[data-notif-' + entity + ']').children("span").length > 0) {
+            $('[data-notif-' + entity + ']').children("span").eq(0).html(value);
+        } else {
+            $('[data-notif-' + entity + ']').prepend(getBadgeTemplate(value));
+        }
+    } else {
+        if ($('[data-notif-' + entity + ']').children("span").length > 0) $('[data-notif-' + entity + ']').children("span").eq(0).remove();
+    }
+    function getBadgeTemplate(number) {
+        return '<span class="label label-warning label-toolbar">' + number + '</span>';
+    }
+};
+
+notifications.initCounts = function () {
+    ajax.genericAction('user_ajaxgetnotifications_typecounts', {}, 
+        function(response) {
+            if (response) {
+                for (i in response) {
+                    result = response[i];
+                    console.log(result.parent + '/' + result.cnt);
+                    notifications.total += parseInt(result.cnt);
+                    $('[data-notif-' + result.parent + ']').data('notif-' + result.parent).count = parseInt(result.cnt);
+                    notifications.showCounts(result.parent, result.cnt);
+                }
+                notifications.showCounts("total", notifications.total);
+            }
+        });
+};
+
+notifications.setFake = function (type) {
+    ajax.genericAction('notification_setfake', {'type': type}, 
+        function(response){}
+    );
+};
+
+$(document).ready(function() {
     notifications.init();
 });

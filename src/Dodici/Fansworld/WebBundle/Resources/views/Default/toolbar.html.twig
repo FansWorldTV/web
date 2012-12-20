@@ -1,65 +1,57 @@
 <ul class='well sidebar-nav sidebar-nav-fixed' id='left-menu'>
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
-    <li>
-        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}" id="toolbar-notification" title="Notificaciones">
-          
+    <li class="toolbar-icon">
+        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}" title="Notificaciones" data-notif-total ='{"count":"0"}'>
             <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_notifications.png' )}}" />
         </a>
     </li>
 
 
-    <li>
-        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}" id="toolbar-message" title="Mensajes">
-          
+    <li class="toolbar-icon">
+        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}"  title="Mensajes" data-notif-message='{"count":"0"}'>
             <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_messages.png' )}}" />
         </a>
     </li>
     
 
-    <li>
-        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}" id="toolbar-fan" title="Mis fans">
-          
+    <li class="toolbar-icon">
+        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}"  title="Mis fans" data-notif-fan='{"count":"0"}'>
             <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_fans.png' )}}" />
         </a>
     </li>
     
 
-    <li>
-        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}" id="toolbar-photo" title="Mis fotos">
-       
+    <li class="toolbar-icon">
+        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}" title="Mis fotos" data-notif-photo='{"count":"0"}'>
             <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_photos.png' )}}" />
         </a>
     </li>
     
 
-    <li>
-        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}" id="toolbar-video" title="Mis videos">
-     
+    <li class="toolbar-icon">
+        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}" title="Mis videos" data-notif-video='{"count":"0"}'>
             <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_videos.png' )}}" />
         </a>
     </li>
 
 
-    <li>
-        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}" id="toolbar-idol" title="Mis idolos">
-    
+    <li class="toolbar-icon">
+        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}" title="Mis idolos" data-notif-idol='{"count":"0"}'>
             <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_idols.png' )}}" />
         </a>
     </li>
 
 
-    <li>
-        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}" id="toolbar-team" title="Mis equipos">
-          
+    <li class="toolbar-icon">
+        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}" title="Mis equipos" data-notif-team='{"count":"0"}'>
             <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_teams.png' )}}" />
         </a>
     </li>
     
 
-    <li>
-        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}"  id="toolbar-badge" title="Mis badges">
-
+    <li class="toolbar-icon">
+        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}" title="Mis badges" data-notif-badge='{"count":"0"}'>
             <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_badges.png' )}}" />
         </a>
     </li>

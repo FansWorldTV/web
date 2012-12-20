@@ -202,7 +202,7 @@ class UserController extends SiteController
                 'readed' => $notification->getReaded(),
                 'view' => $this->renderView('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $notification))
             );
-        }
+        } 
 
         $response['countAll'] = $countAll;
         return $this->jsonResponse($response);
@@ -882,4 +882,28 @@ class UserController extends SiteController
         );
     }
 
+
+    /**
+     *  @Route("/ajax/notifications-typecounts", name="user_ajaxgetnotifications_typecounts") 
+     */
+    public function ajaxGetNotificationsTypeCounts()
+    {
+        $user = $this->getUser();
+        $notificationRepo = $this->getRepository('Notification');
+        $response = $notificationRepo->typeCounts($user, false);
+        //return $this->jsonResponse(array('number' => $number));
+        return $this->jsonResponse($response);
+    }
+
+
+    /**
+     *  @Route("/ajax/notification-setfake", name="notification_setfake") 
+     */
+    public function ajaxSetNotificationFake()
+    {
+        $request = $this->getRequest();
+        $type = $request->get('type', false);
+        $notification = $this->getRepository('Notification')->findOneBy(array('type' => $type));
+        $this->get('meteor')->push($notification);
+    }
 }

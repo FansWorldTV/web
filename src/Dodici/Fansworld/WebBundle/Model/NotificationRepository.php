@@ -6,6 +6,9 @@ use Doctrine\DBAL\Types\Type;
 
 use Doctrine\ORM\EntityRepository;
 
+use Dodici\Fansworld\WebBundle\Entity\Notification;
+
+
 /**
  * NotificationRepository
  */
@@ -87,7 +90,11 @@ class NotificationRepository extends CountBaseRepository
     		
     	if ($readed !== null)
 		$query = $query->setParameter('readed', $readed, Type::BOOLEAN);
-    		
-    	return $query->getResult();
+    	$result = $query->getResult();
+        foreach ($result as &$r) {
+            $typeList = Notification::getTypeList();
+            $r['parent'] = $typeList[(int) $r['type']]['parent'];
+        }
+        return $result;
     }
 }
