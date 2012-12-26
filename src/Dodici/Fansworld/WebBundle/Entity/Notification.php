@@ -158,20 +158,20 @@ class Notification
     
     public static function getTypeList() {
     	return array(
-    		self::TYPE_COMMENT_ANSWERED => array('type' => 'comment_answered', 'parent' => 'message'),
+    		self::TYPE_COMMENT_ANSWERED => array('type' => 'comment_answered', 'parent' => 'messages'),
             self::TYPE_FORUM_ANSWERED => array('type' => 'forum_answered',  'parent' => 'forum'),
             self::TYPE_FORUM_CREATED => array('type' => 'forum_created', 'parent' => 'forum'),
-            self::TYPE_FRIENDSHIP_ACCEPTED => array('type' => 'friendship_accepted', 'parent' => 'fan'),
-            self::TYPE_USER_TAGGED => array('type' => 'user_tagged', 'parent' => 'tag'),
-            self::TYPE_VIDEO_PROCESSED => array('type' => 'video_processed', 'parent' => 'video'),
-            self::TYPE_VIDEO_SUBSCRIPTION => array('type' => 'video_subscription', 'parent' => 'video'),
-            self::TYPE_VIDEO_NEW_FROM_IDOL_TEAM => array('type' => 'video_newidolteam', 'parent' => 'video'),
+            self::TYPE_FRIENDSHIP_ACCEPTED => array('type' => 'friendship_accepted', 'parent' => 'fans'),
+            self::TYPE_USER_TAGGED => array('type' => 'user_tagged', 'parent' => 'tags'),
+            self::TYPE_VIDEO_PROCESSED => array('type' => 'video_processed', 'parent' => 'videos'),
+            self::TYPE_VIDEO_SUBSCRIPTION => array('type' => 'video_subscription', 'parent' => 'videos'),
+            self::TYPE_VIDEO_NEW_FROM_IDOL_TEAM => array('type' => 'video_newidolteam', 'parent' => 'videos'),
             // Artificial type
-            self::TYPE_FRIENDSHIP_CREATED => array('type' => 'friendship_created', 'parent' => 'fan'),
+            self::TYPE_FRIENDSHIP_CREATED => array('type' => 'friendship_created', 'parent' => 'fans'),
             // Temporary types / to test notifications
-            self::TYPE_TEAM => array('type' => 'newteam_test', 'parent' => 'team'),
-            self::TYPE_IDOL => array('type' => 'newidol_test', 'parent' => 'idol'),
-            self::TYPE_PHOTO => array('type' => 'newphoto_test', 'parent' => 'photo'),
+            self::TYPE_TEAM => array('type' => 'newteam_test', 'parent' => 'teams'),
+            self::TYPE_IDOL => array('type' => 'newidol_test', 'parent' => 'idols'),
+            self::TYPE_PHOTO => array('type' => 'newphoto_test', 'parent' => 'photos'),
     	);
     }
     

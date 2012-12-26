@@ -257,21 +257,25 @@ var ajax = {
     },
     
     getNotification: function(id, callback){
-        ajax.setCallback(callback);
         $.ajax({
             url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxnotification' ),
             data:{
                 'id': id
+            },
+            success: function(r){
+                callback(r);
             }
         });
     },
     
     deleteNotification: function(id, callback){
-        ajax.setCallback(callback);
         $.ajax({
             url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxdeletenotification'),
             data: {
                 'id' : id
+            },
+            success: function(r){
+                callback(r);
             }
         });
     },

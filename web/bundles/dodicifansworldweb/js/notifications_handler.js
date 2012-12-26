@@ -31,24 +31,49 @@ notifications.listen = function() {
 notifications.handleNewNotification = function(response) {
     id = response.id; entity = response.p;
     
-    newCant = $('[data-notif-' + entity + ']').data('notif-' + entity).count += 1;
-    notifications.showCounts(entity, newCant);
-    notifications.total += 1;
-    notifications.showCounts("total", notifications.total);
-    
-    $('[data-notif-' + entity + '] span').effect("highlight", {color: "#a0c882"}, 2000);
-    $('[data-notif-' + entity + ']').effect("bounce", { times: 4 }, 1200);
-
+    updateBubbleCount(entity, 1);
     ajax.getNotification(id, function(response) {
         if (response) {
-            domObject = "#relatedcolumn";
-            if ($('.alert.alert-success').size() >= 4) $('.alert.alert-success:last').fadeOut("slow").remove();
-            $(domObject).prepend(getClassicNotificationTemplate(response));
-            $('.alert.alert-success:first').effect("bounce", {times:2}, 300);
-            notice(getBubbleNotificationTemplate(response));
-            console.log(response);
+            entityContent = $('.my-things.' + entity).size();
+            if (entityContent > 0) {
+                if ($('.alert.alert-success').size() >= 4) $('.alert.alert-success:last').fadeOut("slow").remove();
+                $('.notification').prepend(getClassicNotificationTemplate(response));
+                $('.alert.alert-success:first').effect("bounce", {times:2}, 300);
+                bindReadNotification(id, entity);
+            } else {
+                notice(getBubbleNotificationTemplate(response));
+            }   
         }
     });
+
+    function bindReadNotification(id, entity) {
+        $('.alert.alert-success:first .info').bind('mouseenter', {id: id}, function(event) {
+            updateBubbleCount(entity, -1);
+            console.log('Readed:' + event.data.id);
+            $('.alert.alert-success:first .info').unbind('mouseenter');
+        });
+    };
+
+    function updateBubbleCount(entity, value) {
+        if (1 === value) {
+            newCant = $('[data-notif-' + entity + ']').data('notif-' + entity).count += value;
+            notifications.total += value;
+            notifications.showCounts(entity, newCant);
+            notifications.showCounts("total", notifications.total);
+            $('[data-notif-' + entity + '] span').effect("highlight", {color: "#a0c882"}, 2000);
+            $('[data-notif-' + entity + ']').effect("bounce", { times: 4 }, 1200);
+        } else {
+            actualCant = $('[data-notif-' + entity + ']').data('notif-' + entity).count;
+                if (0 != actualCant) {
+                    newCant = $('[data-notif-' + entity + ']').data('notif-' + entity).count += value;
+                    notifications.total += value;
+                    notifications.showCounts(entity, newCant);
+                    notifications.showCounts("total", notifications.total);
+                    $('[data-notif-' + entity + '] span').effect("highlight", {color: "#a0c882"}, 2000);
+                    $('[data-notif-' + entity + ']').effect("bounce", { times: 4 }, 1200);
+                }
+        }
+    };
 
     function getBubbleNotificationTemplate(htmlResponse) {
         return '<div class="bubbleNotification">' + htmlResponse + '</div>';
@@ -164,7 +189,6 @@ notifications.initCounts = function () {
             if (response) {
                 for (i in response) {
                     result = response[i];
-                    console.log(result.parent + '/' + result.cnt);
                     notifications.total += parseInt(result.cnt);
                     $('[data-notif-' + result.parent + ']').data('notif-' + result.parent).count = parseInt(result.cnt);
                     notifications.showCounts(result.parent, result.cnt);
@@ -178,6 +202,11 @@ notifications.setFake = function (type) {
     ajax.genericAction('notification_setfake', {'type': type}, 
         function(response){}
     );
+};
+
+notifications.test = function(id, parent) {
+    var r = {}; r.id = id; r.p = parent;
+    notifications.handleNewNotification(r);
 };
 
 $(document).ready(function() {
