@@ -29,7 +29,15 @@ class Notificator
 		if ($entity instanceof HasUser && ($entity->getAuthor()->getId() != $entity->getTarget()->getId())) {
 			// notif: has sido etiquetado en ...
 			$notification = new Notification();
-    		$notification->setType(Notification::TYPE_USER_TAGGED);
+			
+			if ($entity->getPhoto()) {
+    		    $notification->setType(Notification::TYPE_USER_TAGGED_PHOTO);
+			} elseif ($entity->getVideo()) {
+			    $notification->setType(Notification::TYPE_USER_TAGGED_VIDEO);
+			} else {
+			    return false;
+			}
+    		
     		$notification->setAuthor($entity->getAuthor());
     		$notification->setTarget($entity->getTarget());
     		if ($entity->getComment()) $notification->setComment($entity->getComment());

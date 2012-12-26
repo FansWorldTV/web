@@ -13,13 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Notification
 {
     const TYPE_FRIENDSHIP_ACCEPTED = 1;
-    const TYPE_USER_TAGGED = 2;
     const TYPE_COMMENT_ANSWERED = 3;
     const TYPE_FORUM_CREATED = 4;
     const TYPE_FORUM_ANSWERED = 5;
     const TYPE_VIDEO_PROCESSED = 6;
     const TYPE_VIDEO_SUBSCRIPTION = 7;
     const TYPE_VIDEO_NEW_FROM_IDOL_TEAM = 8;
+    
+    const TYPE_USER_TAGGED_PHOTO = 16;
+    const TYPE_USER_TAGGED_VIDEO = 17;
     
     // Temporary types / to test notifications
     const TYPE_TEAM = 9;
@@ -159,19 +161,24 @@ class Notification
     public static function getTypeList() {
     	return array(
     		self::TYPE_COMMENT_ANSWERED => array('type' => 'comment_answered', 'parent' => 'messages'),
-            self::TYPE_FORUM_ANSWERED => array('type' => 'forum_answered',  'parent' => 'forum'),
+            
+    		self::TYPE_FORUM_ANSWERED => array('type' => 'forum_answered',  'parent' => 'forum'),
             self::TYPE_FORUM_CREATED => array('type' => 'forum_created', 'parent' => 'forum'),
+            
             self::TYPE_FRIENDSHIP_ACCEPTED => array('type' => 'friendship_accepted', 'parent' => 'fans'),
-            self::TYPE_USER_TAGGED => array('type' => 'user_tagged', 'parent' => 'tags'),
+            
             self::TYPE_VIDEO_PROCESSED => array('type' => 'video_processed', 'parent' => 'videos'),
             self::TYPE_VIDEO_SUBSCRIPTION => array('type' => 'video_subscription', 'parent' => 'videos'),
             self::TYPE_VIDEO_NEW_FROM_IDOL_TEAM => array('type' => 'video_newidolteam', 'parent' => 'videos'),
             // Artificial type
-            self::TYPE_FRIENDSHIP_CREATED => array('type' => 'friendship_created', 'parent' => 'fans'),
+            self::TYPE_FRIENDSHIP_CREATED => array('type' => 'friendship_created', 'parent' => 'fan'),
             // Temporary types / to test notifications
             self::TYPE_TEAM => array('type' => 'newteam_test', 'parent' => 'teams'),
             self::TYPE_IDOL => array('type' => 'newidol_test', 'parent' => 'idols'),
             self::TYPE_PHOTO => array('type' => 'newphoto_test', 'parent' => 'photos'),
+            
+            self::TYPE_USER_TAGGED_PHOTO => array('type' => 'user_tagged_photo', 'parent' => 'photos'),
+            self::TYPE_USER_TAGGED_VIDEO => array('type' => 'user_tagged_video', 'parent' => 'videos'),
     	);
     }
     
