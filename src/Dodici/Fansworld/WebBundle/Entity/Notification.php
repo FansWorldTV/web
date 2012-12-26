@@ -171,7 +171,7 @@ class Notification
             self::TYPE_VIDEO_SUBSCRIPTION => array('type' => 'video_subscription', 'parent' => 'videos'),
             self::TYPE_VIDEO_NEW_FROM_IDOL_TEAM => array('type' => 'video_newidolteam', 'parent' => 'videos'),
             // Artificial type
-            self::TYPE_FRIENDSHIP_CREATED => array('type' => 'friendship_created', 'parent' => 'fan'),
+            self::TYPE_FRIENDSHIP_CREATED => array('type' => 'friendship_created', 'parent' => 'fans'),
             // Temporary types / to test notifications
             self::TYPE_TEAM => array('type' => 'newteam_test', 'parent' => 'teams'),
             self::TYPE_IDOL => array('type' => 'newidol_test', 'parent' => 'idols'),

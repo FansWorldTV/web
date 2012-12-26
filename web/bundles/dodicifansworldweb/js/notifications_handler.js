@@ -49,29 +49,27 @@ notifications.handleNewNotification = function(response) {
     function bindReadNotification(id, entity) {
         $('.alert.alert-success:first .info').bind('mouseenter', {id: id}, function(event) {
             updateBubbleCount(entity, -1);
-            console.log('Readed:' + event.data.id);
-            $('.alert.alert-success:first .info').unbind('mouseenter');
+            readNotification(id, true);
+            $($(this)).unbind('mouseenter');
         });
     };
 
     function updateBubbleCount(entity, value) {
-        if (1 === value) {
-            newCant = $('[data-notif-' + entity + ']').data('notif-' + entity).count += value;
-            notifications.total += value;
-            notifications.showCounts(entity, newCant);
-            notifications.showCounts("total", notifications.total);
-            $('[data-notif-' + entity + '] span').effect("highlight", {color: "#a0c882"}, 2000);
-            $('[data-notif-' + entity + ']').effect("bounce", { times: 4 }, 1200);
+        newCant = $('[data-notif-' + entity + ']').data('notif-' + entity).count += value;
+        notifications.total += value;
+        notifications.showCounts(entity, newCant);
+        notifications.showCounts("total", notifications.total);
+        $('[data-notif-' + entity + '] span').effect("highlight", {color: "#a0c882"}, 2000);
+        $('[data-notif-' + entity + ']').effect("bounce", { times: 4 }, 1200);
+    };
+
+    function readNotification(id, status) {
+        if (status) { 
+            ajax.deleteNotification(id, function(response) {
+                console.log('ReadNotification: ' + id + ' => ' + response);
+            });
         } else {
-            actualCant = $('[data-notif-' + entity + ']').data('notif-' + entity).count;
-                if (0 != actualCant) {
-                    newCant = $('[data-notif-' + entity + ']').data('notif-' + entity).count += value;
-                    notifications.total += value;
-                    notifications.showCounts(entity, newCant);
-                    notifications.showCounts("total", notifications.total);
-                    $('[data-notif-' + entity + '] span').effect("highlight", {color: "#a0c882"}, 2000);
-                    $('[data-notif-' + entity + ']').effect("bounce", { times: 4 }, 1200);
-                }
+            console.log('ReadNotification only in the UI (status=false) ' + event.data.id); 
         }
     };
 
@@ -83,47 +81,6 @@ notifications.handleNewNotification = function(response) {
         btnClose = '<button type="button" class="close" data-dismiss="alert">&times;</button>';
         return '<div class="alert alert-success">'+ btnClose + htmlResponse + '</div>';
     };
-};
-
-notifications.handleNotification_Old = function(id) {
-    console.log(id);
-    var classes = 'clearfix notification loading';
-    if(site.isClosedNotificationess){
-        classes += ' hidden';
-    }
-    $("li.notifications_user ul").prepend("<li id='notification_" + id +"' class='" + classes + "'></li>");
-        
-    ajax.getNotification(id, function(response){
-        if(response){
-            var countNotifications = $("li.notifications_user ul li div.info").size();
-            if(countNotifications>4){
-                $("li.notifications_user ul li div.info").last().parent().remove();
-            }
-            $("#notification_" + id).html(response).removeClass('loading');
-                
-            if($("#notificationsList").size()>0){
-                $("#notificationsList").prepend(response);
-            }
-            
-            var actualNumber = $("li.notifications_user a span").html();
-            var number = 0;
-            if(actualNumber == ''){
-                number = 0;
-            }else{
-                number = parseInt(actualNumber);
-            }
-            number++;
-            $("li.notifications_user a span").html(number).show().removeClass('hidden');
-            $(".notifications_user a:first span").effect("highlight",{},3000);
-            $(".notifications_user a:first").effect("bounce",{
-                times:1
-            },300);
-                
-            if(site.isClosedNotificationess){
-                $("#notification_" + id).addClass('hidden');
-            }
-        }
-    });
 };
 
 notifications.handleFriendship = function(id) {
@@ -198,7 +155,7 @@ notifications.initCounts = function () {
         });
 };
 
-notifications.setFake = function (type) {
+notifications.sendToMeteor = function (type) {
     ajax.genericAction('notification_setfake', {'type': type}, 
         function(response){}
     );
