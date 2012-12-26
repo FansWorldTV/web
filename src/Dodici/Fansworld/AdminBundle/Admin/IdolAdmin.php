@@ -28,7 +28,6 @@ class IdolAdmin extends Admin
             ->add('slug', 'text', array ())
             ->add('fanCount', 'integer', array ())
             ->add('image', 'orm_many_to_one', array ())
-            ->add('team', 'orm_many_to_one', array ())
             ->add('idolcareers', 'orm_one_to_many', array ())
         ;
     }
@@ -50,7 +49,6 @@ class IdolAdmin extends Admin
             ->add('twitter', NULL, array (), array ())
             ->add('image', 'sonata_type_model', array(), array('edit' => 'list', 'link_parameters' => array('context' => 'default', 'provider' => 'sonata.media.provider.image')))
             ->add('splash', 'sonata_type_model', array(), array('edit' => 'list', 'link_parameters' => array('context' => 'default', 'provider' => 'sonata.media.provider.image')))
-            ->add('team', NULL, array ('required' => false), array ())
             ->add('idolcareers', 'sonata_type_collection', array ('label'=>'Equipos Carrera', 'required' => false), 
             	array(
                       'edit' => 'inline',
