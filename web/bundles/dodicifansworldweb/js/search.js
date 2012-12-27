@@ -73,10 +73,10 @@ search.it = function(seeAll){
                         destiny = ".am-container.photos";
                         
                         callback = function(){
-                            $("[data-added-element]").not('[data-montage=true]').imagesLoaded(function () {
-                                $('.am-container.photos').montage('add', $("[data-added-element]").not('[data-montage=true]'));
-                                $("[data-added-element]").attr('data-montage', 'true');
-                            }); 
+                            $("[data-new-element]").imagesLoaded(function () {
+                                $('.am-container.photos').montage('add', $("[data-new-element]"));
+                                $("[data-new-element]").css('width', 'auto').removeAttr('data-new-element');
+                            });
                             if(pointerLoop == r.search.length){
                                 $(".section.search"+search.active).removeClass('loading');
                             }

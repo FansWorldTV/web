@@ -31,10 +31,13 @@
             
             <div class="row-fluid">
                 <h3>Fotos ( {{ photosTotalCount }} )</h3>
-                {% include 'DodiciFansworldWebBundle:Photo:blocks/montage.html.twig' with {photos: photos} %}
+                <div class="row-fluid">
+                    <div class="am-container photos">
+                    </div>
+                </div>
             </div>
         </div>
-        <div data-tagged-and-activity>
+        <div data-tagged-and-activity class="hidden">
             <h3>Fotos ( <span data-photo-length></span> )</h3>
             <div data-montage-container data-type="photos">
             </div>

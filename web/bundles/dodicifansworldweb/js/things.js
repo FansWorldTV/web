@@ -86,9 +86,17 @@ things.videos.init = function(){
 things.photos.page = 1;
 things.albums.page = 1;
 things.photos.init = function(){
+    $("[data-tagged-and-activity]").hide().removeClass('hidden');
     things.photos.filter(0);
     $(".controllers-section .btn-group button[data-type]").on('click', function(){
         var type = $(this).attr('data-type');
+        if(type == 0){
+            var $containerMontage = $("[data-my-photos] .am-container.photos");
+        }else{
+            var $containerMontage = $("[data-tagged-and-activity] [data-montage-container][data-type='photos']");
+        }
+        
+        $containerMontage.addClass('loading');
         things.photos.filter(type);
     });
     $("button.loadmore[data-entity-type='album']").click(function(){
@@ -98,18 +106,26 @@ things.photos.init = function(){
 };
 
 things.photos.addMore = function(type, destiny){
+    $(destiny).addClass('loading');
     ajax.genericAction('things_photosajax', {
         'type': type, 
         'page': things.photos.page
     }, function(r){
+        var c = 0;
         for(var i in r.photos){
             var photo = r.photos[i];
-            templateHelper.renderTemplate('search-photo', photo, destiny, false, function(){
+            c++;
+            var callback = function(){
                 $("[data-new-element]").imagesLoaded(function () {
                     $(destiny).montage('add', $("[data-new-element]"));
                     $("[data-new-element]").removeAttr('data-new-element');
                 });
-            })
+                
+                if(c==r.photos.length){
+                    $(destiny).removeClass('loading');
+                }
+            };
+            templateHelper.renderTemplate('search-photo', photo, destiny, false, callback)
         }
         
         if(!r.viewMorePhotos){
@@ -121,18 +137,25 @@ things.photos.addMore = function(type, destiny){
 };
 
 things.albums.addMore = function(type){
+    $("[data-my-photos] .am-container.albums").addClass('loading');
     ajax.genericAction('things_photosajax', {
         'page': things.albums.page, 
         'type': type
     }, function(r){
+        var c = 0;
         for(var i in r.albums){
             var album = r.albums[i];
-            templateHelper.renderTemplate('photo-album', album, "[data-my-photos] .am-container.albums", false, function(){
+            c++;
+            var callback = function(){
                 $("[data-new-element]").imagesLoaded(function () {
                     $('.am-container.albums').montage('add', $("[data-new-element]"));
                     $("[data-new-element]").removeAttr('data-new-element');
                 });
-            });
+                if(c==r.albums.length){
+                    $("[data-my-photos] .am-container.albums").removeClass('loading');
+                }
+            };
+            templateHelper.renderTemplate('photo-album', album, "[data-my-photos] .am-container.albums", false, callback);
         }
         if(!r.viewMoreAlbums){
             $("button.loadmore[data-entity-type='album']").remove();
@@ -155,10 +178,11 @@ things.photos.filter = function(type){
             $("[data-my-photos]").hide();
             $("[data-tagged-and-activity]").show();
             $containerMontage.html("");
-                
+            var c = 0;
             for(var i in r.photos){
                 var photo = r.photos[i];
-                templateHelper.renderTemplate("search-photo", photo, "[data-tagged-and-activity] [data-montage-container][data-type='photos']", false, function(){
+                c++
+                var callback = function(){
                     $containerMontage.find('img').attr('width', '250');
                     $containerMontage.montage({
                         minw: 200, 
@@ -170,7 +194,11 @@ things.photos.filter = function(type){
                         $containerMontage.montage('add', $newImages);
                         $newImages.removeAttr('data-new-element');
                     });
-                });
+                    if(c==r.photos.length){
+                        $containerMontage.removeClass('loading');
+                    }
+                };
+                templateHelper.renderTemplate("search-photo", photo, "[data-tagged-and-activity] [data-montage-container][data-type='photos']", false, callback);
             }
             $("[data-photo-length]").html(r.photosTotalCount);
                 
@@ -189,9 +217,11 @@ things.photos.filter = function(type){
             $containerMontage.data('montage', null);
             $containerMontage.html("");
                 
+            var c = 0;
             for(var i in r.photos){
                 var photo = r.photos[i];
-                templateHelper.renderTemplate("search-photo", photo, "[data-my-photos] .am-container.photos", false, function(){
+                c++;
+                var callback = function(){
                     site.startMosaic($containerMontage, {
                         minw: 150, 
                         margin: 4, 
@@ -203,7 +233,11 @@ things.photos.filter = function(type){
                         $containerMontage.montage('add', $newImages);
                         $newImages.removeAttr('data-new-element');
                     });
-                });
+                    if(c == r.photos.length){
+                        $containerMontage.removeClass('loading');
+                    }
+                };
+                templateHelper.renderTemplate("search-photo", photo, "[data-my-photos] .am-container.photos", false, callback);
             }
                 
             if(r.viewMoreAlbums){
