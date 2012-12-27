@@ -1,0 +1,79 @@
+{% extends "DodiciFansworldWebBundle:Layout:one_column.html.twig" %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/dodicifansworldweb/js/things.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block main_content %}
+<div class="row-fluid my-things fans">
+    <div class="span9">
+        <header>
+            <h2 class="title-section">Mis fans</h2>
+            <div class="controllers-section">
+                <div class="btn-group" data-toggle="buttons-radio">
+                    <div class="btn-group" data-filter-fans>
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                            Filtrar
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li data-type="0" class="active"><a href="#">Alfabéticamente</a></li>
+                            <li data-type="1"><a href="#">Cercano</a></li>
+                            <li data-type="2"><a href="#">Mismo fanatismo</a></li>
+                            <li data-type="3"><a href="#">Más parecido a mi</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group" data-toggle="buttons-radio" data-type-follow>
+                        <button type="button" class="btn active" data-type="0">Yo sigo</button>
+                        <button type="button" class="btn" data-type="1">Me siguen</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="row-fluid fans-list">
+            {% for fan in fans %}
+                {% include "DodiciFansworldWebBundle:Things:blocks/fan_element.html.twig" with { 'fan': fan } %}
+            {% endfor %}
+        </div>
+            
+        {% if addMore %}
+            <input type="hidden" value="true" data-add-more/>
+        {% endif %}
+    </div>
+        
+    <div class="span3 things-sidebar">
+        <section class="notification">
+            <h4>NOTIFICACIONES <span class="midline"></span></h4>
+        </section>
+
+        {% if lastVideos|length > 0 %}
+            <section class="news">
+                <h4>ULTIMOS DE FANSWORLD <span class="midline"></span></h4>
+                {% for video in lastVideos %}
+                    {% if loop.first %}
+                        <div class="video-element first">
+                            <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                                <span class="title">{{ video.title }}</span>
+                                <span class="duration">{{ video.duration|date("i:s") }}</span>
+                                <img src="{{ asset('bundles/dodicifansworldweb/images/play_icon.png') }}" alt="Play" class="play"/>
+                                {% thumbnail video.image, 'medium' %}
+                            </a>
+                        </div>
+                    {% else %}
+                        {% if video.image %}
+                            <div class="video-element" rel="tooltip" title="{{ video.title }}">
+                                <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                                    <img src="{{ asset('bundles/dodicifansworldweb/images/play_icon.png') }}" alt="Play" class="play"/>
+                                    {% thumbnail video.image, 'small' %}
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </section>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

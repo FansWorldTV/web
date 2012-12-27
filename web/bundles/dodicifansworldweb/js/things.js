@@ -3,11 +3,16 @@ things.matchs = {};
 things.photos = {};
 things.videos = {};
 things.albums = {};
+things.fans = {};
 
 things.init = function(){
     things.matchs.init();
     things.videos.init();
     things.photos.init();
+    
+    if($(".my-things").hasClass('fans')) {
+        things.fans.init();
+    }
 };
 
 
@@ -224,6 +229,75 @@ things.photos.filter = function(type){
     }, function(e){
         error(e);
     });
+};
+
+things.fans.filter = "0";
+things.fans.direction = "0";
+things.fans.page = 1;
+
+things.fans.init = function(){
+    $("div.btn-group[data-filter-fans] ul li").on('click', function(){
+        things.fans.direction = $(this).attr('data-type');
+        $("div.btn-group[data-filter-fans] ul li.active").removeClass('active');
+        $(this).addClass('active');
+        things.fans.page = 1;
+        $("div.fans-list").html("");
+    });
+    
+    $("div.btn-group[data-type-follow] button").on('click', function(){
+        things.fans.page = 1;
+        things.fans.filter = $(this).attr('data-type');
+        $("div.fans-list").html("");
+    });
+    
+    if($("input[data-add-more]").length>0){
+        endless.init(10, function(){
+            things.fans.addMore();
+        });
+        things.fans.addMore();
+    }
+};
+
+
+things.fans.doFilter = function(){
+    ajax.genericAction('things_ajaxfans', {
+        'direction': things.fans.direction, 
+        'filter': things.fans.filter,
+        'page': things.fans.page
+    }, function(r){
+        for(var i in r.fans){
+            var fan = r.fans[i];
+            templateHelper.renderTemplate('fans-element', fan, 'div.fans-list', false, function(){});
+        }
+        
+        if(r.addMore){
+            endless.init(10, function(){
+                things.fans.addMore();
+            });
+        }
+    }, function(e){
+        error(e);
+    });
+};
+
+things.fans.addMore = function(){
+    endless.stop();
+    things.fans.page++;
+    ajax.genericAction('things_ajaxfans', {
+        'direction': things.fans.direction,
+        'filter': things.fans.filter,
+        'page': things.fans.page
+    }, function(r){
+        for(var i in r.fans){
+            var fan = r.fans[i];
+            templateHelper.renderTemplate('fans-element', fan, 'div.fans-list', false, function(){});
+        }
+        if(r.addMore){
+            endless.resume();
+        }
+    }, function(e){
+        
+        });
 };
 
 $(document).ready(function(){

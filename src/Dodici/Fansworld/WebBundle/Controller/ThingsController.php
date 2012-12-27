@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Dodici\Fansworld\WebBundle\Controller\SiteController;
 use Symfony\Component\HttpFoundation\Request;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Dodici\Fansworld\WebBundle\Model\UserRepository;
 
 /**
  * My things controller controller.
@@ -25,6 +26,7 @@ class ThingsController extends SiteController
     const TEAMS_LIMIT = null;
     const ALBUMS_LIMIT = 6;
     const PHOTOS_LIMIT = 15;
+    const FANS_LIMIT = 15;
 
     /**
      * My Idols
@@ -59,6 +61,85 @@ class ThingsController extends SiteController
             'ranking' => $ranking,
             'lastVideos' => $lastVideos
         );
+    }
+
+    /**
+     * My fans
+     * @Route("/fans", name="things_fans")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function fansAction()
+    {
+        $user = $this->getUser();
+        $fans = $this->getRepository('User')->fans($user, true, self::FANS_LIMIT);
+        $countFans = $this->getRepository('User')->countFans($user, true);
+        $lastVideos = $this->getRepository('Video')->findBy(array('highlight' => true), array('createdAt' => 'desc'), 4);
+
+        return array(
+            'fans' => $fans,
+            'addMore' => ( 1 * self::FANS_LIMIT) < $countFans ? true : false,
+            'lastVideos' => $lastVideos
+        );
+    }
+
+    /**
+     * @Route("/fans/ajax", name="things_ajaxfans")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function ajaxFansAction()
+    {
+        $user = $this->getUser();
+        $request = $this->getRequest();
+        $serializer = $this->get('serializer');
+
+        $direction = $request->get('direction', 0);
+        $filter = $request->get('filter', 0);
+        $page = $request->get('page', 1);
+
+        $page = (int) $page;
+        $direction = (int) $direction;
+        $filter = (int) $filter;
+
+        $offset = ($page - 1) * self::FANS_LIMIT;
+
+        $direction = $direction == 0 ? true: false;
+        $userRepo = $this->getRepository('User');
+        $userRepo instanceof UserRepository;
+
+
+        switch ($filter) {
+            case 0:
+                $fans = $userRepo->fans($user, $direction, self::FANS_LIMIT, $offset);
+                $countFans = $userRepo->countFans($user, $direction);
+                break;
+            case 1:
+                $fans = $userRepo->fansNearby($user, $direction, self::FANS_LIMIT, $offset);
+                $countFans = $userRepo->countFansNearby($user, $direction);
+                break;
+            case 2:
+                $fans = $userRepo->fansSameFavoriteTeam($user, $direction, self::FANS_LIMIT, $offset);
+                $countFans = $userRepo->countFansSameFavoriteTeam($user, $direction);
+                break;
+            case 3:
+                $fans = $userRepo->fansMostSimilar($user, $direction, self::FANS_LIMIT, $offset);
+                $countFans = $userRepo->countFansMostSimilar($user, $direction);
+                break;
+        }
+        
+        $addMore = ( self::FANS_LIMIT * $page ) < $countFans ? true : false;
+        
+        $response = array(
+            'fans' => array(),
+            'addMore' => $addMore
+        );
+        
+        foreach($fans as $fan){
+            $serialized = $serializer->values($fan, 'big_square');
+            array_push($response['fans'], $serialized);
+        }
+        
+        return $this->jsonResponse($response);
     }
 
     /**

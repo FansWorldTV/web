@@ -26,10 +26,19 @@ endless.scrollBottom = function(){
     return percentScrollSize >= ( 100 - endless.tolerance );
     
 };
+
 endless.bindMyScroll = function(){
     $(window).bind('scroll', function(){
         if(endless.haveScroll() && endless.scrollBottom()){
             endless.callback();
         }
     });
+};
+
+endless.stop = function(){
+    $(window).unbind('scroll');
+};
+
+endless.resume = function(){
+    endless.bindMyScroll();
 };

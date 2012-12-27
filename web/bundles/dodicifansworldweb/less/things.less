@@ -18,8 +18,10 @@ div.my-things {
         }
     }
 
-    &.photos{
+    &.photos, &.fans{
         header {
+            .clearfix();
+
             .title-section {
                 width: 50%;
                 .pull-left();
@@ -191,6 +193,73 @@ div.things-sidebar {
                     }
                 }
             }
+        }
+    }
+}
+
+.fans-list {
+    .fan-element {
+        .square(150px);
+        .pull-left();
+        display: block;
+        position: relative;
+        border: 1px solid gray;
+        margin-right: 10px;
+        margin-bottom: 10px;
+
+        .overlay {
+            position: absolute;
+            .size(55px, 150px);
+            top: 0;
+            left: 0;
+            z-index: 1;
+
+            // Gradient con transparencia
+            background: -moz-linear-gradient(top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.65)), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* IE10+ */
+            background: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
+        }
+
+        .name {
+            font-family: "Open Sans";
+            position: absolute;
+            display: block;
+            color: @white;
+            top: 10px;
+            left: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            z-index: 2;
+            text-overflow: ellipsis;
+            word-break: all;
+        }   
+
+        &:hover {
+            .fanCount, .btn-group {
+                display: block;
+            }
+        }
+
+        .fanCount {
+            display: none;
+            position: absolute;
+            color: @green;
+            font-size: 25px;
+            font-weight: 600;
+            bottom: 10px;
+            right: 10px;
+            text-align: right;
+        }
+
+        .btn-group {
+            display: none;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
         }
     }
 }

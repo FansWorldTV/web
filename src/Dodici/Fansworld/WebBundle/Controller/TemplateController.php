@@ -139,5 +139,20 @@ class TemplateController extends SiteController
             'typename' => $type
         );
     }
+    
+    /**
+     * Get Fans template
+     * @Route("/ajax/get/fans", name="template_fans")
+     * @Template
+     */
+    public function fansAction()
+    {
+        $request = $this->getRequest();
+        $type = $request->get('type');
+
+        return array(
+            'typename' => $type
+        );
+    }
 
 }
