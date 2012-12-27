@@ -53,15 +53,29 @@ var friendship = {
     },
     
     cancel: function(){
-        $(".btn_friendship.remove:not('.loading-small')").live('click', function(e){
+        $(".btn_friendship.remove:not('.loading-small'), [data-remove-friendship]:not('.loading-small')").live('click', function(e){
+            e.preventDefault();
             e.stopImmediatePropagation();
             var self = $(this);
             var friendshipId = self.attr('data-friendship-id');
+            var userId = self.attr('data-user-id');
+            var dontRefresh = self.attr('data-dont-refresh');
+            
+            if(typeof(dontRefresh) == 'undefined'){
+                dontRefresh = false;
+            }else{
+                var parentElement = self.attr('data-remove-element');
+            }
+            
             if(confirm('Seguro deseas dejar de seguir a este usuario?')){
                 self.addClass('loading-small');
-                ajax.cancelFriendAction(friendshipId, function(response){
+                ajax.cancelFriendAction(friendshipId, userId, function(response){
                     if(!response.error) {
-                        window.location.reload();  
+                        if(!dontRefresh){
+                            window.location.reload();
+                        }else{
+                            self.parents(parentElement).remove();
+                        }
                     }else{
                         error(response.error);
                         self.removeClass('loading-small');

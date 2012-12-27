@@ -369,12 +369,21 @@ var ajax = {
         });
     },
     
-    cancelFriendAction: function(friendshipId, callback){
-        ajax.setCallback(callback);
+    cancelFriendAction: function(friendshipId, userId, callback){
+        if(typeof(friendshipId) == 'undefined'){
+            friendshipId = false;
+        }
+        if(typeof(userId) == 'undefined'){
+            userId = false;
+        }
         $.ajax({
             url: 'http://' + location.host + Routing.generate( appLocale + '_friendship_ajaxcancelfriend'),
             data: {
-                'friendship': friendshipId
+                'friendship': friendshipId,
+                'user': userId
+            },
+            success: function(r){
+                callback(r);
             }
         });
     },

@@ -16,14 +16,16 @@ use Application\Sonata\UserBundle\Entity\Notification;
 use Dodici\Fansworld\WebBundle\Entity\Friendship;
 use Dodici\Fansworld\WebBundle\Entity\FriendGroup;
 
-class FriendshipController extends SiteController {
+class FriendshipController extends SiteController
+{
 
     /**
      * Add friend
      * 
      *  @Route("/ajax/add-friend", name="friendship_ajaxaddfriend")
      */
-    public function ajaxAddFriendAction() {
+    public function ajaxAddFriendAction()
+    {
         try {
             $response = null;
             $request = $this->getRequest();
@@ -75,17 +77,34 @@ class FriendshipController extends SiteController {
      * 
      * @Route("/ajax/cancel-friend", name="friendship_ajaxcancelfriend")
      */
-    public function ajaxCancelFriendshipAction() {
+    public function ajaxCancelFriendshipAction()
+    {
         $response = array('error' => false);
 
         $request = $this->getRequest();
-        $author = $this->getUser();
-        $friendshipId = $request->get('friendship');
+        $me = $this->getUser();
+        $userId = $request->get('user', false);
+        $friendshipId = $request->get('friendship', false);
 
-        $friendship = $this->getRepository('Friendship')->find($friendshipId);
+        if ($userId) {
+            $mine = $this->getRepository('Friendship')->findBy(array('author' => $me->getId(), 'target' => $userId));
+            if ($me->getRestricted()) {
+                $friendships = array();
+                array_push($friendships, $mine);
+                
+                $him = $this->getRepository('Friendship')->findBy(array('author' => $userId, 'target' => $me->getId()));
+                array_push($friendships, $him);
+            } else {
+                $friendships = $mine;
+            }
+        }else{
+            $friendships = $this->getRepository('Friendship')->find($friendshipId);
+        }
 
         try {
-            $this->get('friender')->remove($friendship);
+            foreach($friendships as $friendship){
+                $this->get('friender')->remove($friendship);
+            }
         } catch (\Exception $exc) {
             $response['error'] = $exc->getMessage();
         }
@@ -99,7 +118,8 @@ class FriendshipController extends SiteController {
      *  @Route("/su/{username}/fans", name="friendship_user")
      *  @Template
      */
-    public function userFriendshipsAction($username) {
+    public function userFriendshipsAction($username)
+    {
         $userRepo = $this->getRepository('User');
         $user = $userRepo->findOneByUsername($username);
 
