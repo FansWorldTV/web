@@ -237,17 +237,19 @@ things.fans.page = 1;
 
 things.fans.init = function(){
     $("div.btn-group[data-filter-fans] ul li").on('click', function(){
-        things.fans.direction = $(this).attr('data-type');
+        things.fans.filter = $(this).attr('data-type');
         $("div.btn-group[data-filter-fans] ul li.active").removeClass('active');
         $(this).addClass('active');
         things.fans.page = 1;
         $("div.fans-list").html("");
+        things.fans.doFilter();
     });
     
     $("div.btn-group[data-type-follow] button").on('click', function(){
         things.fans.page = 1;
-        things.fans.filter = $(this).attr('data-type');
+        things.fans.direction = $(this).attr('data-type');
         $("div.fans-list").html("");
+        things.fans.doFilter();
     });
     
     if($("input[data-add-more]").length>0){

@@ -1,0 +1,22 @@
+{% raw %}
+<div class='fan-element'>
+    <div class="avatar">
+        <a href="{{>url}}"><img width="150" rel="tooltip" src="{{>image}}" title="{{>title}}"></a>
+    </div>
+    <a class="name" href="{{>url}}">{{>title}}</a>
+    <span class="fanCount">{{>fanCount}}</span>
+    <div class="overlay"></div>
+    
+    <div class="btn-group">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+            <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="#">Enviar mensaje</a></li>
+            <li><a href="#">Ver perfil</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Eliminar</a></li>
+        </ul>
+    </div>
+</div>
+{% endraw %}
