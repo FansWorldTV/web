@@ -267,6 +267,7 @@ class CommentController extends SiteController
           return $tag;
           } */
 
+        if (!$share) return array();
 
         $validTypes = Share::getTypes();
 
