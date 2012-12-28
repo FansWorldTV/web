@@ -906,4 +906,20 @@ class UserController extends SiteController
         $notification = $this->getRepository('Notification')->findOneBy(array('type' => $type));
         $this->get('meteor')->push($notification);
     }
+
+    /**
+     *  @Route("/ajax/notification-getlatest", name="notification_getlatest") 
+     */
+    public function ajaxLatestNotification()
+    {
+        $response = false;
+        $request = $this->getRequest();
+        $parentName = $request->get('parentName', false);
+        $notifications = $this->getRepository('Notification')->latest($this->getUser(), false);
+        foreach ($notifications as $notif) {
+            if ($notif->getTypeParent() === $parentName) $notificationsUnread[] = $notif->getId();
+        }
+        if (isset($notificationsUnread)) $response = $notificationsUnread;
+        return $this->jsonResponse($response);
+    }
 }

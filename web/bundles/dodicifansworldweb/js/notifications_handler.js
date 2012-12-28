@@ -3,12 +3,14 @@ notifications.total = 0;
 
 notifications.init = function() {
     notifications.initCounts();
+    notifications.showUnread();
+    notifications.delegateReadedEvent();
     notifications.listen();
 };
 
 notifications.listen = function() {
     function handleData(response) {
-        response = JSON.parse(response);
+        response = JSON.parse(response);d
         console.log(response);
         if (response) {
             if (response.t == 'n') {
@@ -30,57 +32,119 @@ notifications.listen = function() {
 
 notifications.handleNewNotification = function(response) {
     id = response.id; entity = response.p;
-    
-    updateBubbleCount(entity, 1);
+    notifications.updateBubbleCount(entity, 1);
     ajax.getNotification(id, function(response) {
         if (response) {
-            entityContent = $('.my-things.' + entity).size();
-            if (entityContent > 0) {
-                if ($('.alert.alert-success').size() >= 4) $('.alert.alert-success:last').fadeOut("slow").remove();
-                $('.notification').prepend(getClassicNotificationTemplate(response));
-                $('.alert.alert-success:first').effect("bounce", {times:2}, 300);
-                bindReadNotification(id, entity);
+            entityContent = $('[data-entity]').data('entity');
+            if (entityContent  === entity) {
+                if ($('[data-sidebaralert]').size() >= 4) $('[data-sidebaralert]:last').fadeOut("slow").remove();
+                $('[data-notification]').prepend(notifications.getClassicNotificationTemplate(response));
+                $('[data-sidebaralert]:first').effect("bounce", {times:2}, 300);
             } else {
-                notice(getBubbleNotificationTemplate(response));
+                notice(notifications.getBubbleNotificationTemplate(response));
             }   
         }
     });
+};
 
-    function bindReadNotification(id, entity) {
-        $('.alert.alert-success:first .info').bind('mouseenter', {id: id}, function(event) {
-            updateBubbleCount(entity, -1);
-            readNotification(id, true);
-            $($(this)).unbind('mouseenter');
-        });
-    };
-
-    function updateBubbleCount(entity, value) {
-        newCant = $('[data-notif-' + entity + ']').data('notif-' + entity).count += value;
-        notifications.total += value;
-        notifications.showCounts(entity, newCant);
-        notifications.showCounts("total", notifications.total);
-        $('[data-notif-' + entity + '] span').effect("highlight", {color: "#a0c882"}, 2000);
-        $('[data-notif-' + entity + ']').effect("bounce", { times: 4 }, 1200);
-    };
-
-    function readNotification(id, status) {
-        if (status) { 
-            ajax.deleteNotification(id, function(response) {
-                console.log('ReadNotification: ' + id + ' => ' + response);
-            });
+notifications.showCounts = function(entity, value) {
+    if (value > 0) {
+        if ($('[data-notif-' + entity + ']').children("span").length > 0) {
+            $('[data-notif-' + entity + ']').children("span").eq(0).html(value);
         } else {
-            console.log('ReadNotification only in the UI (status=false) ' + event.data.id); 
+            $('[data-notif-' + entity + ']').prepend(getBadgeTemplate(value));
         }
-    };
+    } else {
+        if ($('[data-notif-' + entity + ']').children("span").length > 0) $('[data-notif-' + entity + ']').children("span").eq(0).remove();
+    }
+    function getBadgeTemplate(number) {
+        return '<span class="label label-warning label-toolbar">' + number + '</span>';
+    }
+};
 
-    function getBubbleNotificationTemplate(htmlResponse) {
-        return '<div class="bubbleNotification">' + htmlResponse + '</div>';
-    };
+notifications.initCounts = function () {
+    ajax.genericAction('user_ajaxgetnotifications_typecounts', {}, 
+        function(response) {
+            if (response) {
+                for (i in response) {
+                    result = response[i];
+                    notifications.total += parseInt(result.cnt);
+                    $('[data-notif-' + result.parent + ']').data('notif-' + result.parent).count = parseInt(result.cnt);
+                    notifications.showCounts(result.parent, result.cnt);
+                }
+                notifications.showCounts("total", notifications.total);
+            }
+        }
+    );
+};
 
-    function getClassicNotificationTemplate(htmlResponse) {
-        btnClose = '<button type="button" class="close" data-dismiss="alert">&times;</button>';
-        return '<div class="alert alert-success">'+ btnClose + htmlResponse + '</div>';
-    };
+notifications.updateBubbleCount = function(entity, value) {
+    newCant = $('[data-notif-' + entity + ']').data('notif-' + entity).count += value;
+    notifications.total += value;
+    notifications.showCounts(entity, newCant);
+    notifications.showCounts("total", notifications.total);
+    $('[data-notif-' + entity + '] span').effect("highlight", {color: "#a0c882"}, 2000);
+    $('[data-notif-' + entity + ']').effect("bounce", { times: 4 }, 1200);
+};
+
+notifications.showUnread = function () {
+    if ($('[data-entity]').size() > 0) {
+        entity = $('[data-entity]').data('entity');
+        ajax.genericAction('notification_getlatest', { 'parentName' : entity}, 
+            function(response) {
+                console.log('Notifications unread for ' + entity + ': ' + response);
+                nCounts = response.length;
+                if (nCounts > 4) nCounts = 4;
+                for (j = 0; j < nCounts; j++) {
+                    id = response[j];
+                    ajax.getNotification(id, function(response) {
+                    if (response) {
+                        if ($('[data-entity]').size() > 0) {
+                            //if ($('[data-sidebaralert]').size() >= 4) $('[data-sidebaralert]:last').fadeOut("slow").remove();
+                            $('[data-notification]').prepend(notifications.getClassicNotificationTemplate(response));
+                        }
+                    }});
+                }
+            }
+        )
+    }
+};
+
+notifications.readNotification = function(id) {
+    ajax.deleteNotification(id, function(response) {console.log('ReadNotification: ' + id + ' => ' + response)});
+};
+
+notifications.delegateReadedEvent = function () {
+    $('[data-notification]').on( 'mouseenter', '[data-sidebaralert]', function() {
+        readed = $(this).data('sidebaralert');
+        if (!readed) {
+            $(this).data('sidebaralert', true);
+            entity = $('[data-entity]').data('entity');
+            notificationId = $(this).find('[data-notifid]').data('notifid');
+            notifications.readNotification(notificationId);
+            notifications.updateBubbleCount(entity, -1);
+        }
+    });
+};
+
+notifications.getBubbleNotificationTemplate = function(htmlResponse) {
+    return '<div class="bubbleNotification" data-bubblealert>' + htmlResponse + '</div>';
+};
+
+notifications.getClassicNotificationTemplate = function (htmlResponse) {
+    btnClose = '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+    return '<div class="alert alert-success" data-sidebaralert=false>'+ btnClose + htmlResponse + '</div>';
+};
+
+notifications.sendToMeteor = function (type) {
+    ajax.genericAction('notification_setfake', {'type': type}, 
+        function(response){}
+    );
+};
+
+notifications.test = function(id, parent) {
+    var r = {}; r.id = id; r.p = parent;
+    notifications.handleNewNotification(r);
 };
 
 notifications.handleFriendship = function(id) {
@@ -123,47 +187,6 @@ notifications.handleFriendship = function(id) {
 
 notifications.handleComment = function(wallname, id, parent) {
     $('[data-wall="'+wallname+'"]').addWallComment(id, parent);
-};
-
-notifications.showCounts = function(entity, value) {
-    if (value > 0) {
-        if ($('[data-notif-' + entity + ']').children("span").length > 0) {
-            $('[data-notif-' + entity + ']').children("span").eq(0).html(value);
-        } else {
-            $('[data-notif-' + entity + ']').prepend(getBadgeTemplate(value));
-        }
-    } else {
-        if ($('[data-notif-' + entity + ']').children("span").length > 0) $('[data-notif-' + entity + ']').children("span").eq(0).remove();
-    }
-    function getBadgeTemplate(number) {
-        return '<span class="label label-warning label-toolbar">' + number + '</span>';
-    }
-};
-
-notifications.initCounts = function () {
-    ajax.genericAction('user_ajaxgetnotifications_typecounts', {}, 
-        function(response) {
-            if (response) {
-                for (i in response) {
-                    result = response[i];
-                    notifications.total += parseInt(result.cnt);
-                    $('[data-notif-' + result.parent + ']').data('notif-' + result.parent).count = parseInt(result.cnt);
-                    notifications.showCounts(result.parent, result.cnt);
-                }
-                notifications.showCounts("total", notifications.total);
-            }
-        });
-};
-
-notifications.sendToMeteor = function (type) {
-    ajax.genericAction('notification_setfake', {'type': type}, 
-        function(response){}
-    );
-};
-
-notifications.test = function(id, parent) {
-    var r = {}; r.id = id; r.p = parent;
-    notifications.handleNewNotification(r);
 };
 
 $(document).ready(function() {

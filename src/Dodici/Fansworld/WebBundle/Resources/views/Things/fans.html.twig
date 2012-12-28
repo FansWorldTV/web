@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block main_content %}
-<div class="row-fluid my-things fans">
+<div class="row-fluid my-things fans" data-entity="fans">
     <div class="span9">
         <header>
             <h2 class="title-section">Mis fans</h2>
@@ -46,6 +46,7 @@
     <div class="span3 things-sidebar">
         <section class="notification">
             <h4>NOTIFICACIONES <span class="midline"></span></h4>
+            <div data-notification></div>
         </section>
 
         {% if lastVideos|length > 0 %}

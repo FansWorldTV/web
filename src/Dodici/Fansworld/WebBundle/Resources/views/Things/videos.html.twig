@@ -6,10 +6,11 @@
 {% endblock %}
 
 {% block main_content %}
-<div class="my-things videos">
+<div class="my-things videos" data-entity="videos">
     <div class="things-sidebar">
         <section class="notification">
             <h4>NOTIFICACIONES <span class="midline"></span></h4>
+            <div data-notification></div>
         </section>
 
         {% if lastVideos|length > 0 %}
