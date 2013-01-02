@@ -201,4 +201,45 @@ class IdolController extends BaseController
             return $this->plainException($e);
         }
     }
+    
+	/**
+     * [signed] Idol - fan/unfan
+     * 
+     * @Route("/idol/fan/{action}", name="api_idol_fan", requirements = {"action" = "add|remove"})
+     * @Method({"POST"})
+     *
+     * Post params:
+	 * - user_id: int
+	 * - team_id: int
+	 * - [user_token]
+     * - [signature params]
+     * 
+     */
+    public function fanAction($action)
+    {
+        try {
+            if ($this->hasValidSignature()) {
+                $request = $this->getRequest();
+                $userid = $request->get('user_id');
+                $idol = $this->getRepository('Idol')->find($request->get('idol_id'));
+                if (!$idol) throw new HttpException(404, 'Idol not found');
+                
+                $user = $this->checkUserToken($userid, $request->get('user_token'));
+                
+                if ($action == 'add') {
+                    $this->get('fanmaker')->addFan($idol, $user);
+                } elseif ($action == 'remove') {
+                    $this->get('fanmaker')->removeFan($idol, $user);
+                } else {
+                    throw new HttpException(400, 'Invalid fan action');
+                }
+                
+                return $this->result(true);
+            } else {
+                throw new HttpException(401, 'Invalid signature');
+            }
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
 }
