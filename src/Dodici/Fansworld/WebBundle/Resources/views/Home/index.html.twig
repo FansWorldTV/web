@@ -19,7 +19,12 @@
             <div class="thumb-container">
                 {% for cat in categories %}
                     {% set video = videos[cat.id] %}
-                    <span data-category-id="{{ cat.id }}" {% if not loop.first %} class="hidden" {% endif %} >{% if video %}{% thumbnail video.image, 'wall' %}{% endif %}</span>
+                    <span data-category-id="{{ cat.id }}" {% if not loop.first %} class="hidden" {% endif %} >
+                        {% if video %}
+                            {% thumbnail video.image, 'wall' %}
+                            <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}"><i class="play-video"></i></a>
+                        {% endif %}
+                    </span>
                 {% endfor %}
             </div>
                 
