@@ -109,30 +109,7 @@ class VideoController extends BaseController
             $return = array();
             
             foreach ($videos as $video) {
-                $rv = array(
-                    'id' => $video->getId(),
-                    'title' => (string)$video,
-                    'image' => $video->getImage() ? $this->get('appmedia')->getImageUrl($video->getImage()) : null,
-                    'highlight' => $video->getHighlight(),
-                    'category_id' => $video->getVideocategory()->getId()
-                );
-                
-                foreach ($extrafields as $x) {
-                    switch ($x) {
-                        case 'author':
-                            $rv['author'] = $video->getAuthor() ? $this->userArray($video->getAuthor()) : null;
-                            break;
-                        case 'createdAt':
-                            $rv['createdAt'] = (int)$video->getCreatedAt()->format('U');
-                            break;
-                        default:
-                            $methodname = 'get'.ucfirst($x);
-                            $rv[$x] = $video->$methodname();
-                            break;
-                    }
-                }
-                
-                $return[] = $rv;
+                $return[] = $this->videoValues($video, $extrafields);
             }
             
             return $this->result($return, $pagination);

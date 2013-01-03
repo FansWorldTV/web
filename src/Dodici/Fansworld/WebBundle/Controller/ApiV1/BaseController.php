@@ -2,6 +2,7 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller\ApiV1;
 
+use Dodici\Fansworld\WebBundle\Entity\Video;
 use Dodici\Fansworld\WebBundle\Entity\Apikey;
 use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -307,5 +308,33 @@ class BaseController extends SiteController
             'result' => $array,
             'metadata' => $metadata
         ));
+    }
+    
+    protected function videoValues(Video $video, $extrafields = array())
+    {
+        $rv = array(
+            'id' => $video->getId(),
+            'title' => (string)$video,
+            'image' => $video->getImage() ? $this->get('appmedia')->getImageUrl($video->getImage()) : null,
+            'highlight' => $video->getHighlight(),
+            'category_id' => $video->getVideocategory()->getId()
+        );
+        
+        foreach ($extrafields as $x) {
+            switch ($x) {
+                case 'author':
+                    $rv['author'] = $video->getAuthor() ? $this->userArray($video->getAuthor()) : null;
+                    break;
+                case 'createdAt':
+                    $rv['createdAt'] = (int)$video->getCreatedAt()->format('U');
+                    break;
+                default:
+                    $methodname = 'get'.ucfirst($x);
+                    $rv[$x] = $video->$methodname();
+                    break;
+            }
+        }
+        
+        return $rv;
     }
 }

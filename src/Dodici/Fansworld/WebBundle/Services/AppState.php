@@ -129,9 +129,9 @@ class AppState
         return true;
     }
 
-    public function canView($entity)
+    public function canView($entity, $user = null)
     {
-        $user = $this->user;
+        if (!$user) $user = $this->user;
 
         if (method_exists($entity, 'getActive')) {
             if (!$entity->getActive())
@@ -144,17 +144,17 @@ class AppState
                 return false;
         }
 
-        if ($this->security_context->isGranted('ROLE_ADMIN'))
+        if ($this->user instanceof User && $this->security_context->isGranted('ROLE_ADMIN'))
             return true;
 
         if (property_exists($entity, 'author')) {
-            if (($this->user instanceof User) && ($user == $entity->getAuthor()))
+            if (($user instanceof User) && ($user == $entity->getAuthor()))
                 return true;
         }
 
         if (method_exists($entity, 'getPrivacy')) {
             if ($entity->getPrivacy() == \Dodici\Fansworld\WebBundle\Entity\Privacy::FRIENDS_ONLY) {
-                if (!($this->user instanceof User))
+                if (!($user instanceof User))
                     return false;
                 if (method_exists($entity, 'getAuthor') && $entity->getAuthor()) {
                     if ($user == $entity->getAuthor())

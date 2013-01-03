@@ -35,12 +35,12 @@ class VideoPlaylist
      * Create a video entry in the user's playlist
      * @param $entity
      */
-    public function add(Video $video)
+    public function add(Video $video, $user = null)
     {
-        $user = $this->user;
+        if (!$user) $user = $this->user;
         if (!($user instanceof User)) throw new AccessDeniedException('Tried to add video to playlist with no user logged in');
         
-        if (!$this->appstate->canView($video)) throw new AccessDeniedException('User cannot view that video');
+        if (!$this->appstate->canView($video, $user)) throw new AccessDeniedException('User cannot view that video');
         
         $wl = $this->em->getRepository('DodiciFansworldWebBundle:WatchLater')->findOneBy(
             array('author' => $user->getId(), 'video' => $video->getId())
@@ -64,12 +64,12 @@ class VideoPlaylist
      * Remove a video from the user's playlist
      * @param $entity
      */
-    public function remove(Video $video)
+    public function remove(Video $video, $user = null)
     {
-        $user = $this->user;
+        if (!$user) $user = $this->user;
         if (!($user instanceof User)) throw new AccessDeniedException('Tried to add video to playlist with no user logged in');
         
-        if (!$this->appstate->canView($video)) throw new AccessDeniedException('User cannot view that video');
+        if (!$this->appstate->canView($video, $user)) throw new AccessDeniedException('User cannot view that video');
         
         $wl = $this->em->getRepository('DodiciFansworldWebBundle:WatchLater')->findOneBy(
             array('author' => $user->getId(), 'video' => $video->getId())
@@ -87,14 +87,14 @@ class VideoPlaylist
      * Get a user's video playlist
      * @param $entity
      */
-    public function get($user=null, $limit=null, $offset=null)
+    public function get($user=null, $limit=null, $offset=null, $sort = array('createdAt' => 'ASC'))
     {
         if (!$user) $user = $this->user;
         if (!($user instanceof User)) throw new AccessDeniedException('Invalid user');
         
         $wls = $this->em->getRepository('DodiciFansworldWebBundle:WatchLater')->findBy(
             array('author' => $user->getId()),
-            array('createdAt' => 'ASC'),
+            $sort,
             $limit,
             $offset
         );
