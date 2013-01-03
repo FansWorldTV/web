@@ -69,8 +69,8 @@ class Serializer
             return $props;
         } elseif (is_array($entity)) {
             $arr = array();
-            foreach ($entity as $e) {
-                $arr[] = $this->values($e, $imageformat);
+            foreach ($entity as $k => $e) {
+                $arr[$k] = $this->values($e, $imageformat);
             }
             return $arr;
         } else {

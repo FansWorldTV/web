@@ -15,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dodici\Fansworld\WebBundle\Controller\ApiV1\BaseController;
 
 /**
- * API controller - Util
+ * API controller - Team
  * V1
  * @Route("/api_v1")
  */
