@@ -9,29 +9,41 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Dodici\Fansworld\WebBundle\Controller\SiteController;
+use Application\Sonata\UserBundle\Entity\User;
 
 /**
  * Home controller.
  */
 class HomeController extends SiteController
 {
+
     /**
      * Site's home
      * @Template
      */
     public function indexAction()
     {
-		$users = $this->getRepository('User')->findBy(array('enabled' => true));
-		$teams = $this->getRepository('Team')->findBy(array('active' => true));
-		$idols = $this->getRepository('Idol')->findBy(array('active' => true));
-		$videos = $this->getRepository('Video')->findBy(array('active' => true));
         
-        return array(
-            'users' => $users,
-            'teams' => $teams,
-            'idols' => $idols,
-            'videos' => $videos
+        $user = $this->getUser();
+        $response = array(
+            'categories' => array(),
+            'videos' => array()
         );
+        
+        $videoCategories = $this->getRepository('VideoCategory')->findAll();
+        foreach ($videoCategories as $vc){
+            // el author ( 7mo ) tiene que ir en false
+            $videos = $this->getRepository('Video')->search(null, $user, 1, null, $vc, true, null, null, null, null, null, null, null, null, 'DESC', null);
+            $video = false;
+            foreach($videos as $vid) {
+                $video = $vid;
+            }
+            
+            $response['categories'][$vc->getId()] = $vc;
+            $response['videos'][$vc->getId()] = $video;
+        }
+        
+        return $response;
     }
-    
+
 }

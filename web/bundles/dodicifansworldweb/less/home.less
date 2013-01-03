@@ -1,0 +1,152 @@
+header.home-header {
+    font-family: "Open Sans";
+    color: @white;
+    .size(700px, 100%);
+    background: url('../images/back-nasty.jpg');
+    position: relative;
+    margin-bottom: 20px;
+
+    h1.title {
+        padding-top: 30px;
+        margin-bottom: 60px;
+        font-size: 35px;
+        font-weight: 100;
+        color: @white;
+        text-align: center;
+        
+        b {
+            font-weight: bold;
+        }
+    }
+
+    div.center-container {
+        .size(406px, 1100px);
+        margin: 0 auto;
+        display: block;
+        position: relative;
+
+        ul.sections {
+            display: block;
+            width: 220px;
+            .pull-left();
+
+            li {
+                text-align: left;
+                color: @gray;
+                font-size: 25px;
+                font-weight: 300;
+                padding: 20px;
+                background-color: transparent;
+                background: url('../images/bg_module_home.png') repeat;
+                
+                &.active {
+                    background: none;
+                    background-color: black;
+                    color: gold;
+                }
+            }
+        }
+
+        div.thumb-container {
+            display: block;
+            .pull-left();
+            width: 500px;
+            height: 100%;
+            overflow: hidden;
+
+            img {
+                .size(100%, 100%);
+            }
+        }
+
+        div.content-container {
+            display: block;
+            .pull-left();
+            .size(347px, 300px);
+            padding: 30px;
+            background-color: black;
+            position: relative;
+
+            span {
+                color: @gray;
+                font-weight: 100;
+            }
+
+            h1 {
+                color: gold;
+                font-weight: 300;
+            }
+            
+            h2 {
+                color: @white;
+                font-weight: 300;
+            }
+
+            p {
+                color: @white;
+                font-weight: 100;
+                font-size: 13px;
+                margin-top: 30px;
+            }
+
+            button {
+                position: absolute;
+                bottom: 30px;
+                font-weight: 100;
+                font-size: 25px;
+                text-align: center;
+                .border-radius(3px);
+                height: 50px;
+
+                &.explore {
+                    background-color: @black;
+                    color: white;
+                    border: 1px solid gray;
+                }
+
+                &.register{ 
+                    left: 150px;
+                    background-color: @green;
+                    color: white;
+                    border: 1px solid green;
+                }
+            }
+        }
+    }
+
+    ul.tabs {
+        position: absolute;
+        bottom: 0;
+        left: 25%;
+
+        li {
+            .pull-left();
+            font-size: 40px;
+            font-family: "Open Sans";
+            font-weight: normal;
+            color: @white;
+            .size(auto, auto);
+            padding: 30px;
+            cursor: pointer;
+
+            &.active {
+                background-color: white;
+                border-top: 2px solid orange;
+                color: @black;
+                cursor: initial;
+            }
+        }
+    }
+}
+
+section.home-content {
+    font-family: "Open Sans";
+
+    h1.legend {
+        text-align: center;
+        font-weight: normal;
+        b {
+            font-weight: bold;
+        }
+    }
+}

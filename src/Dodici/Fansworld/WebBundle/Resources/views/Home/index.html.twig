@@ -1,10 +1,50 @@
-{% if appstate.mobile %}
-	{% include [
-	_self.templatename|replace({'.html.twig' : '.mobile.html.twig'}),
-	_self.templatename|replace({'.html.twig' : '.web.html.twig'})
-	] %}
-{% else %}
-	{% include [
-	_self.templatename|replace({'.html.twig' : '.web.html.twig'})
-	] %}
-{% endif %}
+{% extends "DodiciFansworldWebBundle:Layout:one_column.html.twig" %}
+
+{% block main_content %}
+    <header class="home-header">
+        <h1 class="title">Accede a <b>contenido exclusivo</b> y <b>comparte</b> tu pasión.</h1>
+        
+        <div class="center-container">
+            <ul class="sections">
+                {% for cat in categories %}
+                    <li {% if loop.first %}class="active"{% endif %} data-category-id = "{{ cat.id }}">{{ cat.title }}</li>
+                {% endfor %}
+            </ul>
+                
+            <div class="thumb-container">
+                {% for cat in categories %}
+                    {% set video = videos[cat.id] %}
+                    <span data-category-id="{{ cat.id }}" {% if not loop.first %} class="hidden" {% endif %} >{% if video %}{% thumbnail video.image, 'wall' %}{% endif %}</span>
+                {% endfor %}
+            </div>
+                
+            <div class="content-container">
+                {% for cat in categories %}
+                    {% set video = videos[cat.id] %}
+                    <div data-category-id="{{ cat.id }}" {% if not loop.first %} class="hidden" {% endif %}>
+                        <span>Destacado Fansworld</span>
+                        <h1>{{ cat.title }}</h1>
+                        
+                        {% if video %}
+                            <h2>{{ video.title }}</h2>
+                            <p>{{ video.content }}</p>
+                        {% endif %}
+                        
+                        <button class="explore">Explorar</button>
+                        <button class="register">Registrarse</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <ul class="tabs">
+            <li class="enjoy active">Disfruta</li>
+            <li class="go-on">Sigue</li>
+            <li class="connect">Conectate</li>
+            <li class="participate">Participa</li>
+        </ul>
+    </header>
+    <section class="home-content">
+        <h1 class="legend">El dia a dia de tus <b>idolos</b> y sus <b>clubes</b></h1>
+    </section>
+{% endblock %}
