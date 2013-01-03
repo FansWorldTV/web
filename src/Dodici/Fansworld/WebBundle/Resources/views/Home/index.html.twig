@@ -1,5 +1,10 @@
 {% extends "DodiciFansworldWebBundle:Layout:one_column.html.twig" %}
 
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('bundles/dodicifansworldweb/js/home.js') }}" type="text/javascript"></script>
+{% endblock %}
+
 {% block main_content %}
     <header class="home-header">
         <h1 class="title">Accede a <b>contenido exclusivo</b> y <b>comparte</b> tu pasión.</h1>
@@ -30,21 +35,28 @@
                             <p>{{ video.content }}</p>
                         {% endif %}
                         
-                        <button class="explore">Explorar</button>
-                        <button class="register">Registrarse</button>
+                        <a href="{{ path('teve_home') }}"><button class="explore" >Explorar</button></a>
+                        
+                        {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <a href="{{ path('fos_user_registration_register') }}"><button class="register">Registrarse</button></a>
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>
         </div>
         
         <ul class="tabs">
-            <li class="enjoy active">Disfruta</li>
-            <li class="go-on">Sigue</li>
-            <li class="connect">Conectate</li>
-            <li class="participate">Participa</li>
+            <li class="active" data-type-tab="0">Disfruta</li>
+            <li data-type-tab="1">Sigue</li>
+            <li data-type-tab="2">Conectate</li>
+            <li data-type-tab="3">Participa</li>
         </ul>
     </header>
+        
     <section class="home-content">
-        <h1 class="legend">El dia a dia de tus <b>idolos</b> y sus <b>clubes</b></h1>
+        <h1 class="legend active" data-type-tab="0">El dia a dia de tus <b>idolos</b> y sus <b>clubes</b></h1>
+        <h1 class="legend" data-type-tab="1">FansWorld TV es la <b>comunidad interactiva</b> donde los fanáticos se conectan para <b>compartir</b> experiencias sobre sus ídolos.</h1>
+        <h1 class="legend" data-type-tab="2">Conectate con <b>{{ totalUsers }}</b> fans , comparte fotos y videos de tus idolos.</h1>
+        <h1 class="legend" data-type-tab="3">Te invitamos a vivir los partidos junto a otros fanáticos para <b>vibrar</b> y <b>alentar</b> a tus equipos e ídolos, <b>compartir fotos</b> y participar de encuestas.</h1>
     </section>
 {% endblock %}

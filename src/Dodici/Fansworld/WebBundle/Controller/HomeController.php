@@ -43,6 +43,10 @@ class HomeController extends SiteController
             $response['videos'][$vc->getId()] = $video;
         }
         
+        $countUsers = $this->getRepository('User')->countBy(array('enabled' => true));
+        
+        $response['totalUsers'] = $countUsers;
+        
         return $response;
     }
 
