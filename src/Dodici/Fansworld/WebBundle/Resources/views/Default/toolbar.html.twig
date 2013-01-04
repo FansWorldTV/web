@@ -2,7 +2,7 @@
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
     <li class="toolbar-icon">
-        <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}" title="Notificaciones" data-notif-total ='{"count":"0"}'>
+        <a class='icon' href="{{ path('notification_details') }}" title="Notificaciones" data-notif-total ='{"count":"0"}'>
             <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_notifications.png' )}}" />
         </a>
     </li>

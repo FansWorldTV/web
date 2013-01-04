@@ -221,7 +221,6 @@ class UserController extends SiteController
         if ($notificationId) {
             $notiRepo = $this->getRepository('Notification');
             $notification = $notiRepo->find($notificationId);
-
             $response = $this->renderView('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $notification));
         }
 

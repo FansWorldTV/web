@@ -7,7 +7,7 @@
 		{% endif %}
 	{% endblock %}
 	{% block info %}
-	<div class="info" notificationId = "{{ notification.id }}" data-notifId="{{ notification.id }}">
+	<div class="info" data-notifId="{{ notification.id }}" data-parent="{{ notification.typeparent }}">
 		{% block text %}
 		<a href="user_profile.php">Rodrigo Ramirez</a> 
 		<span>Te quiere agregar como <a href="http://www.google.com">amigo Te</a> quiere agregar como amigo<br>

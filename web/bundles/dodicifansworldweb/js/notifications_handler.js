@@ -10,7 +10,7 @@ notifications.init = function() {
 
 notifications.listen = function() {
     function handleData(response) {
-        response = JSON.parse(response);d
+        response = JSON.parse(response);
         console.log(response);
         if (response) {
             if (response.t == 'n') {
@@ -32,17 +32,22 @@ notifications.listen = function() {
 
 notifications.handleNewNotification = function(response) {
     id = response.id; entity = response.p;
-    notifications.updateBubbleCount(entity, 1);
+    notifications.updateBubbleCount(entity, 1, false);
     ajax.getNotification(id, function(response) {
         if (response) {
             entityContent = $('[data-entity]').data('entity');
-            if (entityContent  === entity) {
-                if ($('[data-sidebaralert]').size() >= 4) $('[data-sidebaralert]:last').fadeOut("slow").remove();
+            if ('total' === entityContent) {
                 $('[data-notification]').prepend(notifications.getClassicNotificationTemplate(response));
                 $('[data-sidebaralert]:first').effect("bounce", {times:2}, 300);
             } else {
-                notice(notifications.getBubbleNotificationTemplate(response));
-            }   
+                if (entityContent  === entity) {
+                    if ($('[data-sidebaralert]').size() >= 4) $('[data-sidebaralert]:last').fadeOut("slow").remove();
+                    $('[data-notification]').prepend(notifications.getClassicNotificationTemplate(response));
+                    $('[data-sidebaralert]:first').effect("bounce", {times:2}, 300);
+                } else {
+                    notice(notifications.getBubbleNotificationTemplate(response));
+                }  
+            } 
         }
     });
 };
@@ -57,6 +62,7 @@ notifications.showCounts = function(entity, value) {
     } else {
         if ($('[data-notif-' + entity + ']').children("span").length > 0) $('[data-notif-' + entity + ']').children("span").eq(0).remove();
     }
+    if ('total' === entity && $('[data-notif-count]').size()) $('[data-notif-count]').html(value);
     function getBadgeTemplate(number) {
         return '<span class="label label-warning label-toolbar">' + number + '</span>';
     }
@@ -78,13 +84,17 @@ notifications.initCounts = function () {
     );
 };
 
-notifications.updateBubbleCount = function(entity, value) {
+notifications.updateBubbleCount = function(entity, value, parentOfNotification) {
     newCant = $('[data-notif-' + entity + ']').data('notif-' + entity).count += value;
     notifications.total += value;
     notifications.showCounts(entity, newCant);
     notifications.showCounts("total", notifications.total);
     $('[data-notif-' + entity + '] span').effect("highlight", {color: "#a0c882"}, 2000);
     $('[data-notif-' + entity + ']').effect("bounce", { times: 4 }, 1200);
+    if ('total' === entity) {
+         newCant = $('[data-notif-' + parentOfNotification + ']').data('notif-' + parentOfNotification).count += value;
+         notifications.showCounts(parentOfNotification, newCant);
+    }
 };
 
 notifications.showUnread = function () {
@@ -121,8 +131,9 @@ notifications.delegateReadedEvent = function () {
             $(this).data('sidebaralert', true);
             entity = $('[data-entity]').data('entity');
             notificationId = $(this).find('[data-notifid]').data('notifid');
+            parentOfNotification = $(this).find('[data-notifid]').data('parent');
             notifications.readNotification(notificationId);
-            notifications.updateBubbleCount(entity, -1);
+            notifications.updateBubbleCount(entity, -1, parentOfNotification);
         }
     });
 };
