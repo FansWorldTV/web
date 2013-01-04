@@ -85,7 +85,10 @@ notifications.initCounts = function () {
 };
 
 notifications.updateBubbleCount = function(entity, value, parentOfNotification) {
-    newCant = $('[data-notif-' + entity + ']').data('notif-' + entity).count += value;
+    // newCant = $('[data-notif-' + entity + ']').data('notif-' + entity).count += value;
+    actualCant = $('[data-notif-' + entity + ']').data('notif-' + entity).count;
+    newCant = parseInt(actualCant) + parseInt(value);
+    $('[data-notif-' + entity + ']').data('notif-' + entity).count = newCant;
     notifications.total += value;
     notifications.showCounts(entity, newCant);
     notifications.showCounts("total", notifications.total);
