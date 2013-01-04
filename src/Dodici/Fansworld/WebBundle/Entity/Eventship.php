@@ -22,13 +22,14 @@ class Eventship
     const TYPE_RADIO = 3;
     const TYPE_LIVE = 4;
 
+    // use as a particle, run it through translation
     public static function getTypes()
     {
         return array(
-            self::TYPE_WEB => 'Web',
-            self::TYPE_TV => 'TV',
-            self::TYPE_RADIO => 'Radio',
-            self::TYPE_LIVE => 'En persona',
+            self::TYPE_WEB => 'web',
+            self::TYPE_TV => 'tv',
+            self::TYPE_RADIO => 'radio',
+            self::TYPE_LIVE => 'live',
         );
     }
 
