@@ -77,7 +77,7 @@ header.home-header {
         div.content-container {
             display: block;
             .pull-left();
-            .size(347px, 300px);
+            .size(346px, 300px);
             padding: 30px;
             background-color: black;
             position: relative;
@@ -162,6 +162,36 @@ section.home-content {
         font-weight: normal;
         b {
             font-weight: bold;
+        }
+    }
+
+    div.content-container {
+        div.tags {
+            margin-top: 30px;
+
+            .pull-left {
+                width: 70%;
+                padding-left: 20px;
+
+                span.label {
+                    font-size: 17px;
+                    font-weight: 300;
+                    color: @black;
+                }
+            }
+
+            .pull-right {
+                width: 30%;
+                font-size: 25px;
+                font-weight: 300;
+                color: black;
+                text-align: right;
+                margin-right: 20px;
+
+                &:hover {
+                    text-decoration: none;
+                }
+            }
         }
     }
 }
