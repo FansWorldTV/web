@@ -2,10 +2,12 @@ var notifications = {};
 notifications.total = 0;
 
 notifications.init = function() {
-    notifications.initCounts();
-    notifications.showUnread();
-    notifications.delegateReadedEvent();
-    notifications.listen();
+    if ($('[data-notif-total]').size() > 0) {
+        notifications.initCounts();
+        notifications.showUnread();
+        notifications.delegateReadedEvent();
+        notifications.listen();
+    }
 };
 
 notifications.listen = function() {
