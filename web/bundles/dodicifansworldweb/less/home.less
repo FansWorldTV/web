@@ -132,7 +132,14 @@ header.home-header {
     ul.tabs {
         position: absolute;
         bottom: 0;
-        left: 25%;
+
+        &[data-user-logged*="true"]{
+            left: 39%;
+        }
+
+        &[data-user-logged*="false"]{
+            left: 25%;
+        }
 
         li {
             .pull-left();
@@ -168,6 +175,7 @@ section.home-content {
     div.content-container {
         div.tags {
             margin-top: 30px;
+            margin-bottom: 35px;
 
             .pull-left {
                 width: 70%;
@@ -181,7 +189,7 @@ section.home-content {
             }
 
             .pull-right {
-                width: 30%;
+                width: 20%;
                 font-size: 25px;
                 font-weight: 300;
                 color: black;

@@ -52,6 +52,7 @@ class HomeController extends SiteController
     }
 
     /**
+     * Ajax method 
      * @Route("/home/ajax/enjoy", name="home_ajaxenjoy")
      */
     public function ajaxEnjoyAction()
@@ -78,22 +79,36 @@ class HomeController extends SiteController
             $tag = $this->getRepository('Tag')->find($byTag);
             $videos = $video->searchByTag(null, null, 20, null, $tag);
         }
-
+        
+        $trending = $this->get('tagger')->trending(3);
+        
+        
         return $this->jsonResponse(array(
-                    'videos' => $serializer->values($videos, 'medium')
+                    'videos' => $serializer->values($videos, 'medium'),
+                    'trending' => $trending
                 ));
     }
 
     /**
+     * Ajax method
      * @Route("/home/ajax/follow", name="home_ajaxfollow")
      */
     public function ajaxFollowAction()
     {
         $serializer = $this->get('serializer');
         $request = $this->getRequest();
+        
+        $photo = $this->getRepository('Photo')->areTagged(20);
+        $video = $this->getRepository('Video')->areTagged(20);
+        
+        return $this->jsonResponse(array(
+            'photos' => $serializer->values($photo, 'medium'),
+            'videos' => $serializer->values($video, 'medium')
+        ));
     }
 
     /**
+     * ajaxMethod
      * @Route("/home/ajax/connect", name="home_ajaxconnect")
      */
     public function ajaxConnectAction()
@@ -107,6 +122,7 @@ class HomeController extends SiteController
     }
 
     /**
+     * Ajax method
      * @Route("/home/ajax/participate", name="home_ajaxparticipate")
      */
     public function ajaxParticipateAction()

@@ -50,37 +50,60 @@
             </div>
         </div>
         
-        <ul class="tabs">
-            <li class="active" data-type-tab="0">Disfruta</li>
-            <li data-type-tab="1">Sigue</li>
-            <li data-type-tab="2">Conectate</li>
-            <li data-type-tab="3">Participa</li>
+        <ul class="tabs" {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} data-user-logged="true" {% else %} data-user-logged = "false" {% endif %}>
+            {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <li class="active" data-type-tab="0" data-method-ajax="home_ajaxenjoy">Disfruta</li>
+                <li data-type-tab="1" data-method-ajax="home_ajaxfollow">Sigue</li>
+                <li data-type-tab="2" data-method-ajax="home_ajaxconnect">Conectate</li>
+                <li data-type-tab="3" data-method-ajax="home_ajaxparticipate">Participa</li>
+            {% else %}
+                <li class="active" data-type-tab="0">Actividad</li>
+                <li data-type-tab="1">Popular</li>
+            {% endif %}
         </ul>
     </header>
         
     <section class="home-content">
-        <h1 class="legend active" data-type-tab="0">El dia a dia de tus <b>idolos</b> y sus <b>clubes</b></h1>
-        <h1 class="legend" data-type-tab="1">FansWorld TV es la <b>comunidad interactiva</b> donde los fanáticos se conectan para <b>compartir</b> experiencias sobre sus ídolos.</h1>
-        <h1 class="legend" data-type-tab="2">Conectate con <b>{{ totalUsers }}</b> fans , comparte fotos y videos de tus idolos.</h1>
-        <h1 class="legend" data-type-tab="3">Te invitamos a vivir los partidos junto a otros fanáticos para <b>vibrar</b> y <b>alentar</b> a tus equipos e ídolos, <b>compartir fotos</b> y participar de encuestas.</h1>
-        
-        <div class="content-container" data-type-tab="0">
-            <div class="tags">
-                <div class="pull-left">
-                    <span class="label">Populares</span>
-                    <span class="label">Destacados</span>
+        {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            
+            <h1 class="legend active" data-type-tab="0">El dia a dia de tus <b>idolos</b> y sus <b>clubes</b></h1>
+            <h1 class="legend" data-type-tab="1">FansWorld TV es la <b>comunidad interactiva</b> donde los fanáticos se conectan para <b>compartir</b> experiencias sobre sus ídolos.</h1>
+            <h1 class="legend" data-type-tab="2">Conectate con <b>{{ totalUsers }}</b> fans , comparte fotos y videos de tus idolos.</h1>
+            <h1 class="legend" data-type-tab="3">Te invitamos a vivir los partidos junto a otros fanáticos para <b>vibrar</b> y <b>alentar</b> a tus equipos e ídolos, <b>compartir fotos</b> y participar de encuestas.</h1>
+
+            <!-- DISFRUTA -->
+            <div class="content-container" data-type-tab="0" >
+                <div class="tags clearfix">
+                    <div class="pull-left">
+                        <span class="label">Populares</span>
+                        <span class="label">Destacados</span>
+                    </div>
+                    <a class="pull-right" href="{{ path('teve_home') }}">Explorar ></a>
                 </div>
-                <a class="pull-right" href="{{ path('teve_home') }}">Explorar ></a>
+                <div class="am-container list-mosaic">
+                </div>
             </div>
-        </div>
-        
-        <div class="content-container" data-type-tab="1">
-        </div>
-        
-        <div class="content-container" data-type-tab="2">
-        </div>
-        
-        <div class="content-container" data-type-tab="3">
-        </div>
+
+            <!-- SIGUE -->
+            <div class="content-container" data-type-tab="1" >
+            </div>
+
+            <!-- CONECTATE -->
+            <div class="content-container" data-type-tab="2" >
+            </div>
+
+            <!-- PARTICIPA -->
+            <div class="content-container" data-type-tab="3" >
+            </div>
+            
+        {% else %}
+            <!-- ACTIVIDAD -->
+            <div class="content-container" data-type-tab="0">
+            </div>
+            
+            <!-- POPULAR -->
+            <div class="content-container" data-type-tab="1">
+            </div>
+        {% endif %}
     </section>
 {% endblock %}
