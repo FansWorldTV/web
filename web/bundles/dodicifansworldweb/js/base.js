@@ -1,451 +1,115 @@
-/**
- * 
+/*
+ * dependencies:
+ * jquery 1.8.3
+ * jquery UI
+ * fos-routing
+ * facebook
+ *  
  */
 
+// FansWorld Plugin Boilerplate
 
-var ajax = {
-    active: false,
-  
-    /*
-    
-    !!! THIS WOULD END UP OVERRIDING EVERY AJAX REQUEST !!!
-    
-    !!! REFACTOR THIS ENTIRE SCRIPT WITHOUT USING AJAXSETUP, OR SO MANY DIFFERENT METHODS !!!
-    
-    init: function(){
-        $.ajaxSetup({
-            type: 'post',
-            dataType: 'json'
-        });
-    },
-    
-    setCallback: function(callback, errorcallback){
-        $.ajaxSetup({
-            success: function(response){
-                if(typeof(callback) !== 'undefined'){
-                    callback(response);
+;(function($) {
+    "use strict";
+    $.ajaxianize = function(el, options) {
+
+        // plugin's default options
+        var defaults = {
+            route: null,
+            params: null,
+            callback: null,
+            errorCallback: null, 
+            type: 'POST'
+        };
+
+        // to avoid confusions, use "plugin" to reference the current instance of the  object
+        var plugin = this;
+        plugin.settings = {}
+
+        // constructor
+        var init = function() {
+            defaults.errorCallback = errorHandler;
+            plugin.settings = $.extend({}, defaults, options);
+            plugin.el = el;
+            console.log("ajaxianize.init()")
+        };
+
+        plugin.genericAction = function(options) {
+
+            console.log('Callee: ',arguments.callee.name, 'Caller: ',arguments.callee.caller.name);
+            console.log('arguments.length', arguments.length);
+
+            if (arguments.length >= 2) {
+                // workaround for old call system 
+                // cast every argument[i] to the literal objet properties
+                var settings = {
+                    route: arguments[0],
+                    params: arguments[1],
+                    callback: arguments[2],
+                    errorCallback: arguments[3],
+                    type: arguments[4],
                 }
-            },
-            error:function (xhr, ajaxOptions, thrownError){
-                if(typeof(errorcallback) !== 'undefined'){
-                    errorcallback(xhr.responseText);
-                }
-            }  
-        });
-    },
-    */
-    
-    init: function(){},
-    
-    setCallback: function(callback, errorcallback){},
-    
-    search: function(method, params, callback){
-        if(!ajax.active) {
-            ajax.active = true;
-            
-            $.ajax({
-                url: 'http://'+ location.host + Routing.generate( appLocale + '_' + method),
-                data: params,
-                success: function(response){
-                    ajax.active = false;
-                    if( typeof(callback) !== 'undefined' ){
-                        callback(response);
-                    }
-                }
-            });
-        }
-    },
-    
-    searchForumThreads: function(page, userid, callback){
-        ajax.search('forum_ajaxsearchthreads', {
-            'page': page,
-            'userId': userid
-        }, callback);
-    },
-    
-    searchThreadPosts: function(thread, page, callback){
-        ajax.search('forum_ajaxposts',{
-            'thread': thread,
-            'page': page
-        }, callback);
-    },
-    
-    searchMyVideos: function(userid, page, callback){
-        ajax.search('video_ajaxmyvideos', {
-            'userid': userid, 
-            'page': page
-        }, callback);
-    },
-  
-    searchAction: function(query, page, callback) {
-        ajax.search('search_ajaxsearch', {
-            'query': query, 
-            'page': page
-        }, callback);
-    },
-    
-    friendsAction: function(query, userId, page, callback) {
-        ajax.search('search_ajaxfriends', {
-            'query': query, 
-            'page': page,
-            'userId': userId
-        }, callback);
-    },
-    
-    searchIdolsAction: function(query, page, isIdol, callback){
-        ajax.search('search_ajaxidols', {
-            'query': query, 
-            'page': page, 
-            'isIdol': isIdol
-        }, callback);
-    },
-    
-    searchByTagAction: function(id, page, callback){
-        ajax.search('video_ajaxsearchbytag', {
-            'page': page, 
-            'id': id
-        }, callback);
-    },
-    
-    contestsListAction: function(page, filter, callback) {
-        if(!ajax.active) {
-            ajax.active = true;
-            
-            if(!filter || typeof(filter) == 'undefined'){
-                filter = null;
+                options = $.extend({}, plugin.settings, settings);
             }
-            
+            else {
+                options = $.extend({}, plugin.settings, options);
+            }
+            console.log("settings: %s", JSON.stringify(options));
+
             $.ajax({
-                url: 'http://' + location.host + Routing.generate( appLocale + '_contest_ajaxlist'),
-                data: {
-                    'filter': filter,
-                    'page': page
-                },
-                success: function(response){
-                    ajax.active = false;
-                    if(typeof(callback) !== 'undefined'){
-                        callback(response);
-                    }
-                }
-            });
-        }
-    },
-    
-    threadCommentAction: function(thread, comment, callback){
-        if(!ajax.active){
-            ajax.active = true;
-            
-            $.ajax({
-                url: 'http://' + location.host + Routing.generate(appLocale + '_forum_ajaxcomment'),
-                data: {
-                    'thread': thread,
-                    'comment': comment
-                },
+                url: 'http://' + location.host + Routing.generate(appLocale + '_' + options.route),
+                type: options.type,
+                data: options.params,
                 success: function(r){
-                    if(typeof(callback) !== 'undefined'){
-                        callback(r);
+                    if(typeof(options.callback) !== 'undefined'){
+                        options.callback(r);
                     }
-                    ajax.active=false;
-                }
-            });
-        }
-    },
-    
-    contestParticipateAction: function(contest, text, photo, video, callback){
-        if(!ajax.active){
-            ajax.active = true;
-            
-            if(typeof(text) == 'undefined'){
-                text = false;
-            }
-            if(typeof(photo) == 'undefined'){
-                photo = false;
-            }
-            if(typeof(video) == 'undefined'){
-                video = false;
-            }
-            
-            $.ajax({
-                url: 'http://' + location.host + Routing.generate( appLocale + '_contest_ajaxparticipate'),
-                type: 'POST',
-                data: {
-                    'contestId' : contest,
-                    'text' : text,
-                    'photo' : photo,
-                    'video' : video
                 },
-                success: function(r){
-                    if(typeof(callback) !== 'undefined'){
-                        callback(r);
+                error: function(r){
+                    if(isFunction(options.errorCallback)){
+                        options.errorCallback(r);
                     }
-                    ajax.active=false;
                 }
             });
-        }
-    },
-    
-    contestAddCommentAction: function(content, contestId, callback){
-        if(!ajax.active){
-            ajax.active = true;
-            $.ajax({
-                url: 'http://' + location.host + Routing.generate( appLocale + '_contest_ajaxaddcomment'),
-                data: {
-                    'content' : content,
-                    'contestId' : contestId
-                },
-                success: function(r){
-                    if(typeof(callback) !== 'undefined'){
-                        callback(r);
+        };
+        // private methods
+        var search = function(method, params, callback) {
+            if(!ajax.active) {
+                ajax.active = true;
+                
+                $.ajax({
+                    url: 'http://'+ location.host + Routing.generate( appLocale + '_' + method),
+                    data: params,
+                    success: function(response) {
+                        ajax.active = false;
+                        if( typeof(callback) !== 'undefined' ) {
+                            callback(response);
+                        }
                     }
-                    ajax.active = false;
-                }
-            });
-        }
-    },
-    
-    pendingFriendsAction: function(page, limit, callback){
-        ajax.setCallback(callback);
-        $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxpendingfriends' ),
-            data: {
-                'page' : page,
-                'limit' : limit
+                });
             }
-        });
-    },
-    
-    
-    numberPendingRequests: function(callback){
-        ajax.setCallback(callback);
-        $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxnumberofpendingrequests' )
-        });
-    },
-    
-    acceptRequestAction: function(friendshipId, callback){
-        ajax.setCallback(callback);
-        $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxacceptrequest'),
-            data: {
-                'id' : friendshipId
-            }
-        });
-    },
-    
-    denyRequestAction: function(id, callback){
-        ajax.setCallback(callback);
-        $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxdenyrequest'),
-            data: {
-                'id' : id
-            }
-        });
-    },
-    
-    notificationNumberAction: function(callback){
-        ajax.setCallback(callback);
-        $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxnotificationnumber' )
-        });
-    },
-    
-    getNotifications: function(callback){
-        ajax.setCallback(callback);
-        $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxnotifications' )
-        });
-    },
-    
-    getNotification: function(id, callback){
-        $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxnotification' ),
-            data:{
-                'id': id
-            },
-            success: function(r){
-                callback(r);
-            }
-        });
-    },
-    
-    deleteNotification: function(id, callback){
-        $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxdeletenotification'),
-            data: {
-                'id' : id
-            },
-            success: function(r){
-                callback(r);
-            }
-        });
-    },
-    
-    likeToggleAction: function(type, id, callback, errorcallback){
-        ajax.setCallback(callback, errorcallback);
-        $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_like_ajaxtoggle'),
-            data: {
-                'id' : id,
-                'type' : type
-            }
-        });
-    },
-    
-    shareAction: function(type, id, text, callback, errorcallback){
-        ajax.setCallback(callback, errorcallback);
-        $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_share_ajax'),
-            data: {
-                'id' : id,
-                'type' : type,
-                'text' : text
-            }
-        });
-    },
-    
-    globalCommentAction: function(type, id, content, privacy, ispin, callback, errorcallback){
-        $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_comment_ajaxpost'),
-            type: 'POST',
-            data: {
-                'id' : id,
-                'type' : type,
-                'content' : content,
-                'privacy' : privacy,
-                'ispin' : ispin
-            },
-            success: function(response) {
-                callback(response);
-            },
-            error: function(response, text, error) {
-                errorcallback(response.responseText, text, error);
-            }
-        });
-    },
-    
-    globalDeleteAction: function(type, id, callback, errorcallback){
-        ajax.setCallback(callback, errorcallback);
-        $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_delete_ajax'),
-            type: 'POST',
-            data: {
-                'id' : id,
-                'type' : type
-            }
-        });
-    },
-    
-    getPhotosAction: function(userid, page, renderpin, callback, errorcallback){
-        ajax.setCallback(callback, errorcallback);
-        $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_photo_get'),
-            data: {
-                'userId' : userid,
-                'page' : page,
-                'renderpin' : renderpin
-            }
-        });
-    },
-    
-    getAlbumsAction: function(userid, page, callback){
-        ajax.setCallback(callback);
-        $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_album_get'),
-            data: {
-                'userId' : userid,
-                'page' : page
-            }
-        });
-    },
-    
-    addFriendAction: function(targetId, friendGroups, callback){
-        ajax.setCallback(callback);
-        $.ajax({
-            url: 'http://'  + location.host + Routing.generate( appLocale + '_friendship_ajaxaddfriend'),
-            data: {
-                'target': targetId,
-                'friendgroups': friendGroups
-            }
-        });
-    },
-    
-    cancelFriendAction: function(friendshipId, userId, callback){
-        if(typeof(friendshipId) == 'undefined'){
-            friendshipId = false;
-        }
-        if(typeof(userId) == 'undefined'){
-            userId = false;
-        }
-        $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_friendship_ajaxcancelfriend'),
-            data: {
-                'friendship': friendshipId,
-                'user': userId
-            },
-            success: function(r){
-                callback(r);
-            }
-        });
-    },
-    
-    videosSearchAction: function(params, callback, errorCallback){
-        ajax.setCallback(callback, errorCallback);
-        $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_video_ajaxsearch'),
-            data: params
-        });
-    },
-    
-    videoCategoryAction: function(params, callback, errorCallback){
-        ajax.setCallback(callback, errorCallback);
-        $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_video_ajaxcategory'),
-            data: params
-        });
-    },
-    
-    usersVideosAction: function(params, callback, errorCallback){
-        ajax.setCallback(callback, errorCallback);
-        $.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_video_ajaxusers '),
-            data: params
-        });
-    },
-  
-    genericAction: function(route, params, callback, errorCallback, type){
-        if (typeof type == 'undefined') type = 'post';
-        
-    	$.ajax({
-            url: 'http://' + location.host + Routing.generate( appLocale + '_' + route),
-            type: type,
-            data: params,
-            success: function(r){
-                if(typeof(callback) !== 'undefined'){
-                    callback(r);
-                }
-            },
-            error: function(r){
-                if(typeof(errorCallback) !== 'undefined'){
-                	errorCallback(r);
-                }
-            }
-        });
-        
-        	
-        
-        
+        };
+        var errorHandler = function(error) {
+            console.log(error);
+        };
+        var isFunction = function(fname) {
+            return (typeof(fname) == typeof(Function));
+        };
+        // call the "constructor" method
+        init();
     }
-};
 
-function trim (myString) {
-    return myString.replace(/^\s+/g,'').replace(/\s+$/g,'')
-}
+})(jQuery);
 
-$(document).ready(function(){
-    $("form").each(function(){
-        $(this).attr("novalidate", "true"); 
-    });
-}); 
+// ***********************************************************
+// LEGACY CODE BELOW 
+// Attach this plugin to window.ajax 
+// TODO: refactor inside FansWorld own namespace
+// ***********************************************************
+;(function($) {
+    window.ajax = window.ajax || {};
+    window.ajax = new $.ajaxianize();
+})(jQuery);
 
 function goLogIn(){
     window.location.href = Routing.generate('_security_check');
@@ -463,7 +127,7 @@ function onFbInit() {
     }
 }
 
-
+/* Global functions */
 /* Wrapper functions for Toast messages */
 function notice (message, callback) {
     createNotify({
@@ -498,6 +162,12 @@ function success (message, callback) {
 function createNotify (options) {
     $('.notifications.top-right').notify(options).show();
 }
+
+$(document).ready(function(){
+    $("form").each(function(){
+        $(this).attr("novalidate", "true"); 
+    });
+}); 
 
 $(function(){
    var notifydiv = $('<div>').addClass('notifications top-right');
