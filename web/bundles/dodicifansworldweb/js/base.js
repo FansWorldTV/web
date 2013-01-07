@@ -31,7 +31,6 @@
             defaults.errorCallback = errorHandler;
             plugin.settings = $.extend({}, defaults, options);
             plugin.el = el;
-            console.log("ajaxianize.init()")
         };
 
         plugin.genericAction = function(options) {
@@ -51,7 +50,6 @@
             else {
                 options = $.extend({}, plugin.settings, options);
             }
-            console.log("settings: %s", JSON.stringify(options));
 
             $.ajax({
                 url: 'http://' + location.host + Routing.generate(appLocale + '_' + options.route),
