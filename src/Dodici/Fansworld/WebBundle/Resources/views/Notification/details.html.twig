@@ -1,0 +1,106 @@
+{% extends "DodiciFansworldWebBundle:Layout:one_column.html.twig" %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/dodicifansworldweb/js/things.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block main_content %}
+<div class="my-things" data-entity="total">
+    <div class="things-sidebar">
+        <section class="notification">
+            <h4>ALGUNA SECCION <span class="midline"></span></h4>
+        </section>
+
+        {% if lastVideos|length > 0 %}
+            <section class="news">
+                <h4>ULTIMOS DE FANSWORLD <span class="midline"></span></h4>
+                {% for video in lastVideos %}
+                    {% if loop.first %}
+                        <div class="video-element first">
+                            <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                                <span class="title">{{ video.title }}</span>
+                                <span class="duration">{{ video.duration|date("i:s") }}</span>
+                                <img src="{{ asset('bundles/dodicifansworldweb/images/play_icon.png') }}" alt="Play" class="play"/>
+                                {% thumbnail video.image, 'medium' %}
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="video-element" rel="tooltip" title="{{ video.title }}">
+                            <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                                <img src="{{ asset('bundles/dodicifansworldweb/images/play_icon.png') }}" alt="Play" class="play"/>
+                                {% thumbnail video.image, 'small' %}
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="fluid-content">
+        <h3>Notificaciones <span class="badge" data-notif-count>{{ notifications|length }} </span> </h3>
+        <div class="btn-group pull-right" data-filter-videos data-toggle="buttons-radio" style="height: 35px;">
+            <button type="button" class="btn active" data-type="0">No Leidas</button>
+            <button type="button" class="btn" data-type="1">Todas</button>
+        </div>
+        <div class="clearfix" style="height: 35px;"></div>
+
+        <div class="notification-container" data-notification>
+            {% if notifications|length > 0 %}
+              {% set today = "now"|date("d/m/Y") %}
+              {% set yesterday = "now"|date_modify("-1 day")|date("d/m/Y") %}
+              {% set twoDaysAgo = "now"|date_modify("-2 day")|date("d/m/Y") %}
+              {% set todayTitle = true %}
+              {% set yesterdayTitle = true %}
+              {% set twoDaysAgoTitle = true %}
+              {% set oldTitle = true %}
+
+                {% for notification in notifications %}
+                  {% set notificationDate = dates[loop.index0]|date("d/m/Y") %}
+                  {% set isOld = true %}
+                
+                  {% if notificationDate == today %}
+                    {% set isOld = false %}
+                    {% if true == todayTitle %}<p class="notification-headerTitle"><em>Hoy</em></p>{% set todayTitle = false %}{% endif %}
+                    <div class="alert"  data-sidebaralert=false>
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        {{ notification|raw }}
+                    </div>
+                  {% endif %}
+
+                  {% if notificationDate == yesterday %}
+                    {% set isOld = false %}
+                    {% if true == yesterdayTitle %}<p class="notification-headerTitle"><em>1 day ago</em></p>{% set yesterdayTitle = false %}{% endif %}
+                    <div class="alert"  data-sidebaralert=false>
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        {{ notification|raw }}
+                    </div>
+                  {% endif %}
+
+                  {% if notificationDate == twoDaysAgo %}
+                    {% set isOld = false %}
+                    {% if true == twoDaysAgoTitle %}<p class="notification-headerTitle"><em>2 day ago</em></p>{% set twoDaysAgoTitle = false %}{% endif %}
+                    <div class="alert"  data-sidebaralert=false>
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        {{ notification|raw }}
+                    </div>
+                  {% endif %}
+
+                  {% if true == isOld %}
+                    {% if true == oldTitle %}<p class="notification-headerTitle"><em>Old</em></p>{% set oldTitle = false %}{% endif %}
+                    {% set isOld = false %}
+                    <div class="alert"  data-sidebaralert=false>
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        {{ notification|raw }}
+                    </div>
+                  {% endif %}
+
+              {% endfor %}
+            {% else %}
+              Sin notificaciones pendientes
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

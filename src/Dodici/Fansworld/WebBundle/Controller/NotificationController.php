@@ -93,11 +93,13 @@ class NotificationController extends SiteController
         $notiRepo = $this->getRepository('Notification');
         $notifications = $notiRepo->findBy(array('target' => $user->getId(), 'readed' => false), array('createdAt' => 'DESC'));
         $response = array();
+        $dates = array();
         foreach ($notifications as $notification) {
             $response[] = $this->renderView('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $notification));
+            $dates[] = $notification->getCreatedAt();
         }
         //$viewMorePhotos = $photosTotalCount > self::PHOTOS_LIMIT ? true : false;
         $lastVideos = $this->getRepository('Video')->findBy(array('highlight' => true), array('createdAt' => 'desc'), 4);
-        return array('notifications' => $response, 'user' => $user,  'lastVideos' => $lastVideos);
+        return array('notifications' => $response, 'user' => $user,  'lastVideos' => $lastVideos, 'dates' => $dates);
     }
 }
