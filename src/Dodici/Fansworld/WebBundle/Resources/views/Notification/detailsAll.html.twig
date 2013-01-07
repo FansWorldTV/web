@@ -43,7 +43,7 @@
           <a href="{{ path('notification_details') }}"> 
             <button type="button" class="btn" data-type="0">No Leidas</button> 
           </a>
-          
+
           <a href="{{ path('notification_all') }}"> 
             <button type="button" class="btn active" data-type="1">Todas</button>
           </a>
@@ -68,8 +68,10 @@
                   {% if notificationDate == today %}
                     {% set isOld = false %}
                     {% if true == todayTitle %}<p class="notification-headerTitle"><em>Hoy</em></p>{% set todayTitle = false %}{% endif %}
-                    <div class="alert">
-                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <div class="alert" data-sidebaralert="{{ readed[loop.index0] }}">
+                      {% if false == readed[loop.index0] %}
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                      {% endif %}
                         {{ notification|raw }}
                     </div>
                   {% endif %}
@@ -77,8 +79,10 @@
                   {% if notificationDate == yesterday %}
                     {% set isOld = false %}
                     {% if true == yesterdayTitle %}<p class="notification-headerTitle"><em>1 day ago</em></p>{% set yesterdayTitle = false %}{% endif %}
-                    <div class="alert">
-                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <div class="alert" data-sidebaralert="{{ readed[loop.index0] }}">
+                      {% if false == readed[loop.index0] %}
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                      {% endif %}
                         {{ notification|raw }}
                     </div>
                   {% endif %}
@@ -86,8 +90,10 @@
                   {% if notificationDate == twoDaysAgo %}
                     {% set isOld = false %}
                     {% if true == twoDaysAgoTitle %}<p class="notification-headerTitle"><em>2 day ago</em></p>{% set twoDaysAgoTitle = false %}{% endif %}
-                    <div class="alert">
-                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <div class="alert" data-sidebaralert="{{ readed[loop.index0] }}">
+                      {% if false == readed[loop.index0] %}
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                      {% endif %}
                         {{ notification|raw }}
                     </div>
                   {% endif %}
@@ -95,8 +101,10 @@
                   {% if true == isOld %}
                     {% if true == oldTitle %}<p class="notification-headerTitle"><em>Old</em></p>{% set oldTitle = false %}{% endif %}
                     {% set isOld = false %}
-                    <div class="alert">
-                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <div class="alert" data-sidebaralert="{{ readed[loop.index0] }}">
+                      {% if false == readed[loop.index0] %}
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                      {% endif %}
                         {{ notification|raw }}
                     </div>
                   {% endif %}

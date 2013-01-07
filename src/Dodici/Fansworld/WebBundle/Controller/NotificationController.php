@@ -95,6 +95,7 @@ class NotificationController extends SiteController
         $notifications = $notiRepo->findBy(array('target' => $user->getId(), 'readed' => false), array('createdAt' => 'DESC'));
         $response = array();
         $dates = array();
+        $readed = array();
         foreach ($notifications as $notification) {
             $response[] = $this->renderView('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $notification));
             $dates[] = $notification->getCreatedAt();
@@ -122,8 +123,9 @@ class NotificationController extends SiteController
         foreach ($notifications as $notification) {
             $response[] = $this->renderView('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $notification));
             $dates[] = $notification->getCreatedAt();
+            $readed[] = $notification->getReaded();
         }
         $lastVideos = $this->getRepository('Video')->findBy(array('highlight' => true), array('createdAt' => 'desc'), 4);
-        return array('notifications' => $response, 'user' => $user,  'lastVideos' => $lastVideos, 'dates' => $dates);
+        return array('notifications' => $response, 'user' => $user,  'lastVideos' => $lastVideos, 'dates' => $dates, 'readed' => $readed);
     }
 }
