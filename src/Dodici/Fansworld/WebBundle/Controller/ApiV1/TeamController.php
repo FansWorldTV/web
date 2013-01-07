@@ -186,7 +186,7 @@ class TeamController extends BaseController
      *
      * Post params:
 	 * - user_id: int
-	 * - team_id: int
+	 * - team_id: int|array
 	 * - [user_token]
      * - [signature params]
      * 
@@ -197,17 +197,27 @@ class TeamController extends BaseController
             if ($this->hasValidSignature()) {
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
-                $team = $this->getRepository('Team')->find($request->get('team_id'));
-                if (!$team) throw new HttpException(404, 'Team not found');
-                
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
                 
+                $teamids = $request->get('team_id');
+                if (!is_array($teamids)) $teamids = array($teamids);
+                if (array_unique($teamids) !== $teamids) throw new HttpException(400, 'Duplicate team_id');
+                
+                foreach ($teamids as $teamid) {
+                    $team = $this->getRepository('Team')->find($teamid);
+                    if (!$team) throw new HttpException(404, 'Team not found - id: ' . $teamid);
+                    
+                    if ($action == 'add') {
+                        $this->get('fanmaker')->addFan($team, $user, false);
+                    } elseif ($action == 'remove') {
+                        $this->get('fanmaker')->removeFan($team, $user);
+                    } else {
+                        throw new HttpException(400, 'Invalid fan action');
+                    }
+                }
+                
                 if ($action == 'add') {
-                    $this->get('fanmaker')->addFan($team, $user);
-                } elseif ($action == 'remove') {
-                    $this->get('fanmaker')->removeFan($team, $user);
-                } else {
-                    throw new HttpException(400, 'Invalid fan action');
+                    $this->getDoctrine()->getEntityManager()->flush();
                 }
                 
                 return $this->result(true);

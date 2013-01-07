@@ -33,7 +33,7 @@ class Fanmaker
      * @param Idol|Team $entity
      * @param User|null $user
      */
-    public function addFan($entity, User $user=null)
+    public function addFan($entity, User $user=null, $flush=true)
     {
     	if (!$user) $user = $this->user;
         if (!$user) throw new AccessDeniedException('Access denied');
@@ -47,14 +47,14 @@ class Fanmaker
             $idolship->setAuthor($user);
             $idolship->setIdol($entity);
             $this->em->persist($idolship);
-            $this->em->flush();
+            if ($flush) $this->em->flush();
             return true;
         } elseif ($entity instanceof Team) {
             $teamship = new Teamship();
             $teamship->setAuthor($user);
             $teamship->setTeam($entity);
             $this->em->persist($teamship);
-            $this->em->flush();
+            if ($flush) $this->em->flush();
             return true;
         }
     }

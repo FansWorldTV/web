@@ -15,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dodici\Fansworld\WebBundle\Controller\ApiV1\BaseController;
 
 /**
- * API controller - Team
+ * API controller - Idol
  * V1
  * @Route("/api_v1")
  */
@@ -210,7 +210,7 @@ class IdolController extends BaseController
      *
      * Post params:
 	 * - user_id: int
-	 * - team_id: int
+	 * - idol_id: int|array
 	 * - [user_token]
      * - [signature params]
      * 
@@ -221,17 +221,27 @@ class IdolController extends BaseController
             if ($this->hasValidSignature()) {
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
-                $idol = $this->getRepository('Idol')->find($request->get('idol_id'));
-                if (!$idol) throw new HttpException(404, 'Idol not found');
-                
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
                 
+                $idolids = $request->get('idol_id');
+                if (!is_array($idolids)) $idolids = array($idolids);
+                if (array_unique($idolids) !== $idolids) throw new HttpException(400, 'Duplicate idol_id');
+                
+                foreach ($idolids as $idolid) {
+                    $idol = $this->getRepository('Idol')->find($idolid);
+                    if (!$idol) throw new HttpException(404, 'Idol not found - id: ' . $idolid);
+                    
+                    if ($action == 'add') {
+                        $this->get('fanmaker')->addFan($idol, $user, false);
+                    } elseif ($action == 'remove') {
+                        $this->get('fanmaker')->removeFan($idol, $user);
+                    } else {
+                        throw new HttpException(400, 'Invalid fan action');
+                    }
+                }
+                
                 if ($action == 'add') {
-                    $this->get('fanmaker')->addFan($idol, $user);
-                } elseif ($action == 'remove') {
-                    $this->get('fanmaker')->removeFan($idol, $user);
-                } else {
-                    throw new HttpException(400, 'Invalid fan action');
+                    $this->getDoctrine()->getEntityManager()->flush();
                 }
                 
                 return $this->result(true);
