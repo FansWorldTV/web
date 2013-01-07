@@ -36,9 +36,6 @@
 
         plugin.genericAction = function(options) {
 
-            console.log('Callee: ',arguments.callee.name, 'Caller: ',arguments.callee.caller.name);
-            console.log('arguments.length', arguments.length);
-
             if (arguments.length >= 2) {
                 // workaround for old call system 
                 // cast every argument[i] to the literal objet properties
