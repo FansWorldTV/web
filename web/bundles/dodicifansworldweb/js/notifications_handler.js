@@ -95,7 +95,7 @@ notifications.updateBubbleCount = function(entity, value, parentOfNotification) 
     notifications.showCounts(entity, newCant);
     notifications.showCounts("total", notifications.total);
     $('[data-notif-' + entity + '] span').effect("highlight", {color: "#a0c882"}, 2000);
-    $('[data-notif-' + entity + ']').effect("bounce", { times: 4 }, 1200);
+    if ('total' != entity) $('[data-notif-' + entity + ']').effect("bounce", { times: 4 }, 1200);
     if ('total' === entity) {
          newCant = $('[data-notif-' + parentOfNotification + ']').data('notif-' + parentOfNotification).count += value;
          notifications.showCounts(parentOfNotification, newCant);
