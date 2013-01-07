@@ -675,4 +675,35 @@ class VideoRepository extends CountBaseRepository
 
         return $query->getResult();
     }
+    
+	/**
+     * Return videos that have been tagged with at least one team or idol
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function areTagged($limit=null, $offset=null)
+    {
+        $query = $this->_em->createQuery('
+    	SELECT v, COUNT(ht) as cntteams, COUNT(hi) as cntidols
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
+    	LEFT JOIN v.hasteams ht
+    	LEFT JOIN v.hasidols hi
+    	WHERE
+    	v.active = true
+    	GROUP BY v
+    	HAVING (cntteams > 0 OR cntidols > 0)
+    	ORDER BY v.weight DESC
+    	')
+        ;
+
+        if ($limit !== null)
+            $query = $query->setMaxResults((int) $limit);
+        if ($offset !== null)
+            $query = $query->setFirstResult((int) $offset);
+
+        $res = $query->getResult();
+        $items = array();
+        foreach ($res as $r) $items[] = $r[0];
+        return $items;
+    }
 }

@@ -324,4 +324,35 @@ class PhotoRepository extends CountBaseRepository
         
         return (int)$query->getSingleScalarResult();
     }
+    
+	/**
+     * Return photos that have been tagged with at least one team or idol
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function areTagged($limit=null, $offset=null)
+    {
+        $query = $this->_em->createQuery('
+    	SELECT p, COUNT(ht) as cntteams, COUNT(hi) as cntidols
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Photo p
+    	LEFT JOIN p.hasteams ht
+    	LEFT JOIN p.hasidols hi
+    	WHERE
+    	p.active = true
+    	GROUP BY p
+    	HAVING (cntteams > 0 OR cntidols > 0)
+    	ORDER BY p.weight DESC
+    	')
+        ;
+
+        if ($limit !== null)
+            $query = $query->setMaxResults((int) $limit);
+        if ($offset !== null)
+            $query = $query->setFirstResult((int) $offset);
+
+        $res = $query->getResult();
+        $items = array();
+        foreach ($res as $r) $items[] = $r[0];
+        return $items;
+    }
 }
