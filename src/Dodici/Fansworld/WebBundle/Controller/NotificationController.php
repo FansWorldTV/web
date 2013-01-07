@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class NotificationController extends SiteController
 {
+    const LIMIT_NOTIFICATIONS = 30;
 
     /**
      * @Route("/preferences", name="notification_preferences")
@@ -79,7 +80,7 @@ class NotificationController extends SiteController
     }
 
 
-       /**
+    /**
      * @Route("/details", name="notification_details")
      * @Secure(roles="ROLE_USER")
      * @Template
@@ -98,7 +99,30 @@ class NotificationController extends SiteController
             $response[] = $this->renderView('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $notification));
             $dates[] = $notification->getCreatedAt();
         }
-        //$viewMorePhotos = $photosTotalCount > self::PHOTOS_LIMIT ? true : false;
+        $lastVideos = $this->getRepository('Video')->findBy(array('highlight' => true), array('createdAt' => 'desc'), 4);
+        return array('notifications' => $response, 'user' => $user,  'lastVideos' => $lastVideos, 'dates' => $dates);
+    }
+
+
+    /**
+     * @Route("/all", name="notification_all")
+     * @Secure(roles="ROLE_USER")
+     * @Template
+     */
+    public function detailsAllAction()
+    {
+        $request = $this->getRequest();
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $notiRepo = $this->getRepository('Notification');
+        $notifications = $notiRepo->findBy(array('target' => $user->getId()), array('createdAt' => 'DESC'), self::LIMIT_NOTIFICATIONS);
+        $response = array();
+        $dates = array();
+        foreach ($notifications as $notification) {
+            $response[] = $this->renderView('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $notification));
+            $dates[] = $notification->getCreatedAt();
+        }
         $lastVideos = $this->getRepository('Video')->findBy(array('highlight' => true), array('createdAt' => 'desc'), 4);
         return array('notifications' => $response, 'user' => $user,  'lastVideos' => $lastVideos, 'dates' => $dates);
     }
