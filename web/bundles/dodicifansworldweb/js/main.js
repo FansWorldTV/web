@@ -301,18 +301,24 @@ var site = {
             askText(function(text){
                 var type = el.attr('data-type');
                 var id = el.attr('data-id');
-                el.addClass('loading-small');
-            	
-                ajax.shareAction(type, id, text,
-                    function(response){
+                el.addClass('loading-small');           	
+                ajax.genericAction({
+                    route: 'share_ajax', 
+                    params: { 
+                        'id' : id,
+                        'type' : type,
+                        'text' : text
+                    }, 
+                    callback: function(response) {
                         el.removeClass('loading-small');
                         el.addClass('disabled');
                         success(response.message);
                     },
-                    function(responsetext){
+                    errorCallback: function(responsetext) {
                         el.removeClass('loading-small');
                         error(responsetext);
-                    });
+                    }
+                }); 
             });
             
         });
