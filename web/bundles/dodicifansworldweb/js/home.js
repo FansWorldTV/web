@@ -113,21 +113,38 @@ home.loadSection.follow = function(){
     ajax.genericAction('home_ajaxfollow', {}, function(r){
         for(var i in r.elements){
             var element = r.elements[i];
-            console.log(element);
+            
+            $divContainer = $('<div class="element"></div>');
             
             $image = $('<img />');
             $image.attr('src', element.element.image)
-                    .attr('alt', element.element.title);
+            .attr('alt', element.element.title);
+                    
+            $image = $('<a></a>').html($image);
+            $image.attr('href', Routing.generate(appLocale + '_' + element.type + '_show', {
+                'id': element.element.id, 
+                'slug': element.element.slug
+                }));
+                    
+            $titleAndUser = $('<div></div>');
             
-            console.log($image);
+            $title = $('<span></span>');
+            $title.addClass('title');
+            $title.html(element.element.title);
             
-            toAppendElements.append($image);
-            /*switch($element.type){
-                case 'photo':
-                    break;
-                case 'video':
-                    break;
-            }*/
+            if(element.element.author != null){
+                $user = $('<a></a>');
+                $user.addClass('user');
+                $user.html(element.element.author.title);
+                $user.attr('href', element.element.author.url);
+            }
+            
+            $titleAndUser.addClass('title-and-user');
+            $titleAndUser.append($title).append($user);
+            
+            $divContainer.append($image).append($titleAndUser);
+            
+            toAppendElements.append($divContainer);
         }
         toAppendElements.removeClass('loading');
     }, function(e){

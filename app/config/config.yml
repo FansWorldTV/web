@@ -475,3 +475,6 @@ services:
     serializer.album:
         class: Dodici\Fansworld\WebBundle\Serializer\Album
         arguments: [@appmedia, @router]
+    serializer.photo:
+        class: Dodici\Fansworld\WebBundle\Serializer\Photo
+        arguments: [@serializer]
