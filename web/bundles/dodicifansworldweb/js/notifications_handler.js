@@ -17,10 +17,6 @@ notifications.listen = function() {
         if (response) {
             if (response.t == 'n') {
                 notifications.handleNewNotification(response);
-            } else if (response.t == 'f') {
-                notifications.handleFriendship(response.id);
-            } else if (response.t == 'c') {
-                notifications.handleComment(response.w, response.id, response.p)
             }
         }
     }
@@ -161,48 +157,6 @@ notifications.sendToMeteor = function (type) {
 notifications.test = function(id, parent) {
     var r = {}; r.id = id; r.p = parent;
     notifications.handleNewNotification(r);
-};
-
-notifications.handleFriendship = function(id) {
-    var actualNumber = $("li.alerts_user a span").html();
-    parseInt(actualNumber);
-    if(actualNumber == ''){
-        actualNumber = 0;
-    }
-                
-                
-    ajax.genericAction('user_ajaxgetfriendship', {
-        'id': id
-    }, function(r){
-        console.log(r);
-        if(r){
-            if(!r.target.restricted){
-                notice(r.author.name + " te empezó a seguir.");
-            }else{
-                var template = $("#templatePendingFriends ul li").clone();
-                if(r.author.image){
-                    template.find("img.avatar").attr('src', r.author.image);
-                }
-                template.find("span.info a.name").attr('href', r.author.url).html(r.author.name);
-                template.find("a.deny").attr('id', r.author.id);
-                template.find("div.button a.accept").attr('id', r.author.id);
-                template.addClass('hidden');
-                      
-                $("li.alerts_user ul li.more").before(template);
-            }
-            actualNumber++;
-
-            $("li.alerts_user a span").html(actualNumber).removeClass('hidden');
-            $(".alerts_user a:first span").effect("highlight",{},3000);
-            $(".alerts_user a:first").effect("bounce",{
-                times:1
-            },300);
-        }
-    });
-};
-
-notifications.handleComment = function(wallname, id, parent) {
-    $('[data-wall="'+wallname+'"]').addWallComment(id, parent);
 };
 
 $(document).ready(function() {
