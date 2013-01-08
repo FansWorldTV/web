@@ -169,25 +169,6 @@ var site = {
                     }
                 }
             });
-
-            /*
-            ajax.deleteNotification(notificationId, function(response){
-                if(response === true){
-                    var cant = $("li.notifications_user a span").html();
-                    parseInt(cant);
-                    cant--;
-                    if(cant>0){
-                        $(".notifications_user a span").html(cant);
-                    }else{
-                        $(".notifications_user a span").hide();
-                    }
-                    
-                    el.parent().css('background', '#f4f3b8');
-                }else{
-                    console.log(response);
-                }
-            });
-            */
         });
     },
     
@@ -428,19 +409,24 @@ var site = {
                 var type = el.attr('data-type');
                 var id = el.attr('data-id');
                 el.addClass('loading');
-	        	
-                ajax.globalDeleteAction(type, id,
-                    function(response){
+	        	ajax.genericAction({
+                    route: 'delete_ajax', 
+                    params: { 
+                        'id' : id,
+                        'type' : type
+                    },
+                    callback: function(response) {
                         el.removeClass('loading');
                         success(response.message);
                         if (response.redirect) {
                             window.location.href = response.redirect;
                         }
                     },
-                    function(responsetext){
+                    errorCallback: function(responsetext){
                         el.removeClass('loading');
                         error(responsetext);
-                    });
+                    }
+                });
             }
         });
         
