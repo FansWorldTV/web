@@ -286,9 +286,13 @@ var site = {
             var type = el.attr('data-type');
             var id = el.attr('data-id');
             el.addClass('loading-small');
-        	
-            ajax.likeToggleAction(type, id,
-                function(response){
+        	ajax.genericAction({
+                route: 'like_ajaxtoggle', 
+                params: { 
+                    'id': id,
+                    'type' : type
+                }, 
+                callback: function(response) {
                     el.removeClass('loading-small');
                     el.find('.likecount').text(response.likecount);
                     el.siblings('.likecount:first').text(response.likecount);
@@ -301,11 +305,11 @@ var site = {
                         el.find('i').addClass('icon-star-empty');
                     }
                 },
-                function(responsetext){
+                errorCallback: function(responsetext) {
                     el.removeClass('loading-small');
                     error(responsetext);
-                });
-        	
+                }
+            });        	
         });
     },
     shareButtons: function(){
