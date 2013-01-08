@@ -140,4 +140,45 @@ class FriendshipController extends SiteController
         );
     }
 
+
+    /**
+     * Accept a friendship
+     * 
+     * @Route("/ajax/accept-friendship", name="friendship_accept")
+     */
+    public function ajaxAcceptFriendshipAction()
+    {
+        $response = false;
+        $request = $this->getRequest();
+        $friendshipId = $request->get('id', false);
+
+        if ($friendshipId) {
+            $response = true;
+            $friendship = $this->getRepository('Friendship')->find($friendshipId);
+            $this->get('friender')->accept($friendship);
+        }
+
+        return $this->jsonResponse($response);
+    }
+
+    /**
+     * Reject a friendship
+     * 
+     * @Route("/ajax/reject-friendship", name="friendship_reject")
+     */
+    public function ajaxRejectFriendshipAction()
+    {
+        $response = false;
+        $request = $this->getRequest();
+        $friendshipId = $request->get('id', false);
+
+        if ($friendshipId) {
+            $response = true;
+            $friendship = $this->getRepository('Friendship')->find($friendshipId);
+            $this->get('friender')->remove($friendship);
+        }
+
+        return $this->jsonResponse($response);
+    }
+
 }

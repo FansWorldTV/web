@@ -31,7 +31,9 @@ notifications.listen = function() {
 notifications.handleNewNotification = function(response) {
     id = response.id; entity = response.p;
     notifications.updateBubbleCount(entity, 1, false);
-    ajax.getNotification(id, function(response) {
+    //ajax.getNotification(id, 
+    ajax.genericAction('user_ajaxnotification', { 'id' : id}, 
+    function(response) {
         if (response) {
             entityContent = $('[data-entity]').data('entity');
             if ('total' === entityContent) {
@@ -122,7 +124,24 @@ notifications.showUnread = function () {
 };
 
 notifications.readNotification = function(id) {
-    ajax.deleteNotification(id, function(response) {console.log('ReadNotification: ' + id + ' => ' + response)});
+    ajax.genericAction({route: 'user_ajaxdeletenotification', params: { id: id }, callback: function(response) {
+        console.log('ReadNotification: ' + id + ' => ' + response);
+        return response;
+    }});
+};
+
+notifications.acceptFriendship = function(id) {
+    ajax.genericAction({route: 'friendship_accept', params: { id: id }, callback: function(response) {
+        console.log('acceptFriendship: ' + id + ' => ' + response);
+        return response;
+    }});
+};
+
+notifications.rejectFriendship = function(id) {
+    ajax.genericAction({route: 'friendship_reject', params: { id: id }, callback: function(response) {
+        console.log('rejectFriendship: ' + id + ' => ' + response);
+        return response;
+    }});
 };
 
 notifications.delegateReadedEvent = function () {
@@ -133,8 +152,30 @@ notifications.delegateReadedEvent = function () {
             entity = $('[data-entity]').data('entity');
             notificationId = $(this).find('[data-notifid]').data('notifid');
             parentOfNotification = $(this).find('[data-notifid]').data('parent');
-            notifications.readNotification(notificationId);
-            notifications.updateBubbleCount(entity, -1, parentOfNotification);
+            if ($(this).find('[data-friendship-pending]').size() == 0) {
+                notifications.readNotification(notificationId);
+                notifications.updateBubbleCount(entity, -1, parentOfNotification);
+            }
+        }
+    });
+
+    $('[data-friendship-container]').on("click", '[data-accept-friendship]', function() {
+        var response = confirm("Aceptar solicitud?");
+        if (response) {
+            friendshipId = $(this).data('accept-friendship');
+            notifications.acceptFriendship(friendshipId);
+            notifications.updateBubbleCount('total', -1, 'fans');
+            $(this).parent('[data-friendship-container]').html(' | Solicitud Aceptada');
+        }
+    });
+
+    $('[data-friendship-container]').on("click", '[data-reject-friendship]', function() {
+        var response = confirm("Cancelar solicitud?");
+        if (response) {
+            friendshipId = $(this).data('reject-friendship');
+            notifications.rejectFriendship(friendshipId);
+            notifications.updateBubbleCount('total', -1, 'fans');
+            $(this).parent('[data-friendship-container]').html(' | Solicitud Denegada');
         }
     });
 };

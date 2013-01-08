@@ -99,7 +99,7 @@ class Friender
         
         if ($friendship->getActive()) return false;
         
-        $friendship->setActive();
+        $friendship->setActive(true);
         
         $this->notifyAccept($friendship);
         $this->scoreAdd($friendship);
