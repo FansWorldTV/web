@@ -79,10 +79,10 @@ class HomeController extends SiteController
             $tag = $this->getRepository('Tag')->find($byTag);
             $videos = $video->searchByTag(null, null, 20, null, $tag);
         }
-        
+
         $trending = $this->get('tagger')->trending(3);
-        
-        
+
+
         return $this->jsonResponse(array(
                     'videos' => $serializer->values($videos, 'medium'),
                     'trending' => $trending
@@ -96,15 +96,44 @@ class HomeController extends SiteController
     public function ajaxFollowAction()
     {
         $serializer = $this->get('serializer');
-        $request = $this->getRequest();
-        
+
         $photo = $this->getRepository('Photo')->areTagged(20);
         $video = $this->getRepository('Video')->areTagged(20);
-        
+
+        $photo = $serializer->values($photo, 'big');
+        $video = $serializer->values($video, 'big');
+
+        $elements = array();
+        $photoCountAdded = 0;
+        $videoCountAdded = 0;
+
+
+        for ($i = 0; $i < 40; $i++) {
+            $isPhoto = rand(0, 1);
+            $isPhoto = (bool) $isPhoto;
+
+            if ($isPhoto && $photoCountAdded < 20) {
+                if (isset($photo[$photoCountAdded])) {
+                    array_push($elements, array(
+                        'element' => $photo[$photoCountAdded],
+                        'type' => 'photo'
+                    ));
+                    $photoCountAdded++;
+                }
+            } else {
+                if (isset($video[$videoCountAdded])) {
+                    array_push($elements, array(
+                        'element' => $video[$videoCountAdded],
+                        'type' => 'video'
+                    ));
+                    $videoCountAdded++;
+                }
+            }
+        }
+
         return $this->jsonResponse(array(
-            'photos' => $serializer->values($photo, 'medium'),
-            'videos' => $serializer->values($video, 'medium')
-        ));
+                    'elements' => $elements
+                ));
     }
 
     /**

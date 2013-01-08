@@ -5,6 +5,7 @@ home.init = function(){
         home.toggleSections();
     }
     if($("section").hasClass('home-content')){
+        home.loadSection.enjoy();
         home.toggleTabs();
     }
 };
@@ -28,25 +29,43 @@ home.toggleSections = function(){
 home.toggleTabs = function(){
     $("section.home-content .legend:not('.active')").hide();
     
-    var active = $(".home-header ul.tabs li.active");
-    var dataType = active.attr('data-type-tab');
-    var dataMethod = active.attr('data-method-ajax');
+    $(".home-header ul.tabs li").on('click', function(){
+        var typeTab = $(this).attr('data-type-tab');
+        $(".home-header ul.tabs li").removeClass('active');
+        $(this).addClass('active');
+        
+        $("section.home-content .legend").hide();
+        $("section.home-content .content-container").hide();
+        
+        if(typeTab != 'enjoy'){
+            window['home']['loadSection'][typeTab]();
+        }
+        
+        $('section.home-content .legend[data-type-tab="' + typeTab + '"]').show();
+        $("section.home-content .content-container[data-type-tab='" + typeTab + "']").show();
+    });
     
-    var toAppendTrending = $('section.home-content .content-container[data-type-tab="' + dataType + '"] .tags .pull-left');
-    var toAppendVideos = $('section.home-content .content-container[data-type-tab="' + dataType + '"] .am-container');
+};
+
+
+home.loadSection = {};
+home.loadSection.enjoy = function(){
+    var toAppendTrending = $('section.home-content .content-container[data-type-tab="enjoy"] .tags .pull-left');
+    var toAppendVideos = $('section.home-content .content-container[data-type-tab="enjoy"] .am-container');
     
-    ajax.genericAction(dataMethod, {}, function(r){
+    toAppendVideos.addClass('loading');
+    
+    ajax.genericAction('home_ajaxenjoy', {}, function(r){
         
         for(var i in r.trending){
             var tag = r.trending[i];
+            
             var elementToAppend = $('<span class="label"></span>');
+            
             elementToAppend.html(tag.title)
             .attr('data-tag-id', tag.id)
             .attr('data-tag-slug', tag.slug);
                             
-            console.log(elementToAppend);
-            console.log(toAppendTrending);
-            
             toAppendTrending.append(elementToAppend);
         }
         
@@ -69,10 +88,11 @@ home.toggleTabs = function(){
                         liquid: true,
                         margin: 3,
                         minw: 150,
-                        minh: 50,
-                        alternateHeight: true,
+                        minh: 250,
                         fillLastRow: true
                     });
+                    
+                    toAppendVideos.removeClass('hidden');
                 };
             }else{
                 var callback = function(){};
@@ -83,19 +103,45 @@ home.toggleTabs = function(){
     }, function(e){
         error(e); 
     });
-    
-    $(".home-header ul.tabs li").on('click', function(){
-        var typeTab = $(this).attr('data-type-tab');
-        $(".home-header ul.tabs li").removeClass('active');
-        $(this).addClass('active');
-        
-        $("section.home-content .legend").hide();
-        $('section.home-content .legend[data-type-tab="' + typeTab + '"]').show();
-    });
-    
 };
 
-home.giveMe
+home.loadSection.follow = function(){
+    var toAppendElements = $('section.home-content .content-container[data-type-tab="follow"] #elements');
+    
+    toAppendElements.addClass('loading');
+    
+    ajax.genericAction('home_ajaxfollow', {}, function(r){
+        for(var i in r.elements){
+            var element = r.elements[i];
+            console.log(element);
+            
+            $image = $('<img />');
+            $image.attr('src', element.element.image)
+                    .attr('alt', element.element.title);
+            
+            console.log($image);
+            
+            toAppendElements.append($image);
+            /*switch($element.type){
+                case 'photo':
+                    break;
+                case 'video':
+                    break;
+            }*/
+        }
+        toAppendElements.removeClass('loading');
+    }, function(e){
+        error(e); 
+    });
+};
+
+home.loadSection.connect = function(){
+    
+    };
+    
+home.loadSection.participate = function(){
+        
+    };
 
 $(document).ready(function(){
     home.init(); 
