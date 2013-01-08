@@ -439,6 +439,25 @@ var site = {
                 var id = el.attr('data-id');
                 el.addClass('loading');
 	        	
+                ajax.genericAction({
+                    route: 'delete_ajax', 
+                    params: { 
+                        'id' : id,
+                        'type' : type
+                    },
+                    callback: function(response){
+                        success(response.message);
+                        el.parent().slideUp('fast',function(){
+                            $(this).remove();
+                        });
+                    },
+                    errorCallback: function(responsetext){
+                        el.removeClass('loading');
+                        error(responsetext);
+                    }
+                });
+
+                /*
                 ajax.globalDeleteAction(type, id,
                     function(response){
                         success(response.message);
@@ -450,6 +469,7 @@ var site = {
                         el.removeClass('loading');
                         error(responsetext);
                     });
+                */
             }
         });
     },
