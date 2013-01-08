@@ -151,7 +151,7 @@ var site = {
             var notificationId = el.attr('notificationId');
             ajax.genericAction({
                 route: 'user_ajaxdeletenotification', 
-                params { id: notificationId }, 
+                params: { id: notificationId }, 
                 callback: function(response) {
                     if(response === true) {
                         var cant = $("li.notifications_user a span").html();
