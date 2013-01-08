@@ -43,7 +43,7 @@ class Friender
     	if (!$author) $author = $this->user;
         if (!$author) throw new AccessDeniedException('Access denied');
         
-        if (!$this->appstate->canFriend($target))
+        if (!$this->appstate->canFriend($target, $author))
             throw new \Exception('Cannot follow this user');
         
         $friendship = new Friendship();
@@ -66,6 +66,20 @@ class Friender
         $this->scoreAdd($friendship);
         
         $this->em->persist($friendship);
+        
+        // notify became fan or pending
+        $notification = new Notification();
+        if ($friendship->getActive()) {
+		    $notification->setType(Notification::TYPE_FRIENDSHIP_NEW_FAN);
+        } else {
+            $notification->setType(Notification::TYPE_FRIENDSHIP_PENDING);
+            $notification->setFriendship($friendship);
+        }
+		
+		$notification->setAuthor($friendship->getAuthor());
+		$notification->setTarget($friendship->getTarget());
+		$this->em->persist($notification);
+        
         $this->em->flush();
         
         // notify new?
@@ -108,7 +122,9 @@ class Friender
         
         $this->scoreRemove($friendship);
             
+        $this->markPendingAsRead($friendship, true);
         $this->em->remove($friendship);
+        
         $this->em->flush();
     }
     
@@ -120,6 +136,10 @@ class Friender
 		$notification->setAuthor($friendship->getTarget());
 		$notification->setTarget($friendship->getAuthor());
 		$this->em->persist($notification);
+		
+		$this->markPendingAsRead($friendship);
+		
+		$this->newFanNotification($friendship);
         
         /*
         // wall: juan es ahora amigo de carlitos
@@ -137,6 +157,32 @@ class Friender
 		$comment->setPrivacy(Privacy::FRIENDS_ONLY);
 		$this->em->persist($comment);
 		*/
+    }
+    
+    private function markPendingAsRead(Friendship $friendship, $remove=false)
+    {
+        $notifrepo = $this->em->getRepository('DodiciFansworldWebBundle:Notification');
+		
+		// mark pending notification as read
+		$notifpending = $notifrepo->findBy(array(
+		    'type' => Notification::TYPE_FRIENDSHIP_PENDING,
+		    'friendship' => $friendship->getId()
+		));
+		foreach ($notifpending as $np) {
+		    $np->setReaded(true);
+		    if ($remove) $np->setFriendship(null);
+		    $this->em->persist($np);
+		}
+    }
+    
+    private function newFanNotification(Friendship $friendship)
+    {
+        // create new fan notification, might want to consider it coming as pre-read
+		$notifnew = new Notification();
+		$notifnew->setType(Notification::TYPE_FRIENDSHIP_NEW_FAN);
+		$notifnew->setAuthor($friendship->getAuthor());
+		$notifnew->setTarget($friendship->getTarget());
+		$this->em->persist($notifnew);
     }
     
     private function scoreAdd(Friendship $friendship, $remove=false)

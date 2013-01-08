@@ -263,11 +263,11 @@ class AppState
         return true;
     }
 
-    public function canFriend(User $target)
+    public function canFriend(User $target, User $user=null)
     {
-        if (!($this->user instanceof User))
+        if (!$user) $user = $this->user;
+        if (!($user instanceof User))
             return false;
-        $user = $this->user;
 
         if ($user == $target)
             return false;

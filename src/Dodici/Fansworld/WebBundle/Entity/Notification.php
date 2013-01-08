@@ -12,7 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Notification
 {
+    // The target accepted our friendship request
     const TYPE_FRIENDSHIP_ACCEPTED = 1;
+    
     const TYPE_COMMENT_ANSWERED = 3;
     const TYPE_FORUM_CREATED = 4;
     const TYPE_FORUM_ANSWERED = 5;
@@ -28,8 +30,9 @@ class Notification
     const TYPE_IDOL = 10;
     const TYPE_PHOTO = 11;
 
-    // Artificial type for Friendship
-    const TYPE_FRIENDSHIP_CREATED = 99;
+    // Someone became or wants to become our fan
+    const TYPE_FRIENDSHIP_NEW_FAN = 12;
+    const TYPE_FRIENDSHIP_PENDING = 13;
     
     /**
      * @var bigint $id
@@ -158,6 +161,16 @@ class Notification
      */
     private $forumthread;
     
+    /**
+     * @var Friendship
+     *
+     * @ORM\ManyToOne(targetEntity="Friendship")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="friendship_id", referencedColumnName="id")
+     * })
+     */
+    private $friendship;
+    
     public static function getTypeList() {
     	return array(
     		self::TYPE_COMMENT_ANSWERED => array('type' => 'comment_answered', 'parent' => 'messages'),
@@ -170,8 +183,9 @@ class Notification
             self::TYPE_VIDEO_PROCESSED => array('type' => 'video_processed', 'parent' => 'videos'),
             self::TYPE_VIDEO_SUBSCRIPTION => array('type' => 'video_subscription', 'parent' => 'videos'),
             self::TYPE_VIDEO_NEW_FROM_IDOL_TEAM => array('type' => 'video_newidolteam', 'parent' => 'videos'),
-            // Artificial type
-            self::TYPE_FRIENDSHIP_CREATED => array('type' => 'friendship_created', 'parent' => 'fans'),
+            // Friendship to us
+            self::TYPE_FRIENDSHIP_NEW_FAN => array('type' => 'friendship_newfan', 'parent' => 'fans'),
+            self::TYPE_FRIENDSHIP_PENDING => array('type' => 'friendship_pending', 'parent' => 'fans'),
             // Temporary types / to test notifications
             self::TYPE_TEAM => array('type' => 'newteam_test', 'parent' => 'teams'),
             self::TYPE_IDOL => array('type' => 'newidol_test', 'parent' => 'idols'),
@@ -466,5 +480,25 @@ class Notification
     public function getForumthread()
     {
         return $this->forumthread;
+    }
+    
+	/**
+     * Set friendship
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Friendship $friendship
+     */
+    public function setFriendship(\Dodici\Fansworld\WebBundle\Entity\Friendship $friendship = null)
+    {
+        $this->friendship = $friendship;
+    }
+
+    /**
+     * Get friendship
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Friendship 
+     */
+    public function getFriendship()
+    {
+        return $this->friendship;
     }
 }

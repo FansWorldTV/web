@@ -1,0 +1,11 @@
+{% extends 'DodiciFansworldWebBundle:Notification:notification.base.html.twig' %}
+
+{% block avatar %}
+    {% set image = notification.author.image %}
+    {{ parent() }}
+{% endblock %}
+
+{% block text %}
+    <a class="notice-link" href="{{ path('user_wall', {username: notification.author.username }) }}">{{ notification.author }}</a> 
+    <span class="notice-text">ahora es tu fan</span>
+{% endblock %}

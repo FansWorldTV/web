@@ -1,0 +1,11 @@
+{% extends 'DodiciFansworldWebBundle:Mail:notification_base.html.twig' %}
+
+{% block title %}
+    <title>Fansworld - {{ "notification_friendship_pending"|trans({'%author%': notification.author}) }}</title>
+{% endblock %}
+    
+{% block text %}
+    <p style="margin-bottom: 10px;">
+        <a href="">{{ notification.author }}</a> quiere ser tu fan
+    </p>
+{% endblock %}

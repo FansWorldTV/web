@@ -32,22 +32,20 @@ class MeteorPusher
         $em = $eventArgs->getEntityManager();
 
         /* NOTIFICATIONS / FRIENDSHIPS */
-        if ($entity instanceof Notification || $entity instanceof Friendship) {
+        if ($entity instanceof Notification && !$entity->getReaded()) {
             $target = $entity->getTarget();
             $allowed = $target->getNotifyprefs();
             
-            if ($entity instanceof Friendship) {
-                $type = Notification::TYPE_FRIENDSHIP_CREATED;
-            } else {
-                $type = $entity->getType();
-            }
+            $type = $entity->getType();
             
             if (in_array($type, $allowed)) {
                 // send comet push
                 $this->container->get('meteor')->push($entity);
             } else {
                 if ($entity instanceof Notification) {
-                    $entity->setReaded(true);
+                    if ($entity->getType() != Notification::TYPE_FRIENDSHIP_PENDING) {
+                        $entity->setReaded(true);
+                    }
                     $em->persist($entity);
                     $em->flush();
                 }

@@ -1,0 +1,16 @@
+{% extends 'DodiciFansworldWebBundle:Notification:notification.base.html.twig' %}
+
+{% block avatar %}
+    {% set image = notification.author.image %}
+    {{ parent() }}
+{% endblock %}
+
+{% block text %}
+    <a class="notice-link" href="{{ path('user_wall', {username: notification.author.username }) }}">{{ notification.author }}</a> 
+    <span class="notice-text">quiere ser tu fan</span>
+    
+    {% if notification.friendship %}
+        <button data-accept-friendship="{{ notification.friendship.id }}" value="Aceptar" />
+        <button data-reject-friendship="{{ notification.friendship.id }}" value="Cancelar" />
+    {% endif %}
+{% endblock %}
