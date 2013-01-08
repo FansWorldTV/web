@@ -186,6 +186,11 @@ section.home-content {
                     font-weight: 300;
                     color: @black;
                     cursor: pointer;
+
+                    &.active {
+                        background-color: @green;
+                        color: @white;
+                    }
                 }
             }
 
@@ -200,6 +205,13 @@ section.home-content {
                 &:hover {
                     text-decoration: none;
                 }
+            }
+        }
+
+        .fans-list {
+            margin-top: 30px;
+            .btn-group {
+                .hidden();
             }
         }
 
@@ -257,7 +269,7 @@ section.home-content {
                         position: relative;
                         width: 100%;
                         color: @green;
-                        margin-top: 11px;
+                        margin-top: 5px;
                         margin-left: 20px;
                         font-size: 15px;
                         font-weight: 300;

@@ -132,7 +132,7 @@ home.loadSection.follow = function(){
             $image.attr('href', Routing.generate(appLocale + '_' + element.type + '_show', {
                 'id': element.element.id, 
                 'slug': element.element.slug
-                }));
+            }));
                     
             $titleAndUser = $('<div></div>');
             
@@ -162,8 +162,31 @@ home.loadSection.follow = function(){
 };
 
 home.loadSection.connect = function(){
+    var toAppendElements = $('section.home-content .content-container[data-type-tab="connect"] .fans-list');
     
-    };
+    toAppendElements.addClass('loading');
+    
+    ajax.genericAction('home_ajaxconnect', {}, function(r){
+        for(var i in r.fans){
+            var fan = r.fans[i];
+            
+            var loop = parseInt(i);
+            loop++;
+            if(r.fans.length == loop)  {
+                var callback = function(){
+                    toAppendElements.removeClass('loading');
+                    home.loadedSection.connect = true;
+                };
+            }else{
+                var callback = function(){};
+            }
+            
+            templateHelper.renderTemplate('fans-element', fan, toAppendElements.selector, false, callback);
+        }
+    }, function(e){
+        error(e);
+    });
+};
     
 home.loadSection.participate = function(){
         
