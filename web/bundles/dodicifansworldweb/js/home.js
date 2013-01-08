@@ -38,7 +38,9 @@ home.toggleTabs = function(){
         $("section.home-content .content-container").hide();
         
         if(typeTab != 'enjoy'){
-            window['home']['loadSection'][typeTab]();
+            if(!window['home']['loadedSection'][typeTab]){
+                window['home']['loadSection'][typeTab]();
+            }
         }
         
         $('section.home-content .legend[data-type-tab="' + typeTab + '"]').show();
@@ -105,6 +107,12 @@ home.loadSection.enjoy = function(){
     });
 };
 
+home.loadedSection = {
+    'enjoy': true,
+    'follow': false,
+    'connect': false,
+    'participate': false
+};
 home.loadSection.follow = function(){
     var toAppendElements = $('section.home-content .content-container[data-type-tab="follow"] #elements');
     
@@ -147,6 +155,7 @@ home.loadSection.follow = function(){
             toAppendElements.append($divContainer);
         }
         toAppendElements.removeClass('loading');
+        home.loadedSection.follow = true;
     }, function(e){
         error(e); 
     });
