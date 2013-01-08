@@ -383,31 +383,39 @@ var site = {
     postComment: function (textAreaElement,type,id,ispin,content,privacy,elDestination, prepend) {
         textAreaElement.addClass('loading-small');
         textAreaElement.attr('disabled','disabled');
+        ajax.genericAction({
+                route: 'comment_ajaxpost', 
+                params: { 
+                    'id' : id,
+                    'type' : type,
+                    'content' : content,
+                    'privacy' : privacy,
+                    'ispin' : ispin
+                }, 
+                callback: function(response) {
+                    textAreaElement.val('');
+                    textAreaElement.removeClass('loadingSmall');
+                    
+                    success(response.message);
 
-        ajax.globalCommentAction(type, id, content, privacy, ispin,
-            function (response) {
-                textAreaElement.val('');
-                textAreaElement.removeClass('loadingSmall');
-                
-                success(response.message);
-
-                templateHelper.renderTemplate(response.jsonComment.templateId,response.jsonComment,elDestination, prepend);
-                
-                $('.timeago').each(function () {
-                    $(this).html($.timeago($(this).attr('data-time')));
-                });
-                
-                if (ispin) {
-                    $('.masonbricks').isotope().resize();
+                    templateHelper.renderTemplate(response.jsonComment.templateId,response.jsonComment,elDestination, prepend);
+                    
+                    $('.timeago').each(function () {
+                        $(this).html($.timeago($(this).attr('data-time')));
+                    });
+                    
+                    if (ispin) {
+                        $('.masonbricks').isotope().resize();
+                    }
+                    site.expander();
+                    textAreaElement.removeClass('loading-small');
+                    textAreaElement.removeAttr('disabled');                    
+                },
+                errorCallback: function(response) {
+                    textAreaElement.removeClass('loading-small');
+                    textAreaElement.removeAttr('disabled');
+                    error(response);
                 }
-                site.expander();
-                textAreaElement.removeClass('loading-small');
-                textAreaElement.removeAttr('disabled');
-            },
-            function (response) {
-                textAreaElement.removeClass('loading-small');
-                textAreaElement.removeAttr('disabled');
-                error(response);
             });
     },
     
