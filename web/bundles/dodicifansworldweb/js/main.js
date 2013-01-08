@@ -149,6 +149,28 @@ var site = {
         $("li.notifications_user li.notification:not('.readed')").hover(function(){
             var el = $(this).find('div.info');
             var notificationId = el.attr('notificationId');
+            ajax.genericAction({
+                route: 'user_ajaxdeletenotification', 
+                params { id: id }, 
+                callback: function(response) {
+                    if(response === true) {
+                        var cant = $("li.notifications_user a span").html();
+                        parseInt(cant);
+                        cant--;
+                        if(cant>0) {
+                            $(".notifications_user a span").html(cant);
+                        } else {
+                            $(".notifications_user a span").hide();
+                        }
+                        
+                        el.parent().css('background', '#f4f3b8');
+                    } else {
+                        console.log(response);
+                    }
+                }
+            });
+
+            /*
             ajax.deleteNotification(notificationId, function(response){
                 if(response === true){
                     var cant = $("li.notifications_user a span").html();
@@ -165,6 +187,7 @@ var site = {
                     console.log(response);
                 }
             });
+            */
         });
     },
     
