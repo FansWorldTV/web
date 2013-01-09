@@ -92,7 +92,7 @@ class NotificationController extends SiteController
         $em = $this->getDoctrine()->getEntityManager();
 
         $notiRepo = $this->getRepository('Notification');
-        $notifications = $notiRepo->findBy(array('target' => $user->getId(), 'readed' => false), array('createdAt' => 'DESC'));
+        $notifications = $notiRepo->findBy(array('target' => $user->getId(), 'readed' => false, 'active' => true), array('createdAt' => 'DESC'));
         $response = array();
         $dates = array();
         $readed = array();

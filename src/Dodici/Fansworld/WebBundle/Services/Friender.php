@@ -117,7 +117,7 @@ class Friender
     {
     	if (!$author) $author = $this->user;
         if (!$author) throw new AccessDeniedException('Not logged on');
-        if ($author->getType() != User::TYPE_STAFF && $author != $friendship->getAuthor())
+        if ($author->getType() != User::TYPE_STAFF && ($author != $friendship->getAuthor() && $author != $friendship->getTarget()))
             throw new AccessDeniedException('Access denied');
         
         $this->scoreRemove($friendship);
