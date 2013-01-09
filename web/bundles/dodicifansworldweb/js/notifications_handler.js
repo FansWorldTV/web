@@ -31,8 +31,7 @@ notifications.listen = function() {
 notifications.handleNewNotification = function(response) {
     id = response.id; entity = response.p;
     notifications.updateBubbleCount(entity, 1, false);
-    //ajax.getNotification(id, 
-    ajax.genericAction('user_ajaxnotification', { 'id' : id}, 
+    ajax.genericAction('user_ajaxnotification', {'id' : id}, 
     function(response) {
         if (response) {
             entityContent = $('[data-entity]').data('entity');

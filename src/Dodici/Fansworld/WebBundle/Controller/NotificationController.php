@@ -121,9 +121,17 @@ class NotificationController extends SiteController
         $response = array();
         $dates = array();
         foreach ($notifications as $notification) {
-            $response[] = $this->renderView('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $notification));
-            $dates[] = $notification->getCreatedAt();
-            $readed[] = $notification->getReaded();
+            if ($notification->getTypeName() != 'friendship_pending') {
+                $response[] = $this->renderView('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $notification));
+                $dates[] = $notification->getCreatedAt();
+                $readed[] = $notification->getReaded();
+            } else {
+                if (false  == $notification->getReaded()) {
+                    $response[] = $this->renderView('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $notification));
+                    $dates[] = $notification->getCreatedAt();
+                    $readed[] = $notification->getReaded();
+                }
+            }
         }
         $lastVideos = $this->getRepository('Video')->findBy(array('highlight' => true), array('createdAt' => 'desc'), 4);
         return array('notifications' => $response, 'user' => $user,  'lastVideos' => $lastVideos, 'dates' => $dates, 'readed' => $readed);
