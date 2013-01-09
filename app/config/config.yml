@@ -356,6 +356,9 @@ services:
     preferences:
       class: Dodici\Fansworld\WebBundle\Services\Preferences
       arguments: [@security.context, @doctrine.orm.entity_manager, @session, @appstate]
+    user.feed:
+      class: Dodici\Fansworld\WebBundle\Services\UserFeed
+      arguments: [@security.context, @doctrine.orm.entity_manager, @appmedia]
     fixture.csvtoyml:
       class: Dodici\Fansworld\WebBundle\Services\FixtureCsvToYaml
     eventship.manager:

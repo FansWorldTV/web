@@ -2,7 +2,7 @@
 
 namespace Dodici\Fansworld\WebBundle\Model;
 
-use Dodici\Fansworld\WebBundle\Entity\Friendship;
+use Dodici\Fansworld\WebBundle\Entity\Privacy;
 use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
@@ -807,6 +807,203 @@ class UserRepository extends CountBaseRepository
         ;
 
         return (int)$query->getSingleScalarResult();
+    }
+    
+	/**
+     * Returns latest video/photo activity filtered by user
+     * Please use Userfeed service if possible
+     *
+     * @param User $user
+     * @param array $filters - 'fans', 'idols', 'teams' possible elements
+     * @param array $resulttypes - 'video', 'photo' possible elements
+     * @param int $limit (default 10)
+     * @param DateTime|null $maxdate
+     * @param DateTime|null $mindate
+     */
+    public function latestActivity(
+        User $user, 
+        $filters = array('fans', 'idols', 'teams'), 
+        $resulttype = array('video', 'photo'), 
+        $limit = 10,
+        $maxdate = null,
+        $mindate = null
+    )
+    {
+        $filtertypes = array('fans', 'idols', 'teams');
+        $resulttypes = array('video', 'photo');
+        
+        if (!$filters || !is_array($filters)) throw new \InvalidArgumentException('Invalid filter(s)');
+        if (!$resulttype || !is_array($resulttype)) throw new \InvalidArgumentException('Invalid resulttype(s)');
+        
+        foreach ($filters as $f) if (!in_array($f, $filtertypes))
+            throw new \InvalidArgumentException('Invalid filter: ' . $f);
+        
+        foreach ($resulttype as $rt) if (!in_array($rt, $resulttypes))
+            throw new \InvalidArgumentException('Invalid resulttype: ' . $rt);
+
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('id', 'id');
+        $rsm->addScalarResult('type', 'type');
+        $rsm->addScalarResult('title', 'title');
+        $rsm->addScalarResult('slug', 'slug');
+        $rsm->addScalarResult('content', 'content');
+        $rsm->addScalarResult('likecount', 'likecount');
+        $rsm->addScalarResult('weight', 'weight');
+        $rsm->addScalarResult('created', 'created');
+        $rsm->addScalarResult('highlight', 'highlight');
+        $rsm->addScalarResult('imageid', 'imageid');
+        
+        $authorkeys = array('authorid', 'authorusername', 'authorfirstname', 'authorlastname', 'authorimageid');
+        
+        foreach ($authorkeys as $ak) $rsm->addScalarResult($ak, $ak);
+        
+        $sqls = array();
+        foreach ($resulttype as $type) {
+            $filtersqls = array();
+            
+            foreach ($filters as $filter) {
+                switch ($filter) {
+                    case 'fans':
+                        $filtersqls[] = '
+                        (
+                			(' . $type . '.author_id IN 
+            	    			(
+            	    				SELECT target_id FROM friendship WHERE active=true AND author_id = :user
+            	    			)
+            	    		)
+                    		OR
+                    		(' . $type . '.id IN (SELECT ' . $type . '_id FROM hasuser WHERE target_id IN 
+                    			(SELECT target_id FROM friendship WHERE active=true AND author_id = :user) 
+                    		))
+                    	)
+                        ';
+                        break;
+                    case 'idols':
+                        $filtersqls[] = '
+                        (' . $type . '.id IN (SELECT ' . $type . '_id FROM hasidol WHERE idol_id IN 
+                    		(SELECT idol_id FROM idolship WHERE author_id = :user) 
+                    	))
+                        ';
+                        break;
+                    case 'teams':
+                        $filtersqls[] = '
+                        (' . $type . '.id IN (SELECT ' . $type . '_id FROM hasteam WHERE team_id IN 
+                    		(SELECT team_id FROM teamship WHERE author_id = :user) 
+                    	))
+                        ';
+                        break;
+                }
+            }
+            
+            $sqls[] = '
+                SELECT
+                ' . $type . '.id as id,
+                "' . $type . '" as type,
+                ' . $type . '.title as title,
+                ' . $type . '.slug as slug,
+                ' . $type . '.content as content,
+                COUNT(lks.id) as likecount,
+                ' . $type . '.weight as weight,
+                ' . $type . '.created_at as created,
+                ' . $type . '.image_id as imageid,
+                
+                '.(($type == 'video') ? '
+                	' . $type . '.highlight as highlight,
+                ' : '
+                	null as highlight,
+                ').'
+                
+                author.id as authorid,
+                author.username as authorusername,
+                author.firstname as authorfirstname,
+                author.lastname as authorlastname,
+                author.image_id as authorimageid
+                
+                FROM ' . $type . '
+                
+                LEFT JOIN liking lks ON lks.' . $type . '_id = ' . $type . '.id
+                
+                LEFT JOIN fos_user_user author ON author.id = ' . $type . '.author_id
+                
+                WHERE
+                ' . $type . '.active = true
+                
+                '.
+                ($mindate ? '
+                AND ' . $type . '.created_at >= :mindate
+                ' : '')
+                .
+                ($maxdate ? '
+                AND ' . $type . '.created_at < :maxdate
+                ' : '')
+                .'
+                
+                
+                AND
+            	(
+            		(' . $type . '.author_id IS NULL)
+            		OR
+            		(' . $type . '.privacy = :everyone)
+            		OR
+        	    	(' . $type . '.privacy = :friendsonly AND (
+        	    		(:user = ' . $type . '.author_id) OR
+        	    		(' . $type . '.author_id IN 
+        	    			(
+        	    				SELECT author_id FROM friendship WHERE active=true AND target_id = :user
+        	    				UNION
+        	    				SELECT target_id FROM friendship WHERE active=true AND author_id = :user
+        	    			)
+        	    		)
+        	    	))
+            	)
+            	
+            	'.
+                ($filtersqls ? '
+                AND ('.join(' OR ', $filtersqls).')
+                ' : '')
+                .'
+                
+                GROUP BY ' . $type . '.id
+                ';
+        }
+
+
+        $query = $this->_em->createNativeQuery(
+                join(' UNION ', $sqls) . '
+            ORDER BY 
+            created DESC
+            ' .
+                (($limit !== null) ? ' LIMIT :limit ' : '')
+                , $rsm
+        );
+
+        if ($limit !== null)
+            $query = $query->setParameter('limit', (int) $limit, Type::INTEGER);
+            
+        if ($mindate)
+            $query = $query->setParameter('mindate', $mindate);
+            
+        if ($maxdate)
+            $query = $query->setParameter('maxdate', $maxdate);
+            
+        $query = $query->setParameter('user', $user->getId());
+        $query = $query->setParameter('everyone', Privacy::EVERYONE);
+        $query = $query->setParameter('friendsonly', Privacy::FRIENDS_ONLY);
+
+        $return = array();
+        
+        $res = $query->getResult();
+        
+        foreach ($res as $r) {
+            $ret = array();
+            foreach ($r as $k => $v) {
+                if (in_array($k, $authorkeys)) $ret['author'][str_replace('author', '', $k)] = $v;
+                else $ret[$k] = $v; 
+            }
+            if (!isset($ret['author'])) $ret['author'] = null;
+            $return[] = $ret;
+        }
+        return $return;
     }
 
     private function getDirectionCondition($direction)
