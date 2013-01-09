@@ -66,42 +66,7 @@
     <section class="home-content">
         {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             
-            <h1 class="legend active" data-type-tab="enjoy">El dia a dia de tus <b>idolos</b> y sus <b>clubes</b></h1>
-            <h1 class="legend" data-type-tab="follow">FansWorld TV es la <b>comunidad interactiva</b> donde los fanáticos se conectan para <b>compartir</b> experiencias sobre sus ídolos.</h1>
-            <h1 class="legend" data-type-tab="connect">Conectate con <b>{{ totalUsers }}</b> fans , comparte fotos y videos de tus idolos.</h1>
-            <h1 class="legend" data-type-tab="participate">Te invitamos a vivir los partidos junto a otros fanáticos para <b>vibrar</b> y <b>alentar</b> a tus equipos e ídolos, <b>compartir fotos</b> y participar de encuestas.</h1>
-
-            <!-- DISFRUTA -->
-            <section class="content-container" data-type-tab="enjoy" >
-                <div class="tags clearfix">
-                    <div class="pull-left">
-                        <span class="label">Populares</span>
-                        <span class="label">Destacados</span>
-                    </div>
-                    <a class="pull-right" href="{{ path('teve_home') }}">Explorar ></a>
-                </div>
-                <div class="am-container list-mosaic">
-                </div>
-            </section>
-
-            <!-- SIGUE -->
-            <section class="content-container" data-type-tab="follow" >
-                <section id="elements"></section>
-            </section>
-
-            <!-- CONECTATE -->
-            <section class="content-container" data-type-tab="connect" >
-                <div class="row-fluid fans-list">
-                </div>
-            </section>
-
-            <!-- PARTICIPA -->
-            <section class="content-container eventgrid-container" data-type-tab="participate" >
-                <div class="tags clearfix">
-                    <a class="pull-right" href="{{ path('event_home') }}">Explorar ></a>
-                </div>
-                <ul class="events-grid"></ul>
-            </section>
+            {% include 'DodiciFansworldWebBundle:Home:blocks/not_logged_tabs.html.twig' %}
             
         {% else %}
             <!-- ACTIVIDAD -->

@@ -238,12 +238,25 @@ section.home-content {
                 height: auto !important;
                 position: relative;
                 margin-bottom: 10px;
+
+                i.play-video {
+                    background-image: url('../images/ui/play_video.png');
+                    .square(80px);
+                    position: absolute;
+                    left: 39%;
+                    top: 30%;
+                    opacity: 0.5;
+
+                    &:hover{
+                        opacity: 1;
+                    }
+                }
                 
                 img {
                     width: 100% !important;
                     height: auto !important;
                 }
-                
+
                 .title-and-user {
                     position: absolute;
                     bottom: 0;

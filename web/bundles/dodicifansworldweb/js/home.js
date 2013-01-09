@@ -122,7 +122,7 @@ home.loadSection.follow = function(){
         for(var i in r.elements){
             var element = r.elements[i];
             
-            $divContainer = $('<div class="element"></div>');
+            $divContainer = $('<div class="element"></div>').attr('data-element-type', element.type);
             
             $image = $('<img />');
             $image.attr('src', element.element.image)
@@ -151,6 +151,11 @@ home.loadSection.follow = function(){
             $titleAndUser.append($title).append($user);
             
             $divContainer.append($image).append($titleAndUser);
+            
+            if(element.type == 'video') {
+                $playIcon = $("<i class='play-video'></i>");
+                $divContainer.append($playIcon);
+            }
             
             toAppendElements.append($divContainer);
         }
