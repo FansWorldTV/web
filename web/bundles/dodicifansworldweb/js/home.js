@@ -201,6 +201,7 @@ home.loadSection.participate = function(){
             templateHelper.renderTemplate('event-grid_element', event, toAppendElements.selector, false, callback);
         }
         toAppendElements.parent().removeClass('loading');
+        home.loadedSection.participate = true;
     }, function(e){error(e)});
 };
 
