@@ -155,19 +155,4 @@ class TemplateController extends SiteController
         );
     }
     
-    /**
-     * Get Home templates
-     * @Route("/ajax/get/home", name="template_home")
-     * @Template
-     */
-    public function homeAction()
-    {
-        $request = $this->getRequest();
-        $type = $request->get('type');
-
-        return array(
-            'typename' => $type
-        );
-    }
-
 }

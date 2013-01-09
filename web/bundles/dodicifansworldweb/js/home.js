@@ -189,8 +189,20 @@ home.loadSection.connect = function(){
 };
     
 home.loadSection.participate = function(){
-        
-    };
+    var toAppendElements = $('section.home-content .content-container[data-type-tab="participate"] .events-grid');    
+    
+    toAppendElements.parent().addClass('loading');
+    
+    ajax.genericAction('home_ajaxparticipate', {}, function(r){
+        for(var i in r.events){
+            var event = r.events[i];
+            var callback = function(){};
+            
+            templateHelper.renderTemplate('event-grid_element', event, toAppendElements.selector, false, callback);
+        }
+        toAppendElements.parent().removeClass('loading');
+    }, function(e){error(e)});
+};
 
 $(document).ready(function(){
     home.init(); 
