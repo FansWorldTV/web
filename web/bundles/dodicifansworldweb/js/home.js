@@ -28,6 +28,7 @@ home.toggleSections = function(){
 
 home.toggleTabs = function(){
     $("section.home-content .legend:not('.active')").hide();
+    $("section.home-content .content-container:not('[data-type-tab='enjoy']')").hide();
     
     $(".home-header ul.tabs li").on('click', function(){
         var typeTab = $(this).attr('data-type-tab');
