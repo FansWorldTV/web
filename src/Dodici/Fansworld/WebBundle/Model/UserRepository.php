@@ -814,11 +814,12 @@ class UserRepository extends CountBaseRepository
      * Please use Userfeed service if possible
      *
      * @param User $user
-     * @param array $filters - 'fans', 'idols', 'teams' possible elements
+     * @param array|null $filters - 'fans', 'idols', 'teams' possible elements
      * @param array $resulttypes - 'video', 'photo' possible elements
      * @param int $limit (default 10)
      * @param DateTime|null $maxdate
      * @param DateTime|null $mindate
+     * @param array $order
      */
     public function latestActivity(
         User $user, 
@@ -826,13 +827,14 @@ class UserRepository extends CountBaseRepository
         $resulttype = array('video', 'photo'), 
         $limit = 10,
         $maxdate = null,
-        $mindate = null
+        $mindate = null,
+        $order = array(array('created' => 'DESC'))
     )
     {
         $filtertypes = array('fans', 'idols', 'teams');
         $resulttypes = array('video', 'photo');
         
-        if (!$filters || !is_array($filters)) throw new \InvalidArgumentException('Invalid filter(s)');
+        if (!is_array($filters)) throw new \InvalidArgumentException('Invalid filter(s)');
         if (!$resulttype || !is_array($resulttype)) throw new \InvalidArgumentException('Invalid resulttype(s)');
         
         foreach ($filters as $f) if (!in_array($f, $filtertypes))
@@ -967,11 +969,15 @@ class UserRepository extends CountBaseRepository
                 ';
         }
 
+        $ordercriterias = array();
+        foreach ($order as $field => $direction) {
+            $ordercriterias[] = $field . ' ' . $direction;
+        }
 
         $query = $this->_em->createNativeQuery(
                 join(' UNION ', $sqls) . '
             ORDER BY 
-            created DESC
+            '.join(', ', $ordercriterias).'
             ' .
                 (($limit !== null) ? ' LIMIT :limit ' : '')
                 , $rsm

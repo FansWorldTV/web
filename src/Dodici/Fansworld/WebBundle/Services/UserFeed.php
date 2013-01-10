@@ -45,9 +45,9 @@ class UserFeed
      * @param boolean $parseimages - whether to hydrate images or not
      */
     public function latestActivity(
+        $limit = 10,
         $filters = array('fans', 'idols', 'teams'), 
         $resulttype = array('video', 'photo'), 
-        $limit = 10,
         $maxdate = null,
         $mindate = null,
         User $user = null,
@@ -70,6 +70,22 @@ class UserFeed
         } else {
             return $items;
         }
+    }
+    
+    public function popular(
+        $limit = 10, 
+        $resulttype = array('video', 'photo'), 
+        $maxdate = null,
+        $mindate = null,
+        User $user = null,
+        $parseimages = true,
+        $imageformat = 'big',
+        $authorimageformat = 'small_square'
+    )
+    {
+        return $this->latestActivity(
+            $limit, array(), $resulttype, $maxdate, $mindate, $user, $parseimages, $imageformat, $authorimageformat
+        );
     }
     
     private function parseImages($item, $imageformat, $authorimageformat) 
