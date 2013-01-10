@@ -318,9 +318,9 @@ class VideoController extends BaseController
     }
     
     /**
-     * Video - categories
+     * Video - categories list
      * 
-     * @Route("/video/categories", name="api_video_categories")
+     * @Route("/video/categories", name="api_video_category_list")
      * @Method({"GET"})
      *
      * Get params:
@@ -361,6 +361,39 @@ class VideoController extends BaseController
             }
             
             return $this->result($return, $pagination);
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
+    
+	/**
+     * Video - category detail
+     * 
+     * @Route("/video/categories/{id}", name="api_video_category_show", requirements = {"id" = "\d+"})
+     * @Method({"GET"})
+     *
+     * Get params: none
+     * 
+     * @return 
+     * array (
+     *     id: int,
+     *     title: string
+     * )
+     * 
+     */
+    public function categoryshowAction($id)
+    {
+        try {
+            $category = $this->getRepository('VideoCategory')->find($id);
+            
+            if (!$category) throw new HttpException(404, 'Video category not found');
+            
+            $return = array(
+                'id' => $category->getId(),
+                'title' => $category->getTitle()
+            );
+            
+            return $this->result($return);
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
