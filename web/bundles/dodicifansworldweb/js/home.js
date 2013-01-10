@@ -5,7 +5,6 @@ home.init = function(){
         home.toggleSections();
     }
     if($("section").hasClass('home-content')){
-        console.log(isLoggedIn);
         if(isLoggedIn){
             home.loadSection.activityFeed();
         }else{
@@ -59,13 +58,17 @@ home.toggleTabs = function(){
             case 'activityFeed':
                 endless.init(1, function(){
                     var lastDate = $('section.home-content .content-container[data-type-tab="activityFeed"] .elements .element').last().attr('data-element-date');
-                    home.loadSection.activityFeed({'date':lastDate});
+                    home.loadSection.activityFeed({
+                        'date':lastDate
+                    });
                 });
                 break;
             case 'popularFeed':
                 endless.init(1, function(){
                     var lastDate = $('section.home-content .content-container[data-type-tab="activityFeed"] .elements .element').last().attr('data-element-date');
-                    home.loadSection.popularFeed({'date': lastDate});
+                    home.loadSection.popularFeed({
+                        'date': lastDate
+                    });
                 });
                 break;
             default:
@@ -112,42 +115,40 @@ home.loadSection.enjoy = function(){
         
         for(var i in r.videos){
             var video = r.videos[i];
-            $divContainer = $('<div class="element"></div>').attr('data-element-type', video.type);
             
-            $image = $('<img />');
-            $image.attr('src', video.image)
-            .attr('alt', video.title);
-                    
-            $image = $('<a></a>').html($image);
-            $image.attr('href', Routing.generate(appLocale + '_video_show', {
-                'id': video.id, 
-                'slug': video.slug
-            }));
-                    
-            $titleAndUser = $('<div></div>');
-            
-            $title = $('<span></span>');
-            $title.addClass('title');
-            $title.html(video.title);
-            
-            if(video.author != null){
-                $user = $('<a></a>');
-                $user.addClass('user');
-                $user.html(video.author.username);
-                $user.attr('href', video.author.url);
+            var loop = parseInt(i);
+            loop++;
+            if(r.videos.length == loop)  {
+                var callback = function(){
+                    toAppendVideos.removeClass('loading');
+                };
+            }else{
+                var callback = function(){};
             }
             
-            $titleAndUser.addClass('title-and-user');
-            $titleAndUser.append($title).append($user);
+            var href = Routing.generate(appLocale + '_video_show', {
+                'id': video.id, 
+                'slug': video.slug
+            });
             
-            $divContainer.append($image).append($titleAndUser);
+            var jsonData = {
+                'type': 'video',
+                'date': video.createdAt,
+                'href': href,
+                'image': video.image,
+                'slug': video.slug,
+                'title': video.title
+            };
+            console.log(video);
+            console.log(jsonData);
             
-            $playIcon = $("<i class='play-video'></i>");
-            $divContainer.append($playIcon);
+            if(video.author != null){
+                jsonData['author'] = video.author.username;
+            }
             
-            toAppendVideos.append($divContainer);
+            templateHelper.renderTemplate('general-column_element', jsonData, toAppendVideos.selector, false, callback);
+                
         }
-        toAppendVideos.removeClass('loading');
     }, function(e){
         error(e); 
     });
