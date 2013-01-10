@@ -24,7 +24,7 @@ class SearchController extends BaseController
 	/**
      * Popular history
      * 
-     * @Route("/search/history", name="api_search_history")
+     * @Route("/search/history", name="api_v1_search_history")
      * @Method({"GET"})
      *
      * Get params:

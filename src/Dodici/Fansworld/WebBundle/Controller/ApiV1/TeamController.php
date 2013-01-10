@@ -24,7 +24,7 @@ class TeamController extends BaseController
 	/**
      * Team - list
      * 
-     * @Route("/team/list", name="api_team_list")
+     * @Route("/team/list", name="api_v1_team_list")
      * @Method({"GET"})
      *
      * Get params:
@@ -91,7 +91,7 @@ class TeamController extends BaseController
 	/**
      * Team - show
      * 
-     * @Route("/team/{id}", name="api_team_show", requirements = {"id" = "\d+"})
+     * @Route("/team/{id}", name="api_v1_team_show", requirements = {"id" = "\d+"})
      * @Method({"GET"})
      *
      * Get params:
@@ -181,7 +181,7 @@ class TeamController extends BaseController
     /**
      * [signed] Team - fan/unfan
      * 
-     * @Route("/team/fan/{action}", name="api_team_fan", requirements = {"action" = "add|remove"})
+     * @Route("/team/fan/{action}", name="api_v1_team_fan", requirements = {"action" = "add|remove"})
      * @Method({"POST"})
      *
      * Post params:

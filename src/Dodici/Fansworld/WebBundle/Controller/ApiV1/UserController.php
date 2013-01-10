@@ -24,7 +24,7 @@ class UserController extends BaseController
 	/**
      * [signed] User Fans
      * 
-     * @Route("/user/fans", name="api_user_fans")
+     * @Route("/user/fans", name="api_v1_user_fans")
      * @Method({"GET"})
      *
      * Get params:
@@ -107,7 +107,7 @@ class UserController extends BaseController
     /**
      * [signed] User - fan/unfan
      * 
-     * @Route("/user/fan/{action}", name="api_user_fan", requirements = {"action" = "add|remove"})
+     * @Route("/user/fan/{action}", name="api_v1_user_fan", requirements = {"action" = "add|remove"})
      * @Method({"POST"})
      *
      * Post params:

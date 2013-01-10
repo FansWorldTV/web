@@ -26,7 +26,7 @@ class EventController extends BaseController
 	/**
      * Event - show
      * 
-     * @Route("/event/{id}", name="api_event_show", requirements = {"id" = "\d+"})
+     * @Route("/event/{id}", name="api_v1_event_show", requirements = {"id" = "\d+"})
      * @Method({"GET"})
      *
      * Get params: none
@@ -70,7 +70,7 @@ class EventController extends BaseController
 	/**
      * [signed] Event check in
      * 
-     * @Route("/event/checkin", name="api_event_checkin")
+     * @Route("/event/checkin", name="api_v1_event_checkin")
      * @Method({"POST"})
      *
      * Post params:

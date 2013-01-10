@@ -24,7 +24,7 @@ class TagController extends BaseController
 	/**
      * Trending tags
      * 
-     * @Route("/tag/trending", name="api_tag_trending")
+     * @Route("/tag/trending", name="api_v1_tag_trending")
      * @Method({"GET"})
      *
      * Get params:

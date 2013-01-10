@@ -31,6 +31,43 @@ class UtilController extends BaseController
         return $this->jsonResponse((int)$now->format('U'));
     }
     
+    /**
+     * Get available locales
+     * @Route("/locales", name="api_v1_locales")
+     * 
+     * @return
+     * array (
+     * 		default: string,
+     * 		current: string,
+     * 		locales: array(
+     * 			array(
+     * 				<code>: <localized name>
+     * 			),
+     * 			...
+     * 		)
+     * )
+     */
+    public function localesAction()
+    {
+        try {
+            $locales = $this->container->getParameter('jms_i18n_routing.locales');
+            $default = $this->container->getParameter('jms_i18n_routing.default_locale');
+            $current = $this->get('session')->getLocale();
+            
+            $return = array();
+            $return['default'] = $default;
+            $return['current'] = $current;
+            $trans = $this->get('translator');
+            foreach ($locales as $l) {
+                $return['locales'][$l] = $trans->trans('locale_'.$l);
+            }
+            
+            return $this->result($return);
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
+    
 	/**
      * [signed] test method (user token)
      * @Route("/test/token", name="api_v1_test_token")
