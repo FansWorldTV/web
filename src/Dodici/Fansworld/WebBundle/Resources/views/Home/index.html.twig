@@ -57,8 +57,8 @@
                 <li data-type-tab="connect" >Conectate</li>
                 <li data-type-tab="participate" >Participa</li>
             {% else %}
-                <li class="active" data-type-tab="0">Actividad</li>
-                <li data-type-tab="1">Popular</li>
+                <li class="active" data-type-tab="activityFeed">Actividad</li>
+                <li data-type-tab="popularFeed">Popular</li>
             {% endif %}
         </ul>
     </header>
@@ -70,12 +70,14 @@
             
         {% else %}
             <!-- ACTIVIDAD -->
-            <div class="content-container" data-type-tab="0">
-            </div>
+            <section class="content-container" data-type-tab="activityFeed">
+                <section class="elements"></section>
+            </section>
             
             <!-- POPULAR -->
-            <div class="content-container" data-type-tab="1">
-            </div>
+            <section class="content-container" data-type-tab="popularFeed">
+                <section class="elements"></section>
+            </section>
         {% endif %}
     </section>
 {% endblock %}

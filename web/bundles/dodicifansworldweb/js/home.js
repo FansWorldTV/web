@@ -5,7 +5,12 @@ home.init = function(){
         home.toggleSections();
     }
     if($("section").hasClass('home-content')){
-        home.loadSection.enjoy();
+        console.log(isLoggedIn);
+        if(isLoggedIn){
+            home.loadSection.activityFeed();
+        }else{
+            home.loadSection.enjoy();
+        }
         home.toggleTabs();
     }
 };
@@ -27,8 +32,13 @@ home.toggleSections = function(){
 };
 
 home.toggleTabs = function(){
-    $("section.home-content .legend:not('.active')").hide();
-    $("section.home-content .content-container:not('[data-type-tab='enjoy']')").hide();
+    
+    if(isLoggedIn){
+        $("section.home-content .content-container:not('[data-type-tab='activityFeed']')").hide();
+    }else{
+        $("section.home-content .legend:not('.active')").hide();
+        $("section.home-content .content-container:not('[data-type-tab='enjoy']')").hide();
+    }
     
     $(".home-header ul.tabs li").on('click', function(){
         var typeTab = $(this).attr('data-type-tab');
@@ -47,7 +57,6 @@ home.toggleTabs = function(){
         $('section.home-content .legend[data-type-tab="' + typeTab + '"]').show();
         $("section.home-content .content-container[data-type-tab='" + typeTab + "']").show();
     });
-    
 };
 
 
@@ -88,7 +97,6 @@ home.loadSection.enjoy = function(){
             if(r.videos.length == loop)  {
                 var callback = function(){
                     toAppendVideos.montage({
-                        liquid: true,
                         margin: 3,
                         minw: 150,
                         minh: 250,
@@ -112,7 +120,10 @@ home.loadedSection = {
     'enjoy': true,
     'follow': false,
     'connect': false,
-    'participate': false
+    'participate': false,
+    
+    'activityFeed': false,
+    'popularFeed': false
 };
 home.loadSection.follow = function(){
     var toAppendElements = $('section.home-content .content-container[data-type-tab="follow"] #elements');
@@ -208,7 +219,119 @@ home.loadSection.participate = function(){
         }
         toAppendElements.parent().removeClass('loading');
         home.loadedSection.participate = true;
-    }, function(e){error(e)});
+    }, function(e){
+        error(e)
+        });
+};
+
+home.loadSection.activityFeed = function(){
+    var $contentContainer = $('section.home-content .content-container[data-type-tab="activityFeed"]');
+    
+    $contentContainer.addClass('loading');
+    
+    console.log('ACTIVITY');
+    
+    ajax.genericAction('home_ajaxactivityfeed', {}, function(r){
+        for(var i in r){
+            var element = r[i];
+            $divContainer = $('<div class="element"></div>').attr('data-element-type', element.type);
+            
+            $image = $('<img />');
+            $image.attr('src', element.image)
+            .attr('alt', element.title);
+                    
+            $image = $('<a></a>').html($image);
+            $image.attr('href', Routing.generate(appLocale + '_' + element.type + '_show', {
+                'id': element.id, 
+                'slug': element.slug
+            }));
+                    
+            $titleAndUser = $('<div></div>');
+            
+            $title = $('<span></span>');
+            $title.addClass('title');
+            $title.html(element.title);
+            
+            if(element.author != null){
+                $user = $('<a></a>');
+                $user.addClass('user');
+                $user.html(element.author.username);
+                $user.attr('href', element.author.url);
+            }
+            
+            $titleAndUser.addClass('title-and-user');
+            $titleAndUser.append($title).append($user);
+            
+            $divContainer.append($image).append($titleAndUser);
+            
+            if(element.type == 'video') {
+                $playIcon = $("<i class='play-video'></i>");
+                $divContainer.append($playIcon);
+            }
+            
+            console.log('apendear');
+            console.log($contentContainer.find('.elements'));
+            $contentContainer.find('.elements').append($divContainer);
+        }
+        
+        $contentContainer.removeClass('loading');
+        home.loadedSection.activityFeed = true;
+    }, function(e){
+        error(e);
+    });
+};
+
+home.loadSection.popularFeed = function(){
+    var $contentContainer = $('section.home-content .content-container[data-type-tab="popularFeed"]');
+    
+    $contentContainer.addClass('loading');
+    
+    ajax.genericAction('home_ajaxpopularfeed', {}, function(r){
+        for(var i in r){
+            var element = r[i];
+            $divContainer = $('<div class="element"></div>').attr('data-element-type', element.type);
+            
+            $image = $('<img />');
+            $image.attr('src', element.image)
+            .attr('alt', element.title);
+                    
+            $image = $('<a></a>').html($image);
+            $image.attr('href', Routing.generate(appLocale + '_' + element.type + '_show', {
+                'id': element.id, 
+                'slug': element.slug
+            }));
+                    
+            $titleAndUser = $('<div></div>');
+            
+            $title = $('<span></span>');
+            $title.addClass('title');
+            $title.html(element.title);
+            
+            if(element.author != null){
+                $user = $('<a></a>');
+                $user.addClass('user');
+                $user.html(element.author.username);
+                $user.attr('href', element.author.url);
+            }
+            
+            $titleAndUser.addClass('title-and-user');
+            $titleAndUser.append($title).append($user);
+            
+            $divContainer.append($image).append($titleAndUser);
+            
+            if(element.type == 'video') {
+                $playIcon = $("<i class='play-video'></i>");
+                $divContainer.append($playIcon);
+            }
+            
+            $contentContainer.find('.elements').append($divContainer);
+        }
+        
+        $contentContainer.removeClass('loading');
+        home.loadedSection.popularFeed = true;
+    }, function(e){
+        error(e);
+    });
 };
 
 $(document).ready(function(){

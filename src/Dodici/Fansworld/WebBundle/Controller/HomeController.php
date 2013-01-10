@@ -164,4 +164,38 @@ class HomeController extends SiteController
                 ));
     }
 
+    /**
+     * User activity feed
+     * @Route("/home/ajax/activity-feed", name="home_ajaxactivityfeed")
+     */
+    public function ajaxActivityAction()
+    {
+        $user = $this->getUser();
+        $userFeed = $this->get('user.feed');
+        $request = $this->getRequest();
+        
+        $filters = $request->get('filters', array('fans', 'idols', 'teams'));
+        
+        $results = $userFeed->latestActivity(10, $filters, array('photo', 'video'), null, null, $user, true);
+        
+        
+        return $this->jsonResponse($results);
+    }
+    
+    /**
+     * User popular feed
+     * @Route("/home/ajax/popular-feed", name="home_ajaxpopularfeed")
+     */
+    public function ajaxPopularAction()
+    {
+        $user = $this->getUser();
+        $userFeed = $this->get('user.feed');
+        //$request = $this->getRequest();
+        
+        $results = $userFeed->popular(10, array('photo', 'video'), null, null, $user, true);
+        
+        
+        return $this->jsonResponse($results);
+    }
+
 }
