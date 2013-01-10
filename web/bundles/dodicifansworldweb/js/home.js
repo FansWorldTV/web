@@ -144,6 +144,7 @@ home.loadSection.enjoy = function(){
             
             if(video.author != null){
                 jsonData['author'] = video.author.username;
+                jsonData['authorHref'] = video.author.url;
             }
             
             templateHelper.renderTemplate('general-column_element', jsonData, toAppendVideos.selector, false, callback);
@@ -229,6 +230,11 @@ home.loadSection.activityFeed = function(params){
                     'id': element.id, 
                     'slug': element.slug
                 });
+                
+                var authorUrl = Routing.generate(appLocale + '_user_wall', {
+                   'username': element.author.username
+                });
+                
                 templateHelper.renderTemplate('general-column_element', {
                     'type': element.type,
                     'date': element.created,
@@ -236,7 +242,8 @@ home.loadSection.activityFeed = function(params){
                     'image': element.image,
                     'slug': element.slug,
                     'title': element.title,
-                    'author': element.author.username
+                    'author': element.author.username,
+                    'author': authorUrl
                 }, $contentContainer.find('.elements').selector, false, callback);
             }
         }else{
@@ -276,6 +283,11 @@ home.loadSection.popularFeed = function(params){
                     'id': element.id, 
                     'slug': element.slug
                 });
+                
+                var authorUrl = Routing.generate(appLocale + '_user_wall', {
+                   'username': element.author.username
+                });
+                
                 templateHelper.renderTemplate('general-column_element', {
                     'type': element.type,
                     'date': element.created,
@@ -283,7 +295,8 @@ home.loadSection.popularFeed = function(params){
                     'image': element.image,
                     'slug': element.slug,
                     'title': element.title,
-                    'author': element.author.username
+                    'author': element.author.username,
+                    'authorHref': authorUrl
                 }, $contentContainer.find('.elements').selector, false, callback);
             }
         }else{

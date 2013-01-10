@@ -5,10 +5,12 @@
         </a>
         <div class="title-and-user">
             <span class="title">{{>title}}</span>
-            <a class="user">{{>author}}</a>
+            <a class="user" href="{{>authorHref}}">{{>author}}</a>
         </div>
         {{if type=='video'}}
-            <i class="play-video"></i>
+            <a href="{{>href}}">
+                <i class="play-video"></i>
+            </a>
         {{/if}}
     </div>
 {% endraw %}    
