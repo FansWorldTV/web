@@ -970,10 +970,12 @@ class UserRepository extends CountBaseRepository
         }
 
         $ordercriterias = array();
-        foreach ($order as $field => $direction) {
-            $ordercriterias[] = $field . ' ' . $direction;
+        foreach ($order as $orderitem) {
+            foreach ($orderitem as $field => $direction) {
+                $ordercriterias[] = $field . ' ' . $direction;
+            }
         }
-
+        
         $query = $this->_em->createNativeQuery(
                 join(' UNION ', $sqls) . '
             ORDER BY 
