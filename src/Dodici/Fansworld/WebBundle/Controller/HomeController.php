@@ -174,9 +174,10 @@ class HomeController extends SiteController
         $userFeed = $this->get('user.feed');
         $request = $this->getRequest();
         
+        $maxDate = $request->get('date', null);
         $filters = $request->get('filters', array('fans', 'idols', 'teams'));
         
-        $results = $userFeed->latestActivity(10, $filters, array('photo', 'video'), null, null, $user, true);
+        $results = $userFeed->latestActivity(10, $filters, array('photo', 'video'), $maxDate, null, $user, true);
         
         
         return $this->jsonResponse($results);
@@ -190,9 +191,10 @@ class HomeController extends SiteController
     {
         $user = $this->getUser();
         $userFeed = $this->get('user.feed');
-        //$request = $this->getRequest();
+        $request = $this->getRequest();
+        $maxDate = $request->get('date', false);
         
-        $results = $userFeed->popular(10, array('photo', 'video'), null, null, $user, true);
+        $results = $userFeed->popular(10, array('photo', 'video'), $maxDate, null, $user, true);
         
         
         return $this->jsonResponse($results);

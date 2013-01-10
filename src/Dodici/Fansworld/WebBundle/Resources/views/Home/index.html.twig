@@ -53,7 +53,6 @@
         <ul class="tabs" {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} data-user-logged="true" {% else %} data-user-logged = "false" {% endif %}>
             {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <li class="active" data-type-tab="enjoy" >Disfruta</li>
-                <li data-type-tab="follow" >Sigue</li>
                 <li data-type-tab="connect" >Conectate</li>
                 <li data-type-tab="participate" >Participa</li>
             {% else %}

@@ -1,0 +1,14 @@
+{% raw %}
+    <div class="element" data-element-type="{{>type}}" data-element-date="{{>date}}">
+        <a href="{{>href}}">
+            <img src="{{>image}}" alt="{{>slug}}">
+        </a>
+        <div class="title-and-user">
+            <span class="title">{{>title}}</span>
+            <a class="user">{{>author}}</a>
+        </div>
+        {{if type=='video'}}
+            <i class="play-video"></i>
+        {{/if}}
+    </div>
+{% endraw %}    
