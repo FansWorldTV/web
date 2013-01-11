@@ -24,7 +24,7 @@ class VideoController extends BaseController
 	/**
      * [signed if user_id given] Video - list
      * 
-     * @Route("/video/list", name="api_video_list")
+     * @Route("/video/list", name="api_v1_video_list")
      * @Method({"GET"})
      *
      * Get params:
@@ -121,7 +121,7 @@ class VideoController extends BaseController
 	/**
      * Video - show
      * 
-     * @Route("/video/{id}", name="api_video_show", requirements = {"id" = "\d+"})
+     * @Route("/video/{id}", name="api_v1_video_show", requirements = {"id" = "\d+"})
      * @Method({"GET"})
      *
      * Get params:
@@ -263,7 +263,7 @@ class VideoController extends BaseController
 	/**
      * Video - streams
      * 
-     * @Route("/video/{id}/streams", name="api_video_streams", requirements = {"id" = "\d+"})
+     * @Route("/video/{id}/streams", name="api_v1_video_streams", requirements = {"id" = "\d+"})
      * @Method({"GET"})
      *
      * Get params: none
@@ -320,7 +320,7 @@ class VideoController extends BaseController
     /**
      * Video - categories list
      * 
-     * @Route("/video/categories", name="api_video_category_list")
+     * @Route("/video/categories", name="api_v1_video_category_list")
      * @Method({"GET"})
      *
      * Get params:
@@ -369,7 +369,7 @@ class VideoController extends BaseController
 	/**
      * Video - category detail
      * 
-     * @Route("/video/categories/{id}", name="api_video_category_show", requirements = {"id" = "\d+"})
+     * @Route("/video/categories/{id}", name="api_v1_video_category_show", requirements = {"id" = "\d+"})
      * @Method({"GET"})
      *
      * Get params: none

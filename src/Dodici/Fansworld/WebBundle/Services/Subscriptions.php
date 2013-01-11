@@ -84,4 +84,14 @@ class Subscriptions
             $this->em->getRepository('DodiciFansworldWebBundle:VideoCategorySubscription')
             ->findOneBy(array('author' => $user->getId(), 'videocategory' => $videocategory->getId()));
     }
+    
+    public function get(User $user=null, $limit=null, $offset=null)
+    {
+        if (!$user) $user = $this->user;
+        if (!$user) throw new AccessDeniedException('Access denied');
+        
+        return 
+            $this->em->getRepository('DodiciFansworldWebBundle:VideoCategorySubscription')
+            ->findBy(array('author' => $user->getId()), null, $limit, $offset);
+    }
 }

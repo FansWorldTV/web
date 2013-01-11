@@ -15,53 +15,48 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dodici\Fansworld\WebBundle\Controller\ApiV1\BaseController;
 
 /**
- * API controller - Video Playlist
+ * API controller - Video Subscription
  * V1
  * @Route("/api_v1")
  */
-class VideoPlaylistController extends BaseController
+class VideoSubscriptionController extends BaseController
 {
 	/**
      * [signed] List
      * 
-     * @Route("/video/playlist/list", name="api_v1_video_playlist_list")
+     * @Route("/video/categories/subscription/list", name="api_v1_video_categories_subscription_list")
      * @Method({"GET"})
      *
      * Get params:
      * - user_id: int
      * - [user token]
-     * - <optional> extra_fields: comma-separated extra fields to return (see VideoController::listAction())
-	 * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
+     * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
      * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
-     * - <optional> sort: 'createdAt' (default: createdAt)
-     * - <optional> sort_order: 'asc'|'desc' (default: asc)
      * - [signature params]
      * 
      * @return 
-     * @see VideoController::listAction()
+     * @see VideoController::categoriesAction()
      */
     public function listAction()
     {
         try {
             if ($this->hasValidSignature()) {
                 $request = $this->getRequest();
-                $pagination = $this->pagination(array('createdAt'), 'createdAt', 'ASC');
+                $pagination = $this->pagination();
+                $pagination['sort_order'] = null;
+                $pagination['sort'] = null;
                 
                 $userid = $request->get('user_id');
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
                 
-                $wls = $this->get('video.playlist')->get(
+                $wls = $this->get('subscriptions')->get(
                     $user,
                     $pagination['limit'],
-                    $pagination['offset'],
-                    array($pagination['sort'] => $pagination['sort_order'])
+                    $pagination['offset']
                 );
                 
-                $allowedfields = array('author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount');
-                $extrafields = $this->getExtraFields($allowedfields);
-                
                 $return = array();
-                foreach ($wls as $wl) $return[] = $this->videoValues($wl->getVideo(), $extrafields);
+                foreach ($wls as $wl) $return[] = $this->get('serializer')->values($wl->getVideoCategory());
                 
                 return $this->result($return, $pagination);
             } else {
@@ -75,13 +70,13 @@ class VideoPlaylistController extends BaseController
 	/**
      * [signed] Add/remove
      * 
-     * @Route("/video/playlist/{action}", name="api_v1_video_playlist_modify", requirements = {"action" = "add|remove"})
+     * @Route("/video/categories/subscription/{action}", name="api_v1_video_categories_subscription_modify", requirements = {"action" = "add|remove"})
      * @Method({"POST"})
      *
      * Get params:
      * - user_id: int
      * - [user token]
-     * - video_id: int
+     * - videocategory_id: int
      * - [signature params]
      */
     public function modifyAction($action)
@@ -92,15 +87,17 @@ class VideoPlaylistController extends BaseController
                 $userid = $request->get('user_id');
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
                 
-                $videoid = $request->get('video_id');
-                if (!$videoid) throw new HttpException(400, 'Invalid video_id');
-                $video = $this->getRepository('Video')->find($videoid);
-                if (!$video) throw new HttpException(404, 'Video not found');
+                $vcid = $request->get('videocategory_id');
+                if (!$vcid) throw new HttpException(400, 'Invalid videocategory_id');
+                $vc = $this->getRepository('VideoCategory')->find($vcid);
+                if (!$vc) throw new HttpException(404, 'Videocategory not found');
                 
                 if ($action == 'add') {
-                    $this->get('video.playlist')->add($video, $user);
+                    $done = $this->get('subscriptions')->subscribe($vc, $user);
+                    if (!$done) throw new HttpException(401, 'User already subscribed');
                 } elseif ($action == 'remove') {
-                    $this->get('video.playlist')->remove($video, $user);
+                    $done = $this->get('subscriptions')->unsubscribe($vc, $user);
+                    if (!$done) throw new HttpException(401, 'User is not subscribed');
                 }
                 
                 return $this->result(true);
