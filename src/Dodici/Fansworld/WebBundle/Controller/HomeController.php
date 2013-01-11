@@ -175,7 +175,22 @@ class HomeController extends SiteController
         $request = $this->getRequest();
         
         $maxDate = $request->get('date', null);
-        $filters = $request->get('filters', array('fans', 'idols', 'teams'));
+        $filters = $request->get('filters', '0');
+        
+        switch ($filters) {
+            case '0':
+                $filters = array('fans', 'idols', 'teams');
+                break;
+            case '1':
+                $filters = array('idols');
+                break;
+            case '2':
+                $filters = array('teams');
+                break;
+            case '3':
+                $filters = array('fans');
+                break;
+        }
         
         $results = $userFeed->latestActivity(10, $filters, array('photo', 'video'), $maxDate, null, $user, true);
         
