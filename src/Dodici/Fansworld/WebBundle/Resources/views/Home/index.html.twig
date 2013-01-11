@@ -78,7 +78,15 @@
                         <span class="label" data-feed-filter="3">Fans</span>
                     </div>
                 </div>
-                <section class="elements"></section>
+                <section class="elements span9" style="min-height: 0; margin-left: 0;"></section>
+                <section class="span3">
+                    <h3>Actividad reciente</h3>
+                    <ul>
+                        {% for user in friendUsers %}
+                            <li>{% thumbnail user.image, 'avatar' %} {{ user }} es amig@ de richard y george</li>
+                        {% endfor %}
+                    </ul>
+                </section>
             </section>
             
             <!-- POPULAR -->

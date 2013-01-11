@@ -48,6 +48,8 @@ class HomeController extends SiteController
         $countUsers = $this->getRepository('User')->countBy(array('enabled' => true));
         $response['totalUsers'] = $countUsers;
 
+        $response['friendUsers'] = $this->getRepository('User')->FriendUsers($user);
+        
         return $response;
     }
 
