@@ -48,8 +48,12 @@ class HomeController extends SiteController
         $countUsers = $this->getRepository('User')->countBy(array('enabled' => true));
         $response['totalUsers'] = $countUsers;
 
-        $response['friendUsers'] = $this->getRepository('User')->FriendUsers($user);
-        
+        if ($user instanceof User) {
+            $response['friendUsers'] = $this->getRepository('User')->FriendUsers($user);
+        } else {
+            $response['friendUsers'] = false;
+        }
+
         return $response;
     }
 
@@ -175,10 +179,10 @@ class HomeController extends SiteController
         $user = $this->getUser();
         $userFeed = $this->get('user.feed');
         $request = $this->getRequest();
-        
+
         $maxDate = $request->get('date', null);
         $filters = $request->get('filters', '0');
-        
+
         switch ($filters) {
             case '0':
                 $filters = array('fans', 'idols', 'teams');
@@ -193,13 +197,13 @@ class HomeController extends SiteController
                 $filters = array('fans');
                 break;
         }
-        
+
         $results = $userFeed->latestActivity(10, $filters, array('photo', 'video'), $maxDate, null, $user, true);
-        
-        
+
+
         return $this->jsonResponse($results);
     }
-    
+
     /**
      * User popular feed
      * @Route("/home/ajax/popular-feed", name="home_ajaxpopularfeed")
@@ -210,10 +214,10 @@ class HomeController extends SiteController
         $userFeed = $this->get('user.feed');
         $request = $this->getRequest();
         $maxDate = $request->get('date', false);
-        
+
         $results = $userFeed->popular(10, array('photo', 'video'), $maxDate, null, $user, true);
-        
-        
+
+
         return $this->jsonResponse($results);
     }
 
