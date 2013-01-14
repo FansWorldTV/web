@@ -47,6 +47,15 @@ class VideoUploadController extends SiteController
     }
     
     /**
+     * @Route("/test/ks", name="video_test_ks")
+     */
+    public function testKalturaKsAction()
+    {
+        $kaltura = $this->get('kaltura');
+        return new Response($kaltura->getKs());
+    }
+    
+    /**
      * @Route("/upload", name="video_upload")
      * @Secure(roles="ROLE_USER")
      * @Template
