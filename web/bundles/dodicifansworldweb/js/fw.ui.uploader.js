@@ -8,12 +8,12 @@
  *      appLocale
  */
 
-// fansWorld file upload plugin
+// fansWorld file upload plugin 1.0
 
 // the semi-colon before function invocation is a safety net against concatenated
 // scripts and/or other plugins which may not be closed properly.
 //;(function ($, window, document, undefined) {
-$(document).ready(function ($, window, document, undefined) {
+$(document).ready(function () {
 
     "use strict";
 
@@ -32,15 +32,16 @@ $(document).ready(function ($, window, document, undefined) {
         propertyName: "fansworld",
         uploadtoken: null,
         mediaExtensions: {
-            photo: ['jpg', 'jpeg', 'png', 'gif'],
+            photo: ['jpg', 'jpeg', 'png', 'gif'],                       // Allowed extensions by media type
             video: ['avi', 'mov', 'mpeg'],
             audio: ['wav', 'mp3', 'ogg', 'midi']
         },
         action: {
-            photo: Routing.generate(appLocale + '_photo_fileupload'),
-            video: 'http://www.kaltura.com/api_v3/index.php'
+            photo: Routing.generate(appLocale + '_photo_fileupload'),   // link for photos
+            video: 'http://www.kaltura.com/api_v3/index.php'            // link for videos
         },
         mediaType: null,
+        // custom bindings
         onSubmit: function(id, fileName){},
         onComplete: function(id, fileName, responseJSON){},
         onCancel: function(id, fileName){},
@@ -67,21 +68,21 @@ $(document).ready(function ($, window, document, undefined) {
             var that = this;
             $(that.element).addClass(that._name);
             that.options.mediaType = $(that.element).attr('data-upload');
-            console.log(that.options.mediaType);
             $(that.element).bind("destroyed", $.proxy(that.teardown, that));
             $(that.element).colorbox({
                 innerWidth: 700,
                 innerHeight: 475,
                 onComplete: function() {
-                    if(that.options.mediaType == 'video')
+                    if(that.options.mediaType === 'video')
                     {
-                        that.getToken('fileName', function(uploadToken){
+                        // Get kaltura token before popup opens
+                        that.getToken('fileName', function(uploadToken) {
                             console.log("token: " + uploadToken)
                             that.createFwGenericUploader();
                             that.uploader.setParams({uploadTokenId: that.options.uploadtoken});
                         });
                     } else {
-                        that.createFwGenericUploader();
+                        that.createFwUploader();
                     }
                     that.resizePopup();
                 }
@@ -106,16 +107,18 @@ $(document).ready(function ($, window, document, undefined) {
             var newfield = $(".templateFieldAlbumName .control-group").clone();
             newfield.find('input').attr('id', 'form_album_new_name');
             el.parents('.control-group').after(newfield);
-            $('#form_album_new_name').parents('.control-group').slideDown('fast', function(){
+            $('#form_album_new_name').parents('.control-group').slideDown('fast', function() {
                 that.resizePopup();
             });
         },
         bindFormSubmit: function() {
             var that = this;
-            // TODO chupar el form adentro del colorbox
-            $("form.upload-photo").submit(function(){
-                var data = $('form.upload-photo').serializeArray();
-                var href = $('form.upload-photo').attr('action');
+            console.log("bindFormSubmit")
+            //$('#cboxLoadedContent').find("form") <--- suck it from above
+            $("form.upload-" + that.options.mediaType).submit(function() {
+                console.log("before submit")
+                var data = $(this).serializeArray();
+                var href = $(this).attr('action');
                 $.colorbox({
                     href: href ,
                     data: data,
@@ -141,22 +144,16 @@ $(document).ready(function ($, window, document, undefined) {
                 debug: true,
                 multiple: false,
                 maxConnections: 1,
-                forceMultipart: true,
-                normalHeaders: false,
-                responsePassthrough: true,
-                inputName: 'resource:fileData',
-                failedUploadTextDisplay: {mode: 'none'},
                 allowedExtensions: that.options.mediaExtensions[that.options.mediaType],
                 onComplete: function(id, fileName, responseJSON) {
                     if(responseJSON.success) {
                         $.colorbox({
-                            href: Routing.generate(appLocale + '_photo_filemeta',
-                                {
-                                    'originalFile': responseJSON.originalFile,
-                                    'tempFile':responseJSON.tempFile,
-                                    'width': responseJSON.width,
-                                    'height': responseJSON.height
-                                }),
+                            href: Routing.generate(appLocale + '_photo_filemeta', {
+                                'originalFile': responseJSON.originalFile,
+                                'tempFile':responseJSON.tempFile,
+                                'width': responseJSON.width,
+                                'height': responseJSON.height
+                            }),
                             iframe: false,
                             innerWidth: 700,
                             innerHeight: 700,
@@ -166,9 +163,9 @@ $(document).ready(function ($, window, document, undefined) {
                             }
                         });
                     }
+                    return that.options.onComplete(id, fileName, responseJSON);
                 },
                 onUpload: function() {
-                    // entry Kaltura
                     console.log("onUpload");
                     that.resizePopup();
                 },
@@ -181,26 +178,7 @@ $(document).ready(function ($, window, document, undefined) {
                     that.resizePopup();
                 },
                 onSubmit: function(id, fileName){
-                    // TODO
-                    // call Kalutra get upload keys
-                    console.log("onSubmit")
-                    switch(that.options.mediaType)
-                    {
-                        case 'video':
-                            that.getToken(fileName, function(uploadToken){
-                                uploader.setParams({
-                                    uploadTokenId: uploadToken
-                                    service: 'media',
-                                    action: 'addContent',
-                                    entryId: '',
-                                    ks: 'NzQxNDRhZDViNmNlYzRhOGRhNWY3ZDgyYjNlOWQ1OTgzYjk1NzEzNHwxMTY0ODMyOzExNjQ4MzI7MTM1Nzk5NDA0OTsyOzE3ODU7RmFuc3dvcmxkQWRtaW47',
-                                    'resource:objectType': 'KalturaUploadedFileResource'
-                                });
-                            });
-                            break;
-                    }
-                    that.options.onSubmit(id, fileName);
-                    return false;
+                    return that.options.onSubmit(id, fileName);
                 }
             });
         },
@@ -215,7 +193,7 @@ $(document).ready(function ($, window, document, undefined) {
                 responsePassthrough: true,
                 debug: true,
                 failedUploadTextDisplay: {mode: 'none'},
-                onSubmit : function(file, ext){
+                onSubmit: function(file, ext){
                     that.uploader.setParams({
                         inputName: 'resource:fileData',
                         service: 'media',
@@ -224,11 +202,21 @@ $(document).ready(function ($, window, document, undefined) {
                         ks: 'MjkyOTNmOGEyZmY1MzJmODA0MDZhMmY2OTdhZGMyODAzNTRmNjhjMnwxMTY0ODMyOzExNjQ4MzI7MTM1ODAxMTY2MDsyOzI1NTI7RmFuc3dvcmxkQWRtaW47',
                         'resource:objectType': 'KalturaUploadedFileResource'
                     });
+                    return that.options.onSubmit(id, fileName);
                 },
+                // kaltura returns XML
                 onComplete: function(id, fileName, xml){
                     var xmlDoc = $.parseXML(xml);
                     var $xml = $( xmlDoc );
                     //var result = $xml.find( "result" );
+                    return that.options.onComplete(id, fileName, xml);
+                },
+                onUpload: function(id, fileName, xhr) {
+                    that.resizePopup();
+                    return that.options.onUpload(id, fileName, xhr);
+                },
+                onProgress: function(id, fileName, loaded, total) {
+                    return that.options.onProgress(id, fileName, loaded, total);
                 }
             });
         },
@@ -255,14 +243,14 @@ $(document).ready(function ($, window, document, undefined) {
                     that.options.onSubmit(id, fileName);
                 },
                 onComplete: function(id, fileName, responseJSON) {
-                    that.options.onComplete(id, fileName, responseJSON);
+                    return that.options.onComplete(id, fileName, responseJSON);
                 },
                 onUpload: function(id, fileName, xhr) {
                     that.resizePopup();
-                    that.options.onUpload(id, fileName, xhr);
+                    return that.options.onUpload(id, fileName, xhr);
                 },
                 onProgress: function(id, fileName, loaded, total) {
-                    that.options.onProgress(id, fileName, loaded, total);
+                    return that.options.onProgress(id, fileName, loaded, total);
                 },
             });
         },
@@ -285,7 +273,7 @@ $(document).ready(function ($, window, document, undefined) {
             });
         },
         resizePopup: function() {
-            //window.top.resizeColorbox({innerHeight: $('.popup-content').height() });
+            window.top.resizeColorbox({innerHeight: $('.popup-content').height() });
         },
         destroy: function() {
             var that = this;
@@ -315,4 +303,4 @@ $(document).ready(function ($, window, document, undefined) {
         });
     };
 
-}); //(jQuery, window, document);
+});
