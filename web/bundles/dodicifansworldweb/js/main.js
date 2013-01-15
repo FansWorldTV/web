@@ -54,7 +54,7 @@ var site = {
                 resizePopup();
             }
         });*/
-
+	/*
         $("[data-upload='photo']").colorbox({
             innerWidth: 700, 
             innerHeight: 175,
@@ -63,7 +63,11 @@ var site = {
                 resizePopup();
             }
         });
-        
+       	*/ 
+	// fw upload plugin
+        $("[data-upload='video']").fwUploader({});
+        $("[data-upload='photo']").fwUploader({});
+
         $(".btn[data-create-album]").colorbox({
             iframe: true, 
             innerWidth: 300, 
