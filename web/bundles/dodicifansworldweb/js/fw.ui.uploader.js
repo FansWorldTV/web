@@ -8,7 +8,7 @@
  *      appLocale
  */
 
-// fansWorld file upload plugin 1.1
+// fansWorld file upload plugin 1.3
 
 // the semi-colon before function invocation is a safety net against concatenated
 // scripts and/or other plugins which may not be closed properly.
@@ -31,6 +31,8 @@ $(document).ready(function () {
     var defaults = {
         propertyName: "fansworld",
         uploadtoken: null,
+        ks: null,
+        entryId: null,
         mediaExtensions: {
             photo: ['jpg', 'jpeg', 'png', 'gif'],                       // Allowed extensions by media type
             video: ['avi', 'mov', 'mpeg'],
@@ -193,14 +195,14 @@ $(document).ready(function () {
                 normalHeaders: false,
                 responsePassthrough: true,
                 debug: true,
+                inputName: 'resource:fileData',
                 failedUploadTextDisplay: {mode: 'none'},
                 onSubmit: function(file, ext){
                     that.uploader.setParams({
-                        inputName: 'resource:fileData',
                         service: 'media',
                         action: 'addContent',
-                        entryId: $('#entryid').val(),
-                        ks: 'MjkyOTNmOGEyZmY1MzJmODA0MDZhMmY2OTdhZGMyODAzNTRmNjhjMnwxMTY0ODMyOzExNjQ4MzI7MTM1ODAxMTY2MDsyOzI1NTI7RmFuc3dvcmxkQWRtaW47',
+                        entryId: that.options.entryId,
+                        ks: that.options.ks,
                         'resource:objectType': 'KalturaUploadedFileResource'
                     });
                     return that.options.onSubmit(id, fileName);
@@ -231,14 +233,14 @@ $(document).ready(function () {
                 normalHeaders: false,
                 responsePassthrough: true,
                 debug: true,
+                inputName: 'resource:fileData',
                 failedUploadTextDisplay: {mode: 'none'},
                 onSubmit: function(id, fileName){
                     that.uploader.setParams({
-                        inputName: 'resource:fileData',
                         service: 'media',
                         action: 'addContent',
-                        entryId: $('#entryid').val(),
-                        ks: 'MjkyOTNmOGEyZmY1MzJmODA0MDZhMmY2OTdhZGMyODAzNTRmNjhjMnwxMTY0ODMyOzExNjQ4MzI7MTM1ODAxMTY2MDsyOzI1NTI7RmFuc3dvcmxkQWRtaW47',
+                        entryId: that.options.entryId,
+                        ks: that.options.ks,
                         'resource:objectType': 'KalturaUploadedFileResource'
                     });
                     that.options.onSubmit(id, fileName);
@@ -257,21 +259,59 @@ $(document).ready(function () {
         },
         getToken: function(filename, callback) {
             var that = this;
+            that.getKs(function(ks){
+                console.log("getKs: " + that.options.ks)
+                that.getMediaId("filename", function(entryId) {
+                    console.log("getMediaId: " + that.options.entryId)
+                    $.ajax({
+                        url: 'http://www.kaltura.com/api_v3/index.php',
+                        data: {
+                            service: 'uploadToken',
+                            action: 'add',
+                            ks: that.options.ks,
+                            'uploadToken:fileName': filename,
+                            'uploadToken:objectType': 'KalturaUploadToken'
+                        },
+                        dataType: 'xml',
+                        success: function(r) {
+                            that.options.uploadtoken = $(r).find('id').text();
+                            callback(that.options.uploadtoken);
+                        }
+                    });
+                });
+            });
+        },
+        getKs: function(callback)
+        {
+            var that = this;
             $.ajax({
-                url: 'http://www.kaltura.com/api_v3/index.php',
-                data: {
-                    service: 'uploadToken',
-                    action: 'add',
-                    ks: 'MjkyOTNmOGEyZmY1MzJmODA0MDZhMmY2OTdhZGMyODAzNTRmNjhjMnwxMTY0ODMyOzExNjQ4MzI7MTM1ODAxMTY2MDsyOzI1NTI7RmFuc3dvcmxkQWRtaW47',
-                    'uploadToken:fileName': filename,
-                    'uploadToken:objectType': 'KalturaUploadToken'
-                },
-                dataType: 'xml',
-                success: function(r) {
-                    that.options.uploadtoken = $(r).find('id').text();
-                    callback(that.options.uploadtoken);
+                url: '/video/test/ks',
+                dataType: 'json',
+                success: function(responseJSON) {
+                    that.options.ks = responseJSON.ks;
+                    callback(that.options.ks);
                 }
             });
+        },
+        getMediaId: function(fileName, callback) {
+            var that = this;
+                $.ajax({
+                    url: 'http://www.kaltura.com/api_v3/index.php',
+                    data: {
+                        service: 'media',
+                        action: 'add',
+                        ks: that.options.ks,
+                        'entry:name': fileName,
+                        'entry:objectType': 'KalturaMediaEntry',
+                        'entry:mediaType': 1
+                    },
+                    dataType: 'xml',
+                    success: function(responseJSON) {
+                        that.options.entryId = $(responseJSON).find('id').text();
+                        console.log("ive a new entryId: " + that.options.entryId);
+                        callback(that.options.entryId);
+                    }
+                });
         },
         resizePopup: function() {
             window.top.resizeColorbox({innerHeight: $('.popup-content').height() });
