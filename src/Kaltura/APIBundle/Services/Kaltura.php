@@ -20,8 +20,9 @@ class Kaltura
     protected $adminsecret;
     protected $username;
     protected $urlpattern;
+    protected $apiurl;
 
-    function __construct($partnerid, $subpartnerid, $usersecret, $adminsecret, $username, $urlpattern)
+    function __construct($partnerid, $subpartnerid, $usersecret, $adminsecret, $username, $urlpattern, $apiurl)
     {
         // init kaltura configuration
         $config = new KalturaConfiguration($partnerid);
@@ -35,6 +36,7 @@ class Kaltura
         $this->adminsecret = $adminsecret;
         $this->username = $username;
         $this->urlpattern = $urlpattern;
+        $this->apiurl = $apiurl;
     }
 
     /**
@@ -134,5 +136,10 @@ class Kaltura
     public function getUserSecret()
     {
         return $this->usersecret;
+    }
+    
+    public function getApiUrl()
+    {
+        return $this->apiurl;
     }
 }

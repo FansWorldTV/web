@@ -47,4 +47,9 @@ class KalturaTwig
     		);
     	}
     }
+    
+    public function getKs()
+    {
+        return $this->kaltura->getKs();
+    }
 }
