@@ -8,7 +8,7 @@
  *      appLocale
  */
 
-// fansWorld file upload plugin 1.0
+// fansWorld file upload plugin 1.1
 
 // the semi-colon before function invocation is a safety net against concatenated
 // scripts and/or other plugins which may not be closed properly.
@@ -80,11 +80,12 @@ $(document).ready(function () {
                             console.log("token: " + uploadToken)
                             that.createFwGenericUploader();
                             that.uploader.setParams({uploadTokenId: that.options.uploadtoken});
+                            that.resizePopup(); // fire this event only when content has loaded
                         });
                     } else {
                         that.createFwUploader();
+                        that.resizePopup();
                     }
-                    that.resizePopup();
                 }
             });
         },
