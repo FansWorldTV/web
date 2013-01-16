@@ -8,7 +8,7 @@
  *      appLocale
  */
 
-// fansWorld file upload plugin 1.3
+// fansWorld file upload plugin 1.4
 
 // the semi-colon before function invocation is a safety net against concatenated
 // scripts and/or other plugins which may not be closed properly.
@@ -16,16 +16,6 @@
 $(document).ready(function () {
 
     "use strict";
-
-    // undefined is used here as the undefined global variable in ECMAScript 3 is
-    // mutable (ie. it can be changed by someone else). undefined isn't really being
-    // passed in so we can ensure the value of it is truly undefined. In ES5, undefined
-    // can no longer be modified.
-
-    // window and document are passed through as local variable rather than global
-    // as this (slightly) quickens the resolution process and can be more efficiently
-    // minified (especially when both are regularly referenced in your plugin).
-
     // Create the defaults once
     var pluginName = "fwUploader";
     var defaults = {
@@ -285,7 +275,7 @@ $(document).ready(function () {
         {
             var that = this;
             $.ajax({
-                url: '/video/test/ks',
+                url: Routing.generate(appLocale + '_video_kaltura_ks'),
                 dataType: 'json',
                 success: function(responseJSON) {
                     that.options.ks = responseJSON.ks;
