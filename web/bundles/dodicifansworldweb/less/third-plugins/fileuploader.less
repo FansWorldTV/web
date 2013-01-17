@@ -5,7 +5,7 @@
  *
  * Licensed under MIT license, GNU GPL 2 or later, GNU LGPL 2 or later, see license.txt.
  */
- 
+
  .container-up {
     width: 610px;
     height: 400px;
@@ -13,6 +13,7 @@
     border-style:dashed;
     border-width:5px;
 }
+
 .qq-uploader {
     position: relative;
     width: 450px;
@@ -20,6 +21,23 @@
     margin-top: 200px;
     margin-left: 110px;
 }
+
+ .videoContainer .container-up {
+    width: 610px;
+    height: 80px;
+    border-color:#b2b2b2;
+    border-style:dashed;
+    border-width:2px;
+}
+
+.videoContainer .qq-uploader {
+    position: relative;
+    width: 450px;
+    height: 100%;
+    margin-top: 12px;
+    margin-left: 25%;
+}
+
 .qq-upload-button {
     /* display: block; */
     /*or inline-block*/
@@ -64,6 +82,30 @@
 .qq-upload-drop-area-active {
     background: #a0c882;
 }
+
+.videoContainer .qq-upload-drop-area, .videoContainer .qq-upload-extra-drop-area {
+    background: #b2b2b2;
+    position: absolute;
+    width: 610px;
+    min-height: 80px;
+    z-index: 2;
+    text-align: center;
+    margin-top: -12px;
+    margin-left: -153px;
+}
+
+.videoContainer .qq-upload-drop-area-active {
+    background: #a0c882;
+    position: absolute;
+    width: 610px;
+    min-height: 80px;
+    z-index: 2;
+    background: #A0C882;
+    text-align: center;
+    margin-top: -12px;
+    margin-left: -153px;
+}
+
 .qq-upload-list {
     width: 340px;
 }
@@ -111,11 +153,9 @@
     display: inline;
 }
 .qq-upload-list li.qq-upload-success {
-    background-color: #FFF;
     color: #000;
 }
 .qq-upload-list li.qq-upload-fail {
-    background-color: #D60000;
     color: #FFFFFF;
 }
 .qq-progress-bar {

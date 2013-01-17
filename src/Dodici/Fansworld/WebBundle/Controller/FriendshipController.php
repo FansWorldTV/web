@@ -21,7 +21,7 @@ class FriendshipController extends SiteController
 
     /**
      * Add friend
-     * 
+     *
      *  @Route("/ajax/add-friend", name="friendship_ajaxaddfriend")
      */
     public function ajaxAddFriendAction()
@@ -74,7 +74,7 @@ class FriendshipController extends SiteController
 
     /**
      * Delete friendship
-     * 
+     *
      * @Route("/ajax/cancel-friend", name="friendship_ajaxcancelfriend")
      */
     public function ajaxCancelFriendshipAction()
@@ -91,7 +91,7 @@ class FriendshipController extends SiteController
             if ($me->getRestricted()) {
                 $friendships = array();
                 array_push($friendships, $mine);
-                
+
                 $him = $this->getRepository('Friendship')->findBy(array('author' => $userId, 'target' => $me->getId()));
                 array_push($friendships, $him);
             } else {
@@ -114,7 +114,7 @@ class FriendshipController extends SiteController
 
     /**
      *  User friendships
-     * 
+     *
      *  @Route("/su/{username}/fans", name="friendship_user")
      *  @Template
      */
@@ -143,7 +143,7 @@ class FriendshipController extends SiteController
 
     /**
      * Accept a friendship
-     * 
+     *
      * @Route("/ajax/accept-friendship", name="friendship_accept")
      */
     public function ajaxAcceptFriendshipAction()
@@ -161,9 +161,10 @@ class FriendshipController extends SiteController
         return $this->jsonResponse($response);
     }
 
+
     /**
      * Reject a friendship
-     * 
+     *
      * @Route("/ajax/reject-friendship", name="friendship_reject")
      */
     public function ajaxRejectFriendshipAction()

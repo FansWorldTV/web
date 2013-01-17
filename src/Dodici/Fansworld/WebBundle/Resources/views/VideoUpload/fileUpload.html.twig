@@ -2,32 +2,81 @@
 
 {% form_theme form 'DodiciFansworldWebBundle::form.html.twig' %}
 
-    
 {% block javascripts %}
 	<script src="{{ asset('bundles/dodicifansworldweb/js/popup.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('bundles/dodicifansworldweb/js/file-uploader/fileuploader.js') }}" type="text/javascript"></script>
+
 	<script src="{{ asset('bundles/dodicifansworldweb/js/popup_upload_video.js') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('bundles/dodicifansworldweb/js/shareTag_UploadPhoto.js') }}" type="text/javascript"></script>
+
+
+    <script type="text/javascript">
+        shareEngine.init();
+        tagEngine.bindTokenizer();
+        $('#share_it').click(function() {$('#submitVideo').click();});
+    </script>
+
+
 {% endblock %}
 
-{% block content %} 
-    
+{% block content %}
+
 	<div class="greybox">
-        <div id="file-uploader">        
-        </div>
-        <div id="progressbar"></div>
-	       
-		<form action="{{ path('video_fileupload') }}" method="post" enctype="multipart/form-data" class="bigform upload-video">
-            <div class="form-upload fieldcontainer">
-                <ul class="fields">
-                    {{ form_widget(form) }}
-                    
-                </ul>
+
+
+            <div class="videoContainer">
+                <div class="container-up">
+                    <div id="file-uploader"></div>
+                    <div id="progressbar"></div>
+                </div>
             </div>
-            
-            <div class="actions clearfix">
-                <input type="submit" name="submit" value="Subir" class="btn_action" />
+
+            <div class="uploadPhotoVideoForm">
+                <form action="{{ path('video_fileupload')}}" method="post" enctype="multipart/form-data" class="bigform upload-photo" name="frmUpload">
+
+                    <div class="row-fluid">
+                        <section class="span2">
+                        </section>
+                    </div>
+
+                        <p class="filename"><small></small></p>
+                            {{ form_errors(form) }}
+                            <div class="row-fluid">
+                                <section class="span7">
+                                    {{ form_row(form.title) }}
+                                    <p></p>
+                                    {{ form_row(form.content) }}
+
+                                    {{ form_row(form.privacy) }}
+                                </section>
+
+                                <aside class="span3">
+                                    {{ form_row(form.categories) }}
+                                        <li class="clearfix">
+                                            <label for="form_tagtext">Tags</label>
+                                            <div class="control-group">
+                                                <input class="completer" type="text" id="form_tagtextac" data-route="tag_ajaxget" data-field="form_tagtext" />
+                                                <p class="helpMessage"><small>Separado con comas ","</small></p>
+                                                <ul class="selectedtags"></ul>
+                                            </div>
+                                        </li>
+                                </aside>
+                            </div>
+                            {{ form_rest(form) }}
+                             <input type="submit" value="{{ 'share'|trans }}" id="submitVideo" class="btn btn-primary" style="display:none;"/>
+                </form>
+                    <span class="pull-left">
+                        <button class="btn-checkbox fb"></button>
+                        <button class="btn-checkbox tw"></button>
+                        <button class="btn-checkbox fw active"></button>
+                    </span>
+                    <div class="sharewith" >
+                        <input data-token-input type="text" id="share_input" placeholder="Con quien lo queres compartir..." />
+                        <input type="submit" name="submit" value="{{ 'share'|trans }}" id="share_it" class="btn btn-primary" style="display:none;"/>
+                    </div>
             </div>
-        </form>
+
     </div>
 
 {% endblock %}

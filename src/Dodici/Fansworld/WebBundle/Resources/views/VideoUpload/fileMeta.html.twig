@@ -1,70 +1,13 @@
 {% extends "DodiciFansworldWebBundle::popup.html.twig" %}
 
-{% form_theme form 'DodiciFansworldWebBundle::form.html.twig' %}
-
-{% block javascripts %}
-    {% if redirectColorBox != true %}
-    
-    {% endif %}
-{% endblock %}
 
 {% block content %}
-    {% if redirectColorBox %}
-    
-        <script type="text/javascript">
-            
-            if(window.contest != undefined){
-                var videoUploaded = {% if video %}{{ video.id }} {% else %} false {% endif %};
-                if(videoUploaded){
-                    ajax.contestParticipateAction(window.top.contest.id, false, false, videoUploaded, function(r){
-                        if(r){
-                            window.top.$("a.contestParticipate").parent().html('Ya estas participando');
-                            window.top.$.colorbox.close();
-                        }
-                    });
-                }           
-            }else{
-                location.href = "{{ path('user_videos', {username: user.username}) }}";
-            }
-                        
-        </script>
-    {% else %}
-    
+
+
         <div class="greybox">
-            <form action="{{ path('video_filemeta', {'videotemp': videotemp, 'fromuploader' : false}) }}" method="post" enctype="multipart/form-data" class="bigform upload-video">
-                {% if thumbnail_url is defined %}
-                    <img src='{{ thumbnail_url }}' />
-                {% endif %}
-                <div class="form-upload fieldcontainer">
-                    <ul class="fields">
-                        {{ form_widget(form) }}
-    
-                        <li class="clearfix">
-                        <label for="form_tagtext">Tags</label>
-                        <div class="field">
-                            <input class="completer" type="text" id="form_tagtextac" data-route="tag_ajaxget" data-field="form_tagtext" />
-                            <ul class="selectedtags"></ul>
-                        </div>
-                    </li>
-                    
-                    <li class="clearfix">
-                        <label for="form_tagtext">Fans / Idolos</label>
-                        <div class="field">
-                            <input class="completer" type="text" id="form_taguserac" data-route="user_ajaxmatching" data-field="form_taguser" />
-                            <ul class="selectedtags"></ul>
-                        </div>
-                    </li>
-                    </ul>
-                </div>
-                
-                <div class="actions clearfix">
-                    <input type="submit" name="submit" value="{{ 'Upload'|trans }}" class="btn_action" />
-                </div>
-            </form>
+            VIDEO PROCESADO OK!
         </div>
-        <div class="templateFieldAlbumName hidden">
-            <div class="field" style="display:none;"><input type="text" name="album_new_name" /></div>
-        </div>
-    {% endif %}
- 
+
+
+
 {% endblock %}

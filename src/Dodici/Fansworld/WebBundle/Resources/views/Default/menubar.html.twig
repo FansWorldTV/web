@@ -9,7 +9,7 @@
           <img src="{{ asset('bundles/dodicifansworldweb/images/logofw.png' )}}" />
         </a>
         <div class="nav-collapse">
-            
+
             <ul class="nav">
                 <li>
                     <a href="{{ path('idol_home') }}">Idolos</a>
@@ -49,21 +49,29 @@
                     </a>
                 </li>
             </ul>
-           
-            <form class="navbar-search pull-left" name="search" method="post" data-search-box action="{{ path('search_home', {}) }}"> 
+
+            <form class="navbar-search pull-left" name="search" method="post" data-search-box action="{{ path('search_home', {}) }}">
                 <div class="input-append">
                     <input name="query" type="text" class="search-query" id="appendedInput" placeholder="Buscar..." data-search-input>
                     <input type="submit" class="add-on search-button" data-search-action value=""/>
                     <!--i class="icon-search"></i-->
                 </div>
             </form>
-            
+
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                
+
             </div>
-        
                 <ul class="nav pull-right usermenu">
-                    
+
+                    <li class="dropdown">
+            <button class="btn dropdown-toggle" data-toggle="dropdown" style="z-index:-99;">Compartir</button>
+
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('photo_fileupload') }}" data-upload="photo">Subir Fotos</a></li>
+                            <li><a href="{{ path('video_fileupload') }}" data-upload="video">Subir Videos</a></li>
+                        </ul>
+                    </li>
+
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle username" data-toggle="dropdown">
                             <span>{{ user.firstname }}<b class="caret"></b></span> {% thumbnail user.image, 'headeravatar' %}<b class="caret" id="overimage"></b>
@@ -72,30 +80,34 @@
                             <li>
                                 <a href="{{ path('profile_account') }}">Configuración de Cuenta</a>
                             </li>
+
                             <li>
-                                <a href="{{ path('profile_privacy') }}">Configuración de Privacidad</a></li>
+                                <a href="{{ path('profile_privacy') }}">Configuración de Privacidad</a>
+                            </li>
+
                             <li>
-                                <a href="{{ path('fos_user_change_password') }}">Cambiar Contraseña</a></li>
+                                <a href="{{ path('fos_user_change_password') }}">Cambiar Contraseña</a>
+                            </li>
+
                             <li>
-                                <a href="{{ path('notification_preferences') }}">Preferencias de Notificación</a></li>
+                                <a href="{{ path('notification_preferences') }}">Preferencias de Notificación</a>
+                            </li>
+
                             <li class="divider"></li>
+
                             <li>
-                                <a href="{{ path("fos_user_security_logout") }}">Cerrar Sesión</a></li>
+                                <a href="{{ path("fos_user_security_logout") }}">Cerrar Sesión</a>
+                            </li>
                         </ul>
                     </li>
-                    
-                    
                 </ul>
-            <div class="nav-collapse">
-                <a class='btn pull-right' href="#">Compartir ></a>
-            
+
             {% else %}
-                
-                <a class='btn btn-success pull-right header-ingresar' href="#">Ingresar</a>
-                <a class='btn btn-success pull-right' href="{{ path('fos_user_registration_register') }}">Registrarse</a>
-                
-            {% endif %}
-        </div>
+            <div class="nav-collapse">
+                    <a class='btn btn-success pull-right header-ingresar' href="#">Ingresar</a>
+                    <a class='btn btn-success pull-right' href="{{ path('fos_user_registration_register') }}">Registrarse</a>
+                {% endif %}
+            </div>
     </div>
 </nav>
 
@@ -107,8 +119,8 @@
                     <div class='fb_button'>
                     	{{ facebook_login_button({'autologoutlink': false, label: 'facebook_login_short'|trans, size: 'large'}) }}
                     </div>
-                    
-                    
+
+
                     <form class="login clearfix" action="{{ path("fos_user_security_check") }}" method="post">
                         <ul>
                             <li>
@@ -129,18 +141,18 @@
                                         <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
                                         <label for="remember_me">Recordarme</label>
                                     </div>
-                                    
+
                                     <div class="olvidar">
                                         <a href='{{ path('fos_user_resetting_request') }}'>Olvido su contrase&ntilde;a</a>
                                     </div>
-                                    
+
                                     <input type="hidden" name="_target_path" value="{{ app.request.uri }}" />
                                     <button type='submit' class='btn btn-success'>Ingresar</button>
-                                    
+
                                 </div>
                             </li>
-                           
+
                         </ul>
                     </form>
                 </div>
-{% endif %}                
+{% endif %}

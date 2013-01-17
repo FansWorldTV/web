@@ -38,14 +38,14 @@ class VideoUploadController extends SiteController
         $kaltura = $this->get('kaltura');
         $ks = $kaltura->getKs();
         $partnerid = $kaltura->getPartnerId();
-        
+
         return array(
             'ks' => $ks,
             'partnerid' => $partnerid,
             'url' => 'http://www.kaltura.com/api_v3/index.php'
         );
     }
-    
+
     /**
      * @Route("/test/ks", name="video_test_ks")
      * @Route("/upload/ks", name="video_kaltura_ks")
@@ -55,7 +55,7 @@ class VideoUploadController extends SiteController
         $kaltura = $this->get('kaltura');
         $ks = $kaltura->getKs();
         $url = $kaltura->getApiUrl();
-        
+
         return $this->jsonResponse(
             array(
                 'url' => $url,
@@ -63,7 +63,7 @@ class VideoUploadController extends SiteController
             )
         );
     }
-    
+
     /**
      * @Route("/upload", name="video_upload")
      * @Secure(roles="ROLE_USER")
@@ -140,7 +140,6 @@ class VideoUploadController extends SiteController
                         $em->persist($video);
                         $em->flush();
 
-
                         $tagtexts = explode(',', $data['tagtext']);
                         $tagusers = explode(',', $data['taguser']);
                         $userrepo = $this->getRepository('User');
@@ -168,7 +167,6 @@ class VideoUploadController extends SiteController
                 $form->addError(new FormError('Error subiendo video'));
             }
         }
-
         return array('video' => $video, 'form' => $form->createView());
     }
 
@@ -184,43 +182,201 @@ class VideoUploadController extends SiteController
         $video = null;
         $user = $this->getUser();
 
-        $collectionConstraint = new Collection(array(
-                    'videourl' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
-                ));
-
-        $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
-                ->add('videourl', 'text', array('required' => true, 'label' => 'URL Video'))
-                ->getForm();
+        $form = $this->_createVideoForm($user->getId());
 
         if ($request->getMethod() == 'POST') {
-
             try {
+
                 $form->bindRequest($request);
                 $data = $form->getData();
 
                 if ($form->isValid()) {
-                    try {
+
+                    /*
                         $videotemp = $this->get('video.uploader')->createVideoFromUrl($data['videourl'], $user);
-                        $em = $this->getDoctrine()->getEntityManager();
                         $em->persist($videotemp);
                         $em->flush();
+                    */
 
-                        return $this->forward('DodiciFansworldWebBundle:VideoUpload:fileMeta', array(
-                                    'videotemp' => $videotemp->getId(),
-                                    'fromuploader' => true
-                                ));
-                    } catch (\Exception $e) {
-                        $form->addError(new FormError($e->getMessage()));
-                        $video = null;
-                    }
+                    $em = $this->getDoctrine()->getEntityManager();
+                    $videoCategory = $this->getRepository('VideoCategory')->find($data['categories']);
+
+                    $video = new Video();
+                    $video->setAuthor($user);
+                    $video->setTitle($data['title']);
+                    $video->setContent($data['content']);
+                    $video->setStream($data['entryid']);
+                    $video->setPrivacy($data['privacy']);
+                    $video->setVideocategory($videoCategory);
+                    $em->persist($video);
+                    $em->flush();
+
+                    $tagtexts = explode(',', $data['tagtext']);
+                    $tagidols = explode(',', $data['tagidol']);
+                    $tagteams = explode(',', $data['tagteam']);
+                    $tagusers = explode(',', $data['taguser']);
+                    $this->_tagEntity($tagtexts, $tagidols, $tagteams, $tagusers, $user, $video);
+
+                    function toBoolean(&$var) {$var = $var == 'true' ? true : false;}
+                    $shareEntities = array(
+                        "idols" => $data['shareidol'],
+                        "teams" => $data['shareteam'],
+                        "users" => $data['shareuser']
+                    );
+                    $this->_shareVideo($video, toBoolean($data['fb']), toBoolean($data['tw']), toBoolean($data['fw']), $data['title'], $shareEntities);
+
+                    // $this->get('session')->setFlash('success', $this->trans('upload_sucess'));
+                    // $redirectColorBox = true;
+
+                    return $this->forward('DodiciFansworldWebBundle:VideoUpload:fileMeta',
+                        array('entryid' => $data['entryid'], 'title' => $data['title'],
+                                'category' => $data['categories'], 'fromuploader' => true));
                 }
             } catch (\Exception $e) {
                 $form->addError(new FormError('Error subiendo video'));
             }
         }
-
-
         return array('form' => $form->createView());
+    }
+
+    private function _createVideoForm ($userId) {
+        $privacies = Privacy::getOptions();
+        $videoCategories = $this->getRepository('VideoCategory')->findAll();
+        $categoriesChoices = array();
+        foreach ($videoCategories as $ab)
+            $categoriesChoices[$ab->getId()] = $ab->getTitle();
+        $defaultData = array();
+        $collectionConstraint = new Collection(array(
+            'title' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
+            'categories' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($categoriesChoices))),
+            'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
+            'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
+            'tagtext' => array(),
+            'tagidol' => array(),
+            'tagteam' => array(),
+            'taguser' => array(),
+            'shareteam' => array(),
+            'shareidol' => array(),
+            'shareuser' => array(),
+            'fb' => array(),
+            'tw' => array(),
+            'fw' => array(),
+            'entryid' => array()
+        ));
+
+        $formVideo = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
+            ->add('title', 'text', array('required' => true, 'label' => 'Título'))
+            ->add('categories', 'choice', array('required' => true, 'choices' => $categoriesChoices, 'label' => 'Categoria'))
+            ->add('content', 'textarea', array('required' => false,'label' => 'Descripción'))
+            ->add('privacy', 'choice', array('required' => true, 'choices' => $privacies, 'label' => 'Privacidad'))
+            ->add('tagtext', 'hidden', array('required' => false))
+            ->add('tagidol', 'hidden', array('required' => false))
+            ->add('tagteam', 'hidden', array('required' => false))
+            ->add('taguser', 'hidden', array('required' => false))
+            ->add('shareteam', 'hidden', array('required' => false))
+            ->add('shareidol', 'hidden', array('required' => false))
+            ->add('shareuser', 'hidden', array('required' => false))
+            ->add('fb', 'hidden', array('required' => false))
+            ->add('tw', 'hidden', array('required' => false))
+            ->add('fw', 'hidden', array('required' => false))
+            ->add('entryid', 'hidden', array('required' => true))
+            ->getForm();
+        return $formVideo;
+    }
+
+
+     private function _tagEntity ($tagtexts, $tagidols, $tagteams, $tagusers, $user, $video) {
+        $idolrepo = $this->getRepository('Idol');
+        $teamrepo = $this->getRepository('Team');
+        $userrepo = $this->getRepository('User');
+        $tagitems = array();
+
+        foreach ($tagtexts as $eText) {
+            if (trim($eText))
+                $tagitems[] = $eText;
+        }
+
+        foreach ($tagidols as $eIdol) {
+            $idolEntity = $idolrepo->find($eIdol);
+            if ($idolEntity)
+                $tagitems[] = $idolEntity;
+        }
+
+        foreach ($tagteams as $eTeam) {
+            $teamEntity = $teamrepo->find($eTeam);
+            if ($teamEntity)
+                $tagitems[] = $teamEntity;
+        }
+
+        foreach ($tagusers as $eUser) {
+            $userEntity = $userrepo->find($eUser);
+            if ($userEntity)
+                $tagitems[] = $userEntity;
+        }
+
+        if (!empty($tagitems))
+            $this->get('tagger')->tag($user, $video, $tagitems);
+    }
+
+    private function _shareVideo ($video, $toFb, $toTw, $toFw, $shareMessage, $entities) {
+        $idolrepo = $this->getRepository('Idol');
+        $teamrepo = $this->getRepository('Team');
+        $userrepo = $this->getRepository('User');
+        $response = array('error' => false, 'msg' => 'Sent...');
+
+        if ($this->getUser() instanceof User) {
+            if ($toFb) {
+                $facebook = $this->get('app.facebook');
+                $facebook instanceof AppFacebook;
+                try {
+                    $facebook->entityShare($video, $shareMessage);
+                } catch (\Exception $exc) {
+                    $response['error'] = true;
+                    $response['msg'] = $exc->getMessage();
+                }
+            }
+
+            if ($toTw) {
+                $twitter = $this->get('app.twitter');
+                $twitter instanceof AppTwitter;
+                try {
+                    $twitter->entityShare($video, $shareMessage);
+                } catch (\Exception $exc) {
+                    $response['error'] = true;
+                    $response['msg'] = $exc->getMessage();
+                }
+            }
+
+            if ($toFw) {
+                $shareEntities = array();
+                $shareidols = explode(',', $entities['idols']);
+                $shareteams = explode(',', $entities['teams']);
+                $shareusers = explode(',', $entities['users']);
+
+                foreach ($shareidols as $eIdol) {
+                    $idolEntity = $idolrepo->find($eIdol);
+                    if ($idolEntity)
+                        $shareEntities[] = $idolEntity;
+                }
+
+                foreach ($shareteams as $eTeam) {
+                    $teamEntity = $teamrepo->find($eTeam);
+                    if ($teamEntity)
+                        $shareEntities[] = $teamEntity;
+                }
+
+                foreach ($shareusers as $eUser) {
+                    $userEntity = $userrepo->find($eUser);
+                    if ($userEntity)
+                        $shareEntities[] = $userEntity;
+                }
+
+                if (!empty($shareEntities)) {
+                    $sharer = $this->get('sharer');
+                    $sharer->share($video, $shareEntities, $shareMessage, $this->getUser());
+                }
+            }
+        }
     }
 
     /**
@@ -272,117 +428,19 @@ class VideoUploadController extends SiteController
     }
 
     /**
-     * @Route("/fileupload/{videotemp}/{fromuploader}", name="video_filemeta", defaults = {"fromuploader" = false})
+     * @Route("/fileupload/{fromuploader}", name="video_filemeta", defaults = {"fromuploader" = false})
      * @Secure(roles="ROLE_USER")
      * @Template
      */
-    public function fileMetaAction($videotemp, $fromuploader)
+    public function fileMetaAction($fromuploader)
     {
-        $em = $this->getDoctrine()->getEntityManager();
 
-
-        $video = $this->getRepository('Video')->findOneBy(array('id' => $videotemp));
-        $thumbnail = null;
-
-        $redirectColorBox = false;
-        $request = $this->getRequest();
         $user = $this->getUser();
-
-        $privacies = Privacy::getOptions();
-
-        $categories = $this->getRepository('VideoCategory')->findBy(array(), array('title' => 'ASC'));
-        $choicecat = array();
-        foreach ($categories as $cat)
-            $choicecat[$cat->getId()] = $cat;
-        $videouploader = $this->get('video.uploader');
+        $this->get('session')->setFlash('success', '¡Has subido un video con éxito!');
+        $redirectColorBox = true;
 
 
-        $defaultData = array();
-
-        $defaultData = array(
-            'title' => $video->getTitle(),
-        );
-
-
-        $collectionConstraint = new Collection(array(
-                    'title' => array(new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
-                    'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
-                    'videocategory' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\Choice(array_keys($choicecat))),
-                    'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
-                    'tagtext' => array(),
-                    'taguser' => array()
-                ));
-
-        $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
-                ->add('title', 'text', array('required' => false, 'label' => 'Título'))
-                ->add('content', 'textarea', array('required' => false, 'label' => 'Descripción'))
-                ->add('videocategory', 'choice', array('required' => true, 'choices' => $choicecat, 'label' => 'Categoría'))
-                ->add('privacy', 'choice', array('required' => true, 'choices' => $privacies, 'label' => 'Privacidad'))
-                ->add('tagtext', 'hidden', array('required' => false))
-                ->add('taguser', 'hidden', array('required' => false))
-                ->getForm();
-
-        if ($fromuploader == false) {
-            try {
-                $form->bindRequest($request);
-                $data = $form->getData();
-
-                if ($form->isValid()) {
-                    try {
-
-
-                        $image = null;
-                        if (!$video->getImage()) {
-                            /*
-                              $image = $this->get('appmedia')->createImageFromUrl($video->getImage());
-                              $video->setImage($image); */
-                        }
-
-
-                        $videocategory = $this->getRepository('VideoCategory')->find($data['videocategory']);
-
-
-                        $video->setAuthor($user);
-                        $video->setTitle($data['title'] ? : $defaultData['title']);
-                        $video->setContent($data['content']);
-
-                        $video->setPrivacy($data['privacy']);
-                        $video->setVideocategory($videocategory);
-                        $em->persist($video);
-                        $em->flush();
-
-
-                        $tagtexts = explode(',', $data['tagtext']);
-                        $tagusers = explode(',', $data['taguser']);
-                        $userrepo = $this->getRepository('User');
-                        $tagitems = array();
-
-                        foreach ($tagtexts as $tt) {
-                            if (trim($tt))
-                                $tagitems[] = $tt;
-                        }
-                        foreach ($tagusers as $tu) {
-                            $tuser = $userrepo->find($tu);
-                            if ($tuser)
-                                $tagitems[] = $tuser;
-                        }
-
-                        $this->get('tagger')->tag($user, $video, $tagitems);
-
-                        $this->get('session')->setFlash('success', '¡Has subido un video con éxito!');
-                        $redirectColorBox = true;
-                    } catch (\Exception $e) {
-                        $form->addError(new FormError($e->getMessage()));
-                        $video = null;
-                    }
-                }
-            } catch (\Exception $e) {
-                $form->addError(new FormError('Error subiendo video'));
-            }
-        }
-
-
-        return array('video' => $video, 'form' => $form->createView(), 'redirectColorBox' => $redirectColorBox, 'videotemp' => $videotemp, 'thumbnail_url' => $thumbnail, 'user' => $user);
+        return array('redirectColorBox' => $redirectColorBox, 'user' => $user);
     }
 
 }

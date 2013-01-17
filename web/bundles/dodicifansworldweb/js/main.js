@@ -8,46 +8,46 @@ $(document).ready(function(){
 var site = {
     isClosedNotificationess: true,
     isClosedRequests: true,
-    
+
     init: function(){
         $("#video-search-form").live('submit', function(){
             $(this).addClass('loading');
         });
-        
+
         $("ul.friendgroupsList").show();
-        
+
         $("a.btn_picture").colorbox({
             'iframe': true,
             'innerWidth': 350,
             'innerHeight': 200
         });
-        
+
         $('body').tooltip({
             selector:'[rel="tooltip"]'
         });
-        
+
         $('.change_image').colorbox({
-            iframe: true, 
-            innerWidth: 700, 
+            iframe: true,
+            innerWidth: 700,
             innerHeight: 220
         });
-        
+
         $('.report').colorbox({
             'iframe': true,
             'innerWidth': 350,
             'innerHeight': 200
         });
-        
+
         $(".editbutton").colorbox({
-            iframe: true, 
-            innerWidth: 700, 
+            iframe: true,
+            innerWidth: 700,
             innerHeight: 455
         });
-        
+
         /*
         $(".btn[data-upload='video']").colorbox({
-            iframe: false, 
-            innerWidth: 700, 
+            iframe: false,
+            innerWidth: 700,
             innerHeight: 455,
             onComplete: function() {
                 createUploader();
@@ -56,51 +56,55 @@ var site = {
         });*/
 	/*
         $("[data-upload='photo']").colorbox({
-            innerWidth: 700, 
+            innerWidth: 700,
             innerHeight: 175,
             onComplete: function() {
                 createPhotoUploader();
                 resizePopup();
             }
         });
-       	*/ 
+       	*/
 	// fw upload plugin
-        $("[data-upload='video']").fwUploader({});
+        $("[data-upload='video']").fwUploader({
+            onComplete: function(){
+                $('#share_it').show();
+            }
+        });
         $("[data-upload='photo']").fwUploader({});
 
         $(".btn[data-create-album]").colorbox({
-            iframe: true, 
-            innerWidth: 300, 
+            iframe: true,
+            innerWidth: 300,
             innerHeight: 600
         });
 
         $.datepicker.setDefaults($.datepicker.regional[appLocale]);
-        
+
         $('.datepicker').datepicker({
             dateFormat: 'dd/mm/yy',
             changeMonth: true,
             changeYear: true,
             yearRange: '-80'
         });
-        
+
         $('.datetimepicker').datetimepicker({
             dateFormat: 'dd/mm/yy',
             timeFormat: 'hh:mm'
         });
-    	
+
         $('.timepicker').datetimepicker({
             timeFormat: 'hhmm',
             timeOnly: true,
             stepMinute: 5
         });
-        
+
         if($('[data-video-now-watching]').length) {
             $('[data-video-now-watching]').videoAudience({
                 ajaxUrl: Routing.generate(appLocale + '_teve_getaudience'),
                 keepAliveUrl: Routing.generate(appLocale + '_teve_keepalive')
             });
         }
-        
+
         site.parseTimes();
         site.denyFriendRequest();
         site.acceptFriendRequest();
@@ -115,7 +119,7 @@ var site = {
         site.showCommentForm();
         site.BindLoginWidget();
         albums.init();
-        
+
         $('[data-wall]').wall();
         site.bindCarousel();
 
@@ -123,20 +127,20 @@ var site = {
         //$('[text-height=ellipsis]').ellipsis('',{live: true});
         $('[text-height=ellipsis]').ellipsis();
     },
-    
+
     parseTimes: function(){
         $('.timeago').each(function(){
             $(this).html($.timeago($(this).attr('data-time')));
         });
     },
-    
+
     showCommentForm: function(){
         $(".showCommentForm").live('click',function(){
             $(this).parent().find('div.form').toggleClass('hidden');
             return false;
         });
     },
-    
+
     getNotifications: function(){
         $("li.notifications_user ul li").addClass('hidden');
         $("li.notifications_user a").live('click', function(){
@@ -148,14 +152,14 @@ var site = {
             }
         });
     },
-    
+
     readedNotification: function(){
         $("li.notifications_user li.notification:not('.readed')").hover(function(){
             var el = $(this).find('div.info');
             var notificationId = el.attr('notificationId');
             ajax.genericAction({
-                route: 'user_ajaxdeletenotification', 
-                params: { id: notificationId }, 
+                route: 'user_ajaxdeletenotification',
+                params: { id: notificationId },
                 callback: function(response) {
                     if(response === true) {
                         var cant = $("li.notifications_user a span").html();
@@ -166,7 +170,7 @@ var site = {
                         } else {
                             $(".notifications_user a span").hide();
                         }
-                        
+
                         el.parent().css('background', '#f4f3b8');
                     } else {
                         console.log(response);
@@ -175,13 +179,13 @@ var site = {
             });
         });
     },
-    
+
     getPendingFriends: function(){
         $("li.alerts_user a").click(function(){
             $("li.alerts_user ul li").toggleClass('hidden');
         });
     },
-    
+
     acceptFriendRequest: function(){
         $("div.button a.accept").click(function(){
             var liElement = $(this).parent().parent();
@@ -262,7 +266,7 @@ var site = {
                 }
             });
             return false;
-        }); 
+        });
     },
     likeButtons: function(){
         $('.btn.like:not(.loading-small)').live('click',function(e){
@@ -272,11 +276,11 @@ var site = {
             var id = el.attr('data-id');
             el.addClass('loading-small');
         	ajax.genericAction({
-                route: 'like_ajaxtoggle', 
-                params: { 
+                route: 'like_ajaxtoggle',
+                params: {
                     'id': id,
                     'type' : type
-                }, 
+                },
                 callback: function(response) {
                     el.removeClass('loading-small');
                     el.find('.likecount').text(response.likecount);
@@ -294,25 +298,25 @@ var site = {
                     el.removeClass('loading-small');
                     error(responsetext);
                 }
-            });        	
+            });
         });
     },
     shareButtons: function(){
         $('.sharebutton:not(.loading-small,.disabled)').live('click',function(e){
             e.preventDefault();
             var el = $(this);
-            
+
             askText(function(text){
                 var type = el.attr('data-type');
                 var id = el.attr('data-id');
-                el.addClass('loading-small');           	
+                el.addClass('loading-small');
                 ajax.genericAction({
-                    route: 'share_ajax', 
-                    params: { 
+                    route: 'share_ajax',
+                    params: {
                         'id' : id,
                         'type' : type,
                         'text' : text
-                    }, 
+                    },
                     callback: function(response) {
                         el.removeClass('loading-small');
                         el.addClass('disabled');
@@ -322,9 +326,9 @@ var site = {
                         el.removeClass('loading-small');
                         error(responsetext);
                     }
-                }); 
+                });
             });
-            
+
         });
     },
     globalCommentButtons: function(){
@@ -338,18 +342,18 @@ var site = {
             content = textAreaElement.val();
             privacy = textAreaElement.parents('.commentform,.shortcommentform').find('.post_privacidad').val() || 1,
             elDestination = '[data-wall]';
-                
-                
+
+
             var prepend = true;
             if(textAreaElement.attr('is-subcomment')) {
                 elDestination = textAreaElement.parents('.comments, .comments-and-tags').find('.subcomments-container');
                 prepend = false;
             }
-            
+
             site.postComment(textAreaElement,type,id,ispin,content,privacy,elDestination, prepend);
             return false;
         });
-    	
+
         $('textarea.comment_message:not(.loading)').live('keydown', function (e) {
             if (e.keyCode == 13) {
                 var textAreaElement = $(this),
@@ -359,7 +363,7 @@ var site = {
                 content = textAreaElement.val(),
                 privacy = textAreaElement.parents('.commentform,.shortcommentform').find('.post_privacidad').val() || 1,
                 elDestination = '[data-wall]';
-                     
+
                 var prepend = true;
                 if(textAreaElement.attr('is-subcomment')) {
                     elDestination = textAreaElement.parents('.comments, .comments-and-tags').find('.subcomments-container');
@@ -370,37 +374,37 @@ var site = {
             }
         });
     },
-    
+
     postComment: function (textAreaElement,type,id,ispin,content,privacy,elDestination, prepend) {
         textAreaElement.addClass('loading-small');
         textAreaElement.attr('disabled','disabled');
         ajax.genericAction({
-                route: 'comment_ajaxpost', 
-                params: { 
+                route: 'comment_ajaxpost',
+                params: {
                     'id' : id,
                     'type' : type,
                     'content' : content,
                     'privacy' : privacy,
                     'ispin' : ispin
-                }, 
+                },
                 callback: function(response) {
                     textAreaElement.val('');
                     textAreaElement.removeClass('loadingSmall');
-                    
+
                     success(response.message);
 
                     templateHelper.renderTemplate(response.jsonComment.templateId,response.jsonComment,elDestination, prepend);
-                    
+
                     $('.timeago').each(function () {
                         $(this).html($.timeago($(this).attr('data-time')));
                     });
-                    
+
                     if (ispin) {
                         $('.masonbricks').isotope().resize();
                     }
                     site.expander();
                     textAreaElement.removeClass('loading-small');
-                    textAreaElement.removeAttr('disabled');                    
+                    textAreaElement.removeAttr('disabled');
                 },
                 errorCallback: function(response) {
                     textAreaElement.removeClass('loading-small');
@@ -409,19 +413,19 @@ var site = {
                 }
             });
     },
-    
+
     globalDeleteButtons: function(){
         $('.deletebutton:not(.loading)').live('click',function(e){
             e.preventDefault();
-            
+
             var el = $(this);
             if (confirm('¿Seguro desea eliminar?')) {
                 var type = el.attr('data-type');
                 var id = el.attr('data-id');
                 el.addClass('loading');
 	        	ajax.genericAction({
-                    route: 'delete_ajax', 
-                    params: { 
+                    route: 'delete_ajax',
+                    params: {
                         'id' : id,
                         'type' : type
                     },
@@ -439,19 +443,19 @@ var site = {
                 });
             }
         });
-        
+
         $('.deletecomment:not(.loading)').live('click',function(e){
             e.preventDefault();
-            
+
             var el = $(this);
             if (confirm('¿Seguro desea eliminar el comentario?')) {
                 var type = 'comment';
                 var id = el.attr('data-id');
                 el.addClass('loading');
-	        	
+
                 ajax.genericAction({
-                    route: 'delete_ajax', 
-                    params: { 
+                    route: 'delete_ajax',
+                    params: {
                         'id' : id,
                         'type' : type
                     },
@@ -483,7 +487,7 @@ var site = {
             }
         });
     },
-    
+
     expander: function() {
         $("[data-expandable]").each(function(index, element){
             var slicePoint = 100;
@@ -497,30 +501,30 @@ var site = {
             });
         });
     },
-    
+
     BindLoginWidget: function(){
         //fix triangle for firefox
         if($.browser.mozilla == true){
             $('header nav div#login-widget div.arrow-up-border').hide();
         }
         $('header .header-ingresar').click(function(){
-            $('header div#login-widget').toggle(); 
+            $('header div#login-widget').toggle();
         });
         $('div#login-widget #do-login').click(function(){
             $('form.login').submit();
         });
-         
+
     },
-    
+
     bindCarousel: function(){
         $("div.info-detail-carousel div:not('.active')").hide();
-        
+
         $('.carousel').carousel({
             interval: 5000
         }).bind('slid', function() {
             // Get currently selected item
             var item = $('#myCarousel .carousel-inner .item.active');
-            
+
             var itemId = $(item).attr('data-video');
             $('div.info-detail-carousel div.active').fadeOut(function(){
                 $(this).removeClass('active');
@@ -534,15 +538,15 @@ var site = {
             var index = item.index() + 1;
             $('#carousel-nav a:nth-child(' + index + ')').addClass('active');
         });
-        
+
         $('#carousel-nav a').click(function(q){
             q.preventDefault();
             targetSlide = $(this).attr('data-to')-1;
             $('#myCarousel').carousel(targetSlide);
         });
-            
+
     },
-    
+
     startMosaic: function(container, options){
         // initialize the plugin
         var $container 	= container,
@@ -572,12 +576,12 @@ function resizeColorbox(options) {
 function askText(callback) {
     $.colorbox({
         href: Routing.generate(appLocale + '_popup_asktext'),
-        onComplete: function(){ 
+        onComplete: function(){
             $('#colorbox').find('.submit').click(function(){
                 var content = $('#colorbox').find('textarea').val();
                 $.colorbox.close();
                 callback(content);
-            }); 
+            });
         }
     });
 }

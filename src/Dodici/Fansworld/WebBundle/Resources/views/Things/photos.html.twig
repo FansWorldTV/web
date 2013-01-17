@@ -20,15 +20,15 @@
                 </div>
             </div>
         </header>
-        
+
         <div class="clearfix"></div>
-        
+
         <div data-my-photos>
             {% include 'DodiciFansworldWebBundle:Photo:blocks/albums_montage.html.twig' with {'albumsTotalCount': albumsTotalCount, 'viewMoreAlbums': false} %}
             {% if viewMoreAlbums %}
                 <button class="loadmore" data-entity-type="album">ver más</button>
             {% endif %}
-            
+
             <div class="row-fluid">
                 <h3>Fotos ( {{ photosTotalCount }} )</h3>
                 <div class="row-fluid">
@@ -42,7 +42,7 @@
             <div data-montage-container data-type="photos">
             </div>
         </div>
-        
+
         {% if viewMorePhotos %}
             <script type="text/javascript">
                 $(document).ready(function(){
@@ -59,7 +59,7 @@
     <div class="span3 things-sidebar">
         <section class="notification">
             <h4>NOTIFICACIONES <span class="midline"></span></h4>
-             <div data-notification></div>
+            <div data-notification></div>
         </section>
 
         {% if lastVideos|length > 0 %}

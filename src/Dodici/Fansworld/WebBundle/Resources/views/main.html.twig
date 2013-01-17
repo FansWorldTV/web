@@ -6,7 +6,7 @@
 	    {% block head %}
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             <title>{% block title %}Fansworld{% endblock %}</title>
-            
+
             {% block metatags %}
 	            <meta property="og:image" content="{% block metafbimage %}http://{{ app.request.host ~ asset('bundles/dodicifansworldweb/images/logo.png') }}{% endblock %}"/>
 				<meta property="og:url" content="http://{{ app.request.host ~ app.request.requesturi }}"/>
@@ -14,17 +14,17 @@
 				<meta property="og:description" content="{{ block('metadescription') }}"/>
 				<meta property="og:site_name" content="Fansworld"/>
 				<meta property="og:type" content="{%block metafbtype %}article{% endblock %}"/>
-	            
+
 	            <meta name="keywords" content="{% block metakeywords %}{% endblock %}"/>
 	            <meta name="description" content="{% block metadescription %}{% endblock %}"/>
 	            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
             {% endblock %}
-            
+
             {% block stylesheets %}
                 <link rel="stylesheet" type="text/css" href="{{ asset('bundles/dodicifansworldweb/css/base.css') }}">
                 <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
             {% endblock %}
-                
+
             {% block javascripts %}
             	{% if (meteor.enabled) %}
 	                <script type="text/javascript" src="http://{{ meteor.host }}:{{ meteor.clientport }}/meteor.js"></script>
@@ -33,7 +33,7 @@
                             var notificationChannel = '{{ meteor.encryptChannelName('notification', app.user) }}';
 		                    var friendshipChannel = '{{ meteor.encryptChannelName('friendship', app.user) }}';
 		                {% endif %}
-		                
+
 		                if (typeof Meteor != 'undefined') {
 			                Meteor.hostid = "{{ meteor.uniqid }}";
 			                Meteor.host = "{{ meteor.host }}";
@@ -44,15 +44,15 @@
 		                }
 	                </script>
                 {% endif %}
-                
+
                 <script type="text/javascript">
                     var appLocale = '{{ app.request.locale }}';
                     var isLoggedIn = {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} true {% else %} false {% endif %};
                     var FBperms = '{{ appfacebook.scope|join(',') }}';
                 </script>
-                
+
                 <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-                
+
                 {% javascripts
                     filter='?yui_js'
                     output='bundles/dodicifansworldweb/js/compiled/all.js'
@@ -96,12 +96,12 @@
 				%}
 				<script type="text/javascript" src="{{ asset_url }}"></script>
 				{% endjavascripts %}
-				
+
 				<script type="text/javascript" src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
                 <script type="text/javascript" src="{{ path('bazinga_exposetranslation_js') }}"></script>
-                
+
             {% endblock %}
-            
+
             {% block flashmessage %}
             	{% if app.session.hasFlash('success') %}
 				    <script type="text/javascript">
