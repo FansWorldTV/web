@@ -5,15 +5,15 @@
 {% block javascripts %}
 	<script src="{{ asset('bundles/dodicifansworldweb/js/popup.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('bundles/dodicifansworldweb/js/file-uploader/fileuploader.js') }}" type="text/javascript"></script>
-
-	<script src="{{ asset('bundles/dodicifansworldweb/js/popup_upload_video.js') }}" type="text/javascript"></script>
-
-    <script src="{{ asset('bundles/dodicifansworldweb/js/shareTag_UploadPhoto.js') }}" type="text/javascript"></script>
-
+    <script src="{{ asset('bundles/dodicifansworldweb/js/fw.ui.metadata.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
-        shareEngine.init();
-        tagEngine.bindTokenizer();
+        //shareEngine.init();
+        //tagEngine.bindTokenizer();
+        $("#form_tagtextac").fwTagify({action: 'tag'});
+        $("#share_input").fwTagify({action: 'share'});
+        $(".btn-checkbox").fwSharify({});
+
         $('#share_it').click(function() {$('#submitVideo').click();});
     </script>
 
@@ -27,8 +27,10 @@
 
             <div class="videoContainer">
                 <div class="container-up">
+                    <div id="progressbar" class="progress progress-success progress-striped">
+                        <div class="bar" style="width:0%;"></div>
+                    </div>
                     <div id="file-uploader"></div>
-                    <div id="progressbar"></div>
                 </div>
             </div>
 
@@ -56,7 +58,7 @@
                                         <li class="clearfix">
                                             <label for="form_tagtext">Tags</label>
                                             <div class="control-group">
-                                                <input class="completer" type="text" id="form_tagtextac" data-route="tag_ajaxget" data-field="form_tagtext" />
+                                                <input class="completer" type="text" id="form_tagtextac" data-route="_tag_ajaxmatch" data-action="tag" data-field="form_tagtext" />
                                                 <p class="helpMessage"><small>Separado con comas ","</small></p>
                                                 <ul class="selectedtags"></ul>
                                             </div>
@@ -72,7 +74,7 @@
                         <button class="btn-checkbox fw active"></button>
                     </span>
                     <div class="sharewith" >
-                        <input data-token-input type="text" id="share_input" placeholder="Con quien lo queres compartir..." />
+                        <input data-token-input type="text" id="share_input" data-route="_share_ajaxwith" data-action="share" placeholder="Con quien lo queres compartir..." />
                         <input type="submit" name="submit" value="{{ 'share'|trans }}" id="share_it" class="btn btn-primary" style="display:none;"/>
                     </div>
             </div>
