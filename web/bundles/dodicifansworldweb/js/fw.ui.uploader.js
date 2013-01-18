@@ -8,7 +8,7 @@
  *      appLocale
  */
 
-// fansWorld file upload plugin 1.3
+// fansWorld file upload plugin 1.4
 
 // the semi-colon before function invocation is a safety net against concatenated
 // scripts and/or other plugins which may not be closed properly.
@@ -16,16 +16,6 @@
 $(document).ready(function () {
 
     "use strict";
-
-    // undefined is used here as the undefined global variable in ECMAScript 3 is
-    // mutable (ie. it can be changed by someone else). undefined isn't really being
-    // passed in so we can ensure the value of it is truly undefined. In ES5, undefined
-    // can no longer be modified.
-
-    // window and document are passed through as local variable rather than global
-    // as this (slightly) quickens the resolution process and can be more efficiently
-    // minified (especially when both are regularly referenced in your plugin).
-
     // Create the defaults once
     var pluginName = "fwUploader";
     var defaults = {
@@ -77,12 +67,12 @@ $(document).ready(function () {
                 onComplete: function() {
                     if(that.options.mediaType === 'video')
                     {
-                        // Get kaltura token before popup opens
+                        that.createFwGenericUploader();
+                        that.resizePopup();
+                        // Get kaltura KS + entryId + uploadToken
                         that.getToken('fileName', function(uploadToken) {
                             console.log("token: " + uploadToken)
-                            that.createFwGenericUploader();
                             that.uploader.setParams({uploadTokenId: that.options.uploadtoken});
-                            that.resizePopup(); // fire this event only when content has loaded
                         });
                     } else {
                         that.createFwUploader();
@@ -137,7 +127,7 @@ $(document).ready(function () {
             var that = this;
             that.bindFormSubmit();
             that.bindAlbumActions();
-            setTimeout(function(){ that.resizePopup(); }, 500);
+            setTimeout(function(){ that.resizePopup(); }, 2000);
         },
         createFwUploader: function() {
             var that = this;
@@ -182,6 +172,9 @@ $(document).ready(function () {
                 },
                 onSubmit: function(id, fileName){
                     return that.options.onSubmit(id, fileName);
+                },
+                onError: function(id, fileName, reason) {
+                    return that.options.onError(id, fileName, reason);
                 }
             });
         },
@@ -220,6 +213,9 @@ $(document).ready(function () {
                 },
                 onProgress: function(id, fileName, loaded, total) {
                     return that.options.onProgress(id, fileName, loaded, total);
+                },
+                onError: function(id, fileName, reason) {
+                    return that.options.onError(id, fileName, reason);
                 }
             });
         },
@@ -243,9 +239,13 @@ $(document).ready(function () {
                         ks: that.options.ks,
                         'resource:objectType': 'KalturaUploadedFileResource'
                     });
+                    $(.'qq-uploader').hide().fadeOut('slow');
                     that.options.onSubmit(id, fileName);
                 },
                 onComplete: function(id, fileName, responseJSON) {
+                    var entryId = $(responseJSON).find('id').text();
+                    $('#form_entryid').val(entryId);
+                    console.log("Video subido correctamente ID: " + entryId);
                     return that.options.onComplete(id, fileName, responseJSON);
                 },
                 onUpload: function(id, fileName, xhr) {
@@ -253,8 +253,17 @@ $(document).ready(function () {
                     return that.options.onUpload(id, fileName, xhr);
                 },
                 onProgress: function(id, fileName, loaded, total) {
+                    if (loaded !== total){
+                        $( "#progressbar .bar" ).css('width', Math.round(loaded / total * 100)+'%');
+                    } else {
+                        $( "#progressbar .bar" ).css('width','100%');
+                    }
+                    that.resizePopup();
                     return that.options.onProgress(id, fileName, loaded, total);
                 },
+                onError: function(id, fileName, reason) {
+                    return that.options.onError(id, fileName, reason);
+                }
             });
         },
         getToken: function(filename, callback) {
@@ -273,9 +282,17 @@ $(document).ready(function () {
                             'uploadToken:objectType': 'KalturaUploadToken'
                         },
                         dataType: 'xml',
-                        success: function(r) {
-                            that.options.uploadtoken = $(r).find('id').text();
-                            callback(that.options.uploadtoken);
+                        success: function(responseJSON) {
+                            if($(responseJSON).find('id').text()) {
+                                console.log(responseJSON)
+                                that.options.uploadtoken = $(responseJSON).find('id').text();
+                                callback(that.options.uploadtoken);
+                            } else {
+                                that.options.onError($(responseJSON).find('error').text());
+                            }
+                        },
+                        error: function (jqXHR, status, error) {
+                            return that.options.onError(error);
                         }
                     });
                 });
@@ -290,6 +307,9 @@ $(document).ready(function () {
                 success: function(responseJSON) {
                     that.options.ks = responseJSON.ks;
                     callback(that.options.ks);
+                },
+                error: function (jqXHR, status, error) {
+                    return that.options.onError(error);
                 }
             });
         },
@@ -307,9 +327,15 @@ $(document).ready(function () {
                     },
                     dataType: 'xml',
                     success: function(responseJSON) {
-                        that.options.entryId = $(responseJSON).find('id').text();
-                        console.log("ive a new entryId: " + that.options.entryId);
-                        callback(that.options.entryId);
+                        if($(responseJSON).find('id').text()) {
+                            that.options.entryId = $(responseJSON).find('id').text();
+                            callback(that.options.entryId);
+                        } else {
+                            that.options.onError($(responseJSON).find('error').text());
+                        }
+                    },
+                    error: function (jqXHR, status, error) {
+                        return that.options.onError(error);
                     }
                 });
         },
