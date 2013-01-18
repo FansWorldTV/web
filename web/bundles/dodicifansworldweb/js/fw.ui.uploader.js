@@ -239,7 +239,6 @@ $(document).ready(function () {
                         ks: that.options.ks,
                         'resource:objectType': 'KalturaUploadedFileResource'
                     });
-                    $(.'qq-uploader').hide().fadeOut('slow');
                     that.options.onSubmit(id, fileName);
                 },
                 onComplete: function(id, fileName, responseJSON) {
