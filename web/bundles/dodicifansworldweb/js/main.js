@@ -64,12 +64,19 @@ var site = {
             }
         });
        	*/
-	// fw upload plugin
+	   // fw upload plugin
+       // Video
         $("[data-upload='video']").fwUploader({
             onComplete: function(){
-                $('#share_it').show();
+                $('#share_it').fadeIn(250);
+                $.fn.colorbox.resize({});
+            },
+            onError: function(err) {
+                $.fn.colorbox.close();
+                error("Ha ocurrido un error!");
             }
         });
+        // Photos
         $("[data-upload='photo']").fwUploader({});
 
         $(".btn[data-create-album]").colorbox({
