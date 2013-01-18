@@ -1,13 +1,26 @@
 {% extends "DodiciFansworldWebBundle::popup.html.twig" %}
 
+{% block javascripts %}
+    <script type="text/javascript">
+        $('[data-videoend-btn]').click(function() {$.fn.colorbox.close();});
+    </script>
+{% endblock %}
 
 {% block content %}
-
-
-        <div class="greybox">
-            VIDEO PROCESADO OK!
+    <div class="greybox">
+        <div class="videoContainerEnd">
+            <div class="container-up">
+                <p class="text-success"></p>
+                <p class="text-success">
+                    <strong>El video se subio correctamente.</strong>
+                    Estamos procesandolo...
+                </p>
+                <p>Fansworld le enviara un aviso cuando este disponible.</p>
+            </div>
         </div>
 
-
-
+        <div class="uploadVideoEndStep">
+            <input type="submit" name="submit" value="Continuar" data-videoend-btn class="btn btn-primary"/>
+        </div>
+    </div>
 {% endblock %}

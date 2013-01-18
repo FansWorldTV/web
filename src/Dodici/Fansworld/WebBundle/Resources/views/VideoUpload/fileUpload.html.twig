@@ -14,6 +14,7 @@
         $("#share_input").fwTagify({action: 'share'});
         $(".btn-checkbox").fwSharify({});
 
+        bindFormActions();
         $('#share_it').click(function() {$('#submitVideo').click();});
     </script>
 
@@ -35,7 +36,7 @@
             </div>
 
             <div class="uploadPhotoVideoForm">
-                <form action="{{ path('video_fileupload')}}" method="post" enctype="multipart/form-data" class="bigform upload-photo" name="frmUpload">
+                <form action="{{ path('video_fileupload')}}" method="post" enctype="multipart/form-data" class="bigform upload-photo" name="frmUpload" id="frm-upload-video">
 
                     <div class="row-fluid">
                         <section class="span2">
@@ -75,7 +76,7 @@
                     </span>
                     <div class="sharewith" >
                         <input data-token-input type="text" id="share_input" data-route="_share_ajaxwith" data-action="share" placeholder="Con quien lo queres compartir..." />
-                        <input type="submit" name="submit" value="{{ 'share'|trans }}" id="share_it" class="btn btn-primary" style="display:none;"/>
+                        <input type="submit" name="submit" value="{{ 'share'|trans }}" id="share_it" class="btn btn-primary" disabled />
                     </div>
             </div>
 

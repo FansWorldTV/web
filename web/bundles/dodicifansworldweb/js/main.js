@@ -68,8 +68,7 @@ var site = {
        // Video
         $("[data-upload='video']").fwUploader({
             onComplete: function(){
-                $('#share_it').fadeIn(250);
-                $.fn.colorbox.resize({});
+                $('#share_it').removeAttr("disabled");
             },
             onError: function(err) {
                 $.fn.colorbox.close();

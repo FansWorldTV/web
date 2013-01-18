@@ -1,13 +1,12 @@
 function bindFormActions(){
-    $("form.upload-video").submit(function(){
-        var data = $('form.upload-video').serializeArray();
-        var href = $('form.upload-video').attr('action');
+    $("#frm-upload-video").submit(function(){
+        var data = $('#frm-upload-video').serializeArray();
+        var href = $('#frm-upload-video').attr('action');
 
-        $.colorbox({        
+        $.colorbox({
             href: href ,
             data: data,
             onComplete: function(){
-                bindFormActions();
                 resizePopup();
             }
         });
@@ -16,21 +15,20 @@ function bindFormActions(){
     resizePopup();
 }
 
-
-function createUploader(){            
+function createUploader(){
     var uploader = new qq.FileUploader({
         element: $("#file-uploader")[0],
         action: Routing.generate( appLocale + '_video_ajaxfileupload'),
         debug: true,
         multiple: false,
         maxConnections: 1,
-        
+
         onComplete: function(id, fileName, responseJSON){
             if(responseJSON.success){
                 $.colorbox({
                     href: Routing.generate( appLocale + '_video_filemeta') + '/' + responseJSON.videoid + '/'+true,
-                    iframe: false, 
-                    innerWidth: 700, 
+                    iframe: false,
+                    innerWidth: 700,
                     innerHeight: 700,
                     onComplete: function() {
                         resizePopup();
@@ -47,14 +45,14 @@ function createUploader(){
                 $( "#progressbar" ).progressbar({
                     value: Math.round(loaded / total * 100)
                 });
-            } else {                                   
+            } else {
                 $( "#progressbar" ).progressbar({
                     value: 100
                 });
-            }  
+            }
             resizePopup();
-            
+
         }
-    });           
-    bindFormActions();  
+    });
+    bindFormActions();
 }
