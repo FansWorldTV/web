@@ -33,6 +33,7 @@ class IdolController extends BaseController
      * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
      * - <optional> sort: 'fanCount'|'name' (default: fanCount)
      * - <optional> sort_order: 'asc'|'desc' (default: desc)
+     * - <optional> imageformat: string
      * 
      * @return 
      * array (
@@ -40,7 +41,7 @@ class IdolController extends BaseController
      * 			id: int,
      * 			firstname: string,
      * 			lastname: string,
-     * 			image: string (url of image),
+     * 			image: array(id: int, url: string),
      * 			fanCount: int
      * 		),
      * 		...
@@ -76,13 +77,13 @@ class IdolController extends BaseController
                 $pagination['offset']);
                 
             $return = array();
-            
+                        
             foreach ($idols as $idol) {
                 $return[] = array(
                     'id' => $idol->getId(),
                     'firstname' => $idol->getFirstname(),
                 	'lastname' => $idol->getLastname(),
-                    'image' => $idol->getImage() ? $this->get('appmedia')->getImageUrl($idol->getImage()) : null,
+                    'image' => $this->imageValues($idol->getImage()),
                     'fanCount' => $idol->getFanCount()
                 );
             }
@@ -101,13 +102,14 @@ class IdolController extends BaseController
      *
      * Get params:
 	 * - <optional> extra_fields: comma-separated extra fields to return (see below)
+	 * - <optional> imageformat: string
      * 
      * @return 
      * array (
      * 			id: int,
      * 			firstname: string,
      * 			lastname: string,
-     * 			image: string (url of image),
+     * 			image: array(id: int, url: string),
      * 			fanCount: int,
      * 			
      * 			// extra fields
@@ -143,12 +145,12 @@ class IdolController extends BaseController
         try {
             $idol = $this->getRepository('Idol')->find($id);
             if (!$idol) throw new HttpException(404, 'Idol not found');
-            
+                        
             $return = array(
                 'id' => $idol->getId(),
                 'firstname' => $idol->getFirstname(),
             	'lastname' => $idol->getLastname(),
-                'image' => $idol->getImage() ? $this->get('appmedia')->getImageUrl($idol->getImage()) : null,
+                'image' => $this->imageValues($idol->getImage()),
                 'fanCount' => $idol->getFanCount()
             );
             
@@ -163,7 +165,7 @@ class IdolController extends BaseController
                         $return['birthday'] = $idol->getBirthday() ? $idol->getBirthday()->format('U') : null;
                         break;
                     case 'splash':
-                        $return['splash'] = $idol->getSplash() ? $this->get('appmedia')->getImageUrl($idol->getSplash()) : null;
+                        $return['splash'] = $this->imageValues($idol->getSplash());
                         break;
                     case 'country':
                         $return['country'] = $idol->getCountry() ? $idol->getCountry()->getId() : null;

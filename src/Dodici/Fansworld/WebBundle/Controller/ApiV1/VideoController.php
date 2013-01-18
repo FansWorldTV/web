@@ -45,7 +45,7 @@ class VideoController extends BaseController
      * 		array (
      * 			id: int,
      * 			title: string,
-     * 			image: string (url of image),
+     * 			image: array(id: int, url: string),
      * 			highlight: boolean,
      * 			category_id: int,
      * 			
@@ -126,12 +126,13 @@ class VideoController extends BaseController
      *
      * Get params:
 	 * - <optional> extra_fields: comma-separated extra fields to return (see below)
+	 * - <optional> imageformat: string
      * 
      * @return 
      * array (
      * 			id: int,
      * 			title: string,
-     * 			image: string (url of image),
+     * 			image: array(id: int, url: string),
      * 			highlight: boolean,
      * 			category_id: int,
      * 			
@@ -149,12 +150,12 @@ class VideoController extends BaseController
      * 				id: int,
      * 				firstname: string,
      * 				lastname: string,
-     * 				image: string (url)
+     * 				image: array(id: int, url: string),
      * 			),
      * 			tagged_teams: array (
      * 				id: int,
      * 				title: string,
-     * 				image: string (url)
+     * 				image: array(id: int, url: string),
      * 			),
      * 			tagged_tags: array (
      * 				id: int,
@@ -166,7 +167,7 @@ class VideoController extends BaseController
      *				email: string,
      *				firstname: string,
      *				lastname: string,
-     *				image: string (avatar url)
+     *				image: array(id: int, url: string),
      * 			)
      * 		)
      * 
@@ -180,7 +181,7 @@ class VideoController extends BaseController
             $return = array(
                 'id' => $video->getId(),
                 'title' => (string)$video,
-                'image' => $video->getImage() ? $this->get('appmedia')->getImageUrl($video->getImage()) : null,
+                'image' => $this->imageValues($video->getImage()),
                 'highlight' => $video->getHighlight(),
                 'category_id' => $video->getVideocategory()->getId()
             );
@@ -208,7 +209,7 @@ class VideoController extends BaseController
                                 'id' => $ent->getId(),
                                 'firstname' => $ent->getFirstname(),
                                 'lastname' => $ent->getLastname(),
-                                'image' => $ent->getImage() ? $this->get('appmedia')->getImageUrl($ent->getImage()) : null
+                                'image' => $this->imageValues($ent->getImage())
                             );
                         }
                         $return[$x] = $t;
@@ -221,7 +222,7 @@ class VideoController extends BaseController
                             $t[] = array(
                                 'id' => $ent->getId(),
                                 'title' => (string)$ent,
-                                'image' => $ent->getImage() ? $this->get('appmedia')->getImageUrl($ent->getImage()) : null
+                                'image' => $this->imageValues($ent->getImage())
                             );
                         }
                         $return[$x] = $t;

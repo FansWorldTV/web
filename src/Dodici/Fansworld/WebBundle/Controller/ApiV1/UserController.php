@@ -34,6 +34,7 @@ class UserController extends BaseController
 	 * - <optional> filter: see below
      * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
      * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
+     * - <optional> imageformat: string
      * - [signature params]
      * 
      * filters:
@@ -47,7 +48,7 @@ class UserController extends BaseController
      * 			id: int,
      * 			firstname: string,
      * 			lastname: string,
-     * 			image: string (url of image)
+     * 			image: array(id: int, url: string),
      * 			fanCount: int,
      * 			sex: string,
      * 			username: string,
@@ -93,7 +94,8 @@ class UserController extends BaseController
                     $pagination['offset']
                 );
 
-                $return = $this->get('serializer')->values($users);
+                $imageformat = $this->getImageFormat();
+                $return = $this->get('serializer')->values($users, $imageformat);
                 
                 return $this->result($return, $pagination);
             } else {

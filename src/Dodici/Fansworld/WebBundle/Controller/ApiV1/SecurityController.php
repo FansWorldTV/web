@@ -139,7 +139,7 @@ class SecurityController extends BaseController
      * 			email: string,
      * 			firstname: string,
      * 			lastname: string,
-     * 			image: string (avatar url) | null
+     * 			image: array(id: int, url: string)
      * 		)
      * )
      */

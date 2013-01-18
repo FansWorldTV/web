@@ -45,7 +45,7 @@ class EventController extends BaseController
      * 					id: int,
 	 *					title: string,
 	 *					fanCount: int,
-	 *					image: string (url)
+	 *					image: array(id: int, url: string)
      *     			),
      *     			...
      * 			)

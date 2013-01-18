@@ -32,6 +32,7 @@ class BaseController extends SiteController
     const TIMESTAMP_MARGIN = 120;
     const TOKEN_SECRET = 'gafd7u8adf9';
     const LIMIT_DEFAULT = 10;
+    const DEFAULT_IMAGE_FORMAT = 'small';
     
     /**
      * Does this request have a valid signature behind it?
@@ -158,11 +159,6 @@ class BaseController extends SiteController
     
     protected function userArray(User $user)
     {
-        $imageurl = null;
-        if ($user->getImage()) {
-            $imageurl = $this->get('appmedia')->getImageUrl($user->getImage());
-        }
-        
         $idolcount = $this->getRepository('Idolship')->countBy(array('author' => $user->getId()));
         $teamcount = $this->getRepository('Teamship')->countBy(array('author' => $user->getId()));
         
@@ -172,7 +168,7 @@ class BaseController extends SiteController
             'email' => $user->getEmail(),
             'firstname' => $user->getFirstname(),
             'lastname' => $user->getLastname(),
-            'image' => $imageurl,
+            'image' => $this->imageValues($user->getImage()),
             'idolcount' => $idolcount,
             'teamcount' => $teamcount
         );
@@ -315,7 +311,7 @@ class BaseController extends SiteController
         $rv = array(
             'id' => $video->getId(),
             'title' => (string)$video,
-            'image' => $video->getImage() ? $this->get('appmedia')->getImageUrl($video->getImage()) : null,
+            'image' => $this->imageValues($video->getImage()),
             'highlight' => $video->getHighlight(),
             'category_id' => $video->getVideocategory()->getId()
         );
@@ -336,5 +332,23 @@ class BaseController extends SiteController
         }
         
         return $rv;
+    }
+    
+    protected function getImageFormat()
+    {
+        $request = $this->getRequest();
+        $imageformat = $request->get('imageformat', self::DEFAULT_IMAGE_FORMAT);
+        return $imageformat;
+    }
+    
+    protected function imageValues($image)
+    {
+        $imageformat = $this->getImageFormat();
+        
+        if (!$image) return null;
+        return array(
+            'id' => $image->getId(),
+            'url' => $this->getImageUrl($image, $imageformat)
+        );
     }
 }

@@ -33,13 +33,14 @@ class TeamController extends BaseController
      * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
      * - <optional> sort: 'fanCount'|'title' (default: fanCount)
      * - <optional> sort_order: 'asc'|'desc' (default: desc)
+     * - <optional> imageformat: string
      * 
      * @return 
      * array (
      * 		array (
      * 			id: int,
      * 			title: string,
-     * 			image: string (url of image)
+     * 			image: array(id: int, url: string),
      * 			fanCount: int
      * 		),
      * 		...
@@ -77,7 +78,7 @@ class TeamController extends BaseController
                 $return[] = array(
                     'id' => $team->getId(),
                     'title' => (string)$team,
-                    'image' => $team->getImage() ? $this->get('appmedia')->getImageUrl($team->getImage()) : null,
+                    'image' => $this->imageValues($team->getImage()),
                     'fanCount' => $team->getFanCount()
                 );
             }
@@ -96,12 +97,13 @@ class TeamController extends BaseController
      *
      * Get params:
 	 * - <optional> extra_fields: comma-separated extra fields to return (see below)
+	 * - <optional> imageformat: string
      * 
      * @return 
      * array (
      * 			id: int,
      * 			title: string,
-     * 			image: string (url of image)
+     * 			image: array(id: int, url: string),
      * 			fanCount: int
      * 			
      * 			// extra fields
@@ -133,7 +135,7 @@ class TeamController extends BaseController
             $return = array(
                 'id' => $team->getId(),
                 'title' => (string)$team,
-                'image' => $team->getImage() ? $this->get('appmedia')->getImageUrl($team->getImage()) : null,
+                'image' => $this->imageValues($team->getImage()),
                 'fanCount' => $team->getFanCount()
             );
             
@@ -148,7 +150,7 @@ class TeamController extends BaseController
                         $return['foundedAt'] = $team->getFoundedAt() ? (int)$team->getFoundedAt()->format('U') : null;
                         break;
                     case 'splash':
-                        $return['splash'] = $team->getSplash() ? $this->get('appmedia')->getImageUrl($team->getSplash()) : null;
+                        $return['splash'] = $this->imageValues($team->getSplash());
                         break;
                     case 'country':
                         $return['country'] = $team->getCountry() ? $team->getCountry()->getId() : null;
