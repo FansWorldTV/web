@@ -39,22 +39,22 @@ class Serializer
         if (is_object($entity)) {
             $props = array();
             
-            if (property_exists($entity, 'id')) $props['id'] = $entity->getId();
-            if (property_exists($entity, 'slug')) $props['slug'] = $entity->getSlug();
+            if (method_exists($entity, 'getId')) $props['id'] = $entity->getId();
+            if (method_exists($entity, 'getSlug')) $props['slug'] = $entity->getSlug();
             if (method_exists($entity, '__toString')) {
                 $props['title'] = (string)$entity;
-            } elseif (property_exists($entity, 'title')) {
+            } elseif (method_exists($entity, 'getTitle')) {
                 $props['title'] = $entity->getTitle();
             }
             
-            if (property_exists($entity, 'image')) {
+            if (method_exists($entity, 'getImage')) {
                 $appmedia = $this->container->get('appmedia');
                 $image = $entity->getImage();
                 $imageurl = $image ? $appmedia->getImageUrl($entity->getImage(), $imageformat) : null;
                 $props['image'] = $imageurl;
             }
             
-            if (property_exists($entity, 'createdAt')) {
+            if (method_exists($entity, 'getCreatedAt')) {
                 $props['createdAt'] = $entity->getCreatedAt() ? $entity->getCreatedAt()->format('U') : null;
             }
             

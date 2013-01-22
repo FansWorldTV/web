@@ -219,7 +219,7 @@ class CommentController extends BaseController
                 $tag['title'] = $tag_item->__toString();
                 $tag['likecount'] = method_exists($tag_item, 'getLikeCount') ? $tag_item->getLikeCount() : null;
                 $tag['image'] = null;
-                if (property_exists($tag_item, 'image')) {
+                if (method_exists($tag_item, 'getImage')) {
                     $image = $tag_item->getImage();
                     if ($image) {
                         $tag['image'] = $this->imageValues($image);

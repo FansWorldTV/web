@@ -134,7 +134,7 @@ class CommentController extends SiteController
 
             $entity = $this->getRepository($type)->find($entityId);
 
-            if (!$entity || ($entity && property_exists($entity, 'active') && !$entity->getActive()))
+            if (!$entity || ($entity && method_exists($entity, 'getActive') && !$entity->getActive()))
                 throw new HttpException(400, 'Wall entity not found');
 
             $comments = $this->get('appstate')->getComments($entity, $lastid, $limit);
@@ -284,7 +284,7 @@ class CommentController extends SiteController
                         'id' => $tag_item->getId(),
                         'slug' => $tag_item->getSlug()
                             ));
-                    if (property_exists($tag_item, 'image') && $tag_item->getImage()) {
+                    if (method_exists($tag_item, 'getImage') && $tag_item->getImage()) {
                         $tag['shareImage'] = $appMedia->getImageUrl($tag_item->getImage(), 'wall');
                     }
                 }
