@@ -67,9 +67,7 @@ class VideoController extends BaseController
     {
         try {
             $request = $this->getRequest();
-            
-            // TODO: listado videos
-            
+                        
             $recommended = $request->get('recommended');
             $userid = $request->get('user_id');
             $highlight = $request->get('highlight');

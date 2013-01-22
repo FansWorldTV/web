@@ -198,16 +198,18 @@ class AppState
         return false;
     }
 
-    public function canEdit($entity)
+    public function canEdit($entity, $user=null)
     {
-        return $this->canDelete($entity);
+        return $this->canDelete($entity, $user=null);
     }
 
-    public function canDelete($entity)
+    public function canDelete($entity, $user=null)
     {
-        if (!($this->user instanceof User))
-            return false;
-        $user = $this->user;
+        if (!$user) {
+            if (!($this->user instanceof User))
+                return false;
+            $user = $this->user;
+        }
 
         if ($this->security_context->isGranted('ROLE_ADMIN'))
             return true;

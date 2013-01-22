@@ -32,13 +32,14 @@ class CommentRepository extends CountBaseRepository
 
 
         $query = $this->_em->createQuery('
-    	SELECT c, cc
+    	SELECT c
     	FROM \Dodici\Fansworld\WebBundle\Entity\Comment c
-    	LEFT JOIN c.comments cc
     	LEFT JOIN c.author ca
     	WHERE c.' . $classname . ' = :entity 
     	AND c.active = true
-    	AND c.comment IS NULL
+    	'.
+        (($classname != 'comment') ? 'AND c.comment IS NULL' : '')
+        .'
     	AND (:lastId IS NULL OR ( c.id < :lastId ))
     	' .
                         (($classname == 'team') ? ' AND c.event IS NULL ' : '')
@@ -53,8 +54,8 @@ class CommentRepository extends CountBaseRepository
 	    		(SELECT COUNT(iss.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship iss WHERE (iss.author = :user AND iss.target = ca.id AND iss.active = true)) >= 1
             ))
     	)
-    	
-    	ORDER BY c.id DESC, cc.createdAt DESC
+    	    	
+    	ORDER BY c.id DESC
     	')
                 ->setParameter('entity', $entity->getId(), Type::BIGINT)
                 ->setParameter('everyone', Privacy::EVERYONE)

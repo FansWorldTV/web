@@ -146,4 +146,50 @@ class UserController extends BaseController
             return $this->plainException($e);
         }
     }
+    
+	/**
+     * [signed] User show
+     * 
+     * @Route("/user/{id}", name="api_v1_user_show", requirements = {"id" = "\d+"})
+     * @Method({"GET"})
+     *
+     * Get params:
+	 * - <optional> [user_token]
+     * - [signature params]
+     * 
+     * @return 
+     * array (
+     * 		id: int,
+     * 		username: string,
+     * 		email: string,
+     * 		firstname: string,
+     * 		lastname: string,
+     * 		image: array(id: int, url: string)
+     * )
+     */
+    public function showAction($id)
+    {
+        try {
+            if ($this->hasValidSignature()) {
+                $request = $this->getRequest();
+                
+                if (!$id) throw new HttpException(400, 'Invalid user_id');
+                
+                if ($request->get('user_token')) {
+                    $user = $this->checkUserToken($id, $request->get('user_token'));
+                    $hastoken = true;
+                } else {
+                    $user = $this->getRepository('User')->findOneBy(array('id' => $id, 'enabled' => true));
+                    if (!$user) throw new HttpException(404, 'User not found');
+                    $hastoken = false;
+                }
+                                
+                return $this->result($this->userArray($user));
+            } else {
+                throw new HttpException(401, 'Invalid signature');
+            }
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
 }

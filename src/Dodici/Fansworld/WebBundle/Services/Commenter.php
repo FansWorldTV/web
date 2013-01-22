@@ -29,7 +29,7 @@ class Commenter
      * @param string $content
      * @param Privacy::* $privacy_type
      */
-    public function comment(User $user, $entity, $content, $privacy_type = Privacy::EVERYONE)
+    public function comment(User $user, $entity, $content, $privacy_type = Privacy::EVERYONE, $team=null)
     {
     	$classname = $this->appstate->getType($entity);
     	
@@ -45,6 +45,8 @@ class Commenter
 			$methodname = 'set'.$classname;
 			$comment->$methodname($entity);
 		}
+		
+		if ($team) $comment->setTeam($team->getId());
 		
     	$this->em->persist($comment);
 			
