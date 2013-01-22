@@ -84,6 +84,32 @@ var site = {
             innerHeight: 600
         });
 
+        // Edit Photo-info
+        $("[data-edit='photo']").colorbox({
+            href: this.href,
+            onComplete: function () {
+                resizePopup();
+            }
+        });
+
+        // Edit Video-info
+        $("[data-edit='video']").colorbox({
+            href: this.href,
+            onComplete: function () {
+                resizePopup();
+            }
+        });
+
+
+        // Edit Album-info
+        $("[data-edit='album']").colorbox({
+            href: this.href,
+            onComplete: function () {
+                resizePopup();
+            }
+        });
+
+
         $.datepicker.setDefaults($.datepicker.regional[appLocale]);
 
         $('.datepicker').datepicker({
