@@ -3,19 +3,18 @@
 {% form_theme form 'DodiciFansworldWebBundle::form.html.twig' %}
 
 {% block javascripts %}
-	<script src="{{ asset('bundles/dodicifansworldweb/js/popup.js') }}" type="text/javascript"></script>
-	<script src="{{ asset('bundles/dodicifansworldweb/js/file-uploader/fileuploader.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/dodicifansworldweb/js/popup.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/dodicifansworldweb/js/file-uploader/fileuploader.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/dodicifansworldweb/js/fw.ui.metadata.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
-        //shareEngine.init();
-        //tagEngine.bindTokenizer();
-        $("#form_tagtextac").fwTagify({action: 'tag'});
-        $("#share_input").fwTagify({action: 'share'});
-        $(".btn-checkbox").fwSharify({});
-
-        bindFormActions();
-        $('#share_it').click(function() {$('#submitVideo').click();});
+        $(document).ready(function () {
+            $("#form_tagtextac").fwTagify({action: 'tag'});
+            $("#share_input").fwTagify({action: 'share'});
+            $(".btn-checkbox").fwSharify({});
+            bindFormActions();
+            $('#share_it').click(function() {$('#submitVideo').click();});
+    })
     </script>
 
 
@@ -23,7 +22,7 @@
 
 {% block content %}
 
-	<div class="greybox">
+    <div class="greybox">
 
 
             <div class="videoContainer">

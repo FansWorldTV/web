@@ -12,7 +12,7 @@
         <script type="text/javascript">
             if(window.contest != undefined){
                 var photoUploaded = {% if photo %}{{ photo.id }} {% else %} false {% endif %};
-                
+
                 ajax.contestParticipateAction(contest.id, false, photoUploaded, false, function(r){
                     if(r){
                         $("a.contestParticipate").parent().html('{{ 'Already participating'|trans }}');
@@ -21,26 +21,27 @@
                 });
             }else{
                 location.href = "{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}";
-            }          
+            }
         </script>
 
     {% else %}
 
         <script src="{{ asset('bundles/dodicifansworldweb/js/jcrop/jquery.Jcrop.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('bundles/dodicifansworldweb/js/shareTag_UploadPhoto.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/dodicifansworldweb/js/fw.ui.metadata.js') }}" type="text/javascript"></script>
 
         <script type="text/javascript">
 
             var jcrop_api;
             var jcrop_state = true;
             $(function(){$('#cropbox').Jcrop({
-                onSelect: updateCoords, 
-                boxWidth: 300, 
+                onSelect: updateCoords,
+                boxWidth: 300,
                 boxHeight: 300,
                 onRelease: function(){
-                    $('#form_x').val(0); 
-                    $('#form_y').val(0); 
-                    $('#form_w').val(0); 
+                    $('#form_x').val(0);
+                    $('#form_y').val(0);
+                    $('#form_w').val(0);
                     $('#form_h').val(0);
                 },
                 trueSize: [{{realWidth}},{{realHeight}}]
@@ -51,9 +52,12 @@
                 alert('Please select a crop region then press submit.');
                 return false;
             };
-            
-            shareEngine.init();
-            tagEngine.bindTokenizer();
+
+            //shareEngine.init();
+            //tagEngine.bindTokenizer();
+            $("#form_tagtextac").fwTagify({action: 'tag'});
+            $("#share_input").fwTagify({action: 'share'});
+            $(".btn-checkbox").fwSharify({});
             $('#share_it').click(function() {$('#submitPhoto').click();});
         </script>
 
@@ -82,10 +86,10 @@
                                 </section>
                                 <aside class="span3">
                                     {{ form_row(form.album) }}
-                                        <li class="clearfix"> 
+                                        <li class="clearfix">
                                             <label for="form_tagtext">Tags</label>
                                             <div class="control-group">
-                                                <input class="completer" type="text" id="form_tagtextac" data-route="tag_ajaxget" data-field="form_tagtext" />
+                                                <input class="completer" type="text" id="form_tagtextac" data-route="_tag_ajaxmatch" data-action="tag" data-field="form_tagtext" />
                                                 <p class="helpMessage"><small>Separado con comas ","</small></p>
                                                 <ul class="selectedtags"></ul>
                                             </div>
@@ -101,11 +105,11 @@
                         <button class="btn-checkbox fw active"></button>
                     </span>
                     <div class="sharewith" >
-                        <input data-token-input type="text" id="share_input" placeholder="Con quien lo queres compartir..." />
+                        <input data-token-input="" type="text" id="share_input" data-route="_share_ajaxwith" data-action="share" placeholder="Con quien lo queres compartir..." />
                         <input type="submit" name="submit" value="{{ 'share'|trans }}" id="share_it" class="btn btn-primary"/>
                     </div>
             </div>
-        </div>  
+        </div>
         <div class="templateFieldAlbumName hidden">
             <div class="control-group" style="display:none;"><input type="text" name="album_new_name" required="required" /></div>
         </div>

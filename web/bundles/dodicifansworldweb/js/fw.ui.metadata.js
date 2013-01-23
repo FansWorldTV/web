@@ -7,7 +7,7 @@
  *      appLocale
  */
 
-// FansWorld tagify plugin 1.1
+// FansWorld tagify plugin 1.3 (prepopulate)
 
 $(document).ready(function () {
 
@@ -64,17 +64,22 @@ $(document).ready(function () {
                 pre.split(',').forEach(function(val) {
                     if(val.length > 0) {
                         var tagInfo = val.split(':');
-                        that.options.prePopulate.push({
+                        var item = {
                             id: tagInfo[0],
                             label: tagInfo[2],
                             value: tagInfo[2],
                             result: {
                                 id: tagInfo[0],
-                                type: tagInfo[1]
+                                type: tagInfo[1].toLowerCase()
                             }
-                        });
+                        };
+                        that.options.prePopulate.push(item);
+                        that.options[item.result.type.toLowerCase()].selected.push(item);
+                        //console.log(item.result.type)
+                        //that.addEntityItem(that.options.prePopulate[that.options.prePopulate.length -1]);
                     }
                 });
+                console.log("sale preload")
             }
             console.log(that.options.dataSource)
             $(that.element).tokenInput(that.options.dataSource, {
