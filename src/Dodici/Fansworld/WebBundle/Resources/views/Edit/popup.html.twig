@@ -19,7 +19,7 @@
 
 	<div class="greybox">
 		<div class="uploadPhotoVideoForm">
-			<form action="" method="post" enctype="multipart/form-data" class="bigform upload-photo">
+			<form action="{{ path('edit_popup',{id:id, type:type}) }}" method="post" enctype="multipart/form-data" class="bigform upload-photo">
 				 <div class="row-fluid">
                     <section class="span7">
                         {{ form_widget(form) }}

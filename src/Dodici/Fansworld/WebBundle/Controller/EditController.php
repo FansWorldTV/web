@@ -62,6 +62,7 @@ class EditController extends SiteController
 
 	        $refresh = false; $form = null;
 			$prepopulate_info = '';
+			$idEntity = $id;
 
 	        if ($appstate->canEdit($entity)) {
 	        	$constraints = array();
@@ -109,21 +110,21 @@ class EditController extends SiteController
 	        		$id = $hasteam->getTeam()->getId();
 	        		$name = $hasteam->getTeam();
 	        		$tagteam .= $id.',';
-    	    		$prepopulate_info .= $id.':'.'Team'.':'.$name.',';
+    	    		$prepopulate_info .= $id.':'.'team'.':'.$name.',';
     	    	}
 
     	    	foreach($entity->getHasidols() as $hasidol) {
     	    		$id = $hasidol->getIdol()->getId();
 	        		$name = $hasidol->getIdol();
 	        		$tagidol .= $id.',';
-    	    		$prepopulate_info .= $id.':'.'Idol'.':"'.$name.'",';
+    	    		$prepopulate_info .= $id.':'.'idol'.':'.$name.',';
     	    	}
 
     	    	foreach($entity->getHasusers() as $hasuser) {
     	    		$id = $hasuser->getUser()->getId();
 	        		$name = $hasuser->getUser();
 	        		$taguser .= $id.',';
-    	    		$prepopulate_info .= $id.':'.'User'.':"'.$name.'",';
+    	    		$prepopulate_info .= $id.':'.'user'.':'.$name.',';
     	    	}
 
 		       	$constraints['tagtext'] = array();
@@ -219,7 +220,7 @@ class EditController extends SiteController
 	        	}
 	        }
 
-	        return array('form' => $form ? $form->createView() : null, 'refresh' => $refresh, 'json_prepopulate' => $prepopulate_info);
+	        return array('form' => $form ? $form->createView() : null, 'refresh' => $refresh, 'json_prepopulate' => $prepopulate_info, 'id' => $idEntity, 'type' => $type);
 
         } catch (\Exception $e) {
         	return new Response($e->getMessage(), 400);
