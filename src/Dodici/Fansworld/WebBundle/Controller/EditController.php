@@ -61,6 +61,7 @@ class EditController extends SiteController
 	        if (!$entity->getActive()) throw new \Exception('Entity has been deleted');
 
 	        $refresh = false; $form = null;
+			$prepopulate_info = '';
 
 	        if ($appstate->canEdit($entity)) {
 	        	$constraints = array();
@@ -103,21 +104,26 @@ class EditController extends SiteController
 				$tagidol = '';
 				$tagteam = '';
 				$taguser = '';
-				$prepopulate_info = '';
 
-	        	foreach($entity->getHasteams() as $team) {
-    	    		$tagteam .= $team->getId().',';
-    	    		$prepopulate_info .= $team->getId().',';
+	        	foreach($entity->getHasteams() as $hasteam) {
+	        		$id = $hasteam->getTeam()->getId();
+	        		$name = $hasteam->getTeam();
+	        		$tagteam .= $id.',';
+    	    		$prepopulate_info .= $id.':'.'Team'.':'.$name.',';
     	    	}
 
-    	    	foreach($entity->getHasidols() as $idol) {
-    	    		$tagidol .= $idol->getId().',';
-    	    		$prepopulate_info .= $idol->getId().',';
+    	    	foreach($entity->getHasidols() as $hasidol) {
+    	    		$id = $hasidol->getIdol()->getId();
+	        		$name = $hasidol->getIdol();
+	        		$tagidol .= $id.',';
+    	    		$prepopulate_info .= $id.':'.'Idol'.':"'.$name.'",';
     	    	}
 
-    	    	foreach($entity->getHasusers() as $userInfo) {
-    	    		$taguser .= $userInfo->getId().',';
-    	    		$prepopulate_info .= $userInfo->getId().',';
+    	    	foreach($entity->getHasusers() as $hasuser) {
+    	    		$id = $hasuser->getUser()->getId();
+	        		$name = $hasuser->getUser();
+	        		$taguser .= $id.',';
+    	    		$prepopulate_info .= $id.':'.'User'.':"'.$name.'",';
     	    	}
 
 		       	$constraints['tagtext'] = array();
@@ -183,13 +189,11 @@ class EditController extends SiteController
 		                    $em->persist($entity);
 		                    $em->flush();
 
-		                    /*
 		                    $tagtexts = explode(',', $data['tagtext']);
                     		$tagidols = explode(',', $data['tagidol']);
                     		$tagteams = explode(',', $data['tagteam']);
                     		$tagusers = explode(',', $data['taguser']);
                     		$this->_tagEntity($tagtexts, $tagidols, $tagteams, $tagusers, $user, $entity);
-							*/
 
 		                    $this->get('session')->setFlash('success', 'Has realizado tu modificación con éxito');
 
@@ -215,7 +219,7 @@ class EditController extends SiteController
 	        	}
 	        }
 
-	        return array('form' => $form ? $form->createView() : null, 'refresh' => $refresh);
+	        return array('form' => $form ? $form->createView() : null, 'refresh' => $refresh, 'json_prepopulate' => $prepopulate_info);
 
         } catch (\Exception $e) {
         	return new Response($e->getMessage(), 400);
