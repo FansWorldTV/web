@@ -60,7 +60,7 @@ $(document).ready(function () {
             that.options.dataSource = Routing.generate(appLocale + $(that.element).attr('data-route'));
             that.options.action = $(that.element).attr('data-action');
             var pre = $("#form_prepopulate").val();
-            if(pre.length > 0) {
+            if(typeof(pre) != 'undefined' && pre.length > 0) {
                 pre.split(',').forEach(function(val) {
                     if(val.length > 0) {
                         var tagInfo = val.split(':');
