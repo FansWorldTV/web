@@ -8,7 +8,7 @@
  *      appLocale
  */
 
-// fansWorld file upload plugin 1.4
+// fansWorld file upload plugin 1.5
 
 // the semi-colon before function invocation is a safety net against concatenated
 // scripts and/or other plugins which may not be closed properly.
@@ -302,7 +302,6 @@ $(document).ready(function () {
             return deferred.promise();
         },
         getMediaId: function(fileName, ks) {
-            "use strict";
             var that = this;
             var deferred = new jQuery.Deferred();
             $.ajax({

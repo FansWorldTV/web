@@ -29,6 +29,7 @@ $(document).ready(function () {
         text: {
             selected: []
         },
+        prePopulate: [],
         action: null,
         dataSource: null,
         onEntityAdd: function(entity) {},
@@ -58,13 +59,32 @@ $(document).ready(function () {
             //that.options.dataSource = Routing.generate(appLocale + '_tag_ajaxmatch');
             that.options.dataSource = Routing.generate(appLocale + $(that.element).attr('data-route'));
             that.options.action = $(that.element).attr('data-action');
+            var pre = $("#form_prepopulate").val();
+            if(pre.length > 0) {
+                pre.split(',').forEach(function(val) {
+                    if(val.length > 0) {
+                        var tagInfo = val.split(':');
+                        that.options.prePopulate.push({
+                            id: tagInfo[0],
+                            label: tagInfo[2],
+                            value: tagInfo[2],
+                            result: {
+                                id: tagInfo[0],
+                                type: tagInfo[1]
+                            }
+                        });
+                    }
+                });
+            }
             console.log(that.options.dataSource)
             $(that.element).tokenInput(that.options.dataSource, {
                 theme: that.options.theme,
                 queryParam: that.options.queryParam,
                 preventDuplicates: that.options.preventDuplicates,
                 propertyToSearch: that.options.propertyToSearch,
+                prePopulate: that.options.prePopulate,
                 onAdd: function(item) {
+                    console.log(item)
                     that.addEntityItem(item);
                 },
                 onDelete: function(item) {
