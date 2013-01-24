@@ -196,6 +196,8 @@ class EditController extends SiteController
                     		$tagusers = explode(',', $data['taguser']);
                     		$this->_tagEntity($tagtexts, $tagidols, $tagteams, $tagusers, $user, $entity);
 
+                            //test commit
+							
 		                    $this->get('session')->setFlash('success', 'Has realizado tu modificación con éxito');
 
 		                    if ($entity instanceof ForumPost) {
