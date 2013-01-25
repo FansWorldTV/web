@@ -187,17 +187,33 @@ class EditController extends SiteController
 		                    		}
 		                    	}
 		                    }
+
+                            $tagtext = explode(',', $data['tagtext']);
+                            $tagidol = explode(',', $data['tagidol']);
+                            $tagteam = explode(',', $data['tagteam']);
+                            $taguser = explode(',', $data['taguser']);
+
+                            $teams = array('type' => 'team', 'tags' => $tagteam, 'has' => $entity->getHasteams());
+                            $idols = array('type' => 'idol', 'tags' => $tagidol, 'has' => $entity->getHasidols());
+                            $users = array('type' => 'user', 'tags' => $taguser, 'has' => $entity->getHasusers());
+                            $entitiesTag = array($teams, $idols, $users);
+
+                            foreach ($entitiesTag as $ent) {
+                                foreach ($ent['has'] as $has) {
+                                    $method = 'get'.ucfirst($ent['type']);
+                                    if (!in_array($has->$method()->getId(), $ent['tags'])) {
+                                        $entity->removeHas($has);
+                                        $em->persist($entity);
+                                        $em->flush();
+                                    }
+                                }
+                            }
+
 		                    $em->persist($entity);
 		                    $em->flush();
 
-		                    $tagtexts = explode(',', $data['tagtext']);
-                    		$tagidols = explode(',', $data['tagidol']);
-                    		$tagteams = explode(',', $data['tagteam']);
-                    		$tagusers = explode(',', $data['taguser']);
-                    		$this->_tagEntity($tagtexts, $tagidols, $tagteams, $tagusers, $user, $entity);
+                    		$this->_tagEntity($tagtext, $tagidol, $tagteam, $taguser, $user, $entity);
 
-                            //test commit
-							
 		                    $this->get('session')->setFlash('success', 'Has realizado tu modificación con éxito');
 
 		                    if ($entity instanceof ForumPost) {
@@ -228,7 +244,6 @@ class EditController extends SiteController
         	return new Response($e->getMessage(), 400);
         }
     }
-
 
     private function _tagEntity ($tagtexts, $tagidols, $tagteams, $tagusers, $user, $entity) {
         $idolrepo = $this->getRepository('Idol');
