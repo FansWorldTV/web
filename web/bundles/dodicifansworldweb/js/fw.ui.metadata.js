@@ -7,7 +7,9 @@
  *      appLocale
  */
 
-// FansWorld tagify plugin 1.3 (prepopulate)
+// FansWorld tagify plugin 1.4 (prepopulate)
+// 1.4 fix FB.ui popup
+
 
 $(document).ready(function () {
 
@@ -183,7 +185,9 @@ $(document).ready(function () {
         },
         facebookMiddleware: function(){
             var that = this;
-            if ($(this).hasClass('active')) {
+            console.log("facebookMiddleware")
+            if ($(that.element).hasClass('active')) {
+                console.log("is active")
                 that.options.fb = true;
                 FB.ui({
                     method: 'permissions.request',
