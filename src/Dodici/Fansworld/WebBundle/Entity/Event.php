@@ -701,4 +701,25 @@ class Event implements SearchableInterface
     {
         return $this->teamcategory;
     }
+
+    public function removeHas($item)
+    {
+        if ($item instanceof HasTeam) {
+            $collection = &$this->hasteams;
+        } elseif ($item instanceof HasIdol) {
+            $collection = &$this->hasidols;
+        } elseif ($item instanceof HasUser) {
+            $collection = &$this->hasusers;
+        } elseif ($item instanceof HasTag) {
+            $collection = &$this->hastags;
+        }
+        
+        foreach ($collection as $i => $colitem) {
+            if ($colitem == $item) {
+                $collection->remove($i);
+                return true;
+            }
+        }
+        return false;
+    }
 }
