@@ -18,12 +18,13 @@ class Comment
 {
     // Normal comment
     const TYPE_COMMENT = 1;
+    // X has shared content Y
+    const TYPE_SHARE = 4;
+    
     // X and Y are now friends
     const TYPE_NEW_FRIEND = 2; // DEPRECATED
     // X has been labelled in content Y
     const TYPE_LABELLED = 3; // DEPRECATED
-    // X has shared content Y
-    const TYPE_SHARE = 4; // DEPRECATED
     // X likes content Y
     const TYPE_LIKES = 5; // DEPRECATED
     // X (idol) has a new forumthread
