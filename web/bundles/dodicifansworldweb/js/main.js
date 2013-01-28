@@ -33,9 +33,12 @@ var site = {
         });
 
         $('.report').colorbox({
-            'iframe': true,
-            'innerWidth': 350,
-            'innerHeight': 200
+            href: this.href,
+            innerWidth: 358,
+            innerHeight: 263,
+            onComplete: function () {
+                resizePopup();
+            }
         });
 
         $(".editbutton").colorbox({

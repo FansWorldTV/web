@@ -45,9 +45,9 @@ class ComplaintController extends SiteController
 
                 $complaint = new Complaint();
                 $complaint->setAuthor($author);
-                
+
                 $setEntity = "set" . ucfirst($entityType);
-                
+
                 $complaint->$setEntity($entity);
                 $complaint->setContent($comment);
                 $complaint->setComplaintCategory($category);
@@ -55,7 +55,7 @@ class ComplaintController extends SiteController
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($complaint);
                 $em->flush();
-                
+
                 $response['error'] = false;
             } catch (\Exception $exc) {
                 $response['error'] = true;
@@ -65,7 +65,7 @@ class ComplaintController extends SiteController
 
         return $this->jsonResponse($response);
     }
-    
+
     /**
      * report form view
      * @Route("/report/{entityType}/{entityId}", name= "complaint_form")
@@ -76,14 +76,14 @@ class ComplaintController extends SiteController
         $categories = $this->getRepository('ComplaintCategory')->findBy(array(), array());
         $entity = $this->getRepository($entityType)->find($entityId);
         $reported = false;
-        
+
         $user = $this->getUser();
-        
+
         $complaintReported = $this->getRepository('Complaint')->findOneBy(array('author' => $user->getId(), $entityType => $entityId));
         if($complaintReported){
             $reported = true;
         }
-        
+
         return array(
             'categories' => $categories,
             'entityType' => $entityType,
@@ -91,7 +91,7 @@ class ComplaintController extends SiteController
             'reported' => $reported
         );
     }
-    
+
     /**
      * list complaints
      * @Route("/reports", name="complaint_list" )
@@ -102,14 +102,14 @@ class ComplaintController extends SiteController
     {
         $complaints = $this->getRepository('Complaint')->getByEntity(self::LIMIT_LIST);
         $countAll = $this->getRepository('Complaint')->countBy(array());
-        
+
         $addMore = $countAll > self::LIMIT_LIST ?  true : false;
-        
+
         return array('complaints' => $complaints, 'addMore' => $addMore);
     }
-    
+
     /**
-     * ajax list complaints 
+     * ajax list complaints
      * @Route("/ajax/reports", name="complaint_ajaxlist")
      */
     public function ajaxListComplaintsAction()
@@ -119,19 +119,19 @@ class ComplaintController extends SiteController
         $page = $request->get('page', 1);
         $page = (int) $page;
         $offset = ( $page -1 ) * self::LIMIT_LIST;
-        
+
         if(empty($complaintType)){
             $complaintType = null;
         }
-        
+
         $response = array();
-        
+
         $complaints = $this->getRepository('Complaint')->getByEntity(self::LIMIT_LIST, $offset, $complaintType);
         $countAll = $this->getRepository('Complaint')->countBy(array());
-        
+
         $pageCount= $countAll / self::LIMIT_LIST;
         $response['addMore'] = $pageCount > $page ? true : false;
-        
+
         foreach($complaints as $complaint){
             $response['complaints'][] = array(
                 'author' => (string) $complaint->getAuthor(),
@@ -142,7 +142,7 @@ class ComplaintController extends SiteController
                 'target' => $complaint->getTarget() ? $complaint->getTarget()->getId() : false
             );
         }
-        
+
         return $this->jsonResponse($response);
     }
 

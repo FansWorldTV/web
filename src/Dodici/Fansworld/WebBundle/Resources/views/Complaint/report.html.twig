@@ -7,11 +7,14 @@
 
 {% block content %}
     {% if not reported%}
-        <div id="report" style="height: 120px">
+
+
+        <div id="report">
+             <div class="greybox">
             <form id="complaintReport" name="report" method="post">
                 <label>{{ 'Category'|trans }}:</label>
                 <br/>
-                <select name="category" id="category" class="category" style="width: 300px">
+                <select name="category" id="category" class="category" data-report-category>
                     {% for category in categories %}
                         <option value="{{ category.id }}">{{ category }}</option>
                     {% endfor %}
@@ -19,12 +22,12 @@
                 <br/>
                 <label>{{ 'Comment'|trans }}:</label>
                 <br/>
-                <textarea name="comment" id="comment" class="comment" style="width: 300px"></textarea>
+                <textarea name="comment" id="comment" class="comment" data-report-coment></textarea>
                 <br/>
-                <input type="submit" name="submit" value="{{ 'Report'|trans }}" />
+                <input type="submit" class="btn btn-primary" name="submit" data-report-submit value="{{ 'Report'|trans }}" id="submit-report" />
             </form>
         </div>
-
+</div>
         <script type="text/javascript">
             $(document).ready(function(){
                 $("#complaintReport").live('submit', function(){
@@ -33,7 +36,7 @@
                         'id': {{ entityId }},
                         'comment': $("#complaintReport textarea.comment").val(),
                         'category': $("#complaintReport select option:selected").attr("value")
-                    }, 
+                    },
                     function(response){
                         console.log(response);
                         window.top.$.colorbox.close();
@@ -46,6 +49,12 @@
             });
         </script>
     {% else %}
-        <h2>{{ 'You\'ve already reported'|trans}}.</h2>
+    <div id="report">
+        <div class="greybox">
+            <div class="alreadyReported">
+                <h3>{{ 'You\'ve already reported'|trans }} </h3>
+            </div>
+        </div>
+    </div>
     {% endif %}
 {% endblock %}

@@ -24,14 +24,18 @@
                         #}
 
         <div class="internal_buttons">
+
+    {% if (type == 'photo' or type == 'video' ) %}
     {% if reportbutton %}
-                <a class="btn report" href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}"><i class="icon-flag"></i></a> 
+                <a class="btn report" href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}"><i class="icon-flag"></i></a>
     {% endif %}
+    {% endif %}
+
 
     {% if (type == 'photo' or type == 'video' or type == 'album') and entity.author == app.user and editbutton %}
             {% include 'DodiciFansworldWebBundle:Default:edit_button.html.twig' with {entity: entity, type: type} %}
             {#{% include 'DodiciFansworldWebBundle:Default:delete_button.html.twig' with {entity: entity, type: type} %}#}
-    {% endif %} 
+    {% endif %}
 
     {% if sharebutton %}
       {% include 'DodiciFansworldWebBundle:Default:share_button.html.twig' with {entity: entity} %}
