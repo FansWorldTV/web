@@ -7,9 +7,9 @@
  *      appLocale
  */
 
-// FansWorld tagify plugin 1.4 (prepopulate)
+// FansWorld tagify plugin 1.5 (prepopulate)
 // 1.4 fix FB.ui popup
-
+// 1.5 add 'user' type to tagifier
 
 $(document).ready(function () {
 
@@ -28,6 +28,9 @@ $(document).ready(function () {
         idol: {
             selected: []
         },
+        user: {
+            selected: []
+        }
         text: {
             selected: []
         },
@@ -86,9 +89,9 @@ $(document).ready(function () {
             console.log(that.options.dataSource)
             $(that.element).tokenInput(that.options.dataSource, {
                 theme: that.options.theme,
-                queryParam: that.options.queryParam,
-                preventDuplicates: that.options.preventDuplicates,
-                propertyToSearch: that.options.propertyToSearch,
+                queryParam: that.options.queryParam || "text",
+                preventDuplicates: that.options.preventDuplicates || true,
+                propertyToSearch: that.options.propertyToSearch || "label",
                 prePopulate: that.options.prePopulate,
                 onAdd: function(item) {
                     console.log(item)
