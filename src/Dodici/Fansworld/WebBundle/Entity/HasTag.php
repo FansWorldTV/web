@@ -131,6 +131,16 @@ class HasTag
      */
     private $comment;
     
+    /**
+     * @var Activity
+     *
+     * @ORM\ManyToOne(targetEntity="Activity")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="activity_id", referencedColumnName="id")
+     * })
+     */
+    private $activity;
+    
 	/**
      * @ORM\PrePersist()
      */
@@ -370,5 +380,25 @@ class HasTag
     public function getMeeting()
     {
         return $this->meeting;
+    }
+
+    /**
+     * Set activity
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Activity $activity
+     */
+    public function setActivity(\Dodici\Fansworld\WebBundle\Entity\Activity $activity)
+    {
+        $this->activity = $activity;
+    }
+
+    /**
+     * Get activity
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Activity 
+     */
+    public function getActivity()
+    {
+        return $this->activity;
     }
 }

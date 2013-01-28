@@ -186,10 +186,14 @@ services:
         class: Dodici\Fansworld\WebBundle\Listener\LikingCountUpdater
         tags:
             - { name: doctrine.event_listener, event: postPersist }
+        arguments:
+            - "@service_container"
     liking.listener.remove:
         class: Dodici\Fansworld\WebBundle\Listener\LikingCountUpdater
         tags:
             - { name: doctrine.event_listener, event: postRemove }
+        arguments:
+            - "@service_container"
     tag.listener.persist:
         class: Dodici\Fansworld\WebBundle\Listener\TagUpdater
         tags:
@@ -202,10 +206,14 @@ services:
         class: Dodici\Fansworld\WebBundle\Listener\Notificator
         tags:
             - { name: doctrine.event_listener, event: postPersist }
+        arguments:
+            - "@service_container"
     notificator.listener.update:
         class: Dodici\Fansworld\WebBundle\Listener\Notificator
         tags:
             - { name: doctrine.event_listener, event: postUpdate }
+        arguments:
+            - "@service_container"
     subscriptionnotificator.listener.persist:
         class: Dodici\Fansworld\WebBundle\Listener\SubscriptionNotificator
         tags:
@@ -331,7 +339,7 @@ services:
       arguments: [@doctrine.orm.entity_manager, @appstate]
     sharer:
       class: Dodici\Fansworld\WebBundle\Services\Sharer
-      arguments: [@doctrine.orm.entity_manager, @security.context, @appstate, @messenger]
+      arguments: [@doctrine.orm.entity_manager, @security.context, @appstate, @messenger, @user.feed.logger]
     messenger:
       class: Dodici\Fansworld\WebBundle\Services\Messenger
       arguments: [@doctrine.orm.entity_manager, @security.context, @appstate]
@@ -346,10 +354,10 @@ services:
       arguments: [@security.context, @doctrine.orm.entity_manager, @session, @appstate]
     friender:
       class: Dodici\Fansworld\WebBundle\Services\Friender
-      arguments: [@security.context, @doctrine.orm.entity_manager, @appstate]
+      arguments: [@security.context, @doctrine.orm.entity_manager, @appstate, @user.feed.logger]
     fanmaker:
       class: Dodici\Fansworld\WebBundle\Services\Fanmaker
-      arguments: [@security.context, @doctrine.orm.entity_manager]
+      arguments: [@security.context, @doctrine.orm.entity_manager, @user.feed.logger]
     subscriptions:
       class: Dodici\Fansworld\WebBundle\Services\Subscriptions
       arguments: [@security.context, @doctrine.orm.entity_manager]
@@ -359,11 +367,14 @@ services:
     user.feed:
       class: Dodici\Fansworld\WebBundle\Services\UserFeed
       arguments: [@security.context, @doctrine.orm.entity_manager, @appmedia]
+    user.feed.logger:
+      class: Dodici\Fansworld\WebBundle\Services\UserFeedLogger
+      arguments: [@security.context, @doctrine.orm.entity_manager]
     fixture.csvtoyml:
       class: Dodici\Fansworld\WebBundle\Services\FixtureCsvToYaml
     eventship.manager:
       class: Dodici\Fansworld\WebBundle\Services\EventshipManager
-      arguments: [@security.context, @doctrine.orm.entity_manager, @meteor]
+      arguments: [@security.context, @doctrine.orm.entity_manager, @meteor, @user.feed.logger]
     video.audience:
       class: Dodici\Fansworld\WebBundle\Services\VideoAudienceManager
       arguments: [@security.context, @doctrine.orm.entity_manager, @meteor]

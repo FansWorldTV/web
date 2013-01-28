@@ -2,6 +2,7 @@
 
 namespace Dodici\Fansworld\WebBundle\Listener;
 
+use Dodici\Fansworld\WebBundle\Entity\Activity;
 use Dodici\Fansworld\WebBundle\Entity\Comment;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -14,6 +15,13 @@ use Dodici\Fansworld\WebBundle\Entity\Privacy;
  */
 class LikingCountUpdater
 {
+    
+    protected $container;
+
+    function __construct($container)
+    {
+        $this->container = $container;
+    }
     
 	public function postPersist(LifecycleEventArgs $eventArgs)
     {
@@ -44,10 +52,12 @@ class LikingCountUpdater
 			if ($video) {
 				$video->likeUp();
 				$em->persist($video);
+                $this->container->get('user.feed.logger')->log(Activity::TYPE_LIKED, $video, $entity->getAuthor(), false);
 			}
 			if ($photo) {
 				$photo->likeUp();
 				$em->persist($photo);
+				$this->container->get('user.feed.logger')->log(Activity::TYPE_LIKED, $photo, $entity->getAuthor(), false);
 			}
 			if ($newspost) {
 				$newspost->likeUp();
@@ -58,7 +68,7 @@ class LikingCountUpdater
 				$em->persist($newspost);
 			}
 			
-			$this->createLikesComment($em, $entity);
+			//$this->createLikesComment($em, $entity);
 			
 			$em->flush();
 		}

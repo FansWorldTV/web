@@ -2,6 +2,7 @@
 
 namespace Dodici\Fansworld\WebBundle\Services;
 
+use Dodici\Fansworld\WebBundle\Entity\Activity;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,13 +21,15 @@ class Sharer
     protected $security_context;
     protected $user;
     protected $messenger;
+    protected $userfeedlogger;
 
-    function __construct(EntityManager $em, SecurityContext $security_context, $appstate, $messenger)
+    function __construct(EntityManager $em, SecurityContext $security_context, $appstate, $messenger, $userfeedlogger)
     {
         $this->request = Request::createFromGlobals();
         $this->em = $em;
         $this->appstate = $appstate;
         $this->messenger = $messenger;
+        $this->userfeedlogger = $userfeedlogger;
         $this->security_context = $security_context;
         $this->user = null;
         $user = $security_context->getToken() ? $security_context->getToken()->getUser() : null;
@@ -88,6 +91,9 @@ class Sharer
         $comment->setShare($share);
 
         $this->em->persist($comment);
+        
+        $this->userfeedlogger->log(Activity::TYPE_SHARED, $targetentity, $author, false);
+        
         $this->em->flush();
     }
 

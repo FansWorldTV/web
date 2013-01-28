@@ -2,6 +2,7 @@
 
 namespace Dodici\Fansworld\WebBundle\Services;
 
+use Dodici\Fansworld\WebBundle\Entity\Activity;
 use Symfony\Component\Security\Core\SecurityContext;
 use Dodici\Fansworld\WebBundle\Listener\ScoreHandler;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
@@ -18,12 +19,14 @@ class Friender
     protected $em;
 	protected $appstate;
     protected $user;
+    protected $userfeedlogger;
 
-    function __construct(SecurityContext $security_context, EntityManager $em, $appstate)
+    function __construct(SecurityContext $security_context, EntityManager $em, $appstate, $userfeedlogger)
     {
         $this->security_context = $security_context;
         $this->em = $em;
         $this->appstate = $appstate;
+        $this->userfeedlogger = $userfeedlogger;
         $this->user = null;
         $user = $security_context->getToken() ? $security_context->getToken()->getUser() : null;
         if ($user instanceof User) {
@@ -71,6 +74,7 @@ class Friender
         $notification = new Notification();
         if ($friendship->getActive()) {
 		    $notification->setType(Notification::TYPE_FRIENDSHIP_NEW_FAN);
+		    $this->userfeedlogger->log(Activity::TYPE_BECAME_FAN, $friendship->getTarget(), $friendship->getAuthor(), false);
         } else {
             $notification->setType(Notification::TYPE_FRIENDSHIP_PENDING);
             $notification->setFriendship($friendship);
@@ -79,7 +83,7 @@ class Friender
 		$notification->setAuthor($friendship->getAuthor());
 		$notification->setTarget($friendship->getTarget());
 		$this->em->persist($notification);
-        
+		
         $this->em->flush();
         
         // notify new?
@@ -137,26 +141,11 @@ class Friender
 		$notification->setTarget($friendship->getAuthor());
 		$this->em->persist($notification);
 		
+		$this->userfeedlogger->log(Activity::TYPE_BECAME_FAN, $friendship->getTarget(), $friendship->getAuthor(), false);
+		
 		$this->markPendingAsRead($friendship);
 		
 		$this->newFanNotification($friendship);
-        
-        /*
-        // wall: juan es ahora amigo de carlitos
-        $comment = new Comment();
-		$comment->setType(Comment::TYPE_NEW_FRIEND);
-		$comment->setAuthor($friendship->getTarget());
-		$comment->setTarget($friendship->getAuthor());
-		$comment->setPrivacy(Privacy::FRIENDS_ONLY);
-		$this->em->persist($comment);
-		// wall: inverso
-		$comment = new Comment();
-		$comment->setType(Comment::TYPE_NEW_FRIEND);
-		$comment->setAuthor($friendship->getAuthor());
-		$comment->setTarget($friendship->getTarget());
-		$comment->setPrivacy(Privacy::FRIENDS_ONLY);
-		$this->em->persist($comment);
-		*/
     }
     
     private function markPendingAsRead(Friendship $friendship, $remove=false)

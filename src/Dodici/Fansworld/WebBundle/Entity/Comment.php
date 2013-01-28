@@ -19,21 +19,21 @@ class Comment
     // Normal comment
     const TYPE_COMMENT = 1;
     // X and Y are now friends
-    const TYPE_NEW_FRIEND = 2;
+    const TYPE_NEW_FRIEND = 2; // DEPRECATED
     // X has been labelled in content Y
-    const TYPE_LABELLED = 3;
+    const TYPE_LABELLED = 3; // DEPRECATED
     // X has shared content Y
-    const TYPE_SHARE = 4;
+    const TYPE_SHARE = 4; // DEPRECATED
     // X likes content Y
-    const TYPE_LIKES = 5;
+    const TYPE_LIKES = 5; // DEPRECATED
     // X (idol) has a new forumthread
-    const TYPE_NEW_THREAD = 6;
+    const TYPE_NEW_THREAD = 6; // DEPRECATED
     // X (idol) answered in a thread. No longer in use
-    const TYPE_THREAD_ANSWERED = 7;
+    const TYPE_THREAD_ANSWERED = 7; // DEPRECATED
     // X has uploaded a new photo
-    const TYPE_NEW_PHOTO = 8;
+    const TYPE_NEW_PHOTO = 8; // DEPRECATED
     // X has uploaded a new video
-    const TYPE_NEW_VIDEO = 9;
+    const TYPE_NEW_VIDEO = 9; // DEPRECATED
 
     /**
      * @var bigint $id

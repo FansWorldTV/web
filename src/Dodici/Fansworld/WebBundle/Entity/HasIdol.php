@@ -141,6 +141,16 @@ class HasIdol
      */
     private $forumthread;
     
+    /**
+     * @var Activity
+     *
+     * @ORM\ManyToOne(targetEntity="Activity")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="activity_id", referencedColumnName="id")
+     * })
+     */
+    private $activity;
+    
 	/**
      * @ORM\PrePersist()
      */
@@ -401,5 +411,25 @@ class HasIdol
     public function getForumthread()
     {
         return $this->forumthread;
+    }
+
+    /**
+     * Set activity
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Activity $activity
+     */
+    public function setActivity(\Dodici\Fansworld\WebBundle\Entity\Activity $activity)
+    {
+        $this->activity = $activity;
+    }
+
+    /**
+     * Get activity
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Activity 
+     */
+    public function getActivity()
+    {
+        return $this->activity;
     }
 }

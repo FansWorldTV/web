@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Services;
 
+use Dodici\Fansworld\WebBundle\Entity\Activity;
+
 use Dodici\Fansworld\WebBundle\Entity\Team;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Dodici\Fansworld\WebBundle\Entity\Event;
@@ -19,12 +21,14 @@ class EventshipManager
     protected $em;
     protected $user;
     protected $meteor;
+    protected $userfeedlogger;
 
-    function __construct(SecurityContext $security_context, EntityManager $em, $meteor)
+    function __construct(SecurityContext $security_context, EntityManager $em, $meteor, $userfeedlogger)
     {
         $this->security_context = $security_context;
         $this->em = $em;
         $this->meteor = $meteor;
+        $this->userfeedlogger = $userfeedlogger;
         $this->user = null;
         $user = $security_context->getToken() ? $security_context->getToken()->getUser() : null;
         if ($user instanceof User) {
@@ -47,6 +51,9 @@ class EventshipManager
         $eventship->setType($eventshipType);
 
         $this->em->persist($eventship);
+        
+        $this->userfeedlogger->log(Activity::TYPE_CHECKED_IN, $event, $author, false);
+        
         $this->em->flush();
 
         $this->meteor->addEventship($eventship);

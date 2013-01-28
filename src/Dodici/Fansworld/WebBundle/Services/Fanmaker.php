@@ -2,6 +2,7 @@
 
 namespace Dodici\Fansworld\WebBundle\Services;
 
+use Dodici\Fansworld\WebBundle\Entity\Activity;
 use Dodici\Fansworld\WebBundle\Entity\Teamship;
 use Dodici\Fansworld\WebBundle\Entity\Idolship;
 use Dodici\Fansworld\WebBundle\Entity\Team;
@@ -16,11 +17,13 @@ class Fanmaker
     protected $security_context;
     protected $em;
     protected $user;
+    protected $userfeedlogger;
 
-    function __construct(SecurityContext $security_context, EntityManager $em)
+    function __construct(SecurityContext $security_context, EntityManager $em, $userfeedlogger)
     {
         $this->security_context = $security_context;
         $this->em = $em;
+        $this->userfeedlogger = $userfeedlogger;
         $this->user = null;
         $user = $security_context->getToken() ? $security_context->getToken()->getUser() : null;
         if ($user instanceof User) {
@@ -47,6 +50,9 @@ class Fanmaker
             $idolship->setAuthor($user);
             $idolship->setIdol($entity);
             $this->em->persist($idolship);
+            
+            $this->userfeedlogger->log(Activity::TYPE_BECAME_FAN, $entity, $user, false);
+            
             if ($flush) $this->em->flush();
             return true;
         } elseif ($entity instanceof Team) {
@@ -54,6 +60,9 @@ class Fanmaker
             $teamship->setAuthor($user);
             $teamship->setTeam($entity);
             $this->em->persist($teamship);
+            
+            $this->userfeedlogger->log(Activity::TYPE_BECAME_FAN, $entity, $user, false);
+            
             if ($flush) $this->em->flush();
             return true;
         }

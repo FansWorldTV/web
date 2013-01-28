@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Listener;
 
+use Dodici\Fansworld\WebBundle\Entity\Activity;
+
 use Dodici\Fansworld\WebBundle\Entity\Comment;
 use Dodici\Fansworld\WebBundle\Entity\ForumPost;
 use Dodici\Fansworld\WebBundle\Entity\ForumThread;
@@ -20,6 +22,13 @@ use Application\Sonata\UserBundle\Entity\User;
  */
 class Notificator
 {
+    
+    protected $container;
+
+    function __construct($container)
+    {
+        $this->container = $container;
+    }
     
 	public function postPersist(LifecycleEventArgs $eventArgs)
     {
@@ -47,25 +56,16 @@ class Notificator
     		if ($entity->getContest()) $notification->setContest($entity->getContest());
     		if ($entity->getNewspost()) $notification->setNewspost($entity->getNewspost());
     		$em->persist($notification);
-			// wall: ha sido etiquetado en ...
-			$comment = new Comment();
-			$comment->setType(Comment::TYPE_LABELLED);
-			$comment->setAuthor($entity->getTarget());
-			$comment->setTarget($entity->getTarget());
-			$comment->setPrivacy(Privacy::FRIENDS_ONLY);
 			
-			$share = new Share();
-    		if ($entity->getComment()) $share->setComment($entity->getComment());
-    		if ($entity->getAlbum()) $share->setAlbum($entity->getAlbum());
-    		if ($entity->getPhoto()) $share->setPhoto($entity->getPhoto());
-    		if ($entity->getVideo()) $share->setVideo($entity->getVideo());
-    		if ($entity->getContest()) $share->setContest($entity->getContest());
-    		if ($entity->getNewspost()) $share->setNewspost($entity->getNewspost());
-    		
-    		$comment->setShare($share);
-			
-    		$em->persist($comment);
-			
+    		// activity: ha sido etiquetado en ...
+			if ($entity->getPhoto() || $entity->getVideo())
+    		    $this->container->get('user.feed.logger')->log(
+    		        Activity::TYPE_LABELLED_IN, 
+    		        array($entity->getPhoto(), $entity->getVideo()), 
+    		        $entity->getTarget(), 
+    		        false
+    		    );
+						
 			$em->flush();
 		}
 		
@@ -85,31 +85,12 @@ class Notificator
 		}
 		
 		if ($entity instanceof Photo && $entity->getAuthor()) {
-			$comment = new Comment();
-			$comment->setType(Comment::TYPE_NEW_PHOTO);
-			$comment->setAuthor($entity->getAuthor());
-			$comment->setTarget($entity->getAuthor());
-			$comment->setPrivacy($entity->getPrivacy());
-			
-			$share = new Share();
-			$share->setPhoto($entity);
-    		$comment->setShare($share);
-			$em->persist($comment);
-			$em->flush();
+			// activity: new photo
+			$this->container->get('user.feed.logger')->log(Activity::TYPE_NEW_PHOTO, $entity, $entity->getAuthor());
 		}
 		
     	if ($entity instanceof Video && $entity->getAuthor() && !$entity->getHighlight()) {
-			$comment = new Comment();
-			$comment->setType(Comment::TYPE_NEW_VIDEO);
-			$comment->setAuthor($entity->getAuthor());
-			$comment->setTarget($entity->getAuthor());
-			$comment->setPrivacy($entity->getPrivacy());
-			
-			$share = new Share();
-			$share->setVideo($entity);
-    		$comment->setShare($share);
-			$em->persist($comment);
-			$em->flush();
+			$this->container->get('user.feed.logger')->log(Activity::TYPE_NEW_VIDEO, $entity, $entity->getAuthor());
 		} elseif ($entity instanceof Video && $entity->getHighlight() && $entity->getProcessed() && $entity->getActive() && !$entity->getNotified()) {
 		    $this->notifyNewIdolTeamVideo($entity, $em);
 		    $entity->setNotified(true);
@@ -144,6 +125,11 @@ class Notificator
         
         foreach ($hasteams as $ht) $teams[] = $ht->getTeam();
         foreach ($hasidols as $ht) $idols[] = $ht->getIdol();
+        
+        $related = array_merge(array($video), $teams, $idols);
+        
+        $this->container->get('user.feed.logger')->log(Activity::TYPE_NEW_VIDEO, $related, false, false);
+        
         $users = array();
         
         $usersteams = array(); $usersidols = array();
