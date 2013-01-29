@@ -2,20 +2,21 @@ header.home-header {
     font-family: "Open Sans";
     color: @white;
     .size(700px, 100%);
-    background: url('../images/back-nasty.jpg');
+    //background: url('../images/back-nasty.jpg');
+    background-color: @black;
     position: relative;
     margin-bottom: 20px;
 
     h1.title {
         padding-top: 30px;
         margin-bottom: 60px;
-        font-size: 35px;
-        font-weight: 100;
+        font-size: 25px;
+        font-weight: 300;
         color: @white;
         text-align: center;
         
         b {
-            font-weight: bold;
+            font-weight: 600;
         }
     }
 
@@ -33,7 +34,7 @@ header.home-header {
             li {
                 text-align: left;
                 color: @gray;
-                font-size: 25px;
+                font-size: 20px;
                 font-weight: 300;
                 padding: 20px;
                 background-color: transparent;
@@ -61,8 +62,9 @@ header.home-header {
             }
 
             i.play-video {
-                background-image: url('../images/ui/play_video.png');
-                .square(78px);
+                background-image: url('../images/play-icon.png');
+                background-size: 100px;
+                .square(100px);
                 position: absolute;
                 left: 39%;
                 top: 39%;
@@ -130,25 +132,28 @@ header.home-header {
     }
 
     ul.tabs {
-        position: absolute;
-        bottom: 0;
+        width: 461px;
+        margin: 0 auto;
+        display: block;
+        position: relative;
+        margin-top: 98px;
 
-        &[data-user-logged*="true"]{
+        /*&[data-user-logged*="true"]{
             left: 39%;
         }
 
         &[data-user-logged*="false"]{
             left: 31%;
-        }
+        }*/
 
         li {
             .pull-left();
-            font-size: 40px;
+            font-size: 25px;
             font-family: "Open Sans";
             font-weight: normal;
             color: @white;
             .size(auto, auto);
-            padding: 30px;
+            padding: 25px;
             cursor: pointer;
 
             &.active {
@@ -165,10 +170,12 @@ section.home-content {
     font-family: "Open Sans";
 
     h1.legend {
+        font-size: 25px;
         text-align: center;
-        font-weight: normal;
+        font-weight: 300;
+        
         b {
-            font-weight: bold;
+            font-weight: 600;
         }
     }
 
@@ -182,14 +189,20 @@ section.home-content {
                 padding-left: 20px;
 
                 span.label {
-                    font-size: 17px;
+                    font-size: 13px;
                     font-weight: 300;
                     color: @black;
                     cursor: pointer;
+                    padding: 10px;
 
                     &.active {
                         background-color: @green;
                         color: @white;
+                    }
+
+                    &:hover {
+                        color: @white;
+                        background-color: @green;
                     }
                 }
             }
@@ -222,11 +235,11 @@ section.home-content {
             .elements {
                 /* Prevent vertical gaps */
                 line-height: 0;
-                -webkit-column-count: 4;
+                -webkit-column-count: 5;
                 -webkit-column-gap:   10px;
-                -moz-column-count:    4;
+                -moz-column-count:    5;
                 -moz-column-gap:      10px;
-                column-count:         4;
+                column-count:         5;
                 column-gap:           10px;
                 margin-top:         30px;
 
@@ -239,8 +252,9 @@ section.home-content {
                 margin-bottom: 10px;
 
                 i.play-video {
-                    background-image: url('../images/ui/play_video.png');
-                    .square(78px);
+                    background-image: url('../images/play-icon.png');
+                    background-size: 50px;
+                    .square(50px);
                     position: absolute;
                     left: 39%;
                     top: 30%;
@@ -264,6 +278,7 @@ section.home-content {
                     width: 100%;
                     height: 100px;
                     background-color: @black;
+                    opacity: 0.8;
                     
                     .title {
                         width: 100%;
