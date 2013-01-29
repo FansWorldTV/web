@@ -215,7 +215,7 @@ class VideoUploadController extends SiteController
                     $tagidols = explode(',', $data['tagidol']);
                     $tagteams = explode(',', $data['tagteam']);
                     $tagusers = explode(',', $data['taguser']);
-                    $this->_tagEntity($tagtexts, $tagidols, $tagteams, $tagusers, $user, $video);
+                    $tagitems = $this->_tagEntity($tagtexts, $tagidols, $tagteams, $tagusers, $user, $video);
 
                     function toBoolean(&$var) {$var = $var == 'true' ? true : false;}
                     $shareEntities = array(
@@ -227,6 +227,25 @@ class VideoUploadController extends SiteController
 
                     // $this->get('session')->setFlash('success', $this->trans('upload_sucess'));
                     // $redirectColorBox = true;
+                    
+                    // Set data on kaltura
+                    try {
+                        $entrydata = array(
+                            'name' => $video->getTitle(),
+                            'description' => $video->getContent()
+                        );
+                        
+                        $tagsintext = array();
+                        foreach ($tagitems as $ti) $tagsintext[] = (string)$ti;
+                        if ($tagsintext) $entrydata['tags'] = implode(', ', $tagsintext);
+                        
+                        $this->get('kaltura')->updateEntry(
+                            $video->getStream(),
+                            $entrydata
+                        );
+                    } catch (\Exception $e) {
+                        // error updating entry, ignore for now
+                    }
 
                     return $this->forward('DodiciFansworldWebBundle:VideoUpload:fileMeta',
                         array('entryid' => $data['entryid'], 'title' => $data['title'],
@@ -316,6 +335,8 @@ class VideoUploadController extends SiteController
 
         if (!empty($tagitems))
             $this->get('tagger')->tag($user, $video, $tagitems);
+            
+        return $tagitems;
     }
 
     private function _shareVideo ($video, $toFb, $toTw, $toFw, $shareMessage, $entities) {

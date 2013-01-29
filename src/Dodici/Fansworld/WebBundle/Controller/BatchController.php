@@ -3,7 +3,7 @@
 namespace Dodici\Fansworld\WebBundle\Controller;
 
 use Dodici\Fansworld\WebBundle\Entity\EventTweet;
-
+use Kaltura\Client\Enum\EntryStatus;
 use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Doctrine\ORM\EntityManager;
@@ -134,9 +134,17 @@ class BatchController extends SiteController
         set_time_limit(600);
         $videos = $this->getRepository('Video')->pendingProcessing(10);
         $uploader = $this->get('video.uploader');
+        $kaltura = $this->get('kaltura');
         
         foreach ($videos as $video) {
-            $uploader->process($video);
+            try {
+                $entry = $kaltura->getEntry($video->getStream());
+                if ($entry && ($entry->status == EntryStatus::READY)) {
+                    $uploader->process($video, $entry->thumbnailUrl, $entry->msDuration);
+                }
+            } catch (\Exception $e) {
+                // entry doesn't exist or something went wrong, do nothing for now
+            }
         }
         
         return new Response('Ok');

@@ -1,4 +1,46 @@
 -
+  id: 1
+  teamcategory: 1
+  title: Club Atlético Boca Juniors
+  foundedAt: "1905-03-04"
+  nicknames: Xeneize, Bosteros, La Mitad más 1
+  letters: CABJ
+  shortname: Boca
+  stadium: Alberto J. Armando, "La Bombonera"
+  website: http://www.bocajuniors.com.ar/
+  twitter: bocajrsoficial
+  country: 13
+  external: 5
+
+-
+  id: 2
+  teamcategory: 1
+  title: Club Atlético Tigre
+  foundedAt: "1902-03-08"
+  nicknames: El Matador
+  letters: CAT
+  shortname: Tigre
+  stadium: José Dellagiovanna, "El Monumental de Victoria"
+  website: http://www.catigre.com.ar/
+  twitter: catigreoficial
+  country: 13
+  external: 136
+
+-
+  id: 3
+  teamcategory: 1
+  title: Club Atlético Newell's Old Boys
+  foundedAt: "1903-03-11"
+  nicknames: La Lepra
+  letters: NOB
+  shortname: Newell´s
+  stadium: Marcelo Bielsa, "El Coloso del Parque"
+  website: http://www.newellsoldboys.com.ar/
+  twitter: canoboficial
+  country: 13
+  external: 13
+
+-
   id: 4
   teamcategory: 1
   title: Club Atlético All Boys
@@ -11,6 +53,48 @@
   twitter: caallboys
   country: 13
   external: 668
+
+-
+  id: 5
+  teamcategory: 1
+  title: Arsenal Fútbol Club
+  foundedAt: "1957-11-01"
+  nicknames: Arse, Los del Viaducto
+  letters: AFC
+  shortname: Arsenal
+  stadium: Julio Humberto Grondona
+  website: http://www.celesteyrojo.com.ar/
+  twitter: CelesteyRojo
+  country: 13
+  external: 3
+
+-
+  id: 6
+  teamcategory: 1
+  title: Club Atletico Colón
+  foundedAt: "1905-05-05"
+  nicknames: Sabalero, Negro, Raza
+  letters: CAC
+  shortname: Colón
+  stadium: Brigadier General Estanislao López
+  website: http://www.clubcolon.com.ar/
+  twitter: ColonOficial
+  country: 13
+  external: 6
+
+-
+  id: 7
+  teamcategory: 1
+  title: Club Estudiantes de La Plata
+  foundedAt: "1905-04-08"
+  nicknames: Pincha, Pincharratas, León
+  letters: CELP
+  shortname: Estudiantes
+  stadium: Ciudad de La Plata, "Único"
+  website: http://www.edelpoficial.com.ar/
+  twitter: EdelpOficial
+  country: 13
+  external: 7
 
 -
   id: 8
@@ -27,6 +111,62 @@
   external: 20
 
 -
+  id: 9
+  teamcategory: 1
+  title: Club Atlético Unión
+  foundedAt: "1907-04-15"
+  nicknames: El Tatengue
+  letters: CAU
+  shortname: Unión
+  stadium: 15 de Abril
+  website: http://www.clubaunion.com.ar/
+  twitter: clubaunion
+  country: 13
+  external: 137
+
+-
+  id: 10
+  teamcategory: 1
+  title: Club Atlético Belgrano
+  foundedAt: "1905-03-19"
+  nicknames: Pirata, Celeste
+  letters: CAB
+  shortname: Belgrano
+  stadium: Julio César Villagra, "El Gigante de Alberdi"
+  website: http://www.mundobelgranoweb.com/
+  twitter: Mundobelgrano
+  country: 13
+  external: 124
+
+-
+  id: 11
+  teamcategory: 1
+  title: Club Atlético Lanús
+  foundedAt: "1915-03-01"
+  nicknames: El Granate
+  letters: CAL
+  shortname: Lanús
+  stadium: Ciudad de Lanús - Néstor Díaz Pérez, "La Fortaleza"
+  website: http://www.clublanus.com/
+  twitter: ClubLanusAr
+  country: 13
+  external: 12
+
+-
+  id: 12
+  teamcategory: 1
+  title: Asociación Atlética Argentinos Juniors
+  foundedAt: "1904-08-15"
+  nicknames: Bicho Colorado, Bicho de la Paternal
+  letters: AAAJ
+  shortname: Argentinos
+  stadium: Diego Armando Maradona
+  website: http://www.argentinosjuniors.com.ar/
+  twitter: PrensaAAAJ
+  country: 13
+  external: 2
+
+-
   id: 13
   teamcategory: 1
   title: Club Atlético San Lorenzo de Almagro
@@ -41,6 +181,48 @@
   external: 19
 
 -
+  id: 14
+  teamcategory: 1
+  title: Asociación Mutual Social y Deportiva Atlético de Rafaela
+  foundedAt: "1907-01-13"
+  nicknames: La Crema
+  letters: AR
+  shortname: At. Rafaela
+  stadium: Nuevo Monumental
+  website: http://www.atleticorafaela.com.ar/
+  twitter: OficialAMSyD
+  country: 13
+  external: 99
+
+-
+  id: 15
+  teamcategory: 1
+  title: Club Atlético Independiente
+  foundedAt: "1905-01-01"
+  nicknames: Rojo, Diablo de Avellaneda, Rey de Copas
+  letters: CAI
+  shortname: Independiente
+  stadium: Libertadores de América
+  website: http://www.clubaindependiente.com/
+  twitter: independientetw
+  country: 13
+  external: 10
+
+-
+  id: 16
+  teamcategory: 1
+  title: Racing Club
+  foundedAt: "1903-03-25"
+  nicknames: La Academia
+  letters: RC
+  shortname: Racing
+  stadium: Presidente Perón, "El Cilindro"
+  website: http://www.racingclub.com/
+  twitter: RacingClub
+  country: 13
+  external: 16
+
+-
   id: 17
   teamcategory: 1
   title: Club Deportivo Godoy Cruz Antonio Tomba
@@ -51,6 +233,20 @@
   stadium: Malvinas Argentinas
   website: http://www.clubgodoycruz.com.ar/
   twitter: clubgodoycruz
+  country: 13
+  external: 132
+
+-
+  id: 18
+  teamcategory: 1
+  title: Club Atlético San Martín
+  foundedAt: "1907-09-27"
+  nicknames: Verdinegro, Santo Sanjuanino
+  letters: SMSJ
+  shortname: San Martín (SJ)
+  stadium: Ingeniero Hilario Sánchez
+  website: http://www.soyverdinegro.com.ar/
+  twitter: SanMartinWeb
   country: 13
   external: 132
 
@@ -68,6 +264,203 @@
   country: 13
 
 -
+  id: 20
+  teamcategory: 1
+  title: Quilmes Atlético Club
+  foundedAt: "1887-11-27"
+  nicknames: El Cervecero
+  letters: QAC
+  shortname: Quilmes
+  stadium: Centenario, Jose Luis Meiszner
+  website: http://www.quilmesaclub.org.ar/
+  twitter: qacoficial
+  country: 13
+
+-
+  id: 21
+  teamcategory: 1
+  title: Club Atlético Banfield
+  foundedAt: "1896-01-21"
+  nicknames: El Taladro
+  letters: CAB
+  shortname: Banfield
+  stadium: Florencio Sola 
+  website: http://www.clubabanfield.com.ar/
+  twitter: banfieldoficial
+  country: 13
+  external: 4
+
+-
+  id: 22
+  teamcategory: 1
+  title: Club Olimpo
+  foundedAt: "1910-10-15"
+  nicknames: El Aurinegro
+  letters: COB
+  shortname: Olimpo
+  stadium: Roberto Natalio Carminatti
+  website: http://www.aurinegro.com.ar/
+  twitter: aurinegroweb
+  country: 13
+  external: 14
+
+-
+  id: 23
+  teamcategory: 
+  title: Club Atlético Rosario Central
+  foundedAt: "1889-12-24"
+  nicknames: Canalla, Academia, Guerreros
+  letters: CARC
+  shortname: Rosario Central
+  stadium: Dr. Lisandro de la Torre, "El Gigante de Arroyito"
+  website: http://www.rosariocentral.com/
+  twitter: carcoficial
+  country: 13
+
+-
+  id: 24
+  teamcategory: 
+  title: Instituto Atlético Central Córdoba
+  foundedAt: "1918-08-08"
+  nicknames: La Gloria
+  letters: IACC
+  shortname: Instituto
+  stadium: Juan Domingo Perón, "El Monumental de Alta Córdoba"
+  website: http://www.institutoatleticocentralcordoba.com/
+  twitter: InstitutoACC
+  country: 13
+
+-
+  id: 25
+  teamcategory: 
+  title: Club Atlético Boca Unidos
+  foundedAt: "1927-07-27"
+  nicknames: Aurirrojo, Los de la Ribera
+  letters: CABU
+  shortname: Boca Unidos
+  stadium: José Antonio Romero Feris
+  website: http://www.bocaunidos.org.ar/
+  twitter: BocaUnidosCtes
+  country: 13
+
+-
+  id: 26
+  teamcategory: 
+  title: Club de Gimnasia y Esgrima La Plata
+  foundedAt: "1887-06-03"
+  nicknames: Lobo, Triperos, Basurero
+  letters: GELP
+  shortname: Gimnasia
+  stadium: Juan Carmelo Zerillo, "El Bosque"
+  website: http://www.gimnasia.org.ar/
+  twitter: gimnasiaoficial
+  country: 13
+
+-
+  id: 27
+  teamcategory: 
+  title: Club Atlético Aldosivi
+  foundedAt: "1913-03-29"
+  nicknames: El Tiburón
+  letters: CAA
+  shortname: Aldosivi
+  stadium: José María Minella
+  website: http://www.aldosivi.com/
+  twitter: clubaldosivi
+  country: 13
+
+-
+  id: 28
+  teamcategory: 
+  title: Club Almirante Brown
+  foundedAt: "1922-01-17"
+  nicknames: Fragata, Mirasol
+  letters: CAB
+  shortname: Almirante Brown
+  stadium: Fragata Presidente Sarmiento
+  website: http://www.almirantebrown.org.ar/
+  twitter: infoalmirante
+  country: 13
+
+-
+  id: 29
+  teamcategory: 
+  title: Club Atlético Patronato de la Juventud Católica
+  foundedAt: "1914-01-02"
+  nicknames: Negro, Patrón
+  letters: CAP
+  shortname: Patronato
+  stadium: Presbítero Bartolomé Grella
+  website: http://www.cpatronato.com.ar/
+  twitter: CPatronato
+  country: 13
+
+-
+  id: 30
+  teamcategory: 
+  title: Club Social y Deportivo Defensa y Justicia
+  foundedAt: "1935-03-20"
+  nicknames: El Halcón
+  letters: DYJ
+  shortname: Defensa y Justicia
+  stadium: Norberto Tomaghello, "El Matadero"
+  website: http://www.defensayjusticia.com.ar/
+  twitter: ClubDefensayJus
+  country: 13
+
+-
+  id: 31
+  teamcategory: 
+  title: Club Ferro Carril Oeste
+  foundedAt: "1904-07-28"
+  nicknames: Verdolagas, Oeste, Locomotora
+  letters: FCO
+  shortname: Ferro
+  stadium: Arquitecto Ricardo Etcheverri, "El Templo"
+  website: http://www.ferrocarriloeste.org.ar/
+  twitter: clubferro
+  country: 13
+
+-
+  id: 32
+  teamcategory: 
+  title: Club Social y Deportivo Merlo
+  foundedAt: "1954-10-19"
+  nicknames: Los Charros
+  letters: DM
+  shortname: Dep. Merlo
+  stadium: José Manuel "Charro" Moreno
+  website: http://www.clubdeportivomerlo.com/
+  twitter: DeportivoMerlo
+  country: 13
+
+-
+  id: 33
+  teamcategory: 
+  title: Club Atlético Tucumán
+  foundedAt: "1902-09-27"
+  nicknames: El Decano
+  letters: CAT
+  shortname: At. Tucumán
+  stadium: Monumental José Fierro
+  website: http://www.atleticotucuman.com.ar/
+  twitter: ATOficial
+  country: 13
+
+-
+  id: 34
+  teamcategory: 
+  title: Club Sportivo Independiente Rivadavia
+  foundedAt: "1913-01-24"
+  nicknames: La Lepra
+  letters: IRM
+  shortname: Indepte. Rivadavia
+  stadium: Bautista Gargantini, "La Catedral"
+  website: http://www.independientemza.com.ar/
+  twitter: IndepteRivMza
+  country: 13
+
+-
   id: 35
   teamcategory: 
   title: Club Atlético Huracán
@@ -79,6 +472,347 @@
   website: http://www.clubahuracan.com.ar/
   twitter: HuracanOficial
   country: 13
+
+-
+  id: 36
+  teamcategory: 
+  title: Club Atlético Gimnasia y Esgrima 
+  foundedAt: "1931-03-18"
+  nicknames: Lobo Jujeño
+  letters: GEJ
+  shortname: Gimnasia (J)
+  stadium: 23 de Agosto, "Coliseo Jujeño"
+  website: http://www.gimnasiayesgrimadejujuy.com/
+  twitter: GimnasiaJujuy
+  country: 13
+
+-
+  id: 37
+  teamcategory: 
+  title: Club Atlético Chacarita Juniors
+  foundedAt: "1906-01-05"
+  nicknames: Funebrero, Chaca, Tricolor de San Martín
+  letters: CACJ
+  shortname: Chacarita
+  stadium: Chacarita Juniors
+  website: http://www.chacaritajuniors.org.ar/
+  twitter: ChacaOficial
+  country: 13
+
+-
+  id: 38
+  teamcategory: 
+  title: Club Atlético Douglas Haig
+  foundedAt: "1918-11-18"
+  nicknames: Fogoneros, Rojinegros, Milan de Pergamino
+  letters: CADH
+  shortname: Douglas Haig
+  stadium: Miguel Morales
+  website: NO TIENE
+  twitter: CADouglasHaig 
+  country: 13
+
+-
+  id: 39
+  teamcategory: 
+  title: Club Atlético Sarmiento
+  foundedAt: "1911-01-04"
+  nicknames: Guerrero, Verde de Junín
+  letters: CAS
+  shortname: Sarmiento
+  stadium: Eva Perón
+  website: http://www.sarmientodejunin.com.ar/
+  twitter: SarmientoDJunin
+  country: 13
+
+-
+  id: 40
+  teamcategory: 
+  title: Club Atlético Nueva Chicago
+  foundedAt: "1911-01-07"
+  nicknames: Torito, Verdinegro
+  letters: CANCH
+  shortname: Nueva Chicago
+  stadium: República de Mataderos
+  website: http://www.nuevachicago.com/
+  twitter: ca_nuevachicago
+  country: 13
+
+-
+  id: 41
+  teamcategory: 
+  title: Club Crucero del Norte
+  foundedAt: "1989-07-19"
+  nicknames: Colectivero
+  letters: CCN
+  shortname: Crucero del Norte
+  stadium: Comandante Andrés Guacurarí
+  website: http://www.clubcrucerodelnorte.com.ar/
+  twitter: 
+  country: 13
+
+-
+  id: 42
+  teamcategory: 5
+  title: Borussia Dortmund
+  foundedAt: "1909-12-19"
+  nicknames: Negro y Amarillo
+  letters: BVB 09
+  shortname: B.Dortmund
+  stadium: Signal Iduna Park
+  website: http://www.bvb.de/
+  twitter: bvb
+  country: 3
+  external: 707
+
+-
+  id: 43
+  teamcategory: 5
+  title: FC Bayern Munich
+  foundedAt: "1900-02-27"
+  nicknames: Bávaros, Gigante de Baviera
+  letters: FCBM
+  shortname: Bayern Munich
+  stadium: Allianz Arena
+  website: http://www.fcbayern.de
+  twitter: fcbayern_news 
+  country: 3
+  external: 617
+
+-
+  id: 44
+  teamcategory: 5
+  title: FC Schalke 04
+  foundedAt: "1904-04-05"
+  nicknames: Azul Real, Mineros
+  letters: S04
+  shortname: Schalke 04
+  stadium: Veltins Arena
+  website: http://www.schalke04.de/
+  twitter: S04
+  country: 3
+  external: 711
+
+-
+  id: 45
+  teamcategory: 5
+  title: Borussia Mönchengladbach
+  foundedAt: "1900-01-08"
+  nicknames: Los Potros
+  letters: BM
+  shortname: Borussia M.
+  stadium: Borussia Park
+  website: http://www.borussia.de/
+  twitter: vflborussia
+  country: 3
+  external: 1259
+
+-
+  id: 46
+  teamcategory: 5
+  title: Bayer Leverkusen
+  foundedAt: "1904-01-07"
+  nicknames: Los Leones
+  letters: BL
+  shortname: B.Leverkusen
+  stadium: Bay Arena
+  website: http://www.bayer04.de/
+  twitter: bayer04fussball
+  country: 3
+  external: 706
+
+-
+  id: 47
+  teamcategory: 5
+  title: VfB Stuttgart
+  foundedAt: "1893-09-09"
+  nicknames: Los Suevos
+  letters: VfBS
+  shortname: Stuttgart
+  stadium: Mercedes Benz Arena
+  website: http://www.vfb.de/
+  twitter: vfb
+  country: 3
+  external: 718
+
+-
+  id: 48
+  teamcategory: 5
+  title: Hannover 96
+  foundedAt: "1896-04-12"
+  nicknames: Los Rojos
+  letters: H96
+  shortname: Hannover
+  stadium: AWD Arena
+  website: http://www.hannover96.de/
+  twitter: hannover96
+  country: 3
+  external: 713
+
+-
+  id: 49
+  teamcategory: 5
+  title: VfL Wolfsburg
+  foundedAt: "1945-09-12"
+  nicknames: Los Lobos
+  letters: VfLW
+  shortname: Wolfsburgo
+  stadium: Volkswagen Arena
+  website: http://www.vfl-wolfsburg.de/
+  twitter: VfL_Wolfsburg
+  country: 3
+  external: 720
+
+-
+  id: 50
+  teamcategory: 5
+  title: SV Werder Bremen
+  foundedAt: "1899-02-04"
+  nicknames: El Verde y Blanco
+  letters: SVWB
+  shortname: Werder Bremen
+  stadium: Weserstadion
+  website: http://www.werder.de/
+  twitter: werderbremen
+  country: 3
+  external: 721
+
+-
+  id: 51
+  teamcategory: 5
+  title: FC Nuremberg
+  foundedAt: "1900-04-05"
+  nicknames: La Leyenda
+  letters: FCN
+  shortname: Nuremberg
+  stadium: Easy Credit Stadion
+  website: http://www.fcn.de/
+  twitter: 1_fc_nuernberg
+  country: 3
+  external: 710
+
+-
+  id: 52
+  teamcategory: 5
+  title: TSG 1899 Hoffenheim
+  foundedAt: "1899-07-01"
+  nicknames: El increíble Hoffenheim
+  letters: TSGH
+  shortname: Hoffenheim
+  stadium: Rhein Neckar Arena
+  website: http://www.achtzehn99.de/
+  twitter: achtzehn99
+  country: 3
+  external: 1260
+
+-
+  id: 53
+  teamcategory: 5
+  title: SC Friburgo
+  foundedAt: "1904-05-30"
+  nicknames: Bosque Negro, Brasileros de Breisgau
+  letters: SCF
+  shortname: Friburgo
+  stadium: Badenova Stadion
+  website: http://www.scfreiburg.com/
+  twitter: sc_freiburg
+  country: 3
+  external: 1717
+
+-
+  id: 54
+  teamcategory: 5
+  title: FSV Mainz 05
+  foundedAt: "1905-03-16"
+  nicknames: El 05
+  letters: M05
+  shortname: Mainz
+  stadium: Coface Arena
+  website: http://www.mainz05.de/
+  twitter: 1FSVMainz05
+  country: 3
+  external: 1718
+
+-
+  id: 55
+  teamcategory: 5
+  title: FC Augsburg
+  foundedAt: "1907-08-08"
+  nicknames: Fuggers
+  letters: FCA
+  shortname: Augsburg
+  stadium: Impuls Arena
+  website: http://www.fcaugsburg.de/
+  twitter: fcaugsburg
+  country: 3
+  external: 3305
+
+-
+  id: 56
+  teamcategory: 5
+  title: Hamburgo S.V.
+  foundedAt: "1887-09-29"
+  nicknames: Los Dinosaurios
+  letters: HSV
+  shortname: Hamburgo
+  stadium: Imtech Arena
+  website: http://www.hsv.de/
+  twitter: hsv
+  country: 3
+  external: 712
+
+-
+  id: 57
+  teamcategory: 5
+  title: Eintracht Frankfurt
+  foundedAt: "1899-03-08"
+  nicknames: Las Águilas
+  letters: EFF
+  shortname: Eintracht Frankfurt
+  stadium: Commerzbank Arena
+  website: http://www.eintracht.de/
+  twitter: Eintracht_News
+  country: 3
+
+-
+  id: 58
+  teamcategory: 5
+  title: Greuther Fürth
+  foundedAt: "1903-09-23"
+  nicknames: Los Tréboles
+  letters: SGF
+  shortname: Greuther Fürth
+  stadium: Trolli Arena
+  website: http://www.greuther-fuerth.de/
+  twitter: kleeblattfuerth
+  country: 3
+
+-
+  id: 59
+  teamcategory: 5
+  title: Fortuna Düsseldorf
+  foundedAt: "1895-05-05"
+  nicknames: F 95
+  letters: FD95
+  shortname: Fortuna Düsseldorf
+  stadium: ESPRIT arena
+  website: http://www.f95.de/
+  twitter: F95Duesseldorf 
+  country: 3
+
+-
+  id: 60
+  teamcategory: 7
+  title: Real Madrid Club de Fútbol
+  foundedAt: "1902-06-03"
+  nicknames: Blancos, Merengues
+  letters: RMFC
+  shortname: Real Madrid 
+  stadium: Santiago Bernabéu 
+  website: http://www.realmadrid.com
+  twitter: realmadrid
+  country: 68
+  external: 39
 
 -
   id: 61
@@ -95,6 +829,34 @@
   external: 31
 
 -
+  id: 62
+  teamcategory: 7
+  title: Valencia Club de Fútbol
+  foundedAt: "1919-03-18"
+  nicknames: Los Ches
+  letters: VCF
+  shortname: Valencia
+  stadium: Mestalla
+  website: http://www.valenciacf.com
+  twitter: valenciacf
+  country: 68
+  external: 42
+
+-
+  id: 63
+  teamcategory: 7
+  title: Málaga Club de Fútbol
+  foundedAt: "1948-05-25"
+  nicknames: Malaguistas, Boquerones
+  letters: MCF
+  shortname: Málaga
+  stadium: La Rosaleda
+  website: http://www.malagacf.com
+  twitter: malagacf
+  country: 68
+  external: 25
+
+-
   id: 64
   teamcategory: 7
   title: Club Atlético de Madrid
@@ -109,13 +871,234 @@
   external: 29
 
 -
+  id: 65
+  teamcategory: 7
+  title: Levante Unión Deportiva
+  foundedAt: "1909-09-09"
+  nicknames: Los Granotas
+  letters: LUD
+  shortname: Levante
+  stadium: Ciudad de Valencia
+  website: http://www.levanteud.com/
+  twitter: LevanteUD
+  country: 68
+  external: 35
+
+-
+  id: 66
+  teamcategory: 7
+  title: Club Atlético Osasuna
+  foundedAt: "1920-10-25"
+  nicknames: Los Rojillos
+  letters: CAO
+  shortname: Osasuna
+  stadium: El Sadar
+  website: http://www.osasuna.es/
+  twitter: CAOsasuna
+  country: 68
+  external: 37
+
+-
+  id: 67
+  teamcategory: 7
+  title: Real Club Deportivo Mallorca
+  foundedAt: "1916-02-27"
+  nicknames: Barralets, Bermellones
+  letters: RCDM
+  shortname: Mallorca
+  stadium: Iberostar 
+  website: http://www.rcdmallorca.es/
+  twitter: rcd_mallorca
+  country: 68
+  external: 36
+
+-
+  id: 68
+  teamcategory: 7
+  title: Sevilla Fútbol Club
+  foundedAt: "1905-10-14"
+  nicknames: Palanganas, Nervionenses
+  letters: SFC
+  shortname: Sevilla 
+  stadium: Ramón Sánchez Pizjuán
+  website: http://www.sevillafc.es
+  twitter: sevillafc
+  country: 68
+  external: 41
+
+-
+  id: 69
+  teamcategory: 7
+  title: Athletic Club de Bilbao
+  foundedAt: "1898-01-01"
+  nicknames: Los Leones
+  letters: ACB
+  shortname: Athletic
+  stadium: San Mamés
+  website: http://www.athletic-club.net/
+  twitter: AthleticClub
+  country: 68
+  external: 30
+
+-
+  id: 70
+  teamcategory: 7
+  title: Getafe Club de Fútbol
+  foundedAt: "1983-08-07"
+  nicknames: Azulones, Geta
+  letters: GCF
+  shortname: Getafe
+  stadium: Coliseum Alfonso Pérez
+  website: http://www.getafecf.com/
+  twitter: GetafeFC 
+  country: 68
+  external: 24
+
+-
+  id: 71
+  teamcategory: 7
+  title: Real Sociedad de Fútbol 
+  foundedAt: "1909-07-09"
+  nicknames: Txuri Urdin, La Real
+  letters: RSF
+  shortname: Real Sociedad
+  stadium: Anoeta
+  website: http://www.realsociedad.com/
+  twitter: RealSociedad
+  country: 68
+  external: 40
+
+-
+  id: 72
+  teamcategory: 7
+  title: Real Betis Balompié 
+  foundedAt: "1907-12-09"
+  nicknames: Béticos, Verdiblancos
+  letters: RBB
+  shortname: Real Betis 
+  stadium: Benito Villamarín
+  website: http://www.realbetisbalompie.es/
+  twitter: RBetisOficial
+  country: 68
+  external: 32
+
+-
+  id: 73
+  teamcategory: 7
+  title: Real Club Deportivo Espanyol
+  foundedAt: "1900-10-28"
+  nicknames: Los Periquitos
+  letters: RCDE
+  shortname: Espanyol
+  stadium: Cornellá-El Prat
+  website: http://www.rcdespanyol.com/
+  twitter: rcdespanyol
+  country: 68
+  external: 34
+
+-
+  id: 74
+  teamcategory: 7
+  title: Rayo Vallecano de Madrid
+  foundedAt: "1924-05-29"
+  nicknames: Rayistas, Vallecanos
+  letters: RVM
+  shortname: Rayo Vallecano
+  stadium: Campo de Fútbol de Vallecas
+  website: http://www.rayovallecano.es/
+  twitter: RVMOficial
+  country: 68
+  external: 3310
+
+-
+  id: 75
+  teamcategory: 7
+  title: Real Zaragoza
+  foundedAt: "1932-03-18"
+  nicknames: Maños, Blanquillos
+  letters: RZ
+  shortname: Zaragoza
+  stadium: La Romareda
+  website: http://www.realzaragoza.com/
+  twitter: RZ_oficial
+  country: 68
+  external: 28
+
+-
+  id: 76
+  teamcategory: 7
+  title: Granada Club de Fútbol
+  foundedAt: "1931-06-04"
+  nicknames: Rojiblanco Horizontal, El 5001, Los Filipinos
+  letters: GCF
+  shortname: Granada
+  stadium: Nuevo Los Cármenes
+  website: http://www.granadacf.es/
+  twitter: GranadaCdeF
+  country: 68
+  external: 3311
+
+-
+  id: 77
+  teamcategory: 7
+  title: Real Club Deportivo de la Coruña
+  foundedAt: "1906-02-03"
+  nicknames: El Depor
+  letters: RCDL
+  shortname: Deportivo
+  stadium: Riazor
+  website: http://www.canaldeportivo.com/
+  twitter: canaldeportivo
+  country: 68
+
+-
+  id: 78
+  teamcategory: 7
+  title: Real Club Celta de Vigo 
+  foundedAt: "1923-08-23"
+  nicknames: Celtiñas, Celestes
+  letters: RCCV
+  shortname: Celta 
+  stadium: Balaídos
+  website: http://www.celtavigo.net/
+  twitter: rccelta_oficial
+  country: 68
+
+-
+  id: 79
+  teamcategory: 7
+  title: Real Valladolid Club de Fútbol
+  foundedAt: "1928-06-20"
+  nicknames: Pucelanos
+  letters: RV
+  shortname: Valladolid
+  stadium: José Zorrilla
+  website: http://www.realvalladolid.es/
+  twitter: realvalladolid
+  country: 68
+
+-
+  id: 80
+  teamcategory: 9
+  title: Montpellier Hérault Sport Club
+  foundedAt: "1919-01-01"
+  nicknames: Le Petit Chelil
+  letters: MHSC
+  shortname: Montpellier
+  stadium: De la Mosson
+  website: http://www.mhscfoot.com/
+  twitter: Montpellier_HSC
+  country: 75
+  external: 1728
+
+-
   id: 81
   teamcategory: 9
   title: Paris Saint Germain Football Club
   foundedAt: "1970-10-06"
   nicknames: Les Parisiens, Rouge et Bleu
   letters: PSG
-  shortname: Paris SG
+  shortname: Paris Saint Germain 
   stadium: Parc des Princes
   website: http://www.psg.fr/
   twitter: PSG_inside
@@ -123,18 +1106,253 @@
   external: 1370
 
 -
+  id: 82
+  teamcategory: 9
+  title: Lille Olympique Sporting Club
+  foundedAt: "1992-09-23"
+  nicknames: Les Dogues
+  letters: LOSC
+  shortname: Lille
+  stadium: Lille-Metropole
+  website: http://www.losc.fr/
+  twitter: losclive 
+  country: 75
+  external: 1725
+
+-
+  id: 83
+  teamcategory: 9
+  title: Olympique de Lyon
+  foundedAt: "1950-08-03"
+  nicknames: Les Gones
+  letters: OL
+  shortname: Lyon
+  stadium: Gerland
+  website: http://www.olweb.fr/
+  twitter: OL_officiel
+  country: 75
+  external: 794
+
+-
+  id: 84
+  teamcategory: 9
+  title: Football Club des Girondins de Bordeaux
+  foundedAt: "1881-10-01"
+  nicknames: Marines et blancs, Les Girondins
+  letters: FCGB
+  shortname: Bordeaux
+  stadium: Jacques Chaban-Delmas
+  website: http://www.girondins.com/
+  twitter: girondins
+  country: 75
+  external: 1309
+
+-
+  id: 85
+  teamcategory: 9
+  title: Association Sportive de Saint Etienne Loire
+  foundedAt: "1933-01-01"
+  nicknames: Les Verts
+  letters: ASSE
+  shortname: Saint Etienne
+  stadium: Geoffroy-Guichard
+  website: http://www.asse.fr/
+  twitter: ASSEofficiel
+  country: 75
+  external: 1372
+
+-
+  id: 86
+  teamcategory: 9
+  title: Stade Rennais Football Club
+  foundedAt: "1901-10-03"
+  nicknames: Les Rouges et Noirs 
+  letters: SRFC
+  shortname: Rennes
+  stadium: De la Route de Lorient
+  website: http://www.staderennais.com/
+  twitter: SRFC_Officiel
+  country: 75
+  external: 1732
+
+-
+  id: 87
+  teamcategory: 9
+  title: Toulouse Football Club
+  foundedAt: "1970-05-25"
+  nicknames: Le Téfécé, Le Tef
+  letters: TFC
+  shortname: Toulouse
+  stadium: Municipal de Toulouse
+  website: http://www.tfc.info/
+  twitter: toulousefc
+  country: 75
+  external: 1733
+
+-
+  id: 88
+  teamcategory: 9
+  title: Evian Thonon Gaillard Football Club
+  foundedAt: "2007-01-07"
+  nicknames: Les Croix de Savoie, Les Roses
+  letters: ETGFC
+  shortname: Evian
+  stadium: Parc des Sports
+  website: http://www.etgfc.com/
+  twitter: etgfc
+  country: 75
+  external: 3299
+
+-
   id: 89
   teamcategory: 9
-  title: Olympique de Marseille
+  title: Olympique de Marsella
   foundedAt: "1899-01-01"
   nicknames: Les Olympiens, Les Phocéens
   letters: OM
-  shortname: Marseille
+  shortname: Olympique 
   stadium: Vélodrome
   website: http://www.om.net
   twitter: OM_Officiel 
   country: 75
   external: 793
+
+-
+  id: 90
+  teamcategory: 9
+  title: Association Sportive Nancy Lorraine
+  foundedAt: "1967-06-16"
+  nicknames: Les Chardons
+  letters: ASNL
+  shortname: Nancy
+  stadium: Marcel Picot
+  website: http://www.asnl.net
+  twitter: ASNancyLorraine
+  country: 75
+  external: 1367
+
+-
+  id: 91
+  teamcategory: 9
+  title: Valenciennes Football Club
+  foundedAt: "1913-01-01"
+  nicknames: Les Athéniens
+  letters: VAFC
+  shortname: Valenciennes
+  stadium: Du Hainaut
+  website: http://www.va-fc.com/
+  twitter: VAFCofficiel 
+  country: 75
+  external: 1734
+
+-
+  id: 92
+  teamcategory: 9
+  title: Olympique Gymnaste Club de Nice Côte d'Azur
+  foundedAt: "1904-09-07"
+  nicknames: Les Aiglons, Le Gym
+  letters: OGCN
+  shortname: Niza
+  stadium: Du Ray
+  website: http://www.ogcnice.com/
+  twitter: ogcnice
+  country: 75
+  external: 1729
+
+-
+  id: 93
+  teamcategory: 9
+  title: Football Club Lorient Bretagne Sud
+  foundedAt: "1926-02-04"
+  nicknames: Les Merlus
+  letters: FCL
+  shortname: Lorient
+  stadium: Du Moustoir
+  website: http://www.fclweb.fr/
+  twitter: FCLorientOff
+  country: 75
+  external: 1726
+
+-
+  id: 94
+  teamcategory: 9
+  title: Football Club Sochaux Montbéliard
+  foundedAt: "1928-01-01"
+  nicknames: Les Lionceaux 
+  letters: FCSM
+  shortname: Sochaux
+  stadium: Auguste Bonal
+  website: http://www.fcsochaux.fr/
+  twitter: FCSM_Officiel
+  country: 75
+  external: 1731
+
+-
+  id: 95
+  teamcategory: 9
+  title: Stade Brestois 29
+  foundedAt: "1950-06-26"
+  nicknames: SB29
+  letters: SB29
+  shortname: Brest
+  stadium: Francis Le Blé
+  website: http://www.sb29.com/
+  twitter: SB29_Brest
+  country: 75
+  external: 2291
+
+-
+  id: 96
+  teamcategory: 9
+  title: Athletic Club Ajaccien
+  foundedAt: "1910-01-01"
+  nicknames: L'ours
+  letters: ACA
+  shortname: Ajaccio
+  stadium: François Coty
+  website: http://www.ac-ajaccio.com/
+  twitter: AcaSiteOfficiel 
+  country: 75
+  external: 2166
+
+-
+  id: 97
+  teamcategory: 9
+  title: Sporting Club de Bastia
+  foundedAt: "1905-01-01"
+  nicknames: Les Bleus
+  letters: SCB
+  shortname: Bastia
+  stadium: Armand Cesari
+  website: http://www.sc-bastia.com/
+  twitter: s_c_bastia
+  country: 75
+
+-
+  id: 98
+  teamcategory: 9
+  title: Stade de Reims
+  foundedAt: "1931-06-18"
+  nicknames: Les rouges et blancs
+  letters: SR
+  shortname: Reims
+  stadium: Auguste Delaune
+  website: http://www.stade-de-reims.com/
+  twitter: Stade_de_Reims
+  country: 75
+
+-
+  id: 99
+  teamcategory: 9
+  title: Espérance Sportive Troyes Aube Champagne
+  foundedAt: "1986-06-27"
+  nicknames: ESTAC Troyes
+  letters: ESTAC
+  shortname: Troyes
+  stadium: De l'Aube
+  website: http://www.estac.fr/
+  twitter: estac_officiel
+  country: 75
 
 -
   id: 100
@@ -160,9 +1378,51 @@
   shortname: Manchester United
   stadium: Old Trafford
   website: http://www.manutd.com/
-  twitter: MUFootballClub
+  twitter: 
   country: 181
   external: 568
+
+-
+  id: 102
+  teamcategory: 6
+  title: Arsenal Football Club
+  foundedAt: "1886-01-01"
+  nicknames: The Gunners 
+  letters: AFC
+  shortname: Arsenal
+  stadium: Emirates 
+  website: http://www.arsenal.com/
+  twitter: Arsenal
+  country: 181
+  external: 558
+
+-
+  id: 103
+  teamcategory: 6
+  title: Tottenham Hotspur Football Club
+  foundedAt: "1882-01-01"
+  nicknames: The Spurs
+  letters: THFC
+  shortname: Tottenham 
+  stadium: White Hart Lane
+  website: http://www.tottenhamhotspur.com/
+  twitter: SpursOfficial
+  country: 181
+  external: 574
+
+-
+  id: 104
+  teamcategory: 6
+  title: Newcastle United Football Club
+  foundedAt: "1892-01-01"
+  nicknames: The Magpies
+  letters: NUFC
+  shortname: Newcastle
+  stadium: Sports Direct Arena 
+  website: http://www.nufc.co.uk/
+  twitter: NUFCOfficial
+  country: 181
+  external: 570
 
 -
   id: 105
@@ -179,6 +1439,20 @@
   external: 563
 
 -
+  id: 106
+  teamcategory: 6
+  title: Everton Football Club
+  foundedAt: "1878-01-01"
+  nicknames: The Toffees
+  letters: EFC
+  shortname: Everton
+  stadium: Goodison Park
+  website: http://www.evertonfc.com/
+  twitter: Everton 
+  country: 181
+  external: 564
+
+-
   id: 107
   teamcategory: 6
   title: Liverpool Football Club
@@ -193,6 +1467,158 @@
   external: 566
 
 -
+  id: 108
+  teamcategory: 6
+  title: Fulham Football Club
+  foundedAt: "1879-08-16"
+  nicknames: The Cottagers
+  letters: FFC
+  shortname: Fulham
+  stadium: Craven Cottage
+  website: http://www.fulhamfc.com/
+  twitter: FulhamFC
+  country: 181
+  external: 565
+
+-
+  id: 109
+  teamcategory: 6
+  title: West Bromwich Albion Football Club
+  foundedAt: "1878-01-01"
+  nicknames: The Baggies, TheThrostles
+  letters: WBA
+  shortname: West Bromwich 
+  stadium: The Hawthorns
+  website: http://www.wba.co.uk/
+  twitter: WBAFCofficial
+  country: 181
+  external: 1263
+
+-
+  id: 110
+  teamcategory: 6
+  title: Swansea City Association Football Club
+  foundedAt: "1912-01-01"
+  nicknames: The Swans
+  letters: SCA
+  shortname: Swansea 
+  stadium: Liberty 
+  website: http://www.swanseacity.net/
+  twitter: SwansOfficial
+  country: 181
+  external: 3302
+
+-
+  id: 111
+  teamcategory: 6
+  title: Norwich City Football Club
+  foundedAt: "1902-06-17"
+  nicknames: The Canaries 
+  letters: NCFC
+  shortname: Norwich 
+  stadium: Carrow Road
+  website: http://www.canaries.co.uk/
+  twitter: NorwichCityFC 
+  country: 181
+  external: 3301
+
+-
+  id: 112
+  teamcategory: 6
+  title: Sunderland Association Football Club
+  foundedAt: "1879-01-01"
+  nicknames: The Black Cats 
+  letters: SAFC
+  shortname: Sunderland
+  stadium: Of Light
+  website: http://www.safc.com/
+  twitter: SAFCofficial
+  country: 181
+  external: 704
+
+-
+  id: 113
+  teamcategory: 6
+  title: Stoke City Football Club
+  foundedAt: "1863-01-01"
+  nicknames: The Potters
+  letters: SCFC
+  shortname: Stoke 
+  stadium: Britannia 
+  website: http://www.stokecityfc.com/
+  twitter: OfficialSCFC 
+  country: 181
+  external: 1262
+
+-
+  id: 114
+  teamcategory: 6
+  title: Wigan Athletic Football Club
+  foundedAt: "1932-01-01"
+  nicknames: The Latics
+  letters: WAFC
+  shortname: Wigan 
+  stadium: DW Stadium
+  website: http://www.wiganlatics.co.uk/
+  twitter: LaticsOfficial
+  country: 181
+  external: 577
+
+-
+  id: 115
+  teamcategory: 6
+  title: Aston Villa Football Club
+  foundedAt: "1874-01-01"
+  nicknames: The Villans
+  letters: AVFC
+  shortname: Aston Villa
+  stadium: Villa Park
+  website: http://www.avfc.co.uk/
+  twitter: AVFCOfficial
+  country: 181
+  external: 559
+
+-
+  id: 116
+  teamcategory: 6
+  title: Queens Park Rangers Football Club
+  foundedAt: "1882-01-01"
+  nicknames: The Hoops, QPR
+  letters: QPR
+  shortname: Queens Park Rangers
+  stadium: Loftus Road
+  website: http://www.qpr.co.uk/
+  twitter: OfficialQPR
+  country: 181
+  external: 3300
+
+-
+  id: 117
+  teamcategory: 6
+  title: Southampton Football Club
+  foundedAt: "1885-11-21"
+  nicknames: The Saints
+  letters: SFC
+  shortname: Southampton
+  stadium: St. Mary's 
+  website: http://www.saintsfc.co.uk/
+  twitter: officialsaints
+  country: 181
+
+-
+  id: 118
+  teamcategory: 6
+  title: Reading Football Club
+  foundedAt: "1871-01-01"
+  nicknames: The Royals
+  letters: RFC
+  shortname: Reading
+  stadium: Madejski 
+  website: http://www.readingfc.co.uk/
+  twitter: ReadingFC
+  country: 181
+
+-
   id: 119
   teamcategory: 6
   title: West Ham United Football Club
@@ -204,6 +1630,34 @@
   website: http://www.whufc.com/
   twitter: whufc_official
   country: 181
+
+-
+  id: 120
+  teamcategory: 4
+  title: Udinese Calcio
+  foundedAt: "1896-01-01"
+  nicknames: Zebrette, Bianconeri, Friulani
+  letters: UC
+  shortname: Udinese
+  stadium: Friuli
+  website: http://www.udinese.it/
+  twitter: Udinese_1896 
+  country: 118
+  external: 64
+
+-
+  id: 121
+  teamcategory: 4
+  title: Società Sportiva Lazio
+  foundedAt: "1900-09-01"
+  nicknames: Biancocelesti, Biancazzurri, Aquile, Aquilotti
+  letters: SSL
+  shortname: Lazio
+  stadium: Olimpico di Roma
+  website: http://www.sslazio.it/
+  twitter: officialsslazio
+  country: 118
+  external: 53
 
 -
   id: 122
@@ -220,9 +1674,149 @@
   external: 726
 
 -
+  id: 123
+  teamcategory: 4
+  title: Football Club Internazionale Milano
+  foundedAt: "1908-09-03"
+  nicknames: Nerazzurro, Beneamata, Biscione
+  letters: FCIM
+  shortname: Inter
+  stadium: Giuseppe Meazza 
+  website: http://www.inter.it/
+  twitter: inter
+  country: 118
+  external: 51
+
+-
+  id: 124
+  teamcategory: 4
+  title: Associazione Sportiva Roma
+  foundedAt: "1927-07-22"
+  nicknames: Giallorossi, Lupi; Magica
+  letters: ASR
+  shortname: Roma
+  stadium: Olimpico di Roma
+  website: http://www.asroma.it/
+  twitter: OfficialASRoma
+  country: 118
+  external: 61
+
+-
+  id: 125
+  teamcategory: 4
+  title: Parma Football Club
+  foundedAt: "1913-07-27"
+  nicknames: Crociati, Gialloblu
+  letters: PFC
+  shortname: Parma
+  stadium: Ennio Tardini
+  website: http://www.fcparma.com/
+  twitter: fcparmacalcio
+  country: 118
+  external: 59
+
+-
+  id: 126
+  teamcategory: 4
+  title: Bologna Football Club
+  foundedAt: "1909-03-10"
+  nicknames: Felsinei, Rossoblu, Petroniani
+  letters: BFC
+  shortname: Bologna
+  stadium: Renato Dall'Ara
+  website: http://www.bolognafc.it/
+  twitter: BolognaFC
+  country: 118
+  external: 46
+
+-
+  id: 127
+  teamcategory: 4
+  title: Associazione Calcio Chievo Verona
+  foundedAt: "1929-01-01"
+  nicknames: Gialloblu, Mussi Volanti, Ceo
+  letters: ACCV
+  shortname: Chievo
+  stadium: Marc'Antonio Bentegodi
+  website: http://www.chievoverona.it/
+  twitter: ACChievoVerona
+  country: 118
+  external: 48
+
+-
+  id: 128
+  teamcategory: 4
+  title: Calcio Catania
+  foundedAt: "1946-09-26"
+  nicknames: Etnei, Rossoazzurri, Gli Elefanti
+  letters: CC
+  shortname: Catania
+  stadium: Angelo Massimino
+  website: http://www.calciocatania.it/
+  twitter: Calcio_Catania
+  country: 118
+  external: 537
+
+-
+  id: 129
+  teamcategory: 4
+  title: Atalanta Bergamasca Calcio
+  foundedAt: "1907-10-17"
+  nicknames: Orobici, la Dea, Nerazzurri
+  letters: ABC
+  shortname: Atalanta
+  stadium: Atleti Azzurri d'Italia
+  website: http://www.atalanta.it/
+  twitter: Atalanta_BC
+  country: 118
+  external: 45
+
+-
+  id: 130
+  teamcategory: 4
+  title: Associazione Calcio Firenze Fiorentina 
+  foundedAt: "1926-08-26"
+  nicknames: Viola, Gigliati, Fiore
+  letters: ACFF
+  shortname: Fiorentina
+  stadium: Artemio Franchi
+  website: http://www.violachannel.tv
+  twitter: Violachannel
+  country: 118
+  external: 50
+
+-
+  id: 131
+  teamcategory: 4
+  title: Associazione Calcio Siena 
+  foundedAt: "1904-01-01"
+  nicknames: Robur, Bianconeri
+  letters: ACS
+  shortname: Siena
+  stadium: Artemio Franchi 
+  website: http://www.acsiena.it/
+  twitter: acsienaofficial
+  country: 118
+  external: 63
+
+-
+  id: 132
+  teamcategory: 4
+  title: Cagliari Calcio
+  foundedAt: "1920-05-30"
+  nicknames: Casteddu, Rossoblu, Sardi
+  letters: CC
+  shortname: Cagliari
+  stadium: Nereo Rocco
+  website: http://www.cagliaricalcio.net/
+  twitter: Cagliari_Calcio
+  country: 118
+  external: 49
+
+-
   id: 133
   teamcategory: 4
-  title: Unione Sportiva Città di Palermo 
+  title: Unione Sportiva Citta di Palermo 
   foundedAt: "1900-01-11"
   nicknames: Rosanero, Aquile
   letters: USCP
@@ -232,6 +1826,87 @@
   twitter: US_Palermo
   country: 118
   external: 58
+
+-
+  id: 134
+  teamcategory: 4
+  title: Genoa Cricket and Football Club 
+  foundedAt: "1893-09-07"
+  nicknames: Grifone, Zena, Vecchio Balordo
+  letters: GCFC
+  shortname: Genoa
+  stadium: Luigi Ferraris
+  website: http://www.genoacfc.it/
+  twitter: GenoaCFCtweet
+  country: 118
+  external: 725
+
+-
+  id: 135
+  teamcategory: 4
+  title: Juventus Football Club 
+  foundedAt: "1987-11-01"
+  nicknames: Vecchia Signora, Bianconeri 
+  letters: JFC
+  shortname: Juventus
+  stadium: Juventus Stadium
+  website: http://www.juventus.com
+  twitter: juventusfc 
+  country: 118
+  external: 52
+
+-
+  id: 136
+  teamcategory: 4
+  title: Associazione Calcio Milan
+  foundedAt: "1899-12-16"
+  nicknames: Rossoneri, Diavolo
+  letters: ACM
+  shortname: Milan
+  stadium: Giuseppe Meazza
+  website: http://www.acmilan.com/
+  twitter: acmilan
+  country: 118
+  external: 57
+
+-
+  id: 137
+  teamcategory: 4
+  title: Delfino Pescara 1936
+  foundedAt: "1936-01-01"
+  nicknames: Biancoazzurri, Delfini
+  letters: DPC
+  shortname: Pescara
+  stadium: Adriático
+  website: http://www.pescaracalcio.com/
+  twitter: PescaraCalcio
+  country: 118
+
+-
+  id: 138
+  teamcategory: 4
+  title: Torino Football Club
+  foundedAt: "1906-12-13"
+  nicknames: Toro, Granata
+  letters: TFC
+  shortname: Torino
+  stadium: Olimpico di Torino
+  website: http://www.torinofc.it/
+  twitter: TorinoFC_1906 
+  country: 118
+
+-
+  id: 139
+  teamcategory: 4
+  title: Unione Calcio Sampdoria
+  foundedAt: "1946-01-08"
+  nicknames: Blucerchiati,Samp
+  letters: UCS
+  shortname: Sampdoria
+  stadium: Luigi Ferraris
+  website: http://www.sampdoria.it/
+  twitter: sampdoria 
+  country: 118
 
 -
   id: 140
@@ -248,6 +1923,602 @@
   external: 797
 
 -
+  id: 141
+  teamcategory: 8
+  title: Sport Lisboa e Benfica
+  foundedAt: "1904-02-28"
+  nicknames: Águias, Encarnados 
+  letters: SLB
+  shortname: Benfica
+  stadium: Da Luz
+  website: http://www.slbenfica.pt/
+  twitter: SL_Benfica
+  country: 178
+  external: 798
+
+-
+  id: 142
+  teamcategory: 8
+  title: Sporting Clube de Braga
+  foundedAt: "1921-01-19"
+  nicknames: Arsenalistas, Arcebispos
+  letters: SCB
+  shortname: Braga
+  stadium: Municipal de Braga - AXA
+  website: http://www.scbraga.pt/
+  twitter: SCBragaOficial
+  country: 178
+  external: 1358
+
+-
+  id: 143
+  teamcategory: 8
+  title: Sporting Clube de Portugal
+  foundedAt: "1906-01-07"
+  nicknames: Sportinguistas, Leões, Verde e Brancos 
+  letters: SCP
+  shortname: Sporting Lisboa
+  stadium: José Alvalade
+  website: http://www.sporting.pt/
+  twitter: Sporting_CP
+  country: 178
+  external: 799
+
+-
+  id: 144
+  teamcategory: 8
+  title: Club Sport Marítimo
+  foundedAt: "1910-09-20"
+  nicknames: Verde Rubros, Leões da Madeira
+  letters: CSM
+  shortname: Marítimo
+  stadium: Dos Barreiros
+  website: http://www.csmaritimo.pt/
+  twitter: csmaritimosad
+  country: 178
+  external: 1753
+
+-
+  id: 145
+  teamcategory: 8
+  title: Vitória Sport Clube
+  foundedAt: "1922-09-22"
+  nicknames: Vimaranenses, Branquinhos, Conquistadores
+  letters: VSC
+  shortname: Vitória de Guimarães
+  stadium: D. Afonso Henriques
+  website: http://www.vitoriasc.pt/
+  twitter: vitoria1922gmr
+  country: 178
+  external: 1759
+
+-
+  id: 146
+  teamcategory: 8
+  title: Clube Desportivo Nacional
+  foundedAt: "1910-08-12"
+  nicknames: Albinegros, Nacionalistas
+  letters: CDN
+  shortname: Nacional
+  stadium: Da Madeira
+  website: http://www.cdnacional.pt/
+  twitter: CDNacional
+  country: 178
+  external: 1754
+
+-
+  id: 147
+  teamcategory: 8
+  title: Sporting Clube Olhanense
+  foundedAt: "1912-04-27"
+  nicknames: Leões de Olhão
+  letters: SCO
+  shortname: Olhanense
+  stadium: José Arcanjo
+  website: http://www.scolhanense.com/
+  twitter: scolhanense
+  country: 178
+  external: 1757
+
+-
+  id: 148
+  teamcategory: 8
+  title: Gil Vicente Futebol Clube
+  foundedAt: "1924-03-05"
+  nicknames: Gilistas, Galos
+  letters: GVFC
+  shortname: Gil Vicente
+  stadium: Cidade de Barcelos
+  website: http://www.gilvicentefc.pt/
+  twitter: GilVicenteFc
+  country: 178
+  external: 3307
+
+-
+  id: 149
+  teamcategory: 8
+  title: Futebol Clube Paços de Ferreira
+  foundedAt: "1950-05-04"
+  nicknames: Castores
+  letters: FCPF
+  shortname: Paços de Ferreira
+  stadium: Da Mata Real
+  website: http://www.fcpf.pt/
+  twitter: fcpf
+  country: 178
+  external: 1756
+
+-
+  id: 150
+  teamcategory: 8
+  title: Vitória Futebol Clube
+  foundedAt: "1910-11-20"
+  nicknames: Sadinos, Velho Senhor 
+  letters: VFC
+  shortname: Vitória Setúbal
+  stadium: Do Bonfim
+  website: http://www.vfc.pt/
+  twitter: v_setubal
+  country: 178
+  external: 1760
+
+-
+  id: 151
+  teamcategory: 8
+  title: Sport Clube Beira Mar
+  foundedAt: "1922-01-01"
+  nicknames: Auri negros 
+  letters: SCBM
+  shortname: Beira Mar
+  stadium: Municipal de Aveiro
+  website: http://www.beiramar.pt/
+  twitter: scbeira_mar
+  country: 178
+  external: 2296
+
+-
+  id: 152
+  teamcategory: 8
+  title: Associação Académica de Coimbra
+  foundedAt: "1887-11-03"
+  nicknames: Briosa, Estudantes, Pretos
+  letters: AAC
+  shortname: Académica
+  stadium: Cidade de Coimbra
+  website: http://www.academica-oaf.pt/
+  twitter: AAC_Briosa
+  country: 178
+  external: 1749
+
+-
+  id: 153
+  teamcategory: 8
+  title: Rio Ave Futebol Clube
+  foundedAt: "1939-10-05"
+  nicknames: Vilacondenses
+  letters: RAFC
+  shortname: Rio Ave
+  stadium: Do Rio Ave
+  website: http://www.rioave-fc.pt/
+  twitter: RioAve_fc
+  country: 178
+  external: 1758
+
+-
+  id: 154
+  teamcategory: 8
+  title: Grupo Desportivo Estoril Praia
+  foundedAt: "1939-05-17"
+  nicknames: Canarinhos, Estorilistas, Equipa da Linha
+  letters: GDEP
+  shortname: Estoril
+  stadium: António Coimbra da Mota
+  website: http://www.estorilpraia.pt/
+  twitter: GDEstorilPraia 
+  country: 178
+
+-
+  id: 155
+  teamcategory: 8
+  title: Moreirense Futebol Clube
+  foundedAt: "1938-01-01"
+  nicknames: Moreira de Cónegos
+  letters: MFC
+  shortname: Moreirense
+  stadium: Comendador Joaquim de Almeida Freitas
+  website: http://www.moreirensefc.pt/
+  twitter: MoreirenseFC
+  country: 178
+
+-
+  id: 156
+  teamcategory: 
+  title: Club The Strongest
+  foundedAt: "1908-08-04"
+  nicknames: Tigre, Atigrados, Aurinegro, Decano
+  letters: CTS
+  shortname: The Strongest
+  stadium: Rafael Mendoza Castellón 
+  website: http://www.club-thestrongest.com/
+  twitter: ClubStrongest
+  country: 27
+
+-
+  id: 157
+  teamcategory: 
+  title: Club Deportivo San José de Oruro
+  foundedAt: "1942-03-19"
+  nicknames: Santo, Minero, V Azulada
+  letters: DSJ
+  shortname: San José
+  stadium: Jesús Bermúdez
+  website: http://www.club-sanjose.com/
+  twitter: ClubSanJose
+  country: 27
+
+-
+  id: 158
+  teamcategory: 
+  title: Club Deportivo Oriente Petrolero
+  foundedAt: "1955-05-11"
+  nicknames: Albiverdes,Verdolagas
+  letters: CDOP
+  shortname: Oriente Petrolero
+  stadium: Ramón Tahuichi Aguilera
+  website: http://www.daleooo.com/
+  twitter: OrientepOficial
+  country: 27
+
+-
+  id: 159
+  teamcategory: 
+  title: Club Universitario San Francisco Xavier
+  foundedAt: "1961-05-04"
+  nicknames: U de Sucre, Docto, Estudiantil
+  letters: CUS
+  shortname: Universitario de Sucre
+  stadium: Olímpico Patria
+  website: http://www.aguantelau.com/
+  twitter: LaUdeSucre
+  country: 27
+
+-
+  id: 160
+  teamcategory: 
+  title: Club Social, Cultural y Deportivo Blooming
+  foundedAt: "1946-01-05"
+  nicknames: Millonario, Pascaneros 
+  letters: SCDP
+  shortname: Blooming
+  stadium: Ramón Tahuichi Aguilera
+  website: http://www.clubblooming.com.bo/
+  twitter: ClubBloomingSC
+  country: 27
+
+-
+  id: 161
+  teamcategory: 
+  title: Club Bamin Real Potosí
+  foundedAt: "1941-10-20"
+  nicknames: Fenómeno, Lilas, León
+  letters: CBRP
+  shortname: Real Potosí
+  stadium: Víctor Agustín Ugarte
+  website: http://www.realpotosi.com/
+  twitter: imperiorealista
+  country: 27
+
+-
+  id: 162
+  teamcategory: 
+  title: Club Aurora
+  foundedAt: "1935-05-27"
+  nicknames: El equipo del pueblo, Celeste
+  letters: CB
+  shortname: Aurora
+  stadium: Félix Capriles
+  website: http://www.clubaurora.com.bo
+  twitter: Club_Aurora 
+  country: 27
+
+-
+  id: 163
+  teamcategory: 
+  title: Club Atlético Nacional Potosí
+  foundedAt: "1942-08-04"
+  nicknames: Pata lados, Banda Roja, Rancho Guitarras
+  letters: CANP
+  shortname: Nacional Potosí
+  stadium: Victor Agustín Ugarte
+  website: NO TIENE
+  twitter: NacionalPotosi
+  country: 27
+
+-
+  id: 164
+  teamcategory: 
+  title: Fútbol Club Bolívar
+  foundedAt: "1925-12-04"
+  nicknames: La Academia 
+  letters: FCB
+  shortname: Bolívar
+  stadium: Hernando Siles
+  website: http://www.clubbolivar.com/
+  twitter: Bolivar_Oficial
+  country: 27
+
+-
+  id: 165
+  teamcategory: 
+  title: La Paz Fútbol Club
+  foundedAt: "1989-05-30"
+  nicknames: Azulgranas, Ingenieros, Hombres Cóndor
+  letters: LPFC
+  shortname: La Paz
+  stadium: Cosmos79
+  website: NO TIENE
+  twitter: La_PazFC
+  country: 27
+
+-
+  id: 166
+  teamcategory: 
+  title: Club Deportivo Jorge Wilstermann
+  foundedAt: "1949-11-24"
+  nicknames: Aviador, Rojo
+  letters: CDJW
+  shortname: Wilstermann
+  stadium: Félix Capriles
+  website: http://www.jorgewilstermann.com/
+  twitter: Wilstermann
+  country: 27
+
+-
+  id: 167
+  teamcategory: 
+  title: Club Petrolero
+  foundedAt: "2000-04-09"
+  nicknames: Petrolero del Chaco, Petrolero de Yacuiba
+  letters: CBY
+  shortname: Petrolero
+  stadium: Provincial de Yacuiba
+  website: http://www.petrolero-del-chaco.globered.com/
+  twitter: PetrolerodelCha
+  country: 27
+
+-
+  id: 168
+  teamcategory: 2
+  title: Botafogo de Futebol e Regatas
+  foundedAt: "1904-12-08"
+  nicknames: Fogão, Estrela Solitaria, Glorioso
+  letters: BFR
+  shortname: Botafogo
+  stadium: Santa Cruz
+  website: http://www.botafogo.com.br/
+  twitter: BotafogoOficial
+  country: 31
+  external: 254
+
+-
+  id: 169
+  teamcategory: 2
+  title: Sport Club Internacional
+  foundedAt: "1909-04-04"
+  nicknames: Inter, Colorado
+  letters: SCI
+  shortname: Internacional
+  stadium: Beira Rio
+  website: http://www.internacional.com.br/
+  twitter: SCInternacional
+  country: 31
+  external: 116
+
+-
+  id: 170
+  teamcategory: 2
+  title: Figueirense Futebol Clube
+  foundedAt: "1921-12-06"
+  nicknames: Figueira
+  letters: FFC
+  shortname: Figueirense
+  stadium: Orlando Scarpelli
+  website: http://www.figueirense.com.br/
+  twitter: figueirensefc
+  country: 31
+  external: 307
+  content: |
+    Vitoria
+
+-
+  id: 171
+  teamcategory: 2
+  title: Club de Regatas Vasco da Gama
+  foundedAt: "1898-08-21"
+  nicknames: Gigante da Colina, Vascão, Trem Bala
+  letters: CRVD
+  shortname: Vasco 
+  stadium: São Januário
+  website: http://www.vasco.com.br/
+  twitter: crvascodagama
+  country: 31
+  external: 261
+
+-
+  id: 172
+  teamcategory: 2
+  title: Clube Atlético Mineiro
+  foundedAt: "1908-03-25"
+  nicknames: Galo, Glorioso
+  letters: CAM
+  shortname: Atlético Mineiro
+  stadium: Mineirão
+  website: http://www.atletico.com.br/
+  twitter: sitedogalo
+  country: 31
+  external: 624
+
+-
+  id: 173
+  teamcategory: 2
+  title: Fluminense Football Club
+  foundedAt: "1902-07-21"
+  nicknames: Flu, Fluzão, Tricolor
+  letters: FFC
+  shortname: Fluminense
+  stadium: Maracaná
+  website: http://www.fluminense.com.br/
+  twitter: OficialFlu
+  country: 31
+  external: 113
+
+-
+  id: 174
+  teamcategory: 2
+  title: Clube de Regatas do Flamengo
+  foundedAt: "1895-11-15"
+  nicknames: Mengão, Fla, Urubu
+  letters: CRF
+  shortname: Flamengo
+  stadium: Maracaná
+  website: http://www.flamengo.com.br/
+  twitter: CR_Flamengo
+  country: 31
+  external: 256
+
+-
+  id: 175
+  teamcategory: 2
+  title: Sociedade Esportiva Palmeiras
+  foundedAt: "1914-08-26"
+  nicknames: Verdão, Alviverde, Palestra
+  letters: SEP
+  shortname: Palmeiras
+  stadium: Palestra Itália
+  website: http://www.palmeiras.com.br/
+  twitter: SitePalmeiras
+  country: 31
+  external: 80
+  content: |
+    Goiás
+
+-
+  id: 176
+  teamcategory: 2
+  title: Associação Portuguesa de Desportos
+  foundedAt: "1920-08-14"
+  nicknames: Lusa, Rubro Verde
+  letters: APD
+  shortname: Portuguesa
+  stadium: Do Edno
+  website: http://www.portuguesa.com.br/
+  twitter: Lusa_Oficial
+  country: 31
+  external: 248
+
+-
+  id: 177
+  teamcategory: 2
+  title: Sport Club do Recife
+  foundedAt: "1905-05-13"
+  nicknames: Leão
+  letters: SCR
+  shortname: Sport Recife
+  stadium: Ilha do Retiro
+  website: http://www.sportrecife.com.br/
+  twitter: sportrecife
+  country: 31
+  external: 626
+  content: |
+    Criciúma
+
+-
+  id: 178
+  teamcategory: 2
+  title: Cruzeiro Esporte Clube
+  foundedAt: "1921-02-01"
+  nicknames: Raposa, Zêro, Zêro, Celeste
+  letters: CEC
+  shortname: Cruzeiro
+  stadium: Mineirão
+  website: http://www.cruzeiro.com.br/
+  twitter: CruzeiroEC
+  country: 31
+  external: 108
+
+-
+  id: 179
+  teamcategory: 2
+  title: Esporte Clube Bahia
+  foundedAt: "1931-01-01"
+  nicknames: Tricolor, Baêa, Bahiaço
+  letters: ECB
+  shortname: Bahía
+  stadium: Pituaçu
+  website: http://www.esporteclubebahia.com.br/
+  twitter: ecbahia_oficial
+  country: 31
+  external: 991
+
+-
+  id: 180
+  teamcategory: 2
+  title: Atlético Clube Goianiense
+  foundedAt: "1937-02-04"
+  nicknames: Dragão, Locomotiva Rubro Negra
+  letters: ACG
+  shortname: Goianiense
+  stadium: Serra Dourada
+  website: http://www.atleticocg.com.br/
+  twitter: acgoficial
+  country: 31
+  external: 1677
+  content: |
+    At. Paranaense
+
+-
+  id: 181
+  teamcategory: 2
+  title: Santos Futebol Clube
+  foundedAt: "1912-04-14"
+  nicknames: Peixe, Santástico, Alvinegro Praiano, Leão do Mar
+  letters: SFC
+  shortname: Santos
+  stadium: Vila Belmiro
+  website: http://www.santosfc.com.br/
+  twitter: santosfc
+  country: 31
+  external: 73
+
+-
+  id: 182
+  teamcategory: 2
+  title: Gremio Foot-Ball Porto Alegrense
+  foundedAt: "1903-09-15"
+  nicknames: Imortal Tricolor, Tricolor Gaucho
+  letters: GFPA
+  shortname: Gremio
+  stadium: Olímpico Monumental
+  website: http://www.gremio.net/
+  twitter: gremiooficial
+  country: 31
+  external: 309
+
+-
+  id: 183
+  teamcategory: 2
+  title: Clube Náutico Capibaribe
+  foundedAt: "1901-07-04"
+  nicknames: Alvirrubro, Coroado, Glorioso
+  letters: CNC
+  shortname: Náutico
+  stadium: Aflitos
+  website: http://www.nautico-pe.com.br/
+  twitter: nauticope
+  country: 31
+  external: 625
+
+-
   id: 184
   teamcategory: 2
   title: Sport Club Corinthians Paulista
@@ -262,6 +2533,542 @@
   external: 107
 
 -
+  id: 185
+  teamcategory: 2
+  title: Associação Atlética Ponte Preta
+  foundedAt: "1900-11-08"
+  nicknames: Macaca, Veterana
+  letters: AAPP
+  shortname: Ponte Preta
+  stadium: Moisés Lucarelli
+  website: http://www.pontepretaesportes.com.br/
+  twitter: aapp_oficial
+  country: 31
+  external: 247
+
+-
+  id: 186
+  teamcategory: 2
+  title: São Paulo Futebol Clube
+  foundedAt: "1930-01-25"
+  nicknames: Tricolor, Clube da Fé, Soberano
+  letters: SPFC
+  shortname: San Pablo
+  stadium: Morumbí
+  website: http://www.saopaulofc.net/
+  twitter: SaoPauloFC
+  country: 31
+  external: 75
+
+-
+  id: 187
+  teamcategory: 2
+  title: Coritiba Foot Ball Club
+  foundedAt: "1909-12-10"
+  nicknames: Coxa, Glorioso, Vovô
+  letters: CFBC
+  shortname: Coritiba
+  stadium: Couto Pereira
+  website: http://www.coritiba.com.br/
+  twitter: coritiba
+  country: 31
+  external: 628
+
+-
+  id: 188
+  teamcategory: 
+  title: Corporación Club Deportes Tolima
+  foundedAt: "1954-12-18"
+  nicknames: Pijaos, Vinotinto y Oro
+  letters: CDT
+  shortname: Tolima
+  stadium: Manuel Murillo Toro
+  website: http://www.deportestolima.com/
+  twitter: cdtolima
+  country: 47
+
+-
+  id: 189
+  teamcategory: 
+  title: Club Independiente Santa Fe
+  foundedAt: "1941-02-28"
+  nicknames: Cardenales, Expreso Rojo, León
+  letters: ISF
+  shortname: Santa Fe
+  stadium: Nemesio Camacho, "El Campín"
+  website: http://www.independientesantafe.co/
+  twitter: IndSantaFeCO
+  country: 47
+
+-
+  id: 190
+  teamcategory: 
+  title: Club Deportivo Atlético Huila
+  foundedAt: "1990-11-29"
+  nicknames: Opitas, Bambuqueros
+  letters: CDAH
+  shortname: Huila
+  stadium: Guillermo Plazas Alcid
+  website: http://www.clubatleticohuila.com/
+  twitter: AtleticoHuila
+  country: 47
+
+-
+  id: 191
+  teamcategory: 
+  title: Club Deportivo La Equidad Seguros
+  foundedAt: "1982-12-13"
+  nicknames: Aseguradores
+  letters: LES
+  shortname: La Equidad
+  stadium: Metropolitano de Techo
+  website: http://www.equidadclubdeportivo.com/
+  twitter: laequidadcd
+  country: 47
+
+-
+  id: 192
+  teamcategory: 
+  title: Itagüí Fútbol Club
+  foundedAt: "2008-02-07"
+  nicknames: Águilas Doradas
+  letters: IFC
+  shortname: Itagüí 
+  stadium: Metropolitano Ciudad de Itagüí
+  website: http://www.aguilasdoradasitagui.com/
+  twitter: ItaguiDitaires
+  country: 47
+
+-
+  id: 193
+  teamcategory: 
+  title: Asociación Deportivo Pasto
+  foundedAt: "1949-12-10"
+  nicknames: Fuerza Tricolor, Equipo Volcánico
+  letters: ADP
+  shortname: Dep. Pasto
+  stadium: Departamental Libertad
+  website: http://www.deportivopasto.com.co/
+  twitter: DeportivoPasto
+  country: 47
+
+-
+  id: 194
+  teamcategory: 
+  title: Club Deportivo Junior de Barranquilla
+  foundedAt: "1924-07-08"
+  nicknames: Tiburones, Rojiblancos
+  letters: CDJB
+  shortname: Junior
+  stadium: Metropolitano Roberto Meléndez
+  website: http://www.juniorbarranquilla.com/
+  twitter: corpojunior
+  country: 47
+
+-
+  id: 195
+  teamcategory: 
+  title: Deportivo Boyacá Chicó Fútbol Club
+  foundedAt: "2002-03-26"
+  nicknames: Ajedrezados
+  letters: BCFC
+  shortname: Boyacá Chicó 
+  stadium: La Independencia
+  website: http://www.boyacachico.com/
+  twitter: BCHICOFCOFICIAL
+  country: 47
+
+-
+  id: 196
+  teamcategory: 
+  title: Asociación Deportivo Cali
+  foundedAt: "1912-11-23"
+  nicknames: Amenaza Verde, Azucareros, Verdiblancos
+  letters: ADC
+  shortname: Dep. Cali
+  stadium: Pascual Guerrero
+  website: http://www.deportivocali.com.co/
+  twitter: AsoDeporCali
+  country: 47
+
+-
+  id: 197
+  teamcategory: 
+  title: Corporación Deportiva Patriotas Fútbol Club
+  foundedAt: "2003-01-01"
+  nicknames: Muiscas, Lanceros, Acereros
+  letters: CDP
+  shortname: Patriotas
+  stadium: La Independencia
+  website: http://www.patriotasfc.com/
+  twitter: patriotasfutbol
+  country: 47
+
+-
+  id: 198
+  teamcategory: 
+  title: Club Atlético Nacional de Medellín
+  foundedAt: "1947-08-03"
+  nicknames: Rey de Copas, Verdolagas, Nacionalistas
+  letters: CANM
+  shortname: At. Nacional 
+  stadium: Atanasio Girardot
+  website: http://www.atlnacional.com.co/
+  twitter: nacionaloficial
+  country: 47
+
+-
+  id: 199
+  teamcategory: 
+  title: Millonarios Fútbol Club
+  foundedAt: "1946-06-18"
+  nicknames: Millos, Embajadores, Albiazules
+  letters: MFC
+  shortname: Millonarios
+  stadium: Nemesio Camacho, "El Campín"
+  website: http://www.millonarios.com.co/
+  twitter: MillosFCoficial
+  country: 47
+
+-
+  id: 200
+  teamcategory: 
+  title: Envigado Fútbol Club 
+  foundedAt: "1989-10-14"
+  nicknames: Naranja
+  letters: EFC
+  shortname: Envigado
+  stadium: Polideportivo Sur
+  website: http://www.envigadofutbolclub.net/
+  twitter: EnvigadoFC
+  country: 47
+
+-
+  id: 201
+  teamcategory: 
+  title: Corporación Deportiva Real Cartagena
+  foundedAt: "1971-10-01"
+  nicknames: Heroicos, Auriverdes
+  letters: CDRC
+  shortname: Real Cartagena
+  stadium: Jaime Morón León
+  website: http://www.futbolclubcartagena.com/
+  twitter: RealCartagenaCD
+  country: 47
+
+-
+  id: 202
+  teamcategory: 
+  title: Corporación Deportes Quindío
+  foundedAt: "1951-08-01"
+  nicknames: Cuyabros, Cafeteros, Milagroso
+  letters: CDQ
+  shortname: Quindío
+  stadium: San José
+  website: http://www.deportesquindio.com.co/
+  twitter: DeporQuindioCD
+  country: 47
+
+-
+  id: 203
+  teamcategory: 
+  title: Corporación Deportivo Independiente Medellín
+  foundedAt: "1913-04-15"
+  nicknames: Poderoso de la Montaña, Medallo, Rey de Corazones, Rojo
+  letters: DIM
+  shortname: Indepte. Medellín
+  stadium: Atanasio Girardot
+  website: http://www.dim.com.co/
+  twitter: oficialDIM
+  country: 47
+
+-
+  id: 204
+  teamcategory: 
+  title: Corporación Deportiva Once Caldas
+  foundedAt: "1961-01-16"
+  nicknames: Blanco Blanco, Sabios
+  letters: DOC
+  shortname: Once Caldas
+  stadium: Palogrande
+  website: http://www.oncecaldas.com.co/
+  twitter: oncecaldasweb
+  country: 47
+
+-
+  id: 205
+  teamcategory: 
+  title: Cúcuta Deportivo Fútbol Club
+  foundedAt: "1924-10-09"
+  nicknames: Motilones, Rojinegro
+  letters: CDFC
+  shortname: Cúcuta
+  stadium: General Santander
+  website: http://www.soyrojinegro.com/
+  twitter: CUCUTADEPORTIVO
+  country: 47
+
+-
+  id: 206
+  teamcategory: 
+  title: Club Universidad de Chile
+  foundedAt: "1927-05-24"
+  nicknames: La U, Chuncho, Bulla, Azules
+  letters: CUC
+  shortname: Universidad de Chile
+  stadium: Nacional de Chile
+  website: http://www.udechile.cl/
+  twitter: udechile
+  country: 44
+
+-
+  id: 207
+  teamcategory: 
+  title: Club Deportivo O'Higgins 
+  foundedAt: "1955-07-04"
+  nicknames: Capo de Provincia, Celeste
+  letters: CDO
+  shortname: O'Higgins
+  stadium: Teniente de Rancagua
+  website: http://www.ohigginsfc.cl/
+  twitter: Ohigginsoficial
+  country: 44
+
+-
+  id: 208
+  teamcategory: 
+  title: Club de Deportes Iquique 
+  foundedAt: "1978-05-21"
+  nicknames: Dragones Celestes
+  letters: CDI
+  shortname: Iquique
+  stadium: Tierra de Campeones
+  website: http://www.clubdeportesiquique.cl/
+  twitter: ClubDIquique
+  country: 44
+
+-
+  id: 209
+  teamcategory: 
+  title: Universidad Católica
+  foundedAt: "1937-04-21"
+  nicknames: Los Cruzados
+  letters: UC
+  shortname: Universidad Católica
+  stadium: San Carlos de Apoquindo
+  website: http://www.cruzados.cl
+  twitter: CruzadosSADP
+  country: 44
+
+-
+  id: 210
+  teamcategory: 
+  title: Club Unión Española
+  foundedAt: "1897-05-18"
+  nicknames: Hispanos, Rojos de Santa Laura
+  letters: CUE
+  shortname: Unión Española
+  stadium: Santa Laura
+  website: http://www.unionespanola.cl/
+  twitter: Ueoficial
+  country: 44
+
+-
+  id: 211
+  teamcategory: 
+  title: Club Social y Deportivo Colo Colo
+  foundedAt: "1925-04-19"
+  nicknames: Albos, Cacique
+  letters: CCC
+  shortname: Colo Colo
+  stadium: Monumental David de Arellano
+  website: http://www.colocolo.cl/
+  twitter: colocolooficial
+  country: 44
+
+-
+  id: 212
+  teamcategory: 
+  title: Deportes Unión La Calera 
+  foundedAt: "1954-01-26"
+  nicknames: Cementeros, Máquina Cementera
+  letters: DUC
+  shortname: Unión La Calera
+  stadium: Nicolás Chahúan
+  website: http://www.unionlacalera.cl/
+  twitter: Union_LaCalera
+  country: 44
+
+-
+  id: 213
+  teamcategory: 
+  title: Club de Deportes Cobreloa 
+  foundedAt: "1977-07-01"
+  nicknames: Zorros del Desierto, Loínos, Mineros.
+  letters: CDC
+  shortname: Cobreloa
+  stadium: Municipal de Calama
+  website: http://www.cobreloa.cl/
+  twitter: cobreloaoficial
+  country: 44
+
+-
+  id: 214
+  teamcategory: 
+  title: Club Deportivo Huachipato
+  foundedAt: "1947-07-06"
+  nicknames: Acereros, Siderúrgicos, Campeón del Sur
+  letters: CDH
+  shortname: Huachipato
+  stadium: CAP de Talcahuano
+  website: http://www.cdhuachipato.cl 
+  twitter: CD_Huachipato
+  country: 44
+
+-
+  id: 215
+  teamcategory: 
+  title: Club Deportivo Universidad de Concepción
+  foundedAt: "1994-08-08"
+  nicknames: U de Conce, Campanil
+  letters: CDUC
+  shortname: U. Concepción
+  stadium: Alcaldesa Ester Roa
+  website: http://www.laudeconce.cl/
+  twitter: laudeconce_cl
+  country: 44
+
+-
+  id: 216
+  teamcategory: 
+  title: Club de Deportes Santiago Wanderers
+  foundedAt: "1892-08-15"
+  nicknames: Caturros, Porteños, Verde
+  letters: CDSW
+  shortname: S. Wanderers
+  stadium: Regional Chiledeportes de Valparaíso
+  website: http://www.santiagowanderers.cl/
+  twitter: swanderers
+  country: 44
+
+-
+  id: 217
+  teamcategory: 
+  title: Audax Italiano La Florida 
+  foundedAt: "1910-11-30"
+  nicknames: Tanos, Audinos, Verde de los Valles
+  letters: AILF
+  shortname: Audax Italiano
+  stadium: Bicentenario de La Florida
+  website: http://www.audaxitaliano.cl/
+  twitter: audaxitaliano
+  country: 44
+
+-
+  id: 218
+  teamcategory: 
+  title: Club de Deportes La Serena 
+  foundedAt: "1955-09-12"
+  nicknames: Granates, Papayeros
+  letters: CDLS
+  shortname: La Serena
+  stadium: La Portada
+  website: http://www.clubdeporteslaserena.cl/
+  twitter: CDLASERENA 
+  country: 44
+
+-
+  id: 219
+  teamcategory: 
+  title: Club Social de Deportes Rangers
+  foundedAt: "1902-02-11"
+  nicknames: Piducanos, Rojinegros, Talquinos
+  letters: CSDR
+  shortname: Rangers
+  stadium: Fiscal de Talca
+  website: http://www.rangersdetalca.com/
+  twitter: Rangersdetalca_
+  country: 44
+
+-
+  id: 220
+  teamcategory: 
+  title: Club Deportivo Palestino 
+  foundedAt: "1920-08-20"
+  nicknames: Árabes, El Tino, Tricolor
+  letters: CDP
+  shortname: Palestino
+  stadium: Municipal de La Cisterna
+  website: http://www.palestino.cl/
+  twitter: CDPalestino
+  country: 44
+
+-
+  id: 221
+  teamcategory: 
+  title: Club de Deportes Antofagasta 
+  foundedAt: "1966-05-14"
+  nicknames: Pumas, Albicelestes
+  letters: CDA
+  shortname: Antofagasta
+  stadium: Regional Calvo y Bascuñan
+  website: http://www.cdantofagasta.cl/
+  twitter: CD_Antofagasta
+  country: 44
+
+-
+  id: 222
+  teamcategory: 
+  title: Club de Deportes Cobresal
+  foundedAt: "1979-05-05"
+  nicknames: Mineros, Legionarios
+  letters: CDC
+  shortname: Cobresal
+  stadium: El Cobre
+  website: http://www.cdcobresal.cl/
+  twitter: COBRESAL
+  country: 44
+
+-
+  id: 223
+  teamcategory: 
+  title: Club Deportivo Unión San Felipe
+  foundedAt: "1956-10-16"
+  nicknames: Uní-Uní, Albirrojos, Aconcagüinos
+  letters: USF
+  shortname: San Felipe
+  stadium: Municipal de San Felipe
+  website: http://www.unionsanfelipe.com/
+  twitter: USanFelipeSADP 
+  country: 44
+
+-
+  id: 224
+  teamcategory: 
+  title: Liga Deportiva Universitaria de Loja
+  foundedAt: "1979-11-26"
+  nicknames: La Garra del Oso, Albos
+  letters: LDUL
+  shortname: Liga de Loja
+  stadium: Federativo Reina del Cisne
+  website: http://www.ligadeloja.com/
+  twitter: LDULOJA
+  country: 60
+
+-
+  id: 225
+  teamcategory: 
+  title: Barcelona Sporting Club
+  foundedAt: "1925-01-05"
+  nicknames: Canarios, Toreros
+  letters: BSC
+  shortname: Barcelona (Ec.)
+  stadium: Monumental Banco Pichincha
+  website: http://www.barcelonasc.com.ec/
+  twitter: BarcelonaSCweb
+  country: 60
+
+-
   id: 226
   teamcategory: 
   title: Club Sport Emelec
@@ -273,6 +3080,515 @@
   website: http://www.emelec.com.ec/
   twitter: csemelec
   country: 60
+
+-
+  id: 227
+  teamcategory: 
+  title: Club Social y Deportivo Independiente
+  foundedAt: "1958-01-03"
+  nicknames: Negriazules, Rayados del Valle
+  letters: IDV
+  shortname: Independiente del Valle
+  stadium: Municipal General Rumiñahui
+  website: http://www.independientedelvalle.com.ec/
+  twitter: Independelvalle 
+  country: 60
+
+-
+  id: 228
+  teamcategory: 
+  title: Club Deportivo Cuenca
+  foundedAt: "1971-04-03"
+  nicknames: Expreso Austral, Morlaco, Rojo, León
+  letters: CDC
+  shortname: Dep. Cuenca
+  stadium: Alejandro Serrano Aguilar
+  website: http://www.deportivocuenca.com.ec/
+  twitter: DCuencaOficial
+  country: 60
+
+-
+  id: 229
+  teamcategory: 
+  title: Liga Deportiva Universitaria de Quito
+  foundedAt: "1930-11-01"
+  nicknames: La U, Albos, Azucenas, Rey de Copas
+  letters: LDUQ
+  shortname: Liga de Quito
+  stadium: Liga Deportiva Universitaria, "Casa Blanca"
+  website: http://www.ldu.com.ec/
+  twitter: LDUWEB
+  country: 60
+
+-
+  id: 230
+  teamcategory: 
+  title: Sociedad Deportivo Quito
+  foundedAt: "1940-09-07"
+  nicknames: La Academia
+  letters: SDQ
+  shortname: Dep. Quito
+  stadium: Olímpico Atahualpa
+  website: http://www.deportivoquito.com/
+  twitter: SDQUITO
+  country: 60
+
+-
+  id: 231
+  teamcategory: 
+  title: Club Deportivo El Nacional
+  foundedAt: "1960-07-03"
+  nicknames: Criollos, Militar, Maquina Gris
+  letters: CDN
+  shortname: El Nacional
+  stadium: Olímpico Atahualpa
+  website: http://www.elnacional.ec
+  twitter: elnacionalec
+  country: 60
+
+-
+  id: 232
+  teamcategory: 
+  title: Manta Fútbol Club
+  foundedAt: "1967-01-01"
+  nicknames: Atuneros, Celestes, Tiburones
+  letters: MFC
+  shortname: Manta
+  stadium: Jocay
+  website: http://www.mantafutbolclub.com/
+  twitter: MantaFutbolClub
+  country: 60
+
+-
+  id: 233
+  teamcategory: 
+  title: Club Social y Deportivo Macará
+  foundedAt: "1939-08-25"
+  nicknames: Celestes, Guaytambos
+  letters: CSDM
+  shortname: Macará
+  stadium: Bellavista
+  website: http://www.clubmacara.com.ec/
+  twitter: CDMacara
+  country: 60
+
+-
+  id: 234
+  teamcategory: 
+  title: Club Deportivo Técnico Universitario
+  foundedAt: "1971-03-26"
+  nicknames: Rodillo Rojo, Albirrojos, Tecniquinos
+  letters: CDTU
+  shortname: Técnico Universitario
+  stadium: Bellavista
+  website: http://www.tecnicouniversitario.ec/
+  twitter: rodillorojo
+  country: 60
+
+-
+  id: 235
+  teamcategory: 
+  title: Centro Deportivo Olmedo
+  foundedAt: "1916-10-11"
+  nicknames: El Ciclón 
+  letters: CDO
+  shortname: Olmedo
+  stadium: Olímpico Ciudad de Riobamba
+  website: http://www.olmedoderiobamba.com/
+  twitter: olmedoriobamba
+  country: 60
+
+-
+  id: 236
+  teamcategory: 
+  title: Club Olimpia
+  foundedAt: "1902-07-25"
+  nicknames: Decano, Franjeado, Rey de Copas
+  letters: CO
+  shortname: Olimpia
+  stadium: Manuel Ferreira
+  website: http://www.olimpia.com.py/
+  twitter: olimpia
+  country: 174
+
+-
+  id: 237
+  teamcategory: 
+  title: Club Cerro Porteño
+  foundedAt: "1912-01-10"
+  nicknames: Ciclón, La Mitad más 1, Azulgrana
+  letters: CCP
+  shortname: Cerro Porteño
+  stadium: Gral. Pablo Rojas
+  website: http://www.cerro.com.py/
+  twitter: ccp1912oficial
+  country: 174
+
+-
+  id: 238
+  teamcategory: 
+  title: Foot Ball Club Libertad
+  foundedAt: "1905-07-30"
+  nicknames: Gumarelo, Repollero, Albinegro
+  letters: FBCL
+  shortname: Libertad
+  stadium: Dr. Nicolás Leoz
+  website: http://www.clublibertad.com.py/
+  twitter: Libertad_Guma
+  country: 174
+
+-
+  id: 239
+  teamcategory: 
+  title: Club Sol de América
+  foundedAt: "1909-03-22"
+  nicknames: El Danzarín
+  letters: CSA
+  shortname: Sol de América
+  stadium: Luis Alfonso Giagni
+  website: http://www.soldeamerica.com/
+  twitter: sdeamerica1909
+  country: 174
+
+-
+  id: 240
+  teamcategory: 
+  title: Club Guaraní
+  foundedAt: "1903-12-10"
+  nicknames: El Legendario, Aborigen
+  letters: CG
+  shortname: Guaraní
+  stadium: Rogelio Livieres
+  website: http://www.clubguarani.com.py/
+  twitter: clubguarani
+  country: 174
+
+-
+  id: 241
+  teamcategory: 
+  title: Club Nacional
+  foundedAt: "1904-05-06"
+  nicknames: Academia, Tricolor
+  letters: CN
+  shortname: Nacional
+  stadium: Arsenio Erico
+  website: http://www.clubnacional.com.py/
+  twitter: clubnacionalpy
+  country: 174
+
+-
+  id: 242
+  teamcategory: 
+  title: Independiente de Campo Grande
+  foundedAt: "1925-09-20"
+  nicknames: Campograndense
+  letters: ICG
+  shortname: Indep. Campo Grande
+  stadium: Ricardo Gregor
+  website: http://clubindependientecg.blogspot.com.ar/
+  twitter: IndependienteCG 
+  country: 174
+
+-
+  id: 243
+  teamcategory: 
+  title: Club Atlético Presidente Franco
+  foundedAt: "1967-12-08"
+  nicknames: Ciclón del Este, Populoso de Alto Paraná
+  letters: CAPF
+  shortname: Cerro Porteño PF
+  stadium: Juan Eudes Pereira
+  website: http://www.cerrodefranco.com
+  twitter: Cerro_deFranco 
+  country: 174
+
+-
+  id: 244
+  teamcategory: 
+  title: Club Sportivo Luqueño
+  foundedAt: "1921-01-05"
+  nicknames: Kure Luque, Chanchón
+  letters: CSL
+  shortname: Sportivo Luqueño
+  stadium: Feliciano Cáceres
+  website: http://www.republicadeluque.com.py/
+  twitter: SpLuquenOficial
+  country: 174
+
+-
+  id: 245
+  teamcategory: 
+  title: Club Rubio Ñu
+  foundedAt: "1913-08-24"
+  nicknames: Ñuenses, Albiverdes
+  letters: CRÑ
+  shortname: Club Rubio Ñu
+  stadium: La Arboleda
+  website: http://www.clubrubionu.com.py/
+  twitter: rubionu1913 
+  country: 174
+
+-
+  id: 246
+  teamcategory: 
+  title: Club Sportivo Carapeguá
+  foundedAt: "2010-03-09"
+  nicknames: El Potro
+  letters: CSC
+  shortname: Sportivo Carapeguá
+  stadium: Teniente 1º Alcides González
+  website: http://www.facebook.com/SptvoCarapegua
+  twitter: SptvoCarapegua 
+  country: 174
+
+-
+  id: 247
+  teamcategory: 
+  title: Tacuary Football Club
+  foundedAt: "1923-10-12"
+  nicknames: Tacua
+  letters: TFC
+  shortname: Tacuary
+  stadium: Roberto Béttega
+  website: http://www.tacuary.com/
+  twitter: TacuaryFBC
+  country: 174
+
+-
+  id: 248
+  teamcategory: 
+  title: Club Deportivo Universidad César Vallejo
+  foundedAt: "1996-06-01"
+  nicknames: Poetas, Azulceleste
+  letters: UCV
+  shortname: U. César Vallejo
+  stadium: Mansiche
+  website: http://www.clubdeportivoucv.edu.pe/
+  twitter: clubucv
+  country: 175
+
+-
+  id: 249
+  teamcategory: 
+  title: Club Sporting Cristal
+  foundedAt: "1955-12-13"
+  nicknames: Bajopontinos, Celestes, Cerveceros
+  letters: CSC
+  shortname: Sporting Cristal
+  stadium: San Martín de Porres
+  website: http://www.clubsportingcristal.pe/
+  twitter: clubscristal
+  country: 175
+
+-
+  id: 250
+  teamcategory: 
+  title: Asociación Civil Real Atlético Garcilaso
+  foundedAt: "2009-07-28"
+  nicknames: La Máquina Celeste
+  letters: RAG
+  shortname: Real Garcilaso
+  stadium: Garcilaso de la Vega
+  website: http://www.realgarcilaso.pe/
+  twitter: REALGARCILASO
+  country: 175
+
+-
+  id: 251
+  teamcategory: 
+  title: Foot Ball Club Melgar
+  foundedAt: "1915-03-25"
+  nicknames: Dominó, Rojinegros, León
+  letters: FBCM
+  shortname: Melgar
+  stadium: Monumental de la UNSA
+  website: http://www.fbcmelgar.pe/
+  twitter: ClubFBCMelgar
+  country: 175
+
+-
+  id: 252
+  teamcategory: 
+  title: Club Inti Gas Deportes 
+  foundedAt: "1972-07-27"
+  nicknames: Los Gasíferos
+  letters: IGD
+  shortname: Inti Gas Deportes
+  stadium: Ciudad de Cumaná
+  website: http://intigasdeportes.blogspot.com.ar/
+  twitter: intigasdeportes
+  country: 175
+
+-
+  id: 253
+  teamcategory: 
+  title: Club Juan Aurich
+  foundedAt: "1922-03-09"
+  nicknames: Ciclón del Norte, Auriche
+  letters: CJA
+  shortname: Juan Aurich
+  stadium: Elías Aguirre
+  website: http://www.juanaurich.net/
+  twitter: Juan_Aurich 
+  country: 175
+
+-
+  id: 254
+  teamcategory: 
+  title: Club Social Deportivo León de Huánuco
+  foundedAt: "1946-06-29"
+  nicknames: León, Cremas del Centro
+  letters: DLH
+  shortname: León de Huanuco
+  stadium: Heraclio Tapia
+  website: http://www.leondehuanuco.com.pe/
+  twitter: LeonDeHco 
+  country: 175
+
+-
+  id: 255
+  teamcategory: 
+  title: Club Deportivo Unión Comercio
+  foundedAt: "1994-06-15"
+  nicknames: Poderoso del Alto Mayo, Comerciantes
+  letters: CDUC
+  shortname: Unión Comercio
+  stadium: Carlos Vidaurre García
+  website: http://www.clubunioncomercio.com/
+  twitter: CDUCMENORES
+  country: 175
+
+-
+  id: 256
+  teamcategory: 
+  title: Club Deportivo Universidad de San Martín de Porres
+  foundedAt: "2004-01-21"
+  nicknames: Santos, Albos
+  letters: SMP
+  shortname: San Martín de Porres
+  stadium: San Martín de Porres
+  website: http://www.clubdeportivo.usmp.edu.pe/
+  twitter: Club_USMP
+  country: 175
+
+-
+  id: 257
+  teamcategory: 
+  title: José Gálvez Foot Ball Club
+  foundedAt: "1951-10-27"
+  nicknames: Galvistas, Pesqueros
+  letters: JGFC
+  shortname: José Gálvez
+  stadium: Manuel Rivera Sánchez
+  website: http://www.josegalvezfbc.com/
+  twitter: clubjosegalvez
+  country: 175
+
+-
+  id: 258
+  teamcategory: 
+  title: Club Social y Deportivo Sport Huancayo
+  foundedAt: "2007-07-02"
+  nicknames: Rojo Matador, León de la Incontrastable
+  letters: SH
+  shortname: Sport Huancayo
+  stadium: Huancayo
+  website: http://www.elsporthuancayo.blogspot.com
+  twitter: Sport_Huancayo
+  country: 175
+
+-
+  id: 259
+  teamcategory: 
+  title: Club Alianza Lima
+  foundedAt: "1901-02-15"
+  nicknames: Aliancistas, Blanquiazules, Potrillos
+  letters: CAL
+  shortname: Alianza Lima
+  stadium: Alejandro Villanueva
+  website: http://www.clubalianzalima.com/
+  twitter: ClubAlianzaLima
+  country: 175
+
+-
+  id: 260
+  teamcategory: 
+  title: Club Sportivo Cienciano
+  foundedAt: "1910-08-07"
+  nicknames: Rojo, Imperial
+  letters: CSC
+  shortname: Cienciano
+  stadium: Garcilaso de la Vega
+  website: http://www.cienciano.com/
+  twitter: ADFPCienciano
+  country: 175
+
+-
+  id: 261
+  teamcategory: 
+  title: Club Sport Boys Association
+  foundedAt: "1927-08-27"
+  nicknames: Rosada, Porteños, Misilera
+  letters: SBA
+  shortname: Sport Boys
+  stadium: Miguel Grau
+  website: http://www.sportboys.com.pe/
+  twitter: sportboys
+  country: 175
+
+-
+  id: 262
+  teamcategory: 
+  title: Club Universitario de Deportes
+  foundedAt: "1924-07-08"
+  nicknames: U, Cremas, Merengues
+  letters: CUD
+  shortname: Universitario
+  stadium: Monumental de Lima
+  website: http://www.clubuniversitario.pe/
+  twitter: Universitario
+  country: 175
+
+-
+  id: 263
+  teamcategory: 
+  title: Club Deportivo Cobresol FBC
+  foundedAt: "2008-05-02"
+  nicknames: Los Dorados
+  letters: CFCB
+  shortname: Cobresol 
+  stadium: 25 de Noviembre
+  website: http://www.cobresol.net/
+  twitter: CobresolFBC_ 
+  country: 175
+
+-
+  id: 264
+  teamcategory: 3
+  title: Club Nacional de Football
+  foundedAt: "1899-05-14"
+  nicknames: Bolso, Tricolor, Decano
+  letters: CNF
+  shortname: Nacional
+  stadium: Centenario
+  website: http://www.nacional.com.uy/
+  twitter: club_nacional
+  country: 228
+  external: 83
+
+-
+  id: 265
+  teamcategory: 3
+  title: Club Atlético Peñarol
+  foundedAt: "1891-09-28"
+  nicknames: Manya, Carboneros, Mirasoles
+  letters: CAP
+  shortname: Peñarol
+  stadium: Centenario
+  website: http://www.peñarol.org/
+  twitter: OficialCAP
+  country: 228
+  external: 98
 
 -
   id: 266
@@ -289,6 +3605,237 @@
   external: 72
 
 -
+  id: 267
+  teamcategory: 3
+  title: Club Atlético River Plate
+  foundedAt: "1932-11-05"
+  nicknames: La Dársena
+  letters: CARP
+  shortname: River Plate (U)
+  stadium: Federico Omar  Saroldi
+  website: http://www.cariverplate.com.uy/
+  twitter: 
+  country: 228
+  external: 197
+
+-
+  id: 268
+  teamcategory: 3
+  title: Cerro Largo Fútbol Club
+  foundedAt: "2002-11-19"
+  nicknames: Arachanes, Azul y Blanca
+  letters: CLFC
+  shortname: Cerro Largo
+  stadium: Arq. Antonio Eleuterio Ubilla
+  website: http://www.cerrolargofc.com.uy/
+  twitter: CerroLargoFC 
+  country: 228
+  external: 958
+
+-
+  id: 269
+  teamcategory: 3
+  title: Defensor Sporting Club
+  foundedAt: "1913-03-15"
+  nicknames: Violeta, Tuertos, Farola, Cometa
+  letters: DSC
+  shortname: Defensor Sporting
+  stadium: Luis Franzini
+  website: http://www.defensorsporting.com.uy/
+  twitter: defensorspweb 
+  country: 228
+  external: 110
+
+-
+  id: 270
+  teamcategory: 3
+  title: Club Atlético Cerro
+  foundedAt: "1922-01-12"
+  nicknames: Villeros, Albiceleste
+  letters: CAC
+  shortname: Cerro
+  stadium: Luis Tróccoli
+  website: http://www.clubatleticocerro.com/
+  twitter: CACerro_oficial
+  country: 228
+  external: 188
+
+-
+  id: 271
+  teamcategory: 3
+  title: Liverpool Fútbol Club
+  foundedAt: "1915-02-15"
+  nicknames: Negriazul
+  letters: LFC
+  shortname: Liverpool
+  stadium: Belvedere
+  website: http://www.liverpoolfc.com.uy/
+  twitter: LiverpoolFC1915
+  country: 228
+  external: 191
+
+-
+  id: 272
+  teamcategory: 3
+  title: Centro Cultural y Deportivo El Tanque Sisley
+  foundedAt: "1955-03-17"
+  nicknames: Verdinegro, Tanques, Fusionado
+  letters: ETS
+  shortname: El Tanque Sisley
+  stadium: Víctor Della Valle
+  website: 
+  twitter: eltanquesisley
+  country: 228
+  external: 961
+
+-
+  id: 273
+  teamcategory: 3
+  title: Montevideo Wanderers Fútbol Club
+  foundedAt: "1902-08-15"
+  nicknames: Bohemios, Vagabundos
+  letters: MWFC
+  shortname: Montevideo Wanderers
+  stadium: Alfredo Víctor Viera
+  website: http://www.mwfc.com.uy/
+  twitter: mwfc_oficial
+  country: 228
+  external: 200
+
+-
+  id: 274
+  teamcategory: 3
+  title: Racing Club de Montevideo
+  foundedAt: "1919-06-04"
+  nicknames: Cerveceros, Escuelita, Academia
+  letters: RCM
+  shortname: Racing (M)
+  stadium: Parque Osvaldo Roberto
+  website: http://www.racing.com.uy
+  twitter: RacingCM 
+  country: 228
+  external: 964
+
+-
+  id: 275
+  teamcategory: 3
+  title: Central Español Fútbol Club
+  foundedAt: "1905-05-01"
+  nicknames: Palermitanos
+  letters: CEFC
+  shortname: Central Español
+  stadium: Parque Palermo
+  website: http://www.central.com.uy/
+  twitter: CENTRALESPANOL 
+  country: 228
+
+-
+  id: 276
+  teamcategory: 3
+  title: Centro Atlético Fénix
+  foundedAt: "1916-07-07"
+  nicknames: Albivioletas, Ave
+  letters: CAF
+  shortname: Fénix
+  stadium: Parque Capurro  
+  website: http://www.cafenix.com.uy/
+  twitter: CAFenixFollower
+  country: 228
+  external: 190
+
+-
+  id: 277
+  teamcategory: 3
+  title: Club Atlético Juventud
+  foundedAt: "1935-12-24"
+  nicknames: Juve, Pedrenses, Canarios
+  letters: CAJ
+  shortname: Juventud
+  stadium: Parque Artigas
+  website: http://www.clubjuventud.org/
+  twitter: juvelaspiedras
+  country: 228
+
+-
+  id: 278
+  teamcategory: 3
+  title: Club Atlético Progreso
+  foundedAt: "1917-04-30"
+  nicknames: Gaucho del Pantanoso
+  letters: CAP
+  shortname: Progreso
+  stadium: Parque Abraham Paladino
+  website: http://www.clubatleticoprogreso.com.uy/
+  twitter: caprogreso
+  country: 228
+
+-
+  id: 279
+  teamcategory: 3
+  title: Club Atlético Bella Vista
+  foundedAt: "1920-04-10"
+  nicknames: Papales, Auriblancos
+  letters: CABV
+  shortname: Bella Vista
+  stadium: Parque José Nasazzi
+  website: http://www.cabellavista.com.uy/
+  twitter: CABellaVista
+  country: 228
+  external: 272
+
+-
+  id: 280
+  teamcategory: 
+  title: Club Santos Laguna
+  foundedAt: "1983-04-09"
+  nicknames: Guerreros, Santos
+  letters: CSL
+  shortname: Santos Laguna
+  stadium: TSM Corona
+  website: http://www.clubsantoslaguna.com.mx/
+  twitter: clubsantoslagun
+  country: 154
+
+-
+  id: 281
+  teamcategory: 
+  title: Club de Fútbol Monterrey
+  foundedAt: "1945-06-28"
+  nicknames: Rayados, Albiazules
+  letters: CFM
+  shortname: Monterrey
+  stadium: Tecnológico
+  website: http://www.rayados.com/
+  twitter: RayadosCom
+  country: 154
+
+-
+  id: 282
+  teamcategory: 
+  title: Club de Fútbol América
+  foundedAt: "1916-10-12"
+  nicknames: Águilas
+  letters: CFA
+  shortname: América
+  stadium: Azteca
+  website: http://www.clubamerica.com.mx
+  twitter: CF_America
+  country: 154
+
+-
+  id: 283
+  teamcategory: 
+  title: Club Monarcas Morelia
+  foundedAt: "1924-11-21"
+  nicknames: Monarquía, Monarcas
+  letters: CMM
+  shortname: Morelia
+  stadium: Morelos
+  website: http://www.fuerzamonarca.com/
+  twitter: FuerzaMonarca
+  country: 154
+
+-
   id: 284
   teamcategory: 
   title: Club de Fútbol Tigres de la Universidad Autónoma de Nuevo León
@@ -300,4 +3847,1070 @@
   website: http://www.tigres.com.mx/
   twitter: TigresOficial
   country: 154
+
+-
+  id: 285
+  teamcategory: 
+  title: Club de Fútbol Pachuca
+  foundedAt: "1901-11-28"
+  nicknames: Tuzos
+  letters: CFP
+  shortname: Pachuca
+  stadium: Hidalgo
+  website: http://www.tuzos.com.mx/
+  twitter: TuzosOficial
+  country: 154
+
+-
+  id: 286
+  teamcategory: 
+  title: Club Tijuana Xoloitzcuintles de Caliente
+  foundedAt: "2007-01-14"
+  nicknames: Xolos, Perros aztecas, Rojinegros
+  letters: CTX
+  shortname: Tijuana
+  stadium: Caliente
+  website: http://www.xolos.com.mx/
+  twitter: XolosOficial
+  country: 154
+
+-
+  id: 287
+  teamcategory: 
+  title: Club de Fútbol Jaguares de Chiapas
+  foundedAt: "2002-06-27"
+  nicknames: Jaguares, Naranjas
+  letters: CFJ
+  shortname: Chiapas
+  stadium: Víctor Manuel Reyna
+  website: http://www.jaguaresdechiapas.com.mx/
+  twitter: soyjaguar
+  country: 154
+
+-
+  id: 288
+  teamcategory: 
+  title: Cruz Azul Fútbol Club
+  foundedAt: "1927-05-22"
+  nicknames: Máquina Cementera, Azules, Cementeros
+  letters: CAFC
+  shortname: Cruz Azul
+  stadium: Azul
+  website: http://www.cruzazulfc.com/
+  twitter: Cruz_Azul_FC
+  country: 154
+
+-
+  id: 289
+  teamcategory: 
+  title: Deportivo Toluca Fútbol Club
+  foundedAt: "1917-12-02"
+  nicknames: Diablos Rojos, Choriceros, Rojo
+  letters: DTFC
+  shortname: Toluca
+  stadium: Nemesio Díez
+  website: http://www.deportivotolucafc.com/
+  twitter: deptolucafc 
+  country: 154
+
+-
+  id: 290
+  teamcategory: 
+  title: Club Social y Deportivo Atlas de Guadalajara
+  foundedAt: "1916-08-15"
+  nicknames: Rojinegros, Zorros
+  letters: CAG
+  shortname: Atlas
+  stadium: Jalisco
+  website: http://www.atlas.com.mx/
+  twitter: atlasoficial
+  country: 154
+
+-
+  id: 291
+  teamcategory: 
+  title: Club de Fútbol Puebla
+  foundedAt: "1944-07-05"
+  nicknames: Camoteros, Franja
+  letters: CFP
+  shortname: Puebla
+  stadium: Cuauhtémoc
+  website: http://www.pueblafutbolclub.com.mx/
+  twitter: Pueblafcoficial
+  country: 154
+
+-
+  id: 292
+  teamcategory: 
+  title: Club Universidad Nacional 
+  foundedAt: "1954-08-28"
+  nicknames: Pumas, UNAM, Universitarios
+  letters: CUN
+  shortname: Pumas 
+  stadium: Olímpico Universitario
+  website: http://www.clubpumasunam.com
+  twitter: ClubUniversidad
+  country: 154
+
+-
+  id: 293
+  teamcategory: 
+  title: Club de Fútbol Atlante
+  foundedAt: "1916-04-18"
+  nicknames: Potros, Azulgranas
+  letters: CFA
+  shortname: Atlante
+  stadium: Olímpico Andrés Quintana Roo
+  website: http://www.atlantefc.mx/
+  twitter: FCAtlante
+  country: 154
+
+-
+  id: 294
+  teamcategory: 
+  title: Club Deportivo Guadalajara
+  foundedAt: "1906-08-05"
+  nicknames: Rebaño Sagrado, Chivas Rayadas
+  letters: CDG
+  shortname: Chivas
+  stadium: Omnilife
+  website: http://www.chivascampeon.com/
+  twitter: Chivas
+  country: 154
+
+-
+  id: 295
+  teamcategory: 
+  title: San Luis Fútbol Club
+  foundedAt: "1957-01-01"
+  nicknames: Auriazules, Gladiadores
+  letters: SLFC
+  shortname: San Luis
+  stadium: Alfonso Lastras Ramírez
+  website: http://www.clubsanluis.com.mx/
+  twitter: SanLuis_FC
+  country: 154
+
+-
+  id: 296
+  teamcategory: 
+  title: Querétaro Fútbol Club
+  foundedAt: "1950-08-07"
+  nicknames: Gallos, Albiazules
+  letters: QFC
+  shortname: Querétaro
+  stadium: Corregidora
+  website: http://www.clubqueretaro.com/
+  twitter: club_queretaro
+  country: 154
+
+-
+  id: 297
+  teamcategory: 
+  title: Club León Fútbol Club
+  foundedAt: "1944-08-20"
+  nicknames: Panzas Verdes, Fiera
+  letters: CLFC
+  shortname: León 
+  stadium: León
+  website: http://www.clubleon-fc.com/
+  twitter: clubleonfcv
+  country: 154
+
+-
+  id: 298
+  teamcategory: 
+  title: Amsterdamsche Football Club Ajax
+  foundedAt: "1900-03-18"
+  nicknames: Sons of God, Ajacieden
+  letters: AFCA
+  shortname: Ajax
+  stadium: Amsterdam Arena
+  website: http://www.ajax.nl
+  twitter: AFCAjax
+  country: 96
+
+-
+  id: 299
+  teamcategory: 
+  title: Feyenoord Rotterdam
+  foundedAt: "1908-07-19"
+  nicknames: Industrials, Legion
+  letters: FR
+  shortname: Feyenoord
+  stadium: De Kuip
+  website: http://www.feyenoord.nl
+  twitter: Feyenoord
+  country: 96
+
+-
+  id: 300
+  teamcategory: 
+  title: Philips Sport Vereniging
+  foundedAt: "1913-08-31"
+  nicknames: The Peasants
+  letters: PSV
+  shortname: PSV
+  stadium: Philips
+  website: http://www.psv.nl
+  twitter: PSV
+  country: 96
+
+-
+  id: 301
+  teamcategory: 
+  title: AZ Alkmaar Zaanstreek
+  foundedAt: "1967-10-05"
+  nicknames: The Cheese Farmers
+  letters: AZA
+  shortname: AZ
+  stadium: AFAS 
+  website: http://www.az.nl
+  twitter: wwwaznl
+  country: 96
+
+-
+  id: 302
+  teamcategory: 
+  title: Sportclub Heerenveen
+  foundedAt: "1920-07-20"
+  nicknames: Super Friezen
+  letters: SCH
+  shortname: Heerenveen
+  stadium: Abe Lenstra 
+  website: http://www.sc-heerenveen.nl
+  twitter: scheerenveen
+  country: 96
+
+-
+  id: 303
+  teamcategory: 
+  title: Football Club Twente
+  foundedAt: "1965-01-07"
+  nicknames: Tukkers, Reds
+  letters: FCT
+  shortname: Twente
+  stadium: De Grolsch Veste
+  website: http://www.fctwente.nl
+  twitter: fctwente
+  country: 96
+
+-
+  id: 304
+  teamcategory: 
+  title: Stichting Betaald Voetbal Vitesse
+  foundedAt: "1892-05-14"
+  nicknames: Yellow Blacks
+  letters: SBVV
+  shortname: Vitesse
+  stadium: GelreDome
+  website: http://www.vitesse.nl
+  twitter: MijnVitesse
+  country: 96
+
+-
+  id: 305
+  teamcategory: 
+  title: Nijmegen Eendracht Combinatie
+  foundedAt: "1900-11-15"
+  nicknames: Eniesee
+  letters: NEC
+  shortname: NEC
+  stadium: Goffertstadion
+  website: http://www.nec-nijmegen.nl
+  twitter: NEC_Nijmegen
+  country: 96
+
+-
+  id: 306
+  teamcategory: 
+  title: Rooms Katholieke Combinatie Waalwijk
+  foundedAt: "1940-08-26"
+  nicknames: RKC
+  letters: RKCW
+  shortname: RKC Waalwijk
+  stadium: Mandemakers 
+  website: http://www.rkcwaalwijk.nl
+  twitter: rkcwaalwijk
+  country: 96
+
+-
+  id: 307
+  teamcategory: 
+  title: Sportvereniging Roda Juliana Combinatie Kerkrade
+  foundedAt: "1962-06-27"
+  nicknames: Koempels
+  letters: RJC
+  shortname: Roda 
+  stadium: Parkstad Limburg 
+  website: http://www.rodajc.nl
+  twitter: rodajckerkrade
+  country: 96
+
+-
+  id: 308
+  teamcategory: 
+  title: Football Club Utrecht
+  foundedAt: "1970-01-07"
+  nicknames: Utreg 
+  letters: FCU
+  shortname: Utrecht
+  stadium: Galgenwaard
+  website: http://www.fcutrecht.nl
+  twitter: fcutrecht
+  country: 96
+
+-
+  id: 309
+  teamcategory: 
+  title: Heracles Almelo
+  foundedAt: "1903-03-05"
+  nicknames: Heraclieden
+  letters: HA
+  shortname: Heracles Almelo
+  stadium: Polman 
+  website: http://www.heracles.nl
+  twitter: HeraclesTweet
+  country: 96
+
+-
+  id: 310
+  teamcategory: 
+  title: Noad Advendo Combinatie Breda
+  foundedAt: "1912-09-19"
+  nicknames: Yellow Army, Rats
+  letters: NACB
+  shortname: NAC 
+  stadium: Rat Verlegh 
+  website: http://www.nac.nl
+  twitter: NACnl
+  country: 96
+
+-
+  id: 311
+  teamcategory: 
+  title: Football Club Groningen
+  foundedAt: "1971-06-16"
+  nicknames: Green White Army
+  letters: FCG
+  shortname: Groningen
+  stadium: Euroborg
+  website: http://www.fcgroningen.nl
+  twitter: fcgroningen
+  country: 96
+
+-
+  id: 312
+  teamcategory: 
+  title: Haagsche Football Club Alles Door Oefening Den Haag
+  foundedAt: "1905-01-02"
+  nicknames: ADO, Caruchaddo
+  letters: ADH
+  shortname: ADO Den Haag
+  stadium: Zuiderpark
+  website: http://www.adodenhaag.nl
+  twitter: adodenhaag
+  country: 96
+
+-
+  id: 313
+  teamcategory: 
+  title: Venlose Voetbal Vereniging
+  foundedAt: "1903-07-02"
+  nicknames: Good Old
+  letters: VVVV
+  shortname: VVV Venlo
+  stadium: De Koel
+  website: http://www.vvv-venlo.nl
+  twitter: vvvvenlo
+  country: 96
+
+-
+  id: 314
+  teamcategory: 
+  title: Willem II 
+  foundedAt: "1896-08-12"
+  nicknames: Tricolor
+  letters: WII
+  shortname: Willem II 
+  stadium: Koning Willem II 
+  website: http://www.willem-ii.nl/
+  twitter: Official_WII
+  country: 96
+
+-
+  id: 315
+  teamcategory: 
+  title: Football Club Zwolle
+  foundedAt: "1990-01-07"
+  nicknames: Bluefingers
+  letters: FCZ
+  shortname: PEC Zwolle
+  stadium: PEC Zwolle
+  website: http://www.peczwolle.nl/
+  twitter: peczwolle
+  country: 96
+
+-
+  id: 316
+  teamcategory: 
+  title: Football Club Zenit
+  foundedAt: "1925-01-01"
+  nicknames: Los Blanquiazules
+  letters: FCZ
+  shortname: Zenit
+  stadium: Petrovski
+  website: http://www.fc-zenit.ru
+  twitter: zenit_spb
+  country: 189
+
+-
+  id: 317
+  teamcategory: 
+  title: PFC CSKA Moscú
+  foundedAt: "1911-01-01"
+  nicknames: Caballos, Hombres del Ejército
+  letters: 
+  shortname: CSKA 
+  stadium: Khimki
+  website: http://www.pfc-cska.com/
+  twitter: PFC_CSKA_MOSCOW
+  country: 189
+
+-
+  id: 318
+  teamcategory: 
+  title: Football Club Dinamo Moscú
+  foundedAt: "1923-01-01"
+  nicknames: Los Policías
+  letters: FCFM
+  shortname: Dinamo Moscú
+  stadium: Khimki
+  website: http://www.fcdinamo.ru/
+  twitter: FCDM_press
+  country: 189
+
+-
+  id: 319
+  teamcategory: 
+  title: Football Club Spartak Moscú
+  foundedAt: "1922-04-18"
+  nicknames: Carne, Rojo y Blanco
+  letters: FCSM
+  shortname: Spartak Moscú
+  stadium: Luzhniki
+  website: http://www.spartak.com/
+  twitter: fcsm_official
+  country: 189
+
+-
+  id: 320
+  teamcategory: 
+  title: Football Club Lokomotiv Moscow
+  foundedAt: "1923-01-01"
+  nicknames: Locomotora, Ferroviarios
+  letters: FCLM
+  shortname: Lokomotiv
+  stadium: Lokomotiv
+  website: http://www.fclm.ru/
+  twitter: fclm_press
+  country: 189
+
+-
+  id: 321
+  teamcategory: 
+  title: Football Club Kuban Krasnodar
+  foundedAt: "1928-01-01"
+  nicknames: Los Cosacos
+  letters: FCKK
+  shortname: Kuban Krasnodar
+  stadium: Kuban
+  website: http://www.fckuban.ru/
+  twitter: fckuban_ru
+  country: 189
+
+-
+  id: 322
+  teamcategory: 
+  title: Football Club Rubin Kazan
+  foundedAt: "1958-04-20"
+  nicknames: Los Tártaros
+  letters: FCRK
+  shortname: Rubin Kazan
+  stadium: Rubin
+  website: http://www.rubin-kazan.ru/
+  twitter: fc_rubin_kazan
+  country: 189
+
+-
+  id: 323
+  teamcategory: 
+  title: Football Club Anzhi Makhachkala
+  foundedAt: "1991-01-01"
+  nicknames: Las Águilas
+  letters: FCAM
+  shortname: Anzhi 
+  stadium: Dinamo
+  website: http://www.fc-anji.ru/
+  twitter: fc-anji
+  country: 189
+
+-
+  id: 324
+  teamcategory: 
+  title: Football Club Krasnodar
+  foundedAt: "2008-01-01"
+  nicknames: Los Toros
+  letters: FCK
+  shortname: Krasnodar
+  stadium: Kuban
+  website: http://www.fckrasnodar.ru/
+  twitter: fckrasnodar
+  country: 189
+
+-
+  id: 325
+  teamcategory: 
+  title: Football Club Rostov
+  foundedAt: "1930-01-01"
+  nicknames: Selmashi
+  letters: FCR
+  shortname: Rostov
+  stadium: Olymp-2
+  website: http://www.fc-rostov.ru/
+  twitter: rostovfc
+  country: 189
+
+-
+  id: 326
+  teamcategory: 
+  title: Kadyrov Republican Football Club Terek Grozny
+  foundedAt: "1946-01-01"
+  nicknames: Nohchi 
+  letters: FCTG
+  shortname: Terek 
+  stadium: Akhmat Arena
+  website: http://www.fc-terek.ru/
+  twitter: fcterek
+  country: 189
+
+-
+  id: 327
+  teamcategory: 
+  title: Football Club Volga Nizhny Novgorod
+  foundedAt: "1998-01-01"
+  nicknames: Volgari 
+  letters: VNN
+  shortname: Volga 
+  stadium: Lokomotiv
+  website: http://www.fcvolgann.ru/
+  twitter: fcvolgann
+  country: 189
+
+-
+  id: 328
+  teamcategory: 
+  title: Football Club Amkar Perm 
+  foundedAt: "1993-01-01"
+  nicknames: Permyaks
+  letters: FCAP
+  shortname: Amkar 
+  stadium: Zvezda
+  website: http://www.fc-amkar.org/
+  twitter: fc_amkar
+  country: 189
+
+-
+  id: 329
+  teamcategory: 
+  title: Football Club Krylia Sovetov Samara
+  foundedAt: "1942-01-01"
+  nicknames: Alas de los Soviets
+  letters: FCKS
+  shortname: Krylia Sovetov
+  stadium: Metallurg
+  website: http://www.kc-camapa.ru/
+  twitter: fckssamara
+  country: 189
+
+-
+  id: 330
+  teamcategory: 
+  title: Football Club Alania Vladikavkaz
+  foundedAt: "1921-01-01"
+  nicknames: Los Leopardos de las Nieves
+  letters: FCAV
+  shortname: Alania Vladikavkaz
+  stadium: Republicano
+  website: http://www.fc-alania.ru/
+  twitter: AlaniaFC
+  country: 189
+
+-
+  id: 331
+  teamcategory: 
+  title: Football Club Mordovia Saransk
+  foundedAt: "1961-01-01"
+  nicknames: 
+  letters: FCMS
+  shortname: Mordovia Saransk
+  stadium: Start
+  website: http://www.fc-mordovia.ru/
+  twitter: 13fcMordovia
+  country: 189
+
+-
+  id: 332
+  teamcategory: 
+  title: Football Club Shakhtar Donetsk
+  foundedAt: "1936-05-24"
+  nicknames: Los Mineros
+  letters: FCSD
+  shortname: Shakhtar 
+  stadium: Donbass Arena
+  website: http://www.shakhtar.com/
+  twitter: SHAKHTAR_UA 
+  country: 225
+
+-
+  id: 333
+  teamcategory: 
+  title: Football Club Dynamo Kiev
+  foundedAt: "1927-05-13"
+  nicknames: Gaviotas, Blanquiazul
+  letters: FCDK
+  shortname: Dynamo Kiev
+  stadium: Lobanovsky Dynamo
+  website: http://www.fcdynamo.kiev.ua/
+  twitter: FCDM_press
+  country: 225
+
+-
+  id: 334
+  teamcategory: 
+  title: Football Club Metalist Kharkiv
+  foundedAt: "1925-01-01"
+  nicknames: Los Hurones
+  letters: FCMK
+  shortname: Metalist
+  stadium: Metalist 
+  website: http://www.metalist.ua/
+  twitter: FCMetalist
+  country: 225
+
+-
+  id: 335
+  teamcategory: 
+  title: Football Club Dnipro Dnipropetrovsk
+  foundedAt: "1918-01-01"
+  nicknames: Dnipriany
+  letters: FCDD
+  shortname: Dnipro 
+  stadium: Dnipro Arena
+  website: http://www.fcdnipro.ua/
+  twitter: fcdnipro
+  country: 225
+
+-
+  id: 336
+  teamcategory: 
+  title: Football Club Arsenal Kiev
+  foundedAt: "1934-01-01"
+  nicknames: Los Artilleros
+  letters: FCAK
+  shortname: Arsenal Kiev
+  stadium: Lobanovsky Dynamo
+  website: http://www.fcarsenal.com.ua
+  twitter: official_fcak
+  country: 225
+
+-
+  id: 337
+  teamcategory: 
+  title: Sports Club Tavria Simferopol
+  foundedAt: "1958-01-01"
+  nicknames: Los Cremosos
+  letters: SCTS
+  shortname: Tavria
+  stadium: RSC Lokomotiv Stadium
+  website: http://www.sctavriya.com/
+  twitter: sc_tavriya
+  country: 225
+
+-
+  id: 338
+  teamcategory: 
+  title: Football Club Metalurh Donetsk
+  foundedAt: "1996-06-17"
+  nicknames: MetaDon
+  letters: FCMD
+  shortname: Metalurg Donetsk
+  stadium: Metalurg Donetsk
+  website: http://www.metallurg.donetsk.ua/
+  twitter: fcmetallurg
+  country: 225
+
+-
+  id: 339
+  teamcategory: 
+  title: Football Club Vorskla Poltava
+  foundedAt: "1955-01-01"
+  nicknames: Verde y Blanco
+  letters: FCVP
+  shortname: Vorskla 
+  stadium: Butovsky Vorskla
+  website: http://www.vorskla.com.ua/
+  twitter: fc_vorskla 
+  country: 225
+
+-
+  id: 340
+  teamcategory: 
+  title: Football Club Chernomorets Odesa
+  foundedAt: "1936-03-26"
+  nicknames: Los Marineros
+  letters: FCCO
+  shortname: Chernomorets
+  stadium: Chernomorets
+  website: http://www.chernomorets.odessa.ua/
+  twitter: ChernomoretsFC 
+  country: 225
+
+-
+  id: 341
+  teamcategory: 
+  title: Football Club Kryvbas Kryvyi Rih
+  foundedAt: "1959-01-01"
+  nicknames: 
+  letters: FCKK
+  shortname: Kryvbas 
+  stadium: Metalurg
+  website: http://www.fckryvbas.com.ua/
+  twitter: fckryvbas
+  country: 225
+
+-
+  id: 342
+  teamcategory: 
+  title: Football Club Illichivets Mariupol 
+  foundedAt: "1960-01-01"
+  nicknames: Los Leninistas
+  letters: FCIM
+  shortname: Illichivets Mariupol
+  stadium: Illichivets
+  website: http://www.fcilich.com/
+  twitter: 
+  country: 225
+
+-
+  id: 343
+  teamcategory: 
+  title: Football Club Volyn Lutsk
+  foundedAt: "1992-01-01"
+  nicknames: Los Cruzados
+  letters: FCVL
+  shortname: Volyn Lutsk
+  stadium: Avanhard
+  website: http://www.fc.volyn.net/
+  twitter: fcVolyn
+  country: 225
+
+-
+  id: 344
+  teamcategory: 
+  title: Football Club Zarya Lugansk
+  foundedAt: "1923-01-01"
+  nicknames: Blanquinegros
+  letters: FCZL
+  shortname: Zarya Lugansk
+  stadium: Vanguard
+  website: http://www.zarya-lugansk.com/
+  twitter: 
+  country: 225
+
+-
+  id: 345
+  teamcategory: 
+  title: Football Club Karpaty Lviv
+  foundedAt: "1963-01-01"
+  nicknames: Leones Verdes
+  letters: FCKL
+  shortname: Karpaty
+  stadium: Lviv Arena
+  website: http://www.fckarpaty.lviv.ua/
+  twitter: fckarpaty
+  country: 225
+
+-
+  id: 346
+  teamcategory: 
+  title: Football Club Metalurh Zaporizhya
+  foundedAt: "1935-01-01"
+  nicknames: Cosacos, Metal
+  letters: FCMZ
+  shortname: Metalurg Zaporizhya
+  stadium: Slavutych Arena
+  website: http://www.fcmetalurg.com/
+  twitter: 
+  country: 225
+
+-
+  id: 347
+  teamcategory: 
+  title: Football Club Hoverla Uzhhorod
+  foundedAt: "1946-01-01"
+  nicknames: 
+  letters: FCHU
+  shortname: Hoverla Uzhhorod
+  stadium: Avanhard
+  website: http://www.zakarpattja.uz.ua/
+  twitter: 
+  country: 225
+
+-
+  id: 348
+  teamcategory: 
+  title: DC United
+  foundedAt: "1994-01-01"
+  nicknames: United, Black and Red, DCU
+  letters: DCU
+  shortname: DC United
+  stadium: RFK 
+  website: http://www.dcunited.com/
+  twitter: dcunited
+  country: 69
+
+-
+  id: 349
+  teamcategory: 
+  title: New York Red Bulls
+  foundedAt: "1995-01-01"
+  nicknames: Red Bulls, Metros
+  letters: NYRB
+  shortname: NY Red Bulls
+  stadium: Red Bull Arena
+  website: http://www.newyorkredbulls.com/
+  twitter: newyorkredbulls
+  country: 69
+
+-
+  id: 350
+  teamcategory: 
+  title: Sporting Kansas City
+  foundedAt: "1995-01-01"
+  nicknames: Sporting, Wizards, The Wiz
+  letters: SKC
+  shortname: Kansas City
+  stadium: Livestrong Sporting Park
+  website: http://www.sportingkc.com/
+  twitter: sportingkc
+  country: 69
+
+-
+  id: 351
+  teamcategory: 
+  title: Chicago Fire Soccer Club
+  foundedAt: "1997-01-01"
+  nicknames: The Fire, Men in Red
+  letters: CFSC
+  shortname: Chicago Fire
+  stadium: Toyota Park
+  website: http://www.chicago-fire.com/
+  twitter: chicagofire
+  country: 69
+
+-
+  id: 352
+  teamcategory: 
+  title: Columbus Crew
+  foundedAt: "1994-06-15"
+  nicknames: The Massive, The Fighting Canaries
+  letters: CC
+  shortname: Columbus Crew
+  stadium: Columbus Crew 
+  website: http://www.thecrew.com/
+  twitter: columbuscrew
+  country: 69
+
+-
+  id: 353
+  teamcategory: 
+  title: Houston Dynamo
+  foundedAt: "2005-12-15"
+  nicknames: Dynamo, Orange Crush
+  letters: HD
+  shortname: Houston Dynamo
+  stadium: BBVA Compass  
+  website: http://www.houstondynamo.com/
+  twitter: houstondynamo
+  country: 69
+
+-
+  id: 354
+  teamcategory: 
+  title: New England Revolution
+  foundedAt: "1995-10-17"
+  nicknames: Revs
+  letters: NER
+  shortname: New England 
+  stadium: Gillette 
+  website: http://www.revolutionsoccer.net/
+  twitter: NErevolution
+  country: 69
+
+-
+  id: 355
+  teamcategory: 
+  title: Montreal Impact
+  foundedAt: "2010-01-01"
+  nicknames: Impact
+  letters: MI
+  shortname: Montreal Impact
+  stadium: Saputo
+  website: http://www.impactmontreal.com/
+  twitter: impactmontreal
+  country: 69
+
+-
+  id: 356
+  teamcategory: 
+  title: Philadelphia Union
+  foundedAt: "2008-01-01"
+  nicknames: Zolos, The U
+  letters: PU
+  shortname: Philadelphia Union
+  stadium: PPL Park
+  website: http://www.philadelphiaunion.com/
+  twitter: PhilaUnion
+  country: 69
+
+-
+  id: 357
+  teamcategory: 
+  title: Toronto FC
+  foundedAt: "2006-01-01"
+  nicknames: Reds, Tuffsy, TFC
+  letters: TFC
+  shortname: Toronto FC
+  stadium: BMO Field
+  website: http://www.torontofc.ca/
+  twitter: torontofc
+  country: 69
+
+-
+  id: 358
+  teamcategory: 
+  title: Real Salt Lake
+  foundedAt: "2004-01-01"
+  nicknames: Royals, Lakers, Monarcas, La Realesa
+  letters: RSL
+  shortname: Real Salt Lake
+  stadium: Rio Tinto 
+  website: http://www.realsaltlake.com/
+  twitter: realsaltlake
+  country: 69
+
+-
+  id: 359
+  teamcategory: 
+  title: San Jose Earthquakes
+  foundedAt: "1995-04-17"
+  nicknames: Quakes, Terremotos de San José
+  letters: SJE
+  shortname: SJ Earthquakes
+  stadium: Buck Shaw  
+  website: http://www.sjearthquakes.com/
+  twitter: SJEarthquakes 
+  country: 69
+
+-
+  id: 360
+  teamcategory: 
+  title: Seattle Sounders
+  foundedAt: "2007-01-01"
+  nicknames: The Sounders, Rave Green
+  letters: SS
+  shortname: Seattle Sounders
+  stadium: CenturyLink Field
+  website: http://www.soundersfc.com/
+  twitter: SoundersFC
+  country: 69
+
+-
+  id: 361
+  teamcategory: 
+  title: Colorado Rapids
+  foundedAt: "1996-01-01"
+  nicknames: Rapids
+  letters: CR
+  shortname: Colorado Rapids
+  stadium: Dick's Sporting Goods Park
+  website: http://www.coloradorapids.com/
+  twitter: coloradorapids
+  country: 69
+
+-
+  id: 362
+  teamcategory: 
+  title: Vancouver Whitecaps Football Club
+  foundedAt: "2009-01-01"
+  nicknames: Caps, Blue and White
+  letters: VWFC
+  shortname: Vancouver Whitecaps
+  stadium: BC Place
+  website: http://www.whitecapsfc.com/
+  twitter: whitecapsfc
+  country: 69
+
+-
+  id: 363
+  teamcategory: 
+  title: Club Deportivo Chivas USA
+  foundedAt: "2004-02-08"
+  nicknames: Goats, Rebaño Angelino
+  letters: CUSA
+  shortname: Chivas USA
+  stadium: The Home Depot Center
+  website: http://www.cdchivasusa.com/
+  twitter: cdchivasusa
+  country: 69
+
+-
+  id: 364
+  teamcategory: 
+  title: Portland Timbers
+  foundedAt: "2009-01-01"
+  nicknames: The Timbers
+  letters: PT
+  shortname: Portland Timbers
+  stadium: Jeld Wen Field
+  website: http://www.portlandtimbers.com/
+  twitter: timbersfc
+  country: 69
+
+-
+  id: 365
+  teamcategory: 
+  title: Football Club Dallas
+  foundedAt: "1996-01-01"
+  nicknames: Toros, FCD, Hoops
+  letters: FCD
+  shortname: FC Dallas
+  stadium: Pizza Hut Park
+  website: http://www.fcdallas.com/
+  twitter: fcdallas
+  country: 69
+
+-
+  id: 366
+  teamcategory: 
+  title: Los Angeles Galaxy
+  foundedAt: "1995-01-01"
+  nicknames: Galaxy, Los Galacticos
+  letters: LAG
+  shortname: LA Galaxy
+  stadium: The Home Depot Center
+  website: http://www.lagalaxy.com/
+  twitter: LAGalaxy
+  country: 69
 

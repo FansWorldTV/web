@@ -33,7 +33,8 @@ class LoadIdolData extends AbstractFixture implements FixtureInterface, Containe
 	    	$loader = Yaml::parse(__DIR__.'/'.self::YAML_PATH);
 	    	
 	        foreach ($loader as $ct) {
-	        	$idol = new Idol();
+	        	echo $ct['id'] . "\n";
+	            $idol = new Idol();
 	        	$idol->setFirstname($ct['firstname']);
 	        	$idol->setLastname($ct['lastname']);
 	        	if (isset($ct['birthday']) && $ct['birthday']) {
@@ -45,8 +46,12 @@ class LoadIdolData extends AbstractFixture implements FixtureInterface, Containe
 	        	$idol->setJobname($ct['jobname']);
 	        	$idol->setContent($ct['content']);
 	        	if (isset($ct['country'])) {
-	        		$country = $manager->merge($this->getReference('country-'.$ct['country']));
-	        		$idol->setCountry($country);
+	        	    if (is_numeric($ct['country'])) {
+    	        		$country = $manager->merge($this->getReference('country-'.$ct['country']));
+    	        		$idol->setCountry($country);
+	        	    } else {
+	        	        $idol->setOrigin($ct['country']);
+	        	    }
 	        	}
 	        	
 	        	/* TEAMS */
@@ -104,6 +109,7 @@ class LoadIdolData extends AbstractFixture implements FixtureInterface, Containe
 		        /* END IMAGES */
 		
 		        $manager->persist($idol);
+		        $manager->flush();
 	        }
 	        
 	        $manager->flush();

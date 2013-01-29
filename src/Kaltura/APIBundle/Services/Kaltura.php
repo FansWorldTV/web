@@ -7,6 +7,7 @@ use Kaltura\Client\Client as KalturaClient;
 use Kaltura\Client\Enum\SessionType as KalturaSessionType;
 use Kaltura\Client\ApiException;
 use Kaltura\Client\ClientException;
+use Kaltura\Client\Type\MediaEntry;
 
 /**
  * Service interface to Kaltura API client
@@ -54,6 +55,34 @@ class Kaltura
         );
         
         return $ks;
+    }
+    
+    /**
+     * Return an entry's data
+     * @param string $entryId
+     */
+    public function getEntry($entryId)
+    {
+        $es = $this->getClient()->getMediaService();
+        $entry = $es->get($entryId);
+        
+        return $entry;
+    }
+    
+    /**
+     * Update an entry's fields
+     * @param string $entryId
+     * @param array $fields
+     */
+    public function updateEntry($entryId, array $fields)
+    {
+        $entry = new MediaEntry();
+        foreach ($fields as $k => $v) {
+            $entry->$k = $v;
+        }
+        $es = $this->getClient()->getMediaService();
+        $updatedentry = $es->update($entryId, $entry);
+        return $updatedentry;
     }
     
     /**
