@@ -34,7 +34,7 @@ class Serializer
      */
     public function values($entity, $imageformat = 'small')
     {
-        if (!$entity) return null;
+        if (!$entity && !is_array($entity)) return null;
         
         if (is_object($entity)) {
             $props = array();
