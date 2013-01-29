@@ -112,6 +112,14 @@ var site = {
             }
         });
 
+        // Invite friends
+        $('[data-invite]').colorbox({
+            href: $('[data-invite]').data('invite'),
+            onComplete: function () {
+                resizePopup();
+            }
+        });
+
 
         $.datepicker.setDefaults($.datepicker.regional[appLocale]);
 

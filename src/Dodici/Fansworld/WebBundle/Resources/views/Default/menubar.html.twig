@@ -61,7 +61,13 @@
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
             </div>
+
+
+
+
+
                 <ul class="nav pull-right usermenu">
+
 
                     <li class="dropdown">
             <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" style="z-index:-99;">Compartir</button>
@@ -71,6 +77,8 @@
                             <li><a href="{{ path('video_fileupload') }}" data-upload="video">Subir Videos</a></li>
                         </ul>
                     </li>
+
+                    <button class="btn btn-success" data-invite="{{ path('user_invite') }}" style="z-index: 2;position: absolute;margin-left: -200px;">Invitar Amigos</button>
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle username" data-toggle="dropdown">

@@ -175,7 +175,7 @@ class UserController extends SiteController
     }
 
     /**
-     *  @Route("/ajax/notification-number", name="user_ajaxnotificationnumber") 
+     *  @Route("/ajax/notification-number", name="user_ajaxnotificationnumber")
      */
     public function ajaxNotificationNumber()
     {
@@ -202,7 +202,7 @@ class UserController extends SiteController
                 'readed' => $notification->getReaded(),
                 'view' => $this->renderView('DodiciFansworldWebBundle:Notification:notification.html.twig', array('notification' => $notification))
             );
-        } 
+        }
 
         $response['countAll'] = $countAll;
         return $this->jsonResponse($response);
@@ -263,7 +263,7 @@ class UserController extends SiteController
     }
 
     /**
-     *  @Route("/ajax/number-friend-requests", name="user_ajaxnumberofpendingrequests") 
+     *  @Route("/ajax/number-friend-requests", name="user_ajaxnumberofpendingrequests")
      */
     public function ajaxNumberOfPendingRequests()
     {
@@ -283,8 +283,8 @@ class UserController extends SiteController
 
     /**
      * method to get the friendship data! ;)
-     * 
-     *  @Route("/ajax/getfriendship", name="user_ajaxgetfriendship") 
+     *
+     *  @Route("/ajax/getfriendship", name="user_ajaxgetfriendship")
      */
     public function ajaxGetFriendship()
     {
@@ -323,7 +323,7 @@ class UserController extends SiteController
 
     /**
      *  @Route("/ajax/pending-friends", name = "user_ajaxpendingfriends")
-     *  
+     *
      */
     public function ajaxPendingFriendsAction()
     {
@@ -632,7 +632,8 @@ class UserController extends SiteController
         $user = $this->getUser();
         $url = $this->get('contact.importer')->inviteUrl($user);
         return array(
-            'url' => $url
+            'url' => $url,
+            'user' => $user
         );
     }
 
@@ -883,7 +884,7 @@ class UserController extends SiteController
 
 
     /**
-     *  @Route("/ajax/notifications-typecounts", name="user_ajaxgetnotifications_typecounts") 
+     *  @Route("/ajax/notifications-typecounts", name="user_ajaxgetnotifications_typecounts")
      */
     public function ajaxGetNotificationsTypeCounts()
     {
@@ -896,7 +897,7 @@ class UserController extends SiteController
 
 
     /**
-     *  @Route("/ajax/notification-setfake", name="notification_setfake") 
+     *  @Route("/ajax/notification-setfake", name="notification_setfake")
      */
     public function ajaxSetNotificationFake()
     {
@@ -907,7 +908,7 @@ class UserController extends SiteController
     }
 
     /**
-     *  @Route("/ajax/notification-getlatest", name="notification_getlatest") 
+     *  @Route("/ajax/notification-getlatest", name="notification_getlatest")
      */
     public function ajaxLatestNotification()
     {
