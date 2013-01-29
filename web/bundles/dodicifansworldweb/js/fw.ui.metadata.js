@@ -7,9 +7,10 @@
  *      appLocale
  */
 
-// FansWorld tagify plugin 1.5 (prepopulate)
+// FansWorld tagify plugin 1.6 (prepopulate)
 // 1.4 fix FB.ui popup
 // 1.5 add 'user' type to tagifier
+// 1.6 missing comma
 
 $(document).ready(function () {
 
@@ -30,7 +31,7 @@ $(document).ready(function () {
         },
         user: {
             selected: []
-        }
+        },
         text: {
             selected: []
         },
