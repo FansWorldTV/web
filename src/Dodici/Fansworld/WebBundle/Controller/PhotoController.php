@@ -43,7 +43,7 @@ class PhotoController extends SiteController
         $repo = $this->getRepository('Photo');
         $photo = $repo->findOneBy(array('id' => $id, 'active' => true));
         $user = $this->getRepository('User')->find($photo->getAuthor()->getId());
-        
+
 
         $next = $repo->getNextActive($id, $photo->getAuthor(), $photo->getAlbum());
         $prev = $repo->getPrevActive($id, $photo->getAuthor(), $photo->getAlbum());
@@ -98,7 +98,6 @@ class PhotoController extends SiteController
         $collectionConstraint = new Collection(array(
                     'title' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
                     'album' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($albumchoices))),
-                    'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
                     'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
                     'file' => new \Symfony\Component\Validator\Constraints\Image(),
                     'tagtext' => array(),
@@ -108,7 +107,6 @@ class PhotoController extends SiteController
         $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
                 ->add('title', 'text', array('required' => true, 'label' => 'Títuloooooooooooooooooooooooooooo'))
                 ->add('album', 'choice', array('required' => true, 'choices' => $albumchoices, 'label' => 'Album'))
-                ->add('content', 'textarea', array('required' => false, 'label' => 'Descripción'))
                 ->add('file', 'file', array('required' => true, 'label' => 'Archivo'))
                 ->add('privacy', 'choice', array('required' => true, 'choices' => $privacies, 'label' => 'Privacidad'))
                 ->add('tagtext', 'hidden', array('required' => false))
@@ -153,7 +151,7 @@ class PhotoController extends SiteController
                     $photo->setAuthor($user);
                     $photo->setAlbum($album);
                     $photo->setTitle($data['title']);
-                    $photo->setContent($data['content']);
+                    $photo->setContent("");
                     $photo->setImage($media);
                     $photo->setPrivacy($data['privacy']);
                     $em->persist($photo);
@@ -188,7 +186,7 @@ class PhotoController extends SiteController
     }
 
     /**
-     *  @Route("/ajax/get", name = "photo_get") 
+     *  @Route("/ajax/get", name = "photo_get")
      */
     public function ajaxGetPhotos()
     {
@@ -255,19 +253,19 @@ class PhotoController extends SiteController
             $input = fopen("php://input", "r");
             $imagecontent = stream_get_contents($input);
             $tempFile = tempnam("/tmp", 'IMG');
-            
+
             file_put_contents($tempFile, $imagecontent);
             fclose($input);
 
             if (file_exists($tempFile)) {
                 $tmpFileName = basename($tempFile);
-                
+
                 $properties = $this->get('appmedia')->getProperties($tempFile);
-                
+
                 $response = array(
-                	'success' => true, 
-                	'tempFile' => $tmpFileName, 
-                	'originalFile' => $originalFileName, 
+                	'success' => true,
+                	'tempFile' => $tmpFileName,
+                	'originalFile' => $originalFileName,
                 	'width' => $properties['width'],
                 	'height' => $properties['height']
                 );
@@ -287,23 +285,23 @@ class PhotoController extends SiteController
     public function fileMetaAction()
     {
         $request = $this->getRequest();
-        
+
         $tempFile = $request->get('tempFile');
         $originalFileName = $request->get('originalFile');
         $realWidth = $request->get('width');
         $realHeight = $request->get('height');
-        
+
         $lastdot = strrpos($originalFileName, '.');
         $originalFile = substr($originalFileName, 0, $lastdot);
         $ext = substr($originalFileName, $lastdot);
-        
+
         $redirectColorBox = false;
-    
+
         $user = $this->getUser();
         $photo = new Photo();
         $idolToTag = "";
         $em = $this->getDoctrine()->getEntityManager();
-        
+
         $form = $this->_createForm($user->getId());
 
         if ($request->getMethod() == 'POST') {
@@ -334,7 +332,7 @@ class PhotoController extends SiteController
                     $photo->setAuthor($user);
                     $photo->setAlbum($album);
                     $photo->setTitle($data['title']);
-                    $photo->setContent($data['content']);
+                    $photo->setContent("");
                     $photo->setPrivacy($data['privacy']);
                     $em->persist($photo);
                     $em->flush();
@@ -344,7 +342,7 @@ class PhotoController extends SiteController
                     $tagteams = explode(',', $data['tagteam']);
                     $tagusers = explode(',', $data['taguser']);
                     $this->_tagEntity($tagtexts, $tagidols, $tagteams, $tagusers, $user, $photo);
-                  
+
                     function toBoolean(&$var) {$var = $var == 'true' ? true : false;}
                     $shareEntities = array(
                         "idols" => $data['shareidol'],
@@ -352,7 +350,7 @@ class PhotoController extends SiteController
                         "users" => $data['shareuser']
                     );
                     $this->_sharePhoto($photo, toBoolean($data['fb']), toBoolean($data['tw']), toBoolean($data['fw']), $data['title'], $shareEntities);
-                    
+
                     $this->get('session')->setFlash('success', $this->trans('upload_sucess'));
                     $redirectColorBox = true;
                 }
@@ -361,12 +359,12 @@ class PhotoController extends SiteController
             }
         }
         return array(
-        	'photo' => $photo, 
-        	'form' => $form->createView(), 
-        	'idolToTag' => $idolToTag, 
-        	'tempFile' => $tempFile, 
-        	'originalFile' => $originalFileName, 
-        	'ext' => $ext, 
+        	'photo' => $photo,
+        	'form' => $form->createView(),
+        	'idolToTag' => $idolToTag,
+        	'tempFile' => $tempFile,
+        	'originalFile' => $originalFileName,
+        	'ext' => $ext,
         	'redirectColorBox' => $redirectColorBox,
             'realWidth' => $realWidth,
             'realHeight' => $realHeight
@@ -384,7 +382,6 @@ class PhotoController extends SiteController
         $collectionConstraint = new Collection(array(
             'title' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
             'album' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($albumchoices))),
-            'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
             'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
             'tagtext' => array(),
             'tagidol' => array(),
@@ -405,7 +402,6 @@ class PhotoController extends SiteController
         $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
             ->add('title', 'text', array('required' => true, 'label' => 'Título'))
             ->add('album', 'choice', array('required' => true, 'choices' => $albumchoices, 'label' => 'Album'))
-            ->add('content', 'textarea', array('required' => false,'label' => 'Descripción'))
             ->add('privacy', 'choice', array('required' => true, 'choices' => $privacies, 'label' => 'Privacidad'))
             ->add('tagtext', 'hidden', array('required' => false))
             ->add('tagidol', 'hidden', array('required' => false))
@@ -446,7 +442,7 @@ class PhotoController extends SiteController
         $imagine = new Imagine();
         $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $options['tempFile'];
         $format = $this->get('appmedia')->getType($path);
-        
+
         $imageStream = $imagine->open($path);
 
         if ($options['cropW'] && $options['cropH']) {
