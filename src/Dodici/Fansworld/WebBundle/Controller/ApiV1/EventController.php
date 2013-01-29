@@ -23,6 +23,65 @@ use Dodici\Fansworld\WebBundle\Controller\ApiV1\BaseController;
 class EventController extends BaseController
 {
 	
+    /**
+     * [signed if user_id given] Event - list
+     * 
+     * @Route("/event", name="api_v1_event_list")
+     * @Method({"GET"})
+     * 
+     * Get params:
+     * - <optional> user_id: int
+     * - <required if user_id given> [user token]
+     * - <optional> date_from: int (ts UTC)
+     * - <optional> date_to: int (ts UTC)
+     * - <optional> sport: int (sport id to filter by)
+     * - <optional> teamcategory: int (teamcategory id to filter by)
+     * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
+     * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
+     * - <optional> sort: 'isfan'(user_id required)|'popular'|'upcoming' (default: popular)
+     * - <optional> imageformat: string
+     * - [signature params if user_id given]
+     * 
+     * @return
+     * array(
+     * 		@see self::showAction
+     * 		...
+     * )
+     */
+    public function listAction()
+    {
+        // TODO
+        return $this->result(null);
+    }
+    
+	/**
+     * [signed] Event - wall
+     * 
+     * @Route("/event/{id}/wall", name="api_v1_event_wall", requirements = {"id" = "\d+"})
+     * @Method({"GET"})
+     * 
+     * Get params:
+	 * - user_id: int
+	 * - [user_token]
+	 * - date_from: int (ts UTC)
+	 * - date_to: int (ts UTC)
+     * - <optional> imageformat: string
+     * - [signature params]
+     * 
+     * @return
+     * array(
+     * 		(TODO)
+     * 		...
+     * )
+     */
+    public function wallAction($id)
+    {
+        // TODO
+        // Throw exception if the user isn't checked into the event
+        // Comment, EventTweet, and EventIncident repos have an eventWall method
+        return $this->result(null);
+    }
+    
 	/**
      * Event - show
      * 
