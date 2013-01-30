@@ -35,7 +35,7 @@ class LoadUserData extends AbstractFixture implements FixtureInterface, Containe
 		    	$user->setEmail($ct['email']);
 		    	$user->setUsername($ct['username']);
 		    	$user->setFirstname($ct['firstname']);
-		    	$user->setLastname($ct['lastname']);
+		    	if ($ct['lastname']) $user->setLastname($ct['lastname']);
 		    	$user->setPlainPassword($ct['password']);
 		    	$user->setType($usertypes[$ct['type']]);
 		    	$user->setEnabled(true);

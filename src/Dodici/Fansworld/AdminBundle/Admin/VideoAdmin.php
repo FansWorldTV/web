@@ -31,7 +31,7 @@ class VideoAdmin extends Admin
     {
         $formMapper
             ->add('title', NULL, array (), array ())
-            ->add('author', NULL, array ('required' => false), array ())
+            ->add('author', NULL, array ('required' => true), array ())
             ->add('content', NULL, array (), array ())
             ->add('createdAt', 'date', array ('attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy HH:mm'), array ())

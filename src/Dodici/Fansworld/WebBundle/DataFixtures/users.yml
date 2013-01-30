@@ -1,11 +1,12 @@
 -
   id: 1
-  email: admin@example.com
-  username: admin
+  email: admin@fansworld.tv
+  username: fansworld
   password: admin
   type: staff
-  firstname: Administrador
-  lastname: Fansworld
+  image: fansworld.jpg
+  firstname: Fansworld.TV
+  lastname:
   roles:
       - ROLE_SUPER_ADMIN
 -
