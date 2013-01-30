@@ -166,6 +166,7 @@ home.loadSection.enjoy = function(){
             if(video.author != null){
                 jsonData['author'] = video.author.username;
                 jsonData['authorHref'] = video.author.url;
+                jsonData['authorImage'] = video.author.image;
             }
             
             templateHelper.renderTemplate('general-column_element', jsonData, toAppendVideos.selector, false, callback);
@@ -265,7 +266,8 @@ home.loadSection.activityFeed = function(params, funcCallback){
                     'slug': element.slug,
                     'title': element.title,
                     'author': element.author.username,
-                    'author': authorUrl
+                    'authorHref': authorUrl,
+                    'authorImage': element.author.image
                 }, $contentContainer.find('.elements').selector, false, callback);
             }
         }else{
@@ -318,7 +320,8 @@ home.loadSection.popularFeed = function(params){
                     'slug': element.slug,
                     'title': element.title,
                     'author': element.author.username,
-                    'authorHref': authorUrl
+                    'authorHref': authorUrl,
+                    'authorImage': element.author.image
                 }, $contentContainer.find('.elements').selector, false, callback);
             }
         }else{

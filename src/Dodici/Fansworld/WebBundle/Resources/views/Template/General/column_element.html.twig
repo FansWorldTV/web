@@ -1,11 +1,16 @@
 {% raw %}
     <div class="element" data-element-type="{{>type}}" data-element-date="{{>date}}">
         <a href="{{>href}}">
-            <img src="{{>image}}" alt="{{>slug}}">
+            <img class="back-thumb" src="{{>image}}" alt="{{>slug}}">
         </a>
+        
         <div class="title-and-user">
-            <span class="title">{{>title}}</span>
-            <a class="user" href="{{>authorHref}}">{{>author}}</a>
+            {{if authorImage}}
+                <a href="{{>authorHref}}"><img class="author-image" src="{{>authorImage}}" alt="{{>author}}" rel="tooltip" title="{{>author}}" /></a>
+            {{/if}}
+            <a href="{{>href}}">
+                <span class="title">{{>title}}</span>
+            </a>
         </div>
         {{if type=='video'}}
             <a href="{{>href}}">

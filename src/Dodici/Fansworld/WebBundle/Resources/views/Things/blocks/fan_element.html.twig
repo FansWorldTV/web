@@ -1,9 +1,9 @@
 <div class='fan-element'>
     <div class="avatar">
-        <a href="{{ path('user_wall', {'username': fan.username}) }}">{% thumbnail fan.image, 'big_square' with {'title':fan, 'rel': 'tooltip'} %}</a>
+        <a href="{{ path('user_wall', {'username': fan.username}) }}">{% thumbnail fan.image, 'big_square' %}</a>
     </div>
     <a class="name" href="{{ path('user_wall', {'username': fan.username}) }}">{{ fan }}</a>
-    <span class="fanCount">{{ fan.fanCount }}</span>
+    <!--span class="fanCount">{{ fan.fanCount }}</span-->
     <div class="overlay"></div>
     
     <div class="btn-group">

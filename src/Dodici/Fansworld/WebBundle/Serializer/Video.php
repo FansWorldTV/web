@@ -17,7 +17,7 @@ class Video
     public function values($entity)
     {
         return array(
-            'author' => $this->serializer->values($entity->getAuthor()),
+            'author' => $this->serializer->values($entity->getAuthor(), 'small_square'),
             'likeCount' => $entity->getLikeCount(),
             'visitCount' => $entity->getVisitCount(),
             'commentCount' => $entity->getCommentCount(),

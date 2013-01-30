@@ -28,7 +28,7 @@
                             <span>
                                 {{ eventteams|join(' vs ') }}
                             </span>
-                            <button class='btn btn-danger' data-event-id="{{ event.id }}" data-event-check-in>{{ appstate.EventText(event.id) }}</button>
+                            <button class='btn btn-success' data-event-id="{{ event.id }}" data-event-check-in>{{ appstate.EventText(event.id) }}</button>
                         </header>
                         <div class='row-fluid'>
                         {% for hasteam in hasteams %}

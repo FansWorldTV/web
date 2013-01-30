@@ -11,9 +11,9 @@
                 {{/for}}
             </span>
             {{if checked === false && finished != true}}
-                <button class='btn btn-danger' data-event-id='{{>id}}' data-event-check-in>{{>text}}</button>
+                <button class='btn btn-success' data-event-id='{{>id}}' data-event-check-in>{{>text}}</button>
             {{else}}
-                <a href='{{>url}}' data-login-required><button class='btn btn-danger'>{{if finished}} {{>text}} {{else}} Ir {{/if}}</button></a>
+                <a href='{{>url}}' data-login-required><button class='btn btn-success'>{{if finished}} {{>text}} {{else}} Ir {{/if}}</button></a>
             {{/if}}
         </header>
         <div class='row-fluid'>

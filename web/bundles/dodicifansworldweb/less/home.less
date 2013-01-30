@@ -251,6 +251,12 @@ section.home-content {
                 position: relative;
                 margin-bottom: 10px;
 
+                &:hover {
+                    i.play-video {
+                        opacity: 1;
+                    }
+                }
+
                 i.play-video {
                     background-image: url('../images/play-icon.png');
                     background-size: 50px;
@@ -265,7 +271,7 @@ section.home-content {
                     }
                 }
                 
-                img {
+                img.back-thumb {
                     width: 100% !important;
                     height: auto !important;
                 }
@@ -276,24 +282,32 @@ section.home-content {
                     bottom: 0;
                     left: 0;
                     width: 100%;
-                    height: 100px;
-                    background-color: @black;
-                    opacity: 0.8;
+                    height: auto;
+                    background: url('../images/ui/pix80trans.png');
+                    background-repeat: repeat;
+                    padding: 10px;
                     
                     .title {
-                        width: 100%;
-                        color: white;
-                        font-weight: 100;
-                        color: white;
-                        font-size: 20px;
                         position: relative;
-                        margin-top: 20px;
-                        margin-left: 20px;
+                        color: white;
+                        font-weight: 600;
+                        font-size: 12px;
                         display: block;
                         line-height: normal !important;
                         text-overflow: ellipsis;
-                        height: 50px;
+                        height: auto;
                         overflow: hidden;
+                        margin-left: 10px;
+                        .pull-left();
+                        width: 60%;
+                        
+                    }
+
+                    .author-image {
+                        position: relative;
+                        .pull-left();
+                        width: 30px !important;
+                        border: 1px solid grey;
                     }
                     
                     .user {
@@ -338,5 +352,13 @@ section.home-content {
                  column-count:         1;
                }
              }
+    }
+}
+
+section[data-type-tab*=participate] {
+    ul.events-grid {
+        li.event {
+            width: 31%;
+        }
     }
 }
