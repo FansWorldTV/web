@@ -482,7 +482,7 @@ services:
         arguments: [@serializer]
     serializer.event:
         class: Dodici\Fansworld\WebBundle\Serializer\Event
-        arguments: [@serializer]
+        arguments: [@serializer, @router, @fos_user.entity_manager, @appstate, @security.context]
     serializer.user:
         class: Dodici\Fansworld\WebBundle\Serializer\User
         arguments: [@router]

@@ -52,7 +52,7 @@ section.eventgrid-container{
         >li{
             .border-radius(8px);
             .box-shadow(~"0 1px 3px rgba(0,0,0,.25), inset 0 -1px 0 rgba(0,0,0,.1)");
-            width: 48%;
+            width: 31%;
             float:left;
             margin: 0 1% 2%;
     
@@ -61,6 +61,7 @@ section.eventgrid-container{
             }
             
             header{
+                font-weight: 600;
                 overflow: hidden;
                 padding: 8px 11px 6px 15px;
                 .border-radius(8px 8px 0 0);
@@ -87,20 +88,26 @@ section.eventgrid-container{
                 > *{
                     text-align: center;
                 }
+
+                .escudo {
+                    padding: 14px;
+                }
+
                 .score{
                         .border-radius(8px);
                         background: @white;
                         font-size: 22px;
                         font-weight: bold;
                         line-height: 22px;
-                        margin-top: 10px;
-                        padding-bottom: 5px;
-                        padding-top: 5px;
+                        margin-top: 12%;
+                        padding-bottom: 10px;
+                        padding-top: 6px;
                         border: 1px solid #ebebeb;
-                    }
+                }
                     
                 background-color: #f8f9f7;
                 padding: 10px 0;
+
                 .local{
                     .escudo{
                     
@@ -113,7 +120,9 @@ section.eventgrid-container{
                 
                 .data{
                     .top{
-                        height: 40px;
+                        height: 22px;
+                        margin-top: 12%;
+                        font-weight: 700;
                     }
                     
                     .bottom{

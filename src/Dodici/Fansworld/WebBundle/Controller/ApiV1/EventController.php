@@ -98,7 +98,13 @@ class EventController extends BaseController
      * 			createdAt: int (timestamp UTC),
      * 			stadium: string,
      * 			finished: boolean,
-     * 			
+     *                  text: string
+     *                  date: date ('d-m-Y')
+     * 			showdate: date ('d-m-Y')
+     *                  url: string
+     *                  started: boolean
+     *                  checked: boolean
+     * 
      * 			teams: array (
      * 				array(
      * 					id: int,
