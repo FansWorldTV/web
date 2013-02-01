@@ -115,6 +115,8 @@ var site = {
         // Invite friends
         $('[data-invite]').colorbox({
             href: $('[data-invite]').data('invite'),
+            innerWidth: 450,
+            innerHeight: 450,
             onComplete: function () {
                 resizePopup();
             }

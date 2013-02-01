@@ -1,27 +1,31 @@
-
-
 {% use "DodiciFansworldWebBundle:Layout/Snippet:profile_inner_fullwidth.html.twig"  %}
 
 {% block javascripts %}
-
 	<script src="{{ asset('bundles/dodicifansworldweb/js/inviter.js') }}" type="text/javascript"></script>
 {% endblock %}
 
-{% block title %} - Registro{% endblock %}
-
 {% block inner_content %}
+   <div class="inviteFriends">
+	   <div class="greybox">
+			<h4>1. Invita a tus amigos de Facebook y Twitter</h4>
+			<a class="invite-facebook" href="{{ url }}" title="Facebook">
+		    	<img src="{{ asset('bundles/dodicifansworldweb/images/ui/invite_fb.png' )}}" />
+		    </a>
+		   	<a class="invite-twitter" href="{{ url }}" title="Twitter">
+		    	<img src="{{ asset('bundles/dodicifansworldweb/images/ui/invite_tw.png' )}}" />
+		    </a>
+			</br></br>
 
-	TODO: inviter
-	<br><br>
-	url:<br>
-	{{ url }}
-	<br><br>
-	<a href="{{ url }}" class="invite-facebook">INVITAR FACEBOOK</a>
-	<br><br>
-	<a href="https://twitter.com/share" class="twitter-share-button" data-url="{{ url }}" data-text="Seguime en" data-lang="es" data-size="large" data-count="none" data-hashtags="fansworld">Twittear</a>
-	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-	<br><br>
-	<input type="button" class="invite-commonfriends-facebook" value="AMIGOS EN COMUN" />
+			<h4>2. Tus amigos de Facebook y Twitter</h4>
+			<input type="button" class="btn btn-primary" value="Ver Amigos"  data-fbinvite style="margin-top: -40px;margin-left: 260px;" />
+			<ul class="invite-commonfriends-list" style="padding: 20px;"></ul>
 
-	<ul class="invite-commonfriends-list" style="padding: 20px;"></ul>
+			</br></br>
+			<h4>...o comparte esta URL con tus amigos</h4>
+			<p class="text-success">
+				<small style="color:#b2c594;">{{ url }}</small>
+			</p>
+			</br>
+		</div>
+	</div>
 {% endblock %}

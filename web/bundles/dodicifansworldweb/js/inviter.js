@@ -2,7 +2,6 @@ $(function(){
 	$('.invite-facebook').live('click',function(e){
 		e.preventDefault();
 		var url = $(this).attr('href');
-		
 		FB.ui({
 			method: 'send',
 			name: 'Unite a Fansworld',
@@ -10,8 +9,8 @@ $(function(){
 			description: 'Unite a Fansworld y compartamos nuestra pasión con otros fans'
 		});
 	});
-	
-	$('.invite-commonfriends-facebook').live('click', function(){
+
+	$('[data-fbinvite]').live('click', function(){
 		FB.ui({
 		   method: 'permissions.request',
 		   'perms': window.FBperms,
@@ -27,22 +26,30 @@ $(function(){
 	});
 });
 
-function callbackfbtokeninvite()
-{
+function callbackfbtokeninvite() {
 	var ul = $('.invite-commonfriends-list');
 	ul.addClass('loading');
-	ajax.genericAction('facebook_commonfriends', {
-        
-    }, function(r){
-    	$.each(r.friends, function(){
-			formFBCommonFriendItem(this)
-			.appendTo( ul );
-		});
-		ul.removeClass('loading');
-    }, function(error){
-    	ul.removeClass('loading');
-    	error(error);
-    });
+
+	ajax.genericAction({
+    	route: 'facebook_commonfriends',
+    	params: {},
+
+    	callback: function (response) {
+    		console.log(response);
+    		$.each(response.friends, function() {
+				formFBCommonFriendItem(this)
+				.appendTo(ul);
+			});
+			ul.removeClass('loading');
+    	},
+
+    	errorCallback: function (errorResponse) {
+    		console.log('Error');
+    		console.log(errorResponse);
+    		ul.removeClass('loading');
+    		alert('Error');
+    	}
+	});
 }
 
 function formFBCommonFriendItem(item) {
