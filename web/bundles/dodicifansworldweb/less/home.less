@@ -14,7 +14,7 @@ header.home-header {
         font-weight: 300;
         color: @white;
         text-align: center;
-        
+
         b {
             font-weight: 600;
         }
@@ -45,7 +45,7 @@ header.home-header {
                 background-color: @black;
                 background: url('../images/bg_module_home.png') repeat;
                 cursor: pointer;
-                
+
                 &.active {
                     background: none;
                     background-color: black;
@@ -99,7 +99,7 @@ header.home-header {
                 color: gold;
                 font-weight: 300;
             }
-            
+
             h2 {
                 color: @white;
                 font-weight: 300;
@@ -128,7 +128,7 @@ header.home-header {
                     border: 1px solid gray;
                 }
 
-                &.register{ 
+                &.register{
                     left: 127px;
                     background-color: @green;
                     color: white;
@@ -180,7 +180,7 @@ section.home-content {
         font-size: 25px;
         text-align: center;
         font-weight: 300;
-        
+
         b {
             font-weight: 600;
         }
@@ -250,7 +250,14 @@ section.home-content {
             column-gap:           10px;
             margin-top:         30px;
 
-         } 
+         }
+         .elements div.item {
+              width: 18%;
+              margin: 5px 0.1%;
+              float: left;
+              overflow: hidden;
+              position: relative;
+        }
        .elements div.element {
            /* Just in case there are inline attributes */
            width: 100% !important;
@@ -374,7 +381,7 @@ section[data-type-tab*=participate] {
 /*  HOME RESPONSIVE  */
 
 @media(max-width: 796px) {
-    
+
 }
 
 @media(max-width: 800px) {
@@ -398,7 +405,7 @@ section[data-type-tab*=participate] {
                 width: 100%;
                 background: #535353;
                 height: 58px;
-                
+
                 li {
                     font-size: 17px;
                     float: left;
