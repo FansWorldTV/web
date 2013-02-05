@@ -1,9 +1,6 @@
 {% raw %}
-    <div class="element" data-element-type="{{>type}}" data-element-date="{{>date}}">
-        <a href="{{>href}}">
-            <img class="back-thumb" src="{{>image}}" alt="{{>slug}}">
-        </a>
-        
+<div id="{{>id}}" class="post item" data-element-type="{{>type}}" data-element-date="{{>date}}">
+    <div class="container">
         <div class="title-and-user">
             {{if authorImage}}
                 <a href="{{>authorHref}}"><img class="author-image" src="{{>authorImage}}" alt="{{>author}}" rel="tooltip" title="{{>author}}" /></a>
@@ -12,10 +9,14 @@
                 <span class="title">{{>title}}</span>
             </a>
         </div>
+        <a href="{{>href}}">
+            <img class="back-thumb" src="{{>image}}" alt="{{>slug}}">
+        </a>
         {{if type=='video'}}
             <a href="{{>href}}">
                 <i class="play-video"></i>
             </a>
         {{/if}}
     </div>
-{% endraw %}    
+</div>
+{% endraw %}
