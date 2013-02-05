@@ -139,19 +139,18 @@ header.home-header {
     }
 
     ul.tabs {
-        width: 461px;
         margin: 0 auto;
         display: block;
         position: relative;
         margin-top: 98px;
 
-        /*&[data-user-logged*="true"]{
-            left: 39%;
+        &[data-user-logged*="true"]{
+            width: 296px;
         }
 
         &[data-user-logged*="false"]{
-            left: 31%;
-        }*/
+            width: 461px;
+        }
 
         li {
             .pull-left();
@@ -465,6 +464,109 @@ section[data-type-tab*=participate] {
     }
 }
 
+@media(max-width: 874px) {
+    header.home-header {
+        height: 636px;
+    
+        .title { 
+            padding-top: 18px !important;
+            margin-bottom: 18px !important;
+            font-size: 18px !important;
+        }
+        
+        ul.tabs {
+            li {
+                font-size: 20px;
+                padding: 20px;
+            }
+        
+            &[data-user-logged*=true] {
+            }
+
+            &[data-user-logged*=false] {
+                width: 370px; 
+            }
+        }
+
+        div.center-container { 
+           width: 100% !important;
+
+           ul.sections {
+               height: 41px !important;
+               li {
+                   font-size: 12px !important;
+                   padding: 12px;
+               }
+           }
+
+           div.thumb-container {
+               width: 100% !important;
+               height: 320px;
+               overflow: hidden;
+               display: block;
+               float: none;
+
+               img {
+                   width: 100%;
+                   height: auto;
+               }
+
+               i.play-video {
+                   left: 42% !important;
+                   top: 44% !important;
+               }
+           }   
+
+           div.content-container {
+               width: 100% !important;
+               height: 70px;
+               padding: 0;
+               position: relative;
+               float: none;
+               padding-top: 25px;
+
+               h1, h2 {
+                   float: left;
+                   width: auto;
+               }
+
+               span {
+                    width: auto;
+                    float: left;
+                    margin-left: 25px;
+               }
+
+               h1 {
+                    clear: left;
+                    margin-left: 25px;
+               }
+
+               h2 {
+                    margin-left: 10px;
+               }
+
+               p {
+                   .hide();
+               }
+
+               button {
+                   bottom: 23px;
+                   left: initial;
+
+                   &.register {
+                       left: initial;
+                       right: 118px;
+                   }
+
+                   &.explore {
+                       right: 20px;
+                   }
+               }
+           }
+        }
+    }
+}
+
 @media(max-width: 990px) {
     header.home-header {
         div.center-container {
@@ -504,6 +606,12 @@ section[data-type-tab*=participate] {
             li.event {
                 width: 31%;
             }
+        }
+    }
+
+    section[data-type-tab*=activityFeed] {
+        section.span3 {
+            .hide();
         }
     }
 }

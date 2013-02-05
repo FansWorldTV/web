@@ -163,7 +163,8 @@ home.loadSection.enjoy = function(){
             loop++;
             if(r.videos.length == loop)  {
                 var callback = function(){
-                    toAppendVideos.removeClass('loading');
+                    toAppendVideos.removeClass('loading')
+                    home.loadedSection.enjoy = true;
                     var post = dummy.find('.post');
                     $.each(post, function(i, item) {
                         $container.append($(item)).isotope('appended', $(item))

@@ -30,7 +30,7 @@ class TvController extends SiteController
      * @Route("", name="teve_home")
      * @Template
      */
-    public function homeTabAction()
+    public function homeAction()
     {
         $user = $this->getUser();
 
