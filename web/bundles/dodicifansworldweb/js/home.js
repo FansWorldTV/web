@@ -66,7 +66,7 @@ home.toggleTabs = function(){
         switch(typeTab){
             case 'activityFeed':
                 endless.init(1, function(){
-                    var lastDate = $('section.home-content .content-container[data-type-tab="activityFeed"] .elements .element').last().attr('data-element-date');
+                    var lastDate = $('section.home-content .content-container[data-type-tab="activityFeed"] #elements .post').last().attr('data-element-date');
                     home.loadSection.activityFeed({
                         'date': lastDate,
                         'filters': $("section.content-container[data-type-tab='activityFeed'] .tags .pull-left span.label.active").attr('data-feed-filter')
@@ -75,7 +75,7 @@ home.toggleTabs = function(){
                 break;
             case 'popularFeed':
                 endless.init(1, function(){
-                    var lastDate = $('section.home-content .content-container[data-type-tab="activityFeed"] .elements .element').last().attr('data-element-date');
+                    var lastDate = $('section.home-content .content-container[data-type-tab="popularFeed"] #elements .post').last().attr('data-element-date');
                     home.loadSection.popularFeed({
                         'date': lastDate
                     });
@@ -166,7 +166,6 @@ home.loadSection.enjoy = function(){
                     toAppendVideos.removeClass('loading');
                     var post = dummy.find('.post');
                     $.each(post, function(i, item) {
-                        console.log(item)
                         $container.append($(item)).isotope('appended', $(item))
                     });
                     $container.isotope('reLayout');
@@ -255,9 +254,24 @@ home.loadSection.activityFeed = function(params, funcCallback){
 
     var $contentContainer = $('section.home-content .content-container[data-type-tab="activityFeed"]');
 
+    if(!$contentContainer.hasClass('isIso'))
+    {
+        var $container = $contentContainer.find('#elements');
+        $container.isotope({
+            itemSelector : '.item',
+            masonry: {
+                columnWidth: 25
+            }
+        });
+    }
+    $contentContainer.addClass('isIso');
     $contentContainer.addClass('loading');
 
     ajax.genericAction('home_ajaxactivityfeed', params, function(r){
+
+        var dummy = $('<div class="dummy"></div>');
+        var $container = $contentContainer.find('#elements');
+
         if(r.length > 0){
             for(var i in r){
                 var element = r[i];
@@ -268,7 +282,12 @@ home.loadSection.activityFeed = function(params, funcCallback){
                     var callback = function(){
                         $contentContainer.removeClass('loading');
                         home.loadedSection.activityFeed = true;
-                        funcCallback();
+                        var post = dummy.find('.post');
+                        $.each(post, function(i, item) {
+                            console.log(item)
+                            $container.append($(item)).isotope('appended', $(item))
+                        });
+                        $container.isotope('reLayout');
                     };
                 }else{
                     var callback = function(){};
@@ -316,17 +335,16 @@ home.loadSection.popularFeed = function(params){
         $container.isotope({
             itemSelector : '.item',
             masonry: {
-                columnWidth: 15
+                columnWidth: 25
             }
         });
     }
     $contentContainer.addClass('isIso');
-
     $contentContainer.addClass('loading');
 
     ajax.genericAction('home_ajaxpopularfeed', params, function(r){
         var dummy = $('<div class="dummy"></div>')
-        var $posts = $('#elements');
+        var $posts = $contentContainer.find('#elements');
         if(r.length > 0){
             for(var i in r){
                 var element = r[i];
@@ -335,10 +353,10 @@ home.loadSection.popularFeed = function(params){
                 if(r.length == loop)  {
                     var callback = function(){
                         $contentContainer.removeClass('loading');
-                        home.loadedSection.activityFeed = true;
+                        home.loadedSection.popularFeed = true;
+                        window.dummy = dummy.find('.post');
                         var a = dummy.find('.post');
                         $.each(a, function(i, item) {
-                            console.log(item)
                             $posts.append($(item)).isotope('appended', $(item))
                         });
                         $posts.isotope('reLayout');
