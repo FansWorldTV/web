@@ -25,16 +25,18 @@
         </script>
     {% else %}
         <script type="text/javascript">
-            {% if checked  %}
-                var checkedTeam = {{ checked.team.id }};
-                if(events.getLocalVisitante(checkedTeam) == 'local'){
-                    $("form[data-event-wall='guest']").parents('.guest').hide();
-                }else{
-                    $("form[data-event-wall='local']").parents('.local').hide();
-                }
-            {% else %}
-                $(".eventwall-form").hide();
-            {% endif %}
+            $(document).ready(function(){
+                {% if checked  %}
+                    var checkedTeam = {{ checked.team.id }};
+                    if(events.getLocalVisitante(checkedTeam) == 'local'){
+                        $("form[data-event-wall='guest']").parents('.guest').hide();
+                    }else{
+                        $("form[data-event-wall='local']").parents('.local').hide();
+                    }
+                {% else %}
+                    $(".eventwall-form").hide();
+                {% endif %}
+            });
         </script>
     {% endif %}
 {% endblock %}

@@ -443,14 +443,14 @@ var events = {
     },
 	
     getLocalVisitante: function(teamId){
-        var localId = events.localId;
-        var VisitanteId = events.guestId;
         var localVisitante = 'error';
-        if(teamId == localId){
+        
+        if(teamId == parseInt(events.localId)){
             localVisitante = 'local';
-        }else if(teamId == VisitanteId){
+        }else if(teamId == parseInt(events.guestId)){
             localVisitante = 'visitante';
         }
+        
         return localVisitante;
     },
 	
