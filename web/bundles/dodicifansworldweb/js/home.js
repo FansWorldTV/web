@@ -207,7 +207,7 @@ home.loadSection.enjoy = function(){
                         })
                         $container.append($(item)).isotope('appended', $(item));
                        });
-                        $posts.isotope('reLayout');
+                        $container.isotope('reLayout');
                     };
             }else{
                 var callback = function(){};
