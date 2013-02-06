@@ -122,6 +122,23 @@ var site = {
             }
         });
 
+        $('[data-youtubeshare]').live('click', function() {
+            var youtube_link = $('[data-youtubelink]').val();
+            console.log(youtube_link);
+            ajax.genericAction({
+                route: 'video_ajaxupload_youtube',
+                params: {
+                    'link': youtube_link
+                },
+                callback: function(response) {
+                    console.log(response);
+                },
+                errorCallback: function(response) {
+                    console.log(response);
+                }
+            });
+            return false;
+        });
 
         $.datepicker.setDefaults($.datepicker.regional[appLocale]);
 

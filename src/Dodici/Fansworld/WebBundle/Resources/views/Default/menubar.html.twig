@@ -62,12 +62,7 @@
 
             </div>
 
-
-
-
-
                 <ul class="nav pull-right usermenu">
-
 
                     <li class="dropdown">
             <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" style="z-index:-99;">Compartir</button>
@@ -75,6 +70,14 @@
                         <ul class="dropdown-menu">
                             <li><a href="{{ path('photo_fileupload') }}" data-upload="photo">Subir Fotos</a></li>
                             <li><a href="{{ path('video_fileupload') }}" data-upload="video">Subir Videos</a></li>
+
+                            <li>
+                            <div class="input-append" style="width: 250px;">
+                                <input class="span2" id="appendedInputButton" type="text" placeholder="Youtube Link.." style="margin-left: 13px;width: 150px;" data-youtubelink>
+                                <button class="btn" type="button" data-youtubeshare>Share!</button>
+                            </div>
+                            </li>
+
                         </ul>
                     </li>
 
