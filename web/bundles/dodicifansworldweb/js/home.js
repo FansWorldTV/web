@@ -118,7 +118,6 @@ home.loadedSection = {
 
 home.loadSection.enjoy = function(){
 
-
     var toAppendTrending = $('section.home-content .content-container[data-type-tab="enjoy"] .tags .pull-left');
     var toAppendVideos = $('section.home-content .content-container[data-type-tab="enjoy"] .elements');
 
@@ -130,13 +129,10 @@ home.loadSection.enjoy = function(){
 
         $container.isotope({
             itemSelector : '.item',
-            masonry: {
-                columnWidth: 15
-            }
         });
     }
-    $contentContainer.addClass('isIso');
 
+    $contentContainer.addClass('isIso');
     toAppendVideos.addClass('loading');
 
     ajax.genericAction('home_ajaxenjoy', {}, function(r){
@@ -329,17 +325,51 @@ home.loadSection.popularFeed = function(params){
         params = {};
     }
     var $contentContainer = $('section.home-content .content-container[data-type-tab="popularFeed"]');
+    var $container = $contentContainer.find('#elements');
 
     if(!$contentContainer.hasClass('isIso'))
     {
         var $container = $contentContainer.find('#elements');
+        $container.css('width', '100%');
         $container.isotope({
             itemSelector : '.item',
+            resizable: false, // disable normal resizing
             masonry: {
-                columnWidth: 25
+                columnWidth: ($container.width() / 5),
             }
         });
     }
+    $(window).smartresize(function(){
+
+        console.log($container.width())
+      if($container.width() <= 600) {
+        var cells = 1;
+        var imgw = '100%';
+      } else if ($container.width() <= 800) {
+        var cells = 2;
+        var imgw = '50%';
+      } else if ($container.width() <= 1000) {
+        var cells = 3;
+        var imgw = '35%';
+      } else if ($container.width() <= 1200) {
+        var cells = 4;
+        var imgw = '25%';
+      } else if ($container.width() > 1200) {
+        var cells = 5;
+        var imgw = '33%';
+      }
+      $container.find('.item').each(function(i, item){
+        var $this = $(this);
+        $this.css('width', ((100 / cells) - 2) + "%")
+        $this.find('.image').css('width', imgw)
+        $this.find('.image').css('max-width', imgw)
+      });
+      $container.isotope({
+        // update columnWidth to a percentage of container width
+        masonry: { columnWidth: $container.width() / cells }
+      });
+      $container.isotope('reLayout');
+    });
     $contentContainer.addClass('isIso');
     $contentContainer.addClass('loading');
 
@@ -357,7 +387,33 @@ home.loadSection.popularFeed = function(params){
                         home.loadedSection.popularFeed = true;
                         window.dummy = dummy.find('.post');
                         var a = dummy.find('.post');
+
+                              if($posts.width() <= 600) {
+                                var cells = 1;
+                                var imgw = '100%';
+                              } else if ($posts.width() <= 800) {
+                                var cells = 2;
+                                var imgw = '50%';
+                              } else if ($posts.width() <= 1000) {
+                                var cells = 3;
+                                var imgw = '35%';
+                              } else if ($posts.width() <= 1200) {
+                                var cells = 4;
+                                var imgw = '25%';
+                              } else if ($posts.width() > 1200) {
+                                var cells = 5;
+                                var imgw = '33%';
+                              }
                         $.each(a, function(i, item) {
+                            var $this = $(item);
+                            console.log(cells)
+                            $this.css('width', ((100 / cells) - 2) + "%")
+                            $this.find('.image').css('width', imgw)
+                            $this.find('.image').css('max-width', imgw)
+                            $this.find('.image').load(function() {
+                                console.log("image loaded: " + $(this).attr('src'))
+                                $posts.isotope('reLayout');
+                            })
                             $posts.append($(item)).isotope('appended', $(item))
                         });
                         $posts.isotope('reLayout');
