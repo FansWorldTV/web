@@ -340,7 +340,6 @@ home.loadSection.popularFeed = function(params){
         });
     }
     $(window).smartresize(function(){
-
         console.log($container.width())
       if($container.width() <= 600) {
         var cells = 1;
@@ -410,7 +409,7 @@ home.loadSection.popularFeed = function(params){
                             $this.css('width', ((100 / cells) - 2) + "%")
                             $this.find('.image').css('width', imgw)
                             $this.find('.image').css('max-width', imgw)
-                            $this.find('.image').load(function() {
+                            $this.find('.imagex').load(function() {
                                 console.log("image loaded: " + $(this).attr('src'))
                                 $posts.isotope('reLayout');
                             })
