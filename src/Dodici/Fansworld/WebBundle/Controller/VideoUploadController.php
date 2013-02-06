@@ -97,9 +97,9 @@ class VideoUploadController extends SiteController
         $video->setImage($image);
 
         */
-        //$em = $this->getEntityManager();
+        $em = $this->getDoctrine()->getEntityManager();
         $videouploader = $this->get('video.uploader');
-        $video = $videouploader->createVideoFromUrl("http://www.youtube.com/watch?v=CyiKboCMA9E");
+        $video = $videouploader->createVideoFromUrl($youtubeLink);
 
         //$video->setPrivacy(1);
         //$video->setVideocategory(3);
