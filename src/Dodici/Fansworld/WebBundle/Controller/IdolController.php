@@ -81,7 +81,13 @@ class IdolController extends SiteController
         $response['gotMore'] = ($count / $page) > self::LIMIT_LIST_IDOL ? true : false;
 
         foreach ($idols as $idol) {
-            $idolship = $this->getRepository('Idolship')->findBy(array('author' => $this->getUser()->getId(), 'idol' => $idol->getId()));
+            
+            if($this->getUser() instanceof User){
+                $idolship = $this->getRepository('Idolship')->findBy(array('author' => $this->getUser()->getId(), 'idol' => $idol->getId()));
+            }else{
+                $idolship = false;
+            }
+            
             $rankedFans = $this->getRepository('Idolship')->rankedUsersScore($idol, 1);
 
             $topFans = array();
@@ -95,8 +101,9 @@ class IdolController extends SiteController
 
             $idolUrl = $this->generateUrl('idol_wall', array('slug' => $idol->getSlug()));
 
-            if ($idol->getTeam()) {
-                $teamUrl = $this->generateUrl('team_wall', array('slug' => $idol->getTeam()->getSlug()));
+            $idolCareer = $idol->getTeamName();
+            if ($idolCareer->getTeam()) {
+                $teamUrl = $this->generateUrl('team_wall', array('slug' => $idolCareer->getTeam()->getSlug()));
             } else {
                 $teamUrl = "";
             }
@@ -107,7 +114,7 @@ class IdolController extends SiteController
                 'avatar' => $this->getImageUrl($idol->getImage(), 'small'),
                 'idolUrl' => $idolUrl,
                 'teamUrl' => $teamUrl,
-                'team' => (string) $idol->getTeam(),
+                'team' => (string) $idolCareer->getTeam(),
                 'fanCount' => $idol->getFanCount(),
                 'videoCount' => $idol->getVideoCount(),
                 'photoCount' => $idol->getPhotoCount(),
