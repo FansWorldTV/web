@@ -1,6 +1,6 @@
 {% raw %}
 <div id="{{>id}}" class="post item" data-element-type="{{>type}}" data-element-date="{{>date}}">
-    <div class="well">
+    <div class="cosas">
         <div class="title-and-user">
             {{if authorImage}}
                 <a href="{{>authorHref}}"><img class="author-image" src="{{>authorImage}}" alt="{{>author}}" rel="tooltip" title="{{>author}}" /></a>
@@ -10,7 +10,7 @@
             </a>
         </div>
         <a href="{{>href}}">
-            <img class="imagex" src="{{>image}}" alt="{{>slug}}">
+            <img class="imagex" src="{{>image}}" style="width:100%;" alt="{{>slug}}">
         </a>
         {{if type=='video'}}
             <a href="{{>href}}">
