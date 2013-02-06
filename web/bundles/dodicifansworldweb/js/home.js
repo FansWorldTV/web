@@ -188,15 +188,15 @@ home.loadSection.enjoy = function(){
                     toAppendVideos.removeClass('loading')
                     home.loadedSection.enjoy = true;
                     var post = dummy.find('.post');
-                      if($posts.width() <= 600) {
+                      if($container.width() <= 600) {
                         var cells = 1;
-                      } else if ($posts.width() <= 800) {
+                      } else if ($container.width() <= 800) {
                         var cells = 2;
-                      } else if ($posts.width() <= 1000) {
+                      } else if ($container.width() <= 1000) {
                         var cells = 3;
-                      } else if ($posts.width() <= 1200) {
+                      } else if ($container.width() <= 1200) {
                         var cells = 4;
-                      } else if ($posts.width() > 1200) {
+                      } else if ($container.width() > 1200) {
                         var cells = 5;
                       }
                     $.each(post, function(i, item) {
