@@ -129,9 +129,35 @@ home.loadSection.enjoy = function(){
 
         $container.isotope({
             itemSelector : '.item',
+            resizable: false, // disable normal resizing
+            masonry: {
+                columnWidth: ($container.width() / 5),
+            }
         });
     }
-
+    $(window).smartresize(function(){
+        console.log($container.width())
+      if($container.width() <= 600) {
+        var cells = 1;
+      } else if ($container.width() <= 800) {
+        var cells = 2;
+      } else if ($container.width() <= 1000) {
+        var cells = 3;
+      } else if ($container.width() <= 1200) {
+        var cells = 4;
+      } else if ($container.width() > 1200) {
+        var cells = 5;
+      }
+      $container.find('.item').each(function(i, item){
+        var $this = $(this);
+        $this.css('width', ((100 / cells) - 2) + "%") // 2% margen entre los elementos
+      });
+      $container.isotope({
+        // update columnWidth to a percentage of container width
+        masonry: { columnWidth: $container.width() / cells }
+      });
+      $container.isotope('reLayout');
+    });
     $contentContainer.addClass('isIso');
     toAppendVideos.addClass('loading');
 
@@ -162,11 +188,27 @@ home.loadSection.enjoy = function(){
                     toAppendVideos.removeClass('loading')
                     home.loadedSection.enjoy = true;
                     var post = dummy.find('.post');
+                      if($posts.width() <= 600) {
+                        var cells = 1;
+                      } else if ($posts.width() <= 800) {
+                        var cells = 2;
+                      } else if ($posts.width() <= 1000) {
+                        var cells = 3;
+                      } else if ($posts.width() <= 1200) {
+                        var cells = 4;
+                      } else if ($posts.width() > 1200) {
+                        var cells = 5;
+                      }
                     $.each(post, function(i, item) {
-                        $container.append($(item)).isotope('appended', $(item))
-                    });
-                    $container.isotope('reLayout');
-                };
+                        var $this = $(item);
+                        $this.css('width', ((100 / cells) - 2) + "%")
+                        $this.find('.imagex').load(function() {
+                            $container.isotope('reLayout');
+                        })
+                        $container.append($(item)).isotope('appended', $(item));
+                       });
+                        $posts.isotope('reLayout');
+                    };
             }else{
                 var callback = function(){};
             }
@@ -359,7 +401,7 @@ home.loadSection.popularFeed = function(params){
       }
       $container.find('.item').each(function(i, item){
         var $this = $(this);
-        $this.css('width', ((100 / cells) - 2) + "%")
+        $this.css('width', ((100 / cells) - 2) + "%") // 2% margen entre los elementos
         $this.find('.image').css('width', imgw)
         $this.find('.image').css('max-width', imgw)
       });
