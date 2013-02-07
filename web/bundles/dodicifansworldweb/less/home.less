@@ -273,6 +273,21 @@ section.home-content {
               }
               .cosas {
                 min-height:20px;
+                 &:hover{
+                     opacity: 0.5;
+                 }
+                .play-video {
+                   background-image: url('../images/play-icon.png');
+                   background-size: 50px;
+                   .square(50px);
+                   position: absolute;
+                   left: 39%;
+                   top: 39%;
+                   opacity: 0.5;
+                   &:hover{
+                       opacity: 1;
+                   }
+                }
               }
               .cosas .title-and-user {
                   position: absolute;
@@ -315,7 +330,7 @@ section.home-content {
                   line-height: normal !important;
                 }
               }
-           
+
               .container {
                 min-height: 20px;
                 padding: 19px;
@@ -337,7 +352,6 @@ section.home-content {
                    left: 39%;
                    top: 39%;
                    opacity: 0.5;
-
                    &:hover{
                        opacity: 1;
                    }
@@ -524,28 +538,28 @@ section[data-type-tab*=participate] {
 @media(max-width: 874px) {
     header.home-header {
         height: 636px;
-    
-        .title { 
+
+        .title {
             padding-top: 18px !important;
             margin-bottom: 18px !important;
             font-size: 18px !important;
         }
-        
+
         ul.tabs {
             li {
                 font-size: 20px;
                 padding: 20px;
             }
-        
+
             &[data-user-logged*=true] {
             }
 
             &[data-user-logged*=false] {
-                width: 370px; 
+                width: 370px;
             }
         }
 
-        div.center-container { 
+        div.center-container {
            width: 100% !important;
 
            ul.sections {
@@ -572,7 +586,7 @@ section[data-type-tab*=participate] {
                    left: 42% !important;
                    top: 44% !important;
                }
-           }   
+           }
 
            div.content-container {
                width: 100% !important;
