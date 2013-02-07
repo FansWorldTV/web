@@ -1,3 +1,5 @@
+// ver 10.1
+
 var home = {};
 
 home.init = function(){
