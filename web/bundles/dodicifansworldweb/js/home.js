@@ -116,6 +116,21 @@ home.loadedSection = {
     'popularFeed': false
 };
 
+home.getMaxSections = function(container) {
+    var $container = $(container)
+    if($container.width() <= 600) {
+        var cells = 1;
+    } else if ($container.width() <= 800) {
+        var cells = 2;
+    } else if ($container.width() <= 1000) {
+        var cells = 3;
+    } else if ($container.width() <= 1200) {
+        var cells = 4;
+    } else if ($container.width() > 1200) {
+       var cells = 5;
+    }
+    return cells;
+}
 home.loadSection.enjoy = function(){
 
     var toAppendTrending = $('section.home-content .content-container[data-type-tab="enjoy"] .tags .pull-left');
@@ -131,7 +146,7 @@ home.loadSection.enjoy = function(){
             itemSelector : '.item',
             resizable: false, // disable normal resizing
             masonry: {
-                columnWidth: ($container.width() / 5),
+                columnWidth: ($container.width() / home.getMaxSections($container)),
             }
         });
     }
@@ -199,6 +214,8 @@ home.loadSection.enjoy = function(){
                       } else if ($container.width() > 1200) {
                         var cells = 5;
                       }
+                    //alert("w: " + $container.width()+ " c: " + cells)
+
                     $.each(post, function(i, item) {
                         var $this = $(item);
                         $this.css('width', ((100 / cells) - 2) + "%")
@@ -243,8 +260,7 @@ home.loadSection.enjoy = function(){
 home.loadSection.connect = function(){
     var toAppendElements = $('section.home-content .content-container[data-type-tab="connect"] .fans-list');
 
-    toAppendElements.addClass('loading');
-
+    toAppendElements.parent().addClass('loading');
     ajax.genericAction('home_ajaxconnect', {}, function(r){
         for(var i in r.fans){
             var fan = r.fans[i];
@@ -253,14 +269,15 @@ home.loadSection.connect = function(){
             loop++;
             if(r.fans.length == loop)  {
                 var callback = function(){
+                    console.log(cells)
                     toAppendElements.removeClass('loading');
                     home.loadedSection.connect = true;
                 };
             }else{
                 var callback = function(){};
             }
-
             templateHelper.renderTemplate('fans-element', fan, toAppendElements.selector, false, callback);
+            toAppendElements.parent().removeClass('loading');
         }
     }, function(e){
         error(e);
@@ -292,21 +309,46 @@ home.loadSection.activityFeed = function(params, funcCallback){
     }
 
     var $contentContainer = $('section.home-content .content-container[data-type-tab="activityFeed"]');
+    var $container = $contentContainer.find('#elements');
 
-    if(!$contentContainer.hasClass('isIso'))
-    {
+    if(!$contentContainer.hasClass('isIso')) {
         var $container = $contentContainer.find('#elements');
+        $container.css('width', '100%');
         $container.isotope({
             itemSelector : '.item',
+            resizable: false, // disable normal resizing
             masonry: {
-                columnWidth: 25
+                columnWidth: ($container.width() / home.getMaxSections($container)),
             }
         });
     }
+    $(window).smartresize(function(){
+        console.log($container.width())
+      if($container.width() <= 600) {
+        var cells = 1;
+      } else if ($container.width() <= 800) {
+        var cells = 2;
+      } else if ($container.width() <= 1000) {
+        var cells = 3;
+      } else if ($container.width() <= 1200) {
+        var cells = 4;
+      } else if ($container.width() > 1200) {
+        var cells = 5;
+      }
+      $container.find('.item').each(function(i, item){
+        var $this = $(this);
+        $this.css('width', ((100 / cells) - 2) + "%") // 2% margen entre los elementos
+      });
+      $container.isotope({
+        // update columnWidth to a percentage of container width
+        masonry: { columnWidth: $container.width() / cells }
+      });
+      $container.isotope('reLayout');
+    });
     $contentContainer.addClass('isIso');
     $contentContainer.addClass('loading');
 
-    ajax.genericAction('home_ajaxactivityfeed', params, function(r){
+    ajax.genericAction('home_ajaxpopularfeed', params, function(r){ //home_ajaxactivityfeed
 
         var dummy = $('<div class="dummy"></div>');
         var $container = $contentContainer.find('#elements');
@@ -322,11 +364,31 @@ home.loadSection.activityFeed = function(params, funcCallback){
                         $contentContainer.removeClass('loading');
                         home.loadedSection.activityFeed = true;
                         var post = dummy.find('.post');
-                        $.each(post, function(i, item) {
-                            console.log(item)
-                            $container.append($(item)).isotope('appended', $(item))
+                        if($container.width() <= 600) {
+                            var cells = 1;
+                          } else if ($container.width() <= 800) {
+                            var cells = 2;
+                          } else if ($container.width() <= 1000) {
+                            var cells = 3;
+                          } else if ($container.width() <= 1200) {
+                            var cells = 4;
+                          } else if ($container.width() > 1200) {
+                            var cells = 5;
+                          }
+                    console.log("w: "+$container.width())
+                    $.each(post, function(i, item) {
+                        var $this = $(item);
+                        $this.css('width', ((100 / cells) - 2) + "%")
+                        $container.isotope({
+                            // update columnWidth to a percentage of container width
+                            masonry: { columnWidth: $container.width() / cells }
                         });
-                        $container.isotope('reLayout');
+                        $this.find('.imagex').load(function() {
+                            $container.isotope('reLayout');
+                        })
+                        $container.append($(item)).isotope('appended', $(item));
+                       });
+                        //$container.isotope('reLayout');
                     };
                 }else{
                     var callback = function(){};
@@ -351,7 +413,7 @@ home.loadSection.activityFeed = function(params, funcCallback){
                     'author': element.author.username,
                     'authorHref': authorUrl,
                     'authorImage': element.author.image
-                }, $contentContainer.find('.elements').selector, false, callback);
+                },dummy, false, callback); //$contentContainer.find('.elements').selector, false, callback);
             }
         }else{
             $contentContainer.removeClass('loading');
@@ -363,21 +425,139 @@ home.loadSection.activityFeed = function(params, funcCallback){
 };
 
 home.loadSection.popularFeed = function(params){
+
     if(typeof(params) == 'undefined'){
         params = {};
     }
+
     var $contentContainer = $('section.home-content .content-container[data-type-tab="popularFeed"]');
     var $container = $contentContainer.find('#elements');
 
-    if(!$contentContainer.hasClass('isIso'))
-    {
+    if(!$contentContainer.hasClass('isIso')) {
         var $container = $contentContainer.find('#elements');
         $container.css('width', '100%');
         $container.isotope({
             itemSelector : '.item',
             resizable: false, // disable normal resizing
             masonry: {
-                columnWidth: ($container.width() / 5),
+                columnWidth: ($container.width() / home.getMaxSections($container)),
+            }
+        });
+    }
+    $(window).smartresize(function(){
+      if($container.width() <= 600) {
+        var cells = 1;
+      } else if ($container.width() <= 800) {
+        var cells = 2;
+      } else if ($container.width() <= 1000) {
+        var cells = 3;
+      } else if ($container.width() <= 1200) {
+        var cells = 4;
+      } else if ($container.width() > 1200) {
+        var cells = 5;
+      }
+      $container.find('.item').each(function(i, item){
+        var $this = $(this);
+        $this.css('width', ((100 / cells) - 2) + "%") // 2% margen entre los elementos
+      });
+      $container.isotope({
+        // update columnWidth to a percentage of container width
+        masonry: { columnWidth: $container.width() / cells }
+      });
+      $container.isotope('reLayout');
+    });
+    $contentContainer.addClass('isIso');
+    $contentContainer.addClass('loading');
+
+    ajax.genericAction('home_ajaxpopularfeed', params, function(r){ //home_ajaxactivityfeed
+
+        var dummy = $('<div class="dummy"></div>');
+
+        if(r.length > 0){
+            for(var i in r){
+                var element = r[i];
+
+                var loop = parseInt(i);
+                loop++;
+                if(r.length == loop)  {
+                    var callback = function(){
+                        $contentContainer.removeClass('loading');
+                        home.loadedSection.activityFeed = true;
+                        var post = dummy.find('.post');
+                        if($container.width() <= 600) {
+                            var cells = 1;
+                          } else if ($container.width() <= 800) {
+                            var cells = 2;
+                          } else if ($container.width() <= 1000) {
+                            var cells = 3;
+                          } else if ($container.width() <= 1200) {
+                            var cells = 4;
+                          } else if ($container.width() > 1200) {
+                            var cells = 5;
+                          }
+                    $.each(post, function(i, item) {
+                        var $this = $(item);
+                        $this.css('width', ((100 / cells) - 2) + "%")
+                        $container.isotope({
+                            // update columnWidth to a percentage of container width
+                            masonry: { columnWidth: $container.width() / cells }
+                        });
+                        $this.find('.imagex').load(function() {
+                            $container.isotope('reLayout');
+                        })
+                        $container.append($(item)).isotope('appended', $(item));
+                       });
+                        //$container.isotope('reLayout');
+                    };
+                }else{
+                    var callback = function(){};
+                }
+
+                var href = Routing.generate(appLocale + '_' + element.type + '_show', {
+                    'id': element.id,
+                    'slug': element.slug
+                });
+
+                var authorUrl = Routing.generate(appLocale + '_user_wall', {
+                    'username': element.author.username
+                });
+
+                templateHelper.renderTemplate('general-column_element', {
+                    'type': element.type,
+                    'date': element.created,
+                    'href': href,
+                    'image': element.image,
+                    'slug': element.slug,
+                    'title': element.title,
+                    'author': element.author.username,
+                    'authorHref': authorUrl,
+                    'authorImage': element.author.image
+                },dummy, false, callback); //$contentContainer.find('.elements').selector, false, callback);
+            }
+        }else{
+            $contentContainer.removeClass('loading');
+            endless.stop();
+        }
+    }, function(e){
+        error(e);
+    });
+}
+
+home.loadSection.popularFeed2 = function(params){
+    if(typeof(params) == 'undefined'){
+        params = {};
+    }
+    var $contentContainer = $('section.home-content .content-container[data-type-tab="popularFeed"]');
+    var $container = $contentContainer.find('#elements');
+
+    if(!$contentContainer.hasClass('isIso')) {
+        var $container = $contentContainer.find('#elements');
+        $container.css('width', '100%');
+        $container.isotope({
+            itemSelector : '.item',
+            resizable: false, // disable normal resizing
+            masonry: {
+                columnWidth: ($container.width() / home.getMaxSections($container)),
             }
         });
     }
@@ -385,25 +565,18 @@ home.loadSection.popularFeed = function(params){
         console.log($container.width())
       if($container.width() <= 600) {
         var cells = 1;
-        var imgw = '100%';
       } else if ($container.width() <= 800) {
         var cells = 2;
-        var imgw = '50%';
       } else if ($container.width() <= 1000) {
         var cells = 3;
-        var imgw = '35%';
       } else if ($container.width() <= 1200) {
         var cells = 4;
-        var imgw = '25%';
       } else if ($container.width() > 1200) {
         var cells = 5;
-        var imgw = '33%';
       }
       $container.find('.item').each(function(i, item){
         var $this = $(this);
-        $this.css('width', ((100 / cells) - 2) + "%") // 2% margen entre los elementos
-        $this.find('.image').css('width', imgw)
-        $this.find('.image').css('max-width', imgw)
+        $this.css('width', ((100 / cells) - 4) + "%") // 2% margen entre los elementos
       });
       $container.isotope({
         // update columnWidth to a percentage of container width
@@ -425,39 +598,27 @@ home.loadSection.popularFeed = function(params){
                 if(r.length == loop)  {
                     var callback = function(){
                         $contentContainer.removeClass('loading');
-                        home.loadedSection.popularFeed = true;
-                        window.dummy = dummy.find('.post');
-                        var a = dummy.find('.post');
-
-                              if($posts.width() <= 600) {
-                                var cells = 1;
-                                var imgw = '100%';
-                              } else if ($posts.width() <= 800) {
-                                var cells = 2;
-                                var imgw = '50%';
-                              } else if ($posts.width() <= 1000) {
-                                var cells = 3;
-                                var imgw = '35%';
-                              } else if ($posts.width() <= 1200) {
-                                var cells = 4;
-                                var imgw = '25%';
-                              } else if ($posts.width() > 1200) {
-                                var cells = 5;
-                                var imgw = '33%';
-                              }
-                        $.each(a, function(i, item) {
-                            var $this = $(item);
-                            console.log(cells)
-                            $this.css('width', ((100 / cells) - 2) + "%")
-                            $this.find('.image').css('width', imgw)
-                            $this.find('.image').css('max-width', imgw)
-                            $this.find('.imagex').load(function() {
-                                console.log("image loaded: " + $(this).attr('src'))
-                                $posts.isotope('reLayout');
-                            })
-                            $posts.append($(item)).isotope('appended', $(item))
-                        });
-                        $posts.isotope('reLayout');
+                        var post = dummy.find('.post');
+                        if($container.width() <= 600) {
+                            var cells = 1;
+                          } else if ($container.width() <= 800) {
+                            var cells = 2;
+                          } else if ($container.width() <= 1000) {
+                            var cells = 3;
+                          } else if ($container.width() <= 1200) {
+                            var cells = 5;
+                          } else if ($container.width() > 1200) {
+                            var cells = 6;
+                          }
+                    $.each(post, function(i, item) {
+                        var $this = $(item);
+                        $this.css('width', ((100 / cells) - 2) + "%")
+                        $this.find('.imagex').load(function() {
+                            $container.isotope('reLayout');
+                        })
+                        $container.append($(item)).isotope('appended', $(item));
+                       });
+                        //$container.isotope('reLayout');
                     };
                 }else{
                     var callback = function(){};
