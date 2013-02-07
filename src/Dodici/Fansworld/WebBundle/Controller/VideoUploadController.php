@@ -66,6 +66,7 @@ class VideoUploadController extends SiteController
 
     /**
      *  @Route("/ajax/upload-youtube", name="video_ajaxupload_youtube")
+     * Test method
      */
     public function ajaxUploadYoutube()
     {
@@ -217,12 +218,6 @@ class VideoUploadController extends SiteController
 
                 if ($form->isValid()) {
 
-                    /*
-                        $videotemp = $this->get('video.uploader')->createVideoFromUrl($data['videourl'], $user);
-                        $em->persist($videotemp);
-                        $em->flush();
-                    */
-
                     $em = $this->getDoctrine()->getEntityManager();
                     $videoCategory = $this->getRepository('VideoCategory')->find($data['categories']);
 
@@ -283,6 +278,73 @@ class VideoUploadController extends SiteController
         return array('form' => $form->createView());
     }
 
+    /**
+     * @Route("/youtubeupload", name="video_youtubeupload")
+     * @Secure(roles="ROLE_USER")
+     * @Template
+     */
+    public function youtubeUploadAction()
+    {
+        $request = $this->getRequest();
+        $defaultData = array();
+        $videotemp = new Video();
+        $youtubeLink = '';
+        $user = $this->getUser();
+
+        if ($request->getMethod() == 'GET') {
+            $youtubeLink = $request->get('link', false);
+            $videotemp = $this->get('video.uploader')->createVideoFromUrl($youtubeLink, $user);
+        }
+
+        $form = $this->_createYoutubeVideoForm($user->getId(), $videotemp, $youtubeLink);
+
+        if ($request->getMethod() == 'POST') {
+            try {
+                $form->bindRequest($request);
+                $data = $form->getData();
+
+                if ($form->isValid()) {
+                    $video = new Video();
+                    $videouploader = $this->get('video.uploader');
+                    $video = $videouploader->createVideoFromUrl($data['youtubelink'], $user);
+
+                    $video->setPrivacy($data['privacy']);
+
+                    $videoCategory = $this->getRepository('VideoCategory')->find($data['categories']);
+                    $video->setVideocategory($videoCategory);
+
+                    $em = $this->getDoctrine()->getEntityManager();
+                    $em->persist($video);
+                    $em->flush();
+
+                    $tagtexts = explode(',', $data['tagtext']);
+                    $tagidols = explode(',', $data['tagidol']);
+                    $tagteams = explode(',', $data['tagteam']);
+                    $tagusers = explode(',', $data['taguser']);
+                    $tagitems = $this->_tagEntity($tagtexts, $tagidols, $tagteams, $tagusers, $user, $video);
+
+                    function toBoolean(&$var) {$var = $var == 'true' ? true : false;}
+                    $shareEntities = array(
+                        "idols" => $data['shareidol'],
+                        "teams" => $data['shareteam'],
+                        "users" => $data['shareuser']
+                    );
+                    $this->_shareVideo($video, toBoolean($data['fb']), toBoolean($data['tw']), toBoolean($data['fw']), $data['title'], $shareEntities);
+
+                    $this->get('session')->setFlash('success', '¡Has subido un video de Youtube con éxito!');
+
+                    return $this->forward('DodiciFansworldWebBundle:VideoUpload:fileMeta',
+                        array('youtubelink' => $data['youtubelink'], 'title' => $data['title'],
+                                'imagen' => 'imagen', 'fromuploader' => true));
+                }
+            } catch (\Exception $e) {
+                $form->addError(new FormError('Error subiendo video'));
+            }
+        }
+        return array('form' => $form->createView());
+    }
+
+
     private function _createVideoForm ($userId) {
         $privacies = Privacy::getOptions();
         $videoCategories = $this->getRepository('VideoCategory')->findAll();
@@ -328,8 +390,56 @@ class VideoUploadController extends SiteController
         return $formVideo;
     }
 
+    private function _createYoutubeVideoForm ($userId, $videotemp, $youtubeLink) {
+        $privacies = Privacy::getOptions();
+        $videoCategories = $this->getRepository('VideoCategory')->findAll();
+        $categoriesChoices = array();
+        foreach ($videoCategories as $ab)
+            $categoriesChoices[$ab->getId()] = $ab->getTitle();
+        $defaultData = array();
+        $collectionConstraint = new Collection(array(
+            'title' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
+            'categories' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($categoriesChoices))),
+            'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
+            'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
+            'tagtext' => array(),
+            'tagidol' => array(),
+            'tagteam' => array(),
+            'taguser' => array(),
+            'shareteam' => array(),
+            'shareidol' => array(),
+            'shareuser' => array(),
+            'fb' => array(),
+            'tw' => array(),
+            'fw' => array(),
+            'youtubelink' => array()
+        ));
 
-     private function _tagEntity ($tagtexts, $tagidols, $tagteams, $tagusers, $user, $video) {
+        $defaultData['title'] = $videotemp->getTitle();
+        $defaultData['content'] = $videotemp->getContent();
+        $defaultData['youtubelink'] = $youtubeLink;
+
+        $formVideo = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
+            ->add('title', 'text', array('required' => true, 'label' => 'Título'))
+            ->add('categories', 'choice', array('required' => true, 'choices' => $categoriesChoices, 'label' => 'Categoria'))
+            ->add('content', 'textarea', array('required' => false,'label' => 'Descripción'))
+            ->add('privacy', 'choice', array('required' => true, 'choices' => $privacies, 'label' => 'Privacidad'))
+            ->add('tagtext', 'hidden', array('required' => false))
+            ->add('tagidol', 'hidden', array('required' => false))
+            ->add('tagteam', 'hidden', array('required' => false))
+            ->add('taguser', 'hidden', array('required' => false))
+            ->add('shareteam', 'hidden', array('required' => false))
+            ->add('shareidol', 'hidden', array('required' => false))
+            ->add('shareuser', 'hidden', array('required' => false))
+            ->add('fb', 'hidden', array('required' => false))
+            ->add('tw', 'hidden', array('required' => false))
+            ->add('fw', 'hidden', array('required' => false))
+            ->add('youtubelink', 'hidden', array('required' => true))
+            ->getForm();
+        return $formVideo;
+    }
+
+    private function _tagEntity ($tagtexts, $tagidols, $tagteams, $tagusers, $user, $video) {
         $idolrepo = $this->getRepository('Idol');
         $teamrepo = $this->getRepository('Team');
         $userrepo = $this->getRepository('User');

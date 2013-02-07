@@ -127,19 +127,14 @@ var site = {
             var youtube_link = $('[data-youtubelink]').val();
 
             if (checkYoutubeUrl(youtube_link)) {
-                shareStatusUpdate('Procesando...', '#a0c882');
-                ajax.genericAction({
-                    route: 'video_ajaxupload_youtube',
-                    params: {
-                        'link': youtube_link
-                    },
-                    callback: function(response) {
-                        console.log(response);
-                        shareStatusUpdate('Video compartido Ok!', '#a0c882');
-                    },
-                    errorCallback: function(response) {
-                        console.log(response);
-                        shareStatusUpdate('Error al compartir, intente nuevamente', 'red');
+                shareStatusUpdate('', '#a0c882');
+                $('[data-youtubelink]').val('');
+                $('[data-dropdownshare]').addClass("dropdown");
+                $.colorbox({
+                    href: $('[data-youtubeshare]').data('youtubeshare') + "?link=" + youtube_link,
+                    // data: {'link': youtube_link},
+                    onComplete: function () {
+                        resizePopup();
                     }
                 });
             } else {
