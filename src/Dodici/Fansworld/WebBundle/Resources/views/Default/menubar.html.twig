@@ -64,7 +64,7 @@
 
                 <ul class="nav pull-right usermenu">
 
-                    <li class="dropdown">
+                    <li class="dropdown" data-dropdownshare>
             <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" style="z-index:-99;">Compartir</button>
 
                         <ul class="dropdown-menu">
@@ -75,6 +75,9 @@
                             <div class="input-append" style="width: 250px;">
                                 <input class="span2" id="appendedInputButton" type="text" placeholder="Youtube Link.." style="margin-left: 13px;width: 150px;" data-youtubelink>
                                 <button class="btn" type="button" data-youtubeshare>Share!</button>
+                                <p data-sharestatus class="text-success" style="margin-left: 14px;">
+                                    <small data-sharestatus-text></small>
+                                </p>
                             </div>
                             </li>
 

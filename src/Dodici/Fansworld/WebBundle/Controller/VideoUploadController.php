@@ -64,7 +64,6 @@ class VideoUploadController extends SiteController
         );
     }
 
-
     /**
      *  @Route("/ajax/upload-youtube", name="video_ajaxupload_youtube")
      */
@@ -73,62 +72,22 @@ class VideoUploadController extends SiteController
         $request = $this->getRequest();
         $user = $this->getUser();
         $youtubeLink = $request->get('link', false);
-
-        /*
-        $idyoutube = $videouploader->getYoutubeId($youtubeLink);
-
-        if (!$idyoutube)
-            throw new \Exception('URL inválida');
-
-        $metadata = $videouploader->getYoutubeMetadata($idyoutube);
-        if (!$metadata)
-            throw new \Exception('No se encontró metadata youtube');
-
-        $image = null;
-        if ($metadata['thumbnail_url']) {
-            $image = $this->get('appmedia')->createImageFromUrl($metadata['thumbnail_url']);
-        }
+        $videouploader = $this->get('video.uploader');
 
         $video = new Video();
-        $video->setAuthor($user);
-        $video->setTitle($metadata['title']);
-        $video->setContent("");
-        $video->setYoutube($idyoutube);
-        $video->setImage($image);
+        $video = $videouploader->createVideoFromUrl($youtubeLink, $user);
 
-        */
+        $video->setPrivacy(1);
+        $videocategory = $this->getRepository('VideoCategory')->find(3);
+        $video->setVideocategory($videocategory);
+
         $em = $this->getDoctrine()->getEntityManager();
-        $videouploader = $this->get('video.uploader');
-        $video = $videouploader->createVideoFromUrl($youtubeLink);
-
-        //$video->setPrivacy(1);
-        //$video->setVideocategory(3);
-        //$em->persist($video);
-        //$em->flush();
-
-        /*
-            $tagtexts = explode(',', $data['tagtext']);
-            $tagusers = explode(',', $data['taguser']);
-            $userrepo = $this->getRepository('User');
-            $tagitems = array();
-
-            foreach ($tagtexts as $tt) {
-                if (trim($tt))
-                    $tagitems[] = $tt;
-            }
-            foreach ($tagusers as $tu) {
-                $tuser = $userrepo->find($tu);
-                if ($tuser)
-                    $tagitems[] = $tuser;
-            }
-
-            $this->get('tagger')->tag($user, $video, $tagitems);
-        */
+        $em->persist($video);
+        $em->flush();
 
         $this->get('session')->setFlash('success', '¡Has subido un video de Youtube con éxito!');
         return $this->jsonResponse(array('success' => true));
     }
-
 
     /**
      * @Route("/upload", name="video_upload")

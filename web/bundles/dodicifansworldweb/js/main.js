@@ -123,21 +123,45 @@ var site = {
         });
 
         $('[data-youtubeshare]').live('click', function() {
+            $('[data-dropdownshare]').addClass("dropdown open");
             var youtube_link = $('[data-youtubelink]').val();
-            console.log(youtube_link);
-            ajax.genericAction({
-                route: 'video_ajaxupload_youtube',
-                params: {
-                    'link': youtube_link
-                },
-                callback: function(response) {
-                    console.log(response);
-                },
-                errorCallback: function(response) {
-                    console.log(response);
-                }
-            });
+
+            if (checkYoutubeUrl(youtube_link)) {
+                shareStatusUpdate('Procesando...', '#a0c882');
+                ajax.genericAction({
+                    route: 'video_ajaxupload_youtube',
+                    params: {
+                        'link': youtube_link
+                    },
+                    callback: function(response) {
+                        console.log(response);
+                        shareStatusUpdate('Video compartido Ok!', '#a0c882');
+                    },
+                    errorCallback: function(response) {
+                        console.log(response);
+                        shareStatusUpdate('Error al compartir, intente nuevamente', 'red');
+                    }
+                });
+            } else {
+                console.log('Invalid Youtube Link');
+                $('[data-youtubelink]').val('');
+                shareStatusUpdate('Link invalido', 'red');
+            }
+
+            function shareStatusUpdate(text, color) {
+                $('[data-sharestatus-text]').html(text);
+                $('[data-sharestatus-text]').attr('style', 'color:' + color);
+            }
+
+            function checkYoutubeUrl(url) {
+                var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+                return (url.match(p)) ? true : false;
+            }
             return false;
+        });
+
+        $('[data-youtubelink]').live('click', function() {
+            $('[data-dropdownshare]').addClass("dropdown open");
         });
 
         $.datepicker.setDefaults($.datepicker.regional[appLocale]);
