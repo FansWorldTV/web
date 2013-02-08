@@ -37,7 +37,6 @@ home.toggleSections = function(){
 
         $(".home-header ul.sections li").removeClass('active');
         $(this).addClass('active');
-
     });
 };
 

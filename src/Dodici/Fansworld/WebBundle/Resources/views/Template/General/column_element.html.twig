@@ -10,11 +10,11 @@
                 <span class="title">{{>title}}</span>
             </a>
         </div>
-        <a href="{{>href}}">
+        <a href="{{>href}}" data-modal-url="{{>href}}">
             <img class="image" src="{{>image}}" style="width:100%;" alt="{{>slug}}">
         </a>
         {{if type=='video'}}
-            <a href="{{>href}}">
+            <a href="{{>href}}" data-modal-url="{{>href}}">
                 <i class="play-video"></i>
             </a>
         {{/if}}
