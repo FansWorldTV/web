@@ -260,7 +260,6 @@ home.loadSection.enjoy = function(){
 };
 
 home.loadSection.connect = function(){
-    alert("hello")
     var toAppendElements = $('section.home-content .content-container[data-type-tab="connect"] .fans-list');
 
     toAppendElements.parent().addClass('loading');
