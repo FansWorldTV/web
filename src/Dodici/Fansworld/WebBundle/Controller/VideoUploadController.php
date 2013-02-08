@@ -313,6 +313,8 @@ class VideoUploadController extends SiteController
                     $videoCategory = $this->getRepository('VideoCategory')->find($data['categories']);
                     $video->setVideocategory($videoCategory);
 
+                    $videoImage = $this->getImageUrl($video->getImage());
+
                     $em = $this->getDoctrine()->getEntityManager();
                     $em->persist($video);
                     $em->flush();
@@ -331,11 +333,8 @@ class VideoUploadController extends SiteController
                     );
                     $this->_shareVideo($video, toBoolean($data['fb']), toBoolean($data['tw']), toBoolean($data['fw']), $data['title'], $shareEntities);
 
-                    $this->get('session')->setFlash('success', '¡Has subido un video de Youtube con éxito!');
-
-                    return $this->forward('DodiciFansworldWebBundle:VideoUpload:fileMeta',
-                        array('youtubelink' => $data['youtubelink'], 'title' => $data['title'],
-                                'imagen' => 'imagen', 'fromuploader' => true));
+                    return $this->forward('DodiciFansworldWebBundle:VideoUpload:fileMetaYoutube',
+                        array('title' => $data['title'], 'image' => $videoImage));
                 }
             } catch (\Exception $e) {
                 $form->addError(new FormError('Error subiendo video'));
@@ -597,6 +596,18 @@ class VideoUploadController extends SiteController
 
 
         return array('redirectColorBox' => $redirectColorBox, 'user' => $user);
+    }
+
+    /**
+     * @Route("/fileuploadyoutube/{title}/{image}", name="video_filemetayoutube")
+     * @Secure(roles="ROLE_USER")
+     * @Template
+     */
+    public function fileMetaYoutubeAction($title, $image)
+    {
+        $user = $this->getUser();
+        $this->get('session')->setFlash('success', '¡Has subido un video de Youtube con éxito!');
+        return array('title' => $title, 'image' => $image, 'user' => $user);
     }
 
 }

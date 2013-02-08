@@ -1,0 +1,29 @@
+{% extends "DodiciFansworldWebBundle::popup.html.twig" %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $('[data-videoyoutube-end-btn]').click(function() {
+            var url = $('[data-videoyoutube-end-btn]').data('videoyoutube-end-btn');
+            location.href = url;
+            //$.fn.colorbox.close();
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="greybox">
+        <div class="videoContainerEnd">
+            <div class="container-up">
+                <p class="text-success"></p>
+                <p class="text-success">
+                    <strong>Su video de Youtube se subio correctamente.</strong>
+                </p>
+                <p>{{ title }}</p>
+            </div>
+        </div>
+
+        <div class="uploadVideoEndStep">
+            <input type="button" name="submit" value="Continuar" data-videoyoutube-end-btn="{{ path('things_videos') }}"  class="btn btn-primary"/>
+        </div>
+    </div>
+{% endblock %}
