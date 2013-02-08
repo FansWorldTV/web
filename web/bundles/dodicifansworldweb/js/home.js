@@ -221,7 +221,7 @@ home.loadSection.enjoy = function(){
                     $.each(post, function(i, item) {
                         var $this = $(item);
                         $this.css('width', ((100 / cells) - 2) + "%")
-                        $this.find('.imagex').load(function() {
+                        $this.find('.image').load(function() {
                             $container.isotope('reLayout');
                         })
                         $container.append($(item)).isotope('appended', $(item));
@@ -380,7 +380,7 @@ home.loadSection.activityFeed = function(params, funcCallback){
                     console.log("w: "+$container.width())
                     $.each(post, function(i, item) {
                         var $this = $(item);
-                        $this.css('width', ((100 / cells) - 2) + "%")
+                        $this.css('width', ((100 / cells) - 2) + "%") 
                         $container.isotope({
                             // update columnWidth to a percentage of container width
                             masonry: { columnWidth: $container.width() / cells }
@@ -504,7 +504,7 @@ home.loadSection.popularFeed = function(params){
                             // update columnWidth to a percentage of container width
                             masonry: { columnWidth: $container.width() / cells }
                         });
-                        $this.find('.imagex').load(function() {
+                        $this.find('.image').load(function() {
                             $container.isotope('reLayout');
                         })
                         $container.append($(item)).isotope('appended', $(item));
@@ -615,7 +615,7 @@ home.loadSection.popularFeed2 = function(params){
                     $.each(post, function(i, item) {
                         var $this = $(item);
                         $this.css('width', ((100 / cells) - 2) + "%")
-                        $this.find('.imagex').load(function() {
+                        $this.find('.image').load(function() {
                             $container.isotope('reLayout');
                         })
                         $container.append($(item)).isotope('appended', $(item));
