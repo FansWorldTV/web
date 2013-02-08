@@ -91,22 +91,6 @@
 
             <!-- POPULAR -->
             <section class="content-container" data-type-tab="popularFeed">
-                <div class="tags clearfix">
-                    <div class="pull-left">
-                        <span class="label active" data-feed-filter="0">Todos</span>
-                        <span class="label" data-feed-filter="1">Idolos</span>
-                        <span class="label" data-feed-filter="2">Equipos</span>
-                        <span class="label" data-feed-filter="3">Fans</span>
-                    </div>
-                </div>
-                <section class="span3">
-                    <h3>Actividad reciente</h3>
-                    <ul>
-                        {% for user in friendUsers %}
-                            <li>{% thumbnail user.image, 'avatar' %} {{ user }} es amig@ de richard y george</li>
-                        {% endfor %}
-                    </ul>
-                </section>
                 <div id="elements" class="isotope_container row"></div>
             </section>
         {% endif %}
