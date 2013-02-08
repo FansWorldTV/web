@@ -484,7 +484,7 @@ home.loadSection.popularFeed = function(params){
                 if(r.length == loop)  {
                     var callback = function(){
                         $contentContainer.removeClass('loading');
-                        home.loadedSection.popularFeed = popularFeed;
+                        home.loadedSection.popularFeed = true;
                         var post = dummy.find('.post');
                         if($container.width() <= 600) {
                             var cells = 1;
@@ -545,7 +545,7 @@ home.loadSection.popularFeed = function(params){
     });
 }
 
-home.loadSection.popularFeed2 = function(params){
+home.loadSection.popularFeed22 = function(params){
     if(typeof(params) == 'undefined'){
         params = {};
     }
@@ -600,6 +600,7 @@ home.loadSection.popularFeed2 = function(params){
                 if(r.length == loop)  {
                     var callback = function(){
                         $contentContainer.removeClass('loading');
+                        home.loadedSection.popularFeed = true;
                         var post = dummy.find('.post');
                         if($container.width() <= 600) {
                             var cells = 1;
