@@ -1,0 +1,76 @@
+/* estilo generico para los elementos dentro del isotope */
+.isotope_container {
+  margin-left: auto;
+  margin-right: auto;
+    .item {
+        margin: 5px 0.1%;
+        float: left;
+        overflow: hidden;
+        position: relative;
+        background: #fff;
+        color: #222;
+        border: 1px solid #2f3344;
+        .cosas {
+            min-height:20px;
+            .image {
+                width:100%;
+                &:hover {
+                    box-shadow: inset 0 0 30px #000;
+                }
+            }
+            .play-video {
+                background-image: url('../images/play-icon.png');
+                background-size: 50px;
+                .square(50px);
+                position: absolute;
+                left: 39%;
+                top: 39%;
+                opacity: 0.5;
+                &:hover{
+                    opacity: 1;
+                }
+            }
+            .title-and-user {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: auto;
+                background: url('../images/ui/pix80trans.png');
+                background-repeat: repeat;
+                padding: 10px;
+                .title {
+                    position: relative;
+                    color: white;
+                    font-weight: 600;
+                    font-size: 12px;
+                    display: block;
+                    line-height: normal !important;
+                    text-overflow: ellipsis;
+                    height: auto;
+                    overflow: hidden;
+                    margin-left: 10px;
+                    .pull-left();
+                    width: 60%;
+                }
+                .author-image {
+                    position: relative;
+                    .pull-left();
+                    width: 30px !important;
+                    border: 1px solid grey;
+                }
+                .user {
+                    display: block;
+                    position: relative;
+                    width: 100%;
+                    color: @green;
+                    margin-top: 5px;
+                    margin-left: 20px;
+                    font-size: 15px;
+                    font-weight: 300;
+                    line-height: normal !important;
+                }
+            }
+        }
+    }
+}
