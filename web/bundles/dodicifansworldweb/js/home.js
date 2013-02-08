@@ -385,7 +385,7 @@ home.loadSection.activityFeed = function(params, funcCallback){
                             // update columnWidth to a percentage of container width
                             masonry: { columnWidth: $container.width() / cells }
                         });
-                        $this.find('.imagex').load(function() {
+                        $this.find('.image').load(function() {
                             $container.isotope('reLayout');
                         })
                         $container.append($(item)).isotope('appended', $(item));
@@ -484,7 +484,7 @@ home.loadSection.popularFeed = function(params){
                 if(r.length == loop)  {
                     var callback = function(){
                         $contentContainer.removeClass('loading');
-                        home.loadedSection.activityFeed = true;
+                        home.loadedSection.popularFeed = popularFeed;
                         var post = dummy.find('.post');
                         if($container.width() <= 600) {
                             var cells = 1;
