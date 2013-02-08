@@ -12,6 +12,25 @@
         border: 1px solid #2f3344;
         .cosas {
             min-height:20px;
+            .overlay {
+                background: rgba(0, 0, 0, 0);
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0px;
+                left: 0px;
+                opacity: 0.0;
+                -moz-transition: -moz-box-shadow 0.25s;
+                -webkit-transition: -webkit-box-shadow 0.25s;
+                -o-transition:  -o-box-shadow 0.25s;
+                transition: box-shadow 0.25s;
+                &:hover {
+                    opacity: 0.75;
+                    -webkit-box-shadow: inset 0 0 10em #000;
+                    -moz-box-shadow: inset 0 0 10em #000;
+                    box-shadow: inset 0 0 10em #000;
+                }
+            }
             .image {
                 width:100%;
                 &:hover {
