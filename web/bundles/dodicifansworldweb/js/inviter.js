@@ -1,4 +1,5 @@
 $(function(){
+
 	$('.invite-facebook').live('click',function(e){
 		e.preventDefault();
 		var url = $(this).attr('href');
@@ -10,19 +11,14 @@ $(function(){
 		});
 	});
 
-	$('[data-fbinvite]').live('click', function(){
+	$(".invite-facebook").live('click', function(){
 		FB.ui({
-		   method: 'permissions.request',
-		   'perms': window.FBperms,
-		   'display': 'popup',
-		   'response_type': 'signed_request',
-		   'fbconnect': 1,
-		   'next': 'http://' + location.host + Routing.generate( appLocale + '_' + 'facebook_jstoken', {callback: 'invite'})
-		  },
-		  function(response) {
-		    alert(response);
-		  }
-		);
+			method: 'apprequests',
+			message: 'Unite a Fansworld y compartamos nuestra pasión con otros fans'
+		});
+	});
+	$('[data-fbinvite]').live('click', function(){
+		callbackfbtokeninvite();
 	});
 });
 
@@ -36,6 +32,10 @@ function callbackfbtokeninvite() {
 
     	callback: function (response) {
     		console.log(response);
+    		response = {"friends":[
+    			{id: 10200306484481114, title: 'Giuliana Agustina Piccinini', image: ' http://profile.ak.fbcdn.net/hprofile-ak-prn1/c170.50.621.621/s160x160/535906_10200306484481114_366570825_n.jpg', url: '#'},
+    			{id: 4571799340698, title: 'Denise Macarena Suarez', image: 'http://sphotos-f.ak.fbcdn.net/hphotos-ak-prn1/734233_4417054712179_1259783293_n.jpg', url: '#'}
+    		]}
     		$.each(response.friends, function() {
 				formFBCommonFriendItem(this)
 				.appendTo(ul);
