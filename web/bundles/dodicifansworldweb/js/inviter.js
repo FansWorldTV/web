@@ -60,5 +60,5 @@ function formFBCommonFriendItem(item) {
 	return $( "<li></li>" )
 	.attr('data-iduser', item.id)
 	.append( "<a target='_blank' href='" + item.url + "'><img alt='' src='" + item.image + "' width='40' /> <span class='name'>" + item.title + "</span>" +
-		"</br><div class='befan'><input type='button' class='btn btn-primary' data-befan='" + item.id + "' value='Ser Fan'></div></a>");
+		"</br><div class='befan'><button class='btn  btn_friendship add btn-primary' data-user-id='" + item.id + "'> Ser fan</button></div></a>");
 }
