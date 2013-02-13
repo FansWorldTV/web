@@ -102,7 +102,23 @@ var templateHelper = {
             console.error(exception);
         }
     },
+    'htmlTemplate': function (templateId, jsonData) {
+        "use strict";
+        var deferred = new jQuery.Deferred();
+        try {
+            if (!templateHelper.queue) {
+                templateHelper.init();
+            }
 
+            templateHelper.getTemplate(templateId, function () {
+                deferred.resolve($.render[templateId](jsonData));
+            });
+        } catch (exception) {
+            console.error(exception);
+            deferred.reject(new Error(error));
+        }
+        return deferred.promise();
+    },
     'appendRenderedTemplate': function (templateId, jsonData, destino, prepend, callback) {
         "use strict";
 
