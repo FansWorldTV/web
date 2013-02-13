@@ -387,6 +387,7 @@ class EventController extends SiteController
             $response = array(
                 'type' => 'c',
                 'teamid' => $entity->getTeam()->getId(),
+                'author' => (string) $entity->getAuthor(),
                 'avatar' => $this->getImageUrl($entity->getAuthor()->getImage()),
                 'profile' => $this->generateUrl('user_wall', array('username' => $entity->getAuthor()->getUsername())),
                 'minute' => $this->get('appstate')->getMinuteFromTimestamp($entity->getCreatedAt()),

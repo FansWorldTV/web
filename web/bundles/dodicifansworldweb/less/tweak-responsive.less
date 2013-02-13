@@ -36,22 +36,6 @@
             }
         }
     }
-
-    div.team-home, div.idol-home {
-        section.middle {
-            div.team:last-child, div.idol:last-child {
-                .hidden;
-            }
-            div.team, div.idol {
-                width: 50%;
-                margin: 0;
-                &:first-child {
-                    width: 49% !important;
-                    margin-right: 1%;
-                }
-            }
-        }
-    }
 }
  
 
@@ -214,3 +198,22 @@
     }
 }
 
+
+
+@media(max-width: 786px) {
+    div.team-home section.bottom div.list-teams dl dd ul, div.idol-home div.list-idols dl dd ul {
+        display: none;
+    }
+    #adcolumn {
+        display: none;
+    }
+}
+
+@media(max-width: 1275px) {
+    #relatedcolumn {
+        display: none;
+    }
+    #content {
+        width: 82.905982906% !important;
+    }
+}

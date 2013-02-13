@@ -4,7 +4,7 @@
     <div class="img-container">
         <a href="{{>profile}}">
             {{if avatar}}
-                <img src="{{>avatar}}" />
+                <img src="{{>avatar}}" rel="tooltip" data-title="{{>author}}"/>
             {{else}}
 {% endraw %}
                 <img src="{{ asset('bundles/dodicifansworldweb/images/profile_no_image_40x40.png') }}" />
