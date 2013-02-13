@@ -59,6 +59,7 @@ home.toggleTabs = function(){
 
         if(typeTab != 'enjoy'){
             if(!window['home']['loadedSection'][typeTab]){
+                alert("about to load section: " + typeTab)
                 window['home']['loadSection'][typeTab]();
             }
         }
@@ -308,7 +309,7 @@ home.loadSection.activityFeed = function(params, funcCallback){
     if(typeof(params) == 'undefined'){
         params = {};
     }
-
+    console.log("loading activity feed by: " + arguments.callee.caller.name)
     var $contentContainer = $('section.home-content .content-container[data-type-tab="activityFeed"]');
     var $container = $contentContainer.find('#elements');
 
@@ -349,8 +350,11 @@ home.loadSection.activityFeed = function(params, funcCallback){
     $contentContainer.addClass('isIso');
     $contentContainer.addClass('loading');
 
-    ajax.genericAction('home_ajaxpopularfeed', params, function(r){ //home_ajaxactivityfeed
+    ajax.genericAction('home_ajaxactivityfeed', params, function(r){ //home_ajaxactivityfeed
 
+        console.log("-- JSON --")
+        console.log(r)
+        console.log("-- JSON --")
         var dummy = $('<div class="dummy"></div>');
         var $container = $contentContainer.find('#elements');
 
@@ -470,6 +474,7 @@ home.loadSection.popularFeed = function(params){
     $contentContainer.addClass('isIso');
     $contentContainer.addClass('loading');
 
+    console.log($container.width())
     ajax.genericAction('home_ajaxpopularfeed', params, function(r){ //home_ajaxactivityfeed
 
         var dummy = $('<div class="dummy"></div>');
@@ -503,12 +508,14 @@ home.loadSection.popularFeed = function(params){
                             // update columnWidth to a percentage of container width
                             masonry: { columnWidth: $container.width() / cells }
                         });
+                        $container.isotope('reLayout');
                         $this.find('.image').load(function() {
                             $container.isotope('reLayout');
                         })
                         $container.append($(item)).isotope('appended', $(item));
                        });
-                        //$container.isotope('reLayout');
+                        $container.isotope('reLayout');
+
                     };
                 }else{
                     var callback = function(){};
