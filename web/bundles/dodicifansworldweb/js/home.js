@@ -21,6 +21,7 @@ home.init = function(){
         }else{
             home.loadSection.enjoy();
         }
+        console.log("calling toggleTabs")
         home.toggleTabs();
     }
 };
