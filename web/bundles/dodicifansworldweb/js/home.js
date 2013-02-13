@@ -572,7 +572,6 @@ home.loadSection.popularFeed22 = function(params){
         });
     }
     $(window).smartresize(function(){
-        console.log($container.width())
       if($container.width() <= 600) {
         var cells = 1;
       } else if ($container.width() <= 800) {
@@ -666,5 +665,6 @@ home.loadSection.popularFeed22 = function(params){
 };
 
 $(document).ready(function(){
+    console.log("HOME INIT")
     home.init();
 });
