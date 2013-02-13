@@ -51,6 +51,7 @@ home.toggleTabs = function(){
 
     $(".home-header ul.tabs li").on('click', function(){
         var typeTab = $(this).attr('data-type-tab');
+        console.log("tab clicked: " + typeTab)
         $(".home-header ul.tabs li").removeClass('active');
         $(this).addClass('active');
 
