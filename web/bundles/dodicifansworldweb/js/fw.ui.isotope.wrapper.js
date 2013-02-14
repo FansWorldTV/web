@@ -54,7 +54,7 @@ $(document).ready(function () {
 				var cells = that.getMaxSections($container);
 				$container.find('.item').each(function(i, item){
 				var $this = $(this);
-				$this.css('width', ((100 / cells) - 2) + "%") // 2% margen entre los elementos
+				$this.css('width', ((100 / cells) - 1) + "%") // 2% margen entre los elementos
 				});
 				$container.isotope({
 					// update columnWidth to a percentage of container width
@@ -162,7 +162,7 @@ $(document).ready(function () {
 			var $container = $(that.element);
 			$container.find('.item').each(function(i, item){
 				var $this = $(this);
-				$this.css('width', ((100 / that.getMaxSections($container)) - 2) + "%"); // 2% margen entre los elementos
+				$this.css('width', '16%'); // 2% margen entre los elementos
 			});
 			$container.isotope({
 				// update columnWidth to a percentage of container width
