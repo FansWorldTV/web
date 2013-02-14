@@ -25,6 +25,7 @@ class TvController extends SiteController
 
     const LIMIT_VIDEOS = 6;
     const LIMIT_SEARCH_VIDEOS = 10;
+    const LIMIT_HOME_VIDEOS = 15;
 
     /**
      * @Route("", name="teve_home")
@@ -40,7 +41,7 @@ class TvController extends SiteController
         $videosDestacadosFW = $videoRepo->search(null, $this->getUser(), 12, 1);
 
         $videoDestacadoMain = $videoRepo->search(null, $this->getUser(), 1);
-        foreach($videoDestacadoMain as $v){
+        foreach ($videoDestacadoMain as $v) {
             $videoDestacadoMain = $v;
         }
 
@@ -54,8 +55,8 @@ class TvController extends SiteController
         foreach ($videoCategories as $key => $videoCategory) {
             $search = $videoRepo->search(null, null, 1, null, $videoCategory, null, null, null, null);
             $cvideo = $search ? $search[0] : null;
-            
-            
+
+
             $channels[$key] = array(
                 //'video' => $videoCategory->getVideos(),
                 'video' => $cvideo,
@@ -66,7 +67,7 @@ class TvController extends SiteController
             );
         }
 
-        
+
         return array(
             'user' => $user,
             'channels' => $channels,
@@ -314,16 +315,17 @@ class TvController extends SiteController
             'activeChannel' => $activeCategory,
         );
     }
-    
-	/**
+
+    /**
      * @Route("/channel/subscribe/toggle", name="teve_channelsubscribe")
      */
-    public function ajaxToggleAction() {
+    public function ajaxToggleAction()
+    {
         try {
             $request = $this->getRequest();
             $idvideocat = intval($request->get('channel'));
             $user = $this->getUser();
-            
+
             $t = $this->get('translator');
 
             if (!$user instanceof User)
@@ -334,7 +336,7 @@ class TvController extends SiteController
                 throw new \Exception($t->trans('channel_not_found'));
 
             $subscriptions = $this->get('subscriptions');
-            
+
             if ($subscriptions->isSubscribed($videocategory)) {
                 $state = $subscriptions->unsubscribe($videocategory) ? false : null;
 
@@ -357,6 +359,46 @@ class TvController extends SiteController
         } catch (\Exception $e) {
             return new Response($e->getMessage(), 400);
         }
+    }
+
+    /**
+     * Tv home explore, ajax method
+     * @Route("/ajax/explore", name="teve_ajaxexplore")
+     */
+    public function ajaxExploreAction()
+    {
+        $serializer = $this->get('serializer');
+        $user = $this->getUser();
+        $request = $this->getRequest();
+        $channelType = $request->get('channel', null);
+        $filterType = $request->get('filter', false);
+        $page = $request->get('page', 1);
+
+        $offset = ( $page - 1 ) * self::LIMIT_HOME_VIDEOS;
+
+        $videoRepo = $this->getRepository('Video');
+        $category = $this->getRepository('VideoCategory')->find($channelType);
+
+        switch ($filterType) {
+            default:
+                $sortCriteria = 'default';
+                break;
+            case 'views':
+                $sortCriteria = "views";
+                break;
+            case 'likes':
+                $sortCriteria = "likes";
+                break;
+            case 'lasts':
+                $sortCriteria = "lasts";
+                break;
+        }
+
+        $search = $videoRepo->search(null, $user, self::LIMIT_HOME_VIDEOS, $offset, $category, null, null, null, null, $sortCriteria);
+
+        return $this->jsonResponse(array(
+                    'videos' => $serializer->values($search, 'medium'),
+                ));
     }
 
 }
