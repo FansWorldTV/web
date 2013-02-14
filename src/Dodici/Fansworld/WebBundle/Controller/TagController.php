@@ -20,7 +20,7 @@ use Dodici\Fansworld\WebBundle\Entity\Tag;
  */
 class TagController extends SiteController
 {
-	
+
     /**
      *  get params (all optional):
      *   - text (partial match)
@@ -30,31 +30,31 @@ class TagController extends SiteController
     public function ajaxTags()
     {
         $request = $this->getRequest();
-    	$text = $request->get('text');
-    	$page = $request->get('page');
-    	$limit = null; $offset = null;
-    	
-    	if ($page !== null) {
-    		$page--;
-    		$limit = self::LIMIT_AJAX_GET;
-    		$offset = $limit * $page;
-    	}
-        
-    	$tags = $this->getRepository('Tag')->matching($text, $limit, $offset);
-        
+        $text = $request->get('text');
+        $page = $request->get('page');
+        $limit = null;
+        $offset = null;
+
+        if ($page !== null) {
+            $page--;
+            $limit = self::LIMIT_AJAX_GET;
+            $offset = $limit * $page;
+        }
+
+        $tags = $this->getRepository('Tag')->matching($text, $limit, $offset);
+
         $response = array();
         foreach ($tags as $tag) {
             $response[] = array(
-            	'id' => $tag->getId(),
-            	'value' => $tag->getTitle(),
-            	'add' => $tag->getTitle(),
+                'id' => $tag->getId(),
+                'value' => $tag->getTitle(),
+                'add' => $tag->getTitle(),
             );
         }
 
         return $this->jsonResponse($response);
     }
-    
-    
+
     /**
      *  get params (all optional):
      *   - text (partial match)
@@ -64,29 +64,25 @@ class TagController extends SiteController
     public function ajaxTagsUsedInVideos()
     {
         $request = $this->getRequest();
+
+        $filterType = $request->get('filter', 'popular');
+        $videoCategory = $request->get('channel');
+
+        $response = array(
+            'tags' => false,
+            'error' => false
+        );
         
-        $filtertype    = $request->get('filtertype');
-        $videocategory = $request->get('videocategory');
-        $limit         = null; 
-        $offset       = null;
-         
-        
-        $tags = $this->get('tagger')->usedInVideos('popular');
-        
-        $response = array('tags' => $tags);
-        /*
-        foreach ($tags as $tag) {
-            $response['tags'][] = array(
-                    'id' => $tag['id'],
-                    'title' => $tag['title'],
-                    'type' => $tag['type'],
-            );
+        try {
+            $response['tags'] = $this->get('tagger')->usedInVideos($filterType, $videoCategory);
+        } catch (Exception $exc) {
+            $response['error'] = $exc->getMessage();
         }
-        */
+
         return $this->jsonResponse($response);
     }
-    
-	/**
+
+    /**
      *  get params:
      *   - text
      *   - limit
@@ -95,13 +91,13 @@ class TagController extends SiteController
     public function matchAll()
     {
         $request = $this->getRequest();
-    	$text = $request->get('text');
-    	$limit = $request->get('limit', 4);
-    	
-    	$tags = $this->getRepository('Tag')->matchAll($text, $this->getUser(), $limit);
-        
+        $text = $request->get('text');
+        $limit = $request->get('limit', 4);
+
+        $tags = $this->getRepository('Tag')->matchAll($text, $this->getUser(), $limit);
+
         $response = array();
-        
+
         $c = 0;
         foreach ($tags as $type => $ents) {
             foreach ($ents as $ent) {
@@ -110,20 +106,22 @@ class TagController extends SiteController
                     'label' => (string) $ent,
                     'value' => (string) $ent,
                 );
-                
+
                 $entjson = array(
                     'id' => $ent->getId(),
                     'type' => $type
                 );
-                if (property_exists($ent, 'slug')) $entjson['slug'] = $ent->getSlug();
-                if (property_exists($ent, 'username')) $entjson['username'] = $ent->getUsername();
+                if (property_exists($ent, 'slug'))
+                    $entjson['slug'] = $ent->getSlug();
+                if (property_exists($ent, 'username'))
+                    $entjson['username'] = $ent->getUsername();
                 $r['result'] = $entjson;
                 $response[] = $r;
                 $c++;
             }
         }
-        
+
         return $this->jsonResponse($response);
     }
-    
+
 }

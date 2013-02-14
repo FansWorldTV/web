@@ -66,8 +66,8 @@ var tv = {
 
         var filterList = $(targetDataList).closest('.content-container').find('.tag-list-container ul');
         opts = $.merge({
-            'videocategory': activeChannel,
-            'filtertype': filter
+            'channel': activeChannel,
+            'filter': filter
         }, opts);
 
         $(filterList).empty().addClass('loading');
