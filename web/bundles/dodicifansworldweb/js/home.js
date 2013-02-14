@@ -1,5 +1,5 @@
 // ver 10.1
-
+;
 var home = {};
 
 home.init = function(){
@@ -61,12 +61,12 @@ home.toggleTabs = function(){
 
         if(typeTab != 'enjoy'){
             if(!window['home']['loadedSection'][typeTab]){
-                alert("about to load section: " + typeTab)
+                console.log("about to load section: " + typeTab)
                 window['home']['loadSection'][typeTab]();
             }
         }
 
-
+        /*
         switch(typeTab){
             case 'activityFeed':
                 endless.init(1, function(){
@@ -88,9 +88,17 @@ home.toggleTabs = function(){
             default:
                 endless.stop();
         }
+        */
 
         $('section.home-content .legend[data-type-tab="' + typeTab + '"]').show();
         $("section.home-content .content-container[data-type-tab='" + typeTab + "']").show();
+
+        var $contentContainer = $("section.home-content .content-container[data-type-tab='" + typeTab + "']");
+        var $container = $contentContainer.find('#elements');
+        $container.attr('data-feed-source', 'home_ajaxactivityfeed');
+        if($contentContainer.hasClass('isIso')) {
+            $container.data('fwGalerizer').resize()
+        }
     });
 };
 
@@ -141,11 +149,11 @@ home.loadSection.enjoy = function(){
     var toAppendVideos = $('section.home-content .content-container[data-type-tab="enjoy"] .elements');
 
     var $contentContainer = $('section.home-content .content-container[data-type-tab="enjoy"]');
+    var $container = $contentContainer.find('#elements');
+
 
     if(!$contentContainer.hasClass('isIso'))
     {
-        var $container = $contentContainer.find('#elements');
-
         $container.isotope({
             itemSelector : '.item',
             resizable: false, // disable normal resizing
@@ -307,7 +315,33 @@ home.loadSection.participate = function(){
     });
 };
 
-home.loadSection.activityFeed = function(params, funcCallback){
+home.loadSection.activityFeed = function(params){
+
+    if(typeof(params) == 'undefined'){
+        params = {};
+    }
+    var $contentContainer = $('section.home-content .content-container[data-type-tab="activityFeed"]');
+    var $container = $contentContainer.find('#elements');
+    $container.attr('data-feed-source', 'home_ajaxactivityfeed');
+    if(!$contentContainer.hasClass('isIso')) {
+        $contentContainer.addClass('loading');
+        $container.fwGalerizer({
+            onEndless: function(plugin) {
+                var lastDate = $('section.home-content .content-container[data-type-tab="activityFeed"] #elements .post').last().attr('data-element-date');
+                plugin.options.feedfilter = {
+                    'date': lastDate
+                };
+                console.log("new filter")
+                console.log(plugin.options.feedfilter)
+                return plugin.options.feedfilter;
+            }
+        })
+        home.loadedSection.activityFeed = true;
+        $contentContainer.addClass('isIso');
+    };
+    return;
+}
+home.loadSection.activityFeed22 = function(params, funcCallback){
     if(typeof(params) == 'undefined'){
         params = {};
     }
@@ -436,121 +470,26 @@ home.loadSection.popularFeed = function(params){
     if(typeof(params) == 'undefined'){
         params = {};
     }
-
     var $contentContainer = $('section.home-content .content-container[data-type-tab="popularFeed"]');
     var $container = $contentContainer.find('#elements');
-
+    $container.attr('data-feed-source', 'home_ajaxpopularfeed');
     if(!$contentContainer.hasClass('isIso')) {
-        var $container = $contentContainer.find('#elements');
-        $container.css('width', '100%');
-        $container.isotope({
-            itemSelector : '.item',
-            resizable: false, // disable normal resizing
-            masonry: {
-                columnWidth: ($container.width() / home.getMaxSections($container)),
+        $contentContainer.addClass('loading');
+        $container.fwGalerizer({
+            onEndless: function(plugin) {
+                var lastDate = $('section.home-content .content-container[data-type-tab="popularFeed"] #elements .post').last().attr('data-element-date');
+                plugin.options.feedfilter = {
+                    'date': lastDate
+                };
+                console.log("new filter")
+                console.log(plugin.options.feedfilter)
+                return plugin.options.feedfilter;
             }
-        });
-    }
-    $(window).smartresize(function(){
-      if($container.width() <= 600) {
-        var cells = 1;
-      } else if ($container.width() <= 800) {
-        var cells = 2;
-      } else if ($container.width() <= 1000) {
-        var cells = 3;
-      } else if ($container.width() <= 1200) {
-        var cells = 4;
-      } else if ($container.width() > 1200) {
-        var cells = 5;
-      }
-      $container.find('.item').each(function(i, item){
-        var $this = $(this);
-        $this.css('width', ((100 / cells) - 2) + "%") // 2% margen entre los elementos
-      });
-      $container.isotope({
-        // update columnWidth to a percentage of container width
-        masonry: { columnWidth: $container.width() / cells }
-      });
-      $container.isotope('reLayout');
-    });
-    $contentContainer.addClass('isIso');
-    $contentContainer.addClass('loading');
-
-    console.log($container.width())
-    ajax.genericAction('home_ajaxpopularfeed', params, function(r){ //home_ajaxactivityfeed
-
-        var dummy = $('<div class="dummy"></div>');
-
-        if(r.length > 0){
-            for(var i in r){
-                var element = r[i];
-
-                var loop = parseInt(i);
-                loop++;
-                if(r.length == loop)  {
-                    var callback = function(){
-                        $contentContainer.removeClass('loading');
-                        home.loadedSection.popularFeed = true;
-                        var post = dummy.find('.post');
-                        if($container.width() <= 600) {
-                            var cells = 1;
-                          } else if ($container.width() <= 800) {
-                            var cells = 2;
-                          } else if ($container.width() <= 1000) {
-                            var cells = 3;
-                          } else if ($container.width() <= 1200) {
-                            var cells = 4;
-                          } else if ($container.width() > 1200) {
-                            var cells = 5;
-                          }
-                    $.each(post, function(i, item) {
-                        var $this = $(item);
-                        $this.css('width', ((100 / cells) - 2) + "%")
-                        $container.isotope({
-                            // update columnWidth to a percentage of container width
-                            masonry: { columnWidth: $container.width() / cells }
-                        });
-                        $container.isotope('reLayout');
-                        $this.find('.image').load(function() {
-                            $container.isotope('reLayout');
-                        })
-                        $container.append($(item)).isotope('appended', $(item));
-                       });
-                        $container.isotope('reLayout');
-
-                    };
-                }else{
-                    var callback = function(){};
-                }
-
-                var href = Routing.generate(appLocale + '_' + element.type + '_show', {
-                    'id': element.id,
-                    'slug': element.slug
-                });
-
-                var authorUrl = Routing.generate(appLocale + '_user_wall', {
-                    'username': element.author.username
-                });
-
-                templateHelper.renderTemplate('general-column_element', {
-                    'type': element.type,
-                    'date': element.created,
-                    'href': href,
-                    'image': element.image,
-                    'slug': element.slug,
-                    'title': element.title,
-                    'author': element.author.username,
-                    'authorHref': authorUrl,
-                    'authorImage': element.author.image
-                },dummy, false, callback); //$contentContainer.find('.elements').selector, false, callback);
-            }
-        }else{
-            $contentContainer.removeClass('loading');
-            endless.stop();
-        }
-    }, function(e){
-        error(e);
-    });
+        })
+        home.loadedSection.popularFeed = true;
+        $contentContainer.addClass('isIso');
+    };
+    return;
 }
 
 home.loadSection.popularFeed22 = function(params){
@@ -579,9 +518,9 @@ home.loadSection.popularFeed22 = function(params){
       } else if ($container.width() <= 1000) {
         var cells = 3;
       } else if ($container.width() <= 1200) {
-        var cells = 4;
-      } else if ($container.width() > 1200) {
         var cells = 5;
+      } else if ($container.width() > 1200) {
+        var cells = 6;
       }
       $container.find('.item').each(function(i, item){
         var $this = $(this);
@@ -602,8 +541,11 @@ home.loadSection.popularFeed22 = function(params){
         if(r.length > 0){
             for(var i in r){
                 var element = r[i];
+
+
                 var loop = parseInt(i);
                 loop++;
+                /*
                 if(r.length == loop)  {
                     var callback = function(){
                         $contentContainer.removeClass('loading');
@@ -630,10 +572,32 @@ home.loadSection.popularFeed22 = function(params){
                        });
                         //$container.isotope('reLayout');
                     };
-                }else{
-                    var callback = function(){};
-                }
 
+                }else{
+                    var callback = function(){
+                        console.log("-----------------")
+                        var $post = $(dummy).find('.post').last()
+                        console.log($post.find(".title").text())
+                        if($container.width() <= 600) {
+                            var cells = 1;
+                          } else if ($container.width() <= 800) {
+                            var cells = 2;
+                          } else if ($container.width() <= 1000) {
+                            var cells = 3;
+                          } else if ($container.width() <= 1200) {
+                            var cells = 5;
+                          } else if ($container.width() > 1200) {
+                            var cells = 6;
+                          }
+
+                        $post.css('width', ((100 / cells) - 2) + "%")
+                        $post.find('.image').load(function() {
+                            $container.isotope('reLayout');
+                        });
+                        $container.append($post).isotope('appended', $post);
+                    };
+                }
+               */
                 var href = Routing.generate(appLocale + '_' + element.type + '_show', {
                     'id': element.id,
                     'slug': element.slug
@@ -642,6 +606,7 @@ home.loadSection.popularFeed22 = function(params){
                 var authorUrl = Routing.generate(appLocale + '_user_wall', {
                     'username': element.author.username
                 });
+                /*
                 templateHelper.renderTemplate('general-column_element', {
                     'id': element.imageid,
                     'type': element.type,
@@ -654,6 +619,69 @@ home.loadSection.popularFeed22 = function(params){
                     'authorHref': authorUrl,
                     'authorImage': element.author.image
                 }, dummy, false, callback);//$contentContainer.find('.elements').selector, false, callback);
+                */
+
+                $.when(templateHelper.htmlTemplate('general-column_element', {
+                    'id': element.imageid,
+                    'type': element.type,
+                    'date': element.created,
+                    'href': href,
+                    'image': element.image,
+                    'slug': element.slug,
+                    'title': element.title,
+                    'author': element.author.username,
+                    'authorHref': authorUrl,
+                    'authorImage': element.author.image
+                }))
+                .then(function(htmlTemplate){
+                    home.loadedSection.popularFeed = true;
+                    var $post = $(htmlTemplate)
+                        console.log($post)
+                        if($container.width() <= 600) {
+                            var cells = 1;
+                          } else if ($container.width() <= 800) {
+                            var cells = 2;
+                          } else if ($container.width() <= 1000) {
+                            var cells = 3;
+                          } else if ($container.width() <= 1200) {
+                            var cells = 5;
+                          } else if ($container.width() > 1200) {
+                            var cells = 6;
+                          }
+
+                        $post.css('width', ((100 / cells) - 2) + "%")
+                        $post.find('.image').load(function() {
+                            $container.isotope('reLayout');
+                        });
+                        $container.append($post).isotope('appended', $post);
+
+                    /*
+                    if($container.width() <= 600) {
+                        var cells = 1;
+                    } else if ($container.width() <= 800) {
+                        var cells = 2;
+                    } else if ($container.width() <= 1000) {
+                        var cells = 3;
+                    } else if ($container.width() <= 1200) {
+                        var cells = 5;
+                    } else if ($container.width() > 1200) {
+                        var cells = 6;
+                    }
+                    console.log($(htmlTemplate))
+                    $(htmlTemplate).css('width', ((100 / home.getMaxSections($container)) - 2) + "%")
+                    $container.isotope({
+                        // update columnWidth to a percentage of container width
+                        masonry: { columnWidth: $container.width() / home.getMaxSections($container) }
+                    });
+                    $container.append($(htmlTemplate)).isotope('appended', $(htmlTemplate));
+                    $(htmlTemplate).find('.image').load(function() {
+                        $container.isotope('reLayout');
+                        console.log($(this))
+                    });
+                    */
+                })
+
+
             }
         }else{
             $contentContainer.removeClass('loading');
@@ -664,7 +692,7 @@ home.loadSection.popularFeed22 = function(params){
     });
 };
 
-$(document).ready(function(){
+;$(document).ready(function(){
     console.log("HOME INIT")
     home.init();
 });
