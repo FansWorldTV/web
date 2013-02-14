@@ -42,7 +42,6 @@ $(document).ready(function () {
 			var $container = $(that.element);
 			that.options.feedSource = $container.attr('data-feed-source');
 			$container.addClass(that._name);
-			$container.css('width', '100%');
 			$container.isotope({
 				itemSelector : '.item',
 				resizable: false, // disable normal resizing
@@ -51,11 +50,22 @@ $(document).ready(function () {
 				}
 			});
 			// Attach to window resize event
-			$(window).smartresize(that.resize);
+			$(window).smartresize(function(){
+				var cells = that.getMaxSections($container);
+				$container.find('.item').each(function(i, item){
+					var $this = $(this);
+				$this.css('width', ((100 / cells) - 2) + "%") // 2% margen entre los elementos
+				});
+				$container.isotope({
+					// update columnWidth to a percentage of container width
+					masonry: { columnWidth: $container.width() / cells }
+				});
+				$container.isotope('reLayout');
+		    });
 			// Get feed
 			$.when(that.loadData(that.options.feedSource, that.options.feedfilter))
 			.then(function(jsonData) {
-				that.loadGallery(that, jsonData)
+				that.loadGallery(that, jsonData);
 				return;
 			})
 			.done(that.options.onGallery);
@@ -63,28 +73,24 @@ $(document).ready(function () {
 		loadGallery: function(plugin, jsonData) {
 			var that = plugin;
 			var $container = $(that.element);
+			endless.stop();
 			if(jsonData.length > 0) {
 				for(var i in jsonData) {
 					var element = that.normalizeData(jsonData[i]);
 					$.when(templateHelper.htmlTemplate('general-column_element', element))
 					.then(function(htmlTemplate) {
-						console.log(htmlTemplate)
-						$(htmlTemplate).css('width', ((100 / that.getMaxSections($container)) - 2) + "%")
-                        $container.isotope({
-                            // update columnWidth to a percentage of container width
-                            masonry: { columnWidth: $container.width() / that.getMaxSections($container) }
-                        });
-						$container.append($(htmlTemplate)).isotope('appended', $(htmlTemplate));
-						$(htmlTemplate).find('.image').load(function() {
+						var $post = $(htmlTemplate)
+						$post.css('width', ((100 / that.getMaxSections($container)) - 2) + "%")
+						$post.find('.image').load(function() {
 							$container.isotope('reLayout');
-							console.log($(this))
 						});
+						$container.append($post).isotope('appended', $post);
 					})
-					.done(function(){
-						if(that.options.endless) {
-							that.makeEndless()
-						}
-					});
+				}
+				if(that.options.endless) {
+					console.log("make endless")
+					that.makeEndless();
+
 				}
 			} else {
 				endless.stop();
@@ -144,9 +150,9 @@ $(document).ready(function () {
 			} else if ($container.width() <= 1000) {
 				cells = 3;
 			} else if ($container.width() <= 1200) {
-				cells = 4;
-			} else if ($container.width() > 1200) {
 				cells = 5;
+			} else if ($container.width() > 1200) {
+				cells = 6;
 			}
 			return cells;
 		},
@@ -169,6 +175,8 @@ $(document).ready(function () {
 			var that = this;
 			var $container = $(that.element);
 			endless.init(1, function() {
+				endless.stop();
+				console.log("doing endless")
 				that.options.onEndless(that);
 				$.when(that.loadData(that.options.feedSource, that.options.feedfilter))
 				.then(function(jsonData) {
