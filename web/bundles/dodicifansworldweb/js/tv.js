@@ -99,7 +99,8 @@ var tv = {
             };
             $(dropDown).find('.dropdown-toggle span').text(activeChannel.title);
             tv.rankingUpdate.videos(activeChannel.slug, null, targetDataList, {});
-        });*/
+        });
+        */
     }
 
 };

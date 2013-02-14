@@ -52,12 +52,12 @@
 
         <ul class="tabs" {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} data-user-logged="true" {% else %} data-user-logged = "false" {% endif %}>
             {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                <li class="active" data-type-tab="enjoy" >Disfruta</li>
-                <li data-type-tab="connect" >Conectate</li>
-                <li data-type-tab="participate" >Participa</li>
+                <li id="tab-enjoy" class="active" data-type-tab="enjoy" ><a href="#tab-enjoy">Disfruta</a></li>
+                <li id="tab-connect" data-type-tab="connect" ><a href="#tab-connect">Conectate</a></li>
+                <li id="tab-participate" data-type-tab="participate" ><a href="#tab-participate">Participa</a></li>
             {% else %}
-                <li class="active" data-type-tab="activityFeed">Actividad</li>
-                <li data-type-tab="popularFeed">Popular</li>
+                <li id="tab-activityFeed" class="active" data-type-tab="activityFeed"><a href="#tab-activityFeed">Actividad</a></li>
+                <li id="tab-popular" data-type-tab="popularFeed"><a href="#tab-popular">Popular</a></li>
             {% endif %}
         </ul>
     </header>
