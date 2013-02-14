@@ -59,7 +59,7 @@ class TagController extends SiteController
      *  get params (all optional):
      *   - text (partial match)
      *   - page
-     *  @Route("/ajax/getUsedInVideos", name="tag_ajaxgetusedinvideos")
+     *  @Route("/ajax/get-used-in-videos", name="tag_ajaxgetusedinvideos")
      */
     public function ajaxTagsUsedInVideos()
     {
