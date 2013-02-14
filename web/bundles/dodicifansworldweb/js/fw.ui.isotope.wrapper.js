@@ -53,7 +53,7 @@ $(document).ready(function () {
 			$(window).smartresize(function(){
 				var cells = that.getMaxSections($container);
 				$container.find('.item').each(function(i, item){
-					var $this = $(this);
+				var $this = $(this);
 				$this.css('width', ((100 / cells) - 2) + "%") // 2% margen entre los elementos
 				});
 				$container.isotope({
@@ -80,13 +80,14 @@ $(document).ready(function () {
 					$.when(templateHelper.htmlTemplate('general-column_element', element))
 					.then(function(htmlTemplate) {
 						var $post = $(htmlTemplate)
-						$post.css('width', ((100 / that.getMaxSections($container)) - 2) + "%")
-						$post.find('.image').load(function() {
-							$container.isotope('reLayout');
-						});
 						$container.append($post).isotope('appended', $post);
+						$(htmlTemplate).find('.image').load(function() {
+							that.resize()
+						});
+
 					})
 				}
+				$container.isotope('reLayout');
 				if(that.options.endless) {
 					console.log("make endless")
 					that.makeEndless();
