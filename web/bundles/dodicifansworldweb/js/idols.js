@@ -2,7 +2,7 @@ var idolHome = {};
 idolHome.category = null;
 idolHome.activePage = 1;
 idolHome.addMore = true;
-    
+
 idolHome.init = function(){
     if($("div.list-idols").attr('data-got-more')){
         idolHome.addMore = true;
@@ -10,14 +10,14 @@ idolHome.init = function(){
         idolHome.addMore = false;
     }
     idolHome.getIdols();
-        
+
     $("ul.categories li a").on('click', function(e){
         //e.preventDefault();
         idolHome.category = $(this).parent().attr('data-category-id');
         idolHome.activePage = 1;
-        
+
         $(".list-idols dl").html(' ');
-        
+
         idolHome.getIdols();
     });
 
@@ -35,12 +35,12 @@ idolHome.init = function(){
             }
         }
     });
-    
+
 };
-    
+
 idolHome.getIdols = function(){
     $("div.list-idols").addClass('loading');
-        
+
     ajax.genericAction('idol_ajaxlist',
     {
         'tc': idolHome.category,
@@ -58,10 +58,9 @@ idolHome.getIdols = function(){
         }else{
             $("div.list-idols").removeClass('loading');
         }
-        
+
         idolHome.addMore = r.gotMore;
         idolHome.activePage++;
-        idolship.init();
     },
     function(r){
         console.log(r);
@@ -70,5 +69,5 @@ idolHome.getIdols = function(){
 }
 
 $(function(){
-   idolHome.init(); 
+   idolHome.init();
 });
