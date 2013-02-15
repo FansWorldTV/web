@@ -66,10 +66,10 @@ class EventRepository extends CountBaseRepository
     	WHERE
             e.active = true
     	AND
-            (e.id IN 
+            (e.id IN
                 (SELECT ex.id FROM \Dodici\Fansworld\WebBundle\Entity\Event ex JOIN ex.hasteams htx JOIN htx.team tx JOIN tx.idolcareers icx WHERE icx.active = true AND icx.actual = true AND icx.idol = :idol )
             )
-        ORDER BY 
+        ORDER BY
             e.userCount DESC, e.fromtime ASC
     	')
                 ->setParameter('idol', $idol);
@@ -83,7 +83,7 @@ class EventRepository extends CountBaseRepository
     }
 
     /**
-     * Get events for calendar according to criteria/sort 
+     * Get events for calendar according to criteria/sort
      * @param User|null $user
      * @param boolean|null $finished - only finished/unfinished events
      * @param boolean|null $checkedin - ($user required, whether to select checked in events only, or non-checked-in)
@@ -95,7 +95,7 @@ class EventRepository extends CountBaseRepository
      * @param int|null $limit
      * @param int|null $offset
      * @throws \Exception
-     * 
+     *
      * sort types (can use an array as parameter, e.g. array('isfan', 'popular')):
      * isfan - show the events that involve a team of which the user is fan first
      * popular - show most popular (and upcoming) events first
@@ -268,16 +268,16 @@ class EventRepository extends CountBaseRepository
 
         return $query->getResult();
     }
-    
+
 	/**
      * Get possibly expired events
-     * 
+     *
      * @param int|null $days - amount of days before the event is considered finished
      */
     public function expired($days = 2)
     {
         $daysbefore = new \DateTime('+'.$days.' days');
-        
+
         $dql = '
     	SELECT e
     	FROM \Dodici\Fansworld\WebBundle\Entity\Event e
@@ -285,17 +285,17 @@ class EventRepository extends CountBaseRepository
         AND e.fromtime < :daysbefore
         AND e.type = :typematch
         ';
-        
+
         $query = $this->_em->createQuery($dql);
         $query = $query->setParameter('daysbefore', $daysbefore);
         $query = $query->setParameter('typematch', Event::TYPE_MATCH);
-            
+
         return $query->getResult();
     }
-    
+
     /**
      * Search events
-     * 
+     *
      * @param string $text - term to search for
      * @param User|null $user - current logged in user, or null
      * @param int|null $limit
@@ -326,22 +326,22 @@ class EventRepository extends CountBaseRepository
     	')
     	.'
     	' : '')
-    	.' 
+    	.'
         ORDER BY e.weight DESC
         ';
-        
+
         $query = $this->_em->createQuery($dql);
         $query = $query->setParameter('textlike', '%'.$text.'%');
         if ($limit !== null) $query = $query->setMaxResults($limit);
     	if ($offset !== null) $query = $query->setFirstResult($offset);
     	if ($tag) $query = $query->setParameter('tag', ($tag instanceof Tag) ? $tag->getId() : $tag);
-            
+
         return $query->getResult();
     }
-    
+
 	/**
      * Count search events
-     * 
+     *
      * @param string $text - term to search for
      * @param User|null $user - current logged in user, or null
      * @param string|Tag|null $tag - Tag slug, or entity, to search by
@@ -352,7 +352,7 @@ class EventRepository extends CountBaseRepository
     	SELECT COUNT(e.id)
     	FROM \Dodici\Fansworld\WebBundle\Entity\Event e
     	'.
-        ($tag ? 
+        ($tag ?
     	('
     	JOIN e.hastags eht
     	JOIN eht.tag ehtag WITH
@@ -379,28 +379,28 @@ class EventRepository extends CountBaseRepository
         )
         '
     	;
-        
+
         $query = $this->_em->createQuery($dql);
         $query = $query->setParameter('textlike', '%'.$text.'%');
     	if ($tag) $query = $query->setParameter('tag', ($tag instanceof Tag) ? $tag->getId() : $tag);
-            
+
         return $query->getSingleScalarResult();
     }
-    
+
     /**
      * Get events where the user is a fan of at least one of the teams involved
-     * 
+     *
      * @param User $user
      * @param boolean|null $checkedin
      *  - if true, only get events where the user checked in
-     *  - if false, only get events where the user hasn't checked in 
+     *  - if false, only get events where the user hasn't checked in
      * @param boolean|null $finished - if set, only get events where finished=val
      * @param int|null $limit
      */
     public function commonTeams(User $user, $checkedin=null, $finished=null, $limit=null)
     {
         $query = $this->_em->createQuery('
-    	SELECT e, COUNT(ehtshipfan) as favcnt, COUNT(ehtship) AS common 
+    	SELECT e, COUNT(ehtshipfan) as favcnt, COUNT(ehtship) AS common
     	FROM \Dodici\Fansworld\WebBundle\Entity\Event e
     	LEFT JOIN e.hasteams eht
     	LEFT JOIN eht.team ehtt
@@ -426,7 +426,7 @@ class EventRepository extends CountBaseRepository
     	')
         ->setParameter('user', $user->getId())
         ;
-        
+
         if ($finished !== null)
             $query = $query->setParameter('finished', $finished);
 
@@ -438,21 +438,21 @@ class EventRepository extends CountBaseRepository
         foreach ($res as $r) $events[] = $r[0];
         return $events;
     }
-    
+
     /**
      * Get events where the user is a fan of at least one of the idols involved
-     * 
+     *
      * @param User $user
      * @param boolean|null $checkedin
      *  - if true, only get events where the user checked in
-     *  - if false, only get events where the user hasn't checked in 
+     *  - if false, only get events where the user hasn't checked in
      * @param boolean|null $finished - if set, only get events where finished=val
      * @param int|null $limit
      */
     public function commonIdols(User $user, $checkedin=null, $finished=null, $limit=null)
     {
         $query = $this->_em->createQuery('
-    	SELECT e, COUNT(ehtship) AS common 
+    	SELECT e, COUNT(ehtship) AS common
     	FROM \Dodici\Fansworld\WebBundle\Entity\Event e
     	LEFT JOIN e.hasidols eht
     	LEFT JOIN eht.idol ehtt
@@ -476,7 +476,7 @@ class EventRepository extends CountBaseRepository
     	')
         ->setParameter('user', $user->getId())
         ;
-        
+
         if ($finished !== null)
             $query = $query->setParameter('finished', $finished);
 
@@ -488,15 +488,15 @@ class EventRepository extends CountBaseRepository
         foreach ($res as $r) $events[] = $r[0];
         return $events;
     }
-    
+
     /**
      * Get events into which the user has checked in
-     * 
+     *
      * @param User $user
      * @param boolean|null $finished - if set, only get events where finished=val
      * @param int|null $limit
      */
-    public function checkedInto(User $user, $finished=null, $limit=null)
+    public function checkedInto(User $user, $finished=null, $limit=null, $datefrom=null, $dateto=null, $teamcategory=null, $offset=null)
     {
         $query = $this->_em->createQuery('
     	SELECT es, e
@@ -510,17 +510,32 @@ class EventRepository extends CountBaseRepository
             	AND e.finished = :finished
             ' : '')
         .
+            ($datefrom ? ' AND e.fromtime >= :datefrom ' : '') .
+            ($dateto ? ' AND e.fromtime < :dateto ' : '') .
+            ($teamcategory ? ' AND e.teamcategory = :teamcategory ' : '')
+        .
         '
     	ORDER BY e.weight DESC
     	')
         ->setParameter('user', $user->getId())
         ;
-        
+
         if ($finished !== null)
             $query = $query->setParameter('finished', $finished);
 
         if ($limit !== null)
             $query = $query->setMaxResults((int) $limit);
+
+        if ($datefrom !== null)
+            $query = $query->setParameter('datefrom', $datefrom);
+
+        if ($dateto !== null)
+            $query = $query->setParameter('dateto', $dateto);
+
+        if ($teamcategory !== null)
+            $query = $query->setParameter('teamcategory', $teamcategory);
+
+        if ($offset !== null) $query = $query->setFirstResult($offset);
 
         $events = array();
         $res = $query->getResult();

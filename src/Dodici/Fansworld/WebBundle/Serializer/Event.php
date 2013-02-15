@@ -22,7 +22,7 @@ class Event
         $this->appstate = $appstate;
         $this->securityContext = $securityContext;
     }
-    
+
     public function values($entity)
     {
         $checked = $this->em->getRepository('DodiciFansworldWebBundle:Eventship')->findOneBy(array('author' => $this->securityContext->getToken()->getUser(), 'event' => $entity->getId())) ? true : false;
@@ -38,11 +38,11 @@ class Event
             'started' => $started,
             'checked' => $checked
         );
-        
+
         foreach($entity->getHasTeams() as $ht){
             $collection['teams'][] = $this->serializer->values($ht->getTeam());
         }
-        
+
         return $collection;
     }
 }
