@@ -6,15 +6,15 @@
             {{if authorImage}}
                 <a href="{{>authorHref}}"><img class="author-image" src="{{>authorImage}}" alt="{{>author}}" rel="tooltip" title="{{>author}}" /></a>
             {{/if}}
-            <a href="{{>href}}" data-modal-url="{{>href}}">
+            <a href="{{>href}}" data-modal-url="{{>hrefModal}}">
                 <span class="title">{{>title}}</span>
             </a>
         </div>
-        <a href="{{>href}}" data-modal-url="{{>href}}">
+        <a href="{{>href}}" data-modal-url="{{>hrefModal}}">
             <img class="image" src="{{>image}}" style="width:100%;" alt="{{>slug}}">
         </a>
         {{if type=='video'}}
-            <a href="{{>href}}" data-modal-url="{{>href}}">
+            <a href="{{>href}}" data-modal-url="{{>hrefModal}}">
                 <i class="play-video"></i>
             </a>
         {{/if}}
