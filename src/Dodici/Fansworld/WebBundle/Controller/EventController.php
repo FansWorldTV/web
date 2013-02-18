@@ -62,6 +62,7 @@ class EventController extends SiteController
     {
         $request = $this->getRequest();
         $appMedia = $this->get('appmedia');
+        $serializer = $this->get('serializer');
         
         $page = $request->get('page', 1);
         $page = (int) $page;
@@ -101,44 +102,8 @@ class EventController extends SiteController
             $teamcategory = $this->getRepository('TeamCategory')->findOneBy(array('id' => $teamcategory));
         }
 
-        $response = array();
-        $now = new \DateTime();
-
         $events = $this->getRepository('Event')->calendar(null, null, null, $dateFrom, $dateTo, $sport, $teamcategory, $sortBy, self::LIMIT_EVENTS, $offset);
-        foreach ($events as $event) {
-
-            $teams = array();
-            foreach ($event->getHasteams() as $hasTeam) {
-                $team = $hasTeam->getTeam();
-                $teams[] = array(
-                    'title' => (string) $team,
-                    'image' => $appMedia->getImageUrl($team->getImage(), 'mini_square'),
-                    'score' => $hasTeam->getScore()
-                );
-            }
-
-            $started = ($event->getFromtime() <= $now);
-
-            if ($this->getUser() instanceof User) {
-                $checked = $this->getRepository('Eventship')->findOneBy(array('author' => $this->getUser()->getId(), 'event' => $event->getId())) ? true : false;
-            } else {
-                $checked = null;
-            }
-
-            $response[] = array(
-                'text' => $this->get('appstate')->getEventText($event->getId()),
-                'id' => $event->getId(),
-                'stadium' => $event->getStadium(),
-                'date' => $event->getFromtime()->format('d-m-Y'),
-                'showdate' => $event->getFromtime()->format('d/m/Y H:i'),
-                'started' => $started,
-                'finished' => $event->getFinished(),
-                'teams' => $teams,
-                'url' => $this->generateUrl('event_show', array('id' => $event->getId(), 'slug' => $event->getSlug())),
-                'checked' => $checked
-            );
-        }
-
+        $response = $serializer->values($events, 'mini_square');
         return $this->jsonResponse($response);
     }
 
