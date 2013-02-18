@@ -123,9 +123,11 @@ var events = {
                             callback();
                         }
                     });
-                    if(r.length > 0){
+                    if(r.length > 0 && !dontEmpty){
                         events.endlessHome();
-                    }else{
+                    } else if(dontEmpty && r.length > 0){
+                        endless.resume();
+                    }else if(r.length == 0){
                         endless.stop();
                     }
                 }
@@ -139,6 +141,7 @@ var events = {
     endlessHome: function(){
         events.searchOptions['page'] = 2;
         endless.init(1, function(){
+            endless.stop();
             events.loadEvents(false, true);
             events.searchOptions['page']++;
         });

@@ -11,7 +11,7 @@ endless.init = function(tolerance, callback){
         endless.callback = callback;
     }
     
-    endless.bindMyScroll();
+    return endless.bindMyScroll();
 }
 
 endless.haveScroll = function(){
@@ -28,17 +28,20 @@ endless.scrollBottom = function(){
 };
 
 endless.bindMyScroll = function(){
-    $(window).bind('scroll', function(){
+    return $(window).bind('scroll', function(){
         if(endless.haveScroll() && endless.scrollBottom()){
             endless.callback();
+            return true;
+        }else{
+            return false;
         }
     });
 };
 
 endless.stop = function(){
-    $(window).unbind('scroll');
+    return $(window).unbind('scroll');
 };
 
 endless.resume = function(){
-    endless.bindMyScroll();
+    return endless.bindMyScroll();
 };
