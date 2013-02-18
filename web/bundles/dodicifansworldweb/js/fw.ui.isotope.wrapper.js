@@ -155,6 +155,7 @@ $(document).ready(function () {
 					'type': data.type,
 					'date': data.created,
 					'href': href,
+					'hrefModal': hrefModal;
 					'image': data.image,
 					'slug': data.slug,
 					'title': data.title,
