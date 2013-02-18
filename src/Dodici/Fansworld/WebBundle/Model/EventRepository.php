@@ -122,7 +122,7 @@ class EventRepository extends CountBaseRepository
             throw new \Exception('Need a user to sort by fandom');
 
         $dql =
-                'SELECT e, ht, t, ti ' .
+                'SELECT e ' .
                 (($user && in_array('isfan', $sort)) ? ', COUNT(tts) isfan' : '') . '
     	FROM \Dodici\Fansworld\WebBundle\Entity\Event e
     	LEFT JOIN e.hasteams ht
@@ -150,7 +150,7 @@ class EventRepository extends CountBaseRepository
         if ($finished !== null)
             $dql .= ' AND e.finished = :finished ';
 
-        $dql .= ' GROUP BY e, ht, t ORDER BY ';
+        $dql .= ' GROUP BY e ORDER BY ';
 
         $ordersdql = array();
         foreach ($sort as $s)
