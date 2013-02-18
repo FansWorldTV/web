@@ -143,6 +143,23 @@ home.getMaxSections = function(container) {
     }
     return cells;
 }
+
+home.loadSection.enjoy22 = function(params){
+
+    if(typeof(params) == 'undefined'){
+        params = {};
+    }
+    var $contentContainer = $('section.home-content .content-container[data-type-tab="enjoy"]');
+    var $container = $contentContainer.find('#elements');
+    $container.attr('data-feed-source', 'home_ajaxenjoy');
+    if(!$contentContainer.hasClass('isIso')) {
+        $container.fwGalerizer({ })
+        home.loadedSection.enjoy = true;
+        $contentContainer.addClass('isIso');
+    };
+    return;
+}
+
 home.loadSection.enjoy = function(){
 
     var toAppendTrending = $('section.home-content .content-container[data-type-tab="enjoy"] .tags .pull-left');
@@ -281,7 +298,6 @@ home.loadSection.connect = function(){
             loop++;
             if(r.fans.length == loop)  {
                 var callback = function(){
-                    console.log(cells)
                     toAppendElements.removeClass('loading');
                     home.loadedSection.connect = true;
                 };
@@ -322,7 +338,7 @@ home.loadSection.activityFeed = function(params){
     }
     var $contentContainer = $('section.home-content .content-container[data-type-tab="activityFeed"]');
     var $container = $contentContainer.find('#elements');
-    $container.attr('data-feed-source', 'home_ajaxactivityfeed');
+    $container.attr('data-feed-source', 'home_ajaxpopularfeed');
     if(!$contentContainer.hasClass('isIso')) {
         $contentContainer.addClass('loading');
         $container.fwGalerizer({
@@ -341,129 +357,6 @@ home.loadSection.activityFeed = function(params){
     };
     return;
 }
-home.loadSection.activityFeed22 = function(params, funcCallback){
-    if(typeof(params) == 'undefined'){
-        params = {};
-    }
-    console.log("loading activity feed by: " + arguments.callee.caller.name)
-    var $contentContainer = $('section.home-content .content-container[data-type-tab="activityFeed"]');
-    var $container = $contentContainer.find('#elements');
-
-    if(!$contentContainer.hasClass('isIso')) {
-        var $container = $contentContainer.find('#elements');
-        $container.css('width', '100%');
-        $container.isotope({
-            itemSelector : '.item',
-            resizable: false, // disable normal resizing
-            masonry: {
-                columnWidth: ($container.width() / home.getMaxSections($container)),
-            }
-        });
-    }
-    $(window).smartresize(function(){
-        console.log($container.width())
-      if($container.width() <= 600) {
-        var cells = 1;
-      } else if ($container.width() <= 800) {
-        var cells = 2;
-      } else if ($container.width() <= 1000) {
-        var cells = 3;
-      } else if ($container.width() <= 1200) {
-        var cells = 4;
-      } else if ($container.width() > 1200) {
-        var cells = 5;
-      }
-      $container.find('.item').each(function(i, item){
-        var $this = $(this);
-        $this.css('width', ((100 / cells) - 2) + "%") // 2% margen entre los elementos
-      });
-      $container.isotope({
-        // update columnWidth to a percentage of container width
-        masonry: { columnWidth: $container.width() / cells }
-      });
-      $container.isotope('reLayout');
-    });
-    $contentContainer.addClass('isIso');
-    $contentContainer.addClass('loading');
-
-    ajax.genericAction('home_ajaxactivityfeed', params, function(r){ //home_ajaxactivityfeed
-
-        console.log("-- JSON --")
-        console.log(r)
-        console.log("-- JSON --")
-        var dummy = $('<div class="dummy"></div>');
-        var $container = $contentContainer.find('#elements');
-
-        if(r.length > 0){
-            for(var i in r){
-                var element = r[i];
-
-                var loop = parseInt(i);
-                loop++;
-                if(r.length == loop)  {
-                    var callback = function(){
-                        $contentContainer.removeClass('loading');
-                        home.loadedSection.activityFeed = true;
-                        var post = dummy.find('.post');
-                        if($container.width() <= 600) {
-                            var cells = 1;
-                          } else if ($container.width() <= 800) {
-                            var cells = 2;
-                          } else if ($container.width() <= 1000) {
-                            var cells = 3;
-                          } else if ($container.width() <= 1200) {
-                            var cells = 4;
-                          } else if ($container.width() > 1200) {
-                            var cells = 5;
-                          }
-                    console.log("w: "+$container.width())
-                    $.each(post, function(i, item) {
-                        var $this = $(item);
-                        $this.css('width', ((100 / cells) - 2) + "%")
-                        $container.isotope({
-                            // update columnWidth to a percentage of container width
-                            masonry: { columnWidth: $container.width() / cells }
-                        });
-                        $this.find('.image').load(function() {
-                            $container.isotope('reLayout');
-                        })
-                        $container.append($(item)).isotope('appended', $(item));
-                       });
-                        //$container.isotope('reLayout');
-                    };
-                }else{
-                    var callback = function(){};
-                }
-
-                var href = Routing.generate(appLocale + '_' + element.type + '_show', {
-                    'id': element.id,
-                    'slug': element.slug
-                });
-
-                var authorUrl = Routing.generate(appLocale + '_user_wall', {
-                    'username': element.author.username
-                });
-
-                templateHelper.renderTemplate('general-column_element', {
-                    'type': element.type,
-                    'date': element.created,
-                    'href': href,
-                    'image': element.image,
-                    'slug': element.slug,
-                    'title': element.title,
-                    'author': element.author.username,
-                    'authorHref': authorUrl,
-                    'authorImage': element.author.image
-                },dummy, false, callback); //$contentContainer.find('.elements').selector, false, callback);
-            }
-        }else{
-            $contentContainer.removeClass('loading');
-            endless.stop();
-        }
-    }, function(e){
-        error(e);
-    });
-};
 
 home.loadSection.popularFeed = function(params){
 
@@ -491,206 +384,6 @@ home.loadSection.popularFeed = function(params){
     };
     return;
 }
-
-home.loadSection.popularFeed22 = function(params){
-    if(typeof(params) == 'undefined'){
-        params = {};
-    }
-    var $contentContainer = $('section.home-content .content-container[data-type-tab="popularFeed"]');
-    var $container = $contentContainer.find('#elements');
-
-    if(!$contentContainer.hasClass('isIso')) {
-        var $container = $contentContainer.find('#elements');
-        $container.css('width', '100%');
-        $container.isotope({
-            itemSelector : '.item',
-            resizable: false, // disable normal resizing
-            masonry: {
-                columnWidth: ($container.width() / home.getMaxSections($container)),
-            }
-        });
-    }
-    $(window).smartresize(function(){
-      if($container.width() <= 600) {
-        var cells = 1;
-      } else if ($container.width() <= 800) {
-        var cells = 2;
-      } else if ($container.width() <= 1000) {
-        var cells = 3;
-      } else if ($container.width() <= 1200) {
-        var cells = 5;
-      } else if ($container.width() > 1200) {
-        var cells = 6;
-      }
-      $container.find('.item').each(function(i, item){
-        var $this = $(this);
-        $this.css('width', ((100 / cells) - 4) + "%") // 2% margen entre los elementos
-      });
-      $container.isotope({
-        // update columnWidth to a percentage of container width
-        masonry: { columnWidth: $container.width() / cells }
-      });
-      $container.isotope('reLayout');
-    });
-    $contentContainer.addClass('isIso');
-    $contentContainer.addClass('loading');
-
-    ajax.genericAction('home_ajaxpopularfeed', params, function(r){
-        var dummy = $('<div class="dummy"></div>')
-        var $posts = $contentContainer.find('#elements');
-        if(r.length > 0){
-            for(var i in r){
-                var element = r[i];
-
-
-                var loop = parseInt(i);
-                loop++;
-                /*
-                if(r.length == loop)  {
-                    var callback = function(){
-                        $contentContainer.removeClass('loading');
-                        home.loadedSection.popularFeed = true;
-                        var post = dummy.find('.post');
-                        if($container.width() <= 600) {
-                            var cells = 1;
-                          } else if ($container.width() <= 800) {
-                            var cells = 2;
-                          } else if ($container.width() <= 1000) {
-                            var cells = 3;
-                          } else if ($container.width() <= 1200) {
-                            var cells = 5;
-                          } else if ($container.width() > 1200) {
-                            var cells = 6;
-                          }
-                    $.each(post, function(i, item) {
-                        var $this = $(item);
-                        $this.css('width', ((100 / cells) - 2) + "%")
-                        $this.find('.image').load(function() {
-                            $container.isotope('reLayout');
-                        })
-                        $container.append($(item)).isotope('appended', $(item));
-                       });
-                        //$container.isotope('reLayout');
-                    };
-
-                }else{
-                    var callback = function(){
-                        console.log("-----------------")
-                        var $post = $(dummy).find('.post').last()
-                        console.log($post.find(".title").text())
-                        if($container.width() <= 600) {
-                            var cells = 1;
-                          } else if ($container.width() <= 800) {
-                            var cells = 2;
-                          } else if ($container.width() <= 1000) {
-                            var cells = 3;
-                          } else if ($container.width() <= 1200) {
-                            var cells = 5;
-                          } else if ($container.width() > 1200) {
-                            var cells = 6;
-                          }
-
-                        $post.css('width', ((100 / cells) - 2) + "%")
-                        $post.find('.image').load(function() {
-                            $container.isotope('reLayout');
-                        });
-                        $container.append($post).isotope('appended', $post);
-                    };
-                }
-               */
-                var href = Routing.generate(appLocale + '_' + element.type + '_show', {
-                    'id': element.id,
-                    'slug': element.slug
-                });
-
-                var authorUrl = Routing.generate(appLocale + '_user_wall', {
-                    'username': element.author.username
-                });
-                /*
-                templateHelper.renderTemplate('general-column_element', {
-                    'id': element.imageid,
-                    'type': element.type,
-                    'date': element.created,
-                    'href': href,
-                    'image': element.image,
-                    'slug': element.slug,
-                    'title': element.title,
-                    'author': element.author.username,
-                    'authorHref': authorUrl,
-                    'authorImage': element.author.image
-                }, dummy, false, callback);//$contentContainer.find('.elements').selector, false, callback);
-                */
-
-                $.when(templateHelper.htmlTemplate('general-column_element', {
-                    'id': element.imageid,
-                    'type': element.type,
-                    'date': element.created,
-                    'href': href,
-                    'image': element.image,
-                    'slug': element.slug,
-                    'title': element.title,
-                    'author': element.author.username,
-                    'authorHref': authorUrl,
-                    'authorImage': element.author.image
-                }))
-                .then(function(htmlTemplate){
-                    home.loadedSection.popularFeed = true;
-                    var $post = $(htmlTemplate)
-                        console.log($post)
-                        if($container.width() <= 600) {
-                            var cells = 1;
-                          } else if ($container.width() <= 800) {
-                            var cells = 2;
-                          } else if ($container.width() <= 1000) {
-                            var cells = 3;
-                          } else if ($container.width() <= 1200) {
-                            var cells = 5;
-                          } else if ($container.width() > 1200) {
-                            var cells = 6;
-                          }
-
-                        $post.css('width', ((100 / cells) - 2) + "%")
-                        $post.find('.image').load(function() {
-                            $container.isotope('reLayout');
-                        });
-                        $container.append($post).isotope('appended', $post);
-
-                    /*
-                    if($container.width() <= 600) {
-                        var cells = 1;
-                    } else if ($container.width() <= 800) {
-                        var cells = 2;
-                    } else if ($container.width() <= 1000) {
-                        var cells = 3;
-                    } else if ($container.width() <= 1200) {
-                        var cells = 5;
-                    } else if ($container.width() > 1200) {
-                        var cells = 6;
-                    }
-                    console.log($(htmlTemplate))
-                    $(htmlTemplate).css('width', ((100 / home.getMaxSections($container)) - 2) + "%")
-                    $container.isotope({
-                        // update columnWidth to a percentage of container width
-                        masonry: { columnWidth: $container.width() / home.getMaxSections($container) }
-                    });
-                    $container.append($(htmlTemplate)).isotope('appended', $(htmlTemplate));
-                    $(htmlTemplate).find('.image').load(function() {
-                        $container.isotope('reLayout');
-                        console.log($(this))
-                    });
-                    */
-                })
-
-
-            }
-        }else{
-            $contentContainer.removeClass('loading');
-            endless.stop();
-        }
-    }, function(e){
-        error(e);
-    });
-};
 
 ;$(document).ready(function(){
     console.log("HOME INIT")
