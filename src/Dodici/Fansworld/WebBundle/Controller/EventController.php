@@ -62,6 +62,10 @@ class EventController extends SiteController
     {
         $request = $this->getRequest();
         $appMedia = $this->get('appmedia');
+        
+        $page = $request->get('page', 1);
+        $page = (int) $page;
+        $offset = ($page - 1) * self::LIMIT_EVENTS;
 
         $dateFrom = $request->get('dateFrom', null);
         if ($dateFrom != null && $dateFrom != 'null') {
@@ -100,7 +104,7 @@ class EventController extends SiteController
         $response = array();
         $now = new \DateTime();
 
-        $events = $this->getRepository('Event')->calendar(null, null, null, $dateFrom, $dateTo, $sport, $teamcategory, $sortBy, null, null);
+        $events = $this->getRepository('Event')->calendar(null, null, null, $dateFrom, $dateTo, $sport, $teamcategory, $sortBy, self::LIMIT_EVENTS, $offset);
         foreach ($events as $event) {
 
             $teams = array();

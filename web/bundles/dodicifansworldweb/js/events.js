@@ -96,12 +96,21 @@ var events = {
         });
     },
 	
-    loadEvents:	function(updateOptions){
+    loadEvents:	function(updateOptions, dontEmpty){
         if(updateOptions){
             events.updateOptions();
         }
 
-        events.eventGridDestination.empty().addClass('loading');
+        if(typeof(dontEmpty) == 'undefined'){
+            dontEmpty = false;
+        }
+
+        if(!dontEmpty){
+            events.eventGridDestination.empty().addClass('loading');
+        }else{
+            events.eventGridDestination.addClass('loading');
+        }
+        
         ajax.genericAction('event_get', 
             events.searchOptions, 
             function(r){
@@ -114,13 +123,25 @@ var events = {
                             callback();
                         }
                     });
+                    if(r.length > 0){
+                        events.endlessHome();
+                    }else{
+                        endless.stop();
+                    }
                 }
                 events.eventGridDestination.removeClass('loading');
-		        
             }, function(msg){
                 error(msg);
                 events.eventGridDestination.removeClass('loading');
             },'get',true);
+    },
+    
+    endlessHome: function(){
+        events.searchOptions['page'] = 2;
+        endless.init(1, function(){
+            events.loadEvents(false, true);
+            events.searchOptions['page']++;
+        });
     },
 	
     bindSportDropdown: function(){
