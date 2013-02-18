@@ -90,7 +90,7 @@ class VideoPlaylist
     public function get($user=null, $limit=null, $offset=null, $sort = array('createdAt' => 'ASC'))
     {
         if (!$user) $user = $this->user;
-        if (!($user instanceof User)) throw new AccessDeniedException('Invalid user');
+        if (!($user instanceof User)) throw new AccessDeniedException('Invalid user for playlist');
         
         $wls = $this->em->getRepository('DodiciFansworldWebBundle:WatchLater')->findBy(
             array('author' => $user->getId()),
@@ -100,5 +100,17 @@ class VideoPlaylist
         );
 		
 		return $wls;
+    }
+    
+    public function isInPlaylist(Video $video, $user = null)
+    {
+        if (!$user) $user = $this->user;
+        if (!($user instanceof User)) throw new AccessDeniedException('Invalid user for playlist');
+        
+        $wls = $this->em->getRepository('DodiciFansworldWebBundle:WatchLater')->findOneBy(
+            array('author' => $user->getId(), 'video' => $video->getId())
+        );
+        
+        return $wls ? true : false;
     }
 }

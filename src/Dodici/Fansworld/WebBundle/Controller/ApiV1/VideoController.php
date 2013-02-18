@@ -29,7 +29,7 @@ class VideoController extends BaseController
      *
      * Get params:
      * - <optional> recommended: boolean (0|1), if true get only videos of possible interest to user
-     * - <optional> user_id: int, required for recommended = 1, will also be used for privacy filtering
+     * - <optional> user_id: int, required for recommended = 1, watchlisted extra field, will also be used for privacy filtering
      * - <required if user_id given> user_token: string, user token
      * - <optional> highlight: boolean (0|1), if true get only highlighted videos, if false, get only non-highlighted videos
      * - <optional> category_id: filter by video category id
@@ -56,8 +56,8 @@ class VideoController extends BaseController
      * 			duration: int (seconds),
      * 			visitCount: int,
      * 			likeCount: int,
-     * 			commentCount: int
-     * 			
+     * 			commentCount: int,
+     * 			watchlisted: boolean
      * 		),
      * 		...
      * 		)
@@ -78,7 +78,7 @@ class VideoController extends BaseController
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
             }
             
-            $allowedfields = array('author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount');
+            $allowedfields = array('author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount', 'watchlisted');
             $extrafields = $this->getExtraFields($allowedfields);
             
             $pagination = $this->pagination(array('weight', 'createdAt'), 'weight');
@@ -107,7 +107,7 @@ class VideoController extends BaseController
             $return = array();
             
             foreach ($videos as $video) {
-                $return[] = $this->videoValues($video, $extrafields);
+                $return[] = $this->videoValues($video, $extrafields, $user);
             }
             
             return $this->result($return, $pagination);
@@ -117,14 +117,16 @@ class VideoController extends BaseController
     }
     
 	/**
-     * Video - show
+     * [signed if user_id given] Video - show
      * 
      * @Route("/video/{id}", name="api_v1_video_show", requirements = {"id" = "\d+"})
      * @Method({"GET"})
      *
      * Get params:
+	 * - <optional> user_id: int, required for watchlisted extra field, also privacy checking
 	 * - <optional> extra_fields: comma-separated extra fields to return (see below)
 	 * - <optional> imageformat: string
+     * - [signature params if user_id given]
      * 
      * @return 
      * array (
@@ -142,6 +144,7 @@ class VideoController extends BaseController
      * 			visitCount: int,
      * 			likeCount: int,
      * 			commentCount: int,
+     * 			watchlisted: boolean,
      * 
      * 			// extra fields, tagged entities
      * 			tagged_idols: array (
@@ -184,8 +187,16 @@ class VideoController extends BaseController
                 'category_id' => $video->getVideocategory()->getId()
             );
             
+            $request = $this->getRequest();
+            $userid = $request->get('user_id');
+            $user = null;
+            if ($userid) {
+                $user = $this->checkUserToken($userid, $request->get('user_token'));
+            }
+            
+            
             $allowedfields = array(
-            	'author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount',
+            	'author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount', 'watchlisted',
                 'tagged_idols', 'tagged_teams', 'tagged_tags', 'tagged_users'
             );
             $extrafields = $this->getExtraFields($allowedfields);
@@ -197,6 +208,9 @@ class VideoController extends BaseController
                         break;
                     case 'createdAt':
                         $return['createdAt'] = (int)$video->getCreatedAt()->format('U');
+                        break;
+                    case 'watchlisted':
+                        $return[$x] = $this->get('video.playlist')->isInPlaylist($video, $user);
                         break;
                     case 'tagged_idols':
                         $has = $video->getHasidols();

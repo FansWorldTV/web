@@ -306,7 +306,7 @@ class BaseController extends SiteController
         ));
     }
     
-    protected function videoValues(Video $video, $extrafields = array())
+    protected function videoValues(Video $video, $extrafields = array(), $user = null)
     {
         $rv = array(
             'id' => $video->getId(),
@@ -323,6 +323,11 @@ class BaseController extends SiteController
                     break;
                 case 'createdAt':
                     $rv['createdAt'] = (int)$video->getCreatedAt()->format('U');
+                    break;
+                case 'watchlisted':
+                    if ($user) {
+                        $rv[$x] = $this->get('video.playlist')->isInPlaylist($video, $user);
+                    }
                     break;
                 default:
                     $methodname = 'get'.ucfirst($x);

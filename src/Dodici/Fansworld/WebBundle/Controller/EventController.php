@@ -201,7 +201,7 @@ class EventController extends SiteController
         $events = null;
         $eventoDestacado = $eventRepo->findOneBy(array(), array('fromtime' => 'desc'));
 
-        if ($this->getUser() instanceof User) {
+        if ($this->getUser() instanceof User && $eventoDestacado) {
             $eventoDestacadoChecked = $this->getRepository('Eventship')->findOneBy(array('event' => $eventoDestacado->getId(), 'author' => $this->getUser()->getId())) ? true : false;
         } else {
             $eventoDestacadoChecked = null;
