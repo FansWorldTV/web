@@ -22,12 +22,17 @@ $(document).ready(function () {
 		cellWidth: 200,
 		feedSource: '',
 		feedfilter: {},
+		normalize: true,
+		jsonData: null,
 		defaultMediaType: null,
 		// custom callback events
 		onError: function(error) {},
 		onIsotopeLoad: function(data) {},
 		onEndless: function(data) {},
-		onGallery: function(data) {}
+		onDataReady: function(data) {return data},
+		onBeforeRender: function(data) {},
+		onFilter: function(data) {},
+		onGallery: function(data) {},
 	};
 	function Plugin(element, options) {
 		this.element = element;
@@ -65,7 +70,8 @@ $(document).ready(function () {
 			// Get feed
 			$.when(that.loadData(that.options.feedSource, that.options.feedfilter))
 			.then(function(jsonData) {
-				that.loadGallery(that, jsonData);
+				that.options.jsonData = that.options.onDataReady(that.options.jsonData);
+				that.loadGallery(that, that.options.jsonData);
 				return;
 			})
 			.done(that.options.onGallery);
@@ -73,25 +79,32 @@ $(document).ready(function () {
 		loadGallery: function(plugin, jsonData) {
 			var that = plugin;
 			var $container = $(that.element);
+			console.log("loadGallery")
+			console.log(that.options.jsonData)
+			console.log("-----------")
+
 			endless.stop();
-			if(jsonData.length > 0) {
-				for(var i in jsonData) {
-					var element = that.normalizeData(jsonData[i]);
+			if(that.options.jsonData.length > 0) {
+				for(var i in that.options.jsonData) {
+					if(that.options.normalize === true) {
+						var element = that.normalizeData(that.options.jsonData[i]);
+					} else {
+						var element = that.options.jsonData[i];
+					}
 					$.when(templateHelper.htmlTemplate('general-column_element', element))
 					.then(function(htmlTemplate) {
 						var $post = $(htmlTemplate)
 						$container.append($post).isotope('appended', $post);
+						console.log($post)
 						$(htmlTemplate).find('.image').load(function() {
 							that.resize()
 						});
-
 					})
 				}
 				$container.isotope('reLayout');
 				if(that.options.endless) {
 					console.log("make endless")
 					that.makeEndless();
-
 				}
 			} else {
 				endless.stop();
@@ -109,7 +122,8 @@ $(document).ready(function () {
 				data: query
 			})
 			.then(function (responseJSON) {
-				return responseJSON;
+				that.options.jsonData = responseJSON;
+				return that.options.jsonData;
 			})
 			.done(function (data){
 				deferred.resolve(data);
@@ -119,11 +133,21 @@ $(document).ready(function () {
 			});
 			return deferred.promise();
 		},
+		normalizeTVdata: function(video) {
+			console.log("normalizeTVdata")
+
+		},
 		normalizeData: function(data) {
 			var href = Routing.generate(appLocale + '_' + data.type + '_show', {
 				'id': data.id,
 				'slug': data.slug
 			});
+
+			var hrefModal = Routing.generate(appLocale + '_modal_media', {
+				'id': data.id,
+				'type': data.type,
+			});
+
 			var authorUrl = Routing.generate(appLocale + '_user_wall', {
 				'username': data.author.username
 			});
@@ -181,7 +205,9 @@ $(document).ready(function () {
 				that.options.onEndless(that);
 				$.when(that.loadData(that.options.feedSource, that.options.feedfilter))
 				.then(function(jsonData) {
-					that.loadGallery(that, jsonData)
+					jsonData = that.options.onDataReady(jsonData);
+					that.options.jsonData = that.options.onDataReady(that.options.jsonData);
+					that.loadGallery(that, that.options.jsonData);
 				});
 			});
 		},
