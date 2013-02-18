@@ -115,6 +115,8 @@ var tv = {
     'tags': function (activeChannel, filter, targetDataList, opts) {
         "use strict";
 
+    //ajax.genericAction('tag_ajaxgetusedinvideos', {'channel': 1, 'filter': 'popular'}, function(r){console.log(r);});
+
         alert("@poniendo tags")
         var filterList = $(targetDataList).closest('.content-container').find('.tag-list-container ul');
         opts = $.merge({
