@@ -145,7 +145,7 @@ $(document).ready(function () {
 
 			var hrefModal = Routing.generate(appLocale + '_modal_media', {
 				'id': data.id,
-				'type': data.type,
+				'type': data.type
 			});
 
 			var authorUrl = Routing.generate(appLocale + '_user_wall', {
@@ -155,7 +155,7 @@ $(document).ready(function () {
 					'type': data.type,
 					'date': data.created,
 					'href': href,
-					'hrefModal': hrefModal;
+					'hrefModal': hrefModal,
 					'image': data.image,
 					'slug': data.slug,
 					'title': data.title,
