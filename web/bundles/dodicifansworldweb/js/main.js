@@ -185,6 +185,8 @@ var site = {
                 keepAliveUrl: Routing.generate(appLocale + '_teve_keepalive')
             });
         }
+        
+        $('[data-modal-url]').modalPopup();
 
         site.parseTimes();
         site.denyFriendRequest();
