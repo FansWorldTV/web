@@ -13,14 +13,65 @@ var tv = {
         $('[data-subscribe-channel]').click(function () {
             tv.subscribe($(this));
         });
-        
+
         // top mosaic
+        /*
         site.startMosaic($(".content-container .list-mosaic"), {
             minw: 100,
             margin: 3,
             liquid: true,
             minsize: false,
             fillLastRow: false
+        });
+
+        $(".ranking-widget .content-container .isotope_container").empty()
+        $(".ranking-widget .content-container .isotope_container").attr('data-feed-source', 'home_ajaxpopularfeed');
+        $(".ranking-widget .content-container .isotope_container").fwGalerizer({})
+        */
+
+        var $contentContainer = $('.ranking-widget .content-container');
+        var $container = $contentContainer.find('.isotope_container').last();
+        $container.attr('data-feed-source', 'teve_ajaxexplore'); //teve_ajaxexplore
+        $container.empty();
+        $container.fwGalerizer({
+            normalize: false,
+            endless: true,
+            feedfilter: {'channel': 29, 'filter': 'popular', 'page': 1},
+            onEndless: function(plugin) {
+                console.log("new filter")
+                console.log(plugin.options.feedfilter)
+                return plugin.options.feedfilter;
+            },
+            onDataReady: function(videos) {
+                console.log("dataReady")
+                window.videos = videos;
+                var normalize = function(video) {
+                    var href = Routing.generate(appLocale + '_video_show', {
+                        'id': video.id,
+                        'slug': video.slug
+                    });
+                    var authorUrl = Routing.generate(appLocale + '_user_wall', {
+                        'username': video.author.username
+                    });
+                    return {
+                            'type': 'video',
+                            'date': video.createdAt,
+                            'href': href,
+                            'image': video.image,
+                            'slug': video.slug,
+                            'title': video.title,
+                            'author': video.author.username,
+                            'authorHref': authorUrl,
+                            'authorImage': video.author.image
+                    };
+                }
+                //for(var i in videos.videos) { console.log(videos.videos[i]) }
+                var outp = new Array();
+                for(var i in videos.videos) {
+                    outp.push(normalize(videos.videos[i]));
+                }
+                return outp;
+            },
         });
 
         // channels explore
@@ -38,24 +89,24 @@ var tv = {
         }
 
         params.channel = channel;
-        
+
         $button.addClass('loading-small');
 
         ajax.genericAction('teve_channelsubscribe', params, function (response) {
             success(response.message);
             $button.text(response.buttontext);
-            
+
             if (response.state == true) {
                 $button.prepend($('<i>').attr('class', 'icon-remove').after(' '));
             } else if (response.state == false) {
                 $button.prepend($('<i>').attr('class', 'icon-ok').after(' '));
             }
-            
+
             $button.removeClass('loading-small');
-            
+
         }, function (msg) {
             error(msg);
-            
+
             $button.removeClass('loading-small');
         });
 
@@ -64,6 +115,7 @@ var tv = {
     'tags': function (activeChannel, filter, targetDataList, opts) {
         "use strict";
 
+        alert("@poniendo tags")
         var filterList = $(targetDataList).closest('.content-container').find('.tag-list-container ul');
         opts = $.merge({
             'channel': activeChannel,
