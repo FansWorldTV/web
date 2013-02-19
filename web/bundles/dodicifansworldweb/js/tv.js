@@ -36,6 +36,7 @@ var tv = {
 
         var $contentContainer = $('.ranking-widget .content-container');
         var $container = $contentContainer.find('.isotope_container').last();
+        var outp = [];
         $container.attr('data-feed-source', 'teve_ajaxexplore'); //teve_ajaxexplore
         $container.empty();
         $container.fwGalerizer({
@@ -49,7 +50,7 @@ var tv = {
             },
             onDataReady: function(videos) {
                 console.log("dataReady");
-                var i, outp;
+                var i;
                 var normalize = function(video) {
                     var href = Routing.generate(appLocale + '_video_show', {
                         'id': video.id,
