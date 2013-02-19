@@ -1,3 +1,14 @@
+/*global $, jQuery, alert, console, error, success, endless, ajax, templateHelper, Routing, appLocale*/
+/*jslint nomen: true */ /* Tolerate dangling _ in identifiers */
+/*jslint vars: true */ /* Tolerate many var statements per function */
+/*jslint white: true */
+/*jslint browser: true */
+/*jslint devel: true */ /* Assume console, alert, ... */
+/*jslint windows: true */ /* Assume Windows */
+/*jslint maxerr: 100 */ /* Maximum number of errors */
+
+
+
 /*
  * library dependencies:
  *      jquery 1.8.3
@@ -7,14 +18,9 @@
  * external dependencies:
  *      template helper
  */
-/*jslint browser: true*/
-/*global $, jQuery, alert, console, error, success, endless, ajax, templateHelper, Routing, appLocale*/
-/*jslint devel: true */ /* Assume console, alert, ... */
-/*jslint windows: true */ /* Assume Windows */
-/*jslint vars: true */ /* Tolerate many var statements per function */
-/*jslint maxerr: 100 */ /* Maximum number of errors */
-/*jslint nomen: true */ /* Tolerate dangling _ in identifiers */ 
+
 // fansWorld isotope wrapper plugin 1.0
+
 
 
 
@@ -31,6 +37,7 @@ $(document).ready(function () {
 		normalize: true,
 		jsonData: null,
 		defaultMediaType: null,
+		itemSelector: '.item',
 		// custom callback events
 		onError: function(error) {},
 		onIsotopeLoad: function(data) {},
@@ -54,7 +61,7 @@ $(document).ready(function () {
 			that.options.feedSource = $container.attr('data-feed-source');
 			$container.addClass(that._name);
 			$container.isotope({
-				itemSelector : '.item',
+				itemSelector : that.options.itemSelector,
 				resizable: false, // disable normal resizing
 				masonry: {
 					columnWidth: ($container.width() / that.getMaxSections($container))
@@ -123,7 +130,8 @@ $(document).ready(function () {
 			var deferred = new jQuery.Deferred();
 			$.ajax({
 				url: 'http://' + location.host + Routing.generate(appLocale + '_' + that.options.feedSource),
-				data: query
+				data: query,
+				type: 'post'
 			})
 			.then(function (responseJSON) {
 				that.options.jsonData = responseJSON;
@@ -211,20 +219,29 @@ $(document).ready(function () {
 				});
 			});
 		},
-		destroy: function() {
+		removeAll: function() {
+			var that = this;
+			var $container = $(that.element);
+			var $removable = $container.find(that.options.itemSelector);
+			$container.isotope( 'remove', $removable );
+			endless.stop();
+		},
+		destroy: function () {
 			var that = this;
 			$(that.element).unbind("destroyed", that.teardown);
 			that.teardown();
 		},
-		teardown: function() {
+		teardown: function () {
 			var that = this;
+			endless.stop();
+			that.removeAll();
 			$.removeData($(that.element)[0], that._name);
 			$(that.element).removeClass(that._name);
 			that.unbind();
 			that.element = null;
 		},
-		bind: function() { },
-		unbind: function() { }
+		bind: function () { },
+		unbind: function () { }
 	};
 	$.fn[pluginName] = function (options) {
 		return this.each(function () {
