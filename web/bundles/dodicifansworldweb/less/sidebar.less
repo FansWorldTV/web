@@ -2,12 +2,12 @@
 #leftcolumn-sidebar{
     padding-left: 15px;
     border-left: 1px solid #D9D9D9;
-    
+
     h3{
         font-size: 16px;
         color: #8cc63f;
     }
-    
+
     p{
         color: #808080;
         font-size: 13px;
@@ -18,5 +18,111 @@
 @media (max-width: 979px) {
     #leftcolumn-sidebar{
         border-left: none;
-    }   
+    }
+}
+
+@media (max-width: 979px) {
+    .sidebar-videos{
+        display: none;
+    }
+}
+
+.sidebar-videos .item {
+  margin: 5px 0.1%;
+  float: left;
+  overflow: hidden;
+  position: relative;
+  background: #fff;
+  color: #222;
+  border: 1px solid #2f3344;
+  -moz-transition: -moz-box-shadow 0.25s;
+  -webkit-transition: -webkit-box-shadow 0.25s;
+  -o-transition: -o-box-shadow 0.25s;
+  transition: box-shadow 0.25s;
+}
+.sidebar-videos .item .item-info {
+  min-height: 20px;
+}
+.sidebar-videos .item .item-info .overlay {
+  background: rgba(0, 0, 0, 0);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  opacity: 0.0;
+  -moz-transition: -moz-box-shadow 0.25s;
+  -webkit-transition: -webkit-box-shadow 0.25s;
+  -o-transition: -o-box-shadow 0.25s;
+  transition: box-shadow 0.25s;
+}
+.sidebar-videos .item .item-info .overlay:hover {
+  opacity: 0.75;
+  -moz-box-shadow: inset 0 0 10em #000;
+  -webkit-box-shadow: inset 0 0 10em #000;
+  -o-box-shadow: inset 0 0 10em #000;
+  box-shadow: inset 0 0 10em #000;
+}
+.sidebar-videos .item .item-info .image {
+  width: 100%;
+}
+.sidebar-videos .item .item-info .image:hover {
+  box-shadow: inset 0 0 30px #000;
+}
+.sidebar-videos .item .item-info .play-video {
+  background-image: url('../images/play-icon.png');
+  background-size: 50px;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: 39%;
+  top: 39%;
+  opacity: 0.5;
+  transition: opacity 0.25s;
+}
+.sidebar-videos .item .item-info .play-video:hover {
+    opacity: 1;
+}
+
+
+.sidebar-videos .item .item-info .title-and-user {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  background: url('../images/ui/pix80trans.png');
+  background-repeat: repeat;
+  padding: 10px;
+}
+.sidebar-videos .item .item-info .title-and-user .title {
+  position: relative;
+  color: white;
+  font-weight: 600;
+  font-size: 12px;
+  display: block;
+  line-height: normal !important;
+  text-overflow: ellipsis;
+  height: auto;
+  overflow: hidden;
+  margin-left: 10px;
+  float: left;
+  width: 60%;
+}
+.sidebar-videos .item .item-info .title-and-user .author-image {
+  position: relative;
+  float: left;
+  width: 30px !important;
+  border: 1px solid grey;
+}
+.sidebar-videos .item .item-info .title-and-user .user {
+  display: block;
+  position: relative;
+  width: 100%;
+  color: #8acd2c;
+  margin-top: 5px;
+  margin-left: 20px;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: normal !important;
 }

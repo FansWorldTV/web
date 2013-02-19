@@ -15,10 +15,9 @@
             	{% include 'DodiciFansworldWebBundle:Comment/blocks:list.html.twig' with {entity: idol} %}
             </div>
         {% endblock %}
-        
+
         {% block inner_sidebar %}
-            <img src="{{ asset("bundles/dodicifansworldweb/images/sidebar.png") }}"  style='width:100%' />
-            TODO
+            {% render "DodiciFansworldWebBundle:Default:sidebarvideos" with {entity: idol} %}
         {% endblock %}
-    {% endembed %}		
+    {% endembed %}
 {% endblock %}

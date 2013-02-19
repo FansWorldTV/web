@@ -43,7 +43,7 @@ class DefaultController extends SiteController
 
     /**
      *  Menubar controller action
-     * @Template 
+     * @Template
      */
     public function menubarAction()
     {
@@ -65,7 +65,7 @@ class DefaultController extends SiteController
         );
     }
 
-    
+
     /**
      * Related column
      * @Template
@@ -94,7 +94,7 @@ class DefaultController extends SiteController
 
     /**
      * force mobile
-     * 
+     *
      * @Route("/mobile/{value}", requirements={"value"="yes|no"}, name="force_mobile")
      */
     public function forcemobileAction($value)
@@ -125,7 +125,7 @@ class DefaultController extends SiteController
 
     /**
      * force mobile
-     * 
+     *
      * @Route("/gethost", name="gethost")
      */
     public function hostAction()
@@ -135,7 +135,7 @@ class DefaultController extends SiteController
         $schema = $request->getScheme();
         return new Response($schema . '://' . $host);
     }
-    
+
 	/**
      * Toolbar controller action
      * @Template
@@ -152,7 +152,36 @@ class DefaultController extends SiteController
             'hide_ad' => $hide_ad
         );
     }
-    
-	
+
+    /**
+     * Sidebar videos
+     * @Template
+     */
+    public function sidebarvideosAction($entity)
+    {
+        $loggedUser = $this->getUser();
+        $numOfResult = 4;
+
+        if ($entity instanceof User) {
+            $entitySearch = null;
+        } else {
+            $entitySearch = $entity;
+        }
+
+        $videos = $this->getRepository('Video')->search(
+            null,
+            $loggedUser,
+            $numOfResult,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            $entitySearch
+        );
+        return array('videos' => $videos);
+    }
 
 }
