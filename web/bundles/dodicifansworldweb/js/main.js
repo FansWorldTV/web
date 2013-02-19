@@ -2,7 +2,7 @@ var redirectColorbox = true;
 
 $(document).ready(function(){
     site.init();
-    //ajax.init();
+//ajax.init();
 });
 
 var site = {
@@ -57,7 +57,7 @@ var site = {
                 resizePopup();
             }
         });*/
-	/*
+        /*
         $("[data-upload='photo']").colorbox({
             innerWidth: 700,
             innerHeight: 175,
@@ -67,8 +67,8 @@ var site = {
             }
         });
        	*/
-	   // fw upload plugin
-       // Video
+        // fw upload plugin
+        // Video
         $("[data-upload='video']").fwUploader({
             onComplete: function(){
                 $('#share_it').removeAttr("disabled");
@@ -188,7 +188,12 @@ var site = {
 
         //$('[data-modal-url]').modalPopup();
 
-        $("body").delegate("a[data-modal-url]", "click", function(e){ e.preventDefault(); $(this).modalPopup(); $(this).trigger('click')})
+        $("body").delegate("a[data-modal-url]", "click", function(e){
+            e.preventDefault();
+            $(this).modalPopup();
+            $(this).trigger('click')
+            console.log('hola');
+        });
 
 
 
@@ -246,7 +251,9 @@ var site = {
             var notificationId = el.attr('notificationId');
             ajax.genericAction({
                 route: 'user_ajaxdeletenotification',
-                params: { id: notificationId },
+                params: {
+                    id: notificationId
+                },
                 callback: function(response) {
                     if(response === true) {
                         var cant = $("li.notifications_user a span").html();
@@ -362,7 +369,7 @@ var site = {
             var type = el.attr('data-type');
             var id = el.attr('data-id');
             el.addClass('loading-small');
-        	ajax.genericAction({
+            ajax.genericAction({
                 route: 'like_ajaxtoggle',
                 params: {
                     'id': id,
@@ -466,39 +473,39 @@ var site = {
         textAreaElement.addClass('loading-small');
         textAreaElement.attr('disabled','disabled');
         ajax.genericAction({
-                route: 'comment_ajaxpost',
-                params: {
-                    'id' : id,
-                    'type' : type,
-                    'content' : content,
-                    'privacy' : privacy,
-                    'ispin' : ispin
-                },
-                callback: function(response) {
-                    textAreaElement.val('');
-                    textAreaElement.removeClass('loadingSmall');
+            route: 'comment_ajaxpost',
+            params: {
+                'id' : id,
+                'type' : type,
+                'content' : content,
+                'privacy' : privacy,
+                'ispin' : ispin
+            },
+            callback: function(response) {
+                textAreaElement.val('');
+                textAreaElement.removeClass('loadingSmall');
 
-                    success(response.message);
+                success(response.message);
 
-                    templateHelper.renderTemplate(response.jsonComment.templateId,response.jsonComment,elDestination, prepend);
+                templateHelper.renderTemplate(response.jsonComment.templateId,response.jsonComment,elDestination, prepend);
 
-                    $('.timeago').each(function () {
-                        $(this).html($.timeago($(this).attr('data-time')));
-                    });
+                $('.timeago').each(function () {
+                    $(this).html($.timeago($(this).attr('data-time')));
+                });
 
-                    if (ispin) {
-                        $('.masonbricks').isotope().resize();
-                    }
-                    site.expander();
-                    textAreaElement.removeClass('loading-small');
-                    textAreaElement.removeAttr('disabled');
-                },
-                errorCallback: function(response) {
-                    textAreaElement.removeClass('loading-small');
-                    textAreaElement.removeAttr('disabled');
-                    error(response);
+                if (ispin) {
+                    $('.masonbricks').isotope().resize();
                 }
-            });
+                site.expander();
+                textAreaElement.removeClass('loading-small');
+                textAreaElement.removeAttr('disabled');
+            },
+            errorCallback: function(response) {
+                textAreaElement.removeClass('loading-small');
+                textAreaElement.removeAttr('disabled');
+                error(response);
+            }
+        });
     },
 
     globalDeleteButtons: function(){
@@ -510,7 +517,7 @@ var site = {
                 var type = el.attr('data-type');
                 var id = el.attr('data-id');
                 el.addClass('loading');
-	        	ajax.genericAction({
+                ajax.genericAction({
                     route: 'delete_ajax',
                     params: {
                         'id' : id,
@@ -558,7 +565,7 @@ var site = {
                     }
                 });
 
-                /*
+            /*
                 ajax.globalDeleteAction(type, id,
                     function(response){
                         success(response.message);

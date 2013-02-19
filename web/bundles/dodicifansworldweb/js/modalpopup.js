@@ -45,15 +45,16 @@
                 'success': function (response) {
                     $overlay.removeClass('loading');
                     $content.html(response);
+                    $(self.settings.container + ' [data-wall]').wall();
                     self.settings.onload(self.settings);
                 }
             });
         }
 
         function open() {
-            var documentHeight = $(document).height();
-            $container.css('height', documentHeight + 'px');
-            $overlay.css('height', documentHeight + 'px');
+            var windowHeight = $(window).height();
+            $container.css('height', windowHeight + 'px');
+            $overlay.css('height', windowHeight + 'px');
             
             $container.animate({
                 opacity: 'show'

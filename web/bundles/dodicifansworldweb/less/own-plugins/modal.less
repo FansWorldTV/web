@@ -8,7 +8,7 @@
 
     #modal-overlay {
         background:#000;
-        position:absolute;
+        position: absolute;
         top:0;
         left:0;
         right:0;
@@ -19,7 +19,7 @@
         filter: alpha(opacity=70);
         -moz-opacity: 0.7;
         -khtml-opacity: 0.7;
-        opacity: 0.7;
+        opacity: 0.95;
 
         &.loading {
             background:black url(../images/ajax-loading_black.gif) no-repeat center;
@@ -32,21 +32,82 @@
         background: url("../images/modal/close.png") no-repeat top;
         float: right;
         cursor: pointer;
-        position: fixed;
+        position: absolute;
         z-index: 5;
         top: 70px;
         right:60px;
+
         &:hover {
             background-position:bottom;
         }
     }
 
     #modal-content {
-        width: 98%;
-        left: 1%;
-        top: 20px;
-        float: left;
-        position: fixed;
+        position: absolute;
+        left: 0;
+        top: 0;
+        .size(inherit, inherit);
+
+        .share-buttons {
+            position: absolute;
+            right: 100px;
+            top: 70.5px;
+        }
+
+        .modal-template {
+            height: 100%;
+            padding-left: 55px;
+            padding-top: 55px;
+
+            .left {
+                .border-radius(5px);
+                padding: 20px;
+                background-color: @white;
+                overflow-y: auto;
+                overflow-x: hidden;
+                height: 90%;
+
+                .top-detail {
+                    img {
+                        width: 50px;
+                        display: block;
+                        .pull-left();
+                    }
+                    .media-title {
+                        color: @green;
+                        font-size: 25px;
+                        font-weight: 500;
+                        width: 80%;
+                        display: block;
+                        .pull-left();
+                        margin-top: 5px;
+                        margin-left: 20px;
+                        margin-bottom: 8px;
+                    }
+                    .author-name {
+                        margin-left: 20px;
+                    }
+                }
+                .media-content {
+                    color: @black;
+                    font-size: 15px;
+                    font-weight: 300;
+                    margin-top: 25px;
+                }
+            }
+
+            .right {
+                height: 90%;
+                padding-top: 100px;
+                img {
+                    position: relative;
+                    display: block;
+                    margin: auto;
+                    max-width: 100%;
+                    max-height: 100%;
+                }
+            }
+        }
     }
 
 }

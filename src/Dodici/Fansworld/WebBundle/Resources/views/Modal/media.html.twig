@@ -1,0 +1,24 @@
+<div class="share-buttons">
+    {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: media, editbutton: true, reportbutton: false} %}
+</div>
+<div class="modal-template row-fluid" data-modal-type="{{ type }}" data-entity-id="{{ media.id }}">
+    <div class="span3 left">
+        <div class="top-detail">
+            {% thumbnail media.author.image, 'small_square' %}
+            <span class="media-title">{{ media.title }}</span>
+            <span class="author-name">{{ media.author }}</span>
+        </div>
+        {% if media.content %}
+            <p data-expandable data-slice-point="120" class="media-content">{{ media.content|striptags|nl2br }}</p>
+        {% endif %}
+        {% include 'DodiciFansworldWebBundle:Comment:blocks/box.html.twig' with {entity: media} %}
+    </div>
+    <div class="span8 right">
+        {% if type == 'video' %}
+            {{ kalturatwig.player(media)|raw }}
+            {% include 'DodiciFansworldWebBundle:Tv:blocks/now-watching.html.twig' with {entity: media} %}
+        {% else %}
+            {% thumbnail media.image, 'wall' %}
+        {% endif %}
+    </div>
+</div>
