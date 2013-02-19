@@ -2,6 +2,7 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller\ApiV1;
 
+use Dodici\Fansworld\WebBundle\Entity\Share;
 use Dodici\Fansworld\WebBundle\Entity\Video;
 use Dodici\Fansworld\WebBundle\Entity\Apikey;
 use Application\Sonata\UserBundle\Entity\User;
@@ -174,6 +175,68 @@ class BaseController extends SiteController
         );
     }
     
+    protected function jsonComment(Comment $comment, $event=false)
+    {
+        $appstate = $this->get('appstate');
+
+        $author = $comment->getAuthor() ? $this->userArray($comment->getAuthor()) : null;
+
+        $type = $comment->getTypeName();
+
+        $tag = $this->getTagItem($comment);
+
+        $commentArray = array(
+            'id' => $comment->getId(),
+            'canDelete' => $appstate->canDelete($comment),
+            'type' => $type,
+            'content' => $comment->getContent(),
+            'createdAt' => $comment->getCreatedAt()->format('U'),
+            'commentCount' => $comment->getCommentCount(),
+            'author' => $author,
+            'share' => $tag
+        );
+        
+        if ($event) {
+            $eventship = $this->getRepository('Eventship')->findOneBy(array('author' => $comment->getAuthor()->getId(), 'event' => $event->getId()));
+            $commentArray['following_team'] = $comment->getTeam()->getId();
+            $commentArray['following_type'] = $eventship->getType();
+        }
+
+        return $commentArray;
+    }
+    
+    protected function getTagItem(Comment $comment)
+    {
+        $share = $comment->getShare();
+        if (!$share) return null;
+        $validTypes = Share::getTypes();
+        
+        $tag = array();
+        
+        foreach ($validTypes as $type) {
+            $getType = 'get' . ucfirst($type);
+            if (!is_null($share->$getType())) {
+                $tag_item = $share->$getType();
+                $tag['type'] = $type;
+                $tag['id'] = $tag_item->getId();
+                $tag['title'] = $tag_item->__toString();
+                $tag['likecount'] = method_exists($tag_item, 'getLikeCount') ? $tag_item->getLikeCount() : null;
+                $tag['image'] = null;
+                if (method_exists($tag_item, 'getImage')) {
+                    $image = $tag_item->getImage();
+                    if ($image) {
+                        $tag['image'] = $this->imageValues($image);
+                    }
+                }
+
+                break;
+            }
+        }
+
+
+        return $tag;
+    }
+    
     protected function addIdolsTeams(User $user)
     {
         $request = $this->getRequest();
@@ -200,17 +263,26 @@ class BaseController extends SiteController
     protected function plainException(\Exception $e)
     {
         if ($e instanceof HttpException) {
-            $code = $e->getStatusCode();
+            $strcode = $e->getStatusCode();
+            if (strpos($strcode, '-') !== false) {
+                $codes = explode('-', $strcode);
+                $appcode = $codes[0];
+                $httpcode = $codes[1];
+            } else {
+                $httpcode = $strcode;
+                $appcode = $strcode;
+            }
         } else {
-            $code = 400;
+            $httpcode = 400;
+            $appcode = 400;
         }
         
         $return = array(
-            'code' => $code,
+            'code' => $appcode,
             'message' => $e->getMessage()
         );
         
-        return $this->jsonResponse($return, $code);
+        return $this->jsonResponse($return, $httpcode);
     }
     
     protected function pagination($allowedsorts = array(), $defaultsort = null, $defaultorder = null, $allowedorders = array('ASC', 'DESC'))
@@ -260,7 +332,7 @@ class BaseController extends SiteController
         $apikey = $this->getApiKey();
         $realtoken = $this->generateUserApiToken($user, $apikey);
         
-        if ($realtoken != $token) throw new HttpException(401, 'Invalid user token');
+        if ($realtoken != $token) throw new HttpException('601-401', 'Invalid user token');
         
         return $user;
     }

@@ -346,4 +346,52 @@ class SecurityController extends BaseController
             return $this->plainException($e);
         }
     }
+    
+	/**
+     * [signed] validate user token
+     * @Route("/token/validate", name="api_v1_token_validate")
+     * 
+     * Get params:
+     * - user_id: int
+     * - user_token: string
+     * - [signature params]
+     * 
+     * @return
+     * array (
+     * 		valid: boolean,
+     * 		<if valid = true> user: @see SecurityController::loginAction()
+     * )
+     */
+    public function tokenValidateAction()
+    {
+        try {
+            if ($this->hasValidSignature()) {
+                $request = $this->getRequest();
+                $userid = $request->get('user_id');
+                $usertoken = $request->get('user_token');
+                
+                if (!$userid || !$usertoken) throw new HttpException(400, 'Requires user_id and user_token');
+                
+                $user = $this->getRepository('User')->find($userid);
+                if (!$user) throw new HttpException(404, 'User not found');
+                
+                $realtoken = $this->generateUserApiToken($user, $this->getApiKey());
+                
+                if ($usertoken === $realtoken) {
+                    $return = array(
+                        'valid' => true,
+                        'user' => $this->userArray($user)
+                    );
+                } else {
+                    $return = array('valid' => false);
+                }
+                
+                return $this->result($return);
+            } else {
+                throw new HttpException(401, 'Invalid signature');
+            }
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
 }

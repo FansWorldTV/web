@@ -51,35 +51,40 @@ class EventController extends BaseController
     public function listAction()
     {
         try {
-            //if (!$id) throw new HttpException(400, 'Invalid id');
-            //if (!$events || $events) throw new HttpException(404, 'Event not found');
-            //if ($this->hasValidSignature()) {
-                $request = $this->getRequest();
-                $userid = $request->get('user_id');
+            $request = $this->getRequest();
+            $userid = $request->get('user_id');
 
-                //$user = $this->checkUserToken($userid, $request->get('user_token'));
+            $user = null;
+            if ($userid) $user = $this->checkUserToken($userid, $request->get('user_token'));
 
-                $datefrom = $request->get('date_from');
-                $dateto = $request->get('date_to');
-                $teamcategory = $request->get('teamcategory');
-                $limit = $request->get('limit');
-                $offset = $request->get('offset');
-                $sort = $request->get('sort'); //  WIP
-                $imageformat = $request->get('imageformat'); // WIP
-                $sport = $request->get('sport'); // ??
+            $datefrom = $request->get('date_from') ? (\DateTime::createFromFormat('U', $request->get('date_from'))) : null;
+            $dateto = $request->get('date_to') ? (\DateTime::createFromFormat('U', $request->get('date_to'))) : null;
+            
+            $sportid = $request->get('sport');
+            if ($sportid) $sport = $this->getRepository('Sport')->find($sportid);
+            if ($sportid && !$sport) throw new HttpException(400, 'Invalid sport');
 
-                if (!$userid) {
-                    $events = $this->getRepository('Event')->findAll();
-                } else {
-                    $user = $this->getRepository('User')->find($userid);
-                    $events = $this->getRepository('Event')->checkedInto($user, null, $limit, $datefrom, $dateto, $teamcategory, $offset);
-                }
+            $teamcategoryid = $request->get('teamcategory');
+            $teamcategory = $this->getRepository('TeamCategory')->find($teamcategoryid);
+            if ($teamcategoryid && !$teamcategory) throw new HttpException(400, 'Invalid teamcategory');
+            
+            $pagination = $this->pagination(array('isfan', 'popular', 'upcoming'), 'popular');
+            
+            $events = $this->getRepository('Event')->calendar(
+                $user,
+                null,
+                null,
+                $datefrom,
+                $dateto,
+                $sport,
+                $teamcategory,
+                $pagination['sort'],
+                $pagination['limit'],
+                $pagination['offset']
+            );
 
-                $result = $this->get('serializer')->values($events);
-                return $this->result($result);
-            //} else {
-                //throw new HttpException(401, 'Invalid signature');
-            //}
+            $result = $this->get('serializer')->values($events);
+            return $this->result($result);
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
@@ -102,8 +107,36 @@ class EventController extends BaseController
      *
      * @return
      * array(
-     * 		(TODO)
-     * 		...
+     * 		comments: array(
+     * 			@see CommentController::listAction(),
+     * 				+ following_type: int,
+     * 				+ following_team: int
+     * 			...
+     * 		),
+     * 		
+     * 		incidents: array (
+     * 			array(
+     * 				id: int,
+     * 				team_id: int,
+     * 				createdAt: int (ts UTC),
+     *				type: int,
+     *				minute: string,
+     *				half: string,
+     *				idol: @see IdolController::list(),
+     *				player_name: string
+     * 			),
+     * 			...
+     * 		),
+     * 
+     * 		tweets: array (
+     * 			array(
+     * 				id: int,
+     * 				team_id: int,
+     * 				createdAt: int (ts UTC),
+     * 				content: string
+     * 			),
+     * 			... 
+     * 		)
      * )
      */
     public function wallAction($id)
@@ -113,11 +146,11 @@ class EventController extends BaseController
         // Comment, EventTweet, and EventIncident repos have an eventWall method
         // return $this->result(null);
         try {
-             //if ($this->hasValidSignature()) {
+             if ($this->hasValidSignature()) {
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
 
-                //$user = $this->checkUserToken($userid, $request->get('user_token'));
+                $user = $this->checkUserToken($userid, $request->get('user_token'));
 
                 if (!$id) throw new HttpException(400, 'Invalid id');
                 $event = $this->getRepository('Event')->find($id);
@@ -127,33 +160,54 @@ class EventController extends BaseController
                 $eventship = $this->getRepository('Eventship')->findOneBy(array('author' => $userid, 'event' => $id));
                 if (!$eventship) throw new HttpException(401, 'User has not checked into event');
 
-                $datefrom = $request->get('date_from');
-                $dateto = $request->get('date_to');
+                $datefrom = $request->get('date_from') ? (\DateTime::createFromFormat('U', $request->get('date_from'))) : null;
+                $dateto = $request->get('date_to') ? (\DateTime::createFromFormat('U', $request->get('date_to'))) : null;
 
-                $response['comments'] = array();
-                $response['incidents'] = array();
-                $response['tweets'] = array();
+                $response = array('comments' => array(), 'incidents' => array(), 'tweets' => array());
 
                 $eventComments = $this->getRepository('Comment')->eventWall($event, $datefrom, $dateto);
-                foreach ($eventComments as $comment) {
-                    array_push($response['comments'], array('id' => $comment->getId(), 'teamid' => $comment->getTeam()->getId()));
-                }
-
                 $eventTweets = $this->getRepository('EventTweet')->eventWall($event, $datefrom, $dateto);
-                foreach ($eventTweets as $tweet) {
-                    array_push($response['tweets'], array('id' => $tweet->getId(), 'teamid' => $tweet->getTeam()->getId()));
-                }
-
                 $eventIncidents = $this->getRepository('EventIncident')->eventWall($event, $datefrom, $dateto);
-                foreach ($eventIncidents as $incident) {
-                    array_push($response['incidents'], array('id' => $incident->getId(), 'teamid' => $incident->getTeam()->getId()));
-                }
+                
+                foreach ($eventComments as $ec) $response['comments'][] = $this->jsonComment($ec, $event);
 
-                $response['event'] = $this->get('serializer')->values($event);
+                foreach ($eventIncidents as $ei) {
+                    $eiarr = array(
+                        'id' => $ei->getId(),
+                        'team_id' => $ei->getTeam() ? $ei->getTeam()->getId() : null,
+                        'createdAt' => $ei->getCreatedAt()->format('U'),
+                        'type' => $ei->getType(),
+                        'minute' => $ei->getMinute(),
+                        'half' => $ei->getHalf(),
+                        'idol' => null,
+                        'player_name' => $ei->getPlayername()
+                    );
+                    if ($ei->getIdol()) {
+                        $idol = $ei->getIdol();
+                        $eiarr['idol'] = array(
+                            'id' => $idol->getId(),
+                            'firstname' => $idol->getFirstname(),
+                        	'lastname' => $idol->getLastname(),
+                            'image' => $this->imageValues($idol->getImage()),
+                            'fanCount' => $idol->getFanCount()
+                        );
+                    }
+                    $response['incidents'][] = $eiarr;
+                }
+                
+                foreach ($eventTweets as $et) {
+                    $response['tweets'][] = array(
+                        'id' => $et->getId(),
+                        'team_id' => $et->getTeam() ? $et->getTeam()->getId() : null,
+                        'createdAt' => $et->getCreatedAt()->format('U'),
+                        'content' => $et->getContent()
+                    );
+                }
+                
                 return $this->result($response);
-            //} else {
-                //throw new HttpException(401, 'Invalid signature');
-            //}
+            } else {
+                throw new HttpException(401, 'Invalid signature');
+            }
         } catch (\Exception $e) {
             return $this->plainException($e);
         }

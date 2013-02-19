@@ -68,48 +68,6 @@ class UtilController extends BaseController
         }
     }
     
-	/**
-     * [signed] test method (user token)
-     * @Route("/test/token", name="api_v1_test_token")
-     * 
-     * Get params:
-     * - user_id: int
-     * - user_token: string
-     * - [signature params]
-     */
-    public function testTokenAction()
-    {
-        try {
-            if ($this->hasValidSignature()) {
-                $request = $this->getRequest();
-                $userid = $request->get('user_id');
-                $usertoken = $request->get('user_token');
-                
-                if (!$userid || !$usertoken) throw new HttpException(400, 'User id and token required');
-                
-                $user = $this->getRepository('User')->find($userid);
-                if (!$user) throw new HttpException(400, 'Invalid user id');
-                
-                $realtoken = $this->generateUserApiToken($user, $this->getApiKey());
-                
-                if ($usertoken === $realtoken) {
-                    return new Response('valid user token');
-                } else {
-                    $txt = 'invalid user token<br>';
-                    $txt .= 'user id: ' . $userid . '<br>';
-                    $txt .= 'user token: ' . $usertoken . '<br><br>';
-                    $txt .= 'expected token: ' . $realtoken;
-                    
-                    return new Response($txt);
-                }
-            } else {
-                throw new HttpException(401, 'Invalid signature');
-            }
-        } catch (\Exception $e) {
-            return $this->plainException($e);
-        }
-    }
-    
     /**
      * test method (signature)
      * @Route("/test/signature", name="api_v1_test_signature")
