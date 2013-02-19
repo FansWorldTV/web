@@ -185,8 +185,12 @@ var site = {
                 keepAliveUrl: Routing.generate(appLocale + '_teve_keepalive')
             });
         }
-        
-        $('[data-modal-url]').modalPopup();
+
+        //$('[data-modal-url]').modalPopup();
+
+        $("body").delegate("a[data-modal-url]", "click", function(e){ e.preventDefault(); $(this).modalPopup(); $(this).trigger('click')})
+
+
 
         site.parseTimes();
         site.denyFriendRequest();
