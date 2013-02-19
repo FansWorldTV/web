@@ -46,6 +46,13 @@
                     $overlay.removeClass('loading');
                     $content.html(response);
                     $(self.settings.container + ' [data-wall]').wall();
+                    
+                    $(document).bind('keydown',function(e){
+                        if ( e.which == 27 ) {
+                            close();
+                        };
+                    });
+                    
                     self.settings.onload(self.settings);
                 }
             });
@@ -68,6 +75,7 @@
             $container.fadeOut(function() {
                 $content.html('');
                 $container.fadeOut();
+                $(document).unbind('keydown');
                 self.settings.onclose();
             });
         }
