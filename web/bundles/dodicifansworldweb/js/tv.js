@@ -81,6 +81,8 @@ var tv = {
         tv.loadGallery();
         // channelToggle
         tv.channelToggle();
+        // filterToggle
+        tv.filterToggle();
         // update tags
         tv.mytags();
         // channels explore
@@ -165,6 +167,22 @@ var tv = {
             tv.loadGallery();
         });
     },
+    filterToggle: function() {
+        'use strict';
+        $('#list-filters').find("li").click(function(e){
+            var i;
+            var selectedFilter = $(this).first().attr('data-list-filter-type');
+            // Isotope Handler
+            var $container = $('.ranking-widget .content-container').find('.isotope_container').last();
+
+            $('#list-filters').find("li.active").removeClass('active');
+            $(this).first().addClass('active');
+
+
+            console.log('changing filter to: %s', selectedFilter);
+
+        });
+    },
     'subscribe': function ($button) {
         "use strict";
 
@@ -210,7 +228,7 @@ var tv = {
             var i;
             for(i in r.tags) {
                 if (r.tags.hasOwnProperty(i)) {
-                    var tagHref = Routing.generate(appLocale + '_teve_taggedvideos', {term: r.tags[i].title })
+                    var tagHref = Routing.generate(appLocale + '_teve_taggedvideos', {term: r.tags[i].title });
                     $tagList.append("<li><a href='" + tagHref + "'>" + r.tags[i].title + "</a></li>");
                     console.log("adding tag: %s", r.tags[i].title);
                 }
