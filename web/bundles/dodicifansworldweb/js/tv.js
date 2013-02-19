@@ -1,7 +1,12 @@
+/*jslint browser: true*/
+/*global $, jQuery, alert, console, error, success, ajax, templateHelper, Routing, appLocale*/
+/*jslint vars: true */ /* Tolerate many var statements per function */
+/*jslint maxerr: 100 */ /*  Maximum number of errors */
 var tv = {
 
     'init': function (filtersList, channelsList, targetDataList) {
         "use strict";
+
 
         // lists
         $('[data-list]').list();
@@ -38,13 +43,13 @@ var tv = {
             endless: true,
             feedfilter: {'channel': 29, 'filter': 'popular', 'page': 1},
             onEndless: function(plugin) {
-                console.log("new filter")
-                console.log(plugin.options.feedfilter)
+                console.log("new filter");
+                console.log(plugin.options.feedfilter);
                 return plugin.options.feedfilter;
             },
             onDataReady: function(videos) {
-                console.log("dataReady")
-                window.videos = videos;
+                console.log("dataReady");
+                var i, outp;
                 var normalize = function(video) {
                     var href = Routing.generate(appLocale + '_video_show', {
                         'id': video.id,
@@ -64,14 +69,15 @@ var tv = {
                             'authorHref': authorUrl,
                             'authorImage': video.author.image
                     };
-                }
+                };
                 //for(var i in videos.videos) { console.log(videos.videos[i]) }
-                var outp = new Array();
-                for(var i in videos.videos) {
-                    outp.push(normalize(videos.videos[i]));
+                for(i in videos.videos) {
+                    if (videos.videos.hasOwnProperty(i)) {
+                        outp.push(normalize(videos.videos[i]));
+                    }
                 }
                 return outp;
-            },
+            }
         });
 
         // channels explore
@@ -96,9 +102,9 @@ var tv = {
             success(response.message);
             $button.text(response.buttontext);
 
-            if (response.state == true) {
+            if (response.state === true) {
                 $button.prepend($('<i>').attr('class', 'icon-remove').after(' '));
-            } else if (response.state == false) {
+            } else if (response.state === false) {
                 $button.prepend($('<i>').attr('class', 'icon-ok').after(' '));
             }
 
@@ -116,8 +122,6 @@ var tv = {
         "use strict";
 
     //ajax.genericAction('tag_ajaxgetusedinvideos', {'channel': 1, 'filter': 'popular'}, function(r){console.log(r);});
-
-        alert("@poniendo tags")
         var filterList = $(targetDataList).closest('.content-container').find('.tag-list-container ul');
         opts = $.merge({
             'channel': activeChannel,
