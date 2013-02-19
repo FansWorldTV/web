@@ -1,7 +1,13 @@
-/*jslint browser: true*/
-/*global $, jQuery, alert, console, error, success, ajax, templateHelper, Routing, appLocale*/
+/*global $, jQuery, alert, console, error, success, endless, ajax, templateHelper, Routing, appLocale*/
+/*jslint nomen: true */ /* Tolerate dangling _ in identifiers */
 /*jslint vars: true */ /* Tolerate many var statements per function */
-/*jslint maxerr: 100 */ /*  Maximum number of errors */
+/*jslint white: true */
+/*jslint browser: true */
+/*jslint devel: true */ /* Assume console, alert, ... */
+/*jslint windows: true */ /* Assume Windows */
+/*jslint maxerr: 100 */ /* Maximum number of errors */
+
+
 var tv = {
 
     'init': function (filtersList, channelsList, targetDataList) {
@@ -18,20 +24,10 @@ var tv = {
         $('[data-subscribe-channel]').click(function () {
             tv.subscribe($(this));
         });
-
-        // top mosaic
         /*
-        site.startMosaic($(".content-container .list-mosaic"), {
-            minw: 100,
-            margin: 3,
-            liquid: true,
-            minsize: false,
-            fillLastRow: false
-        });
-
-        $(".ranking-widget .content-container .isotope_container").empty()
+        $(".ranking-widget .content-container .isotope_container").empty();
         $(".ranking-widget .content-container .isotope_container").attr('data-feed-source', 'home_ajaxpopularfeed');
-        $(".ranking-widget .content-container .isotope_container").fwGalerizer({})
+        $(".ranking-widget .content-container .isotope_container").fwGalerizer({});
         */
 
         var $contentContainer = $('.ranking-widget .content-container');
@@ -43,7 +39,7 @@ var tv = {
             normalize: false,
             endless: true,
             feedfilter: {'channel': 29, 'filter': 'popular', 'page': 1},
-            onEndless: function(plugin) {
+            onEndless: function( plugin ) {
                 console.log("new filter");
                 console.log(plugin.options.feedfilter);
                 return plugin.options.feedfilter;
@@ -71,7 +67,6 @@ var tv = {
                             'authorImage': video.author.image
                     };
                 };
-                //for(var i in videos.videos) { console.log(videos.videos[i]) }
                 for(i in videos.videos) {
                     if (videos.videos.hasOwnProperty(i)) {
                         outp.push(normalize(videos.videos[i]));
@@ -81,10 +76,27 @@ var tv = {
             }
         });
 
+        // channelToggle
+        tv.channelToggle();
+        // update tags
+        tv.mytags();
         // channels explore
         tv.explore();
     },
-
+    'channelToggle': function() {
+        'use strict';
+        $('#filter-channels').closest('ul').find("li").click(function(e){
+            var i;
+            var selectedId = $(this).first().attr('data-list-target');
+            $('#filter-channels').closest('ul').find("li.active").removeClass('active');
+            $(this).first().addClass('active');
+            var $activeChannel = $(".channels-widget .content .active");
+            $activeChannel.removeClass('active');
+            $(".channels-widget .content #" + selectedId).addClass('active');
+            // update tags
+            tv.mytags();
+        });
+    },
     'subscribe': function ($button) {
         "use strict";
 
@@ -118,7 +130,25 @@ var tv = {
         });
 
     },
+    'mytags': function() {
+        "use strict";
+        //ajax.genericAction('tag_ajaxgetusedinvideos', {'channel': 1, 'filter': 'popular'}, function(r){console.log(r);});
+        var $tagList = $('.content-container').find('.tag-list-container ul');
+        var channel = $('#filter-channels').closest('ul').find("li.active").attr("data-channel-id");
+        var filter = $('#list-filters ul').find('li.active').attr('data-list-filter-type');
+        $tagList.empty();
+        console.log("loading tags for channel %s with filter %s", channel, filter);
+        ajax.genericAction('tag_ajaxgetusedinvideos', {'channel': channel, 'filter': filter}, function(r){
+            var i;
+            for(i in r.tags) {
+                if (r.tags.hasOwnProperty(i)) {
+                    $tagList.append("<li>" + r.tags[i].title + "</li>");
+                    console.log("adding tag: %s", r.tags[i].title);
+                }
+            }
+        });
 
+    },
     'tags': function (activeChannel, filter, targetDataList, opts) {
         "use strict";
 
