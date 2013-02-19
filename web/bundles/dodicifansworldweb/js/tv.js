@@ -32,9 +32,11 @@ var tv = {
 
         var $contentContainer = $('.ranking-widget .content-container');
         var $container = $contentContainer.find('.isotope_container').last();
+        $container.data('page', 0);
         var outp = [];
         $container.attr('data-feed-source', 'teve_ajaxexplore'); //teve_ajaxexplore
         $container.empty();
+        /*
         $container.fwGalerizer({
             normalize: false,
             endless: true,
@@ -75,7 +77,8 @@ var tv = {
                 return outp;
             }
         });
-
+        */
+        tv.loadGallery();
         // channelToggle
         tv.channelToggle();
         // update tags
@@ -83,18 +86,83 @@ var tv = {
         // channels explore
         tv.explore();
     },
+    'loadGallery': function() {
+        "use strict";
+        var $contentContainer = $('.ranking-widget .content-container');
+        var $container = $contentContainer.find('.isotope_container').last();
+        var channel = $('#filter-channels').closest('ul').find("li.active").attr("data-channel-id");
+        var filter = $('#list-filters ul').find('li.active').attr('data-list-filter-type');
+        var page = $container.data('page');
+        var outp = [];
+
+        page += 1;
+
+        console.log("loading video gallery for channel %s with filter %s page: %s", channel, filter, page);
+        $container.attr('data-feed-source', 'teve_ajaxexplore'); //teve_ajaxexplore
+        $container.empty();
+        $container.fwGalerizer({
+            normalize: false,
+            endless: true,
+            feedfilter: {'channel': channel, 'filter': filter, 'page': page},
+            onEndless: function( plugin ) {
+                console.log("new filter");
+                console.log(plugin.options.feedfilter);
+                plugin.options.feedfilter.page += 1;
+                console.log("loading video gallery for channel %s with filter %s page: %s", plugin.options.feedfilter.channel, plugin.options.feedfilter.filter, plugin.options.feedfilter.page);
+                return plugin.options.feedfilter;
+            },
+            onDataReady: function(videos) {
+                console.log("dataReady");
+                var i;
+                var normalize = function(video) {
+                    var href = Routing.generate(appLocale + '_video_show', {
+                        'id': video.id,
+                        'slug': video.slug
+                    });
+                    var authorUrl = Routing.generate(appLocale + '_user_wall', {
+                        'username': video.author.username
+                    });
+                    return {
+                            'type': 'video',
+                            'date': video.createdAt,
+                            'href': href,
+                            'image': video.image,
+                            'slug': video.slug,
+                            'title': video.title,
+                            'author': video.author.username,
+                            'authorHref': authorUrl,
+                            'authorImage': video.author.image
+                    };
+                };
+                for(i in videos.videos) {
+                    if (videos.videos.hasOwnProperty(i)) {
+                        outp.push(normalize(videos.videos[i]));
+                    }
+                }
+                return outp;
+            }
+        });
+    },
     'channelToggle': function() {
         'use strict';
         $('#filter-channels').closest('ul').find("li").click(function(e){
             var i;
             var selectedId = $(this).first().attr('data-list-target');
+            var $activeChannel = $(".channels-widget .content .active");
+            // Isotope Handler
+            var $container = $('.ranking-widget .content-container').find('.isotope_container').last();
+
             $('#filter-channels').closest('ul').find("li.active").removeClass('active');
             $(this).first().addClass('active');
-            var $activeChannel = $(".channels-widget .content .active");
+
             $activeChannel.removeClass('active');
             $(".channels-widget .content #" + selectedId).addClass('active');
             // update tags
             tv.mytags();
+            // Empty gallery items
+            $container.data('fwGalerizer').destroy();
+            $container.data('page', 0);
+            tv.loadGallery();
         });
     },
     'subscribe': function ($button) {
