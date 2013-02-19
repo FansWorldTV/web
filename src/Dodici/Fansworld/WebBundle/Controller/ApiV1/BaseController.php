@@ -3,6 +3,7 @@
 namespace Dodici\Fansworld\WebBundle\Controller\ApiV1;
 
 use Dodici\Fansworld\WebBundle\Entity\Share;
+use Dodici\Fansworld\WebBundle\Entity\Comment;
 use Dodici\Fansworld\WebBundle\Entity\Video;
 use Dodici\Fansworld\WebBundle\Entity\Apikey;
 use Application\Sonata\UserBundle\Entity\User;
