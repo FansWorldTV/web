@@ -7,7 +7,13 @@
  * external dependencies:
  *      template helper
  */
-
+/*jslint browser: true*/
+/*global $, jQuery, alert, console, error, success, endless, ajax, templateHelper, Routing, appLocale*/
+/*jslint devel: true */ /* Assume console, alert, ... */
+/*jslint windows: true */ /* Assume Windows */
+/*jslint vars: true */ /* Tolerate many var statements per function */
+/*jslint maxerr: 100 */ /* Maximum number of errors */
+/*jslint nomen: true */ /* Tolerate dangling _ in identifiers */ 
 // fansWorld isotope wrapper plugin 1.0
 
 
@@ -29,10 +35,10 @@ $(document).ready(function () {
 		onError: function(error) {},
 		onIsotopeLoad: function(data) {},
 		onEndless: function(data) {},
-		onDataReady: function(data) {return data},
+		onDataReady: function(data) {return data;},
 		onBeforeRender: function(data) {},
 		onFilter: function(data) {},
-		onGallery: function(data) {},
+		onGallery: function(data) {}
 	};
 	function Plugin(element, options) {
 		this.element = element;
@@ -58,8 +64,8 @@ $(document).ready(function () {
 			$(window).smartresize(function(){
 				var cells = that.getMaxSections($container);
 				$container.find('.item').each(function(i, item){
-				var $this = $(this);
-				$this.css('width', ((100 / cells) - 1) + "%") // 2% margen entre los elementos
+					var $this = $(this);
+					$this.css('width', ((100 / cells) - 1) + "%"); // 2% margen entre los elementos
 				});
 				$container.isotope({
 					// update columnWidth to a percentage of container width
@@ -79,31 +85,29 @@ $(document).ready(function () {
 		loadGallery: function(plugin, jsonData) {
 			var that = plugin;
 			var $container = $(that.element);
-			console.log("loadGallery")
-			console.log(that.options.jsonData)
-			console.log("-----------")
-
+			var i, element;
 			endless.stop();
+			function appendElement (htmlTemplate) {
+				var $post = $(htmlTemplate);
+				$container.append($post).isotope('appended', $post);
+				$(htmlTemplate).find('.image').load(function() {
+					that.resize();
+				});
+			}
 			if(that.options.jsonData.length > 0) {
-				for(var i in that.options.jsonData) {
-					if(that.options.normalize === true) {
-						var element = that.normalizeData(that.options.jsonData[i]);
-					} else {
-						var element = that.options.jsonData[i];
+				for(i in that.options.jsonData) {
+					if (that.options.jsonData.hasOwnProperty(i)) {
+						if(that.options.normalize === true) {
+							element = that.normalizeData(that.options.jsonData[i]);
+						} else {
+							element = that.options.jsonData[i];
+						}
+						$.when(templateHelper.htmlTemplate('general-column_element', element))
+						.then(appendElement);
 					}
-					$.when(templateHelper.htmlTemplate('general-column_element', element))
-					.then(function(htmlTemplate) {
-						var $post = $(htmlTemplate)
-						$container.append($post).isotope('appended', $post);
-						console.log($post)
-						$(htmlTemplate).find('.image').load(function() {
-							that.resize()
-						});
-					})
 				}
 				$container.isotope('reLayout');
 				if(that.options.endless) {
-					console.log("make endless")
 					that.makeEndless();
 				}
 			} else {
@@ -111,7 +115,7 @@ $(document).ready(function () {
 			}
 		},
 		loadData: function(source, query) {
-			if(typeof(query) == 'undefined'){
+			if(typeof(query) === 'undefined'){
 				query = {};
 			}
 			var that = this;
@@ -132,10 +136,6 @@ $(document).ready(function () {
 				deferred.reject(new Error(error));
 			});
 			return deferred.promise();
-		},
-		normalizeTVdata: function(video) {
-			console.log("normalizeTVdata")
-
 		},
 		normalizeData: function(data) {
 			var href = Routing.generate(appLocale + '_' + data.type + '_show', {
@@ -202,7 +202,6 @@ $(document).ready(function () {
 			var $container = $(that.element);
 			endless.init(1, function() {
 				endless.stop();
-				console.log("doing endless")
 				that.options.onEndless(that);
 				$.when(that.loadData(that.options.feedSource, that.options.feedfilter))
 				.then(function(jsonData) {
