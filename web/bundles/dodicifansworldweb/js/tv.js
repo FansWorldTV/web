@@ -210,7 +210,8 @@ var tv = {
             var i;
             for(i in r.tags) {
                 if (r.tags.hasOwnProperty(i)) {
-                    $tagList.append("<li>" + r.tags[i].title + "</li>");
+                    var tagHref = Routing.generate(appLocale + '_teve_taggedvideos', {term: r.tags[i].title })
+                    $tagList.append("<li><a href='" + tagHref + "'>" + r.tags[i].title + "</a></li>");
                     console.log("adding tag: %s", r.tags[i].title);
                 }
             }
