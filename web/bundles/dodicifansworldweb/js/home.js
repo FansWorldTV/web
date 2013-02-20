@@ -377,8 +377,11 @@ home.loadSection.popularFeed = function(params){
                 console.log("new filter")
                 console.log(plugin.options.feedfilter)
                 return plugin.options.feedfilter;
+            },
+            onGallery: function() {
+                $contentContainer.removeClass('loading');
             }
-        })
+        });
         home.loadedSection.popularFeed = true;
         $contentContainer.addClass('isIso');
     };
