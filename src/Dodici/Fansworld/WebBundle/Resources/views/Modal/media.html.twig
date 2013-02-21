@@ -4,9 +4,8 @@
 <div class="modal-template row-fluid" data-modal-type="{{ type }}" data-entity-id="{{ media.id }}">
     <div class="span3 left">
         <div class="top-detail">
-            {% thumbnail media.author.image, 'small_square' %}
+            {% thumbnail media.author.image, 'small_square' with {'rel':'tooltip', 'data-title': media.author} %}
             <span class="media-title">{{ media.title }}</span>
-            <span class="author-name">{{ media.author }}</span>
         </div>
         {% if media.content %}
             <p data-expandable data-slice-point="120" class="media-content">{{ media.content|striptags|nl2br }}</p>
