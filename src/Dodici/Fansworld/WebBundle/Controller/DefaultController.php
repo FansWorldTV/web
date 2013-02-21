@@ -76,8 +76,8 @@ class DefaultController extends SiteController
 
         $repo = $this->getRepository('User');
         $irepo = $this->getRepository('Idol');
-        $topfans = $repo->findBy(array('enabled' => true, 'type' => User::TYPE_FAN), array('score' => 'DESC', 'fanCount' => 'DESC'), 15);
-        $topidols = $irepo->findBy(array('active' => true), array('fanCount' => 'DESC'), 15);
+        $topfans = $repo->findBy(array('enabled' => true, 'type' => User::TYPE_FAN), array('score' => 'DESC', 'fanCount' => 'DESC'), 16);
+        $topidols = $irepo->findBy(array('active' => true), array('fanCount' => 'DESC'), 16);
 
         return array('user' => $user, 'topfans' => $topfans, 'topidols' => $topidols);
     }

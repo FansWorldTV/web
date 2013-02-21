@@ -1,3 +1,35 @@
-<div style="background-color: grey; height: 800px; color: white;">
-    TODO
+<div class="relatedsidebar"style="background-color:#e8e8e8;color:#4f4b4b;
+            height:800px; width:98%;">
+
+    <div class="title_section" style="margin-left:10px;"><strong>Idolos</strong></div>
+
+    <div class="content_section" style="background-color:white">
+        <br/>
+        {% for idol in topidols %}
+            <a href="{{ path('idol_wall', {slug: idol.slug}) }}">
+                {% thumbnail idol.image, 'avatar' with {title: idol.firstname ~ ' ' ~ idol.lastname} %}
+            </a>
+        {% endfor %}
+        <br/><br/>
+    </div>
+
+
+    <div class="title_section"><strong>Ranking de Fans</strong></div>
+
+    <div class="content_section" style="background-color:white">
+        <br/>
+        {% for fan in topfans %}
+            <a href="{{ path('idol_wall', {slug: fan.username}) }}">
+                {% thumbnail fan.image, 'avatar' with {title: fan.firstname ~ ' ' ~ fan.lastname} %}
+            </a>
+        {% endfor %}
+
+        <br/><br/>
+        <button class="btn btn-success" data-suggest="" style="width:100%">SUGERIR IDOLOS A FANSWORLD</button>
+        <br/>
+    </div>
+
 </div>
+
+
+
