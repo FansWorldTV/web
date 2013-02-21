@@ -9,95 +9,101 @@
     text-align: right;
 }
 
-.share-box {
-    .size(auto, 505px);
-    right: 37%;
-    background-color:  #ffffff;
-    border:  2px solid #e2e2e4;
-    border-radius: 3px;
-    position: absolute;
-    color: @black;
-    z-index: 9999999;
+.share_content{
+    .btn.share {
+        .btn-success;
+    }
 
-    .arrow {
-        top: -6px;
+    .share-box {
+        .size(auto, 505px);
+        right: 37%;
+        background-color:  #ffffff;
+        border:  2px solid #e2e2e4;
+        border-radius: 3px;
         position: absolute;
-        left: 50%;
-    }
-
-    h4 {
         color: @black;
-        float: left;
-    }
+        z-index: 9999999;
 
-    .btn {
-        color: white !important;
-    }
-
-    input {
-        border: 2px solid #e2e2e4;
-        background-color: @white;
-        float: left;
-    }
-
-    .top {
-        color: @black;
-        height:  70px;
-
-        i.close-share {
-          display: block;
-          z-index: 99999999999999;
-          position: absolute;
-          top: 5px;
-          right: 5px;
-          background-image: url("../images/ui/closealert.png") !important;
-          .square(14px);
-          background-position: top;
-          cursor: pointer;
-
-          &:hover {
-            background-position: bottom;
-          }
+        .arrow {
+            top: -6px;
+            position: absolute;
+            left: 50%;
         }
 
-        input.wywtsay{
+        h4 {
+            color: @black;
+            float: left;
+        }
+
+        .btn {
+            color: white !important;
+        }
+
+        input {
             border: 2px solid #e2e2e4;
             background-color: @white;
-            width: 80%;
             float: left;
-            margin-left: 45px;
-            margin-top: 20px;
         }
 
-        p{
-            text-align: left;
-            font-size: 15px;
-            color: #333333;
-            font-weight: bold;
-            margin-left: 30px;
-            margin-top: 20px;
-        }
-    }
+        .top {
+            color: @black;
+            height:  70px;
 
-    .bottom{
+            i.close-share {
+              display: block;
+              z-index: 99999999999999;
+              position: absolute;
+              top: 5px;
+              right: 5px;
+              background-image: url("../images/ui/closealert.png") !important;
+              .square(14px);
+              background-position: top;
+              cursor: pointer;
 
-        div.sharewith{
-            margin-left: 5px;
-            margin-bottom: 15px;
+              &:hover {
+                background-position: bottom;
+              }
+            }
 
-            input{
-                width:  411px;
+            input.wywtsay{
+                border: 2px solid #e2e2e4;
+                background-color: @white;
+                width: 80%;
+                float: left;
+                margin-left: 45px;
+                margin-top: 20px;
+            }
+
+            p{
+                text-align: left;
+                font-size: 15px;
+                color: #333333;
+                font-weight: bold;
+                margin-left: 30px;
+                margin-top: 20px;
             }
         }
 
-        border-top: 2px solid #e2e2e4;
-        background-color: #f9f9f9;
-        height: 85px;
-        padding-left: 41px;
-        padding-right: 44px;
-        padding-top: 10px;
-    }
+        .bottom{
 
+            div.sharewith{
+                margin-left: 5px;
+                margin-bottom: 15px;
+
+                input{
+                    width:  411px;
+                }
+            }
+
+            border-top: 2px solid #e2e2e4;
+            background-color: #f9f9f9;
+            height: 85px;
+            padding-left: 41px;
+            padding-right: 44px;
+            padding-top: 10px;
+        }
+
+    }
 }
 
 .btn-checkbox{

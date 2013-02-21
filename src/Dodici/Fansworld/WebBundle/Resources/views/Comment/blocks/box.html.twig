@@ -13,7 +13,7 @@
                 <div class="span12 tags">
                     {% if entity.hastags %}
                             {% for hastag in entity.hastags %}
-                                <button class="btn">{{ hastag.tag.title }}</button>
+                                <span class="label label-success">{{ hastag.tag.title }}</span>
                             {% endfor %}
                     {% else %}
                             <button class="btn">sin tags</button>	

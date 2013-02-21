@@ -7,11 +7,11 @@
 {% block tv_body %}
     {% embed "DodiciFansworldWebBundle:Layout/Embed:tv_videodetail.html.twig" %}
         {% block breadcrumb %}
-            <span class="nav-bar tv">TV {% if video.videocategory %}| <a href="{{ path('teve_explorechannel', {id: video.videocategory.id, slug: video.videocategory.slug}) }}">{{ video.videocategory.title }}</a>{% endif %}</span>
+            <span class="nav-bar tv">TV {% if video.videocategory %}| <a href="{{ path('teve_explorechannel', {id: video.videocategory.id, slug: video.videocategory.slug}) }}">{{ video.videocategory.title }}</a>{% endif %} | {{ video.title }}</span>
         {% endblock %}
         
         {% block top_left_content %}
-            {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video, editbutton: false, reportbutton: false} %}
+            {#{% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video, editbutton: false, reportbutton: false} %}#}
             {{ kalturatwig.player(video)|raw }}
         {% endblock %}
         
@@ -26,7 +26,7 @@
               {% include 'DodiciFansworldWebBundle:Tv:blocks/now-watching.html.twig' with {entity: video} %}
             </div>
             <div>
-              {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video, sharebutton: false, likebutton: false} %}
+              {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video, sharebutton: true, likebutton: true} %}
             </div>
             
             <div class="content">

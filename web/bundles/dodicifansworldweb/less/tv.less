@@ -231,7 +231,8 @@ section.ranking-widget{
     background-color: #1b1b1b;
     color: @white;
     margin-bottom:  15px;
-    padding-top: 13px;
+    //padding-top: 13px;
+    height: 530px;
 
     .share_content{
         margin-bottom: 15px;
@@ -253,14 +254,22 @@ section#videos-related, section#videos-related-sort {
 
         a{
             position: relative;
+            height: 160px;
+            width: 200px;
+            overflow: hidden;
+
             span.video-duration{
                 color: white;
                 position: absolute;
-                bottom: 5px;
+                bottom: 12px;
                 right: 7px;
                 font-size: 15px;
-                opacity: 0.7;
                 text-shadow: 0 0 0.2em black, 0 0 0.2e
+            }
+
+            img {
+                max-width: none;
+                height: 100%;
             }
         }
 
@@ -269,14 +278,14 @@ section#videos-related, section#videos-related-sort {
           margin-bottom: 5px;
 
           &.title{
-            margin-top: 3px;
+            margin-top: 7px;
           }
         }
 
         
 
         span, p {
-            line-height: 12px;
+            line-height: 13px;
             font-size: 11px;
             word-wrap: break-word;
             text-overflow: ellipsis;
@@ -285,7 +294,12 @@ section#videos-related, section#videos-related-sort {
 }
 
 #top-left {
-  padding-bottom: 15px;
+  //padding-bottom: 15px;
+}
+
+#top-right {
+    padding-top: 10px;
+    margin-left: 20px;
 }
 
 #top-left, #top-right{
@@ -293,17 +307,18 @@ section#videos-related, section#videos-related-sort {
 
     .btn {
       color: @black;
-      font-weight: bold;
+      font-weight: 400;
+      font-size: 12px;
     }
     .videoframe {
-      .size(453px, 100%);
+      .size(100%, 100%);
       border: 0 !important;
     }
 }
 
 span.nav-bar.tv {
     margin-left: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     display: block;
     font-size: 20px;
 
@@ -347,3 +362,31 @@ span.nav-bar.tv {
 }
 
 
+.tag-container {
+    .tags {
+        .label {
+            float: right;
+            margin-right: 3px;
+            margin-bottom: 3px;
+            font-weight: 500;
+        }
+    }
+}
+
+div[data-wall] {
+    .actualizacion {
+        font-size: 12px;
+        line-height: 16px;
+        color: @black;
+
+        .status {
+            border: 1px solid  @gray;
+            
+            .infotext-header {
+                .comment-toolbar {
+                    display: none;
+                }
+            }
+        }
+    }
+}
