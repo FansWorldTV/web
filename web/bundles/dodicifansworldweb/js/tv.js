@@ -7,6 +7,19 @@
 /*jslint windows: true */ /* Assume Windows */
 /*jslint maxerr: 100 */ /* Maximum number of errors */
 
+/*
+ * library dependencies:
+ *      jquery 1.8.3
+ *      isotope
+ *      jsrender
+ *      jsviews
+ * external dependencies:
+ *      template helper
+ */
+
+// fansWorld tv class 1.0
+
+
 
 var tv = {
 
@@ -24,11 +37,6 @@ var tv = {
         $('[data-subscribe-channel]').click(function () {
             tv.subscribe($(this));
         });
-        /*
-        $(".ranking-widget .content-container .isotope_container").empty();
-        $(".ranking-widget .content-container .isotope_container").attr('data-feed-source', 'home_ajaxpopularfeed');
-        $(".ranking-widget .content-container .isotope_container").fwGalerizer({});
-        */
 
         var $contentContainer = $('.ranking-widget .content-container');
         var $container = $contentContainer.find('.isotope_container').last();
@@ -144,6 +152,16 @@ var tv = {
                 return outp;
             }
         });
+        $container.isotope({
+            getSortData : {
+                date : function ( $elem ) {
+                    return $elem.attr('data-element-date');
+                },
+                symbol : function ( $elem ) {
+                return $elem.find('.symbol').text();
+                }
+            }
+        });
     },
     'channelToggle': function() {
         'use strict';
@@ -178,9 +196,14 @@ var tv = {
             $('#list-filters').find("li.active").removeClass('active');
             $(this).first().addClass('active');
 
-
             console.log('changing filter to: %s', selectedFilter);
 
+            // update tags
+            tv.mytags();
+            // Empty gallery items
+            $container.data('fwGalerizer').destroy();
+            $container.data('page', 0);
+            tv.loadGallery();
         });
     },
     'subscribe': function ($button) {
