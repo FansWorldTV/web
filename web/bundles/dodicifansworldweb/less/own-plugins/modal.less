@@ -68,12 +68,21 @@
                 height: 90%;
 
                 .comments-and-tags {
+                    position: relative;
+
+                    .comment-loading {
+                        position: absolute;
+                        left: 43%;
+                        bottom: -45px;
+                    }
                     
                     div[data-wall] {
                         div.actualizacion {
                             position: relative;
 
                             header.comment-header {
+                                padding-left: 0;
+
                                 div.avatar {
                                     img {
                                         width: 20px;
@@ -89,6 +98,14 @@
                             .status {
                                 border: 0;
                                 margin-top: 0;
+
+                                .infotext-header, .infotext-content, .infotext-subcomments {
+                                    padding-left: 0;
+                                   
+                                    .share-desc {
+                                        padding-left: 0;
+                                    }
+                                }   
 
                                 .delete {
                                     position: absolute;
