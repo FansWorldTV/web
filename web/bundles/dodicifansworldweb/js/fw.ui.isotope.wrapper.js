@@ -65,8 +65,25 @@ $(document).ready(function () {
 				resizable: false, // disable normal resizing
 				masonry: {
 					columnWidth: ($container.width() / that.getMaxSections($container))
-				}
+				},
+				getSortData: {
+					date: function ( $elem ) {
+						console.log("requesting sort date: %s", $elem.attr('data-element-date'));
+						return $elem.attr('data-element-date');
+					},
+					author: function ( $elem ) {
+						console.log("requesting sort author: %s", $elem.find('.author-image').attr('title'));
+						return $elem.find('.author-image').attr('title');
+					},
+					likes: function ( $elem ) {
+						console.log("requesting sort likes: %s", $elem.attr('data-likeCount'));
+						return $elem.attr('data-likecount');
+					}
+
+				},
+				sortBy : 'random',
 			});
+
 			// Attach to window resize event
 			$(window).smartresize(function(){
 				var cells = that.getMaxSections($container);
@@ -96,7 +113,9 @@ $(document).ready(function () {
 			endless.stop();
 			function appendElement (htmlTemplate) {
 				var $post = $(htmlTemplate);
-				$container.append($post).isotope('appended', $post);
+				$post.attr("data-likeCount", (Math.random() * 100));
+				$post.attr("data-visitCount", (Math.random() * 100));
+				$container.append($post).isotope('appended', $post).isotope({ sortBy: 'likes' });
 				$(htmlTemplate).find('.image').load(function() {
 					that.resize();
 				});
@@ -201,7 +220,7 @@ $(document).ready(function () {
 				// update columnWidth to a percentage of container width
 				masonry: {
 					columnWidth: $container.width() / that.getMaxSections($container)
-				}
+				},
 			});
 			$container.isotope('reLayout');
 		},
@@ -218,6 +237,21 @@ $(document).ready(function () {
 					that.loadGallery(that, that.options.jsonData);
 				});
 			});
+		},
+		sort: function(key) {
+			var that = this;
+			var $container = $(that.element);
+			$container.data('isotope').$filteredAtoms.each( function( i, item ) {
+				//console.log( $.data( item, 'isotope-sort-data').perfDate );
+				$container.isotope({ sortBy: key }).isotope( 'updateSortData', $(item) ).isotope();
+			});
+		},
+		randomize: function() {
+			var that = this;
+			var $container = $(that.element);
+			$container.isotope('reloadItems').isotope({ sortBy: 'random' }).isotope('option', { sortBy: 'random' });
+			//$container.isotope('option', { sortBy: 'random' });
+			that.resize();
 		},
 		removeAll: function() {
 			var that = this;
