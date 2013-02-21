@@ -53,6 +53,10 @@
                         };
                     });
                     
+                    $('body').tooltip({
+                        selector:'[rel="tooltip"]'
+                    });
+                    
                     self.settings.onload(self.settings);
                 }
             });
