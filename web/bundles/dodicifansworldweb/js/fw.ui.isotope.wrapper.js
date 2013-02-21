@@ -60,28 +60,21 @@ $(document).ready(function () {
 			var $container = $(that.element);
 			that.options.feedSource = $container.attr('data-feed-source');
 			$container.addClass(that._name);
+			var $contentContainer = $('.ranking-widget .content-container');
+			$container = $contentContainer.find('.isotope_container').last();
+
 			$container.isotope({
 				itemSelector : that.options.itemSelector,
 				resizable: false, // disable normal resizing
 				masonry: {
 					columnWidth: ($container.width() / that.getMaxSections($container))
 				},
-				getSortData: {
-					date: function ( $elem ) {
-						console.log("requesting sort date: %s", $elem.attr('data-element-date'));
-						return $elem.attr('data-element-date');
-					},
-					author: function ( $elem ) {
-						console.log("requesting sort author: %s", $elem.find('.author-image').attr('title'));
-						return $elem.find('.author-image').attr('title');
-					},
-					likes: function ( $elem ) {
-						console.log("requesting sort likes: %s", $elem.attr('data-likeCount'));
-						return $elem.attr('data-likecount');
+				getSortData : {
+					likes: function($item) {
+						return parseInt($item.attr('data-likecount'), 10 );
 					}
-
 				},
-				sortBy : 'random',
+				sortBy : 'likes'
 			});
 
 			// Attach to window resize event
@@ -113,8 +106,6 @@ $(document).ready(function () {
 			endless.stop();
 			function appendElement (htmlTemplate) {
 				var $post = $(htmlTemplate);
-				$post.attr("data-likeCount", (Math.random() * 100));
-				$post.attr("data-visitCount", (Math.random() * 100));
 				$container.append($post).isotope('appended', $post).isotope({ sortBy: 'likes' });
 				$(htmlTemplate).find('.image').load(function() {
 					that.resize();
@@ -139,6 +130,7 @@ $(document).ready(function () {
 			} else {
 				endless.stop();
 			}
+			return that.options.onGallery();
 		},
 		loadData: function(source, query) {
 			if(typeof(query) === 'undefined'){
@@ -220,7 +212,7 @@ $(document).ready(function () {
 				// update columnWidth to a percentage of container width
 				masonry: {
 					columnWidth: $container.width() / that.getMaxSections($container)
-				},
+				}
 			});
 			$container.isotope('reLayout');
 		},
@@ -267,8 +259,10 @@ $(document).ready(function () {
 		},
 		teardown: function () {
 			var that = this;
+			var $container = $(that.element);
 			endless.stop();
 			that.removeAll();
+			$container.isotope('destroy');
 			$.removeData($(that.element)[0], that._name);
 			$(that.element).removeClass(that._name);
 			that.unbind();
