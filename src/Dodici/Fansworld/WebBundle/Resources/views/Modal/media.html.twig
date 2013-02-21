@@ -14,9 +14,9 @@
         {% include 'DodiciFansworldWebBundle:Comment:blocks/box.html.twig' with {entity: media} %}
     </div>
     <div class="span8 right">
-        {% if type == 'video' %}
-            {{ kalturatwig.player(media)|raw }}
-            {% include 'DodiciFansworldWebBundle:Tv:blocks/now-watching.html.twig' with {entity: media} %}
+        {% if type == "video" %}
+            {{ kalturatwig.player(media)|raw }}{#
+            {% include 'DodiciFansworldWebBundle:Tv:blocks/now-watching.html.twig' with {entity: media} %}#}
         {% else %}
             {% thumbnail media.image, 'wall' %}
         {% endif %}

@@ -67,6 +67,55 @@
                 overflow-x: hidden;
                 height: 90%;
 
+                .comments-and-tags {
+                    
+                    div[data-wall] {
+                        div.actualizacion {
+                            position: relative;
+
+                            header.comment-header {
+                                div.avatar {
+                                    img {
+                                        width: 20px;
+                                    }
+                                }
+                                div.action_container {
+                                    font-size: 13px;
+                                    font-weight: 400;
+                                    line-height: 20px;
+                                }
+                            }
+
+                            .status {
+                                border: 0;
+                                margin-top: 0;
+
+                                .delete {
+                                    position: absolute;
+                                    right: 0;
+                                    top: 0;
+                                }
+                                .comment-toolbar {
+                                    display: none;
+                                }
+
+                                .comments {
+                                    .subcomments-container {
+                                        padding-left: 15px;
+                                    }
+                                    .avatar img {
+                                        width: 20px;
+                                    }
+                                }
+                            }
+
+                            textarea.comment_message {
+                                width: 95%;
+                            }
+                        }
+                    }
+                }
+
                 .top-detail {
                     img {
                         width: 50px;
@@ -88,6 +137,7 @@
                         margin-left: 20px;
                     }
                 }
+
                 .media-content {
                     color: @black;
                     font-size: 15px;
@@ -99,12 +149,21 @@
             .right {
                 height: 90%;
                 padding-top: 100px;
+
                 img {
                     position: relative;
                     display: block;
                     margin: auto;
                     max-width: 100%;
                     max-height: 100%;
+                }
+                
+                object {
+                    position: relative;
+                    display: block;
+                    margin: auto;
+                    width: 70%;
+                    height: 60%;
                 }
             }
         }
