@@ -21,7 +21,7 @@
                 <div class='tipo'>Fotos</div>
                 <div class='separador' />
             </section>
-            <section class='videos-info'>
+            <section class='videos-info with-border'>
                 <div class='numero'>{% if entity.videoCount > 0 %}<a href="{{ path(entityType ~ '_videos', {'slug': entity.slug}) }}">{% endif %}{{ entity.videoCount }}{% if entity.videoCount > 0 %}</a>{%endif%}</div>
                 <div class='tipo'>Videos</div>
                 <div class='separador' />
