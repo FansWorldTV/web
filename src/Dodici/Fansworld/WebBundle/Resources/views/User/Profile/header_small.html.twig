@@ -8,51 +8,38 @@
 
 {% block header_small_right %}
 	{% if selfWall %}
-		<div class='span2'>
-            <div class='header-fship'>
-                
+            <div class='span2'>
+                <div class='header-fship'>
+
+                </div>
             </div>
-        </div>
-		<div class='span4 numbers-info'>
-			<section class='fotos-info'>
-		        <div class='numero'>{{ entity.photoCount }}</div>
-		        <div class='tipo'>Fotos</div>
-		    </section>
-		    
-		    <section class='videos-info with-border'>
-		        <div class='numero'>{{ entity.videoCount }}</div>
-		        <div class='tipo'>Videos</div>
-		    </section>
-		    
-		    <section class='fans-info'>
-		        <div class='numero'>{{ entity.fanCount }}</div>
-		        <div class='tipo'>Fans</div>
-		    </section>
-        </div>
-	{% else %}
-		
-		<div class='span4 numbers-info'>
-		    <section class='fotos-info'>
-		        <div class='numero'>{{ entity.photoCount }}</div>
-		        <div class='tipo'>Fotos</div>
-		    </section>
-		    
-		    <section class='videos-info with-border'>
-		        <div class='numero'>{{ entity.videoCount }}</div>
-		        <div class='tipo'>Videos</div>
-		    </section>
-		    
-		    <section class='fans-info'>
-		        <div class='numero'>{{ entity.fanCount }}</div>
-		        <div class='tipo'>Fans</div>
-		    </section>
-		</div>
-		
-		<div class='span2'>
-            <div class='header-fship'>
-                {% include "DodiciFansworldWebBundle:Default:blocks/fan_button.html.twig" with { entity:  entity, buttonSize: 'btn-large', fType: 'user' } %}
-			</div>
-		</div>
-		
+        {% endif %}
+
+        <div class='span4 numbers-info'>
+            <section class='fotos-info'>
+                {% set entityType = appstate.getType(entity) %}
+
+                <div class='numero'>{% if entity.photoCount > 0 %}<a href="{{ path(entityType ~ '_photos', {'slug': entity.username}) }}">{% endif %}{{ entity.photoCount }}{% if entity.photoCount > 0 %}</a>{%endif%}</div>
+                <div class='tipo'>Fotos</div>
+                <div class='separador' />
+            </section>
+            <section class='videos-info'>
+                <div class='numero'>{% if entity.videoCount > 0 %}<a href="{{ path(entityType ~ '_videos', {'slug': entity.username}) }}">{% endif %}{{ entity.videoCount }}{% if entity.videoCount > 0 %}</a>{%endif%}</div>
+                <div class='tipo'>Videos</div>
+                <div class='separador' />
+            </section>
+            <section class='fans-info'>
+                <div class='numero'>{% if entity.fanCount > 0 %}<a href="{{ path(entityType ~ '_fans', {'slug': entity.username}) }}">{% endif %}{{ entity.fanCount }}{% if entity.fanCount > 0 %}</a>{%endif%}</div>
+                <div class='tipo'>Fans</div>
+                <div class='separador' />
+            </section>
+	</div>
+                
+	{% if not selfWall %}
+            <div class='span2'>
+                <div class='header-fship'>
+                    {% include "DodiciFansworldWebBundle:Default:blocks/fan_button.html.twig" with { entity:  entity, buttonSize: 'btn-large', fType: 'user' } %}
+                </div>
+            </div>
 	{% endif %}
 {% endblock %}

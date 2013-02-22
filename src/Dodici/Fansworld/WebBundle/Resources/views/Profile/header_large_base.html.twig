@@ -43,24 +43,41 @@
 	            
 	        </div>
 	        <div class='span3 numbers-info'>
-	        	{% block header_numbersinfo %}
-    	            <section class='fotos-info'>
-                        {% set entityType = appstate.getType(entity) %}
-                            
-                        <div class='numero'>{% if entity.photoCount > 0 %}<a href="{{ path(entityType ~ '_photos', {'slug': entity.slug}) }}">{% endif %}{{ entity.photoCount }}{% if entity.photoCount > 0 %}</a>{%endif%}</div>
-                        <div class='tipo'>Fotos</div>
-                        <div class='separador' />
-                    </section>
-                    <section class='videos-info'>
-                        <div class='numero'>{% if entity.videoCount > 0 %}<a href="{{ path(entityType ~ '_videos', {'slug': entity.slug}) }}">{% endif %}{{ entity.videoCount }}{% if entity.videoCount > 0 %}</a>{%endif%}</div>
-                        <div class='tipo'>Videos</div>
-                        <div class='separador' />
-                    </section>
-                    <section class='fans-info'>
-                        <div class='numero'>{% if entity.fanCount > 0 %}<a href="{{ path(entityType ~ '_fans', {'slug': entity.slug}) }}">{% endif %}{{ entity.fanCount }}{% if entity.fanCount > 0 %}</a>{%endif%}</div>
-                        <div class='tipo'>Fans</div>
-                        <div class='separador' />
-                    </section>
+                    {% block header_numbersinfo %}
+                            {% set entityType = appstate.getType(entity) %}
+                            {% if entityType == 'user' %}
+                                <section class='fotos-info'>
+                                    <div class='numero'>{% if entity.photoCount > 0 %}<a href="{{ path(entityType ~ '_photos', {'username': entity.username}) }}">{% endif %}{{ entity.photoCount }}{% if entity.photoCount > 0 %}</a>{%endif%}</div>
+                                    <div class='tipo'>Fotos</div>
+                                    <div class='separador' />
+                                </section>
+                                <section class='videos-info'>
+                                    <div class='numero'>{% if entity.videoCount > 0 %}<a href="{{ path(entityType ~ '_videos', {'username': entity.username}) }}">{% endif %}{{ entity.videoCount }}{% if entity.videoCount > 0 %}</a>{%endif%}</div>
+                                    <div class='tipo'>Videos</div>
+                                    <div class='separador' />
+                                </section>
+                                <section class='fans-info'>
+                                    <div class='numero'>{% if entity.fanCount > 0 %}<a href="{{ path(entityType ~ '_fans', {'username': entity.username}) }}">{% endif %}{{ entity.fanCount }}{% if entity.fanCount > 0 %}</a>{%endif%}</div>
+                                    <div class='tipo'>Fans</div>
+                                    <div class='separador' />
+                                </section>
+                            {% else %}
+                                <section class='fotos-info'>
+                                    <div class='numero'>{% if entity.photoCount > 0 %}<a href="{{ path(entityType ~ '_photos', {'slug': entity.slug}) }}">{% endif %}{{ entity.photoCount }}{% if entity.photoCount > 0 %}</a>{%endif%}</div>
+                                    <div class='tipo'>Fotos</div>
+                                    <div class='separador' />
+                                </section>
+                                <section class='videos-info'>
+                                    <div class='numero'>{% if entity.videoCount > 0 %}<a href="{{ path(entityType ~ '_videos', {'slug': entity.slug}) }}">{% endif %}{{ entity.videoCount }}{% if entity.videoCount > 0 %}</a>{%endif%}</div>
+                                    <div class='tipo'>Videos</div>
+                                    <div class='separador' />
+                                </section>
+                                <section class='fans-info'>
+                                    <div class='numero'>{% if entity.fanCount > 0 %}<a href="{{ path(entityType ~ '_fans', {'slug': entity.slug}) }}">{% endif %}{{ entity.fanCount }}{% if entity.fanCount > 0 %}</a>{%endif%}</div>
+                                    <div class='tipo'>Fans</div>
+                                    <div class='separador' />
+                                </section>
+                            {% endif %}
 	            {% endblock %}
 	        </div>
 	    </div>

@@ -276,6 +276,8 @@ header.profile_head{
         }
         
         .numbers-info{
+            .pull-right();
+            margin-right: -19px;
             padding: 5px 0;
             
             a:hover {
@@ -290,8 +292,14 @@ header.profile_head{
             }
             
             section.with-border{
-                border-left: 2px solid gray;
-                border-right: 2px solid gray;
+                border-left: 1px solid gray;
+                border-right: 1px solid gray;
+                height: 33px;
+                margin-top: 3px;
+
+                .numero {
+                    margin-top: -4px;
+                }
             }
             
             .fotos-info, .videos-info, .fans-info{
@@ -328,6 +336,12 @@ header.profile_head{
     
     section.header_main.header_large{
         position: relative;
+
+        #myCarousel {
+            a.carousel-control {
+                display: none;
+            }
+        }
 
         div.main_left{
             div.avatar{
