@@ -22,7 +22,7 @@ class TeamRepository extends CountBaseRepository
      * @param int|null $offset
      * @param Sport|int|null $sport
      */
-    public function matching($category = null, $text = null, $user = null, $limit = null, $offset = null, $sport = null)
+    public function matching($category = null, $text = null, $user = null, $limit = null, $offset = null, $sport = null, $rescache=false)
     {
         /* FIXME: does not return all teamcategories properly when filtering by one */
         
@@ -76,6 +76,10 @@ class TeamRepository extends CountBaseRepository
 
         if ($offset !== null)
             $query = $query->setFirstResult($offset);
+            
+        if ($rescache === true) {
+            $query->useResultCache(true, 120);
+        }
             
         return $query->getResult();
     }
