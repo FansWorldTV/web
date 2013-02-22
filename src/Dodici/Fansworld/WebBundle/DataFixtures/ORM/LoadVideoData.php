@@ -1,6 +1,10 @@
 <?php
 namespace Dodici\Fansworld\WebBundle\DataFixtures\ORM;
 
+use Dodici\Fansworld\WebBundle\Entity\HasTag;
+use Dodici\Fansworld\WebBundle\Entity\Tag;
+use Dodici\Fansworld\WebBundle\Entity\HasTeam;
+use Dodici\Fansworld\WebBundle\Entity\HasIdol;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
 use Dodici\Fansworld\WebBundle\Entity\Video;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -11,6 +15,7 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Yaml\Yaml;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Gedmo\Sluggable\Util\Urlizer as GedmoUrlizer;
 
 class LoadVideoData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
 {
@@ -50,6 +55,7 @@ class LoadVideoData extends AbstractFixture implements FixtureInterface, Contain
     	        	    $video = new Video();
     	        	}
     	        	if ($user) $video->setAuthor($user);
+    	        	echo 'a';
     	        	
     	        	$videocategory = $manager->merge($this->getReference('videocategory-'.$ct['videocategory']));
     	        	$video->setVideocategory($videocategory);
@@ -60,6 +66,7 @@ class LoadVideoData extends AbstractFixture implements FixtureInterface, Contain
     	        	    $date = \DateTime::createFromFormat('Y-m-d', $ct['createdAt']);
     	        	    if ($date) $video->setCreatedAt($date);
     	        	}
+    	        	echo 'b';
     	        	
     	        	$video->setPrivacy(Privacy::EVERYONE);
     	        	$video->setHighlight($ct['highlight']);
@@ -70,15 +77,86 @@ class LoadVideoData extends AbstractFixture implements FixtureInterface, Contain
     	        	}
     	            
     		        $manager->persist($video);
+    		        echo 'c';
+    		        
+    		        if ($user) {
+        		        if (isset($ct['tagtexts']) && $ct['tagtexts']) {
+        		            foreach ($ct['tagtexts'] as $tid) {
+        		                echo 'd';
+        		                echo '*'.$tid.'*';
+        		                
+        		                $slug = GedmoUrlizer::urlize($tid);
+        		                if ($this->hasReference('tag-'.$slug)) {
+        		                    $tag = $manager->merge($this->getReference('tag-'.$slug));
+        		                } else {
+        		                    $tag = new Tag();
+            		    			$tag->setTitle($tid);
+            		    			$manager->persist($tag);
+            		    			$this->addReference('tag-'.$slug, $tag);
+        		                }
+        		                echo 'e';
+        		                $hastag = new HasTag();
+        			    		$hastag->setAuthor($user);
+        			    		$hastag->setTag($tag);
+        			    		$hastag->setVideo($video);
+        			    		
+        			    		$video->addHasTag($hastag);
+        			    		$manager->persist($video);
+        			    		echo 'f';
+        		            }
+        		        }
+        		        
+    		            if (isset($ct['tagteams']) && $ct['tagteams']) {
+        		            foreach ($ct['tagteams'] as $tid) {
+        		                echo 'g';
+        		                echo '*'.$tid.'*';
+        		                
+        		                if ($this->hasReference('team-'.$tid)) {
+            		                $team = $manager->merge($this->getReference('team-'.$tid));
+            		                
+            		                $hasteam = new HasTeam();
+                		    		$hasteam->setAuthor($user);
+                		    		$hasteam->setTeam($team);
+                		    		$hasteam->setVideo($video);
+                		    		
+                		    		$video->addHasTeam($hasteam);
+                		    		$manager->persist($video);
+                		    		echo 'h';
+        		                }
+        		            }
+        		        }
+        		        
+    		            if (isset($ct['tagidols']) && $ct['tagidols']) {
+    		                foreach ($ct['tagidols'] as $tid) {
+        		                echo 'i';
+        		                echo '*'.$tid.'*';
+        		                
+        		                if ($this->hasReference('idol-'.$tid)) {
+        		                    $idol = $manager->merge($this->getReference('idol-'.$tid));
+            		                
+            		                $hasidol = new HasIdol();
+                		    		$hasidol->setAuthor($user);
+                		    		$hasidol->setIdol($idol);
+                		    		$hasidol->setVideo($video);
+                		    		
+                		    		$video->addHasIdol($hasidol);
+                		    		$manager->persist($video);
+                		    		echo 'j';
+        		                }
+        		            }
+        		        }
+    		        }
     		        
     		        if ($video->getStream()) $toprocess[] = $video;
+    		        echo 'k';
 	            } catch(\Exception $e) {
-	                echo "(error!)";
+	                echo "(error!) " . $e->getMessage();
 	            }
 	            echo "\n";
+	            $manager->flush();
 	        }
 	        
-	        $manager->flush();
+	        
 	        
 	        $x = 0;
 	        $cnt = count($toprocess);

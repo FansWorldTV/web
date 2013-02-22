@@ -10,7 +10,7 @@ class FixtureCsvToYaml
 {
 	public function convertAll()
 	{
-	    $names = array('sports', 'teamcategories', 'teams', 'idols');
+	    $names = array('sports', 'teamcategories', 'teams', 'idols', 'videos');
 	    
 	    foreach ($names as $name) $this->convert($name);
 	}
@@ -182,7 +182,7 @@ class FixtureCsvToYaml
                         if (is_numeric($id)) {
                             $yml .= "        id: " . $id . "\n";
                         } else {
-                            $yml .= "        name: " . $id . "\n";
+                            $yml .= "        name: " . utf8_encode($id) . "\n";
                         }
                         
                         $yml .= "        debut: " . ($debut ? 'true' : 'false') . "\n";
@@ -191,6 +191,48 @@ class FixtureCsvToYaml
                         $yml .= "        manager: " . ($manager ? 'true' : 'false') . "\n";
                     }
                 }
+            }
+        }
+        
+        return $yml;
+    }
+    
+    private function nodeVideos($data)
+    {
+        if (!$data[0]) return null;
+        
+        $yml  = "-\n";
+        $yml .= "  author: "    . utf8_encode($data[0]) . "\n";
+        $yml .= "  stream: " . utf8_encode($data[1]) . "\n";
+        $yml .= "  highlight: " . utf8_encode($data[2]) . "\n";
+        $yml .= "  videocategory: " . utf8_encode($data[3]) . "\n";
+        
+        $datestr = utf8_encode($data[4]);
+        $date = '';
+        if ($datestr) {
+            $date = \DateTime::createFromFormat('d/m/Y', $datestr);
+        }
+        $yml .= "  createdAt: \"" . ($date ? $date->format('Y-m-d') : '') . "\"\n";
+        $yml .= "  title: " . utf8_encode($data[5]) . "\n";
+        
+        $tg = array('tagidols' => $data[6], 'tagteams' => $data[7], 'tagtexts' => $data[8]);
+        foreach ($tg as $k => $t) {
+            $ids = array();
+            $exp = explode(',', $t);
+            foreach ($exp as $e) if (trim($e)) $ids[] = utf8_encode(trim($e));
+            
+            $yml .= "  " . $k . ": \n";
+            foreach ($ids as $id) {
+                $yml .= "      - " . $id . "\n";
+            }
+        }
+                
+        $desc = $data[9];
+        if ($desc) {
+            $xp = explode("\n", $desc);
+            $yml .= "  content: |\n"; 
+            foreach ($xp as $x) {
+                $yml .= "    ".utf8_encode($x)."\n";
             }
         }
         

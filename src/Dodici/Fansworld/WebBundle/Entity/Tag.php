@@ -26,7 +26,6 @@ class Tag
 
     /**
      * @var string $title
-     * @Gedmo\Translatable
      *
      * @ORM\Column(name="title", type="string", length=250, nullable=false, unique=true)
      */
@@ -47,7 +46,7 @@ class Tag
     private $createdAt;
         
 	/**
-     * @Gedmo\Slug(fields={"title"}, unique=true)
+     * @Gedmo\Slug(fields={"title"})
      * @ORM\Column(length=250)
      */
     private $slug;
@@ -67,7 +66,7 @@ class Tag
         if (null === $this->useCount) {
         	$this->setUseCount(0);
         }
-        $this->setTitle(strtolower($this->getTitle()));
+        $this->setTitle(mb_strtolower($this->getTitle(), 'UTF-8'));
     }
     
 	public function useUp()

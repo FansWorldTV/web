@@ -109,6 +109,7 @@ class LoadIdolData extends AbstractFixture implements FixtureInterface, Containe
 		        /* END IMAGES */
 		
 		        $manager->persist($idol);
+		        $this->addReference('idol-'.$ct['id'], $idol);
 		        $manager->flush();
 	        }
 	        
