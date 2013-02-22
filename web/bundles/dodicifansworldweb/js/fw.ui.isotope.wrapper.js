@@ -68,13 +68,7 @@ $(document).ready(function () {
 				resizable: false, // disable normal resizing
 				masonry: {
 					columnWidth: ($container.width() / that.getMaxSections($container))
-				},
-				getSortData : {
-					likes: function($item) {
-						return parseInt($item.attr('data-likecount'), 10 );
-					}
-				},
-				sortBy : 'likes'
+				}
 			});
 
 			// Attach to window resize event
@@ -106,8 +100,9 @@ $(document).ready(function () {
 			endless.stop();
 			function appendElement (htmlTemplate) {
 				var $post = $(htmlTemplate);
-				$container.append($post).isotope('appended', $post).isotope({ sortBy: 'likes' });
+				$container.append($post).isotope('appended', $post);
 				$(htmlTemplate).find('.image').load(function() {
+					$container.isotope('reloadItems');
 					that.resize();
 				});
 			}
@@ -124,6 +119,7 @@ $(document).ready(function () {
 					}
 				}
 				$container.isotope('reLayout');
+				$container.isotope('reloadItems');
 				if(that.options.endless) {
 					that.makeEndless();
 				}
@@ -230,26 +226,12 @@ $(document).ready(function () {
 				});
 			});
 		},
-		sort: function(key) {
-			var that = this;
-			var $container = $(that.element);
-			$container.data('isotope').$filteredAtoms.each( function( i, item ) {
-				//console.log( $.data( item, 'isotope-sort-data').perfDate );
-				$container.isotope({ sortBy: key }).isotope( 'updateSortData', $(item) ).isotope();
-			});
-		},
-		randomize: function() {
-			var that = this;
-			var $container = $(that.element);
-			$container.isotope('reloadItems').isotope({ sortBy: 'random' }).isotope('option', { sortBy: 'random' });
-			//$container.isotope('option', { sortBy: 'random' });
-			that.resize();
-		},
 		removeAll: function() {
 			var that = this;
 			var $container = $(that.element);
 			var $removable = $container.find(that.options.itemSelector);
 			$container.isotope( 'remove', $removable );
+			$container.empty();
 			endless.stop();
 		},
 		destroy: function () {
