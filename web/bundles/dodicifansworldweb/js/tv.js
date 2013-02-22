@@ -8,16 +8,17 @@
 /*jslint maxerr: 100 */ /* Maximum number of errors */
 
 /*
- * library dependencies:
- *      jquery 1.8.3
+ * Class dependencies:
+ *      jquery > 1.8.3
  *      isotope
  *      jsrender
  *      jsviews
  * external dependencies:
- *      template helper
+ *      templateHelper
+ *      base genericAction
  */
 
-// fansWorld tv class 1.0
+// fansWorld TV class 1.0
 
 
 
@@ -44,48 +45,7 @@ var tv = {
         var outp = [];
         $container.attr('data-feed-source', 'teve_ajaxexplore'); //teve_ajaxexplore
         $container.empty();
-        /*
-        $container.fwGalerizer({
-            normalize: false,
-            endless: true,
-            feedfilter: {'channel': 29, 'filter': 'popular', 'page': 1},
-            onEndless: function( plugin ) {
-                console.log("new filter");
-                console.log(plugin.options.feedfilter);
-                return plugin.options.feedfilter;
-            },
-            onDataReady: function(videos) {
-                console.log("dataReady");
-                var i;
-                var normalize = function(video) {
-                    var href = Routing.generate(appLocale + '_video_show', {
-                        'id': video.id,
-                        'slug': video.slug
-                    });
-                    var authorUrl = Routing.generate(appLocale + '_user_wall', {
-                        'username': video.author.username
-                    });
-                    return {
-                            'type': 'video',
-                            'date': video.createdAt,
-                            'href': href,
-                            'image': video.image,
-                            'slug': video.slug,
-                            'title': video.title,
-                            'author': video.author.username,
-                            'authorHref': authorUrl,
-                            'authorImage': video.author.image
-                    };
-                };
-                for(i in videos.videos) {
-                    if (videos.videos.hasOwnProperty(i)) {
-                        outp.push(normalize(videos.videos[i]));
-                    }
-                }
-                return outp;
-            }
-        });
-        */
+
         tv.loadGallery();
         // channelToggle
         tv.channelToggle();
