@@ -172,7 +172,8 @@ class CommentController extends SiteController
             if (!empty($subcomments)) {
                 foreach ($subcomments as $subcomment) {
                     $response[(string) $commentId][] = array(
-                        'content' => $subcomment->getContent()
+                        'content' => $subcomment->getContent(),
+                        'authorAvatarUrl' => $this->getImageUrl($subcomment->getAuthor()->getImage(), 'small_square')
                     );
                 }
             }

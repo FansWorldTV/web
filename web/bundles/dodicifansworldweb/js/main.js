@@ -190,9 +190,10 @@ var site = {
 
         $("body").delegate("a[data-modal-url]", "click", function(e){
             e.preventDefault();
-            $(this).modalPopup();
+            $(this).modalPopup({
+                'duration': 300
+            });
             $(this).trigger('click')
-            console.log('hola');
         });
 
 
