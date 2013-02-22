@@ -21,7 +21,7 @@ class BenchController extends SiteController
     /**
      * HTTP (full) caching
      * @Cache(maxage="120")
-     * @Template("DodiciFansworldWebBundle:bench:teamlist.html.twig")
+     * @Template("DodiciFansworldWebBundle:Bench:teamlist.html.twig")
      * @Route("/cache/http", name="admin_bench_httpcache")
      */
     public function httpCacheAction()
@@ -33,7 +33,7 @@ class BenchController extends SiteController
     
 	/**
      * Doctrine result caching
-     * @Template("DodiciFansworldWebBundle:bench:teamlist.html.twig")
+     * @Template("DodiciFansworldWebBundle:Bench:teamlist.html.twig")
      * @Route("/cache/result", name="admin_bench_resultcache")
      */
     public function resultCacheAction()
@@ -45,7 +45,7 @@ class BenchController extends SiteController
     
 	/**
      * No caching
-     * @Template("DodiciFansworldWebBundle:bench:teamlist.html.twig")
+     * @Template("DodiciFansworldWebBundle:Bench:teamlist.html.twig")
      * @Route("/cache/none", name="admin_bench_nocache")
      */
     public function noCacheAction()
