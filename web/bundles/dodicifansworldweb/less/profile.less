@@ -264,8 +264,9 @@ header.profile_head{
             
             
             h1{
-                font-size: 26px;
+                font-size: 22px;
                 line-height: 26px;
+                font-weight: 600;
             }
             
                 
@@ -276,6 +277,11 @@ header.profile_head{
         
         .numbers-info{
             padding: 5px 0;
+            
+            a:hover {
+                color: @white;
+            }
+            
             > section{
                 float: left;
                 height: 40px;
@@ -321,6 +327,8 @@ header.profile_head{
     }
     
     section.header_main.header_large{
+        position: relative;
+
         div.main_left{
             div.avatar{
                 margin-left: 30px;
@@ -342,13 +350,19 @@ header.profile_head{
                 margin-top: 10%;
                 h1{
                     height: 72px;
-                    font-size: 36px;
+                    font-size: 600;
+                    font-size: 23px;
                     max-width: 100%;
                     overflow: hidden;
                     text-overflow: ellipsis;
                 }
+
                 .addFriend{
                     margin-top: 22%;
+                }
+
+                a:hover {
+                    color: @white;
                 }
                 
                 .header-fship{
@@ -356,6 +370,8 @@ header.profile_head{
                         font-size: 20px;
                         font-weight: bold;
                         text-transform: uppercase;
+                        position: absolute;
+                        bottom: 23px;
                     }
                 }
                 
@@ -365,7 +381,8 @@ header.profile_head{
             }
             
             .numbers-info{
-                margin-top: 16%;
+                margin-top: 37%;
+
                 .fotos-info, .videos-info, .fans-info{
                     padding-right: 20%;
                     text-align: right;
@@ -379,11 +396,11 @@ header.profile_head{
                         padding-top: 5px;
                     }
                     div.separador{
-                        border-bottom: 2px solid gray;
+                        border-bottom: 1px solid gray;
                         float: right;
                         height: 0;
                         margin: 7px 0;
-                        width: 100%;
+                        width: 73%;
                     }
                 }
             }

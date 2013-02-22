@@ -45,17 +45,19 @@
 	        <div class='span3 numbers-info'>
 	        	{% block header_numbersinfo %}
     	            <section class='fotos-info'>
-                        <div class='numero'>{{ entity.photoCount }}</div>
+                        {% set entityType = appstate.getType(entity) %}
+                            
+                        <div class='numero'>{% if entity.photoCount > 0 %}<a href="{{ path(entityType ~ '_photos', {'slug': entity.slug}) }}">{% endif %}{{ entity.photoCount }}{% if entity.photoCount > 0 %}</a>{%endif%}</div>
                         <div class='tipo'>Fotos</div>
                         <div class='separador' />
                     </section>
                     <section class='videos-info'>
-                        <div class='numero'>{{ entity.videoCount }}</div>
+                        <div class='numero'>{% if entity.videoCount > 0 %}<a href="{{ path(entityType ~ '_videos', {'slug': entity.slug}) }}">{% endif %}{{ entity.videoCount }}{% if entity.videoCount > 0 %}</a>{%endif%}</div>
                         <div class='tipo'>Videos</div>
                         <div class='separador' />
                     </section>
                     <section class='fans-info'>
-                        <div class='numero'>{{ entity.fanCount }}</div>
+                        <div class='numero'>{% if entity.fanCount > 0 %}<a href="{{ path(entityType ~ '_fans', {'slug': entity.slug}) }}">{% endif %}{{ entity.fanCount }}{% if entity.fanCount > 0 %}</a>{%endif%}</div>
                         <div class='tipo'>Fans</div>
                         <div class='separador' />
                     </section>

@@ -2,7 +2,7 @@
 			
 {% block splash_container %}  
 	{% if highlights is defined and highlights is not null and highlights|length > 0%}
-        {% include 'DodiciFansworldWebBundle:Default/blocks:carousel.html.twig' with {carouselitems: highlights} %}
+        {% include 'DodiciFansworldWebBundle:Default/blocks:carousel.html.twig' with {carouselitems: highlights, showCaption: false} %}
 	{% elseif entity.splash %}
 		{% thumbnail entity.splash, 'splash' %}        
     {% else %}
