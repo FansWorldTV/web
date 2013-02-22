@@ -2,7 +2,7 @@
     <header class="ranking-filters-container">
         {% include "DodiciFansworldWebBundle:Tv:blocks/filters.html.twig"  %}
     </header>
-    
+
     <div class='content-container'>
         <div class='tag-list-container'>
             {% include "DodiciFansworldWebBundle:Tv:blocks/tag_list.html.twig"  %}
@@ -14,6 +14,6 @@
 </section>
 <script>
     $(function(){
-    	tv.init();
+        window.fansworld.tv = new TV(1, 2, 3);
     });
 </script>
