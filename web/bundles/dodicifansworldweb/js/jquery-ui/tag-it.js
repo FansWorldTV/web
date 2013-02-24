@@ -268,24 +268,33 @@
                         var slug = that._cleanedInput();
                         var autocomplete = that.tagInput.data("autocomplete");
                         if(typeof autocomplete !== 'undefined'){
-                            var itemData = that.tagInput.data("autocomplete").menu.activeMenu.prevObject.data('uiAutocompleteItem'); //.menu.active
-                            if(typeof itemData !== 'undefined'){
-                                if(that._formatStr(itemData.value) == that._formatStr(slug)){
-                                    var extra = itemData.extraData;
+                            var prevObject = autocomplete.menu.activeMenu.prevObject;
+                            if(typeof prevObject !== 'undefined') {
+                                var itemData = prevObject.data('uiAutocompleteItem'); //.menu.active
+                                if(typeof itemData !== 'undefined'){
+                                    if(that._formatStr(itemData.value) == that._formatStr(slug)){
+                                        var extra = itemData.extraData;
+                                    } else {
+                                        var extra = {
+                                            id: parseInt(Math.random()*99999),
+                                            slug: slug.replace(/ +/g, '-'),
+                                            type: 'text'
+                                        };  
+                                    }
                                 } else {
                                     var extra = {
                                         id: parseInt(Math.random()*99999),
                                         slug: slug.replace(/ +/g, '-'),
                                         type: 'text'
-                                    };  
-                                }
+                                    };
+                                } 
                             } else {
                                 var extra = {
                                     id: parseInt(Math.random()*99999),
                                     slug: slug.replace(/ +/g, '-'),
                                     type: 'text'
                                 };
-                            }                            
+                            }                          
                         }
 
                         that.createTag(that._cleanedInput(), null, null, extra);
