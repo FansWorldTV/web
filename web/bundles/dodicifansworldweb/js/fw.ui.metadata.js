@@ -122,7 +122,7 @@ $(document).ready(function () {
                     source: function( request, response ) {
                         console.log("tagit llama autocomplete request.term: " + request.term)
                         $.ajax({
-                            url: 'http://fansworld.dodici.local/app_dev.php/tag/ajax/matchall',
+                            url: that.options.dataSource,
                             dataType: "JSON",
                             type: 'GET',
                             data: {
