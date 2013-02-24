@@ -1,3 +1,12 @@
+/*global $, jQuery, alert, console, error, success, endless, ajax, templateHelper, Routing, appLocale, exports, module, require, define*/
+/*jslint nomen: true */ /* Tolerate dangling _ in identifiers */
+/*jslint vars: true */ /* Tolerate many var statements per function */
+/*jslint white: true */
+/*jslint browser: true */
+/*jslint devel: true */ /* Assume console, alert, ... */
+/*jslint windows: true */ /* Assume Windows */
+/*jslint maxerr: 100 */ /* Maximum number of errors */
+
 /*
  * library dependencies:
  *      jquery 1.8.3
@@ -7,7 +16,7 @@
  *      appLocale
  */
 
-// FansWorld tagify plugin 1.6 (prepopulate)
+// FansWorld tagify plugin 1.7 (tagit)
 // 1.4 fix FB.ui popup
 // 1.5 add 'user' type to tagifier
 // 1.6 missing comma
@@ -35,11 +44,12 @@ $(document).ready(function () {
         text: {
             selected: []
         },
+        sampleTags: ['c++', 'java', 'php', 'coldfusion', 'javascript', 'asp', 'ruby', 'python', 'c', 'scala', 'groovy', 'haskell', 'perl', 'erlang', 'apl', 'cobol', 'go', 'lua'],
         prePopulate: [],
         action: null,
         dataSource: null,
         onEntityAdd: function(entity) {},
-        onEntityDelete: function(entity) {},
+        onEntityDelete: function(entity) {}
     };
 
     // The actual plugin constructor
@@ -66,7 +76,7 @@ $(document).ready(function () {
             that.options.dataSource = Routing.generate(appLocale + $(that.element).attr('data-route'));
             that.options.action = $(that.element).attr('data-action');
             var pre = $("#form_prepopulate").val();
-            if(typeof(pre) != 'undefined' && pre.length > 0) {
+            if(typeof(pre) !== 'undefined' && pre.length > 0) {
                 pre.split(',').forEach(function(val) {
                     if(val.length > 0) {
                         var tagInfo = val.split(':');
@@ -85,9 +95,10 @@ $(document).ready(function () {
                         //that.addEntityItem(that.options.prePopulate[that.options.prePopulate.length -1]);
                     }
                 });
-                console.log("sale preload")
+                console.log("sale preload");
             }
-            console.log(that.options.dataSource)
+            console.log(that.options.dataSource);
+            /*
             $(that.element).tokenInput(that.options.dataSource, {
                 theme: that.options.theme,
                 queryParam: that.options.queryParam || "text",
@@ -102,22 +113,76 @@ $(document).ready(function () {
                     that.deleteEntityItem(item);
                 }
             });
+            */
+
+            $(that.element).tagit({
+                availableTags: that.options.sampleTags,
+                // This will make Tag-it submit a single form value, as a comma-delimited field.
+                autocomplete: {
+                    source: function( request, response ) {
+                        console.log("tagit llama autocomplete request.term: " + request.term)
+                        $.ajax({
+                            url: 'http://fansworld.dodici.local/app_dev.php/tag/ajax/matchall',
+                            dataType: "JSON",
+                            type: 'GET',
+                            data: {
+                                'text': request.term
+                            },
+                            success: function( data ) {
+                                response( $.map( data, function( item ) {
+                                    return {
+                                        label: item.label, //+ (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryName,
+                                        value: item.value,
+                                        extraData: item.result
+                                    };
+                                }));
+                            }
+                        });
+                    },
+                    minLength: 1
+                },
+                singleField: true,
+                singleFieldNode: $(that.element),
+                afterTagAdded: function(evt, ui) {
+                    if (!ui.duringInitialization) {
+                        console.log("afterTagAdded")
+                        console.log(ui.extra)
+                        that.addEntityItem({result: ui.extra});
+                    }
+                },
+                afterTagRemoved: function(evt, ui) {
+                    if (!ui.duringInitialization) {
+                        console.log("afterTagRemoved")
+                        console.log(ui.tag.data('extra'))
+                        that.deleteEntityItem({result: ui.tag.data('extra')});
+                    }
+                }                
+            });
+
         },
         addEntityItem: function (item) {
             var that = this;
+            /*
+            if(typeof(item.result.type) === 'undefined') {
+                item.result.type = 
+            }
+            */
+            item.result.type = item.result.type || 'text';
             that.options[item.result.type].selected.push(item);
             that.updateInput('#form_' + that.options.action + item.result.type, that.options[item.result.type].selected);
             console.log("will add: " + JSON.stringify(item) + " to: #form_" + that.options.action + item.result.type);
         },
         updateInput: function(inputSelector, list) {
-            var str = '';
-            for (var i in list) {
+            var i, str = '';
+            for (i in list) {
+                // TODO add hasProperty check 
                 str += list[i].result.id + ',';
             }
             $(inputSelector).val(str);
         },
         deleteEntityItem: function(item) {
             var that = this;
+            item.result.type = item.result.type || 'text';
             var pos = that.options[item.result.type].selected.indexOf(item);
             that.options[item.result.type].selected.splice(pos, 1);
             that.updateInput('#form_' + that.options.action + item.result.type, that.options[item.result.type].selected);
