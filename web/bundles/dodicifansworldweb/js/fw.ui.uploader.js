@@ -1,3 +1,12 @@
+/*global $, jQuery, alert, console, error, success, endless, ajax, templateHelper, qq, Routing, appLocale, exports, module, require, define*/
+/*jslint nomen: true */ /* Tolerate dangling _ in identifiers */
+/*jslint vars: true */ /* Tolerate many var statements per function */
+/*jslint white: true */
+/*jslint browser: true */
+/*jslint devel: true */ /* Assume console, alert, ... */
+/*jslint windows: true */ /* Assume Windows */
+/*jslint maxerr: 100 */ /* Maximum number of errors */
+
 /*
  * library dependencies:
  *      jquery 1.8.3
@@ -8,7 +17,12 @@
  *      appLocale
  */
 
-// fansWorld file upload plugin 1.5
+/*jslint browser: true*/
+/*global $, jQuery, alert, console, error, success, ajax, templateHelper, Routing, appLocale*/
+/*jslint vars: true */ /* Tolerate many var statements per function */
+/*jslint maxerr: 100 */ /*  Maximum number of errors */
+
+// fansWorld file upload plugin 1.6 (auto resize with a timer)
 
 // the semi-colon before function invocation is a safety net against concatenated
 // scripts and/or other plugins which may not be closed properly.
@@ -32,6 +46,7 @@ $(document).ready(function () {
             photo: Routing.generate(appLocale + '_photo_fileupload'),   // link for photos
             video: 'http://www.kaltura.com/api_v3/index.php'            // link for videos
         },
+        timer: null,
         mediaType: null,
         // custom bindings
         onSubmit: function(id, fileName){},
@@ -128,18 +143,16 @@ $(document).ready(function () {
         },
         bindFormSubmit: function() {
             var that = this;
-            console.log("bindFormSubmit")
             //$('#cboxLoadedContent').find("form") <--- suck it from above
             $("form.upload-" + that.options.mediaType).submit(function() {
-                console.log("before submit")
                 var data = $(this).serializeArray();
                 var href = $(this).attr('action');
                 $.colorbox({
                     href: href ,
                     data: data,
                     onComplete: function(){
-                        that.bindFormActions();
-                        that.resizePopup();
+                        //that.bindFormActions();
+                        //that.resizePopup();
                     }
                 });
                 return false;
@@ -149,7 +162,7 @@ $(document).ready(function () {
             var that = this;
             that.bindFormSubmit();
             that.bindAlbumActions();
-            setTimeout(function(){ that.resizePopup(); }, 2000);
+            that.options.timer = setInterval(function(){ that.resizePopup(); }, 250);
         },
         createFwPhotoUploader: function() {
             var that = this;
@@ -171,7 +184,7 @@ $(document).ready(function () {
                             }),
                             iframe: false,
                             innerWidth: 700,
-                            innerHeight: 700,
+                            innerHeight: 160,
                             onComplete: function() {
                                 that.resizePopup();
                                 that.bindFormActions();
@@ -343,6 +356,7 @@ $(document).ready(function () {
         },
         teardown: function() {
             var that = this;
+            clearInterval(that.options.timer);
             $.removeData($(that.element)[0], that._name);
             $(that.element).removeClass(that._name);
             $(that.element).removeClass('cboxElement').removeData('colorbox');
