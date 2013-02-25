@@ -2,10 +2,11 @@
 
 namespace Dodici\Fansworld\WebBundle\Services;
 
+use Dodici\Fansworld\WebBundle\Entity\HasTag;
+use Dodici\Fansworld\WebBundle\Entity\HasIdol;
+use Dodici\Fansworld\WebBundle\Entity\HasTeam;
 use Dodici\Fansworld\WebBundle\Entity\HasUser;
-
 use Dodici\Fansworld\WebBundle\Entity\Video;
-
 use Dodici\Fansworld\WebBundle\Entity\Activity;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
