@@ -94,10 +94,10 @@ class VideoSubscriptionController extends BaseController
                 
                 if ($action == 'add') {
                     $done = $this->get('subscriptions')->subscribe($vc, $user);
-                    if (!$done) throw new HttpException(401, 'User already subscribed');
+                    if (!$done) throw new HttpException(400, 'User already subscribed');
                 } elseif ($action == 'remove') {
                     $done = $this->get('subscriptions')->unsubscribe($vc, $user);
-                    if (!$done) throw new HttpException(401, 'User is not subscribed');
+                    if (!$done) throw new HttpException(400, 'User is not subscribed');
                 }
                 
                 return $this->result(true);
