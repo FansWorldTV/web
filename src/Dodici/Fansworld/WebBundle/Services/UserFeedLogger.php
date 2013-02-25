@@ -61,7 +61,7 @@ class UserFeedLogger
                     case 'team':
                     case 'idol':
                     case 'tag':
-                        $hasclass = 'Has'.ucfirst($entitytype);
+                        $hasclass = 'Dodici\\Fansworld\\WebBundle\\Entity\\Has'.ucfirst($entitytype);
                         $has = new $hasclass();
                         $has->setAuthor($author);
                         $has->{'set'.ucfirst($entitytype)}($entity);
