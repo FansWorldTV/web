@@ -19,7 +19,7 @@
             <section class='fotos-info'>
                 {% set entityType = appstate.getType(entity) %}
 
-                <div class='numero'>{% if entity.photoCount > 0 %}<a href="{{ path(entityType ~ '_photos', {'slug': entity.username}) }}">{% endif %}{{ entity.photoCount }}{% if entity.photoCount > 0 %}</a>{%endif%}</div>
+                <div class='numero'>{% if entity.photoCount > 0 %}<a href="{% if entityType == 'user' %}{{ path(entityType ~ '_photos', {'username': entity.username}) }}{% else %}{{ path(entityType ~ '_photos', {'slug': entity.slug}) }}{% endif %}">{% endif %}{{ entity.photoCount }}{% if entity.photoCount > 0 %}</a>{%endif%}</div>
                 <div class='tipo'>Fotos</div>
                 <div class='separador' />
             </section>
