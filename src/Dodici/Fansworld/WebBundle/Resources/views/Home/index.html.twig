@@ -16,38 +16,36 @@
                 {% endfor %}
             </ul>
 
-            <div class="thumb-container">
+            <div class="category-container">
+                {% set c = 0%}
                 {% for cat in categories %}
+                    {% set c = c+1 %}
                     {% set video = videos[cat.id] %}
-                    <span data-category-id="{{ cat.id }}" {% if not loop.first %} class="hidden" {% endif %} >
+                    <div data-category-id="{{ cat.id }}" {% if not loop.first %} class="hidden" {% endif %} >
+                        <img src="{{ asset('bundles/dodicifansworldweb/images/home/slider_0' ~ c ~ '.png' )}}" />
                         {% if video %}
-                            {% thumbnail video.image, 'wall' %}
+                            {#{% thumbnail video.image, 'wall' %}#}
                             <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}"><i class="play-video"></i></a>
                         {% endif %}
-                    </span>
-                {% endfor %}
-            </div>
+                            
+                        <div class="content-container">
+                            <h1>{{ cat.title }}</h1>
 
-            <div class="content-container">
-                {% for cat in categories %}
-                    {% set video = videos[cat.id] %}
-                    <div data-category-id="{{ cat.id }}" {% if not loop.first %} class="hidden" {% endif %}>
-                        <span>Destacado Fansworld</span>
-                        <h1>{{ cat.title }}</h1>
+                            {% if video %}
+                                <h2>{{ video.title }}</h2>
+                                <p>{{ video.content }}</p>
+                            {% endif %}
 
-                        {% if video %}
-                            <h2>{{ video.title }}</h2>
-                            <p>{{ video.content }}</p>
-                        {% endif %}
+                            <a href="{{ path('teve_home') }}"><button class="explore" >Explorar</button></a>
 
-                        <a href="{{ path('teve_home') }}"><button class="explore" >Explorar</button></a>
-
-                        {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                            <a href="{{ path('fos_user_registration_register') }}"><button class="register">Registrarse</button></a>
-                        {% endif %}
+                            {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                <a href="{{ path('fos_user_registration_register') }}"><button class="register">Registrarse</button></a>
+                            {% endif %}
+                        </div>
                     </div>
                 {% endfor %}
             </div>
+
         </div>
 
         <ul class="tabs" {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} data-user-logged="true" {% else %} data-user-logged = "false" {% endif %}>

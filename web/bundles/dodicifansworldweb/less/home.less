@@ -1,13 +1,17 @@
 header.home-header {
     font-family: "Open Sans";
     color: @white;
-    .size(700px, 100%);
+    //.size(700px, 100%);
     //background: url('../images/back-nasty.jpg');
-    background-color: @black;
+    //background-color: @black;
+    .size(auto, 100%);
+    background-color: black;
     position: relative;
     margin-bottom: 20px;
 
     h1.title {
+        display: none;
+
         padding-top: 30px;
         margin-bottom: 60px;
         font-size: 25px;
@@ -21,128 +25,161 @@ header.home-header {
     }
 
     div.center-container {
-        .size(406px, 960px);
-        margin: 0 auto;
-        display: block;
+        .size(380px, 100%);
+        margin: 0;
         position: relative;
         padding: 0;
+        overflow: hidden;
 
         ul.sections {
             display: block;
-            width: 180px;
-            .pull-left();
-            margin: 0;
+            width: 800px;
+            margin: 0 auto;
             padding: 0;
-            background-color: @black;
-            background: url('../images/bg_module_home.png') repeat;
+            background-color: black;
+            //background: url('../images/bg_module_home.png') repeat;
 
             li {
+                .pull-left();
                 text-align: left;
-                color: @gray;
-                font-size: 20px;
+                color: @grayDark;
+                font-size: 19px;
                 font-weight: 300;
                 padding: 20px;
-                background-color: @black;
-                background: url('../images/bg_module_home.png') repeat;
+                background-color: black;
+                //background: url('../images/bg_module_home.png') repeat;
                 cursor: pointer;
+                border-right: 1px solid #292728;
+
+                &:last-child {
+                    border-right: 0;
+                }
 
                 &.active {
-                    background: none;
-                    background-color: black;
-                    color: gold;
+                    //background: none;
+                    border-bottom: 2px solid @green;
+                    background-color: #292728;
+                    color: @grayLight;
                     cursor: initial;
                 }
-            }
-        }
-
-        div.thumb-container {
-            display: block;
-            .pull-left();
-            width: 500px;
-            height: 100%;
-            overflow: hidden;
-
-            img {
-                .size(100%, 100%);
-            }
-
-            i.play-video {
-                background-image: url('../images/play-icon.png');
-                background-size: 100px;
-                .square(100px);
-                position: absolute;
-                left: 39%;
-                top: 39%;
-                opacity: 0.5;
-
-                &:hover{
-                    opacity: 1;
+                &.active:hover {    
+                    color: @grayLight !important;
+                }   
+                &:hover {
+                    color: @green;
                 }
             }
         }
 
-        .content-container {
-            display: block;
-            .pull-left();
-            .size(346px, 220px);
-            margin: 0;
-            padding: 30px;
-            background-color: black;
+        div.category-container {
+            .size(100%, 100%);
+            overflow: hidden;
+            margin: 0 auto;
+            clear: both;
             position: relative;
 
-            span {
-                color: @gray;
-                font-weight: 100;
-            }
+            div[data-category-id] {
+                width: 960px;
+                display: block;
+                height: 320px;
+                margin: 0 auto;
+                position: relative;
 
-            h1 {
-                color: gold;
-                font-weight: 300;
-            }
+                i.play-video {
+                    background-image: url('../images/play-icon.png');
+                    background-size: 100px;
+                    .square(100px);
+                    position: absolute;
+                    left: 24%;
+                    top: 24%;
+                    opacity: 0.5;
 
-            h2 {
-                color: @white;
-                font-weight: 300;
-            }
-
-            p {
-                color: @white;
-                font-weight: 100;
-                font-size: 13px;
-                margin-top: 30px;
-            }
-
-            button {
-                position: absolute;
-                bottom: 30px;
-                font-weight: 100;
-                font-size: 18px;
-                text-align: center;
-                .border-radius(3px);
-                height: 50px;
-                padding: 8px 10px 8px 10px;
-
-                &.explore {
-                    background-color: @black;
-                    color: white;
-                    border: 1px solid gray;
+                    &:hover{
+                        opacity: 1;
+                    }
                 }
 
-                &.register{
-                    left: 127px;
-                    background-color: @green;
-                    color: white;
-                    border: 0;
+                &.hidden {
+                    display: none !important;
+                }
+
+                .content-container {
+                    display: block;
+                    .size(200px, 400px);
+                    padding: 20px;
+                    position: absolute;
+                    right: 0;
+                    top: 20px;
+                    background-image: url('../images/home/bg_module_home.png');
+
+                    span {
+                        color: @gray;
+                        font-weight: 100;
+                    }
+
+                    h1 {
+                        color: gold;
+                        font-weight: 300;
+                        font-size: 20px;
+                    }
+
+                    h2 {
+                        color: @white;
+                        font-weight: 300;
+                        line-height: 22px;
+                        font-size: 20px;
+                        margin-top: -5px;
+                        height: 45px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+                    p {
+                        color: @white;
+                        font-weight: 100;
+                        font-size: 13px;
+                        margin-top: 10px;
+                        height: 55px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+                    button {
+                        position: absolute;
+                        bottom: 10px;
+                        font-weight: 100;
+                        font-size: 18px;
+                        text-align: center;
+                        .border-radius(3px);
+                        height: 50px;
+                        padding: 8px 10px 8px 10px;
+
+                        &.explore {
+                            background-color: @black;
+                            color: white;
+                            border: 1px solid gray;
+                        }
+
+                        &.register{
+                            left: 127px;
+                            background-color: @green;
+                            color: white;
+                            border: 0;
+                        }
+                    }
                 }
             }
         }
     }
 
     ul.tabs {
-        margin: 0 auto;
+        /*margin: 0 auto;
         display: block;
         position: relative;
-        margin-top: 98px;
+        margin-top: 98px;*/
+        position: absolute;
+        bottom: -1px;
+        left: 38%;
 
         &[data-user-logged*="true"]{
             width: 296px;
@@ -153,24 +190,33 @@ header.home-header {
         }
 
         li {
+            margin-right: 2px;
             .pull-left();
-            font-size: 25px;
+            font-size: 15px;
             font-family: "Open Sans";
-            font-weight: normal;
-            color: @white;
+            font-weight: 300;
             .size(auto, auto);
-            padding: 25px;
+            padding: 15px;
             cursor: pointer;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            background-color: @grayLight;
+            border-bottom: 1px solid @gray;
+            color: @black;
 
             &.active {
                 background-color: white;
-                border-top: 2px solid orange;
-                color: @black;
+                //border-top: 2px solid orange;
                 cursor: initial;
+                border-bottom: 0;
             }
 
             a {
                 color: inherit;
+            }
+
+            &:last-child {
+                margin-right: 0;
             }
         }
     }

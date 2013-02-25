@@ -29,11 +29,9 @@ home.toggleSections = function(){
     $(".home-header ul.sections li").on('click', function(){
         var category = $(this).attr('data-category-id');
 
-        $(".home-header .thumb-container span").addClass('hidden');
-        $(".home-header .content-container div").addClass('hidden');
+        $(".home-header .category-container div[data-category-id]").addClass('hidden');
 
-        $(".home-header .content-container div[data-category-id='" + category + "']").removeClass('hidden');
-        $(".home-header .thumb-container span[data-category-id='" + category + "']").removeClass('hidden');
+        $(".home-header .category-container div[data-category-id='" + category + "']").removeClass('hidden');
 
         $(".home-header ul.sections li").removeClass('active');
         $(this).addClass('active');
