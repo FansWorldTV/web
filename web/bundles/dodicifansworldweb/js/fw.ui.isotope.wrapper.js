@@ -98,7 +98,6 @@ $(document).ready(function () {
 			endless.stop();
 			function appendElement (htmlTemplate) {
 				var $post = $(htmlTemplate);
-				console.log("fwGalerizer.loadGallery.appendElement()");
 				console.log($container.data('isotope'));
 				$container.append($post).isotope('appended', $post);
 				$(htmlTemplate).find('.image').load(function() {
@@ -115,10 +114,7 @@ $(document).ready(function () {
 							element = that.options.jsonData[i];
 						}
 						$.when(templateHelper.htmlTemplate('general-column_element', element))
-						.then(function (htmlTemplate) {
-							console.log("fwGalerizer.loadGallery.htmlTemplate()");
-							appendElement(htmlTemplate);
-						});
+						.then(appendElement);
 					}
 				}
 				$container.isotope('reLayout');
