@@ -56,13 +56,11 @@ $(document).ready(function () {
 	}
 	Plugin.prototype = {
 		init: function () {
+			console.log("fwGalerizer.init()");
 			var that = this;
 			var $container = $(that.element);
 			that.options.feedSource = $container.attr('data-feed-source');
 			$container.addClass(that._name);
-			var $contentContainer = $('.ranking-widget .content-container');
-			$container = $contentContainer.find('.isotope_container').last();
-
 			$container.isotope({
 				itemSelector : that.options.itemSelector,
 				resizable: false, // disable normal resizing
@@ -100,6 +98,8 @@ $(document).ready(function () {
 			endless.stop();
 			function appendElement (htmlTemplate) {
 				var $post = $(htmlTemplate);
+				console.log("fwGalerizer.loadGallery.appendElement()");
+				console.log($container.data('isotope'));
 				$container.append($post).isotope('appended', $post);
 				$(htmlTemplate).find('.image').load(function() {
 					$container.isotope('reloadItems');
@@ -115,7 +115,10 @@ $(document).ready(function () {
 							element = that.options.jsonData[i];
 						}
 						$.when(templateHelper.htmlTemplate('general-column_element', element))
-						.then(appendElement);
+						.then(function (htmlTemplate) {
+							console.log("fwGalerizer.loadGallery.htmlTemplate()");
+							appendElement(htmlTemplate);
+						});
 					}
 				}
 				$container.isotope('reLayout');
