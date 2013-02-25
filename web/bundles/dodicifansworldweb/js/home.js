@@ -1,5 +1,4 @@
 // ver 10.1
-;
 var home = {};
 
 home.init = function(){
@@ -243,8 +242,6 @@ home.loadSection.enjoy = function(){
                       } else if ($container.width() > 1200) {
                         var cells = 5;
                       }
-                    //alert("w: " + $container.width()+ " c: " + cells)
-
                     $.each(post, function(i, item) {
                         var $this = $(item);
                         $this.css('width', ((100 / cells) - 2) + "%")
@@ -343,6 +340,7 @@ home.loadSection.activityFeed = function(params){
         $contentContainer.addClass('loading');
         $container.fwGalerizer({
             onEndless: function(plugin) {
+                $contentContainer.addClass('loading');
                 var lastDate = $('section.home-content .content-container[data-type-tab="activityFeed"] #elements .post').last().attr('data-element-date');
                 plugin.options.feedfilter = {
                     'date': lastDate
@@ -350,6 +348,9 @@ home.loadSection.activityFeed = function(params){
                 console.log("new filter")
                 console.log(plugin.options.feedfilter)
                 return plugin.options.feedfilter;
+            },
+            onGallery: function() {
+                $contentContainer.removeClass('loading');
             }
         })
         home.loadedSection.activityFeed = true;
@@ -370,6 +371,7 @@ home.loadSection.popularFeed = function(params){
         $contentContainer.addClass('loading');
         $container.fwGalerizer({
             onEndless: function(plugin) {
+                $contentContainer.addClass('loading');
                 var lastDate = $('section.home-content .content-container[data-type-tab="popularFeed"] #elements .post').last().attr('data-element-date');
                 plugin.options.feedfilter = {
                     'date': lastDate
@@ -377,7 +379,7 @@ home.loadSection.popularFeed = function(params){
                 console.log("new filter")
                 console.log(plugin.options.feedfilter)
                 return plugin.options.feedfilter;
-            }, 
+            },
             onGallery: function() {
                 $contentContainer.removeClass('loading');
             }
@@ -389,6 +391,5 @@ home.loadSection.popularFeed = function(params){
 }
 
 ;$(document).ready(function(){
-    console.log("HOME INIT")
     home.init();
 });
