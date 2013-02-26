@@ -8,6 +8,7 @@ home.init = function(){
     if($("section").hasClass('home-content')){
         if(isLoggedIn){
             home.filterSection.activityFeed();
+            /*
             home.loadSection.activityFeed({}, function(){
                 endless.init(1, function(){
                     var lastDate = $('section.home-content .content-container[data-type-tab="activityFeed"] .elements .element').last().attr('data-element-date');
@@ -17,6 +18,8 @@ home.init = function(){
                     });
                 });
             });
+            */
+            home.loadSection.activityFeed();
         }else{
             home.loadSection.enjoy();
         }
@@ -141,23 +144,70 @@ home.getMaxSections = function(container) {
     return cells;
 }
 
-home.loadSection.enjoy22 = function(params){
+home.loadSection.enjoy = function(params){
 
     if(typeof(params) == 'undefined'){
         params = {};
     }
+    var $toAppendTrending = $('section.home-content .content-container[data-type-tab="enjoy"] .tags .pull-left');
     var $contentContainer = $('section.home-content .content-container[data-type-tab="enjoy"]');
     var $container = $contentContainer.find('#elements');
     $container.attr('data-feed-source', 'home_ajaxenjoy');
     if(!$contentContainer.hasClass('isIso')) {
-        $container.fwGalerizer({ })
+        $container.fwGalerizer({
+            endless: false,
+            normalize: false,
+            onDataReady: function(jsonData) {
+                var i, outp = [];
+                var normalize = function(video) {
+                    var href = Routing.generate(appLocale + '_video_show', {
+                        'id': video.id,
+                        'slug': video.slug
+                    });
+                    var authorUrl = Routing.generate(appLocale + '_user_wall', {
+                        'username': video.author.username
+                    });
+                    return {
+                            'type': 'video',
+                            'date': video.createdAt,
+                            'href': href,
+                            'image': video.image,
+                            'slug': video.slug,
+                            'title': video.title,
+                            'author': video.author.username,
+                            'authorHref': video.author.url,
+                            'authorImage': video.author.image
+                    };
+                };
+                for(i in jsonData.trending){
+                    var tag = jsonData.trending[i];
+
+                    var elementToAppend = $('<span class="label"></span>');
+
+                    elementToAppend.html(tag.title)
+                    .attr('data-tag-id', tag.id)
+                    .attr('data-tag-slug', tag.slug);
+
+                    $toAppendTrending.append(elementToAppend);
+                }
+                for(i in jsonData.videos) {
+                    if (jsonData.videos.hasOwnProperty(i)) {
+                        outp.push(normalize(jsonData.videos[i]));
+                    }
+                }
+                return outp;
+            },
+            onGallery: function() {
+                $contentContainer.removeClass('loading');
+            }
+        });
         home.loadedSection.enjoy = true;
         $contentContainer.addClass('isIso');
     };
     return;
 }
 
-home.loadSection.enjoy = function(){
+home.loadSection.enjoy22 = function(){
 
     var toAppendTrending = $('section.home-content .content-container[data-type-tab="enjoy"] .tags .pull-left');
     var toAppendVideos = $('section.home-content .content-container[data-type-tab="enjoy"] .elements');
