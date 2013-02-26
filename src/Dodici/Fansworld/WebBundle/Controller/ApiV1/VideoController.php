@@ -57,7 +57,8 @@ class VideoController extends BaseController
      * 			visitCount: int,
      * 			likeCount: int,
      * 			commentCount: int,
-     * 			watchlisted: boolean
+     * 			watchlisted: boolean,
+     * 			url: string
      * 		),
      * 		...
      * 		)
@@ -78,7 +79,7 @@ class VideoController extends BaseController
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
             }
             
-            $allowedfields = array('author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount', 'watchlisted');
+            $allowedfields = array('author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount', 'watchlisted', 'url');
             $extrafields = $this->getExtraFields($allowedfields);
             
             $pagination = $this->pagination(array('weight', 'createdAt'), 'weight');
@@ -145,6 +146,7 @@ class VideoController extends BaseController
      * 			likeCount: int,
      * 			commentCount: int,
      * 			watchlisted: boolean,
+     * 			url: string,
      * 
      * 			// extra fields, tagged entities
      * 			tagged_idols: array (
@@ -196,7 +198,7 @@ class VideoController extends BaseController
             
             
             $allowedfields = array(
-            	'author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount', 'watchlisted',
+            	'author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount', 'watchlisted', 'url',
                 'tagged_idols', 'tagged_teams', 'tagged_tags', 'tagged_users'
             );
             $extrafields = $this->getExtraFields($allowedfields);
@@ -211,6 +213,9 @@ class VideoController extends BaseController
                         break;
                     case 'watchlisted':
                         $return[$x] = $this->get('video.playlist')->isInPlaylist($video, $user);
+                        break;
+                    case 'url':
+                        $return[$x] = $this->get('router')->generate('video_show', array('id' => $video->getId(), 'slug' => $video->getSlug()), true);
                         break;
                     case 'tagged_idols':
                         $has = $video->getHasidols();

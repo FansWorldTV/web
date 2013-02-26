@@ -18,19 +18,15 @@ class VideoUploader
 {
 	protected $request;
 	protected $em;
-	protected $api;
-	protected $ftp;
 	protected $appmedia;
 	protected $security_context;
     protected $user;
 	protected $uploadpath;
 
-    function __construct(EntityManager $em, RequestBuilder $api, FtpWriter $ftp, AppMedia $appmedia, SecurityContext $security_context, $uploadpath)
+    function __construct(EntityManager $em, AppMedia $appmedia, SecurityContext $security_context, $uploadpath)
     {
         $this->request = Request::createFromGlobals();
         $this->em = $em;
-        $this->api = $api;
-        $this->ftp = $ftp;
         $this->appmedia = $appmedia;
         $this->security_context = $security_context;
         $this->user = $security_context->getToken() ? $security_context->getToken()->getUser() : null;
@@ -45,6 +41,8 @@ class VideoUploader
      * @param User $author - user uploading the video
      * 
      * @param string|null $filename - optional filename
+     * 
+     * @deprecated
      * 
      */
     public function upload($filepath, User $author, $filename=null)
@@ -69,7 +67,8 @@ class VideoUploader
         
         $file->move($this->uploadpath, $newname);
 		
-    	$token = $this->api->createMetadata($showname, $newname, 'video', 'uservideos|user_' . $author->getId(), new \DateTime(), array('published' => 1));
+        $token = null;
+    	//$token = $this->api->createMetadata($showname, $newname, 'video', 'uservideos|user_' . $author->getId(), new \DateTime(), array('published' => 1));
         
     	if ($token) {
     	    return intval($token);

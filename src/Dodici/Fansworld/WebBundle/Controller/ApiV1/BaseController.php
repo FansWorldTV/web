@@ -402,6 +402,9 @@ class BaseController extends SiteController
                         $rv[$x] = $this->get('video.playlist')->isInPlaylist($video, $user);
                     }
                     break;
+                case 'url':
+                    $rv[$x] = $this->get('router')->generate('video_show', array('id' => $video->getId(), 'slug' => $video->getSlug()), true);
+                    break;
                 default:
                     $methodname = 'get'.ucfirst($x);
                     $rv[$x] = $video->$methodname();

@@ -383,7 +383,7 @@ services:
       arguments: [@security.context, @doctrine.orm.entity_manager, @appstate]
     video.uploader:
       class: Dodici\Fansworld\WebBundle\Services\VideoUploader
-      arguments: [@doctrine.orm.entity_manager, @flumotion.api.request, @flumotion.ftp, @appmedia, @security.context, %kernel.root_dir%/../web/uploads/videos]
+      arguments: [@doctrine.orm.entity_manager, @appmedia, @security.context, %kernel.root_dir%/../web/uploads/videos]
     fansworld.kaltura.notification:
       class: Dodici\Fansworld\WebBundle\Services\FansworldKalturaNotification
       arguments: [@kaltura, @logger, @doctrine.orm.entity_manager, @video.uploader]

@@ -54,7 +54,7 @@ class EventFeeder {
         
         foreach ($result as $xp) {
             $state = (string)$xp->estado->attributes()->id;
-            $stadium = (string)$xp->attributes()->nombreEstadio;
+            $stadium = utf8_decode((string)$xp->attributes()->nombreEstadio);
             
             if ($state == 0) {
                 $idlocal = (string)$xp->local->attributes()->id;
