@@ -33,7 +33,6 @@
     {% if teams|length > 0 %}
         <div class="title_section"><strong>Equipos</strong></div>
         <div class="content_section">
-            <br/>
             {% for team in teams %}
                 <a href="{{ path('team_wall', {slug: team.slug}) }}" rel="tooltip" title="{{ team.shortname }}">
                     {% thumbnail team.image, 'avatar' with {title: team.shortname} %}
@@ -53,7 +52,6 @@
                 {% thumbnail hasteam.team.image, 'avatar' with {title: hasteam.team.title} %}
             </a>
             {% endfor %}
-
             <button class="btn btn-success checkIn" data-event-id="{{ match.id }}" data-event-check-in="">Check in</button>
             <div class="match_info"> {{ match.stadium }} <br/> {{ match.fromtime|date("d/m/Y H:i") }} </div>
         {% endfor %}
