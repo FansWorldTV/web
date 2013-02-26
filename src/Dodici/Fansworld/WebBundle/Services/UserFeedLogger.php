@@ -63,7 +63,7 @@ class UserFeedLogger
                     case 'tag':
                         $hasclass = 'Dodici\\Fansworld\\WebBundle\\Entity\\Has'.ucfirst($entitytype);
                         $has = new $hasclass();
-                        $has->setAuthor($author);
+                        if ($author) $has->setAuthor($author);
                         $has->{'set'.ucfirst($entitytype)}($entity);
                         $activity->{'addHas'.ucfirst($entitytype)}($has);
                         break;
