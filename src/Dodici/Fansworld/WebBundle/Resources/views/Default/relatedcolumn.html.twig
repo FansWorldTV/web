@@ -1,34 +1,122 @@
-<div class="relatedsidebar"style="background-color:#e8e8e8;color:#4f4b4b;
-            height:800px; width:98%;">
+<div class="relatedsidebar">
 
-    <div class="title_section" style="margin-left:10px;"><strong>Idolos</strong></div>
+    {% if topidols|length > 0 %}
+        <div class="title_section"><strong>Idolos</strong></div>
+        <div class="content_section">
+            {% for idol in topidols %}
+                <a href="{{ path('idol_wall', {slug: idol.slug}) }}" rel="tooltip" title="{{ idol.firstname ~ ' ' ~ idol.lastname }}">
+                    {% thumbnail idol.image, 'avatar' with {title: idol.firstname ~ ' ' ~ idol.lastname} %}
+                </a>
+            {% endfor %}
 
-    <div class="content_section" style="background-color:white">
-        <br/>
-        {% for idol in topidols %}
-            <a href="{{ path('idol_wall', {slug: idol.slug}) }}">
-                {% thumbnail idol.image, 'avatar' with {title: idol.firstname ~ ' ' ~ idol.lastname} %}
+            <!--
+                TODO / NEXT FEATURE
+                <br/><br/>
+                <button class="btn btn-success suggestIdols" data-suggest="">SUGERIR IDOLOS A FANSWORLD</button>
+            -->
+        </div>
+    {% endif %}
+
+
+    {% if topfans|length > 0 %}
+        <div class="title_section"><strong>Fans</strong></div>
+        <div class="content_section">
+            {% for fan in topfans %}
+                <a href="{{ path('user_wall', {username: fan.username}) }}" rel="tooltip" title="{{ fan.firstname ~ ' ' ~ fan.lastname }}">
+                    {% thumbnail fan.image, 'avatar' with {title: fan.firstname ~ ' ' ~ fan.lastname} %}
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
+    {% if teams|length > 0 %}
+        <div class="title_section"><strong>Equipos</strong></div>
+        <div class="content_section">
+            <br/>
+            {% for team in teams %}
+                <a href="{{ path('team_wall', {slug: team.slug}) }}" rel="tooltip" title="{{ team.shortname }}">
+                    {% thumbnail team.image, 'avatar' with {title: team.shortname} %}
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if matchs|length > 0 %}
+        <div class="title_section"><strong>Proximos Partidos</strong></div>
+        <div class="content_section">
+
+        {% for match in matchs %}
+            {{ match.hasteams|length }}
+            {% for hasteam in match.hasteams %}
+            <a href="#" rel="tooltip" data-original-title="{{ hasteam.team.title }}">
+                {% thumbnail hasteam.team.image, 'avatar' with {title: hasteam.team.title} %}
             </a>
-        {% endfor %}
-        <br/><br/>
-    </div>
+            {% endfor %}
 
-
-    <div class="title_section"><strong>Ranking de Fans</strong></div>
-
-    <div class="content_section" style="background-color:white">
-        <br/>
-        {% for fan in topfans %}
-            <a href="{{ path('idol_wall', {slug: fan.username}) }}">
-                {% thumbnail fan.image, 'avatar' with {title: fan.firstname ~ ' ' ~ fan.lastname} %}
-            </a>
+            <button class="btn btn-success checkIn" data-event-id="{{ match.id }}" data-event-check-in="">Check in</button>
+            <div class="match_info"> {{ match.stadium }} <br/> {{ match.fromtime|date("d/m/Y H:i") }} </div>
         {% endfor %}
 
-        <br/><br/>
-        <button class="btn btn-success" data-suggest="" style="width:100%">SUGERIR IDOLOS A FANSWORLD</button>
-        <br/>
-    </div>
 
+
+
+
+<!--
+    <a href="/app_dev.php/team/club-atletico-san-lorenzo-de-almagro" rel="tooltip" data-original-title="San Lorenzo">
+        <img title="San Lorenzo" width="50" src="/uploads/media/default/0001/01/thumb_11_default_avatar_f189b35f8d3bdc303e9f3474e5e6ae348b9a864b.png">
+    </a>
+    <a href="/app_dev.php/team/club-atletico-velez-sarsfield" rel="tooltip" data-original-title="Vélez">
+<img title="Vélez" width="50" src="/uploads/media/default/0001/01/thumb_9_default_avatar_94446d51407cc4f302fe7b6616b24cd8f2f4f1bc.png">                </a>
+    <button class="btn btn-success checkIn" data-suggest="">Check in</button>
+<div class="match_info">San Lorenzo VS Vlz  <br> Jueves 24 </div>
+
+
+    <a href="/app_dev.php/team/club-atletico-san-lorenzo-de-almagro" rel="tooltip" data-original-title="San Lorenzo">
+        <img title="San Lorenzo" width="50" src="/uploads/media/default/0001/01/thumb_11_default_avatar_f189b35f8d3bdc303e9f3474e5e6ae348b9a864b.png">
+    </a>
+    <a href="/app_dev.php/team/club-atletico-velez-sarsfield" rel="tooltip" data-original-title="Vélez">
+<img title="Vélez" width="50" src="/uploads/media/default/0001/01/thumb_9_default_avatar_94446d51407cc4f302fe7b6616b24cd8f2f4f1bc.png">                </a>
+    <button class="btn btn-success checkIn" data-suggest="">Check in</button>
+<div class="match_info">San Lorenzo VS Vlz  <br> Jueves 24 </div>
+
+
+<button class="btn btn-large btn-success" data-event-id="1" data-event-check-in="">CHECK IN</button>
+
+
+
+-->
+
+        </div>
+    {% endif %}
+
+
+    <div class="sidebar-videos">
+        {% for video in videos %}
+            <div class="item">
+                <div class="item-info">
+                    <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                        <div class="overlay"></div>
+                        <div class="title-and-user">
+                            <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                                <span class="title">{{ video.title|truncate(24) }}</span>
+                            </a>
+                        </div>
+
+                        <div class="image">
+                        <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                            {% thumbnail video.image, 'huge_square' %}
+                        </a>
+
+                        <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                            <i class="play-video"></i>
+                        </a>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 
 

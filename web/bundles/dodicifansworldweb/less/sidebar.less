@@ -27,6 +27,14 @@
     }
 }
 
+
+@media (max-width: 800px) {
+    .advertising{
+        display: none;
+    }
+}
+
+
 .sidebar-videos .item {
   margin: 5px 0.1%;
   float: left;
@@ -136,9 +144,49 @@
     border-radius: @radius;
   }
 
+  background-color:#e8e8e8;
+  color:#4f4b4b;
+  width:305px;
+
   border-color:#e8e8e8;
   border-style:solid;
   border-width:1px;
 
   .rounded-corners;
+
+  .content_section {
+    img {
+      margin-bottom: 1px;
+      margin-right: -2px;
+    }
+    background-color:white;
+    margin-top: 2px;
+  }
+
+  .title_section {
+    margin-left:10px;
+  }
+
+  .sidebar-videos {
+    margin-left: 6px;
+  }
+
+  .checkIn {
+    width: 72px;
+    margin-top: 1px;
+    margin-left: 128px;
+  }
+
+  .match_info {
+    position: absolute;
+    margin-top: -45px;
+    margin-left: 110px;
+    font-size: 12px;
+  }
+
+  .suggestIdols{
+    width: 275px;
+    margin-left: 15px;
+    margin-top: -20px;
+  }
 }

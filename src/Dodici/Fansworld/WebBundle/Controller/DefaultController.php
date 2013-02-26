@@ -9,9 +9,18 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Dodici\Fansworld\WebBundle\Entity\Team;
+use Dodici\Fansworld\WebBundle\Entity\Idol;
 
 class DefaultController extends SiteController
 {
+
+
+    const IDOLS_LIMIT = 12;
+    const FANS_LIMIT = 12;
+    const TEAMS_LIMIT = 12;
+    const VIDEOS_LIMIT = 1;
+    const MATCHS_LIMIT = 4;
 
     /**
      * @Route("/hello/{name}")
@@ -70,16 +79,93 @@ class DefaultController extends SiteController
      * Related column
      * @Template
      */
-    public function relatedcolumnAction()
+    public function relatedcolumnAction($entity=null)
     {
         $user = $this->getUser();
 
-        $repo = $this->getRepository('User');
-        $irepo = $this->getRepository('Idol');
-        $topfans = $repo->findBy(array('enabled' => true, 'type' => User::TYPE_FAN), array('score' => 'DESC', 'fanCount' => 'DESC'), 16);
-        $topidols = $irepo->findBy(array('active' => true), array('fanCount' => 'DESC'), 16);
+        if (!$entity) {
+            // No entity
+            $repo = $this->getRepository('User');
+            $irepo = $this->getRepository('Idol');
+            $trepo = $this->getRepository('Team');
+            $topfans = $repo->findBy(array('enabled' => true, 'type' => User::TYPE_FAN), array('score' => 'DESC', 'fanCount' => 'DESC'), self::IDOLS_LIMIT);
+            $topidols = $irepo->findBy(array('active' => true), array('fanCount' => 'DESC'), self::FANS_LIMIT);
+            $teams = $trepo->findBy(array('active' => true), array('fanCount' => 'DESC'), self::TEAMS_LIMIT);
+            $videos = $this->getRepository('Video')->search(null, $user, self::VIDEOS_LIMIT, null, null, null, null, null, null, 'default');
 
-        return array('user' => $user, 'topfans' => $topfans, 'topidols' => $topidols);
+            $matchs =  $this->getRepository('Event')->findBy(array('finished' => false), array('fromtime' => 'desc'), self::MATCHS_LIMIT);
+
+
+
+
+        } else {
+
+            if ($entity instanceof User) {
+                // User Entity
+                $idolshipRepo = $this->getRepository('Idolship');
+
+                // Related Idols to User Entity
+                $idolships = $idolshipRepo->findBy(array('author' => $entity->getId()), array('favorite' => 'desc', 'score' => 'desc', 'createdAt' => 'desc'), self::IDOLS_LIMIT);
+                $topidols = array();
+                foreach ($idolships as $idolship) {
+                    array_push($topidols, $idolship->getIdol());
+                }
+
+                // Related Fans to User entity
+                $topfans = $this->getRepository('User')->fans($entity, true, self::FANS_LIMIT);
+
+                // Related Teams to User Entity
+                $teamshipRepo = $this->getRepository('Teamship');
+                $teamships = $teamshipRepo->findBy(array('author' => $entity->getId()), array('favorite' => 'desc', 'score' => 'desc', 'createdAt' => 'desc'), self::TEAMS_LIMIT);
+                $teams = array();
+                foreach ($teamships as $teamship) {
+                    array_push($teams, $teamship->getTeam());
+                }
+
+                // Related Video
+                $videos = $this->getRepository('Video')->findBy(array('author' => $entity->getId(), 'active' => true), array('createdAt' => 'desc'), self::VIDEOS_LIMIT);
+
+                $matchs = array();
+            } else {
+
+                if ($entity instanceof Team) {
+                    // Team Entity
+
+                    $teams = array();
+                    // Related Teams to Team **
+                    //$teams = $this->getRepository('Team')->getSimilar($entity);
+
+                    $matchs = array();
+
+                    // Related Idols to Team Entity
+                    $topidols = $this->getRepository('Idol')->byTeam($entity);
+
+                    // Related Fans to Team Entity
+                    $topfans = $this->getRepository('User')->byTeams($entity);
+                } else {
+                    // Idol Entity
+
+                    $teams = array();
+                    $topidols = array();
+                    $matchs = array();
+
+                    // Related Teams to Idol **
+                    //$teams = $this->getRepository('Idol')->relatedTeams($entity);
+
+                    // Related Idols to Idol **
+                    //$topidols = $this->getRepository('Idol')->commonIdols($entity);
+
+                    // Related Fans to Idol Entity
+                    $topfans = $this->getRepository('User')->byIdols($entity);
+                }
+
+                // Related videos to Team or Idol Entity
+                $videoRepo = $this->getRepository('Video');
+                $videos = $videoRepo->search(null, $user, self::VIDEOS_LIMIT, null, null, null, null, null, null, 'default', $entity);
+            }
+        }
+
+        return array('user' => $user, 'topfans' => $topfans, 'topidols' => $topidols, 'teams' => $teams, 'videos' => $videos, 'matchs' => $matchs);
     }
 
     /**
