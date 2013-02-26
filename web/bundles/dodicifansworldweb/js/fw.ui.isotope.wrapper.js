@@ -19,7 +19,7 @@
  *      template helper
  */
 
-// fansWorld isotope wrapper plugin 1.2
+// fansWorld isotope wrapper plugin 1.4 /* resolution breaks at getMaxSections */
 
 
 
@@ -92,6 +92,7 @@ $(document).ready(function () {
 			.then(function(jsonData) {
 				that.options.jsonData = that.options.onDataReady(that.options.jsonData);
 				that.loadGallery(that, that.options.jsonData);
+				console.log($container.width());
 				return;
 			})
 			.done(that.options.onGallery);
@@ -118,7 +119,6 @@ $(document).ready(function () {
 						} else {
 							element = that.options.jsonData[i];
 						}
-						console.log(element);
 						$.when(templateHelper.htmlTemplate('general-column_element', element))
 						.then(appendElement);
 					}
@@ -188,26 +188,33 @@ $(document).ready(function () {
 			var that = this;
 			var $container = $(that.element);
 			var cells = 0;
+			var width = parseInt($container.width());
 
-			if($container.width() <= 600) {
+			if(width <= 600) {
 				cells = 1;
-			} else if ($container.width() <= 800) {
+			} else if (width <= 800) {
+				cells = 1;
+			} else if (width <= 1000) {
 				cells = 2;
-			} else if ($container.width() <= 1000) {
+			} else if (width <= 1200) {
 				cells = 3;
-			} else if ($container.width() <= 1200) {
+			} else if (width <= 1200) {
+				cells = 4;
+			} else if (width <= 1600) {
+				cells = 4;
+			} else if (width > 1600) {
 				cells = 5;
-			} else if ($container.width() > 1200) {
-				cells = 6;
 			}
+			console.log("will use [%s] cols at [%s]px", cells, width);
 			return cells;
 		},
 		resize: function(event) {
 			var that = this;
 			var $container = $(that.element);
+			var cells = that.getMaxSections($container);
 			$container.find('.item').each(function(i, item){
 				var $this = $(this);
-				$this.css('width', '16%'); // 2% margen entre los elementos
+				$this.css('width', ((100 / cells) - 1) + "%"); // 2% margen entre los elementos
 			});
 			$container.isotope({
 				// update columnWidth to a percentage of container width
