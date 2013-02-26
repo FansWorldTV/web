@@ -19,7 +19,7 @@
  *      template helper
  */
 
-// fansWorld isotope wrapper plugin 1.0
+// fansWorld isotope wrapper plugin 1.2
 
 
 
@@ -42,6 +42,11 @@ $(document).ready(function () {
 		onError: function(error) {},
 		onIsotopeLoad: function(data) {},
 		onEndless: function(data) {},
+		/////////////////////////////////////////////////////////
+		// onDataReady()                                       //
+		// Permite interceptar los datos recibidos por ajax    //
+		// La funcion debe devolver los datos procesados       //
+		/////////////////////////////////////////////////////////
 		onDataReady: function(data) {return data;},
 		onBeforeRender: function(data) {},
 		onFilter: function(data) {},
@@ -92,13 +97,13 @@ $(document).ready(function () {
 			.done(that.options.onGallery);
 		},
 		loadGallery: function(plugin, jsonData) {
+			console.log("loadGallery()");
 			var that = plugin;
 			var $container = $(that.element);
 			var i, element;
 			endless.stop();
 			function appendElement (htmlTemplate) {
 				var $post = $(htmlTemplate);
-				console.log($container.data('isotope'));
 				$container.append($post).isotope('appended', $post);
 				$(htmlTemplate).find('.image').load(function() {
 					$container.isotope('reloadItems');
@@ -113,6 +118,7 @@ $(document).ready(function () {
 						} else {
 							element = that.options.jsonData[i];
 						}
+						console.log(element);
 						$.when(templateHelper.htmlTemplate('general-column_element', element))
 						.then(appendElement);
 					}
