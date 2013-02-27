@@ -100,8 +100,8 @@
                             'slug': video.slug
                         });
                         var hrefModal = Routing.generate(appLocale + '_modal_media', {
-                            'id': data.id,
-                            'type': data.type
+                            'id': video.id,
+                            'type': video.type
                         });
                         var authorUrl = Routing.generate(appLocale + '_user_wall', {
                             'username': video.author.username
