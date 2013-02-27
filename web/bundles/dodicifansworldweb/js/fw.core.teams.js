@@ -17,6 +17,7 @@
  *      templateHelper
  *      ajax.genericAction
  *      error
+ *      endless
  */
 
 // fansWorld teams Class Module 1.0
@@ -27,13 +28,13 @@
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like enviroments that support module.exports,
         // like Node.
-        module.exports = factory(require('jQuery'), require('Routing'), require('templateHelper'), require('ajax'), require('error'));
+        module.exports = factory(require('jQuery'), require('Routing'), require('templateHelper'), require('ajax'), require('error'), require('endless'));
     } else if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['jQuery', 'Routing', 'templateHelper', 'ajax', 'error'], factory);
+        define(['jQuery', 'Routing', 'templateHelper', 'ajax', 'error', 'endless'], factory);
     } else {
         // Browser globals (root is window)
-        root.TEAMS = factory(root.jQuery, root.Routing, root.templateHelper, root.ajax, root.error);
+        root.TEAMS = factory(root.jQuery, root.Routing, root.templateHelper, root.ajax, root.error, root.endless);
     }
 }(this, function (jQuery, Routing, templateHelper, ajax, error) {
     "use strict";
@@ -44,6 +45,7 @@
             ///////////////////
             this.jQuery = jQuery;
             this.version = '1.0';
+            console.log("crea TEAMS")
             var that = this;
             if($("div.list-teams").attr('data-got-more')){
                 this.addMore = true;
@@ -51,6 +53,10 @@
                 this.addMore = false;
             }
             this.getTeams();
+
+                /*$(".list-teams dl").find(".btn_teamship.add:not('.loading-small')").each(function() {
+                    $(this).fwTeamship();
+                });*/
 
             $("ul.categories li a").on('click', function(e){
                 //e.preventDefault();
@@ -61,11 +67,6 @@
 
                 that.getTeams();
             });
-            endless.init(1, function() {
-                console.log("scroll more teams");
-                that.getTeams();
-            });
-
             /*
             $(window).endlessScroll({
                 fireOnce: true,
@@ -85,6 +86,8 @@
             */
         }
         TEAMS.prototype.getTeams = function() {
+            var that = this;
+            endless.stop();
             $("div.list-teams").addClass('loading');
             var deferred = new jQuery.Deferred();
             ajax.genericAction('team_get', {
@@ -99,12 +102,14 @@
                         console.log("loading team: " + element.title);
                         templateHelper.renderTemplate('team-list_element', element, $(".list-teams dl"), false, function(){
                             $("div.list-teams").removeClass('loading');
+                            $(".list-teams dl").find(".btn_teamship.add:not('.loading-small')").each(function() {
+                                //$(this).fwTeamship();
+                                console.log("encontre un boton ! " + $(this));
+                                $(this).fwTeamship();
+                            });
                         });
                     }
                 }
-                $(".list-teams dl").find(".btn_teamship.add:not('.loading-small')").each(function() {
-                    $(this).fwTeamship();
-                });
                 this.addMore = r.gotMore;
                 this.activePage++;
             },
@@ -112,6 +117,12 @@
                 $("div.list-teams").removeClass('loading');
                 endless.stop();
                 deferred.reject(new Error(error));
+            });
+            /*$(".list-teams dl").find(".btn_teamship.add:not('.loading-small')").each(function() {
+                $(this).fwTeamship();
+            });*/
+            endless.init(1, function() {
+                that.getTeams();
             });
             return deferred.promise();
         };
