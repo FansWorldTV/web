@@ -38,6 +38,7 @@ $(document).ready(function () {
 		jsonData: null,
 		defaultMediaType: null,
 		itemSelector: '.item',
+		prevWidth: null,
 		// custom callback events
 		onError: function(error) {},
 		onIsotopeLoad: function(data) {},
@@ -108,7 +109,6 @@ $(document).ready(function () {
 				$container.append($post).isotope('appended', $post);
 				$(htmlTemplate).find('.image').load(function() {
 					var $this = $(this);
-					$('.title').ellipsis();
 					$container.isotope('reloadItems');
 					that.resize();
 				});
@@ -216,7 +216,6 @@ $(document).ready(function () {
 			var cells = that.getMaxSections($container);
 			$container.find('.item').each(function(i, item){
 				var $this = $(this);
-				$('.title').ellipsis();
 				$this.css('width', ((100 / cells) - 1) + "%"); // 2% margen entre los elementos
 			});
 			$container.isotope({
