@@ -7,6 +7,7 @@
 /*jslint windows: true */ /* Assume Windows */
 /*jslint maxerr: 100 */ /* Maximum number of errors */
 
+
 /*
  * Class dependencies:
  *      jquery > 1.8.3
