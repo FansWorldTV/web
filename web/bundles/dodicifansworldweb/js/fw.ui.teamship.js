@@ -79,12 +79,14 @@ $(document).ready(function () {
             self.removeClass('add');
             //self.html(data.buttontext);
             self.html("Ya eres fan!");
+            notice(data.message);
             console.log("onAddTeam: " + JSON.stringify(data));
             return that.options.onAddTeam(data);
         },
         onRemoveTeam: function(data){
             var that = this;
             var self = $(that.element);
+            notice(data.message);
             console.log("onRemoveTeam: " + JSON.stringify(data));
             return that.options.onRemoveTeam(data);
         },
@@ -115,4 +117,5 @@ $(document).ready(function () {
 $(document).ready(function () {
     "use strict";
     $(".btn_teamship.add:not('.loading-small')").fwTeamship();
+    $(".btn_teamship.remove:not('.loading-small')").fwTeamship();
 });
