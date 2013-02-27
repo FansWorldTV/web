@@ -169,8 +169,8 @@ home.loadSection.enjoy = function(params){
                         'username': video.author.username
                     });
                     var hrefModal = Routing.generate(appLocale + '_modal_media', {
-                        'id': data.id,
-                        'type': data.type
+                        'id': video.id,
+                        'type': video.type
                     });
                     return {
                             'type': 'video',
