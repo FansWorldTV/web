@@ -26,6 +26,6 @@
 		{% set tag_item_url = path("newspost_show", {'id': tag_item.id, 'slug': tag_item.slug }) %}	
 	{% endif %}
 	
-	<a class="notice-link" href="{{ path('user_wall', {username: notification.author.username }) }}">{{ notification.author }}</a> 
+	<a class="notice-link" href="{{ path('user_land', {username: notification.author.username }) }}">{{ notification.author }}</a> 
 	<span class="notice-text">te etiquetó en <a href="{{ tag_item_url }}">{{ tag_item }}</a></span>
 {% endblock %}

@@ -358,7 +358,7 @@ class EventController extends SiteController
                 'teamid' => $entity->getTeam()->getId(),
                 'author' => (string) $entity->getAuthor(),
                 'avatar' => $this->getImageUrl($entity->getAuthor()->getImage()),
-                'profile' => $this->generateUrl('user_wall', array('username' => $entity->getAuthor()->getUsername())),
+                'profile' => $this->generateUrl('user_land', array('username' => $entity->getAuthor()->getUsername())),
                 'minute' => $this->get('appstate')->getMinuteFromTimestamp($entity->getCreatedAt()),
                 'content' => $entity->getContent()
             );
@@ -582,7 +582,7 @@ class EventController extends SiteController
                     'author' => array(
                         'name' => (string) $eventship->getAuthor(),
                         'image' => $this->getImageUrl($eventship->getAuthor()->getImage(), 'small'),
-                        'url' => $this->generateUrl('user_wall', array('username' => $eventship->getAuthor()->getUsername()))
+                        'url' => $this->generateUrl('user_land', array('username' => $eventship->getAuthor()->getUsername()))
                     ),
                     'team' => array(
                         'id' => $eventship->getTeam()->getId(),

@@ -88,7 +88,7 @@ class CommentController extends SiteController
                         'jsonComment' => $jsonComment,
                         'message' => $message,
                         'authorAvatarUrl' => $this->getImageUrl($user->getImage(), 'small'),
-                        'authorProfileUrl' => $this->generateUrl('user_wall', array('username' => $user->getUsername()))
+                        'authorProfileUrl' => $this->generateUrl('user_land', array('username' => $user->getUsername()))
                     ));
         } catch (\Exception $e) {
             return new Response($e->getMessage(), 400);
@@ -195,7 +195,7 @@ class CommentController extends SiteController
             'authorId' => $comment->getAuthor()->getId(),
             'authorName' => (string) $comment->getAuthor(),
             'authorAvatarUrl' => $appMedia->getImageUrl($comment->getAuthor()->getImage(), 'headeravatar'),
-            'authorWallUrl' => $this->generateUrl('user_wall', array('username' => $comment->getAuthor()->getUsername())),
+            'authorWallUrl' => $this->generateUrl('user_land', array('username' => $comment->getAuthor()->getUsername())),
         );
 
         $type = array(
@@ -234,7 +234,7 @@ class CommentController extends SiteController
                 'targetId' => $target->getId(),
                 'targetName' => (string) $target,
                 'targetAvatarUrl' => $this->get('appmedia')->getImageUrl($target->getImage(), 'headeravatar'),
-                'targetWallUrl' => $this->generateUrl('user_wall', array('username' => $target->getUsername())),
+                'targetWallUrl' => $this->generateUrl('user_land', array('username' => $target->getUsername())),
             );
         }
 

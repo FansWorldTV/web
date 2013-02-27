@@ -165,7 +165,7 @@ home.loadSection.enjoy = function(params){
                         'id': video.id,
                         'slug': video.slug
                     });
-                    var authorUrl = Routing.generate(appLocale + '_user_wall', {
+                    var authorUrl = Routing.generate(appLocale + '_user_land', {
                         'username': video.author.username
                     });
                     var hrefModal = Routing.generate(appLocale + '_modal_media', {

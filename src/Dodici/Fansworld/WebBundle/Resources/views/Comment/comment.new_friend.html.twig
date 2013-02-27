@@ -8,9 +8,9 @@
 
 {% block action %}
 	<span class="action_user">
-		<a href="{{ path('user_wall', {username: comment.target.username }) }}">{{ comment.target }}</a> 
+		<a href="{{ path('user_land', {username: comment.target.username }) }}">{{ comment.target }}</a> 
 		{{ 'and'|trans }} 
-		<a href="{{ path('user_wall', {username: comment.author.username }) }}">{{ comment.author }}</a> 
+		<a href="{{ path('user_land', {username: comment.author.username }) }}">{{ comment.author }}</a> 
 		{{ 'are now friends'|trans }}
 	</span>
 {% endblock %}

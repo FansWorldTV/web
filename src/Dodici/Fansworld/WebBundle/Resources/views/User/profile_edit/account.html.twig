@@ -16,7 +16,7 @@
             <dl class="dl-horizontal">
                 {% if user.username %}
                     <dt>Usuario</dt>
-                        <dd><strong>{{ user.username }}</strong> ({{ path('user_wall', {'username':user.username}) }})</dd>
+                        <dd><strong>{{ user.username }}</strong> ({{ path('user_land', {'username':user.username}) }})</dd>
                 {% endif %}
                 
                 {% if user.email %}

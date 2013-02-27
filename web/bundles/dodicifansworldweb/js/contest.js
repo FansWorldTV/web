@@ -230,7 +230,7 @@ var contest = {
             
             ajax.contestAddCommentAction(content, contestId, function(r){
                 var template = $("#templates.contest div.comment").clone();
-                template.find('div.avatar a').attr('href', Routing.generate(appLocale + '_user_wall', {
+                template.find('div.avatar a').attr('href', Routing.generate(appLocale + '_user_land', {
                     'username': r.comment.username
                 }));
                 
@@ -238,7 +238,7 @@ var contest = {
                     template.find('div.avatar img').attr('src', r.comment.avatar);
                 }
                 
-                template.find('div.user_comment span.action_user a').attr('href', Routing.generate(appLocale + '_user_wall', {
+                template.find('div.user_comment span.action_user a').attr('href', Routing.generate(appLocale + '_user_land', {
                     'username': r.comment.username
                 }));
                 template.find('div.user_comment span.action_user a').html(r.comment.name);

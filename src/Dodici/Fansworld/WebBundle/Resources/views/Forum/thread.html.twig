@@ -14,7 +14,7 @@
                 <div class="avatar">
                     {% thumbnail thread.author.image, 'avatar' %}
                 </div>
-                <a href="{{ path('user_wall', {username: thread.author.username}) }}">{{ thread.author }}</a> <br>
+                <a href="{{ path('user_land', {username: thread.author.username}) }}">{{ thread.author }}</a> <br>
                 <span class="timeago" data-time="{{ thread.createdAt|date('c') }}">{{ thread.createdAt|date('c') }}</span>
             </div>
             <div class="topic">
@@ -31,12 +31,12 @@
                 {% for post in posts%}
                     <div class="comment clearfix">
                         <div class="avatar"> 
-                            <a href="{{ path('user_wall', {username: post.author.username}) }}">
+                            <a href="{{ path('user_land', {username: post.author.username}) }}">
                                 <img src="demo/rodri.jpg" width="50" height="50">
                             </a> 
                         </div>
                         <div class="user_comment"> 
-                            <span class="action_user"><a href="{{ path('user_wall', {username: post.author.username}) }}">{{ post.author }}</a> <span class="timeago" data-time="{{ post.createdAt|date('c') }}">{{ post.createdAt|date('c') }}</span></span>
+                            <span class="action_user"><a href="{{ path('user_land', {username: post.author.username}) }}">{{ post.author }}</a> <span class="timeago" data-time="{{ post.createdAt|date('c') }}">{{ post.createdAt|date('c') }}</span></span>
                             {{ post.content }}
                         </div>
                     </div>

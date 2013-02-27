@@ -8,7 +8,7 @@
 				{% for friend in friends %}
                 	<li>
                 		<div class='fan-container'>
-                			<a href="{{ path('user_wall', {username: friend.username}) }}">
+                			<a href="{{ path('user_land', {username: friend.username}) }}">
 	                        	<div class="avatar">
 	                            	{% thumbnail friend.image, 'big_square' %}
 	                            </div>

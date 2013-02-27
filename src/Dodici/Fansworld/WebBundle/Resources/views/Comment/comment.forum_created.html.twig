@@ -8,7 +8,7 @@
 
 {% block action %}
 	<span class="action_user">
-		<a href="{{ path('user_wall', {username: comment.author.username }) }}">{{ comment.author }}</a> 
+		<a href="{{ path('user_land', {username: comment.author.username }) }}">{{ comment.author }}</a> 
 		{{ 'created the forum'|trans }}
 		<a href="{{ path('forum_thread', {'id': comment.share.forumthread.id, 'slug': comment.share.forumthread.slug}) }}">{{ comment.share.forumthread }}</a>
 	</span>

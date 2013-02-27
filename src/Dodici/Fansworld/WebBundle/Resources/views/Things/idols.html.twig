@@ -15,7 +15,7 @@
             {% for idol in ranking %}
                 {% if loop.first %}
                     <div class="block" rel="tooltip" title="{{ idol }}">
-                        <a href="{{ path('idol_wall', {'slug': idol.slug}) }}">
+                        <a href="{{ path('idol_land', {'slug': idol.slug}) }}">
                             {% thumbnail idol.image, 'avatar' %}
                             <span class="title">{{ idol.lastname|truncate(5) }}</span>
                             <ul>
@@ -39,7 +39,7 @@
                     </div>
                     <div class="clearfix"></div>
                 {% else %}
-                    <a href="{{ path('idol_wall', {'slug': idol.slug}) }}" rel="tooltip" title="{{ idol }}">
+                    <a href="{{ path('idol_land', {'slug': idol.slug}) }}" rel="tooltip" title="{{ idol }}">
                         {% thumbnail idol.image, 'headeravatar' %}
                     </a>
                 {% endif %}

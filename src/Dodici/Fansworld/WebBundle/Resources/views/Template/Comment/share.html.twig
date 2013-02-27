@@ -6,7 +6,7 @@
 		{% block share_action_text %}{% raw %}{{>shareActiontext}}{% endraw %}{% endblock %}
 		{#
 		{% if comment.share.author is not null and comment.author.id != comment.share.author.id %}
-		{{ 'by'|trans }} <a href="{{ path('user_wall', {username: comment.share.author.username }) }}">{{ comment.share.author }}</a>
+		{{ 'by'|trans }} <a href="{{ path('user_land', {username: comment.share.author.username }) }}">{{ comment.share.author }}</a>
 		{% endif %}
 		#}
 	</span>

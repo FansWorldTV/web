@@ -7,16 +7,16 @@
             </a>
         </li>
 
+        {#
+            <li class="toolbar-icon">
+                <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}"  title="Mensajes" data-notif-messages='{"count":"0"}'>
+                    <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_messages.png' )}}" />
+                </a>
+            </li>
+        #}
 
         <li class="toolbar-icon">
-            <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}"  title="Mensajes" data-notif-messages='{"count":"0"}'>
-                <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_messages.png' )}}" />
-            </a>
-        </li>
-
-
-        <li class="toolbar-icon">
-            <a class='icon' href="{{ path('user_wall', {'username': app.user.username}) }}"  title="Mis fans" data-notif-fans='{"count":"0"}'>
+            <a class='icon' href="{{ path('things_fans') }}"  title="Mis fans" data-notif-fans='{"count":"0"}'>
                 <img src="{{ asset('bundles/dodicifansworldweb/images/ui/user_fans.png' )}}" />
             </a>
         </li>

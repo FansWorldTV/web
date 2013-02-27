@@ -95,15 +95,15 @@ class IdolController extends SiteController
             foreach ($rankedFans as $iship) {
                 $topFans = array(
                     'name' => (string) $iship->getAuthor(),
-                    'url' => $this->generateUrl('user_wall', array('username' => $iship->getAuthor()->getUsername()))
+                    'url' => $this->generateUrl('user_land', array('username' => $iship->getAuthor()->getUsername()))
                 );
             }
 
-            $idolUrl = $this->generateUrl('idol_wall', array('slug' => $idol->getSlug()));
+            $idolUrl = $this->generateUrl('idol_land', array('slug' => $idol->getSlug()));
 
             $idolCareer = $idol->getTeamName();
             if ($idolCareer->getTeam()) {
-                $teamUrl = $this->generateUrl('team_wall', array('slug' => $idolCareer->getTeam()->getSlug()));
+                $teamUrl = $this->generateUrl('team_land', array('slug' => $idolCareer->getTeam()->getSlug()));
             } else {
                 $teamUrl = "";
             }
@@ -128,7 +128,7 @@ class IdolController extends SiteController
     }
 
     /**
-     * @Route("/{slug}", name="idol_wall")
+     * @Route("/{slug}/wall", name="idol_wall")
      * @Template
      */
     public function wallTabAction($slug)
@@ -143,7 +143,6 @@ class IdolController extends SiteController
 
         return array(
             'idol' => $idol,
-            'isHome' => true,
             'highlights' => $highlights,
         );
     }
@@ -195,7 +194,8 @@ class IdolController extends SiteController
 
     /**
      * Idol videos
-     * 
+     *
+     *  @Route("/{slug}", name="idol_land")
      *  @Route("/{slug}/videos", name="idol_videos")
      *  @Template()
      */
@@ -249,7 +249,8 @@ class IdolController extends SiteController
             'addMore' => $addMore,
             'user' => $user,
             'idol' => $idol,
-            'sorts' => $sorts
+            'sorts' => $sorts,
+        	'isHome' => true
         );
     }
 

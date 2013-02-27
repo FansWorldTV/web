@@ -20,11 +20,11 @@
                 {% endif %}
 
                 {% if avatar.username is defined %}
-                    {% set pathUrl = path('user_wall', {username: avatar.username})  %}
+                    {% set pathUrl = path('user_land', {username: avatar.username})  %}
                 {% elseif avatars.ulClass == 'teams' %}
-                    {% set pathUrl = path('team_wall', {slug: avatar.slug})  %}
+                    {% set pathUrl = path('team_land', {slug: avatar.slug})  %}
                 {% elseif avatar.slug is defined %}
-                    {% set pathUrl = path('idol_wall', {slug: avatar.slug})  %}
+                    {% set pathUrl = path('idol_land', {slug: avatar.slug})  %}
                 {% else %}
                     {% set pathUrl = ''  %}
                 {% endif %}

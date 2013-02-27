@@ -1,20 +1,20 @@
 {% block header_navbar %}
     {% if active_tab is not defined %}
-        {% set active_tab = 'wall' %}
+        {% set active_tab = 'videos' %}
     {% endif %}
     
     <nav class='profilenavbar-container span12'>
        <ul class="nav nav-tabs-profile">
+            <li {% if active_tab == 'videos' %}class="active"{% endif %}>
+                <a  href="{{ path('team_videos', {slug: entity.slug}) }}">Videos</a>
+            </li>
+            
             <li {% if active_tab == 'wall' %}class="active"{% endif %}>
                 <a  href="{{ path('team_wall', {slug: entity.slug}) }}">Muro</a>
             </li>
             
             <li {% if active_tab == 'info' %}class="active"{% endif %}>
                 <a  href="{{ path('team_info', {slug: entity.slug}) }}">Datos</a>
-            </li>
-            
-            <li {% if active_tab == 'videos' %}class="active"{% endif %}>
-                <a  href="{{ path('team_videos', {slug: entity.slug}) }}">Videos</a>
             </li>
             
             <li {% if active_tab == 'photos' %}class="active"{% endif %}>

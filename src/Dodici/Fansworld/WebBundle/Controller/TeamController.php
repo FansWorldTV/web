@@ -93,7 +93,7 @@ class TeamController extends SiteController
                 $idol = $ic->getIdol();
                 $idols[] = array(
                     'name' => (string) $idol,
-                    'url' => $this->generateUrl('idol_wall', array('slug' => $idol->getSlug()))
+                    'url' => $this->generateUrl('idol_land', array('slug' => $idol->getSlug()))
                 );
                 if ($c == 2) {
                     break;
@@ -122,7 +122,7 @@ class TeamController extends SiteController
                 'image' => $this->getImageUrl($team->getImage()),
                 'idols' => $idols,
                 'teamship' => $teamship,
-                'url' => $this->generateUrl('team_wall', array('slug' => $team->getSlug()))
+                'url' => $this->generateUrl('team_land', array('slug' => $team->getSlug()))
             );
         }
 
@@ -328,6 +328,7 @@ class TeamController extends SiteController
 
     /**
      * team videos
+     * @Route("/{slug}", name="team_land") 
      * @Route("/{slug}/videos", name="team_videos") 
      * @Template()
      */
@@ -382,7 +383,8 @@ class TeamController extends SiteController
             'addMore' => $addMore,
             'user' => $user,
             'team' => $team,
-            'sorts' => $sorts
+            'sorts' => $sorts,
+        	'isHome' => true
         );
     }
 
@@ -469,7 +471,7 @@ class TeamController extends SiteController
     }
 
     /**
-     * @Route("/{slug}/eventos", name="team_eventos")
+     * @Route("/{slug}/events", name="team_eventos")
      * @Template
      * @Secure(roles="ROLE_USER")
      */
@@ -492,7 +494,7 @@ class TeamController extends SiteController
     }
     
 	/**
-     * @Route("/{slug}", name= "team_wall")
+     * @Route("/{slug}/wall", name= "team_wall")
      * @Template()
      */
     public function wallTabAction($slug)
@@ -511,7 +513,6 @@ class TeamController extends SiteController
 
         return array(
             'team' => $team,
-            'isHome' => true,
             'highlights' => $highlights,
         );
     }

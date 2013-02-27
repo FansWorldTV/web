@@ -171,7 +171,7 @@ class TvController extends SiteController
             array_push($response, array(
                 'id' => $viewer->getId(),
                 'username' => (string) $viewer,
-                'wall' => $this->generateUrl('user_wall', array('username' => $viewer->getUsername())),
+                'wall' => $this->generateUrl('user_land', array('username' => $viewer->getUsername())),
                 'image' => $this->getImageUrl($viewer->getImage(), 'micro_square')
             ));
         }

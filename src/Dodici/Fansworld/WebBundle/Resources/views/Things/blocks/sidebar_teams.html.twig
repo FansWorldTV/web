@@ -9,7 +9,7 @@
         {% for team in teamsRank %}
             {% if loop.first %}
                 <div class="block" rel="tooltip" title="{{ team }}">
-                    <a href="{{ path('team_wall', {'slug': team.slug}) }}" >
+                    <a href="{{ path('team_land', {'slug': team.slug}) }}" >
                         {% thumbnail team.image, 'avatar' %}
                         <span class="title">{{ team|truncate(5) }}</span>
                         <ul>
@@ -33,7 +33,7 @@
                 </div>
                 <div class="clearfix"></div>
             {% else %}
-                <a href="{{ path('team_wall', {'slug': team.slug}) }}" rel="tooltip" title="{{ team.title }}">
+                <a href="{{ path('team_land', {'slug': team.slug}) }}" rel="tooltip" title="{{ team.title }}">
                     {% thumbnail team.image, 'headeravatar' %}
                 </a>
             {% endif %}

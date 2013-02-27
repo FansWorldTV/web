@@ -25,7 +25,8 @@ class UserController extends SiteController
     const LIMIT_LIST_IDOLS = 15;
 
     /**
-     * @Route("/u/{username}", name="user_wall")
+     * @Route("/u/{username}", name="user_land")
+     * @Route("/u/{username}/wall", name="user_wall")
      * @Template
      * @Secure(roles="ROLE_USER")
      */
@@ -307,7 +308,7 @@ class UserController extends SiteController
                             'id' => $friendship->getAuthor()->getId(),
                             'name' => (string) $friendship->getAuthor(),
                             'image' => $this->getImageUrl($friendship->getAuthor()->getImage()),
-                            'url' => $this->generateUrl('user_wall', array('username' => $friendship->getAuthor()->getUsername()))
+                            'url' => $this->generateUrl('user_land', array('username' => $friendship->getAuthor()->getUsername()))
                         ),
                         'target' => array(
                             'id' => $friendship->getTarget()->getId(),
@@ -365,7 +366,7 @@ class UserController extends SiteController
                         'id' => $element->getAuthor()->getId(),
                         'name' => (string) $element->getAuthor(),
                         'image' => $this->getImageUrl($media),
-                        'url' => $this->generateUrl('user_wall', array('username' => $element->getAuthor()->getUsername()))
+                        'url' => $this->generateUrl('user_land', array('username' => $element->getAuthor()->getUsername()))
                     )
                 );
             }
@@ -477,7 +478,7 @@ class UserController extends SiteController
                         'id' => $element->getAuthor()->getId(),
                         'name' => (string) $element->getAuthor(),
                         'image' => $this->getImageUrl($media),
-                        'url' => $this->generateUrl('user_wall', array('username' => $element->getAuthor()->getUsername()))
+                        'url' => $this->generateUrl('user_land', array('username' => $element->getAuthor()->getUsername()))
                     )
                 );
             }

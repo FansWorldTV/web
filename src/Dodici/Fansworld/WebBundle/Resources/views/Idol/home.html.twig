@@ -27,7 +27,7 @@
                         {% thumbnail idol.image, 'small' %}
                     </div>
                     <p>
-                        <span class="name"><a href="{{ path('idol_wall', {'slug': idol.slug}) }}">{{ idol }}</a></span>
+                        <span class="name"><a href="{{ path('idol_land', {'slug': idol.slug}) }}">{{ idol }}</a></span>
                         <br/>
                         <span>{{ idol.content|striptags|truncate(70) }} <a href="{{ path("idol_biography", {"slug": idol.slug}) }}">más</a></span>
                     </p>

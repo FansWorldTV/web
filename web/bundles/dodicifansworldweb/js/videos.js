@@ -27,7 +27,7 @@ var videos = {
         }
                         
         template.find('.tmpContent').html(video.content + "...");
-        template.find('span a.user').attr('href', Routing.generate(appLocale + '_user_wall', {
+        template.find('span a.user').attr('href', Routing.generate(appLocale + '_user_land', {
             'username': video.author.username
         }));
         if(video.author.avatar){

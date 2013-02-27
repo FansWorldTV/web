@@ -183,11 +183,11 @@ class SearchController extends SiteController
                         break;
                     
                     case 'idol':
-                        $response['search'][$key]['url'] = $this->generateUrl('idol_wall', array('slug' => $entity->getSlug()));
+                        $response['search'][$key]['url'] = $this->generateUrl('idol_land', array('slug' => $entity->getSlug()));
                         break;
                     
                     case 'user':
-                        $response['search'][$key]['url'] = $this->generateUrl('user_wall', array('slug' => $entity->getUsername()));
+                        $response['search'][$key]['url'] = $this->generateUrl('user_land', array('slug' => $entity->getUsername()));
                         break;
                     
                     case 'photo':
@@ -195,7 +195,7 @@ class SearchController extends SiteController
                         break;
                     
                     case 'team':
-                        $response['search'][$key]['url'] = $this->generateUrl('team_wall', array('slug' => $entity->getSlug()));
+                        $response['search'][$key]['url'] = $this->generateUrl('team_land', array('slug' => $entity->getSlug()));
                         break;
                     
                 }

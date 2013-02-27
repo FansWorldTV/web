@@ -170,7 +170,7 @@ $(document).ready(function () {
 				'type': data.type
 			});
 
-			var authorUrl = Routing.generate(appLocale + '_user_wall', {
+			var authorUrl = Routing.generate(appLocale + '_user_land', {
 				'username': data.author.username
 			});
 			return {

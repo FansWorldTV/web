@@ -89,7 +89,7 @@ var tv = {
                         'id': video.id,
                         'slug': video.slug
                     });
-                    var authorUrl = Routing.generate(appLocale + '_user_wall', {
+                    var authorUrl = Routing.generate(appLocale + '_user_land', {
                         'username': video.author.username
                     });
                     return {

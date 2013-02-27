@@ -55,7 +55,7 @@ var forum = {
                     for(var i in response.posts){
                         var post = response.posts[i];
                         var template = $("#templates div.comment").clone();
-                        var href = Routing.generate(appLocale + '_user_wall', {
+                        var href = Routing.generate(appLocale + '_user_land', {
                             'username': post.author.username
                         });
                        
@@ -90,7 +90,7 @@ var forum = {
             ajax.threadCommentAction(threadId, text, function(response){
                 if(!response.error){
                     var template = $("#templates div.comment").clone();
-                    var href = Routing.generate(appLocale + '_user_wall', {
+                    var href = Routing.generate(appLocale + '_user_land', {
                         'username': response.data.author.username
                     });
                        

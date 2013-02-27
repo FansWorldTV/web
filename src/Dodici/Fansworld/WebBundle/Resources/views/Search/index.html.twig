@@ -73,7 +73,7 @@
                         {% set link = path( tag.type ~ '_wall', {'slug': tag.slug}) %}
                     {% endif %}
                     {% if tag.type == 'user' %}
-                        {% set link = path('user_wall', {'username': tag.username}) %}
+                        {% set link = path('user_land', {'username': tag.username}) %}
                     {% endif %}
                     {% if tag.type == 'tag' %}
                         {% set link = path('search_home', {'query': tag.title, 'tag': true}) %}

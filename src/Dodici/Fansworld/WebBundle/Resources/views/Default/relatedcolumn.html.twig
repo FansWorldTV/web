@@ -5,7 +5,7 @@
         <div class="title_section"><strong>Idolos</strong></div>
         <div class="content_section">
             {% for idol in topidols %}
-                <a href="{{ path('idol_wall', {slug: idol.slug}) }}" rel="tooltip" title="{{ idol.firstname ~ ' ' ~ idol.lastname }}">
+                <a href="{{ path('idol_land', {slug: idol.slug}) }}" rel="tooltip" title="{{ idol.firstname ~ ' ' ~ idol.lastname }}">
                     {% thumbnail idol.image, 'avatar' with {title: idol.firstname ~ ' ' ~ idol.lastname} %}
                 </a>
             {% endfor %}
@@ -21,7 +21,7 @@
         <div class="title_section"><strong>Fans</strong></div>
         <div class="content_section">
             {% for fan in topfans %}
-                <a href="{{ path('user_wall', {username: fan.username}) }}" rel="tooltip" title="{{ fan.firstname ~ ' ' ~ fan.lastname }}">
+                <a href="{{ path('user_land', {username: fan.username}) }}" rel="tooltip" title="{{ fan.firstname ~ ' ' ~ fan.lastname }}">
                     {% thumbnail fan.image, 'avatar' with {title: fan.firstname ~ ' ' ~ fan.lastname} %}
                 </a>
             {% endfor %}
@@ -33,7 +33,7 @@
         <div class="title_section"><strong>Equipos</strong></div>
         <div class="content_section">
             {% for team in teams %}
-                <a href="{{ path('team_wall', {slug: team.slug}) }}" rel="tooltip" title="{{ team.shortname }}">
+                <a href="{{ path('team_land', {slug: team.slug}) }}" rel="tooltip" title="{{ team.shortname }}">
                     {% thumbnail team.image, 'avatar' with {title: team.shortname} %}
                 </a>
             {% endfor %}

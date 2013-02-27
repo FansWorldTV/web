@@ -103,7 +103,7 @@
                             'id': video.id,
                             'type': 'video'
                         });
-                        var authorUrl = Routing.generate(appLocale + '_user_wall', {
+                        var authorUrl = Routing.generate(appLocale + '_user_land', {
                             'username': video.author.username
                         });
                         return {
