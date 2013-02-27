@@ -23,11 +23,20 @@
         
         {% block bottom_left_content %}
             <div>
-              {% include 'DodiciFansworldWebBundle:Tv:blocks/now-watching.html.twig' with {entity: video} %}
+              {% if video.author %}
+                <a class="video-author" href="{{ path('user_land', {username: video.author.username}) }}">
+                    {% if video.author.image %}
+                        {% thumbnail video.author.image, 'avatar' %}
+                    {% endif %}
+                    {{ video.author }}
+                </a>
+              {% endif %}
             </div>
             <div>
               {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video, sharebutton: true, likebutton: true} %}
             </div>
+            
+            <div>{% include 'DodiciFansworldWebBundle:Tv:blocks/now-watching.html.twig' with {entity: video} %}</div>
             
             <div class="content">
                 {% if video.content %}

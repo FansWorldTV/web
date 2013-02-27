@@ -1,23 +1,38 @@
 <div class="row-fluid comments-and-tags">
     <div class="span">
-        <section class='tag-container '>
+        <section class='tag-container'>
             <div class="row-fluid">
                 <div class="span6 comments-count">
                     {{ 'comments'|trans }} ( {{ entity.commentCount }} )
                 </div>
-                <div class="span6 tag-title">
-                    {{ 'tags'|trans }}
+                
+                {% if entity.createdAt is defined %}
+                <div class="span6">
+                    <p class="uploaded-date">Subido el <time datetime="{{ entity.createdAt|date('Y-m-d H:i:s') }}">{{ video.createdAt|date('d/m/Y') }}</time></p>
                 </div>
+                {% endif %}
             </div>
             <div class="row-fluid">
                 <div class="span12 tags">
-                    {% if entity.hastags %}
-                            {% for hastag in entity.hastags %}
-                                <span class="label label-success">{{ hastag.tag.title }}</span>
-                            {% endfor %}
-                    {% else %}
-                            <button class="btn">sin tags</button>	
-                    {% endif %}
+                    {% for hasidol in entity.hasidols %}
+                        <a href="{{ path('idol_land', {slug: hasidol.idol.slug}) }}" class="label tag-idol {% if hasidol.idol.image %}tag-avatar{% endif %}">
+                            {% if hasidol.idol.image %}
+                                {% thumbnail hasidol.idol.image, 'avatar' %}
+                            {% endif %}
+                            {{ hasidol.idol }}
+                        </a>
+                    {% endfor %}
+                    {% for hasteam in entity.hasteams %}
+                        <a href="{{ path('team_land', {slug: hasteam.team.slug}) }}" class="label tag-team {% if hasteam.team.image %}tag-avatar{% endif %}"">
+                            {% if hasteam.team.image %}
+                                {% thumbnail hasteam.team.image, 'avatar' %}
+                            {% endif %}
+                            {{ hasteam.team }}
+                        </a>
+                    {% endfor %}
+                    {% for hastag in entity.hastags %}
+                        <a href="{{ path('teve_taggedvideos', {term: hastag.tag.slug}) }}" class="label tag-text">#{{ hastag.tag }}</a>
+                    {% endfor %}
                 </div>
             </div>
         </section>
