@@ -31,10 +31,11 @@ home.init = function(){
 home.toggleSections = function(){
     $(".home-header ul.sections li").on('click', function(){
         var category = $(this).attr('data-category-id');
+        var activeCategory = $(".home-header ul.sections li.active").attr('data-category-id');
 
-        $(".home-header .category-container div[data-category-id]").addClass('hidden');
-
-        $(".home-header .category-container div[data-category-id='" + category + "']").removeClass('hidden');
+        $(".home-header .category-container div[data-category-id='" + activeCategory + "']").fadeOut('fast', function(){
+            $(".home-header .category-container div[data-category-id='" + category + "']").hide().removeClass('hidden').fadeIn('fast');
+        });
 
         $(".home-header ul.sections li").removeClass('active');
         $(this).addClass('active');
