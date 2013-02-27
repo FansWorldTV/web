@@ -87,7 +87,7 @@
                 var i;
                 for(i in r.teams){
                     var element = r.teams[i];
-
+                    console.log("loading team: " + element.title);
                     templateHelper.renderTemplate('team-list_element', element, $(".list-teams dl"), false, function(){
                         $("div.list-teams").removeClass('loading');
                     });
