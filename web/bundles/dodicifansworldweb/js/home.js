@@ -170,7 +170,7 @@ home.loadSection.enjoy = function(params){
                     });
                     var hrefModal = Routing.generate(appLocale + '_modal_media', {
                         'id': video.id,
-                        'type': video.type
+                        'type': 'video'
                     });
                     return {
                             'type': 'video',
