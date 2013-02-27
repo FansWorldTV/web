@@ -232,3 +232,78 @@
     }
 
 }
+
+.video-std-block {
+    &:hover {
+        i.play-video {
+            opacity: 1;
+        }
+    }
+
+    i.play-video {
+        background-image: url('../images/play-icon.png');
+        background-size: 50px;
+        .square(50px);
+        position: absolute;
+        left: 39%;
+        top: 30%;
+        opacity: 0.5;
+
+        &:hover{
+            opacity: 1;
+        }
+    }
+
+    img.back-thumb {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    .title-and-user {
+        position: absolute;
+        //margin-top: -11px
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        background: url('../images/ui/pix80trans.png');
+        background-repeat: repeat;
+        padding: 10px;
+
+        .title {
+            position: relative;
+            color: white;
+            font-weight: 600;
+            font-size: 12px;
+            display: block;
+            line-height: normal !important;
+            text-overflow: ellipsis;
+            height: auto;
+            overflow: hidden;
+            margin-left: 10px;
+            .pull-left();
+            width: 60%;
+            max-height: 30px;
+
+        }
+
+        .author-image {
+            position: relative;
+            .pull-left();
+            width: 30px !important;
+            border: 1px solid grey;
+        }
+
+        .user {
+            display: block;
+            position: relative;
+            width: 100%;
+            color: @green;
+            margin-top: 5px;
+            margin-left: 20px;
+            font-size: 15px;
+            font-weight: 300;
+            line-height: normal !important;
+        }
+    }
+}

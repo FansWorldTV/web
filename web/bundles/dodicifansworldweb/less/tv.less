@@ -149,9 +149,28 @@ section.channels-widget{
             }
         }
         .content-container {
-            .list-mosaic {
-                img {
-                    width: 200px;
+            &.highlighted-videos {
+                height: 315px;
+
+                .video {
+                    position: relative;
+                    width: 30%;
+                    height: 48%;
+                    overflow: hidden;
+                    .pull-left();
+                    margin-right: 3%;
+                    margin-bottom: 1%;
+                    
+                    .video-std-block;
+
+                    img.thumb {
+                        position: absolute;
+                        top: -33px;
+                    }
+
+                    &.last-element-row {
+                        margin-right: 0;
+                    }
                 }
             }
         }
