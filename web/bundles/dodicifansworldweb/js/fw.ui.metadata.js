@@ -72,6 +72,7 @@ $(document).ready(function () {
             // the options via the instance, e.g. this.element
             // and this.options
             var that = this;
+            var i;
             //that.options.dataSource = Routing.generate(appLocale + '_tag_ajaxmatch');
             that.options.dataSource = Routing.generate(appLocale + $(that.element).attr('data-route'));
             that.options.action = $(that.element).attr('data-action');
@@ -98,23 +99,6 @@ $(document).ready(function () {
                 console.log("sale preload");
             }
             console.log(that.options.dataSource);
-            /*
-            $(that.element).tokenInput(that.options.dataSource, {
-                theme: that.options.theme,
-                queryParam: that.options.queryParam || "text",
-                preventDuplicates: that.options.preventDuplicates || true,
-                propertyToSearch: that.options.propertyToSearch || "label",
-                prePopulate: that.options.prePopulate,
-                onAdd: function(item) {
-                    console.log(item)
-                    that.addEntityItem(item);
-                },
-                onDelete: function(item) {
-                    that.deleteEntityItem(item);
-                }
-            });
-            */
-
             $(that.element).tagit({
                 availableTags: that.options.sampleTags,
                 // This will make Tag-it submit a single form value, as a comma-delimited field.
@@ -156,15 +140,20 @@ $(document).ready(function () {
                         console.log(ui.tag.data('extra'))
                         that.deleteEntityItem({result: ui.tag.data('extra')});
                     }
-                }                
+                }
             });
-
+            for(i = 0; i < that.options.prePopulate.length; i++) {
+                if (that.options.prePopulate.hasOwnProperty(i)) {
+                    var item  = that.options.prePopulate[i];
+                    $(that.element).tagit('createTag', item.value, null, null, item.result);
+                }
+            }
         },
         addEntityItem: function (item) {
             var that = this;
             /*
             if(typeof(item.result.type) === 'undefined') {
-                item.result.type = 
+                item.result.type =
             }
             */
             item.result.type = item.result.type || 'text';
@@ -175,7 +164,7 @@ $(document).ready(function () {
         updateInput: function(inputSelector, list) {
             var i, str = '';
             for (i in list) {
-                // TODO add hasProperty check 
+                // TODO add hasProperty check
                 str += list[i].result.id + ',';
             }
             $(inputSelector).val(str);
