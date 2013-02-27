@@ -86,3 +86,9 @@
         {% endfor %}
     </div>
 </div>
+
+{% block javascripts %}
+    <script type="text/javascript">
+        events.bindCheckInButtons();
+    </script>
+{% endblock %}
