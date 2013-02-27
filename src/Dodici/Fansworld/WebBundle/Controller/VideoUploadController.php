@@ -21,6 +21,7 @@ use Dodici\Fansworld\WebBundle\Controller\SiteController;
 use Dodici\Fansworld\WebBundle\Entity\Video;
 use Symfony\Component\HttpFoundation\Request;
 use Dodici\Fansworld\WebBundle\Model\VideoRepository;
+use Dodici\Fansworld\WebBundle\Entity\Notification;
 
 /**
  * Video controller.
@@ -333,6 +334,15 @@ class VideoUploadController extends SiteController
                     );
                     $this->_shareVideo($video, toBoolean($data['fb']), toBoolean($data['tw']), toBoolean($data['fw']), $data['title'], $shareEntities);
 
+                    /*
+                    // Notification for Youtube Upload
+                    $notification = new Notification();
+                    $notification->setType(Notification::TYPE_VIDEO_PROCESSED);
+                    $notification->setAuthor($video->getAuthor());
+                    $notification->setTarget($video->getAuthor());
+                    $notification->setVideo($video);
+                    $em->persist($notification);
+                    */
                     return $this->forward('DodiciFansworldWebBundle:VideoUpload:fileMetaYoutube',
                         array('title' => $data['title'], 'image' => $videoImage));
                 }

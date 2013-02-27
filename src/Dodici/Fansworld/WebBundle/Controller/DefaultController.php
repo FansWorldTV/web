@@ -95,9 +95,6 @@ class DefaultController extends SiteController
 
             $matchs =  $this->getRepository('Event')->findBy(array('finished' => false), array('fromtime' => 'desc'), self::MATCHS_LIMIT);
 
-
-
-
         } else {
 
             if ($entity instanceof User) {

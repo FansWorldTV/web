@@ -31,8 +31,8 @@ class UserRepository extends CountBaseRepository
     	' . ($filtername ? '
 			AND (
 			u.username LIKE :filtername OR
-			u.email LIKE :filtername OR  
-			u.firstname LIKE :filtername OR 
+			u.email LIKE :filtername OR
+			u.firstname LIKE :filtername OR
 			u.lastname LIKE :filtername
 		)' : '') . '
     	')
@@ -134,8 +134,8 @@ class UserRepository extends CountBaseRepository
     	' . ($filtername ? '
 			AND (
 			u.username LIKE :filtername OR
-			u.email LIKE :filtername OR  
-			u.firstname LIKE :filtername OR 
+			u.email LIKE :filtername OR
+			u.firstname LIKE :filtername OR
 			u.lastname LIKE :filtername
 		)' : '') . '
     	')
@@ -202,7 +202,7 @@ class UserRepository extends CountBaseRepository
     }
 
     /**
-     * 
+     *
      * Search for users with optional search term and pagination
      * @param \Application\Sonata\UserBundle\Entity\User $user
      * @param boolean $isfriend (null|true|false)
@@ -242,14 +242,14 @@ class UserRepository extends CountBaseRepository
 		u.enabled AND (:userid IS NULL OR (u.id <> :userid))
 		' . ($filtername ? '
 			AND (
-			country.title LIKE :filtername OR 
-			city.title LIKE :filtername OR 
+			country.title LIKE :filtername OR
+			city.title LIKE :filtername OR
 			u.username LIKE :filtername OR
 			u.email LIKE :filtername OR
-			u.firstname LIKE :filtername OR 
+			u.firstname LIKE :filtername OR
 			u.lastname LIKE :filtername
 		)' : '') . '
-		
+
 		AND
 		(
 		:userid IS NULL OR
@@ -257,9 +257,9 @@ class UserRepository extends CountBaseRepository
 			:isfriend = (SELECT (SELECT COUNT(id) FROM friendship WHERE active AND ((author_id = :userid AND target_id = u.id) OR (author_id = u.id AND target_id = :userid)) >= 1))
 		))
 		)
-		
+
 		ORDER BY isfriend DESC, commonfriends DESC, u.lastname ASC, u.firstname ASC, u.username ASC
-		
+
     	' .
                         (($limit !== null) ? ' LIMIT :limit ' : '') .
                         (($offset !== null) ? ' OFFSET :offset ' : '')
@@ -280,7 +280,7 @@ class UserRepository extends CountBaseRepository
     }
 
     /**
-     * 
+     *
      * Count searched users with optional search term
      * @param \Application\Sonata\UserBundle\Entity\User $user
      * @param boolean $isfriend (null|true|false)
@@ -301,14 +301,14 @@ class UserRepository extends CountBaseRepository
 		u.enabled AND (:userid IS NULL OR (u.id <> :userid))
 		' . ($filtername ? '
 			AND (
-			country.title LIKE :filtername OR 
-			city.title LIKE :filtername OR 
+			country.title LIKE :filtername OR
+			city.title LIKE :filtername OR
 			u.username LIKE :filtername OR
 			u.email LIKE :filtername OR
-			u.firstname LIKE :filtername OR 
+			u.firstname LIKE :filtername OR
 			u.lastname LIKE :filtername
 		)' : '') . '
-		
+
 		AND
 		(
 		:userid IS NULL OR
@@ -329,7 +329,7 @@ class UserRepository extends CountBaseRepository
             $query = $query->setMaxResults($limit);
         if ($offset !== null)
             $query = $query->setFirstResult($offset);
-        
+
         $res = $query->getResult();
         return intval($res[0]['count']);
     }
@@ -338,53 +338,61 @@ class UserRepository extends CountBaseRepository
      * Get all users who have one or more of the given idols
      * @param array_of_idols|idol $idols
      */
-    public function byIdols($idols)
+    public function byIdols($idols, $limit=null)
     {
         if (!is_array($idols))
             $idols = array($idols);
         $idarr = array();
         foreach ($idols as $idol)
             $idarr[] = $idol->getId();
-            
+
         if (!$idarr) throw new \Exception('No idols provided for byIdols');
 
-        return $this->_em->createQuery('
+        $query = $this->_em->createQuery('
     	SELECT DISTINCT u
     	FROM \Application\Sonata\UserBundle\Entity\User u
     	INNER JOIN u.idolships iss
     	WHERE u.enabled = true
     	AND iss.idol IN (:idarr)
     	')
-                        ->setParameter('idarr', $idarr)
-                        ->getResult();
+                ->setParameter('idarr', $idarr);
+
+        if ($limit !== null)
+          $query = $query->setMaxResults($limit);
+
+        return $query->getResult();
     }
-    
-    
+
+
     /**
      * Get all users who have one or more of the given teams
      * @param array_of_teams|team $teams
      */
-    public function byTeams($teams)
+    public function byTeams($teams, $limit=null)
     {
         if (!is_array($teams))
             $teams = array($teams);
         $tmarr = array();
         foreach ($teams as $team)
             $tmarr[] = $team->getId();
-            
+
         if (!$tmarr) throw new \Exception('No teams provided for byTeams');
-    
-        return $this->_em->createQuery('
+
+        $query = $this->_em->createQuery('
                 SELECT DISTINCT u
                 FROM \Application\Sonata\UserBundle\Entity\User u
                 INNER JOIN u.teamships tms
                 WHERE u.enabled = true
                 AND tms.team IN (:tmarr)
                 ')
-                ->setParameter('tmarr', $tmarr)
-                ->getResult();
+                ->setParameter('tmarr', $tmarr);
+
+                if ($limit !== null)
+                  $query = $query->setMaxResults($limit);
+
+                return $query->getResult();
     }
-    
+
 
     /**
      * Get all users who have posted in the thread
@@ -442,16 +450,16 @@ class UserRepository extends CountBaseRepository
 		AND fs.active AND u.enabled
 		' . ($filtername ? '
 			AND (
-			country.title LIKE :filtername OR 
+			country.title LIKE :filtername OR
 			city.title LIKE :filtername OR
 			u.username LIKE :filtername OR
-			u.email LIKE :filtername OR  
-			u.firstname LIKE :filtername OR 
+			u.email LIKE :filtername OR
+			u.firstname LIKE :filtername OR
 			u.lastname LIKE :filtername
 		)' : '') . '
-		
+
 		UNION
-		
+
 		SELECT
 		u.*
 		FROM friendship fs
@@ -462,14 +470,14 @@ class UserRepository extends CountBaseRepository
 		AND fs.active AND u.enabled
 		' . ($filtername ? '
 			AND (
-			country.title LIKE :filtername OR 
-			city.title LIKE :filtername OR 
+			country.title LIKE :filtername OR
+			city.title LIKE :filtername OR
 			u.username LIKE :filtername OR
 			u.email LIKE :filtername OR
-			u.firstname LIKE :filtername OR 
+			u.firstname LIKE :filtername OR
 			u.lastname LIKE :filtername
 		)' : '') . '
-		
+
     	' .
                         (($limit !== null) ? ' LIMIT :limit ' : '') .
                         (($offset !== null) ? ' OFFSET :offset ' : '')
@@ -489,13 +497,13 @@ class UserRepository extends CountBaseRepository
 
     /**
      * Search
-     * 
+     *
      * term to search for:
      * @param string $text
-     * 
+     *
      * current logged in user, or null:
      * @param User|null $user
-     * 
+     *
      * @param int|null $limit
      * @param int|null $offset
      */
@@ -506,10 +514,10 @@ class UserRepository extends CountBaseRepository
 
     /**
      * Count Search
-     * 
+     *
      * term to search for:
      * @param string $text
-     * 
+     *
      * current logged in user, or null:
      * @param User|null $user
      */
@@ -517,10 +525,10 @@ class UserRepository extends CountBaseRepository
     {
         return $this->CountSearchFront($user, $text, null, $limit, $offset);
     }
-    
+
 	/**
      * Get fans of the user
-     * 
+     *
      * @param User $user
      * @param true|false|null $direction - true: user follows them; false: they follow user; null: both ways
      * @param int|null $limit
@@ -536,7 +544,7 @@ class UserRepository extends CountBaseRepository
     	u.id <> :user
     	AND
     	'.$this->getDirectionCondition($direction).'
-    	
+
     	ORDER BY u.lastname ASC, u.firstname ASC
     	')
                 ->setParameter('user', $user->getId())
@@ -549,10 +557,10 @@ class UserRepository extends CountBaseRepository
 
         return $query->getResult();
     }
-    
+
     /**
      * Get fans of the user that share his location
-     * 
+     *
      * @param User $user
      * @param true|false|null $direction - true: user follows them; false: they follow user; null: both ways
      * @param int|null $limit
@@ -570,7 +578,7 @@ class UserRepository extends CountBaseRepository
     	((u.city = :usercity) OR (u.country = :usercountry))
     	AND
     	'.$this->getDirectionCondition($direction).'
-    	
+
     	ORDER BY u.lastname ASC, u.firstname ASC
     	')
                 ->setParameter('user', $user->getId())
@@ -585,10 +593,10 @@ class UserRepository extends CountBaseRepository
 
         return $query->getResult();
     }
-    
+
     /**
      * Get fans of the user that share his choice(s) of favorite team
-     * 
+     *
      * @param User $user
      * @param true|false|null $direction - true: user follows them; false: they follow user; null: both ways
      * @param int|null $limit
@@ -600,7 +608,7 @@ class UserRepository extends CountBaseRepository
     	SELECT u, uts
     	FROM \Application\Sonata\UserBundle\Entity\User u
     	JOIN u.teamships uts WITH uts.favorite = true
-    	AND uts.team IN 
+    	AND uts.team IN
     	(
     		SELECT utx.id FROM \Dodici\Fansworld\WebBundle\Entity\Teamship utsx JOIN utsx.team utx
     		WHERE utsx.author = :user AND utsx.favorite = true
@@ -610,7 +618,7 @@ class UserRepository extends CountBaseRepository
     	u.id <> :user
     	AND
     	'.$this->getDirectionCondition($direction).'
-    	
+
     	ORDER BY u.lastname ASC, u.firstname ASC
     	')
                 ->setParameter('user', $user->getId())
@@ -623,10 +631,10 @@ class UserRepository extends CountBaseRepository
 
         return $query->getResult();
     }
-    
+
     /**
      * Get fans of the user that share the most teamships and idolships
-     * 
+     *
      * @param User $user
      * @param true|false|null $direction - true: user follows them; false: they follow user; null: both ways
      * @param int|null $limit
@@ -637,30 +645,30 @@ class UserRepository extends CountBaseRepository
         $query = $this->_em->createQuery('
     	SELECT u, COUNT(u) as common, COUNT(uts) as commonteams, COUNT(uis) as commonidols
     	FROM \Application\Sonata\UserBundle\Entity\User u
-    	
+
     	LEFT JOIN u.teamships uts
-    	WITH uts.team IN 
+    	WITH uts.team IN
     	(
     		SELECT utx.id FROM \Dodici\Fansworld\WebBundle\Entity\Teamship utsx JOIN utsx.team utx
     		WHERE utsx.author = :user
     	)
-    	
+
     	LEFT JOIN u.idolships uis
-    	WITH uis.idol IN 
+    	WITH uis.idol IN
     	(
     		SELECT uix.id FROM \Dodici\Fansworld\WebBundle\Entity\Idolship uisx JOIN uisx.idol uix
     		WHERE uisx.author = :user
     	)
-    	
+
     	WHERE u.enabled = true
     	AND
     	u.id <> :user
     	AND
     	'.$this->getDirectionCondition($direction).'
-    	
+
     	GROUP BY u.id
     	HAVING (commonteams > 0 OR commonidols > 0)
-    	
+
     	ORDER BY common DESC
     	')
                 ->setParameter('user', $user->getId())
@@ -676,10 +684,10 @@ class UserRepository extends CountBaseRepository
         foreach ($res as $r) $users[] = $r[0];
         return $users;
     }
-    
+
 	/**
      * Get count of fans of the user
-     * 
+     *
      * @param User $user
      * @param true|false|null $direction - true: user follows them; false: they follow user; null: both ways
      */
@@ -693,17 +701,17 @@ class UserRepository extends CountBaseRepository
     	u.id <> :user
     	AND
     	'.$this->getDirectionCondition($direction).'
-    	
+
     	')
                 ->setParameter('user', $user->getId())
         ;
 
         return (int)$query->getSingleScalarResult();
     }
-    
+
     /**
      * Get count of fans of the user that share his location
-     * 
+     *
      * @param User $user
      * @param true|false|null $direction - true: user follows them; false: they follow user; null: both ways
      */
@@ -719,7 +727,7 @@ class UserRepository extends CountBaseRepository
     	((u.city = :usercity) OR (u.country = :usercountry))
     	AND
     	'.$this->getDirectionCondition($direction).'
-    	
+
     	')
                 ->setParameter('user', $user->getId())
                 ->setParameter('usercountry', $user->getCountry() ? $user->getCountry()->getId() : null)
@@ -728,10 +736,10 @@ class UserRepository extends CountBaseRepository
 
         return (int)$query->getSingleScalarResult();
     }
-    
+
     /**
      * Get count of fans of the user that share his choice(s) of favorite team
-     * 
+     *
      * @param User $user
      * @param true|false|null $direction - true: user follows them; false: they follow user; null: both ways
      */
@@ -741,7 +749,7 @@ class UserRepository extends CountBaseRepository
     	SELECT COUNT(u)
     	FROM \Application\Sonata\UserBundle\Entity\User u
     	JOIN u.teamships uts WITH uts.favorite = true
-    	AND uts.team IN 
+    	AND uts.team IN
     	(
     		SELECT utx.id FROM \Dodici\Fansworld\WebBundle\Entity\Teamship utsx JOIN utsx.team utx
     		WHERE utsx.author = :user AND utsx.favorite = true
@@ -751,17 +759,17 @@ class UserRepository extends CountBaseRepository
     	u.id <> :user
     	AND
     	'.$this->getDirectionCondition($direction).'
-    	
+
     	')
                 ->setParameter('user', $user->getId())
         ;
 
         return (int)$query->getSingleScalarResult();
     }
-    
+
     /**
      * Get count of fans of the user that share teamships and idolships
-     * 
+     *
      * @param User $user
      * @param true|false|null $direction - true: user follows them; false: they follow user; null: both ways
      */
@@ -770,7 +778,7 @@ class UserRepository extends CountBaseRepository
         $query = $this->_em->createQuery('
     	SELECT COUNT(u)
     	FROM \Application\Sonata\UserBundle\Entity\User u
-    	
+
     	WHERE
     	(
         	u IN (
@@ -782,9 +790,9 @@ class UserRepository extends CountBaseRepository
             		WHERE utsx.author = :user
         		)
         	)
-        	
+
         	OR
-        	    	
+
         	u IN (
         		SELECT uxib.id FROM \Dodici\Fansworld\WebBundle\Entity\Idolship uxiis
         		JOIN uxiis.author uxib
@@ -795,20 +803,20 @@ class UserRepository extends CountBaseRepository
         		)
         	)
     	)
-    	
+
     	AND u.enabled = true
     	AND
     	u.id <> :user
     	AND
     	'.$this->getDirectionCondition($direction).'
-    	
+
     	')
                 ->setParameter('user', $user->getId())
         ;
 
         return (int)$query->getSingleScalarResult();
     }
-    
+
 	/**
      * Returns latest video/photo activity filtered by user
      * Please use Userfeed service if possible
@@ -822,9 +830,9 @@ class UserRepository extends CountBaseRepository
      * @param array $order
      */
     public function latestActivity(
-        User $user, 
-        $filters = array('fans', 'idols', 'teams'), 
-        $resulttype = array('video', 'photo'), 
+        User $user,
+        $filters = array('fans', 'idols', 'teams'),
+        $resulttype = array('video', 'photo'),
         $limit = 10,
         $maxdate = null,
         $mindate = null,
@@ -833,13 +841,13 @@ class UserRepository extends CountBaseRepository
     {
         $filtertypes = array('fans', 'idols', 'teams');
         $resulttypes = array('video', 'photo');
-        
+
         if (!is_array($filters)) throw new \InvalidArgumentException('Invalid filter(s)');
         if (!$resulttype || !is_array($resulttype)) throw new \InvalidArgumentException('Invalid resulttype(s)');
-        
+
         foreach ($filters as $f) if (!in_array($f, $filtertypes))
             throw new \InvalidArgumentException('Invalid filter: ' . $f);
-        
+
         foreach ($resulttype as $rt) if (!in_array($rt, $resulttypes))
             throw new \InvalidArgumentException('Invalid resulttype: ' . $rt);
 
@@ -854,49 +862,49 @@ class UserRepository extends CountBaseRepository
         $rsm->addScalarResult('created', 'created');
         $rsm->addScalarResult('highlight', 'highlight');
         $rsm->addScalarResult('imageid', 'imageid');
-        
+
         $authorkeys = array('authorid', 'authorusername', 'authorfirstname', 'authorlastname', 'authorimageid');
-        
+
         foreach ($authorkeys as $ak) $rsm->addScalarResult($ak, $ak);
-        
+
         $sqls = array();
         foreach ($resulttype as $type) {
             $filtersqls = array();
-            
+
             foreach ($filters as $filter) {
                 switch ($filter) {
                     case 'fans':
                         $filtersqls[] = '
                         (
-                			(' . $type . '.author_id IN 
+                			(' . $type . '.author_id IN
             	    			(
             	    				SELECT target_id FROM friendship WHERE active=true AND author_id = :user
             	    			)
             	    		)
                     		OR
-                    		(' . $type . '.id IN (SELECT ' . $type . '_id FROM hasuser WHERE target_id IN 
-                    			(SELECT target_id FROM friendship WHERE active=true AND author_id = :user) 
+                    		(' . $type . '.id IN (SELECT ' . $type . '_id FROM hasuser WHERE target_id IN
+                    			(SELECT target_id FROM friendship WHERE active=true AND author_id = :user)
                     		))
                     	)
                         ';
                         break;
                     case 'idols':
                         $filtersqls[] = '
-                        (' . $type . '.id IN (SELECT ' . $type . '_id FROM hasidol WHERE idol_id IN 
-                    		(SELECT idol_id FROM idolship WHERE author_id = :user) 
+                        (' . $type . '.id IN (SELECT ' . $type . '_id FROM hasidol WHERE idol_id IN
+                    		(SELECT idol_id FROM idolship WHERE author_id = :user)
                     	))
                         ';
                         break;
                     case 'teams':
                         $filtersqls[] = '
-                        (' . $type . '.id IN (SELECT ' . $type . '_id FROM hasteam WHERE team_id IN 
-                    		(SELECT team_id FROM teamship WHERE author_id = :user) 
+                        (' . $type . '.id IN (SELECT ' . $type . '_id FROM hasteam WHERE team_id IN
+                    		(SELECT team_id FROM teamship WHERE author_id = :user)
                     	))
                         ';
                         break;
                 }
             }
-            
+
             $sqls[] = '
                 SELECT
                 ' . $type . '.id as id,
@@ -908,28 +916,28 @@ class UserRepository extends CountBaseRepository
                 ' . $type . '.weight as weight,
                 ' . $type . '.created_at as created,
                 ' . $type . '.image_id as imageid,
-                
+
                 '.(($type == 'video') ? '
                 	' . $type . '.highlight as highlight,
                 ' : '
                 	null as highlight,
                 ').'
-                
+
                 author.id as authorid,
                 author.username as authorusername,
                 author.firstname as authorfirstname,
                 author.lastname as authorlastname,
                 author.image_id as authorimageid
-                
+
                 FROM ' . $type . '
-                
+
                 LEFT JOIN liking lks ON lks.' . $type . '_id = ' . $type . '.id
-                
+
                 LEFT JOIN fos_user_user author ON author.id = ' . $type . '.author_id
-                
+
                 WHERE
                 ' . $type . '.active = true
-                
+
                 '.
                 ($mindate ? '
                 AND ' . $type . '.created_at >= :mindate
@@ -939,8 +947,8 @@ class UserRepository extends CountBaseRepository
                 AND ' . $type . '.created_at < :maxdate
                 ' : '')
                 .'
-                
-                
+
+
                 AND
             	(
             		(' . $type . '.author_id IS NULL)
@@ -949,7 +957,7 @@ class UserRepository extends CountBaseRepository
             		OR
         	    	(' . $type . '.privacy = :friendsonly AND (
         	    		(:user = ' . $type . '.author_id) OR
-        	    		(' . $type . '.author_id IN 
+        	    		(' . $type . '.author_id IN
         	    			(
         	    				SELECT author_id FROM friendship WHERE active=true AND target_id = :user
         	    				UNION
@@ -958,13 +966,13 @@ class UserRepository extends CountBaseRepository
         	    		)
         	    	))
             	)
-            	
+
             	'.
                 ($filtersqls ? '
                 AND ('.join(' OR ', $filtersqls).')
                 ' : '')
                 .'
-                
+
                 GROUP BY ' . $type . '.id
                 ';
         }
@@ -975,10 +983,10 @@ class UserRepository extends CountBaseRepository
                 $ordercriterias[] = $field . ' ' . $direction;
             }
         }
-        
+
         $query = $this->_em->createNativeQuery(
                 join(' UNION ', $sqls) . '
-            ORDER BY 
+            ORDER BY
             '.join(', ', $ordercriterias).'
             ' .
                 (($limit !== null) ? ' LIMIT :limit ' : '')
@@ -987,26 +995,26 @@ class UserRepository extends CountBaseRepository
 
         if ($limit !== null)
             $query = $query->setParameter('limit', (int) $limit, Type::INTEGER);
-            
+
         if ($mindate)
             $query = $query->setParameter('mindate', $mindate);
-            
+
         if ($maxdate)
             $query = $query->setParameter('maxdate', $maxdate);
-            
+
         $query = $query->setParameter('user', $user->getId());
         $query = $query->setParameter('everyone', Privacy::EVERYONE);
         $query = $query->setParameter('friendsonly', Privacy::FRIENDS_ONLY);
 
         $return = array();
-        
+
         $res = $query->getResult();
-        
+
         foreach ($res as $r) {
             $ret = array();
             foreach ($r as $k => $v) {
                 if (in_array($k, $authorkeys)) $ret['author'][str_replace('author', '', $k)] = $v;
-                else $ret[$k] = $v; 
+                else $ret[$k] = $v;
             }
             if (!isset($ret['author'])) $ret['author'] = null;
             $return[] = $ret;
@@ -1027,9 +1035,9 @@ class UserRepository extends CountBaseRepository
             u.id IN (SELECT fsub.id FROM \Dodici\Fansworld\WebBundle\Entity\Friendship fsb JOIN fsb.author fsub WHERE fsb.target = :user)
             ';
         }
-        
+
         $condition = '(' . join(' OR ', $conditions) . ')';
-        
+
         return $condition;
     }
 }

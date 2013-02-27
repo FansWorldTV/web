@@ -1,5 +1,6 @@
 <div class="relatedsidebar">
 
+    <!-- IDOLS -->
     {% if topidols|length > 0 %}
         <div class="title_section"><strong>Idolos</strong></div>
         <div class="content_section">
@@ -8,16 +9,14 @@
                     {% thumbnail idol.image, 'avatar' with {title: idol.firstname ~ ' ' ~ idol.lastname} %}
                 </a>
             {% endfor %}
-
             <!--
                 TODO / NEXT FEATURE
-                <br/><br/>
-                <button class="btn btn-success suggestIdols" data-suggest="">SUGERIR IDOLOS A FANSWORLD</button>
+                <br/><br/><button class="btn btn-success suggestIdols" data-suggest="">SUGERIR IDOLOS A FANSWORLD</button>
             -->
         </div>
     {% endif %}
 
-
+    <!-- FANS -->
     {% if topfans|length > 0 %}
         <div class="title_section"><strong>Fans</strong></div>
         <div class="content_section">
@@ -29,7 +28,7 @@
         </div>
     {% endif %}
 
-
+    <!-- TEAMS -->
     {% if teams|length > 0 %}
         <div class="title_section"><strong>Equipos</strong></div>
         <div class="content_section">
@@ -41,54 +40,25 @@
         </div>
     {% endif %}
 
+    <!-- MATCHS -->
     {% if matchs|length > 0 %}
         <div class="title_section"><strong>Proximos Partidos</strong></div>
         <div class="content_section">
-
-        {% for match in matchs %}
-            {{ match.hasteams|length }}
-            {% for hasteam in match.hasteams %}
-            <a href="#" rel="tooltip" data-original-title="{{ hasteam.team.title }}">
-                {% thumbnail hasteam.team.image, 'avatar' with {title: hasteam.team.title} %}
-            </a>
+            {% for match in matchs %}
+                {% for hasteam in match.hasteams %}
+                    <a href="#" rel="tooltip" data-original-title="{{ hasteam.team.title }}">
+                        {% thumbnail hasteam.team.image, 'avatar' with {title: hasteam.team.title} %}
+                    </a>
+                {% endfor %}
+                    {% if match.hasteams|length > 0 %}
+                        <button class="btn btn-success checkIn" data-event-id="{{ match.id }}" data-event-check-in="">Check in</button>
+                        <div class="match_info">{{ match.stadium }} <br/> {{ match.fromtime|date("d/m/Y H:i") }}</div>
+                    {% endif %}
             {% endfor %}
-            <button class="btn btn-success checkIn" data-event-id="{{ match.id }}" data-event-check-in="">Check in</button>
-            <div class="match_info"> {{ match.stadium }} <br/> {{ match.fromtime|date("d/m/Y H:i") }} </div>
-        {% endfor %}
-
-
-
-
-
-<!--
-    <a href="/app_dev.php/team/club-atletico-san-lorenzo-de-almagro" rel="tooltip" data-original-title="San Lorenzo">
-        <img title="San Lorenzo" width="50" src="/uploads/media/default/0001/01/thumb_11_default_avatar_f189b35f8d3bdc303e9f3474e5e6ae348b9a864b.png">
-    </a>
-    <a href="/app_dev.php/team/club-atletico-velez-sarsfield" rel="tooltip" data-original-title="Vélez">
-<img title="Vélez" width="50" src="/uploads/media/default/0001/01/thumb_9_default_avatar_94446d51407cc4f302fe7b6616b24cd8f2f4f1bc.png">                </a>
-    <button class="btn btn-success checkIn" data-suggest="">Check in</button>
-<div class="match_info">San Lorenzo VS Vlz  <br> Jueves 24 </div>
-
-
-    <a href="/app_dev.php/team/club-atletico-san-lorenzo-de-almagro" rel="tooltip" data-original-title="San Lorenzo">
-        <img title="San Lorenzo" width="50" src="/uploads/media/default/0001/01/thumb_11_default_avatar_f189b35f8d3bdc303e9f3474e5e6ae348b9a864b.png">
-    </a>
-    <a href="/app_dev.php/team/club-atletico-velez-sarsfield" rel="tooltip" data-original-title="Vélez">
-<img title="Vélez" width="50" src="/uploads/media/default/0001/01/thumb_9_default_avatar_94446d51407cc4f302fe7b6616b24cd8f2f4f1bc.png">                </a>
-    <button class="btn btn-success checkIn" data-suggest="">Check in</button>
-<div class="match_info">San Lorenzo VS Vlz  <br> Jueves 24 </div>
-
-
-<button class="btn btn-large btn-success" data-event-id="1" data-event-check-in="">CHECK IN</button>
-
-
-
--->
-
         </div>
     {% endif %}
 
-
+    <!-- VIDEO SIDEBAR -->
     <div class="sidebar-videos">
         {% for video in videos %}
             <div class="item">
@@ -116,6 +86,3 @@
         {% endfor %}
     </div>
 </div>
-
-
-

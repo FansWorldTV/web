@@ -126,7 +126,7 @@ class IdolRepository extends CountBaseRepository
 
         if ($filtername)
             $query = $query->setParameter('filtername', '%' . $filtername . '%');
-        
+
         if ($limit !== null)
             $query = $query->setMaxResults($limit);
         if ($offset !== null)
@@ -137,13 +137,13 @@ class IdolRepository extends CountBaseRepository
 
     /**
      * Search
-     * 
+     *
      * term to search for:
      * @param string $text
-     * 
+     *
      * current logged in user, or null:
      * @param User|null $user
-     * 
+     *
      * @param int|null $limit
      * @param int|null $offset
      */
@@ -154,10 +154,10 @@ class IdolRepository extends CountBaseRepository
 
     /**
      * Count Search
-     * 
+     *
      * term to search for:
      * @param string $text
-     * 
+     *
      * current logged in user, or null:
      * @param User|null $user
      */
@@ -170,9 +170,9 @@ class IdolRepository extends CountBaseRepository
      * Returns the Idols that have the team as a current career
      * @param Team $team
      */
-    public function byTeam(Team $team)
+    public function byTeam(Team $team, $limit = null)
     {
-        return $this->_em->createQuery('
+        $query = $this->_em->createQuery('
     	SELECT i
     	FROM \Dodici\Fansworld\WebBundle\Entity\Idol i
     	INNER JOIN i.idolcareers ic
@@ -181,11 +181,14 @@ class IdolRepository extends CountBaseRepository
     	AND ic.actual = true
     	AND ic.team = :team
     	')
-            ->setParameter('team', $team->getId())
-            ->getResult();
-            
+            ->setParameter('team', $team->getId());
+
+        if ($limit !== null)
+            $query = $query->setMaxResults($limit);
+
+        return $query->getResult();
     }
-    
+
 	/**
      * Returns the Idols that have a team belonging to a $teamcategory as a current career
      * @param TeamCategory $teamcategory
@@ -203,7 +206,7 @@ class IdolRepository extends CountBaseRepository
     	AND ic.actual = true
     	')
             ->setParameter('teamcategory', $teamcategory->getId());
-        
+
         if ($limit !== null)
             $query = $query->setMaxResults($limit);
         if ($offset !== null)
@@ -211,7 +214,7 @@ class IdolRepository extends CountBaseRepository
 
         return $query->getResult();
     }
-    
+
     /**
      * Count the Idols that have a team belonging to a $teamcategory as a current career
      * @param TeamCategory $teamcategory
@@ -229,7 +232,26 @@ class IdolRepository extends CountBaseRepository
     	AND ic.actual = true
     	')
             ->setParameter('teamcategory', $teamcategory->getId());
-        
+
         return $query->getSingleScalarResult();
+    }
+
+
+    /**
+     * Return the teams related to Idol
+     * @param Idol $idol
+     */
+    public function relatedTeams($idol)
+    {
+        return null;
+    }
+
+    /**
+     * Return common idols
+     * @param Idol $idol
+     */
+    public function commonIdols($idol)
+    {
+        return null;
     }
 }
