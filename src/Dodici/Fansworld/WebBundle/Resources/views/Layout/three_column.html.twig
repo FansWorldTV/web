@@ -14,10 +14,8 @@
                 <aside id='relatedcolumn' class='span3'>
                     {% block relatedcolumn %}
                         {% if entity is defined and entity %}
-                            HOLA ENTIDAD {{ entity }}
                             {% render "DodiciFansworldWebBundle:Default:relatedcolumn" with {entity: entity} %}
                         {% else %}
-                            SIN ENTIDAD
                             {% render "DodiciFansworldWebBundle:Default:relatedcolumn" %}
                         {% endif %}
                     {% endblock %}
