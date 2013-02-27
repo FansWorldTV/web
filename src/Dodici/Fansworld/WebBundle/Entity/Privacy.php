@@ -12,8 +12,8 @@ class Privacy
     public static function getOptions()
     {
         return array(
-            self::FRIENDS_ONLY => 'friends_only',
             self::EVERYONE => 'everyone',
+            self::FRIENDS_ONLY => 'friends_only',
             self::ONLY_ME => 'only_me'
         );
     }
@@ -42,7 +42,7 @@ class Privacy
         $default['city'] = self::FRIENDS_ONLY;
         $default['facebook'] = self::FRIENDS_ONLY;
         $default['twitter'] = self::FRIENDS_ONLY;
-        
+
         return $default;
     }
 

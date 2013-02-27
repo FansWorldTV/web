@@ -52,7 +52,7 @@
                 {% endfor %}
                     {% if match.hasteams|length > 0 %}
                         <button class="btn btn-success checkIn" data-event-id="{{ match.id }}" data-event-check-in="">Check in</button>
-                        <div class="match_info">{{ match.stadium }} <br/> {{ match.fromtime|date("d/m/Y H:i") }}</div>
+                        <div class="match_info">{{ match.stadium | truncate(16) }} <br/> {{ match.fromtime|date("d/m/Y H:i") }}</div>
                     {% endif %}
             {% endfor %}
         </div>

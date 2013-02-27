@@ -20,7 +20,7 @@ class DefaultController extends SiteController
     const FANS_LIMIT = 12;
     const TEAMS_LIMIT = 12;
     const VIDEOS_LIMIT = 1;
-    const MATCHS_LIMIT = 4;
+    const MATCHS_LIMIT = 6;
 
     /**
      * @Route("/hello/{name}")
@@ -135,10 +135,10 @@ class DefaultController extends SiteController
                     $matchs = array();
 
                     // Related Idols to Team Entity
-                    $topidols = $this->getRepository('Idol')->byTeam($entity);
+                    $topidols = $this->getRepository('Idol')->byTeam($entity, self::IDOLS_LIMIT);
 
                     // Related Fans to Team Entity
-                    $topfans = $this->getRepository('User')->byTeams($entity);
+                    $topfans = $this->getRepository('User')->byTeams($entity, self::FANS_LIMIT);
                 } else {
                     // Idol Entity
 
@@ -153,7 +153,7 @@ class DefaultController extends SiteController
                     //$topidols = $this->getRepository('Idol')->commonIdols($entity);
 
                     // Related Fans to Idol Entity
-                    $topfans = $this->getRepository('User')->byIdols($entity);
+                    $topfans = $this->getRepository('User')->byIdols($entity, self::IDOLS_LIMIT);
                 }
 
                 // Related videos to Team or Idol Entity

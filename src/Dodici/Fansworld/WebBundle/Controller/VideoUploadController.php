@@ -356,6 +356,11 @@ class VideoUploadController extends SiteController
 
     private function _createVideoForm ($userId) {
         $privacies = Privacy::getOptions();
+
+        foreach ($privacies as &$newpri) {
+            $newpri = $this->trans($newpri);
+        }
+
         $videoCategories = $this->getRepository('VideoCategory')->findAll();
         $categoriesChoices = array();
         foreach ($videoCategories as $ab)

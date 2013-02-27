@@ -373,6 +373,11 @@ class PhotoController extends SiteController
 
     private function _createForm ($userId) {
         $privacies = Privacy::getOptions();
+
+        foreach ($privacies as &$newpri) {
+            $newpri = $this->trans($newpri);
+        }
+
         $albums = $this->getRepository('Album')->findBy(array('author' => $userId, 'active' => true));
         $albumchoices = array();
         foreach ($albums as $ab)
