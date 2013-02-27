@@ -80,6 +80,7 @@ $(document).ready(function () {
 				$container.find('.item').each(function(i, item){
 					var $this = $(this);
 					$this.css('width', ((100 / cells) - 1) + "%"); // 2% margen entre los elementos
+					$('.title').ellipsis();
 				});
 				$container.isotope({
 					// update columnWidth to a percentage of container width
@@ -92,7 +93,6 @@ $(document).ready(function () {
 			.then(function(jsonData) {
 				that.options.jsonData = that.options.onDataReady(that.options.jsonData);
 				that.loadGallery(that, that.options.jsonData);
-				console.log($container.width());
 				return;
 			})
 			.done(that.options.onGallery);
@@ -107,6 +107,8 @@ $(document).ready(function () {
 				var $post = $(htmlTemplate);
 				$container.append($post).isotope('appended', $post);
 				$(htmlTemplate).find('.image').load(function() {
+					var $this = $(this);
+					$('.title').ellipsis();
 					$container.isotope('reloadItems');
 					that.resize();
 				});
@@ -205,7 +207,7 @@ $(document).ready(function () {
 			} else if (width > 1600) {
 				cells = 5;
 			}
-			console.log("will use [%s] cols at [%s]px", cells, width);
+			//console.log("will use [%s] cols at [%s]px", cells, width);
 			return cells;
 		},
 		resize: function(event) {
@@ -214,6 +216,7 @@ $(document).ready(function () {
 			var cells = that.getMaxSections($container);
 			$container.find('.item').each(function(i, item){
 				var $this = $(this);
+				$('.title').ellipsis();
 				$this.css('width', ((100 / cells) - 1) + "%"); // 2% margen entre los elementos
 			});
 			$container.isotope({
