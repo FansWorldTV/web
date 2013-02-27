@@ -168,10 +168,15 @@ home.loadSection.enjoy = function(params){
                     var authorUrl = Routing.generate(appLocale + '_user_wall', {
                         'username': video.author.username
                     });
+                    var hrefModal = Routing.generate(appLocale + '_modal_media', {
+                        'id': data.id,
+                        'type': data.type
+                    });
                     return {
                             'type': 'video',
                             'date': video.createdAt,
                             'href': href,
+                            'hrefModal': hrefModal,
                             'image': video.image,
                             'slug': video.slug,
                             'title': video.title,
