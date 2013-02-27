@@ -20,19 +20,23 @@
             <div class="span8 content-container highlighted-videos">
                 {% set counter = 1 %}
                 {% for video in videosDestacadosFW %}
+                    {% if video.image is not null %}
                         <div class="video {% if counter == 3 %} last-element-row {% endif %}">
                             {% thumbnail video.image, 'huge_square' with {'class': 'thumb'} %}
                             <i class="play-video"></i>
                             <div class="title-and-user">
-                                {% if video.author.image %}
-                                    <a href="{{ path('user_wall', {'username': video.author.username}) }}">{% thumbnail video.author.image, 'small_square' with { 'rel': 'tooltip', 'class': 'author-image', 'title': video.author} %}</a>
+                                {% if video.author is not null %}
+                                    {% if video.author.image is not null%}
+                                        <a href="{{ path('user_wall', {'username': video.author.username}) }}">{% thumbnail video.author.image, 'small_square' with { 'rel': 'tooltip', 'class': 'author-image', 'title': video.author} %}</a>
+                                    {% endif %}
                                 {% endif %}
-                                <a href="{{ path('user_wall', {'username': video.author.username}) }}" data-modal-url="{{ path('modal_media', {'type': 'video', 'id': video.id}) }}">
+                                <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}" data-modal-url="{{ path('modal_media', {'type': 'video', 'id': video.id}) }}">
                                     <span class="title">{{ video.title }}</span>
                                 </a>
                             </div>
                         </div>
                         {% set counter = counter+1 %}
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
