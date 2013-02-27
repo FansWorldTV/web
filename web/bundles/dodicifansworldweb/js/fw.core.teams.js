@@ -10,15 +10,16 @@
 /*
  * Class dependencies:
  *      jquery > 1.8.3
- *      isotope
  *      jsrender
  *      jsviews
  * external dependencies:
+ *      Routing
  *      templateHelper
- *      base genericAction
+ *      ajax.genericAction
+ *      error
  */
 
-// fansWorld landing Class Module 1.0
+// fansWorld teams Class Module 1.0
 
 (function (root, factory) {
     "use strict";
@@ -26,10 +27,10 @@
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like enviroments that support module.exports,
         // like Node.
-        module.exports = factory(require('jQuery'), require('Routing'), require('templateHelper'), require('ajax'));
+        module.exports = factory(require('jQuery'), require('Routing'), require('templateHelper'), require('ajax'), require('error'));
     } else if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['jQuery', 'Routing', 'templateHelper', 'ajax'], factory);
+        define(['jQuery', 'Routing', 'templateHelper', 'ajax', 'error'], factory);
     } else {
         // Browser globals (root is window)
         root.TEAMS = factory(root.jQuery, root.Routing, root.templateHelper, root.ajax, root.error);
@@ -60,7 +61,12 @@
 
                 that.getTeams();
             });
+            endless.init(1, function() {
+                console.log("scroll more teams");
+                that.getTeams();
+            });
 
+            /*
             $(window).endlessScroll({
                 fireOnce: true,
                 enableScrollTop: false,
@@ -71,14 +77,16 @@
                 loader: 'cargando',
                 callback: function(i, p, d) {
                     if(that.addMore){
+                        console.log("scroll more teams");
                         that.getTeams();
                     }
                 }
             });
+            */
         }
         TEAMS.prototype.getTeams = function() {
             $("div.list-teams").addClass('loading');
-
+            var deferred = new jQuery.Deferred();
             ajax.genericAction('team_get', {
                 'category': this.category,
                 'page': this.activePage
@@ -86,23 +94,26 @@
             function(r){
                 var i;
                 for(i in r.teams){
-                    var element = r.teams[i];
-                    console.log("loading team: " + element.title);
-                    templateHelper.renderTemplate('team-list_element', element, $(".list-teams dl"), false, function(){
-                        $("div.list-teams").removeClass('loading');
-                    });
+                    if (r.teams.hasOwnProperty(i)) {
+                        var element = r.teams[i];
+                        console.log("loading team: " + element.title);
+                        templateHelper.renderTemplate('team-list_element', element, $(".list-teams dl"), false, function(){
+                            $("div.list-teams").removeClass('loading');
+                        });
+                    }
                 }
                 $(".list-teams dl").find(".btn_teamship.add:not('.loading-small')").each(function() {
                     $(this).fwTeamship();
                 });
                 this.addMore = r.gotMore;
                 this.activePage++;
-                //teamship.init();
             },
-            function(r){
-                console.log(r);
+            function(error){
                 $("div.list-teams").removeClass('loading');
+                endless.stop();
+                deferred.reject(new Error(error));
             });
+            return deferred.promise();
         };
         TEAMS.prototype.version = function() {
             console.log(this.version);
