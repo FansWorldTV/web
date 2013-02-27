@@ -77,7 +77,9 @@ $(document).ready(function () {
             var self = $(that.element);
             self.addClass('disabled');
             self.removeClass('add');
-            self.html(data.buttontext);
+            //self.html(data.buttontext);
+            self.html("Ya eres fan!");
+            self.fadeOut('slow');
             console.log("onAddTeam: " + JSON.stringify(data));
             return that.options.onAddTeam(data);
         },
