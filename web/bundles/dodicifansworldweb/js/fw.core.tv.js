@@ -27,13 +27,13 @@
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like enviroments that support module.exports,
         // like Node.
-        module.exports = factory(require('Routing'), require('templateHelper'), require('ajax'));
+        module.exports = factory(require('Routing'), require('templateHelper'), require('ajax'), require('ExposeTranslation'));
     } else if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['jQuery', 'Routing', 'templateHelper', 'ajax'], factory);
+        define(['jQuery', 'Routing', 'templateHelper', 'ajax', 'ExposeTranslation'], factory);
     } else {
         // Browser globals (root is window)
-        root.TV = factory(root.jQuery, root.Routing, root.templateHelper, root.ajax);
+        root.TV = factory(root.jQuery, root.Routing, root.templateHelper, root.ajax, root.ExposeTranslation);
     }
 }(this, function (jQuery, Routing, templateHelper, ajax) {
     "use strict";
@@ -51,9 +51,9 @@
             this.contentContainer = $('.ranking-widget .content-container');
             this.isotopeContainer = $(this.contentContainer).find('.isotope_container').last();
             this.defaultTags = [
-                {filter: 'day', title: 'dia'},
-                {filter: 'week', title: 'semana'},
-                {filter: 'month', title: 'mes'}
+                {filter: 'day', title: ExposeTranslation.get('day')},
+                {filter: 'week', title: ExposeTranslation.get('week')},
+                {filter: 'month', title: ExposeTranslation.get('month')}
             ];
 
             $(this.isotopeContainer).attr('data-feed-source', 'teve_ajaxexplore');
