@@ -38,19 +38,23 @@
 }(this, function (jQuery, Routing, templateHelper, ajax) {
     "use strict";
     var TV = (function() {
-        function TV(filtersList, channelsList, targetDataList) {
+        function TV(filtersList, channelsList) {
             //////////////
             // Internal //
             //////////////
             this.jQuery = jQuery;
             this.name = filtersList;
             this.channelsList = channelsList;
-            this.targetDataList = targetDataList;
             this.channel = $('#filter-channels').closest('ul').find("li.active").attr("data-channel-id");
             this.filter = $('#list-filters ul').find('li.active').attr('data-list-filter-type');
             this.page = 1;
             this.contentContainer = $('.ranking-widget .content-container');
             this.isotopeContainer = $(this.contentContainer).find('.isotope_container').last();
+            this.customTags = [
+                {filter: 'day', title: 'dia'},
+                {filter: 'week', title: 'semana'},
+                {filter: 'month', title: 'mes'}
+            ];
 
             $(this.isotopeContainer).attr('data-feed-source', 'teve_ajaxexplore');
             $(this.isotopeContainer).empty();
@@ -159,6 +163,11 @@
                 $(this).first().addClass('active');
 
                 that.filter = $('#list-filters ul').find('li.active').attr('data-list-filter-type');
+
+                /*if(that.filter === 'views') {
+
+                    //that.customTags()
+                }*/
                 // update tags
                 that.myTags(that.channel, that.filter);
                 // Destroy gallery items
@@ -185,8 +194,19 @@
                 }
             });
         };
+        TV.prototype.customTags = function(tags, options) {
+            var i;
+            var $tagList = $(".content-container").find(".tag-list-container ul");
+            for(i in tags) {
+                if (tags.hasOwnProperty(i)) {
+                    $tagList.prepend("<li data-list-filter-type='" + tags[i].filter + "' class=''><span>" + tags[i].title + "</span></li>");
+                }
+            }
+            return;
+        };
         TV.prototype.destroyGallery = function() {
             $(this.isotopeContainer).data('fwGalerizer').destroy();
+            return;
         };
         TV.prototype.subscribe = function ($button) {
             var channel = $button.attr('data-subscribe-channel');
@@ -221,3 +241,15 @@
     // can return a function as the exported value.
     return TV;
 }));
+
+
+// implicit global init
+// TODO: refactor inside curl wire
+$(document).ready(function () {
+    "use strict";
+    window.fansworld = window.fansworld || {};
+    var defaultChannel = null; //
+    var defaultFilter = 'popular';
+    window.fansworld.tv = new window.TV(defaultChannel, defaultFilter);
+    return;
+});
