@@ -84,7 +84,8 @@ class VideoUploader
         
         if ($thumburl && !$video->getImage()) {
             try {
-                $thumburl .= '/width/800/vid_slices/10/vid_slice/5';
+                //$thumburl .= '/width/800/vid_slices/10/vid_slice/5';
+                $thumburl .= '/width/800';
                 $image = $this->appmedia->createImageFromUrl($thumburl);
                 if ($image) {
                     $video->setImage($image);
