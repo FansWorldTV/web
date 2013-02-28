@@ -8,10 +8,10 @@
                 <h4>NOTIFICACIONES <span class="midline"></span></h4>
                  <div data-notification></div>
             </section>
-            
+
             <section class="ranking">
                 <h4>RANKING DE EQUIPOS <span class="midline"></span></h4>
-                
+
                 {% for team in teamsRank %}
                     {% if loop.first %}
                         <div class="block" rel="tooltip" title="{{ team }}">
@@ -46,20 +46,14 @@
                 {% endfor %}
                 <div class="clearfix"></div>
             </section>
-            
+
             {% if lastTeams|length > 0 %}
                 <section class="news">
                     <h4>ULTIMOS DE EQUIPOS <span class="midline"></span></h4>
+                    <div class="sidebar-videos">
                     {% for video in lastTeams %}
                         {% if loop.first %}
-                            <div class="video-element first">
-                                <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
-                                    <span class="title">{{ video.title }}</span>
-                                    <span class="duration">{{ video.duration|date("i:s") }}</span>
-                                    <img src="{{ asset('bundles/dodicifansworldweb/images/play_icon.png') }}" alt="Play" class="play"/>
-                                    {% thumbnail video.image, 'medium' %}
-                                </a>
-                            </div>
+                            {% include "DodiciFansworldWebBundle:Default:blocks/sidebar_videos_mythings.html.twig" %}
                         {% else %}
                             <div class="video-element" rel="tooltip" title="{{ video.title }}">
                                 <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
@@ -69,6 +63,7 @@
                             </div>
                         {% endif %}
                     {% endfor %}
+                    </div>
                 </section>
             {% endif %}
         </div>

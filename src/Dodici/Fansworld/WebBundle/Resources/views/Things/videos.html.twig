@@ -16,16 +16,10 @@
         {% if lastVideos|length > 0 %}
             <section class="news">
                 <h4>ULTIMOS DE FANSWORLD <span class="midline"></span></h4>
+                <div class="sidebar-videos">
                 {% for video in lastVideos %}
                     {% if loop.first %}
-                        <div class="video-element first">
-                            <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
-                                <span class="title">{{ video.title }}</span>
-                                <span class="duration">{{ video.duration|date("i:s") }}</span>
-                                <img src="{{ asset('bundles/dodicifansworldweb/images/play_icon.png') }}" alt="Play" class="play"/>
-                                {% thumbnail video.image, 'medium' %}
-                            </a>
-                        </div>
+                         {% include "DodiciFansworldWebBundle:Default:blocks/sidebar_videos_mythings.html.twig" %}
                     {% else %}
                         <div class="video-element" rel="tooltip" title="{{ video.title }}">
                             <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
@@ -35,10 +29,11 @@
                         </div>
                     {% endif %}
                 {% endfor %}
+                </div>
         {% endif %}
     </div>
     <div class="fluid-content">
-        <h3>Mis videos 
+        <h3>Mis videos
             <a class="btn btn-large btn-success pull-right" href="{{ path('video_fileupload') }}" data-upload="video"><i class="icon-upload"></i> Subir video</a>
         </h3>
         <div class="btn-group pull-right" data-filter-videos data-toggle="buttons-radio" style="height: 35px;">

@@ -1,15 +1,30 @@
-<ul class="video-list">
-    {% for video in videos %}
-        <li class="video-element">
-            <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
-                {% thumbnail video.image, 'huge_square' %}
-            </a>
-            <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
-                <span class="title">{{ video.title|truncate(24) }}</span>
-            </a>
-            <span class="duration">{{ video.duration|date("i:s") }}</span>
-            <span class="overlay"></span>
-            <span class="ico-play"></span>
-        </li>
-    {% endfor %}
-</ul>
+<div class="sidebar-videos">
+{% for video in videos %}
+                <div class="item" style="width:260px;">
+                    <div class="item-info">
+                        <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                            <div class="overlay"></div>
+                            <div class="title-and-user">
+
+
+                                <a href="/app_dev.php/u/juan.perez"><img class="author-image" src="http://fansworld.dodici.local/uploads/media/default/0001/01/thumb_2_default_small_square_e34b6053430be1132222b7fe0c38d0e05b3beb32.jpg" alt="juan.perez" rel="tooltip" data-original-title="juan.perez"></a>
+
+                                <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                                    <span class="title">{{ video.title }}</span>
+                                </a>
+                            </div>
+
+                            <div class="image">
+                            <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                                {% thumbnail video.image, 'huge_square' %}
+                            </a>
+
+                            <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                                <i class="play-video"></i>
+                            </a>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+        {% endfor %}
+</div>
