@@ -8,7 +8,7 @@
                 
                 {% if entity.createdAt is defined %}
                 <div class="span6">
-                    <p class="uploaded-date">Subido el <time datetime="{{ entity.createdAt|date('Y-m-d H:i:s') }}">{{ video.createdAt|date('d/m/Y') }}</time></p>
+                    <p class="uploaded-date">Subido el <time datetime="{{ entity.createdAt|date('Y-m-d H:i:s') }}">{{ entity.createdAt|date('d/m/Y') }}</time></p>
                 </div>
                 {% endif %}
             </div>
@@ -35,7 +35,7 @@
                             {% if hasuser.target.image %}
                                 {% thumbnail hasuser.target.image, 'avatar' %}
                             {% endif %}
-                            {{ hasuser.user }}
+                            {{ hasuser.target }}
                         </a>
                     {% endfor %}
                     {% for hastag in entity.hastags %}
