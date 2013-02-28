@@ -4,7 +4,7 @@
 {% if autoplay is not defined %}
     {% set autoplay = false %}
 {% endif %}
-<script type="text/javascript" src="http://www.kaltura.com/p/{{partner}}/sp/{{subpartner}}/embedIframeJs/uiconf_id/{{player}}/partner_id/{{partner}}"></script>
+<script type="text/javascript" src="http://www.kaltura.com/p/{{partner}}/sp/{{subpartner}}/embedIframeJs/uiconf_id/{{player}}/partner_id/{{partner}}{% if autoplay %}/autoPlay/1{% endif %}"></script>
 <object 
   id="kaltura_player_{{timestamp}}"
   class="videoframe" 
