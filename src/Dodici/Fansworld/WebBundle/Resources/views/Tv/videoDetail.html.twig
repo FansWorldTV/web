@@ -12,7 +12,7 @@
         
         {% block top_left_content %}
             {#{% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video, editbutton: false, reportbutton: false} %}#}
-            {{ kalturatwig.player(video)|raw }}
+            {{ kalturatwig.player(video, true)|raw }}
         {% endblock %}
         
         {% block top_right_content %}

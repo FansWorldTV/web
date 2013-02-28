@@ -16,20 +16,24 @@
         {% endif %}
 
         <div class='span4 numbers-info'>
+            {% set entityType = appstate.getType(entity) %}
+            {% if entityType == 'user' %}
+                {% set pathparams = {username: entity.username} %}
+            {% else %}
+                {% set pathparams = {slug: entity.slug} %}
+            {% endif %}
             <section class='fotos-info'>
-                {% set entityType = appstate.getType(entity) %}
-
-                <div class='numero'>{% if entity.photoCount > 0 %}<a href="{% if entityType == 'user' %}{{ path(entityType ~ '_photos', {'username': entity.username}) }}{% else %}{{ path(entityType ~ '_photos', {'slug': entity.slug}) }}{% endif %}">{% endif %}{{ entity.photoCount }}{% if entity.photoCount > 0 %}</a>{%endif%}</div>
+                <div class='numero'>{% if entity.photoCount > 0 %}<a href="{{ path(entityType ~ '_photos', pathparams) }}">{% endif %}{{ entity.photoCount }}{% if entity.photoCount > 0 %}</a>{%endif%}</div>
                 <div class='tipo'>Fotos</div>
                 <div class='separador' />
             </section>
             <section class='videos-info'>
-                <div class='numero'>{% if entity.videoCount > 0 %}<a href="{{ path(entityType ~ '_videos', {'slug': entity.username}) }}">{% endif %}{{ entity.videoCount }}{% if entity.videoCount > 0 %}</a>{%endif%}</div>
+                <div class='numero'>{% if entity.videoCount > 0 %}<a href="{{ path(entityType ~ '_videos', pathparams) }}">{% endif %}{{ entity.videoCount }}{% if entity.videoCount > 0 %}</a>{%endif%}</div>
                 <div class='tipo'>Videos</div>
                 <div class='separador' />
             </section>
             <section class='fans-info'>
-                <div class='numero'>{% if entity.fanCount > 0 %}<a href="{{ path(entityType ~ '_fans', {'slug': entity.username}) }}">{% endif %}{{ entity.fanCount }}{% if entity.fanCount > 0 %}</a>{%endif%}</div>
+                <div class='numero'>{% if entity.fanCount > 0 %}<a href="{{ path(entityType ~ '_fans', pathparams) }}">{% endif %}{{ entity.fanCount }}{% if entity.fanCount > 0 %}</a>{%endif%}</div>
                 <div class='tipo'>Fans</div>
                 <div class='separador' />
             </section>

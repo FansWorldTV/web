@@ -1,5 +1,10 @@
 {% if entity is defined %}
 {% set entityType =  appstate.type(entity) %}
+{% if entityType == 'user' %}
+    {% set pathparams = {username: entity.username} %}
+{% else %}
+    {% set pathparams = {slug: entity.slug} %}
+{% endif %}
 
     <div class="entityBlock {% if third %} third {% endif %}">
         <div class="splash">
@@ -10,7 +15,8 @@
             {% thumbnail entity.image, 'small' %}
         </div>
 
-        <a href="{{ path( entityType ~ '_wall', {'slug': entity.slug}) }}" class="name">{{ entity }}</a>
+        
+        <a href="{{ path( entityType ~ '_land', pathparams) }}" class="name">{{ entity }}</a>
         
         <ul class="stats">
             <li><span>{{entity.fanCount}}</span><br/> fans</li>
