@@ -81,13 +81,13 @@ class IdolController extends SiteController
         $response['gotMore'] = ($count / $page) > self::LIMIT_LIST_IDOL ? true : false;
 
         foreach ($idols as $idol) {
-            
+
             if($this->getUser() instanceof User){
                 $idolship = $this->getRepository('Idolship')->findBy(array('author' => $this->getUser()->getId(), 'idol' => $idol->getId()));
             }else{
                 $idolship = false;
             }
-            
+
             $rankedFans = $this->getRepository('Idolship')->rankedUsersScore($idol, 1);
 
             $topFans = array();
@@ -304,7 +304,7 @@ class IdolController extends SiteController
         $fans = array(
             'ulClass' => 'fans',
             'containerClass' => 'fan-container',
-            'list' => $this->getRepository('User')->byIdols($idol),
+            'list' => $this->getRepository('User')->byIdols($idol, null, 'score'),
         );
 
 
@@ -329,8 +329,8 @@ class IdolController extends SiteController
             $this->get('visitator')->visit($idol);
 
         $eventos = $this->getRepository('Event')->ByIdol($idol);
-        
-        
+
+
         $return = array(
             'eventos' => $eventos,
             'idol' => $idol,

@@ -21,23 +21,30 @@ class UserRepository extends CountBaseRepository
      * @param int $limit
      * @param int $offset
      */
-    public function FriendUsers(\Application\Sonata\UserBundle\Entity\User $user, $filtername = null, $limit = null, $offset = null)
+    public function FriendUsers(\Application\Sonata\UserBundle\Entity\User $user, $filtername = null, $limit = null, $offset = null, $sortby=null)
     {
-        $query = $this->_em->createQuery('
-    	SELECT fs, u
-    	FROM \Dodici\Fansworld\WebBundle\Entity\Friendship fs
-    	JOIN fs.author u
-    	WHERE fs.active = true AND fs.target = :user AND u.enabled = true
-    	' . ($filtername ? '
-			AND (
-			u.username LIKE :filtername OR
-			u.email LIKE :filtername OR
-			u.firstname LIKE :filtername OR
-			u.lastname LIKE :filtername
-		)' : '') . '
-    	')
-                ->setParameter('user', $user->getId())
-        ;
+
+        $dql = '
+      SELECT fs, u
+      FROM \Dodici\Fansworld\WebBundle\Entity\Friendship fs
+      JOIN fs.author u
+      WHERE fs.active = true AND fs.target = :user AND u.enabled = true
+      ' . ($filtername ? '
+      AND (
+      u.username LIKE :filtername OR
+      u.email LIKE :filtername OR
+      u.firstname LIKE :filtername OR
+      u.lastname LIKE :filtername
+    )' : '') . '
+      ';
+
+      if ($sortby !== null) {
+          $orderby = 'ORDER BY u.'.$sortby.' DESC';
+          $dql = $dql.$orderby;
+      }
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('user', $user->getId());
 
         if ($filtername)
             $query = $query->setParameter('filtername', '%' . $filtername . '%');
@@ -338,7 +345,7 @@ class UserRepository extends CountBaseRepository
      * Get all users who have one or more of the given idols
      * @param array_of_idols|idol $idols
      */
-    public function byIdols($idols, $limit=null)
+    public function byIdols($idols, $limit=null, $sortby=null)
     {
         if (!is_array($idols))
             $idols = array($idols);
@@ -348,13 +355,18 @@ class UserRepository extends CountBaseRepository
 
         if (!$idarr) throw new \Exception('No idols provided for byIdols');
 
-        $query = $this->_em->createQuery('
-    	SELECT DISTINCT u
-    	FROM \Application\Sonata\UserBundle\Entity\User u
-    	INNER JOIN u.idolships iss
-    	WHERE u.enabled = true
-    	AND iss.idol IN (:idarr)
-    	')
+        $dql = '
+                SELECT DISTINCT u
+                FROM \Application\Sonata\UserBundle\Entity\User u
+                INNER JOIN u.idolships iss
+                WHERE u.enabled = true
+                AND iss.idol IN (:idarr)';
+        if ($sortby !== null) {
+          $orderby = 'ORDER BY u.'.$sortby.' DESC';
+          $dql = $dql.$orderby;
+        }
+
+        $query = $this->_em->createQuery($dql)
                 ->setParameter('idarr', $idarr);
 
         if ($limit !== null)
@@ -368,7 +380,7 @@ class UserRepository extends CountBaseRepository
      * Get all users who have one or more of the given teams
      * @param array_of_teams|team $teams
      */
-    public function byTeams($teams, $limit=null)
+    public function byTeams($teams, $limit=null, $sortby=null)
     {
         if (!is_array($teams))
             $teams = array($teams);
@@ -378,13 +390,19 @@ class UserRepository extends CountBaseRepository
 
         if (!$tmarr) throw new \Exception('No teams provided for byTeams');
 
-        $query = $this->_em->createQuery('
+        $dql = '
                 SELECT DISTINCT u
                 FROM \Application\Sonata\UserBundle\Entity\User u
                 INNER JOIN u.teamships tms
                 WHERE u.enabled = true
                 AND tms.team IN (:tmarr)
-                ')
+                ';
+        if ($sortby !== null) {
+          $orderby = 'ORDER BY u.'.$sortby.' DESC';
+          $dql = $dql.$orderby;
+        }
+
+        $query = $this->_em->createQuery($dql)
                 ->setParameter('tmarr', $tmarr);
 
                 if ($limit !== null)

@@ -13,7 +13,7 @@
         </header>
 	{% endif %}
     {% if avatars.list is defined and avatars.list|length > 0 %}
-        <ul class="avatar-list {{ avatars.ulClass }}"> 
+        <ul class="avatar-list {{ avatars.ulClass }}">
             {% for avatar in avatars.list %}
                 {% if avatar.idol is defined %}
                     {% set avatar = avatar.idol %}
@@ -34,7 +34,7 @@
                 {% endif %}
                 <li>
                     <div class='{{ avatars.containerClass }}'>
-                        
+
                             <div class="avatar">
                                 {% if avatar.image %}
                                     <a href="{{ pathUrl }}">{% thumbnail avatar.image, 'big_square' %}</a>
@@ -43,10 +43,13 @@
                                 {% endif %}
                             </div>
                             <span class="name"><a href="{{ pathUrl }}">{{ avatar}}</a></span>
-                            <span class="friendCount">{% if fanCount is defined %}{{ fanCount }}{% endif %}</span>
+                            <span class="friendCount">{% if fanCount > 0 %}Fans: {{ fanCount }}{% endif %}</span>
+
+                            <span class="scoreCount">{% if avatar.score > 0 %}Pts: {{ avatar.score }}{% endif %}</span>
+
 
                             {% include "DodiciFansworldWebBundle:Default:blocks/fan_button.html.twig" with { entity:  avatar } %}
-                            
+
                         </div>
                     </li>
             {% endfor %}

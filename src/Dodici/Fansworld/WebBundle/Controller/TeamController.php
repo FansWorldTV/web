@@ -31,7 +31,7 @@ class TeamController extends SiteController
 
     const LIMIT_ITEMS = 10;
 
-    
+
 
     /**
      * @Route("/list/{categorySlug}", name= "team_list", defaults = {"categorySlug" = null})
@@ -53,7 +53,7 @@ class TeamController extends SiteController
     }
 
     /**
-     *  @Route("/ajax/get", name = "team_get") 
+     *  @Route("/ajax/get", name = "team_get")
      */
     public function ajaxGetTeams()
     {
@@ -111,7 +111,7 @@ class TeamController extends SiteController
             }else{
                 $teamTitle = $team->getTitle();
             }
-            
+
             $response['teams'][] = array(
                 'id' => $team->getId(),
                 'title' => $teamTitle,
@@ -131,7 +131,7 @@ class TeamController extends SiteController
 
     /**
      * Toggle teamship
-     * 
+     *
      *  @Route("/ajax/toggle", name="teamship_ajaxtoggle")
      */
     public function ajaxToggleAction()
@@ -259,19 +259,19 @@ class TeamController extends SiteController
         $selectedTeam = $teamRepo->find($selectedTeamId);
 
         $response = array('error' => false);
-        
+
         try {
-        
+
             if($isRemove) {
                 $teamship = $teamshipRepo->findOneBy(array('author' => $user->getId(), 'team' => $actualTeam->getId()));
                 $teamship->setFavorite(false);
                 $em->persist($teamship);
                 $em->flush();
-                
+
                 return $this->jsonResponse($response);
             }
 
-        
+
             if ($actualTeam) {
                 $actual = $teamshipRepo->findOneBy(array('author' => $user->getId(), 'team' => $actualTeam->getId()));
                 if ($actual) {
@@ -328,8 +328,8 @@ class TeamController extends SiteController
 
     /**
      * team videos
-     * @Route("/{slug}", name="team_land") 
-     * @Route("/{slug}/videos", name="team_videos") 
+     * @Route("/{slug}", name="team_land")
+     * @Route("/{slug}/videos", name="team_videos")
      * @Template()
      */
     public function videosTabAction($slug)
@@ -430,7 +430,7 @@ class TeamController extends SiteController
             'ulClass' => 'fans',
             'containerClass' => 'fan-container'
         );
-        $fans['list'] = $this->getRepository('User')->byTeams($team);
+        $fans['list'] = $this->getRepository('User')->byTeams($team, null, 'score');
 
         $return = array(
             'fans' => $fans,
@@ -492,7 +492,7 @@ class TeamController extends SiteController
 
         return $return;
     }
-    
+
 	/**
      * @Route("/{slug}/wall", name= "team_wall")
      * @Template()

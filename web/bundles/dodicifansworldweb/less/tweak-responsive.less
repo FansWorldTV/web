@@ -13,7 +13,7 @@
                 position: absolute;
                 visibility: hidden;
                 z-index: -999;
-                
+
             }
             .carousel {
                 width: 100%;
@@ -37,13 +37,13 @@
         }
     }
 }
- 
+
 
 @media (max-width: 979px) {
-    
+
     ul.avatar-list {
         .fan-container, .idol-container{
-            .name a, .friendCount {
+            .name a, .friendCount, .scoreCount {
                 display: block !important;
             }
         }
@@ -52,23 +52,23 @@
     header div#login-widget{
         top:30px;
     }
-     
+
     .navbar-fixed-top, .navbar-fixed-bottom{
         position: fixed !important;
     }
-    
+
     body{
         padding-top: 54px;
     }
-    
+
     .navbar-fixed-top .navbar-inner, .navbar-fixed-bottom .navbar-inner{
         padding: 0 5px;
     }
-    
+
     form.form-2column p.help-block{
         padding: 0;
     }
-    
+
     header.navbar nav.navbar-inner div.container ul.nav.usermenu{
         left: auto;
         position: absolute;
@@ -78,15 +78,15 @@
             display: inline-block;
         }
     }
-    
-    
-    header.profile_head section.header_main.header_large div.main_right{ 
+
+
+    header.profile_head section.header_main.header_large div.main_right{
         div.user-info h1{
             font-size: 25px;
             height: 50px;
             line-height: 25px;
         }
-        
+
         .numbers-info{
             .fotos-info, .videos-info, .fans-info{
                 div.tipo{
@@ -96,7 +96,7 @@
                 div.numero{
                     font-size: 20px;
                 }
-            } 
+            }
         }
     }
 
@@ -122,40 +122,40 @@
         }
     }
 }
- 
+
 @media (max-width: 767px) {
     .navbar-fixed-top, .navbar-fixed-bottom{
         position: fixed !important;
         padding: 0 20px;
     }
-     
+
     .navbar-fixed-bottom{
         display: none;
     }
-     
+
     .navbar .nav  li.show-on-collapse{
         display: block;
     }
-    
+
     ul#left-menu li{
         float: left;
     }
-     
+
     div.register div.bottom form p.help-block{
         padding: 90px;
     }
-    
-    header.navbar{ 
+
+    header.navbar{
         nav.navbar-inner div.container ul.nav.usermenu{
             right: 75px;
         }
-        ul.nav li.dropdown a.dropdown-toggle.username{ 
+        ul.nav li.dropdown a.dropdown-toggle.username{
             span{
                 width: 100px;
             }
         }
     }
-    
+
     header.profile_head{
         padding-bottom: 5px;
         border-bottom: 0;
@@ -173,22 +173,22 @@
             }
         }
     }
-    
-    header.profile_head section.header_main.header_large div.main_right{ 
+
+    header.profile_head section.header_main.header_large div.main_right{
         .user-info{
             .pull-left();
              padding-left: 2%;
-        }    
+        }
         .numbers-info{
-            .pull-right(); 
+            .pull-right();
             margin-top: 1%;
-        } 
+        }
     }
-    
+
 }
 
 @media (max-width: 550px) {
-    header.navbar  ul.nav li.dropdown a.dropdown-toggle.username{ 
+    header.navbar  ul.nav li.dropdown a.dropdown-toggle.username{
         span{
             visibility: hidden;
         }
