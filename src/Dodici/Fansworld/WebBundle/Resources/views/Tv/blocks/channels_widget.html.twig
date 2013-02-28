@@ -13,7 +13,9 @@
                 <a href="{{ path('video_show', {'id': videoDestacadoMain.id, 'slug': videoDestacadoMain.slug}) }}">
                     <i class="play-video"></i>
                 </a>
-                <span class="video-title">{{ videoDestacadoMain.title|truncate(15) }}</span>
+                <div class="shadow"></div>
+                <span class="video-title">{{ videoDestacadoMain.title }}</span>
+                <span class="highlight-text">{{ videoDestacadoMain.content }}</span>
                 {% thumbnail videoDestacadoMain.image, 'big' with {"title": videoDestacadoMain.title, 'class': 'video-thumb'}%}
             </div>
             <div class="span8 content-container highlighted-videos">
@@ -66,7 +68,7 @@
                                 <a href="{{ path('teve_explorechannel', {id: channel.id, slug: channel.slug}) }}">Explorar &gt;</a>
                             </div>
                             <div class="subscribirse">
-                                {% include 'DodiciFansworldWebBundle:Tv:blocks/button_subscribe.html.twig' with {channel: channel.channelEntity} %}
+                                {% include 'DodiciFansworldWebBundle:Tv:blocks/button_subscribe.html.twig' with {channel: channel.channelEntity, 'large': true} %}
                             </div>
                         </div>
                     </div>

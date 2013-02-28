@@ -43,6 +43,8 @@ section.channels-widget{
     div.videoplayer-container {
         height: 315px;
         position: relative;
+        overflow: hidden;
+
         i.play-video {
             z-index: 1;
             background-image: url('../images/play-icon.png');
@@ -58,24 +60,33 @@ section.channels-widget{
             }
         }
 
-        span {
-            z-index: 1;
+        .shadow {
+            background-image: url('../images/zocalo.png');
             position: absolute;
-            z-index: top;
+            z-index: 9999;
+            bottom: 0;
+            left: 0;
+            .size(155px, 100%);
+        }
+        span {
+            position: absolute;
+            z-index: 99999999;
 
             &.highlight-text {
                 font-size: 15px;
-                color: @gray;
+                color: white;
                 opacity: 0.7;
-                text-shadow: @black 3px 1px 7px;
-                top: 245px;
+                //text-shadow: @black 3px 1px 7px;
+                bottom: 20px;
                 left: 20px;
             }
+
             &.video-title {
-                font-size: 30px;
+                font-size: 22px;
                 color: gold;
-                text-shadow: @black 3px 1px 7px;
-                top: 276px;
+                font-weight: 300;
+                //text-shadow: @black 3px 1px 7px;
+                bottom: 60px;
                 left: 20px;
                 text-overflow: ellipsis;
             }
