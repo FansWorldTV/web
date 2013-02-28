@@ -30,6 +30,14 @@
                             {{ hasteam.team }}
                         </a>
                     {% endfor %}
+                    {% for hasuser in entity.hasusers %}
+                        <a href="{{ path('user_land', {username: hasuser.target.username}) }}" class="label tag-user {% if hasuser.target.image %}tag-avatar{% endif %}"">
+                            {% if hasuser.target.image %}
+                                {% thumbnail hasuser.target.image, 'avatar' %}
+                            {% endif %}
+                            {{ hasuser.user }}
+                        </a>
+                    {% endfor %}
                     {% for hastag in entity.hastags %}
                         <a href="{{ path('teve_taggedvideos', {term: hastag.tag.slug}) }}" class="label tag-text">#{{ hastag.tag }}</a>
                     {% endfor %}
