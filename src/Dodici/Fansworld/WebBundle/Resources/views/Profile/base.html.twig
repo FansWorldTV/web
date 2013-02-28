@@ -4,17 +4,17 @@
     {% if selfWall is not defined %}
         {% set selfWall = false %}
     {% endif %}
-    
+
 	{% if tplLarge is not defined %}
         {% set tplLarge = true %}
     {% endif %}
-    
+
     {% if profile_head_class is not defined %}
         {% set profile_head_class = '' %}
     {% endif %}
-    
+
     {% block profile_header_container %}
-        <header class="{{ profile_head_class }} profile_head {% if tplLarge %} large {% else %} small {% endif %}  row-fluid">
+        <header data-profile-type="{{entity_type}}" data-profile-title="{{entity}}" data-profile-id="{{entity.id}}" class="{{ profile_head_class }} profile_head {% if tplLarge %} large {% else %} small {% endif %}  row-fluid">
             {% block profile_head %}
                 {% if tplLarge %}
                         {% include 'DodiciFansworldWebBundle:' ~ entity_type ~ '/Profile:header_large.html.twig' %}
@@ -28,15 +28,15 @@
             {% endblock %}
     	</header>
 	{% endblock %}
-	
-	
+
+
 	{% if profile_body_class is not defined %}
         {% set profile_body_class = '' %}
     {% endif %}
 	<div class="{{ profile_body_class }} row-fluid">
 		{% block profile_body %}
-		
+
 		{% endblock %}
 	</div>
-	
+
 {% endblock %}
