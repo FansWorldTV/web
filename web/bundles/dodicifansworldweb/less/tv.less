@@ -63,7 +63,7 @@ section.channels-widget{
         .shadow {
             background-image: url('../images/zocalo.png');
             position: absolute;
-            z-index: 9999;
+            z-index: 9;
             bottom: 0;
             left: 0;
             .size(155px, 100%);
@@ -246,10 +246,17 @@ section.ranking-widget{
                     line-height: 30px;
                     .pull-left();
                     cursor: pointer;
-                    &.active,&:hover{
+                    font-weight: 400;
+                    font-size: 13px;
+                    color: @grayDark;
+
+                    &.active {
                         .border-radius(5px 5px 0 0);
-                        #gradient > .vertical(@navbarBackgroundHighlight, @navbarBackground);
+                        background-color: @black;
                         color: @white;
+                    }
+                    &:hover {
+                        color: @black;
                     }
                     span{
                         padding-left: 10px;
@@ -270,7 +277,7 @@ section.ranking-widget{
         div.tag-list-container{
             width: 100%;
             overflow: hidden;
-            margin: 5px 0;
+            margin: 14px 0;
             height: 30px;
             ul{
                 li{
@@ -281,8 +288,15 @@ section.ranking-widget{
                     background-color: #1e1e1e;
                     margin-right: 5px;
                     padding: 5px 15px;   
-                    color: #c6c6c6;
-                    
+                    a{
+                        color: @grayLight;
+                    }
+                }
+
+                li:hover {
+                    a{
+                        color: @white;
+                    }
                 }
             }
         }

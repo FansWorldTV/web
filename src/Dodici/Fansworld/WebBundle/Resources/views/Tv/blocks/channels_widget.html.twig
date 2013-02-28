@@ -14,17 +14,21 @@
                     <i class="play-video"></i>
                 </a>
                 <div class="shadow"></div>
-                <span class="video-title">{{ videoDestacadoMain.title }}</span>
-                <span class="highlight-text">{{ videoDestacadoMain.content }}</span>
-                {% thumbnail videoDestacadoMain.image, 'big' with {"title": videoDestacadoMain.title, 'class': 'video-thumb'}%}
+                <a href="{{ path('video_show', {'id': videoDestacadoMain.id, 'slug': videoDestacadoMain.slug}) }}">
+                    <span class="video-title">{{ videoDestacadoMain.title }}</span>
+                    <span class="highlight-text">{{ videoDestacadoMain.content }}</span>
+                    {% thumbnail videoDestacadoMain.image, 'big' with {"title": videoDestacadoMain.title, 'class': 'video-thumb'}%}
+                </a>
             </div>
             <div class="span8 content-container highlighted-videos">
                 {% set counter = 1 %}
                 {% for video in videosDestacadosFW %}
                     {% if video.image is not null %}
                         <div class="video {% if counter == 3 %} last-element-row {% endif %}">
-                            {% thumbnail video.image, 'huge_square' with {'class': 'thumb'} %}
-                            <i class="play-video"></i>
+                            <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}" data-modal-url="{{ path('modal_media', {'type': 'video', 'id': video.id}) }}">
+                                {% thumbnail video.image, 'huge_square' with {'class': 'thumb'} %}
+                                <i class="play-video"></i>
+                            </a>
                             <div class="title-and-user">
                                 {% if video.author is not null %}
                                     {% if video.author.image is not null%}
@@ -49,8 +53,8 @@
                             <div class='span4 videoplayer-container'>
                                 <a href="{{ path('video_show', {'id': channel.video.id, 'slug': channel.video.slug}) }}">
                                     <i class="play-video"></i>
+                                    {% thumbnail channel.video.image, 'big' with {"title": channel.video.title,'class': 'video-thumb'}%}
                                 </a>
-                                {% thumbnail channel.video.image, 'big' with {"title": channel.video.title,'class': 'video-thumb'}%}
                             </div>
                         {% endif %}
                     {% endif %}
