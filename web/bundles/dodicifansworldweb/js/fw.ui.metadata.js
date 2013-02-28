@@ -16,7 +16,7 @@
  *      appLocale
  */
 
-// FansWorld tagify plugin 1.7 (tagit)
+// FansWorld tagify plugin 1.8 (preload)
 // 1.4 fix FB.ui popup
 // 1.5 add 'user' type to tagifier
 // 1.6 missing comma
@@ -44,7 +44,7 @@ $(document).ready(function () {
         text: {
             selected: []
         },
-        sampleTags: ['c++', 'java', 'php', 'coldfusion', 'javascript', 'asp', 'ruby', 'python', 'c', 'scala', 'groovy', 'haskell', 'perl', 'erlang', 'apl', 'cobol', 'go', 'lua'],
+        magic: null,
         prePopulate: [],
         action: null,
         dataSource: null,
@@ -74,8 +74,25 @@ $(document).ready(function () {
             var that = this;
             var i;
             //that.options.dataSource = Routing.generate(appLocale + '_tag_ajaxmatch');
+            this.options.magic = parseInt(Math.random() * 9999);
+            that.options[this.options.magic] = {
+                team: {
+                    selected: []
+                },
+                idol: {
+                    selected: []
+                },
+                user: {
+                    selected: []
+                },
+                text: {
+                    selected: []
+                }
+            };
             that.options.dataSource = Routing.generate(appLocale + $(that.element).attr('data-route'));
             that.options.action = $(that.element).attr('data-action');
+
+            // Precargo tags autogenerados
             var pre = $("#form_prepopulate").val();
             if(typeof(pre) !== 'undefined' && pre.length > 0) {
                 pre.split(',').forEach(function(val) {
@@ -91,20 +108,32 @@ $(document).ready(function () {
                             }
                         };
                         that.options.prePopulate.push(item);
-                        that.options[item.result.type.toLowerCase()].selected.push(item);
-                        //console.log(item.result.type)
-                        //that.addEntityItem(that.options.prePopulate[that.options.prePopulate.length -1]);
                     }
                 });
-                console.log("sale preload");
             }
-            console.log(that.options.dataSource);
+            // Si estoy en un profile base agrego el tag automaticamente
+            if ($(".profile_head").length > 0) {
+                var profile_type = $(".profile_head").attr("data-profile-type");
+                var profile_title = $(".profile_head").attr("data-profile-title");
+                var profile_id = $(".profile_head").attr("data-profile-id");
+                var item = {
+                    id: profile_id,
+                    label: profile_title,
+                    value: profile_title,
+                    result: {
+                        id: profile_id,
+                        type: profile_type.toLowerCase()
+                    }
+                };
+                console.log("creating auto tag for type: %s, title: %s. id: %s", profile_type, profile_title, profile_id)
+                that.options.prePopulate.push(item);
+            }
             $(that.element).tagit({
                 availableTags: that.options.sampleTags,
                 // This will make Tag-it submit a single form value, as a comma-delimited field.
                 autocomplete: {
                     source: function( request, response ) {
-                        console.log("tagit llama autocomplete request.term: " + request.term)
+                        console.log("tagit llama autocomplete request.term: " + request.term);
                         $.ajax({
                             url: that.options.dataSource,
                             dataType: "JSON",
@@ -129,20 +158,18 @@ $(document).ready(function () {
                 singleFieldNode: $(that.element),
                 afterTagAdded: function(evt, ui) {
                     if (!ui.duringInitialization) {
-                        console.log("afterTagAdded")
-                        console.log(ui.extra)
                         that.addEntityItem({result: ui.extra});
                     }
                 },
                 afterTagRemoved: function(evt, ui) {
                     if (!ui.duringInitialization) {
-                        console.log("afterTagRemoved")
-                        console.log(ui.tag.data('extra'))
                         that.deleteEntityItem({result: ui.tag.data('extra')});
                     }
                 }
             });
-            for(i = 0; i < that.options.prePopulate.length; i++) {
+
+
+            for(i = 0; i < that.options.prePopulate.length; i += 1) {
                 if (that.options.prePopulate.hasOwnProperty(i)) {
                     var item  = that.options.prePopulate[i];
                     $(that.element).tagit('createTag', item.value, null, null, item.result);
@@ -151,14 +178,14 @@ $(document).ready(function () {
         },
         addEntityItem: function (item) {
             var that = this;
-            /*
-            if(typeof(item.result.type) === 'undefined') {
-                item.result.type =
-            }
-            */
             item.result.type = item.result.type || 'text';
-            that.options[item.result.type].selected.push(item);
-            that.updateInput('#form_' + that.options.action + item.result.type, that.options[item.result.type].selected);
+            //that.options[that.options.magic].selected.push(item);
+            var a = that.options[that.options.magic];
+            a[item.result.type].selected.push(item);
+            console.log(a[item.result.type].selected)
+            //that.options[item.result.type].selected.push(item);
+            //that.options[this.options.magic].selected.push(item);
+            that.updateInput('#form_' + that.options.action + item.result.type, a[item.result.type].selected);
             console.log("will add: " + JSON.stringify(item) + " to: #form_" + that.options.action + item.result.type);
         },
         updateInput: function(inputSelector, list) {
@@ -243,9 +270,7 @@ $(document).ready(function () {
         },
         facebookMiddleware: function(){
             var that = this;
-            console.log("facebookMiddleware")
             if ($(that.element).hasClass('active')) {
-                console.log("is active")
                 that.options.fb = true;
                 FB.ui({
                     method: 'permissions.request',
