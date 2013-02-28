@@ -15,6 +15,7 @@
  *      colorBox
  * external dependencies:
  *      appLocale
+ *      ExposeTranslation
  */
 
 /*jslint browser: true*/
@@ -163,6 +164,7 @@ $(document).ready(function () {
             that.bindFormSubmit();
             that.bindAlbumActions();
             that.options.timer = setInterval(function(){ that.resizePopup(); }, 250);
+            console.log("autosize popup")
         },
         createFwPhotoUploader: function() {
             var that = this;
@@ -244,6 +246,7 @@ $(document).ready(function () {
                     var entryId = $(responseJSON).find('id').text();
                     $('#form_entryid').val(entryId);
                     console.log("Video subido correctamente ID: " + entryId);
+                    $(".container-up").replaceWith('<div class="alert alert-success">' + ExposeTranslation.get('upload_complete:') + '</div>');
                     return that.options.onComplete(id, fileName, responseJSON);
                 },
                 onUpload: function(id, fileName, xhr) {
