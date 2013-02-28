@@ -379,6 +379,9 @@ class TvController extends SiteController
         $videoRepo = $this->getRepository('Video');
         $category = $this->getRepository('VideoCategory')->find($channelType);
 
+        $datefrom = null;
+        $dateto = null;
+
         switch ($filterType) {
             default:
                 $sortCriteria = 'default';
@@ -390,11 +393,24 @@ class TvController extends SiteController
                 $sortCriteria = "likes";
                 break;
             case 'lasts':
-                $sortCriteria = "lasts";
+                $sortCriteria = "date";
+                break;
+            case 'day':
+                $sortCriteria = "views";
+                $date = new \DateTime();
+                $datefrom = new \DateTime("-1 day");
+                break;
+            case 'week':
+                $sortCriteria = "views";
+                $datefrom= new \DateTime("-1 week");
+                break;
+            case 'month':
+                $sortCriteria = "views";
+                $datefrom = new \DateTime("-1 month");
                 break;
         }
 
-        $search = $videoRepo->search(null, $user, self::LIMIT_HOME_VIDEOS, $offset, $category, null, null, null, null, $sortCriteria);
+        $search = $videoRepo->search(null, $user, self::LIMIT_HOME_VIDEOS, $offset, $category, null, null, $datefrom, $dateto, $sortCriteria);
 
         return $this->jsonResponse(array(
                     'videos' => $serializer->values($search, 'medium'),
