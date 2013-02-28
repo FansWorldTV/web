@@ -1,7 +1,7 @@
 <section class='channels-widget row-fluid'>
     <aside class='channels-list span2'>
         <ul id="filter-channels">
-            <li class="active" data-list-target="all"><a>All</a></li>
+            <li class="active" data-list-target="all"><a>Todos</a></li>
             {% for channel in channels %}
                 <li data-list-target="{{ channel.channelName }}" data-channel-id="{{ channel.id }}"><a>{{ channel.channelName }}</a></li>
             {% endfor %}
@@ -13,7 +13,6 @@
                 <a href="{{ path('video_show', {'id': videoDestacadoMain.id, 'slug': videoDestacadoMain.slug}) }}">
                     <i class="play-video"></i>
                 </a>
-                <span class="highlight-text">Destacado Fansworld</span>
                 <span class="video-title">{{ videoDestacadoMain.title|truncate(15) }}</span>
                 {% thumbnail videoDestacadoMain.image, 'big' with {"title": videoDestacadoMain.title}%}
             </div>
@@ -46,8 +45,6 @@
                     {% if channel.video.image is defined %}
                         {% if channel.video.image is not null %}
                             <div class='span4 videoplayer-container'>
-                                <span class="highlight-text">Destacado Fansworld</span>
-                                <span class="video-title">{{ channel.video.title|truncate(15) }}</span>
                                 <a href="{{ path('video_show', {'id': channel.video.id, 'slug': channel.video.slug}) }}">
                                     <i class="play-video"></i>
                                 </a>
@@ -58,7 +55,6 @@
                     
                     <div class="span8 content-container">
                         <div class="channel-highlight-container">
-                            <div class="destacado">Destacado Fansworld</div>
                             <div class="channel-name">{{ channel.channelName }}</div>
                             
                             <div class="title">{{ channel.video.title }}</div>

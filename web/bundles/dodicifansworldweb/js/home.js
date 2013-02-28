@@ -33,8 +33,8 @@ home.toggleSections = function(){
         var category = $(this).attr('data-category-id');
         var activeCategory = $(".home-header ul.sections li.active").attr('data-category-id');
 
-        $(".home-header .category-container div[data-category-id='" + activeCategory + "']").fadeOut('fast', function(){
-            $(".home-header .category-container div[data-category-id='" + category + "']").hide().removeClass('hidden').fadeIn('fast');
+        $(".home-header .category-container div[data-category-id='" + activeCategory + "']").fadeOut('500', function(){
+            $(".home-header .category-container div[data-category-id='" + category + "']").hide().removeClass('hidden').fadeIn('500');
         });
 
         $(".home-header ul.sections li").removeClass('active');

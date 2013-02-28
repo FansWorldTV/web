@@ -36,18 +36,20 @@ section.videoexplorer-container{
 section.channels-widget{
     height: 315px;
     margin-bottom: 20px;
-    #gradient > .vertical(@navbarBackgroundHighlight, @navbarBackground);
+    //#gradient > .vertical(@navbarBackgroundHighlight, @navbarBackground);
+    background-color: black;
     overflow: hidden;
 
     div.videoplayer-container {
         position: relative;
         i.play-video {
-            background-image: url('../images/ui/play_video.png');
+            background-image: url('../images/play-icon.png');
+            background-size: 80px;
             .square(80px);
             position: absolute;
             left: 42%;
             top: 32%;
-            opacity: 0.5;
+            opacity: 0.7;
             
             &:hover{
                 opacity: 1;
@@ -79,21 +81,33 @@ section.channels-widget{
     }
 
     aside.channels-list{
-        
+        height: 100%;
         
         ul{
+            margin-top: 8px;
+
             li{
                 padding: 3% 0 3% 25px;
                 cursor: pointer;
-                font-size: 15px;
-                &.active,&:hover{
-                    background-color: #1E1E1E;
+                font-size: 22px;
+                line-height: 22px;
+                font-weight: 300;
+
+                &.active {
+                    background-color: #292728;
+                    border-right: 2px solid @green;
                     a{
-                        color: @white;
+                        color: @grayLight;
                     }
                 }
+
+                a:hover {
+                    color: @green;
+                    background-color: none;
+                }
+
                 a{
-                    color: #7f7f7f;
+                    color: @grayDark;
                 }
             }
         }
@@ -101,6 +115,8 @@ section.channels-widget{
     }
     
     div.content{
+        height: 100%;
+        overflow: hidden;
         margin-left: 0;
 
         .tab-pane {
@@ -120,13 +136,13 @@ section.channels-widget{
             }
             .channel-name{
                 color: #f1e602;
-                font-size: 40px;
+                font-size: 30px;
                 line-height: 40px;
                 top: 40px;
             }
             .title{
                 color: @white;
-                font-size: 40px;
+                font-size: 30px;
                 line-height: 40px;
                 max-height: 40px;
                 max-width: 100%;
@@ -138,6 +154,9 @@ section.channels-widget{
             .description{
                 color: @white;
                 top: 130px;
+                font-size: 18px; 
+                line-height: 22px;
+                font-weight: 300;
             }
             .explorar{
                 .border-radius(4px);
@@ -159,12 +178,11 @@ section.channels-widget{
 
                 .video {
                     position: relative;
-                    width: 30%;
-                    height: 48%;
+                    width: 32%;
+                    height: 50%;
                     overflow: hidden;
                     .pull-left();
-                    margin-right: 3%;
-                    margin-bottom: 1%;
+                    margin: 0;
                     
                     .video-std-block;
 
