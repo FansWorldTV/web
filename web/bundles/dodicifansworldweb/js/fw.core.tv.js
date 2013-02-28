@@ -50,7 +50,7 @@
             this.page = 1;
             this.contentContainer = $('.ranking-widget .content-container');
             this.isotopeContainer = $(this.contentContainer).find('.isotope_container').last();
-            this.customTags = [
+            this.defaultTags = [
                 {filter: 'day', title: 'dia'},
                 {filter: 'week', title: 'semana'},
                 {filter: 'month', title: 'mes'}
@@ -82,6 +82,10 @@
             this.loadGallery();
             // Tags
             this.myTags();
+            // custom tags
+            if(this.filter === 'views') {
+                this.addCustomTags(this.defaultTags);
+            }
         }
         TV.prototype.loadGallery = function() {
             this.channel = $('#filter-channels').closest('ul').find("li.active").attr("data-channel-id");
@@ -148,6 +152,25 @@
                 that.channel = $('#filter-channels').closest('ul').find("li.active").attr("data-channel-id");
                 // update tags
                 that.myTags(that.channel, that.filter);
+                // custom tags
+                if(that.filter === 'views') {
+                    that.addCustomTags(that.defaultTags);
+                }
+                // Destroy gallery items
+                that.destroyGallery();
+                // Load new gallery
+                that.loadGallery();
+            });
+        };
+        TV.prototype.customFilterToggler = function(element) {
+            var that = this;
+            element.click(function(e){
+                console.log("toggle custom filter")
+                that.filter = $('this').attr('data-list-filter-type');
+                // update tags
+                that.myTags(that.channel, that.filter);
+                // create custom UI filter elements
+                that.addCustomTags(that.defaultTags);
                 // Destroy gallery items
                 that.destroyGallery();
                 // Load new gallery
@@ -163,13 +186,12 @@
                 $(this).first().addClass('active');
 
                 that.filter = $('#list-filters ul').find('li.active').attr('data-list-filter-type');
-
-                /*if(that.filter === 'views') {
-
-                    //that.customTags()
-                }*/
                 // update tags
                 that.myTags(that.channel, that.filter);
+                // custom tags
+                if(that.filter === 'views') {
+                    that.addCustomTags(that.defaultTags);
+                }
                 // Destroy gallery items
                 that.destroyGallery();
                 // Load new gallery
@@ -194,12 +216,18 @@
                 }
             });
         };
-        TV.prototype.customTags = function(tags, options) {
+        TV.prototype.addCustomTags = function(tags, options) {
+            var that = this;
             var i;
             var $tagList = $(".content-container").find(".tag-list-container ul");
             for(i in tags) {
                 if (tags.hasOwnProperty(i)) {
-                    $tagList.prepend("<li data-list-filter-type='" + tags[i].filter + "' class=''><span>" + tags[i].title + "</span></li>");
+                    var $customFilter = $("<li data-list-filter-type='" + tags[i].filter + "' class=''><span>" + tags[i].title + "</span></li>");
+                    $customFilter.css('background-color', '#666');
+                    $customFilter.css('color', '#fff');
+                    $customFilter.css('border-color', '#8acd2c');
+                    that.customFilterToggler($customFilter);
+                    $tagList.prepend($customFilter);
                 }
             }
             return;
