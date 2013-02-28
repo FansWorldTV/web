@@ -25,7 +25,7 @@
     <param name="allowNetworking" value="all" />
     <param name="allowScriptAccess" value="always" />
     <param name="bgcolor" value="#000000" />
-    <param name="flashVars" value="streamerType=hdnetwork&amp;akamaiHD.loadingPolicy=preInitialize&amp;akamaiHD.asyncInit=true&amp;&{FLAVOR}" />
+    <param name="flashVars" value="{% if autoplay %}autoPlay=true&amp;{% endif %}streamerType=hdnetwork&amp;akamaiHD.loadingPolicy=preInitialize&amp;akamaiHD.asyncInit=true&amp;&{FLAVOR}" />
     <param name="movie" value="http://www.kaltura.com/index.php/kwidget/cache_st/{{timestamp}}/wid/_{{partner}}/uiconf_id/{{player}}/entry_id/{{video.stream}}{% if autoplay %}/autoPlay/1{% endif %}" />
     <a rel="media:thumbnail" href="http://cdnbakmi.kaltura.com/p/{{partner}}/sp/{{subpartner}}/thumbnail/entry_id/{{video.stream}}/width/120/height/90/bgcolor/000000/type/2"></a>
     <span property="media:title" content="{{video.title|escape('html_attr')}}"></span>
