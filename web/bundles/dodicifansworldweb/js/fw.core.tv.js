@@ -165,11 +165,15 @@
         TV.prototype.customFilterToggler = function(element) {
             var that = this;
             element.click(function(e){
+                $('[data-list-filter-type=' + that.filter + ']').removeClass().removeAttr('style');
                 that.filter = $(this).attr('data-list-filter-type');
                 // update tags
                 that.myTags(that.channel, that.filter);
                 // create custom UI filter elements
                 that.addCustomTags(that.defaultTags);
+                $('[data-list-filter-type=' + that.filter + ']').css('background-color', '#666');
+                $('[data-list-filter-type=' + that.filter + ']').css('color', '#fff');
+                $('[data-list-filter-type=' + that.filter + ']').css('border-color', '#8acd2c');
                 // Destroy gallery items
                 that.destroyGallery();
                 // Load new gallery
@@ -222,9 +226,6 @@
             for(i in tags) {
                 if (tags.hasOwnProperty(i)) {
                     var $customFilter = $("<li data-list-filter-type='" + tags[i].filter + "' class=''><span>" + tags[i].title + "</span></li>");
-                    $customFilter.css('background-color', '#666');
-                    $customFilter.css('color', '#fff');
-                    $customFilter.css('border-color', '#8acd2c');
                     that.customFilterToggler($customFilter);
                     $tagList.prepend($customFilter);
                 }
