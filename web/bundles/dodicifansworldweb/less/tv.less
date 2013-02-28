@@ -41,8 +41,10 @@ section.channels-widget{
     overflow: hidden;
 
     div.videoplayer-container {
+        height: 315px;
         position: relative;
         i.play-video {
+            z-index: 1;
             background-image: url('../images/play-icon.png');
             background-size: 80px;
             .square(80px);
@@ -57,6 +59,7 @@ section.channels-widget{
         }
 
         span {
+            z-index: 1;
             position: absolute;
             z-index: top;
 
@@ -76,6 +79,14 @@ section.channels-widget{
                 left: 20px;
                 text-overflow: ellipsis;
             }
+        }
+
+        img.video-thumb {
+            z-index: 0;
+            max-width: none;
+            left: -20px;
+            top: -10px;
+            position: absolute;
         }
 
     }

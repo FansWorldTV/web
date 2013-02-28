@@ -14,7 +14,7 @@
                     <i class="play-video"></i>
                 </a>
                 <span class="video-title">{{ videoDestacadoMain.title|truncate(15) }}</span>
-                {% thumbnail videoDestacadoMain.image, 'big' with {"title": videoDestacadoMain.title}%}
+                {% thumbnail videoDestacadoMain.image, 'big' with {"title": videoDestacadoMain.title, 'class': 'video-thumb'}%}
             </div>
             <div class="span8 content-container highlighted-videos">
                 {% set counter = 1 %}
