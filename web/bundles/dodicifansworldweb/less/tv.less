@@ -279,6 +279,7 @@ section.ranking-widget{
             overflow: hidden;
             margin: 14px 0;
             height: 30px;
+            
             ul{
                 li{
                     cursor: pointer;
@@ -288,14 +289,23 @@ section.ranking-widget{
                     background-color: #1e1e1e;
                     margin-right: 5px;
                     padding: 5px 15px;   
+                    text-transform: capitalize;
+                    
                     a{
                         color: @grayLight;
+                        text-transform: capitalize;
                     }
-                }
 
-                li:hover {
-                    a{
-                        color: @white;
+                    &.active {
+                        background-color: #353535;
+                        border-color: #727272;
+                        color: white;
+                    }
+
+                    &:hover {
+                        a{
+                            color: @white;
+                        }
                     }
                 }
             }
