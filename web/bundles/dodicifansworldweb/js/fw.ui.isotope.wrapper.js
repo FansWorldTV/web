@@ -81,7 +81,6 @@ $(document).ready(function () {
 				$container.find('.item').each(function(i, item){
 					var $this = $(this);
 					$this.css('width', ((100 / cells) - 1) + "%"); // 2% margen entre los elementos
-					$('.title').ellipsis();
 				});
 				$container.isotope({
 					// update columnWidth to a percentage of container width
