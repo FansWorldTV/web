@@ -425,7 +425,6 @@ class TeamController extends SiteController
         }else
             $this->get('visitator')->visit($team);
 
-
         $fans = array(
             'ulClass' => 'fans',
             'containerClass' => 'fan-container'
