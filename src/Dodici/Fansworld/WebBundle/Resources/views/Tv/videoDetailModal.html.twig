@@ -7,7 +7,7 @@
     </div>
     <div class="right">
         {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video, editbutton: false, reportbutton: false} %}
-        {{ kalturatwig.player(video)|raw }}
+        {{ kalturatwig.player(video, true)|raw }}
         <!--{% include 'DodiciFansworldWebBundle:Tv:blocks/now-watching.html.twig' with {entity: video} %}-->
         {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %}
         {% include 'DodiciFansworldWebBundle:Video:blocks/grid.html.twig' with {videos: videosRelated, sectionId:'videos-related-sort',dataGridRelatedId: video.id} %}

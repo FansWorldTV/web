@@ -1,6 +1,9 @@
 {% if timestamp is not defined %}
     {% set timestamp = 'now'|date('U') %}
 {% endif %}
+{% if autoplay is not defined %}
+    {% set autoplay = false %}
+{% endif %}
 <script type="text/javascript" src="http://www.kaltura.com/p/{{partner}}/sp/{{subpartner}}/embedIframeJs/uiconf_id/{{player}}/partner_id/{{partner}}"></script>
 <object 
   id="kaltura_player_{{timestamp}}"
@@ -16,14 +19,14 @@
   xmlns:dc="http://purl.org/dc/terms/" 
   xmlns:media="http://search.yahoo.com/searchmonkey/media/" 
   rel="media:video" 
-  resource="http://www.kaltura.com/index.php/kwidget/cache_st/{{timestamp}}/wid/_{{partner}}/uiconf_id/{{player}}/entry_id/{{video.stream}}" 
-  data="http://www.kaltura.com/index.php/kwidget/cache_st/{{timestamp}}/wid/_{{partner}}/uiconf_id/{{player}}/entry_id/{{video.stream}}">
+  resource="http://www.kaltura.com/index.php/kwidget/cache_st/{{timestamp}}/wid/_{{partner}}/uiconf_id/{{player}}/entry_id/{{video.stream}}{% if autoplay %}/autoPlay/1{% endif %}" 
+  data="http://www.kaltura.com/index.php/kwidget/cache_st/{{timestamp}}/wid/_{{partner}}/uiconf_id/{{player}}/entry_id/{{video.stream}}{% if autoplay %}/autoPlay/1{% endif %}">
     <param name="allowFullScreen" value="true" />
     <param name="allowNetworking" value="all" />
     <param name="allowScriptAccess" value="always" />
     <param name="bgcolor" value="#000000" />
     <param name="flashVars" value="streamerType=hdnetwork&amp;akamaiHD.loadingPolicy=preInitialize&amp;akamaiHD.asyncInit=true&amp;&{FLAVOR}" />
-    <param name="movie" value="http://www.kaltura.com/index.php/kwidget/cache_st/{{timestamp}}/wid/_{{partner}}/uiconf_id/{{player}}/entry_id/{{video.stream}}" />
+    <param name="movie" value="http://www.kaltura.com/index.php/kwidget/cache_st/{{timestamp}}/wid/_{{partner}}/uiconf_id/{{player}}/entry_id/{{video.stream}}{% if autoplay %}/autoPlay/1{% endif %}" />
     <a rel="media:thumbnail" href="http://cdnbakmi.kaltura.com/p/{{partner}}/sp/{{subpartner}}/thumbnail/entry_id/{{video.stream}}/width/120/height/90/bgcolor/000000/type/2"></a>
     <span property="media:title" content="{{video.title|escape('html_attr')}}"></span>
     <span property="dc:description" content="{{video.content|truncate(30)|escape('html_attr')}}"></span>

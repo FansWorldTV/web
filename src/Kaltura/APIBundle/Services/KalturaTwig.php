@@ -20,14 +20,14 @@ class KalturaTwig
         $this->player = $player;
     }
     
-	public function getPlayer(Video $video)
+	public function getPlayer(Video $video, $autoplay = false)
     {
     	$this->visitator->visit($video);
     	if ($video->getYoutube()) {
     		return $this->container->get('templating')->render(
     	        'KalturaAPIBundle::iframe.html.twig',
     	        array(
-    	            'url' => sprintf('http://www.youtube.com/embed/%1$s?autoplay=1&wmode=transparent', $video->getYoutube())
+    	            'url' => sprintf('http://www.youtube.com/embed/%1$s?autoplay='.($autoplay ? 1 : 0).'&wmode=transparent', $video->getYoutube())
     	        ));
     	} elseif ($video->getVimeo()) {
     	    return $this->container->get('templating')->render(
@@ -42,7 +42,8 @@ class KalturaTwig
     		    	'video' => $video,
     		    	'partner' => $this->kaltura->getPartnerId(),
     		        'subpartner' => $this->kaltura->getSubPartnerId(),
-    		        'player' => $this->player
+    		        'player' => $this->player,
+    		        'autoplay' => $autoplay
     		    )
     		);
     	}
