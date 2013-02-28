@@ -165,8 +165,7 @@
         TV.prototype.customFilterToggler = function(element) {
             var that = this;
             element.click(function(e){
-                console.log("toggle custom filter")
-                that.filter = $('this').attr('data-list-filter-type');
+                that.filter = $(this).attr('data-list-filter-type');
                 // update tags
                 that.myTags(that.channel, that.filter);
                 // create custom UI filter elements
