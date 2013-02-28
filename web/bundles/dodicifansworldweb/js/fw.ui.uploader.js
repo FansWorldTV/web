@@ -246,7 +246,7 @@ $(document).ready(function () {
                     var entryId = $(responseJSON).find('id').text();
                     $('#form_entryid').val(entryId);
                     console.log("Video subido correctamente ID: " + entryId);
-                    $(".container-up").replaceWith('<div class="alert alert-success">' + ExposeTranslation.get('upload_complete:') + '</div>');
+                    $(".container-up").replaceWith('<div class="alert alert-success">' + ExposeTranslation.get('upload_complete') + '</div>');
                     return that.options.onComplete(id, fileName, responseJSON);
                 },
                 onUpload: function(id, fileName, xhr) {
