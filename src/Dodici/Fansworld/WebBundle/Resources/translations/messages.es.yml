@@ -129,3 +129,7 @@ drop_help_message: "Suelte archivo aqui"
 everyone: "Todos"
 friends_only: "Solo amigos"
 only_me: "Solo yo"
+month: "mes"
+week: "semana"
+day: "día"
+
