@@ -1,6 +1,6 @@
 {% extends "DodiciFansworldWebBundle:Layout:base.html.twig" %}
 
-{% if fullwidth is null %}
+{% if fullwidth is not defined %}
     {% set fullwidth = false %}
 {% endif %}
 
