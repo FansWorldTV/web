@@ -16,10 +16,12 @@
  *      appLocale
  */
 
-// FansWorld tagify plugin 1.8 (preload)
+// FansWorld tagify plugin 1.9 (con auto tag de perfiles (user, idol, team))
 // 1.4 fix FB.ui popup
 // 1.5 add 'user' type to tagifier
 // 1.6 missing comma
+// 1.8 prepopulate
+// 1.9 autotag
 
 $(document).ready(function () {
 
@@ -143,6 +145,9 @@ $(document).ready(function () {
                             },
                             success: function( data ) {
                                 response( $.map( data, function( item ) {
+                                    if(item.result.type === 'tag') {
+                                        item.result.type = 'text';
+                                    }
                                     return {
                                         label: item.label, //+ (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryName,
                                         value: item.value,
