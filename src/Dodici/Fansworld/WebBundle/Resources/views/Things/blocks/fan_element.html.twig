@@ -11,7 +11,7 @@
             <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-            <li><a href="#">Enviar mensaje</a></li>
+            {# <li><a href="#">Enviar mensaje</a></li> #}
             <li><a href="{{ path('user_land', {'username': fan.username}) }}">Ver perfil</a></li>
             <li class="divider"></li>
             <li data-remove-friendship data-user-id="{{ fan.id }}" data-dont-refresh="true" data-remove-element="div.fan-element"><a href="#">Eliminar</a></li>

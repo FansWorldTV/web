@@ -86,7 +86,7 @@ class TagRepository extends CountBaseRepository
                 FROM
                 has' . $type . '
                 INNER JOIN ' . $type . ' ON has' . $type . '.' . $type . '_id = ' . $type . '.id
-                INNER JOIN video ON has' . $type . '.video_id = video.id
+                INNER JOIN video ON has' . $type . '.video_id = video.id AND video.active = true 
                 ' .
                     (($videocategory) ?
                             'WHERE
@@ -326,7 +326,13 @@ class TagRepository extends CountBaseRepository
                 FROM
                 has' . $type . '
                 INNER JOIN ' . $type . ' ON has' . $type . '.' . $type . '_id = ' . $type . '.id
+                LEFT JOIN video ON has' . $type . '.video_id = video.id
+                LEFT JOIN photo ON has' . $type . '.photo_id = photo.id
                 WHERE has' . $type . '.created_at > :datebefore
+                
+                AND (has' . $type . '.video_id IS NULL OR video.active = true)
+                AND (has' . $type . '.photo_id IS NULL OR photo.active = true)
+                
                 ' .
                     ($taggedtype ? '
                 	AND has' . $type . '.' . $taggedtype . '_id IS NOT NULL

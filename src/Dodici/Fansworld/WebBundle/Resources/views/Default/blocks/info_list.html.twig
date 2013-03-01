@@ -40,13 +40,21 @@
                     </dd>    
                 {% elseif data == 'sex' %}
                         <dt>Género</dt>
-                        <dd>{% if entity.sex == 'm' %}Hombre{% else %}Mujer{% endif %}</dd>
+                        <dd>{% if entity.sex == 'f' %}Mujer{% else %}Hombre{% endif %}</dd>
                 {% elseif data == 'idolcareers' %}
                     <dt>Carrera</dt>
                     <dd>
                         <ul>
                             {% for career in entity.idolcareers %}
-                                <li>{{ career }}</li>
+                                <li>
+                                    {% if career.team %} 
+                                        <a href="{{ path('team_land', {slug: career.team.slug}) }}">
+                                            {{ career }}
+                                        </a>
+                                    {% else %}
+                                        {{ career }}
+                                    {% endif %}
+                                </li>
                             {% endfor %}
                         </ul>
                     </dd>    
