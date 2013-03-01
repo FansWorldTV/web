@@ -56,6 +56,7 @@ class AppState
 
     public function canLike($entity)
     {
+
         if (!($this->user instanceof User))
             return false;
         $user = $this->user;
@@ -64,8 +65,8 @@ class AppState
             if (!$entity->getActive())
                 return false;
         }
-        
-        if (!property_exists($entity, 'likecount')) return false;
+
+        if (!method_exists($entity, 'getLikeCount')) return false;
 
         $rep = $this->getRepository('DodiciFansworldWebBundle:Liking');
         $liking = $rep->byUserAndEntity($user, $entity);
@@ -86,8 +87,8 @@ class AppState
             if (!$entity->getActive())
                 return false;
         }
-        
-        if (!property_exists($entity, 'likecount')) return false;
+
+        if (!method_exists($entity, 'getLikeCount')) return false;
 
         $rep = $this->getRepository('DodiciFansworldWebBundle:Liking');
         $liking = $rep->byUserAndEntity($user, $entity);
@@ -152,6 +153,7 @@ class AppState
                 return true;
         }
 
+
         if (method_exists($entity, 'getPrivacy')) {
             if ($entity->getPrivacy() == \Dodici\Fansworld\WebBundle\Entity\Privacy::FRIENDS_ONLY) {
                 if (!($user instanceof User))
@@ -161,7 +163,7 @@ class AppState
                         return true;
                     $frep = $this->getRepository('DodiciFansworldWebBundle:Friendship');
                     $fr = $frep->findOneBy(array('author' => $user->getId(), 'target' => $entity->getAuthor()->getId(), 'active' => true));
-                    
+
                     if (!$fr)
                         return false;
                 }
@@ -170,31 +172,31 @@ class AppState
 
         return true;
     }
-    
+
     public function canViewField(User $user, $fieldname)
     {
         $viewer = $this->user;
         $privacies = $user->getPrivacy();
-        
+
         $privacyablefields = Privacy::getFields();
         if (!in_array($fieldname, $privacyablefields)) return true;
-        
+
         if (isset($privacies[$fieldname])) {
             $privacy = $privacies[$fieldname];
-            
+
             if ($privacy == Privacy::EVERYONE) return true;
-            
+
             if ($viewer && ($privacy == Privacy::FRIENDS_ONLY)) {
                 if ($viewer == $user) return true;
                 $frep = $this->getRepository('DodiciFansworldWebBundle:Friendship');
                 $fr = $frep->findOneBy(array('author' => $viewer->getId(), 'target' => $user->getId(), 'active' => true));
             }
-            
+
             if ($privacy == Privacy::ONLY_ME) return ($viewer == $user);
         } else {
             return (!($user->getRestricted()));
         }
-        
+
         return false;
     }
 
@@ -367,19 +369,19 @@ class AppState
         }
         return $this->repos[$repname];
     }
-    
+
     public function getPrivacyName($privacyId)
     {
         $privacyOptions = Privacy::getOptions();
         return $privacyOptions[$privacyId];
     }
-    
+
     public function getEventTypeName($typeId)
     {
         $eventTypes = Event::getTypes();
         return $eventTypes[$typeId];
     }
-    
+
     public function getEventText($eventId)
     {
         $rep = $this->getRepository('DodiciFansworldWebBundle:Event');
@@ -389,7 +391,7 @@ class AppState
         $finished = $event->getFinished();
         $now =  new \DateTime();
         $text = '';
-        
+
         if($finished){
             $text = 'finalizado';
         }else if($fromTime <= $now && $now <= $toTime){
@@ -397,27 +399,27 @@ class AppState
         }else{
             $text = 'check in';
         }
-        
+
         return $text;
     }
-    
+
     public function getEventIncidentTypeName($typeId)
     {
         $eventIncidentTypes = EventIncident::getTypes();
         return $eventIncidentTypes[$typeId];
     }
-    
+
     public function getMinuteFromTimestamp($timestamp){
         $minute = 0;
         if ( \get_class($timestamp) == 'DateTime' ){
-            $timestamp = $timestamp->getTimestamp(); 
+            $timestamp = $timestamp->getTimestamp();
         }
         $minute = \floor($timestamp/60);
-        
-        
+
+
         return $minute;
     }
-    
+
     public function getDatetimeFromMinute($minute){
         $dateTime =  new \DateTime();
         $timestamp = $minute * 60;
