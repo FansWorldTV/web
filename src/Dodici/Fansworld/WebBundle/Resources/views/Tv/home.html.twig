@@ -1,11 +1,9 @@
 {% extends "DodiciFansworldWebBundle:Tv:base.html.twig" %}
 {% block title %}TV - Home{% endblock %}
 {% block tv_body %}
-    {% embed "DodiciFansworldWebBundle:Layout/Embed:tv_fullwidth.html.twig" %}
-        {% block inner_content %}
-            {% include "DodiciFansworldWebBundle:Tv:blocks/channels_widget.html.twig"  %}
-            
-            {% include "DodiciFansworldWebBundle:Tv:blocks/ranking_widget.html.twig"  %}
-        {% endblock %}
-    {% endembed %}		
+    {% block inner_content %}
+        {% include "DodiciFansworldWebBundle:Tv:blocks/channels_widget.html.twig"  %}
+
+        {% include "DodiciFansworldWebBundle:Tv:blocks/ranking_widget.html.twig"  %}
+    {% endblock %}
 {% endblock %}
