@@ -16,12 +16,12 @@
  *      appLocale
  */
 
-// FansWorld tagify plugin 1.9 (con auto tag de perfiles (user, idol, team))
+// FansWorld tagify plugin 2.0 tags texto con auto id, labels as values
 // 1.4 fix FB.ui popup
 // 1.5 add 'user' type to tagifier
 // 1.6 missing comma
 // 1.8 prepopulate
-// 1.9 autotag
+// 1.9 (con auto tag de perfiles (user, idol, team))
 
 $(document).ready(function () {
 
@@ -163,12 +163,12 @@ $(document).ready(function () {
                 singleFieldNode: $(that.element),
                 afterTagAdded: function(evt, ui) {
                     if (!ui.duringInitialization) {
-                        that.addEntityItem({result: ui.extra});
+                        that.addEntityItem({label: ui.tagLabel, result: ui.extra});
                     }
                 },
                 afterTagRemoved: function(evt, ui) {
                     if (!ui.duringInitialization) {
-                        that.deleteEntityItem({result: ui.tag.data('extra')});
+                        that.deleteEntityItem({label: ui.tagLabel, result: ui.tag.data('extra')});
                     }
                 }
             });
@@ -183,31 +183,48 @@ $(document).ready(function () {
         },
         addEntityItem: function (item) {
             var that = this;
-            item.result.type = item.result.type || 'text';
+            item.result.type = item.result.type || 'text'; // override to custom tag 'text'
             //that.options[that.options.magic].selected.push(item);
             var a = that.options[that.options.magic];
             a[item.result.type].selected.push(item);
-            console.log(a[item.result.type].selected)
             //that.options[item.result.type].selected.push(item);
             //that.options[this.options.magic].selected.push(item);
             that.updateInput('#form_' + that.options.action + item.result.type, a[item.result.type].selected);
             console.log("will add: " + JSON.stringify(item) + " to: #form_" + that.options.action + item.result.type);
         },
+        deleteEntityItem: function(item) {
+            var that = this;
+            var fields = that.options[that.options.magic];
+            var tags = fields[item.result.type].selected;
+            var i = null;
+            item.result.type = item.result.type || 'text'; // override to custom tag 'text'
+
+            window.ff = fields;
+            for (i in tags) {
+                if (tags.hasOwnProperty(i)) {
+                    var compare = parseInt(tags[i].result.id, 10);
+                    if(parseInt(item.result.id, 10) === compare) {
+                        delete tags[i];
+                        break;
+                    }
+                }
+            }
+            that.updateInput('#form_' + that.options.action + item.result.type, fields[item.result.type].selected);
+            console.log("will del: " + JSON.stringify(item) + " to: #form_" + that.options.action + item.result.type);
+        },
         updateInput: function(inputSelector, list) {
             var i, str = '';
             for (i in list) {
-                // TODO add hasProperty check
-                str += list[i].result.id + ',';
+                if (list.hasOwnProperty(i)) {
+                    // TODO add hasProperty check
+                    if(list[i].result.type === 'text') {
+                        str += list[i].label + ',';
+                    } else {
+                        str += list[i].result.id + ',';
+                    }
+                }
             }
             $(inputSelector).val(str);
-        },
-        deleteEntityItem: function(item) {
-            var that = this;
-            item.result.type = item.result.type || 'text';
-            var pos = that.options[item.result.type].selected.indexOf(item);
-            that.options[item.result.type].selected.splice(pos, 1);
-            that.updateInput('#form_' + that.options.action + item.result.type, that.options[item.result.type].selected);
-            console.log("will del: " + JSON.stringify(item) + " to: #form_" + that.options.action + item.result.type);
         }
     };
     // A really lightweight plugin wrapper around the constructor,
