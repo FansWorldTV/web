@@ -210,8 +210,9 @@
                 for (i in r.tags) {
                     if (r.tags.hasOwnProperty(i)) {
                         var tagHref = Routing.generate(appLocale + "_teve_taggedvideos", {
-                            term: r.tags[i].title
+                            term: r.tags[i].slug
                         });
+                        //console.log(r.tags[i]);
                         $tagList.append("<li><a href='" + tagHref + "'>" + r.tags[i].title + "</a></li>");
                     }
                 }
