@@ -5,7 +5,7 @@
                 <div class="span6 comments-count">
                     {{ 'comments'|trans }} ( {{ entity.commentCount }} )
                 </div>
-                
+
                 {% if entity.createdAt is defined %}
                 <div class="span6">
                     <p class="uploaded-date">Subido el <time datetime="{{ entity.createdAt|date('Y-m-d H:i:s') }}">{{ entity.createdAt|date('d/m/Y') }}</time></p>
@@ -39,7 +39,7 @@
                         </a>
                     {% endfor %}
                     {% for hastag in entity.hastags %}
-                        <a href="{{ path('teve_taggedvideos', {term: hastag.tag.slug}) }}" class="label tag-text">#{{ hastag.tag }}</a>
+                        <a href="{{ path('teve_taggedvideos', {term: hastag.tag.slug}) }}" class="label tag-text">#{{ hastag.tag.title }}</a>
                     {% endfor %}
                 </div>
             </div>
