@@ -2,6 +2,12 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
+use Dodici\Fansworld\WebBundle\Entity\Privacy;
+
+use Dodici\Fansworld\WebBundle\Services\Search;
+
+use Dodici\Fansworld\WebBundle\Entity\SearchHistory;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -55,4 +61,33 @@ class BenchController extends SiteController
         return array('teams' => $teams);
     }
     
+	/**
+     * Database heavy load
+     * @Route("/db/load", name="admin_bench_nocache")
+     */
+    public function dbLoadAction()
+    {
+        $teams = $this->getRepository('Team')->findBy(array('active' => true));
+        $idols = $this->getRepository('Idol')->findBy(array('active' => true));
+        $users = $this->getRepository('User')->findBy(array('restricted' => false, 'enabled' => true));
+        $videos = $this->getRepository('Video')->findBy(array('active' => true, 'privacy' => Privacy::EVERYONE));
+        $videocategories = $this->getRepository('VideoCategory')->findAll();
+        $photos = $this->getRepository('Photo')->findBy(array('active' => true, 'privacy' => Privacy::EVERYONE));
+        
+        $user = $this->getRepository('User')->find(1);
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        for ($x = 0; $x < 10; $x++) {
+            $sh = new SearchHistory();
+            $sh->setAuthor($user);
+            $sh->setIp('127.0.0.1');
+            $sh->setTerm('*BENCHMARK*');
+            $sh->setType(Search::TYPE_VIDEO);
+            $em->persist($sh);
+        }
+        
+        $em->flush();
+        
+        return new Response('Ok');
+    }
 }
