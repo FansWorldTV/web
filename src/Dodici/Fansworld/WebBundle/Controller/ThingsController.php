@@ -30,7 +30,7 @@ class ThingsController extends SiteController
 
     /**
      * My Idols
-     * 
+     *
      * @Route("/idols", name="things_idols")
      * @Template()
      * @Secure(roles="ROLE_USER")
@@ -126,19 +126,19 @@ class ThingsController extends SiteController
                 $countFans = $userRepo->countFansMostSimilar($user, $direction);
                 break;
         }
-        
+
         $addMore = ( self::FANS_LIMIT * $page ) < $countFans ? true : false;
-        
+
         $response = array(
             'fans' => array(),
             'addMore' => $addMore
         );
-        
+
         foreach($fans as $fan){
             $serialized = $serializer->values($fan, 'big_square');
             array_push($response['fans'], $serialized);
         }
-        
+
         return $this->jsonResponse($response);
     }
 
@@ -317,7 +317,7 @@ class ThingsController extends SiteController
 
     /**
      * My teams
-     * 
+     *
      * @Route("/teams", name="things_teams")
      * @Template()
      */
@@ -340,7 +340,6 @@ class ThingsController extends SiteController
         }
 
         $lastTeamsSearch = $this->getRepository('Video')->commonTeams($user, 4);
-
 
         return array(
             'user' => $user,
@@ -460,6 +459,57 @@ class ThingsController extends SiteController
             'teams' => $teams,
             'url' => $this->generateUrl('event_show', array('id' => $event->getId(), 'slug' => $event->getSlug())),
             'checked' => $checked
+        );
+    }
+
+     /**
+     * My badges
+     *
+     * @Route("/badges", name="things_badges")
+     * @Template()
+     */
+    public function badgesAction()
+    {
+        $user = $this->getUser();
+
+        $teamRepo = $this->getRepository('Team');
+        $teamshipRepo = $this->getRepository('Teamship');
+        $teamships = $teamshipRepo->findBy(array('author' => $user->getId()), array('favorite' => 'desc', 'score' => 'desc', 'createdAt' => 'desc'), 5);
+        $teams = array();
+        foreach ($teamships as $teamship) {
+            array_push($teams, $teamship->getTeam());
+        }
+
+        $idolRepo = $this->getRepository('Idol');
+        $idolshipRepo = $this->getRepository('Idolship');
+        $idolships = $idolshipRepo->findBy(array('author' => $user->getId()), array('favorite' => 'desc', 'score' => 'desc', 'createdAt' => 'desc'), 5);
+        $idols = array();
+        foreach ($idolships as $idolship) {
+            array_push($idols, $idolship->getIdol());
+        }
+
+        $ranking = array();
+        $teamsRank = $teamRepo->findBy(array(), array('fanCount' => 'desc'), 10);
+        foreach ($teamsRank as $team) {
+            array_push($ranking, $team);
+        }
+
+        $lastTeamsSearch = $this->getRepository('Video')->commonTeams($user, 4);
+        $badges = $this->getRepository('BadgeStep')->byUser($user);
+
+        $idolRank = $idolshipRepo->userTopRankedIn($user, 4);
+        $teamRank = $teamshipRepo->userTopRankedIn($user, 4);
+
+        return array(
+            'user' => $user,
+            'badges' => $badges,
+            'teamRank' => $teamRank,
+            'idolRank' => $idolRank,
+            'lastTeams' => $lastTeamsSearch,
+            'teamsRank' => $ranking,
+            'selfWall' => true,
+            'teams' => $teams,
+            'idols' => $idols
         );
     }
 

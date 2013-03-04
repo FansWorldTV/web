@@ -1,5 +1,5 @@
 {% extends 'DodiciFansworldWebBundle:Profile:header_small_base.html.twig' %}
-	
+
 {% block header_subtitle %}
     {% if entity.level %}
         {{ entity.level.title }}
@@ -37,8 +37,15 @@
                 <div class='tipo'>Fans</div>
                 <div class='separador' />
             </section>
+            Puntos =)
+            <section class='ptos-info'>
+                <div class='numero'>{% if entity.score > 0 %}<a href="#">{% endif %}
+                    {{ entity.score }}{% if entity.score > 0 %}</a>{%endif%}</div>
+                <div class='tipo'>Puntos</div>
+                <div class='separador' />
+            </section>
 	</div>
-                
+
 	{% if not selfWall %}
             <div class='span2'>
                 <div class='header-fship'>
