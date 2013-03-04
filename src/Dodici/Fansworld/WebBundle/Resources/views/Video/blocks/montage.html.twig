@@ -102,6 +102,7 @@
     });
     </script>
     <div {{ listId|raw }} class="isotope_container" {{ listParams|raw }} data-ima-test="deadbeef" data-list-result>
+        {#
         {% if videos|length>0 %}
             {% for video in videos %}
                 <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}" {{ listWithModal }} data-dummy="cosa" data-modal-url = "{{ path('video_modal_show', {'id': video.id, 'slug': video.slug}) }}" >
@@ -112,5 +113,6 @@
         {% else %}
             <h2>No se encontraron videos.</h2>
         {% endif %}
+        #}
     </div>
 </div>
