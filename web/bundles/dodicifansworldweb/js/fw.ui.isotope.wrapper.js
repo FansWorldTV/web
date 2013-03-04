@@ -19,7 +19,8 @@
  *      template helper
  */
 
-// fansWorld isotope wrapper plugin 1.4 /* resolution breaks at getMaxSections */
+// fansWorld isotope wrapper plugin 1.5 /* preloadData */
+// 1.4 /* resolution breaks at getMaxSections */
 
 
 
@@ -34,6 +35,7 @@ $(document).ready(function () {
 		cellWidth: 200,
 		feedSource: '',
 		feedfilter: {},
+		preoloadData: [],
 		normalize: true,
 		jsonData: null,
 		defaultMediaType: null,
@@ -64,6 +66,8 @@ $(document).ready(function () {
 		init: function () {
 			console.log("fwGalerizer.init()");
 			var that = this;
+			console.log("preload: ");
+			console.log(that.options.preoloadData);
 			var $container = $(that.element);
 			that.options.feedSource = $container.attr('data-feed-source');
 			$container.addClass(that._name);
@@ -89,8 +93,21 @@ $(document).ready(function () {
 				$container.isotope('reLayout');
 		    });
 			// Get feed
-			$.when(that.loadData(that.options.feedSource, that.options.feedfilter))
-			.then(function(jsonData) {
+			var galleryData = null;
+			if($.isEmptyObject(that.options.preoloadData)) {
+				galleryData = $.when(that.loadData(that.options.feedSource, that.options.feedfilter));
+			} else {
+				galleryData = $.when((function() {
+					var deferred = new jQuery.Deferred();
+					that.options.jsonData = that.options.preoloadData;
+					console.log("that.options.jsonData: ");
+					console.log(that.options.jsonData)
+					deferred.resolve(that.options.jsonData);
+					return deferred.promise();
+				})());
+			}
+
+			galleryData.then(function(jsonData) {
 				that.options.jsonData = that.options.onDataReady(that.options.jsonData);
 				that.loadGallery(that, that.options.jsonData);
 				return;
