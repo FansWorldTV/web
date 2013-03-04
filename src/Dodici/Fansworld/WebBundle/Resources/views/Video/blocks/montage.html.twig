@@ -59,10 +59,52 @@
 
 {% set listParams = listFilters ~ listFiltersElement ~ listChannels ~ listResult ~ listScrollable ~ listFetchMoreButton ~ listIsMontage %}
 <div class="row-fluid">
-    <div {{ listId|raw }} class="am-container list-mosaic" {{ listParams|raw }} data-list-result>
+    <script>
+    $(document).ready(function () {
+        var videos = [
+         {% if videos|length>0 %}
+            {% for video in videos %}
+                {
+                    'id': {{video.id}},
+                    'type': "video",
+                    'image': "{{ appmedia.imageurl(video.image, 'video')}}",
+                    'title': "{{video.title}}",
+                    'slug': "{{video.slug}}",
+                    'author': {'username': "{{video.author.username}}"},
+                    'authorImage': "{{video.author.image}}"
+                },
+            {% endfor %}
+        {% else %}
+        {% endif %}
+                ]
+            var $container = $('body').find('.isotope_container').last();
+            $container.empty();
+            $container.addClass("isotope_container");
+            $container.attr('data-feed-source', 'home_ajaxpopularfeed');
+            if(!$container.parent().hasClass('isIso')) {
+                $container.parent().addClass('loading');
+                $container.fwGalerizer({
+                    preoloadData: videos,
+                    onEndless: function(plugin) {
+                        $container.parent().addClass('loading');
+                        var lastDate = $('section.home-content .content-container[data-type-tab="popularFeed"] #elements .post').last().attr('data-element-date');
+                        plugin.options.feedfilter = {
+                            'date': lastDate
+                        };
+                        return plugin.options.feedfilter;
+                    },
+                    onGallery: function() {
+                        $container.parent().removeClass('loading');
+                    }
+                });
+                $container.parent().addClass('isIso');
+            };
+    });
+    </script>
+    <div {{ listId|raw }} class="isotope_container" {{ listParams|raw }} data-ima-test="deadbeef" data-list-result>
         {% if videos|length>0 %}
             {% for video in videos %}
-                <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}" {{ listWithModal }} data-modal-url = "{{ path('video_modal_show', {'id': video.id, 'slug': video.slug}) }}" >
+                <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}" {{ listWithModal }} data-dummy="cosa" data-modal-url = "{{ path('video_modal_show', {'id': video.id, 'slug': video.slug}) }}" >
                     <span class="title">{{ video.title }}</span>
                     {% thumbnail video.image, thumbnailSize with {"title": video.title} %}
                 </a>
