@@ -38,7 +38,7 @@ class TvController extends SiteController
         $videoRepo = $this->getRepository('Video');
         $homeVideoRepo = $this->getRepository('HomeVideo');
 
-        $videosDestacadosFW = $videoRepo->search(null, $this->getUser(), 6, 1);
+        $videosDestacadosFW = $videoRepo->search(null, $this->getUser(), 10, 1);
 
         $videoDestacadoMain = $videoRepo->search(null, $this->getUser(), 1);
         foreach ($videoDestacadoMain as $v) {

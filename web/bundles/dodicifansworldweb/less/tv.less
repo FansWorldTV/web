@@ -34,123 +34,152 @@ section.videoexplorer-container{
 
 //Channel's widget styles
 section.channels-widget{
-    height: 315px;
+    height: auto;
     margin-bottom: 20px;
     //#gradient > .vertical(@navbarBackgroundHighlight, @navbarBackground);
     background-color: black;
     overflow: hidden;
 
-    div.videoplayer-container {
-        height: 315px;
-        position: relative;
-        overflow: hidden;
 
-        i.play-video {
-            z-index: 1;
-            background-image: url('../images/play-icon.png');
-            background-size: 80px;
-            .square(80px);
-            position: absolute;
-            left: 42%;
-            top: 32%;
-            opacity: 0.7;
-            
-            &:hover{
-                opacity: 1;
-            }
-        }
+    ul.filter-channels{
+        width: 727px;
+        margin: 0 auto;
+        li{
+            cursor: pointer;
+            font-size: 22px;
+            line-height: 22px;
+            font-weight: 300;
+            float: left;
+            padding: 20px;
 
-        .shadow {
-            background-image: url('../images/zocalo.png');
-            position: absolute;
-            z-index: 9;
-            bottom: 0;
-            left: 0;
-            .size(155px, 100%);
-        }
-        span {
-            position: absolute;
-            z-index: 99999999;
-
-            &.highlight-text {
-                font-size: 15px;
-                color: white;
-                opacity: 0.7;
-                //text-shadow: @black 3px 1px 7px;
-                bottom: 23px;
-                left: 25px;
-                max-height: 20px;
-                text-overflow: ellipsis;
-                width: 93%;
-                overflow: hidden;
+            &.active {
+                background-color: #292728;
+                border-bottom: 2px solid @green;
+                a{
+                    color: @grayLight;
+                }
             }
 
-            &.video-title {
-                width: 93%;
-                line-height: 25px;
-                max-height: 52px;
-                font-size: 22px;
-                color: gold;
-                font-weight: 300;
-                //text-shadow: @black 3px 1px 7px;
-                bottom: 60px;
-                left: 25px;
-                text-overflow: ellipsis;
-                overflow: hidden;
+            a:hover {
+                color: @green;
+                background-color: none;
+            }
+
+            a{
+                color: @grayDark;
             }
         }
-
-        img.video-thumb {
-            z-index: 0;
-            max-width: none;
-            position: absolute;
-            height: 100%;
-        }
-
     }
 
-    aside.channels-list{
-        height: 100%;
-        
-        ul{
-            margin-top: 8px;
+    .tab-pane {
+        position: relative;
+        div.videoplayer-container {
+            height: 315px;
+            width: 33%;
+            float: left;
+            overflow: hidden;
+            position: relative;
 
-            li{
-                padding: 3% 0 3% 25px;
-                cursor: pointer;
-                font-size: 22px;
-                line-height: 22px;
-                font-weight: 300;
+            i.play-video {
+                z-index: 1;
+                background-image: url('../images/play-icon.png');
+                background-size: 80px;
+                .square(80px);
+                position: absolute;
+                left: 42%;
+                top: 32%;
+                opacity: 0.7;
 
-                &.active {
-                    background-color: #292728;
-                    border-right: 2px solid @green;
-                    a{
-                        color: @grayLight;
+                &:hover{
+                    opacity: 1;
+                }
+            }
+
+            .shadow {
+                background-image: url('../images/zocalo.png');
+                position: absolute;
+                z-index: 9;
+                bottom: 0;
+                left: 0;
+                .size(155px, 100%);
+            }
+
+            span {
+                position: absolute;
+                z-index: 99999999;
+
+                &.highlight-text {
+                    font-size: 15px;
+                    color: white;
+                    opacity: 0.7;
+                    //text-shadow: @black 3px 1px 7px;
+                    bottom: 23px;
+                    left: 25px;
+                    max-height: 20px;
+                    text-overflow: ellipsis;
+                    width: 93%;
+                    overflow: hidden;
+                }
+
+                &.video-title {
+                    width: 93%;
+                    line-height: 25px;
+                    max-height: 52px;
+                    font-size: 22px;
+                    color: gold;
+                    font-weight: 300;
+                    //text-shadow: @black 3px 1px 7px;
+                    bottom: 60px;
+                    left: 25px;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+            }
+
+            img.video-thumb {
+                z-index: 0;
+                max-width: none;
+                position: absolute;
+                width: 100%;
+            }
+        }
+        .content-container {
+            width: 66%;
+            height: 315px;
+            float: right;
+            position: relative;
+
+            &.highlighted-videos {
+                overflow: hidden;
+                .video {
+                    position: relative;
+                    width: 25%;
+                    height: 50%;
+                    overflow: hidden;
+                    .pull-left();
+                    margin: 0;
+                    
+                    .video-std-block;
+
+                    img.thumb {
+                        position: absolute;
+                        top: -33px;
+                    }
+
+                    &.last-element-row {
+                        margin-right: 0;
                     }
                 }
-
-                a:hover {
-                    color: @green;
-                    background-color: none;
-                }
-
-                a{
-                    color: @grayDark;
-                }
             }
         }
-        
     }
     
-    div.content{
-        height: 100%;
-        overflow: hidden;
-        margin-left: 0;
 
-        .tab-pane {
-            overflow: hidden;
-        }
+
+    
+    div.content{
+        height: 315px;
+        overflow: hidden;
 
         div.channel-highlight-container{
             min-height: 300px;
@@ -199,31 +228,6 @@ section.channels-widget{
             .subscribirse{
                 top: 20px;
                 right: 20px;
-            }
-        }
-        .content-container {
-            &.highlighted-videos {
-                height: 315px;
-
-                .video {
-                    position: relative;
-                    width: 32%;
-                    height: 50%;
-                    overflow: hidden;
-                    .pull-left();
-                    margin: 0;
-                    
-                    .video-std-block;
-
-                    img.thumb {
-                        position: absolute;
-                        top: -33px;
-                    }
-
-                    &.last-element-row {
-                        margin-right: 0;
-                    }
-                }
             }
         }
     }
@@ -489,6 +493,26 @@ div[data-wall] {
     }
 }
 
+@media(max-width: 815px) {
+    section.channels-widget .tab-pane {
+        .content-container.highlighted-videos {
+            width: 33% !important;
+            .video {
+                width: 100% !important;
+            }
+        }
+        .videoplayer-container {
+            width: 67% !important;
+        }
+    }
+
+    section.channels-widget ul.filter-channels {
+        width: 530px;
+        li {
+            font-size: 13px;
+        }
+    }
+}
 
 @media(max-width: 885px) {
     section.channels-widget {
@@ -518,5 +542,12 @@ div[data-wall] {
                 width: 60px !important;
                 height: 60px !important;
             }
+    }
+}
+
+@media(max-width:1290px){
+    section.channels-widget .tab-pane div.videoplayer-container img.video-thumb {
+        width: initial;
+        height: 100%;
     }
 }

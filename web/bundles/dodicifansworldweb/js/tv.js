@@ -125,14 +125,14 @@ var tv = {
     },
     'channelToggle': function() {
         'use strict';
-        $('#filter-channels').closest('ul').find("li").click(function(e){
+        $('.filter-channels').closest('ul').find("li").click(function(e){
             var i;
             var selectedId = $(this).first().attr('data-list-target');
             var $activeChannel = $(".channels-widget .content .active");
             // Isotope Handler
             var $container = $('.ranking-widget .content-container').find('.isotope_container').last();
 
-            $('#filter-channels').closest('ul').find("li.active").removeClass('active');
+            $('.filter-channels').closest('ul').find("li.active").removeClass('active');
             $(this).first().addClass('active');
 
             $activeChannel.removeClass('active');
