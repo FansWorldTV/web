@@ -35,7 +35,7 @@
         // Browser globals (root is window)
         root.TV = factory(root.jQuery, root.Routing, root.templateHelper, root.ajax, root.ExposeTranslation);
     }
-}(this, function (jQuery, Routing, templateHelper, ajax) {
+}(this, function (jQuery, Routing, templateHelper, ajax, ExposeTranslation) {
     "use strict";
     var TV = (function() {
         function TV(filtersList, channelsList) {
@@ -45,11 +45,14 @@
             this.jQuery = jQuery;
             this.name = filtersList;
             this.channelsList = channelsList;
-            this.channel = $('#filter-channels').closest('ul').find("li.active").attr("data-channel-id");
+            this.channel = $('.filter-channels').closest('ul').find("li.active").attr("data-channel-id");
             this.filter = $('#list-filters ul').find('li.active').attr('data-list-filter-type');
             this.page = 1;
             this.contentContainer = $('.ranking-widget .content-container');
             this.isotopeContainer = $(this.contentContainer).find('.isotope_container').last();
+            if(this.isotopeContainer.length <= 0) {
+                return;
+            }
             this.defaultTags = [
                 {filter: 'day', title: ExposeTranslation.get('day')},
                 {filter: 'week', title: ExposeTranslation.get('week')},
@@ -88,7 +91,7 @@
             }
         }
         TV.prototype.loadGallery = function() {
-            this.channel = $('#filter-channels').closest('ul').find("li.active").attr("data-channel-id");
+            this.channel = $('.filter-channels').closest('ul').find("li.active").attr("data-channel-id");
             this.filter = $('#list-filters ul').find('li.active').attr('data-list-filter-type');
             this.page  = 1;
             $(this.isotopeContainer).fwGalerizer({
@@ -139,17 +142,17 @@
         };
         TV.prototype.channelToggle = function() {
             var that = this;
-            $('#filter-channels').closest('ul').find("li").click(function(e){
+            $('.filter-channels').closest('ul').find("li").click(function(e){
                 var i;
                 var selectedChannel = $(this).first().attr('data-list-target');
                 $(".channels-widget .content .active").removeClass('active');
-                $('#filter-channels').closest('ul').find("li.active").removeClass('active');
+                $('.filter-channels').closest('ul').find("li.active").removeClass('active');
                 $(this).first().addClass('active');
 
                 $(".channels-widget .content #" + selectedChannel).addClass('active');
 
                 // Update channel
-                that.channel = $('#filter-channels').closest('ul').find("li.active").attr("data-channel-id");
+                that.channel = $('.filter-channels').closest('ul').find("li.active").attr("data-channel-id");
                 // update tags
                 that.myTags(that.channel, that.filter);
                 // custom tags
