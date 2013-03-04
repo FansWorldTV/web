@@ -125,6 +125,7 @@ sonata_media:
                 video: { width: 100, height: 75 , quality: 90}
                 medium: { width: 250 , quality: 90}
                 splash:   { width: 500 , height: 225, quality: 90}
+                home_splash:   { width: 960 , height: 320, quality: 90}
                 big:   { width: 500 , quality: 90, constraint: false}
                 wall: { width: 800 , quality: 90, constraint: false }
                 huge:   { width: 1024 , quality: 90, constraint: false}

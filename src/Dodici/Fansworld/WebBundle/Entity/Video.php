@@ -195,6 +195,13 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     private $image;
     
     /**
+     * @var Application\Sonata\MediaBundle\Entity\Media
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="splash_id", referencedColumnName="id")
+     */
+    private $splash;
+    
+    /**
      * @ORM\OneToMany(targetEntity="Liking", mappedBy="video", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $likings;
@@ -722,6 +729,26 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     public function getImage()
     {
         return $this->image;
+    }
+    
+	/**
+     * Set splash
+     *
+     * @param Application\Sonata\MediaBundle\Entity\Media $splash
+     */
+    public function setSplash(\Application\Sonata\MediaBundle\Entity\Media $splash)
+    {
+        $this->splash = $splash;
+    }
+
+    /**
+     * Get splash
+     *
+     * @return Application\Sonata\MediaBundle\Entity\Media 
+     */
+    public function getSplash()
+    {
+        return $this->splash;
     }
 
     /**
