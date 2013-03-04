@@ -113,7 +113,7 @@
             {% endblock %}
         {% endblock %}
 	</head>
-	<body>
+	<body data-user-is-logged="{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}true{% else %}false{% endif %}"><body>
 		{% block body %}{% endblock %}
 	</body>
 </html>

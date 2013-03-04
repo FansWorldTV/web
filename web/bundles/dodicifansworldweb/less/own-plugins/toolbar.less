@@ -101,18 +101,29 @@ nav.leftmenubar{
 }
 
 // main content frame padding for toolbar
+
+body {
+    padding-top: 40px;
+}
+body[data-user-is-logged="false"]{
+    #main-content-frame {
+        padding: 0 !important;
+    }
+}
+
 #main-content-frame {
     &.top {
-        padding: 60px 0 0 10px;
+        padding: 65px 0 0 0;
     }
+
     &.bottom {
-        padding: 0 10px 70px;
+        padding: 0 0 70px;
         padding-bottom: 63px;
     }
-    
+
     @media (max-width: 767px) {
         &.left, &.right {
-            padding: 60px 10px 0;
+            padding: 40px 10px 0;
         }
     }
     
@@ -125,34 +136,33 @@ nav.leftmenubar{
     
     @media (min-width: 768px) and (max-width: 1200px) {
         &.left {
-            width: 90%;
+            width: 96%;
             .pull-right;
         }
         &.right {
-            width: 90%;
+            width: 96%;
             .pull-left;
         }
     }
     
     @media (min-width: 1201px) and (max-width: 1600px) {
         &.left {
-            width: 93%;
+            width: 96%;
             .pull-right;
         }
         &.right {
-            width: 93%;
+            width: 96%;
             .pull-left;
         }
     }
     
     @media (min-width: 1601px) {
         &.left {
-            width: 95%;
+            width: 97%;
             .pull-right;
         }
         &.right {
-            padding-left: 20px;
-            width: 96%;
+            width: 97%;
             .pull-left;
         }
     }
