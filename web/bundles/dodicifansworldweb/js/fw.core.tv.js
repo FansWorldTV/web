@@ -66,7 +66,7 @@
             // Bindings //
             //////////////
             // lists
-            $('[data-list]').list();
+            //$('[data-list]').list();
             // modalPopup
             $('#montage-video-list a').modalPopup();
             // subscribe buttons
