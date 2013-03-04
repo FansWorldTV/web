@@ -21,8 +21,15 @@
                 {% for cat in categories %}
                     {% set c = c+1 %}
                     {% set video = videos[cat.id] %}
+                    {% if video %}
                     <div data-category-id="{{ cat.id }}" {% if not loop.first %} class="hidden" {% endif %} >
-                        <img src="{{ asset('bundles/dodicifansworldweb/images/home/slider_0' ~ c ~ '.png' )}}" />
+                        
+                        {% if video.splash %}
+                            {% thumbnail video.splash, 'home_splash' %}
+                        {% else %}
+                            {% thumbnail video.image, 'home_splash' %}
+                        {% endif %}
+                        
                         {% if video %}
                             {#{% thumbnail video.image, 'wall' %}#}
                             <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}"><i class="play-video"></i></a>
@@ -43,6 +50,7 @@
                             {% endif %}
                         </div>
                     </div>
+                    {% endif %}
                 {% endfor %}
             </div>
 

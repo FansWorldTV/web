@@ -33,18 +33,24 @@ class HomeController extends SiteController
         );
 
         $videoCategories = $this->getRepository('VideoCategory')->findAll();
-        foreach ($videoCategories as $vc) {
-            // el author ( 7mo ) tiene que ir en false
-            $videos = $this->getRepository('Video')->search(null, $user, 1, null, $vc, true, null, null, null, null, null, null, null, null, 'DESC', null);
-            $video = false;
-            foreach ($videos as $vid) {
-                $video = $vid;
-            }
-
-            $response['categories'][$vc->getId()] = $vc;
-            $response['videos'][$vc->getId()] = $video;
+        
+        $homevideos = $this->getRepository('HomeVideo')->findBy(array(), array('position' => 'desc'));
+        
+        foreach ($homevideos as $hv) {
+            $vid = $hv->getVideo();
+            if ($vid->getActive()) $response['videos'][$hv->getVideocategory()->getId()] = $vid;
         }
-
+        
+        foreach ($videoCategories as $vc) {
+            $response['categories'][$vc->getId()] = $vc;
+            if (!isset($response['videos'][$vc->getId()])) {
+                $videos = $this->getRepository('Video')->search(null, $user, 1, null, $vc, true, null, null, null, null, null, null, null, null, 'DESC', null);
+                $video = false;
+                foreach ($videos as $vid) $video = $vid;
+                $response['videos'][$vc->getId()] = $video;
+            }
+        }
+        
         $countUsers = $this->getRepository('User')->countBy(array('enabled' => true));
         $response['totalUsers'] = $countUsers;
 
