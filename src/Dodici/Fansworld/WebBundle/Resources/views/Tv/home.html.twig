@@ -1,5 +1,12 @@
 {% extends "DodiciFansworldWebBundle:Tv:base.html.twig" %}
+
+{% block main %}
+    {% set fullwidth = true %}
+    {{ parent() }}
+{% endblock %}
+
 {% block title %}TV - Home{% endblock %}
+
 {% block tv_body %}
     {% block inner_content %}
         {% include "DodiciFansworldWebBundle:Tv:blocks/channels_widget.html.twig"  %}
