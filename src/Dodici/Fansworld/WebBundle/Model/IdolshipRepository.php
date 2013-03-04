@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Model;
 
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use Application\Sonata\UserBundle\Entity\User;
 use Dodici\Fansworld\WebBundle\Entity\Idol;
 use Doctrine\ORM\EntityRepository;
 
@@ -35,6 +37,58 @@ class IdolshipRepository extends CountBaseRepository
             $query = $query->setFirstResult($offset);
 
         return $query->getResult();
+    }
+    
+    /**
+     * Get idols where the user had top activity, and his ranking compared to other users
+     * @param User $user
+     * @param int $limit
+     */
+    public function userTopRankedIn(User $user, $limit = null)
+    {
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addRootEntityFromClassMetadata('Dodici\Fansworld\WebBundle\Entity\Idol', 'idl');
+        $rsm->addScalarResult('total', 'score');
+        $rsm->addScalarResult('rank', 'rank');
+        $rsm->addScalarResult('maxpos', 'maxpos');
+
+        $query = $this->_em->createNativeQuery('
+            SELECT 
+            	idl.*,
+            	idsh1.idol_id, 
+            	idsh1.score AS total, 
+            	COUNT(idsh2.id)+1 AS rank, 
+            	(SELECT COUNT(*) FROM idolship WHERE idol_id = idsh1.idol_id) AS maxpos
+            FROM idolship idsh1
+            INNER JOIN idol idl ON idl.id = idsh1.idol_id
+            LEFT JOIN idolship idsh2 ON 
+            	((idsh1.score < idsh2.score) OR (idsh1.score = idsh2.score AND (
+            		(SELECT score from fos_user_user fsx1 where fsx1.id = idsh1.author_id)
+            		<
+            		(SELECT score from fos_user_user fsx2 where fsx2.id = idsh2.author_id)
+            	)))
+            	AND idsh1.idol_id = idsh2.idol_id
+            WHERE idsh1.author_id = :user
+            GROUP BY idsh1.idol_id
+            ORDER BY total DESC, rank ASC
+            
+            '. 
+            (($limit !== null) ? 'LIMIT :limit' : '')
+	    , $rsm)
+                ->setParameter('user', $user->getId());
+                
+        if ($limit !== null)
+            $query = $query->setParameter('limit', $limit);
+        
+        
+        $result = $query->getResult();
+        foreach ($result as $k => $v) {
+            $v['idol'] = $v[0];
+            unset($v[0]);
+            $result[$k] = $v;
+        }
+
+        return $result;
     }
 
 }

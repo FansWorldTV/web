@@ -2,6 +2,7 @@
 
 namespace Dodici\Fansworld\WebBundle\Model;
 
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
 use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
@@ -14,6 +15,37 @@ use Doctrine\DBAL\Types\Type;
 class UserRepository extends CountBaseRepository
 {
 
+	/**
+     * Get ranking position in the site
+     * @param User $user
+     */
+    public function rankingPosition(User $user)
+    {
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addScalarResult('total', 'score');
+        $rsm->addScalarResult('rank', 'rank');
+        $rsm->addScalarResult('maxpos', 'maxpos');
+
+        $query = $this->_em->createNativeQuery('
+            SELECT 
+            	sh1.score AS total, 
+            	COUNT(sh2.id)+1 AS rank, 
+            	(SELECT COUNT(*) FROM fos_user_user WHERE enabled = true AND type = '.User::TYPE_FAN.') AS maxpos
+            FROM fos_user_user sh1
+            LEFT JOIN fos_user_user sh2 ON 
+            	(sh1.score < sh2.score)
+            	OR
+            	((sh1.score = sh2.score) AND (sh1.id < sh2.id))
+            WHERE sh1.id = :user
+            '
+	    , $rsm)
+                ->setParameter('user', $user->getId());
+        
+        $result = $query->getResult();
+
+        return $result;
+    }
+    
     /**
      * Get the user's friends (followers) with optional search term and pagination
      * @param \Application\Sonata\UserBundle\Entity\User $user
