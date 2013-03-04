@@ -60,7 +60,7 @@ var tv = {
         "use strict";
         var $contentContainer = $('.ranking-widget .content-container');
         var $container = $contentContainer.find('.isotope_container').last();
-        var channel = $('#filter-channels').closest('ul').find("li.active").attr("data-channel-id");
+        var channel = $('.filter-channels').closest('ul').find("li.active").attr("data-channel-id");
         var filter = $('#list-filters ul').find('li.active').attr('data-list-filter-type');
         var page = $container.data('page');
         var outp = [];
@@ -203,7 +203,7 @@ var tv = {
         "use strict";
         //ajax.genericAction('tag_ajaxgetusedinvideos', {'channel': 1, 'filter': 'popular'}, function(r){console.log(r);});
         var $tagList = $('.content-container').find('.tag-list-container ul');
-        var channel = $('#filter-channels').closest('ul').find("li.active").attr("data-channel-id");
+        var channel = $('.filter-channels').closest('ul').find("li.active").attr("data-channel-id");
         var filter = $('#list-filters ul').find('li.active').attr('data-list-filter-type');
         $tagList.empty();
         console.log("loading tags for channel %s with filter %s", channel, filter);
