@@ -7,8 +7,8 @@
         <div class='tag-list-container'>
             {% include "DodiciFansworldWebBundle:Tv:blocks/tag_list.html.twig"  %}
         </div>
-        <div class='isotope_container montage-container'>
-            {% include "DodiciFansworldWebBundle:Video:blocks/montage.html.twig"  with { videos: videosDestacadosFW, listScrollable: true, listFilters:'#list-filters', listIsMontage: true, listId: 'montage-video-list' } %}
+        <div class='teve_container'>
+            {% include "DodiciFansworldWebBundle:Video:blocks/montage.html.twig"  with { 'feedSource': 'teve_ajaxexplore', videos: videosDestacadosFW, listScrollable: true, listFilters:'#list-filters', listIsMontage: true, listId: 'teve-video-list' } %}
         </div>
     </div>
 </section>
