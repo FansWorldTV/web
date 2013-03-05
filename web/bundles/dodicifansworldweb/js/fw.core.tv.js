@@ -48,11 +48,34 @@
             this.channelsList = channelsList;
             this.channel = $('.filter-channels').closest('ul').find("li.active").attr("data-channel-id");
             this.filter = $('#list-filters ul').find('li.active').attr('data-list-filter-type');
+
             this.page = 1;
-            this.contentContainer = $('.ranking-widget .content-container');
+
+            this.contentContainer = $('body');
             this.isotopeContainer = $(this.contentContainer).find('.isotope_container').last();
             if(this.isotopeContainer.length <= 0) {
                 return;
+            }
+            this.feedSource = $(this.isotopeContainer).attr('data-feed-source');
+            if(typeof this.feedSource === 'undefined'){
+                this.entityId   = $("[data-list]").attr('data-entity-id');
+                this.entityType = $("[data-list]").attr('data-entity-type');
+                this.dataList = $("[data-list]").attr('data-list');
+                this.isProfile = true;
+                console.log("in-profile");
+                var feed = that.getProfileVideoFeed();
+                console.log("filter: " + that.criteria + " feed: " + feed);
+                var opts = {
+                    'sort': that.criteria,
+                    'page': that.page,
+                    'entityId': that.entityId,
+                    'entityType': that.entityType
+                };
+                $(this.isotopeContainer).attr('data-feed-source', feed);
+                console.log(opts);
+
+            } else {
+                this.isTeve = true;
             }
             this.defaultTags = [
                 {filter: 'day', title: ExposeTranslation.get('day')},
@@ -60,14 +83,11 @@
                 {filter: 'month', title: ExposeTranslation.get('month')}
             ];
 
-            $(this.isotopeContainer).attr('data-feed-source', 'teve_ajaxexplore');
             $(this.isotopeContainer).empty();
 
             //////////////
             // Bindings //
             //////////////
-            // lists
-            //$('[data-list]').list();
             // modalPopup
             $('#montage-video-list a').modalPopup();
             // subscribe buttons
@@ -78,12 +98,17 @@
             this.channelToggle();
             // Handle Filter tabs (popular, views, latest)
             this.filterToggle();
+            this.filterToolbar();
 
             ////////////////////
             // New TV Gallery //
             ////////////////////
             // load isotope gallery
-            this.loadGallery();
+            if(this.isTeve) {
+                this.profileGallery();
+            } else {
+                this.loadGallery();
+            }
             // Tags
             this.myTags();
             // custom tags
@@ -92,6 +117,61 @@
             }
         }
         TV.prototype.loadGallery = function() {
+            var that = this;
+            $(this.isotopeContainer).fwGalerizer({
+                normalize: false,
+                endless: true,
+                feedfilter: {
+                    'sort': that.criteria,
+                    'page': that.page,
+                    'entityId': that.entityId,
+                    'entityType': that.entityType
+                },
+                onEndless: function( plugin ) {
+                    plugin.options.feedfilter.page += 1;
+                    return plugin.options.feedfilter;
+                },
+                onDataReady: function(videos) {
+                    console.log("data ready")
+                    console.log(videos)
+                    console.log("endo ready")
+                    var i, outp = [];
+                    var normalize = function(video) {
+                        var href = Routing.generate(appLocale + '_video_show', {
+                            'id': video.id,
+                            'slug': video.slug
+                        });
+                        var hrefModal = Routing.generate(appLocale + '_modal_media', {
+                            'id': video.id,
+                            'type': 'video'
+                        });
+                        var authorUrl = Routing.generate(appLocale + '_user_land', {
+                            'username': 'juan.perez'
+                        });
+                        return {
+                                'type': 'video',
+                                'date': video.createdAt,
+                                'href': href,
+                                'hrefModal': hrefModal,
+                                'image': video.imgsrc,
+                                'slug': video.slug,
+                                'title': video.title,
+                                'author': 'juan.perez',
+                                'authorHref': authorUrl,
+                                'authorImage': 'http://fansworld.dodici.local/uploads/media/default/0001/02/thumb_1000_default_small_square_81dfa380953b084fb7eefb0273ac602bdee11874.jpg'
+                        };
+                    };
+                    for(i in videos.elements) {
+                        if (videos.elements.hasOwnProperty(i)) {
+                            outp.push(normalize(videos.elements[i]));
+                        }
+                    }
+                    return outp;
+                    this.page += 1;
+                }
+            });
+        };
+        TV.prototype.profileGallery = function() {
             this.channel = $('.filter-channels').closest('ul').find("li.active").attr("data-channel-id");
             this.filter = $('#list-filters ul').find('li.active').attr('data-list-filter-type');
             this.page  = 1;
@@ -163,7 +243,7 @@
                 // Destroy gallery items
                 that.destroyGallery();
                 // Load new gallery
-                that.loadGallery();
+                that.profileGallery();
             });
         };
         TV.prototype.customFilterToggler = function(element) {
@@ -182,31 +262,109 @@
                 that.loadGallery();
             });
         };
+        TV.prototype.getFilterName = function(id) {
+            // body...
+        };
+        TV.prototype.getMethodName = function() {
+            var that = this;
+            var criteria = '';
+            switch($("[data-sort] .btn-group").find('.active').attr('data-type')){
+                case "0":
+                    criteria = "highlight";
+                    break;
+                case "1":
+                    criteria = "most-visited";
+                    break;
+                case "2":
+                    criteria = "popular";
+                    break;
+                case "3":
+                    criteria = "most-visited-today";
+                    break;
+            }
+            that.criteria = criteria;
+            return criteria;
+        };
+        TV.prototype.getProfileVideoFeed = function() {
+            var that = this;
+            var type = $("[data-sort] .btn-group").find('.active').attr('data-type');
+            if(typeof(type) === 'undefined'){
+                type = 'popular';
+            }
+            var methodName = that.getMethodName();
+            var opts = {
+                'sort': that.criteria,
+                'page': that.page,
+                'entityId': that.entityId,
+                'entityType': that.entityType
+            };
+            var route = '';
+            switch(that.criteria){
+                case 'popular':
+                    route = that.dataList + "_popular";
+                    break;
+                case 'highlight':
+                    route = that.dataList + "_highlighted";
+                    break;
+                case 'most-visited':
+                    route = that.dataList + "_visited";
+                    break;
+                case 'most-visited-today':
+                    route = that.dataList + "_visited";
+                    opts.today = true;
+                    break;
+            }
+            return route;
+
+            //ajax.genericAction(methodName, opts, function(r){ console.log(r) }, function(error) { console.log(error)});
+        };
         TV.prototype.filterToolbar = function($toolbar) {
-            /*
-            $("[data-sort] .btn-group .btn:not('.active')").live('click', function(){
+            var that = this;
+            var method = '';
+            $("[data-sort] .btn-group .btn").on('click', function(){
                 $(this).parent().find('.active').removeClass('active');
                 $(this).addClass('active');
                 switch($(this).attr('data-type')){
                     case "0":
-                        $("[data-list]").sort('highlight');
+                        that.criteria = "highlight";
                         break;
                     case "1":
-                        $("[data-list]").sort('most-visited');
+                        that.criteria = "most-visited";
                         break;
                     case "2":
-                        $("[data-list]").sort('popular');
+                        that.criteria = "popular";
                         break;
                     case "3":
-                        $("[data-list]").sort('most-visited-today');
+                        that.criteria = "most-visited-today";
                         break;
                 }
+                var feed = that.getProfileVideoFeed();
+                console.log("filter: " + that.criteria + " feed: " + feed);
+                var opts = {
+                    'sort': that.criteria,
+                    'page': that.page,
+                    'entityId': that.entityId,
+                    'entityType': that.entityType
+                };
+                console.log(opts);
+                //ajax.genericAction(feed, opts, function(r){ console.log(r); }, function(error) { console.log(error); });
+                // Destroy gallery items
+                that.destroyGallery();
+                that.page = 1;
+                var feed = that.getProfileVideoFeed();
+                $(that.isotopeContainer).attr('data-feed-source', feed);
+                // Load new gallery
+                that.loadGallery();
             });
-            $("[data-list]").sort('popular');
-            */
         };
         TV.prototype.getSortedGallery = function() {
             /*
+
+        sort.page       = 1;
+        sort.entityId   = $("[data-list]").attr('data-entity-id');
+        sort.entityType = $("[data-list]").attr('data-entity-type');
+
+
     var methodName = "";
     var opts = {
         'sort': sort.criteria,
@@ -252,7 +410,7 @@
                 // Destroy gallery items
                 that.destroyGallery();
                 // Load new gallery
-                that.loadGallery();
+                that.profileGallery();
             });
         };
         TV.prototype.myTags = function(channel, filter) {
@@ -326,8 +484,8 @@
 }));
 
 
-// implicit global init
-// TODO: refactor inside curl wire
+// implicit init that adds module to global scope
+// TODO: refactor inside curl
 $(document).ready(function () {
     "use strict";
     window.fansworld = window.fansworld || {};
