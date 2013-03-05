@@ -57,6 +57,12 @@
     {% set listWithModal = 'data-is-modal' %}
 {% endif %}
 
+{% if feedSource is not defined %}
+    {% set feedSource = '' %}
+{% else %}
+    {% set feedSource = ' data-feed-source="' ~ feedSource ~ '"' %}
+{% endif %}
+
 {% set listParams = listFilters ~ listFiltersElement ~ listChannels ~ listResult ~ listScrollable ~ listFetchMoreButton ~ listIsMontage %}
 <div class="row-fluid">
     <script>
@@ -71,12 +77,13 @@
                     'title': "{{video.title}}",
                     'slug': "{{video.slug}}",
                     'author': {'username': "{{video.author.username}}"},
-                    'authorImage': "{{video.author.image}}"
+                    'authorImage': "{{ appmedia.imageurl(video.author.image, 'avatar')}}"
                 },
             {% endfor %}
         {% else %}
         {% endif %}
                 ]
+                return;
             var $container = $('body').find('.isotope_container').last();
             $container.empty();
             $container.addClass("isotope_container");
@@ -101,7 +108,7 @@
             };
     });
     </script>
-    <div {{ listId|raw }} class="isotope_container" {{ listParams|raw }} data-ima-test="deadbeef" data-list-result>
+    <div {{ listId|raw }} class="isotope_container" {{ listParams|raw }} {{feedSource|raw}} data-ima-test="deadbeef" data-list-result>
         {#
         {% if videos|length>0 %}
             {% for video in videos %}
