@@ -58,7 +58,7 @@
                 return;
             }
             this.feedSource = $(this.isotopeContainer).attr('data-feed-source');
-            if(typeof this.feedSource === 'undefined'){
+            if(typeof this.feedSource === 'undefined' || this.feedSource.length == ''){
                 this.entityId   = $("[data-list]").attr('data-entity-id');
                 this.entityType = $("[data-list]").attr('data-entity-type');
                 this.dataList = $("[data-list]").attr('data-list');
