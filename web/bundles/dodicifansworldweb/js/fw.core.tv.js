@@ -42,6 +42,7 @@
             //////////////
             // Internal //
             //////////////
+            var that = this;
             this.jQuery = jQuery;
             this.name = filtersList;
             this.channelsList = channelsList;
@@ -71,7 +72,7 @@
             $('#montage-video-list a').modalPopup();
             // subscribe buttons
             $('[data-subscribe-channel]').click(function () {
-                this.subscribe($(this));
+                that.subscribe($(this));
             });
             // Handle channel list
             this.channelToggle();
@@ -180,6 +181,58 @@
                 // Load new gallery
                 that.loadGallery();
             });
+        };
+        TV.prototype.filterToolbar = function($toolbar) {
+            /*
+            $("[data-sort] .btn-group .btn:not('.active')").live('click', function(){
+                $(this).parent().find('.active').removeClass('active');
+                $(this).addClass('active');
+                switch($(this).attr('data-type')){
+                    case "0":
+                        $("[data-list]").sort('highlight');
+                        break;
+                    case "1":
+                        $("[data-list]").sort('most-visited');
+                        break;
+                    case "2":
+                        $("[data-list]").sort('popular');
+                        break;
+                    case "3":
+                        $("[data-list]").sort('most-visited-today');
+                        break;
+                }
+            });
+            $("[data-list]").sort('popular');
+            */
+        };
+        TV.prototype.getSortedGallery = function() {
+            /*
+    var methodName = "";
+    var opts = {
+        'sort': sort.criteria,
+        'page': sort.page,
+        'entityId': sort.entityId,
+        'entityType': sort.entityType
+    };
+
+    switch(sort.criteria){
+        case 'popular':
+            methodName = sort.dataList + "_popular";
+            break;
+        case 'highlight':
+            methodName = sort.dataList + "_highlighted";
+            break;
+        case 'most-visited':
+            methodName = sort.dataList + "_visited";
+            break;
+        case 'most-visited-today':
+            methodName = sort.dataList + "_visited";
+            opts['today'] = true;
+            break;
+    }
+    window.endlessScrollPaused = true;
+    ajax.genericAction(methodName, opts, function(r){
+        */
         };
         TV.prototype.filterToggle = function() {
             var that = this;
