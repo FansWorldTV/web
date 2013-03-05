@@ -1,0 +1,59 @@
+<h4>Actividad por Idolos</h4>
+{% if idolRank|length > 0 %}
+    <section class="badges-container">
+        <ul class="badges unstyled">
+            {% for rIdol in idolRank %}
+                <li>
+                    <div class='row-fluid'>
+                        <div class="span2">
+                            {% thumbnail rIdol.idol.image, 'avatar' %}
+                            {{ rIdol.idol }}
+                        </div>
+                        <div class="span10">
+                            <span class="badge-label">
+                                Tu puesto es {{ rIdol.rank }} de {{ rIdol.maxpos }} fans
+                            </span>
+                            <div class="row-fluid">
+                                <div class="span10 badge-content">
+                                    Tu puntaje es {{ rIdol.score }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+{% else %}
+    <h5>No posee actividad</h5>
+{% endif %}
+
+<h4>Actividad por Equipos</h4>
+{% if teamRank|length > 0 %}
+    <section class="badges-container">
+        <ul class="badges unstyled">
+            {% for rTeam in teamRank %}
+                <li>
+                    <div class='row-fluid'>
+                        <div class="span2">
+                            {% thumbnail rTeam.team.image, 'avatar' %}
+                            {{ rTeam.team }}
+                        </div>
+                        <div class="span10">
+                            <span class="badge-label">
+                                Tu puesto es {{ rTeam.rank }} de {{ rTeam.maxpos }} fans
+                            </span>
+                            <div class="row-fluid">
+                                <div class="span10 badge-content">
+                                    Tu puntaje es {{ rTeam.score }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+{% else %}
+    <h5>No posee actividad</h5>
+{% endif %}
