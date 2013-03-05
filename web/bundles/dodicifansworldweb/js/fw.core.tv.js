@@ -19,7 +19,8 @@
  *      base genericAction
  */
 
-// fansWorld TV Class Module 1.0
+// fansWorld TV Class Module 1.1 (con galerias de profiles)
+// 1.0
 
 (function (root, factory) {
     "use strict";
@@ -132,9 +133,6 @@
                     return plugin.options.feedfilter;
                 },
                 onDataReady: function(videos) {
-                    console.log("data ready")
-                    console.log(videos)
-                    console.log("endo ready")
                     var i, outp = [];
                     var normalize = function(video) {
                         var href = Routing.generate(appLocale + '_video_show', {
@@ -167,7 +165,6 @@
                         }
                     }
                     return outp;
-                    this.page += 1;
                 }
             });
         };
@@ -262,9 +259,6 @@
                 that.loadGallery();
             });
         };
-        TV.prototype.getFilterName = function(id) {
-            // body...
-        };
         TV.prototype.getMethodName = function() {
             var that = this;
             var criteria = '';
@@ -315,8 +309,6 @@
                     break;
             }
             return route;
-
-            //ajax.genericAction(methodName, opts, function(r){ console.log(r) }, function(error) { console.log(error)});
         };
         TV.prototype.filterToolbar = function($toolbar) {
             var that = this;
@@ -339,6 +331,7 @@
                         break;
                 }
                 var feed = that.getProfileVideoFeed();
+                $(that.isotopeContainer).attr('data-feed-source', feed);
                 console.log("filter: " + that.criteria + " feed: " + feed);
                 var opts = {
                     'sort': that.criteria,
@@ -347,50 +340,12 @@
                     'entityType': that.entityType
                 };
                 console.log(opts);
-                //ajax.genericAction(feed, opts, function(r){ console.log(r); }, function(error) { console.log(error); });
                 // Destroy gallery items
                 that.destroyGallery();
-                that.page = 1;
-                var feed = that.getProfileVideoFeed();
-                $(that.isotopeContainer).attr('data-feed-source', feed);
+                that.page = 1;  // reset page count
                 // Load new gallery
                 that.loadGallery();
             });
-        };
-        TV.prototype.getSortedGallery = function() {
-            /*
-
-        sort.page       = 1;
-        sort.entityId   = $("[data-list]").attr('data-entity-id');
-        sort.entityType = $("[data-list]").attr('data-entity-type');
-
-
-    var methodName = "";
-    var opts = {
-        'sort': sort.criteria,
-        'page': sort.page,
-        'entityId': sort.entityId,
-        'entityType': sort.entityType
-    };
-
-    switch(sort.criteria){
-        case 'popular':
-            methodName = sort.dataList + "_popular";
-            break;
-        case 'highlight':
-            methodName = sort.dataList + "_highlighted";
-            break;
-        case 'most-visited':
-            methodName = sort.dataList + "_visited";
-            break;
-        case 'most-visited-today':
-            methodName = sort.dataList + "_visited";
-            opts['today'] = true;
-            break;
-    }
-    window.endlessScrollPaused = true;
-    ajax.genericAction(methodName, opts, function(r){
-        */
         };
         TV.prototype.filterToggle = function() {
             var that = this;
