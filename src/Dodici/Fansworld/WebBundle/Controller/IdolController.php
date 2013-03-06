@@ -14,6 +14,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Sonata\UserBundle\Entity\User;
+use Dodici\Fansworld\WebBundle\Entity\Team;
+use Dodici\Fansworld\WebBundle\Entity\IdolCareer;
 use Application\Sonata\UserBundle\Entity\Notification;
 
 /**
@@ -58,7 +60,7 @@ class IdolController extends SiteController
     {
         $request = $this->getRequest();
         $page = $request->get('page', 1);
-        $tcId = $request->get('tc', null);
+        $tcId = $request->get('tc', false);
         $offset = ($page - 1 ) * self::LIMIT_LIST_IDOL;
         $response = array(
             'gotMore' => false,
@@ -102,11 +104,15 @@ class IdolController extends SiteController
             $idolUrl = $this->generateUrl('idol_land', array('slug' => $idol->getSlug()));
 
             $idolCareer = $idol->getTeamName();
-            if ($idolCareer->getTeam()) {
-                $teamUrl = $this->generateUrl('team_land', array('slug' => $idolCareer->getTeam()->getSlug()));
-            } else {
-                $teamUrl = "";
+            
+            if($idolCareer instanceof IdolCareer){
+                if ($idolCareer->getTeam() instanceof Team) {
+                    $teamUrl = $this->generateUrl('team_land', array('slug' => $idolCareer->getTeam()->getSlug()));
+                } else {
+                    $teamUrl = "";
+                }
             }
+            
 
             $response['idols'][] = array(
                 'id' => $idol->getId(),
@@ -114,7 +120,7 @@ class IdolController extends SiteController
                 'avatar' => $this->getImageUrl($idol->getImage(), 'small'),
                 'idolUrl' => $idolUrl,
                 'teamUrl' => $teamUrl,
-                'team' => (string) $idolCareer->getTeam(),
+                'team' => $idolCareer instanceof IdolCareer ? (string) $idolCareer->getTeam() : '',
                 'fanCount' => $idol->getFanCount(),
                 'videoCount' => $idol->getVideoCount(),
                 'photoCount' => $idol->getPhotoCount(),

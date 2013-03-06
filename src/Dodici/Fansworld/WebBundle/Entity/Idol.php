@@ -232,9 +232,9 @@ class Idol implements SearchableInterface, VisitableInterface
      */
     public function getTeamName()
     {
-        foreach ($this->idolcareers as $team) {
-            if ($team->getActual()) {
-                return $team;
+        foreach ($this->idolcareers as $ic) {
+            if ($ic->getActual()) {
+                return $ic;
             }
         }
     }

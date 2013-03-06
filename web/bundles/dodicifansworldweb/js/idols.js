@@ -12,7 +12,7 @@ idolHome.init = function(){
     idolHome.getIdols();
 
     $("ul.categories li a").on('click', function(e){
-        //e.preventDefault();
+        e.preventDefault();
         idolHome.category = $(this).parent().attr('data-category-id');
         idolHome.activePage = 1;
 
