@@ -132,6 +132,7 @@ $(document).ready(function () {
             }
             $(that.element).tagit({
                 availableTags: that.options.sampleTags,
+                allowSpaces: true,
                 // This will make Tag-it submit a single form value, as a comma-delimited field.
                 autocomplete: {
                     source: function( request, response ) {
