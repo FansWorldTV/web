@@ -6,10 +6,11 @@ things.albums = {};
 things.fans = {};
 
 things.init = function(){
+    console.log("things.init()")
     things.matchs.init();
-    things.videos.init();
+    /*things.videos.init();*/
     things.photos.init();
-    
+
     if($(".my-things").hasClass('fans')) {
         things.fans.init();
     }
@@ -17,10 +18,11 @@ things.init = function(){
 
 
 things.matchs.init = function(){
+    console.log("things.match: " + $(this).attr('data-type'))
     $("[data-filter-matchs] button").click(function(){
         $(".eventgrid-container").addClass('loading');
         $(".events-grid").html("");
-        
+
         var type = $(this).attr('data-type');
         things.matchs.filter(type);
     });
@@ -28,7 +30,7 @@ things.matchs.init = function(){
 things.matchs.filter = function(type){
     var params = {};
     params['type'] = type;
-    
+
     ajax.genericAction('things_ajaxmatchs', params, function(r){
         $(".events-grid").html("");
         for(var i in r.events){
@@ -46,12 +48,12 @@ things.matchs.filter = function(type){
 
 things.videos.init = function(){
     site.startMosaic($(".videos-container .am-container"), {
-        minw: 150, 
-        margin: 4, 
-        liquid: true, 
+        minw: 150,
+        margin: 4,
+        liquid: true,
         minsize: false
     });
-    
+
     $("[data-filter-videos] button").on('click', function(){
         $('.am-container').html("").addClass('loading');
         var type = $(this).attr('data-type');
@@ -95,7 +97,7 @@ things.photos.init = function(){
         }else{
             var $containerMontage = $("[data-tagged-and-activity] [data-montage-container][data-type='photos']");
         }
-        
+
         $containerMontage.addClass('loading');
         things.photos.filter(type);
     });
@@ -108,7 +110,7 @@ things.photos.init = function(){
 things.photos.addMore = function(type, destiny){
     $(destiny).addClass('loading');
     ajax.genericAction('things_photosajax', {
-        'type': type, 
+        'type': type,
         'page': things.photos.page
     }, function(r){
         var c = 0;
@@ -120,14 +122,14 @@ things.photos.addMore = function(type, destiny){
                     $(destiny).montage('add', $("[data-new-element]"));
                     $("[data-new-element]").removeAttr('data-new-element');
                 });
-                
+
                 if(c==r.photos.length){
                     $(destiny).removeClass('loading');
                 }
             };
             templateHelper.renderTemplate('search-photo', photo, destiny, false, callback)
         }
-        
+
         if(!r.viewMorePhotos){
             endless.init(1, function(){});
         }
@@ -139,7 +141,7 @@ things.photos.addMore = function(type, destiny){
 things.albums.addMore = function(type){
     $("[data-my-photos] .am-container.albums").addClass('loading');
     ajax.genericAction('things_photosajax', {
-        'page': things.albums.page, 
+        'page': things.albums.page,
         'type': type
     }, function(r){
         var c = 0;
@@ -168,9 +170,9 @@ things.albums.addMore = function(type){
 things.photos.filter = function(type){
     things.photos.page = 1;
     things.albums.page = 1;
-        
+    console.log("things.photos.filter dame mas fotos")
     ajax.genericAction('things_photosajax', {
-        'type': type, 
+        'type': type,
         'page': 1
     }, function(r){
         if(type != 0){
@@ -185,7 +187,7 @@ things.photos.filter = function(type){
                 var callback = function(){
                     $containerMontage.find('img').attr('width', '250');
                     $containerMontage.montage({
-                        minw: 200, 
+                        minw: 200,
                         alternateHeight : true,
                         fillLastRow : true
                     });
@@ -201,7 +203,7 @@ things.photos.filter = function(type){
                 templateHelper.renderTemplate("search-photo", photo, "[data-tagged-and-activity] [data-montage-container][data-type='photos']", false, callback);
             }
             $("[data-photo-length]").html(r.photosTotalCount);
-                
+
             if(r.viewMorePhotos){
                 endless.init(10, function(){
                     things.photos.page++;
@@ -216,16 +218,16 @@ things.photos.filter = function(type){
             $containerMontage = $("[data-my-photos] .am-container.photos");
             $containerMontage.data('montage', null);
             $containerMontage.html("");
-                
+
             var c = 0;
             for(var i in r.photos){
                 var photo = r.photos[i];
                 c++;
                 var callback = function(){
                     site.startMosaic($containerMontage, {
-                        minw: 150, 
-                        margin: 4, 
-                        liquid: true, 
+                        minw: 150,
+                        margin: 4,
+                        liquid: true,
                         minsize: false
                     });
                     var $newImages = $("[data-new-element]");
@@ -239,7 +241,7 @@ things.photos.filter = function(type){
                 };
                 templateHelper.renderTemplate("search-photo", photo, "[data-my-photos] .am-container.photos", false, callback);
             }
-                
+
             if(r.viewMoreAlbums){
             //$("[data-my-photos] .am-container.albums").parent().append('<button class="loadmore" data-entity-type="albums">ver más</button>');
             /*   $("button.loadmore[data-entity-type='album']").click(function(){
@@ -278,14 +280,14 @@ things.fans.init = function(){
         $("div.fans-list").html("");
         things.fans.doFilter();
     });
-    
+
     $("div.btn-group[data-type-follow] button").on('click', function(){
         things.fans.page = 1;
         things.fans.direction = $(this).attr('data-type');
         $("div.fans-list").html("");
         things.fans.doFilter();
     });
-    
+
     if($("input[data-add-more]").length>0){
         endless.init(10, function(){
             things.fans.addMore();
@@ -297,7 +299,7 @@ things.fans.init = function(){
 
 things.fans.doFilter = function(){
     ajax.genericAction('things_ajaxfans', {
-        'direction': things.fans.direction, 
+        'direction': things.fans.direction,
         'filter': things.fans.filter,
         'page': things.fans.page
     }, function(r){
@@ -305,7 +307,7 @@ things.fans.doFilter = function(){
             var fan = r.fans[i];
             templateHelper.renderTemplate('fans-element', fan, 'div.fans-list', false, function(){});
         }
-        
+
         if(r.addMore){
             endless.init(10, function(){
                 things.fans.addMore();
@@ -332,10 +334,133 @@ things.fans.addMore = function(){
             endless.resume();
         }
     }, function(e){
-        
+
         });
 };
 
 $(document).ready(function(){
     things.init();
+});
+
+(function (root, factory) {
+    "use strict";
+    if (typeof exports === 'object') {
+        // Node. Does not work with strict CommonJS, but
+        // only CommonJS-like enviroments that support module.exports,
+        // like Node.
+        module.exports = factory(require('jQuery'), require('Routing'), require('templateHelper'), require('ajax'), require('error'), require('endless'));
+    } else if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['jQuery', 'Routing', 'templateHelper', 'ajax', 'error', 'endless'], factory);
+    } else {
+        // Browser globals (root is window)
+        root.MY_VIDEOS = factory(root.jQuery, root.Routing, root.templateHelper, root.ajax, root.error, root.endless);
+    }
+}(this, function (jQuery, Routing, templateHelper, ajax, error) {
+    "use strict";
+    var MY_VIDEOS = (function() {
+        function MY_VIDEOS() {
+            ///////////////////
+            // Internal init //
+            ///////////////////
+            this.jQuery = jQuery;
+            this.version = '1.0';
+            this.type = $("[data-filter-videos] button.active").attr('data-type');
+            this.page = 1;
+            var that = this;
+
+            that.loadGallery();
+        }
+        MY_VIDEOS.prototype.version = function() {
+            console.log(this.version);
+            return this.version;
+        };
+        MY_VIDEOS.prototype.loadGallery = function() {
+            var that = this;
+            var $container = $('body').find('.isotope_container').last();
+            that.type = $("[data-filter-videos] button.active").attr('data-type');
+            $container.empty();
+            $container.addClass("isotope_container");
+            $container.attr('data-feed-source', 'things_videosajax');
+            if(!$container.parent().hasClass('isIso')) {
+                $container.parent().addClass('loading');
+                $container.fwGalerizer({
+                    /*preoloadData: videos,*/
+                    normalize: false,
+                    endless: true,
+                    feedfilter: {'type': that.type},
+                    onEndless: function(plugin) {
+                        $container.parent().addClass('loading');
+                        var lastDate = $('section.home-content .content-container[data-type-tab="popularFeed"] #elements .post').last().attr('data-element-date');
+                        plugin.options.feedfilter = {
+                            'date': lastDate
+                        };
+                        return plugin.options.feedfilter;
+                    },
+                    onDataReady: function(videos) {
+                        var i, outp = [];
+                        var normalize = function(video) {
+                            var href = Routing.generate(appLocale + '_video_show', {
+                                'id': video.id,
+                                'slug': video.slug
+                            });
+                            var hrefModal = Routing.generate(appLocale + '_modal_media', {
+                                'id': video.id,
+                                'type': 'video'
+                            });
+                            var authorUrl = Routing.generate(appLocale + '_user_land', {
+                                'username': video.author.username
+                            });
+                            return {
+                                    'type': 'video',
+                                    'date': video.createdAt,
+                                    'href': href,
+                                    'hrefModal': hrefModal,
+                                    'image': video.image,
+                                    'slug': video.slug,
+                                    'title': video.title,
+                                    'author': video.author.username,
+                                    'authorHref': authorUrl,
+                                    'authorImage': video.author.image
+                            };
+                        };
+                        for(i in videos.videos) {
+                            if (videos.videos.hasOwnProperty(i)) {
+                                outp.push(normalize(videos.videos[i]));
+                            }
+                        }
+                        return outp;
+                    },
+                    onGallery: function() {
+                        $container.parent().removeClass('loading');
+                    }
+                });
+                $container.parent().addClass('isIso');
+            };
+        };
+        MY_VIDEOS.prototype.bindFilterBar = function() {
+            var that = this;
+            $("[data-filter-videos] button").on('click', function(){
+                $('.am-container').html("").addClass('loading');
+                that.type = $(this).attr('data-type');
+                // Destroy gallery items
+                that.destroyGallery();
+                that.page = 1;  // reset page count
+                that.loadGallery();
+            });
+        };
+        return MY_VIDEOS;
+    }());
+    // Just return a value to define the module export.
+    // This example returns an object, but the module
+    // can return a function as the exported value.
+    return MY_VIDEOS;
+}));
+
+
+$(document).ready(function () {
+    "use strict";
+    window.fansworld = window.fansworld || {};
+    things.videos = new MY_VIDEOS();
+    window.fansworld.things = things;
 });
