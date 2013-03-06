@@ -113,9 +113,20 @@ class IdolController extends SiteController
                 }
             }
             
+            $typesUrl = array(
+                'photos' => null,
+                'videos' => null,
+                'fans' => null
+            );
+                    
+            $router = $this->get('router');
+            foreach($typesUrl as $key=>$value){
+                $typesUrl[$key] = $router->generate('idol_' . $key, array('slug'=> $idol->getSlug()));
+            }
 
             $response['idols'][] = array(
                 'id' => $idol->getId(),
+                'slug' => $idol->getSlug(),
                 'name' => (string) $idol,
                 'avatar' => $this->getImageUrl($idol->getImage(), 'small'),
                 'idolUrl' => $idolUrl,
@@ -126,7 +137,10 @@ class IdolController extends SiteController
                 'photoCount' => $idol->getPhotoCount(),
                 'isFan' => $idolship ? true : false,
                 'topFan' => isset($topFans['name']) ? $topFans['name'] : false,
-                'topFanUrl' => isset($topFans['url']) ? $topFans['url'] : false
+                'topFanUrl' => isset($topFans['url']) ? $topFans['url'] : false,
+                'photosUrl' => $typesUrl['photos'],
+                'videosUrl' => $typesUrl['videos'],
+                'fansUrl' => $typesUrl['fans']
             );
         }
 

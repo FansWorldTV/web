@@ -18,7 +18,10 @@ idolHome.init = function(){
 
         $(".list-idols dl").html(' ');
 
-        idolHome.getIdols();
+        idolHome.getIdols(function(){
+            var docHeight = window.innerHeight;
+            $(document).scrollTop(( docHeight - 20 ));
+        });
     });
 
     $(window).endlessScroll({
@@ -38,7 +41,7 @@ idolHome.init = function(){
 
 };
 
-idolHome.getIdols = function(){
+idolHome.getIdols = function(callback){
     $("div.list-idols").addClass('loading');
 
     ajax.genericAction('idol_ajaxlist',
@@ -50,10 +53,15 @@ idolHome.getIdols = function(){
         if(r.idols.length>0){
             for(i in r.idols){
                 var element = r.idols[i];
+                var lastIteration = null;
+                if(i == (r.idols.length-1)){
+                    lastIteration = function(){
+                        $("div.list-idols").removeClass('loading');
+                        callback();
+                    };
+                }
 
-                templateHelper.renderTemplate('idol-list_element', element, $(".list-idols dl"), false, function(){
-                    $("div.list-idols").removeClass('loading');
-                });
+                templateHelper.renderTemplate('idol-list_element', element, $(".list-idols dl"), false, lastIteration);
             }
         }else{
             $("div.list-idols").removeClass('loading');

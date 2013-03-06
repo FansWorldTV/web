@@ -12,13 +12,16 @@ list.init = function(){
     list.getTeams();
         
     $("ul.categories li a").on('click', function(e){
-        //e.preventDefault();
+        e.preventDefault();
         list.category = $(this).parent().attr('data-category-id');
         list.activePage = 1;
         
         $(".list-teams dl").html(' ');
         
-        list.getTeams();
+        list.getTeams(function(){
+            var docHeight = window.innerHeight;
+            $(document).scrollTop(( docHeight - 20 ));
+        });
     });
 
     $(window).endlessScroll({
@@ -38,7 +41,7 @@ list.init = function(){
     
 };
     
-list.getTeams = function(){
+list.getTeams = function(callback){
     $("div.list-teams").addClass('loading');
         
     ajax.genericAction('team_get',
@@ -49,10 +52,15 @@ list.getTeams = function(){
     function(r){
         for(i in r.teams){
             var element = r.teams[i];
-            
-            templateHelper.renderTemplate('team-list_element', element, $(".list-teams dl"), false, function(){
-                $("div.list-teams").removeClass('loading');
-            });
+            var lastIteration = null;
+            if(i == (r.idols.length-1)){
+                lastIteration = function(){
+                    $("div.list-teams").removeClass('loading');
+                    callback();
+                };
+            }
+                
+            templateHelper.renderTemplate('team-list_element', element, $(".list-teams dl"), false, lastIteration);
         }
         list.addMore = r.gotMore;
         list.activePage++;
