@@ -58,23 +58,26 @@
                 return;
             }
             this.feedSource = $(this.isotopeContainer).attr('data-feed-source');
-            if(typeof this.feedSource === 'undefined' || this.feedSource.length == ''){
+            if(typeof this.feedSource === 'undefined' || this.feedSource == ''){
                 this.entityId   = $("[data-list]").attr('data-entity-id');
-                this.entityType = $("[data-list]").attr('data-entity-type');
-                this.dataList = $("[data-list]").attr('data-list');
-                this.isProfile = true;
-                console.log("in-profile");
-                var feed = that.getProfileVideoFeed();
-                console.log("filter: " + that.criteria + " feed: " + feed);
-                var opts = {
-                    'sort': that.criteria,
-                    'page': that.page,
-                    'entityId': that.entityId,
-                    'entityType': that.entityType
-                };
-                $(this.isotopeContainer).attr('data-feed-source', feed);
-                console.log(opts);
-
+                if(typeof this.entityId !== 'undefined'){
+                    this.entityType = $("[data-list]").attr('data-entity-type');
+                    this.dataList = $("[data-list]").attr('data-list');
+                    this.isProfile = true;
+                    console.log("in-profile");
+                    var feed = that.getProfileVideoFeed();
+                    console.log("filter: " + that.criteria + " feed: " + feed);
+                    var opts = {
+                        'sort': that.criteria,
+                        'page': that.page,
+                        'entityId': that.entityId,
+                        'entityType': that.entityType
+                    };
+                    $(this.isotopeContainer).attr('data-feed-source', feed);
+                    console.log(opts);
+                } else {
+                    return;
+                }
             } else {
                 this.isTeve = true;
             }
