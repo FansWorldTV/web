@@ -384,20 +384,15 @@ $(document).ready(function(){
         };
         MY_VIDEOS.prototype.loadGallery = function() {
             var that = this;
-            var $container = $('body').find('.isotope_container').last();
             that.type = $("[data-filter-videos] button.active").attr('data-type');
-            $container.empty();
-            $container.addClass("isotope_container");
-            $container.attr('data-feed-source', 'things_videosajax');
-            if(!$container.parent().hasClass('isIso')) {
-                $container.parent().addClass('loading');
-                $container.fwGalerizer({
+            $(this.isotopeContainer).attr('data-feed-source', 'things_videosajax');
+            $(this.isotopeContainer).fwGalerizer({
                     /*preoloadData: videos,*/
                     normalize: false,
                     endless: true,
                     feedfilter: {'type': that.type},
                     onEndless: function(plugin) {
-                        $container.parent().addClass('loading');
+                        $(this.isotopeContainer).parent().addClass('loading');
                         var lastDate = $('section.home-content .content-container[data-type-tab="popularFeed"] #elements .post').last().attr('data-element-date');
                         plugin.options.feedfilter = {
                             'date': lastDate
@@ -439,11 +434,9 @@ $(document).ready(function(){
                         return outp;
                     },
                     onGallery: function() {
-                        $container.parent().removeClass('loading');
+                        $(this.isotopeContainer).parent().removeClass('loading');
                     }
                 });
-                $container.parent().addClass('isIso');
-            };
         };
         MY_VIDEOS.prototype.bindFilterBar = function() {
             var that = this;
