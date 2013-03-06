@@ -90,4 +90,15 @@ class BenchController extends SiteController
         
         return new Response('Ok');
     }
+    
+	/**
+     * Mailing load
+     * @Route("/mail/send", name="admin_bench_mailsend")
+     */
+    public function mailSendAction()
+    {
+        $this->get('fansworldmailer')->send('cr@fansworld.tv', '[BENCH] fw mail test', 'test');
+        
+        return new Response('Ok');
+    }
 }
