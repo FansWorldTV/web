@@ -45,7 +45,10 @@
             ///////////////////
             this.jQuery = jQuery;
             this.version = '1.0';
-            console.log("crea TEAMS")
+            this.category = null;
+            this.activePage = 1;
+            console.log("crea TEAMS");
+
             var that = this;
             if($("div.list-teams").attr('data-got-more')){
                 this.addMore = true;
@@ -67,32 +70,16 @@
 
                 that.getTeams();
             });
-            /*
-            $(window).endlessScroll({
-                fireOnce: true,
-                enableScrollTop: false,
-                inflowPixels: 100,
-                fireDelay: 250,
-                intervalFrequency: 2000,
-                ceaseFireOnEmpty: false,
-                loader: 'cargando',
-                callback: function(i, p, d) {
-                    if(that.addMore){
-                        console.log("scroll more teams");
-                        that.getTeams();
-                    }
-                }
-            });
-            */
         }
         TEAMS.prototype.getTeams = function() {
             var that = this;
             endless.stop();
             $("div.list-teams").addClass('loading');
             var deferred = new jQuery.Deferred();
+            console.log("category: %s, page: %s", that.category, that.activePage);
             ajax.genericAction('team_get', {
-                'category': this.category,
-                'page': this.activePage
+                'category': that.category,
+                'page': that.activePage
             },
             function(r){
                 var i;
@@ -103,26 +90,21 @@
                         templateHelper.renderTemplate('team-list_element', element, $(".list-teams dl"), false, function(){
                             $("div.list-teams").removeClass('loading');
                             $(".list-teams dl").find(".btn_teamship.add:not('.loading-small')").each(function() {
-                                //$(this).fwTeamship();
-                                console.log("encontre un boton ! " + $(this));
                                 $(this).fwTeamship();
                             });
                         });
                     }
                 }
-                this.addMore = r.gotMore;
-                this.activePage++;
+                that.addMore = r.gotMore;
+                that.activePage++;
+                endless.init(1, function() {
+                    that.getTeams();
+                });
             },
             function(error){
                 $("div.list-teams").removeClass('loading');
                 endless.stop();
                 deferred.reject(new Error(error));
-            });
-            /*$(".list-teams dl").find(".btn_teamship.add:not('.loading-small')").each(function() {
-                $(this).fwTeamship();
-            });*/
-            endless.init(1, function() {
-                that.getTeams();
             });
             return deferred.promise();
         };
