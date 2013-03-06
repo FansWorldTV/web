@@ -8,7 +8,7 @@
                 			{% if badge.steps %}
                 				 {% for step in badge.steps %}
                 				 	{% if loop.last %}
-                				 		{% thumbnail step.image, 'avatar' %}	
+                				 		{% thumbnail step.image, 'avatar' %}
                 					{% endif %}
                 				 {% endfor %}
 	                        {% else %}
@@ -23,13 +23,13 @@
                 				</div>
                 			</div>
                 		</div>
-                	
+
                 	</div>
-                    
+
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <h3>No posee badges</h3>
+        <h3>No posee medallas</h3>
     {% endif %}
 </section>

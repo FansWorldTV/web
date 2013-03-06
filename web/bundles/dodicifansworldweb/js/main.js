@@ -206,6 +206,7 @@ var site = {
         site.readedNotification();
         site.likeButtons();
         site.shareButtons();
+        site.watchLaterButtons();
         site.globalCommentButtons();
         site.globalDeleteButtons();
         site.expander();
@@ -467,6 +468,45 @@ var site = {
                 site.postComment(textAreaElement, type, id, ispin, content, privacy, elDestination, prepend);
                 return false;
             }
+        });
+    },
+    watchLaterButtons: function(){
+        $('.btn.watchlater:not(.loading-small)').live('click',function(e) {
+            e.preventDefault();
+            var el = $(this);
+            var videoid = el.attr('data-videoid');
+            var action = 'playlist_ajaxadd';
+
+            if (el.attr('data-later') == 'true') {
+                action = 'playlist_ajaxremove';
+            }
+
+            el.addClass('loading-small');
+            ajax.genericAction({
+                route: action,
+                params: {
+                    'video_id': videoid,
+                },
+                callback: function(response) {
+                    el.removeClass('loading-small');
+                    console.log(response);
+                    if ('add' == response) {
+                        el.find('i').attr('class', '');
+                        $('.watchlaterText:first').html('Marcar como visto');
+                        el.find('i').addClass('icon-remove');
+                        el.attr('data-later', 'true');
+                    } else {
+                        el.find('i').attr('class', '');
+                        $('.watchlaterText:first').html('Mirar luego');
+                        el.find('i').addClass('icon-eye-open');
+                        el.attr('data-later', 'false');
+                    }
+                },
+                errorCallback: function(responsetext) {
+                    el.removeClass('loading-small');
+                    error(responsetext);
+                }
+            });
         });
     },
 
