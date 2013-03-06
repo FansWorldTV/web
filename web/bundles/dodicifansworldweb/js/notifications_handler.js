@@ -1,4 +1,4 @@
-\var notifications = {};
+var notifications = {};
 notifications.total = 0;
 
 notifications.init = function() {
