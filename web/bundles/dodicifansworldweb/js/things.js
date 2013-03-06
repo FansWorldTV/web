@@ -363,13 +363,20 @@ $(document).ready(function(){
             ///////////////////
             // Internal init //
             ///////////////////
+            var that = this;
             this.jQuery = jQuery;
             this.version = '1.0';
             this.type = $("[data-filter-videos] button.active").attr('data-type');
             this.page = 1;
-            var that = this;
-
+            this.contentContainer = $('body');
+            this.isotopeContainer = $(this.contentContainer).find('.isotope_container').last();
+            if(this.isotopeContainer.length <= 0) {
+                return;
+            }
+            // create the isotope gallery
             that.loadGallery();
+            // bind filter toolbar
+            that.bindFilterBar();
         }
         MY_VIDEOS.prototype.version = function() {
             console.log(this.version);
@@ -448,6 +455,11 @@ $(document).ready(function(){
                 that.page = 1;  // reset page count
                 that.loadGallery();
             });
+        };
+        MY_VIDEOS.prototype.destroyGallery = function() {
+            var that = this;
+            $(that.isotopeContainer).data('fwGalerizer').destroy();
+            return;
         };
         return MY_VIDEOS;
     }());
