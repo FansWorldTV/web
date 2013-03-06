@@ -1,7 +1,4 @@
 -
-  id: 1
-  title: {es: Historias, en: Life stories}
--
   id: 2
   title: {es: Estilos de vida, en: Lifestyle}
 -
@@ -16,6 +13,3 @@
 -
   id: 6
   title: {es: Entrevistas, en: Interviews}
--
-  id: 7
-  title: {es: Desafios, en: Vs}  

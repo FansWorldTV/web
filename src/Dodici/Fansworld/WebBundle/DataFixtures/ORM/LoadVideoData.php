@@ -1,6 +1,8 @@
 <?php
 namespace Dodici\Fansworld\WebBundle\DataFixtures\ORM;
 
+use Dodici\Fansworld\WebBundle\Entity\HomeVideo;
+
 use Dodici\Fansworld\WebBundle\Entity\HasTag;
 use Dodici\Fansworld\WebBundle\Entity\Tag;
 use Dodici\Fansworld\WebBundle\Entity\HasTeam;
@@ -77,6 +79,14 @@ class LoadVideoData extends AbstractFixture implements FixtureInterface, Contain
     	        	}
     	            
     		        $manager->persist($video);
+    		        
+    		        if (isset($ct['home']) && $ct['home']) {
+    		            $hv = new HomeVideo();
+    		            $hv->setVideo($video);
+    		            $hv->setVideoCategory($videocategory);
+    		            $manager->persist($hv);
+    		        }
+    		        
     		        echo 'c';
     		        
     		        if ($user) {

@@ -108,6 +108,7 @@
   author: 1
   stream: 1_e1j95jj2
   highlight: true
+  home: true
   videocategory: 4
   createdAt: "2013-01-16"
   title: Trailer Clubes -eng-
@@ -1068,6 +1069,7 @@
   author: 1
   stream: 1_9bsnlkd3
   highlight: true
+  home: true
   videocategory: 6
   createdAt: "2013-01-16"
   title: Trailer Entrevistas -eng-
@@ -2281,7 +2283,7 @@
   author: 1
   stream: 1_u0ved9ei
   highlight: true
-  videocategory: 1
+  videocategory: 2
   createdAt: "2013-01-16"
   title: Pity Martínez y Juani Hernández, amigos y talentos de Huracán
   tagidols: 
@@ -2386,6 +2388,7 @@
   author: 1
   stream: 1_h3849ddd
   highlight: true
+  home: true
   videocategory: 2
   createdAt: "2013-01-16"
   title: Trailer Estilo de Vida
@@ -2444,7 +2447,7 @@
   author: 1
   stream: 1_zwd9y641
   highlight: true
-  videocategory: 1
+  videocategory: 2
   createdAt: "2013-01-15"
   title: Trailer Historias
   tagidols: 
@@ -2979,6 +2982,7 @@
   author: 1
   stream: 1_7su0nmlj
   highlight: true
+  home: true
   videocategory: 3
   createdAt: "2013-01-16"
   title: Trailer Fans
@@ -3157,7 +3161,7 @@
   author: 1
   stream: 1_35yj8o74
   highlight: true
-  videocategory: 7
+  videocategory: 5
   createdAt: "2013-01-16"
   title: Freire y los mellizos Desábato vs profesionales del wakeboard, desafío de pegada
   tagidols: 
@@ -3179,7 +3183,7 @@
   author: 1
   stream: 1_hy14i5cc
   highlight: true
-  videocategory: 7
+  videocategory: 5
   createdAt: "2013-01-16"
   title: Fútbol vs Rugby, ¿quién acierta más veces al travesaño?
   tagidols: 
@@ -3199,7 +3203,7 @@
   author: 1
   stream: 1_mbhr8dz7
   highlight: true
-  videocategory: 7
+  videocategory: 5
   createdAt: "2013-01-16"
   title: Lucas Orban vs Cristian Lema,  desafío quién le pega más al travesaño por un asado
   tagidols: 
@@ -3419,6 +3423,7 @@
   author: 1
   stream: 1_95bul04z
   highlight: true
+  home: true
   videocategory: 5
   createdAt: "2013-01-16"
   title: Trailer Trucos
@@ -3440,7 +3445,7 @@
   author: 1
   stream: 1_xwos4v2u
   highlight: true
-  videocategory: 7
+  videocategory: 5
   createdAt: "2013-01-16"
   title: Trailer Versus -eng-
   tagidols: 
@@ -3467,7 +3472,7 @@
   author: 1
   stream: 1_ntq0g07y
   highlight: true
-  videocategory: 7
+  videocategory: 5
   createdAt: "2013-01-16"
   title: Trailer Versus 
   tagidols: 
