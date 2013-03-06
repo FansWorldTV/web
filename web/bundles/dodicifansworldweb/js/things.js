@@ -384,7 +384,6 @@ $(document).ready(function(){
         };
         MY_VIDEOS.prototype.loadGallery = function() {
             var that = this;
-            that.type = $("[data-filter-videos] button.active").attr('data-type');
             $(this.isotopeContainer).attr('data-feed-source', 'things_videosajax');
             $(this.isotopeContainer).fwGalerizer({
                     /*preoloadData: videos,*/
@@ -443,6 +442,7 @@ $(document).ready(function(){
             $("[data-filter-videos] button").on('click', function(){
                 $('.am-container').html("").addClass('loading');
                 that.type = $(this).attr('data-type');
+                console.log("filtro por: %s", that.type);
                 // Destroy gallery items
                 that.destroyGallery();
                 that.page = 1;  // reset page count
