@@ -9,6 +9,8 @@ list.init = function(){
     }else{
         list.addMore = false;
     }
+    
+    
     list.getTeams();
         
     $("ul.categories li a").on('click', function(e){
@@ -53,7 +55,8 @@ list.getTeams = function(callback){
         for(i in r.teams){
             var element = r.teams[i];
             var lastIteration = null;
-            if(i == (r.idols.length-1)){
+            console.log("I: "+i+" | Length: "+r.teams.length);
+            if(i == (r.teams.length-1)){
                 lastIteration = function(){
                     $("div.list-teams").removeClass('loading');
                     callback();

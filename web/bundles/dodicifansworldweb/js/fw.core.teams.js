@@ -68,10 +68,13 @@
 
                 $(".list-teams dl").html(' ');
 
-                that.getTeams();
+                that.getTeams(function(){
+                    var docHeight = window.innerHeight;
+                    $(document).scrollTop(( docHeight - 20 ));
+                });
             });
         }
-        TEAMS.prototype.getTeams = function() {
+        TEAMS.prototype.getTeams = function(callback) {
             var that = this;
             endless.stop();
             $("div.list-teams").addClass('loading');
@@ -86,13 +89,23 @@
                 for(i in r.teams){
                     if (r.teams.hasOwnProperty(i)) {
                         var element = r.teams[i];
-                        console.log("loading team: " + element.title);
-                        templateHelper.renderTemplate('team-list_element', element, $(".list-teams dl"), false, function(){
-                            $("div.list-teams").removeClass('loading');
+                        var tplHelperCallback = null;
+                        
+                        tplHelperCallback = function(){
                             $(".list-teams dl").find(".btn_teamship.add:not('.loading-small')").each(function() {
                                 $(this).fwTeamship();
                             });
-                        });
+                            
+                            if(i == (r.teams.length-1)){
+                                $("div.list-teams").removeClass('loading');
+                                if(typeof(callback) != 'undefined'){
+                                    callback();
+                                }
+                            }
+                        };
+                        
+                        
+                        templateHelper.renderTemplate('team-list_element', element, $(".list-teams dl"), false, tplHelperCallback);
                     }
                 }
                 that.addMore = r.gotMore;

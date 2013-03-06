@@ -112,6 +112,16 @@ class TeamController extends SiteController
                 $teamTitle = $team->getTitle();
             }
 
+            $router = $this->get('router');
+            $typesUrl = array(
+                'photos' => null,
+                'videos' => null,
+                'fans' => null
+            );
+            foreach($typesUrl as $key=>$value){
+                $typesUrl[$key] = $router->generate('team_' . $key, array('slug'=> $team->getSlug()));
+            }
+            
             $response['teams'][] = array(
                 'id' => $team->getId(),
                 'title' => $teamTitle,
@@ -122,7 +132,10 @@ class TeamController extends SiteController
                 'image' => $this->getImageUrl($team->getImage()),
                 'idols' => $idols,
                 'teamship' => $teamship,
-                'url' => $this->generateUrl('team_land', array('slug' => $team->getSlug()))
+                'url' => $this->generateUrl('team_land', array('slug' => $team->getSlug())),
+                'photosUrl' => $typesUrl['photos'],
+                'videosUrl' => $typesUrl['videos'],
+                'fansUrl' => $typesUrl['fans']
             );
         }
 
