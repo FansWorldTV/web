@@ -8,10 +8,12 @@ namespace Dodici\Fansworld\WebBundle\Serializer;
 class Video
 {
     protected $serializer;
+    protected $router;
     
-    function __construct($serializer)
+    function __construct($serializer, $router)
     {
         $this->serializer = $serializer;
+        $this->router = $router;
     }
     
     public function values($entity)
@@ -23,7 +25,8 @@ class Video
             'commentCount' => $entity->getCommentCount(),
             'videocategory' => $entity->getVideocategory() ? (int)$entity->getVideocategory()->getId() : null,
             'weight' => $entity->getWeight(),
-            'duration' => $entity->getDuration()
+            'duration' => $entity->getDuration(),
+            'url' => $this->router->generate('video_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()))
         );
     }
 }

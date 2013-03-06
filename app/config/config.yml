@@ -426,6 +426,11 @@ services:
       arguments: [@preferences]
       tags:
           - { name: twig.extension }
+    twig.extension.videoplaylist:
+      class: Dodici\Fansworld\WebBundle\Extensions\VideoPlaylistExtension
+      arguments: [@video.playlist]
+      tags:
+          - { name: twig.extension }
     twig.extension.subscriptions:
       class: Dodici\Fansworld\WebBundle\Extensions\SubscriptionsExtension
       arguments: [@subscriptions]
@@ -486,7 +491,7 @@ services:
         arguments: [@appmedia]
     serializer.video:
         class: Dodici\Fansworld\WebBundle\Serializer\Video
-        arguments: [@serializer]
+        arguments: [@serializer, @router]
     serializer.event:
         class: Dodici\Fansworld\WebBundle\Serializer\Event
         arguments: [@serializer, @router, @fos_user.entity_manager, @appstate, @security.context]
