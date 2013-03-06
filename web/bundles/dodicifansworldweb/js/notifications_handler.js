@@ -1,4 +1,4 @@
-var notifications = {};
+\var notifications = {};
 notifications.total = 0;
 
 notifications.init = function() {
@@ -21,7 +21,7 @@ notifications.listen = function() {
         }
     }
     if ((typeof Meteor != 'undefined') && (typeof notificationChannel != 'undefined')) {
-        Meteor.registerEventCallback("process", handleData);   
+        Meteor.registerEventCallback("process", handleData);
         Meteor.joinChannel(notificationChannel);
         Meteor.connect();
         console.log('Escuchando notifications..');
@@ -31,7 +31,7 @@ notifications.listen = function() {
 notifications.handleNewNotification = function(response) {
     id = response.id; entity = response.p;
     notifications.updateBubbleCount(entity, 1, false);
-    ajax.genericAction('user_ajaxnotification', {'id' : id}, 
+    ajax.genericAction('user_ajaxnotification', {'id' : id},
     function(response) {
         if (response) {
             entityContent = $('[data-entity]').data('entity');
@@ -45,8 +45,8 @@ notifications.handleNewNotification = function(response) {
                     $('[data-sidebaralert]:first').effect("bounce", {times:2}, 300);
                 } else {
                     notice(notifications.getBubbleNotificationTemplate(response));
-                }  
-            } 
+                }
+            }
         }
     });
 };
@@ -68,7 +68,7 @@ notifications.showCounts = function(entity, value) {
 };
 
 notifications.initCounts = function () {
-    ajax.genericAction('user_ajaxgetnotifications_typecounts', {}, 
+    ajax.genericAction('user_ajaxgetnotifications_typecounts', {},
         function(response) {
             if (response) {
                 for (i in response) {
@@ -102,20 +102,26 @@ notifications.updateBubbleCount = function(entity, value, parentOfNotification) 
 notifications.showUnread = function () {
     if ($('[data-entity]').size() > 0) {
         entity = $('[data-entity]').data('entity');
-        ajax.genericAction('notification_getlatest', { 'parentName' : entity}, 
+        ajax.genericAction('notification_getlatest', { 'parentName' : entity},
             function(response) {
                 console.log('Notifications unread for ' + entity + ': ' + response);
                 nCounts = response.length;
                 if (nCounts > 4) nCounts = 4;
                 for (j = 0; j < nCounts; j++) {
                     id = response[j];
-                    ajax.getNotification(id, function(response) {
-                    if (response) {
-                        if ($('[data-entity]').size() > 0) {
-                            //if ($('[data-sidebaralert]').size() >= 4) $('[data-sidebaralert]:last').fadeOut("slow").remove();
-                            $('[data-notification]').prepend(notifications.getClassicNotificationTemplate(response));
+                    $.ajax({
+                        url: 'http://' + location.host + Routing.generate( appLocale + '_user_ajaxnotification' ),
+                        data:{
+                            'id': id
+                        },
+                        success: function(response){
+                        if (response) {
+                            if ($('[data-entity]').size() > 0) {
+                                //if ($('[data-sidebaralert]').size() >= 4) $('[data-sidebaralert]:last').fadeOut("slow").remove();
+                                $('[data-notification]').prepend(notifications.getClassicNotificationTemplate(response));
+                            }
                         }
-                    }});
+                    });
                 }
             }
         )
@@ -189,7 +195,7 @@ notifications.getClassicNotificationTemplate = function (htmlResponse) {
 };
 
 notifications.sendToMeteor = function (type) {
-    ajax.genericAction('notification_setfake', {'type': type}, 
+    ajax.genericAction('notification_setfake', {'type': type},
         function(response){}
     );
 };
