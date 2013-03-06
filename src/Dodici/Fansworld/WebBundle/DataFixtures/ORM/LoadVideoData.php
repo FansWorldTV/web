@@ -22,6 +22,7 @@ use Gedmo\Sluggable\Util\Urlizer as GedmoUrlizer;
 class LoadVideoData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
 {
 	const YAML_PATH = '../videos.yml';
+	const IMAGE_FILE_PATH = '../Files/videos';
 	
 	private $container;
 
@@ -77,6 +78,20 @@ class LoadVideoData extends AbstractFixture implements FixtureInterface, Contain
     	        	    $video->setStream($ct['stream']);
     	        	    $video->setActive(false);
     	        	}
+    	        	
+    	            if (isset($ct['splash']) && $ct['splash']) {
+    		        	$imagepath = __DIR__.'/'.self::IMAGE_FILE_PATH.'/'.$ct['splash'];
+    		        	if (is_file($imagepath)) {
+    			        	$mediaManager = $this->container->get("sonata.media.manager.media");
+    	                    $media = new Media();
+    	                    $media->setBinaryContent($imagepath);
+    	                    $media->setContext('default');
+    	                    $media->setProviderName('sonata.media.provider.image');
+    	                    $mediaManager->save($media);
+    	                    
+    	                    $video->setSplash($media);
+    		        	}
+    		        }
     	            
     		        $manager->persist($video);
     		        

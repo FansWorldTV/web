@@ -231,14 +231,20 @@ services:
         class: Dodici\Fansworld\WebBundle\Listener\ScoreHandler
         tags:
             - { name: doctrine.event_listener, event: postPersist }
+        arguments:
+            - "@service_container"
     score.listener.update:
         class: Dodici\Fansworld\WebBundle\Listener\ScoreHandler
         tags:
             - { name: doctrine.event_listener, event: postUpdate }
+        arguments:
+            - "@service_container"
     score.listener.remove:
         class: Dodici\Fansworld\WebBundle\Listener\ScoreHandler
         tags:
             - { name: doctrine.event_listener, event: postRemove }
+        arguments:
+            - "@service_container"
     comment.listener.persist:
         class: Dodici\Fansworld\WebBundle\Listener\CommentCountUpdater
         tags:

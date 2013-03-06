@@ -109,6 +109,7 @@
   stream: 1_e1j95jj2
   highlight: true
   home: true
+  splash: slider_03.png
   videocategory: 4
   createdAt: "2013-01-16"
   title: Trailer Clubes -eng-
@@ -1070,6 +1071,7 @@
   stream: 1_9bsnlkd3
   highlight: true
   home: true
+  splash: slider_05.png
   videocategory: 6
   createdAt: "2013-01-16"
   title: Trailer Entrevistas -eng-
@@ -2389,6 +2391,7 @@
   stream: 1_h3849ddd
   highlight: true
   home: true
+  splash: slider_01.png
   videocategory: 2
   createdAt: "2013-01-16"
   title: Trailer Estilo de Vida
@@ -2983,6 +2986,7 @@
   stream: 1_7su0nmlj
   highlight: true
   home: true
+  splash: slider_02.png
   videocategory: 3
   createdAt: "2013-01-16"
   title: Trailer Fans
@@ -3424,6 +3428,7 @@
   stream: 1_95bul04z
   highlight: true
   home: true
+  splash: slider_04.png
   videocategory: 5
   createdAt: "2013-01-16"
   title: Trailer Trucos

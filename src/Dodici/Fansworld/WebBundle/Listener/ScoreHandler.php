@@ -42,13 +42,36 @@ class ScoreHandler
     const SCORE_TAG_IDOL_PHOTO = 5;
     const SCORE_TAG_IDOL_VIDEO = 10;
     
+    const DEFAULT_AVATAR_FILE_PATH = '../DataFixtures/Files/users/profile_no_image.png';
+    
 	protected $em;
+	
+    protected $container;
+
+    function __construct($container)
+    {
+        $this->container = $container;
+    }
 	
 	public function postPersist(LifecycleEventArgs $eventArgs)
     {
 		$entity = $eventArgs->getEntity();
 		$em = $eventArgs->getEntityManager();
 		$this->em = $em;
+		
+		if ($entity instanceof User) {
+		    if (!$entity->getImage()) {
+    		    $imgpath = __DIR__ . '/' .  self::DEFAULT_AVATAR_FILE_PATH;
+    		    $imagecontent = file_get_contents($imgpath);
+    		    $appmedia = $this->container->get('appmedia');
+        		$image = $appmedia->createImageFromBinary($imagecontent);
+        		$entity->setImage($image);
+        		$em->persist($entity);
+        		$em->flush();
+		    }
+    		
+		    if (!$entity->getLevel()) $this->addScore($entity, 0);
+		}
 		
 		if ($entity instanceof Idolship) {
 			$this->addScore($entity->getAuthor(), self::SCORE_ADD_IDOL);
