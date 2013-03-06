@@ -33,8 +33,8 @@
         <div class="title_section"><span>EQUIPOS</span></div>
         <div class="content_section">
             {% for team in teams %}
-                <a href="{{ path('team_land', {slug: team.slug}) }}" rel="tooltip" title="{{ team.shortname }}">
-                    {% thumbnail team.image, 'avatar' with {title: team.shortname} %}
+                <a href="{{ path('team_land', {slug: team.slug}) }}" rel="tooltip" title="{{ team.title }}">
+                    {% thumbnail team.image, 'avatar' with {title: team.title} %}
                 </a>
             {% endfor %}
         </div>
