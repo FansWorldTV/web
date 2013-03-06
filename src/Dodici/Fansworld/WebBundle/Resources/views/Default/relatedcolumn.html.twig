@@ -2,7 +2,7 @@
 
     <!-- IDOLS -->
     {% if topidols|length > 0 %}
-        <div class="title_section"><strong>Idolos</strong></div>
+        <div class="title_section"><span>IDOLOS</span></div>
         <div class="content_section">
             {% for idol in topidols %}
                 <a href="{{ path('idol_land', {slug: idol.slug}) }}" rel="tooltip" title="{{ idol.firstname ~ ' ' ~ idol.lastname }}">
@@ -18,7 +18,7 @@
 
     <!-- FANS -->
     {% if topfans|length > 0 %}
-        <div class="title_section"><strong>Fans</strong></div>
+        <div class="title_section"><span>FANS</span></div>
         <div class="content_section">
             {% for fan in topfans %}
                 <a href="{{ path('user_land', {username: fan.username}) }}" rel="tooltip" title="{{ fan.firstname ~ ' ' ~ fan.lastname }}">
@@ -30,7 +30,7 @@
 
     <!-- TEAMS -->
     {% if teams|length > 0 %}
-        <div class="title_section"><strong>Equipos</strong></div>
+        <div class="title_section"><span>EQUIPOS</span></div>
         <div class="content_section">
             {% for team in teams %}
                 <a href="{{ path('team_land', {slug: team.slug}) }}" rel="tooltip" title="{{ team.shortname }}">
@@ -42,17 +42,22 @@
 
     <!-- MATCHS -->
     {% if matchs|length > 0 %}
-        <div class="title_section"><strong>Proximos Partidos</strong></div>
+        <div class="title_section"><span>PROXIMOS PARTIDOS</span></div>
         <div class="content_section">
             {% for match in matchs %}
                 {% for hasteam in match.hasteams %}
                     <a href="{{ path('team_wall', {slug: hasteam.team.slug}) }}" rel="tooltip" data-original-title="{{ hasteam.team.title }}">
-                        {% thumbnail hasteam.team.image, 'avatar' with {title: hasteam.team.title} %}
+
+                            {% if loop.first %}
+                                {% thumbnail hasteam.team.image, 'avatar' with {title: hasteam.team.title} %}
+                            {% else %}
+                                {% thumbnail hasteam.team.image, 'avatar' with {title: hasteam.team.title, class : 'vsitem'} %}
+                            {% endif %}
                     </a>
                 {% endfor %}
                     {% if match.hasteams|length > 0 %}
                         <button class="btn btn-success checkIn" data-event-id="{{ match.id }}" data-event-check-in="">Check in</button>
-                        <div class="match_info">{{ match.stadium | truncate(16) }} <br/> {{ match.fromtime|date("d/m/Y H:i") }}</div>
+                        <div class="match_info">{{ match.stadium | truncate(20) }} <br/> {{ match.fromtime|date("d/m/Y H:i") }}</div>
                     {% endif %}
             {% endfor %}
         </div>
