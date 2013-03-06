@@ -25,7 +25,7 @@
             'onload': function () {},
             'onclose': function () {}
         }, options || {});
-        
+
         var
             $target,
             $container,
@@ -46,18 +46,21 @@
                     $overlay.removeClass('loading');
                     $content.html(response);
                     $(self.settings.container + ' [data-wall]').wall();
-                    
+
                     $(document).bind('keydown',function(e){
                         if ( e.which == 27 ) {
                             close();
                         };
                     });
-                    
+
                     $('body').tooltip({
                         selector:'[rel="tooltip"]'
                     });
-                    
+
                     self.settings.onload(self.settings);
+
+                    //Add share button bindings
+                    share.init();
                 }
             });
         }
@@ -66,7 +69,7 @@
             var windowHeight = $(window).height();
             $container.css('height', windowHeight + 'px');
             $overlay.css('height', windowHeight + 'px');
-            
+
             $container.animate({
                 opacity: 'show'
             }, self.settings.duration, function () {
@@ -89,19 +92,19 @@
                 self.settings = $button.data('modalPopup').settings;
             }
             $target = $(self.settings.target);
-            
+
             if (!$(self.settings.container).length) {
                 var markup = '',
                 inlineStyle = '';
-                
+
                 if(self.settings.width) {
                     inlineStyle += 'width:' + self.settings.width + 'px;left:50%;margin-left:-' + Math.ceil(self.settings.width/2) + 'px;';
                 }
-                
+
                 if(self.settings.height) {
                     inlineStyle += 'height:' + self.settings.height + 'px;top:50%;margin-top:-' + Math.ceil(self.settings.height/2) + 'px;';
                 }
-                
+
                 markup += '<div id="' + self.settings.container.replace('#', '') + '">';
                 markup += '  <div id="' + self.settings.overlay.replace('#', '') + '"></div>';
                 markup += '  <div id="' + self.settings.close.replace('#', '') + '"></div>';
@@ -114,7 +117,7 @@
             $overlay = $(self.settings.overlay);
             $close = $(self.settings.close);
             $content = $(self.settings.content);
-            
+
             $close.on('click', function (e) {
                 close();
                 e.preventDefault();
@@ -130,9 +133,9 @@
                     return false;
                 });
             }
-            
+
         }
-        
+
         init();
         if(options == 'close'){
             close();
