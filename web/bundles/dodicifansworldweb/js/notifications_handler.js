@@ -115,13 +115,23 @@ notifications.showUnread = function () {
                             'id': id
                         },
                         success: function(response){
+                            if (response) {
+                                if ($('[data-entity]').size() > 0) {
+                                    //if ($('[data-sidebaralert]').size() >= 4) $('[data-sidebaralert]:last').fadeOut("slow").remove();
+                                    $('[data-notification]').prepend(notifications.getClassicNotificationTemplate(response));
+                                }
+                            }
+                        }
+                    });
+
+                    /*ajax.getNotification(id, function(response) {
                         if (response) {
                             if ($('[data-entity]').size() > 0) {
                                 //if ($('[data-sidebaralert]').size() >= 4) $('[data-sidebaralert]:last').fadeOut("slow").remove();
                                 $('[data-notification]').prepend(notifications.getClassicNotificationTemplate(response));
                             }
                         }
-                    });
+                    });*/
                 }
             }
         )
