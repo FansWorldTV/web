@@ -263,6 +263,13 @@
             });
             this.page += 1;
         };
+        TV.prototype.getFilters = function() {
+            return {
+                'channel': this.channel,
+                'filter': this.filter,
+                'page': this.page
+            };
+        };
         TV.prototype.channelToggle = function() {
             var that = this;
             $('.filter-channels').closest('ul').find("li").click(function(e){
@@ -464,7 +471,7 @@
                             $(that.isotopeContainer).attr('data-feed-source', that.feedSource);
 
 
-                            console.log("filtro por cosa: " + that.filter + " con id: " + $(this).attr('data-id'));
+                            console.log("filtro por cosa: " + JSON.stringify(that.feedfilter) + " con id: " + $(this).attr('data-id'));
                             // Destroy gallery items
                             that.destroyGallery();
                             // Load new gallery
@@ -475,7 +482,7 @@
                             that.feedfilter = prevFilter;
                         });
 
-                        if(r.tags[i].type == 'idol' || r.tags[i].type === 'team')
+                        //if(r.tags[i].type == 'idol' || r.tags[i].type === 'team')
                         $tagList.append(strp);
 
                         //$tagList.append("<li><a href='" + tagHref + "'>" + r.tags[i].title + "</a></li>");
