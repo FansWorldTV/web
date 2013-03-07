@@ -60,7 +60,7 @@
             //
             // The easiest way to use singleField is to just instantiate tag-it
             // on an INPUT element, in which case singleField is automatically
-            // set to true, and singleFieldNode is set to that element. This 
+            // set to true, and singleFieldNode is set to that element. This
             // way, you don't need to fiddle with these options.
             singleField: false,
 
@@ -238,7 +238,7 @@
 
                     // Comma/Space/Enter are all valid delimiters for new tags,
                     // except when there is an open quote or if setting allowSpaces = true.
-                    // Tab will also create a tag, unless the tag input is empty, 
+                    // Tab will also create a tag, unless the tag input is empty,
                     // in which case it isn't caught.
                     if (
                         event.which === $.ui.keyCode.COMMA ||
@@ -279,7 +279,7 @@
                                             id: parseInt(Math.random()*99999),
                                             slug: slug.replace(/ +/g, '-'),
                                             type: 'text'
-                                        };  
+                                        };
                                     }
                                 } else {
                                     var extra = {
@@ -287,14 +287,14 @@
                                         slug: slug.replace(/ +/g, '-'),
                                         type: 'text'
                                     };
-                                } 
+                                }
                             } else {
                                 var extra = {
                                     id: parseInt(Math.random()*99999),
                                     slug: slug.replace(/ +/g, '-'),
                                     type: 'text'
                                 };
-                            }                          
+                            }
                         }
 
                         that.createTag(that._cleanedInput(), null, null, extra);
@@ -337,7 +337,27 @@
                     that.tagInput.data('autocomplete-open', true);
                 }).bind('autocompleteclose', function(event, ui) {
                     that.tagInput.data('autocomplete-open', false)
-                });
+                })
+
+                .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+                    console.log("_renderItem")
+                    console.log(item)
+                    item.extraData.image = item.extraData.image || '';
+                    return $("<li></li>")
+                            .data("item.autocomplete", item)
+                            .append("<a><img class='ui-corner-all ui-avatar-icon' src="+ item.extraData.image +">"+ item.label + "</a>")
+                            .appendTo(ul);
+                };
+
+                /*
+                $.ui.autocomplete.prototype._renderItem = function (ul, item) {
+                    console.log("_renderItem")
+                    return $("<li></li>")
+                            .data("item.autocomplete", item)
+                            .append("<a>" + item.label + "</a>")
+                            .appendTo(ul);
+                };
+                */
             }
         },
 
@@ -455,10 +475,13 @@
 
             var label = $(this.options.onTagClicked ? '<a class="tagit-label"></a>' : '<span class="tagit-label"></span>').text(value);
 
+            extraData.image = extraData.image || '';
+            var avatar = $("<img class='ui-corner-all ui-avatar-icon' src='"+ extraData.image +"'>")
             // Create tag.
             var tag = $('<li></li>')
                 .addClass('tagit-choice ui-widget-content ui-state-default ui-corner-all')
                 .addClass(additionalClass)
+                .append(avatar)
                 .append(label);
             if (this.options.readOnly){
                 tag.addClass('tagit-choice-read-only');
