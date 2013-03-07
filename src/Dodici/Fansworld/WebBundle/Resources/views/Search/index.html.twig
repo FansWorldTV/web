@@ -66,22 +66,30 @@
     </div>
 
     <script type="text/javascript">
-        var word_array = [
-                {% for tag in trending %}
-                    {% set link = '' %}
-                    {% if tag.type == 'team' or tag.type == 'idol' %}
-                        {% set link = path( tag.type ~ '_wall', {'slug': tag.slug}) %}
-                    {% endif %}
-                    {% if tag.type == 'user' %}
-                        {% set link = path('user_land', {'username': tag.username}) %}
-                    {% endif %}
-                    {% if tag.type == 'tag' %}
-                        {% set link = path('search_home', {'query': tag.title, 'tag': true}) %}
-                    {% endif %}
-                        
-                    {text: "{{ tag.title }}", weight: {{ tag.count }}, link: "{{ link }}", type: "{{ tag.type }}"},
-                {% endfor %}
-        ];
-        $("#wordcloud").wordcloud(word_array, {});
+        $(document).ready(function(){
+            var word_array = [
+                    {% for tag in trending %}
+                        {% set link = '' %}
+                        {% if tag.type == 'team' or tag.type == 'idol' %}
+                            {% set link = path( tag.type ~ '_wall', {'slug': tag.slug}) %}
+                        {% endif %}
+                        {% if tag.type == 'user' %}
+                            {% set link = path('user_land', {'username': tag.username}) %}
+                        {% endif %}
+                        {% if tag.type == 'tag' %}
+                            {% set link = path('search_home', {'query': tag.title, 'tag': true}) %}
+                        {% endif %}
+
+                        {text: "{{ tag.title }}", weight: {{ tag.count }}, link: "{{ link }}", type: "{{ tag.type }}"},
+                    {% endfor %}
+            ];
+
+            $("#wordcloud").wordcloud(word_array, {});
+
+            {% if query is not null %}
+                search.query = '{{ query }}';
+            {% endif %}
+            search.init();
+        });
     </script>
 {% endblock %}

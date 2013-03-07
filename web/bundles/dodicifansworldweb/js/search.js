@@ -8,12 +8,9 @@ search.running = false;
 
 
 search.init = function(query){
-    console.log('hola');
-    
-    if(query != ''){
-        $("input[data-search-input]").val(query);
+    if(search.query != ''){
+        $("input[data-search-input]").val(search.query);
     }
-    search.query = $("input[data-search-input]").val();
     
     endless.init(10, function(){
         if(search.addMore && !search.running && search.active != 'all'){
@@ -139,7 +136,3 @@ function secToMinutes(sec){
     if(min<10) min = "0" + min;
     return min + ":" + sec;
 }
-
-$(document).ready(function(){
-   search.init(); 
-});

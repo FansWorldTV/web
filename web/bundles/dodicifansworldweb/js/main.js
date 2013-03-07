@@ -216,7 +216,6 @@ var site = {
         site.expander();
         site.showCommentForm();
         site.BindLoginWidget();
-        //site.bindSignature();
         albums.init();
 
         $('[data-wall]').wall();
