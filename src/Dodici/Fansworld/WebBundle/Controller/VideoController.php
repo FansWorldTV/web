@@ -340,7 +340,7 @@ class VideoController extends SiteController
             } else {
                 $info_entity = $this->getRepository($repo)->findOneBy(array('id' => $id));
                 $videosRepo = $this->getRepository('Video')->search(null, $user, self::cantVideos, $offset, null, null, null, null, null, 'default', $info_entity);
-                $countAll = $videoRepo->countSearch(null, $user, null, null, null, null, null, $info_entity);
+                $countAll = $this->getRepository('Video')->countSearch(null, $user, null, null, null, null, null, $info_entity);
             }
             foreach ($videosRepo as $video) {
                 $tags = array();
