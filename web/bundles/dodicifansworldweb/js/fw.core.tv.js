@@ -411,6 +411,9 @@
         };
         TV.prototype.myTags = function(channel, filter) {
             var $tagList = $(".content-container").find(".tag-list-container ul");
+
+            var that = this;
+
             $tagList.empty();
             ajax.genericAction("tag_ajaxgetusedinvideos", {
                 "channel": channel,
@@ -435,7 +438,12 @@
                         var tagHref = Routing.generate(appLocale + action, {
                             term: search_term, slug: search_term
                         });
-                        $tagList.append("<li><a href='" + tagHref + "'>" + r.tags[i].title + "</a></li>");
+
+                        var strp = $("<li data-list-filter-type='" + r.tags[i].type + "' data-id='" + r.tags[i].id + "' class=''><span>" + r.tags[i].title + "</span></li>");
+                        that.customFilterToggler(strp)
+                        $tagList.append(strp);
+
+                        //$tagList.append("<li><a href='" + tagHref + "'>" + r.tags[i].title + "</a></li>");
                     }
                 }
             });
