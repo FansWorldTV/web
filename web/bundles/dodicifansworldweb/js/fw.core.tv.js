@@ -475,7 +475,7 @@
                             that.feedfilter = prevFilter;
                         });
 
-                        //if(r.tags[i].type == 'idol' || r.tags[i].type === 'team')
+                        if(r.tags[i].type == 'idol' || r.tags[i].type === 'team')
                         $tagList.append(strp);
 
                         //$tagList.append("<li><a href='" + tagHref + "'>" + r.tags[i].title + "</a></li>");
