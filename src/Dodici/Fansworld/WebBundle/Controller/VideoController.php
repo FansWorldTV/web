@@ -355,7 +355,7 @@ class VideoController extends SiteController
                 $videos[] = array(
                     'id' => $video->getId(),
                     'title' => $video->getTitle(),
-                    'image' => $this->getImageUrl($video->getImage()),
+                    'image' => $this->getImageUrl($video->getImage(), 'medium'),
                     'author' => array(
                         'name' => (string) $video->getAuthor(),
                         'id' => $video->getAuthor()->getId(),
