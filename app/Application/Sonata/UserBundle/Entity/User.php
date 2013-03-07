@@ -1596,4 +1596,14 @@ class User extends BaseUser implements SearchableInterface, VisitableInterface
         
         return false;
     }
+    
+    public function getExpiresAt()
+    {
+        return $this->expiresAt;
+    }
+    
+    public function removeExpireDate()
+    {
+        $this->expiresAt = null;
+    }
 }

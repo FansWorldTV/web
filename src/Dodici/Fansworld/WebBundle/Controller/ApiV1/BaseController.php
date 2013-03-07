@@ -335,6 +335,8 @@ class BaseController extends SiteController
         
         if ($realtoken != $token) throw new HttpException('601-401', 'Invalid user token');
         
+        if ($user->isExpired()) throw new HttpException('602-401', 'User account has expired');
+        
         return $user;
     }
     

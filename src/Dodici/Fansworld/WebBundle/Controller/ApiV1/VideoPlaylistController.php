@@ -57,7 +57,7 @@ class VideoPlaylistController extends BaseController
                     array($pagination['sort'] => $pagination['sort_order'])
                 );
                 
-                $allowedfields = array('author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount');
+                $allowedfields = array('author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount', 'watchlisted', 'url');
                 $extrafields = $this->getExtraFields($allowedfields);
                 
                 $return = array();

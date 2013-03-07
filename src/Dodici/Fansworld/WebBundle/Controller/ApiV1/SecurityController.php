@@ -74,7 +74,8 @@ class SecurityController extends BaseController
                 $user->setUsername($username);
                 
                 if ($confirmationEnabled) {
-                    $user->setEnabled(false);
+                    $user->setEnabled(true);
+                    $user->setExpiresAt(new \DateTime('+2 weeks'));
                 } else {
                     $user->setConfirmationToken(null);
                     $user->setEnabled(true);
@@ -102,6 +103,8 @@ class SecurityController extends BaseController
                         'token' => $token,
                         'user' => $this->userArray($user)
                     );
+                    
+                    if ($user->getExpiresAt()) $return['expires'] = $user->getExpiresAt()->format('U');
                     
                     $this->addIdolsTeams($user);
                     
@@ -133,6 +136,7 @@ class SecurityController extends BaseController
      * @return 
      * array (
      * 		token: hash used in other requests - string,
+     * 		<if not confirmed> expires: int (ts UTC),
      * 		user: array (
      * 			id: int,
      * 			username: string,
@@ -158,12 +162,16 @@ class SecurityController extends BaseController
                 $user = $this->authUser($username ?: $email, $password);
                 
                 if ($user) {
+                    if ($user->isExpired()) throw new HttpException('602-401', 'User account has expired');
+                    
                     $token = $this->generateUserApiToken($user, $this->getApiKey());
                     
                     $return = array(
                         'token' => $token,
                         'user' => $this->userArray($user)
                     );
+                    
+                    if ($user->getExpiresAt()) $return['expires'] = $user->getExpiresAt()->format('U');
                     
                     return $this->result($return);
                     
@@ -359,7 +367,8 @@ class SecurityController extends BaseController
      * @return
      * array (
      * 		valid: boolean,
-     * 		<if valid = true> user: @see SecurityController::loginAction()
+     * 		<if valid = true> user: @see SecurityController::loginAction(),
+     * 		<if not confirmed> expires: int (ts UTC)
      * )
      */
     public function tokenValidateAction()
@@ -378,6 +387,8 @@ class SecurityController extends BaseController
                 $realtoken = $this->generateUserApiToken($user, $this->getApiKey());
                 
                 if ($usertoken === $realtoken) {
+                    if ($user->isExpired()) throw new HttpException('602-401', 'User account has expired');
+                    
                     $return = array(
                         'valid' => true,
                         'user' => $this->userArray($user)
@@ -385,6 +396,8 @@ class SecurityController extends BaseController
                 } else {
                     $return = array('valid' => false);
                 }
+                
+                if ($user->getExpiresAt()) $return['expires'] = $user->getExpiresAt()->format('U');
                 
                 return $this->result($return);
             } else {
