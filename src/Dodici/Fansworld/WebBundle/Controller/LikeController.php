@@ -45,37 +45,20 @@ class LikeController extends SiteController
 	        $message = null;
 	        $user = $this->getUser();
 	        $em = $this->getDoctrine()->getEntityManager();
+	        $liker = $this->get('liker');
 	        
-	        if ($appstate->canDislike($entity)) {
-	        	$liking = $this->getRepository('Liking')->byUserAndEntity($user, $entity);
-	        	foreach ($liking as $lk) {
-	        		$em->remove($lk);
-	        		$likecount--;
-	        	} 
-	        	$em->flush();
-	        	
+	        if ($liker->isLiking($entity)) {
+	        	$liker->unlike($entity);
 	        	$message = $translator->trans('You no longer like') . ' "' . (string)$entity.'"';
 	        	$buttontext = $translator->trans('like');
+	        	$likecount--;
 	        	$liked = false;
-	        } elseif ($appstate->canLike($entity)) {
-	        	$classname = $appstate->getType($entity);
-	        	$liking = new Liking();
-	        	$liking->setAuthor($user);
-	        	$methodname = 'set'.$classname;
-	        	$liking->$methodname($entity);
-	        	$em->persist($liking);
-	        	$em->flush();
-	        	$likecount++;
-	        	
+	        } else {
+	        	$liker->like($entity);
 	        	$message = $translator->trans('You now like') . ' "' . (string)$entity.'"';
 	        	$buttontext = $translator->trans('unlike');
+	        	$likecount++;
 	        	$liked = true;
-	        } else {
-	        	if (!($user instanceof User)) {
-	        		throw new \Exception('User not logged in');
-	        	} else {
-	        		throw new \Exception('Error liking entity');
-	        	}
 	        }
 	
 	        $response = new Response(json_encode(array(

@@ -183,18 +183,6 @@ parameters:
     sonata.media.thumbnail.format: Application\Sonata\MediaBundle\Thumbnail\FormatThumbnail
         
 services:
-    liking.listener.persist:
-        class: Dodici\Fansworld\WebBundle\Listener\LikingCountUpdater
-        tags:
-            - { name: doctrine.event_listener, event: postPersist }
-        arguments:
-            - "@service_container"
-    liking.listener.remove:
-        class: Dodici\Fansworld\WebBundle\Listener\LikingCountUpdater
-        tags:
-            - { name: doctrine.event_listener, event: postRemove }
-        arguments:
-            - "@service_container"
     tag.listener.persist:
         class: Dodici\Fansworld\WebBundle\Listener\TagUpdater
         tags:
@@ -364,6 +352,9 @@ services:
       arguments: [@security.context, @doctrine.orm.entity_manager, @appstate, @user.feed.logger]
     fanmaker:
       class: Dodici\Fansworld\WebBundle\Services\Fanmaker
+      arguments: [@security.context, @doctrine.orm.entity_manager, @user.feed.logger]
+    liker:
+      class: Dodici\Fansworld\WebBundle\Services\Liker
       arguments: [@security.context, @doctrine.orm.entity_manager, @user.feed.logger]
     subscriptions:
       class: Dodici\Fansworld\WebBundle\Services\Subscriptions
