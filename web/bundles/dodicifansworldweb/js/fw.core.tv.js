@@ -101,11 +101,6 @@
                     return;
                 }
             } else {
-                this.feedfilter = {
-                    'channel': this.channel,
-                    'filter': this.filter,
-                    'page': this.page
-                };
                 this.isTeve = true;
             }
             ////////////////////////////////////////////////////////////////////
@@ -161,7 +156,7 @@
             $(this.isotopeContainer).fwGalerizer({
                 normalize: false,
                 endless: true,
-                feedfilter: that.feedfilter,
+                feedfilter: that.getFilters(),
                 ////////////////////////////////////////////////////////////////
                 // pagination callback                                        //
                 ////////////////////////////////////////////////////////////////
@@ -214,13 +209,11 @@
         ////////////////////////////////////////////////////////////////////////
         TV.prototype.profileGallery = function() {
             var that = this;
-            this.channel = $('.filter-channels').closest('ul').find("li.active").attr("data-channel-id");
-            this.filter = $('#list-filters ul').find('li.active').attr('data-list-filter-type');
             this.page  = 1;
             $(this.isotopeContainer).fwGalerizer({
                 normalize: false,
                 endless: true,
-                feedfilter: that.feedfilter,
+                feedfilter: that.getFilters(),
                 onEndless: function( plugin ) {
                     plugin.options.feedfilter.page += 1;
                     console.log("loading video gallery for channel %s with filter %s page: %s", plugin.options.feedfilter.channel, plugin.options.feedfilter.filter, plugin.options.feedfilter.page);
@@ -264,6 +257,9 @@
             this.page += 1;
         };
         TV.prototype.getFilters = function() {
+            var that = this;
+            this.channel = $('.filter-channels').closest('ul').find("li.active").attr("data-channel-id");
+            this.filter = $('#list-filters ul').find('li.active').attr('data-list-filter-type');
             return {
                 'channel': this.channel,
                 'filter': this.filter,
@@ -457,8 +453,8 @@
                         strp.on('click', function(e){
                             var i;
                             var selectedFilter = $(this).first().attr('data-list-filter-type');
-                            var prevFilter = that.feedfilter;
                             var prevFeedSource = that.feedSource;
+                            var getFilters = that.getFilters;
 
                             $('.tag-list').find("li.active").removeClass('active');
                             $(this).first().addClass('active');
@@ -470,6 +466,13 @@
                             that.feedSource = 'video_ajaxsearchbytag';
                             $(that.isotopeContainer).attr('data-feed-source', that.feedSource);
 
+                            that.getFilters = function() {
+                                return {
+                                    id: that.entityId,
+                                    entity: that.entityType,
+                                    page: that.page
+                                };
+                            }
 
                             console.log("filtro por cosa: " + JSON.stringify(that.feedfilter) + " con id: " + $(this).attr('data-id'));
                             // Destroy gallery items
@@ -479,7 +482,7 @@
                             // Restore original source and filters after invading the gallery with nasty shit from hell
                             that.feedSource = prevFeedSource;
                             $(that.isotopeContainer).attr('data-feed-source', prevFeedSource);
-                            that.feedfilter = prevFilter;
+                            that.getFilters = getFilters;
                         });
 
                         //if(r.tags[i].type == 'idol' || r.tags[i].type === 'team')
