@@ -51,7 +51,7 @@ class VideoController extends SiteController
 
     /**
      * video list
-     * 
+     *
      * @Route("/video/list", name="video_list")
      * @Template
      */
@@ -99,7 +99,7 @@ class VideoController extends SiteController
     }
 
     /**
-     * @Route("/video/ajax/search", name="video_ajaxsearch") 
+     * @Route("/video/ajax/search", name="video_ajaxsearch")
      */
     public function ajaxSearchAction()
     {
@@ -116,14 +116,14 @@ class VideoController extends SiteController
 
         $page = (int) $page;
         $offset = ($page - 1) * self::cantVideos;
-        
+
         $response = array('category' => $category);
         $repoVideos = $this->getRepository('Video');
-        
+
         if (!$query) {
             if($filter){
                 switch($filter){
-                    case 'week': 
+                    case 'week':
                         $datefrom = new \DateTime("-1 week");
                         break;
                     case 'day':
@@ -134,20 +134,20 @@ class VideoController extends SiteController
                         break;
                 }
             }else $datefrom = null;
-            
+
             $videos = $repoVideos->search(null, null, self::cantVideos, $offset, $category, null, null, $datefrom,null,null, null);
             $countAll = $repoVideos->countSearch(null, null, $category, true, null, $datefrom, null, null);
-            
-            
+
+
             //$videos = $this->getRepository('Video')->findBy(array('active' => true, 'videocategory' => $categoryId), array('createdAt' => 'DESC'), self::cantVideos, $offset);
             //$countAll = $this->getRepository('Video')->countBy(array('active' => true, 'videocategory' => $categoryId));
         } else {
-        
+
             $videos = $this->getRepository('Video')->search($query, $user, self::cantVideos, $offset, $category);
             $countAll = $this->getRepository('Video')->countSearch($query, $user, $category);
-            
+
         }
-        
+
         $response['addMore'] = $countAll > ($page * self::cantVideos) ? true : false;
         foreach ($videos as $video) {
             $tags = array();
@@ -174,8 +174,8 @@ class VideoController extends SiteController
                 'tags' => $tags
             );
             */
-            
-            
+
+
                 $response['videos'][] = array(
                         'id' => $video->getId(),
                         'title' => $video->getTitle(),
@@ -187,8 +187,8 @@ class VideoController extends SiteController
                                 'slug' => $video->getSlug()
                         ))
                 );
-            
-            
+
+
         }
 
         return $this->jsonResponse($response);
@@ -196,7 +196,7 @@ class VideoController extends SiteController
 
     /**
      * video category page
-     * 
+     *
      * @Route("/video/category/{id}/{slug}", name="video_category", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
      * @Template
      */
@@ -235,7 +235,7 @@ class VideoController extends SiteController
 
     /**
      * get category videos
-     *  @Route("/video/ajax/category", name="video_ajaxcategory") 
+     *  @Route("/video/ajax/category", name="video_ajaxcategory")
      */
     public function ajaxCategoryVidsAction()
     {
@@ -263,7 +263,7 @@ class VideoController extends SiteController
         if (($countAll / 12) > $page) {
             $response['addMore'] = true;
         }
-        
+
         foreach ($categoryVids as $vid) {
             $response['elements'][] = array(
                 'view' => $this->renderView('DodiciFansworldWebBundle:Video:list_video_item_raw.html.twig', array('video' => $vid))
@@ -275,7 +275,7 @@ class VideoController extends SiteController
 
     /**
      * Show by tag
-     * 
+     *
      * @Route("/video/tag/{slug}", name = "video_tags")
      * @Template()
      */
@@ -313,8 +313,8 @@ class VideoController extends SiteController
 
     /**
      * search videos by tag
-     * 
-     * @Route("/video/ajax/search-by-tag", name="video_ajaxsearchbytag") 
+     *
+     * @Route("/video/ajax/search-by-tag", name="video_ajaxsearchbytag")
      */
     public function ajaxSearchByTagAction()
     {
@@ -323,11 +323,25 @@ class VideoController extends SiteController
         $id = $request->get('id', false);
         $offset = ($page - 1) * self::cantVideos;
         $user = $this->getUser();
-        $tag = $this->getRepository('Tag')->find($id);
 
-        $videos = array();
+        $tag = null;
+        $entity = $request->get('entity', false);
+
         if ($id) {
-            $videosRepo = $this->getRepository('Video')->search($tag, $user, self::cantVideos, $offset);
+
+            $videos = array();
+            if ('team' == $entity) {$repo = "Team"}
+            if ('idol' == $entity) {$repo = "Idol"}
+
+            if ('tag' == $entity) {
+                $tag = $this->getRepository('Tag')->find($id);
+                $videosRepo = $this->getRepository('Video')->search($tag, $user, self::cantVideos, $offset);
+                $countAll = $this->getRepository('Video')->countSearch($tag, $user);
+            } else {
+                $info_entity = $this->getRepository($repo)->findOneBy(array('id' => $id));
+                $videosRepo = $this->getRepository('Video')->search(null, $user, self::cantVideos, $offset, null, null, null, null, null, 'default', $info_entity);
+                $countAll = $videoRepo->countSearch(null, $user, null, null, null, null, null, $info_entity);
+            }
             foreach ($videosRepo as $video) {
                 $tags = array();
                 foreach ($video->getHastags() as $tag) {
@@ -354,9 +368,6 @@ class VideoController extends SiteController
                 );
             }
         }
-
-        $tag = $this->getRepository('Tag')->find($id);
-        $countAll = $this->getRepository('Video')->countSearch($tag, $user);
         $addMore = $countAll > (($page) * self::cantVideos) ? true : false;
 
 
@@ -376,10 +387,10 @@ class VideoController extends SiteController
         $response = array(
             'elements' => array()
         );
-        
+
         $entityId = $request->get('entityId');
         $entityType = $request->get('entityType');
-        
+
         $user = $this->getUser();
 
         $page = $request->get('page', 1);
@@ -389,13 +400,13 @@ class VideoController extends SiteController
 
         $page = (int) $page;
         $offset = ($page - 1) * self::cantVideos;
-        
+
         $taggedEntity = null;
         if ($entityType == 'user') {
             $author = $this->getRepository('User')->find($entityId);
         } else {
             $author = null;
-            
+
             switch ($entityType) {
                 case 'team':
                     $taggedEntity = $this->getRepository('Team')->find($entityId);
@@ -437,7 +448,7 @@ class VideoController extends SiteController
 
         $entityId = $request->get('entityId');
         $entityType = $request->get('entityType');
-        
+
         $user = $this->getUser();
 
         $today = $request->get('today', false);
@@ -448,13 +459,13 @@ class VideoController extends SiteController
         $response = array(
             'visits' => array()
         );
-        
+
         $taggedEntity = null;
         if ($entityType == 'user') {
             $author = $this->getRepository('User')->find($entityId);
         } else {
             $author = null;
-            
+
             switch ($entityType) {
                 case 'team':
                     $taggedEntity = $this->getRepository('Team')->find($entityId);
@@ -525,7 +536,7 @@ class VideoController extends SiteController
             $author = $this->getRepository('User')->find($entityId);
         } else {
             $author = null;
-            
+
             switch ($entityType) {
                 case 'team':
                     $taggedEntity = $this->getRepository('Team')->find($entityId);
@@ -535,13 +546,13 @@ class VideoController extends SiteController
                     break;
             }
         }
-        
+
         $videos = $videoRepo->search(null, $user, self::cantVideos, $offset, null, null, $author, null, null, 'default', $taggedEntity);
         $countAll = $videoRepo->countSearch(null, $user, null, null, $author, null, null, $taggedEntity);
 
         $response['addMore'] = $countAll > (self::cantVideos * $page) ? true : false;
         $response['elements'] = array();
-        
+
         foreach ($videos as $video) {
             $response['elements'][] = array(
                 'id' => $video->getId(),
@@ -558,7 +569,7 @@ class VideoController extends SiteController
 
         return $this->jsonResponse($response);
     }
-    
+
     /**
      * @Route("/video/ajax/playerurl", name="video_player_url")
      */
@@ -566,11 +577,11 @@ class VideoController extends SiteController
     {
         $request = $this->getRequest();
         $id = $request->get('id');
-        
+
         $video = $this->getRepository('Video')->find($id);
-        
+
         $this->securityCheck($video);
-        
+
         return $this->jsonResponse(
             $this->get('flumotiontwig')->getVideoPlayerUrl($video, true)
         );
