@@ -62,6 +62,9 @@
             this.channel = $('.filter-channels').closest('ul').find("li.active").attr("data-channel-id");
             this.filter = $('#list-filters ul').find('li.active').attr('data-list-filter-type');
 
+            this.criteria = '';
+            this.entityId = '';
+            this.entityType = '';
             this.page = 1;
 
             ////////////////////////////////////////////////////////////////////
@@ -77,7 +80,7 @@
             // use it as a json source                                        //
             ////////////////////////////////////////////////////////////////////
             this.feedSource = $(this.isotopeContainer).attr('data-feed-source');
-            if(typeof this.feedSource === 'undefined' || this.feedSource == ''){
+            if(typeof this.feedSource === 'undefined' || this.feedSource === ''){
                 this.entityId   = $("[data-list]").attr('data-entity-id');
                 if(typeof this.entityId !== 'undefined'){
                     this.entityType = $("[data-list]").attr('data-entity-type');
@@ -86,18 +89,23 @@
                     console.log("in-profile");
                     var feed = that.getProfileVideoFeed();
                     console.log("filter: " + that.criteria + " feed: " + feed);
-                    var opts = {
-                        'sort': that.criteria,
-                        'page': that.page,
-                        'entityId': that.entityId,
-                        'entityType': that.entityType
+                    this.feedfilter = {
+                        'sort': this.criteria,
+                        'page': this.page,
+                        'entityId': this.entityId,
+                        'entityType': this.entityType
                     };
                     $(this.isotopeContainer).attr('data-feed-source', feed);
-                    console.log(opts);
+                    console.log(this.feedfilter);
                 } else {
                     return;
                 }
             } else {
+                this.feedfilter = {
+                    'channel': this.channel,
+                    'filter': this.filter,
+                    'page': this.page
+                };
                 this.isTeve = true;
             }
             ////////////////////////////////////////////////////////////////////
@@ -153,12 +161,7 @@
             $(this.isotopeContainer).fwGalerizer({
                 normalize: false,
                 endless: true,
-                feedfilter: {
-                    'sort': that.criteria,
-                    'page': that.page,
-                    'entityId': that.entityId,
-                    'entityType': that.entityType
-                },
+                feedfilter: that.feedfilter,
                 ////////////////////////////////////////////////////////////////
                 // pagination callback                                        //
                 ////////////////////////////////////////////////////////////////
@@ -210,13 +213,14 @@
         // Genera galerias en los profiles de idolos y equipos                //
         ////////////////////////////////////////////////////////////////////////
         TV.prototype.profileGallery = function() {
+            var that = this;
             this.channel = $('.filter-channels').closest('ul').find("li.active").attr("data-channel-id");
             this.filter = $('#list-filters ul').find('li.active').attr('data-list-filter-type');
             this.page  = 1;
             $(this.isotopeContainer).fwGalerizer({
                 normalize: false,
                 endless: true,
-                feedfilter: {'channel': this.channel, 'filter': this.filter, 'page': this.page},
+                feedfilter: that.feedfilter,
                 onEndless: function( plugin ) {
                     plugin.options.feedfilter.page += 1;
                     console.log("loading video gallery for channel %s with filter %s page: %s", plugin.options.feedfilter.channel, plugin.options.feedfilter.filter, plugin.options.feedfilter.page);
@@ -427,11 +431,11 @@
                         action = "_teve_taggedvideos";
                         search_term = r.tags[i].slug;
 
-                        if ("team" == r.tags[i].type) {
+                        if ("team" === r.tags[i].type) {
                             action = "_team_videos";
                         }
 
-                        if ("idol" == r.tags[i].type) {
+                        if ("idol" === r.tags[i].type) {
                             action = "_idol_videos";
                         }
 
@@ -439,8 +443,38 @@
                             term: search_term, slug: search_term
                         });
 
+                        console.log(r.tags[i]);
                         var strp = $("<li data-list-filter-type='" + r.tags[i].type + "' data-id='" + r.tags[i].id + "' class=''><span>" + r.tags[i].title + "</span></li>");
-                        that.customFilterToggler(strp)
+                        // TAG event creates new filter and updates de feed source
+
+                        strp.on('click', function(e){
+                            var i;
+                            var selectedFilter = $(this).first().attr('data-list-filter-type');
+                            $('.tag-list').find("li.active").removeClass('active');
+                            $(this).first().addClass('active');
+
+                            that.entityType = $(this).attr('data-list-filter-type');
+                            that.entityId = $(this).attr('data-id');
+                            that.page = 1;
+                            that.feedfilter = {id: that.entityId, entity: that.entityType, page: that.page};
+                            var prevFeedSource = that.feedSource;
+                            that.feedSource = 'video_ajaxsearchbytag';
+                            $(that.isotopeContainer).attr('data-feed-source', that.feedSource);
+
+
+                            console.log("filtro por cosa: " + that.filter + " con id: " + $(this).attr('data-id'));
+                            // Destroy gallery items
+                            that.destroyGallery();
+                            // Load new gallery
+                            that.profileGallery();
+
+                            console.log("prevFeed: " + prevFeedSource);
+                            that.feedSource = prevFeedSource;
+                            $(that.isotopeContainer).attr('data-feed-source', prevFeedSource);
+                            console.log("newFeed: " + that.feedSource);
+                        });
+
+                        //if(r.tags[i].type == 'idol' || r.tags[i].type === 'team')
                         $tagList.append(strp);
 
                         //$tagList.append("<li><a href='" + tagHref + "'>" + r.tags[i].title + "</a></li>");
