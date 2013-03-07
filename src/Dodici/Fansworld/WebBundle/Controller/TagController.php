@@ -72,7 +72,7 @@ class TagController extends SiteController
             'tags' => false,
             'error' => false
         );
-        
+
         try {
             $response['tags'] = $this->get('tagger')->usedInVideos($filterType, $videoCategory);
         } catch (Exception $exc) {
@@ -115,6 +115,8 @@ class TagController extends SiteController
                     $entjson['slug'] = $ent->getSlug();
                 if (property_exists($ent, 'username'))
                     $entjson['username'] = $ent->getUsername();
+                if (property_exists($ent, 'image'))
+                    $entjson['image'] = $this->getImageUrl($ent->getImage(), 'micro_square');
                 $r['result'] = $entjson;
                 $response[] = $r;
                 $c++;
