@@ -8,6 +8,8 @@ search.running = false;
 
 
 search.init = function(query){
+    console.log('hola');
+    
     if(query != ''){
         $("input[data-search-input]").val(query);
     }
