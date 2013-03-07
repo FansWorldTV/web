@@ -47,7 +47,9 @@
                             <span class="friendCount">{% if fanCount == 1 %} {{ fanCount }} fan{% endif %}</span>
                             <span class="friendCount">{% if fanCount > 1 %} {{ fanCount }} fans{% endif %}</span>
 
-                            <span class="scoreCount">{% if avatar.score > 0 %} {{ avatar.score }} pts{% endif %}</span>
+                            {% if avatar.score is defined %}
+                                <span class="scoreCount">{% if avatar.score > 0 %} {{ avatar.score }} pts{% endif %}</span>
+                            {% endif %}
 
 
                             {% include "DodiciFansworldWebBundle:Default:blocks/fan_button.html.twig" with { entity:  avatar } %}
