@@ -169,7 +169,7 @@ class EventController extends BaseController
                 $eventTweets = $this->getRepository('EventTweet')->eventWall($event, $datefrom, $dateto);
                 $eventIncidents = $this->getRepository('EventIncident')->eventWall($event, $datefrom, $dateto);
                 
-                foreach ($eventComments as $ec) $response['comments'][] = $this->jsonComment($ec, $event);
+                foreach ($eventComments as $ec) $response['comments'][] = $this->jsonComment($ec, $event, $user);
 
                 foreach ($eventIncidents as $ei) {
                     $eiarr = array(

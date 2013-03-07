@@ -58,7 +58,8 @@ class VideoController extends BaseController
      * 			likeCount: int,
      * 			commentCount: int,
      * 			watchlisted: boolean,
-     * 			url: string
+     * 			url: string,
+     * 			liked: boolean
      * 		),
      * 		...
      * 		)
@@ -147,6 +148,7 @@ class VideoController extends BaseController
      * 			commentCount: int,
      * 			watchlisted: boolean,
      * 			url: string,
+     * 			liked: boolean,
      * 
      * 			// extra fields, tagged entities
      * 			tagged_idols: array (
@@ -198,7 +200,7 @@ class VideoController extends BaseController
             
             
             $allowedfields = array(
-            	'author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount', 'watchlisted', 'url',
+            	'author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount', 'watchlisted', 'url', 'liked',
                 'tagged_idols', 'tagged_teams', 'tagged_tags', 'tagged_users'
             );
             $extrafields = $this->getExtraFields($allowedfields);
@@ -212,7 +214,10 @@ class VideoController extends BaseController
                         $return['createdAt'] = (int)$video->getCreatedAt()->format('U');
                         break;
                     case 'watchlisted':
-                        $return[$x] = $this->get('video.playlist')->isInPlaylist($video, $user);
+                        if ($user) $return[$x] = $this->get('video.playlist')->isInPlaylist($video, $user);
+                        break;
+                    case 'liked':
+                        if ($user) $return[$x] = ($this->get('liker')->isLiking($video, $user) ? true : false);
                         break;
                     case 'url':
                         $return[$x] = $this->get('router')->generate('video_show', array('id' => $video->getId(), 'slug' => $video->getSlug()), true);

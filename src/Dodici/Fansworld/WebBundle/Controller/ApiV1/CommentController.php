@@ -48,6 +48,7 @@ class CommentController extends BaseController
      * 	    	createdAt: int (ts UTC),
      * 	    	commentCount: int,
      * 	    	author: @see UserController:showAction,
+     * 			liked: boolean,
      * 	    	share: array(
      * 	    		type: string (video|photo|album|event),
 	 *	    		id: int, 
@@ -82,7 +83,7 @@ class CommentController extends BaseController
             
             $return = array();
             foreach ($comments as $comment) {
-                $return[] = $this->jsonComment($comment);
+                $return[] = $this->jsonComment($comment, false, $user);
             }
             
             return $this->result($return, $pagination);

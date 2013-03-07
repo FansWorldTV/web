@@ -176,7 +176,7 @@ class BaseController extends SiteController
         );
     }
     
-    protected function jsonComment(Comment $comment, $event=false)
+    protected function jsonComment(Comment $comment, $event=false, $user=null)
     {
         $appstate = $this->get('appstate');
 
@@ -196,6 +196,8 @@ class BaseController extends SiteController
             'author' => $author,
             'share' => $tag
         );
+        
+        if ($user) $commentArray['liked'] = ($this->get('liker')->isLiking($comment, $user) ? true : false);
         
         if ($event) {
             $eventship = $this->getRepository('Eventship')->findOneBy(array('author' => $comment->getAuthor()->getId(), 'event' => $event->getId()));
@@ -400,9 +402,10 @@ class BaseController extends SiteController
                     $rv['createdAt'] = (int)$video->getCreatedAt()->format('U');
                     break;
                 case 'watchlisted':
-                    if ($user) {
-                        $rv[$x] = $this->get('video.playlist')->isInPlaylist($video, $user);
-                    }
+                    if ($user) $rv[$x] = $this->get('video.playlist')->isInPlaylist($video, $user);
+                    break;
+                case 'liked':
+                    if ($user) $rv[$x] = $this->get('liker')->isLiking($video, $user) ? true : false;
                     break;
                 case 'url':
                     $rv[$x] = $this->get('router')->generate('video_show', array('id' => $video->getId(), 'slug' => $video->getSlug()), true);
