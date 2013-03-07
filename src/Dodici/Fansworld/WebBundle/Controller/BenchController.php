@@ -101,4 +101,17 @@ class BenchController extends SiteController
         
         return new Response('Ok');
     }
+    
+    /**
+     * Meteor load
+     * @Route("/meteor/send", name="admin_bench_meteorsend")
+     */
+    public function meteorSendAction()
+    {
+        $noti = $this->getRepository('Notification')->find(1);
+        $this->get('meteor')->push($noti);
+
+        return new Response('Ok');
+    }
+    
 }
