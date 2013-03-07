@@ -127,10 +127,19 @@
         .box-shadow(none);
         border: 0;
     }
-    .icon-search {
-        position: absolute;
-        right: 8px;
-        top: 4px;
+
+    i{
+        &.icon-search {
+            position: absolute;
+            right: 8px;
+            top: 4px;
+        }
+        &.loading-small {
+            position: absolute;
+            .size(16px, 19px);
+            left: -2px;
+            top: 3px;
+        }
     }
   
   .search-query {
