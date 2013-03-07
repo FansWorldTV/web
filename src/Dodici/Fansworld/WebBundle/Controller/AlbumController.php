@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * Album controller.
@@ -34,9 +35,9 @@ class AlbumController extends SiteController
     public function showAction($id)
     {
         $album = $this->getRepository('Album')->findOneBy(array('id' => $id, 'active' => true));
-        
+
         $this->securityCheck($album);
-        
+
         return array(
             'album' => $album,
             'user' => $album->getAuthor()
@@ -65,8 +66,9 @@ class AlbumController extends SiteController
         $privacies = Privacy::getOptions();
 
         $defaultData = array();
-
         $album = null;
+        $refresh = null;
+        $juan = null;
 
         $collectionConstraint = new Collection(array(
                     'title' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
@@ -82,7 +84,7 @@ class AlbumController extends SiteController
 
 
         if ($request->getMethod() == 'POST') {
-            try {
+
                 $form->bindRequest($request);
                 $data = $form->getData();
 
@@ -94,17 +96,18 @@ class AlbumController extends SiteController
                     $album->setPrivacy($data['privacy']);
                     $em->persist($album);
                     $em->flush();
+
+                    $this->get('session')->setFlash('success', 'El album ha sido creado');
+                    $refresh = $this->generateUrl('user_showalbum', array('id' => $album->getId(), 'username' => $user->getUsername()));
                 }
-            } catch (\Exception $e) {
-                $form->addError(new FormError($this->trans('album_create_error')));
-            }
+
         }
 
-        return array('album' => $album, 'form' => $form->createView());
+        return array('album' => $album, 'form' => $form->createView(), 'refresh' => $refresh);
     }
 
     /**
-     *  @Route("/ajax/get", name = "album_get") 
+     *  @Route("/ajax/get", name = "album_get")
      */
     public function ajaxGetAlbums()
     {
