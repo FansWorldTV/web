@@ -1,27 +1,42 @@
-/*global $, jQuery, alert, console, error, success, endless, ajax, templateHelper, Routing, appLocale, exports, module, require, define*/
-/*jslint nomen: true */ /* Tolerate dangling _ in identifiers */
-/*jslint vars: true */ /* Tolerate many var statements per function */
-/*jslint white: true */
+/*global
+    $,
+    jQuery,
+    error,
+    endless,
+    ajax,
+    templateHelper,
+    Routing,
+    appLocale,
+    exports,
+    module,
+    require,
+    define
+*/
+/*jslint nomen: true */                 /* Tolerate dangling _ in identifiers */
+/*jslint vars: true */           /* Tolerate many var statements per function */
+/*jslint white: true */                       /* tolerate messy whithe spaces */
 /*jslint browser: true */
-/*jslint devel: true */ /* Assume console, alert, ... */
-/*jslint windows: true */ /* Assume Windows */
-/*jslint maxerr: 100 */ /* Maximum number of errors */
+/*jslint devel: true */                         /* Assume console, alert, ... */
+/*jslint windows: true */               /* Assume window object (for browsers)*/
+/*jslint maxerr: 100 */                           /* Maximum number of errors */
 
-/*
+/*******************************************************************************
  * Class dependencies:
  *      jquery > 1.8.3
  *      jsrender
  *      jsviews
- * external dependencies:
- *      Routing
+ * External dependencies:
+ *      FOS Routing
  *      templateHelper
- *      ajax.genericAction
+ *      ajax
  *      error
  *      endless
- */
+ ******************************************************************************/
 
-// fansWorld teams Class Module 1.0
+/*******************************************************************************
+    FansWorld teams Class Module 1.0
 
+*******************************************************************************/
 (function (root, factory) {
     "use strict";
     if (typeof exports === 'object') {
@@ -47,7 +62,6 @@
             this.version = '1.0';
             this.category = null;
             this.activePage = 1;
-            console.log("crea TEAMS");
 
             var that = this;
             if($("div.list-teams").attr('data-got-more')){
@@ -57,9 +71,9 @@
             }
             this.getTeams();
 
-                /*$(".list-teams dl").find(".btn_teamship.add:not('.loading-small')").each(function() {
-                    $(this).fwTeamship();
-                });*/
+            /*$(".list-teams dl").find(".btn_teamship.add:not('.loading-small')").each(function() {
+                $(this).fwTeamship();
+            });*/
 
             $("ul.categories li a").on('click', function(e){
                 //e.preventDefault();
@@ -86,30 +100,26 @@
             },
             function(r){
                 var i;
+                var tplHelperCallback = function(){
+                    $(".list-teams dl").find(".btn_teamship.add:not('.loading-small')").each(function() {
+                        $(this).fwTeamship();
+                    });
+
+                    if(i === (r.teams.length-1)){
+                        $("div.list-teams").removeClass('loading');
+                        if(typeof(callback) !== 'undefined'){
+                            callback();
+                        }
+                    }
+                };
                 for(i in r.teams){
                     if (r.teams.hasOwnProperty(i)) {
                         var element = r.teams[i];
-                        var tplHelperCallback = null;
-                        
-                        tplHelperCallback = function(){
-                            $(".list-teams dl").find(".btn_teamship.add:not('.loading-small')").each(function() {
-                                $(this).fwTeamship();
-                            });
-                            
-                            if(i == (r.teams.length-1)){
-                                $("div.list-teams").removeClass('loading');
-                                if(typeof(callback) != 'undefined'){
-                                    callback();
-                                }
-                            }
-                        };
-                        
-                        
                         templateHelper.renderTemplate('team-list_element', element, $(".list-teams dl"), false, tplHelperCallback);
                     }
                 }
                 that.addMore = r.gotMore;
-                that.activePage++;
+                that.activePage += 1;
                 endless.init(1, function() {
                     that.getTeams();
                 });
@@ -137,5 +147,5 @@
 $(document).ready(function () {
     "use strict";
     window.fansworld = window.fansworld || {};
-    window.fansworld.teams = new TEAMS();
+    window.fansworld.teams = new window.TEAMS();
 });
