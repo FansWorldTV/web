@@ -1,5 +1,9 @@
 {% extends "DodiciFansworldWebBundle:Layout:three_column.html.twig" %}
 
+{% block header %}
+    {% set section_selected = 'events' %}
+    {{ parent() }}
+{% endblock %}
 
 {% block content %}
     {% if event_body_class is not defined %}

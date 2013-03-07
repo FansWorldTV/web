@@ -1,3 +1,7 @@
+{% if sectionSelected is not defined %}
+    {% set sectionSelected = false %}
+{% endif %}
+
 <nav class='navbar-inner'>
     <div class='container'>
         <a class="btn btn-navbar navbar-fixed-top" data-toggle="collapse" data-target=".nav-collapse">
@@ -11,19 +15,19 @@
         <div class="nav-collapse">
 
             <ul class="nav sections">
-                <li>
+                <li {% if sectionSelected == 'home' %} class="active" {% endif %}>
                     <a href="{{ path('homepage') }}">Inicio</a>
                 </li>
-                <li>
+                <li {% if sectionSelected == 'tv' %} class="active" {% endif %}>
                     <a href="{{ path('teve_home') }}">TV</a>
                 </li>
-                <li>
+                <li {% if sectionSelected == 'idols' %} class="active" {% endif %}>
                     <a href="{{ path('idol_home') }}">Idolos</a>
                 </li>
-                <li>
+                <li {% if sectionSelected == 'teams' %} class="active" {% endif %}>
                     <a href="{{ path('team_list') }}">Equipos</a>
                 </li>
-                <li>
+                <li {% if sectionSelected == 'events' %} class="active" {% endif %}>
                     <a href="{{ path('event_home') }}">Eventos</a>
                 </li>
                 <li class='show-on-collapse'>

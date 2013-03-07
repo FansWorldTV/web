@@ -1,5 +1,10 @@
 {% extends "DodiciFansworldWebBundle:Layout:one_column.html.twig" %}
 
+{% block header %}
+    {% set section_selected = 'tv' %}
+    {{ parent() }}
+{% endblock %}
+
 {% block main_content %}
 	{% if tv_body_class is not defined %}
         {% set tv_body_class = '' %}

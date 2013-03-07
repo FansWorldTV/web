@@ -1,5 +1,10 @@
 {% extends "DodiciFansworldWebBundle:Profile:base.html.twig" %}
 
+{% block header %}
+    {% set section_selected = 'idols' %}
+    {{ parent() }}
+{% endblock %}
+
 {% set iship = appstate.idolshipwith(idol) %}
 
 {% if (iship is null) or ( isHome is defined and isHome) %}

@@ -7,12 +7,15 @@
     	{% block header %}
     		<!-- Header -->
             <header id='header' class='navbar navbar-fixed-top'>
-                {% render "DodiciFansworldWebBundle:Default:menubar" %}
+                {% if section_selected is not defined %}
+                        {% set section_selected = false %}
+                {% endif %}
+                {% render "DodiciFansworldWebBundle:Default:menubar" with { 'sectionSelected' : section_selected}%}
             </header>
         {% endblock %}
         
         {% block toolbar %}
-            <!--Toolbar-->
+            <!--Toolbar -->
             <nav id='toolbar' class="leftmenubar {{ preferences.get('toolbar_pos')|default('top') }}" data-fwtoolbar="true">
                 {% render "DodiciFansworldWebBundle:Default:toolbar" %}
             </nav>

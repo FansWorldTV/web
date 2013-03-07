@@ -54,7 +54,7 @@ class DefaultController extends SiteController
      *  Menubar controller action
      * @Template
      */
-    public function menubarAction()
+    public function menubarAction($sectionSelected = false)
     {
         $notifications = array();
         $user = $this->getUser();
@@ -70,7 +70,8 @@ class DefaultController extends SiteController
         return array(
             'user' => $user,
             'notifications' => $notifications,
-            'countNew' => $countNew
+            'countNew' => $countNew,
+            'sectionSelected' => $sectionSelected
         );
     }
 

@@ -1,5 +1,10 @@
 {% extends "DodiciFansworldWebBundle:Layout:one_column.html.twig" %}
 
+{% block header %}
+    {% set section_selected = 'home' %}
+    {{ parent() }}
+{% endblock %}
+
 {% block main %}
     {% set fullwidth = true %}
     {{ parent() }}

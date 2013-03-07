@@ -1,5 +1,10 @@
 {% extends "DodiciFansworldWebBundle:Layout:three_column.html.twig" %}
 
+{% block header %}
+    {% set section_selected = 'teams' %}
+    {{ parent() }}
+{% endblock %}
+
 {% block title %}{{ parent() }} - {{ 'Teams'|trans }}{% endblock %}
 
 {% block javascripts %}

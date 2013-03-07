@@ -1,5 +1,10 @@
 {% extends "DodiciFansworldWebBundle:Profile:base.html.twig" %}
 
+{% block header %}
+    {% set section_selected = 'teams' %}
+    {{ parent() }}
+{% endblock %}
+
 {% set tship = appstate.teamshipwith(team) %}
 
 {% if (tship is null) or ( isHome is defined and isHome) %}
