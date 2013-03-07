@@ -450,6 +450,9 @@
                         strp.on('click', function(e){
                             var i;
                             var selectedFilter = $(this).first().attr('data-list-filter-type');
+                            var prevFilter = that.feedfilter;
+                            var prevFeedSource = that.feedSource;
+
                             $('.tag-list').find("li.active").removeClass('active');
                             $(this).first().addClass('active');
 
@@ -457,7 +460,6 @@
                             that.entityId = $(this).attr('data-id');
                             that.page = 1;
                             that.feedfilter = {id: that.entityId, entity: that.entityType, page: that.page};
-                            var prevFeedSource = that.feedSource;
                             that.feedSource = 'video_ajaxsearchbytag';
                             $(that.isotopeContainer).attr('data-feed-source', that.feedSource);
 
@@ -467,11 +469,10 @@
                             that.destroyGallery();
                             // Load new gallery
                             that.profileGallery();
-
-                            console.log("prevFeed: " + prevFeedSource);
+                            // Restore original source and filters after invading the gallery with nasty shit from hell
                             that.feedSource = prevFeedSource;
                             $(that.isotopeContainer).attr('data-feed-source', prevFeedSource);
-                            console.log("newFeed: " + that.feedSource);
+                            that.feedfilter = prevFilter;
                         });
 
                         //if(r.tags[i].type == 'idol' || r.tags[i].type === 'team')
