@@ -1,12 +1,24 @@
-/*global $, jQuery, alert, console, error, success, endless, ajax, templateHelper, Routing, appLocale, exports, module, require, define*/
-/*jslint nomen: true */ /* Tolerate dangling _ in identifiers */
-/*jslint vars: true */ /* Tolerate many var statements per function */
-/*jslint white: true */
+/*global
+    $,
+    jQuery,
+    error,
+    success,
+    endless,
+    ajax,
+    templateHelper,
+    Routing,
+    appLocale,
+    exports,
+    module,
+    require,
+    define
+*/
+/*jslint nomen: true */                 /* Tolerate dangling _ in identifiers */
+/*jslint vars: true */           /* Tolerate many var statements per function */
+/*jslint white: true */                       /* tolerate messy whithe spaces */
 /*jslint browser: true */
-/*jslint devel: true */ /* Assume console, alert, ... */
-/*jslint windows: true */ /* Assume Windows */
-/*jslint maxerr: 100 */ /* Maximum number of errors */
-
+/*jslint devel: true */                         /* Assume console, alert, ... */
+/*jslint windows: true */               /* Assume window object (for browsers)*/
 
 /*
  * Class dependencies:
@@ -52,11 +64,18 @@
 
             this.page = 1;
 
+            ////////////////////////////////////////////////////////////////////
+            // Hook every isotope_container class                             //
+            ////////////////////////////////////////////////////////////////////
             this.contentContainer = $('body');
             this.isotopeContainer = $(this.contentContainer).find('.isotope_container').last();
             if(this.isotopeContainer.length <= 0) {
                 return;
             }
+            ////////////////////////////////////////////////////////////////////
+            // test against a feed-source field in the markup then            //
+            // use it as a json source                                        //
+            ////////////////////////////////////////////////////////////////////
             this.feedSource = $(this.isotopeContainer).attr('data-feed-source');
             if(typeof this.feedSource === 'undefined' || this.feedSource == ''){
                 this.entityId   = $("[data-list]").attr('data-entity-id');
@@ -81,12 +100,18 @@
             } else {
                 this.isTeve = true;
             }
+            ////////////////////////////////////////////////////////////////////
+            // A list of default tags used for filtering feeds                //
+            ////////////////////////////////////////////////////////////////////
             this.defaultTags = [
                 {filter: 'day', title: ExposeTranslation.get('day')},
                 {filter: 'week', title: ExposeTranslation.get('week')},
                 {filter: 'month', title: ExposeTranslation.get('month')}
             ];
 
+            ////////////////////////////////////////////////////////////////////
+            // Empty container.                                               //
+            ////////////////////////////////////////////////////////////////////
             $(this.isotopeContainer).empty();
 
             //////////////
@@ -120,6 +145,9 @@
                 this.addCustomTags(this.defaultTags);
             }
         }
+        ////////////////////////////////////////////////////////////////////////
+        // Genera galerias isotope genéricas                                  //
+        ////////////////////////////////////////////////////////////////////////
         TV.prototype.loadGallery = function() {
             var that = this;
             $(this.isotopeContainer).fwGalerizer({
@@ -131,10 +159,17 @@
                     'entityId': that.entityId,
                     'entityType': that.entityType
                 },
+                ////////////////////////////////////////////////////////////////
+                // pagination callback                                        //
+                ////////////////////////////////////////////////////////////////
                 onEndless: function( plugin ) {
                     plugin.options.feedfilter.page += 1;
                     return plugin.options.feedfilter;
                 },
+                ////////////////////////////////////////////////////////////////
+                // signal callback to transform json data befor sending it    //
+                // to the template generator                                  //
+                ////////////////////////////////////////////////////////////////
                 onDataReady: function(videos) {
                     var i, outp = [];
                     var normalize = function(video) {
@@ -171,6 +206,9 @@
                 }
             });
         };
+        ////////////////////////////////////////////////////////////////////////
+        // Genera galerias en los profiles de idolos y equipos                //
+        ////////////////////////////////////////////////////////////////////////
         TV.prototype.profileGallery = function() {
             this.channel = $('.filter-channels').closest('ul').find("li.active").attr("data-channel-id");
             this.filter = $('#list-filters ul').find('li.active').attr('data-list-filter-type');
