@@ -379,12 +379,24 @@
                 "filter": filter
             }, function(r) {
                 var i;
+                var action; var search_term;
                 for (i in r.tags) {
                     if (r.tags.hasOwnProperty(i)) {
-                        var tagHref = Routing.generate(appLocale + "_teve_taggedvideos", {
-                            term: r.tags[i].slug
+
+                        action = "_teve_taggedvideos";
+                        search_term = r.tags[i].slug;
+
+                        if ("team" == r.tags[i].type) {
+                            action = "_team_videos";
+                        }
+
+                        if ("idol" == r.tags[i].type) {
+                            action = "_idol_videos";
+                        }
+
+                        var tagHref = Routing.generate(appLocale + action, {
+                            term: search_term, slug: search_term
                         });
-                        //console.log(r.tags[i]);
                         $tagList.append("<li><a href='" + tagHref + "'>" + r.tags[i].title + "</a></li>");
                     }
                 }
