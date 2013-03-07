@@ -330,8 +330,8 @@ class VideoController extends SiteController
         if ($id) {
 
             $videos = array();
-            if ('team' == $entity) {$repo = "Team"}
-            if ('idol' == $entity) {$repo = "Idol"}
+            if ('team' == $entity) $repo = "Team";
+            if ('idol' == $entity) $repo = "Idol";
 
             if ('tag' == $entity) {
                 $tag = $this->getRepository('Tag')->find($id);
