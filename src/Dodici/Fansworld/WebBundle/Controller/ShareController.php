@@ -25,7 +25,7 @@ class ShareController extends SiteController
 {
 
     /**
-     * 
+     *
      * @Route("/ajax/share", name="share_ajax")
      */
     public function ajaxShareAction()
@@ -35,7 +35,7 @@ class ShareController extends SiteController
         $entityType = $request->get('entity-type', false);
         $entityId = $request->get('entity-id', false);
         $entityToShare = $request->get('share-list', array());
-        
+
         $thingToShare = $this->getRepository($entityType)->find($entityId);
 
         $toFb = $request->get('fb', false);
@@ -92,12 +92,12 @@ class ShareController extends SiteController
 
             if ($toFw) {
                 $sharer = $this->get('sharer');
-                
+
                 $entities = array();
                 foreach($entityToShare as $id => $type){
                     $entities[] = $this->getRepository($type)->find($id);
                 }
-                
+
                 try {
                     $sharer->share($thingToShare, $entities, $message, $this->getUser());
                 } catch (\Exception $exc) {
@@ -114,7 +114,7 @@ class ShareController extends SiteController
     }
 
     /**
-     *  @Route("/ajax/sharewith", name="share_ajaxwith") 
+     *  @Route("/ajax/sharewith", name="share_ajaxwith")
      */
     public function ajaxShareWithAction()
     {
@@ -134,7 +134,8 @@ class ShareController extends SiteController
                 'result' => array(
                     'id' => $user->getId(),
                     'slug' => $user->getUsername(),
-                    'type' => 'user'
+                    'type' => 'user',
+                    'image' => $this->getImageUrl($user->getImage(), 'micro_square')
                 )
             );
             $c++;
@@ -147,7 +148,8 @@ class ShareController extends SiteController
                 'result' => array(
                     'id' => $idol->getId(),
                     'slug' => $idol->getSlug(),
-                    'type' => 'idol'
+                    'type' => 'idol',
+                    'image' => $this->getImageUrl($idol->getImage(), 'micro_square')
                 )
             );
             $c++;
@@ -160,7 +162,8 @@ class ShareController extends SiteController
                 'result' => array(
                     'id' => $team->getId(),
                     'slug' => $team->getSlug(),
-                    'type' => 'team'
+                    'type' => 'team',
+                    'image' => $this->getImageUrl($team->getImage(), 'micro_square')
                 )
             );
             $c++;
