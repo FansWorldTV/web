@@ -1,11 +1,24 @@
-/*global $, jQuery, alert, console, error, success, endless, ajax, templateHelper, Routing, appLocale*/
-/*jslint nomen: true */ /* Tolerate dangling _ in identifiers */
-/*jslint vars: true */ /* Tolerate many var statements per function */
-/*jslint white: true */
+/*global
+    $,
+    jQuery,
+    error,
+    success,
+    endless,
+    ajax,
+    templateHelper,
+    Routing,
+    appLocale,
+    exports,
+    module,
+    require,
+    define
+*/
+/*jslint nomen: true */                 /* Tolerate dangling _ in identifiers */
+/*jslint vars: true */           /* Tolerate many var statements per function */
+/*jslint white: true */                       /* tolerate messy whithe spaces */
 /*jslint browser: true */
-/*jslint devel: true */ /* Assume console, alert, ... */
-/*jslint windows: true */ /* Assume Windows */
-/*jslint maxerr: 100 */ /* Maximum number of errors */
+/*jslint devel: true */                         /* Assume console, alert, ... */
+/*jslint windows: true */               /* Assume window object (for browsers)*/
 
 
 
@@ -19,7 +32,8 @@
  *      template helper
  */
 
-// fansWorld isotope wrapper plugin 1.5 /* preloadData */
+// fansWorld isotope wrapper plugin 1.6 (con spinner)
+// 1.5 /* preloadData */
 // 1.4 /* resolution breaks at getMaxSections */
 
 
@@ -41,6 +55,7 @@ $(document).ready(function () {
 		defaultMediaType: null,
 		itemSelector: '.item',
 		prevWidth: null,
+		showSpinner: true,
 		// custom callback events
 		onError: function(error) {},
 		onIsotopeLoad: function(data) {},
@@ -66,8 +81,6 @@ $(document).ready(function () {
 		init: function () {
 			console.log("fwGalerizer.init()");
 			var that = this;
-			console.log("preload: ");
-			console.log(that.options.preoloadData);
 			var $container = $(that.element);
 			that.options.feedSource = $container.attr('data-feed-source');
 			$container.addClass(that._name);
@@ -100,8 +113,6 @@ $(document).ready(function () {
 				galleryData = $.when((function() {
 					var deferred = new jQuery.Deferred();
 					that.options.jsonData = that.options.preoloadData;
-					console.log("that.options.jsonData: ");
-					console.log(that.options.jsonData)
 					deferred.resolve(that.options.jsonData);
 					return deferred.promise();
 				})());
@@ -115,7 +126,6 @@ $(document).ready(function () {
 			.done(that.options.onGallery);
 		},
 		loadGallery: function(plugin, jsonData) {
-			console.log("loadGallery()");
 			var that = plugin;
 			var $container = $(that.element);
 			var i, element;
@@ -152,12 +162,18 @@ $(document).ready(function () {
 			return that.options.onGallery();
 		},
 		loadData: function(source, query) {
+			var that = this;
+			var $container = $(that.element);
 			if(typeof(query) === 'undefined'){
 				query = {};
 			}
 			var that = this;
 			var $container = $(that.element);
 			var deferred = new jQuery.Deferred();
+
+			// Show spinning icon
+			if(that.options.showSpinner) { $container.parent().addClass('loading'); }
+
 			$.ajax({
 				url: 'http://' + location.host + Routing.generate(appLocale + '_' + that.options.feedSource),
 				data: query,
@@ -168,6 +184,8 @@ $(document).ready(function () {
 				return that.options.jsonData;
 			})
 			.done(function (data){
+				// Hide spinning icon
+				$container.parent().removeClass('loading');
 				deferred.resolve(data);
 			})
 			.fail(function (jqXHR, status, error) {
@@ -255,6 +273,30 @@ $(document).ready(function () {
 					that.loadGallery(that, that.options.jsonData);
 				});
 			});
+		},
+		enableStamp: function() {
+			$.Isotope.prototype._masonryResizeChanged = function() {
+				return true;
+			};
+			$.Isotope.prototype._masonryReset = function() {
+				// layout-specific props
+				this.masonry = {};
+				this._getSegments();
+				var i = this.masonry.cols;
+				this.masonry.colYs = [];
+				while (i--) {
+					this.masonry.colYs.push( 0 );
+				}
+				if ( this.options.masonry.cornerStampSelector ) {
+					var $cornerStamp = this.element.find( this.options.masonry.cornerStampSelector ),
+					stampWidth = $cornerStamp.outerWidth(true) - ( this.element.width() % this.masonry.columnWidth ),
+					cornerCols = Math.ceil( stampWidth / this.masonry.columnWidth ),
+					cornerStampHeight = $cornerStamp.outerHeight(true);
+					for ( i = Math.max( this.masonry.cols - cornerCols, cornerCols ); i < this.masonry.cols; i++ ) {
+						this.masonry.colYs[i] = cornerStampHeight;
+					}
+				}
+			};
 		},
 		removeAll: function() {
 			var that = this;
