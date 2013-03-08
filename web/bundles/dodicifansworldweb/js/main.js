@@ -703,34 +703,6 @@ var site = {
                 }
             }).attr('src',$img.attr('src'));
         });
-    },
-    
-    bindSignature: function(){
-        var verified = 0;
-        var counter = 0;
-        
-        $(document).bind('keydown',function(e){
-            key = e.which;
-            if(counter<3){
-                if(key == 17 || key == 18 || key == 68){
-                    verified++;
-                }else{
-                    verified = 0;
-                }
-                
-                if(verified == 3){
-                    $("#toolbar").append('<marquee style="background-color: red; color: black; font-size: 20px; font-weight: bold;"> LA PIBITA DEL FEIBU</marquee>');
-                    console.log('Developed by lospi de fanguorl');
-                    console.error('DALE MOSTRIIIIIII');
-                    verified = 3;
-                }
-                
-                counter++;
-            }else{
-                counter = 0;
-                verified = 0;
-            }
-        });
     }
 }
 
