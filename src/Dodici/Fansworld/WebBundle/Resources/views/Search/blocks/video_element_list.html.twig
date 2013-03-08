@@ -7,7 +7,11 @@
                             <div class="title-and-user">
 
 
-                                <a href="/app_dev.php/u/juan.perez"><img class="author-image" src="http://fansworld.dodici.local/uploads/media/default/0001/01/thumb_2_default_small_square_e34b6053430be1132222b7fe0c38d0e05b3beb32.jpg" alt="juan.perez" rel="tooltip" data-original-title="juan.perez"></a>
+                            {% if video.author %}
+                            <a href="{{ path('user_land', {username: video.author.username}) }}">
+                                {% thumbnail video.author.image, 'small_square' with { class: 'author-image', title: video.author, rel: 'tooltip' } %}
+                            </a>
+                            {% endif %}
 
                                 <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
                                     <span class="title">{{ video.title }}</span>
