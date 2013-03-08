@@ -173,4 +173,44 @@ class BatchController extends SiteController
         return new Response('Ok');
     }
     
+    /**
+     * Update video/photocounts
+     * @Route("/updatecounts", name="admin_batch_updatecounts")
+     */
+    public function updateCounts()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        $idols = $this->getRepository('Idol')->findAll();
+        foreach ($idols as $idol) {
+            $cntvideo = $this->getRepository('Idol')->countTagged($idol, 'video');
+            $cntphoto = $this->getRepository('Idol')->countTagged($idol, 'photo');
+            $idol->setVideoCount($cntvideo);
+            $idol->setPhotoCount($cntphoto);
+            $em->persist($idol);
+        }
+        
+        $teams = $this->getRepository('Team')->findAll();
+        foreach ($teams as $team) {
+            $cntvideo = $this->getRepository('Team')->countTagged($team, 'video');
+            $cntphoto = $this->getRepository('Team')->countTagged($team, 'photo');
+            $team->setVideoCount($cntvideo);
+            $team->setPhotoCount($cntphoto);
+            $em->persist($team);
+        }
+        
+        $users = $this->getRepository('User')->findBy(array('enabled' => true));
+        foreach ($users as $user) {
+            $cntvideo = $this->getRepository('Video')->countBy(array('author' => $user->getId(), 'active' => true));
+            $cntphoto = $this->getRepository('Photo')->countBy(array('author' => $user->getId(), 'active' => true));
+            $user->setVideoCount($cntvideo);
+            $user->setPhotoCount($cntphoto);
+            $em->persist($user);
+        }
+        
+        $em->flush();
+        
+        return new Response('Ok');
+    }
+    
 }
