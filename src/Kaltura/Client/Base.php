@@ -316,6 +316,7 @@ class Base
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
 		if (count($files) > 0)
 		{
 			foreach($files as &$file)

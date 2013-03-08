@@ -920,6 +920,7 @@ abstract class BaseFacebook
     }
 
     curl_setopt_array($ch, $opts);
+    curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
     $result = curl_exec($ch);
 
     if (curl_errno($ch) == 60) { // CURLE_SSL_CACERT

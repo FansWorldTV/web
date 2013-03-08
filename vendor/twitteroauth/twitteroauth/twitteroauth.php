@@ -195,6 +195,7 @@ class TwitterOAuth {
     $this->http_info = array();
     $ci = curl_init();
     /* Curl settings */
+    curl_setopt($ci, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
     curl_setopt($ci, CURLOPT_USERAGENT, $this->useragent);
     curl_setopt($ci, CURLOPT_CONNECTTIMEOUT, $this->connecttimeout);
     curl_setopt($ci, CURLOPT_TIMEOUT, $this->timeout);
