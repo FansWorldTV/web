@@ -60,14 +60,14 @@
                 <div class="nav-collapse">
                     <div class="dropdown user">
                         <a href="#" class="dropdown-toggle username" data-toggle="dropdown">
-                            <!--span>{{ user.firstname }}<b class="caret"></b></span--> 
+                            <!--span>{{ user.firstname }}<b class="caret"></b></span-->
                             {% thumbnail user.image, 'headeravatar' %}
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu pull-right">
                             <li>
                                 <a href="{{ path('user_land', { username: user.username }) }}">Mi perfil</a>
                             </li>
-                            
+
                             <li>
                                 <a href="{{ path('profile_account') }}">Configuración de Cuenta</a>
                             </li>
@@ -95,7 +95,7 @@
                     <div class="dropdown share" data-dropdownshare>
                         <button class="btn btn-success" data-toggle="dropdown" style="z-index:-99;">Compartir</button>
 
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu pull-right">
                             <li><a href="{{ path('photo_fileupload') }}" data-upload="photo">Subir Fotos</a></li>
                             <li><a href="{{ path('video_fileupload') }}" data-upload="video">Subir Videos</a></li>
 
@@ -113,7 +113,7 @@
 
                         </ul>
                     </div>
-                        
+
                     <button class="btn btn-success invite" data-invite="{{ path('user_invite') }}" >Invitar</button>
                 </div>
             {% else %}
@@ -121,7 +121,7 @@
                     <a class='btn btn-success pull-right header-ingresar' href="#">Ingresar</a>
                     <a class='btn btn-success pull-right' href="{{ path('fos_user_registration_register') }}">Registrarse</a>
                 {% endif %}
-                    
+
                     <form class="navbar-search" name="search" method="post" data-search-box action="{{ path('search_home', {}) }}">
                 <div class="input-append">
                     <input name="query" type="text" class="search-query" id="appendedInput" placeholder="Buscar..." data-search-input>
