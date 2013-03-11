@@ -52,17 +52,17 @@
                             {% endif %}
                             
                             <section class='fotos-info'>
-                                <div class='numero'>{% if entity.photoCount > 0 %}<a href="{{ path(entityType ~ '_photos', pathparams) }}">{% endif %}{{ entity.photoCount }}{% if entity.photoCount > 0 %}</a>{%endif%}</div>
+                                <div class='numero'>{% if entity.photoCount > 0 %}<a href="{{ path(entityType ~ '_photos', pathparams) }}" style="color: white">{% endif %}{{ entity.photoCount }}{% if entity.photoCount > 0 %}</a>{%endif%}</div>
                                 <div class='tipo'>Fotos</div>
                                 <div class='separador' />
                             </section>
                             <section class='videos-info'>
-                                <div class='numero'>{% if entity.videoCount > 0 %}<a href="{{ path(entityType ~ '_videos', pathparams) }}">{% endif %}{{ entity.videoCount }}{% if entity.videoCount > 0 %}</a>{%endif%}</div>
+                                <div class='numero'>{% if entity.videoCount > 0 %}<a href="{{ path(entityType ~ '_videos', pathparams) }}" style="color: white">{% endif %}{{ entity.videoCount }}{% if entity.videoCount > 0 %}</a>{%endif%}</div>
                                 <div class='tipo'>Videos</div>
                                 <div class='separador' />
                             </section>
                             <section class='fans-info'>
-                                <div class='numero'>{% if entity.fanCount > 0 %}<a href="{{ path(entityType ~ '_fans', pathparams) }}">{% endif %}{{ entity.fanCount }}{% if entity.fanCount > 0 %}</a>{%endif%}</div>
+                                <div class='numero'>{% if entity.fanCount > 0 %}<a href="{{ path(entityType ~ '_fans', pathparams) }}" style="color: white">{% endif %}{{ entity.fanCount }}{% if entity.fanCount > 0 %}</a>{%endif%}</div>
                                 <div class='tipo'>Fans</div>
                                 <div class='separador' />
                             </section>
