@@ -487,18 +487,19 @@ section.avatar-grid{
 
                 .name{
                     a{
-                        display: none;
+                        display: block;
                         color: @white;
-                        font-size: 20px;
+                        font-size: 12px;
                         font-weight: bold;
                         position: absolute;
                         text-align: left;
-                        top: 15px;
+                        top: 10px;
                         left: 10px;
                         max-width: 100%;
                         overflow: hidden;
                         text-overflow: ellipsis;
                         text-shadow: 1px 2px 0 rgba(0, 0, 0, 0.4);
+                        line-height: 15px;
                     }
                 }
                 .addFriend{
@@ -516,7 +517,7 @@ section.avatar-grid{
                 }
 
                 .friendCount {
-                    bottom: 20px;
+                    bottom: 9px;
                     color: white;
                     font-size: 12px;
                     font-weight: bold;
@@ -536,6 +537,10 @@ section.avatar-grid{
                     text-shadow: 1px 1px 0 rgba(128,128,128,.5);
                     display: block;
                 }
+            }
+
+            .team-container .name a {
+                display: none;
             }
 
         }
