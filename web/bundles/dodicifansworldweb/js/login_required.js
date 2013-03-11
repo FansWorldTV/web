@@ -6,7 +6,9 @@ $(function(){
             e.preventDefault();
             e.stopImmediatePropagation();
             e.stopPropagation();
-            alert('TODO: login required');
+            //alert('TODO: login required');
+            //$('[data-register-btn]').click();
+            $('[data-login-btn]').click();
             return false;
         }
     });

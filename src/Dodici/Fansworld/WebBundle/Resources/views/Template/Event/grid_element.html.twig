@@ -1,17 +1,17 @@
 {% raw %}
-    
+
     <li class='event' data-added-element>
         <header>
             <span>
                 {{for teams}}
                     {{if #index > 0}}
-                     vs 
+                     vs
                     {{/if}}
                     {{>title}}
                 {{/for}}
             </span>
             {{if checked === false && finished != true}}
-                <button class='btn btn-success' data-event-id='{{>id}}' data-event-check-in>{{>text}}</button>
+                <button class='btn btn-success' data-event-id='{{>id}}' data-login-required data-event-check-in>{{>text}}</button>
             {{else}}
                 <a href='{{>url}}' data-login-required><button class='btn btn-success'>{{if finished}} {{>text}} {{else}} Ir {{/if}}</button></a>
             {{/if}}
@@ -24,7 +24,7 @@
                         <div class="bottom">{{>~showdate}}</div>
                     </div>
                 {{/if}}
-            
+
                 {{if #index === 0}}
                     <div class="local span4 row-fluid">
                         <div class='escudo span8'>{{if image}}<img src="{{>image}}" />{{/if}}</div>
@@ -57,7 +57,7 @@
                     </div>
                 {{/if}}
             {{/for}}
-            
+
         </div>
     </li>
 {% endraw %}

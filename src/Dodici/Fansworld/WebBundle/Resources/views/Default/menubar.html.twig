@@ -118,8 +118,8 @@
                 </div>
             {% else %}
             <div class="nav-collapse">
-                    <a class='btn btn-success pull-right header-ingresar' href="#">Ingresar</a>
-                    <a class='btn btn-success pull-right' href="{{ path('fos_user_registration_register') }}">Registrarse</a>
+                    <a class='btn btn-success pull-right header-ingresar' href="#" data-login-btn>Ingresar</a>
+                    <a class='btn btn-success pull-right' data-register-btn href="{{ path('fos_user_registration_register') }}">Registrarse</a>
                 {% endif %}
 
                     <form class="navbar-search" name="search" method="post" data-search-box action="{{ path('search_home', {}) }}">
