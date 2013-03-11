@@ -13,16 +13,24 @@
     		{% if entity.privacy is defined %}
                 <input class="post_privacidad" type="hidden" value="{{ entity.privacy }}" />
     		{% endif %}
-    	</div> 
+    	</div>
     </div>
 {% else %}
-    <div class="update commentform"> 
+    <div class="update commentform">
         <span class="deco"></span>
         <div class="upd">
             <div class='cam-container'>
-                <img alt="compartir" class='comment-cam' src="{{ asset('bundles/dodicifansworldweb/images/ico/cam.png' )}}">
+                <div class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <img alt="compartir" class='comment-cam' src="{{ asset('bundles/dodicifansworldweb/images/ico/cam.png' )}}">
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path('photo_fileupload') }}" data-upload="photo">Subir Fotos</a></li>
+                        <li><a href="{{ path('video_fileupload') }}" data-upload="video">Subir Videos</a></li>
+                    </ul>
+                </div>
             </div>
-            
+
             <textarea cols="" rows="3" class="comment_message" data-type="{{ type }}" data-id="{{ entity.id }}"></textarea>
         </div>
         <div class="bottom clearfix row-fluid">
@@ -36,7 +44,7 @@
             <div class='span2'>
                 <button class='btn btn-success comment_button'>Compartir</button>
             </div>
-            
+
         </div>
     </div>
 {% endif %}
