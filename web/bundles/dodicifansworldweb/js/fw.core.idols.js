@@ -34,7 +34,7 @@
  ******************************************************************************/
 
 /*******************************************************************************
-    FansWorld idols Class Module 1.0
+    FansWorld idols Class Module 1.1
 
 *******************************************************************************/
 (function (root, factory) {
@@ -63,6 +63,7 @@
             this.category = null;
             this.activePage = 1;
 
+            console.log("IDOLS.init v: " + this.getVersion())
             var that = this;
             if($("div.list-idols").attr('data-got-more')){
                 this.addMore = true;
@@ -91,13 +92,14 @@
             $("div.list-idols").addClass('loading');
 
             ajax.genericAction('idol_ajaxlist', {
-                'tc': that.category,
+                'tc': 19, //that.category,
                 'page': that.activePage
             },
             function(r){
                 var i;
                 var tplHelperCallback = function(){
-                    $(".list-teams dl").find(".btn_idolship.add:not('.loading-small')").each(function() {
+                    console.log("tplHelperCallback()")
+                    $(".list-idols dl").find(".btn_idolship.add:not('.loading-small')").each(function() {
                         $(this).fwIdolship();
                     });
 
@@ -110,8 +112,9 @@
                 };
                 if(r.idols.length > 0){
                     for(i in r.idols){
-                        if (r.teams.hasOwnProperty(i)) {
+                        if (r.idols.hasOwnProperty(i)) {
                             var element = r.idols[i];
+                            console.log("loaded idol: %s id: %s", element.name, element.id);
                             templateHelper.renderTemplate('idol-list_element', element, $(".list-idols dl"), false, tplHelperCallback);
                         }
                     }
