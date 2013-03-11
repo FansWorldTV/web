@@ -70,11 +70,6 @@
                 this.addMore = false;
             }
             this.getTeams();
-
-            /*$(".list-teams dl").find(".btn_teamship.add:not('.loading-small')").each(function() {
-                $(this).fwTeamship();
-            });*/
-
             $("ul.categories li a").on('click', function(e){
                 //e.preventDefault();
                 that.category = $(this).parent().attr('data-category-id');
