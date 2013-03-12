@@ -208,6 +208,7 @@ $(document).ready(function () {
 				'username': data.author.username
 			});
 			return {
+					'id': data.id,
 					'type': data.type,
 					'date': data.created,
 					'href': href,
