@@ -62,8 +62,6 @@
             this.version = '1.0';
             this.category = null;
             this.activePage = 1;
-
-            console.log("IDOLS.init v: " + this.getVersion())
             var that = this;
             if($("div.list-idols").attr('data-got-more')){
                 this.addMore = true;
@@ -92,17 +90,15 @@
             $("div.list-idols").addClass('loading');
 
             ajax.genericAction('idol_ajaxlist', {
-                'tc': 19, //that.category,
+                'tc': that.category,
                 'page': that.activePage
             },
             function(r){
                 var i;
                 var tplHelperCallback = function(){
-                    console.log("tplHelperCallback()")
                     $(".list-idols dl").find(".btn_idolship.add:not('.loading-small')").each(function() {
                         $(this).fwIdolship();
                     });
-
                     if(i === (r.idols.length-1)){
                         $("div.list-idols").removeClass('loading');
                         if(typeof(callback) !== 'undefined'){
@@ -110,13 +106,14 @@
                         }
                     }
                 };
-                if(r.idols.length > 0){
-                    for(i in r.idols){
-                        if (r.idols.hasOwnProperty(i)) {
+                if(r.idols.length > 0) {
+                    for(i in r.idols) {
+                        if (r.idols[i].hasOwnProperty(i)) {
                             var element = r.idols[i];
                             console.log("loaded idol: %s id: %s", element.name, element.id);
                             templateHelper.renderTemplate('idol-list_element', element, $(".list-idols dl"), false, tplHelperCallback);
                         }
+                        $("div.list-idols").removeClass('loading');
                     }
                 } else {
                     $("div.list-idols").removeClass('loading');
