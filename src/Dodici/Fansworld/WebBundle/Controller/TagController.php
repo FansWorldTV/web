@@ -64,6 +64,15 @@ class TagController extends SiteController
     public function ajaxTagsUsedInVideos()
     {
         $request = $this->getRequest();
+        $page = $request->get('page');
+        $limit = null;
+        $offset = null;
+
+        if ($page !== null) {
+            $page--;
+            $limit = 20; //TODO: Juan
+            $offset = $limit * $page;
+        }
 
         $filterType = $request->get('filter', 'popular');
         $videoCategory = $request->get('channel');
@@ -74,7 +83,7 @@ class TagController extends SiteController
         );
 
         try {
-            $response['tags'] = $this->get('tagger')->usedInVideos($filterType, $videoCategory);
+            $response['tags'] = $this->get('tagger')->usedInVideos($filterType, $videoCategory, $limit, $offset);
         } catch (Exception $exc) {
             $response['error'] = $exc->getMessage();
         }
