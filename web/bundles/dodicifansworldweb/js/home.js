@@ -70,11 +70,18 @@ home.toggleTabs = function(){
 
 home.filterSection = {};
 home.filterSection.activityFeed = function(){
+
+    var $contentContainer = $('section.home-content .content-container[data-type-tab="activityFeed"]');
+    var $container = $contentContainer.find('#elements');
+
     $("section.content-container[data-type-tab='activityFeed'] .tags span.label").on('click', function(){
         if($(this).not('.active')){
             $(this).parent().find('.active').removeClass('active');
             $(this).addClass('active');
-            $("section.elements").html('');
+
+            $contentContainer.removeClass('isIso');
+            $container.data('fwGalerizer').destroy();
+            //var filterId = parseInt($(this).attr('data-feed-filter'));
             home.loadSection.activityFeed({
                 'filters': $(this).attr('data-feed-filter')
             });
@@ -140,7 +147,7 @@ home.loadSection.enjoy = function(params){
         $container.fwGalerizer({
             endless: false,
             normalize: false,
-            feedfilter: params || {},
+            feedfilter: params,
             onDataReady: function(jsonData) {
                 var i, outp = [];
                 var normalize = function(video) {
@@ -260,12 +267,15 @@ home.loadSection.activityFeed = function(params){
     if(typeof(params) == 'undefined'){
         params = {};
     }
+    console.log("params")
+    console.log(params)
     var $contentContainer = $('section.home-content .content-container[data-type-tab="activityFeed"]');
     var $container = $contentContainer.find('#elements');
-    $container.attr('data-feed-source', 'home_ajaxpopularfeed');
+    $container.attr('data-feed-source', 'home_ajaxactivityfeed');
     if(!$contentContainer.hasClass('isIso')) {
         $contentContainer.addClass('loading');
         $container.fwGalerizer({
+            feedfilter: params,
             onEndless: function(plugin) {
                 $contentContainer.addClass('loading');
                 var lastDate = $('section.home-content .content-container[data-type-tab="activityFeed"] #elements .post').last().attr('data-element-date');
