@@ -10,6 +10,7 @@
         // initialization and self.settings
         self.settings = $.extend({
             'href': $button.attr('data-modal-url') || '#',
+            'id': $button.attr('id'),
             'target': 'body',
             'duration': 1000,
             'width': null,
@@ -65,11 +66,41 @@
             });
         }
 
+        function playNextVideo() {
+            var myId = self.settings.id;
+            var ids = [];
+            $(".isotope_container").data('isotope').$filteredAtoms.each(function(el) {
+                ids.push($(this).attr('id'));
+            });
+            //$($(".isotope_container").data('isotope').$filteredAtoms[4]).attr('id')
+            //$($(".isotope_container").data('isotope').$filteredAtoms[4]).find('a[data-modal-url]').first()
+            var index = $.inArray(myId,ids) ? $.inArray(myId,ids) : false;
+            if(index) {
+                var link = $(".isotope_container").data('isotope').$filteredAtoms[index + 1];
+                $(link).find('a[data-modal-url]').first().trigger('click');
+            }
+        }
+        function playPrevVideo() {
+            var myId = self.settings.id;
+            var ids = [];
+            $(".isotope_container").data('isotope').$filteredAtoms.each(function(el) {
+                ids.push($(this).attr('id'));
+            });
+            //$($(".isotope_container").data('isotope').$filteredAtoms[4]).attr('id')
+            //$($(".isotope_container").data('isotope').$filteredAtoms[4]).find('a[data-modal-url]').first()
+            var index = $.inArray(myId,ids) ? $.inArray(myId,ids) : false;
+            if(index) {
+                var link = $(".isotope_container").data('isotope').$filteredAtoms[index - 1];
+                $(link).find('a[data-modal-url]').first().trigger('click');
+            }
+        }
         function open() {
             var windowHeight = $(window).height();
             $container.css('height', windowHeight + 'px');
             $overlay.css('height', windowHeight + 'px');
 
+            console.log("POPUP-ID")
+            console.log(self.settings.id)
             $container.animate({
                 opacity: 'show'
             }, self.settings.duration, function () {
