@@ -4,11 +4,6 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="fos_user_registration_register" pattern="{dummy}">
-        <default key="_controller">FOSUserBundle:Registration:register</default>
-        <default key="dummy">1</default>
-    </route>
-
     <route id="fos_user_registration_check_email" pattern="/check-email">
         <default key="_controller">FOSUserBundle:Registration:checkEmail</default>
         <requirement key="_method">GET</requirement>
@@ -22,6 +17,11 @@
     <route id="fos_user_registration_confirmed" pattern="/confirmed">
         <default key="_controller">FOSUserBundle:Registration:confirmed</default>
         <requirement key="_method">GET</requirement>
+    </route>
+
+    <route id="fos_user_registration_register" pattern="{dummy}">
+        <default key="_controller">FOSUserBundle:Registration:register</default>
+        <default key="dummy">1</default>
     </route>
 
 </routes>
