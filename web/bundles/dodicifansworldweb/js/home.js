@@ -163,6 +163,7 @@ home.loadSection.enjoy = function(params){
                         'type': 'video'
                     });
                     return {
+                            'id': video.id,
                             'type': 'video',
                             'date': video.createdAt,
                             'href': href,
