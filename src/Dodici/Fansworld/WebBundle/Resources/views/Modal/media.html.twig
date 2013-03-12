@@ -18,8 +18,8 @@
         {% if type == "video" %}
             {{ kalturatwig.player(media, true)|raw }}
 
-            <span class="badge badge-warning" style="font-size: 18px;"><<</span>
-            <span class="badge badge-warning" style="font-size: 18px;">>></span>
+            <button class="badge badge-warning playPrev" style="font-size: 18px;"><<</button>
+            <button class="badge badge-warning playNext" style="font-size: 18px;">>></button>
 
             {% include 'DodiciFansworldWebBundle:Tv:blocks/now-watching.html.twig' with {entity: media} %}
         {% else %}
