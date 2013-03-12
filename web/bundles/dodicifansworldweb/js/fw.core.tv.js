@@ -183,6 +183,7 @@
                             'username': 'juan.perez'
                         });
                         return {
+                                'id': video.id,
                                 'type': 'video',
                                 'date': video.createdAt,
                                 'href': href,
@@ -234,6 +235,7 @@
                             'username': video.author.username
                         });
                         return {
+                                'id': video.id,
                                 'type': 'video',
                                 'date': video.createdAt,
                                 'href': href,
