@@ -73,10 +73,12 @@
                 {% include 'DodiciFansworldWebBundle:User/Profile:header_small.html.twig' with {'entity': user}%}
             </header>
 
-            <h3>Mis Medallas</h3>
+            <h3>Mis Rankings</h3>
             <div class="row-fluid">
+                {# BADGE_REM
                 {% include "DodiciFansworldWebBundle:Badge:blocks/list.html.twig" %}
                 </br>
+                END BADGE_REM #}
                 <div class="badges-ranking"><h3>Ranking</h3></div>
                 {% include "DodiciFansworldWebBundle:Badge:blocks/ranking.html.twig" %}
             </div>

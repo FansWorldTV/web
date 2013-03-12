@@ -27,9 +27,11 @@
                 <li {% if sectionSelected == 'teams' %} class="active" {% endif %}>
                     <a href="{{ path('team_list') }}">Equipos</a>
                 </li>
+                {# EVENT_REM
                 <li {% if sectionSelected == 'events' %} class="active" {% endif %}>
                     <a href="{{ path('event_home') }}">Eventos</a>
                 </li>
+                 END EVENT_REM #}
                 <li class='show-on-collapse'>
                     <a href='{{ path('about_terms') }}'>Terminos y condiciones</a>
                 </li>

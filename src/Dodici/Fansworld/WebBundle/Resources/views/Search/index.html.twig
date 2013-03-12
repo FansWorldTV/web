@@ -15,7 +15,9 @@
                 <button type="button" class="btn" data-filter-type="user">Fans <span class="badge">{{ fanCount }}</span></button>
                 <button type="button" class="btn" data-filter-type="team">Equipos <span class="badge">{{ teamCount }}</span></button>
                 <button type="button" class="btn" data-filter-type="photo">Fotos <span class="badge">{{ photoCount }}</span></button>
+                {# EVENT_REM 
                 <button type="button" class="btn" data-filter-type="event">Partidos <span class="badge">{{ eventCount }}</span></button>
+                 END EVENT_REM #}
             </div>
 
             {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'video', 'title': 'videos'} %}
@@ -48,11 +50,13 @@
                 {% endblock %}
             {% endembed %}
 
+            {# EVENT_REM
             {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'event', 'title': 'partidos'} %}
                 {% block roller %}
                     {% include "DodiciFansworldWebBundle:Event:blocks/grid.html.twig" with {'event': events} %}
                 {% endblock %}
             {% endembed %}
+            END EVENT_REM #}
         </div>
         <div class="span2 trending-sidebar">
             <h4>DESTACADOS DE FANSWORLD</h4>

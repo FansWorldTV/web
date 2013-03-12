@@ -25,9 +25,12 @@
             <li {% if active_tab == 'fans' %}class="active"{% endif %}>
                 <a href="{{ path('user_fans', {'username': user.username}) }}">Fans</a>
             </li>
+            
+            {# BADGE_REM
             <li {% if active_tab == 'badges' %}class="active"{% endif %}>
                     <a href="{{ path('user_badges', {'username': user.username}) }}">Medallas</a>
             </li>
+            END BADGE_REM #}
         </ul>
     </nav>
 {% endblock %}
