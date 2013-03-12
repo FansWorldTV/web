@@ -90,7 +90,6 @@
             $("div.list-idols").addClass('loading');
 
             ajax.genericAction('idol_ajaxlist', {
-                'tc': that.category,
                 'page': that.activePage
             },
             function(r){
