@@ -60,6 +60,15 @@
 
                     self.settings.onload(self.settings);
 
+                    // Bind play prev~next video arrows
+                    $('.modal-template').find('button.playPrev').on('click', function (e) {
+                        playPrevVideo();
+                        return false;
+                    });
+                    $('.modal-template').find('button.playNext').on('click', function (e) {
+                        playNextVideo();
+                        return false;
+                    });
                     //Add share button bindings
                     share.init();
                 }
@@ -101,6 +110,7 @@
 
             console.log("POPUP-ID")
             console.log(self.settings.id)
+
             $container.animate({
                 opacity: 'show'
             }, self.settings.duration, function () {
@@ -164,7 +174,6 @@
                     return false;
                 });
             }
-
         }
 
         init();
