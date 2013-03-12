@@ -1,14 +1,15 @@
 var share = {};
 
 share.init = function(){
-    $(".btn.share, i.close-share").on('click', function(){
+    console.log("SHARE INIT")
+    $(".btn.share, i.close-share").on('click', function(event){
         $(".btn.share").toggleClass('active');
         $(".share-box").slideToggle();
     });
-    
+
     $(".btn-checkbox").on('click', function(){
         $(this).toggleClass('active');
-        
+
         if($(this).hasClass('fb')){
             if($(this).hasClass('active')){
                 FB.ui({
@@ -36,6 +37,7 @@ share.init = function(){
 
 share.selectedList = [];
 share.autocomplete = function(){
+    /*
     $("input[data-token-input]").tokenInput(Routing.generate(appLocale+'_share_ajaxwith'), {
         theme: 'fansworld',
         queryParam: 'term',
@@ -44,20 +46,26 @@ share.autocomplete = function(){
         onAdd: function(item){
             share.selectedList.push(item);
         }
-    }); 
+    });
+    */
+    $("input[data-token-input]").fwTagify({action: 'share'});
 };
 
 share.it = function(){
     $("#share_it").on('click', function(){
         var params = {};
+
+        console.log("share algo papi");
+        return;
+
         params['tw'] = $(".btn-checkbox.tw").hasClass('active');
         params['fw'] = $(".btn-checkbox.fw").hasClass('active');
         params['fb'] = $(".btn-checkbox.fb").hasClass('active');
-        
+
         params['message'] = $("input.wywtsay").val();
         params['entity-type'] = $("a.btn.share").attr('data-type');
         params['entity-id'] = $("a.btn.share").attr('data-id');
-   
+
         var shareWith = $("input[data-token-input]").tokenInput('get');
 
         params['share-list'] = {};
@@ -67,12 +75,12 @@ share.it = function(){
             params['share-list'][finded.result.id] = finded.result.type;
         }
 
-        
+
         if(!$(".btn-checkbox").hasClass('active')){
             error("Seleccione un canal para compartir.");
             return false;
         }
-        
+
         ajax.genericAction('share_ajax', params, function(r){
             if(r){
                 if(r.error){
@@ -98,7 +106,7 @@ share.findIntoTheArray = function(id, foo){
         if(obj.id == id){
             return obj;
         }
-                
+
         return false;
     }
 };
