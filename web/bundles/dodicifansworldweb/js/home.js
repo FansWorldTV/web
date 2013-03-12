@@ -10,6 +10,7 @@ home.init = function(){
             home.filterSection.activityFeed();
             home.loadSection.activityFeed();
         } else {
+            home.filterSection.enjoy();
             home.loadSection.enjoy();
         }
         home.toggleTabs();
@@ -81,6 +82,38 @@ home.filterSection.activityFeed = function(){
     });
 };
 
+// TAG filters for enjoy (user not logged in)
+// In homeController.php ajaxEnjoyAction() takes two parameters:
+// @param: filter (can be 0 sort by weight or 1 sort only highlight (media owned by fw) )
+// @param: tag (show videos associated with a tagid)
+home.filterSection.enjoy = function(){
+    var $contentContainer = $('section.home-content .content-container[data-type-tab="enjoy"]');
+    var $container = $contentContainer.find('#elements');
+    // Remove all listeners
+    $("section.content-container[data-type-tab='enjoy'] .tags span.label").off();
+    // Bind listeners
+    var $filters = $("section.content-container[data-type-tab='enjoy'] .tags span.label").on('click', function(){
+        if($(this).not('.active')){
+            $(this).parent().find('.active').removeClass('active');
+            $(this).addClass('active');
+            $contentContainer.removeClass('isIso');
+            $container.data('fwGalerizer').destroy();
+            var tagId = parseInt($(this).attr('data-tag-id'));
+            // Filter by weight or highlight
+            if(isNaN(tagId)) {
+                $('section.home-content .content-container[data-type-tab="enjoy"] .tags .pull-left').find('[data-tag-id]').remove();
+                home.loadSection.enjoy({
+                    'filters': $(this).attr('data-feed-filter')
+                });
+            } else {
+                home.loadSection.enjoy({
+                    'tag': tagId
+                });
+            }
+        }
+    });
+};
+
 home.loadSection = {};
 
 home.loadedSection = {
@@ -101,11 +134,13 @@ home.loadSection.enjoy = function(params){
     var $toAppendTrending = $('section.home-content .content-container[data-type-tab="enjoy"] .tags .pull-left');
     var $contentContainer = $('section.home-content .content-container[data-type-tab="enjoy"]');
     var $container = $contentContainer.find('#elements');
+
     $container.attr('data-feed-source', 'home_ajaxenjoy');
     if(!$contentContainer.hasClass('isIso')) {
         $container.fwGalerizer({
             endless: false,
             normalize: false,
+            feedfilter: params || {},
             onDataReady: function(jsonData) {
                 var i, outp = [];
                 var normalize = function(video) {
@@ -142,7 +177,21 @@ home.loadSection.enjoy = function(params){
                     .attr('data-tag-id', tag.id)
                     .attr('data-tag-slug', tag.slug);
 
-                    $toAppendTrending.append(elementToAppend);
+                    var ids = [];
+                    $('section.home-content .content-container[data-type-tab="enjoy"] .tags .pull-left')
+                    .find('[data-tag-id]')
+                    .each(function(el) {
+                        //console.log($(this).attr('data-tag-id'))
+                        ids.push($(this).attr('data-tag-id'));
+                    });
+                    // Prevent duplicates
+                    if($.inArray(tag.id,ids) < 0) {
+                        //$toAppendTrending.append(elementToAppend);
+                        $(elementToAppend).hide().appendTo($toAppendTrending).fadeIn('slow');
+                    }
+
+                    // Bind listeners
+                    home.filterSection.enjoy();
                 }
                 for(i in jsonData.videos) {
                     if (jsonData.videos.hasOwnProperty(i)) {
