@@ -207,6 +207,9 @@
     #adcolumn {
         display: none;
     }
+    .navbar .nav {
+        display: none;
+    }
 }
 
 @media(max-width: 1275px) {
@@ -219,20 +222,28 @@
 }
 
 @media(max-width: 940px) {
-    #header .dropdown.user, #header .dropdown.share, #header .btn.invite {
+    #header .dropdown.user, #header .btn.invite {
         display: none;
     }
 }
 
-@media(max-width: 985px){
-    .navbar-search {
+@media(min-width: 990px){
+    #header .nav-collapse.in.collapse {
         display: none;
     }
 }
 
-@media(max-width: 1235px) {
-    .navbar-search {
-        
+@media(max-width: 939px) {
+    .navbar .btn-navbar {
+        display: block;
     }
 }
+@media(min-width: 940px){
+    .navbar .btn-navbar {
+        display: hidden;
+    }
 
+    #collapse-me {
+        display: hidden;
+    }
+}

@@ -93,7 +93,30 @@
                 <a class='btn btn-success pull-right header-ingresar' href="#" data-login-btn>Ingresar</a>
                 <a class='btn btn-success pull-right' data-register-btn href="{{ path('fos_user_registration_register') }}">Registrarse</a>
             {% endif %}
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#collapse-me">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
         </div>
+        <ul id="collapse-me" class="collapse">
+            <li>
+                  <a href="{{ path('teve_home') }}">Canales</a>
+            </li>
+            <li>
+                <a href="{{ path('idol_home') }}">Idolos</a>
+            </li>
+            <li>
+                <a href="{{ path('team_list') }}">Equipos</a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a href="{{ path('user_land', { username: user.username }) }}">Mi perfil</a>
+            </li>
+            <li>
+                <a href="{{ path("fos_user_security_logout") }}">Cerrar Sesión</a>
+            </li>
+        </ul>
     </div>
 </nav>
 
