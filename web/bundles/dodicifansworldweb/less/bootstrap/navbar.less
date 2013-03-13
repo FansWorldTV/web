@@ -108,67 +108,6 @@
   }
 }
 
-// Navbar search
-.navbar-search {
-  position: relative;
-  float: right;
-  .navbarVerticalAlign(26px); // Vertically center in navbar
-  margin-bottom: 0;
-
-    .search-button {
-        margin-left: -5px;
-        height: 26px;
-        border-radius: 0 3px 3px 0;
-        width: 26px;
-        background-color: white;
-        //background-image: url('../images/glyphicons-halflings.png');
-        //background-position: -48px 0;
-        .transition(none);
-        .box-shadow(none);
-        border: 0;
-    }
-
-    i{
-        &.icon-search {
-            position: absolute;
-            right: 8px;
-            top: 4px;
-        }
-        &.loading-small {
-            position: absolute;
-            .size(16px, 19px);
-            left: -2px;
-            top: 3px;
-        }
-    }
-  
-  .search-query {
-    padding: 4px 10px;
-    outline: 0;
-    border: 0;
-    color: @black;
-    background-color: @navbarSearchBackgroundFocus;
-    .transition(none);
-    .border-radius(3px 0 0 3px);
-    .box-shadow(none);
-    width: 350px;
-
-    
-    // Focus states (we use .focused since IE7-8 and down doesn't support :focus)
-    &:focus,
-    &.focused {
-        padding: 4px 10px;
-        color: @black;
-        background-color: @navbarSearchBackgroundFocus;
-        border: 0;
-        outline: 0;
-        .box-shadow(none)
-    }
-  }
-}
-
-
-
 // FIXED NAVBAR
 // ------------
 

@@ -4,127 +4,28 @@
 
 <nav class='navbar-inner'>
     <div class='container'>
-        <a class="btn btn-navbar navbar-fixed-top" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </a>
-        <a class="brand" href="{{ path('homepage') }}">
-          <img src="{{ asset('bundles/dodicifansworldweb/images/logofw.png' )}}" />
-        </a>
-        <div class="nav-collapse">
+        <div class="left-container">
+            <a class="brand" href="{{ path('homepage') }}">
+                <img src="{{ asset('bundles/dodicifansworldweb/images/logofw.png' )}}" />
+            </a>
 
             <ul class="nav sections">
-                <li {% if sectionSelected == 'home' %} class="active" {% endif %}>
-                    <a href="{{ path('homepage') }}">Inicio</a>
-                </li>
-                <li {% if sectionSelected == 'tv' %} class="active" {% endif %}>
-                    <a href="{{ path('teve_home') }}">TV</a>
-                </li>
-                <li {% if sectionSelected == 'idols' %} class="active" {% endif %}>
-                    <a href="{{ path('idol_home') }}">Idolos</a>
-                </li>
-                <li {% if sectionSelected == 'teams' %} class="active" {% endif %}>
-                    <a href="{{ path('team_list') }}">Equipos</a>
-                </li>
-                {# EVENT_REM
-                <li {% if sectionSelected == 'events' %} class="active" {% endif %}>
-                    <a href="{{ path('event_home') }}">Eventos</a>
-                </li>
-                 END EVENT_REM #}
-                <li class='show-on-collapse'>
-                    <a href='{{ path('about_terms') }}'>Terminos y condiciones</a>
-                </li>
-                <li class='show-on-collapse'>
-                    <a>About Us</a>
-                </li>
-                <li class='show-on-collapse'>
-                    <a>Site Map</a>
-                </li>
-                <li class='show-on-collapse'>
-                    <a>Soporte</a>
-                </li>
-                <li class='show-on-collapse'>
-                    <a class='icon'>
-                        <img src="{{ asset('bundles/dodicifansworldweb/images/tw-logo.png' )}}" />
-                    </a>
-                </li>
-                <li class='show-on-collapse'>
-                    <a class='icon'>
-                        <img src="{{ asset('bundles/dodicifansworldweb/images/fb-logo.png' )}}" />
-                    </a>
-                </li>
+              <li {% if sectionSelected == 'tv' %} class="active" {% endif %}>
+                  <a href="{{ path('teve_home') }}">Canales</a>
+              </li>
+              <li {% if sectionSelected == 'idols' %} class="active" {% endif %}>
+                  <a href="{{ path('idol_home') }}">Idolos</a>
+              </li>
+              <li {% if sectionSelected == 'teams' %} class="active" {% endif %}>
+                  <a href="{{ path('team_list') }}">Equipos</a>
+              </li>
+              <!--li {% if sectionSelected == 'events' %} class="active" {% endif %}>
+                  <a href="{{ path('event_home') }}">Eventos</a>
+              </li-->
             </ul>
-
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-
-            </div>
-                <div class="nav-collapse">
-                    <div class="dropdown user">
-                        <a href="#" class="dropdown-toggle username" data-toggle="dropdown">
-                            <!--span>{{ user.firstname }}<b class="caret"></b></span-->
-                            {% thumbnail user.image, 'headeravatar' %}
-                        </a>
-                        <ul class="dropdown-menu pull-right">
-                            <li>
-                                <a href="{{ path('user_land', { username: user.username }) }}">Mi perfil</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ path('profile_account') }}">Configuración de Cuenta</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ path('profile_privacy') }}">Configuración de Privacidad</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ path('fos_user_change_password') }}">Cambiar Contraseña</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ path('notification_preferences') }}">Preferencias de Notificación</a>
-                            </li>
-
-                            <li class="divider"></li>
-
-                            <li>
-                                <a href="{{ path("fos_user_security_logout") }}">Cerrar Sesión</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="dropdown share" data-dropdownshare>
-                        <button class="btn btn-success" data-toggle="dropdown" style="z-index:-99;">Compartir</button>
-
-                        <ul class="dropdown-menu pull-right">
-                            <li><a href="{{ path('photo_fileupload') }}" data-upload="photo">Subir Fotos</a></li>
-                            <li><a href="{{ path('video_fileupload') }}" data-upload="video">Subir Videos</a></li>
-
-                            <li>
-                            <div class="input-append" style="width: 250px;">
-                                <input class="span2" id="appendedInputButton" type="text" placeholder="Youtube Link.." style="margin-left: 13px;width: 150px;" data-youtubelink>
-                                <button class="btn" type="button" data-youtubeshare="{{ path('video_youtubeupload') }}">Share!</button>
-                                <p data-sharestatus class="text-success" style="margin-left: 14px;">
-                                    <small data-sharestatus-text></small>
-
-
-                                </p>
-                            </div>
-                            </li>
-
-                        </ul>
-                    </div>
-
-                    <button class="btn btn-success invite" data-invite="{{ path('user_invite') }}" >Invitar</button>
-                </div>
-            {% else %}
-            <div class="nav-collapse">
-                    <a class='btn btn-success pull-right header-ingresar' href="#" data-login-btn>Ingresar</a>
-                    <a class='btn btn-success pull-right' data-register-btn href="{{ path('fos_user_registration_register') }}">Registrarse</a>
-                {% endif %}
-
-                    <form class="navbar-search" name="search" method="post" data-search-box action="{{ path('search_home', {}) }}">
+        </div>
+        <div class="right-container">
+            <form class="navbar-search" name="search" method="post" data-search-box action="{{ path('search_home', {}) }}">
                 <div class="input-append">
                     <input name="query" type="text" class="search-query" id="appendedInput" placeholder="Buscar..." data-search-input>
                     <span style="position: relative;">
@@ -133,52 +34,110 @@
                     </span>
                 </div>
             </form>
-            </div>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <div class="dropdown share" data-dropdownshare>
+                    <button data-toggle="dropdown" style="z-index:-99;"><i class="icon-circle-arrow-up icon-white"></i>Subir video</button>
+
+                    <ul class="dropdown-menu pull-right">
+                        <li><a href="{{ path('photo_fileupload') }}" data-upload="photo">Subir Fotos</a></li>
+                        <li><a href="{{ path('video_fileupload') }}" data-upload="video">Subir Videos</a></li>
+
+                        <li>
+                        <div class="input-append" style="width: 250px;">
+                            <input class="span2" id="appendedInputButton" type="text" placeholder="Youtube Link.." style="margin-left: 13px;width: 150px;" data-youtubelink>
+                            <button class="btn" type="button" data-youtubeshare="{{ path('video_youtubeupload') }}">Share!</button>
+                            <p data-sharestatus class="text-success" style="margin-left: 14px;">
+                                <small data-sharestatus-text></small>
+
+
+                            </p>
+                        </div>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="dropdown user">
+                    <a href="#" class="dropdown-toggle username" data-toggle="dropdown">
+                        <!--span>{{ user.firstname }}<b class="caret"></b></span-->
+                        {% thumbnail user.image, 'headeravatar' %}
+                    </a>
+                    <ul class="dropdown-menu pull-right">
+                        <li>
+                            <a href="{{ path('user_land', { username: user.username }) }}">Mi perfil</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ path('profile_account') }}">Configuración de Cuenta</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ path('profile_privacy') }}">Configuración de Privacidad</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ path('fos_user_change_password') }}">Cambiar Contraseña</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ path('notification_preferences') }}">Preferencias de Notificación</a>
+                        </li>
+
+                        <li class="divider"></li>
+
+                        <li>
+                            <a href="{{ path("fos_user_security_logout") }}">Cerrar Sesión</a>
+                        </li>
+                    </ul>
+                </div>
+            {% else %}
+                <a class='btn btn-success pull-right header-ingresar' href="#" data-login-btn>Ingresar</a>
+                <a class='btn btn-success pull-right' data-register-btn href="{{ path('fos_user_registration_register') }}">Registrarse</a>
+            {% endif %}
+        </div>
     </div>
 </nav>
 
 {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    <div id='login-widget'>
+        <div class='arrow-up'></div>
+        <div class='arrow-up-border'></div>
+        <div class='fb_button'>
+            {{ facebook_login_button({'autologoutlink': false, label: 'facebook_login_short'|trans, size: 'large'}) }}
+        </div>
 
-                <div id='login-widget'>
-                    <div class='arrow-up'></div>
-                    <div class='arrow-up-border'></div>
-                    <div class='fb_button'>
-                    	{{ facebook_login_button({'autologoutlink': false, label: 'facebook_login_short'|trans, size: 'large'}) }}
+
+        <form class="login clearfix" action="{{ path("fos_user_security_check") }}" method="post">
+            <ul>
+                <li>
+                    <label for="username">Email:</label>
+                </li>
+                <li>
+                    <input type="text" id="username" name="_username" />
+                </li>
+                <li>
+                    <label for="password">Clave:</label>
+                </li>
+                <li>
+                    <input type="password" id="password" name="_password" />
+                </li>
+                <li>
+                    <div class='bottom-login'>
+                        <div class="recordar">
+                            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                            <label for="remember_me">Recordarme</label>
+                        </div>
+
+                        <div class="olvidar">
+                            <a href='{{ path('fos_user_resetting_request') }}'>Olvido su contrase&ntilde;a</a>
+                        </div>
+
+                        <input type="hidden" name="_target_path" value="{{ app.request.uri }}" />
+                        <button type='submit' class='btn btn-success'>Ingresar</button>
+
                     </div>
+                </li>
 
-
-                    <form class="login clearfix" action="{{ path("fos_user_security_check") }}" method="post">
-                        <ul>
-                            <li>
-                                <label for="username">Email:</label>
-                            </li>
-                            <li>
-                                <input type="text" id="username" name="_username" />
-                            </li>
-                            <li>
-                                <label for="password">Clave:</label>
-                            </li>
-                            <li>
-                                <input type="password" id="password" name="_password" />
-                            </li>
-                            <li>
-                                <div class='bottom-login'>
-                                    <div class="recordar">
-                                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-                                        <label for="remember_me">Recordarme</label>
-                                    </div>
-
-                                    <div class="olvidar">
-                                        <a href='{{ path('fos_user_resetting_request') }}'>Olvido su contrase&ntilde;a</a>
-                                    </div>
-
-                                    <input type="hidden" name="_target_path" value="{{ app.request.uri }}" />
-                                    <button type='submit' class='btn btn-success'>Ingresar</button>
-
-                                </div>
-                            </li>
-
-                        </ul>
-                    </form>
-                </div>
+            </ul>
+        </form>
+    </div>
 {% endif %}

@@ -320,39 +320,62 @@
         background-color: black;
         
         .container {
-            ul.nav.sections {
-                li {
-                    a {
-                        font-size: 15px;
+            .left-container {
+                ul.nav.sections {
+                    li {
+                        a {
+                            font-size: 15px;
+                            font-weight: 500;
+                            //text-transform: uppercase;
+                            color: white;
+
+                            &:hover {
+                                color: @green;
+                            }
+                        }
+                    }
+                    li.active {
+                        a {
+                            color: @green;
+                            background: none;
+                        }
+                        border-bottom: 2px solid @green;
+                    }
+                }
+            }
+        
+            .right-container {
+                .navbar-search, .dropdown.user, .dropdown.share {
+                    .pull-left();
+                }
+
+                .dropdown.share {
+                    button {
+                        background-color: #FC6C00;
+                        color: white;
+                        font-size: 12px;
+                        border: 0;
+                        margin-left: 8px;
+                        margin-right: 8px;
+                        margin-top: 7px;
+                        .border-radius(3px);
+                        height: 26px;
+                        padding-left: 13px;
+                        padding-right: 13px;
                         font-weight: 500;
                         text-transform: uppercase;
-                        color: white;
+
+                        i {
+                            height: 16px;
+                            vertical-align: middle;
+                            margin-right: 6px;
+                        }
 
                         &:hover {
-                            color: @green;
+                            background-color: #F98E00;
                         }
                     }
                 }
-                li.active {
-                    a {
-                        color: @green;
-                        background: none;
-                    }
-                    border-bottom: 2px solid @green;
-                }
-            }
-        }
-        
-        .btn.invite {
-            position: relative;
-            float: right;
-        }
-        .dropdown {
-            position: relative;
-            float: right;
-            &.share {  
-            }
-            &.user {
             }
         }
     }
