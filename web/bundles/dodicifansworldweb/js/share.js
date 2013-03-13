@@ -37,7 +37,8 @@ share.init = function(){
 
 share.selectedList = [];
 share.autocomplete = function(){
-    /*
+
+/*
     $("input[data-token-input]").tokenInput(Routing.generate(appLocale+'_share_ajaxwith'), {
         theme: 'fansworld',
         queryParam: 'term',
@@ -47,7 +48,7 @@ share.autocomplete = function(){
             share.selectedList.push(item);
         }
     });
-    */
+*/
     $("input[data-token-input]").fwTagify({action: 'share'});
 };
 
@@ -56,7 +57,6 @@ share.it = function(){
         var params = {};
 
         console.log("share algo papi");
-        return;
 
         params['tw'] = $(".btn-checkbox.tw").hasClass('active');
         params['fw'] = $(".btn-checkbox.fw").hasClass('active');
@@ -66,14 +66,39 @@ share.it = function(){
         params['entity-type'] = $("a.btn.share").attr('data-type');
         params['entity-id'] = $("a.btn.share").attr('data-id');
 
-        var shareWith = $("input[data-token-input]").tokenInput('get');
+        //var shareWith = $("input[data-token-input]").tokenInput('get');
+        var shareWith = $("input[data-token-input]").data('fwTagify').getAllTags();
 
+        console.log("shareWith: ");
+        console.log(shareWith);
         params['share-list'] = {};
+
+
+
+        // User can only share with idol, team and user entities
+        var idols = shareWith['idol'].selected;
+        var team = shareWith['team'].selected;
+        // var text = shareWith['text'].selected; do now use custom tags
+        var user = shareWith['user'].selected;
+
+
+        for(var i in idols) {
+            params['share-list'][idols[i].result.id] = idols[i].result.type;
+        }
+        for(var i in user) {
+            params['share-list'][user[i].result.id] = user[i].result.type;
+        }
+        for(var i in team) {
+            params['share-list'][team[i].result.id] = team[i].result.type;
+        }
+        /*
         for(var i in shareWith){
             var ele = shareWith[i];
             var finded = share.findIntoTheArray(ele.id, share.selectedList);
+            console.log(finded);
             params['share-list'][finded.result.id] = finded.result.type;
         }
+        */
 
 
         if(!$(".btn-checkbox").hasClass('active')){
@@ -81,6 +106,8 @@ share.it = function(){
             return false;
         }
 
+        console.log(params);
+        console.log("before ajax call")
         ajax.genericAction('share_ajax', params, function(r){
             if(r){
                 if(r.error){
