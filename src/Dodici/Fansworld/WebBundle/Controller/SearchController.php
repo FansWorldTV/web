@@ -94,10 +94,10 @@ class SearchController extends SiteController
             'idolCount' => $idolCount,
             'fanCount' => $fanCount,
             'photoCount' => $photoCount,
-            'eventCount' => $eventCount,
+            /*'eventCount' => $eventCount,*/
             'teamCount' => $teamCount,
             'idols' => $idols,
-            'events' => $eventSearch,
+            /*'events' => $eventSearch,*/
             'photos' => $photoSearch,
             'fans' => $fans,
             'videos' => $videoSearch,

@@ -233,7 +233,7 @@ class VideoUploader
     		if (strpos($youtube, '&') !== false) {
     			$youtube = substr($youtube, 0, strpos($youtube, '&'));
     		}
-    		return $youtube;
+    		return trim($youtube);
 		} else {
 		    return null;
 		}

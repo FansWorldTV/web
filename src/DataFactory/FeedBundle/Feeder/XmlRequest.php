@@ -14,7 +14,7 @@ class XmlRequest {
     public function request($params = array())
     {
         try {
-            $file = utf8_encode(file_get_contents($this->to_url($params)));
+            $file = file_get_contents($this->to_url($params));
             $document = new \SimpleXMLElement($file);
             return $document;
         } catch (\Exception $e) {

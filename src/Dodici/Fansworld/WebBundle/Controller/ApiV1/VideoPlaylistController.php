@@ -61,7 +61,7 @@ class VideoPlaylistController extends BaseController
                 $extrafields = $this->getExtraFields($allowedfields);
                 
                 $return = array();
-                foreach ($wls as $wl) $return[] = $this->videoValues($wl->getVideo(), $extrafields);
+                foreach ($wls as $wl) $return[] = $this->videoValues($wl->getVideo(), $extrafields, $user);
                 
                 return $this->result($return, $pagination);
             } else {
