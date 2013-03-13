@@ -16,7 +16,8 @@
  *      appLocale
  */
 
-// FansWorld tagify plugin 2.1 function que retorna array de elementos seleccionados
+// FansWorld tagify plugin 2.2 allow only suggested tags
+// 2.1 function que retorna array de elementos seleccionados
 // 2.0 tags texto con auto id, labels as values
 // 1.4 fix FB.ui popup
 // 1.5 add 'user' type to tagifier
@@ -48,6 +49,7 @@ $(document).ready(function () {
             selected: []
         },
         magic: null,
+        suggestionsOnly: false,
         prePopulate: [],
         action: null,
         dataSource: null,
@@ -65,7 +67,7 @@ $(document).ready(function () {
         this.options = $.extend({}, defaults, options);
         this._defaults = defaults;
         this._name = pluginName;
-        this._version = '2.1';
+        this._version = '2.2';
         this.init();
     }
 
@@ -134,6 +136,7 @@ $(document).ready(function () {
             }
             $(that.element).tagit({
                 availableTags: that.options.sampleTags,
+                suggestionsOnly: that.options.suggestionsOnly,
                 allowSpaces: true,
                 // This will make Tag-it submit a single form value, as a comma-delimited field.
                 autocomplete: {
