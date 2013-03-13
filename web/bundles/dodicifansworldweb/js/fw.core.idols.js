@@ -60,7 +60,7 @@
             ///////////////////
             this.jQuery = jQuery;
             this.version = '1.0';
-            this.category = null;
+            this.category = 0;
             this.activePage = 1;
             var that = this;
             if($("div.list-idols").attr('data-got-more')){
@@ -71,7 +71,7 @@
             this.getIdols();
             $("ul.categories li a").on('click', function(e){
                 e.preventDefault();
-                that.category = $(this).parent().attr('data-category-id');
+                that.category = parseInt($(this).parent().attr('data-category-id'));
                 that.activePage = 1;
 
                 $(".list-idols dl").html(' ');
