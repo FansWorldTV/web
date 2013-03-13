@@ -16,7 +16,8 @@
  *      appLocale
  */
 
-// FansWorld tagify plugin 2.0 tags texto con auto id, labels as values
+// FansWorld tagify plugin 2.1 function que retorna array de elementos seleccionados
+// 2.0 tags texto con auto id, labels as values
 // 1.4 fix FB.ui popup
 // 1.5 add 'user' type to tagifier
 // 1.6 missing comma
@@ -64,6 +65,7 @@ $(document).ready(function () {
         this.options = $.extend({}, defaults, options);
         this._defaults = defaults;
         this._name = pluginName;
+        this._version = '2.1';
         this.init();
     }
 
@@ -76,8 +78,8 @@ $(document).ready(function () {
             var that = this;
             var i;
             //that.options.dataSource = Routing.generate(appLocale + '_tag_ajaxmatch');
-            this.options.magic = parseInt(Math.random() * 9999);
-            that.options[this.options.magic] = {
+            that.options.magic = parseInt(Math.random() * 9999);
+            that.options[that.options.magic] = {
                 team: {
                     selected: []
                 },
@@ -226,6 +228,13 @@ $(document).ready(function () {
                 }
             }
             $(inputSelector).val(str);
+        },
+        getAllTags: function() {
+            var that = this;
+            return that.options[that.options.magic];
+        },
+        getVersion: function() {
+            return this._version;
         }
     };
     // A really lightweight plugin wrapper around the constructor,
@@ -237,10 +246,10 @@ $(document).ready(function () {
         {
             return this.each(function () {
                 // Only allow the plugin to be instantiated once.
-                if (!$.data(this, "plugin_" + pluginName)) {
+                if (!$.data(this, pluginName)) {
                     // Pass options to Plugin constructor, and store Plugin
                     // instance in the elements jQuery data object.
-                    $.data(this, "plugin_" + pluginName, new Plugin(this, options));
+                    $.data(this, pluginName, new Plugin(this, options));
                 }
             });
         }
@@ -284,8 +293,7 @@ $(document).ready(function () {
             });
             that.updateInputValues();
         },
-        updateInputValues: function()
-        {
+        updateInputValues: function(){
             var that = this;
             $('#form_fb').val(that.options.fb);
             $('#form_tw').val(that.options.tw);
