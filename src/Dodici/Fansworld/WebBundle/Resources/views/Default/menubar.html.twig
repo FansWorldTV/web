@@ -90,8 +90,7 @@
                     </ul>
                 </div>
             {% else %}
-                <a class='btn btn-success pull-right header-ingresar' href="#" data-login-btn>Ingresar</a>
-                <a class='btn btn-success pull-right' data-register-btn href="{{ path('fos_user_registration_register') }}">Registrarse</a>
+                <button class='btn-login' href="#" data-login-btn>Ingresar</button>
             {% endif %}
             <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#collapse-me">
                 <span class="icon-bar"></span>
@@ -109,13 +108,19 @@
             <li>
                 <a href="{{ path('team_list') }}">Equipos</a>
             </li>
-            <li class="divider"></li>
-            <li>
-                <a href="{{ path('user_land', { username: user.username }) }}">Mi perfil</a>
-            </li>
-            <li>
-                <a href="{{ path("fos_user_security_logout") }}">Cerrar Sesión</a>
-            </li>
+            
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <li>
+                    <a href="{{ path('user_land', { username: user.username }) }}">Mi perfil</a>
+                </li>
+                <li>
+                    <a href="{{ path("fos_user_security_logout") }}">Cerrar Sesión</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="#" data-login-btn>Ingresar</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
