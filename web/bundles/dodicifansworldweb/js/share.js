@@ -49,7 +49,7 @@ share.autocomplete = function(){
         }
     });
 */
-    $("input[data-token-input]").fwTagify({action: 'share'});
+    $("input[data-token-input]").fwTagify({action: 'share', suggestionsOnly: true});
 };
 
 share.it = function(){
