@@ -34,7 +34,8 @@
  ******************************************************************************/
 
 /*******************************************************************************
-    FansWorld idols Class Module 1.1
+    FansWorld idols Class Module 1.2 (adds hasOwnProperty check)
+    1.1
 
 *******************************************************************************/
 (function (root, factory) {
@@ -59,7 +60,7 @@
             // Internal init //
             ///////////////////
             this.jQuery = jQuery;
-            this.version = '1.0';
+            this.version = '1.2';
             this.category = 0;
             this.activePage = 1;
             var that = this;
@@ -108,7 +109,7 @@
                 };
                 if(r.idols.length > 0) {
                     for(i in r.idols) {
-                        if (r.idols[i].hasOwnProperty(i)) {
+                        if (r.idols.hasOwnProperty(i)) {
                             var element = r.idols[i];
                             console.log("loaded idol: %s id: %s", element.name, element.id);
                             templateHelper.renderTemplate('idol-list_element', element, $(".list-idols dl"), false, tplHelperCallback);
