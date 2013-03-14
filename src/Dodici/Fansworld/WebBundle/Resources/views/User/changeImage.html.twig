@@ -1,8 +1,13 @@
-{% extends "DodiciFansworldWebBundle::popup.html.twig" %}
+{% extends "DodiciFansworldWebBundle:User:profile_edit_base.html.twig" %}
 
-{% form_theme form 'DodiciFansworldWebBundle::form.html.twig' %}
+{% use "DodiciFansworldWebBundle:Layout/Snippet:profile_inner_fullwidth.html.twig"  %}
 
-{% block content %}
+{% block user_edit_toolbar %}
+	{% set current_edit_toolbar = 'profileimage' %}
+	{{ parent() }}
+{% endblock %}
+
+{% block inner_content %}
 <div class="upload_image clearfix">
 	<div class="current">
 		{% if media %}
@@ -19,7 +24,7 @@
 		        		{{ form_widget(form) }}
 		        	</ul>
 				</div>
-				
+
 		        <div class="actions clearfix">
 		            <input type="submit" name="submit" value="Subir" class="btn_action" />
 		        </div>

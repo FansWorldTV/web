@@ -1,0 +1,27 @@
+{% extends "DodiciFansworldWebBundle:User:profile_edit_base.html.twig" %}
+
+{% use "DodiciFansworldWebBundle:Layout/Snippet:profile_inner_fullwidth.html.twig"  %}
+
+{% block user_edit_toolbar %}
+	{% set current_edit_toolbar = 'profileimage' %}
+	{{ parent() }}
+{% endblock %}
+
+{% block inner_content %}
+	{{ parent() }}
+    <div class="row-fluid">
+        <div class="span7">
+	        <div class="current">
+				aca va el modal
+			</div>
+        </div>
+        <div class='span4'>
+            <section class='ayuda'>
+                <h2><span class="circular">?</span>Ayuda</h2>
+                <p>
+                    Seleccione y recorte la nueva imagen que desea subir como foto de perfil
+                </p>
+            </section>
+		</div>
+    </div>
+{% endblock %}

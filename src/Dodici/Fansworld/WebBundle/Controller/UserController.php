@@ -686,7 +686,116 @@ class UserController extends SiteController
             }
         }
 
-        return array('media' => $media, 'form' => $form->createView());
+        return array('media' => $media, 'form' => $form->createView(), 'user'=>$user);
+    }
+
+
+    /**
+     * @Route("/user/change_imageTest", name="user_change_imageTest")
+     * @Secure(roles="ROLE_USER")
+     * @Template
+     */
+    public function changeImageTestAction()
+    {
+        $request = $this->getRequest();
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getEntityManager();
+        $media = $user->getImage();
+        return array('media' => $media, 'user'=>$user);
+    }
+
+    /**
+     * @Route("/user/change_imageSaveTest", name="user_change_imageSaveTest")
+     * @Secure(roles="ROLE_USER")
+     * @Template
+     */
+    public function changeImageSaveTestAction()
+    {
+        $request = $this->getRequest();
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $tempFile = $request->get('tempFile');
+        $originalFileName = $request->get('originalFile');
+        $realWidth = $request->get('width');
+        $realHeight = $request->get('height');
+
+        $lastdot = strrpos($originalFileName, '.');
+        $originalFile = substr($originalFileName, 0, $lastdot);
+        $ext = substr($originalFileName, $lastdot);
+
+        $finish = false;
+        $form = $this->_createForm();
+
+        if ($request->getMethod() == 'POST') {
+            try {
+                $form->bindRequest($request);
+                $data = $form->getData();
+
+                if ($form->isValid()) {
+
+                    //$mediaManager = $this->get("sonata.media.manager.media");
+                    //$media = new Media();
+                    //$media->setBinaryContent($data['file']);
+                    //$media->setContext('default');
+                    //$media->setProviderName('sonata.media.provider.image');
+                    //$mediaManager->save($media);
+                    //$user->setImage($media);
+                    //$em->persist($user);
+                    //$em->flush();
+
+                    $mediaManager = $this->get("sonata.media.manager.media");
+
+                    $cropOptions = array(
+                        "cropX" => $data['x'],
+                        "cropY" => $data['y'],
+                        "cropW" => $data['w'],
+                        "cropH" => $data['h'],
+                        "tempFile" => $tempFile,
+                        "originalFile" => $originalFileName,
+                        "extension" => $ext
+                    );
+                    $media = $this->_GenerateMediaCrop($cropOptions);
+
+                    $user->setImage($media);
+                    $em->persist($user);
+                    $em->flush();
+
+                    $this->get('session')->setFlash('success', $this->trans('upload_sucess'));
+                    $finish = true;
+                }
+            } catch (\Exception $e) {
+                $form->addError(new FormError('Error subiendo foto de perfil'));
+            }
+        }
+
+        return array(
+            'user' => $user,
+            'form' => $form->createView(),
+            'tempFile' => $tempFile,
+            'originalFile' => $originalFileName,
+            'ext' => $ext,
+            'finish' => $finish,
+            'realWidth' => $realWidth,
+            'realHeight' => $realHeight
+        );
+    }
+
+    private function _createForm () {
+        $defaultData = array();
+        $collectionConstraint = new Collection(array(
+            'x' => array(),
+            'y' => array(),
+            'w' => array(),
+            'h' => array()
+        ));
+        $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
+            ->add('x', 'hidden', array('required' => false, 'data' => 0))
+            ->add('y', 'hidden', array('required' => false, 'data' => 0))
+            ->add('w', 'hidden', array('required' => false, 'data' => 0))
+            ->add('h', 'hidden', array('required' => false, 'data' => 0))
+            ->getForm();
+        return $form;
     }
 
     /**

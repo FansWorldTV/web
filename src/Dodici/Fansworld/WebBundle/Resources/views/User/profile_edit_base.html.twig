@@ -24,11 +24,11 @@
 {% block profile_header_container %}
 
 	<header id="headerProfile" class="row-fluid">
-    
+
         <div class="avatar">
             {% thumbnail user.image, 'small_square' %}
         </div>
-    
+
         <div class="menu">
             <a href="#">Configuración de Cuenta</a>
             <h1>{{ user }}</h1>
@@ -36,6 +36,7 @@
                 <nav>
                     <ul class="nav nav-tabs-profile">
                         <li {% if current_edit_toolbar == 'account' %} class="active" {% endif %}><a href="{{ path('profile_account') }}">Cuenta</a></li>
+                        <li {% if current_edit_toolbar == 'profileimage' %} class="active" {% endif %}><a href="{{ path('user_change_imageTest') }}">Foto de Perfil</a></li>
                         <li {% if current_edit_toolbar == 'password' %} class="active" {% endif %}><a href="{{ path('fos_user_change_password') }}">Contraseña</a></li>
                         <li {% if current_edit_toolbar == 'notifications' %} class="active" {% endif %}><a href="{{ path('notification_preferences') }}">Notificaciones</a></li>
                         <li {% if current_edit_toolbar == 'interests' %} class="active" {% endif %}><a href="{{ path('interest_edit') }}">Intereses</a></li>
