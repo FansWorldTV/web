@@ -239,7 +239,14 @@ $(document).ready(function () {
                     '<div class="qq-upload-buttonXX btn btn-success">{uploadButtonText}</div>' +
                     '<ul class="qq-upload-list" style="margin-top: 10px; text-align: center;"></ul>' +
                     '</div>',
-                fileTemplate: '<span class="qq-upload-spinner"></span>',
+                fileTemplate: '<li>' +
+                    '<div class="qq-progress-bar"></div>' +
+                    '<span class="qq-upload-finished"></span>' +
+                    '<span class="qq-upload-file"></span>' +
+                    '<span class="qq-upload-size"></span>' +
+                    '<a class="qq-upload-cancel" href="#">{cancelButtonText}</a>' +
+                    '<span class="qq-upload-failed-text">{failUploadtext}</span>' +
+                    '</li>',
                 classes: {
                     // used to get elements from templates
                     button: 'qq-upload-buttonXX',
