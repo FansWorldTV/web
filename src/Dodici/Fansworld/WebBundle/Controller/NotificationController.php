@@ -40,8 +40,8 @@ class NotificationController extends SiteController
         $maillist = array();
        
         foreach ($preftypes as $key => $pt) {
-            $prefList[$key] = $this->trans('notification_'.$pt);
-            $mailList[$key] = $this->trans('notification_'.$pt);
+            $prefList[$key] = $this->trans('notification_'.$pt['type']);
+            $mailList[$key] = $this->trans('notification_'.$pt['type']);
             
         }
 
