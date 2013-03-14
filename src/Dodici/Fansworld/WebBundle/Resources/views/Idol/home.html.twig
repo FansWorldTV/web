@@ -26,10 +26,10 @@
 
                 <div class="idol">
                     <div class="splash">
-                        {% thumbnail idol.splash, 'big' %}
+                        {% thumbnail idol.splash, 'big' with {'title': ''}%}
                     </div>
                     <div class="logo">
-                        {% thumbnail idol.image, 'small' %}
+                        {% thumbnail idol.image, 'small' with {'title': ''}%}
                     </div>
                     <p>
                         <span class="name"><a href="{{ path('idol_land', {'slug': idol.slug}) }}">{{ idol }}</a></span>
