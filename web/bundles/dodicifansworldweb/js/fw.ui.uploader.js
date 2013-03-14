@@ -49,6 +49,8 @@ $(document).ready(function () {
         },
         timer: null,
         mediaType: null,
+        isModal: true,  // Plugin will use a modal made with colorbox
+        uploaderSelector: '#file-uploader',
         // custom bindings
         onSubmit: function(id, fileName){},
         onComplete: function(id, fileName, responseJSON){},
@@ -76,7 +78,15 @@ $(document).ready(function () {
             var that = this;
             $(that.element).addClass(that._name);
             that.options.mediaType = $(that.element).attr('data-upload');
+            that.options.isModal = $(that.element).attr('data-ismodal');
             $(that.element).bind("destroyed", $.proxy(that.teardown, that));
+            console.log("data-upload: " + that.options.mediaType + " isModal: " + that.options.isModal)
+            if(that.options.isModal === 'false') {
+                console.log("sale is modal")
+                that.options.uploaderSelector = "#avatar-uploader";
+                that.createFwImageUploader();
+                return;
+            };
             $(that.element).colorbox({
                 innerWidth: 700,
                 innerHeight: 475,
@@ -113,8 +123,7 @@ $(document).ready(function () {
                         that.resizePopup();
                     }
                 },
-                onClosed: function()
-                {
+                onClosed: function() {
                     that.uploader._handler.cancelAll();
                 }
             });
@@ -187,6 +196,85 @@ $(document).ready(function () {
                             iframe: false,
                             innerWidth: 700,
                             innerHeight: 160,
+                            onComplete: function() {
+                                that.resizePopup();
+                                that.bindFormActions();
+                            }
+                        });
+                    }
+                    return that.options.onComplete(id, fileName, responseJSON);
+                },
+                onUpload: function() {
+                    console.log("onUpload");
+                    that.resizePopup();
+                },
+                onProgress: function(id, fileName, loaded, total) {
+                    if (loaded !== total){
+                        $( "#progressbar .bar" ).css('width', Math.round(loaded / total * 100)+'%');
+                    } else {
+                        $( "#progressbar .bar" ).css('width','100%');
+                    }
+                    that.resizePopup();
+                },
+                onSubmit: function(id, fileName){
+                    return that.options.onSubmit(id, fileName);
+                },
+                onError: function(id, fileName, reason) {
+                    return that.options.onError(id, fileName, reason);
+                }
+            });
+        },
+        createFwImageUploader: function() {
+            var that = this;
+            var uploader = new qq.FileUploader({
+                element: $(that.options.uploaderSelector)[0],
+                action: that.options.action[that.options.mediaType],
+                debug: true,
+                multiple: false,
+                maxConnections: 1,
+                allowedExtensions: that.options.mediaExtensions[that.options.mediaType],
+                disableDefaultDropzone: true,
+                listElement: '',
+                template: '<div class="qq-uploaderX">' +
+                    '<div class="qq-upload-buttonXX btn btn-success">{uploadButtonText}</div>' +
+                    '<ul class="qq-upload-list" style="margin-top: 10px; text-align: center;"></ul>' +
+                    '</div>',
+                fileTemplate: '<span class="qq-upload-spinner"></span>',
+                classes: {
+                    // used to get elements from templates
+                    button: 'qq-upload-buttonXX',
+                    drop: 'qq-upload-drop-area',
+                    dropActive: 'qq-upload-drop-area-active',
+                    dropDisabled: 'qq-upload-drop-area-disabled',
+                    list: 'qq-upload-list',
+                    progressBar: 'qq-progress-bar',
+                    file: 'qq-upload-file',
+                    spinner: 'qq-upload-spinner',
+                    finished: 'qq-upload-finished',
+                    size: 'qq-upload-size',
+                    cancel: 'qq-upload-cancel',
+                    failText: 'qq-upload-failed-text',
+
+                    // added to list item <li> when upload completes
+                    // used in css to hide progress spinner
+                    success: 'qq-upload-success',
+                    fail: 'qq-upload-fail',
+
+                    successIcon: null,
+                    failIcon: null
+                },
+                onComplete: function(id, fileName, responseJSON) {
+                    if(responseJSON.success) {
+                        $.colorbox({
+                            href: Routing.generate(appLocale + '_user_change_imageSaveTest', {
+                                'originalFile': responseJSON.originalFile,
+                                'tempFile':responseJSON.tempFile,
+                                'width': responseJSON.width,
+                                'height': responseJSON.height
+                            }),
+                            iframe: false,
+                            innerWidth: 700,
+                            innerHeight: 260,
                             onComplete: function() {
                                 that.resizePopup();
                                 that.bindFormActions();
