@@ -90,7 +90,7 @@
                     </ul>
                 </div>
             {% else %}
-                <button class='btn-login' href="#" data-login-btn>Ingresar</button>
+                <button class='btn-login header-ingresar' href="{{ path('fos_user_security_login') }}" data-login-btn>Ingresar</button>
             {% endif %}
             <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#collapse-me">
                 <span class="icon-bar"></span>
@@ -118,7 +118,7 @@
                 </li>
             {% else %}
                 <li>
-                    <a href="#" data-login-btn>Ingresar</a>
+                    <a href="{{ path('fos_user_security_login') }}">Ingresar</a>
                 </li>
             {% endif %}
         </ul>

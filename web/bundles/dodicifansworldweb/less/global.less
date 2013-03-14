@@ -403,13 +403,28 @@
                     }
                 }
             }
+
         }
 
         #collapse-me {
+            margin-left: 10px;
             clear: both;
+            li {
+                border-bottom: 1px solid #686868;
+                &:last-child {
+                    border: 0;
+                    margin-bottom: 10px;
+                }
+            }
             a {
                 font-weight: 400;
                 color: white !important;
+                font-size: 25px;
+                line-height: 38px;
+                
+                &:hover {
+                    color: @green !important;
+                }
             }
         }
     }
