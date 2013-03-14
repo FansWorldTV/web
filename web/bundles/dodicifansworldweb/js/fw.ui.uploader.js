@@ -226,6 +226,7 @@ $(document).ready(function () {
         },
         createFwImageUploader: function() {
             var that = this;
+            var list = $('<ul class="qq-upload-list"></ul>');
             var uploader = new qq.FileUploader({
                 element: $(that.options.uploaderSelector)[0],
                 action: that.options.action[that.options.mediaType],
@@ -234,10 +235,9 @@ $(document).ready(function () {
                 maxConnections: 1,
                 allowedExtensions: that.options.mediaExtensions[that.options.mediaType],
                 disableDefaultDropzone: true,
-                listElement: '',
                 template: '<div class="qq-uploaderX">' +
                     '<div class="qq-upload-buttonXX btn btn-success">{uploadButtonText}</div>' +
-                    '<ul class="qq-upload-list" style="margin-top: 10px; text-align: center;"></ul>' +
+                    '<ul class="qq-upload-list" style="margin-top: 10px; text-align: center;visibility:hidden;"></ul>' +
                     '</div>',
                 fileTemplate: '<li>' +
                     '<div class="qq-progress-bar"></div>' +
@@ -288,6 +288,7 @@ $(document).ready(function () {
                             }
                         });
                     }
+                    $('.qq-upload-buttonXX').removeClass('loading-small');
                     return that.options.onComplete(id, fileName, responseJSON);
                 },
                 onUpload: function() {
@@ -303,9 +304,11 @@ $(document).ready(function () {
                     that.resizePopup();
                 },
                 onSubmit: function(id, fileName){
+                    $('.qq-upload-buttonXX').addClass('loading-small');
                     return that.options.onSubmit(id, fileName);
                 },
                 onError: function(id, fileName, reason) {
+                    $('.qq-upload-buttonXX').removeClass('loading-small');
                     return that.options.onError(id, fileName, reason);
                 }
             });
