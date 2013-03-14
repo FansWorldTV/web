@@ -36,10 +36,6 @@
 
                     <p>
                         <a href="{{ path('team_land', {'slug': team.slug}) }}" class="name">{{ team }}</a>
-                        <br/>
-                        {% if team.content %}
-                            <span>{{ team.content|striptags|truncate(70) }} <a href="{{ path('team_info', {'slug': team.slug}) }}">más</a></span>
-                        {% endif %}
                     </p>
 
                     <div class="fanned">

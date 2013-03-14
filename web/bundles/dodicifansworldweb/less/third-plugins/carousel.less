@@ -1,7 +1,22 @@
 //carousel custom styles
 .carousel {
     margin-bottom: 0;
-    .item > img{
+   
+    .item .play-icon {
+        background-image: url('../images/play-icon.png');
+        background-size: 100px;
+        .square(100px);
+        position: absolute;
+        left: 44%;
+        top: 31%;
+        opacity: 0.5;
+
+        &:hover{
+            opacity: 1;
+        }
+    }
+    
+    .item a > img{
         width: 100%;
     }
     

@@ -2,7 +2,7 @@ div.idol-home {
 
     section.top {
         .square(auto);
-        background-color: @black;
+        background-color: black;
 
         .carousel {
             .size(100%, 70%);
@@ -13,7 +13,7 @@ div.idol-home {
         }
 
         .info-detail-carousel {
-            background-color: @black;
+            background-color: black;
             .pull-left();
             .size(auto, 30%);
             text-overflow: ellipsis;
@@ -23,9 +23,12 @@ div.idol-home {
 
             div {
                 h1 {
-                    color: @orange;
+                    color: @green;
                     font-weight: normal;
                     margin-bottom: 20px;
+                    max-height: 150px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
 
                 p {
@@ -53,13 +56,13 @@ div.idol-home {
             border: 1px solid @gray;
             width: 30%;
             display: block;
-            height: 285px;
+            height: 190px;
             float: left;
             margin-right: 5%;
             .box-sizing(border-box);
             
             .splash {
-                height: 90px;
+                height: 125px;
                 overflow: hidden;
             }
 
@@ -91,7 +94,7 @@ div.idol-home {
             div.fanned {
                 .pull-right();
                 position: absolute;
-                bottom: 5px;
+                bottom: 22px;
                 right: 5px;
 
                 span {

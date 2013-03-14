@@ -17,12 +17,17 @@
             {% if carouselitems|length > 0 %}
                 {% for carouselitem in carouselitems %}
                     <div class="item {% if loop.first %} active {% endif %}" data-video='{{ carouselitem.id }}'>
-                        {% thumbnail carouselitem.image, 'splash' %}
+                        <a href="{{ path("video_show", {'id': carouselitem.id, 'slug': carouselitem.slug}) }}">
+                            {% thumbnail carouselitem.image, 'splash' with {'title': ''} %}
+                        </a>
                         {% if showCaption %}
                             <div class="carousel-caption">
                                 <h4>{% if carouselitem.title is defined %} {{ carouselitem.title|truncate(75) }} {% if carouselitem.title|length > 75 %}...{% endif %} {% endif %}</h4>
                                 <p>{% if carouselitem.content is defined %} {{ carouselitem.content }} {% endif %}</p>
                             </div>
+                        {% endif %}
+                        {% if appstate.type(carouselitem) == 'video' %}
+                            <a href="{{ path("video_show", {'id': carouselitem.id, 'slug': carouselitem.slug}) }}"><i class="play-icon"></i></a>
                         {% endif %}
                     </div>
                 {% endfor %}
@@ -46,8 +51,9 @@
             {% if carouselitems|length > 0 %}
                 {% for carouselitem in carouselitems %}
                     <div {% if loop.first %}class="active"{% endif %} data-video="{{ carouselitem.id }}">
-                        <span>{{ appstate.type(carouselitem)|trans }}</span>
-                        <h1>{{ carouselitem.title }}</h1>
+                        <a href="{{ path("video_show", {'id': carouselitem.id, 'slug': carouselitem.slug}) }}">
+                            <h1>{{ carouselitem.title }}</h1>
+                        </a>
                         <p>{{ carouselitem.content|striptags|truncate(128) }}</p>
                     </div>
                 {% endfor %}
