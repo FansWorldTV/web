@@ -14,6 +14,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Sonata\UserBundle\Entity\User;
 use Application\Sonata\UserBundle\Entity\Notification;
+use Imagine\Image\Box;
+use Imagine\Image\Point;
+use Imagine\Gd\Imagine;
 
 class UserController extends SiteController
 {
@@ -781,23 +784,6 @@ class UserController extends SiteController
         );
     }
 
-    private function _createForm () {
-        $defaultData = array();
-        $collectionConstraint = new Collection(array(
-            'x' => array(),
-            'y' => array(),
-            'w' => array(),
-            'h' => array()
-        ));
-        $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
-            ->add('x', 'hidden', array('required' => false, 'data' => 0))
-            ->add('y', 'hidden', array('required' => false, 'data' => 0))
-            ->add('w', 'hidden', array('required' => false, 'data' => 0))
-            ->add('h', 'hidden', array('required' => false, 'data' => 0))
-            ->getForm();
-        return $form;
-    }
-
     /**
      * @Route("/u/{username}/idols", name="user_idols")
      * @Template
@@ -1032,4 +1018,39 @@ class UserController extends SiteController
         if (isset($notificationsUnread)) $response = $notificationsUnread;
         return $this->jsonResponse($response);
     }
+
+    private function _createForm () {
+        $defaultData = array();
+        $collectionConstraint = new Collection(array(
+            'x' => array(),
+            'y' => array(),
+            'w' => array(),
+            'h' => array()
+        ));
+        $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
+            ->add('x', 'hidden', array('required' => false, 'data' => 0))
+            ->add('y', 'hidden', array('required' => false, 'data' => 0))
+            ->add('w', 'hidden', array('required' => false, 'data' => 0))
+            ->add('h', 'hidden', array('required' => false, 'data' => 0))
+            ->getForm();
+        return $form;
+    }
+
+    private function _GenerateMediaCrop(array $options) {
+        $imagine = new Imagine();
+        $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $options['tempFile'];
+        $format = $this->get('appmedia')->getType($path);
+
+        $imageStream = $imagine->open($path);
+
+        if ($options['cropW'] && $options['cropH']) {
+            $imageStream = $imageStream
+            ->crop(new Point($options['cropX'], $options['cropY']), new Box($options['cropW'], $options['cropH']));
+        }
+
+        $metaData = array('filename' => $options['originalFile']);
+        return $this->get('appmedia')->createImageFromBinary($imageStream->get($format), $metaData);
+    }
+
+
 }
