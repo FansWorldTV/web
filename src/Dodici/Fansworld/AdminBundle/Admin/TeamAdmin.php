@@ -33,7 +33,7 @@ class TeamAdmin extends Admin
             ->add('content', NULL, array (), array ())
             ->add('createdAt', 'date', array ('attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy HH:mm'), array ())
-            ->add('foundedAt', 'date', array ('required' => false, 'attr' => array('class' => 'datepicker'), 'widget' => 'single_text',
+            ->add('foundedAt', 'date', array ('required' => false, 'widget' => 'text',
                 	'format' => 'dd/MM/yyyy'), array ())
             ->add('active', NULL, array ('required' => false), array ())
             ->add('teamcategories', NULL, array ('required' => false), array ())
