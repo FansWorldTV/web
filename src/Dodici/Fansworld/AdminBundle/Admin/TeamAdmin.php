@@ -36,7 +36,7 @@ class TeamAdmin extends Admin
             ->add('foundedAt', 'date', array ('required' => false, 'attr' => array('class' => 'datepicker'), 'widget' => 'single_text',
                 	'format' => 'dd/MM/yyyy'), array ())
             ->add('active', NULL, array ('required' => false), array ())
-            ->add('teamcategories', NULL, array (), array ())
+            ->add('teamcategories', NULL, array ('required' => false), array ())
             ->add('external', NULL, array (), array ())
             ->add('image', 'sonata_type_model', array(), array('edit' => 'list', 'link_parameters' => array('context' => 'default', 'provider' => 'sonata.media.provider.image')))
             ->add('splash', 'sonata_type_model', array(), array('edit' => 'list', 'link_parameters' => array('context' => 'default', 'provider' => 'sonata.media.provider.image')))

@@ -40,6 +40,19 @@ class Search
             self::TYPE_FORUM => 'Dodici\\Fansworld\\WebBundle\\Entity\\ForumThread',
         );
     }
+    
+    public static function humanTypes()
+    {
+        return array(
+            'team' => self::TYPE_TEAM,
+            'video' => self::TYPE_VIDEO,
+            'photo' => self::TYPE_PHOTO,
+            'event' => self::TYPE_EVENT,
+            'user' => self::TYPE_USER,
+            'idol' => self::TYPE_IDOL,
+            'forum' => self::TYPE_FORUM,
+        );
+    }
 
     protected $security_context;
     protected $request;
@@ -111,6 +124,8 @@ class Search
     private function getRepositoryByType($type)
     {
         $types = self::getTypes();
+        $humantypes = self::humanTypes();
+        if (in_array($type, array_keys($humantypes))) $type = $humantypes[$type];
         if (!in_array($type, array_keys($types)))
             throw new \Exception('Unsupported search type');
         return $this->em->getRepository($types[$type]);

@@ -61,7 +61,7 @@ class IdolAdmin extends Admin
     public function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('firstname', 'text', array ())
+            ->addIdentifier('firstname', 'text', array ())
             ->add('lastname', 'text', array ())
             ->add('active', 'boolean', array ())
             ->add('fanCount', 'integer', array ())

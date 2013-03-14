@@ -374,7 +374,7 @@ class BaseController extends SiteController
         
         if ($pagination) {
             $metadata['pagination'] = $pagination;
-            $metadata['pagination']['count'] = count($array);
+            if (!isset($pagination['count'])) $metadata['pagination']['count'] = count($array);
         }
         
         return $this->jsonResponse(array(
