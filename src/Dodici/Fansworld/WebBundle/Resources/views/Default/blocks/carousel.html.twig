@@ -20,7 +20,7 @@
                         {% thumbnail carouselitem.image, 'splash' %}
                         {% if showCaption %}
                             <div class="carousel-caption">
-                                <h4>{% if carouselitem.title is defined %} {{ carouselitem.title }} {% endif %}</h4>
+                                <h4>{% if carouselitem.title is defined %} {{ carouselitem.title|truncate(75) }} {% if carouselitem.title|length > 75 %}...{% endif %} {% endif %}</h4>
                                 <p>{% if carouselitem.content is defined %} {{ carouselitem.content }} {% endif %}</p>
                             </div>
                         {% endif %}
