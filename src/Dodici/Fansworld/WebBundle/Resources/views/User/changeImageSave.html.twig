@@ -57,7 +57,7 @@
 
                                 <br/>
 
-                                <form action="{{ path('user_change_imageSaveTest', {'originalFile': originalFile, 'tempFile': tempFile }) }}" method="post" enctype="multipart/form-data" class="bigform upload-photo" name="frmUpload">
+                                <form action="{{ path('user_change_imageSave', {'originalFile': originalFile, 'tempFile': tempFile }) }}" method="post" enctype="multipart/form-data" class="bigform upload-photo" name="frmUpload">
                                     {{ form_errors(form) }}
                                     {{ form_rest(form) }}
 
