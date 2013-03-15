@@ -110,10 +110,15 @@ $(document).ready(function () {
                 //$(event.target).toggleClass('active');
                 return;
             }
+            // Set new title
             var title = $(event.target).attr("data-original-title");
             that.setTitle(title);
+            // deselect
+            $(that.options.target).removeClass('active');
+            // select
+            $(event.target).addClass('active');
             that.options.target = event.target;
-            $(that.options.target).toggleClass('active');
+
             // Get target window positioning
             var offset = $(event.target).offset();
             offset.top -= $(that.element).height() + $(event.target).height() + 10;
