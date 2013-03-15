@@ -1,4 +1,4 @@
-/*global $, jQuery, alert, console, error, success, endless, ajax, templateHelper, qq, Routing, appLocale, exports, module, require, define*/
+/*global ExposeTranslation, $, jQuery, alert, console, error, success, endless, ajax, templateHelper, qq, Routing, appLocale, exports, module, require, define*/
 /*jslint nomen: true */ /* Tolerate dangling _ in identifiers */
 /*jslint vars: true */ /* Tolerate many var statements per function */
 /*jslint white: true */
@@ -50,6 +50,7 @@ $(document).ready(function () {
         timer: null,
         mediaType: null,
         isModal: true,  // Plugin will use a modal made with colorbox
+        imageType: null, // for profile and splash picture upload
         uploaderSelector: '#file-uploader',
         // custom bindings
         onSubmit: function(id, fileName){},
@@ -79,14 +80,13 @@ $(document).ready(function () {
             $(that.element).addClass(that._name);
             that.options.mediaType = $(that.element).attr('data-upload');
             that.options.isModal = $(that.element).attr('data-ismodal');
+            that.options.imageType = $(that.element).attr('data-type');
             $(that.element).bind("destroyed", $.proxy(that.teardown, that));
-            console.log("data-upload: " + that.options.mediaType + " isModal: " + that.options.isModal)
             if(that.options.isModal === 'false') {
-                console.log("sale is modal")
                 that.options.uploaderSelector = "#avatar-uploader";
                 that.createFwImageUploader();
                 return;
-            };
+            }
             $(that.element).colorbox({
                 innerWidth: 700,
                 innerHeight: 475,
@@ -173,7 +173,6 @@ $(document).ready(function () {
             that.bindFormSubmit();
             that.bindAlbumActions();
             that.options.timer = setInterval(function(){ that.resizePopup(); }, 250);
-            console.log("autosize popup")
         },
         createFwPhotoUploader: function() {
             var that = this;
@@ -277,6 +276,7 @@ $(document).ready(function () {
                                 'originalFile': responseJSON.originalFile,
                                 'tempFile':responseJSON.tempFile,
                                 'width': responseJSON.width,
+                                'type': that.options.imageType,
                                 'height': responseJSON.height
                             }),
                             iframe: false,
