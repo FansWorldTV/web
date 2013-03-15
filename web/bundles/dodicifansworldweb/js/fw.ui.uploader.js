@@ -235,9 +235,9 @@ $(document).ready(function () {
                 maxConnections: 1,
                 allowedExtensions: that.options.mediaExtensions[that.options.mediaType],
                 disableDefaultDropzone: true,
-                template: '<div class="qq-uploaderX">' +
+                template: '<div class="qq-uploaderX" style="margin:10px;">' +
                     '<div class="qq-upload-buttonXX btn btn-success">{uploadButtonText}</div>' +
-                    '<ul class="qq-upload-list" style="margin-top: 10px; text-align: center;visibility:hidden;"></ul>' +
+                    '<ul class="qq-upload-list" style="margin-top: 10px; text-align: center;display:none;"></ul>' +
                     '</div>',
                 fileTemplate: '<li>' +
                     '<div class="qq-progress-bar"></div>' +
@@ -289,7 +289,7 @@ $(document).ready(function () {
                             }
                         });
                     }
-                    $('.qq-upload-buttonXX').removeClass('loading-small');
+                    $(that.element).find('.btn').removeClass('loading-small');
                     return that.options.onComplete(id, fileName, responseJSON);
                 },
                 onUpload: function() {
@@ -305,11 +305,11 @@ $(document).ready(function () {
                     that.resizePopup();
                 },
                 onSubmit: function(id, fileName){
-                    $('.qq-upload-buttonXX').addClass('loading-small');
+                    $(that.element).find('.btn').addClass('loading-small');
                     return that.options.onSubmit(id, fileName);
                 },
                 onError: function(id, fileName, reason) {
-                    $('.qq-upload-buttonXX').removeClass('loading-small');
+                    $(that.element).find('.btn').removeClass('loading-small');
                     return that.options.onError(id, fileName, reason);
                 }
             });
