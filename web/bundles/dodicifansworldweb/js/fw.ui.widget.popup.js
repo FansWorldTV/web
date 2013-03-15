@@ -21,14 +21,13 @@
  */
 // FansWorld widget plugin 1.0 initial
 $(document).ready(function () {
-
     "use strict";
     // Create the defaults once
     var pluginName = "fwWidget";
     var defaults = {
         title: "title",
-        isPoped: true,
-        target: null,
+        isPoped: false,
+        target: null
     };
 
     // The actual plugin constructor
@@ -48,25 +47,29 @@ $(document).ready(function () {
         init: function () {
             var that = this;
             $(that.element).find('.widget-title').text(that.options.title);
-            $(that.element).attr('id', 'mywidget');
-            if (that.options.isPoped) {
-                $(that.element).animate({
-                    opacity: 0
-                });
-                that.options.isPoped = false;
-            }
+            $(that.element).attr('id', 'widget-popup');
             // attach scrollbars
             $(that.element).find('.widget-inner').jScrollPane();
             // Bind close button
-            $('.close-share').on("click", function (event) {
-                $(that.element).animate({
-                    opacity: 0
-                });
-                that.options.isPoped = false;
+            $('.close-share').on("click", function(event) {
+                that.popOut(event);
+            });
+        },
+        setPosition: function(target) {
+            var that = this;
+            // Get target window positioning
+            var offset = $(target).offset();
+            offset.top -= $(that.element).height() + $(target).height() + 10;
+            offset.left -= ($(that.element).width() / 2) - ($(target).width() / 2);
+            // Set popup position
+            $(that.element).offset({
+                top: offset.top,
+                left: offset.left
             });
         },
         popIn: function(event) {
             var that = this;
+            that.setPosition(event.target);
             $(that.element).animate({
                 opacity: 1
             });
@@ -79,9 +82,38 @@ $(document).ready(function () {
             });
             that.options.isPoped = false;
         },
+        setTitle: function(title) {
+            var that = this;
+            $(that.element).find('.widget-title').text(title);
+        },
+        checkBounds: function(check) {
+            var that = this;
+            if(check) {
+                $("body").on('click', function(event) {
+                    if (event.target.id == "widget-popup" || $(event.target).parents("#widget-popup").size()) {
+                        //alert("Inside div");
+                    } else {
+                        that.popOut(event);
+                        $(this).off();
+                    }
+                });
+            } else {
+                $("body").off();
+            }
+        },
         toggle: function (event) {
             var that = this;
+            event.preventDefault();
+            if(!$(event.target).hasClass('active') && that.options.isPoped) {
+                that.popOut(event);
+                $(that.options.target).removeClass('active');
+                //$(event.target).toggleClass('active');
+                return;
+            }
+            var title = $(event.target).attr("data-original-title");
+            that.setTitle(title);
             that.options.target = event.target;
+            $(that.options.target).toggleClass('active');
             // Get target window positioning
             var offset = $(event.target).offset();
             offset.top -= $(that.element).height() + $(event.target).height() + 10;
@@ -91,7 +123,6 @@ $(document).ready(function () {
                 top: offset.top,
                 left: offset.left
             });
-
             // Toggle visibility
             if (!that.options.isPoped) {
                 that.popIn(event);
@@ -120,8 +151,9 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    $('.widget-container').fwWidget({title: "hola mundo"});
-    $('#feed').on("click", function(e) {
+    "use strict";
+    $('.widget-container').fwWidget({});
+    $('.widgets button').on("click", function(e) {
         $('.widget-container').data('fwWidget').toggle(e);
     });
-})
+});
