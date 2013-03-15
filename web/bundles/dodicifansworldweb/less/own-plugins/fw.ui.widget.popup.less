@@ -1,0 +1,138 @@
+/* Styles specific to this particular page */
+/*
+.jspVerticalBar
+{
+  width: 8px;
+  right: 3px;
+  background: rgba(0,0,0,0.25);
+}
+*/
+.jspTrack {
+  background: rgba(0,0,0,0.25);
+  border-radius: 10px;
+}
+.jspVerticalBar  {
+  background: transparent;
+  width: 8px;
+  right: 3px;
+}
+.jspDrag
+{
+	background:  #000;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+
+.widget-container {
+  position: absolute;
+  border: 1px solid #24171a;
+  border-radius: 6px;
+  height: 250px;
+  width: 250px;
+  margin-top: -60px;
+  margin-left: 50px;
+  box-shadow: 0px 0px 6px 2px rgba(0,0,0,1);
+  z-index: 1010;
+  padding: 0px;
+  background-color: #fff;
+}
+.widget-container:after {
+  content: "";
+  border-color: #24171a #24171a transparent transparent ;
+  border-style: solid;
+  border-width: 8px;
+  width: 0;
+  height: 0;
+  position:absolute;
+  bottom: 0%;
+  left: 50%;
+  margin-left: -4px;
+  margin-bottom: -8px;
+  -webkit-transform: rotate(135deg); /* Prefixes... */
+  box-shadow: 0px 0px 6px 2px rgba(0,0,0,1);
+  z-index: -100;
+}
+.widget-container .arrow {
+  box-shadow: 0px 0px 6px 2px rgba(0,0,0,1);
+}
+.widget-container .widget-title {
+  color: #E4E1BC;
+  padding: 10px 10px;
+  line-height: 1;
+  border-radius: 3px 3px 0 0;
+  background-color:#2e282a;
+  background-image:-moz-linear-gradient(top, #343434, #24171a);
+  background-image:-ms-linear-gradient(top, #343434, #24171a);
+  background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#343434), to(#24171a));
+  background-image:-webkit-linear-gradient(top, #343434, #24171a);
+  background-image:-o-linear-gradient(top, #343434, #24171a);
+  background-image:linear-gradient(top, #343434, #24171a);
+  background-repeat:repeat-x;
+
+  box-shadow: 0px 0px 4px 2px rgba(0,0,0,1);
+  text-shadow: 0px 1px 4px rgba(0,0,0,1);
+}
+.widget-container i.close-share{
+  display:block;
+  z-index:99999999999999;
+  position: relative;
+  margin-top:-25px;
+  float: right;
+  right:5px;
+  background-image:url("../images/ui/closealert.png") !important;
+  width:14px;
+  height:14px;
+  background-position:top;
+  cursor:pointer;
+}
+.widget-container i.close-share:hover{
+  background-position:bottom;
+}
+
+.widget-container .widget-content {
+  width: 100%;
+  height: 100%;
+  position:relative;
+  background-image:-moz-linear-gradient(top, #343434, #24171a);
+  background-image:-ms-linear-gradient(top, #343434, #24171a);
+  background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#343434), to(#24171a));
+  background-image:-webkit-linear-gradient(top, #343434, #24171a);
+  background-image:-o-linear-gradient(top, #343434, #24171a);
+  background-image:linear-gradient(top, #343434, #24171a);
+  background-repeat:repeat-x;
+
+  border-radius:3px;
+  overflow: hidden;
+  overflow-y: hidden;
+}
+
+.widget-container .widget-content .widget-inner {
+  width: 100%;
+  height: 210px;
+  position:relative;
+  margin-top: 4px;
+  background-color:transparent;
+}
+
+.widget-container .widget-content .widget-inner .widget-app {
+    width: 100%;
+  position:relative;
+  margin-top: 0px;
+  background-color:transparent;
+}
+.triangle-with-shadow {
+  position:absolute;width:0;height:0;
+  z-index: -100;
+}
+.triangle-with-shadow:after {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: #999;
+  transform: rotate(45deg); /* Prefixes... */
+  top: 75px;
+  left: 25px;
+  box-shadow: -1px -1px 10px -2px rgba(0,0,0,0.5);
+}
