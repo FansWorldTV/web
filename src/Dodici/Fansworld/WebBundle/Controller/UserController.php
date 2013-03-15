@@ -734,7 +734,8 @@ class UserController extends SiteController
             'ext' => $ext,
             'finish' => $finish,
             'realWidth' => $realWidth,
-            'realHeight' => $realHeight
+            'realHeight' => $realHeight,
+            'type' => $type
         );
     }
 

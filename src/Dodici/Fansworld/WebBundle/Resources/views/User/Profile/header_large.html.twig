@@ -1,13 +1,13 @@
 {% extends 'DodiciFansworldWebBundle:Profile:header_large_base.html.twig' %}
 
-{% block splash_container %}  
+{% block splash_container %}
 	{% if entity.splash %}
-        {{ entity.splash }}
+        {% thumbnail entity.splash, 'splash' %}
     {% else %}
         <img src="{{ asset('bundles/dodicifansworldweb/images/profile_cover_no_image.jpg' )}}" />
     {% endif %}
 {% endblock %}
-	            
+
 {% block header_subtitle %}
     {% if entity.level %}
         {{ entity.level.title }}
