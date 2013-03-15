@@ -35,9 +35,9 @@
                     <div data-category-id="{{ cat.id }}" {% if not loop.first %} class="hidden" {% endif %} >
                         
                         {% if video.splash %}
-                            {% thumbnail video.splash, 'home_splash' %}
+                            {% thumbnail video.splash, 'home_splash' with {'title': ''} %}
                         {% else %}
-                            {% thumbnail video.image, 'home_splash' %}
+                            {% thumbnail video.image, 'home_splash' with {'title': ''}%}
                         {% endif %}
                         
                         {% if video %}
@@ -99,7 +99,7 @@
                     <h3>Actividad reciente</h3>
                     <ul>
                         {% for user in friendUsers %}
-                            <li>{% thumbnail user.image, 'avatar' %} {{ user }} es amig@ de richard y george</li>
+                            <li>{% thumbnail user.image, 'avatar' with {'title': ''}%} {{ user }} es amig@ de richard y george</li>
                         {% endfor %}
                     </ul>
                 </section>
