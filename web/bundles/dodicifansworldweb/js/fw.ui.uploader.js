@@ -81,9 +81,10 @@ $(document).ready(function () {
             that.options.mediaType = $(that.element).attr('data-upload');
             that.options.isModal = $(that.element).attr('data-ismodal');
             that.options.imageType = $(that.element).attr('data-type');
+
             $(that.element).bind("destroyed", $.proxy(that.teardown, that));
             if(that.options.isModal === 'false') {
-                that.options.uploaderSelector = "#avatar-uploader";
+                that.options.uploaderSelector = '#' + $(that.element).attr('data-uploader-selector');
                 that.createFwImageUploader();
                 return;
             }
