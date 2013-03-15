@@ -1,8 +1,8 @@
-<h2>{{ 'Comments'|trans }}</h2>
+<br/>
 <div class="actualizaciones clearfix">
 	{% if appstate.cancomment(entity) or true %}
 		{% include 'DodiciFansworldWebBundle:Comment/blocks:form.html.twig' with {entity: entity} %}
 	{% endif %}
-	
+
 	{% include 'DodiciFansworldWebBundle:Comment/blocks:wall.html.twig' with {entity: entity} %}
 </div>
