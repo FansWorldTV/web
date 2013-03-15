@@ -26,11 +26,17 @@ nav.leftmenubar{
     }
     
     ul > li img {
+        opacity: 0.7;
+
         @media (max-width: 480px) {
             max-height: 30px;        
         }
         @media (min-width: 481px) and (max-width: 767px) {
             max-height: 40px;
+        }
+
+        &:hover {
+            opacity: 1;
         }
     }
      
