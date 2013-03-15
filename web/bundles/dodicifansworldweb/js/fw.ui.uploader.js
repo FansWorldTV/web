@@ -273,7 +273,7 @@ $(document).ready(function () {
                 onComplete: function(id, fileName, responseJSON) {
                     if(responseJSON.success) {
                         $.colorbox({
-                            href: Routing.generate(appLocale + '_user_change_imageSaveTest', {
+                            href: Routing.generate(appLocale + '_user_change_imageSave', {
                                 'originalFile': responseJSON.originalFile,
                                 'tempFile':responseJSON.tempFile,
                                 'width': responseJSON.width,

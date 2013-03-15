@@ -8,28 +8,33 @@
 {% endblock %}
 
 {% block inner_content %}
-<div class="upload_image clearfix">
-	<div class="current">
-		{% if media %}
-			{% thumbnail media, 'medium' with { class: 'roundedimg'} %}
-		{% else %}
-			<img class="roundedimg" src="{{ asset('bundles/dodicifansworldweb/images/profile_no_image.png') }}" alt="" />
-		{% endif %}
-	</div>
-	<div class="form">
-		<div class="greybox">
-			<form action="{{ path('user_change_image') }}" method="post" enctype="multipart/form-data" class="bigform change-image">
-				<div class="form-changeimage fieldcontainer">
-					<ul class="fields">
-		        		{{ form_widget(form) }}
-		        	</ul>
-				</div>
+	{{ parent() }}
+    <script src="{{ asset('bundles/dodicifansworldweb/js/jcrop/jquery.Jcrop.min.js') }}" type="text/javascript"></script>
+    <div class="row-fluid">
+        <div class="span7">
+	        <div class="current">
+				<section id="picture" class="row-fluid">
+                    <dl class="with-circles">
+                        <dt>
+                            <h4 class="numbered"><span>1</span> Elija una nueva foto de perfil </h4>
+                            <div class="clearfix"></div>
+                        </dt>
 
-		        <div class="actions clearfix">
-		            <input type="submit" name="submit" value="Subir" class="btn_action" />
-		        </div>
-			</form>
+	                    <div data-ismodal="false" data-upload="photo"></div>
+	                    <div id="avatar-uploader" style="margin-top: 15px;margin-left: 36px;"></div>
+
+	                    <br/>
+                	</dl>
+                </section>
+			</div>
+        </div>
+        <div class='span4'>
+            <section class='ayuda'>
+                <h2><span class="circular">?</span>Ayuda</h2>
+                <p>
+                    Luego de seleccionar la foto, se abrira una ventana modal que le permitira recortar y guardar la imagen.
+                </p>
+            </section>
 		</div>
-	</div>
-</div>
+    </div>
 {% endblock %}

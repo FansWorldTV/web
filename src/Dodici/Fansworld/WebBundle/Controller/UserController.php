@@ -651,68 +651,16 @@ class UserController extends SiteController
         $request = $this->getRequest();
         $user = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
-
-        $media = $user->getImage();
-
-        $defaultData = array();
-
-        $collectionConstraint = new Collection(array(
-                    'file' => new \Symfony\Component\Validator\Constraints\Image()
-                ));
-
-        $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
-                ->add('file', 'file', array('required' => true, 'label' => 'Archivo'))
-                ->getForm();
-
-
-        if ($request->getMethod() == 'POST') {
-            try {
-                $form->bindRequest($request);
-                $data = $form->getData();
-
-                if ($form->isValid()) {
-                    $mediaManager = $this->get("sonata.media.manager.media");
-
-                    $media = new Media();
-                    $media->setBinaryContent($data['file']);
-                    $media->setContext('default');
-                    $media->setProviderName('sonata.media.provider.image');
-
-                    $mediaManager->save($media);
-
-                    $user->setImage($media);
-                    $em->persist($user);
-                    $em->flush();
-                }
-            } catch (\Exception $e) {
-                $form->addError(new FormError('Error subiendo foto'));
-            }
-        }
-
-        return array('media' => $media, 'form' => $form->createView(), 'user'=>$user);
-    }
-
-
-    /**
-     * @Route("/user/change_imageTest", name="user_change_imageTest")
-     * @Secure(roles="ROLE_USER")
-     * @Template
-     */
-    public function changeImageTestAction()
-    {
-        $request = $this->getRequest();
-        $user = $this->getUser();
-        $em = $this->getDoctrine()->getEntityManager();
         $media = $user->getImage();
         return array('media' => $media, 'user'=>$user);
     }
 
     /**
-     * @Route("/user/change_imageSaveTest", name="user_change_imageSaveTest")
+     * @Route("/user/change_imageSave", name="user_change_imageSave")
      * @Secure(roles="ROLE_USER")
      * @Template
      */
-    public function changeImageSaveTestAction()
+    public function changeImageSaveAction()
     {
         $request = $this->getRequest();
         $user = $this->getUser();
