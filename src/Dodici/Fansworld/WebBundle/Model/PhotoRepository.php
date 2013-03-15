@@ -146,21 +146,35 @@ class PhotoRepository extends CountBaseRepository
      */
     public function search($text=null, $user=null, $limit=null, $offset=null, $tag=null)
     {
+        $terms = array();
+        $xp = explode(' ', $text);
+        foreach ($xp as $x) if (trim($x)) $terms[] = trim($x);
+        
         $dql = '
     	SELECT p
     	FROM \Dodici\Fansworld\WebBundle\Entity\Photo p
     	LEFT JOIN p.hastags pht
     	LEFT JOIN pht.tag phtag
         WHERE p.active = true
-        AND
-        (
-        	(p.title LIKE :textlike)
-        	OR
-        	(p.content LIKE :textlike)
-        	OR
-        	(phtag.title LIKE :textlike)
-        )
-        '.
+        ';
+        
+        if ($terms) {
+            foreach ($terms as $k => $t) {
+                $dql .= '
+            	AND
+            	(
+            		(p.title LIKE :term'.$k.')
+                	OR
+                	(p.content LIKE :term'.$k.')
+                	OR
+                	(phtag.title LIKE :term'.$k.')
+            	)
+            	';
+                
+            }
+        }
+        
+        $dql .=
     	($tag ? '
     	AND '.
     	(($tag instanceof Tag) ? '
@@ -175,7 +189,9 @@ class PhotoRepository extends CountBaseRepository
         ';
         
         $query = $this->_em->createQuery($dql);
-        $query = $query->setParameter('textlike', '%'.$text.'%');
+        
+        if ($terms) foreach ($terms as $k => $t) $query = $query->setParameter('term'.$k, '%' . $t . '%');
+        
         if ($limit !== null) $query = $query->setMaxResults($limit);
     	if ($offset !== null) $query = $query->setFirstResult($offset);
     	if ($tag) $query = $query->setParameter('tag', ($tag instanceof Tag) ? $tag->getId() : $tag);
@@ -192,6 +208,10 @@ class PhotoRepository extends CountBaseRepository
      */
     public function countSearch($text=null, $user=null, $tag=null)
     {
+        $terms = array();
+        $xp = explode(' ', $text);
+        foreach ($xp as $x) if (trim($x)) $terms[] = trim($x);
+        
         $dql = '
     	SELECT COUNT(e.id)
     	FROM \Dodici\Fansworld\WebBundle\Entity\Photo e
@@ -208,26 +228,31 @@ class PhotoRepository extends CountBaseRepository
     	')) : '')
         .'
     	WHERE e.active = true
-        AND
-        (
-        	(e.title LIKE :textlike)
-        	OR
-        	(e.content LIKE :textlike)
-        	OR
-        	(
-        		e.id IN (
-        			SELECT ex.id
-    				FROM \Dodici\Fansworld\WebBundle\Entity\Photo ex
-    				JOIN ex.hastags exht
-    				JOIN exht.tag exhtag WITH exhtag.title LIKE :textlike
-        		)
-        	)
-        )
-        '
-    	;
+    	';
+        
+        if ($terms) {
+            foreach ($terms as $k => $t) {
+                $dql .= ' AND
+                (
+                	(e.title LIKE :term'.$k.')
+                	OR
+                	(e.content LIKE :term'.$k.')
+                	OR
+                	(
+                		e.id IN (
+                			SELECT ex'.$k.'.id
+            				FROM \Dodici\Fansworld\WebBundle\Entity\Photo ex'.$k.'
+            				JOIN ex'.$k.'.hastags ex'.$k.'ht
+            				JOIN ex'.$k.'ht.tag ex'.$k.'htag WITH ex'.$k.'htag.title LIKE :term'.$k.'
+                		)
+                	)
+                )
+                ';
+            }
+        }
         
         $query = $this->_em->createQuery($dql);
-        $query = $query->setParameter('textlike', '%'.$text.'%');
+        if ($terms) foreach ($terms as $k => $t) $query = $query->setParameter('term'.$k, '%' . $t . '%');
     	if ($tag) $query = $query->setParameter('tag', ($tag instanceof Tag) ? $tag->getId() : $tag);
             
         return $query->getSingleScalarResult();

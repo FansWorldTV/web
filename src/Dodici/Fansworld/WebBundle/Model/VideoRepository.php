@@ -58,6 +58,10 @@ class VideoRepository extends CountBaseRepository
         if ($recommended && !$user) throw new \Exception('You must provide a user to get recommended videos');
         if ($recommended && $related) throw new \Exception('Related and recommended are mutually exclusive');
         
+        $terms = array();
+        $xp = explode(' ', $searchterm);
+        foreach ($xp as $x) if (trim($x)) $terms[] = trim($x);
+        
         if(!$sortcriteria)
         {
             $sortcriteria = 'default';
@@ -87,7 +91,7 @@ class VideoRepository extends CountBaseRepository
             }
         }
 
-        $query = $this->_em->createQuery('
+        $dql = '
     	SELECT v, vi, va '.
         
         ($related ? ', (COUNT(vhtag) + COUNT(vhteam) + COUNT(vhidol)) common' : '') .
@@ -132,17 +136,32 @@ class VideoRepository extends CountBaseRepository
         
     	.'
     	WHERE v.active = true
-    	AND
     	'.
-    	($taggedentity ? ' vhh.' . (($type == 'user') ? 'target' : $type) . ' = :taggedentity AND ' : '')
-    	.'
-    	(:searchterm IS NULL OR (
-    		(v.title LIKE :searchlike)
-    		OR
-    		(v.content LIKE :searchlike)
-    		OR
-    		(v.id IN (SELECT vhtv.id FROM \Dodici\Fansworld\WebBundle\Entity\HasTag vht INNER JOIN vht.video vhtv INNER JOIN vht.tag vhtt WITH vhtt.title = :searchterm))
-    	))
+    	($taggedentity ? ('AND vhh.' . (($type == 'user') ? 'target' : $type) . ' = :taggedentity ') : '');
+    	
+    	if ($terms) {
+    	
+    	    foreach ($terms as $k => $t) {
+            	$dql .= '
+            	AND
+            	(
+            		(v.title LIKE :term'.$k.')
+            		OR
+            		(v.content LIKE :term'.$k.')
+            		OR
+            		(v.id IN (SELECT vhtvtx'.$k.'.id FROM \Dodici\Fansworld\WebBundle\Entity\HasTag vhttx'.$k.' INNER JOIN vhttx'.$k.'.video vhtvtx'.$k.' INNER JOIN vhttx'.$k.'.tag vhtttx'.$k.' WITH vhtttx'.$k.'.title LIKE :term'.$k.'))
+            		OR
+            		(v.id IN (SELECT vhtvmx'.$k.'.id FROM \Dodici\Fansworld\WebBundle\Entity\HasTeam vhtmx'.$k.' INNER JOIN vhtmx'.$k.'.video vhtvmx'.$k.' INNER JOIN vhtmx'.$k.'.team vhttmx'.$k.' WITH vhttmx'.$k.'.title LIKE :term'.$k.'))
+            		OR
+            		(v.id IN (SELECT vhtvix'.$k.'.id FROM \Dodici\Fansworld\WebBundle\Entity\HasIdol vhtix'.$k.' INNER JOIN vhtix'.$k.'.video vhtvix'.$k.' INNER JOIN vhtix'.$k.'.idol vhttix'.$k.' WITH (vhttix'.$k.'.firstname LIKE :term'.$k.' OR vhttix'.$k.'.lastname LIKE :term'.$k.')))
+            	)
+            	';
+    	    }
+    	
+    	}
+    	
+    	
+    	$dql .= '
     	AND
     	(
     		(v.privacy = :everyone)
@@ -208,9 +227,9 @@ class VideoRepository extends CountBaseRepository
     	' . ($recommended ? 'commonrec DESC, ' : '') . '
     	' . $sortcriterias[$sortcriteria] . '
     	
-    	')
-                ->setParameter('searchterm', $searchterm)
-                ->setParameter('searchlike', '%' . $searchterm . '%')
+    	';
+    	
+    	$query = $this->_em->createQuery($dql)
                 ->setParameter('everyone', Privacy::EVERYONE)
                 ->setParameter('friendsonly', Privacy::FRIENDS_ONLY)
                 ->setParameter('user', ($user instanceof User) ? $user->getId() : $user)
@@ -218,6 +237,8 @@ class VideoRepository extends CountBaseRepository
                 ->setParameter('datefrom', $datefrom)
                 ->setParameter('dateto', $dateto)
                 ->setParameter('highlighted', $highlighted);
+                
+        if ($terms) foreach ($terms as $k => $t) $query = $query->setParameter('term'.$k, '%' . $t . '%');
                 
         if ($author)
             $query = $query->setParameter('author', ($author instanceof User) ? $author->getId() : $author);
@@ -286,6 +307,10 @@ class VideoRepository extends CountBaseRepository
         if ($recommended && !$user) throw new \Exception('You must provide a user to get recommended videos');
         if ($recommended && $related) throw new \Exception('Related and recommended are mutually exclusive');
         
+        $terms = array();
+        $xp = explode(' ', $searchterm);
+        foreach ($xp as $x) if (trim($x)) $terms[] = trim($x);
+        
         if ($taggedentity) {
             $type = $this->getType($taggedentity);
         }
@@ -301,7 +326,7 @@ class VideoRepository extends CountBaseRepository
             }
         }
         
-        $query = $this->_em->createQuery('
+        $dql = '
     	SELECT COUNT(v.id)'
     	
         .'
@@ -322,17 +347,9 @@ class VideoRepository extends CountBaseRepository
     	
     	.'
     	WHERE v.active = true
-    	AND
     	'.
-    	($taggedentity ? ' vhh.' . (($type == 'user') ? 'target' : $type) . ' = :taggedentity AND ' : '')
+    	($taggedentity ? (' AND vhh.' . (($type == 'user') ? 'target' : $type) . ' = :taggedentity  ') : '')
     	.'
-    	(:searchterm IS NULL OR (
-    		(v.title LIKE :searchlike)
-    		OR
-    		(v.content LIKE :searchlike)
-    		OR
-    		(v.id IN (SELECT vhtv.id FROM \Dodici\Fansworld\WebBundle\Entity\HasTag vht INNER JOIN vht.video vhtv INNER JOIN vht.tag vhtt WITH vhtt.title = :searchterm))
-    	))
     	AND
     	(
     		(v.privacy = :everyone)
@@ -408,12 +425,31 @@ class VideoRepository extends CountBaseRepository
             HAVING (COUNT(vhrecteam) + COUNT(vhrecidol)) > 0
             )
         )
-        ' : '')
+        ' : '');
         
+        
+        if ($terms) {
     	
-    	)
-                ->setParameter('searchterm', $searchterm)
-                ->setParameter('searchlike', '%' . $searchterm . '%')
+    	    foreach ($terms as $k => $t) {
+            	$dql .= '
+            	AND
+            	(
+            		(v.title LIKE :term'.$k.')
+            		OR
+            		(v.content LIKE :term'.$k.')
+            		OR
+            		(v.id IN (SELECT vhtvtx'.$k.'.id FROM \Dodici\Fansworld\WebBundle\Entity\HasTag vhttx'.$k.' INNER JOIN vhttx'.$k.'.video vhtvtx'.$k.' INNER JOIN vhttx'.$k.'.tag vhtttx'.$k.' WITH vhtttx'.$k.'.title LIKE :term'.$k.'))
+            		OR
+            		(v.id IN (SELECT vhtvmx'.$k.'.id FROM \Dodici\Fansworld\WebBundle\Entity\HasTeam vhtmx'.$k.' INNER JOIN vhtmx'.$k.'.video vhtvmx'.$k.' INNER JOIN vhtmx'.$k.'.team vhttmx'.$k.' WITH vhttmx'.$k.'.title LIKE :term'.$k.'))
+            		OR
+            		(v.id IN (SELECT vhtvix'.$k.'.id FROM \Dodici\Fansworld\WebBundle\Entity\HasIdol vhtix'.$k.' INNER JOIN vhtix'.$k.'.video vhtvix'.$k.' INNER JOIN vhtix'.$k.'.idol vhttix'.$k.' WITH (vhttix'.$k.'.firstname LIKE :term'.$k.' OR vhttix'.$k.'.lastname LIKE :term'.$k.')))
+            	)
+            	';
+    	    }
+    	
+    	}
+        
+        $query = $this->_em->createQuery($dql)
                 ->setParameter('everyone', Privacy::EVERYONE)
                 ->setParameter('friendsonly', Privacy::FRIENDS_ONLY)
                 ->setParameter('user', ($user instanceof User) ? $user->getId() : null)
@@ -422,6 +458,8 @@ class VideoRepository extends CountBaseRepository
                 ->setParameter('dateto', $dateto)
                 ->setParameter('highlighted', $highlighted)
                 ->setParameter('author', ($author instanceof User) ? $author->getId() : null);
+                
+        if ($terms) foreach ($terms as $k => $t) $query = $query->setParameter('term'.$k, '%' . $t . '%');
                 
         if ($taggedentity)
             $query = $query->setParameter('taggedentity', $taggedentity->getId());

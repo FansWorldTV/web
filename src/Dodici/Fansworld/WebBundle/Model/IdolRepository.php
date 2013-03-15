@@ -23,6 +23,10 @@ class IdolRepository extends CountBaseRepository
      */
     public function SearchFront(\Application\Sonata\UserBundle\Entity\User $user = null, $filtername = null, $isidol = null, $limit = null, $offset = null)
     {
+        $terms = array();
+        $xp = explode(' ', $filtername);
+        foreach ($xp as $x) if (trim($x)) $terms[] = trim($x);
+        
         $querystring = '
     	SELECT i
     	FROM \Dodici\Fansworld\WebBundle\Entity\Idol i
@@ -30,20 +34,25 @@ class IdolRepository extends CountBaseRepository
     	i.active = true
     	';
 
-        if ($filtername)
-            $querystring .=
-                    '
-    	AND
-    	(
-    		(i.firstname LIKE :filtername)
-    		OR
-    		(i.lastname LIKE :filtername)
-    		OR
-    		(i.nicknames LIKE :filtername)
-    		OR
-    		(i.content LIKE :filtername)
-    	)
-    	';
+        if ($terms) {
+
+            foreach ($terms as $k => $t) {
+                $querystring .=
+                        '
+            	AND
+            	(
+            		(i.nicknames LIKE :term'.$k.')
+            		OR
+            		(i.content LIKE :term'.$k.')
+            		OR
+            		(i.firstname LIKE :term'.$k.')
+            		OR
+            		(i.lastname LIKE :term'.$k.')
+            	)
+            	';
+                
+            }
+        }
 
         if ($isidol !== null)
             $querystring .=
@@ -66,8 +75,9 @@ class IdolRepository extends CountBaseRepository
         if ($isidol !== null)
             $query = $query->setParameter('userid', $user ? $user->getId() : null);
 
-        if ($filtername)
-            $query = $query->setParameter('filtername', '%' . $filtername . '%');
+        if ($terms) {
+            foreach ($terms as $k => $t) $query = $query->setParameter('term'.$k, '%' . $t . '%');
+        }   
 
         if ($limit !== null)
             $query = $query->setMaxResults($limit);
@@ -85,6 +95,10 @@ class IdolRepository extends CountBaseRepository
      */
     public function CountSearchFront(\Application\Sonata\UserBundle\Entity\User $user = null, $filtername = null, $isidol = null, $limit = null, $offset = null)
     {
+        $terms = array();
+        $xp = explode(' ', $filtername);
+        foreach ($xp as $x) if (trim($x)) $terms[] = trim($x);
+        
         $querystring = '
     	SELECT COUNT(i)
     	FROM \Dodici\Fansworld\WebBundle\Entity\Idol i
@@ -92,20 +106,25 @@ class IdolRepository extends CountBaseRepository
     	i.active = true
     	';
 
-        if ($filtername)
-            $querystring .=
-                    '
-    	AND
-    	(
-    		(i.firstname LIKE :filtername)
-    		OR
-    		(i.lastname LIKE :filtername)
-    		OR
-    		(i.nicknames LIKE :filtername)
-    		OR
-    		(i.content LIKE :filtername)
-    	)
-    	';
+        if ($terms) {
+
+            foreach ($terms as $k => $t) {
+                $querystring .=
+                        '
+            	AND
+            	(
+            		(i.nicknames LIKE :term'.$k.')
+            		OR
+            		(i.content LIKE :term'.$k.')
+            		OR
+            		(i.firstname LIKE :term'.$k.')
+            		OR
+            		(i.lastname LIKE :term'.$k.')
+            	)
+            	';
+                
+            }
+        }
 
         if ($isidol !== null)
             $querystring .=
@@ -124,8 +143,9 @@ class IdolRepository extends CountBaseRepository
         if ($isidol !== null)
             $query = $query->setParameter('userid', $user ? $user->getId() : null);
 
-        if ($filtername)
-            $query = $query->setParameter('filtername', '%' . $filtername . '%');
+        if ($terms) {
+            foreach ($terms as $k => $t) $query = $query->setParameter('term'.$k, '%' . $t . '%');
+        }  
 
         if ($limit !== null)
             $query = $query->setMaxResults($limit);

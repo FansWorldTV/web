@@ -162,4 +162,116 @@ class TeamRepository extends CountBaseRepository
         
         return $teams;
     }
+    
+	/**
+     * Search
+     * 
+     * term to search for:
+     * @param string $text
+     * 
+     * current logged in user, or null:
+     * @param User|null $user
+     * 
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function search($text, $user=null, $limit=null, $offset=null)
+    {
+    	$terms = array();
+        $xp = explode(' ', $text);
+        foreach ($xp as $x) if (trim($x)) $terms[] = trim($x);
+        
+        $querystring = '
+    	SELECT t
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Team t
+    	WHERE
+    	t.active = true
+    	';
+
+        if ($terms) {
+
+            foreach ($terms as $k => $t) {
+                $querystring .=
+                        '
+            	AND
+            	(
+            		(t.nicknames LIKE :term'.$k.')
+            		OR
+            		(t.content LIKE :term'.$k.')
+            		OR
+            		(t.title LIKE :term'.$k.')
+            		OR
+            		(t.shortname LIKE :term'.$k.')
+            	)
+            	';
+                
+            }
+        }
+
+        $querystring .= ' ORDER BY t.fanCount DESC';
+
+        $query = $this->_em->createQuery($querystring);
+
+        if ($terms) {
+            foreach ($terms as $k => $t) $query = $query->setParameter('term'.$k, '%' . $t . '%');
+        }   
+
+        if ($limit !== null)
+            $query = $query->setMaxResults($limit);
+        if ($offset !== null)
+            $query = $query->setFirstResult($offset);
+
+        return $query->getResult();
+    }
+    
+	/**
+     * Count Search
+     * 
+     * term to search for:
+     * @param string $text
+     * 
+     * current logged in user, or null:
+     * @param User|null $user
+     */
+    public function countSearch($text, $user=null)
+    {
+    	$terms = array();
+        $xp = explode(' ', $text);
+        foreach ($xp as $x) if (trim($x)) $terms[] = trim($x);
+        
+        $querystring = '
+    	SELECT COUNT(t)
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Team t
+    	WHERE
+    	t.active = true
+    	';
+
+        if ($terms) {
+
+            foreach ($terms as $k => $t) {
+                $querystring .=
+                        '
+            	AND
+            	(
+            		(t.nicknames LIKE :term'.$k.')
+            		OR
+            		(t.content LIKE :term'.$k.')
+            		OR
+            		(t.title LIKE :term'.$k.')
+            		OR
+            		(t.shortname LIKE :term'.$k.')
+            	)
+            	';
+                
+            }
+        }
+
+        $query = $this->_em->createQuery($querystring);
+
+        if ($terms) {
+            foreach ($terms as $k => $t) $query = $query->setParameter('term'.$k, '%' . $t . '%');
+        }   
+    	
+    	return (int)$query->getSingleScalarResult();
+    }
 }
