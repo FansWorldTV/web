@@ -96,7 +96,7 @@ class HomeController extends SiteController
 
 
         return $this->jsonResponse(array(
-                    'videos' => $serializer->values($videos, 'medium'),
+                    'videos' => $serializer->values($videos, 'big'),
                     'trending' => $trending
                 ));
     }
@@ -204,7 +204,7 @@ class HomeController extends SiteController
                 break;
         }
 
-        $results = $userFeed->latestActivity(10, $filters, array('photo', 'video'), $maxDate, null, $user, true);
+        $results = $userFeed->latestActivity(10, $filters, array('photo', 'video'), $maxDate, null, $user, true, 'big');
 
 
         return $this->jsonResponse($results);
@@ -221,7 +221,7 @@ class HomeController extends SiteController
         $request = $this->getRequest();
         $maxDate = $request->get('date', false);
 
-        $results = $userFeed->popular(10, array('photo', 'video'), $maxDate, null, $user, true);
+        $results = $userFeed->popular(10, array('photo', 'video'), $maxDate, null, $user, true, 'big');
 
 
         return $this->jsonResponse($results);
