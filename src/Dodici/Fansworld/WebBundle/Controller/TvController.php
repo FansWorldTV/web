@@ -413,7 +413,7 @@ class TvController extends SiteController
         $search = $videoRepo->search(null, $user, self::LIMIT_HOME_VIDEOS, $offset, $category, null, null, $datefrom, $dateto, $sortCriteria);
 
         return $this->jsonResponse(array(
-                    'videos' => $serializer->values($search, 'medium'),
+                    'videos' => $serializer->values($search, 'big'),
                 ));
     }
 
