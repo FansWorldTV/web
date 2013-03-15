@@ -15,7 +15,7 @@
                 z-index: -999;
 
             }
-            .carousel {
+            #myCarousel {
                 width: 100%;
             }
         }
@@ -265,6 +265,27 @@
 
         img.tiny {
             display: block;
+        }
+    }
+}
+
+@media(max-width: 1441px) {
+    div.idol-home section.top {
+        position: relative;
+
+        #myCarousel {   
+            width: 100%;
+        }   
+        
+        .info-detail-carousel {
+            position: absolute;
+            width: 100% !important;
+            bottom: 0;
+            opacity: 0.8;
+
+            h1 {
+                font-size: 20px;
+            }
         }
     }
 }
