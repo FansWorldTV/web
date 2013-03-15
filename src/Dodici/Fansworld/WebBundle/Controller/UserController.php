@@ -670,6 +670,7 @@ class UserController extends SiteController
         $originalFileName = $request->get('originalFile');
         $realWidth = $request->get('width');
         $realHeight = $request->get('height');
+        $type = $request->get('type');
 
         $lastdot = strrpos($originalFileName, '.');
         $originalFile = substr($originalFileName, 0, $lastdot);
@@ -708,7 +709,12 @@ class UserController extends SiteController
                     );
                     $media = $this->_GenerateMediaCrop($cropOptions);
 
-                    $user->setImage($media);
+                    if ('profile' == $type) {
+                        $user->setImage($media);
+                    } else {
+                        $user->setSplash($media);
+                    }
+
                     $em->persist($user);
                     $em->flush();
 
