@@ -61,7 +61,7 @@
             this.channelsList = channelsList;
             this.channel = $('.filter-channels').closest('ul').find("li.active").attr("data-channel-id");
             this.filter = $('#list-filters ul').find('li.active').attr('data-list-filter-type');
-
+            
             this.criteria = '';
             this.entityId = '';
             this.entityType = '';
@@ -96,7 +96,7 @@
                         'entityType': this.entityType
                     };
                     $(this.isotopeContainer).attr('data-feed-source', feed);
-                    console.log(this.feedfilter);
+                    //console.log(this.feedfilter);
                 } else {
                     return;
                 }
@@ -147,6 +147,20 @@
             if(this.filter === 'views') {
                 this.addCustomTags(this.defaultTags);
             }
+            
+            //explore hashtag
+            if(location.hash != ''){
+                var hash = location.hash;
+                hash = hash.replace('#', '');
+                hash = hash.toLowerCase();
+                $("li[data-list-target='"+hash+"']").click();
+            }
+            $(window).hashchange( function(){
+                var hash = location.hash;
+                hash = hash.replace('#', '');
+                hash = hash.toLowerCase();
+                $("li[data-list-target='"+hash+"']").click();
+            });
         }
         ////////////////////////////////////////////////////////////////////////
         // Genera galerias isotope genéricas                                  //
@@ -389,7 +403,7 @@
                     'entityId': that.entityId,
                     'entityType': that.entityType
                 };
-                console.log(opts);
+                //console.log(opts);
                 // Destroy gallery items
                 that.destroyGallery();
                 that.page = 1;  // reset page count
@@ -448,7 +462,7 @@
                             term: search_term, slug: search_term
                         });
 
-                        console.log(r.tags[i]);
+                        //console.log(r.tags[i]);
                         var strp = $("<li data-list-filter-type='" + r.tags[i].type + "' data-id='" + r.tags[i].id + "' class=''><span>" + r.tags[i].title + "</span></li>");
                         // TAG event creates new filter and updates de feed source
 

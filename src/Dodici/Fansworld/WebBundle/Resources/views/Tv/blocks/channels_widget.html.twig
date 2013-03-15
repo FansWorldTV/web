@@ -2,7 +2,7 @@
     <ul class="filter-channels clearfix">
         <li class="active" data-list-target="all"><a>Todos</a></li>
         {% for channel in channels %}
-            <li data-list-target="{{ channel.channelName }}" data-channel-id="{{ channel.id }}"><a>{{ channel.channelName }}</a></li>
+            <li data-list-target="{{ channel.channelName|lower }}" data-channel-id="{{ channel.id }}"><a>{{ channel.channelName }}</a></li>
         {% endfor %}
     </ul>
     <div class="content tab-content">
@@ -44,7 +44,7 @@
             </div>
         </div>
         {% for channel in channels %}
-            <div class="tab-pane" id="{{ channel.channelName }}">
+            <div class="tab-pane" id="{{ channel.channelName|lower }}">
                 {% if channel.video is not null %}
                     {% if channel.video.image is defined %}
                         {% if channel.video.image is not null %}

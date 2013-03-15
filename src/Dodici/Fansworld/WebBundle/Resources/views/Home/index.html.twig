@@ -53,7 +53,7 @@
                                 <p>{{ video.content }}</p>
                             {% endif %}
 
-                            <a href="{{ path('teve_home') }}"><button class="explore" >Explorar</button></a>
+                            <a href="{{ path('teve_home') }}#{{cat.title}}"><button class="explore" >Explorar</button></a>
 
                             {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                                 <a href="{{ path('fos_user_registration_register') }}"><button class="register">Registrarse</button></a>
