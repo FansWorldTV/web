@@ -26,9 +26,9 @@
         <div class="internal_buttons">
 
     {% if (type == 'photo' or type == 'video' ) %}
-    {% if reportbutton %}
+
                 <a class="btn btn-danger report" href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}"><i class="icon-flag"></i></a>
-    {% endif %}
+
     {% endif %}
 
 
