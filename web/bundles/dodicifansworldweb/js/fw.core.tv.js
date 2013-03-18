@@ -31,8 +31,14 @@
  *      base genericAction
  */
 
-// fansWorld TV Class Module 1.1 (con galerias de profiles)
+// fansWorld TV Class Module 1.2 con filtros para detalle
+// 1.1 (con galerias de profiles)
 // 1.0
+
+// TODO:
+// Separar logica de TV
+// Separar detale de video
+// Separar filtros y videos de profile
 
 (function (root, factory) {
     "use strict";
@@ -61,11 +67,14 @@
             this.channelsList = channelsList;
             this.channel = $('.filter-channels').closest('ul').find("li.active").attr("data-channel-id");
             this.filter = $('#list-filters ul').find('li.active').attr('data-list-filter-type');
-            
+
             this.criteria = '';
             this.entityId = '';
             this.entityType = '';
             this.page = 1;
+
+            // Video detail sort
+            this.detailSort();
 
             ////////////////////////////////////////////////////////////////////
             // Hook every isotope_container class                             //
@@ -147,9 +156,9 @@
             if(this.filter === 'views') {
                 this.addCustomTags(this.defaultTags);
             }
-            
+
             //explore hashtag
-            if(location.hash != ''){
+            if(location.hash !== ''){
                 var hash = location.hash;
                 hash = hash.replace('#', '');
                 hash = hash.toLowerCase();
@@ -488,7 +497,7 @@
                                     entity: that.entityType,
                                     page: that.page
                                 };
-                            }
+                            };
 
                             console.log("filtro por cosa: " + JSON.stringify(that.feedfilter) + " con id: " + $(this).attr('data-id'));
                             // Destroy gallery items
@@ -550,6 +559,59 @@
             }, function (msg) {
                 error(msg);
                 $button.removeClass('loading-small');
+            });
+        };
+        TV.prototype.detailSort = function(){
+            var ajaxActive = false;
+            var that = this;
+            console.log("init detal filter bindings")
+            $(".sort-videos .btn").on('click', function(){
+                if(!ajaxActive){
+                    var self = $(this);
+                    $(".sort-videos .btn.active").removeClass('active');
+                    $(this).addClass('active');
+                    $("#videos-related-sort").parent().addClass('loading');
+                    console.log($("#videos-related-sort"));
+                    ajax.genericAction('teve_ajaxsortdetail', {
+                        'video': $('[data-grid-related]').attr('data-grid-related'),
+                        'sort': self.attr('data-type')
+                    }, function(r){
+                        //$("#videos-related-sort").html("");
+                        $("#videos-related-sort").fadeOut('slow').promise().then(function() {
+                            $(this).empty();
+                            for(var i in r.videos){
+                                var video = r.videos[i];
+
+                            $("[data-grid-related]").append('<div class="video"> \
+                                                                  <a href="'+ Routing.generate(appLocale + '_video_show', {'id': video.id, 'slug': video.slug}) +'">\
+                                                                    <img src="' + video.image + '" alt="'+ video.title +'" title="'+ video.title +'" title="'+ video.title +'" /> \
+                                                                    <span class="video-duration">' + video.duration + '</span> \
+                                                                  </a>\
+                                                                  <span data-title class="title">'+ video.title + '</span>\
+                                                                  <p data-content>'+ video.content +'</p>\
+                                                              </div>');
+
+                            /*$('<div class="video"> \
+                                                                  <a href="'+ Routing.generate(appLocale + '_video_show', {'id': video.id, 'slug': video.slug}) +'">\
+                                                                    <img src="' + video.image + '" alt="'+ video.title +'" title="'+ video.title +'" title="'+ video.title +'" /> \
+                                                                    <span class="video-duration">' + video.duration + '</span> \
+                                                                  </a>\
+                                                                  <span data-title class="title">'+ video.title + '</span>\
+                                                                  <p data-content>'+ video.content +'</p>\
+                                                              </div>').hide().appendTo("[data-grid-related]");*/
+                        }
+                        }).then(function() {
+                            $(this).fadeIn('slow');
+                        })
+                        $("#videos-related-sort").parent().removeClass('loading');
+                        console.log($("#videos-related-sort"));
+                        ajaxActive = false;
+                    }, function(e){
+                        error(e);
+                    });
+
+                    ajaxActive = true;
+                }
             });
         };
         return TV;
