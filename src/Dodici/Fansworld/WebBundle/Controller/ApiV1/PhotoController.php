@@ -2,6 +2,7 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller\ApiV1;
 
+use Dodici\Fansworld\WebBundle\Entity\Photo;
 use Dodici\Fansworld\WebBundle\Entity\Apikey;
 use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -177,17 +178,9 @@ class PhotoController extends BaseController
     public function showAction($id)
     {
         try {
-            $video = $this->getRepository('Video')->find($id);
-            if (!$video) throw new HttpException(404, 'Video not found');
-            
-            $return = array(
-                'id' => $video->getId(),
-                'title' => (string)$video,
-                'image' => $this->imageValues($video->getImage()),
-                'highlight' => $video->getHighlight(),
-                'category_id' => $video->getVideocategory()->getId()
-            );
-            
+            $photo = $this->getRepository('Photo')->find($id);
+            if (!$photo) throw new HttpException(404, 'Photo not found');
+                        
             $request = $this->getRequest();
             $userid = $request->get('user_id');
             $user = null;
@@ -195,32 +188,18 @@ class PhotoController extends BaseController
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
             }
             
-            
             $allowedfields = array(
-            	'author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount', 'watchlisted', 'url', 'liked',
+            	'author', 'album', 'content', 'createdAt', 'visitCount', 'likeCount', 'commentCount', 'url', 'liked',
                 'tagged_idols', 'tagged_teams', 'tagged_tags', 'tagged_users'
             );
             $extrafields = $this->getExtraFields($allowedfields);
             
+            $return = $this->photoValues($photo, $extrafields, $user);
+            
             foreach ($extrafields as $x) {
                 switch ($x) {
-                    case 'author':
-                        $return['author'] = $video->getAuthor() ? $this->userArray($video->getAuthor()) : null;
-                        break;
-                    case 'createdAt':
-                        $return['createdAt'] = (int)$video->getCreatedAt()->format('U');
-                        break;
-                    case 'watchlisted':
-                        if ($user) $return[$x] = $this->get('video.playlist')->isInPlaylist($video, $user);
-                        break;
-                    case 'liked':
-                        if ($user) $return[$x] = ($this->get('liker')->isLiking($video, $user) ? true : false);
-                        break;
-                    case 'url':
-                        $return[$x] = $this->get('router')->generate('video_show', array('id' => $video->getId(), 'slug' => $video->getSlug()), true);
-                        break;
                     case 'tagged_idols':
-                        $has = $video->getHasidols();
+                        $has = $photo->getHasidols();
                         $t = array();
                         foreach ($has as $h) {
                             $ent = $h->getIdol();
@@ -234,7 +213,7 @@ class PhotoController extends BaseController
                         $return[$x] = $t;
                         break;
                     case 'tagged_teams':
-                        $has = $video->getHasteams();
+                        $has = $photo->getHasteams();
                         $t = array();
                         foreach ($has as $h) {
                             $ent = $h->getTeam();
@@ -247,7 +226,7 @@ class PhotoController extends BaseController
                         $return[$x] = $t;
                         break;
                     case 'tagged_tags':
-                        $has = $video->getHastags();
+                        $has = $photo->getHastags();
                         $t = array();
                         foreach ($has as $h) {
                             $ent = $h->getTag();
@@ -259,7 +238,7 @@ class PhotoController extends BaseController
                         $return[$x] = $t;
                         break;
                     case 'tagged_users':
-                        $has = $video->getHasusers();
+                        $has = $photo->getHasusers();
                         $t = array();
                         foreach ($has as $h) {
                             $ent = $h->getTarget();
@@ -268,8 +247,6 @@ class PhotoController extends BaseController
                         $return[$x] = $t;
                         break;
                     default:
-                        $methodname = 'get'.ucfirst($x);
-                        $return[$x] = $video->$methodname();
                         break;
                 }
             }
@@ -278,6 +255,47 @@ class PhotoController extends BaseController
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
+    }
+    
+    private function photoValues(Photo $photo, $extrafields = array(), $user = null)
+    {
+        $rv = array(
+            'id' => $photo->getId(),
+            'title' => (string)$photo,
+            'image' => $this->imageValues($photo->getImage())
+        );
+        
+        foreach ($extrafields as $x) {
+            switch ($x) {
+                case 'author':
+                    $rv['author'] = $photo->getAuthor() ? $this->userArray($photo->getAuthor()) : null;
+                    break;
+                case 'album':
+                    if ($photo->getAlbum()) {
+                        $album = $photo->getAlbum();
+                        $rv['album'] = array('id' => $album->getId(), 'title' => (string)$album, 'photoCount' => $album->getPhotoCount());
+                    }
+                    else $rv['album'] = null;
+                    break;
+                case 'createdAt':
+                    $rv['createdAt'] = (int)$photo->getCreatedAt()->format('U');
+                    break;
+                case 'liked':
+                    if ($user) $rv[$x] = $this->get('liker')->isLiking($photo, $user) ? true : false;
+                    break;
+                case 'url':
+                    $rv[$x] = $this->get('router')->generate('photo_show', array('id' => $photo->getId(), 'slug' => $photo->getSlug()), true);
+                    break;
+                default:
+                    $methodname = 'get'.ucfirst($x);
+                    if (method_exists($photo, $methodname)) {
+                        $rv[$x] = $photo->$methodname();
+                    }
+                    break;
+            }
+        }
+        
+        return $rv;
     }
     
 }
