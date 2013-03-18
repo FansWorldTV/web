@@ -581,25 +581,19 @@
                             $(this).empty();
                             for(var i in r.videos){
                                 var video = r.videos[i];
-
-                            $("[data-grid-related]").append('<div class="video"> \
-                                                                  <a href="'+ Routing.generate(appLocale + '_video_show', {'id': video.id, 'slug': video.slug}) +'">\
-                                                                    <img src="' + video.image + '" alt="'+ video.title +'" title="'+ video.title +'" title="'+ video.title +'" /> \
-                                                                    <span class="video-duration">' + video.duration + '</span> \
-                                                                  </a>\
-                                                                  <span data-title class="title">'+ video.title + '</span>\
-                                                                  <p data-content>'+ video.content +'</p>\
-                                                              </div>');
-
-                            /*$('<div class="video"> \
-                                                                  <a href="'+ Routing.generate(appLocale + '_video_show', {'id': video.id, 'slug': video.slug}) +'">\
-                                                                    <img src="' + video.image + '" alt="'+ video.title +'" title="'+ video.title +'" title="'+ video.title +'" /> \
-                                                                    <span class="video-duration">' + video.duration + '</span> \
-                                                                  </a>\
-                                                                  <span data-title class="title">'+ video.title + '</span>\
-                                                                  <p data-content>'+ video.content +'</p>\
-                                                              </div>').hide().appendTo("[data-grid-related]");*/
-                        }
+                                var data = {
+                                    href: Routing.generate(appLocale + '_video_show', {'id': video.id, 'slug': video.slug}),
+                                    imageSrc: video.image,
+                                    videoAlt: video.title,
+                                    videoTitle: video.title,
+                                    videoDuration: video.duration,
+                                    videoContent: video.content
+                                };
+                                $.when(templateHelper.htmlTemplate('general-video_thumbnail', data))
+                                .then(function(html){
+                                     $("[data-grid-related]").append(html);
+                                });
+                            }
                         }).then(function() {
                             $(this).fadeIn('slow');
                         })
