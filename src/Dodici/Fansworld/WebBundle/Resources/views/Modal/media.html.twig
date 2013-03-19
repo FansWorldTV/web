@@ -6,6 +6,10 @@
         <div class="top-detail">
             {% thumbnail media.author.image, 'small_square' with {'rel':'tooltip', 'title': media.author} %}
             <span class="media-title">{{ media.title }}</span>
+            <span class="media-detail"><a href="{{ path('video_show', {'id': media.id, 'slug': media.slug}) }}">(Detalle)</a></span>
+
+
+
         </div>
         {% if media.content %}
             <p data-expandable data-slice-point="120" class="media-content">{{ media.content|striptags|nl2br }}</p>
