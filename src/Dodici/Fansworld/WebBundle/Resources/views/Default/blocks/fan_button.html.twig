@@ -15,8 +15,8 @@
     {% if selfWall is not defined or selfWall != true %}
         {% set canFriend = appstate.canfriend(entity) %}
     {% endif %}
-    
-    {% if entity.restricted %} 
+
+    {% if entity.restricted %}
         {% set solicitar =  '(solicitar)' %}
     {% endif %}
 {% else %}
@@ -30,14 +30,15 @@
         <!--div class="addFriend" ">
             <button class="btn {{ buttonSize }} btn_{{ btnType }} remove btn-success {% if btnType == 'idolship' %} disabled {% endif %}" data-{{ btnType }}-id="{{ fship.id }}">{{ 'remove_idol'|trans }}</button>
         </div-->
-        <!--div class="addFriend">
-            <span class="label">YA ERES FAN</span>
-        </div-->
+        <div class="addFriend">
+            <!-- <span class="label">YA ERES FAN</span> -->
+            <button class="btn btn-large btn_idolship fwIdolship disabled" data-idol-id="228">YA ERES FAN</button>
+        </div>
     {% else %}
         {% if app.user != entity %}
             <div class="addFriend"  data-add-fan data-login-required >
                 <button class="btn {{ buttonSize }} btn_{{ btnType }} add btn-success" data-{{ fType }}-id="{{ entity.id }}"> {{ 'add_idol'|trans }}</button>
-            </div>   
+            </div>
         {% endif %}
     {% endif %}
 {% endif %}
