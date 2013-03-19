@@ -88,9 +88,38 @@ class ComplaintController extends SiteController
             'categories' => $categories,
             'entityType' => $entityType,
             'entityId' => $entity->getId(),
-            'reported' => $reported
+            'reported' => $reported,
+            'user' => $user
         );
     }
+
+    /**
+     * report form view
+     * @Route("/reportPage/{entityType}/{entityId}", name= "complaint_formPage")
+     * @Template
+     */
+    public function reportPageAction($entityType, $entityId)
+    {
+        $categories = $this->getRepository('ComplaintCategory')->findBy(array(), array());
+        $entity = $this->getRepository($entityType)->find($entityId);
+        $reported = false;
+
+        $user = $this->getUser();
+
+        $complaintReported = $this->getRepository('Complaint')->findOneBy(array('author' => $user->getId(), $entityType => $entityId));
+        if($complaintReported){
+            $reported = true;
+        }
+
+        return array(
+            'categories' => $categories,
+            'entityType' => $entityType,
+            'entityId' => $entity->getId(),
+            'reported' => $reported,
+            'user' => $user
+        );
+    }
+
 
     /**
      * list complaints

@@ -27,7 +27,12 @@
 
     {% if (type == 'photo' or type == 'video' ) %}
 
-                <a class="btn btn-danger report" href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}"><i class="icon-flag"></i></a>
+        {% if reportbutton %}
+            <a class="btn btn-danger report" href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}"><i class="icon-flag"></i></a>
+        {% else %}
+            <a class="btn btn-danger report" href="{{ path('complaint_formPage', {'entityId': entity.id, 'entityType': type}) }}"><i class="icon-flag"></i></a>
+        {% endif %}
+
 
     {% endif %}
 
