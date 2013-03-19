@@ -1,7 +1,7 @@
 services:
     kaltura:
       class: Kaltura\APIBundle\Services\Kaltura
-      arguments: [%kaltura.partner_id%, %kaltura.subpartner_id%, %kaltura.user_secret%, %kaltura.admin_secret%, %kaltura.username%, %kaltura.stream_url%, %kaltura.api_url%]
+      arguments: [%kaltura.partner_id%, %kaltura.subpartner_id%, %kaltura.user_secret%, %kaltura.admin_secret%, %kaltura.username%, %kaltura.stream_url%, %kaltura.api_url%, %kaltura.meta.profile_id%, %kaltura.meta.site.value%, %kaltura.meta.user.value%]
     kaltura.notification:
       class: Kaltura\APIBundle\Services\NotificationManager
       arguments: [@kaltura, @logger, @doctrine.orm.entity_manager]

@@ -44,6 +44,7 @@ class IdolAdmin extends Admin
             ->add('createdAt', 'date', array ('attr' => array('class' => 'datetimepicker'), 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy HH:mm'), array ())
             ->add('active', NULL, array ('required' => false), array ())
+            ->add('country', NULL, array ('required' => false), array ())
             ->add('origin',null,array('label'=>'Lugar de origen','required'=>false))
             ->add('sex','choice',array('label'=>'Sexo','required'=>false, 'choices' => array(Idol::SEX_MALE => 'Hombre', Idol::SEX_FEMALE => 'Mujer')))
             ->add('twitter', NULL, array (), array ())

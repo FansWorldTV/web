@@ -8,6 +8,8 @@ use Kaltura\Client\Enum\SessionType as KalturaSessionType;
 use Kaltura\Client\ApiException;
 use Kaltura\Client\ClientException;
 use Kaltura\Client\Type\MediaEntry;
+use Kaltura\Client\Plugin\Metadata\Enum\MetadataObjectType;
+use Kaltura\Client\Plugin\Metadata\MetadataPlugin;
 
 /**
  * Service interface to Kaltura API client
@@ -22,8 +24,11 @@ class Kaltura
     protected $username;
     protected $urlpattern;
     protected $apiurl;
+    protected $metaid;
+    protected $metasiteval;
+    protected $metauserval;
 
-    function __construct($partnerid, $subpartnerid, $usersecret, $adminsecret, $username, $urlpattern, $apiurl)
+    function __construct($partnerid, $subpartnerid, $usersecret, $adminsecret, $username, $urlpattern, $apiurl, $metaid, $metasiteval, $metauserval)
     {
         // init kaltura configuration
         $config = new KalturaConfiguration($partnerid);
@@ -38,6 +43,9 @@ class Kaltura
         $this->username = $username;
         $this->urlpattern = $urlpattern;
         $this->apiurl = $apiurl;
+        $this->metaid = $metaid;
+        $this->metasiteval = $metasiteval;
+        $this->metauserval = $metauserval;
     }
 
     /**
@@ -135,6 +143,16 @@ class Kaltura
         return $streams;
     }
     
+    public function setSiteMetadata($entryId)
+    {
+        return $this->setMeta($entryId, $this->metaid, $this->metasiteval);
+    }
+    
+    public function setUserMetadata($entryId)
+    {
+        return $this->setMeta($entryId, $this->metaid, $this->metauserval);
+    }
+    
     /**
      * Get client
      * @param boolean $admin
@@ -170,5 +188,28 @@ class Kaltura
     public function getApiUrl()
     {
         return $this->apiurl;
+    }
+    
+    protected function setMeta($entryId, $metaid, $xml)
+    {
+        $metadataPlugin = MetadataPlugin::get($this->getClient());
+        $ms = $metadataPlugin->metadata;
+        try {
+            $r = $ms->add($metaid, MetadataObjectType::ENTRY, $entryId, $xml);
+            return $r;
+        } catch(\Exception $e) {
+            if ($e->getCode() == 'METADATA_ALREADY_EXISTS') {
+                $m = $e->getMessage();
+                if (strpos($m, '[') !== false) {
+                    $oldmetaid = substr($m, strpos($m, '[') + 1);
+                    $oldmetaid = substr($oldmetaid, 0, strpos($oldmetaid, ']'));
+                    if ($oldmetaid) {
+                        $r = $ms->update($oldmetaid, $xml);
+                        return $r;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

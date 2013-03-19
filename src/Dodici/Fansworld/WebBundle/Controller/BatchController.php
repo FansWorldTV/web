@@ -141,6 +141,8 @@ class BatchController extends SiteController
                 $entry = $kaltura->getEntry($video->getStream());
                 if ($entry && ($entry->status == EntryStatus::READY)) {
                     $uploader->process($video, $entry->thumbnailUrl, $entry->msDuration);
+                    if ($video->getHighlight()) $kaltura->setSiteMetadata($video->getStream());
+                    else $kaltura->setUserMetadata($video->getStream());
                 }
             } catch (\Exception $e) {
                 // entry doesn't exist or something went wrong, do nothing for now
