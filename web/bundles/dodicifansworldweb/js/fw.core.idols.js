@@ -15,7 +15,7 @@
 /*jslint nomen: true */                 /* Tolerate dangling _ in identifiers */
 /*jslint vars: true */           /* Tolerate many var statements per function */
 /*jslint white: true */                       /* tolerate messy whithe spaces */
-/*jslint browser: true */
+/*jslint browser: true  */                                  /* Assume browser */
 /*jslint devel: true */                         /* Assume console, alert, ... */
 /*jslint windows: true */               /* Assume window object (for browsers)*/
 /*jslint maxerr: 100 */                           /* Maximum number of errors */
@@ -34,8 +34,9 @@
  ******************************************************************************/
 
 /*******************************************************************************
-    FansWorld idols Class Module 1.2 (adds hasOwnProperty check)
-    1.1
+    FansWorld idols Class Module 1.3 minor fixes
+    // 1.2 (adds hasOwnProperty check)
+    // 1.1 Initial
 
 *******************************************************************************/
 (function (root, factory) {
@@ -72,7 +73,7 @@
             this.getIdols();
             $("ul.categories li a").on('click', function(e){
                 e.preventDefault();
-                that.category = parseInt($(this).parent().attr('data-category-id'));
+                that.category = parseInt($(this).parent().attr('data-category-id'),0);
                 that.activePage = 1;
 
                 $(".list-idols dl").html(' ');
@@ -96,10 +97,12 @@
             },
             function(r){
                 var i;
-                var tplHelperCallback = function(){
+                var tplHelperCallback = function() {
+                    // Attach bindings to 'idolship' button
                     $(".list-idols dl").find(".btn_idolship.add:not('.loading-small')").each(function() {
                         $(this).fwIdolship();
                     });
+                    // Last item clears the spinner and makes callback
                     if(i === (r.idols.length-1)){
                         $("div.list-idols").removeClass('loading');
                         if(typeof(callback) !== 'undefined'){
@@ -111,10 +114,8 @@
                     for(i in r.idols) {
                         if (r.idols.hasOwnProperty(i)) {
                             var element = r.idols[i];
-                            console.log("loaded idol: %s id: %s", element.name, element.id);
                             templateHelper.renderTemplate('idol-list_element', element, $(".list-idols dl"), false, tplHelperCallback);
                         }
-                        $("div.list-idols").removeClass('loading');
                     }
                 } else {
                     $("div.list-idols").removeClass('loading');
@@ -126,6 +127,7 @@
                     that.getIdols();
                 });
             },
+            // On error rejet promise clear spinner
             function(r){
                 $("div.list-idols").removeClass('loading');
                 endless.stop();
