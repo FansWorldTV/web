@@ -3500,3 +3500,10246 @@
   content: |
     La diversión de competir y medirse en un desafío. Los ídolos se enfrentan entre sí y el que pierde paga la apuesta. Después del entrenamiento o en un ambiente bien informal, demuestran que no les gusta perder a nada.
 
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=jdzKgcCSjC4&feature=related
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-01-18"
+  tagidols:
+      - 1
+      - 23
+  tagteams:
+      - 1
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=4UntmyU3EFM
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-01-18"
+  tagidols:
+      - 1
+      - 23
+  tagteams:
+      - 1
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=o3Hacg2cb6s
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-01-18"
+  tagidols:
+      - 1
+      - 23
+  tagteams:
+      - 1
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=D9dXHUknceE
+  highlight: false
+  videocategory: 3
+  createdAt: "2013-01-18"
+  tagidols:
+      - 1
+      - 23
+  tagteams:
+      - 1
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=4QcKioj2HLE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-18"
+  tagidols:
+      - 1
+      - 23
+  tagteams:
+      - 1
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=VCnkns2X-Jo
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-01-18"
+  tagidols:
+      - 13
+  tagteams:
+      - 2
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=32bXfZS6Eoc
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-01-18"
+  tagidols:
+      - 13
+  tagteams:
+      - 2
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=85V_qMBp7aQ
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-01-18"
+  tagidols:
+      - 13
+  tagteams:
+      - 2
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=u_EkBX5rC7I&feature=related
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-01-18"
+  tagidols:
+      - 13
+  tagteams:
+      - 2
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=LGZBIYruxvw
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-01-18"
+  tagidols:
+      - 1
+      - 11
+  tagteams:
+      - 3
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=lmSuS4ESovA
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-01-18"
+  tagidols:
+      - 1
+      - 11
+  tagteams:
+      - 3
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=bRjFu6h2ZWk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-18"
+  tagidols:
+      - 1
+      - 11
+  tagteams:
+      - 3
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=2IoJFn3Hq3k&feature=related
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-01-18"
+  tagidols:
+      - 15
+      - 64
+      - 100
+  tagteams:
+      - 4
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=ccTLopeaPhg&feature=related
+  highlight: false
+  videocategory: 5
+  createdAt: "2013-01-18"
+  tagidols:
+      - 15
+      - 64
+      - 100
+  tagteams:
+      - 4
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=GyFR3wXpviE&feature=related
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-01-18"
+  tagidols:
+      - 15
+      - 64
+      - 100
+  tagteams:
+      - 4
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=hzwWtlSbzng
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-01-18"
+  tagidols:
+      - 15
+      - 64
+      - 100
+  tagteams:
+      - 4
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=QXebSyxdbLw&feature=related
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-01-18"
+  tagidols:
+      - 15
+      - 64
+      - 100
+  tagteams:
+      - 4
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=2otEuP8Ywrg
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-01-18"
+  tagidols:
+      - 15
+      - 64
+      - 100
+  tagteams:
+      - 4
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=x2OpLZuRXOk
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-01-18"
+  tagidols:
+      - 15
+      - 64
+      - 100
+  tagteams:
+      - 4
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=Txh0pofK7Tc
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-01-18"
+  tagidols:
+      - 15
+      - 64
+      - 100
+  tagteams:
+      - 4
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=stNy4JRZ624&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-18"
+  tagidols:
+      - 19
+      - 62
+      - 141
+  tagteams:
+      - 5
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=veB2KOMP5aY
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-01-18"
+  tagidols:
+      - 19
+      - 62
+      - 141
+  tagteams:
+      - 5
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=__qxqtQV8pc
+  highlight: false
+  videocategory: 7
+  createdAt: "2013-01-18"
+  tagidols:
+      - 19
+      - 62
+      - 141
+  tagteams:
+      - 5
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=LtlNPIf8LAA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-18"
+  tagidols:
+      - 19
+      - 62
+      - 141
+  tagteams:
+      - 5
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=H5kDCznR5ao&feature=context-cha
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-18"
+  tagidols:
+      - 19
+      - 62
+      - 141
+  tagteams:
+      - 5
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=2Zb8LgBEnN8
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-01-18"
+  tagidols:
+      - 5
+  tagteams:
+      - 6
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=cBDTjC4VWIw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-18"
+  tagidols:
+      - 5
+  tagteams:
+      - 6
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=KnOmSppeh9s
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-01-18"
+  tagidols:
+      - 5
+  tagteams:
+      - 6
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=cNgwnkzDevU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-18"
+  tagidols:
+      - 5
+  tagteams:
+      - 6
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=X_vvWPJXA_E
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-01-18"
+  tagidols:
+      - 8
+  tagteams:
+      - 7
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=6qXCRm-jJ6s
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-01-20"
+  tagidols:
+      - 8
+  tagteams:
+      - 7
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=j4ueK7rWm2Q&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 19
+  tagteams:
+      - 8
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=jw6PVYBsHCw&feature=fvwrel
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-01-20"
+  tagidols:
+      - 19
+  tagteams:
+      - 8
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=O-SBUhG_CNk&feature=relmfu
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 19
+  tagteams:
+      - 8
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=nEhC33At65A&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 19
+  tagteams:
+      - 9
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=8KAzzw4oQrY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 19
+  tagteams:
+      - 9
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=dKgfu0N4CaQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 19
+  tagteams:
+      - 9
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=wVCT4d-4Ixo&feature=related
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-01-20"
+  tagidols:
+      - 19
+  tagteams:
+      - 9
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=fOYCKI3q7mA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 8
+      - 123
+  tagteams:
+      - 10
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=YgQQkeFTcW8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 8
+      - 123
+  tagteams:
+      - 10
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=l2vmaNCIipQ&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 61
+  tagteams:
+      - 11
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=E-nw8ZQ1YJ4&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 61
+  tagteams:
+      - 11
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=4aI3FTzf8A0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 61
+  tagteams:
+      - 11
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=e-7HM4AFt6E
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 61
+  tagteams:
+      - 11
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=81t7MJiw_Yo
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-01-20"
+  tagidols:
+      - 61
+  tagteams:
+      - 11
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=t3pbs_wxxx0&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 61
+  tagteams:
+      - 11
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=E-nw8ZQ1YJ4&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 11
+  tagteams:
+      - 12
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=VlBdxUZAW5E
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 7
+  tagteams:
+      - 13
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=5izh5GHI5uQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 1
+      - 2
+  tagteams:
+      - 14
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=z34ZP6SNu_4
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-01-20"
+  tagidols:
+      - 1
+      - 2
+  tagteams:
+      - 14
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=10OrHeSJS0E&feature=related
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-01-20"
+  tagidols:
+      - 1
+      - 2
+  tagteams:
+      - 14
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=67DyOM3OKmM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 8
+  tagteams:
+      - 15
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=fszCBb2zy3Q&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 8
+  tagteams:
+      - 15
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=NR2ewaLft8E&feature=fvsr
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 8
+  tagteams:
+      - 15
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=gAg2twH32bE
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-01-20"
+  tagidols:
+      - 8
+  tagteams:
+      - 15
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=6X7E7jy0m_Y&feature=relmfu
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 8
+  tagteams:
+      - 15
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=J9xh43Kh8U4
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-01-20"
+  tagidols:
+      - 19
+  tagteams:
+      - 16
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=TJlr9B6GdmY
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-01-20"
+  tagidols:
+      - 19
+  tagteams:
+      - 16
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=IansOnNiw9I
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 19
+      - 31
+      - 62
+      - 16
+      - 136
+      - 75
+  tagteams:
+      - 17
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=YsUQDBl8bbo
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-01-20"
+  tagidols:
+      - 19
+      - 31
+      - 62
+      - 16
+      - 136
+      - 75
+  tagteams:
+      - 17
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=Bv3iKq2WR-Y
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-01-20"
+  tagidols:
+      - 19
+      - 31
+      - 62
+      - 16
+      - 136
+      - 75
+  tagteams:
+      - 17
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=eNqr-cnU27k
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 1
+      - 62
+      - 64
+  tagteams:
+      - 18
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=75zvodUiH0I&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-01-20"
+  tagidols:
+      - 1
+      - 62
+      - 64
+  tagteams:
+      - 18
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=eMDTEg72j-Y
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-01-20"
+  tagidols:
+      - 1
+      - 62
+      - 64
+  tagteams:
+      - 18
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=2FWNGmWoR10
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-06"
+  tagidols:
+      - 1
+      - 62
+      - 64
+  tagteams:
+      - 18
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=64w4JWqE7yA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-06"
+  tagidols:
+      - 21
+  tagteams:
+      - 19
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=jTqM8sVGhzA
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-06"
+  tagidols:
+      - 1
+      - 26
+  tagteams:
+      - 20
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=CWbMP3TWfBw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-06"
+  tagidols:
+      - 1
+      - 26
+  tagteams:
+      - 21
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=tsM4U1BQ3Q8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-06"
+  tagidols:
+      - 1
+      - 26
+  tagteams:
+      - 21
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=tj6u0PxpfnA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-06"
+  tagidols:
+      - 1
+      - 26
+  tagteams:
+      - 21
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=JpC13mY4fKA&feature=related
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-06"
+  tagidols:
+      - 1
+      - 26
+  tagteams:
+      - 21
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=jBX8GdrSwHc&feature=related
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-06"
+  tagidols:
+      - 1
+      - 26
+  tagteams:
+      - 21
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=AO26JMeKey0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-06"
+  tagidols:
+      - 130
+  tagteams:
+      - 22
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=_VL7hwc2Ncw&feature=relmfu
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-06"
+  tagidols:
+      - 130
+  tagteams:
+      - 22
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=vY9GXGJMLWQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-06"
+  tagidols:
+      - 130
+  tagteams:
+      - 22
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=spw2EM62CZY
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-06"
+  tagidols:
+      - 130
+  tagteams:
+      - 22
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=PJA3Rto7BPk
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-06"
+  tagidols:
+      - 130
+  tagteams:
+      - 22
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=80wo7hw1OyI&feature=related
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-06"
+  tagidols:
+      - 130
+  tagteams:
+      - 22
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=bW_QBOK9PvM&feature=related
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-06"
+  tagidols:
+      - 130
+  tagteams:
+      - 22
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=qGm82gTq82E
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-06"
+  tagidols:
+      - 1
+  tagteams:
+      - 23
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=Lc-Xni8BoKc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-06"
+  tagidols:
+      - 1
+  tagteams:
+      - 23
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=k_agUA-tZYQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-06"
+  tagidols:
+      - 1
+  tagteams:
+      - 23
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=eEuxoCIZpow
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-06"
+  tagidols:
+      - 3
+      - 19
+      - 140
+  tagteams:
+      - 24
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=CGqOZmQg_xs&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-06"
+  tagidols:
+      - 3
+      - 19
+      - 140
+  tagteams:
+      - 24
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=ipCn5ApZol8&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-06"
+  tagidols:
+      - 3
+      - 19
+      - 140
+  tagteams:
+      - 24
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=yNVamu25kAo&feature=related&noredirect=1
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-06"
+  tagidols:
+      - 3
+      - 19
+      - 140
+  tagteams:
+      - 24
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=h6yEXW4HXug&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-06"
+  tagidols:
+      - 1
+  tagteams:
+      - 25
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=cMiVdzUyyHk&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-06"
+  tagidols:
+      - 1
+  tagteams:
+      - 25
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=MVC6tOjLDZI
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-06"
+  tagidols:
+      - 1
+  tagteams:
+      - 25
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=jBX8GdrSwHc&feature=related
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-06"
+  tagidols:
+      - 1
+  tagteams:
+      - 25
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=wSRDPoL0udU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-06"
+  tagidols:
+      - 3
+  tagteams:
+      - 26
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=JcfNeAxQ-Pc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 3
+  tagteams:
+      - 26
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=cPv4RC6o_pg&feature=fvsr
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 1
+      - 8
+  tagteams:
+      - 27
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=9KwtZm7Xl5k
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-07"
+  tagidols:
+      - 1
+      - 8
+  tagteams:
+      - 27
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=21rY9amNDNk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 1
+      - 8
+  tagteams:
+      - 27
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=MCKS0cSuPI8&feature=fvwrel
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 1
+      - 8
+  tagteams:
+      - 27
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=qaWy1gvpdlw&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 1
+      - 8
+  tagteams:
+      - 27
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=v4DvjbSKKbY&feature=relmfu
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-07"
+  tagidols:
+      - 1
+      - 8
+  tagteams:
+      - 27
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=_R9PuETWIyQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 3
+      - 8
+      - 69
+  tagteams:
+      - 28
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=t8MtWUExPVY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 3
+      - 8
+      - 69
+  tagteams:
+      - 28
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=tyRI2N4WxgI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 3
+      - 8
+      - 69
+  tagteams:
+      - 28
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=h-XI8_fE5Pg&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 3
+      - 8
+      - 69
+  tagteams:
+      - 28
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=vNhpUntgguQ&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 3
+      - 8
+      - 69
+  tagteams:
+      - 28
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=onSpgVMu-1M&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 3
+      - 8
+      - 69
+  tagteams:
+      - 28
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=HreTYI2sQgc&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 3
+      - 8
+      - 69
+  tagteams:
+      - 28
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=kUcGhvTpdDY&feature=related
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-07"
+  tagidols:
+      - 1
+      - 7
+  tagteams:
+      - 29
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=21NBzd-cGNI&feature=related
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-07"
+  tagidols:
+      - 1
+      - 7
+  tagteams:
+      - 29
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=eNFDawJOy78&feature=related
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-07"
+  tagidols:
+      - 1
+      - 7
+  tagteams:
+      - 29
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=3sn3R7NGcaU
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-07"
+  tagidols:
+      - 1
+      - 7
+  tagteams:
+      - 29
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=mH6WZt9t6rg
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-07"
+  tagidols:
+      - 1
+      - 7
+  tagteams:
+      - 29
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=rvB-8tTphws
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 1
+      - 7
+  tagteams:
+      - 29
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=QgUXLQmZp8k&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 1
+      - 7
+  tagteams:
+      - 29
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=PBNvr-6hLok
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 11
+      - 34
+  tagteams:
+      - 30
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=12I2eGPmcEs
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 11
+      - 34
+  tagteams:
+      - 30
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=g3pEpZEHaOQ&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 11
+      - 34
+  tagteams:
+      - 30
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=myo4YQFB3ek
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 15
+  tagteams:
+      - 31
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=YRGvMNNj2kk&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 15
+  tagteams:
+      - 31
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=vfkKispuefE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 15
+  tagteams:
+      - 31
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=6C-w8kU2XsM&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 15
+  tagteams:
+      - 31
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=iS0FU7LZsTM
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-07"
+  tagidols:
+      - 12
+      - 211
+  tagteams:
+      - 32
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=nDbC9sHOonE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 12
+      - 211
+  tagteams:
+      - 32
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=rEDG_-b0Png
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 12
+      - 211
+  tagteams:
+      - 32
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=Qwt9MUylD18&feature=related
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-07"
+  tagidols:
+      - 12
+      - 211
+  tagteams:
+      - 32
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=eQV8WI0_WRE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 12
+      - 211
+  tagteams:
+      - 32
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=Gu49cyiwoXA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 12
+      - 211
+  tagteams:
+      - 32
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=aL48_oj0gbU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 12
+      - 211
+  tagteams:
+      - 32
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=PmCkydo3Rlk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 19
+      - 63
+  tagteams:
+      - 33
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=NNfJcH0tSZg&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 19
+      - 63
+  tagteams:
+      - 33
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=JzJc_hBIt9Y
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-07"
+  tagidols:
+      - 19
+      - 63
+  tagteams:
+      - 33
+-
+  author: 14
+  url: http://youtu.be/-O1em70F6p4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 19
+      - 63
+  tagteams:
+      - 33
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=uRytW04juq8&feature=relmfu
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-07"
+  tagidols:
+      - 19
+      - 63
+  tagteams:
+      - 33
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=6Z9wh0KPZ8o
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-07"
+  tagidols:
+      - 7
+      - 20
+  tagteams:
+      - 34
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=bf7TDzEg3DQ
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-07"
+  tagidols:
+      - 7
+      - 20
+  tagteams:
+      - 34
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=8do5xyCwPkw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 13
+      - 31
+  tagteams:
+      - 35
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=Ct_WWEXN8ro&feature=relmfu
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 13
+      - 31
+  tagteams:
+      - 35
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=SWD-ChbLY4I
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 13
+      - 31
+  tagteams:
+      - 35
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=LFBb6biajR0&feature=relmfu
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 13
+      - 31
+  tagteams:
+      - 35
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=TzD4j59zrSM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 13
+      - 31
+  tagteams:
+      - 35
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=7IdeOQsrKM4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-07"
+  tagidols:
+      - 1
+      - 123
+      - 124
+  tagteams:
+      - 36
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=nhnxOdwbXW8&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 1
+      - 123
+      - 124
+  tagteams:
+      - 36
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=htHquaaxtPI
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-10"
+  tagidols:
+      - 1
+      - 123
+      - 124
+  tagteams:
+      - 36
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=zY_puuY2Z5E&list=LPs7VoY4K8j5U&index=1&feature=plcp
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 1
+      - 123
+      - 124
+  tagteams:
+      - 36
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=Rf7MtLyBtqc&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 1
+      - 123
+      - 124
+  tagteams:
+      - 36
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=22vqvSoksOc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 5
+      - 23
+  tagteams:
+      - 37
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=Ew8d9BZsDdY&feature=related
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-10"
+  tagidols:
+      - 19
+      - 31
+      - 64
+  tagteams:
+      - 38
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=mRKdDWMQTLo
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 19
+      - 31
+      - 64
+  tagteams:
+      - 38
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=TtptOVU_6Qs&feature=related
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-10"
+  tagidols:
+      - 19
+      - 31
+      - 64
+  tagteams:
+      - 38
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=1AwjEVmW0Ow
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-10"
+  tagidols:
+      - 19
+      - 31
+      - 64
+  tagteams:
+      - 38
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=9cKSLibNSX8&playnext=1&list=PL461C295AC32FA645&feature=results_video
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 19
+      - 31
+      - 64
+  tagteams:
+      - 38
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=rOG0zoNB9M4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 19
+      - 31
+      - 64
+  tagteams:
+      - 38
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=nSmwDP-eIjo
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 19
+      - 31
+      - 64
+  tagteams:
+      - 38
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=0FbDbMiZ6EQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 5
+      - 15
+  tagteams:
+      - 39
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=ndm21CsxNP4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 5
+      - 15
+  tagteams:
+      - 39
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=1055y1He1PQ&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 5
+      - 15
+  tagteams:
+      - 39
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=1AwjEVmW0Ow
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-10"
+  tagidols:
+      - 5
+      - 15
+  tagteams:
+      - 39
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=9cKSLibNSX8&playnext=1&list=PL461C295AC32FA645&feature=results_video
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 5
+      - 15
+  tagteams:
+      - 39
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=rOG0zoNB9M4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 5
+      - 15
+  tagteams:
+      - 39
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=5BF7l_CeDOw
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-10"
+  tagidols:
+      - 16
+      - 28
+  tagteams:
+      - 40
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=__U4nIpv8fM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 16
+      - 28
+  tagteams:
+      - 40
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=NyptJhoAP88
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 16
+      - 28
+  tagteams:
+      - 40
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=6RhuVFd0YNU&feature=relmfu
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 16
+      - 28
+  tagteams:
+      - 40
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=tSEtNbQVpMw&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 11
+  tagteams:
+      - 41
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=tSEtNbQVpMw&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 11
+  tagteams:
+      - 41
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=ohvExTP03H4
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-10"
+  tagidols:
+      - 11
+  tagteams:
+      - 41
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=Ir_P1xitdqI&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 1
+      - 12
+      - 15
+  tagteams:
+      - 42
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=Wj-zegXTnQE&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 1
+      - 12
+      - 15
+  tagteams:
+      - 42
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=jkkN_2_SRIU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 1
+      - 12
+      - 15
+  tagteams:
+      - 42
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=YDz-IeygQcE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 1
+      - 12
+      - 15
+  tagteams:
+      - 42
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=7EyUUyDDmsY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 5
+      - 7
+      - 12
+      - 15
+  tagteams:
+      - 43
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=EmKVJ-OHT5s&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 5
+      - 7
+      - 12
+      - 15
+  tagteams:
+      - 43
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=q-cin13200E&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 5
+      - 7
+      - 12
+      - 15
+  tagteams:
+      - 43
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=KyWH5gVi9hY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 5
+      - 7
+      - 12
+      - 15
+  tagteams:
+      - 43
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=IM3lcZSICU8
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-10"
+  tagidols:
+      - 5
+      - 7
+      - 12
+      - 15
+  tagteams:
+      - 43
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=q5W6vBI3mGE&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 12
+      - 15
+      - 19
+      - 23
+  tagteams:
+      - 44
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=51Y_vkbb2XI
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-10"
+  tagidols:
+      - 12
+      - 15
+      - 19
+      - 23
+  tagteams:
+      - 44
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=rOgHkYvMaUA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 12
+      - 15
+      - 19
+      - 23
+  tagteams:
+      - 44
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=cXKHRmbj6aQ&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 12
+      - 15
+      - 19
+      - 23
+  tagteams:
+      - 44
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=kqHBnj6TeX4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 4
+  tagteams:
+      - 45
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=4wY5Drcm4AQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 4
+  tagteams:
+      - 45
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=jBpmfBP4kdc
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-10"
+  tagidols:
+      - 4
+  tagteams:
+      - 45
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=O-Joy8Jw_CQ&list=PL1158B3DD219D2F73&index=2&feature=plcp
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 11
+      - 16
+      - 135
+  tagteams:
+      - 46
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=TbRYpR_DCFQ&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 11
+      - 16
+      - 135
+  tagteams:
+      - 46
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=oiCubFls9ZU&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 11
+      - 16
+      - 135
+  tagteams:
+      - 46
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=QXbxVmqpVts&list=PL1158B3DD219D2F73&index=6&feature=plcp
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 11
+      - 16
+      - 135
+  tagteams:
+      - 46
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=vd5kKpnirg4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 11
+      - 16
+      - 135
+  tagteams:
+      - 46
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=lxhqQWmUfsM
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-10"
+  tagidols:
+      - 5
+  tagteams:
+      - 47
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=2mOI0NC0Hjs
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 5
+  tagteams:
+      - 47
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=K0kZKtkTSVU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 5
+  tagteams:
+      - 47
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=5xkTbazFG08
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 5
+  tagteams:
+      - 47
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=vZmA2-fFBVg&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 20
+  tagteams:
+      - 48
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=b0SjSC596kw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 20
+  tagteams:
+      - 48
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=3gwc76fbUCM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 20
+  tagteams:
+      - 48
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=XcuabMndUmY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 20
+  tagteams:
+      - 48
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=fK5TFSHerhc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 1
+      - 129
+      - 141
+  tagteams:
+      - 49
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=vejpZfhz7N4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 1
+      - 129
+      - 141
+  tagteams:
+      - 49
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=wu0FfcdZQ18
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 1
+      - 129
+      - 141
+  tagteams:
+      - 49
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=Yx2wcilZHXQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 1
+      - 129
+      - 141
+  tagteams:
+      - 49
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=glyBZnY4Dxs
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 1
+      - 129
+      - 141
+  tagteams:
+      - 49
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=v6_p_YaAet8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 1
+      - 129
+      - 141
+  tagteams:
+      - 49
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=glyBZnY4Dxs
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 1
+      - 129
+      - 141
+  tagteams:
+      - 49
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=nJ-82u_SC5c
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 122
+      - 135
+      - 125
+      - 60
+  tagteams:
+      - 50
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=3phwXSSlH6I
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 122
+      - 135
+      - 125
+      - 60
+  tagteams:
+      - 50
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=eWb38LRjTYk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 122
+      - 135
+      - 125
+      - 60
+  tagteams:
+      - 50
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=QfEczJEZkz4&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 122
+      - 135
+      - 125
+      - 60
+  tagteams:
+      - 50
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=HDWq7qAzCxQ&NR=1
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-10"
+  tagidols:
+      - 122
+      - 135
+      - 125
+      - 60
+  tagteams:
+      - 50
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=w2KCEYApgRA&playnext=1&list=PL8B5F8CF09F158768&feature=results_video
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 60
+      - 124
+  tagteams:
+      - 51
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=GBGwzOAcSfY
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-10"
+  tagidols:
+      - 60
+      - 124
+  tagteams:
+      - 51
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=Yd805X3pCjo
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 60
+      - 124
+  tagteams:
+      - 51
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=aPiOq7xAiGs
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 60
+      - 124
+  tagteams:
+      - 51
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=M1IiptYIAnA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 35
+  tagteams:
+      - 52
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=dyACXEnb8oE&feature=related
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-10"
+  tagidols:
+      - 35
+  tagteams:
+      - 52
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=gPo4LqPtPGQ&feature=related
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-10"
+  tagidols:
+      - 35
+  tagteams:
+      - 52
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=RPokYFeWDFg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 35
+  tagteams:
+      - 52
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=a5aWkW-0sYM&feature=related
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-10"
+  tagidols:
+      - 35
+  tagteams:
+      - 52
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=QAm3T3w3s_I
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 35
+  tagteams:
+      - 52
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=H9dWfO1b6OQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 5
+  tagteams:
+      - 53
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=PguEsffWE4w
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 5
+  tagteams:
+      - 53
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=dnh1owcWwGw&feature=fvsr
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 5
+  tagteams:
+      - 53
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=JuzkWjE0_Us
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 14
+      - 6
+  tagteams:
+      - 54
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=8FKGB_S82A8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 14
+      - 6
+  tagteams:
+      - 54
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=lIcJa6BlrfU&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 14
+      - 6
+  tagteams:
+      - 54
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=0N56WJIlVZU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 19
+  tagteams:
+      - 55
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=8uXQm9a_UdU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 19
+  tagteams:
+      - 55
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=mSJ4_48TjXo&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 19
+  tagteams:
+      - 55
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=WtAxwFDX02s
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-10"
+  tagidols:
+      - 2
+      - 13
+      - 16
+  tagteams:
+      - 56
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=b0p19qlXX0w&feature=related
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-10"
+  tagidols:
+      - 2
+      - 13
+      - 16
+  tagteams:
+      - 56
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=MU5chUMlds4&feature=related
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-10"
+  tagidols:
+      - 2
+      - 13
+      - 16
+  tagteams:
+      - 56
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=oViJD7yg0W4
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-10"
+  tagidols:
+      - 2
+      - 13
+      - 16
+  tagteams:
+      - 56
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=LqWJvmtNwUI&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 2
+      - 13
+      - 16
+  tagteams:
+      - 56
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=7lcDBneGtDw&feature=fvwrel
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 2
+      - 13
+      - 16
+  tagteams:
+      - 56
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=5HOIUObqkMI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 2
+      - 13
+      - 16
+  tagteams:
+      - 56
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=Sq6pcsEhPqU
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-10"
+  tagidols:
+      - 12
+  tagteams:
+      - 57
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=-SxFqzKyLzg
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-10"
+  tagidols:
+      - 12
+  tagteams:
+      - 57
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=VFeo1EAJq9c
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 12
+  tagteams:
+      - 57
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=Xjic5WooPx4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 2
+  tagteams:
+      - 58
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=1pbKXz3cMGU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 2
+  tagteams:
+      - 58
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=YEmRBk4ozVk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-10"
+  tagidols:
+      - 2
+  tagteams:
+      - 58
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=gDdRWY9ccqU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 18
+  tagteams:
+      - 59
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=XTF1TdEjqkc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 18
+  tagteams:
+      - 59
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=HbVB4sON0uk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 18
+  tagteams:
+      - 59
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=K0P0eUvlETg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 18
+  tagteams:
+      - 59
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=4prSB9L4yVo
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 18
+  tagteams:
+      - 60
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=29qVDYk6x6M
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-12"
+  tagidols:
+      - 20
+  tagteams:
+      - 60
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=FCgTUIRcES4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 20
+  tagteams:
+      - 60
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=OMgB6eqcv3Q
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 20
+  tagteams:
+      - 60
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=wXsyh0ZxU0Y
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 20
+  tagteams:
+      - 60
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=wfwxm475haY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 122
+      - 133
+      - 266
+  tagteams:
+      - 61
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=eEwi-PpUqMI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 84
+  tagteams:
+      - 62
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=iQ_ui_EocCc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 84
+  tagteams:
+      - 62
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=iQ_ui_EocCc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 84
+  tagteams:
+      - 62
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=Xqe4e1xJ45w
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 84
+  tagteams:
+      - 62
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=HzlnsAHwrnU
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 84
+  tagteams:
+      - 62
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=h0ME0Gg0VGc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 8
+  tagteams:
+      - 63
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=rgB-lBH1KuE&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 8
+  tagteams:
+      - 63
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=PmnpuTXHrxI
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-12"
+  tagidols:
+      - 8
+  tagteams:
+      - 63
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=3XHwoZwbXyA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 8
+  tagteams:
+      - 63
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=fQv4MT4e2fs
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 8
+  tagteams:
+      - 63
+-
+  author: 13
+  url: http://www.lyrics5.com/videos.html?vid=BWNl2XVmQew
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 8
+  tagteams:
+      - 63
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=dxizAajAOBk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 13
+      - 104
+  tagteams:
+      - 64
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=_icldiRpcl0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 13
+      - 104
+  tagteams:
+      - 64
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=1t2vltJd4ks
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-12"
+  tagidols:
+      - 13
+      - 104
+  tagteams:
+      - 64
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=haYt7bDbZbU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 13
+      - 104
+  tagteams:
+      - 64
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=tIMiaokgiN0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 32
+      - 19
+  tagteams:
+      - 65
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=vWwdW-EhDzM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 32
+      - 19
+  tagteams:
+      - 65
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=eYGaZsL958E
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 32
+      - 19
+  tagteams:
+      - 65
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=X19wXBq-jrQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 32
+      - 19
+  tagteams:
+      - 65
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=oDJMKg18Lkg&feature=related
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-12"
+  tagidols:
+      - 32
+      - 19
+  tagteams:
+      - 65
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=2LbpdUIbgWA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 125
+      - 121
+  tagteams:
+      - 66
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=QuC6wLPih9E
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 125
+      - 121
+  tagteams:
+      - 66
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=VYZI7lcmr2A&feature=related
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 125
+      - 121
+  tagteams:
+      - 66
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=BBu8ig_Qd_I
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 125
+      - 121
+  tagteams:
+      - 66
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=oKkMnsOLP6c&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 125
+      - 121
+  tagteams:
+      - 66
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=Up_dVBWuUEA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 125
+      - 121
+  tagteams:
+      - 66
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=YDxdGHU0-YY&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 125
+      - 121
+  tagteams:
+      - 66
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=2xWrYcS2ZnY
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-12"
+  tagidols:
+      - 8
+  tagteams:
+      - 67
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=xm7NsTGRcF8
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-12"
+  tagidols:
+      - 8
+  tagteams:
+      - 67
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=7J47rw7YdRc
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-12"
+  tagidols:
+      - 8
+  tagteams:
+      - 67
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=JHiggCPhGVE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 8
+  tagteams:
+      - 67
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=_DvF3wadR40
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 8
+  tagteams:
+      - 67
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=mCu9ussa2Jk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 244
+  tagteams:
+      - 68
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=G7kGRKzxMvg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 244
+  tagteams:
+      - 68
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=Pnxg0SMpNHM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 244
+  tagteams:
+      - 68
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=TpbgdRBDYEI&playnext=1&list=PLF8811692F8E23D27&feature=results_video
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 244
+  tagteams:
+      - 68
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=Duc6uSK30cg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 1
+      - 21
+      - 298
+  tagteams:
+      - 69
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=eK8z7xrEEFc
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-12"
+  tagidols:
+      - 1
+      - 21
+      - 298
+  tagteams:
+      - 69
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=cySzhVPRVfU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 1
+      - 21
+      - 298
+  tagteams:
+      - 69
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=cIeun49OIIc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 1
+      - 21
+      - 298
+  tagteams:
+      - 69
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=2RB8FqlcQag
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 169
+  tagteams:
+      - 70
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=5OcLkIJuUQg&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 169
+  tagteams:
+      - 70
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=64_k6ZDJRJY&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 169
+  tagteams:
+      - 70
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=hcLUF8NhMaU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 169
+  tagteams:
+      - 70
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=uMaSGabrhhk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 169
+  tagteams:
+      - 70
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=v29AltdgPFs
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 1
+      - 21
+      - 73
+  tagteams:
+      - 71
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=SO8SmIMj_Ww
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 1
+      - 21
+      - 73
+  tagteams:
+      - 71
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=jfytIMhTwq4
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-12"
+  tagidols:
+      - 1
+      - 21
+      - 73
+  tagteams:
+      - 71
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=yGe1k_zY54E
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 1
+      - 21
+      - 73
+  tagteams:
+      - 71
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=49pB0hg_vvk
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-12"
+  tagidols:
+      - 20
+      - 22
+  tagteams:
+      - 72
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=iQJhdgDAHdw
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-12"
+  tagidols:
+      - 20
+      - 22
+  tagteams:
+      - 72
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=2UQ9CljeTps
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 20
+      - 22
+  tagteams:
+      - 72
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=J3tekAOA9jw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 43
+      - 63
+  tagteams:
+      - 73
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=IG-Obf67S-E
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 43
+      - 63
+  tagteams:
+      - 73
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=muJpZDYN_d0
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 43
+      - 63
+  tagteams:
+      - 73
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=Qa0ye4wAXZE
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 43
+      - 63
+  tagteams:
+      - 73
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=hCIIfOZsGTI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 43
+      - 63
+  tagteams:
+      - 73
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=VNsu1w6uKOo&feature=fvst
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 15
+  tagteams:
+      - 74
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=qab84k_xywE&feature=fvst
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 15
+  tagteams:
+      - 74
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=Y5rhA8McnP4&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 15
+  tagteams:
+      - 74
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=9QOTnf8E5vM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 7
+      - 20
+  tagteams:
+      - 77
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=qlrVYPq8WGI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 7
+      - 20
+  tagteams:
+      - 77
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=XN-R-8NMSbY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 7
+      - 20
+  tagteams:
+      - 77
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=8RYHcIfQjc0&feature=fvwrel
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 7
+      - 20
+  tagteams:
+      - 77
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=D4lGZocoKsQ
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-12"
+  tagidols:
+      - 23
+      - 60
+  tagteams:
+      - 78
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=ycrzS-WZ7pQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 23
+      - 60
+  tagteams:
+      - 78
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=zjkaQTQMGzs
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 23
+      - 60
+  tagteams:
+      - 78
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=o3nDZS8WQd0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 23
+      - 60
+  tagteams:
+      - 78
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=xvuLmL7PLV0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 23
+      - 60
+  tagteams:
+      - 78
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=N-6C2vySFwg&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 15
+  tagteams:
+      - 79
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=lniLSHRLT6Y
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-12"
+  tagidols:
+      - 15
+  tagteams:
+      - 79
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=ppisgkai5bg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 13
+      - 19
+  tagteams:
+      - 80
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=fz8NW6LkNyU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 13
+      - 19
+  tagteams:
+      - 80
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=ogaRJ0CPi9s
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 13
+      - 19
+  tagteams:
+      - 80
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=-juNENV0Qfw
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-12"
+  tagidols:
+      - 13
+      - 19
+  tagteams:
+      - 80
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=4vUlOgCiaR8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 13
+      - 19
+  tagteams:
+      - 80
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=AXXbkPQYeOg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 181
+      - 49
+      - 64
+  tagteams:
+      - 81
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=jDhLqHrGf-E
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 181
+      - 49
+      - 64
+  tagteams:
+      - 81
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=DsFY6u3Zj9I
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-12"
+  tagidols:
+      - 181
+      - 49
+      - 64
+  tagteams:
+      - 81
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=EiWmNm9v9Yw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 181
+      - 49
+      - 64
+  tagteams:
+      - 81
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=WgMvpQnoqLo
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+  tagteams:
+      - 82
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=e1KBedqEhgU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 20
+      - 322
+  tagteams:
+      - 83
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=xjL2t7muO-A
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 20
+      - 322
+  tagteams:
+      - 83
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=ME3dBqZI6mY&feature=related
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 20
+      - 322
+  tagteams:
+      - 83
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=RDd4CDG3Xeo
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 20
+      - 322
+  tagteams:
+      - 83
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=dmiw7lXlrc4
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 20
+      - 322
+  tagteams:
+      - 83
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=Fj3XsWKwiVE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 1
+      - 9
+  tagteams:
+      - 84
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=siIx_Bi9NL0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 1
+      - 9
+  tagteams:
+      - 84
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=M-pVbKcXzqk&feature=plcp
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 1
+      - 9
+  tagteams:
+      - 84
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=danDhmPGTgc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 89
+      - 105
+  tagteams:
+      - 85
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=Tt3iRprP4O4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 89
+      - 105
+  tagteams:
+      - 85
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=oa8TQRYYUpw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 89
+      - 105
+  tagteams:
+      - 85
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=UHnDM4rFr1M
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 89
+      - 105
+  tagteams:
+      - 85
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=NvSNMrcKR5Q
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 89
+      - 105
+  tagteams:
+      - 85
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=a9hapUZLEw0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 169
+  tagteams:
+      - 86
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=d7rXlJgRU-g
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-12"
+  tagidols:
+      - 169
+  tagteams:
+      - 86
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=QyemrFg3_ig
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 24
+  tagteams:
+      - 87
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=LiKNqzYwX7k
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-12"
+  tagidols:
+      - 24
+  tagteams:
+      - 87
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=a3Jh77Y7b9Q
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-12"
+  tagidols:
+      - 24
+  tagteams:
+      - 87
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=-Gaan6CQ5kQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 21
+      - 281
+  tagteams:
+      - 88
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=LdT75WVr-ZY
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-12"
+  tagidols:
+      - 21
+      - 281
+  tagteams:
+      - 88
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=mgtvY1-2gnw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 21
+      - 281
+  tagteams:
+      - 88
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=QuVrunTjAJ8&feature=fvst
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 21
+      - 281
+  tagteams:
+      - 88
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=R0_AGhzfv-A
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 16
+  tagteams:
+      - 89
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=70TVnHS51ck
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 16
+  tagteams:
+      - 89
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=FXjj_FyrP4A
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-12"
+  tagidols:
+      - 16
+  tagteams:
+      - 89
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=bpNNp8qd43Y
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 16
+  tagteams:
+      - 89
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=4-7AWOS9hiY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 64
+      - 140
+  tagteams:
+      - 90
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=MDh_51yJY4g
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 64
+      - 140
+  tagteams:
+      - 90
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=1EjG-ZgqhKI
+  highlight: false
+  videocategory: 7
+  createdAt: "2013-02-12"
+  tagidols:
+      - 19
+      - 64
+      - 140
+  tagteams:
+      - 90
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=tnNW5jpdXt8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 1
+      - 21
+  tagteams:
+      - 91
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=wKU96kkNrdU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 1
+      - 21
+  tagteams:
+      - 91
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=1BkUmRXOjZg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 1
+      - 21
+  tagteams:
+      - 91
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=gVZ76xcqDs0
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-12"
+  tagidols:
+      - 1
+      - 21
+  tagteams:
+      - 91
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=R0KwhlRVdIE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 1
+      - 21
+  tagteams:
+      - 91
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=0d_DPCsi3SE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 7
+      - 19
+  tagteams:
+      - 92
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=1QY627yVySQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 7
+      - 19
+  tagteams:
+      - 92
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=T2gDMr32PnU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 7
+      - 19
+  tagteams:
+      - 92
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=yzDJR5VS9CU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 7
+      - 19
+  tagteams:
+      - 92
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=X0niBm_kzjs
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 7
+      - 13
+      - 16
+      - 19
+      - 284
+  tagteams:
+      - 93
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=GYD3d1ORbg0&feature=fvst
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 7
+      - 13
+      - 16
+      - 19
+      - 284
+  tagteams:
+      - 93
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=QabrVO4Sw-w
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-12"
+  tagidols:
+      - 7
+      - 13
+      - 16
+      - 19
+      - 284
+  tagteams:
+      - 93
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=ajzgMIE7sd0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 7
+      - 13
+      - 16
+      - 19
+      - 284
+  tagteams:
+      - 93
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=HvYBVkyx70s
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 78
+      - 19
+      - 8
+  tagteams:
+      - 94
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=PmEAM6kex0U
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 78
+      - 19
+      - 8
+  tagteams:
+      - 94
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=9AQ1i5jVAa8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 78
+      - 19
+      - 8
+  tagteams:
+      - 94
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=7zbjA9zBGBI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 23
+  tagteams:
+      - 95
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=rZkQQzkpjU4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 23
+  tagteams:
+      - 95
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=_l_uLMt-tg0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 23
+  tagteams:
+      - 95
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=CtrrK0uubq0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 19
+      - 16
+  tagteams:
+      - 96
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=6WTnOwCttPo
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 19
+      - 16
+  tagteams:
+      - 96
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=C6T8lW667ro
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 19
+      - 16
+  tagteams:
+      - 96
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=xi19sVx33bE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 19
+      - 16
+  tagteams:
+      - 96
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=nwCzMpmtaYw
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-13"
+  tagidols:
+      - 19
+      - 16
+  tagteams:
+      - 96
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=HF10Amr1T6U
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 14
+  tagteams:
+      - 97
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=0VIbuFjW_Hw
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-13"
+  tagidols:
+      - 14
+  tagteams:
+      - 97
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=pnwB8IQSAkU
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-13"
+  tagidols:
+      - 14
+  tagteams:
+      - 97
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=-0_3ey0Mh_k&list=UUwprmCziEK3BEQW84kQ3m5Q&index=3&feature=plcp
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 15
+      - 64
+      - 101
+  tagteams:
+      - 98
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=jFgS4nhbb3U&list=UUwprmCziEK3BEQW84kQ3m5Q&index=5&feature=plcp
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-13"
+  tagidols:
+      - 15
+      - 64
+      - 101
+  tagteams:
+      - 98
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=FO9-RsOShDQ&list=UUwprmCziEK3BEQW84kQ3m5Q&index=14&feature=plcp
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-13"
+  tagidols:
+      - 15
+      - 64
+      - 101
+  tagteams:
+      - 98
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=sabyR16Ncl0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 15
+      - 64
+      - 101
+  tagteams:
+      - 98
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=5lRuw6Ldsuo
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 15
+      - 64
+      - 101
+  tagteams:
+      - 98
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=ddN96-eMNkA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 15
+      - 64
+      - 101
+  tagteams:
+      - 98
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=DsyxoBiV_CE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 19
+  tagteams:
+      - 99
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=oXJBk9Df-mE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 19
+  tagteams:
+      - 99
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=kv7cjX4IfQA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 19
+  tagteams:
+      - 99
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=J4NR7amo_6U
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 19
+  tagteams:
+      - 99
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=yO5SYKy5PZQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 19
+  tagteams:
+      - 99
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=2iM61VFwhOU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 8
+  tagteams:
+      - 100
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=JseUOaQne4k
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 8
+  tagteams:
+      - 100
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=6gRzURBh8LA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 8
+  tagteams:
+      - 100
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=NDpVZEIiAyI
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-13"
+  tagidols:
+      - 11
+  tagteams:
+      - 101
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=bfcwrtbklkU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 11
+  tagteams:
+      - 101
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=bcpTl8EaKEY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 11
+  tagteams:
+      - 101
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=nNwfhEXJYVk
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-13"
+  tagidols:
+      - 6
+  tagteams:
+      - 102
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=VK6_OpFLjBE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 6
+  tagteams:
+      - 102
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=ESnUJSUTjfQ&feature=fvst
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-13"
+  tagidols:
+      - 6
+  tagteams:
+      - 102
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=YWmFIlfNr-k
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 6
+  tagteams:
+      - 102
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=25_PNeS8Q7U
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 14
+  tagteams:
+      - 103
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=i9zjx9SszEE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 14
+  tagteams:
+      - 103
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=oYELiiOCtu4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 14
+  tagteams:
+      - 103
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=bQbnvxzY29c
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 1
+      - 60
+  tagteams:
+      - 104
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=-qkpdq5H5i8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 1
+      - 60
+  tagteams:
+      - 104
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=gT2wngD2NeY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 1
+      - 60
+  tagteams:
+      - 104
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=dq7DOD0Vrto&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 1
+      - 60
+  tagteams:
+      - 104
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=3TkfsHBiMcU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 19
+      - 264
+  tagteams:
+      - 105
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=jZAnfV4Vl-E
+  highlight: false
+  videocategory: 3
+  createdAt: "2013-02-13"
+  tagidols:
+      - 19
+      - 264
+  tagteams:
+      - 105
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=9qBzw5_qd8A
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 19
+      - 264
+  tagteams:
+      - 105
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=4htMCs5WR3o
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 19
+      - 264
+  tagteams:
+      - 105
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=HGBWSOE67sw
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-13"
+  tagidols:
+      - 19
+      - 264
+  tagteams:
+      - 105
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=wJQXXk9_Xqw
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-13"
+  tagidols:
+      - 3
+      - 15
+      - 19
+  tagteams:
+      - 106
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=W-tEhtSE26w
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 3
+      - 15
+      - 19
+  tagteams:
+      - 106
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=xqd3ajikWTo
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 3
+      - 15
+      - 19
+  tagteams:
+      - 106
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=TvQlJQ7R5a4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 3
+      - 15
+      - 19
+  tagteams:
+      - 106
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=_CqDec_dZ1M&feature=fvsr
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 2
+  tagteams:
+      - 107
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=DoKHNzynNis
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-13"
+  tagidols:
+      - 2
+  tagteams:
+      - 107
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=F6Lt1Zn8DHo
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-13"
+  tagidols:
+      - 2
+  tagteams:
+      - 107
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=OfEfEaJ21SQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 2
+  tagteams:
+      - 107
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=SdEMONhADmI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 8
+  tagteams:
+      - 108
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=PeB1HheaxUg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 8
+  tagteams:
+      - 108
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=o1S7sSB31D8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 8
+  tagteams:
+      - 108
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=OIj6tPu-uU0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 8
+  tagteams:
+      - 108
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=CG4F6MhvYLM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 266
+      - 122
+  tagteams:
+      - 109
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=6THJNyVndaI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 266
+      - 122
+  tagteams:
+      - 109
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=6J-Qpb0t524
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 266
+      - 122
+  tagteams:
+      - 109
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=VEA9YDIwZRU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 266
+      - 122
+  tagteams:
+      - 109
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=FdDSiZQIo3A
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 266
+      - 122
+  tagteams:
+      - 109
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=MiDR1vTmKb4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 1
+  tagteams:
+      - 110
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=lY7flzgeLZ4
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-13"
+  tagidols:
+      - 1
+  tagteams:
+      - 110
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=LFrLPODihOc
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-13"
+  tagidols:
+      - 1
+  tagteams:
+      - 110
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=kxrPe9H_TK8
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-13"
+  tagidols:
+      - 1
+  tagteams:
+      - 110
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=uZ_tJJITfak
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 1
+  tagteams:
+      - 110
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=Ew8d9BZsDdY&feature=related
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-13"
+  tagidols:
+      - 1
+      - 28
+  tagteams:
+      - 111
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=t5JgdtnwZoQ&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 1
+      - 28
+  tagteams:
+      - 111
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=3NzKMuDPQu4&feature=relmfu
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 1
+      - 28
+  tagteams:
+      - 111
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=bZNY8XnS82w
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 64
+      - 270
+  tagteams:
+      - 112
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=RLtde8FMrP8
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-13"
+  tagidols:
+      - 64
+      - 270
+  tagteams:
+      - 112
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=1Lb2g6ee8nc
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-13"
+  tagidols:
+      - 64
+      - 270
+  tagteams:
+      - 112
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=5WOdFNuAvkQ
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-13"
+  tagidols:
+      - 64
+      - 270
+  tagteams:
+      - 112
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=jM1j3IjQ0t0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 16
+      - 19
+      - 89
+      - 140
+  tagteams:
+      - 113
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=I2EHszhLeg0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 16
+      - 19
+      - 89
+      - 140
+  tagteams:
+      - 113
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=gsYhd00KyQA&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 16
+      - 19
+      - 89
+      - 140
+  tagteams:
+      - 113
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=fatwSLqm1m8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 16
+      - 19
+      - 89
+      - 140
+  tagteams:
+      - 113
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=QrCy8b4_c9U
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-13"
+  tagidols:
+      - 269
+      - 121
+  tagteams:
+      - 114
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=I_k40v3Pbog
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-16"
+  tagidols:
+      - 23
+      - 62
+  tagteams:
+      - 115
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=ojRSK36s8Zo
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 23
+      - 62
+  tagteams:
+      - 115
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=T6jXLUJXEWs
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 23
+      - 62
+  tagteams:
+      - 115
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=UxsBZBKR-E0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 19
+  tagteams:
+      - 116
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=NTMDr1ySwCU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 19
+  tagteams:
+      - 116
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=563mhgsxBjc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 19
+  tagteams:
+      - 116
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=ePWNc4II3tI
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-16"
+  tagidols:
+      - 19
+  tagteams:
+      - 116
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=3G1vtFIt6F4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 8
+      - 104
+  tagteams:
+      - 117
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=ajAVjoajFFg
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-16"
+  tagidols:
+      - 8
+      - 104
+  tagteams:
+      - 117
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=3dr4jdzLT9o&playnext=1&list=PL453CBD4C1FD81CDB&feature=results_video
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 8
+      - 104
+  tagteams:
+      - 117
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=QgsfAlktU3k
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 194
+  tagteams:
+      - 118
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=sEuK22yMb38
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 194
+  tagteams:
+      - 118
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=HXvld3e6yLU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 194
+  tagteams:
+      - 118
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=9Jg7HJIixTI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 194
+  tagteams:
+      - 118
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=2rHhey9Z_KM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 122
+  tagteams:
+      - 119
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=mh4sOSnNDS4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 122
+  tagteams:
+      - 119
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=1RdCZC36PRg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 122
+  tagteams:
+      - 119
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=lg4UpjCosbY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 3
+      - 81
+      - 101
+      - 60
+  tagteams:
+      - 120
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=sHAu7651Eog
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 3
+      - 81
+      - 101
+      - 60
+  tagteams:
+      - 120
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=4ZMb9yzQ25A
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 3
+      - 81
+      - 101
+      - 60
+  tagteams:
+      - 120
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=xDUlFAr-Syk&NR=1&feature=fvwp
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-16"
+  tagidols:
+      - 3
+      - 81
+      - 101
+      - 60
+  tagteams:
+      - 120
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=2nf_ktQ_-PA
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-16"
+  tagidols:
+      - 35
+  tagteams:
+      - 121
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=wF-Gbw57GYo
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 12
+  tagteams:
+      - 122
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=AejwEN1U3dg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 12
+  tagteams:
+      - 122
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=ggmMX4m2P5Y
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 19
+      - 60
+  tagteams:
+      - 123
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=9B1fl1NdilE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 19
+      - 60
+  tagteams:
+      - 123
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=ry0I7rkOcN0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 19
+      - 60
+  tagteams:
+      - 123
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=pePI36pTKE4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 19
+      - 60
+  tagteams:
+      - 123
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=MVp_PaW5fQw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 1
+  tagteams:
+      - 124
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=aIlnZ1DNoeI
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-16"
+  tagidols:
+      - 1
+  tagteams:
+      - 124
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=W1j4ZLMJJ_w
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 1
+  tagteams:
+      - 124
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=joZNYvHk5x8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 1
+  tagteams:
+      - 124
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=dkQwlmYXy80
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 3
+  tagteams:
+      - 125
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=UTiSjFShujg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 3
+  tagteams:
+      - 125
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=27LKjMkfACs
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 3
+  tagteams:
+      - 125
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=nqKiApelCBE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 1
+      - 8
+      - 12
+  tagteams:
+      - 126
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=G7vNGeqbmg8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 1
+      - 8
+      - 12
+  tagteams:
+      - 126
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=7OwFfXw0e9Y
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 1
+      - 8
+      - 12
+  tagteams:
+      - 126
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=GiIrhZwhnxk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 5
+  tagteams:
+      - 127
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=7tC-bs2mEYU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 5
+  tagteams:
+      - 127
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=ONutwFFHn6E
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 5
+  tagteams:
+      - 127
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=Mq4mEVKEffY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 124
+  tagteams:
+      - 128
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=RTupaKMfq-k
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 124
+  tagteams:
+      - 128
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=bh6zP9hQ3IM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 23
+      - 62
+  tagteams:
+      - 129
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=w49sqqYDt8k
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 23
+      - 62
+  tagteams:
+      - 129
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=N4gCyKaXCZo
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 23
+      - 62
+  tagteams:
+      - 129
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=JZGTaNVM0Lo
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-16"
+  tagidols:
+      - 23
+      - 62
+  tagteams:
+      - 129
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=AqtxwXbBmM4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 19
+      - 124
+  tagteams:
+      - 130
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=7kgh998oG0I
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 19
+      - 124
+  tagteams:
+      - 130
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=1bFmLgggMmQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 19
+      - 124
+  tagteams:
+      - 130
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=nMtErj0Vd1A
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-16"
+  tagidols:
+      - 19
+      - 124
+  tagteams:
+      - 130
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=1Of2zSJOuuw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 19
+      - 124
+  tagteams:
+      - 130
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=gPsW3wCg-uc
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-16"
+  tagidols:
+      - 19
+      - 124
+  tagteams:
+      - 130
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=eS5WslUzNf0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 19
+  tagteams:
+      - 131
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=ColcOBBYkII
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-16"
+  tagidols:
+      - 19
+  tagteams:
+      - 131
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=rN4HBcREHTk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 19
+  tagteams:
+      - 131
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=QMtw-rnQjgE&feature=fvst
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 13
+      - 81
+      - 122
+  tagteams:
+      - 132
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=eQHdAiDM6to
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 13
+      - 81
+      - 122
+  tagteams:
+      - 132
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=c_M8PW603lA
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-16"
+  tagidols:
+      - 13
+      - 81
+      - 122
+  tagteams:
+      - 132
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=DuC4vk_rogc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 13
+      - 81
+      - 122
+  tagteams:
+      - 132
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=UFDW2YNQnOc&feature=fvst
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 13
+      - 81
+      - 122
+  tagteams:
+      - 132
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=K9IbAaAx3ZU
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-16"
+  tagidols:
+      - 13
+      - 81
+      - 122
+  tagteams:
+      - 132
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=_wZXho9Lh8s
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 1
+      - 128
+  tagteams:
+      - 133
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=RFfJw_dAXkE
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-16"
+  tagidols:
+      - 1
+      - 128
+  tagteams:
+      - 133
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=G4Lez5s9ZVI
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-16"
+  tagidols:
+      - 1
+      - 128
+  tagteams:
+      - 133
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=JKFjYyPZ6ns
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 1
+      - 128
+  tagteams:
+      - 133
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=xgd59opBnoM
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-16"
+  tagidols:
+      - 5
+  tagteams:
+      - 134
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=HLTWLJp2qGI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 5
+  tagteams:
+      - 134
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=Qdoi3BHCA4A
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 5
+  tagteams:
+      - 134
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=JgsqERYOagw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 5
+  tagteams:
+      - 134
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=oi9uitoDYnc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-16"
+  tagidols:
+      - 5
+  tagteams:
+      - 134
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=0qGwAUzlXVg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 5
+  tagteams:
+      - 135
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=f-8CBBB-SHQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 5
+  tagteams:
+      - 135
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=9qRntBaZBsU
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-17"
+  tagidols:
+      - 5
+  tagteams:
+      - 135
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=5cGuOSsjZJQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 16
+      - 83
+      - 140
+  tagteams:
+      - 136
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=vTmAn7F7Hbw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 16
+      - 83
+      - 140
+  tagteams:
+      - 136
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=wETMjphXaAw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 16
+      - 83
+      - 140
+  tagteams:
+      - 136
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=c9N7khmE4tY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 16
+      - 83
+      - 140
+  tagteams:
+      - 136
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=C2I4zE7UJnQ
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-17"
+  tagidols:
+      - 19
+      - 61
+  tagteams:
+      - 137
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=K9XgNkZSo9s&feature=share&list=PLA4B8DD3BFBA5FC2D
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-17"
+  tagidols:
+      - 19
+      - 61
+  tagteams:
+      - 137
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=tk56RqK3KLg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 19
+      - 61
+  tagteams:
+      - 137
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=JLpeR9ivqhs
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 21
+  tagteams:
+      - 138
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=Tv0Vzz8WlBQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 21
+  tagteams:
+      - 138
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=Ei0ge1jRYcU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 21
+  tagteams:
+      - 138
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=7zC-BhQ7qAg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 21
+  tagteams:
+      - 138
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=n_6ZjfGp9wE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 264
+      - 186
+  tagteams:
+      - 139
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=zi9e33CWrgE
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 264
+      - 186
+  tagteams:
+      - 139
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=DZPIxrobVlk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 264
+      - 186
+  tagteams:
+      - 139
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=m_V9_j1BSAk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 2
+  tagteams:
+      - 140
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=tnkTlW1O5pc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 2
+  tagteams:
+      - 140
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=YirlJzsRsXI
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 2
+  tagteams:
+      - 140
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=bHnaVfynACo
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 1
+      - 21
+  tagteams:
+      - 141
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=AefXUwH6sDU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 1
+      - 21
+  tagteams:
+      - 141
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=hTrwXqXhea0&feature=plcp
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 1
+      - 21
+  tagteams:
+      - 141
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=6qXCRm-jJ6s
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 8
+      - 1
+  tagteams:
+      - 142
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=yOKfUUQTyl4
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-17"
+  tagidols:
+      - 8
+      - 1
+  tagteams:
+      - 142
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=9iKiEgWqSV0
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 8
+      - 1
+  tagteams:
+      - 142
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=-KKbkcbx12U
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 1
+      - 12
+      - 122
+  tagteams:
+      - 143
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=ipzhH9-Afl0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 1
+      - 12
+      - 122
+  tagteams:
+      - 143
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=nXzXsdZJ5AQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 1
+      - 12
+      - 122
+  tagteams:
+      - 143
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=i_PP7QJwNpM
+  highlight: false
+  videocategory: 5
+  createdAt: "2013-02-17"
+  tagidols:
+      - 1
+      - 12
+      - 122
+  tagteams:
+      - 143
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=Lx49CRvpwJQ
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 1
+      - 12
+      - 122
+  tagteams:
+      - 143
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=R_MX8SxvHes
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 1
+      - 12
+      - 122
+  tagteams:
+      - 143
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=LRpK9tc-xkA
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-17"
+  tagidols:
+      - 1
+      - 12
+      - 122
+  tagteams:
+      - 143
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=9nrNk4SzBAs
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-17"
+  tagidols:
+      - 1
+      - 12
+      - 122
+  tagteams:
+      - 143
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=324UsTQsHAM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 1
+      - 12
+      - 122
+  tagteams:
+      - 143
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=gK2z5-cceP4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 1
+      - 12
+      - 122
+  tagteams:
+      - 143
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=k7wazi6PL30
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 11
+  tagteams:
+      - 144
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=PWsdOjKIAtY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 11
+  tagteams:
+      - 144
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=w8cS8y3n8BY
+  highlight: false
+  videocategory: 7
+  createdAt: "2013-02-17"
+  tagidols:
+      - 11
+  tagteams:
+      - 144
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=QaLFw8Jb-fA&feature=plcp
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 35
+  tagteams:
+      - 145
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=w6yKSGD5T4Y
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 35
+  tagteams:
+      - 145
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=rRi1JhwKIa8
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 35
+  tagteams:
+      - 145
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=o6UQF_HvFfc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 35
+  tagteams:
+      - 145
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=F6Lt1Zn8DHo
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 2
+  tagteams:
+      - 146
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=TOxqPZL3JJE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 2
+  tagteams:
+      - 146
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=T4ckIf_uQ0Y
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 2
+  tagteams:
+      - 146
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=8qlaZ1jRmGI
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 2
+  tagteams:
+      - 146
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=nITE9AWn1r8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 8
+  tagteams:
+      - 147
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=tgduh13QSAg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 8
+  tagteams:
+      - 147
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=J84KtkAy5jk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 8
+  tagteams:
+      - 147
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=Q0ZO7T0Hl0k
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 3
+  tagteams:
+      - 148
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=WiEvZq4b3dA
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 3
+  tagteams:
+      - 148
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=WTtLqE8NkTk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 3
+  tagteams:
+      - 148
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=woedC1fC83U&feature=relmfu
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 3
+  tagteams:
+      - 148
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=xo2OuRCxagc&feature=fvst
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 19
+      - 119
+      - 184
+      - 107
+      - 61
+  tagteams:
+      - 149
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=CbafAMsoCKo
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 19
+      - 119
+      - 184
+      - 107
+      - 61
+  tagteams:
+      - 149
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=L9i41xtWiow
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 19
+      - 119
+      - 184
+      - 107
+      - 61
+  tagteams:
+      - 149
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=pdolEKm4cZA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 19
+      - 119
+      - 184
+      - 107
+      - 61
+  tagteams:
+      - 149
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=HWjFzPcqvsA
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 19
+      - 119
+      - 184
+      - 107
+      - 61
+  tagteams:
+      - 149
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=VhmGvJSOw-Q
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 19
+      - 119
+      - 184
+      - 107
+      - 61
+  tagteams:
+      - 149
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=JzXBSvngRR0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 19
+      - 119
+      - 184
+      - 107
+      - 61
+  tagteams:
+      - 149
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=UpnsNjMKW80
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 123
+  tagteams:
+      - 150
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=r_KKTLXgTIc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 123
+  tagteams:
+      - 150
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=nR85j3oAIRg
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-17"
+  tagidols:
+      - 123
+  tagteams:
+      - 150
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=JdrgBorgzwQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 4
+      - 5
+  tagteams:
+      - 151
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=SSwkS6oawkE
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 4
+      - 5
+  tagteams:
+      - 151
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=5bz2gMidTuQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 4
+      - 5
+  tagteams:
+      - 151
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=G0JdoLbSISY
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 1
+      - 15
+  tagteams:
+      - 152
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=OWPoKRMzAIk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 1
+      - 15
+  tagteams:
+      - 152
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=gQS_YPYmmkg
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 1
+      - 15
+  tagteams:
+      - 152
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=2D9leTw4o3c
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 1
+      - 15
+  tagteams:
+      - 152
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=anZWcRWWQzY
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 16
+      - 19
+  tagteams:
+      - 153
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=33Jkhfvxy3Y
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-17"
+  tagidols:
+      - 16
+      - 19
+  tagteams:
+      - 153
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=3M4aqgoNOtw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 16
+      - 19
+  tagteams:
+      - 153
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=EPt_r_3hzZ4
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 16
+      - 19
+  tagteams:
+      - 153
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=sxGKhnE9PHE
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 16
+      - 19
+  tagteams:
+      - 153
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=xOToL-SSkKI&feature=fvst
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 61
+  tagteams:
+      - 154
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=x2OpLZuRXOk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 61
+  tagteams:
+      - 154
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=63hYI0_XJ78
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-17"
+  tagidols:
+      - 61
+  tagteams:
+      - 154
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=Pgt8LsGc1ys
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 61
+  tagteams:
+      - 154
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=I0gS5CshUDE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 61
+  tagteams:
+      - 154
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=nXzXsdZJ5AQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 61
+  tagteams:
+      - 154
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=tPI6uPtDtI8
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 61
+  tagteams:
+      - 154
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=IkgaI6HJtWI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 61
+  tagteams:
+      - 154
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=_t9zYT8IJnE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-17"
+  tagidols:
+      - 16
+  tagteams:
+      - 155
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=lS-034IyFJI
+  highlight: false
+  videocategory: 5
+  createdAt: "2013-02-17"
+  tagidols:
+      - 13
+  tagteams:
+      - 156
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=dSz4AKeXsUE
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-17"
+  tagidols:
+      - 13
+  tagteams:
+      - 156
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=YmjyTYcrsqw
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-17"
+  tagidols:
+      - 13
+  tagteams:
+      - 156
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=HbKPNpj3a9w
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 13
+  tagteams:
+      - 156
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=o60rR1yeIjg
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-17"
+  tagidols:
+      - 16
+      - 123
+      - 134
+  tagteams:
+      - 157
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=RTXecKNXU3Q
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 16
+      - 123
+      - 134
+  tagteams:
+      - 157
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=0PYt1SFuFoE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 16
+      - 123
+      - 134
+  tagteams:
+      - 157
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=cJpr6QsXHuc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 16
+      - 123
+      - 134
+  tagteams:
+      - 157
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=d5d6AVefTfs
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 15
+      - 61
+  tagteams:
+      - 158
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=o60rR1yeIjg
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-22"
+  tagidols:
+      - 15
+      - 61
+  tagteams:
+      - 158
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=Dyomj5Xw0eQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 15
+      - 61
+  tagteams:
+      - 158
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=A2BafFiLq94
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 15
+      - 61
+  tagteams:
+      - 158
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=Hy_aJsE3DGQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 15
+      - 61
+  tagteams:
+      - 158
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=5uoNYSrsgp4
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-22"
+  tagidols:
+      - 15
+      - 61
+  tagteams:
+      - 158
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=pt-4nOQKFFo
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-22"
+  tagidols:
+      - 15
+      - 35
+      - 286
+  tagteams:
+      - 159
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=7P6WjhaKPok
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 15
+      - 35
+      - 286
+  tagteams:
+      - 159
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=3Pmxpk1kQFw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 15
+      - 35
+      - 286
+  tagteams:
+      - 159
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=GJX1YuC0oqA
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-22"
+  tagidols:
+      - 15
+      - 35
+      - 286
+  tagteams:
+      - 159
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=VOSG0bkKdH4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 15
+      - 35
+      - 286
+  tagteams:
+      - 159
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=s4tcgWpb8G0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 21
+  tagteams:
+      - 160
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=voUc9WmokmM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 15
+      - 282
+  tagteams:
+      - 161
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=yym-km825a0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 15
+      - 282
+  tagteams:
+      - 161
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=RMLdWO1A9x8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 15
+      - 282
+  tagteams:
+      - 161
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=hF7AhOzBLZ8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 15
+      - 282
+  tagteams:
+      - 161
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=Mxnmvhlk6QE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 15
+      - 282
+  tagteams:
+      - 161
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=klkaaMO5bOk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 2
+  tagteams:
+      - 162
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=Iu3kVRrnKSY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 2
+  tagteams:
+      - 162
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=ckAQIcafOsk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 2
+  tagteams:
+      - 162
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=p8-lvNlbPVI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 8
+      - 16
+  tagteams:
+      - 163
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=fDA2HhlalJ8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 8
+      - 16
+  tagteams:
+      - 163
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=56N2IhyJ1Hk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 8
+      - 16
+  tagteams:
+      - 163
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=Lfk_553d43k
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 8
+      - 16
+  tagteams:
+      - 163
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=pAdnWIZWUaw
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-22"
+  tagidols:
+      - 6
+  tagteams:
+      - 164
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=8WGNM0X-qmI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 6
+  tagteams:
+      - 164
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=UmgIR4wTuHk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 16
+  tagteams:
+      - 165
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=tsX60OhrJCE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 16
+  tagteams:
+      - 165
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=vDZGKfMWuns
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 16
+  tagteams:
+      - 165
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=iVaNCP1swJ0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 16
+  tagteams:
+      - 165
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=q0qGv5tHwRw
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-22"
+  tagidols:
+      - 16
+  tagteams:
+      - 165
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=LcQGVeddwLw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 16
+  tagteams:
+      - 165
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=RG5j5znxKDo
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 6
+  tagteams:
+      - 166
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=yRjiCCqWltM
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-22"
+  tagidols:
+      - 6
+  tagteams:
+      - 166
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=Fy_KzSttymM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 6
+  tagteams:
+      - 166
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=Fb_76uta-KA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 1
+  tagteams:
+      - 167
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=ggVXGN2wh-I
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-22"
+  tagidols:
+      - 1
+  tagteams:
+      - 167
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=CWBerJUNduM
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-22"
+  tagidols:
+      - 1
+  tagteams:
+      - 167
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=B2VIqKB1y-c
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 1
+  tagteams:
+      - 167
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=86OMBM-mf_A&feature=fvst
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-22"
+  tagidols:
+      - 1
+  tagteams:
+      - 167
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=sjDmzIivFWA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 81
+  tagteams:
+      - 168
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=oGbgQtfHxqk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 81
+  tagteams:
+      - 168
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=cV01pgjNwFA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 81
+  tagteams:
+      - 168
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=WGscvHVtsCQ
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-22"
+  tagidols:
+      - 81
+  tagteams:
+      - 168
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=tU60FMH9aBY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 121
+      - 136
+  tagteams:
+      - 169
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=5uitAOnSN8E
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 121
+      - 136
+  tagteams:
+      - 169
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=gsFRPGcxd_0
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-22"
+  tagidols:
+      - 121
+      - 136
+  tagteams:
+      - 169
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=8QFANgnOYK4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 121
+      - 136
+  tagteams:
+      - 169
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=7ZO5ucIvZH4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 121
+      - 136
+  tagteams:
+      - 169
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=cz7DmI0Oxzc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 12
+  tagteams:
+      - 170
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=s1ggcW5pVf8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 12
+  tagteams:
+      - 170
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=_1K6slf2gYY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 12
+  tagteams:
+      - 170
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=UN_6-SqhGwM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 12
+  tagteams:
+      - 170
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=NDSRO77aCUM&feature=fvsr
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 282
+  tagteams:
+      - 171
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=wHolIsV0ZGg&feature=related
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 282
+  tagteams:
+      - 171
+-
+  author: 11
+  url: http://youtu.be/J0ZN74pYDIA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 282
+  tagteams:
+      - 171
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=DovcZ8x2Lzg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 282
+  tagteams:
+      - 171
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=wom6brgF3gE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 282
+  tagteams:
+      - 171
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=uWhQoTYV3WU
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-22"
+  tagidols:
+      - 10
+  tagteams:
+      - 172
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=t6JcsgSzWVU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 10
+  tagteams:
+      - 172
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=pQW-A9ZzvLQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 10
+  tagteams:
+      - 172
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=Wds8R3A4NUg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 17
+  tagteams:
+      - 173
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=hjgYlDcQFIg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 17
+  tagteams:
+      - 173
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=kmSnQ87kdxY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 2
+  tagteams:
+      - 174
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=4q9E7eizi1k
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 2
+  tagteams:
+      - 174
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=JDq28MYoHCk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 1
+      - 7
+  tagteams:
+      - 175
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=nKhfHfBNAfY&feature=fvst
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 1
+      - 7
+  tagteams:
+      - 175
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=xO3imeBX3_M
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 1
+      - 7
+  tagteams:
+      - 175
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=0CkKwUNmpP0
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-22"
+  tagidols:
+      - 1
+      - 7
+  tagteams:
+      - 175
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=Q-IPh7AQjrI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 1
+      - 7
+  tagteams:
+      - 175
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=EKbPGofH76I
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 1
+      - 7
+  tagteams:
+      - 175
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=QmhFsdFrWlM
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-22"
+  tagidols:
+      - 19
+      - 72
+  tagteams:
+      - 176
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=8RYHcIfQjc0
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-22"
+  tagidols:
+      - 19
+      - 72
+  tagteams:
+      - 176
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=JUtBCsSU2iI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 19
+      - 72
+  tagteams:
+      - 176
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=QjXu3i5FJHY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 19
+      - 72
+  tagteams:
+      - 176
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=SzlLebUvWJo
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 19
+      - 72
+  tagteams:
+      - 176
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=BfvVP1VK0N4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 19
+      - 72
+  tagteams:
+      - 176
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=_sgMgUZvrYQ
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-22"
+  tagidols:
+      - 19
+      - 72
+  tagteams:
+      - 176
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=NMNiyTETQUA
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-22"
+  tagidols:
+      - 19
+      - 72
+  tagteams:
+      - 176
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=MihWfBqJ4UI&feature=fvst
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 35
+      - 73
+      - 124
+  tagteams:
+      - 177
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=aDG_qnWpTKc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 35
+      - 73
+      - 124
+  tagteams:
+      - 177
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=OjqR9a0JKTk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 35
+      - 73
+      - 124
+  tagteams:
+      - 177
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=gWpf8--pMGc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 35
+      - 73
+      - 124
+  tagteams:
+      - 177
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=JM-4Bkieai8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 8
+      - 140
+  tagteams:
+      - 178
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=XeUX0TC9Srw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 8
+      - 140
+  tagteams:
+      - 178
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=wR2EHxD3_bY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 8
+      - 140
+  tagteams:
+      - 178
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=XE8UsXozN2o
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-22"
+  tagidols:
+      - 8
+      - 140
+  tagteams:
+      - 178
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=Q2NMngGoWvY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 123
+      - 134
+      - 1
+  tagteams:
+      - 179
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=ReKsrFCnmlw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 123
+      - 134
+      - 1
+  tagteams:
+      - 179
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=jg5JqBCzPvU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 123
+      - 134
+      - 1
+  tagteams:
+      - 179
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=5NKVxvDJWUA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 123
+      - 134
+      - 1
+  tagteams:
+      - 179
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=sxIOcgbKv3Y
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-22"
+  tagidols:
+      - 123
+      - 134
+      - 1
+  tagteams:
+      - 179
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=HTkh9m-1f5A
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 123
+      - 134
+      - 1
+  tagteams:
+      - 179
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=x5w1SylrrEI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 1
+  tagteams:
+      - 180
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=1tibt3ZjnFA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-22"
+  tagidols:
+      - 1
+  tagteams:
+      - 180
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=Qupc8tnBYK8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 1
+  tagteams:
+      - 180
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=UNg1L5LNIkg
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-25"
+  tagidols:
+      - 1
+  tagteams:
+      - 180
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=gSSQJDrwsHs
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 1
+  tagteams:
+      - 180
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=ASfQzFFYCog
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 21
+      - 125
+  tagteams:
+      - 181
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=KuYPin2aq9Q
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 21
+      - 125
+  tagteams:
+      - 181
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=uR3ixvPW4FY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 21
+      - 125
+  tagteams:
+      - 181
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=F4v49vhB-NM
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 19
+  tagteams:
+      - 182
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=h-jkSNlhiJA
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 19
+  tagteams:
+      - 182
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=ivMrXezqHDU
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 19
+  tagteams:
+      - 182
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=T3-QejVvKnQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 19
+  tagteams:
+      - 182
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=zqf5tBQUAbo
+  highlight: false
+  videocategory: 5
+  createdAt: "2013-02-25"
+  tagidols:
+      - 35
+      - 81
+      - 133
+  tagteams:
+      - 183
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=2P8zkSy9GvE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 35
+      - 81
+      - 133
+  tagteams:
+      - 183
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=cDSdOdMZZhg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 35
+      - 81
+      - 133
+  tagteams:
+      - 183
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=iKlkBzYuITY
+  highlight: false
+  videocategory: 5
+  createdAt: "2013-02-25"
+  tagidols:
+      - 35
+      - 81
+      - 133
+  tagteams:
+      - 183
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=DLH1-EnODrs
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 35
+      - 81
+      - 133
+  tagteams:
+      - 183
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=zhPDsLraW4E
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 35
+      - 81
+      - 133
+  tagteams:
+      - 183
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=f5pFyAWjdZ4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 12
+  tagteams:
+      - 184
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=G2vuzal0g38
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 12
+  tagteams:
+      - 184
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=Qp8oAJGSq8w
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 12
+  tagteams:
+      - 184
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=KzI7C75Mit4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 12
+  tagteams:
+      - 184
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=MEofHhzaTVU
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-25"
+  tagidols:
+      - 11
+      - 16
+  tagteams:
+      - 185
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=xK2NdYfoGMk
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 11
+      - 16
+  tagteams:
+      - 185
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=Zp9mVBfr3ao
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 11
+      - 16
+  tagteams:
+      - 185
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=Rje-sWU22tE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 11
+      - 16
+  tagteams:
+      - 185
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=r_Ahvfkwygo
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 11
+      - 16
+  tagteams:
+      - 185
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=8XPYioVxIAM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 3
+      - 8
+  tagteams:
+      - 186
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=WnCY_NND_RM
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 3
+      - 8
+  tagteams:
+      - 186
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=_mCoqVL6VSs
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 3
+      - 8
+  tagteams:
+      - 186
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=WWFMwg9CXGk
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 3
+      - 8
+  tagteams:
+      - 186
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=7q30-6hSJt4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 9
+      - 10
+  tagteams:
+      - 187
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=eYVxV9PH6tY
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-25"
+  tagidols:
+      - 9
+      - 10
+  tagteams:
+      - 187
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=o7_EarpJqPc
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-25"
+  tagidols:
+      - 9
+      - 10
+  tagteams:
+      - 187
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=bLXEGZqJsD8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 7
+      - 17
+  tagteams:
+      - 188
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=5PX8z9x7Hms
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 7
+      - 17
+  tagteams:
+      - 188
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=U8dvX4i77lQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 3
+  tagteams:
+      - 189
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=yVo9Tl3Mmk4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 3
+  tagteams:
+      - 189
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=5-i8ER-wSck
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-25"
+  tagidols:
+      - 269
+  tagteams:
+      - 190
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=QMNH7NWz-dE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 269
+  tagteams:
+      - 190
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=GtFvzqun148
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 269
+  tagteams:
+      - 190
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=n_8zn6UzCoM&t=8m42s
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-25"
+  tagidols:
+      - 15
+      - 64
+  tagteams:
+      - 191
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=E_LxLySIvKM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 15
+      - 64
+  tagteams:
+      - 191
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=1lu_TzIsfe0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 15
+      - 64
+  tagteams:
+      - 191
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=FTTFI-ImdCQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 15
+      - 64
+  tagteams:
+      - 191
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=rneBpol3bI4&feature=fvst
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-25"
+  tagidols:
+      - 61
+  tagteams:
+      - 192
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=F3HIT0igJhE
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-25"
+  tagidols:
+      - 61
+  tagteams:
+      - 192
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=exjhHL1sb3c
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 61
+  tagteams:
+      - 192
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=8SjjjboB2AQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 61
+  tagteams:
+      - 192
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=bGfstUCNJc0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 6
+      - 13
+      - 23
+  tagteams:
+      - 193
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=F-Sa-GrpvCM
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 6
+      - 13
+      - 23
+  tagteams:
+      - 193
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=XkJRGleNN34
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 6
+      - 13
+      - 23
+  tagteams:
+      - 193
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=vrESwWDDw0k
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 6
+      - 13
+      - 23
+  tagteams:
+      - 193
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=YgRWLBY26A0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 12
+  tagteams:
+      - 194
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=gGRVovFRc2Y
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 12
+  tagteams:
+      - 194
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=z4XEotR_rcc
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 12
+  tagteams:
+      - 194
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=fws1jRzvvoo
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 6
+  tagteams:
+      - 195
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=IzC0hE5TckQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 6
+  tagteams:
+      - 195
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=krGcxHxtLM4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 6
+  tagteams:
+      - 195
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=Es8V86H1Dvo
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 17
+  tagteams:
+      - 196
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=LSb5I0cVwTo&feature=fvst
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 17
+  tagteams:
+      - 196
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=auz-Iv2lUG4
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 17
+  tagteams:
+      - 196
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=QUFPD5Zcq2o
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 6
+      - 17
+  tagteams:
+      - 197
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=kjEOZrGkPkw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 6
+      - 17
+  tagteams:
+      - 197
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=4d5vnQbRmoo
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 6
+      - 17
+  tagteams:
+      - 197
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=ShYg4BAR2CY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 11
+  tagteams:
+      - 198
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=xl6ERwOistM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 11
+  tagteams:
+      - 198
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=vAGuN58X-m8
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-25"
+  tagidols:
+      - 26
+      - 143
+  tagteams:
+      - 199
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=gKTmOuSdFbo
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 26
+      - 143
+  tagteams:
+      - 199
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=0qSvoml9dqY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 26
+      - 143
+  tagteams:
+      - 199
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=dKf62HRDOlc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 26
+      - 143
+  tagteams:
+      - 199
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=WwHGQYse9_k
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-25"
+  tagidols:
+      - 1
+  tagteams:
+      - 200
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=OMQcnayhbvk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 1
+  tagteams:
+      - 200
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=T6Gl9Edf-qI
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-25"
+  tagidols:
+      - 1
+  tagteams:
+      - 200
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=UoJLs6o7wQg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 1
+  tagteams:
+      - 200
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=8PCXH1dKEFg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 1
+  tagteams:
+      - 200
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=J-hCDlrUEXE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 1
+  tagteams:
+      - 200
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=GxBrGFVudrk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 1
+  tagteams:
+      - 200
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=yXtGojOe9vA&feature=related
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-25"
+  tagidols:
+      - 181
+      - 136
+  tagteams:
+      - 201
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=QmxrJcHW52c&feature=fvwrel
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-25"
+  tagidols:
+      - 181
+      - 136
+  tagteams:
+      - 201
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=5wA5RiyIwv8
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 1
+  tagteams:
+      - 202
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=h-bSm-s9LRU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 1
+  tagteams:
+      - 202
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=qULx5VGt5T8
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 1
+  tagteams:
+      - 202
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=jNyzHh59RrM
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 1
+  tagteams:
+      - 202
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=T2g40QF8FcU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 1
+  tagteams:
+      - 202
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=nDHwNQsFKxo&feature=fvst
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 15
+  tagteams:
+      - 203
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=3D34FO8q91w
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-25"
+  tagidols:
+      - 15
+  tagteams:
+      - 203
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=1b5HNVSV3io
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-25"
+  tagidols:
+      - 15
+  tagteams:
+      - 203
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=xP0a93shwZA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 15
+  tagteams:
+      - 203
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=rmplDLvdHQc
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-25"
+  tagidols:
+      - 15
+  tagteams:
+      - 203
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=WozHXbsAn9M
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 3
+      - 64
+      - 107
+  tagteams:
+      - 204
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=pdQSN-dJn4w
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 3
+      - 64
+      - 107
+  tagteams:
+      - 204
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=rLXB-kO8rRE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-25"
+  tagidols:
+      - 3
+      - 64
+      - 107
+  tagteams:
+      - 204
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=vSN6qnr3q58
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-28"
+  tagidols:
+      - 3
+      - 64
+      - 107
+  tagteams:
+      - 204
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=VeivwZy8jD4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 3
+      - 64
+      - 107
+  tagteams:
+      - 204
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=4RBKJ9Qa5bU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 21
+      - 140
+  tagteams:
+      - 205
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=v0lsaAK9-_s
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 21
+      - 140
+  tagteams:
+      - 205
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=DAFjdAZJQPI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 21
+      - 140
+  tagteams:
+      - 205
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=J-uVswobImU&feature=fvst
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 21
+      - 140
+  tagteams:
+      - 205
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=I7tw6OK-0ko
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-28"
+  tagidols:
+      - 21
+      - 140
+  tagteams:
+      - 205
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=WgC5yWAA8F0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 13
+      - 130
+  tagteams:
+      - 206
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=SQU_qDoY_-M
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 13
+      - 130
+  tagteams:
+      - 206
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=gAEFScqeQHU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 13
+      - 130
+  tagteams:
+      - 206
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=Dy4hw6ciPWM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 22
+  tagteams:
+      - 207
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=lhkwhKGaftc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 22
+  tagteams:
+      - 207
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=1UuQezjjHcQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 22
+  tagteams:
+      - 207
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=iW2qak7sEZw
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-28"
+  tagidols:
+      - 13
+  tagteams:
+      - 208
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=KNL_ii8ODTM
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-28"
+  tagidols:
+      - 13
+  tagteams:
+      - 208
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=6BODrvgC25o
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 13
+  tagteams:
+      - 208
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=gTK8NLu5Ips
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 13
+  tagteams:
+      - 208
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=HzdINNG077o
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-28"
+  tagidols:
+      - 13
+  tagteams:
+      - 208
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=c-gKpmnZvBQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 13
+  tagteams:
+      - 208
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=sSjvuYxeoHs
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 13
+  tagteams:
+      - 209
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=ftP_0CCAe7Y
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 13
+  tagteams:
+      - 209
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=8gRtcULGshM
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-28"
+  tagidols:
+      - 13
+  tagteams:
+      - 209
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=yUKCkHksncU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 13
+  tagteams:
+      - 209
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=Z84_ni47qHs
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 13
+  tagteams:
+      - 209
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=UDSW6GDY33Y
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 16
+      - 139
+  tagteams:
+      - 210
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=ZeXrURC-svM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 16
+      - 139
+  tagteams:
+      - 210
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=YUju-1yJ1tE
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-28"
+  tagidols:
+      - 4
+  tagteams:
+      - 211
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=RcbfBcwC8yc
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-28"
+  tagidols:
+      - 4
+  tagteams:
+      - 211
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=1IGmP70TirU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 9
+  tagteams:
+      - 212
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=wCBGe6XvkdM
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-28"
+  tagidols:
+      - 9
+  tagteams:
+      - 212
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=xI4J0z0wnN8
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-28"
+  tagidols:
+      - 13
+  tagteams:
+      - 213
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=RFQAempLuLE
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-28"
+  tagidols:
+      - 13
+  tagteams:
+      - 213
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=a7Rw7Si729g
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-28"
+  tagidols:
+      - 23
+  tagteams:
+      - 214
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=OLoSn-hhkX4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 23
+  tagteams:
+      - 214
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=AnUkSnicSaQ
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-28"
+  tagidols:
+      - 7
+  tagteams:
+      - 215
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=10YbMpBHF2U
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 7
+  tagteams:
+      - 215
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=PMzV6H3L6Wg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 13
+      - 16
+  tagteams:
+      - 216
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=lXeM4G0nElI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 13
+      - 16
+  tagteams:
+      - 216
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=f2OWNpJOJhg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 19
+  tagteams:
+      - 217
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=bxH5oCYIoTg
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-28"
+  tagidols:
+      - 19
+  tagteams:
+      - 217
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=RKtcfpYu7bo
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-02-28"
+  tagidols:
+      - 3
+  tagteams:
+      - 218
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=7m7Z8wRu2wk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 3
+  tagteams:
+      - 218
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=MG6ua9xbkgk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 11
+  tagteams:
+      - 219
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=eH6NhdYhAcw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 11
+  tagteams:
+      - 219
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=ooN6OkJk1bE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 3
+      - 1
+      - 123
+  tagteams:
+      - 220
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=T5CctX066cg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 3
+      - 1
+      - 123
+  tagteams:
+      - 220
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=bgT24C_HJZg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 120
+      - 211
+      - 213
+  tagteams:
+      - 221
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=ffDuWcdhdkY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 120
+      - 211
+      - 213
+  tagteams:
+      - 221
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=z2-pKF-2bn8
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-28"
+  tagidols:
+      - 11
+  tagteams:
+      - 222
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=o8gAXnkHTy4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 11
+  tagteams:
+      - 222
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=xTxgMlPTzlQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 102
+      - 173
+  tagteams:
+      - 223
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=UEhlvsHF1L8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 102
+      - 173
+  tagteams:
+      - 223
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=vBOh3AgJr9U
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 18
+  tagteams:
+      - 224
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=qIWjtC6fZFo
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-28"
+  tagidols:
+      - 18
+  tagteams:
+      - 224
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=2692YxBSjoA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 19
+      - 63
+  tagteams:
+      - 225
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=U-p-ovB6kRY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 19
+      - 63
+  tagteams:
+      - 225
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=SOTSC13U5GQ
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-28"
+  tagidols:
+      - 1
+      - 3
+  tagteams:
+      - 226
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=rjMyTDin0yA
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-28"
+  tagidols:
+      - 1
+      - 3
+  tagteams:
+      - 226
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=ySgG_BZ5FVU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 3
+  tagteams:
+      - 227
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=6cguEf3aJ2w
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 3
+  tagteams:
+      - 227
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=l0x7O5oaPu0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 136
+      - 198
+  tagteams:
+      - 228
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=VBl-_YLsBhM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 136
+      - 198
+  tagteams:
+      - 228
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=U6JN1AvxcSE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 3
+      - 125
+  tagteams:
+      - 229
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=Ff_ngCPpvPM
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-02-28"
+  tagidols:
+      - 3
+      - 125
+  tagteams:
+      - 229
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=757Ym9Nxil0
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-02-28"
+  tagidols:
+      - 1
+  tagteams:
+      - 230
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=3RvRgZ_IlKY
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-03-01"
+  tagidols:
+      - 1
+  tagteams:
+      - 230
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=fyQNCFq-eXg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 1
+      - 8
+      - 21
+  tagteams:
+      - 231
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=PJ_2w4-p8pw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 1
+      - 8
+      - 21
+  tagteams:
+      - 231
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=CGIZWKR432w
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 13
+      - 15
+  tagteams:
+      - 232
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=Nt1Grm32ccs
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 13
+      - 15
+  tagteams:
+      - 232
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=AFbK0pl3eC4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 1
+      - 133
+  tagteams:
+      - 233
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=eQIZ8KTFWgk
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 1
+      - 133
+  tagteams:
+      - 233
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=YHoKSFFc30c
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 7
+      - 16
+      - 64
+      - 121
+      - 123
+  tagteams:
+      - 234
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=6vdY-uF5-cY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 7
+      - 16
+      - 64
+      - 121
+      - 123
+  tagteams:
+      - 234
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=e4FyLvj1mKo
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 8
+  tagteams:
+      - 235
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=f8b_xu9cnrc
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-03-01"
+  tagidols:
+      - 8
+  tagteams:
+      - 235
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=SZOQEeYqJtc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 7
+  tagteams:
+      - 236
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=B-DA5GoydjM
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-03-01"
+  tagidols:
+      - 7
+  tagteams:
+      - 236
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=qvAIZ1PBcIE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 3
+  tagteams:
+      - 237
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=SLGJOiF1m3w
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 3
+  tagteams:
+      - 237
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=TOxVS4_8U2I
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 2
+  tagteams:
+      - 238
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=JBLlHiYJRRI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 2
+  tagteams:
+      - 238
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=hRo7vHT5eco
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 107
+      - 298
+  tagteams:
+      - 239
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=wn_oYeugGiw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 107
+      - 298
+  tagteams:
+      - 239
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=LGBIkWebXgA
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-03-01"
+  tagidols:
+      - 1
+      - 184
+      - 119
+      - 100
+      - 101
+  tagteams:
+      - 240
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=50u8B3vAI0o
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 1
+      - 184
+      - 119
+      - 100
+      - 101
+  tagteams:
+      - 240
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=x4nX6jR0PcI
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-03-01"
+  tagidols:
+      - 35
+  tagteams:
+      - 241
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=ggXwC0Ag7uE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 35
+  tagteams:
+      - 241
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=UaJsiXf9EUI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 19
+      - 135
+  tagteams:
+      - 242
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=CoJNPRc0BNc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 19
+      - 135
+  tagteams:
+      - 242
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=JCSZdf5eVZU
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-03-01"
+  tagidols:
+      - 26
+  tagteams:
+      - 243
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=NQjLT4S65cc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 26
+  tagteams:
+      - 243
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=_bHrrltf62o
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 13
+      - 15
+  tagteams:
+      - 244
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=h82s6alKlAo
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 13
+      - 15
+  tagteams:
+      - 244
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=qlczDzDsPzY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 3
+  tagteams:
+      - 245
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=0ZgwIhbga6I
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-03-01"
+  tagidols:
+      - 3
+  tagteams:
+      - 245
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=osH5dCRGxY8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 15
+  tagteams:
+      - 246
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=YHRqDT86oiY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 15
+  tagteams:
+      - 246
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=BY2VMbjPetw
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 11
+  tagteams:
+      - 247
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=4WKRZvKQHwE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 11
+  tagteams:
+      - 247
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=z6S9FKd7v1U
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-03-01"
+  tagidols:
+      - 13
+  tagteams:
+      - 248
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=5SfS7So3LmQ
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-03-01"
+  tagidols:
+      - 13
+  tagteams:
+      - 248
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=jOfu24o_zek
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 7
+      - 121
+      - 125
+  tagteams:
+      - 249
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=0tTo8Q5e9bM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 7
+      - 121
+      - 125
+  tagteams:
+      - 249
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=3OBwO_WuuUU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 204
+  tagteams:
+      - 250
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=aiv7gWQ6aTM
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-03-01"
+  tagidols:
+      - 204
+  tagteams:
+      - 250
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=bClK2e0OUw4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 1
+  tagteams:
+      - 251
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=i7R7hSDKNyY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 1
+  tagteams:
+      - 251
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=KSwGme4PlVg
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 17
+  tagteams:
+      - 252
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=3fQkdD9sQtM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 17
+  tagteams:
+      - 252
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=aDUwcxtUXzE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 3
+  tagteams:
+      - 253
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=JrqEV1tptqI
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-03-01"
+  tagidols:
+      - 3
+  tagteams:
+      - 253
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=-OAWHpUHokY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 16
+  tagteams:
+      - 254
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=xkyLWuo_Xu4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 16
+  tagteams:
+      - 254
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=cA-kp42BqQQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 8
+  tagteams:
+      - 255
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=1KZwDEQPsr8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 8
+  tagteams:
+      - 255
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=g2MGWSAFT0c
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 19
+      - 136
+  tagteams:
+      - 256
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=coZP7kUujmE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 19
+      - 136
+  tagteams:
+      - 256
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=1gF4WmW4DZM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 123
+  tagteams:
+      - 257
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=v41LVxCi1zY
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-03-01"
+  tagidols:
+      - 123
+  tagteams:
+      - 257
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=AZtkvbBU2eE
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 8
+  tagteams:
+      - 258
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=5_uUVabK-aQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 8
+  tagteams:
+      - 258
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=HSQ6X6qsizY
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-03-01"
+  tagidols:
+      - 10
+  tagteams:
+      - 259
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=15sfoizsoDM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 10
+  tagteams:
+      - 259
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=2Vseiy9FWYE
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-03-01"
+  tagidols:
+      - 11
+  tagteams:
+      - 260
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=AwNWFAx7ZkY
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 11
+  tagteams:
+      - 260
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=giFBOO7fhVM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 16
+  tagteams:
+      - 261
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=kWLqyGJjKoI
+  highlight: false
+  videocategory: 5
+  createdAt: "2013-03-01"
+  tagidols:
+      - 16
+  tagteams:
+      - 261
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=yLTHRNEP-dM
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 1
+      - 133
+  tagteams:
+      - 262
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=8cPzKTc8uIQ
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 1
+      - 133
+  tagteams:
+      - 262
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=GD0pltJgRRk
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-03-01"
+  tagidols:
+      - 16
+      - 62
+      - 121
+  tagteams:
+      - 263
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=aAUrxP_vpNA
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 16
+      - 62
+      - 121
+  tagteams:
+      - 263
+-
+  author: 20
+  url: http://www.youtube.com/watch?v=7MGNRg5ERU8
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 9
+      - 236
+  tagteams:
+      - 264
+-
+  author: 11
+  url: http://www.youtube.com/watch?v=_mI1ewuzfcU
+  highlight: false
+  videocategory: 2
+  createdAt: "2013-03-01"
+  tagidols:
+      - 9
+      - 236
+  tagteams:
+      - 264
+-
+  author: 12
+  url: http://www.youtube.com/watch?v=n8utg8LfCvc
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 63
+  tagteams:
+      - 265
+-
+  author: 13
+  url: http://www.youtube.com/watch?v=piKj9LibwdI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 63
+  tagteams:
+      - 265
+-
+  author: 14
+  url: http://www.youtube.com/watch?v=g-UIxvFwI4Q
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 123
+      - 135
+  tagteams:
+      - 266
+-
+  author: 15
+  url: http://www.youtube.com/watch?v=AfOWJtQLtsg
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-03-01"
+  tagidols:
+      - 123
+      - 135
+  tagteams:
+      - 266
+-
+  author: 16
+  url: http://www.youtube.com/watch?v=uVTjnvoMATE
+  highlight: false
+  videocategory: 6
+  createdAt: "2013-03-01"
+  tagidols:
+      - 16
+      - 35
+  tagteams:
+      - 267
+-
+  author: 17
+  url: http://www.youtube.com/watch?v=od_mD7DcQe4
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 16
+      - 35
+  tagteams:
+      - 267
+-
+  author: 18
+  url: http://www.youtube.com/watch?v=Bkc0nyU3qqI
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 13
+      - 100
+  tagteams:
+      - 268
+-
+  author: 19
+  url: http://www.youtube.com/watch?v=cnL9EglhQqU
+  highlight: false
+  videocategory: 4
+  createdAt: "2013-03-01"
+  tagidols:
+      - 13
+      - 100
+  tagteams:
+      - 268

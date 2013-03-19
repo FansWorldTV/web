@@ -18,39 +18,84 @@
   firstname: Juan
   lastname: Pérez
   image: juanperez.jpg
+
 -
-  id: 3
-  email: adolfa@example.com
-  username: adolfa
-  password: test
+  id: 11
+  email: leandelsur@ciudad.com.ar
+  username: leandro-ubeda
+  password: placeholder829
   type: fan
-  firstname: Adolfa
-  lastname: González
-  image: usuario3.jpg
+  firstname: Leandro
+  lastname: Ubeda
 -
-  id: 4
-  email: jacobo@example.com
-  username: jacobo.pruebaman
-  password: test
+  id: 12
+  email: bosteritaxime@yahoo.com.ar
+  username: ximena-mendoza
+  password: placeholder829
   type: fan
-  firstname: Jacobo
-  lastname: Pruebaman
-  image: usuario4.jpg
+  firstname: Ximena
+  lastname: Mendoza
 -
-  id: 5
-  email: chef@example.com
-  username: chef
-  password: test
+  id: 13
+  email: santiperez@ciudad.com.ar
+  username: santiago-perezlindo
+  password: placeholder829
   type: fan
-  firstname: Peter
-  lastname: Doe
-  image: usuario5.jpg
+  firstname: Santiago
+  lastname: Perezlindo
 -
-  id: 6
-  email: alicia@example.com
-  username: alicia.maravillas
-  password: test
+  id: 14
+  email: ramicar28@hotmail.com
+  username: ramiro-cardenas
+  password: placeholder829
   type: fan
-  firstname: Alicia
-  lastname: Pérez
-  image: usuario6.jpg
+  firstname: Ramiro
+  lastname: Cárdenas
+-
+  id: 15
+  email: matiasmingo@yahoo.com.ar
+  username: matias-mingoechea
+  password: placeholder829
+  type: fan
+  firstname: Matías
+  lastname: Mingoechea
+-
+  id: 16
+  email: messibarca@terra.com.ar
+  username: ariel-goldstein
+  password: placeholder829
+  type: fan
+  firstname: Ariel
+  lastname: Goldstein
+-
+  id: 17
+  email: oscarpmillonario@ciudad.com.ar
+  username: oscar-flores
+  password: placeholder829
+  type: fan
+  firstname: Oscar
+  lastname: Flores
+-
+  id: 18
+  email: giulinunez@yahoo.com.ar
+  username: giuliana-depetris
+  password: placeholder829
+  type: fan
+  firstname: Giuliana
+  lastname: Depetris
+-
+  id: 19
+  email: fm_guerra@ciudad.com.ar
+  username: fernando-martin-guerra
+  password: placeholder829
+  type: fan
+  firstname: Fernando martin
+  lastname: Guerra
+-
+  id: 20
+  email: pabli_velez88@yahoo.com.ar
+  username: pablo-iribarren
+  password: placeholder829
+  type: fan
+  firstname: Pablo
+  lastname: Iribarren

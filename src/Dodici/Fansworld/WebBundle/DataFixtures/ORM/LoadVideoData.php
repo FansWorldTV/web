@@ -36,7 +36,7 @@ class LoadVideoData extends AbstractFixture implements FixtureInterface, Contain
     	if (file_exists(__DIR__.'/'.self::YAML_PATH)) {
 	    	$loader = Yaml::parse(__DIR__.'/'.self::YAML_PATH);
 	    	
-	    	set_time_limit(1800);
+	    	set_time_limit(36000);
 	    	
 	    	$uploader = $this->container->get('video.uploader');
 	    	$toprocess = array();

@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use FOS\UserBundle\Model\UserManagerInterface;
 use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Mailer\MailerInterface;
-
+use Gedmo\Sluggable\Util\Urlizer as GedmoUrlizer;
 use FOS\UserBundle\Form\Handler\RegistrationFormHandler as BaseHandler;
 
 class RegistrationFormHandler extends BaseHandler
@@ -35,10 +35,10 @@ class RegistrationFormHandler extends BaseHandler
 
             if ($this->form->isValid()) {
                 // generate username
-                $username = $user->getFirstname().'.'.$user->getLastname();
-                $username = str_replace(' ', '.', $username);
+                $username = $user->getFirstname().' '.$user->getLastname();
+                $username = GedmoUrlizer::urlize($username);
                 $exists = $this->userManager->findUserByUsername($username);
-                if ($exists) $username .= '.' . uniqid();
+                if ($exists) $username .= '-' . uniqid();
                 $user->setUsername($username);
                 
                 $this->onSuccess($user, $confirmation);
