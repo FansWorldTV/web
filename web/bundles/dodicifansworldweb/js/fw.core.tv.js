@@ -20,25 +20,35 @@
 /*jslint devel: true */                         /* Assume console, alert, ... */
 /*jslint windows: true */               /* Assume window object (for browsers)*/
 
-/*
- * Class dependencies:
- *      jquery > 1.8.3
- *      isotope
- *      jsrender
- *      jsviews
- * external dependencies:
- *      templateHelper
- *      base genericAction
- */
+/*******************************************************************************
+ * Class dependencies:                                                         *
+ *      jquery > 1.8.3                                                         *
+ *      isotope                                                                *
+ *      jsrender                                                               *
+ *      jsviews                                                                *
+ * external dependencies:                                                      *
+ *      templateHelper                                                         *
+ *      base genericAction                                                     *
+ *      ExposeTranslation                                                      *
+ *      FOS Routing                                                            *
+ ******************************************************************************/
 
-// fansWorld TV Class Module 1.2 con filtros para detalle
+// Historia:
+// --------
+// fansWorld TV Class Module 1.4 (filtros detalle de video [relacionados])
+// 1.3 (con hastags)
+// 1.2 (con filtros para detalle)
 // 1.1 (con galerias de profiles)
-// 1.0
+// 1.0 (Inicial)
 
-// TODO:
-// Separar logica de TV
-// Separar detale de video
-// Separar filtros y videos de profile
+////////////////////////////////////////////////////////////////////////////////
+// TODO:                                                                      //
+//                                                                            //
+// * Separar logica de TV                                                     //
+// * Separar detale de video                                                  //
+// * Separar filtros y videos de profile tanto como de video detalle          //
+//                                                                            //
+////////////////////////////////////////////////////////////////////////////////
 
 (function (root, factory) {
     "use strict";
@@ -152,12 +162,12 @@
             }
             // Tags
             this.myTags();
-            // custom tags
+            // custom tags para el listado de mas vistos
             if(this.filter === 'views') {
                 this.addCustomTags(this.defaultTags);
             }
 
-            //explore hashtag
+            // explore hashtag
             if(location.hash !== ''){
                 var hash = location.hash;
                 hash = hash.replace('#', '');
@@ -281,6 +291,7 @@
             });
             this.page += 1;
         };
+        // Return the filters for the JSON query
         TV.prototype.getFilters = function() {
             var that = this;
             this.channel = $('.filter-channels').closest('ul').find("li.active").attr("data-channel-id");
@@ -291,6 +302,7 @@
                 'page': this.page
             };
         };
+        // Channel toggler actions
         TV.prototype.channelToggle = function() {
             var that = this;
             $('.filter-channels').closest('ul').find("li").click(function(e){
@@ -316,6 +328,7 @@
                 that.profileGallery();
             });
         };
+        // Custom filter actions
         TV.prototype.customFilterToggler = function(element) {
             var that = this;
             element.click(function(e){
@@ -332,26 +345,26 @@
                 that.loadGallery();
             });
         };
+        // Returns the JSON method associated with the choosen filter
         TV.prototype.getMethodName = function() {
             var that = this;
-            var criteria = '';
             switch($("[data-sort] .btn-group").find('.active').attr('data-type')){
                 case "0":
-                    criteria = "highlight";
+                    that.criteria = "highlight";
                     break;
                 case "1":
-                    criteria = "most-visited";
+                    that.criteria = "most-visited";
                     break;
                 case "2":
-                    criteria = "popular";
+                    that.criteria = "popular";
                     break;
                 case "3":
-                    criteria = "most-visited-today";
+                    that.criteria = "most-visited-today";
                     break;
             }
-            that.criteria = criteria;
-            return criteria;
+            return that.criteria;
         };
+        // Return the route associated with an entity profile
         TV.prototype.getProfileVideoFeed = function() {
             var that = this;
             var type = $("[data-sort] .btn-group").find('.active').attr('data-type');
@@ -383,6 +396,7 @@
             }
             return route;
         };
+        // Video sort toolbar actions
         TV.prototype.filterToolbar = function($toolbar) {
             var that = this;
             var method = '';
@@ -420,6 +434,7 @@
                 that.loadGallery();
             });
         };
+        // Video filters tabs actions
         TV.prototype.filterToggle = function() {
             var that = this;
             $('#list-filters').find("li").click(function(e){
@@ -441,6 +456,7 @@
                 that.profileGallery();
             });
         };
+        // Render tags used in videos, converts them to filters
         TV.prototype.myTags = function(channel, filter) {
             var $tagList = $(".content-container").find(".tag-list-container ul");
 
@@ -471,7 +487,6 @@
                             term: search_term, slug: search_term
                         });
 
-                        //console.log(r.tags[i]);
                         var strp = $("<li data-list-filter-type='" + r.tags[i].type + "' data-id='" + r.tags[i].id + "' class=''><span>" + r.tags[i].title + "</span></li>");
                         // TAG event creates new filter and updates de feed source
 
@@ -509,15 +524,12 @@
                             $(that.isotopeContainer).attr('data-feed-source', prevFeedSource);
                             that.getFilters = getFilters;
                         });
-
-                        //if(r.tags[i].type == 'idol' || r.tags[i].type === 'team')
                         $tagList.append(strp);
-
-                        //$tagList.append("<li><a href='" + tagHref + "'>" + r.tags[i].title + "</a></li>");
                     }
                 }
             });
         };
+        // Adds a list of custom tags to be used as filters
         TV.prototype.addCustomTags = function(tags, options) {
             var that = this;
             var i;
@@ -531,6 +543,7 @@
             }
             return;
         };
+        // Handle isotope cleanup
         TV.prototype.destroyGallery = function() {
             $(this.isotopeContainer).data('fwGalerizer').destroy();
             return;
@@ -561,10 +574,10 @@
                 $button.removeClass('loading-small');
             });
         };
+        // Video detail show associated videos and Sort them
         TV.prototype.detailSort = function(){
             var ajaxActive = false;
             var that = this;
-            console.log("init detal filter bindings")
             $(".sort-videos .btn").on('click', function(){
                 if(!ajaxActive){
                     var self = $(this);
@@ -576,29 +589,33 @@
                         'video': $('[data-grid-related]').attr('data-grid-related'),
                         'sort': self.attr('data-type')
                     }, function(r){
-                        //$("#videos-related-sort").html("");
                         $("#videos-related-sort").fadeOut('slow').promise().then(function() {
                             $(this).empty();
-                            for(var i in r.videos){
-                                var video = r.videos[i];
-                                var data = {
-                                    href: Routing.generate(appLocale + '_video_show', {'id': video.id, 'slug': video.slug}),
-                                    imageSrc: video.image,
-                                    videoAlt: video.title,
-                                    videoTitle: video.title,
-                                    videoDuration: video.duration,
-                                    videoContent: video.content
-                                };
+                            var i = 0;
+                            function doTemplate(data) {
                                 $.when(templateHelper.htmlTemplate('general-video_thumbnail', data))
-                                .then(function(html){
+                                .then(function(html) {
                                      $("[data-grid-related]").append(html);
                                 });
                             }
+                            for(i in r.videos){
+                                if (r.videos.hasOwnProperty(i)) {
+                                    var video = r.videos[i];
+                                    var data = {
+                                        href: Routing.generate(appLocale + '_video_show', {'id': video.id, 'slug': video.slug}),
+                                        imageSrc: video.image,
+                                        videoAlt: video.title,
+                                        videoTitle: video.title,
+                                        videoDuration: video.duration,
+                                        videoContent: video.content
+                                    };
+                                    doTemplate(data);
+                                }
+                            }
                         }).then(function() {
                             $(this).fadeIn('slow');
-                        })
+                        });
                         $("#videos-related-sort").parent().removeClass('loading');
-                        console.log($("#videos-related-sort"));
                         ajaxActive = false;
                     }, function(e){
                         error(e);
