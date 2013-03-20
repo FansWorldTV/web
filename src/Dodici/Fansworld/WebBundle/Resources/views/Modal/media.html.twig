@@ -2,7 +2,7 @@
     {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: media, editbutton: true, reportbutton: false} %}
 </div>
 <div class="modal-template row-fluid" data-modal-type="{{ type }}" data-entity-id="{{ media.id }}">
-    <div class="span3 left">
+    <div class="left">
         <div class="top-detail">
             {% thumbnail media.author.image, 'small_square' with {'rel':'tooltip', 'title': media.author} %}
             <span class="media-title">{{ media.title }}</span>
@@ -18,12 +18,12 @@
     </div>
 
 
-    <div class="span8 right">
+    <div class="right">
         {% if type == "video" %}
             {{ kalturatwig.player(media, true)|raw }}
 
-            <button class="badge badge-warning playPrev" style="font-size: 18px;"><<</button>
-            <button class="badge badge-warning playNext" style="font-size: 18px;">>></button>
+            <button class="playPrev" style="font-size: 18px;"></button>
+            <button class="playNext" style="font-size: 18px;"></button>
 
             {% include 'DodiciFansworldWebBundle:Tv:blocks/now-watching.html.twig' with {entity: media} %}
         {% else %}
