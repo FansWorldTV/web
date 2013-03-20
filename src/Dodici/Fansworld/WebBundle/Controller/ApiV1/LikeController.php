@@ -36,7 +36,7 @@ class LikeController extends BaseController
      * 		likecount: int (new likecount)
      * )
      */
-    public function modifyAction($entitytype, $id)
+    public function modifyAction($entitytype, $id, $action)
     {
         try {
             if ($this->hasValidSignature()) {
@@ -50,11 +50,11 @@ class LikeController extends BaseController
                 
                 $liker = $this->get('liker');
                 $likecount = $entity->getLikeCount();
-                if ($liker->isLiking($entity)) {
+                if ($action == 'remove') {
                 	$liker->unlike($entity, $user);
                 	$likecount--;
                 	$liked = false;
-                } else {
+                } elseif ($action == 'add') {
                 	$liker->like($entity, $user);
                 	$likecount++;
                 	$liked = true;
