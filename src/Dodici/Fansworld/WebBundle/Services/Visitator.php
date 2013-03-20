@@ -56,13 +56,12 @@ class Visitator
         $type = $this->appstate->getType($entity);
 
     	$visit = new Visit();
+        $visit->setDevice($device);
     	$visit->setIp($this->request->getClientIp());
     	if ($this->user) $visit->setAuthor($this->user);
     	$entity->addVisit($visit);
-		$entity->setDevice($device);
     	$this->em->persist($entity);
         $this->em->flush();
-
 		return $visit;
     }
 
