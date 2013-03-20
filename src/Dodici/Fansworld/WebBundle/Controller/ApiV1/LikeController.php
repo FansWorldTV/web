@@ -51,11 +51,11 @@ class LikeController extends BaseController
                 $liker = $this->get('liker');
                 $likecount = $entity->getLikeCount();
                 if ($liker->isLiking($entity)) {
-                	$liker->unlike($entity);
+                	$liker->unlike($entity, $user);
                 	$likecount--;
                 	$liked = false;
                 } else {
-                	$liker->like($entity);
+                	$liker->like($entity, $user);
                 	$likecount++;
                 	$liked = true;
                 }
