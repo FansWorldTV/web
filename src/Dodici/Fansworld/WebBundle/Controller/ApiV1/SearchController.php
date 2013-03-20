@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dodici\Fansworld\WebBundle\Controller\ApiV1\BaseController;
+use Dodici\Fansworld\WebBundle\Services\Search;
 
 /**
  * API controller - Search
@@ -24,7 +25,7 @@ class SearchController extends BaseController
 {
 	/**
      * Popular history
-     * 
+     *
      * @Route("/search/history", name="api_v1_search_history")
      * @Method({"GET"})
      *
@@ -32,8 +33,8 @@ class SearchController extends BaseController
      * - <optional> match: string (partial match)
 	 * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
      * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
-     * 
-     * @return 
+     *
+     * @return
      * array (
      * 		array(
      * 			term: string,
@@ -50,7 +51,7 @@ class SearchController extends BaseController
             $pagination = $this->pagination();
             $pagination['sort_order'] = null;
             $pagination['sort'] = null;
-            
+
             $terms = $this->get('search')->topTerms(
                 $match,
                 null, null, null,
@@ -58,16 +59,16 @@ class SearchController extends BaseController
                 $pagination['offset']
             );
             $return = $this->get('serializer')->values($terms);
-            
+
             return $this->result($return, $pagination);
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
     }
-    
+
 	/**
      * [signed if user_id given] Search - search by term
-     * 
+     *
      * @Route("/search/term", name="api_v1_search_term")
      * @Method({"GET"})
      *
@@ -80,8 +81,8 @@ class SearchController extends BaseController
      * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
 	 * - <optional> imageformat: string
      * - [signature params if user_id given]
-     * 
-     * @return 
+     *
+     * @return
      * array (
      * 		<resulttype> : array (
      * 			array (
@@ -94,20 +95,20 @@ class SearchController extends BaseController
      * 				<if event> showdate: @see EventController::showAction()
      * 			),
      * 			...
-     * 			
+     *
      * 		),
      * 		...
      * 		)
-     * 
+     *
      */
     public function termAction()
     {
         try {
             $request = $this->getRequest();
-                        
+
             $term = $request->get('term');
             if (!$term) throw new HttpException(400, 'Requires term');
-            
+
             $userid = $request->get('user_id');
             $rts = array('video','photo','event','user','team','idol');
             $resulttypes = $request->get('result_types');
@@ -125,19 +126,23 @@ class SearchController extends BaseController
             } else {
                 $searchtypes = $rts;
             }
-            
+
             $user = null;
             if ($userid) {
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
             }
-                        
+
             $pagination = $this->pagination();
             $pagination['sort_order'] = null;
             $pagination['sort'] = null;
-            
+
             /* here goes the search */
             $return = array();
             $search = $this->get('search');
+
+            // Log search
+            $searchLog = $search->log($term, $user, null, 'api');
+
             $highestcount = 0;
             foreach ($searchtypes as $type) {
                 $items = $search->search($term, $type, $user, $pagination['limit'], $pagination['offset']);
@@ -148,25 +153,25 @@ class SearchController extends BaseController
                         'title' => (string)$i,
                         'createdAt' => ($i->getCreatedAt() ? $i->getCreatedAt()->format('U') : null)
                     );
-                    
+
                     if (method_exists($i, 'getImage')) $data['image'] = $this->imageValues($i->getImage());
                     if (method_exists($i, 'getAuthor')) $data['author'] = ($i->getAuthor() ? $this->userArray($i->getAuthor()) : null);
-                    
+
                     if ($i instanceof Event) {
                         $data['showdate'] = ($i->getFromtime() ? $i->getFromtime()->format('U') : null);
                         foreach($i->getHasTeams() as $ht){
                             $data['teams'][] = $this->get('serializer')->values($ht->getTeam());
                         }
                     }
-                    
+
                     $return[$type][] = $data;
                 }
                 $count = count($return[$type]);
-                if ($count > $highestcount) $highestcount = $count; 
+                if ($count > $highestcount) $highestcount = $count;
             }
-            
+
             $pagination['count'] = $highestcount;
-            
+
             return $this->result($return, $pagination);
         } catch (\Exception $e) {
             return $this->plainException($e);

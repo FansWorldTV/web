@@ -14,6 +14,7 @@ use Dodici\Fansworld\WebBundle\Entity\Privacy;
 use Dodici\Fansworld\WebBundle\Services\Search;
 use Symfony\Component\HttpFoundation\Request;
 use Application\Sonata\UserBundle\Entity\User;
+use Dodici\Fansworld\WebBundle\Entity\SearchHistory;
 
 class SearchController extends SiteController
 {
@@ -34,7 +35,11 @@ class SearchController extends SiteController
         $user = $this->getUser();
         $request = $this->getRequest();
         $query = $request->get('query', null);
-        
+        $ip = $this->getRequest()->server->get("REMOTE_ADDR");
+
+        // Log search
+        $searchLog = $this->get('search')->log($query, $user, $ip, 'web');
+
         $videoRepo = $this->getRepository('Video');
         $idolRepo = $this->getRepository('Idol');
         $fanRepo = $this->getRepository('User');
@@ -83,9 +88,9 @@ class SearchController extends SiteController
         foreach ($fanSearch as $fan) {
             $fans['list'][] = $fan[0];
         }
-        
+
         $trending = $this->get('tagger')->trending();
-        
+
         $videosHighlighted = $this->getRepository('Video')->findBy(array('highlight' => true, 'active' => true), array('weight' => 'desc'), 2);
 
         return array(
@@ -159,7 +164,7 @@ class SearchController extends SiteController
                 }
 
                 $entity = $this->getRepository(ucfirst($type))->find($el['id']);
-                
+
                 switch ($type) {
                     case 'event':
                         if ($this->getUser() instanceof User) {
@@ -175,29 +180,29 @@ class SearchController extends SiteController
                         $response['search'][$key]['showdate'] = $entity->getFromtime()->format('d/m/Y H:i');
                         $response['search'][$key]['url'] = $this->generateUrl('event_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()));
                         $response['search'][$key]['started'] = $started;
-                        
+
                         break;
 
                     case 'video':
                         $response['search'][$key]['url'] = $this->generateUrl('video_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()));
                         break;
-                    
+
                     case 'idol':
                         $response['search'][$key]['url'] = $this->generateUrl('idol_land', array('slug' => $entity->getSlug()));
                         break;
-                    
+
                     case 'user':
                         $response['search'][$key]['url'] = $this->generateUrl('user_land', array('slug' => $entity->getUsername()));
                         break;
-                    
+
                     case 'photo':
                         $response['search'][$key]['url'] = $this->generateUrl('photo_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()));
                         break;
-                    
+
                     case 'team':
                         $response['search'][$key]['url'] = $this->generateUrl('team_land', array('slug' => $entity->getSlug()));
                         break;
-                    
+
                 }
             }
         }
@@ -239,7 +244,7 @@ class SearchController extends SiteController
 //
 //    /**
 //     *  @Route("/ajax/search", name = "search_ajaxsearch")
-//     *  
+//     *
 //     */
 //    public function ajaxSearchAction()
 //    {
@@ -309,7 +314,7 @@ class SearchController extends SiteController
 //    }
 //
 //    /**
-//     *  @Route("/ajax/friends", name="search_ajaxfriends") 
+//     *  @Route("/ajax/friends", name="search_ajaxfriends")
 //     */
 //    public function ajaxFriendsAction()
 //    {
@@ -366,7 +371,7 @@ class SearchController extends SiteController
 //
 //    /**
 //     * Search Idols View
-//     * 
+//     *
 //     * @Route("/search/idols", name = "search_idols")
 //     * @Template()
 //     */
@@ -374,7 +379,7 @@ class SearchController extends SiteController
 //    {
 //        return array();
 //    }
-//        
+//
 //   /**
 //     * @Route("/search_box/{type}/{query}/{page}", defaults={"type" =  false, "query" = false, "page" = 1}, name="search_box")
 //     * @Template()
@@ -400,7 +405,7 @@ class SearchController extends SiteController
 //            'searchType' => $type
 //        );
 //    }
-//    
+//
 //    /**
 //     * Search Idols Ajax method
 //     * @Route("/search/idols/ajax", name = "search_ajaxidols")

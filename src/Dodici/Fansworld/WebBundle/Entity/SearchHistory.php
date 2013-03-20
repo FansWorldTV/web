@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\SearchHistory
- * 
+ *
  * Users/visitors search log
  *
  * @ORM\Table(name="searchhistory")
@@ -33,7 +33,7 @@ class SearchHistory
      * })
      */
     private $author;
-    
+
     /**
      * @var string $ip
      *
@@ -47,14 +47,14 @@ class SearchHistory
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     private $createdAt;
-    
+
     /**
      * @var string $term
      *
      * @ORM\Column(name="term", type="string", length=250, nullable=false)
      */
     private $term;
-    
+
     /**
      * @var integer $type
      * Dodici\Fansworld\WebBundle\Extensions\Search::TYPE_*
@@ -62,6 +62,13 @@ class SearchHistory
      * @ORM\Column(name="type", type="integer", nullable=true)
      */
     private $type;
+
+    /**
+     * @var string $device
+     *
+     * @ORM\Column(name="device", type="string", length=100, nullable=true)
+     */
+    private $device;
 
     public function __construct()
     {
@@ -72,7 +79,7 @@ class SearchHistory
     /**
      * Get id
      *
-     * @return bigint 
+     * @return bigint
      */
     public function getId()
     {
@@ -92,7 +99,7 @@ class SearchHistory
     /**
      * Get ip
      *
-     * @return string 
+     * @return string
      */
     public function getIp()
     {
@@ -112,7 +119,7 @@ class SearchHistory
     /**
      * Get createdAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedAt()
     {
@@ -132,7 +139,7 @@ class SearchHistory
     /**
      * Get term
      *
-     * @return string 
+     * @return string
      */
     public function getTerm()
     {
@@ -152,7 +159,7 @@ class SearchHistory
     /**
      * Get type
      *
-     * @return integer 
+     * @return integer
      */
     public function getType()
     {
@@ -172,10 +179,31 @@ class SearchHistory
     /**
      * Get author
      *
-     * @return Application\Sonata\UserBundle\Entity\User 
+     * @return Application\Sonata\UserBundle\Entity\User
      */
     public function getAuthor()
     {
         return $this->author;
+    }
+
+
+    /**
+     * Set device
+     *
+     * @param string $device
+     */
+    public function setDevice($device)
+    {
+        $this->device = $device;
+    }
+
+    /**
+     * Get device
+     *
+     * @return string
+     */
+    public function getDevice()
+    {
+        return $this->device;
     }
 }

@@ -37,51 +37,51 @@ class Visitator
      * Check sesion for timestamp, if correct add visit
      * @param $entity
      */
-    public function visit(VisitableInterface $entity)
+    public function visit(VisitableInterface $entity, $device=null)
     {
         $visit = null;
         if($this->shouldAddVisit($entity)){
-            $visit = $this->addVisit($entity);
+            $visit = $this->addVisit($entity, $device);
             $this->updateLastVisit($entity);
         }
     	return $visit;
-    }  
-    
+    }
+
     /**
      * Create a visit object, add to entity
      * @param $entity
      */
-    private function addVisit(VisitableInterface $entity)
+    private function addVisit(VisitableInterface $entity, $device)
     {
         $type = $this->appstate->getType($entity);
-        
+
     	$visit = new Visit();
     	$visit->setIp($this->request->getClientIp());
     	if ($this->user) $visit->setAuthor($this->user);
     	$entity->addVisit($visit);
-		
+		$entity->setDevice($device);
     	$this->em->persist($entity);
         $this->em->flush();
-		
+
 		return $visit;
-    }    
-    
+    }
+
     private function updateLastVisit($entity){
         $type = $this->appstate->getType($entity);
-        $this->session->set($type.'_lastvisit',time());        
+        $this->session->set($type.'_lastvisit',time());
     }
-    
+
     private function shouldAddVisit($entity){
         $shouldUpdate = false;
         $type = $this->appstate->getType($entity);
         if($this->session->has($type.'_lastvisit')){
     	    $lastVisit = $this->session->get($type.'_lastvisit');
-    	    
+
     	    if( time() > $lastVisit + self::LIMIT_VISIT * 60 ){
     	        $shouldUpdate = true;
     	    }
     	}else $shouldUpdate = true;
-    	
+
     	return $shouldUpdate;
     }
 }

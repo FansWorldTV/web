@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\Visit
- * 
+ *
  * A visit to a site content
  *
  * @ORM\Table(name="visit")
@@ -32,7 +32,7 @@ class Visit
      * })
      */
     private $author;
-    
+
     /**
      * @var string $ip
      *
@@ -46,7 +46,7 @@ class Visit
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     private $createdAt;
-        
+
     /**
      * @var Video
      *
@@ -56,7 +56,7 @@ class Visit
      * })
      */
     private $video;
-    
+
     /**
      * @var Team
      *
@@ -66,7 +66,7 @@ class Visit
      * })
      */
     private $team;
-    
+
     /**
      * @var Idol
      *
@@ -76,7 +76,7 @@ class Visit
      * })
      */
     private $idol;
-    
+
     /**
      * @var Photo
      *
@@ -86,7 +86,7 @@ class Visit
      * })
      */
     private $photo;
-    
+
     /**
      * @var Application\Sonata\UserBundle\Entity\User
      *
@@ -97,6 +97,13 @@ class Visit
      */
     private $target;
 
+    /**
+     * @var string $device
+     *
+     * @ORM\Column(name="device", type="string", length=100, nullable=true)
+     */
+    private $device;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -105,7 +112,7 @@ class Visit
     /**
      * Get id
      *
-     * @return bigint 
+     * @return bigint
      */
     public function getId()
     {
@@ -125,7 +132,7 @@ class Visit
     /**
      * Get ip
      *
-     * @return string 
+     * @return string
      */
     public function getIp()
     {
@@ -145,7 +152,7 @@ class Visit
     /**
      * Get createdAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedAt()
     {
@@ -165,7 +172,7 @@ class Visit
     /**
      * Get author
      *
-     * @return Application\Sonata\UserBundle\Entity\User 
+     * @return Application\Sonata\UserBundle\Entity\User
      */
     public function getAuthor()
     {
@@ -185,7 +192,7 @@ class Visit
     /**
      * Get video
      *
-     * @return Dodici\Fansworld\WebBundle\Entity\Video 
+     * @return Dodici\Fansworld\WebBundle\Entity\Video
      */
     public function getVideo()
     {
@@ -205,7 +212,7 @@ class Visit
     /**
      * Get team
      *
-     * @return Dodici\Fansworld\WebBundle\Entity\Team 
+     * @return Dodici\Fansworld\WebBundle\Entity\Team
      */
     public function getTeam()
     {
@@ -225,7 +232,7 @@ class Visit
     /**
      * Get idol
      *
-     * @return Dodici\Fansworld\WebBundle\Entity\Idol 
+     * @return Dodici\Fansworld\WebBundle\Entity\Idol
      */
     public function getIdol()
     {
@@ -245,7 +252,7 @@ class Visit
     /**
      * Get photo
      *
-     * @return Dodici\Fansworld\WebBundle\Entity\Photo 
+     * @return Dodici\Fansworld\WebBundle\Entity\Photo
      */
     public function getPhoto()
     {
@@ -265,10 +272,30 @@ class Visit
     /**
      * Get target
      *
-     * @return Application\Sonata\UserBundle\Entity\User 
+     * @return Application\Sonata\UserBundle\Entity\User
      */
     public function getTarget()
     {
         return $this->target;
+    }
+
+     /**
+     * Set device
+     *
+     * @param string $device
+     */
+    public function setDevice($device)
+    {
+        $this->device = $device;
+    }
+
+    /**
+     * Get device
+     *
+     * @return string
+     */
+    public function getDevice()
+    {
+        return $this->device;
     }
 }

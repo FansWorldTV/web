@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
+use Dodici\Fansworld\WebBundle\Entity\SearchHistory;
 
 /**
  * Search service.
@@ -40,7 +41,7 @@ class Search
             self::TYPE_FORUM => 'Dodici\\Fansworld\\WebBundle\\Entity\\ForumThread',
         );
     }
-    
+
     public static function humanTypes()
     {
         return array(
@@ -71,7 +72,7 @@ class Search
         $this->appstate = $appstate;
     }
 
-    
+
 
     public function search($text, $type, $user = null, $limit = null, $offset = null)
     {
@@ -105,7 +106,7 @@ class Search
                 break;
         }
     }
-    
+
     /**
      * Get top searched terms, for autocomplete, etc.
      * @param string|null $match - String to match terms against, term%
@@ -130,4 +131,21 @@ class Search
             throw new \Exception('Unsupported search type');
         return $this->em->getRepository($types[$type]);
     }
+
+    /**
+     *
+     * @return boolean
+     */
+    function log($query, $user, $ip, $device) {
+        $log = new SearchHistory();
+        $log->setTerm($query);
+        $log->setAuthor($user);
+        $log->setIp($ip);
+        $log->setDevice($device);
+        $this->em->persist($log);
+        $this->em->flush();
+        return true;
+    }
+
+
 }
