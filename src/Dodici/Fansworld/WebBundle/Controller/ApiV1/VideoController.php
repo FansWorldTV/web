@@ -80,7 +80,7 @@ class VideoController extends BaseController
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
             }
             
-            $allowedfields = array('author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount', 'watchlisted', 'url');
+            $allowedfields = array('author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount', 'watchlisted', 'url', 'liked');
             $extrafields = $this->getExtraFields($allowedfields);
             
             $pagination = $this->pagination(array('weight', 'createdAt'), 'weight');
