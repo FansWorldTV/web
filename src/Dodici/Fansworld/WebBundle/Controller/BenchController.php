@@ -114,4 +114,65 @@ class BenchController extends SiteController
         return new Response('Ok');
     }
     
+	/**
+     * Extract user videos
+     * @Route("/video/extract", name="admin_bench_videoextract")
+     */
+    public function videoExtractAction()
+    {
+        $videos = array();
+        
+        $userids = $this->getRequest()->get('userid');
+        
+        foreach ($userids as $uid) {
+            $usrvids = $this->getRepository('Video')->findBy(array('author' => $uid, 'active' => true));
+            foreach ($usrvids as $uv) $videos[] = $uv;
+        }
+        $yml = '';
+        foreach ($videos as $video) {
+            if ($video->getAuthor()) {
+                $yml .= "-\n";
+                $yml .= "  author: " . $video->getAuthor()->getId();
+            }
+            
+            if ($video->getStream()) {
+                $yml .= "\n";
+                $yml .= "  stream: " . $video->getStream();
+                $yml .= "\n";
+                $yml .= "  title: " . $video->getTitle();
+            } elseif ($video->getYoutube()) {
+                $yml .= "\n";
+                $yml .= "  url: http://www.youtube.com/watch?v=" . $video->getYoutube();
+            }
+            
+            $yml .= "\n";
+            $yml .= "  highlight: " . ($video->getHighlight() ? 'true' : 'false');
+            $yml .= "\n";
+            $yml .= "  videocategory: " .$video->getVideoCategory()->getId();
+            $yml .= "\n";
+            $yml .= '  createdAt: "' . $video->getCreatedAt()->format('Y-m-d') . '"';
+            $yml .= "\n";
+            $yml .= "  tagidols:\n";
+            foreach ($video->getHasidols() as $ti) $yml .= "      - " . $ti->getIdol()->getId() . "\n";
+            $yml .= "  tagteams:\n";
+            foreach ($video->getHasteams() as $ti) $yml .= "      - " . $ti->getTeam()->getId() . "\n";
+            $yml .= "  tagtexts:\n";
+            foreach ($video->getHastags() as $ti) $yml .= "      - " . $ti->getTag()->getTitle() . "\n";
+            
+            if ($video->getStream()) {
+                $xp = explode("\n", $video->getContent());
+                $yml .= "  content: |\n"; 
+                foreach ($xp as $x) {
+                    $yml .= "    ".($x)."\n";
+                }
+            }
+        }
+        
+        $response = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head><body>';
+        $response .= '<textarea cols="80" rows="30">'.$yml.'</textarea>';
+        $response .= '</body></html>';
+        
+        return new Response($response);
+    }
+    
 }
