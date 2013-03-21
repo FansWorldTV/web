@@ -67,11 +67,14 @@
                                 <div class='tipo'>Videos</div>
                                 <div class='separador' />
                             </section>
-                            <section class='fans-info'>
-                                <div class='numero'>{% if entity.fanCount > 0 %}<a href="{{ path(entityType ~ '_fans', pathparams) }}" style="color: white">{% endif %}{{ entity.fanCount }}{% if entity.fanCount > 0 %}</a>{%endif%}</div>
-                                <div class='tipo'>Fans</div>
-                                <div class='separador' />
-                            </section>
+
+                            {% if entityType == 'user' %}
+                                <section class='fans-info'>
+                                    <div class='numero'>{% if entity.fanCount > 0 %}<a href="{{ path(entityType ~ '_fans', pathparams) }}" style="color: white">{% endif %}{{ entity.fanCount }}{% if entity.fanCount > 0 %}</a>{%endif%}</div>
+                                    <div class='tipo'>Fans</div>
+                                    <div class='separador' />
+                                </section>
+                            {% endif %}
 	            {% endblock %}
 	        </div>
 	    </div>
