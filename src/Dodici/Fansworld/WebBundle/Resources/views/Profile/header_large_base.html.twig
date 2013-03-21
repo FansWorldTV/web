@@ -1,11 +1,11 @@
 {% block header_main %}
-    <section class='header_main row-fluid header_large'>	
+    <section class='header_main row-fluid header_large'>
 	    <div class='main_left span8' >
 	        {% block avatar_container %}
 			    <div class="avatar">
 			        {% block avatar_content %}
 			            {% set avatar_format = 'small_square' %}
-			            
+
 			            {% if entity.image %}
 			                {% thumbnail entity.image, avatar_format %}
 			            {% else %}
@@ -13,10 +13,10 @@
 			            {% endif %}
 			        {% endblock %}
 			    </div>
-			{% endblock %}  
-			
-			{% block splash_container %}  
-    			
+			{% endblock %}
+
+			{% block splash_container %}
+
 			{% endblock %}
 	    </div>
 	    <div class='main_right span4 row-fluid' >
@@ -26,13 +26,13 @@
     	                {{ entity }}
     	            {% endblock %}
 	            </h1>
-	            
+
 	            <div class='header-subtitle'>
 					{% block header_subtitle %}
-    	            
+
                 	{% endblock %}
                 </div>
-                
+
                 <div class='header-fship'>
     	            {% block header_fship %}
                                         {% if entity != app.user %}
@@ -40,7 +40,7 @@
                                         {% endif %}
     	            {% endblock %}
 	            </div>
-	            
+
 	        </div>
 	        <div class='span3 numbers-info'>
                     {% block header_numbersinfo %}
@@ -50,7 +50,13 @@
                             {% else %}
                                 {% set pathparams = {slug: entity.slug} %}
                             {% endif %}
-                            
+
+                            <section class='fans-info'>
+                                <div class='numero'>{% if entity.score > 0 %}{% endif %}
+                                    {{ entity.score }}{% if entity.score > 0 %}{% endif %}</div>
+                                <div class='tipo'>Puntos</div>
+                                <div class='separador' />
+                            </section>
                             <section class='fotos-info'>
                                 <div class='numero'>{% if entity.photoCount > 0 %}<a href="{{ path(entityType ~ '_photos', pathparams) }}" style="color: white">{% endif %}{{ entity.photoCount }}{% if entity.photoCount > 0 %}</a>{%endif%}</div>
                                 <div class='tipo'>Fotos</div>
@@ -66,7 +72,6 @@
                                 <div class='tipo'>Fans</div>
                                 <div class='separador' />
                             </section>
-                            
 	            {% endblock %}
 	        </div>
 	    </div>
