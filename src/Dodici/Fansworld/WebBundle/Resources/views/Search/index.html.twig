@@ -8,47 +8,74 @@
 {% block main_content %}
     <div class="row-fluid search-home">
         <div class="span10">
+            <h1>Búsqueda de <strong>"{{ query }}"</strong> ({{ todoCount }})</h1>
             <div class="btn-group" data-toggle="buttons-radio">
-                <button type="button" class="btn active" data-filter-type="all">Todo <span class="badge">{{ todoCount }}</span></button>
-                <button type="button" class="btn" data-filter-type="video">Tv <span class="badge">{{ videoCount }}</span></button>
-                <button type="button" class="btn" data-filter-type="idol">Idolos <span class="badge">{{ idolCount }}</span></button>
-                <button type="button" class="btn" data-filter-type="user">Fans <span class="badge">{{ fanCount }}</span></button>
-                <button type="button" class="btn" data-filter-type="team">Equipos <span class="badge">{{ teamCount }}</span></button>
-                <button type="button" class="btn" data-filter-type="photo">Fotos <span class="badge">{{ photoCount }}</span></button>
+                <button type="button" class="btn active" data-filter-type="all">Todo <span class="badge badge-inverse">{{ todoCount }}</span></button>
+                
+                {% if videoCount > 0 %}
+                    <button type="button" class="btn" data-filter-type="video">Tv <span class="badge badge-inverse">{{ videoCount }}</span></button>
+                {% endif %}
+                    
+                {% if idolCount > 0 %}
+                    <button type="button" class="btn" data-filter-type="idol">Idolos <span class="badge badge-inverse">{{ idolCount }}</span></button>
+                {% endif %}
+                    
+                {% if fanCount > 0 %}
+                    <button type="button" class="btn" data-filter-type="user">Fans <span class="badge badge-inverse">{{ fanCount }}</span></button>
+                {% endif %}
+                    
+                {% if teamCount > 0 %}
+                    <button type="button" class="btn" data-filter-type="team">Equipos <span class="badge badge-inverse">{{ teamCount }}</span></button>
+                {% endif %}
+                    
+                {% if photoCount > 0 %}
+                    <button type="button" class="btn" data-filter-type="photo">Fotos <span class="badge badge-inverse">{{ photoCount }}</span></button>
+                {% endif %}
+                    
                 {# EVENT_REM 
-                <button type="button" class="btn" data-filter-type="event">Partidos <span class="badge">{{ eventCount }}</span></button>
+                <button type="button" class="btn" data-filter-type="event">Partidos <span class="badge badge-inverse">{{ eventCount }}</span></button>
                  END EVENT_REM #}
             </div>
 
-            {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'video', 'title': 'videos'} %}
-                {% block roller %}
-                    {% include "DodiciFansworldWebBundle:Search:blocks/video_element_list.html.twig"  with { videos: videos } %}
-                {% endblock %}
-            {% endembed %}
+            {% if videoCount > 0 %}
+                {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'video', 'title': 'videos'} %}
+                    {% block roller %}
+                        {% include "DodiciFansworldWebBundle:Search:blocks/video_element_list.html.twig"  with { videos: videos } %}
+                    {% endblock %}
+                {% endembed %}
+            {% endif %}
 
-            {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'idol', 'title': 'idolos'} %}
-                {% block roller %}
-                    {% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { avatars: idols, type: 'idols' } %}
-                {% endblock %}
-            {% endembed %}
+            {% if idolCount > 0 %}
+                {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'idol', 'title': 'idolos'} %}
+                    {% block roller %}
+                        {% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { avatars: idols, type: 'idols' } %}
+                    {% endblock %}
+                {% endembed %}
+            {% endif %}
 
-            {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'user', 'title': 'fans'} %}
-                {% block roller %}
-                    {% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { avatars: fans, type: 'fans' } %}
-                {% endblock %}
-            {% endembed %}
+            {% if fanCount > 0 %}
+                {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'user', 'title': 'fans'} %}
+                    {% block roller %}
+                        {% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { avatars: fans, type: 'fans' } %}
+                    {% endblock %}
+                {% endembed %}
+            {% endif %}
 
-            {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'photo', 'title': 'fotos'} %}
-                {% block roller %}
-                    {% include 'DodiciFansworldWebBundle:Photo:blocks/montage.html.twig' with {photos: photos} %}
-                {% endblock %}
-            {% endembed %}
+            {% if teamCount > 0 %}
+                {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'team', 'title': 'equipos'} %}
+                    {% block roller %}
+                        {% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { avatars: teams, type: 'teams'} %}
+                    {% endblock %}
+                {% endembed %}
+            {% endif %}
                 
-            {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'team', 'title': 'equipos'} %}
-                {% block roller %}
-                    {% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { avatars: teams, type: 'teams'} %}
-                {% endblock %}
-            {% endembed %}
+            {% if photoCount > 0 %}
+                {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'photo', 'title': 'fotos'} %}
+                    {% block roller %}
+                        {% include 'DodiciFansworldWebBundle:Photo:blocks/montage.html.twig' with {photos: photos} %}
+                    {% endblock %}
+                {% endembed %}
+            {% endif %}
 
             {# EVENT_REM
             {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'event', 'title': 'partidos'} %}
