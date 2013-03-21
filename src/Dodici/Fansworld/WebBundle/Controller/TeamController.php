@@ -31,8 +31,6 @@ class TeamController extends SiteController
 
     const LIMIT_ITEMS = 10;
 
-
-
     /**
      * @Route("/list/{categorySlug}", name= "team_list", defaults = {"categorySlug" = null})
      * @Template()
@@ -106,9 +104,9 @@ class TeamController extends SiteController
                 $teamship = false;
             }
 
-            if(strlen($team->getTitle())>70){
+            if (strlen($team->getTitle()) > 70) {
                 $teamTitle = substr($team->getTitle(), 0, 21) . "...";
-            }else{
+            } else {
                 $teamTitle = $team->getTitle();
             }
 
@@ -118,10 +116,10 @@ class TeamController extends SiteController
                 'videos' => null,
                 'fans' => null
             );
-            foreach($typesUrl as $key=>$value){
-                $typesUrl[$key] = $router->generate('team_' . $key, array('slug'=> $team->getSlug()));
+            foreach ($typesUrl as $key => $value) {
+                $typesUrl[$key] = $router->generate('team_' . $key, array('slug' => $team->getSlug()));
             }
-            
+
             $response['teams'][] = array(
                 'id' => $team->getId(),
                 'title' => $teamTitle,
@@ -275,7 +273,7 @@ class TeamController extends SiteController
 
         try {
 
-            if($isRemove) {
+            if ($isRemove) {
                 $teamship = $teamshipRepo->findOneBy(array('author' => $user->getId(), 'team' => $actualTeam->getId()));
                 $teamship->setFavorite(false);
                 $em->persist($teamship);
@@ -369,25 +367,25 @@ class TeamController extends SiteController
             'class' => 'list-videos',
             'list' => array(
                 array(
-                    'name' => 'destacados',
+                    'name' => 'Destacados',
                     'dataType' => 0,
                     'class' => '',
                 ),
                 array(
-                    'name' => 'masVistos',
+                    'name' => 'Más vistos',
                     'dataType' => 1,
                     'class' => '',
                 ),
                 array(
-                    'name' => 'populares',
-                    'dataType' => 2,
-                    'class' => 'active',
-                ),
-                array(
-                    'name' => 'masVistosDia',
+                    'name' => 'Más vistos del día',
                     'dataType' => 3,
                     'class' => '',
                 ),
+                array(
+                    'name' => 'Populares',
+                    'dataType' => 2,
+                    'class' => 'active',
+                )
             )
         );
 
@@ -397,7 +395,7 @@ class TeamController extends SiteController
             'user' => $user,
             'team' => $team,
             'sorts' => $sorts,
-        	'isHome' => true
+            'isHome' => true
         );
     }
 
@@ -505,7 +503,7 @@ class TeamController extends SiteController
         return $return;
     }
 
-	/**
+    /**
      * @Route("/{slug}/wall", name= "team_wall")
      * @Template()
      */

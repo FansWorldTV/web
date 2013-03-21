@@ -104,15 +104,12 @@ div.register{
 /* Login widget */
 
 header div#login-widget{
-    background-color: #f7f7f7;
+    background-color: white;
     position: absolute;
     right: 25px;
     top: 55px;
-    width: 220px;
     border: 1px solid #c1c1c1;
     border-radius: 5px;
-    box-shadow: 0 0 9px 1px #EDEDED;
-    padding: 15px;
     color: #6C6C6C;
     display:none;
     z-index: 1100;
@@ -124,11 +121,61 @@ header div#login-widget{
         
     }
     
+    a.register {
+        background-color: #f7f7f7;
+        color: @grayDark;
+        display: block;
+        width: 100%;
+        height: 50px;
+        font-size: 15px;
+        font-weight: 400;
+        text-align: center;
+        line-height: 50px;
+        border-top: 1px solid lightgray;
+        margin-top: -7px;
+
+        &:hover {
+            text-decoration: underline;
+            color: @green;
+        }
+    }
+
     .fb_button { 
-        width: 100%; 
-        height: 25px;
+        .size(44px, 222px);
+        display: block;
+        border: 0;
+        background-image: url('../images/bt-fb-conectarse.png');
         
         .fb_button_text { font-size: 14px; }
+    }
+
+    form{
+        margin-top: 15px;
+
+        .pull-left {
+            color: @green;
+            font-weight: 400;
+        }
+
+        .pull-right {
+            font-size: 11px;
+        }
+
+        .btn-submit {
+            height: 44px;
+            background-color: @green;
+            border: 0;
+            font-size: 17px !important;
+            color: white;
+            text-transform: uppercase;
+            width: 111px;
+            .pull-right();
+            font-weight: 500;
+
+            &:hover {
+                background-color: @lightGreen;
+            }
+        }
     }
 
     div.bottom-login{
@@ -138,17 +185,22 @@ header div#login-widget{
         
     input{
         width: 100%;   
+
+        &:focus, &:-webkit-autofill {
+            background-color: white;
+        }
     }
     
     .recordar{
         float: left;
         font-size: 11px;
         width: 50%;
-        
+        margin-top: 12px;
+        color: black;
+
         label{
             margin-left: 5px;
             float:left;
-            text-decoration: underline;
         }
         
         input{
@@ -157,20 +209,6 @@ header div#login-widget{
         }
     }
                 
-    .olvidar{
-        float: left;
-        width: 51%;
-        
-        a{
-            color: #6C6C6C;
-            font-size: 11px;
-            height: auto;
-            line-height: 14px;
-            padding: 0;
-            text-decoration: underline;
-        }
-    }
-    
     div.header-ingresar{
          float: right;
         font-size: 18px;

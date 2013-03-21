@@ -652,7 +652,7 @@ class UserController extends SiteController
         $user = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
         $media = $user->getImage();
-        return array('media' => $media, 'user'=>$user);
+        return array('media' => $media, 'user' => $user);
     }
 
     /**
@@ -903,25 +903,25 @@ class UserController extends SiteController
             'class' => 'list-videos',
             'list' => array(
                 array(
-                    'name' => 'destacados',
+                    'name' => 'Destacados',
                     'dataType' => 0,
                     'class' => '',
                 ),
                 array(
-                    'name' => 'masVistos',
+                    'name' => 'Más vistos',
                     'dataType' => 1,
                     'class' => '',
                 ),
                 array(
-                    'name' => 'populares',
-                    'dataType' => 2,
-                    'class' => 'active',
-                ),
-                array(
-                    'name' => 'masVistosDia',
+                    'name' => 'Más vistos del día',
                     'dataType' => 3,
                     'class' => '',
                 ),
+                array(
+                    'name' => 'Populares',
+                    'dataType' => 2,
+                    'class' => 'active',
+                )
             )
         );
 
@@ -932,7 +932,6 @@ class UserController extends SiteController
             'user' => $author
         );
     }
-
 
     /**
      *  @Route("/ajax/notifications-typecounts", name="user_ajaxgetnotifications_typecounts")
@@ -945,7 +944,6 @@ class UserController extends SiteController
         //return $this->jsonResponse(array('number' => $number));
         return $this->jsonResponse($response);
     }
-
 
     /**
      *  @Route("/ajax/notification-setfake", name="notification_setfake")
@@ -968,30 +966,34 @@ class UserController extends SiteController
         $parentName = $request->get('parentName', false);
         $notifications = $this->getRepository('Notification')->latest($this->getUser(), false);
         foreach ($notifications as $notif) {
-            if ($notif->getTypeParent() === $parentName) $notificationsUnread[] = $notif->getId();
+            if ($notif->getTypeParent() === $parentName)
+                $notificationsUnread[] = $notif->getId();
         }
-        if (isset($notificationsUnread)) $response = $notificationsUnread;
+        if (isset($notificationsUnread))
+            $response = $notificationsUnread;
         return $this->jsonResponse($response);
     }
 
-    private function _createForm () {
+    private function _createForm()
+    {
         $defaultData = array();
         $collectionConstraint = new Collection(array(
-            'x' => array(),
-            'y' => array(),
-            'w' => array(),
-            'h' => array()
-        ));
+                    'x' => array(),
+                    'y' => array(),
+                    'w' => array(),
+                    'h' => array()
+                ));
         $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
-            ->add('x', 'hidden', array('required' => false, 'data' => 0))
-            ->add('y', 'hidden', array('required' => false, 'data' => 0))
-            ->add('w', 'hidden', array('required' => false, 'data' => 0))
-            ->add('h', 'hidden', array('required' => false, 'data' => 0))
-            ->getForm();
+                ->add('x', 'hidden', array('required' => false, 'data' => 0))
+                ->add('y', 'hidden', array('required' => false, 'data' => 0))
+                ->add('w', 'hidden', array('required' => false, 'data' => 0))
+                ->add('h', 'hidden', array('required' => false, 'data' => 0))
+                ->getForm();
         return $form;
     }
 
-    private function _GenerateMediaCrop(array $options) {
+    private function _GenerateMediaCrop(array $options)
+    {
         $imagine = new Imagine();
         $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $options['tempFile'];
         $format = $this->get('appmedia')->getType($path);
@@ -1000,12 +1002,11 @@ class UserController extends SiteController
 
         if ($options['cropW'] && $options['cropH']) {
             $imageStream = $imageStream
-            ->crop(new Point($options['cropX'], $options['cropY']), new Box($options['cropW'], $options['cropH']));
+                    ->crop(new Point($options['cropX'], $options['cropY']), new Box($options['cropW'], $options['cropH']));
         }
 
         $metaData = array('filename' => $options['originalFile']);
         return $this->get('appmedia')->createImageFromBinary($imageStream->get($format), $metaData);
     }
-
 
 }

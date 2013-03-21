@@ -130,43 +130,32 @@
     <div id='login-widget'>
         <div class='arrow-up'></div>
         <div class='arrow-up-border'></div>
-        <div class='fb_button'>
-            {{ facebook_login_button({'autologoutlink': false, label: 'facebook_login_short'|trans, size: 'large'}) }}
-        </div>
+        <div style="padding: 15px; width: 222px;">
+            <button class="fb_button"></button>
 
-
-        <form class="login clearfix" action="{{ path("fos_user_security_check") }}" method="post">
-            <ul>
-                <li>
-                    <label for="username">Email:</label>
-                </li>
-                <li>
-                    <input type="text" id="username" name="_username" />
-                </li>
-                <li>
-                    <label for="password">Clave:</label>
-                </li>
-                <li>
-                    <input type="password" id="password" name="_password" />
-                </li>
-                <li>
-                    <div class='bottom-login'>
-                        <div class="recordar">
-                            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-                            <label for="remember_me">Recordarme</label>
-                        </div>
-
-                        <div class="olvidar">
-                            <a href='{{ path('fos_user_resetting_request') }}'>Olvido su contrase&ntilde;a</a>
-                        </div>
-
-                        <input type="hidden" name="_target_path" value="{{ app.request.uri }}" />
-                        <button type='submit' class='btn btn-success'>Ingresar</button>
-
+            <form class="login clearfix" action="{{ path("fos_user_security_check") }}" method="post">
+                <span class="pull-left">Login</span>
+                <span class="pull-right"><a href='{{ path('fos_user_resetting_request') }}'>Olvidaste Contraseña?</a></span>
+                <ul>
+                    <li>
+                        <input type="text" id="username" name="_username" placeholder="Usuario"/>
+                    </li>
+                    <li>
+                        <input type="password" id="password" name="_password" placeholder="Contraseña"/>
+                    </li>
+                </ul>
+                <div class='bottom-login'>
+                    <div class="recordar">
+                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                        <label for="remember_me">Recordarme</label>
                     </div>
-                </li>
 
-            </ul>
-        </form>
+                    <input type="hidden" name="_target_path" value="{{ app.request.uri }}" />
+                    <button type='submit' class='btn-submit'>ingresar</button>
+
+                </div>
+            </form>
+        </div>
+        <a class="register" href="{{ path('fos_user_registration_register') }}">Crear nueva cuenta</a>
     </div>
 {% endif %}

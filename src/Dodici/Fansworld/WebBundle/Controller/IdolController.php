@@ -242,25 +242,25 @@ class IdolController extends SiteController
             'class' => 'list-videos',
             'list' => array(
                 array(
-                    'name' => 'destacados',
+                    'name' => 'Destacados',
                     'dataType' => 0,
                     'class' => '',
                 ),
                 array(
-                    'name' => 'masVistos',
+                    'name' => 'Más vistos',
                     'dataType' => 1,
                     'class' => '',
                 ),
                 array(
-                    'name' => 'populares',
-                    'dataType' => 2,
-                    'class' => 'active',
-                ),
-                array(
-                    'name' => 'masVistosDia',
+                    'name' => 'Más vistos del día',
                     'dataType' => 3,
                     'class' => '',
                 ),
+                array(
+                    'name' => 'Populares',
+                    'dataType' => 2,
+                    'class' => 'active',
+                )
             )
         );
 
