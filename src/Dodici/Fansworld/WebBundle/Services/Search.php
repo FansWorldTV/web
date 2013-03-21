@@ -121,6 +121,21 @@ class Search
         return $this->em->getRepository('DodiciFansworldWebBundle:SearchHistory')
             ->topTerms($match, $user, $ip, $type, $limit, $offset);
     }
+    
+	/**
+     *
+     * @return boolean
+     */
+    public function log($query, $user, $ip, $device) {
+        $log = new SearchHistory();
+        $log->setTerm($query);
+        $log->setAuthor($user);
+        $log->setIp($ip);
+        $log->setDevice($device);
+        $this->em->persist($log);
+        $this->em->flush();
+        return true;
+    }
 
     private function getRepositoryByType($type)
     {
@@ -132,20 +147,7 @@ class Search
         return $this->em->getRepository($types[$type]);
     }
 
-    /**
-     *
-     * @return boolean
-     */
-    function log($query, $user, $ip, $device) {
-        $log = new SearchHistory();
-        $log->setTerm($query);
-        $log->setAuthor($user);
-        $log->setIp($ip);
-        $log->setDevice($device);
-        $this->em->persist($log);
-        $this->em->flush();
-        return true;
-    }
+    
 
 
 }

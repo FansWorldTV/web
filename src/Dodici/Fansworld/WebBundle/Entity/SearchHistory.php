@@ -169,9 +169,9 @@ class SearchHistory
     /**
      * Set author
      *
-     * @param Application\Sonata\UserBundle\Entity\User $author
+     * @param $author
      */
-    public function setAuthor(\Application\Sonata\UserBundle\Entity\User $author)
+    public function setAuthor($author)
     {
         $this->author = $author;
     }
