@@ -129,6 +129,8 @@ section.related_videos {
 
 .video-author {
     float: left;
+    font-size: 16px;
+    font-weight: 100;
 }
 
 .video-author img {
@@ -137,19 +139,35 @@ section.related_videos {
 }
 
 .tag-idol {
-    background-color: #ff0000;
+    background-color: #D1CEC1;
+
+    &:hover{
+        background-color: lighten(#D1CEC1, 5%);
+    }
 }
 
 .tag-team {
-    background-color: #00ff00;
+    background-color: #BFBCAF;
+
+    &:hover{
+        background-color: lighten(#BFBCAF, 5%);
+    }
 }
 
 .tag-user {
-    background-color: #00ffff;
+    background-color: #AAA89F;
+
+    &:hover{
+        background-color: lighten(#AAA89F, 5%);
+    }
 }
 
 .tag-text {
-    background-color: #0000ff;
+    background-color: #666561;
+
+    &:hover{
+        background-color: lighten(#666561, 5%);
+    }
 }
 
 .tag-avatar {
@@ -160,4 +178,8 @@ section.related_videos {
     width: 16px;
     height: 16px;
     .border-radius(3px);
+}
+
+.video.bottom-container {
+    padding-left: 15px;
 }
