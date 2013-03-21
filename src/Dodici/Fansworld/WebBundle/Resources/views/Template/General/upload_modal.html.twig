@@ -1,0 +1,21 @@
+{% raw %}
+<!-- ModalXXX -->
+<div id="{{>modalId}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="{{>modalLabel}}" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="{{>modalLabel}}">{{>modalTitle}}</h3>
+  </div>
+  <div class="modal-body">
+    <div id="drop_zone" style="border:2px dashed #bbb;border-radius:4px;text-align:center;padding:100px">Arrastre los archivos aqui o
+      <div class="btn btn-success" style="position: relative;">seleccione desde su PC
+        <input type="file" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; cursor: pointer; opacity: 0;width: 100%;">
+      </div>
+    </div>
+    <output class="list"><ul></ul></output>
+  </div>
+  <div class="modal-footer">
+    <button id="modal-btn-close" class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button id="modal-btn-save" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+  </div>
+</div>
+{% endraw %}
