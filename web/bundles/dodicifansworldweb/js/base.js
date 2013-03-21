@@ -162,6 +162,16 @@ $(document).ready(function(){
     $("form").each(function(){
         $(this).attr("novalidate", "true"); 
     });
+    
+    $("#login-widget .fb_button").click(function(){
+        FB.login(function(response) {
+            if (response.authResponse) {
+                location.reload();
+            } else {
+                error('No se ha podido conectar con facebook');
+            }
+        }, {scope: FBperms});
+    });
 }); 
 
 $(function(){
