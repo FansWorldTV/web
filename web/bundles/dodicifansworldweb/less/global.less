@@ -1,5 +1,3 @@
-.toolbar
-
 .fullwidth {
     width: 100% !important;
 }
@@ -13,6 +11,29 @@
 
 .internal_buttons {
     text-align: right;
+}
+
+.btn-upload-video {
+    background-color: #FC6C00;
+    color: white;
+    font-size: 12px;
+    border: 0;
+    .border-radius(3px);
+    height: 26px;
+    padding-left: 13px;
+    padding-right: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+
+    i {
+        height: 16px;
+        vertical-align: middle;
+        margin-right: 6px;
+    }
+
+    &:hover {
+        background-color: #F98E00;
+    }
 }
 
 .share_content{
@@ -351,29 +372,10 @@
 
                 .dropdown.share {
                     button {
-                        background-color: #FC6C00;
-                        color: white;
-                        font-size: 12px;
-                        border: 0;
+                        .btn-upload-video;
                         margin-left: 8px;
                         margin-right: 8px;
                         margin-top: 7px;
-                        .border-radius(3px);
-                        height: 26px;
-                        padding-left: 13px;
-                        padding-right: 13px;
-                        font-weight: 500;
-                        text-transform: uppercase;
-
-                        i {
-                            height: 16px;
-                            vertical-align: middle;
-                            margin-right: 6px;
-                        }
-
-                        &:hover {
-                            background-color: #F98E00;
-                        }
                     }
                 }
 
@@ -400,6 +402,16 @@
 
                     &:hover {
                         background-color: #B8DD1B;
+                    }
+                }
+                
+                .btn-upload-video.notlogged {
+                    margin-top: 6px;
+                    margin-left: 7px;
+                    margin-right: -4px;
+
+                    &:hover {
+                        color: white;
                     }
                 }
             }

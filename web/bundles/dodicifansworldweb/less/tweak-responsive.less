@@ -204,12 +204,40 @@
     div.team-home section.bottom div.list-teams dl dd ul, div.idol-home div.list-idols dl dd ul {
         display: none;
     }
+
     #adcolumn {
         display: none;
     }
+
     .navbar .nav {
         display: none;
     }
+
+    .navbar .btn-navbar {
+        display: block;
+    }
+
+    #collapse-me {
+        display: block;
+    }
+
+    #header .dropdown.user {    
+        display: none;
+    }   
+}
+
+@media(min-width: 811px){
+    .navbar .btn-navbar {
+        display: hidden;
+    }
+
+    #collapse-me {
+        display: hidden;
+    }
+
+    #header .dropdown.user {    
+        display: block;
+    }   
 }
 
 @media(max-width: 1275px) {
@@ -222,7 +250,7 @@
 }
 
 @media(max-width: 940px) {
-    #header .dropdown.user, #header .btn.invite {
+    #header .btn.invite {
         display: none;
     }
 }
@@ -230,28 +258,6 @@
 @media(min-width: 990px){
     #header .nav-collapse.in.collapse {
         display: none;
-    }
-}
-
-@media(max-width: 939px) {
-    .navbar .btn-navbar {
-        display: block;
-    }
-}
-
-@media(max-width: 993px){
-    #header .btn-login {
-        display: none !important;
-    }
-}
-
-@media(min-width: 940px){
-    .navbar .btn-navbar {
-        display: hidden;
-    }
-
-    #collapse-me {
-        display: hidden;
     }
 }
 
@@ -293,5 +299,14 @@
                 font-size: 20px;
             }
         }
+    }
+}
+
+@media(max-width: 850px){
+    #header .navbar-inner .container .right-container .btn-upload-video.notlogged {
+        font-size: 0;
+        color: transparent;
+        padding-left: 9px;
+        padding-right: 4px;
     }
 }

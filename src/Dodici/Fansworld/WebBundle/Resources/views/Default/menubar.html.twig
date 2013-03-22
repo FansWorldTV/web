@@ -91,6 +91,7 @@
                     </ul>
                 </div>
             {% else %}
+                <a href="{{ path('fos_user_registration_register') }}"><button class="btn-upload-video notlogged"><i class="icon-circle-arrow-up icon-white"></i>Subir video</button></a>
                 <button class='btn-login header-ingresar' href="{{ path('fos_user_security_login') }}" data-login-btn>Ingresar</button>
             {% endif %}
             <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#collapse-me">
