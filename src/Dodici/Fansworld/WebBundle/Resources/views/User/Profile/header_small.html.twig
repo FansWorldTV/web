@@ -37,10 +37,11 @@
                 <div class='tipo'>Fans</div>
                 <div class='separador' />
             </section>
-            Puntos =)
+
             <section class='ptos-info'>
-                <div class='numero'>{% if entity.score > 0 %}<a href="#">{% endif %}
-                    {{ entity.score }}{% if entity.score > 0 %}</a>{%endif%}</div>
+                <div class='numero'>
+                    {% include "DodiciFansworldWebBundle:Default:blocks/puntos.html.twig" with { score: '14650' } %}
+                </div>
                 <div class='tipo'>Puntos</div>
                 <div class='separador' />
             </section>

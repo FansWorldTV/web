@@ -68,14 +68,14 @@
                             </section>
 
                             {% if entityType == 'user' %}
-                                <section class='fans-info'>
-                                    <div class='numero'>{% if entity.score > 0 %}{% endif %}
-                                        {{ entity.score }}{% if entity.score > 0 %}{% endif %}</div>
+                                <section class='ptos-info'>
+                                    <div class='numero'>
+                            {% include "DodiciFansworldWebBundle:Default:blocks/puntos.html.twig" with { score: '14650' } %}
+                                    </div>
                                     <div class='tipo'>Puntos</div>
                                     <div class='separador' />
                                 </section>
                             {% endif %}
-
 	            {% endblock %}
 	        </div>
 	    </div>
