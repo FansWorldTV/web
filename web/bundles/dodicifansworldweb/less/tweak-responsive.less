@@ -314,3 +314,13 @@
         padding-right: 4px;
     }
 }
+
+@media(max-width: 640px){
+    #toolbar {
+        .toolbar-icon {
+            &.wall, &.badges, &.notifications, &.config {
+                display: none;
+            }
+        }
+    }
+}
