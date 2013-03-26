@@ -9,3 +9,4 @@ web/uploads/*
 # Configuration files
 app/config/parameters.ini
 app/config/parameters.yml
+web/bundles/dodicifansworldweb/css/base.css
