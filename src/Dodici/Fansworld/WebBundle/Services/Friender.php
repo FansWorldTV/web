@@ -17,7 +17,7 @@ class Friender
 {
     protected $security_context;
     protected $em;
-	protected $appstate;
+    protected $appstate;
     protected $user;
     protected $userfeedlogger;
     protected $appfacebook;

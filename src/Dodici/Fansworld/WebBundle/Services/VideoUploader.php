@@ -16,13 +16,13 @@ use Flumotion\APIBundle\Ftp\FtpWriter;
 
 class VideoUploader
 {
-	protected $request;
-	protected $em;
-	protected $appmedia;
-	protected $security_context;
+    protected $request;
+    protected $em;
+    protected $appmedia;
+    protected $security_context;
     protected $user;
     protected $appfacebook;
-	protected $uploadpath;
+    protected $uploadpath;
 
     function __construct(EntityManager $em, AppMedia $appmedia, SecurityContext $security_context, $appfacebook, $uploadpath)
     {
