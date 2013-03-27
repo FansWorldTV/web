@@ -44,8 +44,9 @@
                             </div>
                             <span class="name"><a href="{{ pathUrl }}">{{ avatar}}</a></span>
 
-                            <span class="friendCount">{% if fanCount == 1 %} {{ fanCount }} fan{% endif %}</span>
-                            <span class="friendCount">{% if fanCount > 1 %} {{ fanCount }} fans{% endif %}</span>
+                            {% if fanCount > 0 %}
+                                <span class="friendCount">{{ fanCount }} {% if fanCount > 1 %}fans{% else %}fan{% endif %}</span>
+                            {% endif %}
 
                             {% if avatar.score is defined %}
                                 <span class="scoreCount">{% if avatar.score > 0 %} {{ avatar.score }} pts{% endif %}</span>

@@ -13,7 +13,9 @@
                 {{/if}}
             </div>
             <span class="name"><a href="{{>url}}">{{>title}}</a></span>
-            <span class="friendCount">{{>fanCount}}</span>
+            {{if fanCount>0}}
+                <span class="friendCount">{{>fanCount}}</span>
+            {{/if}}
 
             <div class="addFriend" data-add-fan="" data-login-required="">
                 <button class="btn  btn_friendship add btn-success" data-user-id="{{>id}}"> Ser fan</button>
