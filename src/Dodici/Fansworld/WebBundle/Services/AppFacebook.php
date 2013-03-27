@@ -84,7 +84,7 @@ class AppFacebook
         if (!($user instanceof User))
             throw new \Exception('La entidad no tiene autor');
 
-        $type = $this->getType($entity);
+        $type = $this->getEntityType($entity);
         $url = $this->router->generate($type . '_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()), true);
         //$message = $this->translator->trans('shared_' . $type) . ' ' . $url . ' #fansworlds';
         
@@ -105,14 +105,14 @@ class AppFacebook
     
     public function comment($entity, $user)
     {
-        $type = $this->getType($entity);
+        $type = $this->getEntityType($entity);
         $url = $this->router->generate($type . '_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()), true);
         return $this->verb('comment', array('other' => $url), $user);
     }
     
     public function fan($entity, $user)
     {
-        $type = $this->getType($entity);
+        $type = $this->getEntityType($entity);
         if ($entity instanceof User) $params = array('username' => $entity->getUsername());
         else $params = $params = array('slug' => $entity->getSlug());
         $url = $this->router->generate($type . '_land', $params, true);
@@ -135,7 +135,7 @@ class AppFacebook
     {
         if (!$this->feedenabled) return false;
         
-        $type = $this->getType($entity);
+        $type = $this->getEntityType($entity);
         $url = $this->router->generate($type . '_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()), true);
         
         $picture = null;
@@ -181,7 +181,7 @@ class AppFacebook
         return $this->facebook->api($url, $method, $params);
     }
     
-    private function getType($entity)
+    private function getEntityType($entity)
     {
         $name = $this->em->getClassMetadata(get_class($entity))->getName();
         $exp = explode('\\', $name);
