@@ -19,3 +19,5 @@
 {% set entity 		        = idol %}
 
 {% block title %}{{ parent() }} - {{ idol }}{% endblock %}
+{% block metafbimage %}{{ appmedia.imageurl(idol.image, 'small_square') }}{% endblock %}
+{% block metafbtype %}{{ appfacebook.type('idol') }}{% endblock %}

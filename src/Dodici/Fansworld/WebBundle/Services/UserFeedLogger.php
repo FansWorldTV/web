@@ -22,11 +22,13 @@ class UserFeedLogger
     protected $security_context;
     protected $em;
     protected $user;
+    protected $appfacebook;
 
-    function __construct(SecurityContext $security_context, EntityManager $em)
+    function __construct(SecurityContext $security_context, EntityManager $em, $appfacebook)
     {
         $this->security_context = $security_context;
         $this->em = $em;
+        $this->appfacebook = $appfacebook;
         $this->user = null;
         $user = $security_context->getToken() ? $security_context->getToken()->getUser() : null;
         if ($user instanceof User) {
@@ -51,6 +53,11 @@ class UserFeedLogger
         foreach ($entities as $entity) {
             if ($entity) {
                 $entitytype = $this->getType($entity);
+                
+                if ($type == Activity::TYPE_BECAME_FAN && $author) {
+                    $this->appfacebook->fan($entity, $author);
+                }
+                
                 switch ($entitytype) {
                     case 'user':
                         $has = new HasUser();

@@ -3,6 +3,8 @@
 {% use "DodiciFansworldWebBundle:Layout/Snippet:profile_inner_fullwidth.html.twig"  %}
 
 {% block title %}{{ parent() }} - Detalle{% endblock %}
+{% block metafbimage %}{{ appmedia.imageurl(team.image, 'small_square') }}{% endblock %}
+{% block metafbtype %}{{ appfacebook.type('team') }}{% endblock %}
 
 {% block inner_content %}
 	{{ parents() }}

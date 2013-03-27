@@ -16,20 +16,22 @@ use Flumotion\APIBundle\Ftp\FtpWriter;
 
 class VideoUploader
 {
-	protected $request;
-	protected $em;
-	protected $appmedia;
-	protected $security_context;
+    protected $request;
+    protected $em;
+    protected $appmedia;
+    protected $security_context;
     protected $user;
-	protected $uploadpath;
+    protected $appfacebook;
+    protected $uploadpath;
 
-    function __construct(EntityManager $em, AppMedia $appmedia, SecurityContext $security_context, $uploadpath)
+    function __construct(EntityManager $em, AppMedia $appmedia, SecurityContext $security_context, $appfacebook, $uploadpath)
     {
         $this->request = Request::createFromGlobals();
         $this->em = $em;
         $this->appmedia = $appmedia;
         $this->security_context = $security_context;
         $this->user = $security_context->getToken() ? $security_context->getToken()->getUser() : null;
+        $this->appfacebook = $appfacebook;
         $this->uploadpath = $uploadpath;
     }
 
@@ -104,6 +106,8 @@ class VideoUploader
         	    		$notification->setTarget($video->getAuthor());
         	    		$notification->setVideo($video);
         	    		$this->em->persist($notification);
+        	    		
+        	    		$this->appfacebook->upload($video);
                     }
     	    		
                     $this->em->flush();
@@ -162,6 +166,8 @@ class VideoUploader
             $video->setVimeo($idvimeo);
             $video->setImage($image);
             $video->setDuration($duration);
+            
+            $this->appfacebook->upload($video);
             
             return $video;
         } else {

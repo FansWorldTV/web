@@ -29,12 +29,5 @@ class FacebookActivity
                 $this->container->get('app.facebook')->upload($entity);
 			} 
 		}
-		
-    	if ($entity instanceof Video && $entity->getAuthor()) {
-			$user = $entity->getAuthor();
-    	    if ($user->getLinkfacebook() && $entity->getActive()){
-			    $this->container->get('app.facebook')->upload($entity);
-			}
-		}
     }
 }

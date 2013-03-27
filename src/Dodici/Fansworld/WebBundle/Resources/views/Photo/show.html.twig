@@ -3,6 +3,8 @@
 {% use "DodiciFansworldWebBundle:Layout/Snippet:profile_inner_rsidebar.html.twig"  %}
 
 {% block title %}{{ parent() }} - Detalle Foto{% endblock %}
+{% block metafbimage %}{{ appmedia.imageurl(photo.image, 'small_square') }}{% endblock %}
+{% block metafbtype %}{{ appfacebook.type('photo') }}{% endblock %}
 
 {% block profile_tabs %}
 	{% set active_tab = 'photos' %}

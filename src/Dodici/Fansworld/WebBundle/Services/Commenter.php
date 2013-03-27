@@ -2,8 +2,9 @@
 
 namespace Dodici\Fansworld\WebBundle\Services;
 
+use Dodici\Fansworld\WebBundle\Entity\Photo;
+use Dodici\Fansworld\WebBundle\Entity\Video;
 use Symfony\Component\HttpFoundation\Request;
-
 use Application\Sonata\UserBundle\Entity\User;
 use Dodici\Fansworld\WebBundle\Entity\Comment;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
@@ -13,13 +14,13 @@ class Commenter
 {
 	protected $request;
 	protected $em;
-	protected $appstate;
+	protected $appfacebook;
 
-    function __construct(EntityManager $em, $appstate)
+    function __construct(EntityManager $em, $appfacebook)
     {
         $this->request = Request::createFromGlobals();
         $this->em = $em;
-        $this->appstate = $appstate;
+        $this->appfacebook = $appfacebook;
     }
 
     /**
@@ -31,7 +32,7 @@ class Commenter
      */
     public function comment(User $user, $entity, $content, $privacy_type = Privacy::EVERYONE, $team=null)
     {
-    	$classname = $this->appstate->getType($entity);
+    	$classname = $this->getType($entity);
     	
     	$comment = new Comment();
 		$comment->setType(Comment::TYPE_COMMENT);
@@ -46,6 +47,10 @@ class Commenter
 			$comment->$methodname($entity);
 		}
 		
+		if ($entity instanceof Video || $entity instanceof Photo) {
+		    $this->appfacebook->comment($entity, $user);
+		}
+		
 		if ($team) $comment->setTeam($team->getId());
 		
     	$this->em->persist($comment);
@@ -54,4 +59,11 @@ class Commenter
 		
 		return $comment;
     }    
+    
+    private function getType($entity)
+    {
+        $name = $this->em->getClassMetadata(get_class($entity))->getName();
+        $exp = explode('\\', $name);
+		return strtolower(end($exp));
+    }
 }
