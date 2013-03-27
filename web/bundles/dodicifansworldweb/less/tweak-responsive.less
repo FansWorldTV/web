@@ -251,6 +251,9 @@
     #content:not(.fullwidth) {
         width: 82.905982906% !important;
     }
+    .three-column #content {
+        width: 100% !important;
+    }
 }
 
 @media(max-width: 940px) {
@@ -322,5 +325,44 @@
                 display: none;
             }
         }
+    }
+}
+
+@media(max-width: 400px){
+    .three-column #content  {
+        div.formshadow {
+            .size(auto, 100%);
+            .box-shadow(none);
+            margin: auto;
+            .border-radius(none);
+            display: block;
+            margin-top: 10%;
+
+            div.loginformbig {
+                border: 0;
+                
+                div.form-login {
+                    ul.fields {
+                        #username, #password {
+                            width: 100%;
+                        }
+                    }
+                }
+                
+                &.bottom {
+                    background-color: initial;
+                }
+            }
+        }
+
+        div.actions.login {
+            width: 100%;
+        }
+    }
+}
+
+@media(max-width: 295px){
+    #header .navbar-search {
+        display: none;
     }
 }
