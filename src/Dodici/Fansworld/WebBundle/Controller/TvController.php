@@ -344,6 +344,8 @@ class TvController extends SiteController
                 $buttontext = $t->trans('subscribe');
             } else {
                 $state = $subscriptions->subscribe($videocategory) ? true : null;
+                
+                $this->get('app.facebook')->subscribe($videocategory, $user);
 
                 $message = $t->trans('subscribed_to_channel') . ' "' . (string) $videocategory . '"';
                 $buttontext = $t->trans('unsubscribe');

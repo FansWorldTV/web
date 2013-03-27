@@ -4,7 +4,7 @@
  * jquery UI
  * fos-routing
  * facebook
- *  
+ *
  */
 
 // FansWorld Plugin Boilerplate
@@ -18,7 +18,7 @@
             route: null,
             params: null,
             callback: null,
-            errorCallback: null, 
+            errorCallback: null,
             type: 'POST'
         };
 
@@ -36,7 +36,7 @@
         plugin.genericAction = function(options) {
 
             if (arguments.length >= 2) {
-                // workaround for old call system 
+                // workaround for old call system
                 // cast every argument[i] to the literal objet properties
                 var settings = {
                     route: arguments[0],
@@ -71,7 +71,7 @@
         var search = function(method, params, callback) {
             if(!ajax.active) {
                 ajax.active = true;
-                
+
                 $.ajax({
                     url: 'http://'+ location.host + Routing.generate( appLocale + '_' + method),
                     data: params,
@@ -97,8 +97,8 @@
 })(jQuery);
 
 // ***********************************************************
-// LEGACY CODE BELOW 
-// Attach this plugin to window.ajax 
+// LEGACY CODE BELOW
+// Attach this plugin to window.ajax
 // TODO: refactor inside FansWorld own namespace
 // ***********************************************************
 ;(function($) {
@@ -160,19 +160,19 @@ function createNotify (options) {
 
 $(document).ready(function(){
     $("form").each(function(){
-        $(this).attr("novalidate", "true"); 
+        $(this).attr("novalidate", "true");
     });
-    
+
     $("#login-widget .fb_button").click(function(){
         FB.login(function(response) {
             if (response.authResponse) {
-                location.reload();
+                console.log(response);
             } else {
                 error('No se ha podido conectar con facebook');
             }
         }, {scope: FBperms});
     });
-}); 
+});
 
 $(function(){
    var notifydiv = $('<div>').addClass('notifications top-right');
