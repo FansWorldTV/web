@@ -340,7 +340,7 @@ services:
       arguments: [@doctrine.orm.entity_manager, @security.context, @appstate]
     commenter:
       class: Dodici\Fansworld\WebBundle\Services\Commenter
-      arguments: [@doctrine.orm.entity_manager, @appfacebook]
+      arguments: [@doctrine.orm.entity_manager, @app.facebook]
     complainer:
       class: Dodici\Fansworld\WebBundle\Services\Complainer
       arguments: [@doctrine.orm.entity_manager, @appstate]
