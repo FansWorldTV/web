@@ -20,13 +20,15 @@ class Friender
 	protected $appstate;
     protected $user;
     protected $userfeedlogger;
+    protected $appfacebook;
 
-    function __construct(SecurityContext $security_context, EntityManager $em, $appstate, $userfeedlogger)
+    function __construct(SecurityContext $security_context, EntityManager $em, $appstate, $userfeedlogger, $appfacebook)
     {
         $this->security_context = $security_context;
         $this->em = $em;
         $this->appstate = $appstate;
         $this->userfeedlogger = $userfeedlogger;
+        $this->appfacebook = $appfacebook;
         $this->user = null;
         $user = $security_context->getToken() ? $security_context->getToken()->getUser() : null;
         if ($user instanceof User) {

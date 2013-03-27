@@ -1,5 +1,6 @@
 {% extends "DodiciFansworldWebBundle:Tv:base.html.twig" %}
 {% block title %}TV - Search Results{% endblock %}
+{% block metafbtype %}{{ appfacebook.type('channel') }}{% endblock %}
 {% block tv_body %}
     {% embed "DodiciFansworldWebBundle:Layout/Embed:tv_fullwidth.html.twig" %}
         {% block inner_content %}

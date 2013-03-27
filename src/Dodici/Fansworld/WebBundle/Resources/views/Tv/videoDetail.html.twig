@@ -2,7 +2,8 @@
 
 {% block title %}{{ parent() }} - Video detail{% endblock %}
 
-
+{% block metafbimage %}{{ appmedia.imageurl(video.image, 'small_square') }}{% endblock %}
+{% block metafbtype %}{{ appfacebook.type('video') }}{% endblock %}
 
 {% block tv_body %}
     {% embed "DodiciFansworldWebBundle:Layout/Embed:tv_videodetail.html.twig" %}

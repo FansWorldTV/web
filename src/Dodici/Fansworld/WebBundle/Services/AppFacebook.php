@@ -17,27 +17,27 @@ class AppFacebook
     protected $em;
     protected $user;
     protected $facebook;
-    protected $appstate;
     protected $router;
     protected $translator;
     protected $appmedia;
     protected $scope;
     protected $feedenabled;
+    protected $namespace;
 
-    function __construct(SecurityContext $security_context, EntityManager $em, $facebook, $appstate, $router, $translator, $appmedia, $scope=array(), $feedenabled)
+    function __construct(SecurityContext $security_context, EntityManager $em, $facebook, $router, $translator, $appmedia, $scope=array(), $feedenabled, $namespace)
     {
         $this->security_context = $security_context;
         $this->request = Request::createFromGlobals();
         $this->em = $em;
         $this->user = $security_context->getToken() ? $security_context->getToken()->getUser() : null;
         $this->facebook = $facebook;
-        $this->appstate = $appstate;
         $this->router = $router;
         $this->translator = $translator;
         $this->appmedia = $appmedia;
         $this->appmedia instanceof AppMedia;
         $this->scope = $scope;
         $this->feedenabled = $feedenabled;
+        $this->namespace = $namespace;
     }
 
     /**
@@ -84,29 +84,58 @@ class AppFacebook
         if (!($user instanceof User))
             throw new \Exception('La entidad no tiene autor');
 
-        $type = $this->appstate->getType($entity);
+        $type = $this->getType($entity);
         $url = $this->router->generate($type . '_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()), true);
-        $message = $this->translator->trans('shared_' . $type) . ' ' . $url . ' #fansworlds';
-        return $this->verb('feed', array(
-                    'message' => $message,
-                    'name' => $entity->getSlug(),
-                    'link' => $url,
-                    'description' => $entity->getContent()
-                        ), $user);
+        //$message = $this->translator->trans('shared_' . $type) . ' ' . $url . ' #fansworlds';
+        
+        return $this->verb('upload', array(
+            'other' => $url
+        ), $user);
+    }
+    
+    public function subscribe($videocategory, $user)
+    {
+        $url = $this->router->generate(
+        	'teve_explorechannel', 
+            array('id' => $videocategory->getId(), 'slug' => $videocategory->getSlug()), 
+            true
+        );
+        return $this->verb('subscribe', array('other' => $url), $user);
+    }
+    
+    public function comment($entity, $user)
+    {
+        $type = $this->getType($entity);
+        $url = $this->router->generate($type . '_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()), true);
+        return $this->verb('comment', array('other' => $url), $user);
+    }
+    
+    public function fan($entity, $user)
+    {
+        $type = $this->getType($entity);
+        if ($entity instanceof User) $params = array('username' => $entity->getUsername());
+        else $params = $params = array('slug' => $entity->getSlug());
+        $url = $this->router->generate($type . '_land', $params, true);
+        return $this->verb('comment', array('other' => $url), $user);
     }
 
     public function verb($verb, $params, $user)
     {
         if (!$this->feedenabled) return false;
-        //return $this->api('/{uid}/fansworld:'.$verb, $user, 'POST', $params);
-        return $this->api('/{uid}/' . $verb, $user, 'POST', $params);
+        try {
+            return $this->api('/{uid}/'.$this->namespace.':'.$verb, $user, 'POST', $params);
+        } catch (\Exception $e) {
+            // do something
+            return false;
+        }
+        //return $this->api('/{uid}/' . $verb, $user, 'POST', $params);
     }
 
     public function entityShare($entity, $message)
     {
         if (!$this->feedenabled) return false;
         
-        $type = $this->appstate->getType($entity);
+        $type = $this->getType($entity);
         $url = $this->router->generate($type . '_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()), true);
         
         $picture = null;
@@ -132,6 +161,11 @@ class AppFacebook
     {
         return $this->scope;
     }
+    
+    public function getType($type)
+    {
+        return $this->namespace.':'.$type;
+    }
 
     private function api($url, $user = null, $method = 'GET', $params = array())
     {
@@ -145,6 +179,13 @@ class AppFacebook
 
         $url = str_replace('{uid}', $user->getFacebookId(), $url);
         return $this->facebook->api($url, $method, $params);
+    }
+    
+    private function getType($entity)
+    {
+        $name = $this->em->getClassMetadata(get_class($entity))->getName();
+        $exp = explode('\\', $name);
+		return strtolower(end($exp));
     }
 
 }
