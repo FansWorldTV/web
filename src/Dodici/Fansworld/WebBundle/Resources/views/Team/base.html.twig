@@ -19,3 +19,5 @@
 {% set entity 				= team %}
 
 {% block title %}{{ parent() }} - {{ team }}{% endblock %}
+{% block metafbimage %}{{ appmedia.imageurl(team.image, 'small_square') }}{% endblock %}
+{% block metafbtype %}{{ appfacebook.type('team') }}{% endblock %}

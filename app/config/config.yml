@@ -313,7 +313,7 @@ services:
       arguments: [@security.context, @doctrine.orm.entity_manager]
     app.facebook:
       class: Dodici\Fansworld\WebBundle\Services\AppFacebook
-      arguments: [@security.context, @doctrine.orm.entity_manager, @fos_facebook.api, @appstate, @router, @translator,@appmedia, %fos_facebook.permissions%, %facebook.feed.enabled%]
+      arguments: [@security.context, @doctrine.orm.entity_manager, @fos_facebook.api, @router, @translator,@appmedia, %fos_facebook.permissions%, %facebook.feed.enabled%, %facebook.namespace%]
     app.twitter:
       class: Dodici\Fansworld\WebBundle\Services\AppTwitter
       arguments: [@security.context, @doctrine.orm.entity_manager, @fos_twitter.api, @appstate, @router, @translator, %twitter.feed.enabled%]  
@@ -340,7 +340,7 @@ services:
       arguments: [@doctrine.orm.entity_manager, @security.context, @appstate]
     commenter:
       class: Dodici\Fansworld\WebBundle\Services\Commenter
-      arguments: [@doctrine.orm.entity_manager, @appstate]
+      arguments: [@doctrine.orm.entity_manager, @appfacebook]
     complainer:
       class: Dodici\Fansworld\WebBundle\Services\Complainer
       arguments: [@doctrine.orm.entity_manager, @appstate]
@@ -367,7 +367,7 @@ services:
       arguments: [@security.context, @doctrine.orm.entity_manager, @appmedia]
     user.feed.logger:
       class: Dodici\Fansworld\WebBundle\Services\UserFeedLogger
-      arguments: [@security.context, @doctrine.orm.entity_manager]
+      arguments: [@security.context, @doctrine.orm.entity_manager, @app.facebook]
     fixture.csvtoyml:
       class: Dodici\Fansworld\WebBundle\Services\FixtureCsvToYaml
     eventship.manager:
@@ -381,7 +381,7 @@ services:
       arguments: [@security.context, @doctrine.orm.entity_manager, @appstate]
     video.uploader:
       class: Dodici\Fansworld\WebBundle\Services\VideoUploader
-      arguments: [@doctrine.orm.entity_manager, @appmedia, @security.context, %kernel.root_dir%/../web/uploads/videos]
+      arguments: [@doctrine.orm.entity_manager, @appmedia, @security.context, @app.facebook, %kernel.root_dir%/../web/uploads/videos]
     fansworld.kaltura.notification:
       class: Dodici\Fansworld\WebBundle\Services\FansworldKalturaNotification
       arguments: [@kaltura, @logger, @doctrine.orm.entity_manager, @video.uploader]

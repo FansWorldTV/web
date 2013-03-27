@@ -19,3 +19,5 @@
 {% set entity 				= user %}
 
 {% block title %}{{ parent() }} - {{ user }}{% endblock %}
+{% block metafbimage %}{{ appmedia.imageurl(user.image, 'small_square') }}{% endblock %}
+{% block metafbtype %}{{ appfacebook.type('user') }}{% endblock %}

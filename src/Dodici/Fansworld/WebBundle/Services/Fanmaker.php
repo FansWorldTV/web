@@ -18,12 +18,14 @@ class Fanmaker
     protected $em;
     protected $user;
     protected $userfeedlogger;
+    protected $appfacebook;
 
-    function __construct(SecurityContext $security_context, EntityManager $em, $userfeedlogger)
+    function __construct(SecurityContext $security_context, EntityManager $em, $userfeedlogger, $appfacebook)
     {
         $this->security_context = $security_context;
         $this->em = $em;
         $this->userfeedlogger = $userfeedlogger;
+        $this->appfacebook = $appfacebook;
         $this->user = null;
         $user = $security_context->getToken() ? $security_context->getToken()->getUser() : null;
         if ($user instanceof User) {
