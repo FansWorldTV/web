@@ -1,11 +1,12 @@
-/*global                                                ////////////////////////
-    $,                                                  //                    //
-    jQuery,                                             //        2013        //
-    FormData,                                           //      FANSWORD      //
-    exports,                                            //        XHR         //
-    module,                                             //      UPLOADER      //
-    require,                                            //                    //
-    define                                              ////////////////////////
+/*global
+    $,
+    jQuery,
+    File,
+    FormData,
+    exports,
+    module,
+    require,
+    define
 */
 /*jslint nomen: true */                 /* Tolerate dangling _ in identifiers */
 /*jslint vars: true */           /* Tolerate many var statements per function */
@@ -13,6 +14,7 @@
 /*jslint browser: true */                                  /* Target browsers */
 /*jslint devel: true */                         /* Assume console, alert, ... */
 /*jslint windows: true */               /* Assume window object (for browsers)*/
+/*jslint continue: true */                     /* Allow continue inside loops */
 
 /*******************************************************************************
  * Class dependencies:                                                         *
@@ -26,11 +28,26 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Historia:                                                                  //
 // --------                                                                   //
+// 1.7 Custom Events                                                          //
+// 1.4 File queue manager                                                     //
 // 1.0 Initial version 21-Mar-2013                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////
 // FansWorld XHR Uploader                                                     //
+// Internal modules:                                                          //
+// * XHR handler                                                              //
+// * Uploader queue handler                                                   //
+// * Event handler                                                            //
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+// ISOTOPE TODO:
+// * Search
+// * mis videos y mis fotos
+// perfil:
+//      videos
+//      fotos
 ////////////////////////////////////////////////////////////////////////////////
 
 (function (root, factory) {
@@ -50,23 +67,24 @@
 }(this, function (jQuery, Routing, templateHelper, ExposeTranslation) {
     "use strict";
     var UPLOADER = (function() {
-        function UPLOADER() {
+        function UPLOADER(settings) {
             ////////////////////////////////////////////////////////////////////
             // Constructor                                                    //
             ////////////////////////////////////////////////////////////////////
             var _self = this;
             this.jQuery = jQuery;
-            this.version = '1.0';
-            this.options = {
+            this.version = '1.7';
+            this.defaults = {
                 // set to true to see the server response
                 action: '/app_dev.php/photo/fileupload',
+                element: null,
                 protocol: 'POST',
                 params: {},
                 normalHeaders: true,
                 customHeaders: {},
                 multiple: true,
                 maxConnections: 1,
-                autoUpload: true,
+                autoUpload: false,
                 forceMultipart: false,
                 // validation
                 allowedExtensions: [],
@@ -81,6 +99,8 @@
                 // events
                 // return false to cancel submit
                 responsePassthrough: false,
+                // Event Listeners
+                listeners: {},
                 onSubmit: function(id, fileName){},
                 onComplete: function(id, fileName, responseJSON){},
                 onCancel: function(id, fileName){},
@@ -104,10 +124,16 @@
                 },
                 inputName: 'qqfile'
             };
+            // Merge options
+            this.options = $.extend({}, this.defaults, settings);
+            // Test XHR Lv2 Support
             if (this.isSupported()) {
-                this.options.debug("XHR Upload is supported");
+                this.options.debug("XMLHttpRequest Level 2 is supported");
+                this.options.debug("-----------------------------------");
+                this.options.debug("settings:");
+                this.options.debug(settings);
             } else {
-                this.options.debug("XHR Upload is not supported");
+                this.options.debug("XMLHttpRequest Level 2 is not supported");
             }
 
             ////////////////////////////////////////////////////////////////////
@@ -115,8 +141,19 @@
             ////////////////////////////////////////////////////////////////////
             this.queue = new this.Queue(this);
             this.activeConnections = 0;
+
+            ////////////////////////////////////////////////////////////////////
+            // Event Handlers                                                 //
+            ////////////////////////////////////////////////////////////////////
+            this.addListener('onabort', this.onAbort);
+            this.addListener('onerror', this.onError);
+            this.addListener('onreadystatechange', this.onReadystatechange);
+            this.addListener('onprogress', this.onProgress);
+            this.addListener('onload', this.onLoad);
+            this.addListener('onupload', this.onUpload);
+            this.addListener('oncomplete', this.onComplete);
         }
-        UPLOADER.prototype.addFiles = function(files){
+        UPLOADER.prototype.addFiles = function(files) {
             var that = this;
             var i;
             for(i = 0; i < files.length; i += 1) {
@@ -139,9 +176,9 @@
             if (this.options.autoUpload && !that.options.paused) {
                 that.start();
             }
-            return
+            return true;
         };
-        UPLOADER.prototype.start = function(){
+        UPLOADER.prototype.start = function() {
             var that = this;
             (function loopy() {
                 var i;
@@ -152,22 +189,29 @@
                     var file = that.queue.dequeue();
                     that.options.recent.push(file);
 
-                    console.log("will process: " + file.atom.file.name)
+                    console.log("will process: " + file.atom.file.name);
                     $.when(that.upload(file))
-                    .progress(function(val, data) {
-                        //console.log(val + ': ' + data);
-                        switch(val) {
+                    .progress(function(event, data) {
+                        switch(event) {
                             case 'onprogress':
-                                console.log("uploaded: " + data.percent);
+                                console.log("onprogress [percent: " + data.percent + "]");
                                 break;
                             case 'onreadystatechange':
+                                console.log("onreadystatechange [readyState: " + data.readyState + "]");
+                                break;
+                            case 'onabort':
+                                console.log("onabort");
+                                break;
+                            case 'onerror':
+                                console.log("onerror");
                                 break;
                         }
                     })
                     .then(function(xhr){
-
+                        // paulina risso
                     })
                     .done(function() {
+                        // Update recent files queue
                         var last = that.options.recent.pop();
                     })
                     .fail();
@@ -177,16 +221,21 @@
                 if ( typeof that.options.delay === 'number' && that.options.delay >= 0 ) {
                     that.options.timeout_id = setTimeout( loopy, that.options.delay );
                 }
-            })();
+            }());
         };
         ////////////////////////////////////////////////////////////////////////
         // Stop a running queue (does not cancell any upload)                 //
         ////////////////////////////////////////////////////////////////////////
         UPLOADER.prototype.stop = function() {
-            this.options.timeout_id && clearTimeout( this.options.timeout_id );
+            if(this.options.timeout_id) {
+                clearTimeout( this.options.timeout_id );
+            }
             this.options.timeout_id = undefined;
             return true;
         };
+        ////////////////////////////////////////////////////////////////////////
+        //                                                                    //
+        ////////////////////////////////////////////////////////////////////////
         UPLOADER.prototype.pause = function(){
             this.paused = !this.paused;
             return this.paused;
@@ -195,7 +244,6 @@
         // Stop all uploads and clear all queues                              //
         ////////////////////////////////////////////////////////////////////////
         UPLOADER.prototype.stopAll = function(){
-            console.log("STOPPING ALL CURRENT TRANSACTIONS")
             var i = 0;
             // Stop timers
             this.stop();
@@ -218,7 +266,7 @@
             console.log("aborting file: " + file.atom.file.name);
             file.atom.xhr.abort();
             // Remove file from queue
-            var fileIndex = this.options.recent.indexOf(file)
+            var fileIndex = this.options.recent.indexOf(file);
             this.options.recent = this.options.recent.slice(fileIndex, fileIndex + 1);
         };
         ////////////////////////////////////////////////////////////////////////
@@ -237,12 +285,13 @@
             xhr.upload.onprogress = function(event){
                 if (event.lengthComputable){
                     var percentComplete = parseInt(((event.loaded / event.total) * 100), 10);
-                    deferred.notifyWith(this, ["onprogress", {atom: object, percent: percentComplete}]);
+                    that.fire({type: "onprogress", source: event, target: object.atom});
+                    deferred.notifyWith(this, ["onprogress", {atom: object.atom, percent: percentComplete}]);
                 }
             };
-
-            xhr.onreadystatechange = function(){
-                deferred.notifyWith(this, ["onreadystatechange", {readyState: xhr.readyState, status: xhr.readyState}]);
+            xhr.onreadystatechange = function(event){
+                that.fire({type: "onreadystatechange", source: event, target: object.atom});
+                deferred.notifyWith(this, ["onreadystatechange", {readyState: xhr.readyState, xhr: xhr}]);
                 switch(xhr.readyState) {
                     case 0:
                         // request not initialized
@@ -259,20 +308,24 @@
                         break;
                     case 4:
                         // request finished and response is ready
-                        that.activeConnections -= 1;
                         break;
                 }
-                if (xhr.readyState === 4){
-                    console.log("upload complete");
-                    that.options.onComplete(id, xhr);
+                // Todo move this condition outside the upload method
+                if (xhr.readyState === 4 && xhr.status === 200){
+                    that.fire({type: "oncomplete", source: event, target: object.atom});
                     deferred.resolve(xhr);
                 }
             };
-
-            xhr.onerror = function() {
-                console.log("XHR error")
+            xhr.onerror = function(event) {
+                that.fire({type: "onerror", source: event, target: object.atom});
                 deferred.reject(new Error(xhr));
-            }
+            };
+            xhr.onabort = function(event) {
+                that.fire({type: "onabort", source: event, target: object.atom});
+            };
+            xhr.onload = function(event) {
+                that.fire({type: "onload", source: event, target: object.atom});
+            };
             // build query string
             var params = {};
             params[this.options.inputName] = name;
@@ -301,18 +354,33 @@
             return deferred.promise();
         };
         ////////////////////////////////////////////////////////////////////////
-        // Handle onComplete                                                  //
+        //  INTERNAL EVENT HANDLERS                                           //
         ////////////////////////////////////////////////////////////////////////
-        UPLOADER.prototype.onComplete = function(id, fileName, result){
-            if (!this.options.responsePassthrough && !result.success){
-                var errorReason = result.error || "Upload failure reason unknown";
-                this.options.onError(id, fileName, errorReason);
-            }
+        UPLOADER.prototype.onProgress = function(event){
+            var that = this;
         };
-        ////////////////////////////////////////////////////////////////////////
-        // Handle onProgress                                                  //
-        ////////////////////////////////////////////////////////////////////////
-        UPLOADER.prototype.onProgress = function(){
+        UPLOADER.prototype.onComplete = function(event){
+            var that = this;
+            var xhr = event.target.xhr;
+            that.activeConnections -= 1;
+            console.log('oncomplete');
+            return xhr.statusText;
+        };
+        UPLOADER.prototype.onError = function(event){
+            var that = this;
+        };
+        UPLOADER.prototype.onAbort = function(event){
+            var that = this;
+        };
+        UPLOADER.prototype.onLoad = function(event){
+            var that = this;
+            var xhr = event.target.xhr;
+            that.activeConnections -= 1;
+            console.log('onload');
+            return xhr.statusText;
+        };
+        UPLOADER.prototype.onReadystatechange = function(event){
+            var that = this;
         };
         ////////////////////////////////////////////////////////////////////////
         // Detect browser fratures                                            //
@@ -320,23 +388,45 @@
         UPLOADER.prototype.isSupported = function(){
             var input = document.createElement('input');
             input.type = 'file';
+            input.setAttribute("multiple", "true");
+            var supportsMultiple = input.multiple === true;
 
             return (
-                'multiple' in input &&
-                    typeof File != "undefined" &&
-                    typeof FormData != "undefined" &&
-                    typeof (new XMLHttpRequest()).upload != "undefined" );
+                supportsMultiple &&
+                    typeof File !== "undefined" &&
+                    typeof FormData !== "undefined" &&
+                    typeof (new XMLHttpRequest()).upload !== "undefined" );
         };
         ////////////////////////////////////////////////////////////////////////
-        // Validate the file acconding to the settings                        //
+        // File validation                                                    //
         ////////////////////////////////////////////////////////////////////////
         UPLOADER.prototype.validateFile = function(file){
             var name, size;
 
+            function extractFilename(path) {
+                var x;
+                // modern browser
+                if (path.substr(0, 12) === "C:\\fakepath\\") {
+                    return path.substr(12);
+                }
+                // Unix-based path
+                x = path.lastIndexOf('/');
+                if (x >= 0) {
+                    return path.substr(x+1);
+                }
+                // Windows-based path
+                x = path.lastIndexOf('\\');
+                if (x >= 0) {
+                    return path.substr(x+1);
+                }
+                return path; // just the filename
+            }
+
             if (file.value){
                 // it is a file input
                 // get input value and remove path to normalize
-                name = file.value.replace(/.*(\/|\\)/, "");
+                //name = file.value.replace(/.*(\/|\\)/, "");
+                name = extractFilename(file.value);
             } else {
                 // fix missing properties in Safari 4 and firefox 11.0a2
                 name = (file.fileName !== null && file.fileName !== undefined) ? file.fileName : file.name;
@@ -366,13 +456,14 @@
         // Validate file type and extension                                   //
         ////////////////////////////////////////////////////////////////////////
         UPLOADER.prototype.isAllowedExtension = function(fileName){
+            var i;
             var ext = (-1 !== fileName.indexOf('.')) ? fileName.replace(/.*[.]/, '').toLowerCase() : '';
             var allowed = this.options.allowedExtensions;
 
             if (!allowed.length){return true;}
 
-            for (var i=0; i<allowed.length; i++){
-                if (allowed[i].toLowerCase() == ext){ return true;}
+            for (i = 0; i < allowed.length; i += 1){
+                if (allowed[i].toLowerCase() === ext){ return true;}
             }
 
             return false;
@@ -404,19 +495,79 @@
             var i = -1;
             do {
                 bytes = bytes / 1024;
-                i++;
+                i += 1;
             } while (bytes > 99);
 
             return Math.max(bytes, 0.1).toFixed(1) + ['kB', 'MB', 'GB', 'TB', 'PB', 'EB'][i];
         };
         ////////////////////////////////////////////////////////////////////////
-        // Generate unique ID's for each file                                 //
+        // Create and return a "version 4" RFC-4122 UUID string.              //
         ////////////////////////////////////////////////////////////////////////
         UPLOADER.prototype.guidGenerator = function() {
-            var S4 = function() {
-                return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-            };
-            return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+            var s = [];
+            var itoh = '0123456789ABCDEF';
+            var i = 0;
+            // Make array of random hex digits. The UUID only has 32 digits in it, but we
+            // allocate an extra items to make room for the '-'s we'll be inserting.
+            for (i = 0; i < 36; i += 1) {
+                s[i] = Math.floor(Math.random()*0x10);
+            }
+            // Conform to RFC-4122, section 4.4
+            s[14] = 4;  // Set 4 high bits of time_high field to version
+            s[19] = (s[19] && 0x3) || 0x8;  // Specify 2 high bits of clock sequence
+            // Convert to hex chars
+            for (i = 0; i < 36; i += 1) {
+                s[i] = itoh[s[i]];
+            }
+            // Insert '-'s
+            s[8] = s[13] = s[18] = s[23] = '-';
+
+            return s.join('');
+        };
+        UPLOADER.prototype.createInput = function(){
+            var that = this;
+            var input = document.createElement("input");
+
+            if (that.options.multiple){
+                input.setAttribute("multiple", "multiple");
+            }
+
+            if (this.options.acceptFiles) {
+                input.setAttribute("accept", this.options.acceptFiles);
+            }
+
+            input.setAttribute("type", "file");
+            input.setAttribute("name", this.options.name);
+
+            $(input).css({
+                position: 'absolute',
+                // in Opera only 'browse' button
+                // is clickable and it is located at
+                // the right side of the input
+                right: 0,
+                top: 0,
+                fontFamily: 'Arial',
+                // 4 persons reported this, the max values that worked for them were 243, 236, 236, 118
+                fontSize: '118px',
+                margin: 0,
+                padding: 0,
+                cursor: 'pointer',
+                opacity: 0
+            });
+
+            this.options.element.appendChild(input);
+
+            $(input).on('change', function(event) {
+                that.fire({type: "onchange", source: event, target: input});
+            });
+            // IE and Opera, unfortunately have 2 tab stops on file input
+            // which is unacceptable in our case, disable keyboard access
+            if (window.attachEvent){
+                // it is IE or Opera
+                input.setAttribute('tabIndex', "-1");
+            }
+
+            return input;
         };
         ///////////////////////////////////////////////////////////////////////
         // Simple queue handler for multiple file upload                     //
@@ -428,7 +579,7 @@
             var self = context;
 
             this.isEmpty = function() {
-                return (data.length == 0);
+                return (data.length === 0);
             };
             this.length = function() {
                 return data.length;
@@ -447,8 +598,48 @@
             };
             this.indexOf = function(data) {
 
+            };
+        };
+        ////////////////////////////////////////////////////////////////////////
+        //  CUSTOM EVENT HANDLERS                                             //
+        ////////////////////////////////////////////////////////////////////////
+        UPLOADER.prototype.addListener = function(type, listener){
+            if (typeof this.options.listeners[type] === "undefined"){
+                this.options.listeners[type] = [];
+            }
+            this.options.listeners[type].push(listener);
+        };
+        UPLOADER.prototype.removeListener = function(type, listener){
+            if (this.options.listeners[type] instanceof Array){
+                var listeners = this.options.listeners[type];
+                var i, len;
+                for (i = 0, len = listeners.length; i < len; i += 1){
+                    if (listeners[i] === listener){
+                        listeners.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+        };
+        UPLOADER.prototype.fire = function(event){
+            var i, len;
+            if (typeof event === "string"){
+                event = { type: event };
+            }
+            if (!event.target){
+                event.target = this;
             }
 
+            if (!event.type){  //falsy
+                throw new Error("Event object missing 'type' property.");
+            }
+
+            if (this.options.listeners[event.type] instanceof Array){
+                var listeners = this.options.listeners[event.type];
+                for (i = 0, len = listeners.length; i < len; i += 1){
+                    listeners[i].call(this, event);
+                }
+            }
         };
         ////////////////////////////////////////////////////////////////////////
         // Get module version number                                          //
@@ -469,6 +660,6 @@
 $(document).ready(function () {
     "use strict";
     window.fansworld = window.fansworld || {};
-    window.fansworld.uploader = new window.UPLOADER();
+    window.fansworld.uploader = new window.UPLOADER({autoUpload: true});
     return;
 });

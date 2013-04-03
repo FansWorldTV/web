@@ -21,20 +21,30 @@
             var jcrop_state = true;
             var ratio = 2.20;
             if ("profile" == "{{ type }}") {ratio = 1;}
-            $(function(){$('#cropbox').Jcrop({
-                onSelect: updateCoords,
-                boxWidth: 500,
-                boxHeight: 500,
-                aspectRatio: ratio,
-                onRelease: function(){
-                    $('#form_x').val(0);
-                    $('#form_y').val(0);
-                    $('#form_w').val(0);
-                    $('#form_h').val(0);
-                },
-                trueSize: [{{realWidth}},{{realHeight}}]
-            },function(){jcrop_api = this;});});
-            function updateCoords(c) { $('#form_x').val(c.x); $('#form_y').val(c.y); $('#form_w').val(c.w); $('#form_h').val(c.h);};
+            $(function(){
+                $('#cropbox').Jcrop({
+                    onSelect: updateCoords,
+                    boxWidth: 500,
+                    boxHeight: 500,
+                    aspectRatio: ratio,
+                    onRelease: function(){
+                        $('#form_x').val(0);
+                        $('#form_y').val(0);
+                        $('#form_w').val(0);
+                        $('#form_h').val(0);
+                    },
+                    trueSize: [{{realWidth}},{{realHeight}}]
+                    },
+                    function(){
+                        jcrop_api = this;
+                    });
+            });
+            function updateCoords(c) {
+                $('#form_x').val(c.x);
+                $('#form_y').val(c.y);
+                $('#form_w').val(c.w);
+                $('#form_h').val(c.h);
+            };
             function checkCoords() {
                 if (parseInt($('#form_w').val())) return true;
                 alert('Please select a crop region then press submit.');

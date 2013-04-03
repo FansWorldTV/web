@@ -23,10 +23,12 @@
 /*jslint vars: true */ /* Tolerate many var statements per function */
 /*jslint maxerr: 100 */ /*  Maximum number of errors */
 
-// fansWorld file upload plugin 1.6 (auto resize with a timer)
+// fansWorld file upload plugin 1.7 (new XHR backend)
+// 1.6 (auto resize with a timer)
 
 // the semi-colon before function invocation is a safety net against concatenated
 // scripts and/or other plugins which may not be closed properly.
+//;(function ($, window, document, undefined) {
 $(document).ready(function () {
 
     "use strict";
@@ -84,7 +86,7 @@ $(document).ready(function () {
             $(that.element).bind("destroyed", $.proxy(that.teardown, that));
             if(that.options.isModal === 'false') {
                 that.options.uploaderSelector = '#' + $(that.element).attr('data-uploader-selector');
-                that.createFwImageUploader();
+                that.createWithBootstrap();
                 return;
             }
             $(that.element).colorbox({
@@ -221,6 +223,89 @@ $(document).ready(function () {
                 onError: function(id, fileName, reason) {
                     return that.options.onError(id, fileName, reason);
                 }
+            });
+        },
+        createInput: function(){
+            var that = this;
+            var input = document.createElement("input");
+
+            if (that.options.multiple){
+                input.setAttribute("multiple", "multiple");
+            }
+
+            if (that.options.acceptFiles) {
+                input.setAttribute("accept", that.options.acceptFiles);
+            }
+
+            input.setAttribute("type", "file");
+            input.setAttribute("name", that.options.name);
+
+            $(input).css({
+                position: 'absolute',
+                // in Opera only 'browse' button
+                // is clickable and it is located at
+                // the right side of the input
+                right: 0,
+                top: 0,
+                fontFamily: 'Arial',
+                // 4 persons reported this, the max values that worked for them were 243, 236, 236, 118
+                fontSize: '118px',
+                margin: 0,
+                padding: 0,
+                cursor: 'pointer',
+                opacity: 0
+            });
+
+            $(that.options.uploaderSelector)[0].appendChild(input);
+
+            // IE and Opera, unfortunately have 2 tab stops on file input
+            // which is unacceptable in our case, disable keyboard access
+            if (window.attachEvent){
+                // it is IE or Opera
+                input.setAttribute('tabIndex', "-1");
+            }
+
+            return input;
+        },
+        createWithBootstrap: function() {
+            var that = this;
+            var input = that.createInput();
+
+            var uploader = new window.UPLOADER({
+                element: $(that.options.uploaderSelector)[0],
+                multiple: false,
+                autoUpload: true,
+                action: that.options.action[that.options.mediaType],
+                maxConnections: 1,
+                allowedExtensions: that.options.mediaExtensions[that.options.mediaType]
+            });
+
+            $(input).on('change', function(event) {
+                uploader.addFiles(event.target.files);
+            });
+
+            uploader.addListener('oncomplete', function(event) {
+                var xhr = event.target.xhr;
+                var data = JSON.parse(xhr.responseText);
+                console.log(event)
+                console.log('complete status: ' + xhr.statusText)
+                console.log(data.tempFile)
+                $.colorbox({
+                    href: Routing.generate(appLocale + '_user_change_imageSave', {
+                        'originalFile': data.originalFile,
+                        'tempFile':data.tempFile,
+                        'width': data.width,
+                        'type': that.options.imageType,
+                        'height': data.height
+                    }),
+                    iframe: false,
+                    innerWidth: 700,
+                    innerHeight: 260,
+                    onComplete: function() {
+                        that.resizePopup();
+                        that.bindFormActions();
+                    }
+                });
             });
         },
         createFwImageUploader: function() {
