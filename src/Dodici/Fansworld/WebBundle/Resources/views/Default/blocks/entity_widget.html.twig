@@ -30,9 +30,11 @@
                 </a>
                 {% if entityType == 'team' %}
                     <ul class="dropdown-menu">
+                        {# EVENT_REM
                         <li>
                             <a href="{{ path('team_eventos', {'slug': entity.slug}) }}">Ver partidos</a>
                         </li>
+                        END EVENT_REM #}
                         <li>
                             <a href="{{ path('team_idols', {'slug': entity.slug}) }}">Ver idolos</a>
                         </li>
