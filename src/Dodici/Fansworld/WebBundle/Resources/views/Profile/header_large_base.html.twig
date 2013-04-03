@@ -2,22 +2,24 @@
     <section class='header_main row-fluid header_large'>
 	    <div class='main_left span8' >
 	        {% block avatar_container %}
-			    <div class="avatar">
-			        {% block avatar_content %}
-			            {% set avatar_format = 'small_square' %}
+                    <div class="avatar">
+                        {% block avatar_content %}
+                            {% set avatar_format = 'small_square' %}
 
-			            {% if entity.image %}
-			                {% thumbnail entity.image, avatar_format %}
-			            {% else %}
-			                <img src="{{ asset('bundles/dodicifansworldweb/images/profile_no_image.png' )}}" />
-			            {% endif %}
-			        {% endblock %}
-			    </div>
-			{% endblock %}
+                            {% if entity.image %}
+                                {% thumbnail entity.image, avatar_format %}
+                            {% else %}
+                                <img src="{{ asset('bundles/dodicifansworldweb/images/profile_no_image.png' )}}" />
+                            {% endif %}
+                        {% endblock %}
+                        <a href="#" class="edit-image avatar" rel="tooltip" title="Cambiar imagen de perfil"><i class="icon-pencil icon-white"></i></a>
+                    </div>
+                {% endblock %}
+                
+                <a href="#" class="edit-image splash" rel="tooltip" title="Cambiar portada"><i class="icon-pencil icon-white"></i></a>
+                {% block splash_container %}
 
-			{% block splash_container %}
-
-			{% endblock %}
+                {% endblock %}
 	    </div>
 	    <div class='main_right span4 row-fluid' >
 	        <div class='span9 user-info'>

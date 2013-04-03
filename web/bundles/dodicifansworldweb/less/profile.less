@@ -353,7 +353,22 @@ header.profile_head{
             }
         }
 
+        a.edit-image {
+            display: none;
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background-color: @black;
+            padding: 7px;
+            padding-bottom: 3px;
+            border-radius: 16px;
+            border: 2px solid white;
+            opacity: 0.5;
+        }
+
         div.main_left{
+            position: relative;
+
             div.avatar{
                 position: absolute;
                 z-index: 99;
@@ -362,6 +377,18 @@ header.profile_head{
                 img{
                     max-width: 100px;
                     max-height: 100px;
+                }
+
+                &:hover {
+                    a.edit-image.avatar {
+                        display: block;
+                    }
+                }
+            }
+
+            &:hover {
+                a.edit-image.splash {
+                    display: block;
                 }
             }
         }
