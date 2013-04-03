@@ -12,11 +12,17 @@
                                 <img src="{{ asset('bundles/dodicifansworldweb/images/profile_no_image.png' )}}" />
                             {% endif %}
                         {% endblock %}
-                        <a href="#" class="edit-image avatar" rel="tooltip" title="Cambiar imagen de perfil"><i class="icon-pencil icon-white"></i></a>
+                                
+                        {% if entity == app.user %}
+                            <a href="#" class="edit-image avatar" rel="tooltip" title="Cambiar imagen de perfil"><i class="icon-pencil icon-white"></i></a>
+                        {% endif %}
                     </div>
                 {% endblock %}
                 
-                <a href="#" class="edit-image splash" rel="tooltip" title="Cambiar portada"><i class="icon-pencil icon-white"></i></a>
+                {% if entity == app.user %}
+                    <a href="#" class="edit-image splash" rel="tooltip" title="Cambiar portada"><i class="icon-pencil icon-white"></i></a>
+                {% endif %}
+                        
                 {% block splash_container %}
 
                 {% endblock %}
