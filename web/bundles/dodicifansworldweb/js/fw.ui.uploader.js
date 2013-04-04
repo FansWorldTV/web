@@ -1,4 +1,4 @@
-/*global ExposeTranslation, $, jQuery, alert, console, error, success, endless, ajax, templateHelper, qq, Routing, appLocale, exports, module, require, define*/
+/*global ExposeTranslation, $, jQuery, alert, FormData, console, error, success, endless, ajax, templateHelper, qq, Routing, appLocale, exports, module, require, define*/
 /*jslint nomen: true */ /* Tolerate dangling _ in identifiers */
 /*jslint vars: true */ /* Tolerate many var statements per function */
 /*jslint white: true */
@@ -267,9 +267,56 @@ $(document).ready(function () {
 
             return input;
         },
+        makeCrop: function() {
+            /*
+            var jcrop_api;
+            var jcrop_state = true;
+            var ratio = 2.20;
+            if ("profile" == "{{ type }}") {ratio = 1;}
+            $(function(){
+                $('#cropbox').Jcrop({
+                    onSelect: updateCoords,
+                    boxWidth: 500,
+                    boxHeight: 500,
+                    aspectRatio: ratio,
+                    onRelease: function(){
+                        $('#form_x').val(0);
+                        $('#form_y').val(0);
+                        $('#form_w').val(0);
+                        $('#form_h').val(0);
+                    },
+                    trueSize: [{{realWidth}},{{realHeight}}]
+                    },
+                    function(){
+                        jcrop_api = this;
+                    });
+            });
+            function updateCoords(c) {
+                $('#form_x').val(c.x);
+                $('#form_y').val(c.y);
+                $('#form_w').val(c.w);
+                $('#form_h').val(c.h);
+            };
+            function checkCoords() {
+                if (parseInt($('#form_w').val())) return true;
+                alert('Please select a crop region then press submit.');
+                return false;
+            };
+            */
+        },
+        sendForm: function(form) {
+            var that = this;
+            var action = form.getAttribute('action');
+            var formData = new FormData(form);
+            var xhr = new XMLHttpRequest();
+            // Add any event handlers here...
+            xhr.open('POST', action, true);
+            xhr.send(formData);
+        },
         createWithBootstrap: function() {
             var that = this;
             var input = that.createInput();
+            var boot = null;
 
             var uploader = new window.UPLOADER({
                 element: $(that.options.uploaderSelector)[0],
@@ -277,34 +324,163 @@ $(document).ready(function () {
                 autoUpload: true,
                 action: that.options.action[that.options.mediaType],
                 maxConnections: 1,
-                allowedExtensions: that.options.mediaExtensions[that.options.mediaType]
-            });
+                allowedExtensions: that.options.mediaExtensions[that.options.mediaType],
+                onLoadStart: function(event) {
+                    var id = parseInt((Math.random() * 1000), 10);
+                    var modal = {
+                        modalId: id,
+                        modalLabel: 'label',
+                        modalTitle: 'Upload Photo',
+                        modalBody: 'Uploader'
+                    };
 
-            $(input).on('change', function(event) {
-                uploader.addFiles(event.target.files);
-            });
-
-            uploader.addListener('oncomplete', function(event) {
-                var xhr = event.target.xhr;
-                var data = JSON.parse(xhr.responseText);
-                console.log(event)
-                console.log('complete status: ' + xhr.statusText)
-                console.log(data.tempFile)
-                $.colorbox({
-                    href: Routing.generate(appLocale + '_user_change_imageSave', {
+                    $.when(templateHelper.htmlTemplate('general-progress_modal', modal))
+                    .then(function(html) {
+                        boot = $(html).clone();
+                        boot.find("#modal-btn-close").one("click", null, null, function(){
+                            boot.modal('hide');
+                            $('body').removeClass('modal-open');
+                            $('.modal-backdrop').remove();
+                            uploader.stopAll();
+                        });
+                        boot.modal({
+                            //backdrop: false
+                        })
+                        .css({
+                            width: '700px',
+                            'margin-left': '-350px'
+                        })
+                        .on('hide', function() {
+                            console.log("modal hide");
+                            $('.modal-backdrop').remove();
+                            $(this).data('modal', null);
+                        });
+                    });
+                },
+                onProgress: function(event) {
+                    var percentComplete = parseInt(((event.source.loaded / event.source.total) * 100), 10);
+                    $('progress').val(percentComplete);
+                    console.log("progress: " + percentComplete + "%");
+                },
+                onComplete: function(event) {
+                    var xhr = event.target.xhr;
+                    var data = JSON.parse(xhr.responseText);
+                    var formHtml = null;
+                    var href = Routing.generate(appLocale + '_user_change_imageSave', {
                         'originalFile': data.originalFile,
                         'tempFile':data.tempFile,
                         'width': data.width,
                         'type': that.options.imageType,
                         'height': data.height
-                    }),
-                    iframe: false,
-                    innerWidth: 700,
-                    innerHeight: 260,
-                    onComplete: function() {
-                        that.resizePopup();
-                        that.bindFormActions();
-                    }
+                    });
+                    $.ajax({url: href, type: 'GET'}).then(function(response){
+                        formHtml = $(response).clone();
+                        boot.find('.modal-body').html(formHtml);
+                        boot.find("#modal-btn-save").one("click", null, null, function(){
+                            $(this).addClass('loading-small');
+                            boot.find('form').find('input[type="submit"]').click();
+                        });
+                        boot.find('form').submit(function() {
+                            var data = $(this).serializeArray();
+                            var action = $(this).attr('action');
+                            console.log("onsubmit");
+                            console.log(this.getAttribute('action'));
+                            boot.find('form').find('input[type="submit"]').addClass('loading-small');
+                            $.ajax({
+                                url: this.getAttribute('action'),
+                                data: data,
+                                type: 'POST'
+                            })
+                            .then(function(response){
+                                location.reload();
+                            });
+                              return false;
+                        });
+                    })
+                }
+            });
+
+            // Attach file browsing event
+            $(input).on('change', function(event) {
+                uploader.addFiles(event.target.files);
+            });
+
+            uploader.addListener('oncomplete', function(event) {
+
+                return;
+                var xhr = event.target.xhr;
+                var data = JSON.parse(xhr.responseText);
+                var formHtml = null;
+                var href = Routing.generate(appLocale + '_user_change_imageSave', {
+                    'originalFile': data.originalFile,
+                    'tempFile':data.tempFile,
+                    'width': data.width,
+                    'type': that.options.imageType,
+                    'height': data.height
+                });
+                $.ajax({url: href, type: 'GET'})
+                .then(function(response) {
+                    formHtml = $(response).clone();
+
+                    console.log(formHtml);
+
+                    var id = parseInt((Math.random() * 1000), 10);
+                    var modal = {
+                        modalId: id,
+                        modalLabel: 'label',
+                        modalTitle: 'Upload Photo',
+                        modalBody: 'Uploader'
+                    };
+
+                    $.when(templateHelper.htmlTemplate('general-upload_modal', modal))
+                    .then(function(html) {
+                        //var boot = $(html).clone();
+                        boot.find('.modal-body').html(formHtml);
+
+                        //that.makeCrop();
+                        console.log("modal id: " + modal.modalId);
+                        boot.find("#modal-btn-close").one("click", null, null, function(){
+                            boot.modal('hide');
+                            $('body').removeClass('modal-open');
+                            $('.modal-backdrop').remove();
+                            uploader.stopAll();
+                        });
+                        /*
+                        boot.modal({
+                            //backdrop: false
+                        })
+                        .css({
+                            width: '700px',
+                            'margin-left': '-350px'
+                        })
+                        .on('hide', function() {
+                            console.log("modal hide");
+                            $('.modal-backdrop').remove();
+                            $(this).data('modal', null);
+                        });
+                        */
+                        //boot.find('form').find('input[type="submit"]').hide();
+                        boot.find("#modal-btn-save").one("click", null, null, function(){
+                            $(this).addClass('loading-small');
+                            boot.find('form').find('input[type="submit"]').click();
+                        });
+                        boot.find('form').submit(function() {
+                            var data = $(this).serializeArray();
+                            var action = $(this).attr('action');
+                            console.log("onsubmit");
+                            console.log(this.getAttribute('action'));
+                            boot.find('form').find('input[type="submit"]').addClass('loading-small');
+                            $.ajax({
+                                url: this.getAttribute('action'),
+                                data: data,
+                                type: 'POST'
+                            })
+                            .then(function(response){
+                                location.reload();
+                            });
+                              return false;
+                        });
+                    });
                 });
             });
         },

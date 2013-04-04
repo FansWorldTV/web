@@ -101,12 +101,13 @@
                 responsePassthrough: false,
                 // Event Listeners
                 listeners: {},
-                onSubmit: function(id, fileName){},
-                onComplete: function(id, fileName, responseJSON){},
-                onCancel: function(id, fileName){},
-                onUpload: function(id, fileName, xhr){},
-                onProgress: function(file, loaded, total){},
-                onError: function(id, fileName, reason) {},
+                onSubmit: function(event){},
+                onComplete: function(event){},
+                onCancel: function(event){},
+                onUpload: function(event){},
+                onLoadStart: function(event) {},
+                onProgress: function(event){},
+                onError: function(event) {},
                 // messages
                 messages: {
                     typeError: "{file} has an invalid extension. Valid extension(s): {extensions}.",
@@ -147,9 +148,10 @@
             ////////////////////////////////////////////////////////////////////
             this.addListener('onabort', this.onAbort);
             this.addListener('onerror', this.onError);
-            this.addListener('onreadystatechange', this.onReadystatechange);
+            this.addListener('onreadystatechange', this.onReadystateChange);
             this.addListener('onprogress', this.onProgress);
             this.addListener('onload', this.onLoad);
+            this.addListener('onloadstart', this.onLoadStart);
             this.addListener('onupload', this.onUpload);
             this.addListener('oncomplete', this.onComplete);
         }
@@ -326,6 +328,10 @@
             xhr.onload = function(event) {
                 that.fire({type: "onload", source: event, target: object.atom});
             };
+            xhr.onloadstart = function(event) {
+                console.log("onloadstart")
+                that.fire({type: "onloadstart", source: event, target: object.atom});
+            };
             // build query string
             var params = {};
             params[this.options.inputName] = name;
@@ -358,13 +364,15 @@
         ////////////////////////////////////////////////////////////////////////
         UPLOADER.prototype.onProgress = function(event){
             var that = this;
+            // return custom function
+            return that.options.onProgress(event);
         };
         UPLOADER.prototype.onComplete = function(event){
             var that = this;
             var xhr = event.target.xhr;
             that.activeConnections -= 1;
             console.log('oncomplete');
-            return xhr.statusText;
+            return that.options.onComplete(event);
         };
         UPLOADER.prototype.onError = function(event){
             var that = this;
@@ -379,7 +387,12 @@
             console.log('onload');
             return xhr.statusText;
         };
-        UPLOADER.prototype.onReadystatechange = function(event){
+        UPLOADER.prototype.onLoadStart = function(event){
+            var that = this;
+            // return custom function
+            return that.options.onLoadStart(event);
+        };
+        UPLOADER.prototype.onReadystateChange = function(event){
             var that = this;
         };
         ////////////////////////////////////////////////////////////////////////
@@ -524,6 +537,9 @@
 
             return s.join('');
         };
+        ///////////////////////////////////////////////////////////////////////
+        // Create an input element to handle file browsing                   //
+        ///////////////////////////////////////////////////////////////////////
         UPLOADER.prototype.createInput = function(){
             var that = this;
             var input = document.createElement("input");
