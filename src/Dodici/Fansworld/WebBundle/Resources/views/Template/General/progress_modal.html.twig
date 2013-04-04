@@ -1,0 +1,17 @@
+{% raw %}
+<!-- Modal-Progress -->
+<div id="{{>modalId}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="{{>modalLabel}}" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="{{>modalLabel}}">{{>modalTitle}}</h3>
+  </div>
+  <div class="modal-body">
+    <div class="well" id="drop_zone" style="text-align:center;padding:100px">
+        <progress min="0" max="100" value="0"></progress>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button id="modal-btn-close" class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+  </div>
+</div>
+{% endraw %}
