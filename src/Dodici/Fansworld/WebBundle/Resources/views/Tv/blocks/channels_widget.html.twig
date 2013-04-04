@@ -2,7 +2,7 @@
     <ul class="filter-channels clearfix">
         <li class="active" data-list-target="all"><a>Todos</a></li>
         {% for channel in channels %}
-            <li data-list-target="{{ channel.channelName|lower }}" data-channel-id="{{ channel.id }}"><a>{{ channel.channelName }}</a></li>
+            <li data-list-target="{{ channel.channelName|lower|replace({' ': ""}) }}" data-channel-id="{{ channel.id }}"><a>{{ channel.channelName }}</a></li>
         {% endfor %}
     </ul>
     <div class="content tab-content">
@@ -44,7 +44,7 @@
             </div>
         </div>
         {% for channel in channels %}
-            <div class="tab-pane" id="{{ channel.channelName|lower }}">
+            <div class="tab-pane" id="{{ channel.channelName|lower|replace({' ': ""}) }}">
                 {% if channel.video is not null %}
                     {% if channel.video.image is defined %}
                         {% if channel.video.image is not null %}
@@ -56,16 +56,16 @@
                             </div>
                         {% endif %}
                     {% endif %}
-                    
+
                     <div class="content-container">
                         <div class="channel-highlight-container">
                             <div class="channel-name">{{ channel.channelName }}</div>
-                            
+
                             <div class="title">{{ channel.video.title }}</div>
                             <div class="description">
                                 {{ channel.video.content }}
                             </div>
-                            
+
                             <div class="explorar">
                                 <a href="{{ path('teve_explorechannel', {id: channel.id, slug: channel.slug}) }}">Explorar &gt;</a>
                             </div>
