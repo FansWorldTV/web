@@ -26,14 +26,20 @@ class AppState
     protected $em;
     protected $user;
     protected $repos;
+    protected $shortener_api;
 
-    function __construct(SecurityContext $security_context, EntityManager $em)
+    function __construct(SecurityContext $security_context, EntityManager $em, $shortener_api)
     {
         $this->security_context = $security_context;
         $this->request = Request::createFromGlobals();
         $this->em = $em;
         $this->user = $security_context->getToken() ? $security_context->getToken()->getUser() : null;
         $this->repos = array();
+        $this->shortener_api = $shortener_api;
+    }
+    
+    public function getShortenerApi(){
+        return $this->shortener_api;
     }
 
     public function getMobile()
