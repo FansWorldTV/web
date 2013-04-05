@@ -106,20 +106,8 @@
     window.ajax = new $.ajaxianize();
 })(jQuery);
 
-function goLogIn(){
-    window.location.href = Routing.generate('_security_check');
-}
-
 function onFbInit() {
-    if (typeof(FB) != 'undefined' && FB != null ) {
-        FB.Event.subscribe('auth.statusChange', function(response) {
-            if (response.session || response.authResponse) {
-                setTimeout(goLogIn, 500);
-            } else {
-                window.location.href = Routing.generate('_security_logout');
-            }
-        });
-    }
+    
 }
 
 /* Global functions */
@@ -163,10 +151,11 @@ $(document).ready(function(){
         $(this).attr("novalidate", "true");
     });
 
-    $("#login-widget .fb_button").click(function(){
+    $('body').on('click', '[data-facebook-login]', function(e){
         FB.login(function(response) {
-            if (response.authResponse) {
+            if (response.authResponse && response.status == 'connected') {
                 console.log(response);
+                window.location.href = Routing.generate('_security_check');
             } else {
                 error('No se ha podido conectar con facebook');
             }
