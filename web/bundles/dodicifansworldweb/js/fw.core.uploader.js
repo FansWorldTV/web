@@ -182,6 +182,27 @@
             }
             return true;
         };
+        UPLOADER.prototype.addFile = function(file, params) {
+            var that = this;
+            params = params || {};
+            if (!that.validateFile(file)) {
+                return false;
+            } else {
+                this.queue.enqueue({
+                    atom: {
+                        id: that.guidGenerator(),
+                        xhr: null,
+                        file: file,
+                        params: params,
+                        progress: document.createElement('progress')
+                    }
+                });
+            }
+            if (that.options.autoUpload && !that.options.paused) {
+                that.start();
+            }
+            return true;
+        };
         UPLOADER.prototype.start = function() {
             var that = this;
             (function loopy() {

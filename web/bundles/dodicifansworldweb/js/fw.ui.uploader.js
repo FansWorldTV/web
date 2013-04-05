@@ -229,6 +229,47 @@ $(document).ready(function () {
                 modalTitle: 'Subir Foto',
                 modalBody: 'Uploader'
             }
+            var uploader = new window.UPLOADER({
+                element: $(that.options.uploaderSelector)[0],
+                multiple: false,
+                autoUpload: true,
+                action: that.options.action[that.options.mediaType],
+                maxConnections: 1,
+                allowedExtensions: that.options.mediaExtensions['all'],
+                onLoadStart: function(event) {
+                    return;
+                },
+                onProgress: function(event) {
+                    return;
+                },
+                onComplete: function(event) {
+                    return;
+                }
+            });
+            var videoUploader = new window.UPLOADER({
+                element: $(that.options.uploaderSelector)[0],
+                autoUpload: true,
+                multiple: false,
+                forceMultipart: true,
+                normalHeaders: false,
+                responsePassthrough: true,
+                action: that.options.action['video'],
+                maxConnections: 1,
+                inputName: 'resource:fileData',
+                allowedExtensions: that.options.mediaExtensions['all'],
+                onLoadStart: function(event) {
+                    return;
+                },
+                onProgress: function(event) {
+                    return;
+                },
+                onComplete: function(event) {
+                    return;
+                },
+                onError: function(error) {
+                    return error;
+                }
+            });
             $.when(templateHelper.htmlTemplate('general-upload_modal', modal)).then(function(html) {
                 var boot = $(html).clone();
                 boot.find('input[type="file"]').on('change', function(event) {
@@ -356,23 +397,6 @@ $(document).ready(function () {
                         }
                     }
                 })
-                var uploader = new window.UPLOADER({
-                    element: $(that.options.uploaderSelector)[0],
-                    multiple: false,
-                    autoUpload: false,
-                    action: that.options.action[that.options.mediaType],
-                    maxConnections: 1,
-                    allowedExtensions: that.options.mediaExtensions['all'],
-                    onLoadStart: function(event) {
-                        return;
-                    },
-                    onProgress: function(event) {
-                        return;
-                    },
-                    onComplete: function(event) {
-                        return;
-                    }
-                });
                 function processFiles(files) {
                     var self = this;
                     var i;
@@ -418,18 +442,16 @@ $(document).ready(function () {
                     uploader.addListener('onprogress', onProgress);
                     uploader.addListener('oncomplete', onComplete);
 
-
-                    uploader.addFiles(files);
-
                     for(i = 0; i < files.length; i += 1) {
                         if(!files.hasOwnProperty(i)) {
                             return false;
                         }
                         var file = files[i];
                         boot.find('#drop_zone').hide();
-                        if (!file.type.match('image.*')) {
-                            continue;
-                        } else {
+                        if (file.type.match('image.*')) {
+                            ///////////////////////////////////// IMAGES //
+                            uploader.addFile(file);
+
                             $.when(that.getImage(file))
                             .then(function(image){
                                 var uploadBtt = $("<button class='btn upload'>upload</button>");
@@ -448,12 +470,40 @@ $(document).ready(function () {
                                     .append(uploadBtt);
                                 }
                                 uploadBtt.one("click", null, null, function(){
+                                    console.log("upload button clicked")
                                     uploader.start();
                                 });
                                 that.placeImage(image, container)
                                 var cosa = $("<li></li>").append(container).append(infobox);
                                 boot.find('output ul').append(cosa);
                                 uploader.start();
+                            });
+                        } else if (file.type.match('video.*')) {
+                            ///////////////////////////////////// VIDEO //
+                            $.when(that.getKs())
+                            .then(function(ks) {
+                                var dfd = new jQuery.Deferred();
+                                $.when(that.getMediaId(file.name, ks), that.getUploadToken(file.name, ks))
+                                .then(function (mediaId, token){
+                                    return {kalturaKeys: [that.options.ks, mediaId, token]};
+                                })
+                                .done(function (kaltura){
+                                    console.log(JSON.stringify(kaltura));
+                                    dfd.resolve(kaltura);
+                                })
+                                .fail(function (error) {
+                                    that.options.onError(error);
+                                    dfd.reject(new Error(error));
+                                });
+                                return dfd.promise();
+                            })
+                            .done(function (kaltura) {
+                                console.log("ks: %s id: %s tk: %s", JSON.stringify(kaltura));
+                                videoUploader.addFile(file);
+                                videoUploader.start();
+                            })
+                            .fail(function (error) {
+                                return error;
                             });
                         }
                     }
@@ -463,7 +513,7 @@ $(document).ready(function () {
                     $('body').removeClass('modal-open');
                     $('.modal-backdrop').remove();
                     uploader.stopAll();
-
+                    videoUploader.stopAll();
                 });
                 boot.modal({
                     backdrop: true
@@ -472,6 +522,7 @@ $(document).ready(function () {
                     'margin-left': '-350px'
                 }).on('hide', function() {
                     uploader.stopAll();
+                    videoUploader.stopAll();
                     $('.modal-backdrop').remove();
                     $(this).data('modal', null);
                 });
@@ -871,7 +922,33 @@ $(document).ready(function () {
             });
         },
         createFwVideoUploaderMAX: function() {
+            var that = this;
 
+                $.when(that.getKs())
+                .then(function(ks) {
+                    var dfd = new jQuery.Deferred();
+                    $.when(that.getMediaId('filename', ks), that.getUploadToken('filename', ks))
+                    .then(function (mediaId, token){
+                        return {kalturaKeys: [that.options.ks, mediaId, token]};
+                    })
+                    .done(function (kaltura){
+                        console.log(JSON.stringify(kaltura));
+                        dfd.resolve(kaltura);
+                    })
+                    .fail(function (error) {
+                        that.options.onError(error);
+                        dfd.reject(new Error(error));
+                    });
+                    return dfd.promise();
+                })
+                .done(function (kaltura) {
+                    console.log("ks: %s id: %s tk: %s", JSON.stringify(kaltura));
+                })
+                .fail(function (error) {
+                    return error;
+                });
+
+                /*
                 var uploader = new window.UPLOADER({
                     element: $(that.options.uploaderSelector)[0],
                     autoUpload: false,
@@ -922,30 +999,8 @@ $(document).ready(function () {
                     return that.options.onSubmit(id, fileName);
 
                 },
-                onComplete: function(id, fileName, responseJSON) {
-                    var entryId = $(responseJSON).find('id').text();
-                    $('#form_entryid').val(entryId);
-                    console.log("Video subido correctamente ID: " + entryId);
-                    $(".container-up").replaceWith('<div class="alert alert-success">' + ExposeTranslation.get('upload_complete') + '</div>');
-                    return that.options.onComplete(id, fileName, responseJSON);
-                },
-                onUpload: function(id, fileName, xhr) {
-                    that.resizePopup();
-                    return that.options.onUpload(id, fileName, xhr);
-                },
-                onProgress: function(id, fileName, loaded, total) {
-                    if (loaded !== total){
-                        $( "#progressbar .bar" ).css('width', Math.round(loaded / total * 100)+'%');
-                    } else {
-                        $( "#progressbar .bar" ).css('width','100%');
-                    }
-                    that.resizePopup();
-                    return that.options.onProgress(id, fileName, loaded, total);
-                },
-                onError: function(id, fileName, reason) {
-                    return that.options.onError(id, fileName, reason);
-                }
             });
+            */
         },
         createFwVideoUploaderX: function() {
             var that = this;
