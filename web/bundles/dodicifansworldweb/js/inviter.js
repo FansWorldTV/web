@@ -25,6 +25,7 @@ inviter.init = function(url) {
     });
 
     inviter.tabs.selected = $("div.invite-modal ul.nav-tabs li.active").attr('data-type');
+    inviter.tabs[inviter.tabs.selected]();
 
     inviter.toggleTabs();
 };
@@ -42,6 +43,16 @@ inviter.toggleTabs = function() {
 };
 
 inviter.tabs.facebook = function() {
+    var $container = $("div.content-modal[data-type ='facebook']");
+    FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+            $container.find('is-logged').show();
+        } else {
+            $container.find('not-logged').show();
+        }
+        
+        return false;
+    });
 };
 
 inviter.tabs.email = function() {

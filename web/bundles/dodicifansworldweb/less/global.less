@@ -515,6 +515,27 @@ div.invite-modal {
             display: block;
         }
 
+        &[data-type='facebook'] {
+            div.not-logged {
+                display: none;
+                span {
+                    font-size: 15px;
+                    font-weight: 300;
+                    margin-top: 60px;
+                    margin-bottom: 10px;
+                    text-align: center;
+                    width: 100%;
+                    display: block;
+                }
+                button {
+                    margin: 50px auto;
+                }
+            }
+            div.is-logged {
+                display: none;
+            }
+        }
+
         &[data-type='twitter'] {
             form {
                 display: block;
@@ -547,5 +568,18 @@ div.invite-modal {
                 }
             }
         }
+    }
+}
+
+button.fb_button { 
+    .size(44px, 222px);
+    display: block;
+    border: 0;
+    background-image: url('../images/bt-fb-conectarse.png');
+
+    .fb_button_text { font-size: 14px; }
+
+    &:hover {
+        opacity: 0.9;
     }
 }

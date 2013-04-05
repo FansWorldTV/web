@@ -113,11 +113,12 @@ function goLogIn(){
 function onFbInit() {
     if (typeof(FB) != 'undefined' && FB != null ) {
         FB.Event.subscribe('auth.statusChange', function(response) {
+            console.log(response);/*
             if (response.session || response.authResponse) {
                 setTimeout(goLogIn, 500);
             } else {
                 window.location.href = Routing.generate('_security_logout');
-            }
+            }*/
         });
     }
 }
