@@ -28,6 +28,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Historia:                                                                  //
 // --------                                                                   //
+// 1.8 adds support for onloadstart event                                     //
 // 1.7 Custom Events                                                          //
 // 1.4 File queue manager                                                     //
 // 1.0 Initial version 21-Mar-2013                                            //
@@ -73,7 +74,7 @@
             ////////////////////////////////////////////////////////////////////
             var _self = this;
             this.jQuery = jQuery;
-            this.version = '1.7';
+            this.version = '1.8';
             this.defaults = {
                 // set to true to see the server response
                 action: '/app_dev.php/photo/fileupload',
@@ -169,6 +170,7 @@
                                 id: that.guidGenerator(),
                                 xhr: null,
                                 file: file,
+                                params: null,
                                 progress: document.createElement('progress')
                             }
                         });
@@ -329,11 +331,11 @@
                 that.fire({type: "onload", source: event, target: object.atom});
             };
             xhr.onloadstart = function(event) {
-                console.log("onloadstart")
+                console.log("onloadstart");
                 that.fire({type: "onloadstart", source: event, target: object.atom});
             };
             // build query string
-            var params = {};
+            var params = object.atom.params || {};
             params[this.options.inputName] = name;
             var queryString = this.options.action + '?' + jQuery.param(params);
 
