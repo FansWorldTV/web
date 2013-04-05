@@ -23,7 +23,8 @@
 /*jslint vars: true */ /* Tolerate many var statements per function */
 /*jslint maxerr: 100 */ /*  Maximum number of errors */
 
-// fansWorld file upload plugin 1.7 (new XHR backend)
+// fansWorld file upload plugin 1.8 (new frontend with bootstrap)
+// 1.7 (new XHR backend)
 // 1.6 (auto resize with a timer)
 
 // the semi-colon before function invocation is a safety net against concatenated
@@ -89,6 +90,14 @@ $(document).ready(function () {
                 that.createWithBootstrap();
                 return;
             }
+            if(that.options.mediaType === 'photo') {
+                $(that.element).on('click', function(event) {
+                    that.createFwPhotoUploader();
+                    return false;
+                });
+            }
+
+            return;
             $(that.element).colorbox({
                 innerWidth: 700,
                 innerHeight: 475,
@@ -176,7 +185,212 @@ $(document).ready(function () {
             that.bindAlbumActions();
             that.options.timer = setInterval(function(){ that.resizePopup(); }, 250);
         },
+        getImage: function(file) {
+            var reader = new FileReader();
+            var deferred = new jQuery.Deferred();
+            reader.onload = function(event) {
+                var img = new Image();
+                img.onload = function(event) {
+                    deferred.resolve(img);
+                }
+                img.src = event.target.result;
+                img.alt = file.name;
+                img.title = escape(file.name);
+
+                var result = event.target.result;
+                var fileName = file.name; //Should be 'picture.jpg'
+            }
+            reader.readAsDataURL(file);
+            return deferred.promise();
+        },
+        placeImage: function(imgObj, container) {
+            var imageAspectRatio = imgObj.height / imgObj.width;
+            var containerAspectRatio = container.height() / container.width();
+            // figure out which dimension hits first and set that to match
+            if (imageAspectRatio > containerAspectRatio) {
+                imgObj.style.height = container.height() + "px";
+            } else {
+                imgObj.style.width = container.width() + "px";
+                var mul = imgObj.width / container.width();
+                var offset = (imgObj.height / mul) / 2
+                imgObj.style.top = '50%';
+                imgObj.style.marginTop = '-' + offset + 'px';
+            }
+            container.append(imgObj);
+        },
         createFwPhotoUploader: function() {
+            var that = this;
+            //var input = that.createInput();
+            var boot = null;
+            var id = (Math.random() * 1000);
+            var modal = {
+                modalId: id,
+                modalLabel: 'label',
+                modalTitle: 'Subir Foto',
+                modalBody: 'Uploader'
+            }
+            var uploader = new window.UPLOADER({
+                element: $(that.options.uploaderSelector)[0],
+                multiple: false,
+                autoUpload: false,
+                action: that.options.action[that.options.mediaType],
+                maxConnections: 1,
+                allowedExtensions: that.options.mediaExtensions[that.options.mediaType],
+                onLoadStart: function(event) {
+                    return;
+                },
+                onProgress: function(event) {
+                    return;
+                },
+                onComplete: function(event) {
+                    return;
+                }
+            });
+            $.when(templateHelper.htmlTemplate('general-upload_modal', modal)).then(function(html) {
+                var boot = $(html).clone();
+                boot.find('input[type="file"]').on('change', function(event) {
+                    var i;
+                    var files = event.target.files; // FileList object
+                    var file = null;
+                    // Loop through the FileList and render image files as thumbnails.
+                    for (i = 0; i < files.length; i++) {
+                        // Only process image files.
+                        var file = files[i];
+                        console.log("mime: " + file.type)
+                        if (!file.type.match('image.*')) {
+                            continue;
+                        } else {
+                            $.when(that.getImage(file))
+                            .then(function(image){
+                                console.log(image);
+                            })
+                        }
+                    }
+                });
+                boot.find('#drop_zone')
+                .on('dragenter', function(event) {
+                    if(event.target === this) {
+                        $(this).animate({ 'background-color': '#c0c0c0', 'border-color': '#444' } );
+                        console.log('dragenter');
+                    }
+                }).on('dragover', function(event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    if(event.target === this) {
+                        event.originalEvent.dataTransfer.dropEffect = 'copy';
+                    }
+                }).on('dragleave', function(event) {
+                    if(event.target === this) {
+                        $(this).animate({ 'background-color': 'transparent', 'border-color': '#bbb' } );
+                        console.log('dragleave');
+                    }
+                }).on('drop', function(event) {
+                    var i;
+                    event.stopPropagation();
+                    event.preventDefault();
+                    if(event.target === this) {
+                        var files = event.originalEvent.dataTransfer.files;
+
+                        uploader.addListener('onprogress', function(event) {
+                            var percentComplete = parseInt(((event.source.loaded / event.source.total) * 100), 10);
+                            boot.find('.progress .bar').css('width', percentComplete + '%');
+                        });
+                        uploader.addListener('oncomplete', function(event) {
+                            var xhr = event.target.xhr;
+                            var data = JSON.parse(xhr.responseText);
+                            var formHtml = null;
+                            var href = Routing.generate(appLocale + '_photo_filemeta', {
+                                'originalFile': data.originalFile,
+                                'tempFile':data.tempFile,
+                                'width': data.width,
+                                'height': data.height
+                            });
+                            $.ajax({url: href, type: 'GET'}).then(function(response){
+                                formHtml = $(response).clone();
+                                boot.find('.modal-body').html(formHtml);
+                                boot.find("#modal-btn-save").one("click", null, null, function(){
+                                    $(this).addClass('loading-small');
+                                    boot.find('form').find('input[type="submit"]').click();
+                                });
+                                boot.find('form').submit(function() {
+                                    var data = $(this).serializeArray();
+                                    var action = $(this).attr('action');
+                                    boot.find('form').find('input[type="submit"]').addClass('loading-small');
+                                    $.ajax({
+                                        url: this.getAttribute('action'),
+                                        data: data,
+                                        type: 'POST'
+                                    })
+                                    .then(function(response){
+                                        location.reload();
+                                    });
+                                    return false;
+                                });
+                            });
+                        });
+
+                        uploader.addFiles(files);
+
+                        for(i = 0; i < files.length; i += 1) {
+                            if(!files.hasOwnProperty(i)) {
+                                return false;
+                            }
+                            var file = files[i];
+                            boot.find('#drop_zone').hide();
+                            if (!file.type.match('image.*')) {
+                                continue;
+                            } else {
+                                $.when(that.getImage(file))
+                                .then(function(image){
+                                    var uploadBtt = $("<button class='btn upload'>upload</button>");
+                                    if(files.length > 1) {
+                                        var container = $("<div class='thumbnail' style='width:64px;height:64px;'></div>");
+                                        var infobox = $("<div class='fileinfo' style='height:64px;'></div>")
+                                        .append("<h5 class='title'>" + image.alt + "</h5>")
+                                        .append("<div class='progress progress-striped active' style='margin-top:4px;'><div class='bar' style='width: 0%;'></div></div>")
+                                        .append(uploadBtt);
+                                    } else {
+                                        var container = $("<div class='thumbnail' style='width: 256px;height:256px;'></div>");
+                                        var infobox = $("<div class='fileinfo' style='width: 200px;''></div>")
+                                        .append("<h5 class='title'>" + image.alt + "</h5>")
+                                        .append("<div class='progress progress-striped active' style='margin-top:10px;'><div class='bar' style='width: 0%;'></div></div>")
+                                        .append("<div class='well'>"+ "file: " + image.alt + "<br /> size: " + file.size +"</div>")
+                                        .append(uploadBtt);
+                                    }
+                                    uploadBtt.one("click", null, null, function(){
+                                        uploader.start();
+                                    });
+                                    that.placeImage(image, container)
+                                    var cosa = $("<li></li>").append(container).append(infobox);
+                                    boot.find('output ul').append(cosa);
+                                    uploader.start();
+                                });
+                            }
+                        }
+                    }
+                })
+                boot.find("#modal-btn-close").one("click", null, null, function(){
+                    boot.modal('hide');
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+                    uploader.stopAll();
+
+                });
+                boot.modal({
+                    backdrop: true
+                }).css({
+                    width: '700px',
+                    'margin-left': '-350px'
+                }).on('hide', function() {
+                    uploader.stopAll();
+                    $('.modal-backdrop').remove();
+                    $(this).data('modal', null);
+                });
+            });
+
+            return false;
+        },
+        createFwPhotoUploader2: function() {
             var that = this;
             var uploader = new qq.FileUploader({
                 element: $("#file-uploader")[0],
@@ -304,19 +518,12 @@ $(document).ready(function () {
             };
             */
         },
-        sendForm: function(form) {
-            var that = this;
-            var action = form.getAttribute('action');
-            var formData = new FormData(form);
-            var xhr = new XMLHttpRequest();
-            // Add any event handlers here...
-            xhr.open('POST', action, true);
-            xhr.send(formData);
-        },
         createWithBootstrap: function() {
             var that = this;
             var input = that.createInput();
             var boot = null;
+
+            console.log("createWithBootstrap()")
 
             var uploader = new window.UPLOADER({
                 element: $(that.options.uploaderSelector)[0],
@@ -396,7 +603,7 @@ $(document).ready(function () {
                             });
                               return false;
                         });
-                    })
+                    });
                 }
             });
 
