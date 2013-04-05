@@ -12,10 +12,6 @@
 {% endblock %}
 
 {% block inner_content %}
-<div class="pull-right">
-    {% include 'DodiciFansworldWebBundle:Default:blocks/button_upload.html.twig'  with { 'type': 'photo' }%}
-</div>
-    
 <div class="row-fluid album-detail">
     <span class="title">
         <h4>{{ album.title }} ({{ album.photos|length }}) <a class="more" href="{{ path('user_listalbums', {username: user.username}) }}"> {{'Albums'|trans}}</a></h4>

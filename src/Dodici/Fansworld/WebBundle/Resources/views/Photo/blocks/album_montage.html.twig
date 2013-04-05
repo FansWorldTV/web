@@ -8,10 +8,7 @@
                 <h4>{{ album.title }} ({{ album.photos|length }}) <a class="more" href="{{ path('user_listalbums', {username: user.username}) }}"> {{'Albums'|trans}}</a></h4>
             </span>    
         </div>
-        <div class="span2">
-            {% include 'DodiciFansworldWebBundle:Default:blocks/button_upload.html.twig'  with { 'type': 'photo' }%}
-        </div>
-        <div class="span4">
+        <div class="span6">
             {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: album} %}    
         </div>
     </header>
