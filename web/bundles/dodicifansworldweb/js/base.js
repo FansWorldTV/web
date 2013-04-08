@@ -107,20 +107,7 @@
 })(jQuery);
 
 function onFbInit() {
-<<<<<<< HEAD
     
-=======
-    if (typeof(FB) != 'undefined' && FB != null ) {
-        FB.Event.subscribe('auth.statusChange', function(response) {
-            console.log(response);/*
-            if (response.session || response.authResponse) {
-                setTimeout(goLogIn, 500);
-            } else {
-                window.location.href = Routing.generate('_security_logout');
-            }*/
-        });
-    }
->>>>>>> e640fa79a2be7c4a82a5b0a6abc4f8507b856bb6
 }
 
 /* Global functions */
