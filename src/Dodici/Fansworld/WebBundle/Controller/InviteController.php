@@ -65,6 +65,8 @@ class InviteController extends SiteController
         $request = $this->getRequest();
         $users2bInvited = $request->get('users', null);
         $response = null;
+        
+        $users2bInvited = explode(",", $users2bInvited);
 
         if ($users2bInvited) {
             $user = $this->getUser();
@@ -74,6 +76,7 @@ class InviteController extends SiteController
 
 
             foreach ($users2bInvited as $user2bInvited) {
+                $user2bInvited = trim($user2bInvited);
                 $inviteUrl = $importer->inviteUrl($user);
 
                 $subject = "Invitation";

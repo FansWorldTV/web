@@ -568,6 +568,33 @@ div.invite-modal {
                 }
             }
         }
+
+        &[data-type='email'] {
+            form {
+                width: 400px;
+                margin: 50px auto;
+                display: block;
+                position: relative;
+
+                span {
+                    .pull-right();
+                    .clearfix();
+                    margin-top: 20px;
+                    margin-bottom: 10px;
+                    color: gray;
+                    font-weight: 300;
+                }
+
+                input, textarea {
+                    width: 97.5%;
+                    font-weight: 300;
+                    color: black;
+                }
+                textarea {
+                    height: 100px;
+                }
+            }
+        }
     }
 }
 

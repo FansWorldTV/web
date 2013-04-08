@@ -23,6 +23,8 @@ inviter.init = function(url) {
     }).done(function(r) {
         inviter.url.short = r.id;
     });
+    
+    //$("div.invite-modal div.content-modal[data-type='email'] input").fwTagify({action: null});
 
     inviter.tabs.selected = $("div.invite-modal ul.nav-tabs li.active").attr('data-type');
     inviter.tabs[inviter.tabs.selected]();
@@ -56,6 +58,23 @@ inviter.tabs.facebook = function() {
 };
 
 inviter.tabs.email = function() {
+    var $container = $("div.content-modal[data-type ='email']");
+    $container.find('form').submit(function(){
+        var mailList = $container.find('form input').val();
+        var submitBtn = $(this).find('.btn-success').addClass('loading-small');
+        
+        ajax.genericAction('invite_generateInvitation', {'users': mailList}, function(r){
+            submitBtn.removeClass('loading-small');
+            success('Invitación enviada');
+            
+            $container.find('form').trigger('reset');
+        }, function(e){
+            console.log(e);
+            submitBtn.removeClass('loading-small');
+        });
+        
+        return false;
+    });
 };
 
 inviter.tabs.twitter = function() {
