@@ -95,7 +95,10 @@ $(document).ready(function () {
                     selected: []
                 }
             };
-            that.options.dataSource = Routing.generate(appLocale + $(that.element).attr('data-route'));
+            var route = $(that.element).attr('data-route');
+            if(typeof route !== 'undefined') {
+                that.options.dataSource = Routing.generate(appLocale + $(that.element).attr('data-route'));
+            }
             that.options.action = $(that.element).attr('data-action');
 
             // Precargo tags autogenerados
@@ -134,12 +137,26 @@ $(document).ready(function () {
                 console.log("creating auto tag for type: %s, title: %s. id: %s", profile_type, profile_title, profile_id)
                 that.options.prePopulate.push(item);
             }
-            $(that.element).tagit({
+            var tagParams = {
                 availableTags: that.options.sampleTags,
                 suggestionsOnly: that.options.suggestionsOnly,
                 allowSpaces: true,
-                // This will make Tag-it submit a single form value, as a comma-delimited field.
-                autocomplete: {
+                singleField: true,
+                singleFieldNode: $(that.element),
+                afterTagAdded: function(evt, ui) {
+                    if (!ui.duringInitialization) {
+                        that.addEntityItem({label: ui.tagLabel, result: ui.extra});
+                    }
+                },
+                afterTagRemoved: function(evt, ui) {
+                    if (!ui.duringInitialization) {
+                        that.deleteEntityItem({label: ui.tagLabel, result: ui.tag.data('extra')});
+                    }
+                }
+            };
+
+            if(that.options.dataSource) {
+                tagParams.autocomplete = {
                     source: function( request, response ) {
                         console.log("tagit llama autocomplete request.term: " + request.term);
                         $.ajax({
@@ -164,20 +181,9 @@ $(document).ready(function () {
                         });
                     },
                     minLength: 1
-                },
-                singleField: true,
-                singleFieldNode: $(that.element),
-                afterTagAdded: function(evt, ui) {
-                    if (!ui.duringInitialization) {
-                        that.addEntityItem({label: ui.tagLabel, result: ui.extra});
-                    }
-                },
-                afterTagRemoved: function(evt, ui) {
-                    if (!ui.duringInitialization) {
-                        that.deleteEntityItem({label: ui.tagLabel, result: ui.tag.data('extra')});
-                    }
-                }
-            });
+                };
+            }
+            $(that.element).tagit(tagParams);
 
 
             for(i = 0; i < that.options.prePopulate.length; i += 1) {
