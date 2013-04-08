@@ -531,8 +531,49 @@ div.invite-modal {
                     margin: 50px auto;
                 }
             }
+
             div.is-logged {
                 display: none;
+
+                div.invite-block {
+                    display: block;
+                    position: relative;
+                    .size(320px, 100%);
+
+                    span.top {
+                        span.title {
+                            font-size: 22px;
+                            font-weight: 300;
+                            color: @grayDark;
+                        }
+                    }
+                    
+                    div.fan-friends {
+                        .pull-left();
+                        .size(100%, 66%);
+                        padding: 0 15px 0 15px;
+                        box-sizing: border-box;
+                    }
+
+                    div.invite-friends {
+                        .pull-left();
+                        .size(100%, 33%);
+                        padding: 0 15px 0 15px;
+                        box-sizing: border-box;
+                    }
+                }
+
+                span.command-buttons {
+                    display: block;
+                    width: 227px;
+                    margin: 0 auto;
+
+                    button {    
+                        font-size: 20px;
+                        font-weight: 300;
+                        padding: 15px;
+                    }
+                }
             }
         }
 

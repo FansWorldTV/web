@@ -27,6 +27,7 @@ inviter.init = function(url) {
     //$("div.invite-modal div.content-modal[data-type='email'] input").fwTagify({action: null});
 
     inviter.tabs.selected = $("div.invite-modal ul.nav-tabs li.active").attr('data-type');
+    console.log(inviter.tabs.selected);
     inviter.tabs[inviter.tabs.selected]();
 
     inviter.toggleTabs();
@@ -46,11 +47,15 @@ inviter.toggleTabs = function() {
 
 inviter.tabs.facebook = function() {
     var $container = $("div.content-modal[data-type ='facebook']");
+    $container.addClass('loading');
+    
     FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
-            $container.find('is-logged').show();
+            $container.removeClass('loading');
+            $container.find('.is-logged').show();
         } else {
-            $container.find('not-logged').show();
+            $container.removeClass('loading');
+            $container.find('.not-logged').show();
         }
         
         return false;
