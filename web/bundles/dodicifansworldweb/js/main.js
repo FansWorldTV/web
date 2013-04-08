@@ -2,7 +2,7 @@ var redirectColorbox = true;
 
 $(document).ready(function(){
     site.init();
-//ajax.init();
+    //ajax.init();
 });
 
 var site = {

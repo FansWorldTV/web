@@ -457,3 +457,129 @@
         font-weight: 400;
     }
 }
+
+div.invite-modal {
+    background-color: white;
+    .border-radius(5px);
+    height: 500px;
+    margin-top: 15%;
+
+    div.title-bar {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        height: 50px;
+        font-size: 20px;
+        color: white;
+        background: url('../images/bg-bar-modal.jpg');
+
+        span.title {
+            position: relative;
+            top: 15px;
+            left: 15px;
+        }
+
+        span.close-button {
+            width: 29px;
+            height: 29px;
+            background: url("../images/modal/close.png") no-repeat top;
+            float: right;
+            cursor: pointer;
+            position: relative;
+            z-index: 5;
+            top: 10px;
+            right: 10px;
+            &:hover {
+                background-position:bottom;
+            }
+        }
+    }
+
+    ul.nav-tabs {
+        background-color: #f9f9f5;
+        padding-top: 15px;
+        li {
+            &:first-child {
+                margin-left: 15px;
+            }           
+
+            img {
+                margin-right: 12px;
+            }
+        }
+    }
+
+    div.content-modal {
+        display: none;
+            
+        &.active {
+            display: block;
+        }
+
+        &[data-type='facebook'] {
+            div.not-logged {
+                display: none;
+                span {
+                    font-size: 15px;
+                    font-weight: 300;
+                    margin-top: 60px;
+                    margin-bottom: 10px;
+                    text-align: center;
+                    width: 100%;
+                    display: block;
+                }
+                button {
+                    margin: 50px auto;
+                }
+            }
+            div.is-logged {
+                display: none;
+            }
+        }
+
+        &[data-type='twitter'] {
+            form {
+                display: block;
+                width: 350px;
+                height: auto;
+                margin: 0 auto;
+                margin-top: 10%;
+                .clearfix();
+                
+                span {
+                    float: left;
+                    font-size: 17px;
+                    font-weight: 300;
+                    margin-bottom: 10px;
+                }
+
+                textarea {
+                    float: left;
+                    width: 100%;
+                    height: 100px;
+                    .clearfix();
+                }
+
+                button {
+                    float: right;
+                    
+                    &:last-child {
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+button.fb_button { 
+    .size(44px, 222px);
+    display: block;
+    border: 0;
+    background-image: url('../images/bt-fb-conectarse.png');
+
+    .fb_button_text { font-size: 14px; }
+
+    &:hover {
+        opacity: 0.9;
+    }
+}

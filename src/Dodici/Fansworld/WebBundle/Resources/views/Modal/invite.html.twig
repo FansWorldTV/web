@@ -1,0 +1,46 @@
+<div class="invite-modal">
+    <div class="title-bar">
+        <span class="title">Invitar a Fansworld</span>
+        <span class="close-button"></span>
+    </div>
+        
+    <ul class="nav nav-tabs">
+        <li data-type="facebook" class="active">
+            <a href="#"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/ico_facebook.png' )}}" />Amigos de Facebook</a>
+        </li>
+        <li data-type="email">
+            <a href="#"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/ico_mail.png' )}}" />Invitar por email</a>
+        </li>
+        <li data-type="twitter">
+            <a href="#"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/ico_twitter.png' )}}" />Via Twitter</a>
+        </li>
+    </ul>
+        
+    <div class="content-modal active" data-type="facebook">
+        <div class="not-logged">
+            <span>Necesitamos que te conectes a Facebook para poder enviar tus invitaciones.</span>
+            <button class="fb_button"></button>
+        </div>
+        <div class="is-logged">
+        </div>
+    </div>
+        
+    <div class="content-modal" data-type="email">
+        
+    </div>
+        
+    <div class="content-modal" data-type="twitter">
+        <form>
+            <span>Mensaje</span>
+            <textarea>¡ Los invito a Fansworld.TV ! {{ url }}</textarea>
+            <button type="submit" class="btn btn-success">Twitear</button>
+            <button type="reset" class="btn">Borrar</button>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+       inviter.init('{{ url }}');
+    });
+</script>

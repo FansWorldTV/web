@@ -310,7 +310,7 @@ services:
             container: "@service_container"
     appstate:
       class: Dodici\Fansworld\WebBundle\Services\AppState
-      arguments: [@security.context, @doctrine.orm.entity_manager]
+      arguments: [@security.context, @doctrine.orm.entity_manager, %google.shortener.apikey%]
     app.facebook:
       class: Dodici\Fansworld\WebBundle\Services\AppFacebook
       arguments: [@security.context, @doctrine.orm.entity_manager, @fos_facebook.api, @router, @translator,@appmedia, %fos_facebook.permissions%, %facebook.feed.enabled%, %facebook.namespace%]
