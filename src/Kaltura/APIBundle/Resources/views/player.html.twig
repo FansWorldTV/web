@@ -4,31 +4,5 @@
 {% if autoplay is not defined %}
     {% set autoplay = false %}
 {% endif %}
-<script type="text/javascript" src="http://www.kaltura.com/p/{{partner}}/sp/{{subpartner}}/embedIframeJs/uiconf_id/{{player}}/partner_id/{{partner}}{% if autoplay %}/autoPlay/1{% endif %}"></script>
-<object 
-  id="kaltura_player_{{timestamp}}"
-  class="videoframe" 
-  name="kaltura_player_{{timestamp}}" 
-  type="application/x-shockwave-flash" 
-  allowFullScreen="true" 
-  allowNetworking="all" 
-  allowScriptAccess="always"
-  height="{{height|default(395)}}" 
-  width="{{width|default(560)}}" 
-  bgcolor="#000000" 
-  xmlns:dc="http://purl.org/dc/terms/" 
-  xmlns:media="http://search.yahoo.com/searchmonkey/media/" 
-  rel="media:video" 
-  resource="http://www.kaltura.com/index.php/kwidget/cache_st/{{timestamp}}/wid/_{{partner}}/uiconf_id/{{player}}/entry_id/{{video.stream}}{% if autoplay %}/autoPlay/1{% endif %}" 
-  data="http://www.kaltura.com/index.php/kwidget/cache_st/{{timestamp}}/wid/_{{partner}}/uiconf_id/{{player}}/entry_id/{{video.stream}}{% if autoplay %}/autoPlay/1{% endif %}">
-    <param name="allowFullScreen" value="true" />
-    <param name="allowNetworking" value="all" />
-    <param name="allowScriptAccess" value="always" />
-    <param name="bgcolor" value="#000000" />
-    <param name="flashVars" value="{% if autoplay %}autoPlay=true&amp;{% endif %}streamerType=hdnetwork&amp;akamaiHD.loadingPolicy=preInitialize&amp;akamaiHD.asyncInit=true&amp;&{FLAVOR}" />
-    <param name="movie" value="http://www.kaltura.com/index.php/kwidget/cache_st/{{timestamp}}/wid/_{{partner}}/uiconf_id/{{player}}/entry_id/{{video.stream}}{% if autoplay %}/autoPlay/1{% endif %}" />
-    <a rel="media:thumbnail" href="http://cdnbakmi.kaltura.com/p/{{partner}}/sp/{{subpartner}}/thumbnail/entry_id/{{video.stream}}/width/120/height/90/bgcolor/000000/type/2"></a>
-    <span property="media:title" content="{{video.title|escape('html_attr')}}"></span>
-    <span property="dc:description" content="{{video.content|truncate(30)|escape('html_attr')}}"></span>
-    <span property="media:type" content="application/x-shockwave-flash"></span>
-</object>
+
+<script type="text/javascript" src="http://cdnapi.kaltura.com/p/{{partner}}/sp/{{subpartner}}/embedIframeJs/uiconf_id/{{player}}/partner_id/{{partner}}?entry_id={{video.stream}}&playerId=kaltura_player_{{timestamp}}&cache_st={{timestamp}}&autoembed=true&width={{width|default(560)}}&height={{height|default(395)}}&&flashvars[streamerType]=hdnetwork&flashvars[akamaiHD]=%7B%22loadingPolicy%22%3A%22preInitialize%22%2C%22asyncInit%22%3A%22true%22%7D"></script>
