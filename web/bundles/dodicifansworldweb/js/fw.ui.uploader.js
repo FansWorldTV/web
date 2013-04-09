@@ -269,7 +269,10 @@ $(document).ready(function () {
                     });
                     $.ajax({url: href, type: 'GET'}).then(function(response){
                         formHtml = $(response).clone();
+                        formHtml.find('input[type="submit"]').hide();
+
                         boot.find('.modal-body').html(formHtml);
+
                         boot.find("#modal-btn-save").one("click", null, null, function(){
                             $(this).addClass('loading-small');
                             boot.find('form').find('input[type="submit"]').click();
@@ -296,6 +299,7 @@ $(document).ready(function () {
                     var href = Routing.generate(appLocale + '_video_fileupload');
                     $.ajax({url: href, type: 'GET'}).then(function(response){
                         formHtml = $(response).clone();
+                        formHtml.find('input[type="submit"]').hide();
                         boot.find('.modal-body').html(formHtml);
                         boot.find("#modal-btn-save").one("click", null, null, function(){
                             $(this).addClass('loading-small');
