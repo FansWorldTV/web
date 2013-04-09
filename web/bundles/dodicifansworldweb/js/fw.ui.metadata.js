@@ -79,6 +79,7 @@ $(document).ready(function () {
             // and this.options
             var that = this;
             var i;
+            $(that.element).bind("destroyed", $.proxy(that.teardown, that));
             //that.options.dataSource = Routing.generate(appLocale + '_tag_ajaxmatch');
             that.options.magic = parseInt(Math.random() * 9999);
             that.options[that.options.magic] = {
@@ -185,12 +186,6 @@ $(document).ready(function () {
             }
             $(that.element).tagit(tagParams);
 
-
-
-
-
-
-
             for(i = 0; i < that.options.prePopulate.length; i += 1) {
                 if (that.options.prePopulate.hasOwnProperty(i)) {
                     var item  = that.options.prePopulate[i];
@@ -247,6 +242,21 @@ $(document).ready(function () {
             var that = this;
             return that.options[that.options.magic];
         },
+        destroy: function () {
+            var that = this;
+            $(that.element).unbind("destroyed", that.teardown);
+            that.teardown();
+        },
+        teardown: function () {
+            var that = this;
+            $(that.element).isotope('destroy');
+            $.removeData($(that.element)[0], that._name);
+            $(that.element).removeClass(that._name);
+            that.unbind();
+            that.element = null;
+        },
+        bind: function () { },
+        unbind: function () { },
         getVersion: function() {
             return this._version;
         }
