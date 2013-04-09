@@ -23,7 +23,8 @@
 /*jslint vars: true */ /* Tolerate many var statements per function */
 /*jslint maxerr: 100 */ /*  Maximum number of errors */
 
-// fansWorld file upload plugin 1.8 (new frontend with bootstrap)
+// fansWorld file upload plugin 1.9 backend listeners
+// 1.8 (new frontend with bootstrap)
 // 1.7 (new XHR backend)
 // 1.6 (auto resize with a timer)
 
@@ -272,11 +273,8 @@ $(document).ready(function () {
                         formHtml.find('input[type="submit"]').hide();
 
                         boot.find('.modal-body').html(formHtml);
-
                         boot.find("#modal-btn-save").removeAttr("disabled");
-
                         // Set default title
-
                         boot.find("#form_title").val(data.originalFile);
 
                         boot.find("#modal-btn-save").one("click", null, null, function(){
@@ -308,6 +306,9 @@ $(document).ready(function () {
                         formHtml.find('input[type="submit"]').hide();
                         boot.find('.modal-body').html(formHtml);
                         boot.find("#modal-btn-save").removeAttr("disabled");
+                        // Set default title
+                        boot.find("#form_title").val(data.originalFile);
+
                         boot.find("#modal-btn-save").one("click", null, null, function(){
                             $(this).addClass('loading-small');
                             boot.find('form').find('input[type="submit"]').click();
