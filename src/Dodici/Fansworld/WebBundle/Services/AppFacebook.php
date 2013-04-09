@@ -74,10 +74,39 @@ class AppFacebook
         return $fwfriends;
     }
 
+    /**
+     * Get facebook friends that are not Fansworld
+     * @param Application\Sonata\UserBundle\Entity\User $user
+     * @throws \Exception
+     */
+    public function facebookNotFansworld($user = null)
+    {
+        $friends = $this->facebookFriends($user);
+        if (!$friends)
+            throw new \Exception('Sin amigos');
+        $fbFriendsIds = array();
+        foreach ($friends as $friend) {
+            $fbFriendsIds[] = $friend['id'];
+
+        $friendrepo = $this->em->getRepository('Application\\Sonata\\UserBundle\\Entity\\User');
+        $fwfriends = $friendrepo->findBy(
+                array('enabled' => true, 'linkfacebook' => true, 'facebookId' => $fbFriendsIds)
+        );
+
+        $fwFriendsIds = array();
+        foreach ($fwfriends as $friend) {
+            $fwFriendsIds[] =  $friend->getId();
+        }
+
+        $fbNotfw = array_diff($fbFriendsIds, $fwFriendsIds);
+
+        return $fbNotfw;
+    }
+
     public function upload($entity)
     {
         if (!$this->feedenabled) return false;
-        
+
         if (!property_exists($entity, 'author'))
             throw new \Exception('La entidad no es compatible');
         $user = $entity->getAuthor();
@@ -87,29 +116,29 @@ class AppFacebook
         $type = $this->getEntityType($entity);
         $url = $this->router->generate($type . '_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()), true);
         //$message = $this->translator->trans('shared_' . $type) . ' ' . $url . ' #fansworlds';
-        
+
         return $this->verb('upload', array(
             'other' => $url
         ), $user);
     }
-    
+
     public function subscribe($videocategory, $user)
     {
         $url = $this->router->generate(
-        	'teve_explorechannel', 
-            array('id' => $videocategory->getId(), 'slug' => $videocategory->getSlug()), 
+        	'teve_explorechannel',
+            array('id' => $videocategory->getId(), 'slug' => $videocategory->getSlug()),
             true
         );
         return $this->verb('subscribe', array('other' => $url), $user);
     }
-    
+
     public function comment($entity, $user)
     {
         $type = $this->getEntityType($entity);
         $url = $this->router->generate($type . '_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()), true);
         return $this->verb('comment', array('other' => $url), $user);
     }
-    
+
     public function fan($entity, $user)
     {
         $type = $this->getEntityType($entity);
@@ -134,15 +163,15 @@ class AppFacebook
     public function entityShare($entity, $message)
     {
         if (!$this->feedenabled) return false;
-        
+
         $type = $this->getEntityType($entity);
         $url = $this->router->generate($type . '_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()), true);
-        
+
         $picture = null;
         if (property_exists($entity, 'image')) {
             $picture = $this->appmedia->getImageUrl($entity->getImage(), 'medium');
         }
-        
+
         $data = array(
             'message' => $message,
             'name' => 'Fansworld ' . ucfirst($type),
@@ -151,17 +180,17 @@ class AppFacebook
             'link' => $url,
             'description' => $entity->getContent()
         );
-        
+
         if ($picture) $data['picture'] = $picture;
 
         return $this->api('/me/feed', null, 'POST', $data);
     }
-    
+
     public function getScope()
     {
         return $this->scope;
     }
-    
+
     public function getType($type)
     {
         return $this->namespace.':'.$type;
@@ -180,7 +209,7 @@ class AppFacebook
         $url = str_replace('{uid}', $user->getFacebookId(), $url);
         return $this->facebook->api($url, $method, $params);
     }
-    
+
     private function getEntityType($entity)
     {
         $name = $this->em->getClassMetadata(get_class($entity))->getName();
