@@ -186,6 +186,11 @@ $(document).ready(function () {
             $(that.element).tagit(tagParams);
 
 
+
+
+
+
+
             for(i = 0; i < that.options.prePopulate.length; i += 1) {
                 if (that.options.prePopulate.hasOwnProperty(i)) {
                     var item  = that.options.prePopulate[i];
