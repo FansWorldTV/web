@@ -84,6 +84,7 @@ class AppFacebook
         $friends = $this->facebookFriends($user);
         if (!$friends)
             throw new \Exception('Sin amigos');
+
         $fbFriendsIds = array();
         foreach ($friends as $friend) {
             $fbFriendsIds[] = $friend['id'];
@@ -96,11 +97,17 @@ class AppFacebook
 
         $fwFriendsIds = array();
         foreach ($fwfriends as $friend) {
-            $fwFriendsIds[] =  $friend->getId();
+            $fwFriendsIds[] =  $friend->getFacebookId();
         }
 
-        $fbNotfw = array_diff($fbFriendsIds, $fwFriendsIds);
+        $fbNotfw = array();
+        foreach ($friends as $friend) {
+            if (!in_array($friend['id'], $fwFriendsIds)) {
+                $fbNotfw[] = $friend;
+            }
+        }
 
+        // $fbNotfw = array_diff($fbFriendsIds, $fwFriendsIds);
         return $fbNotfw;
     }
 
