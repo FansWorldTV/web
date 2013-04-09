@@ -224,7 +224,7 @@ $(document).ready(function () {
             var that = this;
             //var input = that.createInput();
             var boot = null;
-            var id = (Math.random() * 1000);
+            var id = parseInt((Math.random() * 1000), 10);
             var modal = {
                 modalId: id,
                 modalLabel: 'label',
@@ -574,6 +574,7 @@ $(document).ready(function () {
                     videoUploader.stopAll();
                     $('.modal-backdrop').remove();
                     $(this).data('modal', null);
+                    $(this).remove();
                 });
             });
 
@@ -750,6 +751,7 @@ $(document).ready(function () {
                             console.log("modal hide");
                             $('.modal-backdrop').remove();
                             $(this).data('modal', null);
+                            $(this).remove();
                         });
                     });
                 },
