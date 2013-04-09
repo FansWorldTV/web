@@ -23,7 +23,7 @@ inviter.init = function(url) {
     }).done(function(r) {
         inviter.url.short = r.id;
     });
-    
+
     //$("div.invite-modal div.content-modal[data-type='email'] input").fwTagify({action: null});
 
     inviter.tabs.selected = $("div.invite-modal ul.nav-tabs li.active").attr('data-type');
@@ -48,36 +48,61 @@ inviter.toggleTabs = function() {
 inviter.tabs.facebook = function() {
     var $container = $("div.content-modal[data-type ='facebook']");
     $container.addClass('loading');
-    
+
     FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
             $container.removeClass('loading');
             $container.find('.is-logged').show();
+            var $inviteBlock = $container.find('.invite-block');
+            $inviteBlock.find('.fan-friends').addClass('loading');
+            $inviteBlock.find('.invite-friends').addClass('loading');
+
+            ajax.genericAction({
+                route: 'facebook_commonfriends',
+                params: {},
+                callback: function(response) {
+                    $.each(response.friends, function() {
+                        $.when(templateHelper.htmlTemplate('fans-invite_element', this))
+                                .then(function(htmlTemplate) {
+                            $(htmlTemplate).appendTo($inviteBlock.find('.fan-friends ul'));
+                        })
+                    });
+
+                    $inviteBlock.find('.fan-friends').removeClass('loading');
+                },
+                errorCallback: function(errorResponse) {
+                    console.log('Error');
+                    console.log(errorResponse);
+                    $inviteBlock.find('.fan-friends').removeClass('loading');
+                    error('Error');
+                }
+            });
+
         } else {
             $container.removeClass('loading');
             $container.find('.not-logged').show();
         }
-        
+
         return false;
     });
 };
 
 inviter.tabs.email = function() {
     var $container = $("div.content-modal[data-type ='email']");
-    $container.find('form').submit(function(){
+    $container.find('form').submit(function() {
         var mailList = $container.find('form input').val();
         var submitBtn = $(this).find('.btn-success').addClass('loading-small');
-        
-        ajax.genericAction('invite_generateInvitation', {'users': mailList}, function(r){
+
+        ajax.genericAction('invite_generateInvitation', {'users': mailList}, function(r) {
             submitBtn.removeClass('loading-small');
             success('Invitación enviada');
-            
+
             $container.find('form').trigger('reset');
-        }, function(e){
+        }, function(e) {
             console.log(e);
             submitBtn.removeClass('loading-small');
         });
-        
+
         return false;
     });
 };

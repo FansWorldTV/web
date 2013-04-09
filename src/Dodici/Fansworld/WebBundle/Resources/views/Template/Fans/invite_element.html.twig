@@ -1,0 +1,13 @@
+{% raw %}
+    <li>
+        <img src="{{>image}}" />
+        <div class="pull-left">
+            <span class="name">{{>title}}</span>
+            <br/>
+            <span class="location">{{>location}}</span>
+        </div>
+        {{if canFriend}}
+            <button class="btn btn-small btn-success pull-right">SER FAN</button>
+        {{/if}}
+    </li>
+{% endraw %}

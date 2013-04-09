@@ -77,6 +77,7 @@ class FacebookController extends SiteController
      */
     public function ajaxCommonFriends()
     {
+        $serializer = $this->get('serializer');
         $request = $this->getRequest();
     	$page = $request->get('page');
     	$limit = null; $offset = null;
@@ -89,16 +90,6 @@ class FacebookController extends SiteController
         
     	$friends = $this->get('app.facebook')->facebookFansworld(null, $limit, $offset);
     	
-        $rfriends = array();
-        foreach ($friends as $friend) {
-            $rfriends[] = array(
-            	'id' => $friend->getId(),
-            	'title' => (string)$friend,
-            	'image' => $this->getImageUrl($friend->getImage(), 'avatar'),
-            	'url' => $this->generateUrl('user_detail', array('username' => $friend->getUsername()))
-            );
-        }
-
-        return $this->jsonResponse(array('friends' => $rfriends));
+        return $this->jsonResponse(array('friends' => $serializer->values($friends, 'avatar')));
     }
 }

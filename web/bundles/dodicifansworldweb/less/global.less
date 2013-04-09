@@ -541,6 +541,7 @@ div.invite-modal {
                     .size(320px, 100%);
 
                     span.top {
+                        .clearfix();
                         span.title {
                             font-size: 22px;
                             font-weight: 300;
@@ -553,6 +554,37 @@ div.invite-modal {
                         .size(100%, 66%);
                         padding: 0 15px 0 15px;
                         box-sizing: border-box;
+                        
+                        ul {
+                            margin-top: 10px;
+
+                            li {
+                                .size(40px, 50%);
+                                .pull-left();
+                                box-sizing: border-box;
+                                margin-bottom: 5px;
+
+                                &.notpair {
+                                    padding-right: 5px;
+                                }
+
+                                img {
+                                    margin-right: 10px;
+                                    .size(40px, auto);
+                                }
+                                img, span {
+                                    .pull-left()
+                                }
+                                .name { 
+                                    font-size: 11px;
+                                    font-weight: 600;
+                                }
+                                .location {
+                                    font-weight: 300;
+                                    font-size: 10px;
+                                }
+                            }
+                        }
                     }
 
                     div.invite-friends {
