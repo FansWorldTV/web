@@ -263,7 +263,7 @@ $(document).ready(function () {
                     var formHtml = null;
                     var href = Routing.generate(appLocale + '_photo_filemeta', {
                         'originalFile': data.originalFile,
-                        'tempFile':data.tempFile,
+                        'tempFile': data.tempFile,
                         'width': data.width,
                         'height': data.height
                     });
@@ -272,6 +272,12 @@ $(document).ready(function () {
                         formHtml.find('input[type="submit"]').hide();
 
                         boot.find('.modal-body').html(formHtml);
+
+                        boot.find("#modal-btn-save").removeAttr("disabled");
+
+                        // Set default title
+
+                        boot.find("#form_title").val(data.originalFile);
 
                         boot.find("#modal-btn-save").one("click", null, null, function(){
                             $(this).addClass('loading-small');
@@ -301,6 +307,7 @@ $(document).ready(function () {
                         formHtml = $(response).clone();
                         formHtml.find('input[type="submit"]').hide();
                         boot.find('.modal-body').html(formHtml);
+                        boot.find("#modal-btn-save").removeAttr("disabled");
                         boot.find("#modal-btn-save").one("click", null, null, function(){
                             $(this).addClass('loading-small');
                             boot.find('form').find('input[type="submit"]').click();
