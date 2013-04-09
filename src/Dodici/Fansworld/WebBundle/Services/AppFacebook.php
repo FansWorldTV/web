@@ -87,6 +87,7 @@ class AppFacebook
         $fbFriendsIds = array();
         foreach ($friends as $friend) {
             $fbFriendsIds[] = $friend['id'];
+        }
 
         $friendrepo = $this->em->getRepository('Application\\Sonata\\UserBundle\\Entity\\User');
         $fwfriends = $friendrepo->findBy(
