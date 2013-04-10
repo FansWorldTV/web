@@ -35,7 +35,8 @@
 
 // Historia:
 // --------
-// fansWorld TV Class Module 1.4 (filtros detalle de video [relacionados])
+// fansWorld TV Class Module 1.5 (filtrado correcto de entidades)
+// 1.4 (filtros detalle de video [relacionados])
 // 1.3 (con hastags)
 // 1.2 (con filtros para detalle)
 // 1.1 (con galerias de profiles)
