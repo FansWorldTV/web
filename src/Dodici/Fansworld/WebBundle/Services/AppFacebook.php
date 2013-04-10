@@ -126,7 +126,7 @@ class AppFacebook
         //$message = $this->translator->trans('shared_' . $type) . ' ' . $url . ' #fansworlds';
 
         return $this->verb('upload', array(
-            'other' => $url
+            $type => $url
         ), $user);
     }
 
@@ -137,14 +137,14 @@ class AppFacebook
             array('id' => $videocategory->getId(), 'slug' => $videocategory->getSlug()),
             true
         );
-        return $this->verb('subscribe', array('other' => $url), $user);
+        return $this->verb('subscribe', array('channel' => $url), $user);
     }
 
     public function comment($entity, $user)
     {
         $type = $this->getEntityType($entity);
         $url = $this->router->generate($type . '_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()), true);
-        return $this->verb('comment', array('other' => $url), $user);
+        return $this->verb('comment', array($type => $url), $user);
     }
 
     public function fan($entity, $user)
@@ -153,14 +153,23 @@ class AppFacebook
         if ($entity instanceof User) $params = array('username' => $entity->getUsername());
         else $params = $params = array('slug' => $entity->getSlug());
         $url = $this->router->generate($type . '_land', $params, true);
-        return $this->verb('comment', array('other' => $url), $user);
+        return $this->verb('comment', array($type => $url), $user);
+    }
+    
+    public function like($entity, $user)
+    {
+        $type = $this->getEntityType($entity);
+        $url = $this->router->generate($type . '_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()), true);
+        
+        $params = array('object' => $url);
+        return $this->verb('og.likes', $params, $user, false);
     }
 
-    public function verb($verb, $params, $user)
+    public function verb($verb, $params, $user, $usenamespace=true)
     {
         if (!$this->feedenabled) return false;
         try {
-            return $this->api('/{uid}/'.$this->namespace.':'.$verb, $user, 'POST', $params);
+            return $this->api('/{uid}/'.($usenamespace ? ($this->namespace.':') : '').$verb, $user, 'POST', $params);
         } catch (\Exception $e) {
             // do something
             return false;
