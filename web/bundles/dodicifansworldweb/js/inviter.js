@@ -50,9 +50,12 @@ inviter.toggleTabs = function() {
 inviter.tabs.facebook = function() {
     var $container = $("div.content-modal[data-type ='facebook']");
     $container.addClass('loading');
+    $container.find('.fan-friends ul').html('');
+    $container.find('.invite-friends ul').html('');
 
     FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
+
             $container.removeClass('loading');
             $container.find('.is-logged').show();
             var $inviteBlock = $container.find('.invite-block');
@@ -77,6 +80,30 @@ inviter.tabs.facebook = function() {
                     console.log(errorResponse);
                     $inviteBlock.find('.fan-friends').removeClass('loading');
                     error('Error');
+                }
+            });
+
+            ajax.genericAction({
+                route: 'facebook_notcommonfriends',
+                params: {},
+                callback: function(response) {
+                    console.log('miraaaa:');
+                    console.log(response);
+
+                    $.each(response.friends, function() {
+                        var jsonData = {'title': this.name, 'image': 'https://graph.facebook.com/' + this.id + '/picture?type=square', 'canFriend': false, 'location': ''};
+                        $.when(templateHelper.htmlTemplate('fans-invite_element', jsonData))
+                                .then(function(htmlTemplate) {
+                            $(htmlTemplate).appendTo($inviteBlock.find('.invite-friends ul'));
+                        })
+                    });
+
+                    $inviteBlock.find('.invite-friends').removeClass('loading');
+                },
+                errorCallback: function(errorResponse) {
+                    console.log('Error');
+                    console.log(errorResponse);
+                    $inviteBlock.find('.invite-friends').removeClass('loading');
                 }
             });
 
