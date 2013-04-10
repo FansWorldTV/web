@@ -35,8 +35,7 @@
 
 // Historia:
 // --------
-// fansWorld TV Class Module 1.5 (filtrado correcto de entidades)
-// 1.4 (filtros detalle de video [relacionados])
+// fansWorld TV Class Module 1.4 (filtros detalle de video [relacionados])
 // 1.3 (con hastags)
 // 1.2 (con filtros para detalle)
 // 1.1 (con galerias de profiles)
@@ -106,7 +105,7 @@
                     this.entityType = $("[data-list]").attr('data-entity-type');
                     this.dataList = $("[data-list]").attr('data-list');
                     this.isProfile = true;
-                    console.log("in-profile");
+                    console.log("IN-PROFILE");
                     var feed = that.getProfileVideoFeed();
                     console.log("filter: " + that.criteria + " feed: " + feed);
                     this.feedfilter = {
@@ -297,6 +296,15 @@
             var that = this;
             this.channel = $('.filter-channels').closest('ul').find("li.active").attr("data-channel-id");
             this.filter = $('#list-filters ul').find('li.active').attr('data-list-filter-type');
+            if(this.isProfile) {
+                var filter = {
+                    'sort': this.criteria,
+                    'page': this.page,
+                    'entityId': this.entityId,
+                    'entityType': this.entityType
+                };
+                return filter;
+            }
             return {
                 'channel': this.channel,
                 'filter': this.filter,
@@ -419,6 +427,8 @@
                         break;
                 }
                 var feed = that.getProfileVideoFeed();
+                console.log('getProfileVideoFeed()')
+                console.log(feed)
                 $(that.isotopeContainer).attr('data-feed-source', feed);
                 console.log("filter: " + that.criteria + " feed: " + feed);
                 var opts = {
