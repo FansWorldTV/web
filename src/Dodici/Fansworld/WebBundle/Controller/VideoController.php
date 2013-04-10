@@ -423,7 +423,9 @@ class VideoController extends SiteController
         $response['addMore'] = $countAll > self::cantVideos ? true : false;
 
         foreach ($videos as $video) {
-            $response['elements'][] = array(
+            $response['elements'][] = $this->get('serializer')->values($video);
+            /*
+            array(
                 'id' => $video->getId(),
                 'title' => $video->getTitle(),
                 'slug' => $video->getSlug(),
@@ -434,6 +436,7 @@ class VideoController extends SiteController
                     'slug' => $video->getSlug()
                 ))
             );
+            */
         }
 
         return $this->jsonResponse($response);
@@ -495,7 +498,9 @@ class VideoController extends SiteController
         $response['elements'] = array();
 
         foreach ($videos as $video) {
-            $response['elements'][] = array(
+            $response['elements'][] = $this->get('serializer')->values($video);
+            /*
+            array(
                 'id' => $video->getId(),
                 'title' => $video->getTitle(),
                 'slug' => $video->getSlug(),
@@ -506,6 +511,7 @@ class VideoController extends SiteController
                     'slug' => $video->getSlug()
                 ))
             );
+            */
         }
 
         return $this->jsonResponse($response);
@@ -554,17 +560,20 @@ class VideoController extends SiteController
         $response['elements'] = array();
 
         foreach ($videos as $video) {
-            $response['elements'][] = array(
-                'id' => $video->getId(),
-                'title' => $video->getTitle(),
-                'slug' => $video->getSlug(),
-                'imgsrc' => $this->getImageUrl($video->getImage(), 'medium'),
-                'visitCount' => $video->getVisitCount(),
-                'url' => $this->generateUrl('video_show', array(
+            $response['elements'][] = $this->get('serializer')->values($video);
+            /*
+                array(
                     'id' => $video->getId(),
-                    'slug' => $video->getSlug()
-                ))
-            );
+                    'title' => $video->getTitle(),
+                    'slug' => $video->getSlug(),
+                    'imgsrc' => $this->getImageUrl($video->getImage(), 'medium'),
+                    'visitCount' => $video->getVisitCount(),
+                    'url' => $this->generateUrl('video_show', array(
+                        'id' => $video->getId(),
+                        'slug' => $video->getSlug()
+                    ))
+                );
+            */
         }
 
         return $this->jsonResponse($response);
