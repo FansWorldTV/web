@@ -256,7 +256,6 @@ $(document).ready(function () {
                     var percentComplete = parseInt(((event.source.loaded / event.source.total) * 100), 10);
                     boot.find('.progress .bar').css('width', percentComplete + '%');
                     $('progress').val(percentComplete);
-                    console.log("progresando");
                 }
                 function onImageUploadComplete(event) {
                     var xhr = event.target.xhr;
@@ -299,6 +298,8 @@ $(document).ready(function () {
                 }
                 function onVideoUploadComplete(event) {
                     var xhr = event.target.xhr;
+                    var name = $(xhr.responseText).find('name').text();
+
                     var formHtml = null;
                     var href = Routing.generate(appLocale + '_video_fileupload');
                     $.ajax({url: href, type: 'GET'}).then(function(response){
@@ -307,7 +308,7 @@ $(document).ready(function () {
                         boot.find('.modal-body').html(formHtml);
                         boot.find("#modal-btn-save").removeAttr("disabled");
                         // Set default title
-                        boot.find("#form_title").val(data.originalFile);
+                        boot.find("#form_title").val(name);
 
                         boot.find("#modal-btn-save").one("click", null, null, function(){
                             $(this).addClass('loading-small');
