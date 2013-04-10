@@ -23,8 +23,12 @@
 /*jslint vars: true */ /* Tolerate many var statements per function */
 /*jslint maxerr: 100 */ /*  Maximum number of errors */
 
+<<<<<<< HEAD
 // fansWorld file upload plugin 1.9 backend listeners
 // 1.8 (new frontend with bootstrap)
+=======
+// fansWorld file upload plugin 1.8 (new frontend with bootstrap)
+>>>>>>> iss1 nuevo uploader
 // 1.7 (new XHR backend)
 // 1.6 (auto resize with a timer)
 
@@ -98,8 +102,13 @@ $(document).ready(function () {
                     return false;
                 });
             }
+<<<<<<< HEAD
             return;
             /*
+=======
+
+            return;
+>>>>>>> iss1 nuevo uploader
             $(that.element).colorbox({
                 innerWidth: 700,
                 innerHeight: 475,
@@ -195,14 +204,22 @@ $(document).ready(function () {
                 var img = new Image();
                 img.onload = function(event) {
                     deferred.resolve(img);
+<<<<<<< HEAD
                 };
+=======
+                }
+>>>>>>> iss1 nuevo uploader
                 img.src = event.target.result;
                 img.alt = file.name;
                 img.title = escape(file.name);
 
                 var result = event.target.result;
                 var fileName = file.name; //Should be 'picture.jpg'
+<<<<<<< HEAD
             };
+=======
+            }
+>>>>>>> iss1 nuevo uploader
             reader.readAsDataURL(file);
             return deferred.promise();
         },
@@ -215,7 +232,11 @@ $(document).ready(function () {
             } else {
                 imgObj.style.width = container.width() + "px";
                 var mul = imgObj.width / container.width();
+<<<<<<< HEAD
                 var offset = (imgObj.height / mul) / 2;
+=======
+                var offset = (imgObj.height / mul) / 2
+>>>>>>> iss1 nuevo uploader
                 imgObj.style.top = '50%';
                 imgObj.style.marginTop = '-' + offset + 'px';
             }
@@ -225,6 +246,7 @@ $(document).ready(function () {
             var that = this;
             //var input = that.createInput();
             var boot = null;
+<<<<<<< HEAD
             var id = parseInt((Math.random() * 1000), 10);
             var modal = {
                 modalId: id,
@@ -429,6 +451,22 @@ $(document).ready(function () {
                 maxConnections: 1,
                 inputName: 'resource:fileData',
                 allowedExtensions: that.options.mediaExtensions.all,
+=======
+            var id = (Math.random() * 1000);
+            var modal = {
+                modalId: id,
+                modalLabel: 'label',
+                modalTitle: 'Subir Foto',
+                modalBody: 'Uploader'
+            }
+            var uploader = new window.UPLOADER({
+                element: $(that.options.uploaderSelector)[0],
+                multiple: false,
+                autoUpload: false,
+                action: that.options.action[that.options.mediaType],
+                maxConnections: 1,
+                allowedExtensions: that.options.mediaExtensions[that.options.mediaType],
+>>>>>>> iss1 nuevo uploader
                 onLoadStart: function(event) {
                     return;
                 },
@@ -437,6 +475,7 @@ $(document).ready(function () {
                 },
                 onComplete: function(event) {
                     return;
+<<<<<<< HEAD
                 },
                 onError: function(error) {
                     return error;
@@ -444,10 +483,17 @@ $(document).ready(function () {
             });
             $.when(templateHelper.htmlTemplate('general-upload_modal', modal)).then(function(html) {
                 boot = $(html).clone();
+=======
+                }
+            });
+            $.when(templateHelper.htmlTemplate('general-upload_modal', modal)).then(function(html) {
+                var boot = $(html).clone();
+>>>>>>> iss1 nuevo uploader
                 boot.find('input[type="file"]').on('change', function(event) {
                     var i;
                     var files = event.target.files; // FileList object
                     var file = null;
+<<<<<<< HEAD
                     processFiles(files);
 
                     // Loop through the FileList and render image files as thumbnails.
@@ -455,13 +501,25 @@ $(document).ready(function () {
                         // Only process image files.
                         file = files[i];
                         console.log("mime: " + file.type);
+=======
+                    // Loop through the FileList and render image files as thumbnails.
+                    for (i = 0; i < files.length; i++) {
+                        // Only process image files.
+                        var file = files[i];
+                        console.log("mime: " + file.type)
+>>>>>>> iss1 nuevo uploader
                         if (!file.type.match('image.*')) {
                             continue;
                         } else {
                             $.when(that.getImage(file))
                             .then(function(image){
+<<<<<<< HEAD
                                 console.log(file.name);
                             });
+=======
+                                console.log(image);
+                            })
+>>>>>>> iss1 nuevo uploader
                         }
                     }
                 });
@@ -488,9 +546,13 @@ $(document).ready(function () {
                     event.preventDefault();
                     if(event.target === this) {
                         var files = event.originalEvent.dataTransfer.files;
+<<<<<<< HEAD
                         processFiles(files);
 
                         return;
+=======
+
+>>>>>>> iss1 nuevo uploader
                         uploader.addListener('onprogress', function(event) {
                             var percentComplete = parseInt(((event.source.loaded / event.source.total) * 100), 10);
                             boot.find('.progress .bar').css('width', percentComplete + '%');
@@ -542,17 +604,29 @@ $(document).ready(function () {
                             } else {
                                 $.when(that.getImage(file))
                                 .then(function(image){
+<<<<<<< HEAD
                                     var container, infobox;
                                     var uploadBtt = $("<button class='btn upload'>upload</button>");
                                     if(files.length > 1) {
                                         container = $("<div class='thumbnail' style='width:64px;height:64px;'></div>");
                                         infobox = $("<div class='fileinfo' style='height:64px;'></div>")
+=======
+                                    var uploadBtt = $("<button class='btn upload'>upload</button>");
+                                    if(files.length > 1) {
+                                        var container = $("<div class='thumbnail' style='width:64px;height:64px;'></div>");
+                                        var infobox = $("<div class='fileinfo' style='height:64px;'></div>")
+>>>>>>> iss1 nuevo uploader
                                         .append("<h5 class='title'>" + image.alt + "</h5>")
                                         .append("<div class='progress progress-striped active' style='margin-top:4px;'><div class='bar' style='width: 0%;'></div></div>")
                                         .append(uploadBtt);
                                     } else {
+<<<<<<< HEAD
                                         container = $("<div class='thumbnail' style='width: 256px;height:256px;'></div>");
                                         infobox = $("<div class='fileinfo' style='width: 200px;''></div>")
+=======
+                                        var container = $("<div class='thumbnail' style='width: 256px;height:256px;'></div>");
+                                        var infobox = $("<div class='fileinfo' style='width: 200px;''></div>")
+>>>>>>> iss1 nuevo uploader
                                         .append("<h5 class='title'>" + image.alt + "</h5>")
                                         .append("<div class='progress progress-striped active' style='margin-top:10px;'><div class='bar' style='width: 0%;'></div></div>")
                                         .append("<div class='well'>"+ "file: " + image.alt + "<br /> size: " + file.size +"</div>")
@@ -569,13 +643,21 @@ $(document).ready(function () {
                             }
                         }
                     }
+<<<<<<< HEAD
                 });
+=======
+                })
+>>>>>>> iss1 nuevo uploader
                 boot.find("#modal-btn-close").one("click", null, null, function(){
                     boot.modal('hide');
                     $('body').removeClass('modal-open');
                     $('.modal-backdrop').remove();
                     uploader.stopAll();
+<<<<<<< HEAD
                     videoUploader.stopAll();
+=======
+
+>>>>>>> iss1 nuevo uploader
                 });
                 boot.modal({
                     backdrop: true
@@ -584,10 +666,15 @@ $(document).ready(function () {
                     'margin-left': '-350px'
                 }).on('hide', function() {
                     uploader.stopAll();
+<<<<<<< HEAD
                     videoUploader.stopAll();
                     $('.modal-backdrop').remove();
                     $(this).data('modal', null);
                     $(this).remove();
+=======
+                    $('.modal-backdrop').remove();
+                    $(this).data('modal', null);
+>>>>>>> iss1 nuevo uploader
                 });
             });
 
@@ -837,7 +924,11 @@ $(document).ready(function () {
             var input = that.createInput();
             var boot = null;
 
+<<<<<<< HEAD
             console.log("createWithBootstrap()");
+=======
+            console.log("createWithBootstrap()")
+>>>>>>> iss1 nuevo uploader
 
             var uploader = new window.UPLOADER({
                 element: $(that.options.uploaderSelector)[0],
