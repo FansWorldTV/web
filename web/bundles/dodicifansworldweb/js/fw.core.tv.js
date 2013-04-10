@@ -297,6 +297,7 @@
             var that = this;
             this.channel = $('.filter-channels').closest('ul').find("li.active").attr("data-channel-id");
             this.filter = $('#list-filters ul').find('li.active').attr('data-list-filter-type');
+            // Filtra profiles de idols y teams
             if(this.isProfile) {
                 var filter = {
                     'sort': this.criteria,
