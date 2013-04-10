@@ -642,6 +642,115 @@ $(document).ready(function () {
                 }
             });
         },
+        dad: function(element) {
+            $(element).on('dragenter', function(event) {
+                if(event.target === this) {
+                    $(this).animate({ 'background-color': '#c0c0c0', 'border-color': '#444' } );
+                    console.log('dragenter');
+                }
+            }).on('dragover', function(event) {
+                event.stopPropagation();
+                event.preventDefault();
+                if(event.target === this) {
+                    event.originalEvent.dataTransfer.dropEffect = 'copy';
+                }
+            }).on('dragleave', function(event) {
+                if(event.target === this) {
+                    $(this).animate({ 'background-color': 'transparent', 'border-color': '#bbb' } );
+                    console.log('dragleave');
+                }
+            }).on('drop', function(event) {
+                var i;
+                event.stopPropagation();
+                event.preventDefault();
+                if(event.target === this) {
+                    var files = event.originalEvent.dataTransfer.files;
+                    processFiles(files);
+
+                    return;
+                    uploader.addListener('onprogress', function(event) {
+                        var percentComplete = parseInt(((event.source.loaded / event.source.total) * 100), 10);
+                        boot.find('.progress .bar').css('width', percentComplete + '%');
+                    });
+                    uploader.addListener('oncomplete', function(event) {
+                        var xhr = event.target.xhr;
+                        var data = JSON.parse(xhr.responseText);
+                        var formHtml = null;
+                        var href = Routing.generate(appLocale + '_photo_filemeta', {
+                            'originalFile': data.originalFile,
+                            'tempFile':data.tempFile,
+                            'width': data.width,
+                            'height': data.height
+                        });
+                        $.ajax({url: href, type: 'GET'}).then(function(response){
+                            formHtml = $(response).clone();
+                            boot.find('.modal-body').html(formHtml);
+                            boot.find("#modal-btn-save").one("click", null, null, function(){
+                                $(this).addClass('loading-small');
+                                boot.find('form').find('input[type="submit"]').click();
+                            });
+                            boot.find('form').submit(function() {
+                                var data = $(this).serializeArray();
+                                var action = $(this).attr('action');
+                                boot.find('form').find('input[type="submit"]').addClass('loading-small');
+                                $.ajax({
+                                    url: this.getAttribute('action'),
+                                    data: data,
+                                    type: 'POST'
+                                })
+                                .then(function(response){
+                                    location.reload();
+                                });
+                                return false;
+                            });
+                        });
+                    });
+
+                    uploader.addFiles(files);
+
+                    for(i = 0; i < files.length; i += 1) {
+                        if(!files.hasOwnProperty(i)) {
+                            return false;
+                        }
+                        var file = files[i];
+                        boot.find('#drop_zone').hide();
+                        if (!file.type.match('image.*')) {
+                            continue;
+                        } else {
+                            $.when(that.getImage(file))
+                            .then(function(image){
+                                var container, infobox;
+                                var uploadBtt = $("<button class='btn upload'>upload</button>");
+                                if(files.length > 1) {
+                                    container = $("<div class='thumbnail' style='width:64px;height:64px;'></div>");
+                                    infobox = $("<div class='fileinfo' style='height:64px;'></div>")
+                                    .append("<h5 class='title'>" + image.alt + "</h5>")
+                                    .append("<div class='progress progress-striped active' style='margin-top:4px;'><div class='bar' style='width: 0%;'></div></div>")
+                                    .append(uploadBtt);
+                                } else {
+                                    container = $("<div class='thumbnail' style='width: 256px;height:256px;'></div>");
+                                    infobox = $("<div class='fileinfo' style='width: 200px;''></div>")
+                                    .append("<h5 class='title'>" + image.alt + "</h5>")
+                                    .append("<div class='progress progress-striped active' style='margin-top:10px;'><div class='bar' style='width: 0%;'></div></div>")
+                                    .append("<div class='well'>"+ "file: " + image.alt + "<br /> size: " + file.size +"</div>")
+                                    .append(uploadBtt);
+                                }
+                                uploadBtt.one("click", null, null, function(){
+                                    uploader.start();
+                                });
+                                that.placeImage(image, container)
+                                var cosa = $("<li></li>").append(container).append(infobox);
+                                boot.find('output ul').append(cosa);
+                                uploader.start();
+                            });
+                        }
+                    }
+                }
+            });
+        },
+        drop: function(event) {
+
+        },
         createInput: function(){
             var that = this;
             var input = document.createElement("input");
@@ -673,7 +782,8 @@ $(document).ready(function () {
                 opacity: 0
             });
 
-            $(that.options.uploaderSelector)[0].appendChild(input);
+            //$(that.options.uploaderSelector)[0].appendChild(input);
+            $(that.element).append(input);
 
             // IE and Opera, unfortunately have 2 tab stops on file input
             // which is unacceptable in our case, disable keyboard access
@@ -719,6 +829,7 @@ $(document).ready(function () {
                 alert('Please select a crop region then press submit.');
                 return false;
             };
+            <a id="kaka" data-ismodal="false" data-upload="photo" data-type="profile" data-uploader-selector="avatar-uploader" class="btn">Subir Fotos</a>
             */
         },
         createWithBootstrap: function() {
