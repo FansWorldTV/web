@@ -204,6 +204,8 @@
                 ////////////////////////////////////////////////////////////////
                 onDataReady: function(videos) {
                     var i, outp = [];
+                    console.log("onDataReady")
+                    console.log(videos)
                     var normalize = function(video) {
                         var href = Routing.generate(appLocale + '_video_show', {
                             'id': video.id,
