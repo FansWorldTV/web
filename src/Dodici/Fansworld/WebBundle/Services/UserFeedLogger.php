@@ -58,6 +58,10 @@ class UserFeedLogger
                     $this->appfacebook->fan($entity, $author);
                 }
                 
+                if ($type == Activity::TYPE_LIKED && $author) {
+                    $this->appfacebook->like($entity, $author);
+                }
+                
                 switch ($entitytype) {
                     case 'user':
                         $has = new HasUser();
