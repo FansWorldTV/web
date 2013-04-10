@@ -390,7 +390,8 @@ class BaseController extends SiteController
             'title' => (string)$video,
             'image' => $this->imageValues($video->getImage()),
             'highlight' => $video->getHighlight(),
-            'category_id' => $video->getVideocategory()->getId()
+            'category_id' => $video->getVideocategory()->getId(),
+            'provider' => ($video->getYoutube() ? 'youtube' : 'kaltura')
         );
         
         foreach ($extrafields as $x) {

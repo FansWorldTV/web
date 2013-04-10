@@ -48,6 +48,7 @@ class VideoController extends BaseController
      * 			image: array(id: int, url: string),
      * 			highlight: boolean,
      * 			category_id: int,
+     * 			provider: kaltura|youtube,
      * 			
      * 			// extra fields
      * 			author: @see SecurityController::loginAction() - without token,
@@ -137,6 +138,7 @@ class VideoController extends BaseController
      * 			image: array(id: int, url: string),
      * 			highlight: boolean,
      * 			category_id: int,
+     * 			provider: kaltura|youtube,
      * 			
      * 			// extra fields
      * 			author: @see SecurityController::loginAction() - without token,
@@ -188,7 +190,8 @@ class VideoController extends BaseController
                 'title' => (string)$video,
                 'image' => $this->imageValues($video->getImage()),
                 'highlight' => $video->getHighlight(),
-                'category_id' => $video->getVideocategory()->getId()
+                'category_id' => $video->getVideocategory()->getId(),
+                'provider' => ($video->getYoutube() ? 'youtube' : 'kaltura')
             );
             
             $request = $this->getRequest();
