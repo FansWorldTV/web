@@ -515,6 +515,10 @@ div.invite-modal {
             display: block;
         }
 
+        .btn.loading-small {
+            width: auto;
+        }
+
         &[data-type='facebook'] {
             div.not-logged {
                 display: none;
@@ -649,7 +653,7 @@ div.invite-modal {
                 display: block;
                 position: relative;
 
-                span {
+                span.legend {
                     .pull-right();
                     .clearfix();
                     margin-top: 20px;
@@ -658,14 +662,28 @@ div.invite-modal {
                     font-weight: 300;
                 }
 
-                input, textarea {
+                ul.tagit {
+                    width: 97%;
+                    margin-bottom: 5px;
+                }
+
+                input.email, textarea.msg {
                     width: 97.5%;
                     font-weight: 300;
                     color: black;
+
+                    &.msg {
+                        height: 100px;
+                    }
                 }
-                textarea {
-                    height: 100px;
+
+                span.actions {
+                    .pull-right();
+                    textarea {
+                        height: 100px;
+                    }
                 }
+                
             }
         }
     }
