@@ -349,7 +349,7 @@ services:
       arguments: [@security.context, @doctrine.orm.entity_manager, @session, @appstate]
     friender:
       class: Dodici\Fansworld\WebBundle\Services\Friender
-      arguments: [@security.context, @doctrine.orm.entity_manager, @appstate, @user.feed.logger]
+      arguments: [@security.context, @doctrine.orm.entity_manager, @appstate, @user.feed.logger, @app.facebook]
     fanmaker:
       class: Dodici\Fansworld\WebBundle\Services\Fanmaker
       arguments: [@security.context, @doctrine.orm.entity_manager, @user.feed.logger, @app.facebook]
