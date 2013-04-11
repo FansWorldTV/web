@@ -158,10 +158,12 @@ inviter.tabs.facebook = function() {
 inviter.tabs.email = function() {
     var $container = $("div.content-modal[data-type ='email']");
     $container.find('form').submit(function() {
-        var mailList = $container.find('form input').val();
+        var mailList = $("div.invite-modal div.content-modal[data-type='email'] input").tagit("assignedTags");
+        var msg = $container.find('textarea.msg').val();
+        
         var submitBtn = $(this).find('.btn-success').addClass('loading-small');
 
-        ajax.genericAction('invite_generateInvitation', {'users': mailList}, function(r) {
+        ajax.genericAction('invite_generateInvitation', {'users': mailList, 'msg': msg}, function(r) {
             submitBtn.removeClass('loading-small');
             success('Invitación enviada');
 

@@ -64,10 +64,9 @@ class InviteController extends SiteController
     {
         $request = $this->getRequest();
         $users2bInvited = $request->get('users', null);
+        $msg = $request->get('msg', null);
         $response = null;
         
-        $users2bInvited = explode(",", $users2bInvited);
-
         if ($users2bInvited) {
             $user = $this->getUser();
 
@@ -80,7 +79,7 @@ class InviteController extends SiteController
                 $inviteUrl = $importer->inviteUrl($user);
 
                 $subject = "Invitation";
-                $html = $this->get('templating')->render('DodiciFansworldWebBundle:Invite:new_invitation.html.twig', array('url' => $inviteUrl, 'who' => $user));
+                $html = $this->get('templating')->render('DodiciFansworldWebBundle:Invite:new_invitation.html.twig', array('url' => $inviteUrl, 'who' => $user, 'msg' => $msg));
                 
                 $sent = $this->container->get('fansworldmailer')->send($user2bInvited,$subject,$html); 
 
