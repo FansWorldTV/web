@@ -748,8 +748,12 @@ $(document).ready(function () {
                 }
             });
         },
-        drop: function(event) {
-
+        onDrop: function(event) {
+            var that = this;
+            if(event.target === this) {
+                var files = event.originalEvent.dataTransfer.files;
+                processFiles(files);
+            }
         },
         createInput: function(){
             var that = this;
