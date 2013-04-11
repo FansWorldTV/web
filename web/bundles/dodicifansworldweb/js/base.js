@@ -106,8 +106,8 @@
     window.ajax = new $.ajaxianize();
 })(jQuery);
 
-function onFbInit() {
-    
+function onFbInit() {    
+
 }
 
 /* Global functions */

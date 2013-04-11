@@ -47,7 +47,7 @@ class AppFacebook
      */
     public function facebookFriends($user = null)
     {
-        $friends = $this->api('/{uid}/friends', $user);
+        $friends = $this->api('/{uid}/friends?fields=id,name,hometown', $user);
         if (isset($friends['data']))
             $friends = $friends['data'];
         return $friends;

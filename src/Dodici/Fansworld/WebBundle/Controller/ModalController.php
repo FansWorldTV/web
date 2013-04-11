@@ -36,4 +36,19 @@ class ModalController extends SiteController
         );
     }
 
+    /**
+     * show invite friends 
+     * @Route("/invite", name = "modal_invite")
+     * @Template()
+     */
+    public function inviteAction()
+    {
+        $user = $this->getUser();
+        $url = $this->get('contact.importer')->inviteUrl($user);
+        
+        return array(
+            'url' => $url,
+            'user' => $user
+        );
+    }
 }
