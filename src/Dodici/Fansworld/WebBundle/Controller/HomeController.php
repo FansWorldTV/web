@@ -25,7 +25,9 @@ class HomeController extends SiteController
      */
     public function indexAction()
     {
-
+        $checkfbreq = $this->checkFacebookRequest();
+        if ($checkfbreq) return $checkfbreq;
+        
         $user = $this->getUser();
         $response = array(
             'categories' => array(),
@@ -225,6 +227,33 @@ class HomeController extends SiteController
 
 
         return $this->jsonResponse($results);
+    }
+    
+    private function checkFacebookRequest()
+    {
+        $request = $this->getRequest();
+        $fbrequest = $request->get('request_ids');
+        if ($fbrequest) {
+            $fbrequest = explode(',', $fbrequest);
+            if (!is_array($fbrequest)) $fbrequest = array($fbrequest);
+            $fb = $this->get('app.facebook');
+            try {
+                $requester = $fb->getRequestAuthor($fbrequest);
+                if ($requester) {
+                    $session = $this->get('session');
+                    $session->set('registration.fbrequest', $fbrequest);
+                    $inviteurl = $this->get('contact.importer')->inviteUrl($requester);
+                    return $this->redirect($inviteurl);
+                } else {
+                    // set some flash
+                    $this->get('session')->setFlash('error', 'Error procesando invitación');
+                }
+            } catch(\Exception $e) {
+                // failed to get requester user, set some flash
+                $this->get('session')->setFlash('error', 'Error procesando invitación');
+            }
+        }
+        return false;
     }
 
 }
