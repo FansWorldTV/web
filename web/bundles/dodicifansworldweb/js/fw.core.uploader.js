@@ -28,6 +28,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Historia:                                                                  //
 // --------                                                                   //
+// 1.8 adds support for onloadstart event                                     //
 // 1.7 Custom Events                                                          //
 // 1.4 File queue manager                                                     //
 // 1.0 Initial version 21-Mar-2013                                            //
@@ -73,13 +74,14 @@
             ////////////////////////////////////////////////////////////////////
             var _self = this;
             this.jQuery = jQuery;
-            this.version = '1.7';
+            this.version = '1.8';
             this.defaults = {
                 // set to true to see the server response
                 action: '/app_dev.php/photo/fileupload',
                 element: null,
                 protocol: 'POST',
                 params: {},
+                verbose: false,
                 normalHeaders: true,
                 customHeaders: {},
                 multiple: true,
@@ -119,9 +121,11 @@
                 },
                 showMessage: function(message){
                     alert(message);
+                    return;
                 },
                 debug: function(message){
                     console.log(message);
+                    return;
                 },
                 inputName: 'qqfile'
             };
@@ -169,6 +173,7 @@
                                 id: that.guidGenerator(),
                                 xhr: null,
                                 file: file,
+                                params: null,
                                 progress: document.createElement('progress')
                             }
                         });
@@ -176,6 +181,27 @@
                 }
             }
             if (this.options.autoUpload && !that.options.paused) {
+                that.start();
+            }
+            return true;
+        };
+        UPLOADER.prototype.addFile = function(file, params) {
+            var that = this;
+            params = params || {};
+            if (!that.validateFile(file)) {
+                return false;
+            } else {
+                this.queue.enqueue({
+                    atom: {
+                        id: that.guidGenerator(),
+                        xhr: null,
+                        file: file,
+                        params: params,
+                        progress: document.createElement('progress')
+                    }
+                });
+            }
+            if (that.options.autoUpload && !that.options.paused) {
                 that.start();
             }
             return true;
@@ -191,21 +217,21 @@
                     var file = that.queue.dequeue();
                     that.options.recent.push(file);
 
-                    console.log("will process: " + file.atom.file.name);
+                    that.options.debug("will process: " + file.atom.file.name);
                     $.when(that.upload(file))
                     .progress(function(event, data) {
                         switch(event) {
                             case 'onprogress':
-                                console.log("onprogress [percent: " + data.percent + "]");
+                                that.options.debug("onprogress [percent: " + data.percent + "]");
                                 break;
                             case 'onreadystatechange':
-                                console.log("onreadystatechange [readyState: " + data.readyState + "]");
+                                that.options.debug("onreadystatechange [readyState: " + data.readyState + "]");
                                 break;
                             case 'onabort':
-                                console.log("onabort");
+                                that.options.debug("onabort");
                                 break;
                             case 'onerror':
-                                console.log("onerror");
+                                that.options.debug("onerror");
                                 break;
                         }
                     })
@@ -246,6 +272,7 @@
         // Stop all uploads and clear all queues                              //
         ////////////////////////////////////////////////////////////////////////
         UPLOADER.prototype.stopAll = function(){
+            var that = this;
             var i = 0;
             // Stop timers
             this.stop();
@@ -254,7 +281,7 @@
             // Abort all XHR transactions in the queue
             for(i = 0; i < this.options.recent.length; i += 1) {
                 var file = this.options.recent[i];
-                console.log("stop: " + file.atom.file.name);
+                that.options.debug("stop: " + file.atom.file.name);
                 this.abort(file);
             }
             // Clear the recent files queue
@@ -264,8 +291,9 @@
         // Abort an upload, remove it from the queue                          //
         ////////////////////////////////////////////////////////////////////////
         UPLOADER.prototype.abort = function(file) {
+            var that = this;
             // Abort the upload
-            console.log("aborting file: " + file.atom.file.name);
+            that.options.debug("aborting file: " + file.atom.file.name);
             file.atom.xhr.abort();
             // Remove file from queue
             var fileIndex = this.options.recent.indexOf(file);
@@ -329,11 +357,11 @@
                 that.fire({type: "onload", source: event, target: object.atom});
             };
             xhr.onloadstart = function(event) {
-                console.log("onloadstart")
+                that.options.debug("onloadstart");
                 that.fire({type: "onloadstart", source: event, target: object.atom});
             };
             // build query string
-            var params = {};
+            var params = object.atom.params || {};
             params[this.options.inputName] = name;
             var queryString = this.options.action + '?' + jQuery.param(params);
 
@@ -371,7 +399,6 @@
             var that = this;
             var xhr = event.target.xhr;
             that.activeConnections -= 1;
-            console.log('oncomplete');
             return that.options.onComplete(event);
         };
         UPLOADER.prototype.onError = function(event){
@@ -384,7 +411,6 @@
             var that = this;
             var xhr = event.target.xhr;
             that.activeConnections -= 1;
-            console.log('onload');
             return xhr.statusText;
         };
         UPLOADER.prototype.onLoadStart = function(event){

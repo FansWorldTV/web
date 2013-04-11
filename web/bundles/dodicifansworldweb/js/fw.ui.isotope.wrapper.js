@@ -32,7 +32,8 @@
  *      template helper
  */
 
-// fansWorld isotope wrapper plugin 1.6 (con spinner)
+// fansWorld isotope wrapper plugin 1.7 (mejora llamada a dataready)
+// 1.6 (con spinner)
 // 1.5 /* preloadData */
 // 1.4 /* resolution breaks at getMaxSections */
 
@@ -167,8 +168,6 @@ $(document).ready(function () {
 			if(typeof(query) === 'undefined'){
 				query = {};
 			}
-			var that = this;
-			var $container = $(that.element);
 			var deferred = new jQuery.Deferred();
 
 			// Show spinning icon
@@ -225,7 +224,7 @@ $(document).ready(function () {
 			var that = this;
 			var $container = $(that.element);
 			var cells = 0;
-			var width = parseInt($container.width());
+			var width = parseInt($container.width(), 10);
 
 			if(width <= 600) {
 				cells = 1;
@@ -269,35 +268,10 @@ $(document).ready(function () {
 				that.options.onEndless(that);
 				$.when(that.loadData(that.options.feedSource, that.options.feedfilter))
 				.then(function(jsonData) {
-					jsonData = that.options.onDataReady(jsonData);
 					that.options.jsonData = that.options.onDataReady(that.options.jsonData);
 					that.loadGallery(that, that.options.jsonData);
 				});
 			});
-		},
-		enableStamp: function() {
-			$.Isotope.prototype._masonryResizeChanged = function() {
-				return true;
-			};
-			$.Isotope.prototype._masonryReset = function() {
-				// layout-specific props
-				this.masonry = {};
-				this._getSegments();
-				var i = this.masonry.cols;
-				this.masonry.colYs = [];
-				while (i--) {
-					this.masonry.colYs.push( 0 );
-				}
-				if ( this.options.masonry.cornerStampSelector ) {
-					var $cornerStamp = this.element.find( this.options.masonry.cornerStampSelector ),
-					stampWidth = $cornerStamp.outerWidth(true) - ( this.element.width() % this.masonry.columnWidth ),
-					cornerCols = Math.ceil( stampWidth / this.masonry.columnWidth ),
-					cornerStampHeight = $cornerStamp.outerHeight(true);
-					for ( i = Math.max( this.masonry.cols - cornerCols, cornerCols ); i < this.masonry.cols; i++ ) {
-						this.masonry.colYs[i] = cornerStampHeight;
-					}
-				}
-			};
 		},
 		removeAll: function() {
 			var that = this;

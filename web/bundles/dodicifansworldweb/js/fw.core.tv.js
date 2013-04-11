@@ -203,6 +203,8 @@
                 ////////////////////////////////////////////////////////////////
                 onDataReady: function(videos) {
                     var i, outp = [];
+                    console.log("onDataReady")
+                    console.log(videos)
                     var normalize = function(video) {
                         var href = Routing.generate(appLocale + '_video_show', {
                             'id': video.id,
@@ -213,7 +215,7 @@
                             'type': 'video'
                         });
                         var authorUrl = Routing.generate(appLocale + '_user_land', {
-                            'username': 'juan.perez'
+                            'username': video.author.username
                         });
                         return {
                                 'id': video.id,
@@ -221,12 +223,12 @@
                                 'date': video.createdAt,
                                 'href': href,
                                 'hrefModal': hrefModal,
-                                'image': video.imgsrc,
+                                'image': video.image,
                                 'slug': video.slug,
                                 'title': video.title,
-                                'author': 'juan.perez',
+                                'author': video.author.username,
                                 'authorHref': authorUrl,
-                                'authorImage': 'http://fansworld.dodici.local/uploads/media/default/0001/02/thumb_1000_default_small_square_81dfa380953b084fb7eefb0273ac602bdee11874.jpg'
+                                'authorImage': video.author.image
                         };
                     };
                     for(i in videos.elements) {
@@ -250,7 +252,6 @@
                 feedfilter: that.getFilters(),
                 onEndless: function( plugin ) {
                     plugin.options.feedfilter.page += 1;
-                    console.log("loading video gallery for channel %s with filter %s page: %s", plugin.options.feedfilter.channel, plugin.options.feedfilter.filter, plugin.options.feedfilter.page);
                     return plugin.options.feedfilter;
                 },
                 onDataReady: function(videos) {

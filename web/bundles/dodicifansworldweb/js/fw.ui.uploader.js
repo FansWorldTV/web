@@ -1,4 +1,4 @@
-/*global ExposeTranslation, $, jQuery, alert, FormData, console, error, success, endless, ajax, templateHelper, qq, Routing, appLocale, exports, module, require, define*/
+/*global ExposeTranslation, $, jQuery, alert, FormData, FileReader, escape, console, error, success, endless, ajax, templateHelper, qq, Routing, appLocale, exports, module, require, define*/
 /*jslint nomen: true */ /* Tolerate dangling _ in identifiers */
 /*jslint vars: true */ /* Tolerate many var statements per function */
 /*jslint white: true */
@@ -23,7 +23,9 @@
 /*jslint vars: true */ /* Tolerate many var statements per function */
 /*jslint maxerr: 100 */ /*  Maximum number of errors */
 
-// fansWorld file upload plugin 1.7 (new XHR backend)
+// fansWorld file upload plugin 1.9 backend listeners
+// 1.8 (new frontend with bootstrap)
+// 1.7 (new XHR backend)
 // 1.6 (auto resize with a timer)
 
 // the semi-colon before function invocation is a safety net against concatenated
@@ -41,8 +43,9 @@ $(document).ready(function () {
         entryId: null,
         mediaExtensions: {
             photo: ['jpg', 'jpeg', 'png', 'gif'],                       // Allowed extensions by media type
-            video: ['avi', 'mov', 'mpeg', 'mp4', '3gp'],
-            audio: ['wav', 'mp3', 'ogg', 'midi']
+            video: ['flv', 'f4v', 'mov', 'mp4', 'qt', 'm4v', 'avi', '3gp', 'asf', 'wmv', 'mpg', 'm1v', 'm2v', 'mkv', 'ogg', 'rm', 'web'],
+            audio: ['wav', 'mp3', 'ogg', 'midi'],
+            all: ['jpg', 'jpeg', 'png', 'gif', 'flv', 'f4v', 'mov', 'mp4', 'qt', 'm4v', 'avi', '3gp', 'asf', 'wmv', 'mpg', 'm1v', 'm2v', 'mkv', 'ogg', 'rm', 'web']
         },
         action: {
             photo: Routing.generate(appLocale + '_photo_fileupload'),   // link for photos
@@ -89,6 +92,14 @@ $(document).ready(function () {
                 that.createWithBootstrap();
                 return;
             }
+            if(that.options.mediaType === 'photo') {
+                $(that.element).on('click', function(event) {
+                    that.createFwPhotoUploader();
+                    return false;
+                });
+            }
+            return;
+            /*
             $(that.element).colorbox({
                 innerWidth: 700,
                 innerHeight: 475,
@@ -129,6 +140,7 @@ $(document).ready(function () {
                     that.uploader._handler.cancelAll();
                 }
             });
+            */
         },
         bindAlbumActions: function() {
             var that = this;
@@ -176,7 +188,412 @@ $(document).ready(function () {
             that.bindAlbumActions();
             that.options.timer = setInterval(function(){ that.resizePopup(); }, 250);
         },
+        getImage: function(file) {
+            var reader = new FileReader();
+            var deferred = new jQuery.Deferred();
+            reader.onload = function(event) {
+                var img = new Image();
+                img.onload = function(event) {
+                    deferred.resolve(img);
+                };
+                img.src = event.target.result;
+                img.alt = file.name;
+                img.title = escape(file.name);
+
+                var result = event.target.result;
+                var fileName = file.name; //Should be 'picture.jpg'
+            };
+            reader.readAsDataURL(file);
+            return deferred.promise();
+        },
+        placeImage: function(imgObj, container) {
+            var imageAspectRatio = imgObj.height / imgObj.width;
+            var containerAspectRatio = container.height() / container.width();
+            // figure out which dimension hits first and set that to match
+            if (imageAspectRatio > containerAspectRatio) {
+                imgObj.style.height = container.height() + "px";
+            } else {
+                imgObj.style.width = container.width() + "px";
+                var mul = imgObj.width / container.width();
+                var offset = (imgObj.height / mul) / 2;
+                imgObj.style.top = '50%';
+                imgObj.style.marginTop = '-' + offset + 'px';
+            }
+            container.append(imgObj);
+        },
         createFwPhotoUploader: function() {
+            var that = this;
+            //var input = that.createInput();
+            var boot = null;
+            var id = parseInt((Math.random() * 1000), 10);
+            var modal = {
+                modalId: id,
+                modalLabel: 'label',
+                modalTitle: 'Compartir',
+                modalBody: 'Uploader'
+            };
+            var uploader = new window.UPLOADER({
+                element: $(that.options.uploaderSelector)[0],
+                multiple: false,
+                autoUpload: true,
+                action: that.options.action[that.options.mediaType],
+                maxConnections: 1,
+                allowedExtensions: that.options.mediaExtensions.all,
+                onLoadStart: function(event) {
+                    return;
+                },
+                onProgress: function(event) {
+                    return;
+                },
+                onComplete: function(event) {
+                    return;
+                }
+            });
+            function processFiles(files) {
+                var i;
+
+                function onProgress(event) {
+                    var percentComplete = parseInt(((event.source.loaded / event.source.total) * 100), 10);
+                    boot.find('.progress .bar').css('width', percentComplete + '%');
+                    $('progress').val(percentComplete);
+                }
+                function onImageUploadComplete(event) {
+                    var xhr = event.target.xhr;
+                    var data = JSON.parse(xhr.responseText);
+                    var formHtml = null;
+                    var href = Routing.generate(appLocale + '_photo_filemeta', {
+                        'originalFile': data.originalFile,
+                        'tempFile': data.tempFile,
+                        'width': data.width,
+                        'height': data.height
+                    });
+                    $.ajax({url: href, type: 'GET'}).then(function(response){
+                        formHtml = $(response).clone();
+                        formHtml.find('input[type="submit"]').hide();
+
+                        boot.find('.modal-body').html(formHtml);
+                        boot.find("#modal-btn-save").removeAttr("disabled");
+                        // Set default title
+                        boot.find("#form_title").val(data.originalFile);
+
+                        boot.find("#modal-btn-save").one("click", null, null, function(){
+                            $(this).addClass('loading-small');
+                            boot.find('form').find('input[type="submit"]').click();
+                        });
+                        boot.find('form').submit(function() {
+                            var data = $(this).serializeArray();
+                            var action = $(this).attr('action');
+                            boot.find('form').find('input[type="submit"]').addClass('loading-small');
+                            $.ajax({
+                                url: this.getAttribute('action'),
+                                data: data,
+                                type: 'POST'
+                            })
+                            .then(function(response){
+                                location.reload();
+                            });
+                            return false;
+                        });
+                    });
+                }
+                function onVideoUploadComplete(event) {
+                    var xhr = event.target.xhr;
+                    var name = $(xhr.responseText).find('name').text();
+
+                    var formHtml = null;
+                    var href = Routing.generate(appLocale + '_video_fileupload');
+                    $.ajax({url: href, type: 'GET'}).then(function(response){
+                        formHtml = $(response).clone();
+                        formHtml.find('input[type="submit"]').hide();
+                        boot.find('.modal-body').html(formHtml);
+                        boot.find("#modal-btn-save").removeAttr("disabled");
+                        // Set default title
+                        boot.find("#form_title").val(name);
+
+                        boot.find("#modal-btn-save").one("click", null, null, function(){
+                            $(this).addClass('loading-small');
+                            boot.find('form').find('input[type="submit"]').click();
+                        });
+                        boot.find('form').submit(function() {
+                            var data = $(this).serializeArray();
+                            var action = $(this).attr('action');
+                            boot.find('form').find('input[type="submit"]').addClass('loading-small');
+                            $.ajax({
+                                url: this.getAttribute('action'),
+                                data: data,
+                                type: 'POST'
+                            })
+                            .then(function(response){
+                                location.reload();
+                            });
+                            return false;
+                        });
+                    });
+                }
+
+                // Image files
+                uploader.addListener('onprogress', onProgress);
+                uploader.addListener('oncomplete', onImageUploadComplete);
+                // Video files
+                videoUploader.addListener('onprogress', onProgress);
+                videoUploader.addListener('oncomplete', onVideoUploadComplete);
+
+                for(i = 0; i < files.length; i += 1) {
+                    if(!files.hasOwnProperty(i)) {
+                        return false;
+                    }
+                    var file = files[i];
+                    boot.find('#drop_zone').hide();
+                    if (file.type.match('image.*')) {
+                        ///////////////////////////////////// IMAGES //
+                        uploader.addFile(file);
+
+                        $.when(that.getImage(file))
+                        .then(function(image){
+                            var container = null;
+                            var infobox = null;
+                            var uploadBtt = $("<button class='btn upload'>upload</button>");
+                            if(files.length > 1) {
+                                container = $("<div class='thumbnail' style='width:64px;height:64px;'></div>");
+                                infobox = $("<div class='fileinfo' style='height:64px;'></div>")
+                                .append("<h5 class='title'>" + image.alt + "</h5>")
+                                .append("<div class='progress progress-striped active' style='margin-top:4px;'><div class='bar' style='width: 0%;'></div></div>")
+                                .append(uploadBtt);
+                            } else {
+                                container = $("<div class='thumbnail' style='width: 256px;height:256px;'></div>");
+                                infobox = $("<div class='fileinfo' style='width: 200px;''></div>")
+                                .append("<h5 class='title'>" + image.alt + "</h5>")
+                                .append("<div class='progress progress-striped active' style='margin-top:10px;'><div class='bar' style='width: 0%;'></div></div>")
+                                .append("<div class='well'>"+ "file: " + image.alt + "<br /> size: " + file.size +"</div>")
+                                .append(uploadBtt);
+                            }
+                            uploadBtt.one("click", null, null, function(){
+                                console.log("upload button clicked")
+                                uploader.start();
+                            });
+                            that.placeImage(image, container)
+                            var cosa = $("<li></li>").append(container).append(infobox);
+                            boot.find('output ul').append(cosa);
+                            uploader.start();
+                        });
+                    } else if (file.type.match('video.*')) {
+                        ///////////////////////////////////// VIDEO //
+                        $.when(that.getKs())
+                        .then(function(ks) {
+                            var dfd = new jQuery.Deferred();
+                            $.when(that.getMediaId(file.name, ks), that.getUploadToken(file.name, ks))
+                            .then(function (mediaId, token){
+                                return {kalturaKeys: [that.options.ks, mediaId, token]};
+                            })
+                            .done(function (kaltura){
+                                console.log(JSON.stringify(kaltura));
+                                dfd.resolve(kaltura);
+                            })
+                            .fail(function (error) {
+                                that.options.onError(error);
+                                dfd.reject(new Error(error));
+                            });
+                            return dfd.promise();
+                        })
+                        .done(function (kaltura) {
+                            console.log("ks: %s id: %s tk: %s", JSON.stringify(kaltura));
+                            videoUploader.addFile(file, {
+                                service: 'media',
+                                action: 'addContent',
+                                entryId: that.options.entryId,
+                                ks: that.options.ks,
+                                'resource:objectType': 'KalturaUploadedFileResource'
+                            });
+                            videoUploader.start();
+                            $.when(templateHelper.htmlTemplate('general-progress_modal', modal))
+                            .then(function(html) {
+                                var progress = $(html).find('.modal-body').clone();
+                                boot.find('.modal-body').html(progress);
+                            });
+                        })
+                        .fail(function (error) {
+                            return error;
+                        });
+                    }
+                }
+            }
+
+            var videoUploader = new window.UPLOADER({
+                element: $(that.options.uploaderSelector)[0],
+                autoUpload: true,
+                multiple: false,
+                forceMultipart: true,
+                normalHeaders: false,
+                responsePassthrough: true,
+                action: that.options.action.video,
+                maxConnections: 1,
+                inputName: 'resource:fileData',
+                allowedExtensions: that.options.mediaExtensions.all,
+                onLoadStart: function(event) {
+                    return;
+                },
+                onProgress: function(event) {
+                    return;
+                },
+                onComplete: function(event) {
+                    return;
+                },
+                onError: function(error) {
+                    return error;
+                }
+            });
+            $.when(templateHelper.htmlTemplate('general-upload_modal', modal)).then(function(html) {
+                boot = $(html).clone();
+                boot.find('input[type="file"]').on('change', function(event) {
+                    var i;
+                    var files = event.target.files; // FileList object
+                    var file = null;
+                    processFiles(files);
+
+                    // Loop through the FileList and render image files as thumbnails.
+                    for (i = 0; i < files.length; i += 1) {
+                        // Only process image files.
+                        file = files[i];
+                        console.log("mime: " + file.type);
+                        if (!file.type.match('image.*')) {
+                            continue;
+                        } else {
+                            $.when(that.getImage(file))
+                            .then(function(image){
+                                console.log(file.name);
+                            });
+                        }
+                    }
+                });
+                boot.find('#drop_zone')
+                .on('dragenter', function(event) {
+                    if(event.target === this) {
+                        $(this).animate({ 'background-color': '#c0c0c0', 'border-color': '#444' } );
+                        console.log('dragenter');
+                    }
+                }).on('dragover', function(event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    if(event.target === this) {
+                        event.originalEvent.dataTransfer.dropEffect = 'copy';
+                    }
+                }).on('dragleave', function(event) {
+                    if(event.target === this) {
+                        $(this).animate({ 'background-color': 'transparent', 'border-color': '#bbb' } );
+                        console.log('dragleave');
+                    }
+                }).on('drop', function(event) {
+                    var i;
+                    event.stopPropagation();
+                    event.preventDefault();
+                    if(event.target === this) {
+                        var files = event.originalEvent.dataTransfer.files;
+                        processFiles(files);
+
+                        return;
+                        uploader.addListener('onprogress', function(event) {
+                            var percentComplete = parseInt(((event.source.loaded / event.source.total) * 100), 10);
+                            boot.find('.progress .bar').css('width', percentComplete + '%');
+                        });
+                        uploader.addListener('oncomplete', function(event) {
+                            var xhr = event.target.xhr;
+                            var data = JSON.parse(xhr.responseText);
+                            var formHtml = null;
+                            var href = Routing.generate(appLocale + '_photo_filemeta', {
+                                'originalFile': data.originalFile,
+                                'tempFile':data.tempFile,
+                                'width': data.width,
+                                'height': data.height
+                            });
+                            $.ajax({url: href, type: 'GET'}).then(function(response){
+                                formHtml = $(response).clone();
+                                boot.find('.modal-body').html(formHtml);
+                                boot.find("#modal-btn-save").one("click", null, null, function(){
+                                    $(this).addClass('loading-small');
+                                    boot.find('form').find('input[type="submit"]').click();
+                                });
+                                boot.find('form').submit(function() {
+                                    var data = $(this).serializeArray();
+                                    var action = $(this).attr('action');
+                                    boot.find('form').find('input[type="submit"]').addClass('loading-small');
+                                    $.ajax({
+                                        url: this.getAttribute('action'),
+                                        data: data,
+                                        type: 'POST'
+                                    })
+                                    .then(function(response){
+                                        location.reload();
+                                    });
+                                    return false;
+                                });
+                            });
+                        });
+
+                        uploader.addFiles(files);
+
+                        for(i = 0; i < files.length; i += 1) {
+                            if(!files.hasOwnProperty(i)) {
+                                return false;
+                            }
+                            var file = files[i];
+                            boot.find('#drop_zone').hide();
+                            if (!file.type.match('image.*')) {
+                                continue;
+                            } else {
+                                $.when(that.getImage(file))
+                                .then(function(image){
+                                    var container, infobox;
+                                    var uploadBtt = $("<button class='btn upload'>upload</button>");
+                                    if(files.length > 1) {
+                                        container = $("<div class='thumbnail' style='width:64px;height:64px;'></div>");
+                                        infobox = $("<div class='fileinfo' style='height:64px;'></div>")
+                                        .append("<h5 class='title'>" + image.alt + "</h5>")
+                                        .append("<div class='progress progress-striped active' style='margin-top:4px;'><div class='bar' style='width: 0%;'></div></div>")
+                                        .append(uploadBtt);
+                                    } else {
+                                        container = $("<div class='thumbnail' style='width: 256px;height:256px;'></div>");
+                                        infobox = $("<div class='fileinfo' style='width: 200px;''></div>")
+                                        .append("<h5 class='title'>" + image.alt + "</h5>")
+                                        .append("<div class='progress progress-striped active' style='margin-top:10px;'><div class='bar' style='width: 0%;'></div></div>")
+                                        .append("<div class='well'>"+ "file: " + image.alt + "<br /> size: " + file.size +"</div>")
+                                        .append(uploadBtt);
+                                    }
+                                    uploadBtt.one("click", null, null, function(){
+                                        uploader.start();
+                                    });
+                                    that.placeImage(image, container)
+                                    var cosa = $("<li></li>").append(container).append(infobox);
+                                    boot.find('output ul').append(cosa);
+                                    uploader.start();
+                                });
+                            }
+                        }
+                    }
+                });
+                boot.find("#modal-btn-close").one("click", null, null, function(){
+                    boot.modal('hide');
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+                    uploader.stopAll();
+                    videoUploader.stopAll();
+                });
+                boot.modal({
+                    backdrop: true
+                }).css({
+                    width: '700px',
+                    'margin-left': '-350px'
+                }).on('hide', function() {
+                    uploader.stopAll();
+                    videoUploader.stopAll();
+                    $('.modal-backdrop').remove();
+                    $(this).data('modal', null);
+                    $(this).remove();
+                });
+            });
+
+            return false;
+        },
+        createFwPhotoUploader2: function() {
             var that = this;
             var uploader = new qq.FileUploader({
                 element: $("#file-uploader")[0],
@@ -225,6 +642,119 @@ $(document).ready(function () {
                 }
             });
         },
+        dad: function(element) {
+            $(element).on('dragenter', function(event) {
+                if(event.target === this) {
+                    $(this).animate({ 'background-color': '#c0c0c0', 'border-color': '#444' } );
+                    console.log('dragenter');
+                }
+            }).on('dragover', function(event) {
+                event.stopPropagation();
+                event.preventDefault();
+                if(event.target === this) {
+                    event.originalEvent.dataTransfer.dropEffect = 'copy';
+                }
+            }).on('dragleave', function(event) {
+                if(event.target === this) {
+                    $(this).animate({ 'background-color': 'transparent', 'border-color': '#bbb' } );
+                    console.log('dragleave');
+                }
+            }).on('drop', function(event) {
+                var i;
+                event.stopPropagation();
+                event.preventDefault();
+                if(event.target === this) {
+                    var files = event.originalEvent.dataTransfer.files;
+                    processFiles(files);
+
+                    return;
+                    uploader.addListener('onprogress', function(event) {
+                        var percentComplete = parseInt(((event.source.loaded / event.source.total) * 100), 10);
+                        boot.find('.progress .bar').css('width', percentComplete + '%');
+                    });
+                    uploader.addListener('oncomplete', function(event) {
+                        var xhr = event.target.xhr;
+                        var data = JSON.parse(xhr.responseText);
+                        var formHtml = null;
+                        var href = Routing.generate(appLocale + '_photo_filemeta', {
+                            'originalFile': data.originalFile,
+                            'tempFile':data.tempFile,
+                            'width': data.width,
+                            'height': data.height
+                        });
+                        $.ajax({url: href, type: 'GET'}).then(function(response){
+                            formHtml = $(response).clone();
+                            boot.find('.modal-body').html(formHtml);
+                            boot.find("#modal-btn-save").one("click", null, null, function(){
+                                $(this).addClass('loading-small');
+                                boot.find('form').find('input[type="submit"]').click();
+                            });
+                            boot.find('form').submit(function() {
+                                var data = $(this).serializeArray();
+                                var action = $(this).attr('action');
+                                boot.find('form').find('input[type="submit"]').addClass('loading-small');
+                                $.ajax({
+                                    url: this.getAttribute('action'),
+                                    data: data,
+                                    type: 'POST'
+                                })
+                                .then(function(response){
+                                    location.reload();
+                                });
+                                return false;
+                            });
+                        });
+                    });
+
+                    uploader.addFiles(files);
+
+                    for(i = 0; i < files.length; i += 1) {
+                        if(!files.hasOwnProperty(i)) {
+                            return false;
+                        }
+                        var file = files[i];
+                        boot.find('#drop_zone').hide();
+                        if (!file.type.match('image.*')) {
+                            continue;
+                        } else {
+                            $.when(that.getImage(file))
+                            .then(function(image){
+                                var container, infobox;
+                                var uploadBtt = $("<button class='btn upload'>upload</button>");
+                                if(files.length > 1) {
+                                    container = $("<div class='thumbnail' style='width:64px;height:64px;'></div>");
+                                    infobox = $("<div class='fileinfo' style='height:64px;'></div>")
+                                    .append("<h5 class='title'>" + image.alt + "</h5>")
+                                    .append("<div class='progress progress-striped active' style='margin-top:4px;'><div class='bar' style='width: 0%;'></div></div>")
+                                    .append(uploadBtt);
+                                } else {
+                                    container = $("<div class='thumbnail' style='width: 256px;height:256px;'></div>");
+                                    infobox = $("<div class='fileinfo' style='width: 200px;''></div>")
+                                    .append("<h5 class='title'>" + image.alt + "</h5>")
+                                    .append("<div class='progress progress-striped active' style='margin-top:10px;'><div class='bar' style='width: 0%;'></div></div>")
+                                    .append("<div class='well'>"+ "file: " + image.alt + "<br /> size: " + file.size +"</div>")
+                                    .append(uploadBtt);
+                                }
+                                uploadBtt.one("click", null, null, function(){
+                                    uploader.start();
+                                });
+                                that.placeImage(image, container)
+                                var cosa = $("<li></li>").append(container).append(infobox);
+                                boot.find('output ul').append(cosa);
+                                uploader.start();
+                            });
+                        }
+                    }
+                }
+            });
+        },
+        onDrop: function(event) {
+            var that = this;
+            if(event.target === this) {
+                var files = event.originalEvent.dataTransfer.files;
+                processFiles(files);
+            }
+        },
         createInput: function(){
             var that = this;
             var input = document.createElement("input");
@@ -256,7 +786,8 @@ $(document).ready(function () {
                 opacity: 0
             });
 
-            $(that.options.uploaderSelector)[0].appendChild(input);
+            //$(that.options.uploaderSelector)[0].appendChild(input);
+            $(that.element).append(input);
 
             // IE and Opera, unfortunately have 2 tab stops on file input
             // which is unacceptable in our case, disable keyboard access
@@ -302,21 +833,15 @@ $(document).ready(function () {
                 alert('Please select a crop region then press submit.');
                 return false;
             };
+            <a id="kaka" data-ismodal="false" data-upload="photo" data-type="profile" data-uploader-selector="avatar-uploader" class="btn">Subir Fotos</a>
             */
-        },
-        sendForm: function(form) {
-            var that = this;
-            var action = form.getAttribute('action');
-            var formData = new FormData(form);
-            var xhr = new XMLHttpRequest();
-            // Add any event handlers here...
-            xhr.open('POST', action, true);
-            xhr.send(formData);
         },
         createWithBootstrap: function() {
             var that = this;
             var input = that.createInput();
             var boot = null;
+
+            console.log("createWithBootstrap()");
 
             var uploader = new window.UPLOADER({
                 element: $(that.options.uploaderSelector)[0],
@@ -354,6 +879,7 @@ $(document).ready(function () {
                             console.log("modal hide");
                             $('.modal-backdrop').remove();
                             $(this).data('modal', null);
+                            $(this).remove();
                         });
                     });
                 },
@@ -396,7 +922,7 @@ $(document).ready(function () {
                             });
                               return false;
                         });
-                    })
+                    });
                 }
             });
 
@@ -404,87 +930,8 @@ $(document).ready(function () {
             $(input).on('change', function(event) {
                 uploader.addFiles(event.target.files);
             });
-
-            uploader.addListener('oncomplete', function(event) {
-
-                return;
-                var xhr = event.target.xhr;
-                var data = JSON.parse(xhr.responseText);
-                var formHtml = null;
-                var href = Routing.generate(appLocale + '_user_change_imageSave', {
-                    'originalFile': data.originalFile,
-                    'tempFile':data.tempFile,
-                    'width': data.width,
-                    'type': that.options.imageType,
-                    'height': data.height
-                });
-                $.ajax({url: href, type: 'GET'})
-                .then(function(response) {
-                    formHtml = $(response).clone();
-
-                    console.log(formHtml);
-
-                    var id = parseInt((Math.random() * 1000), 10);
-                    var modal = {
-                        modalId: id,
-                        modalLabel: 'label',
-                        modalTitle: 'Upload Photo',
-                        modalBody: 'Uploader'
-                    };
-
-                    $.when(templateHelper.htmlTemplate('general-upload_modal', modal))
-                    .then(function(html) {
-                        //var boot = $(html).clone();
-                        boot.find('.modal-body').html(formHtml);
-
-                        //that.makeCrop();
-                        console.log("modal id: " + modal.modalId);
-                        boot.find("#modal-btn-close").one("click", null, null, function(){
-                            boot.modal('hide');
-                            $('body').removeClass('modal-open');
-                            $('.modal-backdrop').remove();
-                            uploader.stopAll();
-                        });
-                        /*
-                        boot.modal({
-                            //backdrop: false
-                        })
-                        .css({
-                            width: '700px',
-                            'margin-left': '-350px'
-                        })
-                        .on('hide', function() {
-                            console.log("modal hide");
-                            $('.modal-backdrop').remove();
-                            $(this).data('modal', null);
-                        });
-                        */
-                        //boot.find('form').find('input[type="submit"]').hide();
-                        boot.find("#modal-btn-save").one("click", null, null, function(){
-                            $(this).addClass('loading-small');
-                            boot.find('form').find('input[type="submit"]').click();
-                        });
-                        boot.find('form').submit(function() {
-                            var data = $(this).serializeArray();
-                            var action = $(this).attr('action');
-                            console.log("onsubmit");
-                            console.log(this.getAttribute('action'));
-                            boot.find('form').find('input[type="submit"]').addClass('loading-small');
-                            $.ajax({
-                                url: this.getAttribute('action'),
-                                data: data,
-                                type: 'POST'
-                            })
-                            .then(function(response){
-                                location.reload();
-                            });
-                              return false;
-                        });
-                    });
-                });
-            });
         },
-        createFwImageUploader: function() {
+        createFwImageUploaderX: function() {
             var that = this;
             var list = $('<ul class="qq-upload-list"></ul>');
             var uploader = new qq.FileUploader({
@@ -574,7 +1021,88 @@ $(document).ready(function () {
                 }
             });
         },
-        createFwVideoUploader: function() {
+        createFwVideoUploaderMAX: function() {
+            var that = this;
+
+                $.when(that.getKs())
+                .then(function(ks) {
+                    var dfd = new jQuery.Deferred();
+                    $.when(that.getMediaId('filename', ks), that.getUploadToken('filename', ks))
+                    .then(function (mediaId, token){
+                        return {kalturaKeys: [that.options.ks, mediaId, token]};
+                    })
+                    .done(function (kaltura){
+                        console.log(JSON.stringify(kaltura));
+                        dfd.resolve(kaltura);
+                    })
+                    .fail(function (error) {
+                        that.options.onError(error);
+                        dfd.reject(new Error(error));
+                    });
+                    return dfd.promise();
+                })
+                .done(function (kaltura) {
+                    console.log("ks: %s id: %s tk: %s", JSON.stringify(kaltura));
+                })
+                .fail(function (error) {
+                    return error;
+                });
+
+                /*
+                var uploader = new window.UPLOADER({
+                    element: $(that.options.uploaderSelector)[0],
+                    autoUpload: false,
+                    multiple: false,
+                    forceMultipart: true,
+                    normalHeaders: false,
+                    responsePassthrough: true,
+                    action: that.options.action[that.options.mediaType],
+                    maxConnections: 1,
+                    inputName: 'resource:fileData',
+                    allowedExtensions: that.options.mediaExtensions['all'],
+                    onLoadStart: function(event) {
+                        return;
+                    },
+                    onProgress: function(event) {
+                        return;
+                    },
+                    onComplete: function(event) {
+                        return;
+                    },
+                    onError: function(error) {
+                        return error;
+                    }
+                });
+
+                that.uploader = new qq.FileUploader({
+                element: $('#file-uploader')[0],
+                action: that.options.action[that.options.mediaType],
+                multiple: false,
+                forceMultipart: true,
+                normalHeaders: false,
+                responsePassthrough: true,
+                debug: true,
+                inputName: 'resource:fileData',
+                failedUploadTextDisplay: {mode: 'none'},
+                onSubmit: function(id, fileName){
+                    that.uploader.setParams({
+                        service: 'media',
+                        action: 'addContent',
+                        entryId: that.options.entryId,
+                        ks: that.options.ks,
+                        'resource:objectType': 'KalturaUploadedFileResource'
+                    });
+                    //$('.qq-uploader').hide();
+                    var progress = '<div id="progressbar" class="progress progress-success progress-striped" style="margin:20px;height: 40px;"><div class="bar" style="height: 40px;margin: 0px;background-color: #68CE1D;border-radius: 4px;height: 40px"></div></div>';
+                    $(".container-up").html('');
+                    $(".container-up").html(progress);
+                    return that.options.onSubmit(id, fileName);
+
+                },
+            });
+            */
+        },
+        createFwVideoUploaderX: function() {
             var that = this;
             that.uploader = new qq.FileUploader({
                 element: $('#file-uploader')[0],
@@ -625,7 +1153,6 @@ $(document).ready(function () {
                     return that.options.onError(id, fileName, reason);
                 }
             });
-            window.uploader = that.uploader;
             return that.uploader;
         },
         getUploadToken: function (fileName, ks) {

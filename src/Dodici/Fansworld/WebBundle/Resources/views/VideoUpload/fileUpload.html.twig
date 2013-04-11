@@ -24,7 +24,7 @@
 
     <div class="greybox">
 
-
+            <!--
             <div class="videoContainer">
                 <div class="container-up">
                     <div id="progressbar" class="progress progress-success progress-striped">
@@ -33,15 +33,9 @@
                     <div id="file-uploader"></div>
                 </div>
             </div>
-
+            -->
             <div class="uploadPhotoVideoForm">
                 <form action="{{ path('video_fileupload')}}" method="post" enctype="multipart/form-data" class="bigform upload-photo" name="frmUpload" id="frm-upload-video">
-
-                    <div class="row-fluid">
-                        <section class="span2">
-                        </section>
-                    </div>
-
                         <p class="filename"><small></small></p>
                             {{ form_errors(form) }}
                             <div class="row-fluid">
@@ -75,7 +69,7 @@
                     </span>
                     <div class="sharewith" >
                         <input data-token-input type="text" id="share_input" data-route="_share_ajaxwith" data-action="share" placeholder="Con quien lo queres compartir..." />
-                        <input type="submit" name="submit" value="{{ 'share'|trans }}" id="share_it" class="btn btn-primary" disabled />
+                        <input type="submit" name="submit" value="{{ 'share'|trans }}" id="share_it" class="btn btn-primary" />
                     </div>
             </div>
 
