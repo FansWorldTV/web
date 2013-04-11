@@ -81,7 +81,7 @@ class FacebookProvider implements UserProviderInterface
                 return $user;
             }
             
-        	if (empty($user)) {
+            if (empty($user)) {
                 $user = $this->userManager->createUser();
                 $user->setEnabled(true);
                 $user->setConfirmationToken(null);
@@ -89,44 +89,44 @@ class FacebookProvider implements UserProviderInterface
                 $user->setPassword('');
                 
                 // Set FB image
-		        $imagecontent = file_get_contents(sprintf('https://graph.facebook.com/%1$s/picture?type=large', $fbdata['id']));
-				if ($imagecontent) {
-					$tmpfile = tempnam('/tmp', 'IFB');
-					file_put_contents($tmpfile, $imagecontent);
-					$mediaManager = $this->container->get("sonata.media.manager.media");
-			        $media = new Media();
-			        $media->setBinaryContent($tmpfile);
-			        $media->setContext('default');
-			        $media->setProviderName('sonata.media.provider.image');
-			        $mediaManager->save($media);
-			        $user->setImage($media); 
-				}
-				
-				if (isset($fbdata['location']) && $fbdata['location']) {
-					$location = $this->container->get('user.location')->parseLocation($fbdata['location']);
-					$user->setCountry($location['country']);
-					$user->setCity($location['city']);
-				}
-				
-				$user->setFBData($fbdata);
-				
-				if ($user->getFirstname() || $user->getLastname()) {
-					$username = GedmoUrlizer::urlize($user->getFirstname() . ' ' . $user->getLastname());
-					if ($this->userManager->findUserBy(array('username' => $username))) {
-						$username = $username.uniqid();
-					}
-				} elseif ($fbdata['id']) {
-					$username = $fbdata['id'];
-					if ($this->userManager->findUserBy(array('username' => $username))) {
-						$username = $username.uniqid();
-					}
-				} else {
-					$username = uniqid();
-				}
-				
-				$user->setUsername($username);
-				
-        		// TODO use http://developers.facebook.com/docs/api/realtime
+                $imagecontent = file_get_contents(sprintf('https://graph.facebook.com/%1$s/picture?type=large', $fbdata['id']));
+                if ($imagecontent) {
+                    $tmpfile = tempnam('/tmp', 'IFB');
+                    file_put_contents($tmpfile, $imagecontent);
+                    $mediaManager = $this->container->get("sonata.media.manager.media");
+                    $media = new Media();
+                    $media->setBinaryContent($tmpfile);
+                    $media->setContext('default');
+                    $media->setProviderName('sonata.media.provider.image');
+                    $mediaManager->save($media);
+                    $user->setImage($media); 
+                }
+                
+                if (isset($fbdata['location']) && $fbdata['location']) {
+                    $location = $this->container->get('user.location')->parseLocation($fbdata['location']);
+                    $user->setCountry($location['country']);
+                    $user->setCity($location['city']);
+                }
+                
+                $user->setFBData($fbdata);
+                
+                if ($user->getFirstname() || $user->getLastname()) {
+                    $username = GedmoUrlizer::urlize($user->getFirstname() . ' ' . $user->getLastname());
+                    if ($this->userManager->findUserBy(array('username' => $username))) {
+                        $username = $username.uniqid();
+                    }
+                } elseif ($fbdata['id']) {
+                    $username = $fbdata['id'];
+                    if ($this->userManager->findUserBy(array('username' => $username))) {
+                        $username = $username.uniqid();
+                    }
+                } else {
+                    $username = uniqid();
+                }
+                
+                $user->setUsername($username);
+                
+                // TODO use http://developers.facebook.com/docs/api/realtime
                 
                 if (count($this->validator->validate($user, 'Facebook'))) {
                     // TODO: the user was found obviously, but doesnt match our expectations, do something smart
@@ -134,25 +134,25 @@ class FacebookProvider implements UserProviderInterface
                 }
                 $this->userManager->updateUser($user);
                 
-        		/* Invitation, check for session */
-				$session = $this->container->get('session');
-				$invitetoken = $session->get('registration.token');
-        		$inviteuser = $session->get('registration.inviter');
-        		$inviter = null;
-        		try {
-            		if ($invitetoken && $inviteuser) {
-    	        		$userrepo = $this->container->get('doctrine')->getRepository('Application\Sonata\UserBundle\Entity\User');
-    	        		$inviter = $userrepo->findOneByUsername($inviteuser);
-    	        		$calcinvitetoken = $this->container->get('contact.importer')->inviteToken($inviter);
-    	        		
-    	        		if ($inviter && ($invitetoken == $calcinvitetoken)) {
-    	        			$fbrequest = $session->get('registration.fbrequest');
-    	        		    $this->container->get('contact.importer')->finalizeInvitation($inviter, $user, true, $fbrequest);
-    	        		}
-            		}
-        		} catch (\Exception $e) {
-        		    $this->container->get('session')->setFlash('error', 'Error procesando invitación');
-        		}
+                /* Invitation, check for session */
+                $session = $this->container->get('session');
+                $invitetoken = $session->get('registration.token');
+                $inviteuser = $session->get('registration.inviter');
+                $inviter = null;
+                try {
+                    if ($invitetoken && $inviteuser) {
+                        $userrepo = $this->container->get('doctrine')->getRepository('Application\Sonata\UserBundle\Entity\User');
+                        $inviter = $userrepo->findOneByUsername($inviteuser);
+                        $calcinvitetoken = $this->container->get('contact.importer')->inviteToken($inviter);
+                        
+                        if ($inviter && ($invitetoken == $calcinvitetoken)) {
+                            $fbrequest = $session->get('registration.fbrequest');
+                            $this->container->get('contact.importer')->finalizeInvitation($inviter, $user, true, $fbrequest);
+                        }
+                    }
+                } catch (\Exception $e) {
+                    $this->container->get('session')->setFlash('error', 'Error procesando invitación');
+                }
             }
 
         }

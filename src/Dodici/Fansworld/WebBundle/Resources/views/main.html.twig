@@ -2,22 +2,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="http://www.facebook.com/2008/fbml">
-	<head>
-	    {% block head %}
+    <head>
+        {% block head %}
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             <title>{% block title %}Fansworld{% endblock %}</title>
 
             {% block metatags %}
-	            <meta property="og:image" content="{% block metafbimage %}http://{{ app.request.host ~ asset('bundles/dodicifansworldweb/images/logo.png') }}{% endblock %}"/>
-				<meta property="og:url" content="http://{{ app.request.host ~ app.request.requesturi }}"/>
-				<meta property="og:title" content="{{ block('title') }}"/>
-				<meta property="og:description" content="{{ block('metadescription') }}"/>
-				<meta property="og:site_name" content="Fansworld"/>
-				<meta property="og:type" content="{%block metafbtype %}article{% endblock %}"/>
+                <meta property="og:image" content="{% block metafbimage %}http://{{ app.request.host ~ asset('bundles/dodicifansworldweb/images/logo.png') }}{% endblock %}"/>
+                <meta property="og:url" content="http://{{ app.request.host ~ app.request.requesturi }}"/>
+                <meta property="og:title" content="{{ block('title') }}"/>
+                <meta property="og:description" content="{{ block('metadescription') }}"/>
+                <meta property="og:site_name" content="Fansworld"/>
+                <meta property="og:type" content="{%block metafbtype %}article{% endblock %}"/>
 
-	            <meta name="keywords" content="{% block metakeywords %}{% endblock %}"/>
-	            <meta name="description" content="{% block metadescription %}{% endblock %}"/>
-	            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+                <meta name="keywords" content="{% block metakeywords %}{% endblock %}"/>
+                <meta name="description" content="{% block metadescription %}{% endblock %}"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
             {% endblock %}
 
             {% block stylesheets %}
@@ -27,23 +27,23 @@
             {% endblock %}
 
             {% block javascripts %}
-            	{% if (meteor.enabled) %}
-	                <script type="text/javascript" src="http://{{ meteor.host }}:{{ meteor.clientport }}/meteor.js"></script>
+                {% if (meteor.enabled) %}
+                    <script type="text/javascript" src="http://{{ meteor.host }}:{{ meteor.clientport }}/meteor.js"></script>
                     <script type="text/javascript">
                         {% if app.user %}
                             var notificationChannel = '{{ meteor.encryptChannelName('notification', app.user) }}';
-		                    var friendshipChannel = '{{ meteor.encryptChannelName('friendship', app.user) }}';
-		                {% endif %}
+                            var friendshipChannel = '{{ meteor.encryptChannelName('friendship', app.user) }}';
+                        {% endif %}
 
-		                if (typeof Meteor != 'undefined') {
-			                Meteor.hostid = "{{ meteor.uniqid }}";
-			                Meteor.host = "{{ meteor.host }}";
-			                Meteor.port = "{{ meteor.clientport }}";
-			                Meteor.mode = "stream";
-			                Meteor.debugmode = {{ meteor.debugmode }};
-			                Meteor.pingtimeout = 3600000;
-		                }
-	                </script>
+                        if (typeof Meteor != 'undefined') {
+                            Meteor.hostid = "{{ meteor.uniqid }}";
+                            Meteor.host = "{{ meteor.host }}";
+                            Meteor.port = "{{ meteor.clientport }}";
+                            Meteor.mode = "stream";
+                            Meteor.debugmode = {{ meteor.debugmode }};
+                            Meteor.pingtimeout = 3600000;
+                        }
+                    </script>
                 {% endif %}
 
                 <script type="text/javascript">
@@ -106,13 +106,13 @@
             {% endblock %}
 
             {% block flashmessage %}
-            	{% if app.session.hasFlash('success') %}
-				    <script type="text/javascript">
-				        $(function(){
-				        	success("{{ app.session.flash('success') }}");
-				        });
-				    </script>
-				{% endif %}
+                {% if app.session.hasFlash('success') %}
+                    <script type="text/javascript">
+                        $(function(){
+                            success("{{ app.session.flash('success') }}");
+                        });
+                    </script>
+                {% endif %}
                 {% if app.session.hasFlash('error') %}
                     <script type="text/javascript">
                         $(function(){
@@ -122,8 +122,8 @@
                 {% endif %}
             {% endblock %}
         {% endblock %}
-	</head>
-	<body data-user-is-logged="{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}true{% else %}false{% endif %}"><body>
-		{% block body %}{% endblock %}
-	</body>
+    </head>
+    <body data-user-is-logged="{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}true{% else %}false{% endif %}"><body>
+        {% block body %}{% endblock %}
+    </body>
 </html>
