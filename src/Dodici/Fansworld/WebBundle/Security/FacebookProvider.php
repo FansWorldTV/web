@@ -77,8 +77,6 @@ class FacebookProvider implements UserProviderInterface
                 $user->setEnabled(true);
                 $user->setConfirmationToken(null);
                 $this->userManager->updateUser($user);
-                
-                return $user;
             }
             
         	if (empty($user)) {
@@ -126,20 +124,6 @@ class FacebookProvider implements UserProviderInterface
 				
 				$user->setUsername($username);
 				
-        		/* Invitation, check for session */
-				$session = $this->container->get('session');
-				$invitetoken = $session->get('registration.inviter');
-        		$inviteuser = $session->get('registration.token');
-        		$inviter = null;
-        		if ($invitetoken && $inviteuser) {
-	        		$userrepo = $this->container->get('doctrine')->getRepository('Application\Sonata\UserBundle\Entity\User');
-	        		$inviter = $userrepo->findOneByUsername($inviteuser);
-	        		$calcinvitetoken = $this->container->get('contact.importer')->inviteToken($inviter);
-	        		if ($inviter && ($invitetoken != $calcinvitetoken)) {
-	        			$this->container->get('contact.importer')->finalizeInvitation($inviter, $user, false);
-	        		}
-        		}
-        		
         		// TODO use http://developers.facebook.com/docs/api/realtime
                 
                 if (count($this->validator->validate($user, 'Facebook'))) {
@@ -147,6 +131,26 @@ class FacebookProvider implements UserProviderInterface
                     throw new UsernameNotFoundException('The facebook user could not be stored');
                 }
                 $this->userManager->updateUser($user);
+                
+        		/* Invitation, check for session */
+				$session = $this->container->get('session');
+				$invitetoken = $session->get('registration.token');
+        		$inviteuser = $session->get('registration.inviter');
+        		$inviter = null;
+        		try {
+            		if ($invitetoken && $inviteuser) {
+    	        		$userrepo = $this->container->get('doctrine')->getRepository('Application\Sonata\UserBundle\Entity\User');
+    	        		$inviter = $userrepo->findOneByUsername($inviteuser);
+    	        		$calcinvitetoken = $this->container->get('contact.importer')->inviteToken($inviter);
+    	        		
+    	        		if ($inviter && ($invitetoken == $calcinvitetoken)) {
+    	        			$fbrequest = $session->get('registration.fbrequest');
+    	        		    $this->container->get('contact.importer')->finalizeInvitation($inviter, $user, true, $fbrequest);
+    	        		}
+            		}
+        		} catch (\Exception $e) {
+        		    $this->container->get('session')->setFlash('error', 'Error procesando invitación');
+        		}
             }
 
         }

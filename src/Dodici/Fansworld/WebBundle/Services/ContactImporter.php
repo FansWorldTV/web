@@ -59,8 +59,19 @@ class ContactImporter
     		), true);
     }
     
-    public function finalizeInvitation(User $inviter, User $target, $flush=true)
+    public function finalizeInvitation(User $inviter, User $target, $flush=true, $fbrequest=null)
     {
-    	return $this->container->get('friender')->friend($inviter, null, $target, true);
+    	if ($fbrequest && $target->getFacebookId()) {
+    	    foreach ($fbrequest as $fbr) {
+        	    $fullid = $fbr.'_'.$target->getFacebookId();
+        	    try {
+        	        $this->container->get('app.facebook')->delete($fullid);
+        	    } catch(\Exception $e) {
+        	        // failed to delete request
+        	    }
+    	    }
+    	}
+    	
+        return $this->container->get('friender')->friend($inviter, null, $target, true);
     }
 }
