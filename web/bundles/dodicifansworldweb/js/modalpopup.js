@@ -53,6 +53,13 @@
                             close();
                         };
                     });
+                    
+                    $close = $(self.settings.close);
+                    $close.on('click', function (e) {
+                        close();
+                        e.preventDefault();
+                        return false;
+                    });
 
                     $('body').tooltip({
                         selector:'[rel="tooltip"]'
@@ -156,14 +163,8 @@
 
             $container = $(self.settings.container);
             $overlay = $(self.settings.overlay);
-            $close = $(self.settings.close);
             $content = $(self.settings.content);
-
-            $close.on('click', function (e) {
-                close();
-                e.preventDefault();
-                return false;
-            });
+            
 
             if($button.attr('data-open-modal')){
                 open();

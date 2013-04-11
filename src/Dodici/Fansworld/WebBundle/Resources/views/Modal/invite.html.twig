@@ -1,0 +1,82 @@
+<div class="invite-modal">
+    <div class="title-bar">
+        <span class="title">Invitar a Fansworld</span>
+        <span class="close-button"></span>
+    </div>
+        
+    <ul class="nav nav-tabs">
+        <li data-type="facebook" class="active">
+            <a href="#"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/ico_facebook.png' )}}" />Amigos de Facebook</a>
+        </li>
+        <li data-type="email">
+            <a href="#"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/ico_mail.png' )}}" />Invitar por email</a>
+        </li>
+        <li data-type="twitter">
+            <a href="#"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/ico_twitter.png' )}}" />Via Twitter</a>
+        </li>
+    </ul>
+        
+    <div class="content-modal active" data-type="facebook">
+        <div class="not-logged">
+            <span>Necesitamos que te conectes a Facebook para poder enviar tus invitaciones.</span>
+            <button class="fb_button" data-facebook-login></button>
+        </div>
+        <div class="is-logged">
+            <div class="invite-block">
+                <div class="invite-friends">
+                    <span class="top">
+                        <span class="title pull-left">Invitar a unirse</span>
+                        <button class="btn pull-right">Todos</button>
+                    </span>
+                    <ul>
+                    </ul>
+                </div>
+                <div class="fan-friends">
+                    <span class="top">
+                        <span class="title pull-left"">Hazte fan</span>
+                        <button class="btn pull-right">Todos</button>
+                    </span>
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+            <button class="btn btn-success submit-invite">Invitar</button>
+        </div>
+    </div>
+        
+    <div class="content-modal" data-type="email">
+        <form>
+            <span class="legend">Separá las direcciones con comas ","</span>
+            <input class="email" type="text" placeholder="Email"/>
+            <textarea class="msg" placeholder="Mensaje"></textarea>
+            <span class="actions">
+                <button class="btn" type="reset">Borrar</button>
+                <button class="btn btn-success" type="submit">Invitar</button>
+            </span>
+        </form>
+    </div>
+        
+    <div class="content-modal" data-type="twitter">
+        <div class="not-logged">
+            <span>Necesitamos que te conectes a Twitter para poder enviar tus invitaciones..</span>
+            <button class="tw_button"></button>
+        </div>
+        <div class="is-logged">
+            <form>
+                <span>Mensaje</span>
+                <textarea>¡ Los invito a Fansworld.TV ! {{ url }}</textarea>
+                <button type="submit" class="btn btn-success">Twitear</button>
+                <button type="reset" class="btn">Borrar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        var linkfacebook = {% if app.user.linkfacebook==true %}true{% else %}false{% endif %};
+        var linktwitter = {% if app.user.linktwitter==true %}true{% else %}false{% endif %};
+        
+        inviter.init('{{ url }}', linkfacebook, linktwitter);
+    });
+</script>

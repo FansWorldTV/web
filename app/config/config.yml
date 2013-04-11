@@ -154,7 +154,7 @@ fos_facebook:
     app_id: %facebook.app_id%
     secret: %facebook.app_secret%
     cookie: true
-    permissions: [email, user_birthday, user_location, publish_actions]
+    permissions: [email, user_birthday, user_location, publish_actions, friends_hometown, user_hometown]
     
 fos_twitter:
     file: %kernel.root_dir%/../vendor/twitteroauth/twitteroauth/twitteroauth.php
@@ -310,7 +310,7 @@ services:
             container: "@service_container"
     appstate:
       class: Dodici\Fansworld\WebBundle\Services\AppState
-      arguments: [@security.context, @doctrine.orm.entity_manager]
+      arguments: [@security.context, @doctrine.orm.entity_manager, %google.shortener.apikey%]
     app.facebook:
       class: Dodici\Fansworld\WebBundle\Services\AppFacebook
       arguments: [@security.context, @doctrine.orm.entity_manager, @fos_facebook.api, @router, @translator,@appmedia, %fos_facebook.permissions%, %facebook.feed.enabled%, %facebook.namespace%]
@@ -349,7 +349,7 @@ services:
       arguments: [@security.context, @doctrine.orm.entity_manager, @session, @appstate]
     friender:
       class: Dodici\Fansworld\WebBundle\Services\Friender
-      arguments: [@security.context, @doctrine.orm.entity_manager, @appstate, @user.feed.logger]
+      arguments: [@security.context, @doctrine.orm.entity_manager, @appstate, @user.feed.logger, @app.facebook]
     fanmaker:
       class: Dodici\Fansworld\WebBundle\Services\Fanmaker
       arguments: [@security.context, @doctrine.orm.entity_manager, @user.feed.logger]
@@ -488,7 +488,7 @@ services:
         arguments: [@serializer, @router, @fos_user.entity_manager, @appstate, @security.context]
     serializer.user:
         class: Dodici\Fansworld\WebBundle\Serializer\User
-        arguments: [@router]
+        arguments: [@router, @appstate]
     serializer.album:
         class: Dodici\Fansworld\WebBundle\Serializer\Album
         arguments: [@appmedia, @router]

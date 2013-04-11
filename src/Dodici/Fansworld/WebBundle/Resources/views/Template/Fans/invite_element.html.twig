@@ -1,0 +1,16 @@
+{% raw %}
+    <li>
+        <img src="{{>image}}" />
+        <div class="pull-left">
+            <span class="name">{{>title}}</span>
+            <br/>
+            <span class="location">{{>location}}</span>
+        </div>
+        {{if canFriend}}
+            <button class="btn btn-small btn-success pull-right btn_friendship add" data-user-id="{{>id}}">SER FAN</button>
+        {{/if}}
+        {{if canInvite}}
+            <button type="button" class="btn btn-primary invite-checkbox" data-toggle="button" data-invite-user="{{>id}}"><i class="icon-plus-sign icon-white"></i></button>
+        {{/if}}
+    </li>
+{% endraw %}

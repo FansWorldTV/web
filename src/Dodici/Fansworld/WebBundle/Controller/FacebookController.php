@@ -3,9 +3,7 @@
 namespace Dodici\Fansworld\WebBundle\Controller;
 
 use Application\Sonata\UserBundle\Entity\User;
-
 use Symfony\Component\HttpKernel\Exception\HttpException;
-
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,55 +19,56 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FacebookController extends SiteController
 {
-	const LIMIT_AJAX_GET = 10;
-	
-	/**
+
+    const LIMIT_AJAX_GET = 10;
+
+    /**
      * Set access token by client js from uri hash
      * @Route("/jstoken", name="facebook_jstoken")
      * @Template
      */
     public function jsTokenAction()
     {
-    	$callback = $this->getRequest()->get('callback');
-    	return array(
-    		'callback' => $callback
-    	);
+        $callback = $this->getRequest()->get('callback');
+        return array(
+            'callback' => $callback
+        );
     }
-    
-	/**
+
+    /**
      * Set access token
      * @Route("/settoken", name="facebook_settoken")
      */
     public function setTokenAction()
     {
-    	$user = $this->getUser();
-    	$signed_request = $this->getRequest()->get('signed_request');
-    	if ($signed_request && ($user instanceof User)) {
-	    	$facebook = $this->get('fos_facebook.api');
-	    	
-	    	$fbuid = $facebook->getUser();
-			$fbtoken = $facebook->getAccessToken();
-			
-			if ($fbuid && $fbtoken) {
-				if ($fbuid != $user->getFacebookId()) {
-					$user->setFacebookId($fbuid);
-					$em = $this->getDoctrine()->getEntityManager();
-					$em->persist($user);
-					$em->flush();
-				}
-				
-		    	return $this->jsonResponse(array(
-		    		'uid' => $fbuid
-		    	));
-			} else {
-				throw new HttpException(400);
-			}
-    	} else {
-    		throw new HttpException(400);
-    	}
+        $user = $this->getUser();
+        $signed_request = $this->getRequest()->get('signed_request');
+        if ($signed_request && ($user instanceof User)) {
+            $facebook = $this->get('fos_facebook.api');
+
+            $fbuid = $facebook->getUser();
+            $fbtoken = $facebook->getAccessToken();
+
+            if ($fbuid && $fbtoken) {
+                if ($fbuid != $user->getFacebookId()) {
+                    $user->setFacebookId($fbuid);
+                    $em = $this->getDoctrine()->getEntityManager();
+                    $em->persist($user);
+                    $em->flush();
+                }
+
+                return $this->jsonResponse(array(
+                            'uid' => $fbuid
+                ));
+            } else {
+                throw new HttpException(400);
+            }
+        } else {
+            throw new HttpException(400);
+        }
     }
-    
-	/**
+
+    /**
      *  get friends in common
      *  get params (all optional):
      *   - page
@@ -77,28 +76,31 @@ class FacebookController extends SiteController
      */
     public function ajaxCommonFriends()
     {
+        $serializer = $this->get('serializer');
         $request = $this->getRequest();
-    	$page = $request->get('page');
-    	$limit = null; $offset = null;
-    	
-    	if ($page !== null) {
-    		$page--;
-    		$limit = self::LIMIT_AJAX_GET;
-    		$offset = $limit * $page;
-    	}
-        
-    	$friends = $this->get('app.facebook')->facebookFansworld(null, $limit, $offset);
-    	
-        $rfriends = array();
-        foreach ($friends as $friend) {
-            $rfriends[] = array(
-            	'id' => $friend->getId(),
-            	'title' => (string)$friend,
-            	'image' => $this->getImageUrl($friend->getImage(), 'avatar'),
-            	'url' => $this->generateUrl('user_detail', array('username' => $friend->getUsername()))
-            );
+        $page = $request->get('page');
+        $limit = null;
+        $offset = null;
+
+        if ($page !== null) {
+            $page--;
+            $limit = self::LIMIT_AJAX_GET;
+            $offset = $limit * $page;
         }
 
-        return $this->jsonResponse(array('friends' => $rfriends));
+        $friends = $this->get('app.facebook')->facebookFansworld(null, $limit, $offset);
+
+        return $this->jsonResponse(array('friends' => $serializer->values($friends, 'avatar')));
     }
+
+    /**
+     *  @Route("/ajax/getnotcommonfriends", name="facebook_notcommonfriends")
+     */
+    public function ajaxNotCommonFriends()
+    {
+        $user = $this->getUser();
+        $friends = $this->get('app.facebook')->facebookNotFansworld($user);
+        return $this->jsonResponse(array('friends' => $friends));
+    }
+
 }

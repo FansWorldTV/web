@@ -457,3 +457,324 @@
         font-weight: 400;
     }
 }
+
+div.invite-modal {
+    background-color: white;
+    .border-radius(5px);
+    height: 500px;
+    margin-top: 15%;
+
+    div.title-bar {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        height: 50px;
+        font-size: 20px;
+        color: white;
+        background: url('../images/bg-bar-modal.jpg');
+
+        span.title {
+            position: relative;
+            top: 15px;
+            left: 15px;
+        }
+
+        span.close-button {
+            width: 29px;
+            height: 29px;
+            background: url("../images/modal/close.png") no-repeat top;
+            float: right;
+            cursor: pointer;
+            position: relative;
+            z-index: 5;
+            top: 10px;
+            right: 10px;
+            &:hover {
+                background-position:bottom;
+            }
+        }
+    }
+
+    ul.nav-tabs {
+        background-color: #f9f9f5;
+        padding-top: 15px;
+        li {
+            &:first-child {
+                margin-left: 15px;
+            }           
+
+            img {
+                margin-right: 12px;
+            }
+        }
+    }
+
+    div.content-modal {
+        display: none;
+            
+        &.active {
+            display: block;
+        }
+
+        .btn.loading-small {
+            width: auto;
+        }
+
+        &[data-type='facebook'] {
+            div.not-logged {
+                display: none;
+                span {
+                    font-size: 15px;
+                    font-weight: 300;
+                    margin-top: 60px;
+                    margin-bottom: 10px;
+                    text-align: center;
+                    width: 100%;
+                    display: block;
+                }
+                button {
+                    margin: 50px auto;
+                }
+            }
+            div.is-logged {
+                display: none;
+
+                div.invite-block {
+                    display: block;
+                    position: relative;
+                    .size(310px, 100%);
+
+                    span.top {
+                        .clearfix();
+                        span.title {
+                            font-size: 22px;
+                            font-weight: 300;
+                            color: @grayDark;
+                        }
+                    }
+                    
+                    div.fan-friends {
+                        .pull-left();
+                        .size(100%, 33%);
+                        padding: 0 15px 0 15px;
+                        box-sizing: border-box;
+                        overflow-x: hidden;
+                        overflow-y: scroll;
+                        
+                        ul {
+                            margin-top: 10px;
+
+                            li {
+                                .size(40px, 100%);
+                                .pull-left();
+                                box-sizing: border-box;
+                                margin-bottom: 5px;
+
+                                &.notpair {
+                                    padding-right: 5px;
+                                }
+
+                                img {
+                                    margin-right: 10px;
+                                    .size(40px, auto);
+                                }
+                                img, span {
+                                    .pull-left()
+                                }
+                                .name { 
+                                    font-size: 11px;
+                                    font-weight: 600;
+                                }
+                                .location {
+                                    font-weight: 300;
+                                    font-size: 10px;
+                                }
+                            }
+                        }
+                    }
+
+                    div.invite-friends {
+                        .pull-left();
+                        .size(100%, 66%);
+                        padding: 0 15px 0 15px;
+                        box-sizing: border-box;
+                        overflow-x: hidden;
+                        overflow-y: scroll;
+
+                        ul {
+                            margin-top: 10px;
+
+                            li {
+                                .size(40px, 50%);
+                                .pull-left();
+                                box-sizing: border-box;
+                                margin-bottom: 5px;
+
+                                &.notpair {
+                                    padding-right: 5px;
+                                }
+
+                                img {
+                                    margin-right: 10px;
+                                    .size(40px, auto);
+                                }
+
+                                img, span {
+                                    .pull-left()
+                                }
+
+                                .name { 
+                                    font-size: 11px;
+                                    font-weight: 600;
+                                }
+
+                                .location {
+                                    font-weight: 300;
+                                    font-size: 10px;
+                                }
+
+                                .invite-checkbox {
+                                    float: right;
+                                    margin-right: 12px;
+                                    
+                                    i {
+                                        margin-top: 2px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                button.submit-invite {    
+                    font-size: 20px;
+                    font-weight: 300;
+                    padding: 15px;
+                    margin-left: 30%;
+                    margin-top: 10px;
+                }
+            }
+        }
+
+        &[data-type='twitter'] {
+            div.not-logged {
+                display: none;
+                span {
+                    font-size: 15px;
+                    font-weight: 300;
+                    margin-top: 60px;
+                    margin-bottom: 10px;
+                    text-align: center;
+                    width: 100%;
+                    display: block;
+                }
+                button {
+                    margin: 50px auto;
+                }
+            }
+            div.is-logged {
+                display: none;
+
+                form {
+                    display: block;
+                    width: 60%;
+                    height: auto;
+                    margin: 0 auto;
+                    margin-top: 10%;
+                    .clearfix();
+
+                    span {
+                        float: left;
+                        font-size: 17px;
+                        font-weight: 300;
+                        margin-bottom: 10px;
+                    }
+
+                    textarea {
+                        float: left;
+                        width: 100%;
+                        height: 100px;
+                        .clearfix();
+                    }
+
+                    button {
+                        float: right;
+
+                        &:last-child {
+                            margin-right: 10px;
+                        }
+                    }
+                }
+            }
+            
+        }
+
+        &[data-type='email'] {
+            form {
+                width: 60%;
+                margin: 50px auto;
+                display: block;
+                position: relative;
+
+                span.legend {
+                    .pull-right();
+                    .clearfix();
+                    margin-top: 20px;
+                    margin-bottom: 10px;
+                    color: gray;
+                    font-weight: 300;
+                }
+
+                ul.tagit {
+                    width: 97%;
+                    margin-bottom: 5px;
+                    margin-left: 0;
+                }
+
+                input.email, textarea.msg {
+                    width: 97.5%;
+                    font-weight: 300;
+                    color: black;
+
+                    &.msg {
+                        height: 100px;
+                    }
+                }
+
+                span.actions {
+                    .pull-right();
+                    textarea {
+                        height: 100px;
+                    }
+                }
+                
+            }
+        }
+    }
+}
+
+button.fb_button { 
+    .size(44px, 222px);
+    display: block;
+    border: 0;
+    background-image: url('../images/bt-fb-conectarse.png');
+
+    .fb_button_text { font-size: 14px; }
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+button.tw_button { 
+    .size(44px, 222px);
+    display: block;
+    border: 0;
+    background-image: url('../images/bt-tw-conectarse.png');
+
+    .fb_button_text { font-size: 14px; }
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
