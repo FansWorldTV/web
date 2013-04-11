@@ -77,6 +77,8 @@ class FacebookProvider implements UserProviderInterface
                 $user->setEnabled(true);
                 $user->setConfirmationToken(null);
                 $this->userManager->updateUser($user);
+                
+                return $user;
             }
             
         	if (empty($user)) {
