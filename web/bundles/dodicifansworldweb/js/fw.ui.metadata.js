@@ -79,6 +79,7 @@ $(document).ready(function () {
             // and this.options
             var that = this;
             var i;
+            $(that.element).bind("destroyed", $.proxy(that.teardown, that));
             //that.options.dataSource = Routing.generate(appLocale + '_tag_ajaxmatch');
             that.options.magic = parseInt(Math.random() * 9999);
             that.options[that.options.magic] = {
@@ -95,7 +96,10 @@ $(document).ready(function () {
                     selected: []
                 }
             };
-            that.options.dataSource = Routing.generate(appLocale + $(that.element).attr('data-route'));
+            var route = $(that.element).attr('data-route');
+            if(typeof route !== 'undefined') {
+                that.options.dataSource = Routing.generate(appLocale + $(that.element).attr('data-route'));
+            }
             that.options.action = $(that.element).attr('data-action');
 
             // Precargo tags autogenerados
@@ -134,12 +138,26 @@ $(document).ready(function () {
                 console.log("creating auto tag for type: %s, title: %s. id: %s", profile_type, profile_title, profile_id)
                 that.options.prePopulate.push(item);
             }
-            $(that.element).tagit({
+            var tagParams = {
                 availableTags: that.options.sampleTags,
                 suggestionsOnly: that.options.suggestionsOnly,
                 allowSpaces: true,
-                // This will make Tag-it submit a single form value, as a comma-delimited field.
-                autocomplete: {
+                singleField: true,
+                singleFieldNode: $(that.element),
+                afterTagAdded: function(evt, ui) {
+                    if (!ui.duringInitialization) {
+                        that.addEntityItem({label: ui.tagLabel, result: ui.extra});
+                    }
+                },
+                afterTagRemoved: function(evt, ui) {
+                    if (!ui.duringInitialization) {
+                        that.deleteEntityItem({label: ui.tagLabel, result: ui.tag.data('extra')});
+                    }
+                }
+            };
+
+            if(that.options.dataSource) {
+                tagParams.autocomplete = {
                     source: function( request, response ) {
                         console.log("tagit llama autocomplete request.term: " + request.term);
                         $.ajax({
@@ -164,21 +182,9 @@ $(document).ready(function () {
                         });
                     },
                     minLength: 1
-                },
-                singleField: true,
-                singleFieldNode: $(that.element),
-                afterTagAdded: function(evt, ui) {
-                    if (!ui.duringInitialization) {
-                        that.addEntityItem({label: ui.tagLabel, result: ui.extra});
-                    }
-                },
-                afterTagRemoved: function(evt, ui) {
-                    if (!ui.duringInitialization) {
-                        that.deleteEntityItem({label: ui.tagLabel, result: ui.tag.data('extra')});
-                    }
-                }
-            });
-
+                };
+            }
+            $(that.element).tagit(tagParams);
 
             for(i = 0; i < that.options.prePopulate.length; i += 1) {
                 if (that.options.prePopulate.hasOwnProperty(i)) {
@@ -236,6 +242,21 @@ $(document).ready(function () {
             var that = this;
             return that.options[that.options.magic];
         },
+        destroy: function () {
+            var that = this;
+            $(that.element).unbind("destroyed", that.teardown);
+            that.teardown();
+        },
+        teardown: function () {
+            var that = this;
+            $(that.element).isotope('destroy');
+            $.removeData($(that.element)[0], that._name);
+            $(that.element).removeClass(that._name);
+            that.unbind();
+            that.element = null;
+        },
+        bind: function () { },
+        unbind: function () { },
         getVersion: function() {
             return this._version;
         }

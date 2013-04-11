@@ -11,11 +11,40 @@
         <input type="file" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; cursor: pointer; opacity: 0;width: 100%;">
       </div>
     </div>
+<div style="border:1px solid #bbb;border-radius:4px;text-align:center;padding: 10px;margin-top:10px;height: 40px;">
+<div class="control-group">
+              <label class="control-label" for="inputEmail" style="
+    background-image: url(http://www.youtube.com/yt/brand/media/image/yt-brand-standard-logo-95x40.png);
+    height: 40px;
+    background-repeat: no-repeat;
+    background-position-x: 0px;
+    width: 95px;
+    float: left;
+    vertical-align: middle;
+"></label>
+              <div class="controls" style="
+    vertical-align: middle;
+">
+                <input type="text" placeholder="Youtube Link.." data-youtubelink style="
+    vertical-align: middle;
+    display: inline-block;
+    float: left;
+    margin-top: 5px;
+    margin-left: 10px;
+"><button class="btn" type="button" data-youtubeshare="{{ path('video_youtubeupload') }}" style="
+    float: left;
+    vertical-align: middle;
+    margin-top: 5px;
+    margin-left: 10px;
+">Share!</button>
+              </div>
+            </div>
+    </div>
     <output class="list"><ul></ul></output>
   </div>
   <div class="modal-footer">
-    <button id="modal-btn-close" class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button id="modal-btn-save" class="btn btn-primary">Save changes</button>
+    <button id="modal-btn-close" class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+    <button id="modal-btn-save" class="btn btn-primary" disabled>Guardar</button>
   </div>
 </div>
 {% endraw %}
