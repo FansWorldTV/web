@@ -656,36 +656,56 @@ div.invite-modal {
         }
 
         &[data-type='twitter'] {
-            form {
-                display: block;
-                width: 60%;
-                height: auto;
-                margin: 0 auto;
-                margin-top: 10%;
-                .clearfix();
-                
+            div.not-logged {
+                display: none;
                 span {
-                    float: left;
-                    font-size: 17px;
+                    font-size: 15px;
                     font-weight: 300;
+                    margin-top: 60px;
                     margin-bottom: 10px;
-                }
-
-                textarea {
-                    float: left;
+                    text-align: center;
                     width: 100%;
-                    height: 100px;
-                    .clearfix();
+                    display: block;
                 }
-
                 button {
-                    float: right;
-                    
-                    &:last-child {
-                        margin-right: 10px;
+                    margin: 50px auto;
+                }
+            }
+            div.is-logged {
+                display: none;
+
+                form {
+                    display: block;
+                    width: 60%;
+                    height: auto;
+                    margin: 0 auto;
+                    margin-top: 10%;
+                    .clearfix();
+
+                    span {
+                        float: left;
+                        font-size: 17px;
+                        font-weight: 300;
+                        margin-bottom: 10px;
+                    }
+
+                    textarea {
+                        float: left;
+                        width: 100%;
+                        height: 100px;
+                        .clearfix();
+                    }
+
+                    button {
+                        float: right;
+
+                        &:last-child {
+                            margin-right: 10px;
+                        }
                     }
                 }
             }
+            
         }
 
         &[data-type='email'] {
@@ -745,11 +765,11 @@ button.fb_button {
     }
 }
 
-button.fb_button { 
+button.tw_button { 
     .size(44px, 222px);
     display: block;
     border: 0;
-    background-image: url('../images/bt-fb-conectarse.png');
+    background-image: url('../images/bt-tw-conectarse.png');
 
     .fb_button_text { font-size: 14px; }
 
@@ -757,3 +777,4 @@ button.fb_button {
         opacity: 0.9;
     }
 }
+
