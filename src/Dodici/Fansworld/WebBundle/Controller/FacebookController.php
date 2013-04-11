@@ -102,4 +102,5 @@ class FacebookController extends SiteController
         $friends = $this->get('app.facebook')->facebookNotFansworld($user);
         return $this->jsonResponse(array('friends' => $friends));
     }
+
 }

@@ -541,7 +541,7 @@ div.invite-modal {
                 div.invite-block {
                     display: block;
                     position: relative;
-                    .size(320px, 100%);
+                    .size(310px, 100%);
 
                     span.top {
                         .clearfix();
@@ -554,52 +554,12 @@ div.invite-modal {
                     
                     div.fan-friends {
                         .pull-left();
-                        .size(100%, 66%);
-                        padding: 0 15px 0 15px;
-                        box-sizing: border-box;
-                        overflow-x: hidden;
-                        overflow-y: scroll;
-                        
-                        ul {
-                            margin-top: 10px;
-
-                            li {
-                                .size(40px, 50%);
-                                .pull-left();
-                                box-sizing: border-box;
-                                margin-bottom: 5px;
-
-                                &.notpair {
-                                    padding-right: 5px;
-                                }
-
-                                img {
-                                    margin-right: 10px;
-                                    .size(40px, auto);
-                                }
-                                img, span {
-                                    .pull-left()
-                                }
-                                .name { 
-                                    font-size: 11px;
-                                    font-weight: 600;
-                                }
-                                .location {
-                                    font-weight: 300;
-                                    font-size: 10px;
-                                }
-                            }
-                        }
-                    }
-
-                    div.invite-friends {
-                        .pull-left();
                         .size(100%, 33%);
                         padding: 0 15px 0 15px;
                         box-sizing: border-box;
                         overflow-x: hidden;
                         overflow-y: scroll;
-
+                        
                         ul {
                             margin-top: 10px;
 
@@ -631,20 +591,67 @@ div.invite-modal {
                             }
                         }
                     }
-                }
 
-                span.command-buttons {
-                    display: block;
-                    width: 227px;
-                    margin: 0 auto;
+                    div.invite-friends {
+                        .pull-left();
+                        .size(100%, 66%);
+                        padding: 0 15px 0 15px;
+                        box-sizing: border-box;
+                        overflow-x: hidden;
+                        overflow-y: scroll;
 
-                    button {    
-                        font-size: 20px;
-                        font-weight: 300;
-                        padding: 15px;
+                        ul {
+                            margin-top: 10px;
+
+                            li {
+                                .size(40px, 50%);
+                                .pull-left();
+                                box-sizing: border-box;
+                                margin-bottom: 5px;
+
+                                &.notpair {
+                                    padding-right: 5px;
+                                }
+
+                                img {
+                                    margin-right: 10px;
+                                    .size(40px, auto);
+                                }
+
+                                img, span {
+                                    .pull-left()
+                                }
+
+                                .name { 
+                                    font-size: 11px;
+                                    font-weight: 600;
+                                }
+
+                                .location {
+                                    font-weight: 300;
+                                    font-size: 10px;
+                                }
+
+                                .invite-checkbox {
+                                    float: right;
+                                    margin-right: 12px;
+                                    
+                                    i {
+                                        margin-top: 2px;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
 
+                button.submit-invite {    
+                    font-size: 20px;
+                    font-weight: 300;
+                    padding: 15px;
+                    margin-left: 30%;
+                    margin-top: 10px;
+                }
             }
         }
 

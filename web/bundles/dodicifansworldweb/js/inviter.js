@@ -67,6 +67,7 @@ inviter.tabs.facebook = function() {
                 params: {},
                 callback: function(response) {
                     $.each(response.friends, function() {
+                        this.canFriend = true;
                         $.when(templateHelper.htmlTemplate('fans-invite_element', this))
                                 .then(function(htmlTemplate) {
                             $(htmlTemplate).appendTo($inviteBlock.find('.fan-friends ul'));
@@ -87,11 +88,24 @@ inviter.tabs.facebook = function() {
                 route: 'facebook_notcommonfriends',
                 params: {},
                 callback: function(response) {
-                    console.log('miraaaa:');
-                    console.log(response);
-
                     $.each(response.friends, function() {
-                        var jsonData = {'title': this.name, 'image': 'https://graph.facebook.com/' + this.id + '/picture?type=square', 'canFriend': false, 'location': ''};
+                        var location = null;
+
+                        if (typeof(this.hometown) != 'undefined') {
+                            location = this.hometown.name;
+                        } else {
+                            location = '';
+                        }
+
+                        var jsonData = {
+                            'id': this.id,
+                            'title': this.name,
+                            'image': 'https://graph.facebook.com/' + this.id + '/picture?type=square',
+                            'canInvite': true,
+                            'canFriend': false,
+                            'location': location
+                        };
+
                         $.when(templateHelper.htmlTemplate('fans-invite_element', jsonData))
                                 .then(function(htmlTemplate) {
                             $(htmlTemplate).appendTo($inviteBlock.find('.invite-friends ul'));
@@ -105,6 +119,21 @@ inviter.tabs.facebook = function() {
                     console.log(errorResponse);
                     $inviteBlock.find('.invite-friends').removeClass('loading');
                 }
+            });
+
+            $("button.submit-invite").click(function() {
+                var friendsToInvite = [];
+                
+                $inviteBlock.find('.invite-checkbox.active').each(function(index, el) {
+                    friendsToInvite.push($(this).attr('data-invite-user'));
+                });
+                
+                $.modalPopup('close');
+                
+                FB.ui({method: 'apprequests',
+                    message: 'My Great Request',
+                    to: friendsToInvite
+                });
             });
 
         } else {

@@ -154,7 +154,7 @@ fos_facebook:
     app_id: %facebook.app_id%
     secret: %facebook.app_secret%
     cookie: true
-    permissions: [email, user_birthday, user_location, publish_actions]
+    permissions: [email, user_birthday, user_location, publish_actions, friends_hometown, user_hometown]
     
 fos_twitter:
     file: %kernel.root_dir%/../vendor/twitteroauth/twitteroauth/twitteroauth.php
