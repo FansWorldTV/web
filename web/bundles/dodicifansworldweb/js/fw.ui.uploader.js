@@ -144,6 +144,7 @@ $(document).ready(function () {
         },
         bindAlbumActions: function() {
             var that = this;
+            console.log('BIND ALBUM ACTION')
             if ($('#form_album').val() === 'NEW') {
                 that.spawnNewAlbumField($('#form_album'));
             }
@@ -272,6 +273,10 @@ $(document).ready(function () {
                         formHtml.find('input[type="submit"]').hide();
 
                         boot.find('.modal-body').html(formHtml);
+
+                        // album actions
+                        that.bindAlbumActions();
+
                         boot.find("#modal-btn-save").removeAttr("disabled");
                         // Set default title
                         boot.find("#form_title").val(data.originalFile);
@@ -344,6 +349,7 @@ $(document).ready(function () {
                     }
                     var file = files[i];
                     boot.find('#drop_zone').hide();
+                    boot.find('#youtube_share').hide();
                     if (file.type.match('image.*')) {
                         ///////////////////////////////////// IMAGES //
                         uploader.addFile(file);
