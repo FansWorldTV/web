@@ -27,9 +27,15 @@ class RegistrationController extends BaseController
         } else {
             /* Invite code */
             $request = $this->container->get('request');
+            $session = $this->container->get('session');
             $inviteuser = $request->get('inviter');
             $invitetoken = $request->get('token');
+            if (!$inviteuser || !$invitetoken) {
+                $inviteuser = $session->get('registration.inviter');
+                $invitetoken = $session->get('registration.token');
+            }
             $inviter = null;
+            
             $userrepo = $this->container->get('doctrine')->getRepository('Application\Sonata\UserBundle\Entity\User');
             if ($invitetoken && $inviteuser) {
                 $inviter = $userrepo->findOneByUsername($inviteuser);
@@ -38,9 +44,9 @@ class RegistrationController extends BaseController
                 $calcinvitetoken = $this->container->get('contact.importer')->inviteToken($inviter);
                 if ($invitetoken != $calcinvitetoken)
                     throw new \Exception('Código de invitación inválido');
-                $session = $this->container->get('session');
-                $session->set('registration.inviter', $invitetoken);
-                $session->set('registration.token', $inviteuser);
+                
+                $session->set('registration.inviter', $inviteuser);
+                $session->set('registration.token', $invitetoken);
             }
 
             $form = $this->container->get('fos_user.registration.form');
@@ -60,7 +66,8 @@ class RegistrationController extends BaseController
                 }
 
                 if ($inviter) {
-                    $this->container->get('contact.importer')->finalizeInvitation($inviter, $user);
+                    $fbrequest = $session->get('registration.fbrequest');
+                    $this->container->get('contact.importer')->finalizeInvitation($inviter, $user, true, $fbrequest);
                 }
 
                 $this->setFlash('fos_user_success', 'registration.flash.user_created');
@@ -72,6 +79,7 @@ class RegistrationController extends BaseController
             return $this->container->get('templating')->renderResponse('FOSUserBundle:Registration:register.html.' . $this->getEngine(), array(
                         'form' => $form->createView(),
                         'theme' => $this->container->getParameter('fos_user.template.theme'),
+                        'inviter' => $inviter
                     ));
         }
     }

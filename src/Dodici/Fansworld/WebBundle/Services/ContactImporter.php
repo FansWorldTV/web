@@ -13,9 +13,9 @@ use Artseld\OpeninviterBundle\ArtseldOpeninviter\ArtseldOpeninviter;
 
 class ContactImporter
 {
-	protected $request;
-	protected $container;
-	protected $inviter;
+    protected $request;
+    protected $container;
+    protected $inviter;
 
     function __construct(Container $container)
     {
@@ -32,11 +32,11 @@ class ContactImporter
      */
     public function import($username, $password, $provider)
     {
-    	$this->inviter->getPlugins();
-    	$this->inviter->startPlugin($provider);
-    	$this->inviter->login($username, $password);
-    	return $this->inviter->getMyContacts(); 
-    	exit;
+        $this->inviter->getPlugins();
+        $this->inviter->startPlugin($provider);
+        $this->inviter->login($username, $password);
+        return $this->inviter->getMyContacts(); 
+        exit;
     }    
     
     /**
@@ -45,22 +45,33 @@ class ContactImporter
      */
     public function inviteToken(User $user)
     {
-    	return sha1($user->getId().'-ashurbanipal-'.$user->getUsername());
+        return sha1($user->getId().'-ashurbanipal-'.$user->getUsername());
     }
     
     public function inviteUrl(User $user)
     {
-    	$router = $this->container->get('router');
-    	return $router->generate(
-    		'fos_user_registration_register', 
-    		array(
-    			'inviter' => $user->getUsername(), 
-    			'token' => $this->inviteToken($user)
-    		), true);
+        $router = $this->container->get('router');
+        return $router->generate(
+            'fos_user_registration_register', 
+            array(
+                'inviter' => $user->getUsername(), 
+                'token' => $this->inviteToken($user)
+            ), true);
     }
     
-    public function finalizeInvitation(User $inviter, User $target, $flush=true)
+    public function finalizeInvitation(User $inviter, User $target, $flush=true, $fbrequest=null)
     {
-    	return $this->container->get('friender')->friend($inviter, null, $target, true);
+        if ($fbrequest && $target->getFacebookId()) {
+            foreach ($fbrequest as $fbr) {
+                $fullid = $fbr.'_'.$target->getFacebookId();
+                try {
+                    $this->container->get('app.facebook')->delete($fullid);
+                } catch(\Exception $e) {
+                    // failed to delete request
+                }
+            }
+        }
+        
+        return $this->container->get('friender')->friend($inviter, null, $target, true);
     }
 }

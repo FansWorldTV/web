@@ -202,7 +202,29 @@ class AppFacebook
 
         return $this->api('/me/feed', null, 'POST', $data);
     }
-
+    
+    public function delete($fullid) {
+        return $this->facebook->api("/$fullid",'DELETE');
+    }
+    
+    public function getRequestAuthor($rqid) {
+        $rq = $this->facebook->api('/'.$rqid[0]);
+        if (isset($rq['application']) && $rq['application']) {
+            if ($rq['application']['id'] == $this->getAppId()) {
+                $from = $rq['from']['id'];
+                $requester = $this->em->getRepository('Application\\Sonata\\UserBundle\\Entity\\User')->findOneBy(array('enabled' => true, 'facebookId' => $from));
+                if ($requester) {
+                    return $requester;
+                } else {
+                    throw new \Exception('App Request creator is not a Fansworld user');
+                }
+            } else {
+                throw new \Exception('App Request is from different Facebook App');
+            }
+        }
+        return false;
+    }
+    
     public function getScope()
     {
         return $this->scope;
@@ -211,6 +233,11 @@ class AppFacebook
     public function getType($type)
     {
         return $this->namespace.':'.$type;
+    }
+    
+    public function getAppId()
+    {
+        return $this->facebook->getAppId();
     }
 
     private function api($url, $user = null, $method = 'GET', $params = array())
