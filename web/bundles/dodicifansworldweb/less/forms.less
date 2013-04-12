@@ -98,11 +98,12 @@ input[type="color"],
 //Login form
 div.formshadow {
     .size(auto, 350px);
-    .box-shadow(1px -1px 19px 3px @gray);
+    //.box-shadow(1px -1px 19px 3px @gray);
     margin: auto;
     .border-radius(5px);
     display: block;
-    margin-top: 10%;
+    margin-top: 45px;
+    border: 1px solid @gray;
 }
 div.loginformbig {
     .border-radius(5px);
@@ -113,11 +114,22 @@ div.loginformbig {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         padding-bottom: 0;
+        position: relative;
+        
+        .opuedes {
+            position: absolute;
+            bottom: -26px;
+            display: block;
+            background-color: white;
+            font-size: 15px;
+            font-weight: 300;
+            left: 38%;
+            padding: 0 7px 0 7px;
+        }
     }
 
     &.bottom {
-        border-top: 1px solid #ebeaea;
-        background-color: #f4f3f3;
+        border-top: 1px solid @grayDark;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
 
@@ -125,6 +137,10 @@ div.loginformbig {
             width: 208px;
             margin: auto;
             display: block;
+        }
+
+        span.facebook-login {
+            margin-bottom: 10px;
         }
     }
 
@@ -159,7 +175,7 @@ div.loginformbig {
                     
                     label {
                         font-size: 12px;
-                        color: @green;
+                        color: @grayDark;
                         .pull-left();
                         margin-left: 13px; 
                     }
@@ -169,8 +185,14 @@ div.loginformbig {
                     }
                 }
                 
-                .btn_action {
-                    .pull-right();
+                input[type='submit'] {
+                    .size(45px, 100%);
+                    display: block;
+                    font-size: 20px;
+                    font-weight: 400;
+                    background-color: @green;
+                    border: 0;
+                    color: white;
                 }
             }
         }
