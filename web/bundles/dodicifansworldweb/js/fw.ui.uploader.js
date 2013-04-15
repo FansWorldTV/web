@@ -450,6 +450,69 @@ $(document).ready(function () {
             });
             $.when(templateHelper.htmlTemplate('general-upload_modal', modal)).then(function(html) {
                 boot = $(html).clone();
+                boot.find('[data-youtubeshare]').on('click', function() {
+                    var self = $(this);
+                    self.addClass('loading-small');
+                    $('[data-dropdownshare]').addClass("dropdown open");
+                    var youtube_link = $('[data-youtubelink]').val();
+
+                    if (checkYoutubeUrl(youtube_link)) {
+                        shareStatusUpdate('', '#a0c882');
+                        $('[data-youtubelink]').val('');
+                        $('[data-dropdownshare]').addClass("dropdown");
+                        var link = Routing.generate(appLocale + '_video_youtubeupload', {link: youtube_link});
+                        $.ajax({url: link, type: 'GET'}).
+                        then(function(response){
+                            self.removeClass('loading-small');
+                            console.log('VIDEO DE YOUTUBE SUBIDO');
+
+                            var formHtml = $(response).clone();
+                            formHtml.find('input[type="submit"]').hide();
+
+                            boot.find('.modal-body').html(formHtml);
+
+                            // album actions
+                            that.bindAlbumActions();
+
+                            boot.find("#modal-btn-save").removeAttr("disabled");
+
+                            boot.find("#modal-btn-save").one("click", null, null, function(){
+                                $(this).addClass('loading-small');
+                                boot.find('form').find('input[type="submit"]').click();
+                            });
+                            boot.find('form').submit(function() {
+                                var data = $(this).serializeArray();
+                                var action = $(this).attr('action');
+                                var method = $(this).attr('method');
+                                boot.find('form').find('input[type="submit"]').addClass('loading-small');
+                                $.ajax({
+                                    url: this.getAttribute('action'),
+                                    data: data,
+                                    type: method
+                                })
+                                .then(function(response){
+                                    location.reload();
+                                });
+                                return false;
+                            });
+                        })
+                    } else {
+                        console.log('Invalid Youtube Link');
+                        $('[data-youtubelink]').val('');
+                        shareStatusUpdate('Link invalido', 'red');
+                    }
+
+                    function shareStatusUpdate(text, color) {
+                        $('[data-sharestatus-text]').html(text);
+                        $('[data-sharestatus-text]').attr('style', 'color:' + color);
+                    }
+
+                    function checkYoutubeUrl(url) {
+                        var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+                        return (url.match(p)) ? true : false;
+                    }
+                    return false;
+                });
                 boot.find('input[type="file"]').on('change', function(event) {
                     var i;
                     var files = event.target.files; // FileList object
