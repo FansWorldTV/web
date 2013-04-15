@@ -345,7 +345,7 @@
     .navbar-inner {
         background-image: none;
         background-color: black;
-        
+
         .container {
             .left-container {
                 ul.nav.sections {
@@ -370,7 +370,7 @@
                     }
                 }
             }
-        
+
             .right-container {
                 .navbar-search, .dropdown.user, .dropdown.share {
                     .pull-left();
@@ -382,6 +382,14 @@
                         margin-left: 8px;
                         margin-right: 8px;
                         margin-top: 7px;
+                    }
+                    a {
+                        .btn-upload-video;
+                        margin-left: 8px;
+                        margin-right: 8px;
+                        margin-top: 7px;
+                        line-height: 40px;
+                        padding: 5px;
                     }
                 }
 
@@ -410,7 +418,7 @@
                         background-color: #B8DD1B;
                     }
                 }
-                
+
                 .btn-upload-video.notlogged {
                     margin-top: 6px;
                     margin-left: 7px;
@@ -439,7 +447,7 @@
                 color: white !important;
                 font-size: 25px;
                 line-height: 38px;
-                
+
                 &:hover {
                     color: @green !important;
                 }
@@ -500,7 +508,7 @@ div.invite-modal {
         li {
             &:first-child {
                 margin-left: 15px;
-            }           
+            }
 
             img {
                 margin-right: 12px;
@@ -510,7 +518,7 @@ div.invite-modal {
 
     div.content-modal {
         display: none;
-            
+
         &.active {
             display: block;
         }
@@ -551,7 +559,7 @@ div.invite-modal {
                             color: @grayDark;
                         }
                     }
-                    
+
                     div.fan-friends {
                         .pull-left();
                         .size(100%, 33%);
@@ -559,7 +567,7 @@ div.invite-modal {
                         box-sizing: border-box;
                         overflow-x: hidden;
                         overflow-y: scroll;
-                        
+
                         ul {
                             margin-top: 10px;
 
@@ -580,7 +588,7 @@ div.invite-modal {
                                 img, span {
                                     .pull-left()
                                 }
-                                .name { 
+                                .name {
                                     font-size: 11px;
                                     font-weight: 600;
                                 }
@@ -622,7 +630,7 @@ div.invite-modal {
                                     .pull-left()
                                 }
 
-                                .name { 
+                                .name {
                                     font-size: 11px;
                                     font-weight: 600;
                                 }
@@ -635,7 +643,7 @@ div.invite-modal {
                                 .invite-checkbox {
                                     float: right;
                                     margin-right: 12px;
-                                    
+
                                     i {
                                         margin-top: 2px;
                                     }
@@ -645,7 +653,7 @@ div.invite-modal {
                     }
                 }
 
-                button.submit-invite {    
+                button.submit-invite {
                     font-size: 20px;
                     font-weight: 300;
                     padding: 15px;
@@ -705,7 +713,7 @@ div.invite-modal {
                     }
                 }
             }
-            
+
         }
 
         &[data-type='email'] {
@@ -746,13 +754,13 @@ div.invite-modal {
                         height: 100px;
                     }
                 }
-                
+
             }
         }
     }
 }
 
-button.fb_button { 
+button.fb_button {
     .size(44px, 222px);
     display: block;
     border: 0;
@@ -765,7 +773,7 @@ button.fb_button {
     }
 }
 
-button.tw_button { 
+button.tw_button {
     .size(44px, 222px);
     display: block;
     border: 0;
