@@ -1,5 +1,13 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
+{% block maincontent %}
+    <header class="login-header-mosaic">
+        <h2>Registrate en Fansworld.tv</h2>
+        <span>Conectate con tus ídolos y clubes, demostrando tu pasión</span>
+    </header>
+    {{ parent() }}
+{% endblock %}
+
 {% block fos_user_content %}
     <div class="formshadow">
         <div class="loginformbig top">
