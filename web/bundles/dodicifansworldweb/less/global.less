@@ -778,3 +778,45 @@ button.tw_button {
     }
 }
 
+.twitter-login, .facebook-login {
+    display: block;
+    width: 100%;
+    height: 45px;
+    cursor: pointer;
+    border: 0;
+
+    &.facebook-login {
+        background-color: #495194;
+        i {
+            background-image: url('../images/ico-facebook-registro.png');
+        }
+        span {
+            margin-left: 63px;
+        }
+    }
+    &.twitter-login {
+        background-color: #6cc8e6;
+        i {
+            background-image: url('../images/ico-twitter-registro.png');
+        }
+        span {
+            margin-left: 73px;
+        }
+    }
+
+    i {
+        background-color: transparent;
+        .square(45px);
+        .pull-left();
+        border-right: 1px solid white;
+    }
+
+
+    span {
+        line-height: 45px;
+        font-size: 20px;
+        color: white;
+        font-weight: 400;
+        float: left;
+    }
+}
