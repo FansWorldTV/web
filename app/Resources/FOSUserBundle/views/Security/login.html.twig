@@ -1,7 +1,11 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
-{% block leftbar %}
-	{% render "DodiciFansworldWebBundle:Default:leftbar" with {hide_login: true} %}
+{% block maincontent %}
+    <header class="login-header-mosaic">
+        <h2>Registrate en Fansworld.tv</h2>
+        <span>Conectate con tus ídolos y clubes, demostrando tu pasión</span>
+    </header>
+    {{ parent() }}
 {% endblock %}
 
 {% block fos_user_content %}
@@ -22,21 +26,27 @@
                             </li>
 
                             <li class="clearfix">
+                                <input type="submit" name="submit" value="Ingresar"/>
                                 <span class="remember_me">
                                     <input type="checkbox" id="remember_me" name="_remember_me" value="on" class="checkboxRemember"/>
                                     <label for="remember_me" >{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
                                 </span>
-                                <input type="submit" name="submit" value="Ingresar" class="btn_action" />
                             </li>
                         </ul>
                     </div>
                 </form>
             </div>
+            <span class="opuedes">o puedes</span>
         </div>
         <div class="loginformbig bottom">
-            <div class="fb">
-                {{ facebook_login_button({'autologoutlink': false, label: 'facebook_login_long'|trans, 'width': '208px' }) }}
-            </div>
+            <span class="facebook-login" data-facebook-login>
+                <i></i>
+                <span>Facebook</span>
+            </span>
+            <span class="twitter-login">
+                <i></i>
+                <span>Twitter</span>
+            </span>
         </div>
     </div>
 
