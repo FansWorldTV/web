@@ -195,9 +195,10 @@ class PhotoController extends SiteController
         if ($userId == 'null')
             $userId = null;
         $page = (int) $request->get('page');
-        $renderpin = $request->get('renderpin', false);
+        if(!$page)
+            $page = 1;
 
-        $limit = $renderpin ? self::LIMIT_PHOTOS_PIN : self::LIMIT_PHOTOS;
+        $limit = self::LIMIT_PHOTOS;
         $page--;
         $offset = $page * $limit;
 
@@ -210,19 +211,7 @@ class PhotoController extends SiteController
 
         $response = array();
         foreach ($photos as $photo) {
-            if ($renderpin) {
-                $response['images'][] = array(
-                    'htmlpin' => $this->renderView('DodiciFansworldWebBundle:Default:pin.html.twig', array('entity' => $photo))
-                );
-            } else {
-                $response['images'][] = array(
-                    'id' => $photo->getId(),
-                    'image' => $this->getImageUrl($photo->getImage()),
-                    'slug' => $photo->getSlug(),
-                    'title' => $photo->getTitle(),
-                    'comments' => $photo->getCommentCount()
-                );
-            }
+                $response['images'][] = $this->get('serializer')->values($photo);
         }
 
         $countTotal = $this->getRepository('Photo')->countBy($params);
