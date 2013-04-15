@@ -84,9 +84,9 @@ class IdolController extends SiteController
 
         foreach ($idols as $idol) {
 
-            if($this->getUser() instanceof User){
+            if ($this->getUser() instanceof User) {
                 $idolship = $this->getRepository('Idolship')->findBy(array('author' => $this->getUser()->getId(), 'idol' => $idol->getId()));
-            }else{
+            } else {
                 $idolship = false;
             }
 
@@ -104,24 +104,22 @@ class IdolController extends SiteController
             $idolUrl = $this->generateUrl('idol_land', array('slug' => $idol->getSlug()));
 
             $idolCareer = $idol->getTeamName();
-            
-            if($idolCareer instanceof IdolCareer){
-                if ($idolCareer->getTeam() instanceof Team) {
-                    $teamUrl = $this->generateUrl('team_land', array('slug' => $idolCareer->getTeam()->getSlug()));
-                } else {
-                    $teamUrl = "";
-                }
+
+            if ($idolCareer instanceof IdolCareer && $idolCareer->getTeam() instanceof Team) {
+                $teamUrl = $this->generateUrl('team_land', array('slug' => $idolCareer->getTeam()->getSlug()));
+            } else {
+                $teamUrl = "";
             }
-            
+
             $typesUrl = array(
                 'photos' => null,
                 'videos' => null,
                 'fans' => null
             );
-                    
+
             $router = $this->get('router');
-            foreach($typesUrl as $key=>$value){
-                $typesUrl[$key] = $router->generate('idol_' . $key, array('slug'=> $idol->getSlug()));
+            foreach ($typesUrl as $key => $value) {
+                $typesUrl[$key] = $router->generate('idol_' . $key, array('slug' => $idol->getSlug()));
             }
 
             $response['idols'][] = array(
@@ -156,7 +154,8 @@ class IdolController extends SiteController
         $idol = $this->getRepository('Idol')->findOneBySlug($slug);
         if (!$idol) {
             throw new HttpException(404, "No existe el ídolo");
-        }else
+        }
+        else
             $this->get('visitator')->visit($idol);
 
         $highlights = $this->getRepository('video')->highlights($idol, 4);
@@ -197,7 +196,8 @@ class IdolController extends SiteController
 
         if (!$idol) {
             throw new HttpException(404, "No existe el ídolo");
-        }else
+        }
+        else
             $this->get('visitator')->visit($idol);
 
         $photos = $this->getRepository('Photo')->searchByEntity($idol, self::LIMIT_PHOTOS);
@@ -270,7 +270,7 @@ class IdolController extends SiteController
             'user' => $user,
             'idol' => $idol,
             'sorts' => $sorts,
-        	'isHome' => true
+            'isHome' => true
         );
     }
 
@@ -317,7 +317,8 @@ class IdolController extends SiteController
         $idol = $this->getRepository('Idol')->findOneBy(array('slug' => $slug));
         if (!$idol) {
             throw new HttpException(404, "No existe el ídolo");
-        }else
+        }
+        else
             $this->get('visitator')->visit($idol);
 
 
@@ -345,7 +346,8 @@ class IdolController extends SiteController
         $idol = $this->getRepository('Idol')->findOneBy(array('slug' => $slug));
         if (!$idol) {
             throw new HttpException(404, "No existe el ídolo");
-        }else
+        }
+        else
             $this->get('visitator')->visit($idol);
 
         $eventos = $this->getRepository('Event')->ByIdol($idol);
