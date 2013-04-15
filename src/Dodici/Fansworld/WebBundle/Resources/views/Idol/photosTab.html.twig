@@ -11,7 +11,7 @@
 {% block profile_body %}
     {% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_fullwidth.html.twig" %}
         {% block inner_content %}
-        	
+
             <div class="row-fluid">
                 <div class="am-container photos">
                     {% for photo in photos %}
@@ -19,10 +19,10 @@
                     {% endfor %}
                 </div>
                 {% if gotMore %}
-                    <a class="loadmore pictures" href="#1">ver más</a> 
+                    <a class="loadmore pictures" href="#1">ver más</a>
                 {% endif %}
             </div>
-            
+
             <script type="text/javascript">
                 site.startMosaic($('.am-container'), {
                     minsize: false,
@@ -31,5 +31,5 @@
                 });
             </script>
         {% endblock %}
-    {% endembed %}		
+    {% endembed %}
 {% endblock %}

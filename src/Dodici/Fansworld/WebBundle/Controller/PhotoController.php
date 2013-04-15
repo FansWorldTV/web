@@ -211,7 +211,7 @@ class PhotoController extends SiteController
 
         $response = array();
         foreach ($photos as $photo) {
-                $response['images'][] = $this->get('serializer')->values($photo);
+                $response['images'][] = $this->get('serializer')->values($photo, 'big');
         }
 
         $countTotal = $this->getRepository('Photo')->countBy($params);
