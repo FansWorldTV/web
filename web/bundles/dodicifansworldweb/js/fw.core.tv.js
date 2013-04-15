@@ -35,7 +35,8 @@
 
 // Historia:
 // --------
-// fansWorld TV Class Module 1.4 (filtros detalle de video [relacionados])
+// fansWorld TV Class Module 1.5 (con filtrado)
+// 1.4 (filtros detalle de video [relacionados])
 // 1.3 (con hastags)
 // 1.2 (con filtros para detalle)
 // 1.1 (con galerias de profiles)
@@ -297,6 +298,7 @@
             var that = this;
             this.channel = $('.filter-channels').closest('ul').find("li.active").attr("data-channel-id");
             this.filter = $('#list-filters ul').find('li.active').attr('data-list-filter-type');
+            // Filtra profiles de idols y teams
             if(this.isProfile) {
                 var filter = {
                     'sort': this.criteria,
