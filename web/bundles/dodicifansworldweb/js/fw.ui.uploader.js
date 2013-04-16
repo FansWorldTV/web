@@ -23,7 +23,8 @@
 /*jslint vars: true */ /* Tolerate many var statements per function */
 /*jslint maxerr: 100 */ /*  Maximum number of errors */
 
-// fansWorld file upload plugin 1.9 backend listeners
+// fansWorld file upload plugin 2.0 with youtube link catching
+// 1.9 backend listeners
 // 1.8 (new frontend with bootstrap)
 // 1.7 (new XHR backend)
 // 1.6 (auto resize with a timer)
@@ -99,52 +100,9 @@ $(document).ready(function () {
                 });
             }
             return;
-            /*
-            $(that.element).colorbox({
-                innerWidth: 700,
-                innerHeight: 475,
-                onComplete: function() {
-                    if(that.options.mediaType === 'video')
-                    {
-                        that.createFwVideoUploader();
-                        that.resizePopup();
-                        $.when(that.getKs())
-                        .then(function(ks) {
-                            var dfd = new jQuery.Deferred();
-                            $.when(that.getMediaId('filename', ks), that.getUploadToken('filename', ks))
-                            .then(function (mediaId, token){
-                                return {kalturaKeys: [that.options.ks, mediaId, token]};
-                            })
-                            .done(function (kaltura){
-                                console.log(JSON.stringify(kaltura));
-                                dfd.resolve(kaltura);
-                            })
-                            .fail(function (error) {
-                                that.options.onError(error);
-                                dfd.reject(new Error(error));
-                            });
-                            return dfd.promise();
-                        })
-                        .done(function (kaltura) {
-                            console.log("ks: %s id: %s tk: %s", JSON.stringify(kaltura));
-                        })
-                        .fail(function (error) {
-                            that.options.onError(error);
-                        });
-                    } else {
-                        that.createFwPhotoUploader();
-                        that.resizePopup();
-                    }
-                },
-                onClosed: function() {
-                    that.uploader._handler.cancelAll();
-                }
-            });
-            */
         },
         bindAlbumActions: function() {
             var that = this;
-            console.log('BIND ALBUM ACTION')
             if ($('#form_album').val() === 'NEW') {
                 that.spawnNewAlbumField($('#form_album'));
             }
@@ -319,6 +277,7 @@ $(document).ready(function () {
                             $(this).addClass('loading-small');
                             boot.find('form').find('input[type="submit"]').click();
                         });
+
                         boot.find('form').submit(function() {
                             var data = $(this).serializeArray();
                             var action = $(this).attr('action');
@@ -333,9 +292,9 @@ $(document).ready(function () {
                             });
                             return false;
                         });
+
                     });
                 }
-
                 // Image files
                 uploader.addListener('onprogress', onProgress);
                 uploader.addListener('oncomplete', onImageUploadComplete);
@@ -374,10 +333,10 @@ $(document).ready(function () {
                                 .append(uploadBtt);
                             }
                             uploadBtt.one("click", null, null, function(){
-                                console.log("upload button clicked")
+                                console.log("upload button clicked");
                                 uploader.start();
                             });
-                            that.placeImage(image, container)
+                            that.placeImage(image, container);
                             var cosa = $("<li></li>").append(container).append(infobox);
                             boot.find('output ul').append(cosa);
                             uploader.start();
@@ -423,7 +382,49 @@ $(document).ready(function () {
                     }
                 }
             }
-
+            function hookForm(dialog) {
+                // Remove spinner
+                dialog.find("#modal-btn-save").removeClass('loading-small');
+                // Enable native dialog button
+                dialog.find("#modal-btn-save").removeAttr("disabled");
+                // Hide dialog submit
+                dialog.find('input[type="submit"]').hide();
+                // Passthrough
+                dialog.find("#modal-btn-save").one("click", null, null, function(){
+                    $(this).addClass('loading-small');
+                    dialog.find('form').find('input[type="submit"]').click();
+                });
+                dialog.find('form').submit(function(event) {
+                    event.preventDefault();
+                    var data = $(this).serializeArray();
+                    var action = $(this).attr('action');
+                    var method = $(this).attr('method');
+                    $.ajax({
+                        url: this.getAttribute('action'),
+                        data: data,
+                        type: method
+                    })
+                    .then(function(response){
+                        // Remove spinner
+                        dialog.find("#modal-btn-save").removeClass('loading-small');
+                        // Process all forms
+                        var formHtml = $(response).clone();
+                        dialog.find('.modal-body').html(formHtml);
+                        console.log(formHtml.find('form').length);
+                        if (formHtml.find('form').length) {
+                            hookForm(dialog);
+                        } else {
+                            dialog.find("#modal-btn-save").text('continuar');
+                            // No more forms ? ok then we're done
+                            dialog.find("#modal-btn-save").one("click", null, null, function(){
+                                $(this).addClass('loading-small');
+                                location.href = Routing.generate(appLocale + '_things_videos');
+                            })
+                        }
+                    });
+                    return false;
+                });
+            }
             var videoUploader = new window.UPLOADER({
                 element: $(that.options.uploaderSelector)[0],
                 autoUpload: true,
@@ -450,6 +451,75 @@ $(document).ready(function () {
             });
             $.when(templateHelper.htmlTemplate('general-upload_modal', modal)).then(function(html) {
                 boot = $(html).clone();
+
+                boot.find('[data-youtubeshare]').on('click', function() {
+                    var self = $(this);
+                    self.addClass('loading-small');
+                    $('[data-dropdownshare]').addClass("dropdown open");
+                    var youtube_link = $('[data-youtubelink]').val();
+
+                    if (checkYoutubeUrl(youtube_link)) {
+                        shareStatusUpdate('', '#a0c882');
+                        $('[data-youtubelink]').val('');
+                        $('[data-dropdownshare]').addClass("dropdown");
+                        var link = Routing.generate(appLocale + '_video_youtubeupload', {link: youtube_link});
+                        $.ajax({url: link, type: 'GET'}).
+                        then(function(response) {
+                            self.removeClass('loading-small');
+                            console.log('VIDEO DE YOUTUBE SUBIDO');
+
+                            var formHtml = $(response).clone();
+                            formHtml.find('input[type="submit"]').hide();
+
+                            boot.find('.modal-body').html(formHtml);
+
+                            hookForm(boot);
+                            return;
+
+                            boot.find("#modal-btn-save").removeAttr("disabled");
+
+                            boot.find("#modal-btn-save").one("click", null, null, function(){
+                                $(this).addClass('loading-small');
+                                boot.find('form').find('input[type="submit"]').click();
+                            });
+
+                            boot.find('form').submit(function(event) {
+                                event.preventDefault();
+                                var data = $(this).serializeArray();
+                                var action = $(this).attr('action');
+                                var method = $(this).attr('method');
+                                boot.find('form').find('input[type="submit"]').addClass('loading-small');
+                                $.ajax({
+                                    url: this.getAttribute('action'),
+                                    data: data,
+                                    type: method
+                                })
+                                .then(function(response){
+                                    //location.reload();
+                                    //console.log(response)
+                                    boot.find('.modal-body').html(response);
+                                });
+                                return false;
+                            });
+                        })
+                    } else {
+                        console.log('Invalid Youtube Link');
+                        $('[data-youtubelink]').val('');
+                        shareStatusUpdate('Link invalido', 'red');
+                    }
+
+                    function shareStatusUpdate(text, color) {
+                        $('[data-sharestatus-text]').html(text);
+                        $('[data-sharestatus-text]').attr('style', 'color:' + color);
+                    }
+
+                    function checkYoutubeUrl(url) {
+                        var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+                        return (url.match(p)) ? true : false;
+                    }
+                    return false;
+                });
+
                 boot.find('input[type="file"]').on('change', function(event) {
                     var i;
                     var files = event.target.files; // FileList object
@@ -460,7 +530,6 @@ $(document).ready(function () {
                     for (i = 0; i < files.length; i += 1) {
                         // Only process image files.
                         file = files[i];
-                        console.log("mime: " + file.type);
                         if (!file.type.match('image.*')) {
                             continue;
                         } else {
@@ -596,57 +665,7 @@ $(document).ready(function () {
                     $(this).remove();
                 });
             });
-
             return false;
-        },
-        createFwPhotoUploader2: function() {
-            var that = this;
-            var uploader = new qq.FileUploader({
-                element: $("#file-uploader")[0],
-                action: that.options.action[that.options.mediaType],
-                debug: true,
-                multiple: false,
-                maxConnections: 1,
-                allowedExtensions: that.options.mediaExtensions[that.options.mediaType],
-                onComplete: function(id, fileName, responseJSON) {
-                    if(responseJSON.success) {
-                        $.colorbox({
-                            href: Routing.generate(appLocale + '_photo_filemeta', {
-                                'originalFile': responseJSON.originalFile,
-                                'tempFile':responseJSON.tempFile,
-                                'width': responseJSON.width,
-                                'height': responseJSON.height
-                            }),
-                            iframe: false,
-                            innerWidth: 700,
-                            innerHeight: 160,
-                            onComplete: function() {
-                                that.resizePopup();
-                                that.bindFormActions();
-                            }
-                        });
-                    }
-                    return that.options.onComplete(id, fileName, responseJSON);
-                },
-                onUpload: function() {
-                    console.log("onUpload");
-                    that.resizePopup();
-                },
-                onProgress: function(id, fileName, loaded, total) {
-                    if (loaded !== total){
-                        $( "#progressbar .bar" ).css('width', Math.round(loaded / total * 100)+'%');
-                    } else {
-                        $( "#progressbar .bar" ).css('width','100%');
-                    }
-                    that.resizePopup();
-                },
-                onSubmit: function(id, fileName){
-                    return that.options.onSubmit(id, fileName);
-                },
-                onError: function(id, fileName, reason) {
-                    return that.options.onError(id, fileName, reason);
-                }
-            });
         },
         dad: function(element) {
             $(element).on('dragenter', function(event) {
@@ -744,7 +763,7 @@ $(document).ready(function () {
                                 uploadBtt.one("click", null, null, function(){
                                     uploader.start();
                                 });
-                                that.placeImage(image, container)
+                                that.placeImage(image, container);
                                 var cosa = $("<li></li>").append(container).append(infobox);
                                 boot.find('output ul').append(cosa);
                                 uploader.start();
@@ -936,230 +955,6 @@ $(document).ready(function () {
             $(input).on('change', function(event) {
                 uploader.addFiles(event.target.files);
             });
-        },
-        createFwImageUploaderX: function() {
-            var that = this;
-            var list = $('<ul class="qq-upload-list"></ul>');
-            var uploader = new qq.FileUploader({
-                element: $(that.options.uploaderSelector)[0],
-                action: that.options.action[that.options.mediaType],
-                debug: true,
-                multiple: false,
-                maxConnections: 1,
-                allowedExtensions: that.options.mediaExtensions[that.options.mediaType],
-                disableDefaultDropzone: true,
-                template: '<div class="qq-uploaderX" style="margin:10px;">' +
-                    '<div class="qq-upload-buttonXX btn btn-success">{uploadButtonText}</div>' +
-                    '<ul class="qq-upload-list" style="margin-top: 10px; text-align: center;display:none;"></ul>' +
-                    '</div>',
-                fileTemplate: '<li>' +
-                    '<div class="qq-progress-bar"></div>' +
-                    '<span class="qq-upload-finished"></span>' +
-                    '<span class="qq-upload-file"></span>' +
-                    '<span class="qq-upload-size"></span>' +
-                    '<a class="qq-upload-cancel" href="#">{cancelButtonText}</a>' +
-                    '<span class="qq-upload-failed-text">{failUploadtext}</span>' +
-                    '</li>',
-                classes: {
-                    // used to get elements from templates
-                    button: 'qq-upload-buttonXX',
-                    drop: 'qq-upload-drop-area',
-                    dropActive: 'qq-upload-drop-area-active',
-                    dropDisabled: 'qq-upload-drop-area-disabled',
-                    list: 'qq-upload-list',
-                    progressBar: 'qq-progress-bar',
-                    file: 'qq-upload-file',
-                    spinner: 'qq-upload-spinner',
-                    finished: 'qq-upload-finished',
-                    size: 'qq-upload-size',
-                    cancel: 'qq-upload-cancel',
-                    failText: 'qq-upload-failed-text',
-
-                    // added to list item <li> when upload completes
-                    // used in css to hide progress spinner
-                    success: 'qq-upload-success',
-                    fail: 'qq-upload-fail',
-
-                    successIcon: null,
-                    failIcon: null
-                },
-                onComplete: function(id, fileName, responseJSON) {
-                    if(responseJSON.success) {
-                        $.colorbox({
-                            href: Routing.generate(appLocale + '_user_change_imageSave', {
-                                'originalFile': responseJSON.originalFile,
-                                'tempFile':responseJSON.tempFile,
-                                'width': responseJSON.width,
-                                'type': that.options.imageType,
-                                'height': responseJSON.height
-                            }),
-                            iframe: false,
-                            innerWidth: 700,
-                            innerHeight: 260,
-                            onComplete: function() {
-                                that.resizePopup();
-                                that.bindFormActions();
-                            }
-                        });
-                    }
-                    $(that.element).find('.btn').removeClass('loading-small');
-                    return that.options.onComplete(id, fileName, responseJSON);
-                },
-                onUpload: function() {
-                    console.log("onUpload");
-                    that.resizePopup();
-                },
-                onProgress: function(id, fileName, loaded, total) {
-                    if (loaded !== total){
-                        $( "#progressbar .bar" ).css('width', Math.round(loaded / total * 100)+'%');
-                    } else {
-                        $( "#progressbar .bar" ).css('width','100%');
-                    }
-                    that.resizePopup();
-                },
-                onSubmit: function(id, fileName){
-                    $(that.element).find('.btn').addClass('loading-small');
-                    return that.options.onSubmit(id, fileName);
-                },
-                onError: function(id, fileName, reason) {
-                    $(that.element).find('.btn').removeClass('loading-small');
-                    return that.options.onError(id, fileName, reason);
-                }
-            });
-        },
-        createFwVideoUploaderMAX: function() {
-            var that = this;
-
-                $.when(that.getKs())
-                .then(function(ks) {
-                    var dfd = new jQuery.Deferred();
-                    $.when(that.getMediaId('filename', ks), that.getUploadToken('filename', ks))
-                    .then(function (mediaId, token){
-                        return {kalturaKeys: [that.options.ks, mediaId, token]};
-                    })
-                    .done(function (kaltura){
-                        console.log(JSON.stringify(kaltura));
-                        dfd.resolve(kaltura);
-                    })
-                    .fail(function (error) {
-                        that.options.onError(error);
-                        dfd.reject(new Error(error));
-                    });
-                    return dfd.promise();
-                })
-                .done(function (kaltura) {
-                    console.log("ks: %s id: %s tk: %s", JSON.stringify(kaltura));
-                })
-                .fail(function (error) {
-                    return error;
-                });
-
-                /*
-                var uploader = new window.UPLOADER({
-                    element: $(that.options.uploaderSelector)[0],
-                    autoUpload: false,
-                    multiple: false,
-                    forceMultipart: true,
-                    normalHeaders: false,
-                    responsePassthrough: true,
-                    action: that.options.action[that.options.mediaType],
-                    maxConnections: 1,
-                    inputName: 'resource:fileData',
-                    allowedExtensions: that.options.mediaExtensions['all'],
-                    onLoadStart: function(event) {
-                        return;
-                    },
-                    onProgress: function(event) {
-                        return;
-                    },
-                    onComplete: function(event) {
-                        return;
-                    },
-                    onError: function(error) {
-                        return error;
-                    }
-                });
-
-                that.uploader = new qq.FileUploader({
-                element: $('#file-uploader')[0],
-                action: that.options.action[that.options.mediaType],
-                multiple: false,
-                forceMultipart: true,
-                normalHeaders: false,
-                responsePassthrough: true,
-                debug: true,
-                inputName: 'resource:fileData',
-                failedUploadTextDisplay: {mode: 'none'},
-                onSubmit: function(id, fileName){
-                    that.uploader.setParams({
-                        service: 'media',
-                        action: 'addContent',
-                        entryId: that.options.entryId,
-                        ks: that.options.ks,
-                        'resource:objectType': 'KalturaUploadedFileResource'
-                    });
-                    //$('.qq-uploader').hide();
-                    var progress = '<div id="progressbar" class="progress progress-success progress-striped" style="margin:20px;height: 40px;"><div class="bar" style="height: 40px;margin: 0px;background-color: #68CE1D;border-radius: 4px;height: 40px"></div></div>';
-                    $(".container-up").html('');
-                    $(".container-up").html(progress);
-                    return that.options.onSubmit(id, fileName);
-
-                },
-            });
-            */
-        },
-        createFwVideoUploaderX: function() {
-            var that = this;
-            that.uploader = new qq.FileUploader({
-                element: $('#file-uploader')[0],
-                action: that.options.action[that.options.mediaType],
-                multiple: false,
-                forceMultipart: true,
-                normalHeaders: false,
-                responsePassthrough: true,
-                debug: true,
-                inputName: 'resource:fileData',
-                failedUploadTextDisplay: {mode: 'none'},
-                onSubmit: function(id, fileName){
-                    that.uploader.setParams({
-                        service: 'media',
-                        action: 'addContent',
-                        entryId: that.options.entryId,
-                        ks: that.options.ks,
-                        'resource:objectType': 'KalturaUploadedFileResource'
-                    });
-                    //$('.qq-uploader').hide();
-                    var progress = '<div id="progressbar" class="progress progress-success progress-striped" style="margin:20px;height: 40px;"><div class="bar" style="height: 40px;margin: 0px;background-color: #68CE1D;border-radius: 4px;height: 40px"></div></div>';
-                    $(".container-up").html('');
-                    $(".container-up").html(progress);
-                    return that.options.onSubmit(id, fileName);
-
-                },
-                onComplete: function(id, fileName, responseJSON) {
-                    var entryId = $(responseJSON).find('id').text();
-                    $('#form_entryid').val(entryId);
-                    console.log("Video subido correctamente ID: " + entryId);
-                    $(".container-up").replaceWith('<div class="alert alert-success">' + ExposeTranslation.get('upload_complete') + '</div>');
-                    return that.options.onComplete(id, fileName, responseJSON);
-                },
-                onUpload: function(id, fileName, xhr) {
-                    that.resizePopup();
-                    return that.options.onUpload(id, fileName, xhr);
-                },
-                onProgress: function(id, fileName, loaded, total) {
-                    if (loaded !== total){
-                        $( "#progressbar .bar" ).css('width', Math.round(loaded / total * 100)+'%');
-                    } else {
-                        $( "#progressbar .bar" ).css('width','100%');
-                    }
-                    that.resizePopup();
-                    return that.options.onProgress(id, fileName, loaded, total);
-                },
-                onError: function(id, fileName, reason) {
-                    return that.options.onError(id, fileName, reason);
-                }
-            });
-            return that.uploader;
         },
         getUploadToken: function (fileName, ks) {
             var that = this;
