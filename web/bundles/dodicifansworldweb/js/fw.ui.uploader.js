@@ -103,7 +103,6 @@ $(document).ready(function () {
         },
         bindAlbumActions: function() {
             var that = this;
-            console.log('BIND ALBUM ACTION')
             if ($('#form_album').val() === 'NEW') {
                 that.spawnNewAlbumField($('#form_album'));
             }
@@ -334,10 +333,10 @@ $(document).ready(function () {
                                 .append(uploadBtt);
                             }
                             uploadBtt.one("click", null, null, function(){
-                                console.log("upload button clicked")
+                                console.log("upload button clicked");
                                 uploader.start();
                             });
-                            that.placeImage(image, container)
+                            that.placeImage(image, container);
                             var cosa = $("<li></li>").append(container).append(infobox);
                             boot.find('output ul').append(cosa);
                             uploader.start();
@@ -415,8 +414,12 @@ $(document).ready(function () {
                         if (formHtml.find('form').length) {
                             hookForm(dialog);
                         } else {
+                            dialog.find("#modal-btn-save").text('continuar');
                             // No more forms ? ok then we're done
-                            //location.href = Routing.generate(appLocale + '_things_videos')
+                            dialog.find("#modal-btn-save").one("click", null, null, function(){
+                                $(this).addClass('loading-small');
+                                location.href = Routing.generate(appLocale + '_things_videos');
+                            })
                         }
                     });
                     return false;
@@ -760,7 +763,7 @@ $(document).ready(function () {
                                 uploadBtt.one("click", null, null, function(){
                                     uploader.start();
                                 });
-                                that.placeImage(image, container)
+                                that.placeImage(image, container);
                                 var cosa = $("<li></li>").append(container).append(infobox);
                                 boot.find('output ul').append(cosa);
                                 uploader.start();
