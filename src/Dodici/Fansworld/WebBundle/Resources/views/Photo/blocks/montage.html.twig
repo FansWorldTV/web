@@ -2,12 +2,12 @@
     {% set photos = false %}
 {% endif %}
 {% if thumbnailSize is not defined %}
-    {% set thumbnailSize = 'small' %}  
+    {% set thumbnailSize = 'small' %}
 {% endif %}
 <!-- Listado de fotos para mostrar como montage -->
 
 <div class="row-fluid">
-    <div class="am-container photos">
+    <div class="isotope_container">
         {% for photo in photos %}
             <a href="{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}" rel="tooltip" title="{{ photo.title }}">
                 {% thumbnail photo.image, thumbnailSize with {title: photo.title} %}
