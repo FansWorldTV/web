@@ -710,6 +710,7 @@ var site = {
 }
 
 function resizeColorbox(options) {
+    return;
     if (typeof $.colorbox.resize === "function") {
         $.colorbox.resize(options);
     }
