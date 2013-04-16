@@ -58,19 +58,15 @@ class NotificationController extends SiteController
                 ->add('mails', 'choice', array('required' => false, 'choices' => $mailList, 'label' => 'Notificar por mail', 'multiple' => true, 'expanded' => true))
                 ->getForm();
 
-
         if ($request->getMethod() == 'POST') {
             try {
                 $form->bindRequest($request);
                 $data = $form->getData();
-
-                if ($form->isValid()) {
-                    $user->setNotifyprefs($data['prefs']);
-                    $user->setNotifymail($data['mails']);
-                    $em->persist($user);
-                    $em->flush();
-                    $this->get('session')->setFlash('success', '¡Has cambiado tus preferencias con éxito!');
-                }
+                $user->setNotifyprefs($data['prefs']);
+                $user->setNotifymail($data['mails']);
+                $em->persist($user);
+                $em->flush();
+                $this->get('session')->setFlash('success', '¡Has cambiado tus preferencias con éxito!');
             } catch (\Exception $e) {
                 $form->addError(new FormError('Error guardando preferencias'));
             }
