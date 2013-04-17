@@ -24,7 +24,7 @@ var albums = {
                     });
                     var hrefModal = Routing.generate(appLocale + '_modal_media', {
                         'id': image.id,
-                        'type': 'video'
+                        'type': 'photo'
                     });
                     return {
                             'id': image.id,
