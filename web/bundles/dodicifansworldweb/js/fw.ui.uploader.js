@@ -48,6 +48,7 @@ $(document).ready(function () {
             audio: ['wav', 'mp3', 'ogg', 'midi'],
             all: ['jpg', 'jpeg', 'png', 'gif', 'flv', 'f4v', 'mov', 'mp4', 'qt', 'm4v', 'avi', '3gp', 'asf', 'wmv', 'mpg', 'm1v', 'm2v', 'mkv', 'ogg', 'rm', 'web']
         },
+        allowedExtensions: null,
         action: {
             photo: Routing.generate(appLocale + '_photo_fileupload'),   // link for photos
             video: 'http://www.kaltura.com/api_v3/index.php'            // link for videos
@@ -183,6 +184,9 @@ $(document).ready(function () {
         createFwPhotoUploader: function() {
             var that = this;
             //var input = that.createInput();
+            // Allow all media extensions
+            that.options.allowedExtensions = that.options.mediaExtensions.all;
+
             var boot = null;
             var id = parseInt((Math.random() * 1000), 10);
             var modal = {
@@ -307,6 +311,12 @@ $(document).ready(function () {
                         return false;
                     }
                     var file = files[i];
+                    if(!that.isAllowedExtension(file.name)) {
+                        //boot.modal('hide');
+                        alert("Archivo de extensión inválida");
+                        boot.find('#drop_zone').animate({ 'background-color': 'transparent', 'border-color': '#bbb' } );
+                        continue;
+                    }
                     boot.find('#drop_zone').hide();
                     boot.find('#youtube_share').hide();
                     if (file.type.match('image.*')) {
@@ -564,85 +574,7 @@ $(document).ready(function () {
                     if(event.target === this) {
                         var files = event.originalEvent.dataTransfer.files;
                         processFiles(files);
-
                         return;
-                        uploader.addListener('onprogress', function(event) {
-                            var percentComplete = parseInt(((event.source.loaded / event.source.total) * 100), 10);
-                            boot.find('.progress .bar').css('width', percentComplete + '%');
-                        });
-                        uploader.addListener('oncomplete', function(event) {
-                            var xhr = event.target.xhr;
-                            var data = JSON.parse(xhr.responseText);
-                            var formHtml = null;
-                            var href = Routing.generate(appLocale + '_photo_filemeta', {
-                                'originalFile': data.originalFile,
-                                'tempFile':data.tempFile,
-                                'width': data.width,
-                                'height': data.height
-                            });
-                            $.ajax({url: href, type: 'GET'}).then(function(response){
-                                formHtml = $(response).clone();
-                                boot.find('.modal-body').html(formHtml);
-                                boot.find("#modal-btn-save").one("click", null, null, function(){
-                                    $(this).addClass('loading-small');
-                                    boot.find('form').find('input[type="submit"]').click();
-                                });
-                                boot.find('form').submit(function() {
-                                    var data = $(this).serializeArray();
-                                    var action = $(this).attr('action');
-                                    boot.find('form').find('input[type="submit"]').addClass('loading-small');
-                                    $.ajax({
-                                        url: this.getAttribute('action'),
-                                        data: data,
-                                        type: 'POST'
-                                    })
-                                    .then(function(response){
-                                        location.reload();
-                                    });
-                                    return false;
-                                });
-                            });
-                        });
-
-                        uploader.addFiles(files);
-
-                        for(i = 0; i < files.length; i += 1) {
-                            if(!files.hasOwnProperty(i)) {
-                                return false;
-                            }
-                            var file = files[i];
-                            boot.find('#drop_zone').hide();
-                            if (!file.type.match('image.*')) {
-                                continue;
-                            } else {
-                                $.when(that.getImage(file))
-                                .then(function(image){
-                                    var container, infobox;
-                                    var uploadBtt = $("<button class='btn upload'>upload</button>");
-                                    if(files.length > 1) {
-                                        container = $("<div class='thumbnail' style='width:64px;height:64px;'></div>");
-                                        infobox = $("<div class='fileinfo' style='height:64px;'></div>")
-                                        .append("<h5 class='title'>" + image.alt + "</h5>")
-                                        .append("<div class='progress progress-striped active' style='margin-top:4px;'><div class='bar' style='width: 0%;'></div></div>")
-                                        .append(uploadBtt);
-                                    } else {
-                                        container = $("<div class='thumbnail' style='width: 256px;height:256px;'></div>");
-                                        infobox = $("<div class='fileinfo' style='width: 200px;''></div>")
-                                        .append("<h5 class='title'>" + image.alt + "</h5>")
-                                        .append("<div class='progress progress-striped active' style='margin-top:10px;'><div class='bar' style='width: 0%;'></div></div>")
-                                        .append("<div class='well'>"+ "file: " + image.alt + "<br /> size: " + file.size +"</div>")
-                                        .append(uploadBtt);
-                                    }
-                                    uploadBtt.one("click", null, null, function(){
-                                        uploader.start();
-                                    });
-                                    that.placeImage(image, container)
-                                    var cosa = $("<li></li>").append(container).append(infobox);
-                                    boot.find('output ul').append(cosa);
-                                    uploader.start();
-                                });
-                            }
-                        }
                     }
                 });
                 boot.find("#modal-btn-close").one("click", null, null, function(){
@@ -1035,6 +967,20 @@ $(document).ready(function () {
                 deferred.reject(new Error(error));
             });
             return deferred.promise();
+        },
+        isAllowedExtension: function(fileName){
+            var i;
+            var that = this;
+            var ext = (-1 !== fileName.indexOf('.')) ? fileName.replace(/.*[.]/, '').toLowerCase() : '';
+            var allowed = this.options.allowedExtensions;
+
+            if (!allowed.length){return true;}
+
+            for (i = 0; i < allowed.length; i += 1){
+                if (allowed[i].toLowerCase() === ext){ return true;}
+            }
+
+            return false;
         },
         resizePopup: function() {
             window.top.resizeColorbox({innerHeight: $('.popup-content').height() });
