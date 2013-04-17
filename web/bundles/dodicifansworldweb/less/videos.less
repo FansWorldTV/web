@@ -1,17 +1,18 @@
 .video-detail-wall {
     .user-info {
+        margin-bottom: 5px;
         width: 300px;
         display: block;
         .pull-left();
 
         .avatar, .name, .location, .videoCount {
             .pull-left();
+            margin-bottom: 4px;
         }
 
         .name, .location, .videoCount {
             width: 230px;
             margin-left: 10px;
-            margin-bottom: 4px;
         }
         .name {
             font-size: 20px;
@@ -24,6 +25,11 @@
             font-weight: 300;
             color: @grayDark;
         }
+
+        .videoCount {
+            color: @greenDark;
+            font-weight: 400;
+        }
     }
 
     .share_content {
@@ -34,6 +40,17 @@
 
     .audience-list {
         clear: both;
+    }
+
+    .content {
+        margin-top: 30px;
+        font-weight: 300;
+        font-size: 14px;
+        color: @black;
+
+        .read-more {
+            font-weight: 500;
+        }
     }
 }
 
