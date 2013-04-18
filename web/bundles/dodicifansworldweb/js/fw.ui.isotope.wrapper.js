@@ -193,6 +193,7 @@ $(document).ready(function () {
 			return deferred.promise();
 		},
 		normalizeData: function(data) {
+			console.log(data)
 			var href = Routing.generate(appLocale + '_' + data.type + '_show', {
 				'id': data.id,
 				'slug': data.slug
