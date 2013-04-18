@@ -2,10 +2,13 @@ var albums = {
     pager: 2,
 
     init: function(){
-        console.log('CARGANDO ALBUMS');
         $('.isotope_container').empty()
         var feed = $('.isotope_container').attr('data-feed-source');
         var albumId = $('.isotope_container').attr('data-album-id');
+        if(!albumId) {
+            // Esto no es un album de fotos retornar
+            return;
+        }
         $('.isotope_container').fwGalerizer({
             normalize: true,
             feedfilter: {id: albumId, page: 1},
