@@ -982,29 +982,20 @@ class UserController extends SiteController
         $request = $this->getRequest();
         $user = $this->getUser();
         $id = $request->get('id');
+        if (!($user instanceof User))
+            throw new HttpException(403, 'Acceso denegado');
 
-        //$albums = array();
-        $albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
-        //$albumsTotalCount = $this->getRepository('Album')->countBy(array('author' => $user->getId(), 'active' => true));
-
-
-        //$album = $this->getRepository('Album')->findOneBy(array('author' => $user->getId(), 'id' => $id, 'active' => true));
         $album = $this->getRepository('Album')->findOneBy(array('id' => $id, 'active' => true));
-        //$album = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'id' => $id, 'active' => true));
-        //$albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true));
 
-        //$this->securityCheck($album);
+        if (!$album) {
+            throw new HttpException(404, "No existe el album");
+        }
+
+        $this->securityCheck($album);
 
         $response = array();
         $photos = $album->getPhotos();
-        /*
-        foreach ($photos as $photo) {
-            $response['images'][] = $this->get('serializer')->values($photo, 'big');
-        }
-        */
 
-        //$response['albums'] = $this->get('serializer')->values($albums);
-        //$response['album'] = $this->get('serializer')->values($album);
         $response['photos'] = $this->get('serializer')->values($photos, 'big');
         return $this->jsonResponse($response);
     }
