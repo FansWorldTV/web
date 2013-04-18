@@ -2,47 +2,51 @@ var albums = {
     pager: 2,
 
     init: function(){
-        console.log('CARGANDO ALBUMS');
         $('.isotope_container').empty()
-        $('.isotope_container').attr('data-feed-source', 'photo_get');
+        var feed = $('.isotope_container').attr('data-feed-source');
+        var albumId = $('.isotope_container').attr('data-album-id');
+        if(!albumId) {
+            // Esto no es un album de fotos retornar
+            return;
+        }
         $('.isotope_container').fwGalerizer({
-            normalize: false,
-            feedfilter: {page: 1},
+            normalize: true,
+            feedfilter: {id: albumId, page: 1},
             onEndless: function( plugin ) {
                 plugin.options.feedfilter.page += 1;
                 return plugin.options.feedfilter;
             },
             onDataReady: function(jsonData) {
                 var i, outp = [];
-                var serialize = function(image) {
+                var serialize = function(photo) {
                     var href = Routing.generate(appLocale + '_photo_show', {
-                        'id': image.id,
-                        'slug': image.slug
+                        'id': photo.id,
+                        'slug': photo.slug
                     });
                     var authorUrl = Routing.generate(appLocale + '_user_land', {
-                        'username': image.author.username
+                        'username': photo.author.username
                     });
                     var hrefModal = Routing.generate(appLocale + '_modal_media', {
-                        'id': image.id,
+                        'id': photo.id,
                         'type': 'photo'
                     });
                     return {
-                            'id': image.id,
+                            'id': photo.id,
                             'type': 'photo',
-                            'date': image.createdAt,
+                            'date': photo.createdAt,
                             'href': href,
                             'hrefModal': hrefModal,
-                            'image': image.image,
-                            'slug': image.slug,
-                            'title': image.title,
-                            'author': image.author.username,
-                            'authorHref': image.author.url,
-                            'authorImage': image.author.image
+                            'image': photo.image,
+                            'slug': photo.slug,
+                            'title': photo.title,
+                            'author': photo.author.username,
+                            'authorHref': photo.author.url,
+                            'authorImage': photo.author.image
                     };
                 }
-                for(i in jsonData.images) {
-                    if (jsonData.images.hasOwnProperty(i)) {
-                        outp.push(serialize(jsonData.images[i]));
+                for(i in jsonData.photos) {
+                    if (jsonData.photos.hasOwnProperty(i)) {
+                        outp.push(serialize(jsonData.photos[i]));
                     }
                 }
                 return outp;

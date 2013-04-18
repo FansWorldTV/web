@@ -6,14 +6,14 @@
         <div class='span6'>
             <span class="title">
                 <h4>{{ album.title }} ({{ album.photos|length }}) <a class="more" href="{{ path('user_listalbums', {username: user.username}) }}"> {{'Albums'|trans}}</a></h4>
-            </span>    
+            </span>
         </div>
         <div class="span6">
-            {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: album} %}    
+            {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: album} %}
         </div>
     </header>
-    
-    {% include 'DodiciFansworldWebBundle:Photo:blocks/montage.html.twig' with {photos: album.photos,thumbnailSize: 'medium'} %}
+    <div class="isotope_container" data-album-id="{{album.id}}" data-feed-source="getphotosfrom_album"></div>
+    {# % include 'DodiciFansworldWebBundle:Photo:blocks/montage.html.twig' with {photos: album.photos,thumbnailSize: 'medium'} % #}
 
     <div class="content">
         <p>{{ album.content }}</p>
