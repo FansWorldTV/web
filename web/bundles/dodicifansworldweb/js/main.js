@@ -1,5 +1,36 @@
 var redirectColorbox = true;
 
+/* Player callToActions */
+    function jsCallbackReady (widgetId) {
+        window.player = document.getElementById(widgetId);
+        player.addJsListener("playerPlayEnd", "playerFinalAction");
+    }
+
+    function playerFinalAction (id) {
+        var videoContainer = $('#' + id).parents('[data-videocontainer]');
+        var videoContainerParent = videoContainer.parents('[data-videocontainer-parent]');
+        var videoId = videoContainer.attr('data-videoid');
+        videoContainer.hide();
+        ajax.genericAction({
+            route: 'video_ajaxPlayerFinalAction',
+            params: {
+                id: videoId,
+                idVideoDom: id
+            },
+            callback: function(response) {
+                if (response) {
+                    console.log(response);
+                    videoContainerParent.append(response.view);
+                    $('[data-viewagain='+ id +']').click( function () {
+                          $('[data-finalAction-detail='+ id +']').remove();
+                          videoContainer.show();
+                    });
+                }
+            }
+        });
+    }
+/* End Player callToActions */
+
 $(document).ready(function() {
     site.init();
     //ajax.init();
@@ -70,15 +101,15 @@ var site = {
          }
          });
          */
-        
+
         // Invite modal popup
         $(".btn[data-invite-modal]").modalPopup({
             'href': Routing.generate(appLocale + '_modal_invite', {}),
             'width': 1000,
             'close': '.invite-modal .close-button'
         });
-        
-        
+
+
         // fw upload plugin
         // Video
         $("[data-upload='video']").fwUploader({

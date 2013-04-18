@@ -5,4 +5,9 @@
     {% set autoplay = false %}
 {% endif %}
 
-<script type="text/javascript" src="http://cdnapi.kaltura.com/p/{{partner}}/sp/{{subpartner}}/embedIframeJs/uiconf_id/{{player}}/partner_id/{{partner}}?entry_id={{video.stream}}&playerId=kaltura_player_{{timestamp}}&cache_st={{timestamp}}&autoembed=true&width={{width|default(560)}}&height={{height|default(395)}}&&flashvars[streamerType]=hdnetwork&flashvars[akamaiHD]=%7B%22loadingPolicy%22%3A%22preInitialize%22%2C%22asyncInit%22%3A%22true%22%7D"></script>
+<div data-videocontainer-parent>
+    <div data-videoid="{{ video.id }}" data-videocontainer>
+        <script type="text/javascript" src="http://cdnapi.kaltura.com/p/{{partner}}/sp/{{subpartner}}/embedIframeJs/uiconf_id/{{player}}/partner_id/{{partner}}?entry_id={{video.stream}}&playerId=kaltura_player_{{timestamp}}&cache_st={{timestamp}}&autoembed=true&width={{width|default(560)}}&height={{height|default(395)}}&&flashvars[streamerType]=hdnetwork&flashvars[akamaiHD]=%7B%22loadingPolicy%22%3A%22preInitialize%22%2C%22asyncInit%22%3A%22true%22%7D&flashvars[externalInterfaceDisabled]=false">
+        </script>
+    </div>
+</div>

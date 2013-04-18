@@ -31,6 +31,7 @@ class VideoController extends SiteController
 {
 
     const cantVideos = 20;
+    const MIN_ITEMS_CALLTOACTION = 9;
 
     /**
      * rightbar
@@ -594,5 +595,87 @@ class VideoController extends SiteController
         return $this->jsonResponse(
             $this->get('flumotiontwig')->getVideoPlayerUrl($video, true)
         );
+    }
+
+
+    /**
+     * @Route("/video/ajax/playerfinal", name="video_ajaxPlayerFinalAction")
+     */
+    public function playerFinalAction()
+    {
+        $request = $this->getRequest();
+        $id = $request->get('id');
+        $idVideoDom = $request->get('idVideoDom');
+        $video = $this->getRepository('Video')->find($id);
+
+        $idols = array();
+        foreach ($video->getHasidols() as $idol) {
+                $entidad = $idol->getIdol();
+                $this->_createIdolTeamArray($entidad, $idols);
+        }
+
+        $teams = array();
+        foreach ($video->getHasteams() as $team) {
+                $entidad = $team->getTeam();
+                $this->_createIdolTeamArray($entidad, $teams);
+        }
+
+        $relatedVideos = $this->getRepository('Video')->related($video, null, 5);
+
+        $this->_addMoreData($idols, $relatedVideos, 'idol');
+        $this->_addMoreData($teams, $relatedVideos, 'team');
+
+        $response = array(
+            'view' => $this->renderView(
+                'DodiciFansworldWebBundle:Video:final_action.html.twig',
+                    array('idols' => $idols, 'teams' => $teams, 'idvideodom'=> $idVideoDom))
+        );
+
+        /* $response = array('idols' => $idols, 'teams' => $teams, 'idvideodom'=> $idVideoDom, 'view' => "Test"); */
+        return $this->jsonResponse($response);
+    }
+
+    private function _createIdolTeamArray($entity, &$array) {
+        $isFan = $this->get('fanmaker')->isFan($entity, $this->getUser());
+        if (!$isFan) {
+            array_push($array,
+                array(
+                    'id' => $entity->getId(),
+                    'title' => (string) $entity,
+                    'image' => $entity->getImage()
+                )
+            );
+        }
+    }
+
+    private function _addMoreData(&$array, $videos, $entityType) {
+        if (count($array) < self::MIN_ITEMS_CALLTOACTION) {
+            foreach ($videos as $video) {
+                if (count($array) < self::MIN_ITEMS_CALLTOACTION) {
+                    $getHas = "getHas".$entityType."s"; $get = "get".ucwords($entityType);
+                    foreach ($video->$getHas() as $item) {
+                        if (count($array) < self::MIN_ITEMS_CALLTOACTION) {
+                            $entidad = $item->$get();
+                            $isFan = $this->get('fanmaker')->isFan($entidad, $this->getUser());
+
+                            $inarray = false;
+                            foreach ($array as $element) {
+                                if ($entidad->getId() == $element['id']) $inarray = true;
+                            }
+
+                            if (!$isFan && !$inarray) {
+                                array_push($array,
+                                    array(
+                                        'id' => $entidad->getId(),
+                                        'title' => (string) $entidad,
+                                        'image' => $entidad->getImage()
+                                    )
+                                );
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
