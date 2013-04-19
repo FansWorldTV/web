@@ -12,7 +12,6 @@
         {% endblock %}
         
         {% block top_left_content %}
-            {#{% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video, editbutton: false, reportbutton: false} %}#}
             {{ kalturatwig.player(video, true)|raw }}
         {% endblock %}
         
@@ -23,32 +22,43 @@
         {% endblock %}
         
         {% block bottom_left_content %}
-            <div>
-              {% if video.author %}
-                <a class="video-author" href="{{ path('user_land', {username: video.author.username}) }}">
-                    {% if video.author.image %}
-                        {% thumbnail video.author.image, 'avatar' %}
-                    {% endif %}
-                    {{ video.author }}
-                </a>
-              {% endif %}
-            </div>
-            <div>
-              {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video, sharebutton: true, likebutton: true} %}
-            </div>
-            
-            <div>{% include 'DodiciFansworldWebBundle:Tv:blocks/now-watching.html.twig' with {entity: video} %}</div>
-            
-            <div class="content">
-                {% if video.content %}
-                    <p data-expandable data-slice-point="300">{{ video.content|striptags|nl2br }}</p>
+            <div class="video-detail-wall">
+                {% if video.author %}
+                    <div class="user-info">
+                        {% if video.author.image %}
+                        <a class="avatar" href="{{ path('user_land', {username: video.author.username}) }}">
+                            {% thumbnail video.author.image, 'mini_square' %}
+                        </a>
+                        {% endif %}
+                        <a class="name" href="{{ path('user_land', {username: video.author.username}) }}">
+                            {{ video.author }}
+                        </a>
+                        {% if video.author.city or video.author.country %}
+                          {% set location = [video.author.city, video.author.country]|join(', ') %}
+                          <span class="location">{{ location }}</span>
+                        {% endif %}
+                        <a class="videoCount" href="{{ path('user_land', {username: video.author.username}) }}">
+                          {{ video.author.videoCount }} videos
+                        </a>
+                    </div>
                 {% endif %}
-            </div>
+                  
+                {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video, sharebutton: true, likebutton: true} %}
+                  
+                {% include 'DodiciFansworldWebBundle:Tv:blocks/now-watching.html.twig' with {entity: video} %}
             
-            {% include 'DodiciFansworldWebBundle:Comment:blocks/box.html.twig' with {entity: video} %}
+                <div class="content">
+                    {% if video.content %}
+                        <p data-expandable data-slice-point="300">{{ video.content|striptags|nl2br }}</p>
+                    {% endif %}
+                </div>
+
+                {% include 'DodiciFansworldWebBundle:Comment:blocks/box.html.twig' with {entity: video} %}
+            </div>
         {% endblock %}
             
         {% block bottom_right_content %}
+            <h3>Fans que sigues</h3>
             {% include 'DodiciFansworldWebBundle:Video:blocks/grid.html.twig' with {videos: videosRecommended, sectionId:'videos-related'} %}
         {% endblock %}
     {% endembed %}		

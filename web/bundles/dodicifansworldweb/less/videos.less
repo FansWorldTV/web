@@ -1,31 +1,55 @@
-.am-container {
-    .title {
+.video-detail-wall {
+    .user-info {
+        margin-bottom: 5px;
+        width: 300px;
         display: block;
-        position: absolute;
-        float:left;
-        left: 0;
-        top: 0;
-        width: inherit;
-        height: inherit;
-        padding: 4px;
-        z-index: 99999;
-        color: white; 
-        text-shadow: black 0.1em 0.1em 0.2em;
-        width: 95%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-size:11px;
-        line-height:14px;
+        .pull-left();
+
+        .avatar, .name, .location, .videoCount {
+            .pull-left();
+            margin-bottom: 4px;
+        }
+
+        .name, .location, .videoCount {
+            width: 230px;
+            margin-left: 10px;
+        }
+        .name {
+            font-size: 20px;
+            font-weight: 400;
+            color: @black;
+        }
+
+        .location, .videoCount {
+            font-weight: 12px;
+            font-weight: 300;
+            color: @grayDark;
+        }
+
+        .videoCount {
+            color: @greenDark;
+            font-weight: 400;
+        }
     }
 
-    a {
-        text-decoration: none;
-        position:relative;
+    .share_content {
+        width: 301px;
+        .pull-right();
+        display: block;
+    }
 
-        button {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
+    .audience-list {
+        clear: both;
+    }
+
+    .content {
+        margin-top: 30px;
+        font-weight: 300;
+        font-size: 14px;
+        color: @black;
+
+        .read-more {
+            font-weight: 500;
         }
     }
 }
@@ -43,35 +67,6 @@ section.related_videos {
     &.list-videos {
         margin-bottom: 15px;
     }
-}
-
-.am-container.list-mosaic {
-    a {
-        background-color: black;
-        text-decoration: none;
-        color: white;
-        .title {
-            display: none !important;
-        }
-    }
-}
-
-.am-container.list-mosaic a:hover {
-    img {
-        opacity: 0.5;
-    }
-    span {
-        display: block !important;
-    }
-}
-
-.am-container.list-mosaic a span, 
-.am-container.list-mosaic a:hover span {
-    font-weight: bold;
-    position: absolute;
-    z-index: 1000;
-    text-overflow: ellipsis;
-    word-wrap: break-word;
 }
 
 .audience-list {
@@ -129,14 +124,18 @@ section.related_videos {
 
 .video-author {
     float: left;
-    font-size: 16px;
-    font-weight: 100;
+    .name {
+        font-size: 20px;
+        font-weight: 400;
+        color: @black;
+    }
+    .location {
+        font-size: 12px;
+        font-weight: 300;
+        color: @gray;
+    }
 }
 
-.video-author img {
-    width: 24px;
-    height: 24px;
-}
 
 .tag-idol {
     background-color: #D1CEC1;
@@ -182,4 +181,12 @@ section.related_videos {
 
 .video.bottom-container {
     padding-left: 15px;
+
+    #bottom-right {
+      h3 {
+        font-weight: 300;
+        font-size: 22px;
+        color: @black;
+      }
+    }
 }
