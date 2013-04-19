@@ -328,9 +328,12 @@ div.actualizacion{
 // Estilo del bloque que contiene tanto los tags de la entidad como los comentarios
 
 .comments-and-tags {
+    position: relative;
     font-size: 14px;
-    color: #a19e9f;
+    color: @grayDark;
     padding-top: 15px;
+    font-weight: 300;
+    padding-bottom: 60px;
 
     .tags{
         border-top: 1px solid #b9b9b9;
@@ -361,5 +364,11 @@ div.actualizacion{
         div.subcomment-content{
             padding-left: 15px;
         }
+    }
+
+    .comment-loading {
+      bottom: 0;
+      position: absolute;
+      left: 47%;
     }
 }
