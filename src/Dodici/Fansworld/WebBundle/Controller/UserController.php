@@ -974,6 +974,33 @@ class UserController extends SiteController
         return $this->jsonResponse($response);
     }
 
+    /**
+     *  @Route("/ajax/getphotosfrom-album", name="getphotosfrom_album")
+     */
+    public function ajaxGetPhotosFromAlbum()
+    {
+        $request = $this->getRequest();
+        $user = $this->getUser();
+        $id = $request->get('id');
+        if (!($user instanceof User))
+            throw new HttpException(403, 'Acceso denegado');
+
+        $album = $this->getRepository('Album')->findOneBy(array('id' => $id, 'active' => true));
+
+        if (!$album) {
+            throw new HttpException(404, "No existe el album");
+        }
+
+        $this->securityCheck($album);
+
+        $response = array();
+        $photos = $album->getPhotos();
+
+        $response['photos'] = $this->get('serializer')->values($photos, 'big');
+        return $this->jsonResponse($response);
+    }
+
+
     private function _createForm()
     {
         $defaultData = array();
