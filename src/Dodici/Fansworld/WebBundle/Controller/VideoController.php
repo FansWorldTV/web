@@ -628,10 +628,9 @@ class VideoController extends SiteController
         $response = array(
             'view' => $this->renderView(
                 'DodiciFansworldWebBundle:Video:final_action.html.twig',
-                    array('idols' => $idols, 'teams' => $teams, 'idvideodom'=> $idVideoDom))
+                    array('idols' => $idols, 'teams' => $teams, 'idvideodom'=> $idVideoDom, 'video' => $video ))
         );
 
-        /* $response = array('idols' => $idols, 'teams' => $teams, 'idvideodom'=> $idVideoDom, 'view' => "Test"); */
         return $this->jsonResponse($response);
     }
 

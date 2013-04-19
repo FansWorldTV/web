@@ -5,11 +5,12 @@ var redirectColorbox = true;
         window.player = document.getElementById(widgetId);
         player.addJsListener("playerPlayEnd", "playerFinalAction");
     }
-
     function playerFinalAction (id) {
+        var loading = $('[data-ctaloading]');
         var videoContainer = $('#' + id).parents('[data-videocontainer]');
         var videoContainerParent = videoContainer.parents('[data-videocontainer-parent]');
         var videoId = videoContainer.attr('data-videoid');
+        loading.show();
         videoContainer.hide();
         ajax.genericAction({
             route: 'video_ajaxPlayerFinalAction',
@@ -21,6 +22,7 @@ var redirectColorbox = true;
                 if (response) {
                     console.log(response);
                     videoContainerParent.append(response.view);
+                    loading.hide();
                     $('[data-viewagain='+ id +']').click( function () {
                           $('[data-finalAction-detail='+ id +']').remove();
                           videoContainer.show();
