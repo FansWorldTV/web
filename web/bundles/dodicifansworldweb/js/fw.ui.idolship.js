@@ -97,3 +97,15 @@ $(document).ready(function () {
         });
     };
 });
+//Attach plugin to all matching element
+$(document).ready(function () {
+    "use strict";
+    $("[data-idolship-add]:not('[data-override]')").fwIdolship({
+        onAddIdol: function(plugin, data) {
+            var self = $(plugin.element);
+            self.addClass('disabled');
+            self.removeClass('add');
+            self.text("YA ERES FAN");
+        }
+    });
+});

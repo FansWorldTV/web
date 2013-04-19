@@ -98,6 +98,17 @@
             function(r){
                 var i;
                 var tplHelperCallback = function() {
+                    // Attach bindings to 'idolship' button
+                    $(".list-idols dl").find(".btn_idolship.add:not('.loading-small')").each(function() {
+                        $(this).fwIdolship({
+                            onAddIdol: function(plugin, data) {
+                                var self = $(plugin.element);
+                                self.addClass('disabled');
+                                self.removeClass('add');
+                                self.text("YA ERES FAN");
+                            }
+                        });
+                    });
                     // Last item clears the spinner and makes callback
                     if(i === (r.idols.length-1)){
                         $("div.list-idols").removeClass('loading');
