@@ -12,7 +12,32 @@
 
 <div data-videocontainer-parent>
     <div data-videoid="{{ video.id }}" data-videocontainer>
-        <script type="text/javascript" src="http://cdnapi.kaltura.com/p/{{partner}}/sp/{{subpartner}}/embedIframeJs/uiconf_id/{{player}}/partner_id/{{partner}}?entry_id={{video.stream}}&playerId=kaltura_player_{{timestamp}}&cache_st={{timestamp}}&autoembed=true&width={{width|default(560)}}&height={{height|default(395)}}&&flashvars[streamerType]=hdnetwork&flashvars[akamaiHD]=%7B%22loadingPolicy%22%3A%22preInitialize%22%2C%22asyncInit%22%3A%22true%22%7D&flashvars[externalInterfaceDisabled]=false">
+        <div id="kaltura_player_{{timestamp}}" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
+            <meta itemprop="name" content="{{video.title}}" />
+            <meta itemprop="description" content="{{video.content}}" />
+            {% if video.image %}
+                <meta itemprop="thumbnail" content="{{ appmedia.imageurl(video.image, 'medium') }}" />
+            {% endif %}
+        </div>
+        <script type="text/javascript">
+          kWidget.embed({
+            "targetId": "kaltura_player_{{ timestamp }}",
+            "wid": "_{{partner}}",
+            "uiconf_id": {{player}},
+            "flashvars": {
+              "akamaiHD": {
+                "loadingPolicy": "preInitialize",
+                "asyncInit": "true"
+              },
+              "streamerType": "hdnetwork",
+              "externalInterfaceDisabled": false
+            },
+            "cache_st": {{ timestamp }},
+            "entry_id": "{{ video.stream }}",
+            "params": {
+              'wmode': 'transparent'
+            }
+          });
         </script>
     </div>
 </div>
