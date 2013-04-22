@@ -1,7 +1,7 @@
-<a class="btn share{% if extraclasses is defined %} {{ extraclasses|join(' ') }}{% endif %}" data-id="{{ entity.id }}" data-type="{{ type }}">
-    <i class="icon-share"></i>
+<button class="share{% if extraclasses is defined %} {{ extraclasses|join(' ') }}{% endif %}"  data-share-button data-id="{{ entity.id }}" data-type="{{ type }}">
+    <i></i>
     Compartir
-</a>
+</button>
 <div class="share-box hide">
     <img class="arrow" src="{{ asset('bundles/dodicifansworldweb/images/arrow_nav.png') }}" />
     <div class="top">

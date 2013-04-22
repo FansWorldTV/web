@@ -36,9 +36,64 @@
     }
 }
 
+.btn.edit {
+    i {
+        background-image: url('../images/bt-edit.png');
+        .square(30px);
+        display: inline-block;
+        float: left;
+    }
+ }
+
+.btn.watchlater {
+        i {
+            background-image: url('../images/bt-watch-later.png');
+            .square(30px);
+            display: inline-block;
+            float: left;
+        }
+    }
+
+.btn.report {
+    i {
+        background-image: url('../images/bt-denunciar.png');
+        .square(30px);
+        display: inline-block;
+        float: left;
+    }
+}
+
 .share_content{
-    .btn.share {
-        .btn-success;
+    .btn.watchlater,  .btn.like, .btn.report, .btn.edit{
+        display: inline-block;
+        height: 32px;
+        padding: 0;
+    }
+
+    .btn.like {
+       line-height: 30px;
+       padding-right: 5px;
+       padding-left: 5px;
+        i {
+            margin-top: 2px;
+        }
+    }
+
+    button.share {
+            background-color: @green;
+            .border-radius(3px);
+            color: white;
+            font-weight: 400;
+            fotn-size: 12px;
+            border: 0;
+            line-height: 29px;
+        i {
+            background-image: url('../images/bt-compartir.png');
+            .square(30px);
+            display: inline-block;
+            float: left;
+            margin-right: 5px;
+        }
     }
 
     .share-box {
