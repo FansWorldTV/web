@@ -24,6 +24,10 @@
     padding-right: 13px;
     font-weight: 500;
     text-transform: uppercase;
+    float: left;
+    margin-top: 7px;
+    margin-left: 5px;
+    margin-right: 5px;
 
     i {
         height: 16px;
@@ -36,9 +40,82 @@
     }
 }
 
+.btn.edit {
+    i {
+        background-image: url('../images/bt-edit.png');
+        .square(30px);
+        display: inline-block;
+        float: left;
+    }
+ }
+
+.btn.watchlater {
+        i {
+            background-image: url('../images/bt-watch-later.png');
+            .square(30px);
+            display: inline-block;
+            float: left;
+        }
+    }
+
+.btn.report {
+    i {
+        background-image: url('../images/bt-denunciar.png');
+        .square(30px);
+        display: inline-block;
+        float: left;
+    }
+}
+
 .share_content{
-    .btn.share {
-        .btn-success;
+    .btn.watchlater,  .btn.like, .btn.report, .btn.edit{
+        display: inline-block;
+        height: 32px;
+        padding: 0;
+    }
+
+    .btn.like, .btn.report, .btn.edit {
+        height: 30px;
+    }
+
+    .btn.like {
+       height: 30px;
+       line-height: 30px;
+       padding-right: 5px;
+       padding-left: 5px;
+        i {
+            background-size: 30px;
+            display: inline-block;
+            .square(30px);
+            float: left;
+            background-position: 0 0;
+            background-repeat: initial;
+            
+            &.icon-star-empty {
+                background-image: url('../images/bt-like-default.png') !important;
+            }
+
+            &.icon-star {
+                background-image: url('../images/bt-like.png') !important;
+            }
+        }
+    }
+
+    button.share {
+            background-color: @green;
+            .border-radius(3px);
+            color: white;
+            font-weight: 400;
+            fotn-size: 12px;
+            border: 0;
+            line-height: 29px;
+        i {
+            background-image: url('../images/bt-compartir.png');
+            .square(30px);
+            display: inline-block;
+            float: left;
+            margin-right: 5px;
+        }
     }
 
     .share-box {
@@ -375,24 +452,6 @@
                 .navbar-search, .dropdown.user, .dropdown.share {
                     .pull-left();
                 }
-
-                .dropdown.share {
-                    button {
-                        .btn-upload-video;
-                        margin-left: 8px;
-                        margin-right: 8px;
-                        margin-top: 7px;
-                    }
-                    a {
-                        .btn-upload-video;
-                        margin-left: 8px;
-                        margin-right: 8px;
-                        margin-top: 7px;
-                        line-height: 40px;
-                        padding: 5px;
-                    }
-                }
-
                 .btn-login {
                     background-color: #A0CE2E;
                     color: white;

@@ -50,6 +50,28 @@ $(document).ready(function () {
             $(that.element).attr('id', 'widget-popup');
             // attach scrollbars
             $(that.element).find('.widget-inner').jScrollPane();
+            $(that.element).find('.widget-inner')
+            .bind(
+                'jsp-initialised',
+                function(event, isScrollable)
+                {
+                    console.log('Handle jsp-initialised', this,
+                                'isScrollable=', isScrollable);
+                }
+            )
+            .bind(
+                'jsp-scroll-y',
+                function(event, scrollPositionY, isAtTop, isAtBottom)
+                {
+                    //console.log('Handle jsp-scroll-y', this, 'scrollPositionY=', scrollPositionY, 'isAtTop=', isAtTop, 'isAtBottom=', isAtBottom);
+                    if(isAtBottom) {
+                        $(this).find('.widget-app ul').append('<li><img title="" width="32" src="/uploads/media/default/0001/01/thumb_3_default_small_square_7c6b7e0426a40d52bf972747dac702eea26f5650.jpg">Contenido apendeado</li>');
+                        var pane = $(that.element).find('.widget-inner');
+                        var api = pane.data('jsp');
+                        api.reinitialise();
+                    }
+                }
+            );
             // Bind close button
             $('.close-share').on("click", function(event) {
                 that.popOut(event);

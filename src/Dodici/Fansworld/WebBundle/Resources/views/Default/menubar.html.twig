@@ -36,9 +36,10 @@
                 </div>
             </form>
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                <div class="dropdown share" data-dropdownshare>
-                    <a  href="{{ path('photo_fileupload') }}" data-upload="photo"><i class="icon-circle-arrow-up icon-white"></i>Subir Video</a>
-                </div>
+                <!-- div class="dropdown share" data-dropdownshare>
+                    <a href="{{ path('photo_fileupload') }}" data-upload="photo"><i class="icon-circle-arrow-up icon-white"></i>Subir Video</a>
+                </div -->
+                <button class="btn-upload-video" href="{{ path('photo_fileupload') }}" data-upload="photo"><i class="icon-circle-arrow-up icon-white"></i>Subir Video</button>
                 <div class="dropdown user">
                     <a href="#" class="dropdown-toggle username" data-toggle="dropdown">
                         <!--span>{{ user.firstname }}<b class="caret"></b></span-->

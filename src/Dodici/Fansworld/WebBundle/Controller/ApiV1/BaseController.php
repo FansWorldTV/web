@@ -35,6 +35,7 @@ class BaseController extends SiteController
     const TOKEN_SECRET = 'gafd7u8adf9';
     const LIMIT_DEFAULT = 10;
     const DEFAULT_IMAGE_FORMAT = 'small';
+    const DEFAULT_SPLASH_FORMAT = 'medium';
     
     /**
      * Does this request have a valid signature behind it?
@@ -171,6 +172,7 @@ class BaseController extends SiteController
             'firstname' => $user->getFirstname(),
             'lastname' => $user->getLastname(),
             'image' => $this->imageValues($user->getImage()),
+        	'splash' => $this->imageValues($user->getSplash(), $this->getImageFormat('splash')),
             'idolcount' => $idolcount,
             'teamcount' => $teamcount
         );
@@ -421,16 +423,18 @@ class BaseController extends SiteController
         return $rv;
     }
     
-    protected function getImageFormat()
+    protected function getImageFormat($suffix = null)
     {
         $request = $this->getRequest();
-        $imageformat = $request->get('imageformat', self::DEFAULT_IMAGE_FORMAT);
+        $default = self::DEFAULT_IMAGE_FORMAT;
+        if ($suffix == 'splash') $default = self::DEFAULT_SPLASH_FORMAT;
+        $imageformat = $request->get('imageformat'.($suffix ? ('_'.$suffix) : ''), $default);
         return $imageformat;
     }
     
-    protected function imageValues($image)
+    protected function imageValues($image, $imageformat=null)
     {
-        $imageformat = $this->getImageFormat();
+        if (!$imageformat) $imageformat = $this->getImageFormat();
         
         if (!$image) return null;
         return array(
