@@ -364,7 +364,11 @@ section#videos-related, section#videos-related-sort {
         .clearfix();
 
         * { display: block; }
-        p { height:  auto; }
+
+        p { 
+          height:  auto; 
+          font-weight: 300;
+        }
 
         a{
             position: relative;
@@ -388,7 +392,7 @@ section#videos-related, section#videos-related-sort {
         }
 
         span {
-          font-weight: bold;
+          font-weight: 600;
           margin-bottom: 5px;
 
           &.title{
@@ -409,6 +413,11 @@ section#videos-related, section#videos-related-sort {
 
 #top-left {
   //padding-bottom: 15px;
+
+  object {
+    width: 100% !important;
+    height: 100% !important;
+  }
 }
 
 #top-right {
@@ -508,41 +517,162 @@ div[data-wall] {
     }
 }
 
-.btn-upload-video-callToAction {
-	background-color: #FC6C00;
-	color: white;
-	font-size: 14px;
-	border: 0;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	height: 48px;
-	width: 180px;
-	padding-left: 13px;
-	padding-right: 13px;
-	font-weight: 500;
-	text-transform: uppercase;
+.cta-loading {
+	margin-top: 18%;
+	margin-left: 40%;
+	display:none;
 }
 
-.btn-upload-video-callToAction:hover {
-	background-color: #F98E00;
-}
+.videoCallToAction {
+	margin-top: 20px;
+	margin-left: 20px;
+	position:relative;
+	
+	.beFanBtnCta {
+		position: absolute;
+		top: 5px;
+		left: 5px;
+	}
+	
+	.header-box {
+	
+		margin-left: 40px;
+		
+		.header-title{
+			font-size: 14px;
+			font-weight: 500;	
+		}
+		
+		.buttonsHeader {
+			margin-left: 63%;
+			margin-top:-25px;
+			width: 260px;
+			position: relative;
+			
+			.btnViewAgain {
+				cursor: pointer;
+				position:relative;
+			}
+			
+			.btnNextVideo {
+				margin-top: -54px;
+				margin-left: 120px;
+				position: relative;
+				background-color: #000;
+				color: #98c12e;
+				font-size: 12px;
+				border: 1px solid white;
+				-webkit-border-radius: 3px;
+				-moz-border-radius: 3px;
+				border-radius: 3px;
+				height: 30px;
+				width: 136px;
+				padding-left: 13px;
+				padding-right: 13px;
+				font-weight: 500;
+				text-transform: uppercase;
+			}
+			
+		}
+		
+	}
+	
+	.share-box {
+		margin-top: 25px;
+		margin-left: 40px;
+		
+		.btn-upload-video {	
+			background-color: #FC6C00;
+			color: white;
+			font-size: 14px;
+			border: 0;
+			-webkit-border-radius: 3px;
+			-moz-border-radius: 3px;
+			border-radius: 3px;
+			height: 48px;
+			width: 180px;
+			padding-left: 13px;
+			padding-right: 13px;
+			font-weight: 500;
+			text-transform: uppercase;
+			position: relative;
+			margin-left: 54%;
+		}
 
-.btn-twt-callToAction {
-	background-image: url('https://twitter.com/images/resources/twitter-bird-dark-bgs.png');
-	background-size: 52px;
-	background-color: #00acee;
-	color: white;
-	border: 0;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	height: 48px;
-	width: 51px;
-}
+		.btn-upload-video:hover {
+			background-color: #F98E00;
+		}
 
-.btn-twt-callToAction:hover {
-	background-color: #0092ed;
+		.btn-twt{
+			background-image: url('../images/ico-twitter-registro.png');
+			background-size: 52px;
+			background-color: #00acee;
+			color: white;
+			border: 0;
+			-webkit-border-radius: 3px;
+			-moz-border-radius: 3px;
+			border-radius: 3px;
+			height: 48px;
+			width: 51px;
+		}
+
+		.btn-twt:hover {
+			background-color: #0092ed;
+		}
+
+		.btn-fb {
+			margin-left: 2px;
+			background-image: url('../images/ico-facebook-registro.png');
+			background-size: 52px;
+			background-color: #3b5999;
+			color: white;
+			border: 0;
+			-webkit-border-radius: 3px;
+			-moz-border-radius: 3px;
+			border-radius: 3px;
+			height: 48px;
+			width: 48px;
+		}
+
+		.btn-fb:hover {
+			background-color: #3b4e99;
+		}
+		
+		.btn-gplus {
+			margin-left: 2px;
+			background-image: url('http://www.gstatic.com/images/icons/gplus-64.png');
+			background-size: 51px;
+			background-color: #db4834;
+			color: white;
+			border: 0;
+			-webkit-border-radius: 3px;
+			-moz-border-radius: 3px;
+			border-radius: 3px;
+			height: 47px;
+			width: 49px;
+			margin-top: 1px;
+		}
+		
+		.share-title {
+			color: #98c12e;
+			font-size: 14px;
+			font-weight: 400;
+		}
+	}
+	
+	.elastislide-list {
+		i {
+			margin-left: -7px;
+			margin-top: -2px;
+		}
+		
+		button {
+			margin-top: -53px;
+			width: 21px;
+			height: 20px;
+			margin-left: 70px;
+		}
+	}
 }
 			
 @media(max-width: 815px) {
