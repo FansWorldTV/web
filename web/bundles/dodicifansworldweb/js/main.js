@@ -134,50 +134,6 @@ var site = {
             }
         });
 
-        $('[data-youtubeshareX]').live('click', function() {
-            $('[data-dropdownshare]').addClass("dropdown open");
-            var youtube_link = $('[data-youtubelink]').val();
-
-            if (checkYoutubeUrl(youtube_link)) {
-                shareStatusUpdate('', '#a0c882');
-                $('[data-youtubelink]').val('');
-                $('[data-dropdownshare]').addClass("dropdown");
-
-                /*
-                $.colorbox({
-                    href: $('[data-youtubeshare]').data('youtubeshare') + "?link=" + youtube_link,
-                    //data: {'link': youtube_link},
-                    onComplete: function() {
-                        resizePopup();
-                    }
-                });
-                */
-                var link = Routing.generate(appLocale + '_video_youtubeupload', {link: youtube_link});
-                $.ajax({url: link, type: 'GET'}).then(function(){
-                    console.log('VIDEO DE YOUTUBE SUBIDO');
-                })
-            } else {
-                console.log('Invalid Youtube Link');
-                $('[data-youtubelink]').val('');
-                shareStatusUpdate('Link invalido', 'red');
-            }
-
-            function shareStatusUpdate(text, color) {
-                $('[data-sharestatus-text]').html(text);
-                $('[data-sharestatus-text]').attr('style', 'color:' + color);
-            }
-
-            function checkYoutubeUrl(url) {
-                var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-                return (url.match(p)) ? true : false;
-            }
-            return false;
-        });
-
-        $('[data-youtubelink]').live('click', function() {
-            $('[data-dropdownshare]').addClass("dropdown open");
-        });
-
         $.datepicker.setDefaults($.datepicker.regional[appLocale]);
 
         $('.datepicker').datepicker({
