@@ -14,12 +14,12 @@ class Team
         $this->appmedia = $appmedia;
     }
     
-    public function values($entity)
+    public function values($entity, $imageformat='small')
     {
         return array(
             'id' => $entity->getId(),
             'fanCount' => $entity->getFanCount(),
-            'image' => $this->appmedia->getImageUrl($entity->getImage(), 'small')
+            'image' => $this->appmedia->getImageUrl($entity->getImage(), $imageformat)
         );
     }
 }

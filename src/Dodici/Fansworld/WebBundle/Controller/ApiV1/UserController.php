@@ -44,16 +44,7 @@ class UserController extends BaseController
      * 
      * @return 
      * array (
-     * 		array (
-     * 			id: int,
-     * 			firstname: string,
-     * 			lastname: string,
-     * 			image: array(id: int, url: string),
-     * 			fanCount: int,
-     * 			sex: string,
-     * 			username: string,
-     * 			url: string
-     * 		),
+     * 		@see self::showAction(),
      * 		...
      * )
      */
@@ -94,8 +85,10 @@ class UserController extends BaseController
                     $pagination['offset']
                 );
 
-                $imageformat = $this->getImageFormat();
-                $return = $this->get('serializer')->values($users, $imageformat);
+                $return = array();
+                foreach ($users as $u) {
+                    $return[] = $this->userArray($u);
+                }
                 
                 return $this->result($return, $pagination);
             } else {
@@ -164,7 +157,10 @@ class UserController extends BaseController
      * 		email: string,
      * 		firstname: string,
      * 		lastname: string,
-     * 		image: array(id: int, url: string)
+     * 		image: array(id: int, url: string),
+     *      splash: array(id: int, url: string),
+     *      idolcount: int,
+     *      teamcount: int
      * )
      */
     public function showAction($id)
@@ -183,7 +179,7 @@ class UserController extends BaseController
                     if (!$user) throw new HttpException(404, 'User not found');
                     $hastoken = false;
                 }
-                                
+                
                 return $this->result($this->userArray($user));
             } else {
                 throw new HttpException(401, 'Invalid signature');
