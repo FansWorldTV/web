@@ -23,6 +23,9 @@
         
         {% block bottom_left_content %}
             <div class="video-detail-wall">
+                
+                {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video, sharebutton: true, likebutton: true} %}
+                
                 {% if video.author %}
                     <div class="user-info">
                         {% if video.author.image %}
@@ -42,8 +45,6 @@
                         </a>
                     </div>
                 {% endif %}
-                  
-                {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video, sharebutton: true, likebutton: true} %}
                   
                 {% include 'DodiciFansworldWebBundle:Tv:blocks/now-watching.html.twig' with {entity: video} %}
             

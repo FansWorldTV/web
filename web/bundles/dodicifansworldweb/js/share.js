@@ -2,8 +2,8 @@ var share = {};
 
 share.init = function(){
     console.log("SHARE INIT")
-    $(".btn.share, i.close-share").on('click', function(event){
-        $(".btn.share").toggleClass('active');
+    $("[data-share-button], i.close-share").on('click', function(event){
+        $("[data-share-button]").toggleClass('active');
         $("[data-sharebox-gral]").slideToggle();
     });
 
@@ -63,8 +63,8 @@ share.it = function(){
         params['fb'] = $(".btn-checkbox.fb").hasClass('active');
 
         params['message'] = $("input.wywtsay").val();
-        params['entity-type'] = $("a.btn.share").attr('data-type');
-        params['entity-id'] = $("a.btn.share").attr('data-id');
+        params['entity-type'] = $("[data-share-button]").attr('data-type');
+        params['entity-id'] = $("[data-share-button]").attr('data-id');
 
         //var shareWith = $("input[data-token-input]").tokenInput('get');
         var shareWith = $("input[data-token-input]").data('fwTagify').getAllTags();
@@ -115,7 +115,7 @@ share.it = function(){
                 }else{
                     success("Contenido compartido!");
                     $("[data-sharebox-gral]").slideToggle();
-                    $(".btn.share").toggleClass('active');
+                    $("[data-share-button]").toggleClass('active');
                     $("input.wywtsay").val("");
                     $(".btn-checkbox").removeClass('active');
                     $(".btn-checkbox.fw").addClass('active');
