@@ -35,9 +35,13 @@
         {% if (type == 'photo' or type == 'video' ) %}
 
             {% if reportbutton %}
-                <a class="btn btn-danger report" href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}" rel="tooltip" title="Reportar"><i class="icon-flag"></i></a>
+                <a class="btn report" href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}" rel="tooltip" title="Reportar">
+                    <i></i>
+                </a>
             {% else %}
-                <a class="btn btn-danger report" href="{{ path('complaint_formPage', {'entityId': entity.id, 'entityType': type}) }}" rel="tooltip" title="Reportar"><i class="icon-flag"></i></a>
+                <a class="btn report" href="{{ path('complaint_formPage', {'entityId': entity.id, 'entityType': type}) }}" rel="tooltip" title="Reportar">
+                    <i></i>
+                </a>
             {% endif %}
 
 

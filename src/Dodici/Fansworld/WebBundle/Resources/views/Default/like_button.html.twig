@@ -5,10 +5,9 @@
 {% set candislike = appstate.candislike(entity) %}
 
 {% if 'video' == type %}
-    <a class="btn watchlater" data-videoid="{{ entity.id }}" data-later="false">
-        <i class="icon-eye-open"></i>
-         <!--span class="watchlaterText">Mirar luego</span-->
-    </a>
+    <button class="btn watchlater" data-videoid="{{ entity.id }}" data-later="false">
+        <i></i>
+    </button>
 {% endif %}
 
 {% if canlike or candislike %}
