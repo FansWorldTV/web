@@ -545,7 +545,7 @@ div[data-wall] {
 		}
 		
 		.buttonsHeader {
-			margin-left: 63%;
+			float: right;
 			margin-top:-25px;
 			width: 260px;
 			position: relative;
@@ -598,7 +598,7 @@ div[data-wall] {
 			font-weight: 500;
 			text-transform: uppercase;
 			position: relative;
-			margin-left: 54%;
+			float: right;
 		}
 
 		.btn-upload-video:hover {
@@ -691,15 +691,25 @@ div[data-wall] {
 				position: absolute;
 				margin-top: -26px;
 			}
-			
-			.btn-upload-video {
-				margin-left: 41%;
-			}
-			
-			.buttonsHeader {
-				margin-left: 47%;
-			}
 	}
+	
+	.cta-loading {
+		margin-top: 10%;
+		margin-left: 0%;
+	}
+	
+	.btn-upload-video {
+		margin-left: 41% !important;
+		float: none !important;
+	}
+	
+	.header-box  {
+		.buttonsHeader {
+			margin-left: 47% !important;
+			float: none !important;
+		}
+	}
+
 }
 			
 @media(max-width: 815px) {
