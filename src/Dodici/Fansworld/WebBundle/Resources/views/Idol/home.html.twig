@@ -36,7 +36,7 @@
                     </p>
                     <div class="fanned">
                         <span>{{ idol.fanCount }}</span>
-                        <button class="btn btn-success {% if iship %} disabled {% else %} btn_idolship add {% endif %}" data-idol-id="{{ idol.id }}">Ser fan</button>
+                        <button class="btn btn-success {% if iship %} disabled {% else %} btn_idolship add {% endif %}" data-idolship-add="true" data-idol-id="{{ idol.id }}">Ser fan</button>
                     </div>
                 </div>
             {% endfor %}
