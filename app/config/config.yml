@@ -488,7 +488,7 @@ services:
         arguments: [@serializer, @router, @fos_user.entity_manager, @appstate, @security.context]
     serializer.user:
         class: Dodici\Fansworld\WebBundle\Serializer\User
-        arguments: [@router, @appstate]
+        arguments: [@router, @appstate, @appmedia]
     serializer.album:
         class: Dodici\Fansworld\WebBundle\Serializer\Album
         arguments: [@appmedia, @router]

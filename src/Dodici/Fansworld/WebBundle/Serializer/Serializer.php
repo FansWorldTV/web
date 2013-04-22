@@ -34,7 +34,7 @@ class Serializer
      * @param mixed $entity
      * @param string $imageformat
      */
-    public function values($entity, $imageformat = 'small')
+    public function values($entity, $imageformat = 'small', $splashformat = 'big')
     {
         if (!$entity && !is_array($entity)) return null;
         if ($entity instanceof Collection) $entity = $entity->toArray();
@@ -64,7 +64,7 @@ class Serializer
             $type = $this->getType($entity);
             if ($this->container->has('serializer.'.$type)) {
                 $entserializer = $this->container->get('serializer.'.$type);
-                $extrafields = $entserializer->values($entity);
+                $extrafields = $entserializer->values($entity, $imageformat, $splashformat);
 
                 $props = array_merge($props, $extrafields);
             }
@@ -73,7 +73,7 @@ class Serializer
         } elseif (is_array($entity)) {
             $arr = array();
             foreach ($entity as $k => $e) {
-                $arr[$k] = $this->values($e, $imageformat);
+                $arr[$k] = $this->values($e, $imageformat, $splashformat);
             }
             return $arr;
         } else {
