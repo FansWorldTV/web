@@ -66,12 +66,7 @@ $(document).ready(function () {
         },
         onAddIdol: function(data) {
             var that = this;
-            var self = $(that.element);
-            self.addClass('disabled');
-            self.removeClass('add');
-            self.text("YA ERES FAN");
-            console.log("onAddIdol: " + JSON.stringify(data))
-            return that.options.onAddIdol(data);
+            return that.options.onAddIdol(this, data);
         },
         onRemoveIdol: function(data){
             var that = this;
@@ -105,5 +100,12 @@ $(document).ready(function () {
 //Attach plugin to all matching element
 $(document).ready(function () {
     "use strict";
-    $(".btn_idolship.add:not('.loading-small')").fwIdolship();
+    $("[data-idolship-add]:not('[data-override]')").fwIdolship({
+        onAddIdol: function(plugin, data) {
+            var self = $(plugin.element);
+            self.addClass('disabled');
+            self.removeClass('add');
+            self.text("YA ERES FAN");
+        }
+    });
 });

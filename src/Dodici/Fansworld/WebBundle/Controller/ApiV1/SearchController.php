@@ -146,6 +146,7 @@ class SearchController extends BaseController
             $highestcount = 0;
             foreach ($searchtypes as $type) {
                 $items = $search->search($term, $type, $user, $pagination['limit'], $pagination['offset']);
+                $return[$type] = array();
                 foreach ($items as $i) {
                     if ($type == 'user') $i = $i[0];
                     $data = array(

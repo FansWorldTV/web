@@ -4,7 +4,7 @@ share.init = function(){
     console.log("SHARE INIT")
     $("[data-share-button], i.close-share").on('click', function(event){
         $("[data-share-button]").toggleClass('active');
-        $(".share-box").slideToggle();
+        $("[data-sharebox-gral]").slideToggle();
     });
 
     $(".btn-checkbox").on('click', function(){
@@ -114,7 +114,7 @@ share.it = function(){
                     console.log(r.msg);
                 }else{
                     success("Contenido compartido!");
-                    $(".share-box").slideToggle();
+                    $("[data-sharebox-gral]").slideToggle();
                     $("[data-share-button]").toggleClass('active');
                     $("input.wywtsay").val("");
                     $(".btn-checkbox").removeClass('active');

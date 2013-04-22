@@ -7,8 +7,8 @@
         <a href="{{>teamUrl}}" clasS="team">{{>team}}</a>
         <br/>
         {{if topFan}}
-        <span class="fans">Top Fan: 
-            <a href="{{>topFanUrl}}">{{>topFan}}</a> 
+        <span class="fans">Top Fan:
+            <a href="{{>topFanUrl}}">{{>topFan}}</a>
         </span>
         {{/if}}
     </p>
@@ -18,9 +18,9 @@
                 <li><a href="{{>fansUrl}}"><span>{{>fanCount}}</span><br/> fans</a></li>
                 <li><a href="{{>videosUrl}}"><span>{{>videoCount}}</span><br/> videos</a></li>
                 <li><a href="{{>photosUrl}}"><span>{{>photoCount}}</span><br/> fotos</a></li>
-            
+
         </ul>
-            
-        <button class="btn btn-success {{if isFan}}disabled{{else}}btn_idolship add{{/if}}" data-idol-id="{{>id}}">Ser fan</button>
+
+        <button class="btn btn-success {{if isFan}}disabled{{else}}btn_idolship add{{/if}}" data-idolship-add="true" data-idol-id="{{>id}}">Ser fan</button>
     </dd>
 {% endraw %}
