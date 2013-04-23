@@ -197,6 +197,7 @@ $(document).ready(function () {
     var pluginName = "fwFooterNews";
     var defaults = {
         footer: null,
+        buttons: [],
     };
 
     // The actual plugin constructor
@@ -217,17 +218,73 @@ $(document).ready(function () {
             var that = this;
             console.log('fwFooterNews')
             that.options.footer = $('footer');
-            that.options.footer.find('.widgets').append(that.makeButton('cosas'));
+            that.options.buttons.push({
+                id: that.guidGenerator(),
+                node: that.makeButton(parseInt((Math.random()*0x10), 10), 'cosas')
+            });
+            console.log("BUTTON");
+            console.log(that.options.buttons);
+            that.options.footer.find('.widgets').append(that.options.buttons[0].node);
+            setTimeout(function(){that.updateLabel('id', 101)}, 5000)
         },
-        makeButton: function(name) {
-            return '<button id="msg" type="button" class="btn btn-info dropup" data-toggle="dropdown" href="#" data-original-title="Fansworld chat">'+name+'<span class="caret"></span></button>';
-        },
-        makeLabel: function(count) {
-            <span class="label label-important label-toolbar" style="margin-left: -15px;margin-top: -8px;z-index: 9999"></span>
-            var span = document.createElement("span");
-            $(span).addClass();
+        makeButton: function(id, name) {
+            var that = this;
+            var button = document.createElement("button");
+            button.setAttribute('id', id);
+            button.setAttribute('data-toggle', 'dropdown');
+            button.setAttribute('title', name);
+            button.setAttribute('rel', 'tooltip');
+            button.setAttribute('type', 'button');
+            button.setAttribute('data-original-title', 'Notificaciones');
+            button.className = "btn btn-info dropup";
+            button.innerText = name;
 
-        }
+            var span = document.createElement("span");
+            span.className = "caret";
+            button.appendChild(span);
+
+            var label = that.makeLabel('id', 55);
+            button.insertBefore(label, button.firstChild);
+
+            button.addEventListener("click", function(event) {
+                event.preventDefault();
+                $('.widget-container').data('fwWidget').toggle(event);
+            });
+            return button;
+        },
+        makeLabel: function(id, count) {
+            var span = document.createElement("span");
+            span.setAttribute('id', id);
+            span.className = "label label-important label-footer";
+            span.innerText = count;
+            return span;
+        },
+        updateLabel: function(id, message) {
+            var that = this;
+            $(that.options.buttons[0].node).find('#id').html(message);
+            //span.innerText = message;
+        },
+        guidGenerator: function() {
+            var s = [];
+            var itoh = '0123456789ABCDEF';
+            var i = 0;
+            // Make array of random hex digits. The UUID only has 32 digits in it, but we
+            // allocate an extra items to make room for the '-'s we'll be inserting.
+            for (i = 0; i < 36; i += 1) {
+                s[i] = Math.floor(Math.random()*0x10);
+            }
+            // Conform to RFC-4122, section 4.4
+            s[14] = 4;  // Set 4 high bits of time_high field to version
+            s[19] = (s[19] && 0x3) || 0x8;  // Specify 2 high bits of clock sequence
+            // Convert to hex chars
+            for (i = 0; i < 36; i += 1) {
+                s[i] = itoh[s[i]];
+            }
+            // Insert '-'s
+            s[8] = s[13] = s[18] = s[23] = '-';
+
+            return s.join('');
+        },
         getVersion: function() {
 
         }
