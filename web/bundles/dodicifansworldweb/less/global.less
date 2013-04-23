@@ -56,6 +56,13 @@
             display: inline-block;
             float: left;
         }
+
+        &.added { 
+            .btn-success;
+            i {
+                background-image: url('../images/bt-watch-later-active.png');
+            }
+        }
     }
 
 .btn.report {
@@ -197,6 +204,10 @@
                 input{
                     width:  411px;
                 }
+
+                ul.tagit {
+                    margin-left: -1px;
+                }
             }
 
             border-top: 2px solid #e2e2e4;
@@ -264,35 +275,50 @@
 }
 
 #report {
+    position: relative;
+    height: 200px;
+    width: 250px;
+    display: block;
+    box-sizing: border-box;
+    margin: 24px auto;
 
-    height: 120px;
+    .category, .comment  {
+        position: relative;
+    }
+    
 
-    .greybox {
-        width:295px;
-        height:200px;
+    select.category { width: 100%; }
+    textarea.comment { .size(50px, 96%); }
 
-            #category {
-                width: 310px;
-            }
-
-            #comment {
-                width: 300px;
-            }
-
-            #submit-report {
-                margin-left: 235px;
-            }
-
-
-            .alreadyReported {
-                margin-top: 25%;
-                border-color:#b2b2b2;
-                border-style:dashed;
-                border-width:2px;
-                text-align:center;
-            }
+    label.comment, label.category {
+        font-weight: 300;
+        font-size: 16px;
     }
 
+    select.category, textarea.comment {
+        font-weight: 400;
+        font-size: 12px;
+        color: @black;
+    }
+
+    label.comment {
+        margin-top: 10px;
+    }
+
+    #submit-report {
+        position: absolute; 
+        bottom: 0;
+        right: 0;
+    }
+
+
+    &.alreadyReported {
+        margin-top: 25%;
+        border-color:#b2b2b2;
+        border-style:dashed;
+        border-width:2px;
+        text-align:center;
+    }
 }
 
 

@@ -1,36 +1,36 @@
 var redirectColorbox = true;
 
 /* Player callToActions */
-    function jsCallbackReady (widgetId) {
-        window.player = document.getElementById(widgetId);
-        player.addJsListener("playerPlayEnd", "playerFinalAction");
-    }
-    function playerFinalAction (id) {
-        var loading = $('[data-ctaloading]');
-        var videoContainer = $('#' + id).parents('[data-videocontainer]');
-        var videoContainerParent = videoContainer.parents('[data-videocontainer-parent]');
-        var videoId = videoContainer.attr('data-videoid');
-        loading.show();
-        videoContainer.hide();
-        ajax.genericAction({
-            route: 'video_ajaxPlayerFinalAction',
-            params: {
-                id: videoId,
-                idVideoDom: id
-            },
-            callback: function(response) {
-                if (response) {
-                    console.log(response);
-                    videoContainerParent.append(response.view);
-                    loading.hide();
-                    $('[data-viewagain='+ id +']').click( function () {
-                          $('[data-finalAction-detail='+ id +']').remove();
-                          videoContainer.show();
-                    });
-                }
+function jsCallbackReady(widgetId) {
+    window.player = document.getElementById(widgetId);
+    player.addJsListener("playerPlayEnd", "playerFinalAction");
+}
+function playerFinalAction(id) {
+    var loading = $('[data-ctaloading]');
+    var videoContainer = $('#' + id).parents('[data-videocontainer]');
+    var videoContainerParent = videoContainer.parents('[data-videocontainer-parent]');
+    var videoId = videoContainer.attr('data-videoid');
+    loading.show();
+    videoContainer.hide();
+    ajax.genericAction({
+        route: 'video_ajaxPlayerFinalAction',
+        params: {
+            id: videoId,
+            idVideoDom: id
+        },
+        callback: function(response) {
+            if (response) {
+                console.log(response);
+                videoContainerParent.append(response.view);
+                loading.hide();
+                $('[data-viewagain=' + id + ']').click(function() {
+                    $('[data-finalAction-detail=' + id + ']').remove();
+                    videoContainer.show();
+                });
             }
-        });
-    }
+        }
+    });
+}
 /* End Player callToActions */
 
 $(document).ready(function() {
@@ -70,10 +70,10 @@ var site = {
 
         $('.report').colorbox({
             href: this.href,
-            innerWidth: 358,
-            innerHeight: 263,
+            innerWidth: 350,
+            innerHeight: 250,
             onComplete: function() {
-                resizePopup();
+                //resizePopup();
             }
         });
 
@@ -367,12 +367,12 @@ var site = {
         });
     },
     likeButtons: function() {
-        $('.btn.like:not(.loading-small)').live('click', function(e) {
+        $('.btn.like:not(.disabled)').live('click', function(e) {
             e.preventDefault();
             var el = $(this);
             var type = el.attr('data-type');
             var id = el.attr('data-id');
-            el.addClass('loading-small');
+            el.addClass('disabled');
             ajax.genericAction({
                 route: 'like_ajaxtoggle',
                 params: {
@@ -380,7 +380,7 @@ var site = {
                     'type': type
                 },
                 callback: function(response) {
-                    el.removeClass('loading-small');
+                    el.removeClass('disabled');
                     el.find('.likecount').text(response.likecount);
                     el.siblings('.likecount:first').text(response.likecount);
                     success(response.message);
@@ -393,7 +393,7 @@ var site = {
                     }
                 },
                 errorCallback: function(responsetext) {
-                    el.removeClass('loading-small');
+                    el.removeClass('disabled');
                     error(responsetext);
                 }
             });
@@ -473,7 +473,7 @@ var site = {
         });
     },
     watchLaterButtons: function() {
-        $('.btn.watchlater:not(.loading-small)').live('click', function(e) {
+        $('.btn.watchlater:not(.disabled)').live('click', function(e) {
             e.preventDefault();
             var el = $(this);
             var videoid = el.attr('data-videoid');
@@ -483,29 +483,31 @@ var site = {
                 action = 'playlist_ajaxremove';
             }
 
-            el.addClass('loading-small');
+            el.addClass('disabled');
             ajax.genericAction({
                 route: action,
                 params: {
                     'video_id': videoid,
                 },
                 callback: function(response) {
-                    el.removeClass('loading-small');
+                    el.removeClass('disabled');
                     console.log(response);
-                    if ('add' == response) {
+                    if (response === "add") {
                         el.find('i').attr('class', '');
                         $('.watchlaterText:first').html('Marcar como visto');
-                        el.find('i').addClass('icon-remove');
+                        el.addClass('added');
                         el.attr('data-later', 'true');
+                        success('Added to playlist');
                     } else {
                         el.find('i').attr('class', '');
                         $('.watchlaterText:first').html('Mirar luego');
-                        el.find('i').addClass('icon-eye-open');
+                        el.removeClass('added');
                         el.attr('data-later', 'false');
+                        success('Removed from playlist');
                     }
                 },
                 errorCallback: function(responsetext) {
-                    el.removeClass('loading-small');
+                    el.removeClass('disabled');
                     error(responsetext);
                 }
             });

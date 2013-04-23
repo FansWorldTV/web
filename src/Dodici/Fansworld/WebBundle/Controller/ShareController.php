@@ -119,7 +119,7 @@ class ShareController extends SiteController
     public function ajaxShareWithAction()
     {
         $request = $this->getRequest();
-        $term = $request->get('term', null);
+        $term = $request->get('text', null);
         $response = array();
 
         $resultMatching = $this->getRepository('Tag')->matchEntities($term, $this->getUser());
