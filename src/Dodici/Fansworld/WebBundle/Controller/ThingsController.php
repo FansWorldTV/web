@@ -103,7 +103,7 @@ class ThingsController extends SiteController
 
         $offset = ($page - 1) * self::FANS_LIMIT;
 
-        $direction = $direction == 0 ? true: false;
+        $direction = $direction == 0 ? true : false;
         $userRepo = $this->getRepository('User');
         $userRepo instanceof UserRepository;
 
@@ -134,7 +134,7 @@ class ThingsController extends SiteController
             'addMore' => $addMore
         );
 
-        foreach($fans as $fan){
+        foreach ($fans as $fan) {
             $serialized = $serializer->values($fan, 'big_square');
             array_push($response['fans'], $serialized);
         }
@@ -199,7 +199,11 @@ class ThingsController extends SiteController
 
             case 4:
                 $playlist = $this->get('video.playlist');
-                $videos = $playlist->get($user);
+                $videosPlaylist = $playlist->get($user);
+                
+                foreach ($videosPlaylist as $video) {
+                    $videos[] = $video->getVideo();
+                }
                 break;
         }
 
@@ -312,7 +316,7 @@ class ThingsController extends SiteController
                     'viewMorePhotos' => $viewMorePhotos,
                     'viewMoreAlbums' => $viewMoreAlbums,
                     'photosTotalCount' => $photosTotalCount
-                ));
+        ));
     }
 
     /**
@@ -462,7 +466,7 @@ class ThingsController extends SiteController
         );
     }
 
-     /**
+    /**
      * My badges
      *
      * @Route("/badges", name="things_badges")
