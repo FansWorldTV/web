@@ -56,16 +56,14 @@ $(document).ready(function () {
             $(that.element).find('.widget-inner')
             .bind(
                 'jsp-initialised',
-                function(event, isScrollable)
-                {
+                function(event, isScrollable) {
                     console.log('Handle jsp-initialised', this,
                                 'isScrollable=', isScrollable);
                 }
             )
             .bind(
                 'jsp-scroll-y',
-                function(event, scrollPositionY, isAtTop, isAtBottom)
-                {
+                function(event, scrollPositionY, isAtTop, isAtBottom) {
                     //console.log('Handle jsp-scroll-y', this, 'scrollPositionY=', scrollPositionY, 'isAtTop=', isAtTop, 'isAtBottom=', isAtBottom);
                     if(isAtBottom) {
                         $(this).find('.widget-app ul').append('<li><img title="" width="32" src="/uploads/media/default/0001/01/thumb_3_default_small_square_7c6b7e0426a40d52bf972747dac702eea26f5650.jpg">Contenido apendeado</li>');
@@ -79,6 +77,9 @@ $(document).ready(function () {
             $('.close-share').on("click", function(event) {
                 that.popOut(event);
             });
+        },
+        loadNews: function() {
+
         },
         setPosition: function(target) {
             var that = this;
@@ -189,6 +190,70 @@ $(document).ready(function () {
 });
 
 
+// FansWorld footer news buttons plugin 1.0 initial
+$(document).ready(function () {
+    "use strict";
+    // Create the defaults once
+    var pluginName = "fwFooterNews";
+    var defaults = {
+        footer: null,
+    };
+
+    // The actual plugin constructor
+
+    function Plugin(element, options) {
+        this.element = element;
+        // jQuery has an extend method which merges the contents of two or
+        // more objects, storing the result in the first object. The first object
+        // is generally empty as we don't want to alter the default options for
+        // future instances of the plugin
+        this.options = $.extend({}, defaults, options);
+        this._defaults = defaults;
+        this._name = pluginName;
+        this.init();
+    }
+    Plugin.prototype = {
+        init: function () {
+            var that = this;
+            console.log('fwFooterNews')
+            that.options.footer = $('footer');
+            that.options.footer.find('.widgets').append(that.makeButton('cosas'));
+        },
+        makeButton: function(name) {
+            return '<button id="msg" type="button" class="btn btn-info dropup" data-toggle="dropdown" href="#" data-original-title="Fansworld chat">'+name+'<span class="caret"></span></button>';
+        },
+        makeLabel: function(count) {
+            <span class="label label-important label-toolbar" style="margin-left: -15px;margin-top: -8px;z-index: 9999"></span>
+            var span = document.createElement("span");
+            $(span).addClass();
+
+        }
+        getVersion: function() {
+
+        }
+    };
+    // A really lightweight plugin wrapper around the constructor,
+    // preventing against multiple instantiations
+    $.fn[pluginName] = function (options) {
+        // If the first parameter is an object (options), or was omitted,
+        // instantiate a new instance of the plugin.
+        if (typeof options === "object" || !options) {
+            return this.each(function () {
+                // Only allow the plugin to be instantiated once.
+                if (!$.data(this, pluginName)) {
+                    // Pass options to Plugin constructor, and store Plugin
+                    // instance in the elements jQuery data object.
+                    $.data(this, pluginName, new Plugin(this, options));
+                }
+            });
+        }
+    };
+});
+
+$(document).ready(function () {
+    "use strict";
+    $('footer').fwFooterNews({});
+});
 /*  TIPICA NOTIFICACION
 <div class="avatar">
     <img title="IYTZf6I3O" width="50" src="/uploads/media/default/0001/02/thumb_1275_default_avatar_52744a5474d78da695ee0f7ecb79d613a40d172e.jpg" />
