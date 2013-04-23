@@ -367,12 +367,12 @@ var site = {
         });
     },
     likeButtons: function() {
-        $('.btn.like:not(.loading-small)').live('click', function(e) {
+        $('.btn.like:not(.disabled)').live('click', function(e) {
             e.preventDefault();
             var el = $(this);
             var type = el.attr('data-type');
             var id = el.attr('data-id');
-            el.addClass('loading-small');
+            el.addClass('disabled');
             ajax.genericAction({
                 route: 'like_ajaxtoggle',
                 params: {
@@ -380,7 +380,7 @@ var site = {
                     'type': type
                 },
                 callback: function(response) {
-                    el.removeClass('loading-small');
+                    el.removeClass('disabled');
                     el.find('.likecount').text(response.likecount);
                     el.siblings('.likecount:first').text(response.likecount);
                     success(response.message);
@@ -393,7 +393,7 @@ var site = {
                     }
                 },
                 errorCallback: function(responsetext) {
-                    el.removeClass('loading-small');
+                    el.removeClass('disabled');
                     error(responsetext);
                 }
             });
