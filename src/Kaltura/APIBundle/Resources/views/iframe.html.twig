@@ -1,1 +1,45 @@
-<iframe class="videoframe" src="{{url|raw}}"></iframe>
+<div class="cta-loading" data-ctaloading>
+    <img src="{{ asset('bundles/dodicifansworldweb/images/fw_tiny_logo.png') }}" />
+    <img src="{{ asset('bundles/dodicifansworldweb/images/ajax-loader-small.gif') }}" />
+</div>
+
+<div data-videocontainer-parent>
+    <div data-videoid="" data-videocontainer>
+        <div id="youtubePlayer">
+            <script type="text/javascript">
+                var tagSrcYoutube = document.createElement('script');
+                tagSrcYoutube.src = "https://www.youtube.com/iframe_api";
+
+                var scriptTag = document.getElementsByTagName('script')[0];
+                scriptTag.parentNode.insertBefore(tagSrcYoutube, scriptTag);
+
+                var playerYoutube;
+                function onYouTubeIframeAPIReady() {
+                    playerYoutube = new YT.Player('youtubePlayer', {
+                        width: '100%',
+                        height: '100%',
+                        videoId: '{{ idvideo }}',
+                        playerVars: { 'wmode': 'transparent' },
+                        events: {
+                            'onReady': autoPlayVideo,
+                            'onStateChange': youtubeListener
+                      }
+                    });
+                }
+
+                function youtubeListener(event) {
+                    if (YT.PlayerState.ENDED == event.data) {
+                        playerFinalAction('youtubePlayer');
+                    }
+                }
+
+                function autoPlayVideo(event) {
+                    event.target.playVideo();
+                }
+                function stopVideo() {
+                    playerYoutube.stopVideo();
+                }
+            </script>
+        </div>
+    </div>
+</div>
