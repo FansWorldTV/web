@@ -7,27 +7,21 @@
 
 {% block content %}
     {% if not reported%}
-
-
         <div id="report">
-             <div class="greybox">
             <form id="complaintReport" name="report" method="post">
-                <label>{{ 'Category'|trans }}:</label>
-                <br/>
-                <select name="category" id="category" class="category" data-report-category>
+                <label class="category">{{ 'Category'|trans }}</label>
+                <select name="category" class="category" data-report-category>
                     {% for category in categories %}
                         <option value="{{ category.id }}">{{ category }}</option>
                     {% endfor %}
                 </select>
-                <br/>
-                <label>{{ 'Comment'|trans }}:</label>
-                <br/>
-                <textarea name="comment" id="comment" class="comment" data-report-coment></textarea>
-                <br/>
+                
+                <label class="comment">{{ 'Comment'|trans }}</label>
+                <textarea name="comment" class="comment" data-report-coment></textarea>
+                
                 <input type="submit" class="btn btn-primary" name="submit" data-report-submit value="{{ 'Report'|trans }}" id="submit-report" />
             </form>
         </div>
-</div>
         <script type="text/javascript">
             $(document).ready(function(){
                 $("#complaintReport").live('submit', function(){
@@ -49,12 +43,8 @@
             });
         </script>
     {% else %}
-    <div id="report">
-        <div class="greybox">
-            <div class="alreadyReported">
-                <h3>{{ 'You\'ve already reported'|trans }} </h3>
-            </div>
+        <div id="report" class="reported">
+            <h3>{{ 'You\'ve already reported'|trans }} </h3>
         </div>
-    </div>
     {% endif %}
 {% endblock %}

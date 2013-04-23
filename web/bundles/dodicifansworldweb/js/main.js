@@ -70,10 +70,10 @@ var site = {
 
         $('.report').colorbox({
             href: this.href,
-            innerWidth: 358,
-            innerHeight: 263,
+            innerWidth: 350,
+            innerHeight: 250,
             onComplete: function() {
-                resizePopup();
+                //resizePopup();
             }
         });
 
