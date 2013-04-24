@@ -24,7 +24,7 @@ class KalturaTwig {
     $this->visitator->visit($video);
     if ($video->getYoutube()) {
       return $this->container->get('templating')->render(
-                      'KalturaAPIBundle::iframe.html.twig', array('idvideo' => $video->getYoutube()));
+                      'KalturaAPIBundle::iframe.html.twig', array('idvideo' => $video->getYoutube(), 'video' => $video));
     } elseif ($video->getVimeo()) {
       return $this->container->get('templating')->render(
                       'KalturaAPIBundle::iframe.html.twig', array(

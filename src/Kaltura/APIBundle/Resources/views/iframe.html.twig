@@ -4,7 +4,7 @@
 </div>
 
 <div data-videocontainer-parent>
-    <div data-videoid="" data-videocontainer>
+    <div data-videoid="{{ video.id }}" data-videocontainer>
         <div id="youtubePlayer">
             <script type="text/javascript">
                 var tagSrcYoutube = document.createElement('script');
@@ -35,9 +35,6 @@
 
                 function autoPlayVideo(event) {
                     event.target.playVideo();
-                }
-                function stopVideo() {
-                    playerYoutube.stopVideo();
                 }
             </script>
         </div>

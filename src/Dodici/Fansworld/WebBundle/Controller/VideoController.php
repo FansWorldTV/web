@@ -32,6 +32,8 @@ class VideoController extends SiteController
 
     const cantVideos = 20;
     const MIN_ITEMS_CALLTOACTION = 9;
+    const CALLTOACTION_RELATED = 5;
+    const CALLTOACTION_MOSTVIEWS = 2;
 
     /**
      * rightbar
@@ -620,10 +622,15 @@ class VideoController extends SiteController
                 $this->_createIdolTeamArray($entidad, $teams);
         }
 
-        $relatedVideos = $this->getRepository('Video')->related($video, null, 5);
-
+        $relatedVideos = $this->getRepository('Video')->related($video, null, self::CALLTOACTION_RELATED);
         $this->_addMoreData($idols, $relatedVideos, 'idol');
         $this->_addMoreData($teams, $relatedVideos, 'team');
+
+        if (count($idols) < self::MIN_ITEMS_CALLTOACTION || count($teams) < self::MIN_ITEMS_CALLTOACTION) {
+            $mostViewed = $this->getRepository('Video')->search(null, $this->getUser(), self::CALLTOACTION_MOSTVIEWS, null, null, null, null, null, null, 'views');
+            if (count($idols) < self::MIN_ITEMS_CALLTOACTION) $this->_addMoreData($idols, $mostViewed, 'idol');
+            if (count($teams) < self::MIN_ITEMS_CALLTOACTION) $this->_addMoreData($teams, $mostViewed, 'team');
+        }
 
         $response = array(
             'view' => $this->renderView(
