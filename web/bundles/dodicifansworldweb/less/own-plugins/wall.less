@@ -42,6 +42,9 @@ div.shortcommentform{
     .upd{
         position: relative;
         padding-right: 1%;
+        border: 1px solid @gray;
+        .border-radius(5px);
+
         div.cam-container{
             position: absolute;
             top: 5%;
@@ -70,7 +73,7 @@ div.shortcommentform{
             }
         }
         border-top: 1px solid #ebebeb;
-        background-color: #f8f8f8;
+
         button{
             .pull-right();
             margin-right: 10px;
@@ -86,6 +89,9 @@ div.shortcommentform{
 /* Estilos actualizacion */
 div.actualizacion{
     padding-right: 5px;
+    display: block;
+    position: relative;
+    width: 100%;
 
     header.comment-header{
         overflow: hidden;
@@ -119,6 +125,7 @@ div.actualizacion{
         }
     }
     .status{
+        box-sizing: border-box;
         width: 100%;
         border: 2px solid #D3D3D3;
         .border-radius(5px);
