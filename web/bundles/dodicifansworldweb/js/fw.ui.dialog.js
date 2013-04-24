@@ -158,61 +158,20 @@ $(document).ready(function () {
         openExternal: function(href) {
             var that = this;
             var width = 640;
-            var height = 480;
+            var height = 380;
             var left = (screen.width / 2)-(width / 2);
             var top = (screen.height / 2)-(height / 2);
 
             window.open(href,'Popup','toolbar=no,location=no,directories=no, status=no,menubar=no,scrollbars=no,resizable=no,copyhistory=no, width='+width+', height='+height+', top='+top+', left='+left);
-
-            /*
-            var id = parseInt((Math.random() * 1000), 10);
-            var modal = {
-                modalId: id,
-                modalLabel: 'label',
-                modalTitle: 'Upload Photo',
-                modalBody: 'Uploader'
-            };
-            var iframe = document.createElement("iframe");
-            iframe.setAttribute("src", href);
-
-            $.when(templateHelper.htmlTemplate('general-upload_modal', modal))
-                .then(function(html) {
-                    var dialog = $(html).clone();
-                    // Replace body
-                    dialog.find('.modal-body').html(iframe);
-                    // Enable save button
-                    dialog.find("#modal-btn-save").removeAttr("disabled");
-                    // Bind close button
-                    dialog.find("#modal-btn-close").one("click", null, null, function(){
-                        dialog.modal('hide');
-                        $('body').removeClass('modal-open');
-                        $('.modal-backdrop').remove();
-                    });
-                    // Bind save button to form submit
-                    dialog.find("#modal-btn-save").one("click", null, null, function(){
-                        $(this).addClass('loading-small');
-                        dialog.find('form').find('input[type="submit"]').click();
-                    });
-                    // Set styles & bind hide event
-                    dialog.modal({
-                        backdrop: true
-                    }).css({
-                        width: '700px',
-                        'margin-left': '-350px'
-                    }).on('hide', function() {
-                        $('.modal-backdrop').remove();
-                        $(this).data('modal', null);
-                        $(this).remove();
-                    });
-                });
-            return iframe;
-
-            */
         },
         isExternal: function(url) {
             var match = url.match(/^([^:\/?#]+:)?(?:\/\/([^\/?#]*))?([^?#]+)?(\?[^#]*)?(#.*)?/);
-            if (typeof match[1] === "string" && match[1].length > 0 && match[1].toLowerCase() !== location.protocol) return true;
-            if (typeof match[2] === "string" && match[2].length > 0 && match[2].replace(new RegExp(":("+{"http:":80,"https:":443}[location.protocol]+")?$"), "") !== location.host) return true;
+            if (typeof match[1] === "string" && match[1].length > 0 && match[1].toLowerCase() !== location.protocol) {
+                return true;
+            }
+            if (typeof match[2] === "string" && match[2].length > 0 && match[2].replace(new RegExp(":("+{"http:":80,"https:":443}[location.protocol]+")?$"), "") !== location.host) {
+                return true;
+            }
             return false;
         },
         destroy: function() {
