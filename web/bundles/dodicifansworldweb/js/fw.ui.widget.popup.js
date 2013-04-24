@@ -184,9 +184,11 @@ $(document).ready(function () {
 $(document).ready(function () {
     "use strict";
     $('.widget-container').fwWidget({});
+    /*
     $('.widgets button').on("click", function(e) {
         $('.widget-container').data('fwWidget').toggle(e);
     });
+    */
 });
 
 
@@ -220,12 +222,12 @@ $(document).ready(function () {
             that.options.footer = $('footer');
             that.options.buttons.push({
                 id: that.guidGenerator(),
-                node: that.makeButton(parseInt((Math.random()*0x10), 10), 'cosas')
+                node: that.makeButton(parseInt((Math.random()*0x10), 10), 'cosas'),
+                count: 0
             });
-            console.log("BUTTON");
             console.log(that.options.buttons);
             that.options.footer.find('.widgets').append(that.options.buttons[0].node);
-            setTimeout(function(){that.updateLabel('id', 101)}, 5000)
+            setInterval(function(){that.updateLabel('id', 101)}, 2500);
         },
         makeButton: function(id, name) {
             var that = this;
@@ -248,6 +250,7 @@ $(document).ready(function () {
 
             button.addEventListener("click", function(event) {
                 event.preventDefault();
+                console.log('entonces clickeo')
                 $('.widget-container').data('fwWidget').toggle(event);
             });
             return button;
@@ -261,8 +264,9 @@ $(document).ready(function () {
         },
         updateLabel: function(id, message) {
             var that = this;
-            $(that.options.buttons[0].node).find('#id').html(message);
-            //span.innerText = message;
+            $(that.options.buttons[0].node).find('#id').html(that.options.buttons[0].count);
+            $(that.options.buttons[0].node).find('#id').effect("highlight", {color: "#a0c882"}, 2000);
+            that.options.buttons[0].count += 1;
         },
         guidGenerator: function() {
             var s = [];
