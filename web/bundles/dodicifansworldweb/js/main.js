@@ -26,6 +26,9 @@ function playerFinalAction(id) {
                 $('[data-viewagain=' + id + ']').click(function() {
                     $('[data-finalAction-detail=' + id + ']').remove();
                     videoContainer.show();
+                    if ($("[data-viewagain='youtubePlayer']")) {
+                        playerYoutube.playVideo();
+                    }
                 });
             }
         }
@@ -43,6 +46,7 @@ var site = {
     isClosedRequests: true,
     init: function() {
         $("form[data-search-box]").submit(function() {
+            alert('hola');
             $(this).find('i.icon-search').removeClass('icon-search').addClass('loading-small');
         });
 
