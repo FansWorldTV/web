@@ -26,6 +26,9 @@ function playerFinalAction(id) {
                 $('[data-viewagain=' + id + ']').click(function() {
                     $('[data-finalAction-detail=' + id + ']').remove();
                     videoContainer.show();
+                    if ($("[data-viewagain='youtubePlayer']")) {
+                        playerYoutube.playVideo();
+                    }
                 });
             }
         }
