@@ -21,8 +21,9 @@
  */
 
 
-
-// FansWorld widget plugin 1.0 initial
+////////////////////////////////////////////////////////////////////////////////
+// FansWorld widget plugin 1.0 initial                                        //
+////////////////////////////////////////////////////////////////////////////////
 $(document).ready(function () {
     "use strict";
     // Create the defaults once
@@ -81,12 +82,14 @@ $(document).ready(function () {
         loadNews: function() {
 
         },
+        ////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////
         setPosition: function(target) {
             var that = this;
             // Get target window positioning
             var offset = $(target).offset();
             offset.top -= $(that.element).height() + $(target).height() + 10;
-            offset.left -= ($(that.element).width() / 2) - ($(target).width() / 2);
+            offset.left -= parseInt(($(that.element).width() / 2) - ($(target).width() / 2), 10);
             // Set popup position
             $(that.element).offset({
                 top: offset.top,
@@ -112,6 +115,8 @@ $(document).ready(function () {
             var that = this;
             $(that.element).find('.widget-title').text(title);
         },
+        ////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////
         checkBounds: function(check) {
             var that = this;
             if(check) {
@@ -191,8 +196,9 @@ $(document).ready(function () {
     */
 });
 
-
-// FansWorld footer news buttons plugin 1.0 initial
+////////////////////////////////////////////////////////////////////////////////
+// FansWorld footer news buttons plugin 1.0 initial                           //
+////////////////////////////////////////////////////////////////////////////////
 $(document).ready(function () {
     "use strict";
     // Create the defaults once
@@ -248,10 +254,14 @@ $(document).ready(function () {
             var label = that.makeLabel('id', 55);
             button.insertBefore(label, button.firstChild);
 
+            /*
             button.addEventListener("click", function(event) {
                 event.preventDefault();
-                console.log('entonces clickeo')
                 $('.widget-container').data('fwWidget').toggle(event);
+            });
+            */
+            $(button).on("click", function(e) {
+                $('.widget-container').data('fwWidget').toggle(e);
             });
             return button;
         },
@@ -335,7 +345,9 @@ $.ajax({url: Routing.generate('es_notification_getlatest'), data: {'parentName':
 
  */
 
-
+////////////////////////////////////////////////////////////////////////////////
+// FansWorld Meteor listener handler                                          //
+////////////////////////////////////////////////////////////////////////////////
 (function (root, factory) {
     "use strict";
     if (typeof exports === 'object') {
@@ -414,7 +426,7 @@ $.ajax({url: Routing.generate('es_notification_getlatest'), data: {'parentName':
             });
             return deferred.promise();
         };
-        NOTIFICACION.prototype.readNotification = function(id) {
+        NOTIFICACION.prototype.delete = function(id) {
             var that = this;
             var deferred = new jQuery.Deferred();
             $.ajax({
@@ -423,7 +435,7 @@ $.ajax({url: Routing.generate('es_notification_getlatest'), data: {'parentName':
                 type: 'GET'
             })
             .then(function(response){
-                console.log('ReadNotification: ' + id + ' => ' + response);
+                console.log('Notification deleted: ' + id + ' => ' + response);
                 deferred.resolve(response);
             })
             .fail(function(jqXHR, textStatus, errorThrown) {
