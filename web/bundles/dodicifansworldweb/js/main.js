@@ -134,29 +134,14 @@ var site = {
         });
 
         // Edit Photo-info
-        $("[data-edit='photo']").colorbox({
-            href: this.href,
-            onComplete: function() {
-                resizePopup();
-            }
-        });
+        $("[data-edit='photo']").fwModalDialog();
 
         // Edit Video-info
-        $("[data-edit='video']").colorbox({
-            href: this.href,
-            onComplete: function() {
-                resizePopup();
-            }
-        });
+        $("[data-edit='video']").fwModalDialog();
 
 
         // Edit Album-info
-        $("[data-edit='album']").colorbox({
-            href: this.href,
-            onComplete: function() {
-                resizePopup();
-            }
-        });
+        $("[data-edit='album']").fwModalDialog();
 
         // Invite friends
         $('[data-invite]').colorbox({
