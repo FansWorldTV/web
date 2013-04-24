@@ -43,6 +43,7 @@ var site = {
     isClosedRequests: true,
     init: function() {
         $("form[data-search-box]").submit(function() {
+            alert('hola');
             $(this).find('i.icon-search').removeClass('icon-search').addClass('loading-small');
         });
 

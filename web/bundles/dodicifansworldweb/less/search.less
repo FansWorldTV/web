@@ -7,11 +7,11 @@
                 margin-left: 15px;
             }
             .search.video {
-                height: 270px;
-                .video-list {
-                    width: 190px;
+                .video-std-block {
                     display: block;
+                    position: relative;
                     margin: 0 auto;
+                    width: 100%;
                 }
             }
     }
@@ -55,79 +55,13 @@
         }
 
         &.video {
-            ul.video-list {
-                li.video-element {
-                    cursor: pointer;
-                    position: relative;
-                    .size(130px, 190px);
-                    .pull-left();
-                    margin-right: 5px;
-                    margin-bottom: 5px;
-                    border: 1px solid @gray;
-                    overflow: hidden;
-                    background-color: black;
-
-                    img {
-                        width: 300px;
-                        max-width: initial;
-                        position: absolute;
-                        top: -35px;
-                        left: -20px;
-                    }
-                    
-                    span {
-                        font-family: "Open Sans";
-                        position: absolute;
-                        display: block;
-                        text-shadow: black 3px 1px 7px;
-                        color: @white;
-                        
-                        &.title {
-                            top: 10px;
-                            left: 10px;
-                            font-size: 15px;
-                            font-weight: 600;
-                            z-index: 2;
-                        }
-
-                        &.duration {
-                            bottom: 5px;
-                            right: 10px;
-                            font-size: 20px;
-                            z-index: 2;
-                        }
-
-                        &.ico-play {
-                            background: url('../images/ico/ico_play.png') no-repeat;
-                            background-color: transparent;
-                            .square(16px);
-                            position: absolute;
-                            bottom: 5px;
-                            left: 10px;
-                        }
-
-                        &.overlay {
-                            position: absolute;
-                            .size(55px, 190px);
-                            //background-color: @black;
-                            top: 0;
-                            left: 0;
-                            z-index: 1;
-
-                            // Gradient con transparencia
-                            background: -moz-linear-gradient(top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 100%); /* FF3.6+ */
-                            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.65)), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
-                            background: -webkit-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* Chrome10+,Safari5.1+ */
-                            background: -o-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* Opera 11.10+ */
-                            background: -ms-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* IE10+ */
-                            background: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* W3C */
-                            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
-                        }
-                    }
-
-                    &:hover {
-                    }
-                }
+            .video-std-block {
+                width: 20%;
+                display: block;
+                position: relative;
+                float: left;
+                overflow: hidden;
+                .border-radius(0);
             }
         }
     }
