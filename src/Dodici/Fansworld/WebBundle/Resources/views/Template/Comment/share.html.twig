@@ -2,7 +2,7 @@
 
 {% block action %}
 	<span class="action_user">
-		<a href="{% raw %}{{>authorWallUrl}}{% endraw %}">{% raw %}{{>authorName}}{% endraw %}</a> 
+		<a href="{% raw %}{{>authorWallUrl}}{% endraw %}">{% raw %}{{>authorName}}{% endraw %}</a>
 		{% block share_action_text %}{% raw %}{{>shareActiontext}}{% endraw %}{% endblock %}
 		{#
 		{% if comment.share.author is not null and comment.author.id != comment.share.author.id %}
@@ -22,14 +22,16 @@
 {% block info_commentcontent %}
 	{% raw %}
 		{{if shareImage}}
-			<div class="{{>shareType}}" {{if shareType == 'video'}}data-video-player-inline="{{>shareId}}"{{/if}}>
-				<a href="{{>shareUrl}}"><img src='{{>shareImage}}' alt='{{>shareTitle}}'/></a>
+			<div class="{{>shareType}}">
+				<a href="{{>shareUrl}}" {{if shareType == 'video'}} data-modal-paramid="{{>shareId}}" data-modal-type="video" data-modal-route="modal_media"{{/if}}>
+					<img src='{{>shareImage}}' alt='{{>shareTitle}}'/>
+				</a>
 			</div>
 		{{/if}}
 	{% endraw %}
-{% endblock %}    
-    
-{% block description %}  
+{% endblock %}
+
+{% block description %}
 	{% raw %}
 		{{if content}}
 			<div class="share-desc">
@@ -42,12 +44,12 @@
 {% block comment_social %}
 	{#
     <div class="social">
-        
+
 		{% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {entity: tag_item, showcount: true, type: tag_item_type} %}
 		{% if comment.author != app.user %}
 			{% block share_button %}{% include 'DodiciFansworldWebBundle:Default:share_button.html.twig' with {entity: tag_item, type: tag_item_type} %}{% endblock %}
 		{% endif %}
-		
+
 	</div>
 	#}
 {% endblock %}

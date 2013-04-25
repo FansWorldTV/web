@@ -192,7 +192,12 @@ var site = {
             $(this).trigger('click')
         });
 
-
+        $("body").delegate("a[data-modal-paramid]", "click", function(e) {
+            e.preventDefault();
+            urlModal = Routing.generate(appLocale + '_' + $(this).attr('data-modal-route'),
+                {'type': $(this).attr('data-modal-type'), 'id': $(this).attr('data-modal-paramid')});
+            $(this).modalPopup({'href': urlModal});
+        });
 
         site.parseTimes();
         site.denyFriendRequest();
