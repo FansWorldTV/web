@@ -362,7 +362,7 @@ $(document).ready(function () {
                 console.log("notification id: %s, parent: %s", id, parent);
                 $.when(fansworld.notificacion.getNotification(id))
                 .then(function(notification){
-                    $(that.element).find('.widget-app ul').append('<li>' + notification + '</li>');
+                    $(that.element).find('.widget-app ul').prepend('<li>' + notification + '</li>');
                     that.redrawScrollBar();
                 })
             });
@@ -372,8 +372,7 @@ $(document).ready(function () {
                 for(i in response.result.notifications) {
                     if (response.result.notifications.hasOwnProperty(i)) {
                         var notification = response.result.notifications[i].view;
-                        $(that.element).find('.widget-app ul').append('<li>' + notification + '</li>');
-                        //that.redrawScrollBar();
+                        $(that.element).find('.widget-app ul').prepend('<li>' + notification + '</li>');
                         that.makeScrollPane();
                     }
                 }
@@ -487,8 +486,8 @@ $(document).ready(function () {
 
             // Get target window positioning
             var offset = $(event.target).offset();
-            offset.top -= $(that.element).height() + $(event.target).height() + 10;
-            offset.left -= ($(that.element).width() / 2) - ($(event.target).width() / 2);
+            offset.top -= parseInt(($(that.element).height() + $(event.target).height() + 10), 10);
+            offset.left -= parseInt(($(that.element).width() / 2) - ($(event.target).width() / 2), 10);
             // Set popup position
             $(that.element).offset({
                 top: offset.top,
@@ -583,15 +582,15 @@ $(document).ready(function () {
             button.setAttribute('id', id);
             button.setAttribute('data-toggle', 'dropdown');
             button.setAttribute('title', name);
-            button.setAttribute('rel', 'tooltip');
+            //button.setAttribute('rel', 'tooltip');
             button.setAttribute('type', 'button');
             button.setAttribute('data-original-title', 'Notificaciones');
-            button.className = "btn btn-info dropup";
+            button.className = "notification";
             button.innerText = name;
 
-            var span = document.createElement("span");
-            span.className = "caret";
-            button.appendChild(span);
+            var caret = document.createElement("span");
+            caret.className = "caret";
+            //button.appendChild(caret);
 
             var label = that.makeLabel('id', 0);
             button.insertBefore(label, button.firstChild);
