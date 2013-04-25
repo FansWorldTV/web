@@ -67,7 +67,14 @@
                     self.find('i').removeClass().addClass('icon-minus-sign');;
                 }
             });
-            $('[data-team-id]').fwTeamship();
+            $('[data-team-add]').fwTeamship({
+                onAddTeam: function(plugin, data) {
+                    var self = $(plugin.element);
+                    self.addClass('disabled');
+                    self.removeClass('add');
+                    self.find('i').removeClass().addClass('icon-minus-sign');;
+                }
+            });
             $("[data-share-content]").fwModalDialog();
         </script>
     </div>
