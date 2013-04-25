@@ -18,7 +18,7 @@
         <!-- Idols Carousel -->
         <ul id="idols_carousel" class="elastislide-list">
             {% for idol in idols %}
-                <li><a href="#">
+                <li><a href="{{ path('idol_land', {slug: idol.slug}) }}">
                     {% thumbnail idol.image, 'big' with {"title": idol.title, "alt": idol.title, "width": "100px", "rel": "tooltip"} %}
                     <button type="button" class="btn btn-primary" data-idolship-add="true" data-idol-id="{{ idol.id }}" data-toggle="button" rel="tooltip" title="SER FAN" data-override>
                         <i class="icon-plus-sign icon-white"></i>
@@ -31,7 +31,7 @@
         <!-- Teams Carousel -->
         <ul id="teams_carousel" class="elastislide-list">
             {% for team in teams %}
-                <li><a href="#">
+                <li><a href="{{ path('team_land', {slug: team.slug}) }}">
                     {% thumbnail team.image, 'big' with {"title": team.title, "alt": team.title, "width": "100px", "rel": "tooltip"} %}
                     <button type="button" class="btn btn-primary" data-team-add="true" data-team-id="{{ team.id }}" data-toggle="button" rel="tooltip" title="SER FAN" data-override>
                         <i class="icon-plus-sign icon-white"></i>
