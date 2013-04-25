@@ -74,14 +74,7 @@ $(document).ready(function () {
         },
         onAddTeam: function(data) {
             var that = this;
-            var self = $(that.element);
-            self.addClass('disabled');
-            self.removeClass('add');
-            //self.html(data.buttontext);
-            self.html("Ya eres fan!");
-            notice(data.message);
-            console.log("onAddTeam: " + JSON.stringify(data));
-            return that.options.onAddTeam(data);
+            return that.options.onAddTeam(this, data);
         },
         onRemoveTeam: function(data){
             var that = this;
@@ -116,6 +109,16 @@ $(document).ready(function () {
 //Attach plugin to all matching element
 $(document).ready(function () {
     "use strict";
+    /*
     $(".btn_teamship.add:not('.loading-small')").fwTeamship();
     $(".btn_teamship.remove:not('.loading-small')").fwTeamship();
+    */
+    $("[data-team-add]:not('[data-override]')").fwTeamship({
+        onAddTeam: function(plugin, data) {
+            var self = $(plugin.element);
+            self.addClass('disabled');
+            self.removeClass('add');
+            self.text("YA ERES FAN");
+        }
+    });
 });
