@@ -426,7 +426,7 @@ class VideoController extends SiteController
         $response['addMore'] = $countAll > self::cantVideos ? true : false;
 
         foreach ($videos as $video) {
-            $response['elements'][] = $this->get('serializer')->values($video);
+            $response['elements'][] = $this->get('serializer')->values($video, 'big');
             /*
             array(
                 'id' => $video->getId(),
@@ -501,7 +501,7 @@ class VideoController extends SiteController
         $response['elements'] = array();
 
         foreach ($videos as $video) {
-            $response['elements'][] = $this->get('serializer')->values($video);
+            $response['elements'][] = $this->get('serializer')->values($video , 'big');
             /*
             array(
                 'id' => $video->getId(),
@@ -563,7 +563,7 @@ class VideoController extends SiteController
         $response['elements'] = array();
 
         foreach ($videos as $video) {
-            $response['elements'][] = $this->get('serializer')->values($video);
+            $response['elements'][] = $this->get('serializer')->values($video, 'big');
             /*
                 array(
                     'id' => $video->getId(),
@@ -648,7 +648,8 @@ class VideoController extends SiteController
                 array(
                     'id' => $entity->getId(),
                     'title' => (string) $entity,
-                    'image' => $entity->getImage()
+                    'image' => $entity->getImage(),
+                    'slug' => $entity->getSlug()
                 )
             );
         }
@@ -674,7 +675,8 @@ class VideoController extends SiteController
                                     array(
                                         'id' => $entidad->getId(),
                                         'title' => (string) $entidad,
-                                        'image' => $entidad->getImage()
+                                        'image' => $entidad->getImage(),
+                                        'slug' => $entidad->getSlug()
                                     )
                                 );
                             }
