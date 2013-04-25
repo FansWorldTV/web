@@ -23,6 +23,7 @@
 /*
 
 NOTIFICATIONS:
+$.get('/bench/meteor/send')
 notifications.handleNewNotification({t: "n", id: "1", p: "videos"})
 $.ajax({url: Routing.generate('es_user_ajaxnotificationnumber'), data: {}}).then(function(r){console.log(r)})
 $.ajax({url: Routing.generate('es_user_ajaxnotification'), data: {'id' : 1}}).then(function(r){console.log(r)})
@@ -94,7 +95,7 @@ proceso para obtener notificaciones:
             // ADD NOTIFICATION CHANNEL
             if ((typeof Meteor != 'undefined') && (typeof notificationChannel != 'undefined')) {
                 console.log('Esta todo bien');
-                Meteor.registerEventCallback("process", that.handleData);
+                Meteor.registerEventCallback("process", that.notificationReceived);
                 Meteor.joinChannel(that.channel);
                 Meteor.connect();
                 console.log('Escuchando notifications..');
@@ -109,14 +110,15 @@ proceso para obtener notificaciones:
             }
         };
 
-        NOTIFICACION.prototype.handleData = function(response) {
+        NOTIFICACION.prototype.notificationReceived = function(response) {
             var that = this;
             var response = JSON.parse(response);
             console.log('Notification has arrived');
             console.log(response);
             if (response) {
                 if (response.t == 'n') {
-                    //notifications.handleNewNotification(response);
+                    that.total += 1;
+                    that.fire({type: "onnotificationreceived", result: response});
                 }
             }
         };
@@ -329,7 +331,7 @@ $(document).ready(function () {
     // Create the defaults once
     var pluginName = "fwWidget";
     var defaults = {
-        title: "title",
+        title: "Notificaciones",
         isPoped: false,
         target: null
     };
@@ -352,7 +354,40 @@ $(document).ready(function () {
             var that = this;
             $(that.element).find('.widget-title').text(that.options.title);
             $(that.element).attr('id', 'widget-popup');
-            // attach scrollbars
+            // Listen notifications
+            fansworld.notificacion.addListener('onnotificationreceived', function(response){
+                var id = response.result.id;
+                var parent = response.result.p;
+
+                console.log("notification id: %s, parent: %s", id, parent);
+                $.when(fansworld.notificacion.getNotification(id))
+                .then(function(notification){
+                    $(that.element).find('.widget-app ul').append('<li>' + notification + '</li>');
+                    that.redrawScrollBar();
+                })
+            });
+            // Get latest unread notifications
+            fansworld.notificacion.addListener('ongetnotifications', function(response){
+                var i;
+                for(i in response.result.notifications) {
+                    if (response.result.notifications.hasOwnProperty(i)) {
+                        var notification = response.result.notifications[i].view;
+                        $(that.element).find('.widget-app ul').append('<li>' + notification + '</li>');
+                        //that.redrawScrollBar();
+                        that.makeScrollPane();
+                    }
+                }
+            });
+            // Bind close button
+            $('.close-share').on("click", function(event) {
+                that.popOut(event);
+            });
+        },
+        getMoreNews: function() {
+
+        },
+        makeScrollPane: function() {
+            var that = this;
             $(that.element).find('.widget-inner').jScrollPane();
             $(that.element).find('.widget-inner')
             .bind(
@@ -364,36 +399,23 @@ $(document).ready(function () {
             .bind(
                 'jsp-scroll-y',
                 function(event, scrollPositionY, isAtTop, isAtBottom) {
-                    //console.log('Handle jsp-scroll-y', this, 'scrollPositionY=', scrollPositionY, 'isAtTop=', isAtTop, 'isAtBottom=', isAtBottom);
+                    // console.log('Handle jsp-scroll-y', this, 'scrollPositionY=', scrollPositionY, 'isAtTop=', isAtTop, 'isAtBottom=', isAtBottom);
                     if(isAtBottom) {
+                        /*
                         $(this).find('.widget-app ul').append('<li><img title="" width="32" src="/uploads/media/default/0001/01/thumb_3_default_small_square_7c6b7e0426a40d52bf972747dac702eea26f5650.jpg">Contenido apendeado</li>');
                         var pane = $(that.element).find('.widget-inner');
                         var api = pane.data('jsp');
                         api.reinitialise();
+                        */
                     }
                 }
             );
-            // Get latest unread notifications
-            fansworld.notificacion.addListener('ongetnotifications', function(response){
-                console.log('GOT LATEST')
-                console.log(response)
-                //$(that).find('.widget-app ul').empty();
-                $(that.element).find('.widget-app ul').empty();
-                var i;
-                for(i in response.result.notifications) {
-                    if (response.result.notifications.hasOwnProperty(i)) {
-                        var notification = response.result.notifications[i].view;
-                        $(that.element).find('.widget-app ul').append('<li>' + notification + '</li>');
-                    }
-                }
-            });
-            // Bind close button
-            $('.close-share').on("click", function(event) {
-                that.popOut(event);
-            });
         },
-        loadNews: function() {
-
+        redrawScrollBar: function() {
+            var that = this;
+            var pane = $(that.element).find('.widget-inner');
+            var api = pane.data('jsp');
+            api.reinitialise();
         },
         ////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////
@@ -546,20 +568,14 @@ $(document).ready(function () {
             });
             console.log(that.options.buttons);
             that.options.footer.find('.widgets').append(that.options.buttons[0].node);
-            /*
-            setInterval(function() {
-                that.updateLabel('id', 101)
-            }, 2500);
-            */
+
             fansworld.notificacion.addListener('ongettotal', function(response){
                 that.updateLabel('id', response.result);
             });
-            /*
-            $.when(fansworld.notificacion.getTotal()).then(function(total) {
-                console.log('GOT TOTAL NOTIFICATIONS')
+            // Listen notifications
+            fansworld.notificacion.addListener('onnotificationreceived', function(response){
                 that.updateLabel('id', fansworld.notificacion.total);
             });
-            */
         },
         makeButton: function(id, name) {
             var that = this;
