@@ -196,135 +196,6 @@ $(document).ready(function () {
     */
 });
 
-////////////////////////////////////////////////////////////////////////////////
-// FansWorld footer news buttons plugin 1.0 initial                           //
-////////////////////////////////////////////////////////////////////////////////
-$(document).ready(function () {
-    "use strict";
-    // Create the defaults once
-    var pluginName = "fwFooterNews";
-    var defaults = {
-        footer: null,
-        buttons: [],
-    };
-
-    // The actual plugin constructor
-
-    function Plugin(element, options) {
-        this.element = element;
-        // jQuery has an extend method which merges the contents of two or
-        // more objects, storing the result in the first object. The first object
-        // is generally empty as we don't want to alter the default options for
-        // future instances of the plugin
-        this.options = $.extend({}, defaults, options);
-        this._defaults = defaults;
-        this._name = pluginName;
-        this.init();
-    }
-    Plugin.prototype = {
-        init: function () {
-            var that = this;
-            console.log('fwFooterNews')
-            that.options.footer = $('footer');
-            that.options.buttons.push({
-                id: that.guidGenerator(),
-                node: that.makeButton(parseInt((Math.random()*0x10), 10), 'cosas'),
-                count: 0
-            });
-            console.log(that.options.buttons);
-            that.options.footer.find('.widgets').append(that.options.buttons[0].node);
-            setInterval(function(){that.updateLabel('id', 101)}, 2500);
-        },
-        makeButton: function(id, name) {
-            var that = this;
-            var button = document.createElement("button");
-            button.setAttribute('id', id);
-            button.setAttribute('data-toggle', 'dropdown');
-            button.setAttribute('title', name);
-            button.setAttribute('rel', 'tooltip');
-            button.setAttribute('type', 'button');
-            button.setAttribute('data-original-title', 'Notificaciones');
-            button.className = "btn btn-info dropup";
-            button.innerText = name;
-
-            var span = document.createElement("span");
-            span.className = "caret";
-            button.appendChild(span);
-
-            var label = that.makeLabel('id', 55);
-            button.insertBefore(label, button.firstChild);
-
-            /*
-            button.addEventListener("click", function(event) {
-                event.preventDefault();
-                $('.widget-container').data('fwWidget').toggle(event);
-            });
-            */
-            $(button).on("click", function(e) {
-                $('.widget-container').data('fwWidget').toggle(e);
-            });
-            return button;
-        },
-        makeLabel: function(id, count) {
-            var span = document.createElement("span");
-            span.setAttribute('id', id);
-            span.className = "label label-important label-footer";
-            span.innerText = count;
-            return span;
-        },
-        updateLabel: function(id, message) {
-            var that = this;
-            $(that.options.buttons[0].node).find('#id').html(that.options.buttons[0].count);
-            $(that.options.buttons[0].node).find('#id').effect("highlight", {color: "#a0c882"}, 2000);
-            that.options.buttons[0].count += 1;
-        },
-        guidGenerator: function() {
-            var s = [];
-            var itoh = '0123456789ABCDEF';
-            var i = 0;
-            // Make array of random hex digits. The UUID only has 32 digits in it, but we
-            // allocate an extra items to make room for the '-'s we'll be inserting.
-            for (i = 0; i < 36; i += 1) {
-                s[i] = Math.floor(Math.random()*0x10);
-            }
-            // Conform to RFC-4122, section 4.4
-            s[14] = 4;  // Set 4 high bits of time_high field to version
-            s[19] = (s[19] && 0x3) || 0x8;  // Specify 2 high bits of clock sequence
-            // Convert to hex chars
-            for (i = 0; i < 36; i += 1) {
-                s[i] = itoh[s[i]];
-            }
-            // Insert '-'s
-            s[8] = s[13] = s[18] = s[23] = '-';
-
-            return s.join('');
-        },
-        getVersion: function() {
-
-        }
-    };
-    // A really lightweight plugin wrapper around the constructor,
-    // preventing against multiple instantiations
-    $.fn[pluginName] = function (options) {
-        // If the first parameter is an object (options), or was omitted,
-        // instantiate a new instance of the plugin.
-        if (typeof options === "object" || !options) {
-            return this.each(function () {
-                // Only allow the plugin to be instantiated once.
-                if (!$.data(this, pluginName)) {
-                    // Pass options to Plugin constructor, and store Plugin
-                    // instance in the elements jQuery data object.
-                    $.data(this, pluginName, new Plugin(this, options));
-                }
-            });
-        }
-    };
-});
-
-$(document).ready(function () {
-    "use strict";
-    $('footer').fwFooterNews({});
-});
 /*  TIPICA NOTIFICACION
 <div class="avatar">
     <img title="IYTZf6I3O" width="50" src="/uploads/media/default/0001/02/thumb_1275_default_avatar_52744a5474d78da695ee0f7ecb79d613a40d172e.jpg" />
@@ -372,10 +243,13 @@ $.ajax({url: Routing.generate('es_notification_getlatest'), data: {'parentName':
             var that = this;
             this.jQuery = jQuery;
             this.version = '1.0';
+            // Event Listeners
+            this.listeners = {};
             this.channel = "notification_" + this.guidGenerator();
             this.total = 0;
             // Listen for Meteor messages
             this.join();
+            this.getTotal();
         }
         NOTIFICACION.prototype.join = function() {
             var that = this;
@@ -419,6 +293,7 @@ $.ajax({url: Routing.generate('es_notification_getlatest'), data: {'parentName':
             .then(function(response) {
                 var result = response[0];
                 that.total = parseInt(result.cnt, 10);
+                that.fire({type: "ongettotal", result: that.total});
                 deferred.resolve(parseInt(result.cnt, 10));
             })
             .fail(function(jqXHR, textStatus, errorThrown) {
@@ -442,6 +317,47 @@ $.ajax({url: Routing.generate('es_notification_getlatest'), data: {'parentName':
                 deferred.reject(new Error(jqXHR));
             });
             return deferred.promise();
+        };
+        ////////////////////////////////////////////////////////////////////////
+        //  CUSTOM EVENT HANDLERS                                             //
+        ////////////////////////////////////////////////////////////////////////
+        NOTIFICACION.prototype.addListener = function(type, listener){
+            if (typeof this.listeners[type] === "undefined"){
+                this.listeners[type] = [];
+            }
+            this.listeners[type].push(listener);
+        };
+        NOTIFICACION.prototype.removeListener = function(type, listener){
+            if (this.listeners[type] instanceof Array){
+                var listeners = this.listeners[type];
+                var i, len;
+                for (i = 0, len = listeners.length; i < len; i += 1){
+                    if (listeners[i] === listener){
+                        listeners.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+        };
+        NOTIFICACION.prototype.fire = function(event){
+            var i, len;
+            if (typeof event === "string"){
+                event = { type: event };
+            }
+            if (!event.target){
+                event.target = this;
+            }
+
+            if (!event.type){  //falsy
+                throw new Error("Event object missing 'type' property.");
+            }
+
+            if (this.listeners[event.type] instanceof Array){
+                var listeners = this.listeners[event.type];
+                for (i = 0, len = listeners.length; i < len; i += 1){
+                    listeners[i].call(this, event);
+                }
+            }
         };
         ////////////////////////////////////////////////////////////////////////
         // Create and return a "version 4" RFC-4122 UUID string.              //
@@ -487,4 +403,146 @@ $(document).ready(function () {
     window.fansworld = window.fansworld || {};
     window.fansworld.notificacion = new window.NOTIFICACION();
     return;
+});
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// FansWorld footer news buttons plugin 1.0 initial                           //
+////////////////////////////////////////////////////////////////////////////////
+$(document).ready(function () {
+    "use strict";
+    // Create the defaults once
+    var pluginName = "fwFooterNews";
+    var defaults = {
+        footer: null,
+        buttons: [],
+    };
+
+    // The actual plugin constructor
+
+    function Plugin(element, options) {
+        this.element = element;
+        // jQuery has an extend method which merges the contents of two or
+        // more objects, storing the result in the first object. The first object
+        // is generally empty as we don't want to alter the default options for
+        // future instances of the plugin
+        this.options = $.extend({}, defaults, options);
+        this._defaults = defaults;
+        this._name = pluginName;
+        this.init();
+    }
+    Plugin.prototype = {
+        init: function () {
+            var that = this;
+            console.log('fwFooterNews')
+            that.options.footer = $('footer');
+            that.options.buttons.push({
+                id: that.guidGenerator(),
+                node: that.makeButton(parseInt((Math.random()*0x10), 10), 'cosas'),
+                count: 0
+            });
+            console.log(that.options.buttons);
+            that.options.footer.find('.widgets').append(that.options.buttons[0].node);
+            /*
+            setInterval(function() {
+                that.updateLabel('id', 101)
+            }, 2500);
+            */
+            fansworld.notificacion.addListener('ongettotal', function(response){
+                console.log('DATA IS READY ongettotal')
+                console.log(response.result)
+                that.updateLabel('id', response.result);
+            });
+            /*
+            $.when(fansworld.notificacion.getTotal()).then(function(total) {
+                console.log('GOT TOTAL NOTIFICATIONS')
+                that.updateLabel('id', fansworld.notificacion.total);
+            });
+            */
+        },
+        makeButton: function(id, name) {
+            var that = this;
+            var button = document.createElement("button");
+            button.setAttribute('id', id);
+            button.setAttribute('data-toggle', 'dropdown');
+            button.setAttribute('title', name);
+            button.setAttribute('rel', 'tooltip');
+            button.setAttribute('type', 'button');
+            button.setAttribute('data-original-title', 'Notificaciones');
+            button.className = "btn btn-info dropup";
+            button.innerText = name;
+
+            var span = document.createElement("span");
+            span.className = "caret";
+            button.appendChild(span);
+
+            var label = that.makeLabel('id', 55);
+            button.insertBefore(label, button.firstChild);
+
+            $(button).on("click", function(e) {
+                $('.widget-container').data('fwWidget').toggle(e);
+            });
+            return button;
+        },
+        makeLabel: function(id, count) {
+            var span = document.createElement("span");
+            span.setAttribute('id', id);
+            span.className = "label label-important label-footer";
+            span.innerText = count;
+            return span;
+        },
+        updateLabel: function(id, message) {
+            var that = this;
+            $(that.options.buttons[0].node).find('#id').html(message);
+            $(that.options.buttons[0].node).find('#id').effect("highlight", {color: "#a0c882"}, 2000);
+        },
+        guidGenerator: function() {
+            var s = [];
+            var itoh = '0123456789ABCDEF';
+            var i = 0;
+            // Make array of random hex digits. The UUID only has 32 digits in it, but we
+            // allocate an extra items to make room for the '-'s we'll be inserting.
+            for (i = 0; i < 36; i += 1) {
+                s[i] = Math.floor(Math.random()*0x10);
+            }
+            // Conform to RFC-4122, section 4.4
+            s[14] = 4;  // Set 4 high bits of time_high field to version
+            s[19] = (s[19] && 0x3) || 0x8;  // Specify 2 high bits of clock sequence
+            // Convert to hex chars
+            for (i = 0; i < 36; i += 1) {
+                s[i] = itoh[s[i]];
+            }
+            // Insert '-'s
+            s[8] = s[13] = s[18] = s[23] = '-';
+
+            return s.join('');
+        },
+        getVersion: function() {
+
+        }
+    };
+    // A really lightweight plugin wrapper around the constructor,
+    // preventing against multiple instantiations
+    $.fn[pluginName] = function (options) {
+        // If the first parameter is an object (options), or was omitted,
+        // instantiate a new instance of the plugin.
+        if (typeof options === "object" || !options) {
+            return this.each(function () {
+                // Only allow the plugin to be instantiated once.
+                if (!$.data(this, pluginName)) {
+                    // Pass options to Plugin constructor, and store Plugin
+                    // instance in the elements jQuery data object.
+                    $.data(this, pluginName, new Plugin(this, options));
+                }
+            });
+        }
+    };
+});
+
+$(document).ready(function () {
+    "use strict";
+    $('footer').fwFooterNews({});
 });
