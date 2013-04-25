@@ -648,7 +648,8 @@ class VideoController extends SiteController
                 array(
                     'id' => $entity->getId(),
                     'title' => (string) $entity,
-                    'image' => $entity->getImage()
+                    'image' => $entity->getImage(),
+                    'slug' => $entity->getSlug()
                 )
             );
         }
@@ -674,7 +675,8 @@ class VideoController extends SiteController
                                     array(
                                         'id' => $entidad->getId(),
                                         'title' => (string) $entidad,
-                                        'image' => $entidad->getImage()
+                                        'image' => $entidad->getImage(),
+                                        'slug' => $entidad->getSlug()
                                     )
                                 );
                             }
