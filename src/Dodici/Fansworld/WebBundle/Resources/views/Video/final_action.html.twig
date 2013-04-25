@@ -20,7 +20,7 @@
             {% for idol in idols %}
                 <li><a href="#">
                     {% thumbnail idol.image, 'big' with {"title": idol.title, "alt": idol.title, "width": "100px", "rel": "tooltip"} %}
-                    <button type="button" class="btn btn-primary" data-idol-id="{{ idol.id }}" data-toggle="button" rel="tooltip" title="SER FAN">
+                    <button type="button" class="btn btn-primary" data-idol-id="{{ idol.id }}" data-toggle="button" rel="tooltip" title="SER FAN" data-override>
                         <i class="icon-plus-sign icon-white"></i>
                     </button>
                 </a></li>
@@ -33,7 +33,7 @@
             {% for team in teams %}
                 <li><a href="#">
                     {% thumbnail team.image, 'big' with {"title": team.title, "alt": team.title, "width": "100px", "rel": "tooltip"} %}
-                    <button type="button" class="btn btn-primary" data-team-id="{{ team.id }}" data-toggle="button" rel="tooltip" title="SER FAN">
+                    <button type="button" class="btn btn-primary" data-team-id="{{ team.id }}" data-toggle="button" rel="tooltip" title="SER FAN" data-override>
                         <i class="icon-plus-sign icon-white"></i>
                     </button>
                 </a></li>
