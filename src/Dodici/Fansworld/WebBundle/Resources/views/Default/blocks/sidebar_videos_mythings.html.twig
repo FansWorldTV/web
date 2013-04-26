@@ -1,29 +1,16 @@
-<div class="item">
-    <div class="item-info">
+<div class="video-std-block">
+    <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+        {% thumbnail video.image, 'huge_square' with {'class': 'thumb'} %}
+        <i class="play-video"></i>
+    </a>
+    <div class="title-and-user">
+        {% if video.author is not null %}
+            {% if video.author.image is not null%}
+                <a href="{{ path('user_wall', {'username': video.author.username}) }}">{% thumbnail video.author.image, 'small_square' with { 'rel': 'tooltip', 'class': 'author-image', 'title': video.author} %}</a>
+            {% endif %}
+        {% endif %}
         <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
-            <div class="overlay"></div>
-                <div class="title-and-user">
-                    {% if video.author is not null %}
-                        {% if video.author.image is not null%}
-                            <a href="{{ path('user_wall', {'username': video.author.username}) }}">
-                                {% thumbnail video.author.image, 'small_square' with { 'rel': 'tooltip', 'class': 'author-image', 'title': video.author} %}
-                            </a>
-                        {% endif %}
-                    {% endif %}
-                    <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}" data-modal-url="{{ path('modal_media', {'type': 'video', 'id': video.id}) }}">
-                        <span class="title">{{ video.title }}</span>
-                    </a>
-                </div>
-    </div>
-            <div class="image">
-                <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
-                    {% thumbnail video.image, 'huge_square' %}
-                </a>
-
-                <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
-                    <i class="play-video"></i>
-                </a>
-            </div>
+            <span class="title">{{ video.title }}</span>
         </a>
     </div>
 </div>
