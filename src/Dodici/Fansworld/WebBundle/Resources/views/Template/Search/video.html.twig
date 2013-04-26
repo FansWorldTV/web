@@ -1,13 +1,20 @@
 {% raw %}
-    <li class="video-element" data-added-element>
+    <div class="video-std-block">
         <a href="{{>url}}">
-            <img title="{{>title}}" width="250" src="{{>image}}">            
+            <img title="{{>title}}" src="{{>image}}" />
+            <i class="play-video"></i>
         </a>
-        <a href="{{>url}}">
-            <span class="title">{{>title}}</span>
-        </a>
-        <span class="duration">{{>duration}}</span>
-        <span class="overlay"></span>
-        <span class="ico-play"></span>
-    </li>
+        <div class="title-and-user">
+            {{if author}}
+                {{if author.image}}
+                    <a href="{{>author.url}}">
+                        <img title="" src="{{>author.image}}" class="author-image" rel="tooltip" title="{{>author.title}}"/>
+                    </a>
+                {{/if}}
+            {{/if}}
+            <a href="{{>url}}">
+                <span class="title">{{>title}}</span>
+            </a>
+        </div>
+    </div>
 {% endraw %}
