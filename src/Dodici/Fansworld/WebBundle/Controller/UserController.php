@@ -18,6 +18,7 @@ use Dodici\Fansworld\WebBundle\Entity\Activity;
 use Imagine\Image\Box;
 use Imagine\Image\Point;
 use Imagine\Gd\Imagine;
+use Dodici\Fansworld\WebBundle\Entity\HasTag;
 
 class UserController extends SiteController
 {
@@ -1053,9 +1054,11 @@ class UserController extends SiteController
                         break;
                     case 5:
                         // TYPE_LABELLED_IN
-                        $video = $activity->getVideo();
-                        $photo = $activity->getPhoto();
-                        $what = $video || $photo;
+                        if ($activity->getPhoto() != null) {
+                            $what = $this->get('serializer')->values($activity->getPhoto());
+                        } else {
+                            $what = $this->get('serializer')->values($activity->getVideo());
+                        }
                         $who = $activity->getAuthor();
                         break;
                     case 6:
@@ -1066,11 +1069,13 @@ class UserController extends SiteController
                         $who = $activity->getAuthor();
                         break;
                     case 7:
-                        $video = $activity->getVideo();
-                        $photo = $activity->getPhoto();
-                        $what = $video || $photo;
-                        $who = $activity->getAuthor();
                         // TYPE_SHARED
+                        if ($activity->getPhoto() != null) {
+                            $what = $this->get('serializer')->values($activity->getPhoto());
+                        } else {
+                            $what = $this->get('serializer')->values($activity->getVideo());
+                        }
+                        $who = $activity->getAuthor();
                         break;
                 }
 
