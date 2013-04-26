@@ -159,6 +159,10 @@ class SearchController extends SiteController
 
         if ($response['search']) {
             foreach ($response['search'] as $key => $el) {
+                if(!isset($el['id'])){
+                    continue;
+                }
+                
                 if (array_key_exists('duration', $el)) {
                     $response['search'][$key]['duration'] = date('i:s', $el['duration']);
                 }
