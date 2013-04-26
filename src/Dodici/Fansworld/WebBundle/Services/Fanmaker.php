@@ -36,7 +36,7 @@ class Fanmaker
      * @param Idol|Team $entity
      * @param User|null $user
      */
-    public function addFan($entity, User $user=null, $flush=true)
+    public function addFan($entity, User $user=null, $flush=true, $favorite=false)
     {
     	if (!$user) $user = $this->user;
         if (!$user) throw new AccessDeniedException('Access denied');
@@ -49,6 +49,7 @@ class Fanmaker
             $idolship = new Idolship();
             $idolship->setAuthor($user);
             $idolship->setIdol($entity);
+            $idolship->setFavorite($favorite);
             $this->em->persist($idolship);
             
             $this->userfeedlogger->log(Activity::TYPE_BECAME_FAN, $entity, $user, false);
@@ -59,6 +60,7 @@ class Fanmaker
             $teamship = new Teamship();
             $teamship->setAuthor($user);
             $teamship->setTeam($entity);
+            $teamship->setFavorite($favorite);
             $this->em->persist($teamship);
             
             $this->userfeedlogger->log(Activity::TYPE_BECAME_FAN, $entity, $user, false);

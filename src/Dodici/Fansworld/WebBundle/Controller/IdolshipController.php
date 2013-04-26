@@ -48,11 +48,7 @@ class IdolshipController extends SiteController {
                 $buttontext = $translator->trans('add_idol');
                 $isFan = false;
             } else {
-                $idolship = new Idolship();
-                $idolship->setAuthor($user);
-                $idolship->setIdol($idol);
-                $em->persist($idolship);
-                $em->flush();
+                $this->get('fanmaker')->addFan($idol, $user);
 
                 $message = $translator->trans('You are now a fan of') . ' "' . (string) $idol . '"';
                 $buttontext = $translator->trans('remove_idol');
