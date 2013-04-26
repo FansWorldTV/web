@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Sonata\UserBundle\Entity\User;
 use Application\Sonata\UserBundle\Entity\Notification;
+use Dodici\Fansworld\WebBundle\Entity\Activity;
 use Imagine\Image\Box;
 use Imagine\Image\Point;
 use Imagine\Gd\Imagine;
@@ -23,6 +24,7 @@ class UserController extends SiteController
 
     const LIMIT_SEARCH = 20;
     const LIMIT_NOTIFICATIONS = 5;
+    const LIMIT_ACTIVITIES = 10;
     const LIMIT_PHOTOS = 8;
     const LIMIT_VIDEOS = 10;
     const LIMIT_LIST_IDOLS = 15;
@@ -1000,7 +1002,100 @@ class UserController extends SiteController
         return $this->jsonResponse($response);
     }
 
+    /**
+     *  @Route("/ajax/getactivity-feed", name="getactivity_feed")
+     */
+    public function ajaxGetActivityFeed()
+    {
+        $request = $this->getRequest();
+        $user = $this->getUser();
+        if (!($user instanceof User))
+            throw new HttpException(403, 'Acceso denegado');
 
+        $activyRepo = $this->getRepository('Activity');
+
+        $response = array();
+        $latestActivity = $activyRepo->latest($user, 1000); //self::LIMIT_ACTIVITIES);
+        $countAll = $activyRepo->countBy(array('author' => $user->getId()));
+
+        foreach ($latestActivity as $activity) {
+            //$media = $activity->getAuthor()->getImage();
+
+                $userImage = $activity->getAuthor()->getImage();
+                $mediaEntity = array();
+                $beFan = array();
+                $shared = array();
+                $what = array();
+                $who = array();
+
+                switch ($activity->getType()) {
+                    case 1:
+                        // TYPE_NEW_VIDEO
+                        $video = $activity->getVideo();
+                        $mediaEntity['video'] = $this->get('serializer')->values($video , 'big');
+                        break;
+                    case 2:
+                        // TYPE_NEW_PHOTO
+                        $photo = $activity->getPhoto();
+                        $mediaEntity['photo'] = $this->get('serializer')->values($photo , 'big');
+                        break;
+                    case 3:
+                        // TYPE_BECAME_FAN
+                        $beIdols = $activity->getHasidols();
+                        $beTeams = $activity->getHasteams();
+                        $beUsers = $activity->getHasusers();
+
+                        $beFan = $beIdols || $beTeams || $beUsers;
+
+                        break;
+                    case 4:
+                        // TYPE_CHECKED_IN
+                        break;
+                    case 5:
+                        // TYPE_LABELLED_IN
+                        $video = $activity->getVideo();
+                        $photo = $activity->getPhoto();
+                        $what = $video || $photo;
+                        $who = $activity->getAuthor();
+                        break;
+                    case 6:
+                        // TYPE_LIKED
+                        $video = $activity->getVideo();
+                        $photo = $activity->getPhoto();
+                        $what = $video || $photo;
+                        $who = $activity->getAuthor();
+                        break;
+                    case 7:
+                        $video = $activity->getVideo();
+                        $photo = $activity->getPhoto();
+                        $what = $video || $photo;
+                        $who = $activity->getAuthor();
+                        // TYPE_SHARED
+                        break;
+                }
+
+                $response[] = array(
+                    'activity' => array(
+                        'id' => $activity->getId(),
+                        'ts' => $activity->getCreatedat()->format('U'),
+                        'type' => $activity->getType(),
+                        'typeName' => $activity->getTypeName()
+                    ),
+                    'media' => $mediaEntity,
+                    'fan'  => $beFan,
+                    'labeled' => $what,
+                    'share' => $what,
+                    'user' => array(
+                        'id' => (string) $activity->getAuthor()->getId(),
+                        'name' => (string) $activity->getAuthor(),
+                        'image' => $this->getImageUrl($userImage),
+                        'url' => $this->generateUrl('user_land', array('username' => $activity->getAuthor()->getUsername()))
+                    )
+                );
+        }
+        $response['countAll'] = $countAll;
+        return $this->jsonResponse($response);
+    }
     private function _createForm()
     {
         $defaultData = array();

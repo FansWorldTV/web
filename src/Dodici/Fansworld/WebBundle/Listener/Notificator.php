@@ -22,23 +22,23 @@ use Application\Sonata\UserBundle\Entity\User;
  */
 class Notificator
 {
-    
+
     protected $container;
 
     function __construct($container)
     {
         $this->container = $container;
     }
-    
+
 	public function postPersist(LifecycleEventArgs $eventArgs)
     {
 		$entity = $eventArgs->getEntity();
 		$em = $eventArgs->getEntityManager();
-		
+
 		if ($entity instanceof HasUser && ($entity->getAuthor()->getId() != $entity->getTarget()->getId())) {
 			// notif: has sido etiquetado en ...
 			$notification = new Notification();
-			
+
 			if ($entity->getPhoto()) {
     		    $notification->setType(Notification::TYPE_USER_TAGGED_PHOTO);
 			} elseif ($entity->getVideo()) {
@@ -46,7 +46,7 @@ class Notificator
 			} else {
 			    return false;
 			}
-    		
+
     		$notification->setAuthor($entity->getAuthor());
     		$notification->setTarget($entity->getTarget());
     		if ($entity->getComment()) $notification->setComment($entity->getComment());
@@ -56,19 +56,19 @@ class Notificator
     		if ($entity->getContest()) $notification->setContest($entity->getContest());
     		if ($entity->getNewspost()) $notification->setNewspost($entity->getNewspost());
     		$em->persist($notification);
-			
+
     		// activity: ha sido etiquetado en ...
 			if ($entity->getPhoto() || $entity->getVideo())
     		    $this->container->get('user.feed.logger')->log(
-    		        Activity::TYPE_LABELLED_IN, 
-    		        array($entity->getPhoto(), $entity->getVideo()), 
-    		        $entity->getTarget(), 
+    		        Activity::TYPE_LABELLED_IN,
+    		        array($entity->getPhoto(), $entity->getVideo()),
+    		        $entity->getTarget(),
     		        false
     		    );
-						
+
 			$em->flush();
 		}
-		
+
     	if ($entity instanceof Comment) {
 			$parent = $entity->getComment();
     		if ($parent && ($entity->getAuthor() != $parent->getAuthor())) {
@@ -79,16 +79,16 @@ class Notificator
     			$notification->setTarget($parent->getAuthor());
     			$notification->setComment($entity);
     			$em->persist($notification);
-    			
+
     			$em->flush();
     		}
 		}
-		
+
 		if ($entity instanceof Photo && $entity->getAuthor()) {
 			// activity: new photo
 			$this->container->get('user.feed.logger')->log(Activity::TYPE_NEW_PHOTO, $entity, $entity->getAuthor());
 		}
-		
+
     	if ($entity instanceof Video && $entity->getAuthor() && !$entity->getHighlight()) {
 			$this->container->get('user.feed.logger')->log(Activity::TYPE_NEW_VIDEO, $entity, $entity->getAuthor());
 		} elseif ($entity instanceof Video && $entity->getHighlight() && $entity->getProcessed() && $entity->getActive() && !$entity->getNotified()) {
@@ -97,53 +97,53 @@ class Notificator
 			$em->persist($entity);
 			$em->flush();
 		}
-		
+
     }
-    
+
 	public function postUpdate(LifecycleEventArgs $eventArgs)
     {
 		$entity = $eventArgs->getEntity();
 		$em = $eventArgs->getEntityManager();
-		
+
         if ($entity instanceof Video && $entity->getHighlight() && $entity->getProcessed() && $entity->getActive() && !$entity->getNotified()) {
 		    $this->notifyNewIdolTeamVideo($entity, $em);
-            
+
 			$entity->setNotified(true);
 			$em->persist($entity);
-			
+
 			$em->flush();
 		}
     }
-    
+
     private function notifyNewIdolTeamVideo($video, $em)
     {
         $teams = array();
         $idols = array();
-        
+
         $hasteams = $video->getHasteams();
         $hasidols = $video->getHasidols();
-        
+
         foreach ($hasteams as $ht) $teams[] = $ht->getTeam();
         foreach ($hasidols as $ht) $idols[] = $ht->getIdol();
-        
+
         $related = array_merge(array($video), $teams, $idols);
-        
-        $this->container->get('user.feed.logger')->log(Activity::TYPE_NEW_VIDEO, $related, false, false);
-        
+
+        $this->container->get('user.feed.logger')->log(Activity::TYPE_NEW_VIDEO, $related, $video->getAuthor(), false);
+
         $users = array();
-        
+
         $usersteams = array(); $usersidols = array();
-        
+
         if ($teams) {
             $usersteams = $em->getRepository('ApplicationSonataUserBundle:User')->byTeams($teams);
         }
         if ($idols) {
             $usersidols = $em->getRepository('ApplicationSonataUserBundle:User')->byIdols($idols);
         }
-        
+
         foreach ($usersteams as $u) $users[$u->getId()] = $u;
         foreach ($usersidols as $u) $users[$u->getId()] = $u;
-        
+
         foreach ($users as $user) {
             // notif: ha respondido tu comentario...
 			$notification = new Notification();
@@ -151,7 +151,7 @@ class Notificator
 			$notification->setAuthor($user);
 			$notification->setTarget($user);
 			$notification->setVideo($video);
-			
+
 			$em->persist($notification);
         }
     }
