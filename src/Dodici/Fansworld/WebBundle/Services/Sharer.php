@@ -92,7 +92,7 @@ class Sharer
 
         $this->em->persist($comment);
         
-        $this->userfeedlogger->log(Activity::TYPE_SHARED, $targetentity, $author, false);
+        $this->userfeedlogger->log(Activity::TYPE_SHARED, $sharedthing, $author, false);
         
         $this->em->flush();
     }

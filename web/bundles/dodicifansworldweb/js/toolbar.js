@@ -4,7 +4,7 @@
 (function ($, document, window) {
     var
     defaults = {
-        position: 'top'
+        position: 'left'
     },
     fwtoolbar = 'fwtoolbar',
     positions = ['top','bottom','left','right'],
