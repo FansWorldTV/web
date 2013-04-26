@@ -172,11 +172,7 @@ class TeamController extends SiteController
                 $buttontext = $translator->trans('add_idol');
                 $isFan = false;
             } else {
-                $teamship = new Teamship();
-                $teamship->setAuthor($user);
-                $teamship->setTeam($team);
-                $em->persist($teamship);
-                $em->flush();
+                $this->get('fanmaker')->addFan($team, $user);
 
                 $message = $translator->trans('You are now a fan of') . ' "' . (string) $team . '"';
                 $buttontext = $translator->trans('remove_idol');
@@ -297,11 +293,7 @@ class TeamController extends SiteController
                     $selectedTeamship->setFavorite(true);
                     $em->persist($selectedTeamship);
                 } else {
-                    $newTeamship = new Teamship();
-                    $newTeamship->setAuthor($user);
-                    $newTeamship->setFavorite(true);
-                    $newTeamship->setTeam($selectedTeam);
-                    $em->persist($newTeamship);
+                    $this->get('fanmaker')->addFan($selectedTeam, $user, false, true);
                 }
                 $em->flush();
             }
