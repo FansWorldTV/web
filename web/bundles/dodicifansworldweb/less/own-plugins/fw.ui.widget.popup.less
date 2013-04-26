@@ -35,13 +35,13 @@
   width: 320px;
   /*margin-top: -60px;*/
   /*margin-left: 50px;*/
-  box-shadow: 0px 0px 6px 2px rgba(0,0,0,1);
   z-index: 1010;
   padding: 0px;
   background-color: #fff;
   /*top: 0px;*/
   /*left: 0px;*/
 }
+
 .widget-container:after {
   content: "";
   border-color: #24171a #24171a transparent transparent ;
@@ -49,20 +49,19 @@
   border-width: 8px;
   width: 0;
   height: 0;
-  position:absolute;
+  position: absolute;
   bottom: 0%;
   left: 50%;
   margin-left: -4px;
   margin-bottom: -8px;
   -webkit-transform: rotate(135deg); /* Prefixes... */
-  box-shadow: 0px 0px 6px 2px rgba(0,0,0,1);
   z-index: -100;
 }
-.widget-container .arrow {
-  box-shadow: 0px 0px 6px 2px rgba(0,0,0,1);
-}
+
 .widget-container .widget-title {
-  color: #E4E1BC;
+  font-size: 16px;
+  font-weight: 600;
+  color: @white;
   padding: 10px 10px;
   line-height: 1;
   border-radius: 3px 3px 0 0;
@@ -74,9 +73,6 @@
   background-image:-o-linear-gradient(top, #343434, #24171a);
   background-image:linear-gradient(top, #343434, #24171a);
   background-repeat:repeat-x;
-
-  box-shadow: 0px 0px 4px 2px rgba(0,0,0,1);
-  text-shadow: 0px 1px 4px rgba(0,0,0,1);
 }
 .widget-container i.close-share{
   display:block;
@@ -117,7 +113,7 @@
   height: 210px;
   position:relative;
   margin-top: 4px;
-  background-color:transparent;
+  background-color: white;
 }
 
 .widget-container .widget-content .widget-inner .widget-app {
@@ -126,40 +122,26 @@
   margin-top: 0px;
   background-color:transparent;
 }
+
 .widget-container .widget-content .widget-inner .widget-app li {
+  background-color: #f8f8f6;
   min-height: 40px;
   line-height: 18px;
   margin: 3px;
-  border: 1px solid #444;
+  border: 1px solid #f0f0f0;
   border-radius: 4px;
   padding: 4px;
+  font-weight: 400;
+  color: black;
 }
-.widget-container .widget-content .widget-inner .widget-app li:hover {
-  border: 1px solid #666;
-  background-color: #444
-}
+
+
 .widget-container .widget-content .widget-inner .widget-app a {
-  color: #8acd2c;
-  text-decoration:none;
-}
+  color: black;
+  text-decoration: none;
+  font-weight: 600;
 
-.widget-container .widget-content .widget-inner .widget-app a:hover{
-  color: rgba(188, 218, 32, 1);
-  text-decoration:underline;
-}
-
-.triangle-with-shadow {
-  position:absolute;width:0;height:0;
-  z-index: -100;
-}
-.triangle-with-shadow:after {
-  content: "";
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  background: #999;
-  transform: rotate(45deg); /* Prefixes... */
-  top: 75px;
-  left: 25px;
-  box-shadow: -1px -1px 10px -2px rgba(0,0,0,0.5);
+  &:hover {
+    color: @green;
+  }
 }
