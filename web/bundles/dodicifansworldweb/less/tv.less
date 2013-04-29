@@ -587,7 +587,7 @@ div[data-wall] {
 		margin-top: 25px;
 		float: left;
 		width: 100%;
-		
+
 		.btn-upload-video {	
 			background-color: #FC6C00;
 			color: white;
@@ -610,54 +610,42 @@ div[data-wall] {
 			background-color: #F98E00;
 		}
 
+
+    button.btn-twt, button.btn-fb, button.btn-gplus {
+      .square(49px);
+      display: block;
+      box-sizing: border-box;
+      .border-radius(3px);
+      border: 0;
+      color: white;
+      background-size: 49px;
+      .pull-left();
+
+    }
+    
 		.btn-twt{
 			background-image: url('../images/ico-twitter-registro.png');
-			background-size: 52px;
 			background-color: #00acee;
-			color: white;
-			border: 0;
-			-webkit-border-radius: 3px;
-			-moz-border-radius: 3px;
-			border-radius: 3px;
-			height: 48px;
-			width: 51px;
-		}
 
-		.btn-twt:hover {
-			background-color: #0092ed;
+      &:hover{
+        background-color: #0092ed;
+      }
 		}
 
 		.btn-fb {
 			margin-left: 2px;
 			background-image: url('../images/ico-facebook-registro.png');
-			background-size: 52px;
 			background-color: #3b5999;
-			color: white;
-			border: 0;
-			-webkit-border-radius: 3px;
-			-moz-border-radius: 3px;
-			border-radius: 3px;
-			height: 48px;
-			width: 48px;
+
+      &:hover {
+        background-color: #3b4e99;
+      }
 		}
 
-		.btn-fb:hover {
-			background-color: #3b4e99;
-		}
-		
 		.btn-gplus {
 			margin-left: 2px;
 			background-image: url('http://www.gstatic.com/images/icons/gplus-64.png');
-			background-size: 51px;
 			background-color: #db4834;
-			color: white;
-			border: 0;
-			-webkit-border-radius: 3px;
-			-moz-border-radius: 3px;
-			border-radius: 3px;
-			height: 47px;
-			width: 49px;
-			margin-top: 1px;
 		}
 		
 		.share-title {
