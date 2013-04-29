@@ -1010,13 +1010,23 @@ class UserController extends SiteController
     {
         $request = $this->getRequest();
         $user = $this->getUser();
+        $page = $request->get('page');
+        $offset = null;
+
+        if ($page > 0) {
+            $page--;
+            $offset = self::LIMIT_ACTIVITIES * $page;
+        } else {
+            $offset = 0;
+        }
+
         if (!($user instanceof User))
             throw new HttpException(403, 'Acceso denegado');
 
         $activyRepo = $this->getRepository('Activity');
 
         $response = array();
-        $latestActivity = $activyRepo->latest($user, self::LIMIT_ACTIVITIES);
+        $latestActivity = $activyRepo->latest($user, 10, self::LIMIT_ACTIVITIES);
 
         foreach ($latestActivity as $activity) {
             //$media = $activity->getAuthor()->getImage();

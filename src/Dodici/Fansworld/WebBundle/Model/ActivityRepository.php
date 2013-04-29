@@ -16,7 +16,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class ActivityRepository extends CountBaseRepository
 {
-    public function latest(User $user = null, $limit = 10, $lastid = null)
+    public function latest(User $user = null, $offset = null, $limit = 10, $lastid = null)
     {
         $query = $this->_em->createQuery('
     	SELECT ac, aca, acv
@@ -84,6 +84,9 @@ class ActivityRepository extends CountBaseRepository
 		' : '').'
 			ORDER BY ac.id DESC
     	');
+
+		if ($offset !== null)
+			$query = $query->setFirstResult($offset);
 
         if ($user instanceof User) $query = $query->setParameter('user', $user->getId());
 
