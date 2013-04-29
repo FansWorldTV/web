@@ -23,7 +23,7 @@ class UserController extends BaseController
 {
 	/**
      * [signed] User Fans
-     * 
+     *
      * @Route("/user/fans", name="api_v1_user_fans")
      * @Method({"GET"})
      *
@@ -36,13 +36,13 @@ class UserController extends BaseController
      * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
      * - <optional> imageformat: string
      * - [signature params]
-     * 
+     *
      * filters:
      * - 'nearby': same country/city
      * - 'favoriteteam': same favorite team(s)
      * - 'mostsimilar': at least one common idol/team, order by most coincidences
-     * 
-     * @return 
+     *
+     * @return
      * array (
      * 		@see self::showAction(),
      * 		...
@@ -53,10 +53,10 @@ class UserController extends BaseController
         try {
             if ($this->hasValidSignature()) {
                 $request = $this->getRequest();
-                
+
                 $userid = $request->get('user_id');
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
-                
+
                 $pagination = $this->pagination();
                 $pagination['sort_order'] = null;
                 $pagination['sort'] = null;
@@ -64,11 +64,11 @@ class UserController extends BaseController
                 $dirstr = $request->get('direction');
                 if ($dirstr == 'followed') $direction = true;
                 if ($dirstr == 'followers') $direction = false;
-                
+
                 $filter = $request->get('filter');
-                
+
                 $methodname = 'fans';
-                
+
                 if ($filter) {
                     switch ($filter) {
                         case 'nearby': $methodname = 'fansNearby'; break;
@@ -77,7 +77,7 @@ class UserController extends BaseController
                         default: throw new HttpException(400, 'Invalid filter'); break;
                     }
                 }
-                
+
                 $users = $this->getRepository('User')->$methodname(
                     $user,
                     $direction,
@@ -89,7 +89,7 @@ class UserController extends BaseController
                 foreach ($users as $u) {
                     $return[] = $this->userArray($u);
                 }
-                
+
                 return $this->result($return, $pagination);
             } else {
                 throw new HttpException(401, 'Invalid signature');
@@ -98,10 +98,10 @@ class UserController extends BaseController
             return $this->plainException($e);
         }
     }
-        
+
     /**
      * [signed] User - fan/unfan
-     * 
+     *
      * @Route("/user/fan/{action}", name="api_v1_user_fan", requirements = {"action" = "add|remove"})
      * @Method({"POST"})
      *
@@ -110,7 +110,7 @@ class UserController extends BaseController
 	 * - target_id: int
 	 * - [user_token]
      * - [signature params]
-     * 
+     *
      */
     public function fanAction($action)
     {
@@ -120,9 +120,9 @@ class UserController extends BaseController
                 $userid = $request->get('user_id');
                 $target = $this->getRepository('User')->find($request->get('target_id'));
                 if (!$target) throw new HttpException(404, 'Target user not found');
-                
+
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
-                
+
                 if ($action == 'add') {
                     $this->get('friender')->friend($target, null, $user);
                 } elseif ($action == 'remove') {
@@ -130,7 +130,7 @@ class UserController extends BaseController
                 } else {
                     throw new HttpException(400, 'Invalid fan action');
                 }
-                
+
                 return $this->result(true);
             } else {
                 throw new HttpException(401, 'Invalid signature');
@@ -139,18 +139,18 @@ class UserController extends BaseController
             return $this->plainException($e);
         }
     }
-    
+
 	/**
      * [signed] User show
-     * 
+     *
      * @Route("/user/{id}", name="api_v1_user_show", requirements = {"id" = "\d+"})
      * @Method({"GET"})
      *
      * Get params:
 	 * - <optional> [user_token]
      * - [signature params]
-     * 
-     * @return 
+     *
+     * @return
      * array (
      * 		id: int,
      * 		username: string,
@@ -168,9 +168,9 @@ class UserController extends BaseController
         try {
             if ($this->hasValidSignature()) {
                 $request = $this->getRequest();
-                
+
                 if (!$id) throw new HttpException(400, 'Invalid user_id');
-                
+
                 if ($request->get('user_token')) {
                     $user = $this->checkUserToken($id, $request->get('user_token'));
                     $hastoken = true;
@@ -179,8 +179,115 @@ class UserController extends BaseController
                     if (!$user) throw new HttpException(404, 'User not found');
                     $hastoken = false;
                 }
-                
+
                 return $this->result($this->userArray($user));
+            } else {
+                throw new HttpException(401, 'Invalid signature');
+            }
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
+
+
+    /**
+     * [signed] User Teams
+     *
+     * @Route("/user/teams", name="api_v1_user_teams")
+     * @Method({"GET"})
+     *
+     * Get params:
+     * - user_id: int
+     * - [user_token]
+     * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
+     * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
+     * - <optional> imageformat: string
+     * - [signature params]
+     *
+     * @return
+     * array (Serializer of team)
+     *
+     */
+    public function teamsListAction()
+    {
+        try {
+            if ($this->hasValidSignature()) {
+
+                $request = $this->getRequest();
+                $userid = $request->get('user_id');
+                $user = $this->checkUserToken($userid, $request->get('user_token'));
+
+                $pagination = $this->pagination();
+                $pagination['sort_order'] = null;
+                $pagination['sort'] = null;
+
+                $imageformat = $request->get('imageformat');
+                if (null == $imageformat) $imageformat = 'small';
+
+                $teamships = $this->getRepository('Teamship')->byUser(
+                    $user,
+                    $pagination['limit'],
+                    $pagination['offset']);
+
+                $return = array();
+                foreach ($teamships as $teamship) {
+                    $return[] = $this->get('serializer')->values($teamship->getTeam(), $imageformat);
+                }
+
+                return $this->result($return, $pagination);
+            } else {
+                throw new HttpException(401, 'Invalid signature');
+            }
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
+
+     /**
+     * [signed] User Idols
+     *
+     * @Route("/user/idols", name="api_v1_user_idols")
+     * @Method({"GET"})
+     *
+     * Get params:
+     * - user_id: int
+     * - [user_token]
+     * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
+     * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
+     * - <optional> imageformat: string
+     * - [signature params]
+     *
+     * @return
+     * array (Serializer of idol)
+     *
+     */
+    public function idolsListAction()
+    {
+        try {
+            if ($this->hasValidSignature()) {
+
+                $request = $this->getRequest();
+                $userid = $request->get('user_id');
+                $user = $this->checkUserToken($userid, $request->get('user_token'));
+
+                $pagination = $this->pagination();
+                $pagination['sort_order'] = null;
+                $pagination['sort'] = null;
+
+                $imageformat = $request->get('imageformat');
+                if (null == $imageformat) $imageformat = 'small';
+
+                $idolships = $this->getRepository('Idolship')->byUser(
+                    $user,
+                    $pagination['limit'],
+                    $pagination['offset']);
+
+                $return = array();
+                foreach ($idolships as $idolship) {
+                    $return[] = $this->get('serializer')->values($idolship->getIdol(), $imageformat);
+                }
+
+                return $this->result($return, $pagination);
             } else {
                 throw new HttpException(401, 'Invalid signature');
             }
