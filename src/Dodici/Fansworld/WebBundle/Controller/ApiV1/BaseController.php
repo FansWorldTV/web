@@ -174,7 +174,8 @@ class BaseController extends SiteController
             'image' => $this->imageValues($user->getImage()),
         	'splash' => $this->imageValues($user->getSplash(), $this->getImageFormat('splash')),
             'idolcount' => $idolcount,
-            'teamcount' => $teamcount
+            'teamcount' => $teamcount,
+            'fanCount' => $user->getFanCount()
         );
     }
     
