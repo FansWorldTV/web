@@ -25,7 +25,7 @@ class UserController extends SiteController
 
     const LIMIT_SEARCH = 20;
     const LIMIT_NOTIFICATIONS = 5;
-    const LIMIT_ACTIVITIES = 10;
+    const LIMIT_ACTIVITIES = 20;
     const LIMIT_PHOTOS = 8;
     const LIMIT_VIDEOS = 10;
     const LIMIT_LIST_IDOLS = 15;
@@ -1016,8 +1016,7 @@ class UserController extends SiteController
         $activyRepo = $this->getRepository('Activity');
 
         $response = array();
-        $latestActivity = $activyRepo->latest($user, 1000); //self::LIMIT_ACTIVITIES);
-        $countAll = $activyRepo->countBy(array('author' => $user->getId()));
+        $latestActivity = $activyRepo->latest($user, self::LIMIT_ACTIVITIES);
 
         foreach ($latestActivity as $activity) {
             //$media = $activity->getAuthor()->getImage();
@@ -1079,7 +1078,7 @@ class UserController extends SiteController
                         break;
                 }
 
-                $response[] = array(
+                $actValues = array(
                     'activity' => array(
                         'id' => $activity->getId(),
                         'ts' => $activity->getCreatedat()->format('U'),
@@ -1097,8 +1096,12 @@ class UserController extends SiteController
                         'url' => $this->generateUrl('user_land', array('username' => $activity->getAuthor()->getUsername()))
                     )
                 );
+                $response['act'][] = $actValues;
+                $response['view'][] = $this->renderView('DodiciFansworldWebBundle:Activity:activity.html.twig', array('activity' => $actValues));
         }
-        $response['countAll'] = $countAll;
+        //$response = array();
+        //$response['view'] = $this->renderView('DodiciFansworldWebBundle:Activity:activity.html.twig', array('activity' => $activityJson));
+
         return $this->jsonResponse($response);
     }
     private function _createForm()

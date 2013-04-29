@@ -24,7 +24,7 @@ class ActivityRepository extends CountBaseRepository
 		LEFT JOIN ac.author aca
 		LEFT JOIN ac.video acv
 		WHERE
-		
+
 		'.($user ? ('
 			(
 				(ac.author = :user)
@@ -78,17 +78,17 @@ class ActivityRepository extends CountBaseRepository
 		') : '
 			ac.author IS NULL
 		').'
-		
+
 		'.($lastid ? '
 			AND ac.id < :lastid
 		' : '').'
-		
+			ORDER BY ac.id DESC
     	');
-        
+
         if ($user instanceof User) $query = $query->setParameter('user', $user->getId());
-        
+
         if ($lastid !== null) $query = $query->setParameter('lastid', $lastid);
-        
+
         if ($limit !== null) $query = $query->setMaxResults($limit);
 
         return $query->getResult();
