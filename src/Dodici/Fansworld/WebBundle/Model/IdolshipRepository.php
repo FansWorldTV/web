@@ -38,7 +38,7 @@ class IdolshipRepository extends CountBaseRepository
 
         return $query->getResult();
     }
-    
+
     /**
      * Get idols where the user had top activity, and his ranking compared to other users
      * @param User $user
@@ -53,15 +53,15 @@ class IdolshipRepository extends CountBaseRepository
         $rsm->addScalarResult('maxpos', 'maxpos');
 
         $query = $this->_em->createNativeQuery('
-            SELECT 
+            SELECT
             	idl.*,
-            	idsh1.idol_id, 
-            	idsh1.score AS total, 
-            	COUNT(idsh2.id)+1 AS rank, 
+            	idsh1.idol_id,
+            	idsh1.score AS total,
+            	COUNT(idsh2.id)+1 AS rank,
             	(SELECT COUNT(*) FROM idolship WHERE idol_id = idsh1.idol_id) AS maxpos
             FROM idolship idsh1
             INNER JOIN idol idl ON idl.id = idsh1.idol_id
-            LEFT JOIN idolship idsh2 ON 
+            LEFT JOIN idolship idsh2 ON
             	((idsh1.score < idsh2.score) OR (idsh1.score = idsh2.score AND (
             		(SELECT score from fos_user_user fsx1 where fsx1.id = idsh1.author_id)
             		<
@@ -71,16 +71,16 @@ class IdolshipRepository extends CountBaseRepository
             WHERE idsh1.author_id = :user
             GROUP BY idsh1.idol_id
             ORDER BY total DESC, rank ASC
-            
-            '. 
+
+            '.
             (($limit !== null) ? 'LIMIT :limit' : '')
 	    , $rsm)
                 ->setParameter('user', $user->getId());
-                
+
         if ($limit !== null)
             $query = $query->setParameter('limit', $limit);
-        
-        
+
+
         $result = $query->getResult();
         foreach ($result as $k => $v) {
             $v['idol'] = $v[0];
@@ -89,6 +89,32 @@ class IdolshipRepository extends CountBaseRepository
         }
 
         return $result;
+    }
+
+     /**
+     * Get idolship->idols the user is a fan of
+     * @param User $user
+     * @param int $limit
+     * @param int $offset
+     */
+    public function byUser(User $user, $limit = null, $offset = null)
+    {
+        $query = $this->_em->createQuery('
+        SELECT is, i
+        FROM \Dodici\Fansworld\WebBundle\Entity\Idolship is
+        JOIN is.idol i
+        WHERE
+        i.active = true AND is.author = :user
+        ORDER BY is.score DESC
+        ')
+            ->setParameter('user', $user->getId());
+
+        if ($limit !== null)
+            $query = $query->setMaxResults($limit);
+        if ($offset !== null)
+            $query = $query->setFirstResult($offset);
+
+        return $query->getResult();
     }
 
 }
