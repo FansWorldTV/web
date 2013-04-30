@@ -216,7 +216,8 @@ class UserController extends BaseController
 
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
-                $target = $this->getRepository('User')->find($request->get('target_id'));
+                $targetid = $request->get('target_id');
+                $targetid ? $target = $this->getRepository('User')->find($targetid) : $target = false;
 
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
 
@@ -234,10 +235,10 @@ class UserController extends BaseController
 
                 $return = array();
                 foreach ($teamships as $teamship) {
-                   $return[] = $this->get('serializer')->values($teamship->getTeam(), $imageformat);
+                    $return[] = $this->get('serializer')->values($teamship->getTeam(), $imageformat);
                 }
 
-                if ($target) {
+                if ($target instanceof User) {
                     $teamships = $this->getRepository('Teamship')->byUser($target);
                     $teamIds = array();
 
@@ -285,7 +286,8 @@ class UserController extends BaseController
 
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
-                $target = $this->getRepository('User')->find($request->get('target_id'));
+                $targetid = $request->get('target_id');
+                $targetid ? $target = $this->getRepository('User')->find($targetid) : $target = false;
 
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
 
@@ -306,7 +308,7 @@ class UserController extends BaseController
                     $return[] = $this->get('serializer')->values($idolship->getIdol(), $imageformat);
                 }
 
-                 if ($target) {
+                 if ($target instanceof User) {
                     $idolships = $this->getRepository('Idolship')->byUser($target);
                     $idolIds = array();
 
