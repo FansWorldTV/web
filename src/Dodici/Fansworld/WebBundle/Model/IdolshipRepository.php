@@ -100,12 +100,12 @@ class IdolshipRepository extends CountBaseRepository
     public function byUser(User $user, $limit = null, $offset = null)
     {
         $query = $this->_em->createQuery('
-        SELECT is, i
-        FROM \Dodici\Fansworld\WebBundle\Entity\Idolship is
-        JOIN is.idol i
+        SELECT iss, i
+        FROM \Dodici\Fansworld\WebBundle\Entity\Idolship iss
+        JOIN iss.idol i
         WHERE
-        i.active = true AND is.author = :user
-        ORDER BY is.score DESC
+        i.active = true AND iss.author = :user
+        ORDER BY iss.score DESC
         ')
             ->setParameter('user', $user->getId());
 
