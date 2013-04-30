@@ -113,7 +113,7 @@ $(document).ready(function () {
     $(".btn_teamship.add:not('.loading-small')").fwTeamship();
     $(".btn_teamship.remove:not('.loading-small')").fwTeamship();
     */
-    $("[data-team-add]:not('[data-override]')").fwTeamship({
+    $("[data-teamship-add]:not('[data-override]')").fwTeamship({
         onAddTeam: function(plugin, data) {
             var self = $(plugin.element);
             self.addClass('disabled');
