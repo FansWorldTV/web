@@ -37,7 +37,7 @@
     {% else %}
         {% if app.user != entity %}
             <div class="addFriend"  data-add-fan data-login-required >
-                <button class="btn {{ buttonSize }} btn_{{ btnType }} add btn-success" data-{{ fType }}-id="{{ entity.id }}"> {{ 'add_idol'|trans }}</button>
+                <button class="btn {{ buttonSize }} btn_{{ btnType }} add btn-success" data-{{ fType }}ship-add="true" data-{{ fType }}-id="{{ entity.id }}"> {{ 'add_idol'|trans }}</button>
             </div>
         {% endif %}
     {% endif %}
