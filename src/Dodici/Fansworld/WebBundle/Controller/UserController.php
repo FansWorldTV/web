@@ -1026,7 +1026,77 @@ class UserController extends SiteController
         $activyRepo = $this->getRepository('Activity');
 
         $response = array();
-        $latestActivity = $activyRepo->latest($user, 10, self::LIMIT_ACTIVITIES);
+        $latestActivity = $activyRepo->latest($user, $offset, self::LIMIT_ACTIVITIES);
+
+        foreach ($latestActivity as $activity) {
+
+            $mediaEntity = array();
+            $type = $activity->getType();
+            $userImage = $activity->getAuthor()->getImage();
+
+            switch ($activity->getType()) {
+                    case 1:
+                        // TYPE_NEW_VIDEO
+                        $video = $activity->getVideo();
+                        $mediaEntity['video'] = $this->get('serializer')->values($video , 'big');
+                        break;
+                    case 2:
+                        // TYPE_NEW_PHOTO
+                        $photo = $activity->getPhoto();
+                        $mediaEntity['photo'] = $this->get('serializer')->values($photo , 'big');
+                        break;
+                    case 3:
+                        // TYPE_BECAME_FAN
+                        $beIdols = $activity->getHasidols();
+                        $beTeams = $activity->getHasteams();
+                        $beUsers = $activity->getHasusers();
+
+                        $beFan = $beIdols || $beTeams || $beUsers;
+
+                        break;
+                    case 4:
+                        // TYPE_CHECKED_IN
+                        break;
+                    case 5:
+                        // TYPE_LABELLED_IN
+                        if ($activity->getPhoto() != null) {
+                            $mediaEntity['photo'] = $this->get('serializer')->values($activity->getPhoto(), 'big');
+                        } else {
+                            $mediaEntity['video'] = $this->get('serializer')->values($activity->getVideo(), 'big');
+                        }
+                        break;
+                    case 6:
+                        // TYPE_LIKED
+                        $video = $activity->getVideo();
+                        $photo = $activity->getPhoto();
+                        $what = $video || $photo;
+                        $who = $activity->getAuthor();
+                        break;
+                    case 7:
+                        // TYPE_SHARED
+                        if ($activity->getPhoto() != null) {
+                            $mediaEntity['photo'] = $this->get('serializer')->values($activity->getPhoto(), 'big');
+                        } else {
+                            $mediaEntity['video'] = $this->get('serializer')->values($activity->getVideo(), 'big');
+                        }
+                        break;
+                }
+
+            $actValues = array(
+                'id' => $activity->getId(),
+                'ts' => $activity->getCreatedat()->format('U'),
+                'type' => $activity->getType(),
+                'typeName' => $activity->getTypeName(),
+                'media' => $mediaEntity,
+                'target' => $this->get('serializer')->values($activity->getAuthor()),
+            );
+            //$response['view'][] = $this->renderView('DodiciFansworldWebBundle:Activity:activity.html.twig', array('activity' => $actValues));
+            $response['activity'][] = $actValues;
+            $response['view'][] = $this->renderView('DodiciFansworldWebBundle:Activity:activity.html.twig', array('activity' => $actValues));
+        }
+
+
+        return $this->jsonResponse($response);
 
         foreach ($latestActivity as $activity) {
             //$media = $activity->getAuthor()->getImage();

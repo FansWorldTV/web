@@ -1,0 +1,7 @@
+{% block text %}
+	<div class="avatar">
+		<img src="{{activity.media.photo.author.image}}" />
+	</div>
+	<a class="notice-link" href="{{ path('user_land', {username: activity.media.photo.author.username }) }}">{{activity.media.photo.author.username}}</a>
+	<span class="notice-text">Etiquetó a <a class="notice-link" href="{{ path('user_land', {username: activity.target.username }) }}">{{activity.target.username}}</a> en una foto</span>
+{% endblock %}
