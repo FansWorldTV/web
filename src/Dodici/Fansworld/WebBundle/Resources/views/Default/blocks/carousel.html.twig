@@ -52,7 +52,7 @@
                 {% for carouselitem in carouselitems %}
                     <div {% if loop.first %}class="active"{% endif %} data-video="{{ carouselitem.id }}">
                         <a href="{{ path("video_show", {'id': carouselitem.id, 'slug': carouselitem.slug}) }}">
-                            <h1>{% if carouselitem.title is defined %} {{ carouselitem.title|truncate(40) }}{% endif %}</h1>
+                            <h1>{% if carouselitem.title is defined %} {{ carouselitem.title|truncate(29) }}{% endif %}</h1>
                         </a>
                         <p>{{ carouselitem.content|striptags|truncate(128) }}</p>
                     </div>

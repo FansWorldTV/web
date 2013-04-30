@@ -20,7 +20,11 @@
             {% for idol in idols %}
                 <li>
                   <a href="{{ path('idol_land', {slug: idol.slug}) }}">
-                    {% thumbnail idol.image, 'small' with {"title": idol.title, "alt": idol.title, "rel": "tooltip"} %}
+                    {% if idol.image %}
+                      {% thumbnail idol.image, 'small' with {"title": idol.title, "alt": idol.title, "rel": "tooltip"} %}
+                    {% else %}
+                      <img class="avatar" src="{{ asset('bundles/dodicifansworldweb/images/profile/idol.png' )}}" title="{{ idol.title }}" rel="tooltip"/>
+                    {% endif %}
                   </a>
                   <button type="button" class="btn btn-primary" data-idolship-add="true" data-idol-id="{{ idol.id }}" data-toggle="button" rel="tooltip" title="SER FAN" data-override>
                       <i class="icon-plus-sign icon-white"></i>
@@ -35,7 +39,11 @@
             {% for team in teams %}
                 <li>
                   <a href="{{ path('team_land', {slug: team.slug}) }}">
-                    {% thumbnail team.image, 'small' with {"title": team.title, "alt": team.title, "rel": "tooltip"} %}
+                    {% if team.image %}
+                      {% thumbnail team.image, 'small' with {"title": team.title, "alt": team.title, "rel": "tooltip"} %}
+                    {% else %}
+                      <img class="avatar" src="{{ asset('bundles/dodicifansworldweb/images/profile/team.png' )}}" title="{{ team.title }}" rel="tooltip"/>
+                    {% endif %}
                   </a>
                   <button type="button" class="btn btn-primary" data-team-add="true" data-team-id="{{ team.id }}" data-toggle="button" rel="tooltip" title="SER FAN" data-override>
                     <i class="icon-plus-sign icon-white"></i>
