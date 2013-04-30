@@ -114,13 +114,22 @@ class Friender
     
 	/**
      * Removes a friendship
-     * @param Friendship $friendship
+     * @param Friendship|User $target
      * @param User|null $author
      */
-    public function remove(Friendship $friendship, User $author=null)
+    public function remove($target, User $author=null)
     {
     	if (!$author) $author = $this->user;
         if (!$author) throw new AccessDeniedException('Not logged on');
+        
+        if ($target instanceof Friendship) $friendship = $target;
+        elseif ($target instanceof User) {
+            $frrepo = $this->em->getRepository('DodiciFansworldWebBundle:Friendship');
+            $friendship = $frrepo->findOneBy(array('author' => $author->getId(), 'target' => $target->getId()));
+            if (!$friendship) throw new \Exception('User is not fan of target');
+        }
+        else throw new \Exception('Friendship remove target is not instance of User or Friendship');
+        
         if ($author->getType() != User::TYPE_STAFF && ($author != $friendship->getAuthor() && $author != $friendship->getTarget()))
             throw new AccessDeniedException('Access denied');
         
