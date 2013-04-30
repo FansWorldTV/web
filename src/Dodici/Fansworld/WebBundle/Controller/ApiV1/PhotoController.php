@@ -122,7 +122,7 @@ class PhotoController extends BaseController
      *
      * Post params:
      * - user_id: int
-     * - video_id: int|array
+     * - photo_id: int|array
      * - [user_token]
      * - [signature params]
      * 
@@ -133,24 +133,28 @@ class PhotoController extends BaseController
             if ($this->hasValidSignature()) {
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
-                $user = $this->getRepository('User')->find($userid); //$this->checkUserToken($userid, $request->get('user_token'));
+                $this->checkUserToken($userid, $request->get('user_token'));
                 
                 $photoids = $request->get('photo_id');
                 if (!is_array($photoids)) $photoids = array($photoids);
-                if (array_unique($photoids) !== $photoids) throw new HttpException(400, 'Duplicate idol_id');
+                if (array_unique($photoids) !== $photoids) throw new HttpException(400, 'Duplicate photo_id');
                 
+                $em = $this->getDoctrine()->getEntityManager();
+
                 foreach ($photoids as $photoid) {
                     $photo = $this->getRepository('Photo')->find($photoid);
                     if (!$photo) throw new HttpException(404, 'Photo not found - id: ' . $photoid);
                     
                     $photo->setActive(false);
+
+                    $em->persist($photo);
                 }
 
-                $this->getDoctrine()->getEntityManager()->flush();
+                $em->flush();
                 
                 return $this->result(true);
             } else {
-                throw new HttpException(401, 'Invalid signature');
+                throw new HttpException(401, 'Duplicate photo_id');
             }
         } catch (\Exception $e) {
             return $this->plainException($e);

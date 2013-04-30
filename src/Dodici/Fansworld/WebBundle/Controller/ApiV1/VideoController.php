@@ -138,24 +138,28 @@ class VideoController extends BaseController
             if ($this->hasValidSignature()) {
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
-                $user = $this->getRepository('User')->find($userid); //$this->checkUserToken($userid, $request->get('user_token'));
+                $this->checkUserToken($userid, $request->get('user_token'));
                 
                 $videoids = $request->get('video_id');
                 if (!is_array($videoids)) $videoids = array($videoids);
-                if (array_unique($videoids) !== $videoids) throw new HttpException(400, 'Duplicate idol_id');
+                if (array_unique($videoids) !== $videoids) throw new HttpException(400, 'Duplicate video_id');
                 
+                $em = $this->getDoctrine()->getEntityManager();
+
                 foreach ($videoids as $videoid) {
                     $video = $this->getRepository('video')->find($videoid);
                     if (!$video) throw new HttpException(404, 'video not found - id: ' . $videoid);
                     
                     $video->setActive(false);
+
+                    $em->persist($video);
                 }
 
-                $this->getDoctrine()->getEntityManager()->flush();
+                $em->flush();
                 
                 return $this->result(true);
             } else {
-                throw new HttpException(401, 'Invalid signature');
+                throw new HttpException(401, 'Duplicate video_id');
             }
         } catch (\Exception $e) {
             return $this->plainException($e);
