@@ -199,6 +199,7 @@ class UserController extends BaseController
      * Get params:
      * - user_id: int
      * - [user_token]
+     * - <optional> target_id: int
      * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
      * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
      * - <optional> imageformat: string
@@ -215,6 +216,8 @@ class UserController extends BaseController
 
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
+                $target = $this->getRepository('User')->find($request->get('target_id'));
+
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
 
                 $pagination = $this->pagination();
@@ -231,7 +234,20 @@ class UserController extends BaseController
 
                 $return = array();
                 foreach ($teamships as $teamship) {
-                    $return[] = $this->get('serializer')->values($teamship->getTeam(), $imageformat);
+                   $return[] = $this->get('serializer')->values($teamship->getTeam(), $imageformat);
+                }
+
+                if ($target) {
+                    $teamships = $this->getRepository('Teamship')->byUser($target);
+                    $teamIds = array();
+
+                    foreach ($teamships as $teamship) {
+                        $teamIds[] = $teamship->getTeam()->getId();
+                    }
+
+                    foreach ($return as &$rta) {
+                        in_array($rta['id'], $teamIds) ? $rta['followed'] = true : $rta['followed'] = false;
+                    }
                 }
 
                 return $this->result($return, $pagination);
@@ -252,6 +268,7 @@ class UserController extends BaseController
      * Get params:
      * - user_id: int
      * - [user_token]
+     * - <optional> target_id: int
      * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
      * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
      * - <optional> imageformat: string
@@ -268,6 +285,8 @@ class UserController extends BaseController
 
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
+                $target = $this->getRepository('User')->find($request->get('target_id'));
+
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
 
                 $pagination = $this->pagination();
@@ -285,6 +304,19 @@ class UserController extends BaseController
                 $return = array();
                 foreach ($idolships as $idolship) {
                     $return[] = $this->get('serializer')->values($idolship->getIdol(), $imageformat);
+                }
+
+                 if ($target) {
+                    $idolships = $this->getRepository('Idolship')->byUser($target);
+                    $idolIds = array();
+
+                    foreach ($idolships as $idolship) {
+                        $idolIds[] = $idolship->getIdol()->getId();
+                    }
+
+                    foreach ($return as &$rta) {
+                        in_array($rta['id'], $idolIds) ? $rta['followed'] = true : $rta['followed'] = false;
+                    }
                 }
 
                 return $this->result($return, $pagination);
