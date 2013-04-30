@@ -159,7 +159,7 @@ class VideoController extends BaseController
                 
                 return $this->result(true);
             } else {
-                throw new HttpException(401, 'Duplicate video_id');
+                throw new HttpException(401, 'Invalid signature');
             }
         } catch (\Exception $e) {
             return $this->plainException($e);

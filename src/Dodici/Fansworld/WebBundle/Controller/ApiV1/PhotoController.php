@@ -154,7 +154,7 @@ class PhotoController extends BaseController
                 
                 return $this->result(true);
             } else {
-                throw new HttpException(401, 'Duplicate photo_id');
+                throw new HttpException(401, 'Invalid signature');
             }
         } catch (\Exception $e) {
             return $this->plainException($e);
