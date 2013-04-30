@@ -336,7 +336,7 @@ $(document).ready(function () {
         define(['jQuery', 'Routing', 'templateHelper', 'ajax', 'error'], factory);
     } else {
         // Browser globals (root is window)
-        root.NOTIFICACION = factory(root.jQuery, root.Routing, root.templateHelper, root.ajax, error);
+        root.ACTIVITY = factory(root.jQuery, root.Routing, root.templateHelper, root.ajax, error);
     }
 }(this, function (jQuery, Routing, templateHelper, ajax, error) {
     "use strict";
@@ -351,9 +351,12 @@ $(document).ready(function () {
             // Event Listeners
             this.listeners = {};
             this.total = 0;
-
-            // Get total unreaded notifications
+            this.page = 0;
+            this.activity = {},
+            // Get total unreaded activityes
             this.getTotal();
+            // Get a limited set of unreaded activityes to populate activity widget
+            this.getActivity();
         }
         ACTIVITY.prototype.getTotal = function() {
             var that = this;
@@ -367,6 +370,24 @@ $(document).ready(function () {
                 that.total = parseInt(response.number, 10);
                 that.fire({type: "ongettotal", result: that.total});
                 deferred.resolve(that.total);
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) {
+                deferred.reject(new Error(jqXHR));
+            });
+            return deferred.promise();
+        };
+        ACTIVITY.prototype.getActivity = function() {
+            var that = this;
+            var deferred = new jQuery.Deferred();
+            $.ajax({
+                url: Routing.generate(appLocale + '_getactivity_feed'),
+                data: {page: that.page},
+                type: 'GET'
+            })
+            .then(function(response) {
+                that.activity = response;
+                that.fire({type: "ongetactivity", result: that.activity});
+                deferred.resolve(that.activity);
             })
             .fail(function(jqXHR, textStatus, errorThrown) {
                 deferred.reject(new Error(jqXHR));
