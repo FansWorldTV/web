@@ -1031,6 +1031,7 @@ class UserController extends SiteController
         foreach ($latestActivity as $activity) {
 
             $mediaEntity = array();
+            $beFan = array();
             $type = $activity->getType();
             $userImage = $activity->getAuthor()->getImage();
 
@@ -1047,11 +1048,20 @@ class UserController extends SiteController
                         break;
                     case 3:
                         // TYPE_BECAME_FAN
+
                         $beIdols = $activity->getHasidols();
                         $beTeams = $activity->getHasteams();
                         $beUsers = $activity->getHasusers();
 
-                        $beFan = $beIdols || $beTeams || $beUsers;
+
+                        $beFan = 'NADA';
+                        if ( $beIdols instanceof Hasidol) {
+                            $beFan = 'Idol';
+                        } elseif ($beTeams instanceof Hasteam) {
+                            $beFan = 'Team';
+                        } elseif ($beUsers instanceof Hasuser) {
+                            $beFan = 'User';
+                        }
 
                         break;
                     case 4:
@@ -1067,10 +1077,11 @@ class UserController extends SiteController
                         break;
                     case 6:
                         // TYPE_LIKED
-                        $video = $activity->getVideo();
-                        $photo = $activity->getPhoto();
-                        $what = $video || $photo;
-                        $who = $activity->getAuthor();
+                        if ($activity->getPhoto() != null) {
+                            $mediaEntity['photo'] = $this->get('serializer')->values($activity->getPhoto(), 'big');
+                        } else {
+                            $mediaEntity['video'] = $this->get('serializer')->values($activity->getVideo(), 'big');
+                        }
                         break;
                     case 7:
                         // TYPE_SHARED
@@ -1089,6 +1100,7 @@ class UserController extends SiteController
                 'typeName' => $activity->getTypeName(),
                 'media' => $mediaEntity,
                 'target' => $this->get('serializer')->values($activity->getAuthor()),
+                'fanOf' => $beFan
             );
             //$response['view'][] = $this->renderView('DodiciFansworldWebBundle:Activity:activity.html.twig', array('activity' => $actValues));
             $response['activity'][] = $actValues;
