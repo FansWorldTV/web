@@ -154,11 +154,11 @@ body[data-user-is-logged="false"]{
     
     @media (min-width: 1201px) and (max-width: 1600px) {
         &.left {
-            width: 96.8%;
+            width: 96.3%;
             .pull-right;
         }
         &.right {
-            width: 96.8%;
+            width: 96.3%;
             .pull-left;
         }
     }
@@ -247,13 +247,14 @@ body[data-user-is-logged="false"]{
 
 .label-toolbar {
     position: absolute;
-    margin-left: 23px;
-    margin-top: 2px;
-    z-index: 1;
+    z-index: 9;
+    right: 1px;
+    top: 2px;
 }
 
 .toolbar-icon {
     height: 43px;
+    position: relative;
 
     &.notifications {
         position: relative;

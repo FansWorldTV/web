@@ -27,11 +27,15 @@
                 <div class="team">
 
                     <div class="splash">
+                      <a href="{{ path('team_land', {'slug': team.slug}) }}">
                         {% thumbnail team.splash, 'big' with {'title': ''}%}
+                      </a>
                     </div>
 
                     <div class="logo">
+                      <a href="{{ path('team_land', {'slug': team.slug}) }}">
                         {% thumbnail team.image, 'small' with {'title': ''}%}
+                      </a>
                     </div>
 
                     <p>
