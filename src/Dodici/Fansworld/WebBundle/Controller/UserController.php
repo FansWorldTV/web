@@ -25,7 +25,7 @@ class UserController extends SiteController
 
     const LIMIT_SEARCH = 20;
     const LIMIT_NOTIFICATIONS = 5;
-    const LIMIT_ACTIVITIES = 20;
+    const LIMIT_ACTIVITIES = 5;
     const LIMIT_PHOTOS = 8;
     const LIMIT_VIDEOS = 10;
     const LIMIT_LIST_IDOLS = 15;
@@ -1032,8 +1032,6 @@ class UserController extends SiteController
 
             $mediaEntity = array();
             $beFan = array();
-            $type = $activity->getType();
-            $userImage = $activity->getAuthor()->getImage();
 
             switch ($activity->getType()) {
                     case 1:
@@ -1053,6 +1051,14 @@ class UserController extends SiteController
                         $beTeams = $activity->getHasteams();
                         $beUsers = $activity->getHasusers();
 
+                        $prepopulate_info = '';
+
+                        foreach ($activity->getHasidols() as $hasidol) {
+                            $id = $hasidol->getIdol()->getId();
+                            $name = $hasidol->getIdol();
+                            $tagidol .= $id . ',';
+                            $prepopulate_info .= $id . ':' . 'idol' . ':' . $name . ',';
+                        }
 
                         $beFan = 'NADA';
                         if ( $beIdols instanceof Hasidol) {
@@ -1063,6 +1069,7 @@ class UserController extends SiteController
                             $beFan = 'User';
                         }
 
+                        $beFan = count($activity->getHasidols());
                         break;
                     case 4:
                         // TYPE_CHECKED_IN
@@ -1107,8 +1114,19 @@ class UserController extends SiteController
             $response['view'][] = $this->renderView('DodiciFansworldWebBundle:Activity:activity.html.twig', array('activity' => $actValues));
         }
 
-
+        $response['offset'] = $offset;
         return $this->jsonResponse($response);
+    }
+    /**
+     *  @Route("/ajax/activity-number", name="user_ajaxactivitynumber")
+     */
+    public function ajaxActivityNumber()
+    {
+        $user = $this->getUser();
+        $activityRepo = $this->getRepository('Activity');
+        $number = $activityRepo->countBy(array('author' => $user->getId()));
+
+        return $this->jsonResponse(array('number' => $number));
     }
     private function _createForm()
     {

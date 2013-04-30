@@ -321,7 +321,143 @@ $(document).ready(function () {
 });
 
 
+////////////////////////////////////////////////////////////////////////////////
+// FansWorld Activity handler                                                 //
+////////////////////////////////////////////////////////////////////////////////
+(function (root, factory) {
+    "use strict";
+    if (typeof exports === 'object') {
+        // Node. Does not work with strict CommonJS, but
+        // only CommonJS-like enviroments that support module.exports,
+        // like Node.
+        module.exports = factory(require('jQuery'), require('Routing'), require('templateHelper'), require('ajax'), require('error'));
+    } else if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['jQuery', 'Routing', 'templateHelper', 'ajax', 'error'], factory);
+    } else {
+        // Browser globals (root is window)
+        root.NOTIFICACION = factory(root.jQuery, root.Routing, root.templateHelper, root.ajax, error);
+    }
+}(this, function (jQuery, Routing, templateHelper, ajax, error) {
+    "use strict";
+    var ACTIVITY = (function() {
+        function ACTIVITY() {
+            ///////////////////
+            // Internal init //
+            ///////////////////
+            var that = this;
+            this.jQuery = jQuery;
+            this.version = '1.0';
+            // Event Listeners
+            this.listeners = {};
+            this.total = 0;
 
+            // Get total unreaded notifications
+            this.getTotal();
+        }
+        ACTIVITY.prototype.getTotal = function() {
+            var that = this;
+            var deferred = new jQuery.Deferred();
+            $.ajax({
+                url: Routing.generate(appLocale + '_user_ajaxactivitynumber'),
+                data: {},
+                type: 'GET'
+            })
+            .then(function(response) {
+                that.total = parseInt(response.number, 10);
+                that.fire({type: "ongettotal", result: that.total});
+                deferred.resolve(that.total);
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) {
+                deferred.reject(new Error(jqXHR));
+            });
+            return deferred.promise();
+        };
+        ////////////////////////////////////////////////////////////////////////
+        //  CUSTOM EVENT HANDLERS                                             //
+        ////////////////////////////////////////////////////////////////////////
+        ACTIVITY.prototype.addListener = function(type, listener){
+            if (typeof this.listeners[type] === "undefined"){
+                this.listeners[type] = [];
+            }
+            this.listeners[type].push(listener);
+        };
+        ACTIVITY.prototype.removeListener = function(type, listener){
+            if (this.listeners[type] instanceof Array){
+                var listeners = this.listeners[type];
+                var i, len;
+                for (i = 0, len = listeners.length; i < len; i += 1){
+                    if (listeners[i] === listener){
+                        listeners.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+        };
+        ACTIVITY.prototype.fire = function(event){
+            var i, len;
+            if (typeof event === "string"){
+                event = { type: event };
+            }
+            if (!event.target){
+                event.target = this;
+            }
+
+            if (!event.type){  //falsy
+                throw new Error("Event object missing 'type' property.");
+            }
+
+            if (this.listeners[event.type] instanceof Array){
+                var listeners = this.listeners[event.type];
+                for (i = 0, len = listeners.length; i < len; i += 1){
+                    listeners[i].call(this, event);
+                }
+            }
+        };
+        ////////////////////////////////////////////////////////////////////////
+        // Create and return a "version 4" RFC-4122 UUID string.              //
+        ////////////////////////////////////////////////////////////////////////
+        ACTIVITY.prototype.guidGenerator = function() {
+            var s = [];
+            var itoh = '0123456789ABCDEF';
+            var i = 0;
+            // Make array of random hex digits. The UUID only has 32 digits in it, but we
+            // allocate an extra items to make room for the '-'s we'll be inserting.
+            for (i = 0; i < 36; i += 1) {
+                s[i] = Math.floor(Math.random()*0x10);
+            }
+            // Conform to RFC-4122, section 4.4
+            s[14] = 4;  // Set 4 high bits of time_high field to version
+            s[19] = (s[19] && 0x3) || 0x8;  // Specify 2 high bits of clock sequence
+            // Convert to hex chars
+            for (i = 0; i < 36; i += 1) {
+                s[i] = itoh[s[i]];
+            }
+            // Insert '-'s
+            s[8] = s[13] = s[18] = s[23] = '-';
+
+            return s.join('');
+        };
+        ACTIVITY.prototype.getVersion = function() {
+            console.log(this.version);
+            return this.version;
+        };
+        return ACTIVITY;
+    }());
+    // Just return a value to define the module export.
+    // This example returns an object, but the module
+    // can return a function as the exported value.
+    return ACTIVITY;
+}));
+
+// implicit init that adds module to global scope
+// TODO: refactor inside curl
+$(document).ready(function () {
+    "use strict";
+    window.fansworld = window.fansworld || {};
+    window.fansworld.activity = new window.ACTIVITY();
+    return;
+});
 
 ////////////////////////////////////////////////////////////////////////////////
 // FansWorld widget plugin 1.0 initial                                        //
