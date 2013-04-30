@@ -119,6 +119,49 @@ class VideoController extends BaseController
         }
     }
     
+    /**
+     * [signed] Video - delete (active/inactive)
+     * 
+     * @Route("/video/delete", name="api_v1_video_delete")
+     * @Method({"POST"})
+     *
+     * Post params:
+     * - user_id: int
+     * - video_id: int|array
+     * - [user_token]
+     * - [signature params]
+     * 
+     */       
+    public function deleteAction() {
+   
+        try {
+            if ($this->hasValidSignature()) {
+                $request = $this->getRequest();
+                $userid = $request->get('user_id');
+                $user = $this->getRepository('User')->find($userid); //$this->checkUserToken($userid, $request->get('user_token'));
+                
+                $videoids = $request->get('video_id');
+                if (!is_array($videoids)) $videoids = array($videoids);
+                if (array_unique($videoids) !== $videoids) throw new HttpException(400, 'Duplicate idol_id');
+                
+                foreach ($videoids as $videoid) {
+                    $video = $this->getRepository('video')->find($videoid);
+                    if (!$video) throw new HttpException(404, 'video not found - id: ' . $videoid);
+                    
+                    $video->setActive(false);
+                }
+
+                $this->getDoctrine()->getEntityManager()->flush();
+                
+                return $this->result(true);
+            } else {
+                throw new HttpException(401, 'Invalid signature');
+            }
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
+
 	/**
      * [signed if user_id given] Video - show
      * 
