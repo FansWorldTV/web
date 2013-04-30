@@ -45,7 +45,7 @@
                       <img class="avatar" src="{{ asset('bundles/dodicifansworldweb/images/profile/team.png' )}}" title="{{ team.title }}" rel="tooltip"/>
                     {% endif %}
                   </a>
-                  <button type="button" class="btn btn-primary" data-team-add="true" data-team-id="{{ team.id }}" data-toggle="button" rel="tooltip" title="SER FAN" data-override>
+                  <button type="button" class="btn btn-primary" data-teamship-add="true" data-team-id="{{ team.id }}" data-toggle="button" rel="tooltip" title="SER FAN" data-override>
                     <i class="icon-plus-sign icon-white"></i>
                   </button>
                 </li>
@@ -82,7 +82,7 @@
                     self.find('i').removeClass().addClass('icon-minus-sign');
                 }
             });
-            $('[data-team-add]').fwTeamship({
+            $('[data-teamship-add]').fwTeamship({
                 onAddTeam: function(plugin, data) {
                     var self = $(plugin.element);
                     self.addClass('disabled');
