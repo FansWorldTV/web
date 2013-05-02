@@ -351,7 +351,7 @@ $(document).ready(function () {
             // Event Listeners
             this.listeners = {};
             this.total = 0;
-            this.page = 0;
+            this.page = 1;
             this.activity = {},
             // Get total unreaded activityes
             this.getTotal();
@@ -387,6 +387,7 @@ $(document).ready(function () {
             .then(function(response) {
                 that.activity = response;
                 that.fire({type: "ongetactivity", result: that.activity});
+                that.page += 1;
                 deferred.resolve(that.activity);
             })
             .fail(function(jqXHR, textStatus, errorThrown) {
@@ -511,6 +512,7 @@ $(document).ready(function () {
             var that = this;
             $(that.element).find('.widget-title').text(that.options.title);
             $(that.element).attr('id', 'widget-popup');
+            console.log("fwWidget INIT")
             // Listen notifications
             fansworld.notificacion.addListener('onnotificationreceived', function(response){
                 var id = response.result.id;
@@ -679,13 +681,215 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     "use strict";
-    $('.widget-container').fwWidget({});
-    /*
-    $('.widgets button').on("click", function(e) {
-        $('.widget-container').data('fwWidget').toggle(e);
-    });
-    */
+    //$('.widget-container').fwWidget({});
 });
+
+
+////////////////////////////////////////////////////////////////////////////////
+// FansWorld activity widget plugin 1.0 initial                               //
+////////////////////////////////////////////////////////////////////////////////
+$(document).ready(function () {
+    "use strict";
+    // Create the defaults once
+    var pluginName = "fwActivityWidget";
+    var defaults = {
+        title: "Actividades",
+        isPoped: false,
+        isLoadingActivities: false,
+        isScrollable: false,
+        target: null
+    };
+
+    // The actual plugin constructor
+
+    function Plugin(element, options) {
+        this.element = element;
+        // jQuery has an extend method which merges the contents of two or
+        // more objects, storing the result in the first object. The first object
+        // is generally empty as we don't want to alter the default options for
+        // future instances of the plugin
+        this.options = $.extend({}, defaults, options);
+        this._defaults = defaults;
+        this._name = pluginName;
+        this.init();
+    }
+    Plugin.prototype = {
+        init: function () {
+            var that = this;
+            $(that.element).find('.widget-title').text(that.options.title);
+            $(that.element).attr('id', 'widget-popup');
+
+            // Populate on activity received
+            that.options.isLoadingActivities = true;
+            fansworld.activity.addListener('ongetactivity', function(response){
+                var i;
+                console.log('ongetactivity')
+                console.log(response)
+                for(i in response.result.view) {
+                    if (response.result.view.hasOwnProperty(i)) {
+                        $(that.element).find('.widget-app ul li .loading').parent().remove();
+                        var activity = response.result.view[i];
+                        //$(that.element).find('.widget-app ul').append('<li>' + activity + '<br /><span class="notice-text"><i class="icon-barcode" style="margin-top:2px;"></i>' + response.result.activity[i].id + '<i class="icon-time" style="margin-top:2px;"></i> ' + $.timeago(new Date(parseInt(response.result.activity[i].ts, 10) * 1000)) + '</span></li>');
+                        $(that.element).find('.widget-app ul').append('<li>' + activity + '<br /><span class="notice-text"><i class="icon-time" style="margin-top:2px;"></i> ' + $.timeago(new Date(parseInt(response.result.activity[i].ts, 10) * 1000)) + '</span></li>');
+                        that.options.isLoadingActivities = false;
+                        // Make new scrollbars is none
+                        if(!that.options.isScrollable) {
+                            that.makeScrollPane();
+                        } else {
+                            // Redraw is scrollbars are present and new data arrived
+                            that.redrawScrollBar();
+                        }
+                    }
+                }
+            });
+            // Bind close button
+            $('.close-share').on("click", function(event) {
+                that.popOut(event);
+            });
+        },
+        makeScrollPane: function() {
+            var that = this;
+            $(that.element).find('.widget-inner').jScrollPane();
+            $(that.element).find('.widget-inner')
+            .bind(
+                'jsp-initialised',
+                function(event, isScrollable) {
+                    //console.log('Handle jsp-initialised', this, 'isScrollable=', isScrollable);
+                }
+            )
+            .bind(
+                'jsp-scroll-y',
+                function(event, scrollPositionY, isAtTop, isAtBottom) {
+                    // console.log('Handle jsp-scroll-y', this, 'scrollPositionY=', scrollPositionY, 'isAtTop=', isAtTop, 'isAtBottom=', isAtBottom);
+                    if(isAtBottom && !that.options.isLoadingActivities) {
+                        that.options.isLoadingActivities = true;
+                        that.loadMoreActivities();
+                    }
+                }
+            );
+        },
+        redrawScrollBar: function() {
+            var that = this;
+            var pane = $(that.element).find('.widget-inner');
+            var api = pane.data('jsp');
+            api.reinitialise();
+        },
+        loadMoreActivities: function() {
+            var that = this;
+            console.log("CARGANDO PAGINA: " + fansworld.activity.page + " isLoading: " + that.options.isLoadingActivities)
+            $(that.element).find('.widget-app ul').append('<li><div class="loading"></div></li>');
+            that.redrawScrollBar();
+            fansworld.activity.getActivity();
+        },
+        ////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////
+        setPosition: function(target) {
+            var that = this;
+            // Get target window positioning
+            var offset = $(target).offset();
+            offset.top -= $(that.element).height() + $(target).height() + 10;
+            offset.left -= parseInt(($(that.element).width() / 2) - ($(target).width() / 2), 10);
+            // Set popup position
+            $(that.element).offset({
+                top: offset.top,
+                left: offset.left
+            });
+        },
+        popIn: function(event) {
+            var that = this;
+            that.setPosition(event.target);
+            $(that.element).animate({
+                opacity: 1
+            });
+            that.options.isPoped = true;
+        },
+        popOut: function(event) {
+            var that = this;
+            $(that.element).animate({
+                opacity: 0
+            });
+            that.options.isPoped = false;
+        },
+        setTitle: function(title) {
+            var that = this;
+            $(that.element).find('.widget-title').text(title);
+        },
+        ////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////
+        checkBounds: function(check) {
+            var that = this;
+            if(check) {
+                $("body").on('click', function(event) {
+                    if (event.target.id === "widget-popup" || $(event.target).parents("#widget-popup").size()) {
+                        //alert("Inside div");
+                    } else {
+                        that.popOut(event);
+                        $(this).off();
+                    }
+                });
+            } else {
+                $("body").off();
+            }
+        },
+        toggle: function (event) {
+            var that = this;
+            event.preventDefault();
+            if(!$(event.target).hasClass('active') && that.options.isPoped) {
+                that.popOut(event);
+                $(that.options.target).removeClass('active');
+                //$(event.target).toggleClass('active');
+                return;
+            }
+            // Set new title
+            var title = $(event.target).attr("data-original-title");
+            that.setTitle(title);
+            // deselect
+            $(that.options.target).removeClass('active');
+            // select
+            $(event.target).addClass('active');
+            that.options.target = event.target;
+
+            // Get target window positioning
+            var offset = $(event.target).offset();
+            offset.top -= parseInt(($(that.element).height() + $(event.target).height() + 10), 10);
+            offset.left -= parseInt(($(that.element).width() / 2) - ($(event.target).width() / 2), 10);
+            // Set popup position
+            $(that.element).offset({
+                top: offset.top,
+                left: offset.left
+            });
+            // Toggle visibility
+            if (!that.options.isPoped) {
+                that.popIn(event);
+            }
+            else {
+                that.popOut(event);
+            }
+        }
+    };
+    // A really lightweight plugin wrapper around the constructor,
+    // preventing against multiple instantiations
+    $.fn[pluginName] = function (options) {
+        // If the first parameter is an object (options), or was omitted,
+        // instantiate a new instance of the plugin.
+        if (typeof options === "object" || !options) {
+            return this.each(function () {
+                // Only allow the plugin to be instantiated once.
+                if (!$.data(this, pluginName)) {
+                    // Pass options to Plugin constructor, and store Plugin
+                    // instance in the elements jQuery data object.
+                    $.data(this, pluginName, new Plugin(this, options));
+                }
+            });
+        }
+    };
+});
+
+$(document).ready(function () {
+    "use strict";
+    $('.widget-container').fwActivityWidget({});
+});
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // FansWorld footer news buttons plugin 1.0 initial                           //
@@ -753,7 +957,8 @@ $(document).ready(function () {
             button.insertBefore(label, button.firstChild);
 
             $(button).on("click", function(e) {
-                $('.widget-container').data('fwWidget').toggle(e);
+                //$('.widget-container').data('fwWidget').toggle(e);
+                $('.widget-container').data('fwActivityWidget').toggle(e);
             });
             return button;
         },
