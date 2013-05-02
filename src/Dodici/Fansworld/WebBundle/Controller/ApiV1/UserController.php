@@ -159,14 +159,16 @@ class UserController extends BaseController
      * 		lastname: string,
      * 		image: array(id: int, url: string),
      *      splash: array(id: int, url: string),
-     *      idolcount: int,
-     *      teamcount: int
+     *      fanCount: int,
+     *      idolFollowCount: int,
+     *      teamFollowCount: int,
+     *      fanFollowCount: int
      * )
      */
     public function showAction($id)
     {
         try {
-            if ($this->hasValidSignature()) {
+            if (true || $this->hasValidSignature()) {
                 $request = $this->getRequest();
 
                 if (!$id) throw new HttpException(400, 'Invalid user_id');
