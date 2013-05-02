@@ -164,7 +164,7 @@ class BaseController extends SiteController
     {
         $idolcount = $this->getRepository('Idolship')->countBy(array('author' => $user->getId()));
         $teamcount = $this->getRepository('Teamship')->countBy(array('author' => $user->getId()));
-        $followcount = $this->getRepository('Friendship')->countBy(array('target' => $user->getId(), 'active' => true));
+        $followcount = $this->getRepository('Friendship')->countBy(array('author' => $user->getId(), 'active' => true));
         
         return array(
             'id' => $user->getId(),
