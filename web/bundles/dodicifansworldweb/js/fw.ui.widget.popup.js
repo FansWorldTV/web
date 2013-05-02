@@ -1,51 +1,68 @@
-/*global $, jQuery, alert, console, error, success, endless, ajax, templateHelper, Routing, appLocale, exports, module, require, define*/
-/*jslint nomen: true */
-/* Tolerate dangling _ in identifiers */
-/*jslint vars: true */
-/* Tolerate many var statements per function */
-/*jslint white: true */
-/*jslint browser: true */
-/*jslint devel: true */
-/* Assume console, alert, ... */
-/*jslint windows: true */
-/* Assume Windows */
-/*jslint maxerr: 100 */
-/* Maximum number of errors */
+/*global
+    $,
+    jQuery,
+    alert,
+    console,
+    error,
+    success,
+    endless,
+    ajax,
+    templateHelper,
+    Routing,
+    appLocale,
+    exports,
+    module,
+    require,
+    define
+*/
+/*jslint nomen: true */                 /* Tolerate dangling _ in identifiers */
+/*jslint vars: true */           /* Tolerate many var statements per function */
+/*jslint white: true */                       /* tolerate messy whithe spaces */
+/*jslint browser: true  */                                  /* Assume browser */
+/*jslint devel: true */                         /* Assume console, alert, ... */
+/*jslint windows: true */               /* Assume window object (for browsers)*/
+/*jslint maxerr: 100 */                           /* Maximum number of errors */
+
 /*
  * library dependencies:
  *      jquery 1.8.3
- *      jquery tokeninput 9
  *      fos-routing
  * external dependencies:
  *      appLocale
  */
 
-/*
-
-NOTIFICATIONS:
-$.get('/bench/meteor/send')
-notifications.handleNewNotification({t: "n", id: "1", p: "videos"})
-$.ajax({url: Routing.generate('es_user_ajaxnotificationnumber'), data: {}}).then(function(r){console.log(r)})
-$.ajax({url: Routing.generate('es_user_ajaxnotification'), data: {'id' : 1}}).then(function(r){console.log(r)})
-$.ajax({url: Routing.generate('es_user_ajaxnotifications'), data: {}}).then(function(r){console.log(r)})
-$.ajax({url: Routing.generate('es_user_ajaxgetnotifications_typecounts'), data: {}}).then(function(r){console.log(r)})
-$.ajax({url: Routing.generate('es_notification_getlatest'), data: {'parentName': 1}}).then(function(r){console.log(r)})
 
 
-proceso para obtener notificaciones:
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// NOTIFICATIONS API:                                                                                                        //
+// $.get('/bench/meteor/send')                                                                                               //
+// notifications.handleNewNotification({t: "n", id: "1", p: "videos"})                                                       //
+// $.ajax({url: Routing.generate('es_user_ajaxnotificationnumber'), data: {}}).then(function(r){console.log(r)})             //
+// $.ajax({url: Routing.generate('es_user_ajaxnotification'), data: {'id' : 1}}).then(function(r){console.log(r)})           //
+// $.ajax({url: Routing.generate('es_user_ajaxnotifications'), data: {}}).then(function(r){console.log(r)})                  //
+// $.ajax({url: Routing.generate('es_user_ajaxgetnotifications_typecounts'), data: {}}).then(function(r){console.log(r)})    //
+// $.ajax({url: Routing.generate('es_notification_getlatest'), data: {'parentName': 1}}).then(function(r){console.log(r)})   //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-1) Obtener el total de notificaciones pendientes [user_ajaxnotificationnumber]
-2) Obtener el tipo de notificaciones pendientes segun el tipo [user_ajaxgetnotifications_typecounts]
-    2.1) El resultado es un array de objetos [
-            {"type":"6","cnt":"165","parent":"videos"},
-            {"type":"12","cnt":"1","parent":"fans"},
-            {"type":"16","cnt":"3","parent":"photos"}
-        ]
-3) Del resultado del punto 2.1 pasar el parent a [notification_getlatest (con parent)]
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// proceso para obtener notificaciones:                                                                                      //
+//                                                                                                                           //
+// 1) Obtener el total de notificaciones pendientes [user_ajaxnotificationnumber]                                            //
+// 2) Obtener el tipo de notificaciones pendientes segun el tipo [user_ajaxgetnotifications_typecounts]                      //
+//    2.1) El resultado es un array de objetos [                                                                             //
+//            {"type":"6","cnt":"165","parent":"videos"},                                                                    //
+//            {"type":"12","cnt":"1","parent":"fans"},                                                                       //
+//            {"type":"16","cnt":"3","parent":"photos"}                                                                      //
+// ]                                                                                                                         //
+// 3) Del resultado del punto 2.1 pasar el parent a [notification_getlatest (con parent)]                                    //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
- */
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ACTIVITY API:                                                                                                             //
+// $.ajax({url: Routing.generate('es_getactivity_feed'), data: {page: 0}}).then(function(r){console.log(r)})                 //
+// $.ajax({url: Routing.generate('es_user_ajaxactivitynumber'), data: {}}).then(function(r){console.log(r)})                 //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -678,11 +695,15 @@ $(document).ready(function () {
     };
 });
 
+///////////////////////////////////////////////////////////////////////////////
+// Descomentar para activar plugin de Notificaciones                         //
+///////////////////////////////////////////////////////////////////////////////
+/*
 $(document).ready(function () {
     "use strict";
-    //$('.widget-container').fwWidget({});
+    $('.widget-container').fwWidget({});
 });
-
+*/
 
 ////////////////////////////////////////////////////////////////////////////////
 // FansWorld activity widget plugin 1.0 initial                               //
@@ -780,8 +801,6 @@ $(document).ready(function () {
             that.redrawScrollBar();
             fansworld.activity.getActivity();
         },
-        ////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
         setPosition: function(target) {
             var that = this;
             // Get target window positioning
@@ -813,8 +832,6 @@ $(document).ready(function () {
             var that = this;
             $(that.element).find('.widget-title').text(title);
         },
-        ////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
         checkBounds: function(check) {
             var that = this;
             if(check) {
@@ -944,7 +961,7 @@ $(document).ready(function () {
             button.setAttribute('id', id);
             button.setAttribute('data-toggle', 'dropdown');
             button.setAttribute('title', name);
-            //button.setAttribute('rel', 'tooltip');
+            //button.setAttribute('rel', 'tooltip');  // Enable tootlit (overlaps widget !)
             button.setAttribute('type', 'button');
             button.setAttribute('data-original-title', that.options.title);
             button.className = "notification";
@@ -958,7 +975,7 @@ $(document).ready(function () {
             button.insertBefore(label, button.firstChild);
 
             $(button).on("click", function(e) {
-                //$('.widget-container').data('fwWidget').toggle(e);
+                //$('.widget-container').data('fwWidget').toggle(e); // To activate Notifications widget
                 $('.widget-container').data('fwActivityWidget').toggle(e);
             });
             return button;
