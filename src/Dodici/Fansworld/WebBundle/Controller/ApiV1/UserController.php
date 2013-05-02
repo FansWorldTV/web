@@ -168,7 +168,7 @@ class UserController extends BaseController
     public function showAction($id)
     {
         try {
-            if (true || $this->hasValidSignature()) {
+            if ($this->hasValidSignature()) {
                 $request = $this->getRequest();
 
                 if (!$id) throw new HttpException(400, 'Invalid user_id');
