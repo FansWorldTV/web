@@ -1034,19 +1034,18 @@ class UserController extends SiteController
             $beFan = array();
 
             switch ($activity->getType()) {
-                    case 1:
+                    case Activity::TYPE_NEW_VIDEO:
                         // TYPE_NEW_VIDEO
                         $video = $activity->getVideo();
                         $mediaEntity['video'] = $this->get('serializer')->values($video , 'big');
                         break;
-                    case 2:
+                    case Activity::TYPE_NEW_PHOTO:
                         // TYPE_NEW_PHOTO
                         $photo = $activity->getPhoto();
                         $mediaEntity['photo'] = $this->get('serializer')->values($photo , 'big');
                         break;
-                    case 3:
+                    case Activity::TYPE_BECAME_FAN:
                         // TYPE_BECAME_FAN
-
                         $beIdols = $activity->getHasidols();
                         $beTeams = $activity->getHasteams();
                         $beUsers = $activity->getHasusers();
@@ -1071,10 +1070,10 @@ class UserController extends SiteController
 
                         $beFan = count($activity->getHasidols());
                         break;
-                    case 4:
+                    case Activity::TYPE_CHECKED_IN:
                         // TYPE_CHECKED_IN
                         break;
-                    case 5:
+                    case Activity::TYPE_LABELLED_IN:
                         // TYPE_LABELLED_IN
                         if ($activity->getPhoto() != null) {
                             $mediaEntity['photo'] = $this->get('serializer')->values($activity->getPhoto(), 'big');
@@ -1082,7 +1081,7 @@ class UserController extends SiteController
                             $mediaEntity['video'] = $this->get('serializer')->values($activity->getVideo(), 'big');
                         }
                         break;
-                    case 6:
+                    case Activity::TYPE_LIKED:
                         // TYPE_LIKED
                         if ($activity->getPhoto() != null) {
                             $mediaEntity['photo'] = $this->get('serializer')->values($activity->getPhoto(), 'big');
@@ -1090,7 +1089,7 @@ class UserController extends SiteController
                             $mediaEntity['video'] = $this->get('serializer')->values($activity->getVideo(), 'big');
                         }
                         break;
-                    case 7:
+                    case Activity::TYPE_SHARED:
                         // TYPE_SHARED
                         if ($activity->getPhoto() != null) {
                             $mediaEntity['photo'] = $this->get('serializer')->values($activity->getPhoto(), 'big');
