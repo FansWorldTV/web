@@ -512,7 +512,6 @@ $(document).ready(function () {
             var that = this;
             $(that.element).find('.widget-title').text(that.options.title);
             $(that.element).attr('id', 'widget-popup');
-            console.log("fwWidget INIT")
             // Listen notifications
             fansworld.notificacion.addListener('onnotificationreceived', function(response){
                 var id = response.result.id;
@@ -716,7 +715,7 @@ $(document).ready(function () {
     Plugin.prototype = {
         init: function () {
             var that = this;
-            $(that.element).find('.widget-title').text(that.options.title);
+            $(that.element).find('.widget-title').text("that.options.title");
             $(that.element).attr('id', 'widget-popup');
 
             // Populate on activity received
@@ -901,6 +900,8 @@ $(document).ready(function () {
     var defaults = {
         footer: null,
         buttons: [],
+        title: null,
+        name: null
     };
 
     // The actual plugin constructor
@@ -923,7 +924,7 @@ $(document).ready(function () {
             that.options.footer = $('footer');
             that.options.buttons.push({
                 id: that.guidGenerator(),
-                node: that.makeButton(parseInt((Math.random()*0x10), 10), 'cosas'),
+                node: that.makeButton(parseInt((Math.random()*0x10), 10), that.options.name),
                 count: 0
             });
             console.log(that.options.buttons);
@@ -945,7 +946,7 @@ $(document).ready(function () {
             button.setAttribute('title', name);
             //button.setAttribute('rel', 'tooltip');
             button.setAttribute('type', 'button');
-            button.setAttribute('data-original-title', 'Notificaciones');
+            button.setAttribute('data-original-title', that.options.title);
             button.className = "notification";
             button.innerText = name;
 
@@ -1019,5 +1020,9 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     "use strict";
-    $('footer').fwFooterNews({});
+    $('footer').fwFooterNews({
+        name: 'Actividad',
+        title: 'Actividad reciente',
+        id: 'act-reciente'
+    });
 });
