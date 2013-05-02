@@ -3,24 +3,37 @@
 {% block title %}
     <title>Fansworld - {{ "notification_video_newidolteam"|trans({'%video%': notification.video}) }}</title>
 {% endblock %}
+
+{% block styles %}
+  {{ parent() }}
+  .image-square {
+    padding: 10px;
+    border: 1px solid lightgray;
+    width: 250px;
+    margin: 10px auto 30px auto;
+    display: block;
+  }
+  .image-square:hover { border-color: darkgray; }
+  .image-square img { vertical-align: middle; }
+
+  section.body { text-align: center; }
+{% endblock %}
     
-{% block text %}
-    <div style="margin-bottom: 20px;">
+{% block body %}
+    <div style="margin-bottom: 40px;">
         {% if (notification.video.image) %}
-            <span style="float: left;margin-right: 15px;"><img src="{{ appmedia.imageurl(notification.video.image, 'avatar') }}" style="width: 45px;height: 45px;"/></span>
-        {% endif %}       
-        <div>
-            <p style="margin-bottom: 10px;">
-                Fansworld subió un nuevo vídeo <a href="{{ url('video_show', { id: notification.video.id, slug: notification.video.slug }) }}">{{ notification.video }}</a>
-                taggeado con: <br />
-                {% for ht in notification.video.hasteams %}
-                    {{ ht.team }} <br />
-                {% endfor %}
-                
-                {% for ht in notification.video.hasidols %}
-                    {{ ht.idol }} <br />
-                {% endfor %}
-            </p>
-        </div>
+          <a class="image-square" href="{{ url('video_show', { id: notification.video.id, slug: notification.video.slug }) }}"><img src="{{ appmedia.imageurl(notification.video.image, 'medium') }}"/></a>
+        {% endif %}
+        <p style="margin-bottom: 40px;">
+            Fansworld subió un nuevo vídeo <a href="{{ url('video_show', { id: notification.video.id, slug: notification.video.slug }) }}">{{ notification.video }}</a>
+            taggeado con: <br />
+            {% for ht in notification.video.hasteams %}
+                {{ ht.team }} <br />
+            {% endfor %}
+
+            {% for ht in notification.video.hasidols %}
+                {{ ht.idol }} <br />
+            {% endfor %}
+        </p>
     </div>
 {% endblock %}

@@ -3,16 +3,28 @@
 {% block title %}
     <title>Fansworld - {{ "notification_video_processed"|trans({'%video%': notification.video}) }}</title>
 {% endblock %}
+
+{% block styles %}
+    {{ parent() }}
+    .image-square {
+      padding: 10px;
+      border: 1px solid lightgray;
+      width: 250px;
+      margin: 10px auto 30px auto;
+      display: block;
+    }
+    .image-square:hover { border-color: darkgray; }
+    .image-square img { vertical-align: middle; }
     
-{% block text %}
-    <div style="margin-bottom: 20px;">
+    section.body { text-align: center; }
+{% endblock %}
+    
+{% block body %}
         {% if (notification.video.image) %}
-            <span style="float: left;margin-right: 15px;"><img src="{{ appmedia.imageurl(notification.video.image, 'avatar') }}" style="width: 45px;height: 45px;"/></span>
+            <a class="image-square" href="{{ url('video_show', { id: notification.video.id, slug: notification.video.slug }) }}"><img src="{{ appmedia.imageurl(notification.video.image, 'medium') }}"/></a>
         {% endif %}    
-        <div>
-            <p style="margin-bottom: 10px;">
-                <a href="{{ url('video_show', { id: notification.video.id, slug: notification.video.slug }) }}">{{ notification.video }}</a> se terminó de procesar
-            </p>
-        </div>
-    </div>
+        <p style="text-align: center; margin-bottom: 20px;">
+            <a href="{{ url('video_show', { id: notification.video.id, slug: notification.video.slug }) }}">{{ notification.video }}</a> se terminó de procesar
+        </p>
+        <a class="green-button" href="{{ url('video_show', { id: notification.video.id, slug: notification.video.slug }) }}" style="display: inline-block; margin-bottom: 30px;">Ver video</a>
 {% endblock %}

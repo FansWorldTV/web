@@ -4,8 +4,13 @@
     <title>Fansworld - {{ "notification_comment_answered"|trans({'%author%': notification.author}) }}</title>
 {% endblock %}
     
-{% block text %}
-    <p style="margin-bottom: 10px;">
-        <a href="">{{ notification.author }}</a> respondió en <a href="{{ url('comment_show', {'id': notification.comment.comment.id }) }}">{{ notification.comment.comment|truncate(15) }}</a>
+{% block styles %}
+    {{ parent() }}
+    section.body { text-align: center; }
+{% endblock %}
+    
+{% block body %}
+    <p style="text-align: center; margin-bottom: 20px;">
+        <a href="{{ url('user_wall',{'username': notification.author.username}) }}">{{ notification.author }}</a> respondió en <a href="{{ url('comment_show', {'id': notification.comment.comment.id }) }}">{{ notification.comment.comment|truncate(15) }}</a>
     </p>
 {% endblock %}
