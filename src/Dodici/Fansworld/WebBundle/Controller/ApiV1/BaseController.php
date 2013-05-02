@@ -164,6 +164,7 @@ class BaseController extends SiteController
     {
         $idolcount = $this->getRepository('Idolship')->countBy(array('author' => $user->getId()));
         $teamcount = $this->getRepository('Teamship')->countBy(array('author' => $user->getId()));
+        $followcount = $this->getRepository('Friendship')->countBy(array('author' => $user->getId(), 'active' => true));
         
         return array(
             'id' => $user->getId(),
@@ -173,9 +174,10 @@ class BaseController extends SiteController
             'lastname' => $user->getLastname(),
             'image' => $this->imageValues($user->getImage()),
         	'splash' => $this->imageValues($user->getSplash(), $this->getImageFormat('splash')),
-            'idolcount' => $idolcount,
-            'teamcount' => $teamcount,
-            'fanCount' => $user->getFanCount()
+        	'fanCount' => $user->getFanCount(),
+            'idolFollowCount' => $idolcount,
+            'teamFollowCount' => $teamcount,
+            'fanFollowCount' => $followcount
         );
     }
     
