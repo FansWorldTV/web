@@ -34,8 +34,8 @@
         cursor: pointer;
         position: absolute;
         z-index: 5;
-        top: 70px;
-        right:60px;
+        top: 10px;
+        right: 10px;
 
         &:hover {
             background-position:bottom;
@@ -49,174 +49,28 @@
         .size(inherit, inherit);
 
         .share-buttons {
-            position: absolute;
-            right: 100px;
-            top: 70.5px;
-            z-index: 9999999;
+            margin-top: 10px;
+            margin-right: 50px;
         }
 
         .modal-template {
-            height: 100%;
-            padding-left: 55px;
-            padding-top: 55px;
-
-            .left {
-                .border-radius(5px);
-                padding: 20px;
-                background-color: @white;
-                overflow-y: auto;
-                overflow-x: hidden;
-                height: 90%;
-                width: 440px;
-                float: left;
-
-                .comments-and-tags {
-                    padding-top: 0;
-                    position: relative;
-
-                    .form-container {
-                        padding-top: 0;
-                    }
-
-                    .tag-container {
-                        display: none;
-                    }
-
-                    .comment-loading {
-                        position: absolute;
-                        left: 43%;
-                        bottom: -45px;
-                    }
-
-                    div[data-wall] {
-                        font-size: 11px;
-                        color: @black;
-                        line-height: 15px;
-
-                        div.actualizacion {
-                            position: relative;
-
-                            header.comment-header {
-                                padding-left: 0;
-
-                                div.avatar {
-                                    margin-top: 5px;
-                                    img {
-                                        width: 35px;
-                                    }
-                                }
-                                div.action_container {
-                                    font-size: 13px;
-                                    font-weight: 400;
-                                    line-height: 20px;
-                                }
-                            }
-
-                            .status {
-                                border: 0;
-                                margin-top: 0;
-
-                                .infotext-header, .infotext-content, .infotext-subcomments {
-                                    padding-left: 0;
-
-                                    .share-desc {
-                                        padding-left: 0;
-                                    }
-                                }
-
-                                .delete {
-                                    position: absolute;
-                                    right: 0;
-                                    top: 0;
-                                }
-                                .comment-toolbar {
-                                    display: none;
-                                }
-
-                                .comments {
-                                    .subcomments-container {
-                                        padding-left: 15px;
-
-                                        .subcomment-avatar {
-                                        }
-
-                                        .subcomment-content {
-                                            float: left;
-                                            display: block;
-                                            width: 86%;
-                                            margin-top: -3px;
-                                        }
-                                    }
-                                    .avatar img {
-                                        width: 20px;
-                                    }
-                                }
-                            }
-
-                            textarea.comment_message {
-                                width: 95%;
-                            }
-                        }
-                    }
-                }
-
-                .top-detail {
-                    img {
-                        margin-bottom: 10px;
-                        width: 50px;
-                        display: block;
-                        .pull-left();
-                    }
-                    .media-title {
-                        color: @green;
-                        font-size: 23px;
-                        font-weight: 500;
-                        line-height: 25px;
-                        width: 80%;
-                        display: block;
-                        .pull-left();
-                        margin-left: 20px;
-                        margin-bottom: 8px;
-                    }
-                    .media-detail {
-                        color: @green;
-                        font-size: 18px;
-                        font-weight: 500;
-                        line-height: 25px;
-                        width: 80%;
-                        display: block;
-                        .pull-left();
-                        margin-left: 20px;
-                        margin-bottom: 8px;
-                    }
-                    .author-name {
-                        margin-left: 20px;
-                    }
-                }
-
-                .media-content {
-                    color: @black;
-                    font-size: 13px;
-                    font-weight: 300;
-                    margin-top: 25px;
-                    clear: both;
-                }
+            position: absolute;
+            width: 100%;
+            height: 90%;
+            margin-top: 10px;
+            
+            img {
+                position: relative;
+                display: block;
+                margin: auto;
+                max-width: 100%;
+                max-height: 100%;
             }
 
-            .right {
-                width: auto;
-                position: relative;
-                margin-left: 480px;
-                height: 90%;
-                padding-top: 100px;
-
-                img {
-                    position: relative;
-                    display: block;
-                    margin: auto;
-                    max-width: 100%;
-                    max-height: 100%;
-                }
+            .video-container {
+                position: absolute;
+                width: 90%;
+                left: 5%;
 
                 object, .videoframe {
                     position: relative;
@@ -225,28 +79,28 @@
                     width: 70%;
                     height: 60%;
                 }
+            }
 
-                .playPrev, .playNext {
-                    position: absolute;
-                    top: 40%;
-                    background: url('../images/ui/arrow-slider.png');
-                    background-size: 50px;
-                    .square(50px);
-                    border: 0;
-                }
+            .playPrev, .playNext {
+                position: absolute;
+                top: 40%;
+                background: url('../images/ui/arrow-slider.png');
+                background-size: 50px;
+                .square(50px);
+                border: 0;
+            }
 
-                .playPrev { 
-                    left: 60px;
-                    -webkit-transform: rotate(180deg);
-                    -moz-transform: rotate(180deg);
-                    -ms-transform: rotate(180deg);
-                    -o-transform: rotate(180deg);
-                    transform: rotate(180deg);
-                }
-                
-                .playNext {
-                    right: 60px;
-                }
+            .playPrev { 
+                left: 15px;
+                -webkit-transform: rotate(180deg);
+                -moz-transform: rotate(180deg);
+                -ms-transform: rotate(180deg);
+                -o-transform: rotate(180deg);
+                transform: rotate(180deg);
+            }
+            
+            .playNext {
+                right: 15px;
             }
         }
     }
