@@ -22,6 +22,25 @@ use Symfony\Component\HttpFoundation\Request;
 class NotificationController extends SiteController
 {
     const LIMIT_NOTIFICATIONS = 30;
+    
+    /**
+     * Only for testing purpose
+     * @Route("/test", name="notification_test")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+//    public function testAction(){
+//      $notification = $this->getRepository('Notification')->findOneBy(array('type'=>Notification::TYPE_VIDEO_NEW_FROM_IDOL_TEAM));
+//      
+//      $html = $this->render(
+//                'DodiciFansworldWebBundle:Notification:Mail/'.$notification->getTypeName().'.html.twig', 
+//                array(
+//                    'notification' => $notification, 
+//                    'targetUser' => $this->getUser()
+//                )
+//              );
+//      
+//      return $html;
+//    }
 
     /**
      * @Route("/preferences", name="notification_preferences")

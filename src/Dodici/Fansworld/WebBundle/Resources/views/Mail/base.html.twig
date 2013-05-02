@@ -1,90 +1,118 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:og="http://ogp.me/ns#"
-      xmlns:fb="http://www.facebook.com/2008/fbml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        {% block title %}
-            <title>Fansworld.TV</title>
-        {% endblock %}
-    </head>
-    <body>
-        <style type="text/css">
-        {% block styles %}
-                body {
-                    background-color: #efefef;
-                    font-family: "Lucida Sans", "Lucida Grande", "FreeSans";
-                }
-                table, tr, td{
-                    padding:0 !important;
-                    margin:0 !important;
-                }
-                a{
-                    color: #2e5fc9;
-                    text-decoration: none;
-                    font-weight: bold;
-                }
-                p {
-                    margin: 0;
-                    padding: 0;
-                }
-        {% endblock %}
-            </style>
-            <table cellpadding="0" cellspacing="0" style="background-color: #ffffff; border: 1px solid #c9c9c9; border-radius: 3px; height: 270px; width: 500px;">
-                <tr style="height: 50px;">
-                    <td style="border-bottom: 1px solid #c9c9c9; width: 290px;">
-                        <img src="{{ appmedia.absolute( asset('bundles/dodicifansworldweb/images/mail/logoBlanco.jpg') ) }}" alt="Comparti tu pasion" style="margin-top: 20px; margin-left: 28px; margin-bottom: 15px;"/>
-                    </td>
-                    {% if targetUser is defined %}
-                        <td style="border-bottom: 1px solid #c9c9c9; width: 273px;" align="right">
-                            <table cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <td>
-                                        <table cellpadding="0" cellspacing="0" style="font-size: 11px; text-align: right;">
-                                            <tr>
-                                                <td>
-                                                    <span style="color: #444444;margin-right: 15px;">{{ targetUser }}</span> <!-- FULL NAME -->
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td >
-                                                    <span style="color: #adadad;margin-right: 15px;">({{ targetUser.username }})</span> <!--USERNAME-->
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <img src="{{ appmedia.imageurl(targetUser.image, 'avatar') }}" style="margin-right:10px; width: 35px; height: 35px;"/> <!--TARGET AVATAR-->
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    {% endif  %}
-                </tr>
-                <tr>
-                    <td style="width: 500px;vertical-align: top;" colspan="2">
-                        <div style="padding-left: 30px;">
-                            {% if targetUser is defined %}
-                                <p style="margin-bottom: 15px;margin-top: 15px;">Hola {{ targetUser }},</p>
-                            {% endif %}
-                            <div style="margin-bottom: 20px;">
-                                <div>
-                                    {% block text %}
-                                    {% endblock %}
-                                </div>
-                            </div>
-                            <div style="clear: both;"></div>
-                            {% block extratext %}{% endblock %}
-                            </div>
-                        </td>
-                    </tr>
-            </table>
-            <div style="width: 500px; margin-top: 10px;">
-                    <div style="float: left; font-size: 11px; color: #c0c0c0;">
-                        <p>Copyright {{ 'now'|date('Y') }}, todos los derechos reservados</p>
-                        <p>Fansworld.tv</p>
-                    </div>
-                    <img style="float:right;" src="{{ appmedia.absolute( asset('bundles/dodicifansworldweb/images/mail/fwGris.jpg') ) }}" alt="" />
-            </div>
-        </body>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    {% block title %}<title>Fansworld.TV</title>{% endblock %}
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.10.0/build/cssreset/cssreset-min.css" />
+  </head>
+  <body>
+    <style type="text/css">
+      {% block styles %}
+        body {
+          font-family: "Open Sans";
+          font-weight: 300;
+        }
+
+        a{
+          color: #3f57c6;
+          text-decoration: none;
+          font-weight: 600;
+        }
+
+        p {
+          padding: 0;
+        }
+
+        .block-container {
+          width: 600px;
+          display: block;
+          margin: 0 auto;
+          height: auto;
+          border: 1px solid lightgray;
+          -webkit-border-radius: 3px;
+          -moz-border-radius: 3px;
+          border-radius: 3px;
+          overflow: hidden;
+          margin-top: 40px;
+        }
+
+        .block-container header {
+          width: 100%;
+          height: 50px;
+          background-color: #231f20;
+          color: white;
+        } 
+
+        header section.left, header section.right {
+          display: inline-block;
+          height: 100%;
+        }
+
+        header section.right p {
+          text-align: right;
+          line-height: 14px;
+          padding-top: 9px;
+          margin-right: 10px;
+        }
+
+        .left { float: left; }
+        .right { float: right; }
+
+        div.block-container section.body {
+          padding: 15px;
+          color: #7c7c7c;
+          font-weight: 400;
+        }
+        
+        div.block-container section.body a.legend {
+          display: block; 
+          color: #9e9e9e; 
+          clear: both; 
+          text-align: center;
+          font-size: 10px; 
+          width: 100%;
+        }
+
+        .green-button {
+          background-color: #8dc527;
+          font-size: 15px;
+          color: white;
+          font-weight: 600;
+          padding: 10px;
+          -webkit-border-radius: 5px;
+          -moz-border-radius: 5px;
+          border-radius: 5px;
+        }
+
+        footer {
+          font-size: 12px;
+          font-weight: 500;
+          color: lightgray;
+          text-align: center;
+          margin-top: 10px;
+        }
+      {% endblock %}
+    </style>
+    <div class="block-container">
+      <header>
+        <section class="left">
+          <img src="{{ appmedia.absolute( asset('bundles/dodicifansworldweb/images/fansworld143.png') ) }}" alt="Comparti tu pasion" style="margin-top: 14px;margin-left: 10px;"/>
+        </section>
+        <section class="right">
+          <p class="left" style="text-align: right">
+            <span class="fullname" style="font-size: 11px; font-weight: 600;">{{ targetUser }}</span>
+            <br/>
+            <span class="username" style="font-size: 10px;">({{ targetUser.username }})</span>
+          </p>
+          <a href="" class="left"><img src="{{ appmedia.imageurl(targetUser.image, 'avatar') }}"  /></a>
+        </section>
+      </header>
+      <section class="body">
+        {% block body %}{% endblock %}
+        {% block extratext %}{% endblock %}
+      </section>
+    </div>
+    <footer>Copyright 2013, todos los derechos reservados</footer>
+  </body>
 </html>

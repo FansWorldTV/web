@@ -4,8 +4,25 @@
     <title>Fansworld - {{ "notification_friendship_newfan"|trans({'%author%': notification.author}) }}</title>
 {% endblock %}
     
-{% block text %}
-    <p style="margin-bottom: 10px;">
-        <a href="">{{ notification.author }}</a> ahora es tu fan
+{% block styles %}
+  {{ parent() }}
+  .image-square {
+    padding: 10px;
+    border: 1px solid lightgray;
+    width: 250px;
+    margin: 10px auto 30px auto;
+    display: block;
+  }
+  .image-square:hover { border-color: darkgray; }
+  .image-square img { vertical-align: middle; }
+  section.body { text-align: center; }
+{% endblock %}
+  
+{% block body %}
+    {% if (notification.author.image) %}
+        <a class="image-square" href="{{ url('user_wall', { 'username': notification.author.username }) }}"><img src="{{ appmedia.imageurl(notification.author.image, 'medium') }}"/></a>
+    {% endif %}
+    <p style="margin-bottom: 40px;">
+        <a href="{{ url('user_wall', { 'username': notification.author.username }) }}">{{ notification.author }}</a> ahora es tu fan
     </p>
 {% endblock %}

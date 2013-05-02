@@ -4,7 +4,21 @@
     <title>Fansworld - {{ "notification_user_tagged"|trans({'%author%': notification.author}) }}</title>
 {% endblock %}
     
-{% block text %}
+{% block styles %}
+  {{ parent() }}
+  .image-square {
+    padding: 10px;
+    border: 1px solid lightgray;
+    width: 250px;
+    margin: 10px auto 30px auto;
+    display: block;
+  }
+  .image-square:hover { border-color: darkgray; }
+  .image-square img { vertical-align: middle; }
+  section.body { text-align: center; }
+{% endblock %}
+    
+{% block body %}
     {% if notification.comment is not null %}
             {% set tag_item = notification.comment %}
             {% set tag_item_url = url("comment_show", {'id': tag_item.id }) %}	
@@ -24,7 +38,11 @@
             {% set tag_item = notification.newspost %} 
             {% set tag_item_url = url("newspost_show", {'id': tag_item.id, 'slug': tag_item.slug }) %}	
     {% endif %}
-    <p style="margin-bottom: 10px;">
+  
+    {% if (tag_item) %}
+        <a class="image-square" href="{{ tag_item_url }}"><img src="{{ appmedia.imageurl(tag_item.image, 'medium') }}"/></a>
+    {% endif %}
+    <p style="margin-bottom: 40px;">
         <a href="">{{ notification.author }}</a> te etiquetó en <a href="{{ tag_item_url }}">{{ tag_item }}</a>
     </p>
 {% endblock %}
