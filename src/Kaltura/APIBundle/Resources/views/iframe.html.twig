@@ -7,14 +7,41 @@
     <div data-videoid="{{ video.id }}" data-videocontainer>
         <div id="youtubePlayer">
             <script type="text/javascript">
-                var tagSrcYoutube = document.createElement('script');
-                tagSrcYoutube.src = "https://www.youtube.com/iframe_api";
+                if (!$(scriptTag).attr('first-time')) {
+                    var tagSrcYoutube = document.createElement('script');
+                    tagSrcYoutube.src = "https://www.youtube.com/iframe_api";
 
-                var scriptTag = document.getElementsByTagName('script')[0];
-                scriptTag.parentNode.insertBefore(tagSrcYoutube, scriptTag);
+                    var scriptTag = document.getElementsByTagName('script')[0];
+                    scriptTag.parentNode.insertBefore(tagSrcYoutube, scriptTag);
 
-                var playerYoutube;
-                function onYouTubeIframeAPIReady() {
+                    $(scriptTag).attr('first-time', true);
+
+                    var playerYoutube;
+                    function onYouTubeIframeAPIReady() {
+                        playerYoutube = new YT.Player('youtubePlayer', {
+                            width: '100%',
+                            height: '100%',
+                            videoId: '{{ idvideo }}',
+                            playerVars: { 'wmode': 'transparent' },
+                            events: {
+                                'onReady': autoPlayVideo,
+                                'onStateChange': youtubeListener
+                          }
+                        });
+                    }
+
+                    function youtubeListener(event) {
+                        if (YT.PlayerState.ENDED == event.data) {
+                            playerFinalAction('youtubePlayer');
+                        }
+                    }
+
+                    function autoPlayVideo(event) {
+                        event.target.playVideo();
+                    }
+                }
+
+                else {
                     playerYoutube = new YT.Player('youtubePlayer', {
                         width: '100%',
                         height: '100%',
@@ -25,16 +52,6 @@
                             'onStateChange': youtubeListener
                       }
                     });
-                }
-
-                function youtubeListener(event) {
-                    if (YT.PlayerState.ENDED == event.data) {
-                        playerFinalAction('youtubePlayer');
-                    }
-                }
-
-                function autoPlayVideo(event) {
-                    event.target.playVideo();
                 }
             </script>
         </div>

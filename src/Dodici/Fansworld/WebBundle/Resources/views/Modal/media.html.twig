@@ -3,12 +3,12 @@
 </div>
 <div class="modal-template row-fluid" data-modal-type="{{ type }}" data-entity-id="{{ media.id }}">
     {% if type == "video" %}
-        {{ kalturatwig.player(media, true)|raw }}
-
-
+    	<div class="video-container">
+        	{{ kalturatwig.player(media, true)|raw }}
+        </div>
+        <button class="playPrev" style="font-size: 18px;"></button>
+        <button class="playNext" style="font-size: 18px;"></button>
     {% else %}
         {% thumbnail media.image, 'wall' %}
     {% endif %}
 </div>
-<button class="playPrev" style="font-size: 18px;"></button>
-<button class="playNext" style="font-size: 18px;"></button>
