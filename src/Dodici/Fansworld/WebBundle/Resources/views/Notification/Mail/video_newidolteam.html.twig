@@ -4,28 +4,15 @@
     <title>Fansworld - {{ "notification_video_newidolteam"|trans({'%video%': notification.video}) }}</title>
 {% endblock %}
 
-{% block styles %}
-  {{ parent() }}
-  .image-square {
-    padding: 10px;
-    border: 1px solid lightgray;
-    width: 250px;
-    margin: 10px auto 30px auto;
-    display: block;
-  }
-  .image-square:hover { border-color: darkgray; }
-  .image-square img { vertical-align: middle; }
-
-  section.body { text-align: center; }
-{% endblock %}
-    
 {% block body %}
     <div style="margin-bottom: 40px;">
+        {% set entityUrl = url('video_show', { id: notification.video.id, slug: notification.video.slug }) %}
         {% if (notification.video.image) %}
-          <a class="image-square" href="{{ url('video_show', { id: notification.video.id, slug: notification.video.slug }) }}"><img src="{{ appmedia.imageurl(notification.video.image, 'medium') }}"/></a>
+          {% include 'DodiciFansworldWebBundle:Mail/Templates:show_thumb.html.twig' with { entity: notification.video, href: entityUrl } %}
         {% endif %}
-        <p style="margin-bottom: 40px;">
-            Fansworld subió un nuevo vídeo <a href="{{ url('video_show', { id: notification.video.id, slug: notification.video.slug }) }}">{{ notification.video }}</a>
+        
+        <p style="text-align: center; margin-bottom: 20px;padding: 0;font-size: 17px;">
+            Fansworld subió un nuevo vídeo <a style="color: #3f57c6;text-decoration: none;font-weight: 600;text-decoration: none !important;" href="{{ url('video_show', { id: notification.video.id, slug: notification.video.slug }) }}">{{ notification.video }}</a>
             taggeado con: <br />
             {% for ht in notification.video.hasteams %}
                 {{ ht.team }} <br />
@@ -35,5 +22,7 @@
                 {{ ht.idol }} <br />
             {% endfor %}
         </p>
+        
+        {% include 'DodiciFansworldWebBundle:Mail/Templates:green_button.html.twig' with { href: entityUrl, text: 'Ver video' } %}
     </div>
 {% endblock %}

@@ -26,18 +26,19 @@ class NotificationController extends SiteController
     /**
      * Only for testing purpose
      * @Route("/test", name="notification_test")
-     * @Secure(roles="ROLE_ADMIN")
      */
 //    public function testAction(){
-//      $notification = $this->getRepository('Notification')->findOneBy(array('type'=>Notification::TYPE_VIDEO_NEW_FROM_IDOL_TEAM));
+//      $notification = $this->getRepository('Notification')->findOneBy(array());
 //      
 //      $html = $this->render(
 //                'DodiciFansworldWebBundle:Notification:Mail/'.$notification->getTypeName().'.html.twig', 
 //                array(
 //                    'notification' => $notification, 
-//                    'targetUser' => $this->getUser()
+//                    'targetUser' => $notification->getTarget()
 //                )
-//              );
+//              ); 
+//     
+//      $this->get('fansworldmailer')->send('nrosso@fansworld.tv', '[BENCH] fw mail test', $html);
 //      
 //      return $html;
 //    }

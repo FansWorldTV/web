@@ -4,25 +4,13 @@
     <title>Fansworld - {{ "notification_friendship_newfan"|trans({'%author%': notification.author}) }}</title>
 {% endblock %}
     
-{% block styles %}
-  {{ parent() }}
-  .image-square {
-    padding: 10px;
-    border: 1px solid lightgray;
-    width: 250px;
-    margin: 10px auto 30px auto;
-    display: block;
-  }
-  .image-square:hover { border-color: darkgray; }
-  .image-square img { vertical-align: middle; }
-  section.body { text-align: center; }
-{% endblock %}
-  
 {% block body %}
+    {% set entityUrl = url('user_wall', { 'username': notification.author.username }) %}
     {% if (notification.author.image) %}
-        <a class="image-square" href="{{ url('user_wall', { 'username': notification.author.username }) }}"><img src="{{ appmedia.imageurl(notification.author.image, 'medium') }}"/></a>
+        {% include 'DodiciFansworldWebBundle:Mail/Templates:show_thumb.html.twig' with { entity: notification.author, href: entityUrl } %}
     {% endif %}
-    <p style="margin-bottom: 40px;">
-        <a href="{{ url('user_wall', { 'username': notification.author.username }) }}">{{ notification.author }}</a> ahora es tu fan
+    <p style="text-align: center; margin-bottom: 20px;padding: 0;font-size: 17px;">
+        <a style="color: #3f57c6;text-decoration: none;font-weight: 600;text-decoration: none !important;" href="{{ url('user_wall', { 'username': notification.author.username }) }}">{{ notification.author }}</a> ahora es tu fan
     </p>
+    {% include 'DodiciFansworldWebBundle:Mail/Templates:green_button.html.twig' with { href: entityUrl, text: 'Ver perfil' } %}
 {% endblock %}
