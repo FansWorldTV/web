@@ -14,15 +14,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Sonata\UserBundle\Entity\User;
 use Application\Sonata\UserBundle\Entity\Notification;
+use Dodici\Fansworld\WebBundle\Entity\Activity;
 use Imagine\Image\Box;
 use Imagine\Image\Point;
 use Imagine\Gd\Imagine;
+use Dodici\Fansworld\WebBundle\Entity\HasTag;
 
 class UserController extends SiteController
 {
 
     const LIMIT_SEARCH = 20;
     const LIMIT_NOTIFICATIONS = 5;
+    const LIMIT_ACTIVITIES = 5;
     const LIMIT_PHOTOS = 8;
     const LIMIT_VIDEOS = 10;
     const LIMIT_LIST_IDOLS = 15;
@@ -1000,7 +1003,129 @@ class UserController extends SiteController
         return $this->jsonResponse($response);
     }
 
+    /**
+     *  @Route("/ajax/getactivity-feed", name="getactivity_feed")
+     */
+    public function ajaxGetActivityFeed()
+    {
+        $request = $this->getRequest();
+        $user = $this->getUser();
+        $page = $request->get('page');
+        $offset = null;
 
+        if ($page > 0) {
+            $page--;
+            $offset = self::LIMIT_ACTIVITIES * $page;
+        } else {
+            $offset = 0;
+        }
+
+        if (!($user instanceof User))
+            throw new HttpException(403, 'Acceso denegado');
+
+        $activyRepo = $this->getRepository('Activity');
+
+        $response = array();
+        $latestActivity = $activyRepo->latest($user, $offset, self::LIMIT_ACTIVITIES);
+
+        foreach ($latestActivity as $activity) {
+
+            $mediaEntity = array();
+            $beFan = array();
+
+            switch ($activity->getType()) {
+                    case Activity::TYPE_NEW_VIDEO:
+                        // TYPE_NEW_VIDEO
+                        $video = $activity->getVideo();
+                        $mediaEntity['video'] = $this->get('serializer')->values($video , 'big');
+                        break;
+                    case Activity::TYPE_NEW_PHOTO:
+                        // TYPE_NEW_PHOTO
+                        $photo = $activity->getPhoto();
+                        $mediaEntity['photo'] = $this->get('serializer')->values($photo , 'big');
+                        break;
+                    case Activity::TYPE_BECAME_FAN:
+                        // TYPE_BECAME_FAN
+                        $beIdols = $activity->getHasidols();
+                        $beTeams = $activity->getHasteams();
+                        $beUsers = $activity->getHasusers();
+
+                        $prepopulate_info = '';
+
+                        foreach ($activity->getHasidols() as $hasidol) {
+                            $id = $hasidol->getIdol()->getId();
+                            $name = $hasidol->getIdol();
+                            $tagidol .= $id . ',';
+                            $prepopulate_info .= $id . ':' . 'idol' . ':' . $name . ',';
+                        }
+
+                        $beFan = 'NADA';
+                        if ( $beIdols instanceof Hasidol) {
+                            $beFan = 'Idol';
+                        } elseif ($beTeams instanceof Hasteam) {
+                            $beFan = 'Team';
+                        } elseif ($beUsers instanceof Hasuser) {
+                            $beFan = 'User';
+                        }
+
+                        $beFan = count($activity->getHasidols());
+                        break;
+                    case Activity::TYPE_CHECKED_IN:
+                        // TYPE_CHECKED_IN
+                        break;
+                    case Activity::TYPE_LABELLED_IN:
+                        // TYPE_LABELLED_IN
+                        if ($activity->getPhoto() != null) {
+                            $mediaEntity['photo'] = $this->get('serializer')->values($activity->getPhoto(), 'big');
+                        } else {
+                            $mediaEntity['video'] = $this->get('serializer')->values($activity->getVideo(), 'big');
+                        }
+                        break;
+                    case Activity::TYPE_LIKED:
+                        // TYPE_LIKED
+                        if ($activity->getPhoto() != null) {
+                            $mediaEntity['photo'] = $this->get('serializer')->values($activity->getPhoto(), 'big');
+                        } else {
+                            $mediaEntity['video'] = $this->get('serializer')->values($activity->getVideo(), 'big');
+                        }
+                        break;
+                    case Activity::TYPE_SHARED:
+                        // TYPE_SHARED
+                        if ($activity->getPhoto() != null) {
+                            $mediaEntity['photo'] = $this->get('serializer')->values($activity->getPhoto(), 'big');
+                        } else {
+                            $mediaEntity['video'] = $this->get('serializer')->values($activity->getVideo(), 'big');
+                        }
+                        break;
+                }
+
+            $actValues = array(
+                'id' => $activity->getId(),
+                'ts' => $activity->getCreatedat()->format('U'),
+                'type' => $activity->getType(),
+                'typeName' => $activity->getTypeName(),
+                'media' => $mediaEntity,
+                'target' => $this->get('serializer')->values($activity->getAuthor()),
+                'fanOf' => $beFan
+            );
+            $response['activity'][] = $actValues;
+            $response['view'][] = $this->renderView('DodiciFansworldWebBundle:Activity:activity.html.twig', array('activity' => $actValues));
+        }
+
+        $response['offset'] = $offset;
+        return $this->jsonResponse($response);
+    }
+    /**
+     *  @Route("/ajax/activity-number", name="user_ajaxactivitynumber")
+     */
+    public function ajaxActivityNumber()
+    {
+        $user = $this->getUser();
+        $activityRepo = $this->getRepository('Activity');
+        $number = $activityRepo->countBy(array('author' => $user->getId()));
+
+        return $this->jsonResponse(array('number' => $number));
+    }
     private function _createForm()
     {
         $defaultData = array();

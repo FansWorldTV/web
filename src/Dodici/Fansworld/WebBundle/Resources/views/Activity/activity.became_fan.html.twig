@@ -1,0 +1,6 @@
+{% block text %}
+	<div class="avatar">
+		<img src="{{activity.target.image}}" />
+	</div>
+	<span class="notice-text"><a class="notice-link" href="{{ path('user_land', {username: activity.target.username }) }}">{{activity.target.username}}</a> se hizo fan de algo</span>
+{% endblock %}

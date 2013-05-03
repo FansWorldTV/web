@@ -16,7 +16,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class ActivityRepository extends CountBaseRepository
 {
-    public function latest(User $user = null, $limit = 10, $lastid = null)
+    public function latest(User $user = null, $offset = null, $limit = 10, $lastid = null)
     {
         $query = $this->_em->createQuery('
     	SELECT ac, aca, acv
@@ -24,7 +24,7 @@ class ActivityRepository extends CountBaseRepository
 		LEFT JOIN ac.author aca
 		LEFT JOIN ac.video acv
 		WHERE
-		
+
 		'.($user ? ('
 			(
 				(ac.author = :user)
@@ -78,17 +78,20 @@ class ActivityRepository extends CountBaseRepository
 		') : '
 			ac.author IS NULL
 		').'
-		
+
 		'.($lastid ? '
 			AND ac.id < :lastid
 		' : '').'
-		
+			ORDER BY ac.id DESC
     	');
-        
+
+		if ($offset !== null)
+			$query = $query->setFirstResult($offset);
+
         if ($user instanceof User) $query = $query->setParameter('user', $user->getId());
-        
+
         if ($lastid !== null) $query = $query->setParameter('lastid', $lastid);
-        
+
         if ($limit !== null) $query = $query->setMaxResults($limit);
 
         return $query->getResult();
