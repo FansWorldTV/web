@@ -183,7 +183,6 @@ $(document).ready(function () {
         },
         createFwPhotoUploader: function() {
             var that = this;
-            //var input = that.createInput();
             // Allow all media extensions
             that.options.allowedExtensions = that.options.mediaExtensions.all;
 

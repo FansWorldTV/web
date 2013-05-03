@@ -84,21 +84,43 @@ class SearchController extends BaseController
      *
      * @return
      * array (
-     * 		<resulttype> : array (
-     * 			array (
-     * 				id: int,
-     * 				title: string,
-     * 				<if applicable> image: array(id: int, url: string),
-     * 				<if applicable> author: @see SecurityController::loginAction() - without token,
-     * 				createdAt: int (timestamp UTC),
-     * 				<if event> teams: @see EventController::showAction()
-     * 				<if event> showdate: @see EventController::showAction()
-     * 			),
-     * 			...
+     *      <resulttype> : array (
+     *          array (
+     *              id: int,
+     *              title: string,
+     *              <if applicable> image: array(id: int, url: string),
+     *              <if applicable> author: @see SecurityController::loginAction() - without token,
+     *              createdAt: int (timestamp UTC),
+     *              <if event> teams: @see EventController::showAction(),
+     *              <if event> showdate: @see EventController::showAction(),
+     *              <if user> username: @see UserController:showAction(),
+     *              <if user|idol> firstname: string,
+     *              <if user|idol> lastname: string,
      *
-     * 		),
-     * 		...
-     * 		)
+     *              // extra fields
+     *              <video|photo|team|idol> content: string,
+     *              <video|photo|team|idol> visitCount: int,
+     *              <user|team|idol> splash: array(id: int, url: string),
+     *              <user|team|idol> photoCount: int,
+     *              <user|team|idol> videoCount: int,
+     *              <user|team|idol> fanCount: int,
+     *              <video|photo> likeCount: int,
+     *              <video|photo> commentCount: int,
+     *              <video|photo> url: string,
+     *              <video|photo> liked: boolean,
+     *              <video> watchlisted: boolean,
+     *              <video> duration: int (seconds),
+     *              <photo> album: array (
+     *                  id: int,
+     *                  title: string,
+     *                  photoCount: int
+     *              )
+     *          ),
+     *          ...
+     *
+     *      ),
+     *      ...
+     *      )
      *
      */
     public function termAction()
@@ -152,7 +174,8 @@ class SearchController extends BaseController
                     $data = array(
                         'id' => $i->getId(),
                         'title' => (string)$i,
-                        'createdAt' => ($i->getCreatedAt() ? $i->getCreatedAt()->format('U') : null)
+                        'createdAt' => ($i->getCreatedAt() ? $i->getCreatedAt()->format('U') : null),
+                        'type'=> $type
                     );
 
                     if (method_exists($i, 'getImage')) $data['image'] = $this->imageValues($i->getImage());
@@ -163,6 +186,45 @@ class SearchController extends BaseController
                         foreach($i->getHasTeams() as $ht){
                             $data['teams'][] = $this->get('serializer')->values($ht->getTeam());
                         }
+                    }
+
+                    $allowedfields = array(
+                        'content', 'visitCount', 'likeCount', 'commentCount', 'liked', 'url', 'watchlisted',
+                            'duration', 'album', 'photoCount', 'videoCount', 'fanCount', 'splash'
+                    );
+                    $extrafields = $this->getExtraFields($allowedfields);
+
+                    if ($this->_evaluateConditions($type, array('video', 'photo', 'team', 'idol'))) {
+                        if (in_array('content', $extrafields)) $data['content'] = $i->getContent();
+                        if (in_array('visitCount', $extrafields)) $data['visitCount'] = $i->getVisitCount();
+
+                        if ($this->_evaluateConditions($type, array('video', 'photo'))) {
+                             if (in_array('likeCount', $extrafields)) $data['likeCount'] = $i->getLikeCount();
+                             if (in_array('commentCount', $extrafields)) $data['commentCount'] =  $i->getCommentCount();
+                             if (in_array('liked', $extrafields)) $data['liked'] = $this->get('liker')->isLiking($i, $user) ? true : false;
+                             if (in_array('url', $extrafields)) $data['url'] =  $this->get('router')->generate($type.'_show', array('id' => $i->getId(), 'slug' => $i->getSlug()), true);
+
+                            if ('video' == $type) {
+                                 if (in_array('watchlisted', $extrafields)) $data['watchlisted'] = $this->get('video.playlist')->isInPlaylist($i, $user);
+                                 if (in_array('duration', $extrafields)) $data['duration'] = $i->getDuration();
+                            } else {
+                                 if (in_array('album', $extrafields)) $data['album'] = array('id'=>$i->getAlbum()->getId(),
+                                    'title'=>$i->getTitle()->getId(), 'photoCount'=>$i->getAlbum()->getPhotoCount());
+                            }
+                        }
+                    }
+
+                    if ($this->_evaluateConditions($type, array('user', 'team', 'idol'))) {
+                        if ('user' == $type) $data['username'] = $this->userArray($i);
+                        if ('user' == $type || 'idol' == $type) {
+                            $data['firstname'] = $i->getFirstname();
+                            $data['lastname'] = $i->getLastname();
+                        }
+
+                        if (in_array('photoCount', $extrafields)) $data['photoCount'] = $i->getPhotoCount();
+                        if (in_array('videoCount', $extrafields)) $data['videoCount'] = $i->getVideoCount();
+                        if (in_array('fanCount', $extrafields)) $data['fanCount'] = $i->getFanCount();
+                        if (in_array('splash', $extrafields)) $data['splash'] = $this->imageValues($i->getSplash());
                     }
 
                     $return[$type][] = $data;
@@ -177,5 +239,15 @@ class SearchController extends BaseController
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
+    }
+
+
+    private function _evaluateConditions($what, array $values)
+    {
+        $final=false;
+        for ($j=0; (!$final && $j < count($values)); $j++ ) {
+            if ($what == $values[$j]) $final = true;
+        }
+        return $final;
     }
 }
