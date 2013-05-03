@@ -1108,7 +1108,6 @@ class UserController extends SiteController
                 'target' => $this->get('serializer')->values($activity->getAuthor()),
                 'fanOf' => $beFan
             );
-            //$response['view'][] = $this->renderView('DodiciFansworldWebBundle:Activity:activity.html.twig', array('activity' => $actValues));
             $response['activity'][] = $actValues;
             $response['view'][] = $this->renderView('DodiciFansworldWebBundle:Activity:activity.html.twig', array('activity' => $actValues));
         }
