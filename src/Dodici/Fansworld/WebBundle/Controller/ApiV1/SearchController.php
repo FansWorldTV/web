@@ -84,21 +84,43 @@ class SearchController extends BaseController
      *
      * @return
      * array (
-     * 		<resulttype> : array (
-     * 			array (
-     * 				id: int,
-     * 				title: string,
-     * 				<if applicable> image: array(id: int, url: string),
-     * 				<if applicable> author: @see SecurityController::loginAction() - without token,
-     * 				createdAt: int (timestamp UTC),
-     * 				<if event> teams: @see EventController::showAction()
-     * 				<if event> showdate: @see EventController::showAction()
-     * 			),
-     * 			...
+     *      <resulttype> : array (
+     *          array (
+     *              id: int,
+     *              title: string,
+     *              <if applicable> image: array(id: int, url: string),
+     *              <if applicable> author: @see SecurityController::loginAction() - without token,
+     *              createdAt: int (timestamp UTC),
+     *              <if event> teams: @see EventController::showAction(),
+     *              <if event> showdate: @see EventController::showAction(),
+     *              <if user> username: @see UserController:showAction(),
+     *              <if user|idol> firstname: string,
+     *              <if user|idol> lastname: string,
      *
-     * 		),
-     * 		...
-     * 		)
+     *              // extra fields
+     *              <video|photo|team|idol> content: string,
+     *              <video|photo|team|idol> visitCount: int,
+     *              <user|team|idol> splash: array(id: int, url: string),
+     *              <user|team|idol> photoCount: int,
+     *              <user|team|idol> videoCount: int,
+     *              <user|team|idol> fanCount: int,
+     *              <video|photo> likeCount: int,
+     *              <video|photo> commentCount: int,
+     *              <video|photo> url: string,
+     *              <video|photo> liked: boolean,
+     *              <video> watchlisted: boolean,
+     *              <video> duration: int (seconds),
+     *              <photo> album: array (
+     *                  id: int,
+     *                  title: string,
+     *                  photoCount: int
+     *              )
+     *          ),
+     *          ...
+     *
+     *      ),
+     *      ...
+     *      )
      *
      */
     public function termAction()
