@@ -2,37 +2,13 @@
     {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: media, editbutton: true, reportbutton: false} %}
 </div>
 <div class="modal-template row-fluid" data-modal-type="{{ type }}" data-entity-id="{{ media.id }}">
-    <div class="left">
-        <div class="top-detail">
-            {% thumbnail media.author.image, 'small_square' with {'rel':'tooltip', 'title': media.author} %}
-            <span class="media-title">
-                {% if "video" == type %}
-                    <a href="{{ path('video_show', {'id': media.id, 'slug': media.slug}) }}">
-                        {{ media.title }} (Detalle)
-                    </a>
-                {% else %}
-                    <a href="{{ path('photo_show', {'id': media.id, 'slug': media.slug}) }}">
-                        {{ media.title }} (Detalle)
-                    </a>
-                {% endif %}
-            </span>
+    {% if type == "video" %}
+    	<div class="video-container">
+        	{{ kalturatwig.player(media, true)|raw }}
         </div>
-        {% if media.content %}
-            <p data-expandable data-slice-point="120" class="media-content">{{ media.content|striptags|nl2br }}</p>
-        {% endif %}
-        {% include 'DodiciFansworldWebBundle:Comment:blocks/box.html.twig' with {entity: media} %}
-    </div>
-
-    <div class="right">
-        {% if type == "video" %}
-            {{ kalturatwig.player(media, true)|raw }}
-
-            <button class="playPrev" style="font-size: 18px;"></button>
-            <button class="playNext" style="font-size: 18px;"></button>
-
-            {% include 'DodiciFansworldWebBundle:Tv:blocks/now-watching.html.twig' with {entity: media} %}
-        {% else %}
-            {% thumbnail media.image, 'wall' %}
-        {% endif %}
-    </div>
+        <button class="playPrev" style="font-size: 18px;"></button>
+        <button class="playNext" style="font-size: 18px;"></button>
+    {% else %}
+        {% thumbnail media.image, 'wall' %}
+    {% endif %}
 </div>
