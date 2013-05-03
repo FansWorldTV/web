@@ -3,7 +3,7 @@
 		<img src="{{activity.target.image}}" />
 	</div>
 	{% if activity.media.video is not null %}
-		{% set media_type = 'una foto' %}
+		{% set media_type = 'un video' %}
 		{% set media_href = path('video_show', {'id': activity.media.video.id, 'slug': activity.media.video.slug}) %}
 		{% set media_title = activity.media.video.title %}
 		{% set media_modal_url = path('modal_media', {'type': 'video', 'id': activity.media.video.id}) %}
