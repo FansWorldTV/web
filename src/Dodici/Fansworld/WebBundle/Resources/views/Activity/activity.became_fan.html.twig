@@ -2,5 +2,18 @@
 	<div class="avatar">
 		<img src="{{activity.target.image}}" />
 	</div>
-	<span class="notice-text"><a class="notice-link" href="{{ path('user_land', {username: activity.target.username }) }}">{{activity.target.username}}</a> se hizo fan de algo</span>
+	{% if activity.fanOf.idol is defined %}
+		{% set fan_type = 'un idolo' %}
+		{% set fan_title = activity.fanOf.idol.title %}
+		{% set fan_href = path('idol_land', {'slug': activity.fanOf.idol.slug}) %}
+	{% elseif activity.fanOf.team is defined %}
+		{% set fan_type = 'un equipo' %}
+		{% set fan_title = activity.fanOf.team.title %}
+		{% set fan_href = path('team_land', {'slug': activity.fanOf.team.slug}) %}
+	{% elseif activity.fanOf.user is defined %}
+		{% set fan_type = 'un usuario' %}
+		{% set fan_title = activity.fanOf.user.title %}
+		{% set fan_href = path('user_land', {username: activity.fanOf.user.username }) %}	
+	{% endif %}	
+	<span class="notice-text"><a class="notice-link" href="{{ path('user_land', {username: activity.target.username }) }}">{{activity.target.username}}</a> se hizo fan de <a class="notice-link" href="{{fan_href}}">{{fan_title}}</a></span>
 {% endblock %}

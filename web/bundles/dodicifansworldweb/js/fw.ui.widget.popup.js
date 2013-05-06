@@ -369,7 +369,8 @@ $(document).ready(function () {
             this.listeners = {};
             this.total = 0;
             this.page = 1;
-            this.activity = {},
+            this.activity = {};
+            this.pushTimer = null;
             // Get total unreaded activityes
             this.getTotal();
             // Get a limited set of unreaded activityes to populate activity widget
