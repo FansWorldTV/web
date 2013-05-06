@@ -42,9 +42,25 @@
   /*left: 0px;*/
 }
 
+.widget-container:before {
+  content: "";
+  border-color: #000 #000 transparent transparent ;
+  border-style: solid;
+  border-width: 8px;
+  width: 0;
+  height: 0;
+  position: absolute;
+  bottom: 0%;
+  left: 50%;
+  margin-left: -4px;
+  margin-bottom: -8px;
+  -webkit-transform: rotate(135deg); /* Prefixes... */
+  z-index: -100;
+}
+
 .widget-container:after {
   content: "";
-  border-color: #24171a #24171a transparent transparent ;
+  border-color: #fff #fff transparent transparent ;
   border-style: solid;
   border-width: 8px;
   width: 0;
