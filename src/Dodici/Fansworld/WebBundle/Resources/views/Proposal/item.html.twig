@@ -1,0 +1,9 @@
+<li>
+	{% if proposal.author.image %}
+	    {% thumbnail proposal.author.image, 'avatar' %}
+	{% endif %}
+	<span><label>{{ 'Author'|trans }}:</label>{{ proposal.author }}</span>
+	<span><label>{{ 'Content'|trans }}: </label>{{ proposal.content|truncate(50) }}</span>
+	<span><label>{{ 'Date of creation'|trans }}: </label>{{ proposal.createdAt|date()}}</span>
+	<span><label>{{ 'Type'|trans }}: </label>{{ proposal.getTypeName }}</span>
+</li>
