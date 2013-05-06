@@ -1105,7 +1105,7 @@ class UserController extends SiteController
                 'type' => $activity->getType(),
                 'typeName' => $activity->getTypeName(),
                 'media' => $mediaEntity,
-                'target' => $this->get('serializer')->values($activity->getAuthor()),
+                'target' => $this->get('serializer')->values($activity->getAuthor(), 'small_square'),
                 'fanOf' => $beFan
             );
             $response['activity'][] = $actValues;
