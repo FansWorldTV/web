@@ -27,7 +27,7 @@ class ActivityRepository extends CountBaseRepository
 
 		'.($user ? ('
 			(
-				(ac.author = :user)
+				(ac.author != :user)
 				OR
 				(ac.author IN (
 				SELECT ufxt.id FROM \Dodici\Fansworld\WebBundle\Entity\Friendship ufx JOIN ufx.target ufxt
