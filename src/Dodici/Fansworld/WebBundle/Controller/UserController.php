@@ -1067,8 +1067,6 @@ class UserController extends SiteController
                             $targetUser = $repo->findOneBy(array('id' => $target));
                             $beFan = array('user' => $this->get('serializer')->values($targetUser, 'small_square'));
                         }
-                        //$beFan = $act->getId();
-                        //$beFan = $this->get('serializer')->values($beTeams->getTeam(), 'small_square');
                         break;
                     case Activity::TYPE_CHECKED_IN:
                         // TYPE_CHECKED_IN
