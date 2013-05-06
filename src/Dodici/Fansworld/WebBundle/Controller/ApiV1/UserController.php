@@ -199,9 +199,9 @@ class UserController extends BaseController
      * @Method({"GET"})
      *
      * Get params:
-     * - user_id: int
+     * - target_id: int
      * - [user_token]
-     * - <optional> target_id: int
+     * - <optional> user_id: int
      * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
      * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
      * - <optional> imageformat: string
@@ -219,9 +219,16 @@ class UserController extends BaseController
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
                 $targetid = $request->get('target_id');
-                $targetid ? $target = $this->getRepository('User')->find($targetid) : $target = false;
 
-                $user = $this->checkUserToken($userid, $request->get('user_token'));
+                if (!$targetid) throw new HttpException(400, 'Invalid target_id');
+                $target = $this->getRepository('User')->find($targetid);
+
+                if (!($target instanceof User)) throw new HttpException(404, 'Target user not found');
+
+                if ($userid) {
+                    $user = $this->checkUserToken($userid, $request->get('user_token'));
+                    if (!($user instanceof User)) throw new HttpException(404, 'User not found');
+                }
 
                 $pagination = $this->pagination();
                 $pagination['sort_order'] = null;
@@ -231,7 +238,7 @@ class UserController extends BaseController
                 if (null == $imageformat) $imageformat = 'small';
 
                 $teamships = $this->getRepository('Teamship')->byUser(
-                    $user,
+                    $target,
                     $pagination['limit'],
                     $pagination['offset']);
 
@@ -240,8 +247,8 @@ class UserController extends BaseController
                     $return[] = $this->get('serializer')->values($teamship->getTeam(), $imageformat);
                 }
 
-                if ($target instanceof User) {
-                    $teamships = $this->getRepository('Teamship')->byUser($target);
+                if ($userid) {
+                    $teamships = $this->getRepository('Teamship')->byUser($user);
                     $teamIds = array();
 
                     foreach ($teamships as $teamship) {
@@ -249,7 +256,11 @@ class UserController extends BaseController
                     }
 
                     foreach ($return as &$rta) {
-                        in_array($rta['id'], $teamIds) ? $rta['followed'] = true : $rta['followed'] = false;
+                        if ($userid != $targetid) {
+                            in_array($rta['id'], $teamIds) ? $rta['followed'] = true : $rta['followed'] = false;
+                        } else {
+                            $rta['followed'] = true;
+                        }
                     }
                 }
 
@@ -269,9 +280,9 @@ class UserController extends BaseController
      * @Method({"GET"})
      *
      * Get params:
-     * - user_id: int
+     * - target_id: int
      * - [user_token]
-     * - <optional> target_id: int
+     * - <optional> user_id: int
      * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
      * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
      * - <optional> imageformat: string
@@ -289,9 +300,16 @@ class UserController extends BaseController
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
                 $targetid = $request->get('target_id');
-                $targetid ? $target = $this->getRepository('User')->find($targetid) : $target = false;
 
-                $user = $this->checkUserToken($userid, $request->get('user_token'));
+                if (!$targetid) throw new HttpException(400, 'Invalid target_id');
+                $target = $this->getRepository('User')->find($targetid);
+
+                if (!($target instanceof User)) throw new HttpException(404, 'Target user not found');
+
+                if ($userid) {
+                    $user = $this->checkUserToken($userid, $request->get('user_token'));
+                    if (!($user instanceof User)) throw new HttpException(404, 'User not found');
+                }
 
                 $pagination = $this->pagination();
                 $pagination['sort_order'] = null;
@@ -301,7 +319,7 @@ class UserController extends BaseController
                 if (null == $imageformat) $imageformat = 'small';
 
                 $idolships = $this->getRepository('Idolship')->byUser(
-                    $user,
+                    $target,
                     $pagination['limit'],
                     $pagination['offset']);
 
@@ -310,8 +328,8 @@ class UserController extends BaseController
                     $return[] = $this->get('serializer')->values($idolship->getIdol(), $imageformat);
                 }
 
-                 if ($target instanceof User) {
-                    $idolships = $this->getRepository('Idolship')->byUser($target);
+                 if ($userid) {
+                    $idolships = $this->getRepository('Idolship')->byUser($user);
                     $idolIds = array();
 
                     foreach ($idolships as $idolship) {
@@ -319,7 +337,11 @@ class UserController extends BaseController
                     }
 
                     foreach ($return as &$rta) {
-                        in_array($rta['id'], $idolIds) ? $rta['followed'] = true : $rta['followed'] = false;
+                        if ($userid != $targetid) {
+                            in_array($rta['id'], $idolIds) ? $rta['followed'] = true : $rta['followed'] = false;
+                        } else {
+                            $rta['followed'] = true;
+                        }
                     }
                 }
 
