@@ -1046,29 +1046,29 @@ class UserController extends SiteController
                         break;
                     case Activity::TYPE_BECAME_FAN:
                         // TYPE_BECAME_FAN
-                        $beIdols = $activity->getHasidols();
-                        $beTeams = $activity->getHasteams();
-                        $beUsers = $activity->getHasusers();
+                        
+                        // FOR IDOL
+                        $idolRepo = $this->getRepository('HasIdol');
+                        $beIdols = $idolRepo->findOneBy(array('activity' => $activity->getId()));
+                        // FOR TEAM
+                        $teamRepo = $this->getRepository('HasTeam');
+                        $beTeams = $teamRepo->findOneBy(array('activity' => $activity->getId()));
+                        // FOR USER
+                        $userRepo = $this->getRepository('HasUser');
+                        $beUsers = $userRepo->findOneBy(array('activity' => $activity->getId()));
 
-                        $prepopulate_info = '';
-
-                        foreach ($activity->getHasidols() as $hasidol) {
-                            $id = $hasidol->getIdol()->getId();
-                            $name = $hasidol->getIdol();
-                            $tagidol .= $id . ',';
-                            $prepopulate_info .= $id . ':' . 'idol' . ':' . $name . ',';
+                        if ($beIdols != null) {
+                            $beFan = array('idol' => $this->get('serializer')->values($beIdols->getIdol(), 'small_square'));
+                        } elseif ($beTeams != null) {
+                            $beFan = array('team' => $this->get('serializer')->values($beTeams->getTeam(), 'small_square'));
+                        } elseif ($beUsers != null) {
+                            $target = $beUsers->getTarget()->getId();
+                            $repo = $this->getRepository('User');
+                            $targetUser = $repo->findOneBy(array('id' => $target));
+                            $beFan = array('user' => $this->get('serializer')->values($targetUser, 'small_square'));
                         }
-
-                        $beFan = 'NADA';
-                        if ( $beIdols instanceof Hasidol) {
-                            $beFan = 'Idol';
-                        } elseif ($beTeams instanceof Hasteam) {
-                            $beFan = 'Team';
-                        } elseif ($beUsers instanceof Hasuser) {
-                            $beFan = 'User';
-                        }
-
-                        $beFan = count($activity->getHasidols());
+                        //$beFan = $act->getId();
+                        //$beFan = $this->get('serializer')->values($beTeams->getTeam(), 'small_square');
                         break;
                     case Activity::TYPE_CHECKED_IN:
                         // TYPE_CHECKED_IN
@@ -1105,7 +1105,7 @@ class UserController extends SiteController
                 'type' => $activity->getType(),
                 'typeName' => $activity->getTypeName(),
                 'media' => $mediaEntity,
-                'target' => $this->get('serializer')->values($activity->getAuthor()),
+                'target' => $this->get('serializer')->values($activity->getAuthor(), 'small_square'),
                 'fanOf' => $beFan
             );
             $response['activity'][] = $actValues;
@@ -1122,7 +1122,7 @@ class UserController extends SiteController
     {
         $user = $this->getUser();
         $activityRepo = $this->getRepository('Activity');
-        $number = $activityRepo->countBy(array('author' => $user->getId()));
+        $number = $activityRepo->count(array('author' => $user->getId()));
 
         return $this->jsonResponse(array('number' => $number));
     }
