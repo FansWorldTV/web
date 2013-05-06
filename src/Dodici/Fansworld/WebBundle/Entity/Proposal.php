@@ -112,6 +112,25 @@ class Proposal
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="proposal", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $comments;
+
+    /**
+     * @var integer $type
+     *
+     * @ORM\Column(name="type", type="integer", nullable=false)
+     */
+    private $type;
+
+    public static function getTypeList() {
+        return array(
+            self::TYPE_IDOL => 'idol',
+            self::TYPE_TEAM => 'team'
+        );
+    }
+    
+    public function getTypeName() {
+        $arr = self::getTypeList();
+        return $arr[$this->type]['type'];
+    } 
     
     public function __construct()
     {
@@ -418,4 +437,24 @@ class Proposal
     {
         return $this->comments;
     }
+
+    /**
+     * Set type
+     *
+     * @param integer $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }    
 }
