@@ -57,12 +57,11 @@ swiftmailer:
     username:  %mailer_user%
     password:  %mailer_password%
     port:      %mailer_port%
-    encryption: %mailer_encryption%
 
 jms_security_extra:
     secure_controllers:  true
     secure_all_services: false
-    
+
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
@@ -83,13 +82,13 @@ fos_user:
         sender_name:    Fansworld
     service:
         mailer:         fos_user.mailer.twig_swift
-    
+
 fos_js_routing:
     routes_to_expose: [ ^((?!_(admin|assetic)_).)*$ ]
-    
+
 sonata_user:
     security_acl: true
-    
+
 stof_doctrine_extensions:
     default_locale: es_ES
     translation_fallback: true
@@ -102,7 +101,7 @@ jms_i18n_routing:
     default_locale: es
     locales: [en, es]
     strategy: prefix_except_default
-    
+
 sonata_media:
     db_driver: doctrine_orm # or doctrine_mongodb
     default_context: default
@@ -139,7 +138,7 @@ sonata_media:
         local:
             directory:  %kernel.root_dir%/../web/uploads/media
             create:     false
-            
+
 sonata_admin:
     title:      Fansworld
     title_logo: /bundles/dodicifansworldadmin/images/logo_title.png
@@ -148,7 +147,7 @@ sonata_admin:
         user_block: DodiciFansworldAdminBundle:Core:user_block.html.twig
     security:
         handler: sonata.admin.security.handler.role
-        
+
 fos_facebook:
     file:   %kernel.root_dir%/../vendor/facebook/src/base_facebook.php
     alias:  facebook
@@ -156,12 +155,12 @@ fos_facebook:
     secret: %facebook.app_secret%
     cookie: true
     permissions: [email, user_birthday, user_location, publish_actions, friends_hometown, user_hometown]
-    
+
 fos_twitter:
     file: %kernel.root_dir%/../vendor/twitteroauth/twitteroauth/twitteroauth.php
     consumer_key: %twitter.app_key%
     consumer_secret: %twitter.app_secret%
-    
+
 artseld_openinviter:
     username: "fansworld"
     private_key: "6c0b090b7bf71fa484ab40de80beb21a"
@@ -182,7 +181,7 @@ parameters:
     sonata.user.admin.user.class: Application\Sonata\UserBundle\Admin\Entity\UserAdmin
     sonata.media.resizer.simple.class: Application\Sonata\MediaBundle\Media\SimpleResizer
     sonata.media.thumbnail.format: Application\Sonata\MediaBundle\Thumbnail\FormatThumbnail
-        
+
 services:
     tag.listener.persist:
         class: Dodici\Fansworld\WebBundle\Listener\TagUpdater
@@ -317,10 +316,10 @@ services:
       arguments: [@security.context, @doctrine.orm.entity_manager, @fos_facebook.api, @router, @translator,@appmedia, %fos_facebook.permissions%, %facebook.feed.enabled%, %facebook.namespace%]
     app.twitter:
       class: Dodici\Fansworld\WebBundle\Services\AppTwitter
-      arguments: [@security.context, @doctrine.orm.entity_manager, @fos_twitter.api, @appstate, @router, @translator, %twitter.feed.enabled%]  
+      arguments: [@security.context, @doctrine.orm.entity_manager, @fos_twitter.api, @appstate, @router, @translator, %twitter.feed.enabled%]
     fansworldmailer:
       class: Dodici\Fansworld\WebBundle\Services\FansworldMailer
-      arguments: [@mailer, @templating,@security.context, @translator]  
+      arguments: [@mailer, @templating,@security.context, @translator]
     search:
       class: Dodici\Fansworld\WebBundle\Services\Search
       arguments: [@security.context, @doctrine.orm.entity_manager, @router, @appstate]
