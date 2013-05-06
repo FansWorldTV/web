@@ -214,8 +214,6 @@ class UserController extends BaseController
     public function teamsListAction()
     {
         try {
-            if ($this->hasValidSignature()) {
-
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
                 $targetid = $request->get('target_id');
@@ -265,9 +263,6 @@ class UserController extends BaseController
                 }
 
                 return $this->result($return, $pagination);
-            } else {
-                throw new HttpException(401, 'Invalid signature');
-            }
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
@@ -295,8 +290,6 @@ class UserController extends BaseController
     public function idolsListAction()
     {
         try {
-            if ($this->hasValidSignature()) {
-
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
                 $targetid = $request->get('target_id');
@@ -346,9 +339,6 @@ class UserController extends BaseController
                 }
 
                 return $this->result($return, $pagination);
-            } else {
-                throw new HttpException(401, 'Invalid signature');
-            }
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
