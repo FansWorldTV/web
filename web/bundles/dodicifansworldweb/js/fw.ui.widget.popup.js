@@ -714,7 +714,7 @@ $(document).ready(function () {
     // Create the defaults once
     var pluginName = "fwActivityWidget";
     var defaults = {
-        title: "Actividades",
+        title: "Actividad Reciente",
         isPoped: false,
         isLoadingActivities: false,
         isScrollable: false,
@@ -737,7 +737,7 @@ $(document).ready(function () {
     Plugin.prototype = {
         init: function () {
             var that = this;
-            $(that.element).find('.widget-title').text("that.options.title");
+            $(that.element).find('.widget-title').text(that.options.title);
             $(that.element).attr('id', 'widget-popup');
 
             // Populate on activity received
@@ -904,7 +904,9 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     "use strict";
-    $('.widget-container').fwActivityWidget({});
+    $('.widget-container').fwActivityWidget({
+        title: "Actividad Reciente"
+    });
 });
 
 
