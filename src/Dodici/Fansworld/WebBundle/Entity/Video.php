@@ -23,7 +23,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     const WEIGHT_LIKES_FACTOR = 1.5;
     const WEIGHT_VIEWS_FACTOR = 1.0;
     const WEIGHT_HIGHLIGHT_FACTOR = 1.1;
-    
+
     /**
      * @var bigint $id
      *
@@ -40,7 +40,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
      * @ORM\Column(name="title", type="string", length=250, nullable=false)
      */
     private $title;
-    
+
     /**
      * @var Application\Sonata\UserBundle\Entity\User
      *
@@ -65,63 +65,63 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     private $createdAt;
-    
+
     /**
      * @var datetime $createdAtWeek
      *
      * @ORM\Column(name="created_at_week", type="bigint", nullable=false)
      */
     private $createdAtWeek;
-    
+
     /**
      * @var boolean $active
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
     private $active;
-    
+
     /**
      * @var boolean $processed
      *
      * @ORM\Column(name="processed", type="boolean", nullable=false)
      */
     private $processed;
-    
+
     /**
      * @var boolean $notified
      *
      * @ORM\Column(name="notified", type="boolean", nullable=false)
      */
     private $notified;
-    
+
     /**
      * @var integer $duration
      *
      * @ORM\Column(name="duration", type="integer", nullable=true)
      */
     private $duration;
-    
+
     /**
      * @var string $stream
      *
      * @ORM\Column(name="stream", type="string", length=250, nullable=true)
      */
     private $stream;
-    
+
     /**
      * @var string $youtube
      *
      * @ORM\Column(name="youtube", type="string", length=250, nullable=true)
      */
     private $youtube;
-    
+
     /**
      * @var string $vimeo
      *
      * @ORM\Column(name="vimeo", type="string", length=250, nullable=true)
      */
     private $vimeo;
-    
+
     /**
      * @var integer $privacy
      * Privacy::EVERYONE|Privacy::FRIENDS_ONLY
@@ -129,45 +129,45 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
      * @ORM\Column(name="privacy", type="integer", nullable=false)
      */
     private $privacy;
-    
+
     /**
      * @var boolean $highlight
      *
      * @ORM\Column(name="highlight", type="boolean", nullable=false)
      */
     private $highlight;
-    
+
     /**
      * @var integer $likeCount
      *
      * @ORM\Column(name="likecount", type="integer", nullable=false)
      */
     private $likeCount;
-    
+
     /**
      * @var integer $commentCount
      *
      * @ORM\Column(name="commentcount", type="integer", nullable=false)
      */
     private $commentCount;
-    
+
     /**
      * @var integer $viewCount
      *
      * @ORM\Column(name="viewcount", type="integer", nullable=false)
      */
     private $viewCount;
-    
+
     /**
      * @Gedmo\Slug(fields={"title"}, unique=false)
      * @Gedmo\Translatable
      * @ORM\Column(length=250)
      */
     private $slug;
-    
+
     /**
      * @var VideoCategory
-     * 
+     *
      * @Assert\NotNull()
      *
      * @ORM\ManyToOne(targetEntity="VideoCategory")
@@ -176,7 +176,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
      * })
      */
     private $videocategory;
-    
+
     /**
      * @var Event
      *
@@ -186,87 +186,87 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
      * })
      */
     private $event;
-    
+
     /**
      * @var Application\Sonata\MediaBundle\Entity\Media
      * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
      */
     private $image;
-    
+
     /**
      * @var Application\Sonata\MediaBundle\Entity\Media
      * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="splash_id", referencedColumnName="id")
      */
     private $splash;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Liking", mappedBy="video", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $likings;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="HasTag", mappedBy="video", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $hastags;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="HasUser", mappedBy="video", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $hasusers;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="HasIdol", mappedBy="video", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $hasidols;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="HasTeam", mappedBy="video", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $hasteams;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="video", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $comments;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Visit", mappedBy="video", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $visits;
-    
+
     /**
      * @var integer $visitCount
      *
      * @ORM\Column(name="visitcount", type="integer", nullable=false)
      */
     private $visitCount;
-    
+
     /**
      * @var integer $weight
      *
      * @ORM\Column(name="weight", type="integer", nullable=false)
      */
     private $weight;
-        
+
 	/**
 	 * @Gedmo\Locale
 	 * Used locale to override Translation listener`s locale
 	 * this is not a mapped field of entity metadata, just a simple property
 	 */
 	private $locale;
-	
+
 	public function setTranslatableLocale($locale)
 	{
 	    $this->locale = $locale;
 	}
-    
+
     public function __toString()
     {
     	return $this->getTitle();
     }
-    
+
 	/**
      * @ORM\PrePersist()
      */
@@ -296,24 +296,24 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
         if (null === $this->author) {
         	$this->setPrivacy(Privacy::EVERYONE);
         }
-        
+
     	if ($this->getYoutube()) {
 			$youtube = $this->getYoutube();
 			$youtube = str_replace(
-			array('http://','www.youtube.com/watch?v=','youtu.be/','www.youtube.com/v/'), 
-			array('','','',''), 
+			array('http://','www.youtube.com/watch?v=','youtu.be/','www.youtube.com/v/'),
+			array('','','',''),
 			$youtube);
 			if (strpos($youtube, '&') !== false) {
 				$youtube = substr($youtube, 0, strpos($youtube, '&'));
 			}
 			$this->setYoutube($youtube);
 		}
-		
+
 		if ($this->getVimeo()) {
 		    $vimeo = $this->getVimeo();
 			$vimeo = str_replace(
-			array('http://','https://','www.','vimeo.com/'), 
-			array('','','',''), 
+			array('http://','https://','www.','vimeo.com/'),
+			array('','','',''),
 			$vimeo);
 			if (strpos($vimeo, '?') !== false) {
 				$vimeo = substr($vimeo, 0, strpos($vimeo, '?'));
@@ -324,7 +324,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
         	$this->calculateWeight();
         }
     }
-    
+
 	/**
      * @ORM\PreUpdate()
      */
@@ -332,7 +332,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     {
         $this->calculateWeight();
     }
-    
+
     public function calculateWeight()
     {
     	$this->setWeight(
@@ -345,7 +345,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     	    )
     	);
     }
-    
+
     public function __construct()
     {
         $this->visits = new \Doctrine\Common\Collections\ArrayCollection();
@@ -358,7 +358,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
         $this->processed = false;
         $this->privacy = Privacy::EVERYONE;
     }
-    
+
 	public function likeUp()
     {
     	$this->setLikeCount($this->getLikeCount() + 1);
@@ -369,7 +369,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     		$this->setLikeCount($this->getLikeCount() - 1);
     	}
     }
-    
+
 	/**
      * Add comments
      *
@@ -379,7 +379,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     {
         $this->comments[] = $comments;
     }
-    
+
 	public function addComments(\Dodici\Fansworld\WebBundle\Entity\Comment $comments)
     {
         $this->comments[] = $comments;
@@ -388,22 +388,22 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get comments
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getComments()
     {
         return $this->comments;
     }
-    
+
 	public function setComments($comments)
     {
         $this->comments = $comments;
     }
-        
+
     /**
      * Get id
      *
-     * @return bigint 
+     * @return bigint
      */
     public function getId()
     {
@@ -423,7 +423,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -443,7 +443,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get content
      *
-     * @return text 
+     * @return text
      */
     public function getContent()
     {
@@ -464,13 +464,13 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get createdAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
-    
+
 	/**
      * Set createdAtWeek
      *
@@ -504,13 +504,13 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get active
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActive()
     {
         return $this->active;
     }
-    
+
 	/**
      * Set processed
      *
@@ -524,13 +524,13 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get processed
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getProcessed()
     {
         return $this->processed;
     }
-    
+
 	/**
      * Set notified
      *
@@ -544,7 +544,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get notified
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getNotified()
     {
@@ -564,7 +564,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get duration
      *
-     * @return integer 
+     * @return integer
      */
     public function getDuration()
     {
@@ -584,7 +584,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get stream
      *
-     * @return integer 
+     * @return integer
      */
     public function getStream()
     {
@@ -604,13 +604,13 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get youtube
      *
-     * @return string 
+     * @return string
      */
     public function getYoutube()
     {
         return $this->youtube;
     }
-    
+
 	/**
      * Set vimeo
      *
@@ -624,7 +624,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get vimeo
      *
-     * @return string 
+     * @return string
      */
     public function getVimeo()
     {
@@ -644,13 +644,13 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get privacy
      *
-     * @return integer 
+     * @return integer
      */
     public function getPrivacy()
     {
         return $this->privacy;
     }
-    
+
 	/**
      * Set highlight
      *
@@ -664,7 +664,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get highlight
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getHighlight()
     {
@@ -684,7 +684,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
@@ -704,7 +704,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get videocategory
      *
-     * @return Dodici\Fansworld\WebBundle\Entity\VideoCategory 
+     * @return Dodici\Fansworld\WebBundle\Entity\VideoCategory
      */
     public function getVideocategory()
     {
@@ -724,13 +724,13 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get image
      *
-     * @return Application\Sonata\MediaBundle\Entity\Media 
+     * @return Application\Sonata\MediaBundle\Entity\Media
      */
     public function getImage()
     {
         return $this->image;
     }
-    
+
 	/**
      * Set splash
      *
@@ -744,7 +744,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get splash
      *
-     * @return Application\Sonata\MediaBundle\Entity\Media 
+     * @return Application\Sonata\MediaBundle\Entity\Media
      */
     public function getSplash()
     {
@@ -764,7 +764,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get author
      *
-     * @return Application\Sonata\UserBundle\Entity\User 
+     * @return Application\Sonata\UserBundle\Entity\User
      */
     public function getAuthor()
     {
@@ -784,7 +784,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get likings
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getLikings()
     {
@@ -804,13 +804,13 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get likeCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getLikeCount()
     {
         return $this->likeCount;
     }
-    
+
     /**
      * Set viewCount
      *
@@ -824,7 +824,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get viewCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getViewCount()
     {
@@ -844,7 +844,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get hastags
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getHastags()
     {
@@ -864,13 +864,13 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get hasusers
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getHasusers()
     {
         return $this->hasusers;
     }
-    
+
 	/**
      * Admin methods
      */
@@ -882,7 +882,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     {
         $this->addHasTag($hastags);
     }
-    
+
 	public function setHasusers($hasusers)
     {
         $this->hasusers = $hasusers;
@@ -906,13 +906,13 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get hasteams
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getHasteams()
     {
         return $this->hasteams;
     }
-    
+
 	public function setHasteams($hasteams)
     {
         $this->hasteams = $hasteams;
@@ -935,7 +935,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get commentCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getCommentCount()
     {
@@ -955,7 +955,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get event
      *
-     * @return Dodici\Fansworld\WebBundle\Entity\Event 
+     * @return Dodici\Fansworld\WebBundle\Entity\Event
      */
     public function getEvent()
     {
@@ -972,7 +972,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
         $hasidols->setVideo($this);
         $this->hasidols[] = $hasidols;
     }
-    
+
     public function addHasidols($hasidols){
         $this->addHasIdol($hasidols);
     }
@@ -980,22 +980,22 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get hasidols
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getHasidols()
     {
         return $this->hasidols;
     }
-    
+
     /**
-     *  Set hasidols 
+     *  Set hasidols
      */
     public function setHasidols($hasidols){
         foreach ($hasidols as $hasidol){
             $this->addHasIdol($hasidol);
         }
     }
-    
+
 	/**
      * Add visits
      *
@@ -1007,7 +1007,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
         $this->setVisitCount($this->getVisitCount() + 1);
         $this->visits[] = $visits;
     }
-    
+
 	public function addVisits(\Dodici\Fansworld\WebBundle\Entity\Visit $visits)
     {
         $this->addVisit($visits);
@@ -1016,13 +1016,13 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get visits
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getVisits()
     {
         return $this->visits;
     }
-    
+
 	public function setVisits($visits)
     {
         $this->visits = $visits;
@@ -1041,7 +1041,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get visitCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getVisitCount()
     {
@@ -1061,7 +1061,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get weight
      *
-     * @return integer 
+     * @return integer
      */
     public function getWeight()
     {
@@ -1079,7 +1079,7 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
         } elseif ($item instanceof HasTag) {
             $collection = &$this->hastags;
         }
-        
+
         foreach ($collection as $i => $colitem) {
             if ($colitem == $item) {
                 $collection->remove($i);
@@ -1087,5 +1087,22 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
             }
         }
         return false;
+    }
+
+    /**
+     * Get provider
+     *
+     * @return string ('kaltura' or 'youtube' or 'vimeo')
+     */
+    public function getProvider() {
+        $provider = null;
+        if ($this->getStream() != null) {
+            $provider = "kaltura";
+        } elseif ($this->getYoutube() != null) {
+            $provider = "youtube";
+        } elseif ($this->getVimeo() != null) {
+            $provider = "vimeo";
+        }
+        return $provider;
     }
 }

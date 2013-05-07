@@ -96,6 +96,8 @@ class SearchController extends BaseController
      *              <if user> username: @see UserController:showAction(),
      *              <if user|idol> firstname: string,
      *              <if user|idol> lastname: string,
+     *              <if video> category_id: int,
+     *              <if video> provider: string,
      *
      *              // extra fields
      *              <video|photo|team|idol> content: string,
@@ -206,8 +208,10 @@ class SearchController extends BaseController
                             if (in_array('author', $extrafields)) $data['author'] = $i->getAuthor();
 
                             if ('video' == $type) {
-                                 if (in_array('watchlisted', $extrafields)) $data['watchlisted'] = $this->get('video.playlist')->isInPlaylist($i, $user);
-                                 if (in_array('duration', $extrafields)) $data['duration'] = $i->getDuration();
+                                if (in_array('watchlisted', $extrafields)) $data['watchlisted'] = $this->get('video.playlist')->isInPlaylist($i, $user);
+                                if (in_array('duration', $extrafields)) $data['duration'] = $i->getDuration();
+                                $data['category_id'] = $i->getVideocategory()->getId();
+                                $data['provider'] =  $i->getProvider();
                             } else {
                                  if (in_array('album', $extrafields)) $data['album'] = array('id'=>$i->getAlbum()->getId(),
                                     'title'=>$i->getTitle()->getId(), 'photoCount'=>$i->getAlbum()->getPhotoCount());
