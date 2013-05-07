@@ -262,6 +262,40 @@ $(document).ready(function () {
                         });
                     });
                 }
+                function getVideoUploadForm(name, description, category, tags, sharewith) {
+                    var formHtml = null;
+                    var href = Routing.generate(appLocale + '_video_fileupload');
+                    $.ajax({url: href, type: 'GET'}).then(function(response){
+                        formHtml = $(response).clone();
+                        formHtml.find('input[type="submit"]').hide();
+                        boot.find('.modal-body').html(formHtml);
+                        //boot.find("#modal-btn-save").removeAttr("disabled");
+                        // Set default title
+                        boot.find("#form_title").val(name);
+
+                        boot.find("#modal-btn-save").one("click", null, null, function(){
+                            $(this).addClass('loading-small');
+                            boot.find('form').find('input[type="submit"]').click();
+                        });
+
+                        boot.find('form').submit(function() {
+                            var data = $(this).serializeArray();
+                            var action = $(this).attr('action');
+                            var method = $(this).attr('method');
+                            boot.find('form').find('input[type="submit"]').addClass('loading-small');
+                            $.ajax({
+                                url: this.getAttribute('action'),
+                                data: data,
+                                type: method
+                            })
+                            .then(function(response){
+                                location.href = Routing.generate(appLocale + '_things_videos');
+                            });
+                            return false;
+                        });
+
+                    });                    
+                }
                 function onVideoUploadComplete(event) {
                     var xhr = event.target.xhr;
                     var name = $(xhr.responseText).find('name').text();
@@ -379,11 +413,17 @@ $(document).ready(function () {
                                 'resource:objectType': 'KalturaUploadedFileResource'
                             });
                             videoUploader.start();
+                            console.log("ADSFASDFADSFADSFASDF")
+                            console.log(file)
+                            $('progress').show();
+                            getVideoUploadForm(file.name);
+                            /*
                             $.when(templateHelper.htmlTemplate('general-progress_modal', modal))
                             .then(function(html) {
                                 var progress = $(html).find('.modal-body').clone();
                                 boot.find('.modal-body').html(progress);
                             });
+                            */
                         })
                         .fail(function (error) {
                             return error;
