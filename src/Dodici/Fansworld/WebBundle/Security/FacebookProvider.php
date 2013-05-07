@@ -41,7 +41,7 @@ class FacebookProvider implements UserProviderInterface
     {
         return $this->userManager->findUserBy(array('facebookId' => $fbId));
     }
-    
+
     public function findUserByEmail($email)
     {
         return $this->userManager->findUserBy(array('email' => $email));
@@ -54,22 +54,22 @@ class FacebookProvider implements UserProviderInterface
         if ($token) {
             $this->facebook->setAccessToken($token);
         }
-        
+
         try {
             $fbdata = $this->facebook->api('/me');
         } catch (FacebookApiException $e) {
             $fbdata = null;
         }
-        
+
         if (!empty($fbdata)) {
             if (isset($fbdata['email'])) {
                 $user = $this->findUserByEmail($fbdata['email']);
             }
-            
+
             if ($user) {
-                // TODO: maybe set a session so we can ask the user 
+                // TODO: maybe set a session so we can ask the user
                 // whether he wants to link his account to fb or not, or send a mail
-                
+
                 $user->setLinkfacebook(true);
                 $user->setFacebookId($fbdata['id']);
                 $user->addRole('ROLE_FACEBOOK');
@@ -77,17 +77,17 @@ class FacebookProvider implements UserProviderInterface
                 $user->setEnabled(true);
                 $user->setConfirmationToken(null);
                 $this->userManager->updateUser($user);
-                
+
                 return $user;
             }
-            
+
             if (empty($user)) {
                 $user = $this->userManager->createUser();
                 $user->setEnabled(true);
                 $user->setConfirmationToken(null);
                 $user->setLinkfacebook(true);
                 $user->setPassword('');
-                
+
                 // Set FB image
                 $imagecontent = file_get_contents(sprintf('https://graph.facebook.com/%1$s/picture?type=large', $fbdata['id']));
                 if ($imagecontent) {
@@ -99,17 +99,17 @@ class FacebookProvider implements UserProviderInterface
                     $media->setContext('default');
                     $media->setProviderName('sonata.media.provider.image');
                     $mediaManager->save($media);
-                    $user->setImage($media); 
+                    $user->setImage($media);
                 }
-                
+
                 if (isset($fbdata['location']) && $fbdata['location']) {
                     $location = $this->container->get('user.location')->parseLocation($fbdata['location']);
                     $user->setCountry($location['country']);
                     $user->setCity($location['city']);
                 }
-                
+
                 $user->setFBData($fbdata);
-                
+
                 if ($user->getFirstname() || $user->getLastname()) {
                     $username = GedmoUrlizer::urlize($user->getFirstname() . ' ' . $user->getLastname());
                     if ($this->userManager->findUserBy(array('username' => $username))) {
@@ -123,17 +123,19 @@ class FacebookProvider implements UserProviderInterface
                 } else {
                     $username = uniqid();
                 }
-                
+
                 $user->setUsername($username);
-                
+
                 // TODO use http://developers.facebook.com/docs/api/realtime
-                
+
                 if (count($this->validator->validate($user, 'Facebook'))) {
                     // TODO: the user was found obviously, but doesnt match our expectations, do something smart
                     throw new UsernameNotFoundException('The facebook user could not be stored');
                 }
                 $this->userManager->updateUser($user);
-                
+
+                // $this->container->get('fansworldmailer')->sendWelcome($user);
+
                 /* Invitation, check for session */
                 $session = $this->container->get('session');
                 $invitetoken = $session->get('registration.token');
@@ -144,7 +146,7 @@ class FacebookProvider implements UserProviderInterface
                         $userrepo = $this->container->get('doctrine')->getRepository('Application\Sonata\UserBundle\Entity\User');
                         $inviter = $userrepo->findOneByUsername($inviteuser);
                         $calcinvitetoken = $this->container->get('contact.importer')->inviteToken($inviter);
-                        
+
                         if ($inviter && ($invitetoken == $calcinvitetoken)) {
                             $fbrequest = $session->get('registration.fbrequest');
                             $this->container->get('contact.importer')->finalizeInvitation($inviter, $user, true, $fbrequest);
