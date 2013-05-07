@@ -39,6 +39,18 @@ class ProposalController extends SiteController
     }
 
     /**
+     * @Route("/list", name= "proposal_list")
+     * @Secure(roles="ROLE_USER")
+     * @Template     
+     */
+    public function listAction()
+    {
+        $proposals = $this->getRepository('Proposal')->findBy(array('active' => true), array('likeCount' => 'DESC'));
+
+        return array('proposals' => $proposals);
+    }    
+
+    /**
      * @Route("/new", name= "proposal_new")
      * @Secure(roles="ROLE_USER")
      * @Template     
@@ -67,7 +79,7 @@ class ProposalController extends SiteController
         $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
                 ->add('title', 'text', array('required' => true, 'label' => 'Título'))
                 ->add('content', 'text', array('required' => true, 'label' => 'Descripción'))
-                ->add('type', 'choice', array('required' => true, 'choices' => $proposalTypes, 'label' => 'Tipo'))
+                ->add('type', 'choice', array('required' => true, 'choices' => $proposalTypes, 'label' => 'Tipo', 'expanded' => true))
                 ->getForm();
 
         if ($request->getMethod() == 'POST') {

@@ -122,14 +122,14 @@ class Proposal
 
     public static function getTypeList() {
         return array(
-            self::TYPE_IDOL => 'idol',
-            self::TYPE_TEAM => 'team'
+            self::TYPE_IDOL => 'Idolo',
+            self::TYPE_TEAM => 'Equipo'
         );
     }
     
     public function getTypeName() {
         $arr = self::getTypeList();
-        return $arr[$this->type]['type'];
+        return $arr[$this->type];
     } 
     
     public function __construct()
