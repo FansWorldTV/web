@@ -1,0 +1,16 @@
+{% extends "DodiciFansworldWebBundle:Layout:three_column.html.twig" %}
+
+{% block title %} {{ parent() }} - {{ 'Proposal'|trans }}{% endblock %}
+
+{% block content %}
+<div class="proposals">
+    <div class="cont clearfix">
+        <h1>{{ 'Proposal'|trans }}</h1>
+        <ul class="listProposals">
+            {% for proposal in proposals %}
+                {% include 'DodiciFansworldWebBundle:Proposal:item.html.twig' with { 'proposal': proposal } %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
