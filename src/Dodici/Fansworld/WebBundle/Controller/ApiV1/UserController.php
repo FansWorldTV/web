@@ -28,8 +28,7 @@ class UserController extends BaseController
      * @Method({"GET"})
      *
      * Get params:
-	 * - user_id: int
-	 * - [user_token]
+	 * - target_id: int
 	 * - <optional> direction: 'followed'|'followers' (filter by users I follow, or users that follow me)
 	 * - <optional> filter: see below
      * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
@@ -51,11 +50,12 @@ class UserController extends BaseController
     public function listAction()
     {
         try {
-            if ($this->hasValidSignature()) {
                 $request = $this->getRequest();
 
-                $userid = $request->get('user_id');
-                $user = $this->checkUserToken($userid, $request->get('user_token'));
+                $targetid = $request->get('target_id');
+                if (!$targetid) throw new HttpException(400, 'Invalid target_id');
+                $target = $this->getRepository('User')->find($targetid);
+                if (!($target instanceof User)) throw new HttpException(404, 'Target user not found');
 
                 $pagination = $this->pagination();
                 $pagination['sort_order'] = null;
@@ -79,7 +79,7 @@ class UserController extends BaseController
                 }
 
                 $users = $this->getRepository('User')->$methodname(
-                    $user,
+                    $target,
                     $direction,
                     $pagination['limit'],
                     $pagination['offset']
@@ -91,9 +91,6 @@ class UserController extends BaseController
                 }
 
                 return $this->result($return, $pagination);
-            } else {
-                throw new HttpException(401, 'Invalid signature');
-            }
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
