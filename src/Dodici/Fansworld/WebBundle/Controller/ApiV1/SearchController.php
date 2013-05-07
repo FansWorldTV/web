@@ -192,7 +192,7 @@ class SearchController extends BaseController
 
                     $allowedfields = array(
                         'content', 'visitCount', 'likeCount', 'commentCount', 'liked', 'url', 'watchlisted',
-                            'duration', 'album', 'photoCount', 'videoCount', 'fanCount', 'splash', 'author'
+                            'duration', 'album', 'photoCount', 'videoCount', 'fanCount', 'splash'
                     );
                     $extrafields = $this->getExtraFields($allowedfields);
 
@@ -205,7 +205,6 @@ class SearchController extends BaseController
                             if (in_array('commentCount', $extrafields)) $data['commentCount'] =  $i->getCommentCount();
                             if (in_array('liked', $extrafields)) $data['liked'] = $this->get('liker')->isLiking($i, $user) ? true : false;
                             if (in_array('url', $extrafields)) $data['url'] =  $this->get('router')->generate($type.'_show', array('id' => $i->getId(), 'slug' => $i->getSlug()), true);
-                            if (in_array('author', $extrafields)) $data['author'] = $i->getAuthor();
 
                             if ('video' == $type) {
                                 if (in_array('watchlisted', $extrafields)) $data['watchlisted'] = $this->get('video.playlist')->isInPlaylist($i, $user);
