@@ -12,10 +12,78 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('bundles/dodicifansworldweb/js/home.js') }}" type="text/javascript"></script>
+    <!--script src="{{ asset('bundles/dodicifansworldweb/js/home.js') }}" type="text/javascript"></script-->
 {% endblock %}
 
 {% block main_content %}
+<div class="home-content">
+    
+    <ul class="filter-home">
+        {% for category in categories %}
+            <li {% if loop.first %}class="active"{% endif %} data-category-id = "{{ category.id }}">{{ category.title }}</li>
+        {% endfor %}
+        <li><i class="icon-cog"></i></li>
+    </ul>
+    
+    <section class="row-fluid gray highlights">
+        {% for video in testvideos %}
+                <article class="video" >
+                    {% if loop.index == 2 %}
+                        {% thumbnail video.image, 'home_video_double' %}
+                    {% else %}
+                        {% thumbnail video.image, 'home_video' %}
+                    {% endif %}
+                </article>
+        {% endfor %}    
+    </section>
+    
+    <section class="row-fluid">
+        <header class="clearfix">
+            <h3 class="pull-left">Sigues</h3>
+            <span class="cant pull-left">30 videos</span>
+            
+            <section class="pull-right topics">
+                <ul class="pull-right">
+                    <li>Dalma Maradona</li>
+                    <li>Dalma Maradona</li>
+                    <li>Dalma Maradona</li>
+                </ul>
+                <h3 class="pull-right">Temas</h3>
+            </section>
+        </header>
+        <div class="videos-container">
+            {% for video in testvideos %}
+                <article class="video" data-loop ="{{ loop.index }}">
+                    {% thumbnail video.image, 'home_video' %}
+                </article>
+            {% endfor %}    
+        </div>
+    </section>
+    
+    <section class="row-fluid gray">
+        <header class="clearfix">
+            <h3 class="pull-left">Popular</h3>
+            <span class="cant pull-left">30 videos</span>
+            
+            <section class="pull-right topics">
+                <ul class="pull-right">
+                    <li>Dalma Maradona</li>
+                    <li>Dalma Maradona</li>
+                    <li>Dalma Maradona</li>
+                </ul>
+                <h3 class="pull-right">Temas</h3>
+            </section>
+        </header>
+        <div class="videos-container">
+            {% for video in testvideos %}
+                <article class="video" data-loop ="{{ loop.index }}">
+                    {% thumbnail video.image, 'home_video' %}
+                </article>
+            {% endfor %}    
+        </div>
+    </section>
+</div>
+    {#
     <header class="home-header">
         <h1 class="title">Accede a <b>contenido exclusivo</b> y <b>comparte</b> tu pasión.</h1>
 
@@ -41,7 +109,6 @@
                         {% endif %}
                         
                         {% if video %}
-                            {#{% thumbnail video.image, 'wall' %}#}
                             <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}"><i class="play-video"></i></a>
                         {% endif %}
                             
@@ -111,4 +178,5 @@
             </section>
         {% endif %}
     </section>
+    #}
 {% endblock %}
