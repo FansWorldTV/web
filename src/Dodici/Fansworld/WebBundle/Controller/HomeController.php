@@ -61,6 +61,8 @@ class HomeController extends SiteController
         } else {
             $response['friendUsers'] = false;
         }
+        
+        $response['testvideos'] = $this->getRepository('Video')->findBy(array(), array(), 10);
 
         return $response;
     }

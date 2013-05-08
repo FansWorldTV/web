@@ -129,6 +129,8 @@ sonata_media:
                 big:   { width: 500 , quality: 90, constraint: false}
                 wall: { width: 800 , quality: 90, constraint: false }
                 huge:   { width: 1024 , quality: 90, constraint: false}
+                home_video: { width: 220, height: 137, quality: 100 }
+                home_video_double: { width: 440, height: 214, quality: 100 }
 
     cdn:
         server:
