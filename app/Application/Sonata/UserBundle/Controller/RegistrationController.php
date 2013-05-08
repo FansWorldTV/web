@@ -35,7 +35,7 @@ class RegistrationController extends BaseController
                 $invitetoken = $session->get('registration.token');
             }
             $inviter = null;
-            
+
             $userrepo = $this->container->get('doctrine')->getRepository('Application\Sonata\UserBundle\Entity\User');
             if ($invitetoken && $inviteuser) {
                 $inviter = $userrepo->findOneByUsername($inviteuser);
@@ -44,7 +44,7 @@ class RegistrationController extends BaseController
                 $calcinvitetoken = $this->container->get('contact.importer')->inviteToken($inviter);
                 if ($invitetoken != $calcinvitetoken)
                     throw new \Exception('Código de invitación inválido');
-                
+
                 $session->set('registration.inviter', $inviteuser);
                 $session->set('registration.token', $invitetoken);
             }
@@ -56,7 +56,7 @@ class RegistrationController extends BaseController
             $process = $formHandler->process($confirmationEnabled);
             if ($process) {
                 $user = $form->getData();
-                
+
                 if ($confirmationEnabled) {
                     $this->container->get('session')->set('fos_user_send_confirmation_email/email', $user->getEmail());
                     $route = 'fos_user_registration_check_email';
@@ -83,7 +83,7 @@ class RegistrationController extends BaseController
                     ));
         }
     }
-    
+
 	/**
      * Receive the confirmation token from user email provider, login the user
      */
@@ -98,12 +98,14 @@ class RegistrationController extends BaseController
         $user->setConfirmationToken(null);
         $user->setEnabled(true);
         $user->setLastLogin(new \DateTime());
-        
+
         // override: set expiresat = null
         $user->removeExpireDate();
 
         $this->container->get('fos_user.user_manager')->updateUser($user);
         $this->authenticateUser($user);
+
+        // $this->container->get('fansworldmailer')->sendWelcome($user);
 
         return new RedirectResponse($this->container->get('router')->generate('fos_user_registration_confirmed'));
     }

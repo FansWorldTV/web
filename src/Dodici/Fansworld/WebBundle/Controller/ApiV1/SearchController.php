@@ -112,6 +112,7 @@ class SearchController extends BaseController
      *              <video|photo> liked: boolean,
      *              <video> watchlisted: boolean,
      *              <video> duration: int (seconds),
+     *              <video|photo> author: serializer of (user),
      *              <photo> album: array (
      *                  id: int,
      *                  title: string,
@@ -181,7 +182,6 @@ class SearchController extends BaseController
                     );
 
                     if (method_exists($i, 'getImage')) $data['image'] = $this->imageValues($i->getImage());
-                    if (method_exists($i, 'getAuthor')) $data['author'] = ($i->getAuthor() ? $this->userArray($i->getAuthor()) : null);
 
                     if ($i instanceof Event) {
                         $data['showdate'] = ($i->getFromtime() ? $i->getFromtime()->format('U') : null);
@@ -192,7 +192,7 @@ class SearchController extends BaseController
 
                     $allowedfields = array(
                         'content', 'visitCount', 'likeCount', 'commentCount', 'liked', 'url', 'watchlisted',
-                            'duration', 'album', 'photoCount', 'videoCount', 'fanCount', 'splash'
+                            'duration', 'album', 'photoCount', 'videoCount', 'fanCount', 'splash', 'author'
                     );
                     $extrafields = $this->getExtraFields($allowedfields);
 
@@ -205,6 +205,7 @@ class SearchController extends BaseController
                             if (in_array('commentCount', $extrafields)) $data['commentCount'] =  $i->getCommentCount();
                             if (in_array('liked', $extrafields)) $data['liked'] = $this->get('liker')->isLiking($i, $user) ? true : false;
                             if (in_array('url', $extrafields)) $data['url'] =  $this->get('router')->generate($type.'_show', array('id' => $i->getId(), 'slug' => $i->getSlug()), true);
+                            if (in_array('author', $extrafields)) $data['author'] = ($i->getAuthor() ? $this->userArray($i->getAuthor()) : null);
 
                             if ('video' == $type) {
                                 if (in_array('watchlisted', $extrafields)) $data['watchlisted'] = $this->get('video.playlist')->isInPlaylist($i, $user);
