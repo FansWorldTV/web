@@ -285,8 +285,7 @@ class IdolController extends BaseController
                 if (!$idol) throw new HttpException(404, "Idol not found");
 
                 if ($userid) {
-                    // $user = $this->checkUserToken($userid, $request->get('user_token'));
-                    $user = $this->getRepository('User')->find($userid);
+                    $user = $this->checkUserToken($userid, $request->get('user_token'));
                     if (!($user instanceof User)) throw new HttpException(404, 'User not found');
                 }
 
