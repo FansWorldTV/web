@@ -23,7 +23,7 @@ class IdolController extends BaseController
 {
 	/**
      * Idol - list
-     * 
+     *
      * @Route("/idol/list", name="api_v1_idol_list")
      * @Method({"GET"})
      *
@@ -34,8 +34,8 @@ class IdolController extends BaseController
      * - <optional> sort: 'fanCount'|'name' (default: fanCount)
      * - <optional> sort_order: 'asc'|'desc' (default: desc)
      * - <optional> imageformat: string
-     * 
-     * @return 
+     *
+     * @return
      * array (
      * 		array (
      * 			id: int,
@@ -53,31 +53,31 @@ class IdolController extends BaseController
         try {
             $request = $this->getRequest();
             $countryid = $request->get('country');
-            
+
             $pagination = $this->pagination(array('fanCount', 'name'), 'fanCount');
-                        
+
             $filters = array('active' => true);
-            
+
             if ($countryid) {
                 $country = $this->getRepository('Country')->find($countryid);
                 if (!$country) throw new HttpException(400, 'Invalid country');
                 $filters['country'] = $country->getId();
             }
-            
+
             $sortarray = array($pagination['sort'] => $pagination['sort_order']);
             if ($pagination['sort'] == 'name') $sortarray = array(
             	'lastname' => $pagination['sort_order'],
             	'firstname' => $pagination['sort_order']
             );
-            
+
             $idols = $this->getRepository('Idol')->findBy(
-                $filters, 
+                $filters,
                 $sortarray,
                 $pagination['limit'],
                 $pagination['offset']);
-                
+
             $return = array();
-                        
+
             foreach ($idols as $idol) {
                 $return[] = array(
                     'id' => $idol->getId(),
@@ -87,31 +87,31 @@ class IdolController extends BaseController
                     'fanCount' => $idol->getFanCount()
                 );
             }
-            
+
             return $this->result($return, $pagination);
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
     }
-    
+
 	/**
      * Idol - show
-     * 
+     *
      * @Route("/idol/{id}", name="api_v1_idol_show", requirements = {"id" = "\d+"})
      * @Method({"GET"})
      *
      * Get params:
 	 * - <optional> extra_fields: comma-separated extra fields to return (see below)
 	 * - <optional> imageformat: string
-     * 
-     * @return 
+     *
+     * @return
      * array (
      * 			id: int,
      * 			firstname: string,
      * 			lastname: string,
      * 			image: array(id: int, url: string),
      * 			fanCount: int,
-     * 			
+     *
      * 			// extra fields
      * 			content: string,
      * 			birthday: int (DOB timestamp UTC),
@@ -138,14 +138,14 @@ class IdolController extends BaseController
      * 			videoCount: int,
      * 			visitCount: int
      * 		)
-     * 
+     *
      */
     public function showAction($id)
     {
         try {
             $idol = $this->getRepository('Idol')->find($id);
             if (!$idol) throw new HttpException(404, 'Idol not found');
-                        
+
             $return = array(
                 'id' => $idol->getId(),
                 'firstname' => $idol->getFirstname(),
@@ -153,12 +153,12 @@ class IdolController extends BaseController
                 'image' => $this->imageValues($idol->getImage()),
                 'fanCount' => $idol->getFanCount()
             );
-            
+
             $allowedfields = array(
             	'content', 'birthday', 'splash', 'country', 'sex', 'twitter', 'careers', 'photoCount', 'videoCount', 'visitCount'
             );
             $extrafields = $this->getExtraFields($allowedfields);
-            
+
             foreach ($extrafields as $x) {
                 switch ($x) {
                     case 'birthday':
@@ -197,16 +197,16 @@ class IdolController extends BaseController
                         break;
                 }
             }
-            
+
             return $this->result($return);
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
     }
-    
+
 	/**
      * [signed] Idol - fan/unfan
-     * 
+     *
      * @Route("/idol/fan/{action}", name="api_v1_idol_fan", requirements = {"action" = "add|remove"})
      * @Method({"POST"})
      *
@@ -215,7 +215,7 @@ class IdolController extends BaseController
 	 * - idol_id: int|array
 	 * - [user_token]
      * - [signature params]
-     * 
+     *
      */
     public function fanAction($action)
     {
@@ -224,15 +224,15 @@ class IdolController extends BaseController
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
-                
+
                 $idolids = $request->get('idol_id');
                 if (!is_array($idolids)) $idolids = array($idolids);
                 if (array_unique($idolids) !== $idolids) throw new HttpException(400, 'Duplicate idol_id');
-                
+
                 foreach ($idolids as $idolid) {
                     $idol = $this->getRepository('Idol')->find($idolid);
                     if (!$idol) throw new HttpException(404, 'Idol not found - id: ' . $idolid);
-                    
+
                     if ($action == 'add') {
                         $this->get('fanmaker')->addFan($idol, $user, false);
                     } elseif ($action == 'remove') {
@@ -241,15 +241,80 @@ class IdolController extends BaseController
                         throw new HttpException(400, 'Invalid fan action');
                     }
                 }
-                
+
                 if ($action == 'add') {
                     $this->getDoctrine()->getEntityManager()->flush();
                 }
-                
+
                 return $this->result(true);
             } else {
                 throw new HttpException(401, 'Invalid signature');
             }
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
+
+
+    /**
+     * [signed] Idol fans
+     *
+     * @Route("/idol/{id}/fans", name="api_v1_idol_fans", requirements = {"id" = "\d+"})
+     * @Method({"GET"})
+     *
+     * Get params:
+     * - [user_token]
+     * - <optional> user_id: int
+     * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
+     * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
+     * - <optional> imageformat: string
+     * - [signature params]
+     *
+     * @return
+     * array (Serializer of user) + followed(boolean) if user_id is defined
+     *
+     */
+    public function idolFansListAction($id)
+    {
+        try {
+                $request = $this->getRequest();
+                $userid = $request->get('user_id');
+
+                if (!$id) throw new HttpException(400, 'Invalid idol id');
+                $idol = $this->getRepository('Idol')->findOneBy(array('id' => $id));
+                if (!$idol) throw new HttpException(404, "Idol not found");
+
+                if ($userid) {
+                    $user = $this->checkUserToken($userid, $request->get('user_token'));
+                    if (!($user instanceof User)) throw new HttpException(404, 'User not found');
+                }
+
+                $pagination = $this->pagination();
+                $pagination['sort_order'] = null;
+                $pagination['sort'] = null;
+
+                $imageformat = $request->get('imageformat');
+                if (null == $imageformat) $imageformat = 'small';
+
+                $fansOfIdol = $this->getRepository('User')->byIdols($idol, $pagination['limit'], 'score', $pagination['offset']);
+
+                $response = array();
+                foreach ($fansOfIdol as $aFan) {
+                    if($aFan->getId() != $userid) {
+                        $response[] = $this->userArray($aFan);
+                    }
+                }
+
+                if ($userid) {
+                    $friendsOfUser = $this->getRepository('User')->FriendUsers($user, null, null, null, 'score');
+                    $friendsIds = array();
+                    foreach ($friendsOfUser as $friend) $friendsIds[] = $friend->getId();
+                    foreach ($response as &$rta) {
+                        in_array($rta['id'], $friendsIds) ? $rta['followed'] = true : $rta['followed'] = false;
+                    }
+                }
+
+                return $this->result($response, $pagination);
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
