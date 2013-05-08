@@ -18,6 +18,7 @@ use Dodici\Fansworld\WebBundle\Serializer\Serializer;
  */
 class HomeController extends SiteController
 {
+    const LIMIT_VIDEO = 12;
 
     /**
      * Site's home
@@ -29,9 +30,15 @@ class HomeController extends SiteController
         if ($checkfbreq) return $checkfbreq;
         
         $user = $this->getUser();
+
         $response = array(
             'categories' => array(),
-            'videos' => array()
+            'videos' => array(
+                'home' => null,
+                'highlighted' => array(),
+                'followed' => array(),
+                'popular' => array()
+            )
         );
 
         $videoCategories = $this->getRepository('VideoCategory')->findAll();
@@ -65,6 +72,65 @@ class HomeController extends SiteController
         $response['testvideos'] = $this->getRepository('Video')->findBy(array(), array(), 10);
 
         return $response;
+    }
+
+    /**
+     * Ajax method
+     * @Route("/home/ajax/filter", name="home_ajaxfilter")
+     */
+    public function ajaxFilterAction()
+    {
+        $request = $this->getRequest();
+        $serializer = $this->get('serializer');
+
+        $paginate = $request->get('paginate', false);
+
+        $videoRepo = $this->getRepository('Video');
+
+        if(!$paginate){
+            $vc = $request->get('vc', false);
+            $vc = $this->getRepository('VideoCategory')->find($vc);
+
+            $response = array(
+                'home' => null,
+                'highlighted' => array(),
+                'followed' => array(),
+                'popular' => array()
+            );
+
+            $homeVideo = $this->getRepository('HomeVideo')->findOneBy(array('videocategory' => $vc->getId()));
+            $homeVideo = $homeVideo->getVideo();
+            $response['home'] = $serializer->values($homeVideo, 'home_video_double');
+
+            $videos = $videoRepo->search(null, null, (self::LIMIT_VIDEO-1), 0, $vc, true, null, null, null, null, null, $homeVideo);
+            $response['highlighted'] = $serializer->values($videos, 'home_video');
+
+            $videos = $videoRepo->areTagged(self::LIMIT_VIDEO);
+            $response['followed'] = $serializer->values($videos, 'home_video');
+
+            $videos = $videoRepo->search(null, null, self::LIMIT_VIDEO, 0, $vc->getId(), false);
+            $response['popular'] = $serializer->values($videos, 'home_video');
+        }else{
+            $vc = $this->getRepository('VideoCategory')->find($paginate['vc']);
+            $block = $paginate['block'];
+            $page = $paginate['page'];
+            $offset = ($page -1)*self::LIMIT_VIDEO;
+
+            $response = array('videos' => array());
+
+            switch($block){
+                case 'follow':
+                    $videos = $videoRepo->areTagged(self::LIMIT_VIDEO, $offset);
+                    $response['videos'] = $serializer->values($videos, 'home_video');
+                    break;
+                case 'popular':
+                    $videos = $videoRepo->search(null, null, self::LIMIT_VIDEO, $offset, $vc->getId(), false);
+                    $response['videos'] = $serializer->values($videos, 'home_video');
+                    break;
+            }
+        }
+
+        return $this->jsonResponse($response);
     }
 
     /**
