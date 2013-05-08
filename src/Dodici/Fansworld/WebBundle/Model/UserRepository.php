@@ -27,12 +27,12 @@ class UserRepository extends CountBaseRepository
         $rsm->addScalarResult('maxpos', 'maxpos');
 
         $query = $this->_em->createNativeQuery('
-            SELECT 
-            	sh1.score AS total, 
-            	COUNT(sh2.id)+1 AS rank, 
+            SELECT
+            	sh1.score AS total,
+            	COUNT(sh2.id)+1 AS rank,
             	(SELECT COUNT(*) FROM fos_user_user WHERE enabled = true AND type = '.User::TYPE_FAN.') AS maxpos
             FROM fos_user_user sh1
-            LEFT JOIN fos_user_user sh2 ON 
+            LEFT JOIN fos_user_user sh2 ON
             	(sh1.score < sh2.score)
             	OR
             	((sh1.score = sh2.score) AND (sh1.id < sh2.id))
@@ -40,12 +40,12 @@ class UserRepository extends CountBaseRepository
             '
 	    , $rsm)
                 ->setParameter('user', $user->getId());
-        
+
         $result = $query->getResult();
 
         return $result;
     }
-    
+
     /**
      * Get the user's friends (followers) with optional search term and pagination
      * @param \Application\Sonata\UserBundle\Entity\User $user
@@ -377,7 +377,7 @@ class UserRepository extends CountBaseRepository
      * Get all users who have one or more of the given idols
      * @param array_of_idols|idol $idols
      */
-    public function byIdols($idols, $limit=null, $sortby=null)
+    public function byIdols($idols, $limit=null, $sortby=null, $offset = null)
     {
         if (!is_array($idols))
             $idols = array($idols);
@@ -403,6 +403,8 @@ class UserRepository extends CountBaseRepository
 
         if ($limit !== null)
           $query = $query->setMaxResults($limit);
+        if ($offset !== null)
+          $query = $query->setFirstResult($offset);
 
         return $query->getResult();
     }
@@ -412,7 +414,7 @@ class UserRepository extends CountBaseRepository
      * Get all users who have one or more of the given teams
      * @param array_of_teams|team $teams
      */
-    public function byTeams($teams, $limit=null, $sortby=null)
+    public function byTeams($teams, $limit=null, $sortby=null, $offset = null)
     {
         if (!is_array($teams))
             $teams = array($teams);
@@ -437,10 +439,12 @@ class UserRepository extends CountBaseRepository
         $query = $this->_em->createQuery($dql)
                 ->setParameter('tmarr', $tmarr);
 
-                if ($limit !== null)
-                  $query = $query->setMaxResults($limit);
+        if ($limit !== null)
+          $query = $query->setMaxResults($limit);
+        if ($offset !== null)
+          $query = $query->setFirstResult($offset);
 
-                return $query->getResult();
+        return $query->getResult();
     }
 
 
