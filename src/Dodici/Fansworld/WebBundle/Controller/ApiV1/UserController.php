@@ -340,4 +340,70 @@ class UserController extends BaseController
             return $this->plainException($e);
         }
     }
+
+
+    /**
+     * [signed] User fans
+     *
+     * @Route("/user/{id}/fans", name="api_v1_user_fans", requirements = {"id" = "\d+"})
+     * @Method({"GET"})
+     *
+     * Get params:
+     * - [user_token]
+     * - <optional> user_id: int
+     * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
+     * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
+     * - <optional> imageformat: string
+     * - [signature params]
+     *
+     * @return
+     * array (Serializer of user) + followed(boolean) if user_id is defined
+     *
+     */
+    public function userFansListAction($id)
+    {
+        try {
+                $request = $this->getRequest();
+                $userid = $request->get('user_id');
+
+                if (!$id) throw new HttpException(400, 'Invalid user id');
+                $user = $this->getRepository('User')->find($id);
+                if (!$user) throw new HttpException(404, "User not found");
+
+                if ($userid) {
+                    $userByGet = $this->checkUserToken($userid, $request->get('user_token'));
+                    if (!($userByGet instanceof User)) throw new HttpException(404, 'User by get not found');
+                }
+
+                $pagination = $this->pagination();
+                $pagination['sort_order'] = null;
+                $pagination['sort'] = null;
+
+                $imageformat = $request->get('imageformat');
+                if (null == $imageformat) $imageformat = 'small';
+
+                $fansOfUser = $this->getRepository('User')->FriendUsers($user, null, $pagination['limit'], $pagination['offset'], 'score');
+
+                $response = array();
+                foreach ($fansOfUser as $aFan) {
+                    if($aFan->getId() != $userid) {
+                        $response[] = $this->userArray($aFan);
+                    }
+                }
+
+                if ($userid) {
+                    $friendsOfUserByGet = $this->getRepository('User')->FriendUsers($userByGet, null, null, null, 'score');
+                    $friendsIds = array();
+                    foreach ($friendsOfUserByGet as $friend) $friendsIds[] = $friend->getId();
+                    foreach ($response as &$rta) {
+                        in_array($rta['id'], $friendsIds) ? $rta['followed'] = true : $rta['followed'] = false;
+                    }
+                }
+
+                return $this->result($response, $pagination);
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+
+    }
 }
