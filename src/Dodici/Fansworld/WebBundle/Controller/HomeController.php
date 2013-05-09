@@ -26,12 +26,12 @@ class HomeController extends SiteController
      */
     public function indexAction()
     {
-        /* This checks the fb requests */
         $checkfbreq = $this->checkFacebookRequest();
         if ($checkfbreq) return $checkfbreq;
 
         return array(
-            'testvideos' => $this->getRepository('Video')->findBy(array(), array(), 10)
+            'testvideos' => $this->getRepository('Video')->findBy(array(), array(), 10),
+            'categories' => $this->getRepository('VideoCategory')->findAll()
         );
     }
 
