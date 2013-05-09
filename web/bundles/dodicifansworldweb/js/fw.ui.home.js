@@ -64,6 +64,9 @@ $(document).ready(function () {
             self.bind("destroyed", $.proxy(that.teardown, that));
             self.addClass(that._name);
 
+            that.appendVideos(2)
+
+            return;
             // initialize Isotope
             self.isotope({
                 // options...
@@ -124,6 +127,26 @@ $(document).ready(function () {
 //                });
 //            });
         },
+        appendVideos: function(videoCategory) {
+            var that = this;
+            var i = 0;
+            // ajax.genericAction('home_ajaxfilter', {paginate:{'page':1, 'block':'popular','vc': 6}}, function(r){console.log(r);});
+            // $.ajax({url: Routing.generate('es_home_ajaxfilter'), data: {'vc': 1}}).then(function(r){console.log(r)})
+            var feed = Routing.generate(appLocale + '_home_ajaxfilter');
+            $.ajax({url: feed, data: {'vc': videoCategory}}).then(function(response){
+                for(i in response.highlighted) {
+                    if (response.highlighted.hasOwnProperty(i)) {
+                        console.log(response.highlighted[i]);
+                        var video = response.highlighted[i];
+                        var thumb = document.createElement('article');
+                        var image = document.createElement('img');
+                        //thumb.className('video');
+                        $(that.element).append('<article class="video"><img src="' + video.image + '" /></article>');
+                    }
+                }
+                $(that.element).append()
+            });
+        },
         getMaxSections: function(container) {
             var that = this;
             var $container = $(that.element);
@@ -174,14 +197,63 @@ $(document).ready(function () {
 //Attach plugin to all matching element
 $(document).ready(function () {
     "use strict";
-    $('section.highlights').fwHomeGallery({});
+    //$('section.highlights').fwHomeGallery({});
 });
 
 $(document).ready(function () {
 
-    return;
+
     var $container = $('section.highlights');
-    $('.video').css({
+    function appendVideos(videoCategory) {
+        var i = 0;
+        var cnt = 0;
+        // ajax.genericAction('home_ajaxfilter', {paginate:{'page':1, 'block':'popular','vc': 6}}, function(r){console.log(r);});
+        // $.ajax({url: Routing.generate('es_home_ajaxfilter'), data: {'vc': 1}}).then(function(r){console.log(r)})
+        var feed = Routing.generate(appLocale + '_home_ajaxfilter');
+        $.ajax({url: feed, data: {'vc': videoCategory}}).then(function(response){
+            for(i in response.highlighted) {
+                if (response.highlighted.hasOwnProperty(i)) {
+                    console.log(response.highlighted[i]);
+                    var video = response.highlighted[i];
+                    var thumb = document.createElement('article');
+                    var image = document.createElement('img');
+                    //thumb.className('video');
+                    $thumb = $('<article class="video"><img src="' + video.image + '" title="' + video.title + '"/></article>');
+
+                    $thumb.css({
+                        'width': '16%',
+                        'height': '160px',
+                        'margin-top': '5px',
+                        'margin-bottom': '5px',
+                        'border': '1px solid #333',
+                        'border-radius': '4px',
+                        'overflow': 'hidden'
+                    });
+                    if(cnt === 1) {
+                        $thumb.css({
+                            'width': '32.5%',
+                            'height': '332px'
+                        });
+                    }
+                    $thumb.find('.video img').css({
+                        'width': '100%',
+                        'height': '100%'
+                    });
+                    cnt += 1;
+                    $container.append($thumb).isotope('appended', $thumb);
+                }
+            }
+            $container.isotope('reLayout');
+            $container.isotope('reloadItems');
+            $container.isotope({
+                // update columnWidth to a percentage of container width
+                masonry: { columnWidth: $container.width() / 6 }
+            });
+        });
+    }
+
+
+    $container.find('.video').css({
         'width': '16%',
         'height': '160px',
         'margin-top': '5px',
@@ -190,19 +262,25 @@ $(document).ready(function () {
         'border-radius': '4px',
         'overflow': 'hidden'
     });
-    $('.video.double').css({
+    $container.find('.video.double').css({
         'width': '32.5%',
         'height': '332px'
     });
-    $('.video img').css({
+    $container.find('.video img').css({
         'width': '100%',
         'height': '100%'
     });
+
     // initialize Isotope
     $container.isotope({
         // options...
         itemSelector: '.video',
         resizable: false, // disable normal resizing
+        animationOptions: {
+            duration: 2750,
+            easing: 'linear',
+            queue: false
+        },
         // set columnWidth to a percentage of container width
         masonry: { columnWidth: $container.width() / 6 }
     });
@@ -214,4 +292,6 @@ $(document).ready(function () {
             masonry: { columnWidth: $container.width() / 6 }
         });
     });
+
+    appendVideos(2);
 });
