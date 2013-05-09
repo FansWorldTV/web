@@ -213,7 +213,6 @@ $(document).ready(function () {
         $.ajax({url: feed, data: {'vc': videoCategory}}).then(function(response){
             for(i in response.highlighted) {
                 if (response.highlighted.hasOwnProperty(i)) {
-                    console.log(response.highlighted[i]);
                     var video = response.highlighted[i];
                     var thumb = document.createElement('article');
                     var image = document.createElement('img');
@@ -252,6 +251,40 @@ $(document).ready(function () {
         });
     }
 
+    function appendFollowed(videoCategory) {
+        var i = 0;
+        var cnt = 0;
+        var $container = $('section.followed > .videos-container');
+        $container.empty();
+        var feed = Routing.generate(appLocale + '_home_ajaxfilter');
+        $.ajax({url: feed, data: {'vc': videoCategory}}).then(function(response){
+            for(i in response.followed) {
+                if (response.followed.hasOwnProperty(i)) {
+                    var video = response.followed[i];
+                    $thumb = $('<article class="video"><img width="220" src="' + video.image + '" title="' + video.title + '"/></article>');
+                    $container.append($thumb);
+                }
+            }
+        });
+    }
+
+    function appendPopular(videoCategory) {
+        var i = 0;
+        var cnt = 0;
+        var $container = $('section.popular > .videos-container');
+        $container.empty();
+        var feed = Routing.generate(appLocale + '_home_ajaxfilter');
+        $.ajax({url: feed, data: {'vc': videoCategory}}).then(function(response){
+            for(i in response.popular) {
+                if (response.popular.hasOwnProperty(i)) {
+                    var video = response.popular[i];
+                    console.log(video);
+                    $thumb = $('<article class="video"><img width="220" src="' + video.image + '" title="' + video.title + '"/></article>');
+                    $container.append($thumb);
+                }
+            }
+        });
+    }
 
     $container.find('.video').css({
         'width': '16%',
@@ -294,4 +327,6 @@ $(document).ready(function () {
     });
 
     appendVideos(2);
+    appendFollowed(2);
+    appendPopular(2);
 });
