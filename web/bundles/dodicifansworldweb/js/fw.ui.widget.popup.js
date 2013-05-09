@@ -372,7 +372,7 @@ $(document).ready(function () {
             this.activity = {};
             this.pushTimer = null;
             // Get total unreaded activityes
-            this.getTotal();
+//            this.getTotal();
             // Get a limited set of unreaded activityes to populate activity widget
             this.getActivity();
         }
