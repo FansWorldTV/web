@@ -63,7 +63,7 @@ class HomeController extends SiteController
             $homeVideo = $homeVideo->getVideo();
             $response['home'] = $serializer->values($homeVideo, 'home_video_double');
 
-            $videos = $videoRepo->search(null, null, (self::LIMIT_VIDEO-1), 0, $vc, true, null, null, null, null, null, $homeVideo);
+            $videos = $videoRepo->search(null, null, (self::LIMIT_VIDEO-3), 0, $vc, true, null, null, null, null, null, $homeVideo);
             $response['highlighted'] = $serializer->values($videos, 'home_video');
 
             $videos = $videoRepo->areTagged(self::LIMIT_VIDEO);
