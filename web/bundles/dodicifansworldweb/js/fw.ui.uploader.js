@@ -413,8 +413,6 @@ $(document).ready(function () {
                                 'resource:objectType': 'KalturaUploadedFileResource'
                             });
                             videoUploader.start();
-                            console.log("ADSFASDFADSFADSFASDF")
-                            console.log(file)
                             $('progress').show();
                             getVideoUploadForm(file.name);
                             /*
