@@ -151,11 +151,12 @@ class IdolController extends BaseController
                 'firstname' => $idol->getFirstname(),
             	'lastname' => $idol->getLastname(),
                 'image' => $this->imageValues($idol->getImage()),
-                'fanCount' => $idol->getFanCount()
+                'fanCount' => $idol->getFanCount(),
+                'videoCount' => $idol->getVideoCount()
             );
 
             $allowedfields = array(
-            	'content', 'birthday', 'splash', 'country', 'sex', 'twitter', 'careers', 'photoCount', 'videoCount', 'visitCount'
+            	'content', 'birthday', 'splash', 'country', 'sex', 'twitter', 'careers', 'photoCount', 'visitCount'
             );
             $extrafields = $this->getExtraFields($allowedfields);
 
