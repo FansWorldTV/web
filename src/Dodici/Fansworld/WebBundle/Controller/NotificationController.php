@@ -48,17 +48,17 @@ class NotificationController extends SiteController
      * @Route("/testregister", name="notification_test_register")
      * @Secure(roles="ROLE_USER")
      */
-    public function testAction(){
-        $user = $this->getUser();        
-      $html = $this->render(
-                'DodiciFansworldWebBundle:Mail:welcome.html.twig', 
-                array('targetUser' => $user)
-              ); 
-     
-     $this->get('fansworldmailer')->send('jam@fansworld.tv', '[BENCH] fw mail test', $html);
-      
-      return $html;
-    }    
+    //public function testAction(){
+    //    $user = $this->getUser();        
+    //  $html = $this->render(
+    //            'DodiciFansworldWebBundle:Mail:welcome.html.twig', 
+    //            array('targetUser' => $user)
+    //          ); 
+    // 
+    // $this->get('fansworldmailer')->send('jam@fansworld.tv', '[BENCH] fw mail test', $html);
+    //  
+    //  return $html;
+    //}    
 
     /**
      * @Route("/preferences", name="notification_preferences")
