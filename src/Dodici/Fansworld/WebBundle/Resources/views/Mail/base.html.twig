@@ -12,6 +12,7 @@
         <div style="display: inline-block;height: 100%;float:left;">
           <img src="{{ appmedia.absolute( asset('bundles/dodicifansworldweb/images/fansworld143.png') ) }}" alt="Comparti tu pasion" style="margin-top: 14px;margin-left: 10px;float: left;"/>
         </div>
+        {% if targetUser is defined %}
         <div style="display: inline-block;height: 100%;float:right;">
           <p style="text-align: right; text-align: right;line-height: 14px;margin-right: 10px;float: left;">
             <span class="fullname" style="font-size: 11px; font-weight: 600;">{{ targetUser }}</span>
@@ -20,6 +21,7 @@
           </p>
           <a href="" style="float: left;"><img src="{{ appmedia.imageurl(targetUser.image, 'avatar') }}"  /></a>
         </div>
+        {% endif %}
       </div>
       <div style="padding: 15px;color: #7c7c7c;font-weight: 400;text-align: center;">
         {% block body %}{% endblock %}
