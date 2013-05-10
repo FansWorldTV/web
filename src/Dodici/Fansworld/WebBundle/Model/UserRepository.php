@@ -251,16 +251,9 @@ class UserRepository extends CountBaseRepository
      */
     public function SearchFront(\Application\Sonata\UserBundle\Entity\User $user = null, $filtername = null, $isfriend = null, $limit = null, $offset = null)
     {
-        $rsm = new ResultSetMapping;
-        $rsm->addEntityResult('Application\Sonata\UserBundle\Entity\User', 'u');
-        $rsm->addFieldResult('u', 'id', 'id');
-        $rsm->addFieldResult('u', 'username', 'username');
-        $rsm->addFieldResult('u', 'email', 'email');
-        $rsm->addFieldResult('u', 'firstname', 'firstname');
-        $rsm->addFieldResult('u', 'lastname', 'lastname');
-        $rsm->addMetaResult('u', 'image_id', 'image_id');
-        $rsm->addMetaResult('u', 'country_id', 'country_id');
-        $rsm->addMetaResult('u', 'city_id', 'city_id');
+
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addRootEntityFromClassMetadata('Application\Sonata\UserBundle\Entity\User', 'u');
         $rsm->addScalarResult('commonfriends', 'commonfriends');
         $rsm->addScalarResult('isfriend', 'isfriend');
 

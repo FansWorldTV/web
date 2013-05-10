@@ -165,9 +165,7 @@ class UserController extends BaseController
     public function showAction($id)
     {
         try {
-            if ($this->hasValidSignature()) {
                 $request = $this->getRequest();
-
                 if (!$id) throw new HttpException(400, 'Invalid user_id');
 
                 if ($request->get('user_token')) {
@@ -180,9 +178,6 @@ class UserController extends BaseController
                 }
 
                 return $this->result($this->userArray($user));
-            } else {
-                throw new HttpException(401, 'Invalid signature');
-            }
         } catch (\Exception $e) {
             return $this->plainException($e);
         }

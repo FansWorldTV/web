@@ -136,11 +136,12 @@ class TeamController extends BaseController
                 'id' => $team->getId(),
                 'title' => (string)$team,
                 'image' => $this->imageValues($team->getImage()),
-                'fanCount' => $team->getFanCount()
+                'fanCount' => $team->getFanCount(),
+                'videoCount' => $team->getVideoCount()
             );
 
             $allowedfields = array(
-            	'content', 'foundedAt', 'splash', 'categories', 'country', 'twitter', 'photoCount', 'videoCount', 'visitCount'
+            	'content', 'foundedAt', 'splash', 'categories', 'country', 'twitter', 'photoCount', 'visitCount'
             );
             $extrafields = $this->getExtraFields($allowedfields);
 
