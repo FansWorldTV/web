@@ -40,32 +40,34 @@
 #}
         </section>
 
-        <section class="row-fluid followed">
-            <header class="clearfix">
-                <h3 class="pull-left">Sigues</h3>
-                <span class="cant pull-left">30 videos</span>
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <section class="row-fluid followed">
+                <header class="clearfix">
+                    <h3 class="pull-left">Sigues</h3>
+                    <span class="cant pull-left">30 videos</span>
 
-                <section class="pull-right topics">
-                    <ul class="pull-right">
-                        <li>Dalma Maradona</li>
-                        <li>Dalma Maradona</li>
-                        <li>Dalma Maradona</li>
-                    </ul>
-                    <h3 class="pull-right">Temas</h3>
-                </section>
-            </header>
-            <div class="videos-container">
-                {% for video in testvideos %}
-                    <article class="video">
-                        {% thumbnail video.image, 'home_video' %}
-                        <div>
-                            <a href="{{ path('video_show', {id: video.id, slug: video.slug }) }}">{{ video.title }}</a>
-                            <span class="author">de <a href="{{ path('user_wall', {'username': video.author.username}) }}">{{ video.author.username }}</a></span>
-                        </div>
-                    </article>
-                {% endfor %}
-            </div>
-        </section>
+                    <section class="pull-right topics">
+                        <ul class="pull-right">
+                            <li>Dalma Maradona</li>
+                            <li>Dalma Maradona</li>
+                            <li>Dalma Maradona</li>
+                        </ul>
+                        <h3 class="pull-right">Temas</h3>
+                    </section>
+                </header>
+                <div class="videos-container">
+                    {% for video in testvideos %}
+                        <article class="video">
+                            {% thumbnail video.image, 'home_video' %}
+                            <div>
+                                <a href="{{ path('video_show', {id: video.id, slug: video.slug }) }}">{{ video.title }}</a>
+                                <span class="author">de <a href="{{ path('user_wall', {'username': video.author.username}) }}">{{ video.author.username }}</a></span>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
 
         <section class="row-fluid gray popular">
             <header class="clearfix">
