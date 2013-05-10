@@ -1,0 +1,54 @@
+{% extends 'DodiciFansworldWebBundle:Mail:notification_base.html.twig' %}
+
+{% block body %}
+    <div style="text-align:left;">
+    	<h1 style="color:#8acd2c; font-size: 48px;font-weight: bold;line-height: 48px;width: 320px;">Bienvenido a Fansworld.tv</h1>
+        <h2 style="font-size: 25px; margin-top: 25px; margin-bottom: 25px;">Tus primeros pasos</h2>
+        <ul style="border-bottom: 1px solid black; padding-left: 0;">
+            <li style="margin-bottom: 15px; list-style: none; margin-left: 0;">
+                <div style="margin-right: 20px; margin-top: 5px; width: 50px; height: 50px; background-color: #8e8e8e;display: inline-block; vertical-align: top"></div>
+                <div style="display: inline-block; width: 370px; font-size: 15px;">
+                    <p style="font-weight:bold;display:inline-block;clear:both;vertical-align:top;margin: 0;padding: 0;">1.ELIJE</p>
+                    <p style="font-size:13px;margin: 0;padding: 0;">Completa tu perfil y <a style="color: #8acd2c; text-decoration: none;" href="{{ url('idol_home') }}">selecciona a tus ídolos</a> y equipos para recibir los más exclusivos contenidos relacionados a ellos.</p>
+                </div>
+            </li>
+            <li style="margin-bottom: 15px; list-style: none; margin-left: 0;">
+                <div style="margin-right: 20px; margin-top: 5px; width: 50px; height: 50px; background-color: #8e8e8e;display: inline-block; vertical-align: top"></div>
+                <div style="display: inline-block; width: 370px; font-size: 15px;">
+                    <p style="font-weight:bold;display:inline-block;clear:both;vertical-align:top;margin: 0;padding: 0;">2.SUBE</p>
+                    <p style="font-size:13px;margin: 0;padding: 0;">Comienza a <a style="color: #8acd2c; text-decoration: none;" href="{{ url('things_photos') }}">compartir fotos</a> y videos con tus amigos para demostrar tu fanatismo.</p>
+                </div>
+            </li>
+            <li style="margin-bottom: 15px; list-style: none; margin-left: 0;">
+                <div style="margin-right: 20px; margin-top: 5px; width: 50px; height: 50px; background-color: #8e8e8e;display: inline-block; vertical-align: top"></div>
+                <div style="display: inline-block; width: 370px; font-size: 15px;">
+                    <p style="font-weight:bold;display:inline-block;clear:both;vertical-align:top;margin: 0;padding: 0;">3.EXPLORA</p>
+                    <p style="font-size:13px;margin: 0;padding: 0;">Visita los canales de video que <a style="color: #8acd2c; text-decoration: none;" href="{{ url('teve_home') }}">tenemos</a> para tí: Estilo de vida, Fans, Clubes, Trucos, Entrevistas.</p>
+                </div>
+            </li>
+            <li style="margin-bottom: 15px; list-style: none; margin-left: 0;">
+                <div style="margin-right: 20px; margin-top: 5px; width: 50px; height: 50px; background-color: #8e8e8e;display: inline-block; vertical-align: top"></div>
+                <div style="display: inline-block; width: 370px; font-size: 15px;">
+                    <p style="font-weight:bold;display:inline-block;clear:both;vertical-align:top;margin: 0;padding: 0;">4.PARTICIPA</p>
+                    <p style="font-size:13px;margin: 0;padding: 0;">Suma puntos por tus actividades en el sitio para convertirte en el fan más reconocido de tus ídolos y equipos.</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block extratext %}
+    <div style="text-align:left;">
+        <p style="font-size: 18px; color:#8acd2c; font-weight: bold;margin-top: 25px;margin-left: 25px;margin-bottom: 25px;">¡También podés llevar tu fanatismo a todos lados con nuestra aplicación para iPhone!</p>
+
+        <div style="background-color: #3F3F3F;color: #ffffff;padding: 20px; font-weight: bold;">
+            <span style="display:inline-block;vertical-align:top;padding-top: 25px;font-size:18px;">Visita nuestras redes sociales</span>
+            <ul style="display:inline-block;margin:0;padding:0;padding-left: 50px;padding-top: 12px;">
+                <li style="list-style: none;display: inline-block;"><a href="https://www.facebook.com/FansWorldTV"><img src="{{ appmedia.absolute( asset('bundles/dodicifansworldweb/images/facebook-mail.jpg') ) }}" alt="Comparti tu pasion" /></a></li>
+                <li style="list-style: none;display: inline-block;"><a href="http://www.twitter.com/FansWorldTV"><img src="{{ appmedia.absolute( asset('bundles/dodicifansworldweb/images/twitter-mail.jpg') ) }}" alt="Comparti tu pasion" /></a></li>
+                <li style="list-style: none;display: inline-block;"><a href="https://plus.google.com/100054855734703605290?rel=publisher"><img src="{{ appmedia.absolute( asset('bundles/dodicifansworldweb/images/googleplus-mail.jpg') ) }}" alt="Comparti tu pasion" /></a></li>
+                <li style="list-style: none;display: inline-block;"   ><a href="http://pinterest.com/fansworldtv/"><img src="{{ appmedia.absolute( asset('bundles/dodicifansworldweb/images/p-mail.jpg') ) }}" alt="Comparti tu pasion" /></a></li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

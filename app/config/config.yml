@@ -57,6 +57,7 @@ swiftmailer:
     username:  %mailer_user%
     password:  %mailer_password%
     port:      %mailer_port%
+    encryption: ssl    
 
 jms_security_extra:
     secure_controllers:  true
