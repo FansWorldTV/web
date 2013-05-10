@@ -337,8 +337,13 @@ $(document).ready(function () {
         var container = document.querySelector('section.highlights');
         var packery = new Packery( container, {
             itemSelector: '.video',
-            columnWidth: 15
+//            gutter: '25px',
+            gutter: ".gutter-sizer",
+            columnWidth: ".grid-sizer"
+//            columnWidth: container.querySelector('.grid-sizer')
         });
+
+        window.packery = packery;
         // ajax.genericAction('home_ajaxfilter', {paginate:{'page':1, 'block':'popular','vc': 6}}, function(r){console.log(r);});
         // $.ajax({url: Routing.generate('es_home_ajaxfilter'), data: {'vc': 1}}).then(function(r){console.log(r)})
         var feed = Routing.generate(appLocale + '_home_ajaxfilter');
@@ -356,22 +361,27 @@ $(document).ready(function () {
 
                     $thumb = $('<article class="video"><img src="' + video.image + '" title="' + video.title + '"/></article>');
 
-                    $thumb.css({
+/*                    $thumb.css({
                         'width': '16%',
+                        'width': '20%',
                         'height': '160px',
                         'margin-top': '5px',
                         'margin-bottom': '5px',
                         'border': '1px solid #333',
                         'border-radius': '4px',
                         'overflow': 'hidden'
-                    });
+                    });*/
+                    $thumb.addClass('video');
                     if(cnt === 1) {
-                        $thumb.css({
+/*                        $thumb.css({
                             'width': '32.5%',
+                            'width': '40.5%',
                             'height': '332px'
-                        });
+                        });*/
+                        $thumb.addClass('double');
                     }
-                    $thumb.find('.video img').css({
+
+                    $thumb.find('img').css({
                         'width': '100%',
                         'height': '100%'
                     });
@@ -380,6 +390,7 @@ $(document).ready(function () {
                     //container.append($thumb);
                     $('section.highlights').append($thumb);
                     packery.appended($thumb);
+                    packery.layout();
                 }
             }
         });
