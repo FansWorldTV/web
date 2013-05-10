@@ -336,18 +336,21 @@ class VideoController extends BaseController
 
 	/**
      * Video - streams
-     *
-     * @Route("/video/{id}/streams", name="api_v1_video_streams", requirements = {"id" = "\d+"})
+     * 
+     * @Route("/video/{id}/streams/{protocol}", name="api_v1_video_streams", requirements = {"id" = "\d+"}, defaults = {"protocol" = "progressive"})
      * @Method({"GET"})
      *
      * Get params: none
-     *
-     * @return
+     * Url params:
+     * - protocol: 'progressive'(default)|'rtmp'|'hls'
+     * 
+     * @return 
      * array (
      * 			provider: 'youtube'|'vimeo'|'kaltura',
      * 			streams:
 	 *              - youtube/vimeo id string, or
-	 *              - array(
+	 *              - (hls/rtmp) url string, or
+	 *              - (progressive) array(
      * 					url: string (stream url),
      *                  format: array(
      *                      id: stream format id,
@@ -362,7 +365,7 @@ class VideoController extends BaseController
      * 		)
      *
      */
-    public function streamsAction($id)
+    public function streamsAction($id, $protocol)
     {
         try {
             $video = $this->getRepository('Video')->find($id);
@@ -381,7 +384,7 @@ class VideoController extends BaseController
             } else {
                 $return = array(
                     'provider' => 'kaltura',
-                    'streams' => $this->get('kaltura')->streams($video->getStream())
+                    'streams' => $this->get('kaltura')->streams($video->getStream(), $protocol)
                 );
             }
 
