@@ -80,6 +80,25 @@
                 .column(4.8, 12);
             }
 
+            div {
+                display: block;
+
+                a.title {
+                  font-size: 15px;
+                  font-weight: 500;
+                }
+
+                span.author {
+                  color: @grayLight;
+                  font-size: 12px;
+                  font-weight: 300;
+
+                  strong {
+                    color: @gray;
+                  }
+                }
+            }
+
             @media screen and (max-width: 480px) {
                 .column(12);
                 margin-bottom: 10px;

@@ -41,6 +41,7 @@ class HomeController extends SiteController
      */
     public function ajaxFilterAction()
     {
+        $user = $this->getUser();
         $request = $this->getRequest();
         $serializer = $this->get('serializer');
 
@@ -63,10 +64,11 @@ class HomeController extends SiteController
             $homeVideo = $homeVideo->getVideo();
             $response['home'] = $serializer->values($homeVideo, 'home_video_double');
 
-            $videos = $videoRepo->search(null, null, (self::LIMIT_VIDEO-3), 0, $vc, true, null, null, null, null, null, $homeVideo);
+            $limitWithTheHighlighted = (self::LIMIT_VIDEO-3);
+            $videos = $videoRepo->search(null, null, $limitWithTheHighlighted, 0, $vc, true, null, null, null, null, null, $homeVideo);
             $response['highlighted'] = $serializer->values($videos, 'home_video');
 
-            $videos = $videoRepo->areTagged(self::LIMIT_VIDEO);
+            $videos = $videoRepo->recommended($user, null, self::LIMIT_VIDEO);
             $response['followed'] = $serializer->values($videos, 'home_video');
 
             $videos = $videoRepo->search(null, null, self::LIMIT_VIDEO, 0, $vc->getId(), false);
@@ -81,7 +83,7 @@ class HomeController extends SiteController
 
             switch($block){
                 case 'follow':
-                    $videos = $videoRepo->areTagged(self::LIMIT_VIDEO, $offset);
+                    $videos = $videoRepo->recommended($user, null, self::LIMIT_VIDEO, $offset);
                     $response['videos'] = $serializer->values($videos, 'home_video');
                     break;
                 case 'popular':
