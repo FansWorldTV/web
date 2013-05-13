@@ -307,7 +307,14 @@ $(document).ready(function () {
                 if (response.followed.hasOwnProperty(i)) {
                     var video = response.followed[i];
                     $thumb = $('<article class="video"><img width="220" src="' + video.image + '" title="' + video.title + '"/></article>');
-                    $container.append($thumb);
+                    $.when(templateHelper.htmlTemplate('video-home_element', video))
+                        .then(function(response){
+                            $thumb = $(response).clone();
+
+
+                            //container.append($thumb);
+                            $container.append($thumb);;
+                        });
                 }
             }
         });
@@ -326,6 +333,15 @@ $(document).ready(function () {
                     //console.log(video);
                     $thumb = $('<article class="video"><img width="220" src="' + video.image + '" title="' + video.title + '"/></article>');
                     $container.append($thumb);
+
+                    $.when(templateHelper.htmlTemplate('video-home_element', video))
+                        .then(function(response){
+                            $thumb = $(response).clone();
+
+
+                            //container.append($thumb);
+                            $container.append($thumb);;
+                    });
                 }
             }
         });
@@ -390,7 +406,7 @@ $(document).ready(function () {
     console.log("home javascript")
     //appendVideos(8);
     var videoCategory = $('.filter-home').find('.active').attr('data-category-id');
-    makePackery(videoCategory);
+    makePackery(8);
     appendFollowed(videoCategory);
     appendPopular(videoCategory);
 });
