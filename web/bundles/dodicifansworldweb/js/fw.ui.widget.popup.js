@@ -103,7 +103,7 @@
             // Listen for Meteor messages
             this.join();
             // Get total unreaded notifications
-            this.getTotal();
+            /*this.getTotal();*/
             // Get a limited set of unreaded notifications to populate activity widget
             this.getNotifications();
         }
@@ -950,9 +950,9 @@ $(document).ready(function () {
             console.log(that.options.buttons);
             that.options.footer.find('.widgets').append(that.options.buttons[0].node);
 
-            fansworld.notificacion.addListener('ongettotal', function(response){
+            /*fansworld.notificacion.addListener('ongettotal', function(response){
                 that.updateLabel('id', response.result);
-            });
+            });*/
             // Listen notifications
             fansworld.notificacion.addListener('onnotificationreceived', function(response){
                 that.updateLabel('id', fansworld.notificacion.total);
