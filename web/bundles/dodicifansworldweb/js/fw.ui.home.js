@@ -398,7 +398,8 @@ $(document).ready(function () {
 
     console.log("home javascript")
     //appendVideos(8);
-    makePackery(8);
-    appendFollowed(8);
-    appendPopular(8);
+    var videoCategory = $('.filter-home').find('.active').attr('data-category-id');
+    makePackery(videoCategory);
+    appendFollowed(videoCategory);
+    appendPopular(videoCategory);
 });
