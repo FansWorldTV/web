@@ -53,7 +53,7 @@ $(document).ready(function () {
                         if(responseJSON.isFan) {
                             that.onAddIdol(responseJSON);
                         } else {
-                            that.onRemoveIdol(responseJSON);
+                            that.onRemoveIdol(responseJSON);deja
                         }
                     }
                     self.removeClass('loading-small');
