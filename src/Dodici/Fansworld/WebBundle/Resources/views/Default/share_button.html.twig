@@ -1,22 +1,23 @@
-<button class="share{% if extraclasses is defined %} {{ extraclasses|join(' ') }}{% endif %}"  data-share-button data-id="{{ entity.id }}" data-type="{{ type }}">
-    <i></i>
-    Compartir
-</button>
-<div class="share-box hide" data-sharebox-gral>
-    <img class="arrow" src="{{ asset('bundles/dodicifansworldweb/images/arrow_nav.png') }}" />
-    <div class="top">
-        <i class="close-share"></i>
-        <h4 class="wywtsay"></h4>
-        <form action="">
-            <input name="message" type="text" placeholder="Que quieres decir..." class="wywtsay"/>
-        </form>
-    </div>
-    <div class="bottom">
-        <div class="sharewith" >
-            <input data-token-input data-route="_share_ajaxwith" data-action="tag" type="text" placeholder="Con quien lo queres compartir..." />
+<div class="sharer-container">
+    <button class="share{% if extraclasses is defined %} {{ extraclasses|join(' ') }}{% endif %}"  data-share-button data-id="{{ entity.id }}" data-type="{{ type }}">
+        <i></i>
+        Compartir
+    </button>
+    <div class="share-box hide" data-sharebox-gral>
+        <img class="arrow" src="{{ asset('bundles/dodicifansworldweb/images/arrow_nav.png') }}" />
+        <div class="top">
+            <i class="close-share"></i>
+            <h4 class="wywtsay"></h4>
+            <form action="">
+                <input name="message" type="text" placeholder="Que quieres decir..." class="wywtsay"/>
+            </form>
         </div>
+        <div class="bottom">
+            <div class="sharewith" >
+                <input data-token-input data-route="_share_ajaxwith" data-action="tag" type="text" placeholder="Con quien lo queres compartir..." />
+            </div>
 
-        <div class="clearfix"></div>
+            <div class="clearfix"></div>
 
         <span class="pull-left">
             <button class="btn-checkbox fb"></button>
@@ -27,5 +28,6 @@
         <span class="pull-right">
             <button id="share_it" class="btn btn-primary">Compartir</button>
         </span>
+        </div>
     </div>
 </div>

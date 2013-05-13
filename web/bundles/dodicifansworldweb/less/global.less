@@ -114,26 +114,33 @@
         }
     }
 
-    button.share {
-            background-color: @green;
-            .border-radius(3px);
-            color: white;
-            font-weight: 400;
-            fotn-size: 12px;
-            border: 0;
-            line-height: 29px;
-        i {
-            background-image: url('../images/bt-compartir.png');
-            .square(30px);
-            display: inline-block;
-            float: left;
-            margin-right: 5px;
-        }
-    }
+    .sharer-container {
+      position: relative;
+      display: inline-block;
+      .square(auto);
 
-    .share-box {
-        .size(auto, 505px);
-        right: 37%;
+      button.share {
+        background-color: @green;
+        .border-radius(3px);
+        color: white;
+        font-weight: 400;
+        fotn-size: 12px;
+        border: 0;
+        line-height: 29px;
+        i {
+          background-image: url('../images/bt-compartir.png');
+          .square(30px);
+          display: inline-block;
+          float: left;
+          margin-right: 5px;
+        }
+      }
+
+      .share-box {
+        .size(184px, 505px);
+        position: absolute;
+        bottom: 0;
+        left: -202px;
         background-color:  #ffffff;
         border:  2px solid #e2e2e4;
         border-radius: 3px;
@@ -142,88 +149,93 @@
         z-index: 9;
 
         .arrow {
-            top: -6px;
-            position: absolute;
-            left: 50%;
+          top: -6px;
+          position: absolute;
+          left: 50%;
         }
 
         h4 {
-            color: @black;
-            float: left;
+          color: @black;
+          float: left;
         }
 
         .btn {
-            color: white !important;
+          color: white !important;
         }
 
         input {
-            border: 2px solid #e2e2e4;
-            background-color: @white;
-            float: left;
+          border: 2px solid #e2e2e4;
+          background-color: @white;
+          float: left;
+
+          &.ui-widget-content {
+            border: 0;
+          }
         }
 
         .top {
-            color: @black;
-            height:  70px;
+          color: @black;
+          height:  70px;
 
-            i.close-share {
-              display: block;
-              z-index: 99999999999999;
-              position: absolute;
-              top: 5px;
-              right: 5px;
-              background-image: url("../images/ui/closealert.png") !important;
-              .square(14px);
-              background-position: top;
-              cursor: pointer;
+          i.close-share {
+            display: block;
+            z-index: 99999999999999;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-image: url("../images/ui/closealert.png") !important;
+            .square(14px);
+            background-position: top;
+            cursor: pointer;
 
-              &:hover {
-                background-position: bottom;
-              }
+            &:hover {
+              background-position: bottom;
             }
+          }
 
-            input.wywtsay{
-                border: 2px solid #e2e2e4;
-                background-color: @white;
-                width: 80%;
-                float: left;
-                margin-left: 45px;
-                margin-top: 20px;
-            }
+          input.wywtsay{
+            border: 2px solid #e2e2e4;
+            background-color: @white;
+            width: 80%;
+            float: left;
+            margin-left: 45px;
+            margin-top: 20px;
+          }
 
-            p{
-                text-align: left;
-                font-size: 15px;
-                color: #333333;
-                font-weight: bold;
-                margin-left: 30px;
-                margin-top: 20px;
-            }
+          p{
+            text-align: left;
+            font-size: 15px;
+            color: #333333;
+            font-weight: bold;
+            margin-left: 30px;
+            margin-top: 20px;
+          }
         }
 
         .bottom{
 
-            div.sharewith{
-                margin-left: 5px;
-                margin-bottom: 15px;
+          div.sharewith{
+            margin-left: 5px;
+            margin-bottom: 15px;
 
-                input{
-                    width:  411px;
-                }
-
-                ul.tagit {
-                    margin-left: -1px;
-                }
+            input{
+              width:  411px;
             }
 
-            border-top: 2px solid #e2e2e4;
-            background-color: #f9f9f9;
-            height: 85px;
-            padding-left: 41px;
-            padding-right: 44px;
-            padding-top: 10px;
+            ul.tagit {
+              margin-left: -1px;
+            }
+          }
+
+          border-top: 2px solid #e2e2e4;
+          background-color: #f9f9f9;
+          height: 85px;
+          padding-left: 41px;
+          padding-right: 44px;
+          padding-top: 10px;
         }
 
+      }
     }
 }
 
