@@ -59,7 +59,7 @@ $(document).ready(function () {
                     self.removeClass('loading-small');
                 },
                 function(error) {
-                    error(error);
+                    window.error(error.responseText);
                     self.removeClass('loading-small');
                     return that.options.onError(error);
                 });
@@ -106,6 +106,8 @@ $(document).ready(function () {
             self.addClass('disabled');
             self.removeClass('add');
             self.text("YA ERES FAN");
+            var number = parseInt($('.numbers-info .fans-info .numero').text()) + 1;
+            $('.numbers-info .fans-info .numero').text(number);
         }
     });
 });

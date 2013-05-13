@@ -13,6 +13,9 @@ use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Controller\RegistrationController as BaseController;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use JMS\SecurityExtraBundle\Annotation\Secure;
+
 class RegistrationController extends BaseController
 {
 
@@ -105,9 +108,8 @@ class RegistrationController extends BaseController
         $this->container->get('fos_user.user_manager')->updateUser($user);
         $this->authenticateUser($user);
 
-        // $this->container->get('fansworldmailer')->sendWelcome($user);
+        $this->container->get('fansworldmailer')->sendWelcome($user);
 
         return new RedirectResponse($this->container->get('router')->generate('fos_user_registration_confirmed'));
     }
-
 }

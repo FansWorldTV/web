@@ -29,11 +29,11 @@ class IdolshipController extends SiteController {
             $user = $this->getUser();
 
             if (!$user instanceof User)
-                throw new \Exception('Debe iniciar sesión');
+                throw new \Exception('Debe iniciar sesión', 500);
 
             $idol = $this->getRepository('Idol')->find($ididol);
             if (!$idol)
-                throw new \Exception('Idolo no encontrado');
+                throw new \Exception('Idolo no encontrado', 404);
 
             $translator = $this->get('translator');
             $appstate = $this->get('appstate');

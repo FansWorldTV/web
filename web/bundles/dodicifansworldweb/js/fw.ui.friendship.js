@@ -59,7 +59,7 @@ $(document).ready(function () {
                     self.removeClass('loading-small');
                 },
                 function(error) {
-                    error(error);
+                    window.error(error.responseText);
                     self.removeClass('loading-small');
                     return that.options.onError(error);
                 });
