@@ -136,7 +136,7 @@ $(document).ready(function () {
             $.ajax({url: feed, data: {'vc': videoCategory}}).then(function(response){
                 for(i in response.highlighted) {
                     if (response.highlighted.hasOwnProperty(i)) {
-                        console.log(response.highlighted[i]);
+                        //console.log(response.highlighted[i]);
                         var video = response.highlighted[i];
                         var thumb = document.createElement('article');
                         var image = document.createElement('img');
@@ -323,7 +323,7 @@ $(document).ready(function () {
             for(i in response.popular) {
                 if (response.popular.hasOwnProperty(i)) {
                     var video = response.popular[i];
-                    console.log(video);
+                    //console.log(video);
                     $thumb = $('<article class="video"><img width="220" src="' + video.image + '" title="' + video.title + '"/></article>');
                     $container.append($thumb);
                 }
@@ -352,6 +352,7 @@ $(document).ready(function () {
                 if (response.highlighted.hasOwnProperty(i)) {
                     var video = response.highlighted[i];
 
+                    console.log(video)
 
                     var thumb = document.createElement('article');
                     thumb.classList.add('video');
@@ -361,36 +362,26 @@ $(document).ready(function () {
 
                     $thumb = $('<article class="video"><img src="' + video.image + '" title="' + video.title + '"/></article>');
 
-/*                    $thumb.css({
-                        'width': '16%',
-                        'width': '20%',
-                        'height': '160px',
-                        'margin-top': '5px',
-                        'margin-bottom': '5px',
-                        'border': '1px solid #333',
-                        'border-radius': '4px',
-                        'overflow': 'hidden'
-                    });*/
-                    $thumb.addClass('video');
-                    if(cnt === 1) {
-/*                        $thumb.css({
-                            'width': '32.5%',
-                            'width': '40.5%',
-                            'height': '332px'
-                        });*/
-                        $thumb.addClass('double');
-                    }
+                    $.when(templateHelper.htmlTemplate('video-home_element', video))
+                    .then(function(response){
+                        $thumb = $(response).clone();
 
-                    $thumb.find('img').css({
-                        'width': '100%',
-                        'height': '100%'
+                        $thumb.addClass('video');
+                        if(cnt === 1) {
+                            $thumb.addClass('double');
+                        }
+
+                        $thumb.find('img').css({
+                            'width': '100%',
+                            'height': '100%'
+                        });
+                        cnt += 1;
+
+                        //container.append($thumb);
+                        $('section.highlights').append($thumb);
+                        packery.appended($thumb);
+                        packery.layout();
                     });
-                    cnt += 1;
-
-                    //container.append($thumb);
-                    $('section.highlights').append($thumb);
-                    packery.appended($thumb);
-                    packery.layout();
                 }
             }
         });
@@ -399,7 +390,7 @@ $(document).ready(function () {
     console.log("home javascript")
     //appendVideos(8);
     var videoCategory = $('.filter-home').find('.active').attr('data-category-id');
-    makePackery(videoCategory);
+    makePackery(8);
     appendFollowed(videoCategory);
     appendPopular(videoCategory);
 });
