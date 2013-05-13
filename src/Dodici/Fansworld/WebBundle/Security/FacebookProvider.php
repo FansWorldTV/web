@@ -134,7 +134,7 @@ class FacebookProvider implements UserProviderInterface
                 }
                 $this->userManager->updateUser($user);
 
-                // $this->container->get('fansworldmailer')->sendWelcome($user);
+                $this->container->get('fansworldmailer')->sendWelcome($user);
 
                 /* Invitation, check for session */
                 $session = $this->container->get('session');

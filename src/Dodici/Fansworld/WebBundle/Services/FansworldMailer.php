@@ -62,4 +62,15 @@ class FansworldMailer
     }
   }
 
+  public function sendWelcome($user)
+  {
+      $sendTo = $user->getEmail();
+
+      $html = $this->templating->render('DodiciFansworldWebBundle:Mail:welcome.html.twig', array('targetUser' => $user));
+      
+      $subject = $this->translator->trans('Bienvenido a Fansworld.tv');
+
+      return $this->send($sendTo, $subject, $html);
+  }  
+
 }
