@@ -29,17 +29,6 @@
         <section class="row-fluid gray highlights" id="home-gallery">
             <div class="grid-sizer"></div>
             <div class="gutter-sizer"></div>
-{#
-            {% for video in testvideos %}
-                <article class="video" >
-                    {% if loop.index == 2 %}
-                        {% thumbnail video.image, 'home_video_double' %}
-                    {% else %}
-                        {% thumbnail video.image, 'home_video' %}
-                    {% endif %}
-                </article>
-            {% endfor %}
-#}
         </section>
 
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -58,15 +47,6 @@
                     </section>
                 </header>
                 <div class="videos-container">
-                    {% for video in testvideos %}
-                        <article class="video">
-                            {% thumbnail video.image, 'home_video' %}
-                            <div>
-                                <a href="{{ path('video_show', {id: video.id, slug: video.slug }) }}">{{ video.title }}</a>
-                                <span class="author">de <a href="{{ path('user_wall', {'username': video.author.username}) }}">{{ video.author.username }}</a></span>
-                            </div>
-                        </article>
-                    {% endfor %}
                 </div>
             </section>
         {% endif %}
@@ -86,15 +66,6 @@
                 </section>
             </header>
             <div class="videos-container">
-                {% for video in testvideos %}
-                    <article class="video">
-                        {% thumbnail video.image, 'home_video' %}
-                        <div>
-                            <a href="{{ path('video_show', {id: video.id, slug: video.slug }) }}">{{ video.title }}</a>
-                            <span class="author">de <a href="{{ path('user_wall', {'username': video.author.username}) }}">{{ video.author.username }}</a></span>
-                        </div>
-                    </article>
-                {% endfor %}
             </div>
         </section>
     </div>

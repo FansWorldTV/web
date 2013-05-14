@@ -86,14 +86,16 @@
                 a.title {
                   font-size: 15px;
                   font-weight: 500;
+                  .pull-left();
                 }
 
                 span.author {
-                  color: @grayLight;
+                  .pull-left();
+                  color: @gray;
                   font-size: 12px;
                   font-weight: 300;
 
-                  strong {
+                  strong, a {
                     color: @gray;
                   }
                 }
