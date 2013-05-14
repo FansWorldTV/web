@@ -1,7 +1,10 @@
 {% raw %}
     <article class="video">
-        <img src="{{>image}}" alt="{{>title}}" />
-        <div>
+        <div class="image">
+            <img src="{{>image}}" alt="{{>title}}" />
+            <span class="duration">{{>duration}}</span>
+        </div>
+        <div class="info">
             <a class="title" href="{{>url}}">{{>title}}</a>
             <span class="author">de <a href="{{>author.url}}">{{>author.username}}</a></span>
         </div>

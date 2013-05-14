@@ -80,29 +80,49 @@
         .column(4.8, 12);
       }
 
-      div {
+      div.image {
+        position: relative;
+
+        span.duration {
+          position: absolute;
+          right: 5px;
+          bottom: 5px;
+          color: @white;
+          text-shadow: 1px 1px 1px black;
+          font-size: 11px;
+          font-weight: bold;
+        }
+      }
+
+      div.info {
         display: block;
         text-align: left;
+        padding-top: 12px;
 
         a.title {
-          font-size: 15px;
-          font-weight: 500;
+          color: @black;
+          font-size: 14px;
+          font-weight: 600;
           width: 100%;
-          height: 40px;
+          height: 39px;
           .pull-left();
           overflow: hidden;
           display: block;
+
+          &:hover {
+            color: @orange;
+          }
         }
 
         span.author {
           .pull-left();
           color: @grayDark;
-          font-size: 12px;
+          font-size: 11px;
           font-weight: 300;
 
           strong, a {
             color: @grayDarker;
-            font-weight: 500;
+            font-weight: 600;
           }
         }
       }
