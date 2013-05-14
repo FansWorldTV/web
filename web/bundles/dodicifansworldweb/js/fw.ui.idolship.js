@@ -71,7 +71,7 @@ $(document).ready(function () {
         onRemoveIdol: function(data){
             var that = this;
             var self = $(that.element);
-            console.log("onRemoveIdol: " + JSON.stringify(data))
+            console.log("onRemoveIdol: " + JSON.stringify(data));
             return that.options.onRemoveIdol(data);
         },
         destroy: function() {
@@ -108,6 +108,12 @@ $(document).ready(function () {
             self.text("YA ERES FAN");
             var number = $('.numbers-info .fans-info .numero').text() + 1;
             $('.numbers-info .fans-info .numero').text(number);
+        }
+    });
+
+    $(".btn_idolship.remove").fwIdolship({
+        onRemoveIdol: function(plugin, data) {
+            location.reload();
         }
     });
 });
