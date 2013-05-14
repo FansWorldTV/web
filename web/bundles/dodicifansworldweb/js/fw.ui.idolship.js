@@ -60,7 +60,7 @@ $(document).ready(function () {
                 },
                 function(error) {
                     window.error(error.responseText);
-                    self.removeClhomass('loading-small');
+                    self.removeClass('loading-small');
                     return that.options.onError(error);
                 });
         },
