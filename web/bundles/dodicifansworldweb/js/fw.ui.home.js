@@ -332,14 +332,9 @@ $(document).ready(function () {
                     var video = response.popular[i];
                     //console.log(video);
                     $thumb = $('<article class="video"><img width="220" src="' + video.image + '" title="' + video.title + '"/></article>');
-                    $container.append($thumb);
-
                     $.when(templateHelper.htmlTemplate('video-home_element', video))
                         .then(function(response){
                             $thumb = $(response).clone();
-
-
-                            //container.append($thumb);
                             $container.append($thumb);;
                     });
                 }
