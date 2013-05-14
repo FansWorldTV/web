@@ -83,6 +83,12 @@
       div.image {
         position: relative;
 
+        &:hover {
+          i.ico-channels, i.ico-watchlater {
+            display: block;
+          }
+        }
+
         span.duration {
           position: absolute;
           right: 5px;
@@ -91,6 +97,25 @@
           text-shadow: 1px 1px 1px black;
           font-size: 11px;
           font-weight: bold;
+        }
+
+        i.ico-channels, i.ico-watchlater {
+          @size: 32px;
+          position: absolute;
+          right: 5px;
+          .square(@size);
+          background-size: @size;
+          display: none;
+
+          &.ico-channels {
+            top: 5px;
+            background-image: url('../images/ico-qv-channels.png');
+          }
+
+          &.ico-watchlater {
+            top: 40px;
+            background-image: url('../images/ico-watchlater-channels.png');
+          }
         }
       }
 
