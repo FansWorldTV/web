@@ -274,4 +274,38 @@ class TeamRepository extends CountBaseRepository
     	
     	return (int)$query->getSingleScalarResult();
     }
+
+    /**
+     * Return the next team
+     * @param Idol $team
+     */
+    public function next($team)
+    {
+        $query = $this->createQuery('
+            SELECT t
+            FROM \Dodici\Fansworld\WebBundle\Entity\Team t
+            WHERE t.id > :teamId
+        ')
+            ->setParameter('teamId', $team->getId())
+            ->setMaxResults(1);
+
+        return $query->getSingleResult();
+    }
+
+    /**
+     * Return previous team
+     * @param Idol $team
+     */
+    public function previous($team)
+    {
+        $query = $this->createQuery('
+            SELECT t
+            FROM \Dodici\Fansworld\WebBundle\Entity\Team t
+            WHERE i.id < :teamId
+        ')
+            ->setParameter('teamId', $team->getId())
+            ->setMaxResults(1);
+
+        return $query->getSingleResult();
+    }
 }

@@ -404,7 +404,7 @@ class UserRepository extends CountBaseRepository
 
 
     /**
-     * Get all users who have one or more of the given teams
+     * Get all users who have one or more of the given users
      * @param array_of_teams|team $teams
      */
     public function byTeams($teams, $limit=null, $sortby=null, $offset = null)
@@ -1086,5 +1086,39 @@ class UserRepository extends CountBaseRepository
         $condition = '(' . join(' OR ', $conditions) . ')';
 
         return $condition;
+    }
+
+    /**
+     * Return the next user
+     * @param User $user
+     */
+    public function next($user)
+    {
+        $query = $this->createQuery('
+            SELECT u
+            FROM User u
+            WHERE u.id > :userId
+        ')
+            ->setParameter('userId', $user->getId())
+            ->setMaxResults(1);
+
+        return $query->getSingleResult();
+    }
+
+    /**
+     * Return previous user
+     * @param User $user
+     */
+    public function previous($user)
+    {
+        $query = $this->createQuery('
+            SELECT u
+            FROM User u
+            WHERE u.id < :userId
+        ')
+            ->setParameter('userId', $user->getId())
+            ->setMaxResults(1);
+
+        return $query->getSingleResult();
     }
 }

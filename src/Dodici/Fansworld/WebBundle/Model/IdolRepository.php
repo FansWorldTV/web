@@ -274,4 +274,38 @@ class IdolRepository extends CountBaseRepository
     {
         return null;
     }
+
+    /**
+     * Return the next idol
+     * @param Idol $idol
+     */
+    public function next($idol)
+    {
+        $query = $this->createQuery('
+            SELECT i
+            FROM \Dodici\Fansworld\WebBundle\Entity\Idol i
+            WHERE i.id > :idolId
+        ')
+        ->setParameter('idolId', $idol->getId())
+        ->setMaxResults(1);
+
+        return $query->getSingleResult();
+    }
+
+    /**
+     * Return previous idol
+     * @param Idol $idol
+     */
+    public function previous($idol)
+    {
+        $query = $this->createQuery('
+            SELECT i
+            FROM \Dodici\Fansworld\WebBundle\Entity\Idol i
+            WHERE i.id < :idolId
+        ')
+            ->setParameter('idolId', $idol->getId())
+            ->setMaxResults(1);
+
+        return $query->getSingleResult();
+    }
 }

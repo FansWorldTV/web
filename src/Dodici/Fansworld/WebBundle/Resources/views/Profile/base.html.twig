@@ -14,7 +14,7 @@
     {% endif %}
 
     {% block profile_header_container %}
-        <header data-profile-type="{{entity_type}}" data-profile-title="{{entity}}" data-profile-id="{{entity.id}}" class="{{ profile_head_class }} profile_head {% if tplLarge %} large {% else %} small {% endif %}  row-fluid">
+        <header style="position: relative;" data-profile-type="{{entity_type}}" data-profile-title="{{entity}}" data-profile-id="{{entity.id}}" class="{{ profile_head_class }} profile_head {% if tplLarge %} large {% else %} small {% endif %}  row-fluid">
             {% block profile_head %}
                 {% if tplLarge %}
                         {% include 'DodiciFansworldWebBundle:' ~ entity_type ~ '/Profile:header_large.html.twig' %}
@@ -26,6 +26,13 @@
             {% block profile_tabs %}
                 {% include 'DodiciFansworldWebBundle:' ~ entity_type ~ '/Profile:header_navbar.html.twig' %}
             {% endblock %}
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <div style="position: absolute; bottom: 0; right: 0;">
+                    <i class="icon-chevron-left pull-left"></i>
+                    <i class="icon-chevron-right pull-left"></i>
+                </div>
+            {% endif %}
     	</header>
 	{% endblock %}
 
