@@ -16,13 +16,13 @@
                         {% endblock %}
 
                         {% if entity == app.user or is_granted('ROLE_ADMIN') %}
-                            <a href="#" class="edit-image avatar" rel="tooltip" title="Cambiar imagen de perfil" id="avatar-uploader" data-entity-type="{{ entityType }}" data-ismodal="false" data-upload="photo" data-type="profile" data-uploader-selector="avatar-uploader"><i class="icon-pencil icon-white"></i></a>
+                            <a href="#" class="edit-image avatar" rel="tooltip" title="Cambiar imagen de perfil" id="avatar-uploader" data-entity-type="{{ entityType }}" data-entity-id="{{ entity.id }}" data-ismodal="false" data-upload="photo" data-type="profile" data-uploader-selector="avatar-uploader"><i class="icon-pencil icon-white"></i></a>
                         {% endif %}
                     </div>
                 {% endblock %}
 
                 {% if entity == app.user or is_granted('ROLE_ADMIN') %}
-                    <a href="#" class="edit-image splash" rel="tooltip" title="Cambiar portada" id="splash-uploader" data-entity-type="{{ entityType }}" data-ismodal="false" data-upload="photo" data-type="splash" data-uploader-selector="splash-uploader"><i class="icon-pencil icon-white"></i></a>
+                    <a href="#" class="edit-image splash" rel="tooltip" title="Cambiar portada" id="splash-uploader" data-entity-type="{{ entityType }}" data-entity-id="{{ entity.id }}" data-ismodal="false" data-upload="photo" data-type="splash" data-uploader-selector="splash-uploader"><i class="icon-pencil icon-white"></i></a>
                 {% endif %}
 
                 {% block splash_container %}

@@ -3,6 +3,7 @@
 namespace Dodici\Fansworld\WebBundle\Controller;
 
 use Dodici\Fansworld\WebBundle\Entity\Idol;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use JMS\SecurityExtraBundle\Annotation\Secure;
@@ -361,4 +362,82 @@ class IdolController extends SiteController
         return $return;
     }
 
+    /**
+     * @Route("/change_imageSave", name="idol_change_imageSave")
+     * @Secure(roles="ROLE_ADMIN")
+     * @Template
+     */
+    public function changeImageSaveAction()
+    {
+        $request = $this->getRequest();
+        $idolId = $request->get('idol', null);
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $tempFile = $request->get('tempFile');
+        $originalFileName = $request->get('originalFile');
+        $realWidth = $request->get('width');
+        $realHeight = $request->get('height');
+        $type = $request->get('type');
+
+        $lastdot = strrpos($originalFileName, '.');
+        $originalFile = substr($originalFileName, 0, $lastdot);
+        $ext = substr($originalFileName, $lastdot);
+
+        $finish = false;
+        $form = $this->_createForm();
+
+        if($idolId){
+            $idol = $this->getRepository('Idol')->find($idolId);
+        }else{
+            throw new Exception('No idol');
+        }
+
+        if ($request->getMethod() == 'POST') {
+            try {
+                $form->bindRequest($request);
+                $data = $form->getData();
+
+                if ($form->isValid()) {
+                    $mediaManager = $this->get("sonata.media.manager.media");
+
+                    $cropOptions = array(
+                        "cropX" => $data['x'],
+                        "cropY" => $data['y'],
+                        "cropW" => $data['w'],
+                        "cropH" => $data['h'],
+                        "tempFile" => $tempFile,
+                        "originalFile" => $originalFileName,
+                        "extension" => $ext
+                    );
+                    $media = $this->_GenerateMediaCrop($cropOptions);
+
+                    if ('profile' == $type) {
+                        $idol->setImage($media);
+                    } else {
+                        $idol->setSplash($media);
+                    }
+
+                    $em->persist($idol);
+                    $em->flush();
+
+                    $this->get('session')->setFlash('success', $this->trans('upload_sucess'));
+                    $finish = true;
+                }
+            } catch (\Exception $e) {
+                $form->addError(new FormError('Error subiendo foto de perfil'));
+            }
+        }
+
+        return array(
+            'idol' => $idol,
+            'form' => $form->createView(),
+            'tempFile' => $tempFile,
+            'originalFile' => $originalFileName,
+            'ext' => $ext,
+            'finish' => $finish,
+            'realWidth' => $realWidth,
+            'realHeight' => $realHeight,
+            'type' => $type
+        );
+    }
 }

@@ -519,4 +519,82 @@ class TeamController extends SiteController
         );
     }
 
+    /**
+     * @Route("/change_imageSave", name="team_change_imageSave")
+     * @Secure(roles="ROLE_ADMIN")
+     * @Template
+     */
+    public function changeImageSaveAction()
+    {
+        $request = $this->getRequest();
+        $teamId = $request->get('team', null);
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $tempFile = $request->get('tempFile');
+        $originalFileName = $request->get('originalFile');
+        $realWidth = $request->get('width');
+        $realHeight = $request->get('height');
+        $type = $request->get('type');
+
+        $lastdot = strrpos($originalFileName, '.');
+        $originalFile = substr($originalFileName, 0, $lastdot);
+        $ext = substr($originalFileName, $lastdot);
+
+        $finish = false;
+        $form = $this->_createForm();
+
+        if($teamId){
+            $team = $this->getRepository('Team')->find($teamId);
+        }else{
+            throw new Exception('No Team');
+        }
+
+        if ($request->getMethod() == 'POST') {
+            try {
+                $form->bindRequest($request);
+                $data = $form->getData();
+
+                if ($form->isValid()) {
+                    $mediaManager = $this->get("sonata.media.manager.media");
+
+                    $cropOptions = array(
+                        "cropX" => $data['x'],
+                        "cropY" => $data['y'],
+                        "cropW" => $data['w'],
+                        "cropH" => $data['h'],
+                        "tempFile" => $tempFile,
+                        "originalFile" => $originalFileName,
+                        "extension" => $ext
+                    );
+                    $media = $this->_GenerateMediaCrop($cropOptions);
+
+                    if ('profile' == $type) {
+                        $team->setImage($media);
+                    } else {
+                        $team->setSplash($media);
+                    }
+
+                    $em->persist($team);
+                    $em->flush();
+
+                    $this->get('session')->setFlash('success', $this->trans('upload_sucess'));
+                    $finish = true;
+                }
+            } catch (\Exception $e) {
+                $form->addError(new FormError('Error subiendo foto de perfil'));
+            }
+        }
+
+        return array(
+            'team' => $team,
+            'form' => $form->createView(),
+            'tempFile' => $tempFile,
+            'originalFile' => $originalFileName,
+            'ext' => $ext,
+            'finish' => $finish,
+            'realWidth' => $realWidth,
+            'realHeight' => $realHeight,
+            'type' => $type
+        );
+    }
 }

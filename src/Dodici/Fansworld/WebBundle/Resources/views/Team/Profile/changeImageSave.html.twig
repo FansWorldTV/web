@@ -1,0 +1,97 @@
+{% extends "DodiciFansworldWebBundle::popup.html.twig" %}
+{% form_theme form 'DodiciFansworldWebBundle::form.html.twig' %}
+
+{% block javascripts %}
+    {% if finish != true %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if finish %}
+        <script type="text/javascript">
+            location.href = "{{ path('team_change_imageSave') }}";
+        </script>
+
+    {% else %}
+
+        <script src="{{ asset('bundles/dodicifansworldweb/js/jcrop/jquery.Jcrop.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('bundles/dodicifansworldweb/js/fw.ui.metadata.js') }}" type="text/javascript"></script>
+        <script type="text/javascript">
+            var jcrop_api;
+            var jcrop_state = true;
+            var ratio = 2.20;
+            if ("profile" == "{{ type }}") {ratio = 1;}
+            $(function(){
+                $('#cropbox').Jcrop({
+                            onSelect: updateCoords,
+                            boxWidth: 500,
+                            boxHeight: 500,
+                            aspectRatio: ratio,
+                            onRelease: function(){
+                                $('#form_x').val(0);
+                                $('#form_y').val(0);
+                                $('#form_w').val(0);
+                                $('#form_h').val(0);
+                            },
+                            trueSize: [{{realWidth}},{{realHeight}}]
+                        },
+                        function(){
+                            jcrop_api = this;
+                        });
+            });
+            function updateCoords(c) {
+                $('#form_x').val(c.x);
+                $('#form_y').val(c.y);
+                $('#form_w').val(c.w);
+                $('#form_h').val(c.h);
+            };
+            function checkCoords() {
+                if (parseInt($('#form_w').val())) return true;
+                alert('Please select a crop region then press submit.');
+                return false;
+            };
+            //$('#share_it').click(function() {$('#saveProfileImage').click();});
+        </script>
+
+
+
+        <div class="row-fluid">
+            <div class="span7">
+                <div class="current">
+                    <section id="picture" class="row-fluid">
+                        <dl class="with-circles">
+                            <dt>
+                            <h4 class="numbered"><span>1</span> Seleccione el area de recorte</h4>
+                            <div class="clearfix"></div>
+                            </dt>
+
+                            <br/>
+                            <img src="{{ path('media_temp', {tempfile: tempFile, hash: appmedia.temphash(tempFile) } )}}" id="cropbox" />
+
+                            <br/>
+
+                            <form action="{{ path('team_change_imageSave', {'originalFile': originalFile, 'tempFile': tempFile, 'type' : type }) }}" method="post" enctype="multipart/form-data" class="bigform upload-photo" name="frmUpload">
+                                {{ form_errors(form) }}
+                                {{ form_rest(form) }}
+
+                                <dt>
+                                <h4 class="numbered"><span>2</span> Confirme los cambios </h4>
+                                <input type="submit" name="submit" value="Guardar Imagen" id="saveProfileImage" class="btn btn-primary" style="position: absolute;margin-top: -23px;margin-left: 200px;"/>
+                                </dt>
+                            </form>
+
+                        </dl>
+                    </section>
+                </div>
+            </div>
+            <div class='span4'>
+                <section class='ayuda' style="margin-top:25px;">
+                    <h2><span class="circular">?</span>Ayuda</h2>
+                    <p>
+                        Utilize el mouse para seleccionar el area de recorte, si desea utilizar la imagen completa puede omitir este paso y confirmar los cambios.
+                    </p>
+                </section>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
