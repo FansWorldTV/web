@@ -404,7 +404,7 @@ class UserRepository extends CountBaseRepository
 
 
     /**
-     * Get all users who have one or more of the given users
+     * Get all users who have one or more of the given teams
      * @param array_of_teams|team $teams
      */
     public function byTeams($teams, $limit=null, $sortby=null, $offset = null)
@@ -425,17 +425,17 @@ class UserRepository extends CountBaseRepository
                 AND tms.team IN (:tmarr)
                 ';
         if ($sortby !== null) {
-          $orderby = 'ORDER BY u.'.$sortby.' DESC';
-          $dql = $dql.$orderby;
+            $orderby = 'ORDER BY u.'.$sortby.' DESC';
+            $dql = $dql.$orderby;
         }
 
         $query = $this->_em->createQuery($dql)
-                ->setParameter('tmarr', $tmarr);
+            ->setParameter('tmarr', $tmarr);
 
         if ($limit !== null)
-          $query = $query->setMaxResults($limit);
+            $query = $query->setMaxResults($limit);
         if ($offset !== null)
-          $query = $query->setFirstResult($offset);
+            $query = $query->setFirstResult($offset);
 
         return $query->getResult();
     }
