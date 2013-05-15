@@ -39,7 +39,7 @@ class Genre implements Translatable
     private $slug;
 
     /**
-     * @var Genre
+     * @var Parent
      *
      * @ORM\ManyToOne(targetEntity="Genre")
      * @ORM\JoinColumns({

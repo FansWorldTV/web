@@ -609,25 +609,43 @@ class VideoController extends BaseController
     /**
      * Video test juan
      *
-     * @Route("/video/testjuan", name="api_v1_video_tesjuan")
+     * @Route("/video/bygenre/{id}", name="api_v1_video_tesjuan")
      * @Method({"GET"})
      *
      */
-    public function tesjuanAction()
+    public function bygenreAction($id)
     {
 
-        $user = $this->getRepository('User')->findOneBy(array('id' => 30));
+        //$user = $this->getRepository('User')->findOneBy(array('id' => 30));
+        //$videos = $this->getRepository('Video')->recommendedForUser($user);
 
-        $videos = $this->getRepository('Video')->recommendedForUser($user);
+        $videos = $this->getRepository('Video')->search(
+            null,
+            null,
+            null,
+            null,
+            null, //category
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            $id //genre
+            );
 
         $return = array();
         foreach ($videos as $video) {
             $return[] = $this->get("serializer")->values($video);
         }
 
-        $count = count($return);
-
-        return $this->result($return);
+        $count = count($videos);
+        return $this->result($count);
     }
 
 
@@ -659,9 +677,5 @@ class VideoController extends BaseController
 
         return $this->result($resu);
     }
-
-
-
-
 
 }
