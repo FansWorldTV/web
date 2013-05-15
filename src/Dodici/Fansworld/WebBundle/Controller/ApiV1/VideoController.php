@@ -619,25 +619,7 @@ class VideoController extends BaseController
         //$user = $this->getRepository('User')->findOneBy(array('id' => 30));
         //$videos = $this->getRepository('Video')->recommendedForUser($user);
 
-        $videos = $this->getRepository('Video')->search(
-            null,
-            null,
-            null,
-            null,
-            null, //category
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            $id //genre
-            );
+        $videos = $this->getRepository('Video')->moreFromGenre($id);
 
         $return = array();
         foreach ($videos as $video) {
