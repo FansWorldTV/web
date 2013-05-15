@@ -1094,10 +1094,11 @@ class UserRepository extends CountBaseRepository
      */
     public function next($user)
     {
-        $query = $this->createQuery('
+        $query = $this->_em->createQuery('
             SELECT u
-            FROM User u
+            FROM Application\Sonata\UserBundle\Entity\User u
             WHERE u.id > :userId
+            ORDER BY u.id DESC
         ')
             ->setParameter('userId', $user->getId())
             ->setMaxResults(1);
@@ -1111,10 +1112,11 @@ class UserRepository extends CountBaseRepository
      */
     public function previous($user)
     {
-        $query = $this->createQuery('
+        $query = $this->_em->createQuery('
             SELECT u
-            FROM User u
+            FROM Application\Sonata\UserBundle\Entity\User u
             WHERE u.id < :userId
+            ORDER BY u.id DESC
         ')
             ->setParameter('userId', $user->getId())
             ->setMaxResults(1);

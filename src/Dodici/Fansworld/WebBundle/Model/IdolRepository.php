@@ -281,10 +281,11 @@ class IdolRepository extends CountBaseRepository
      */
     public function next($idol)
     {
-        $query = $this->createQuery('
+        $query = $this->_em->createQuery('
             SELECT i
             FROM \Dodici\Fansworld\WebBundle\Entity\Idol i
             WHERE i.id > :idolId
+            ORDER BY i.id DESC
         ')
         ->setParameter('idolId', $idol->getId())
         ->setMaxResults(1);
@@ -298,10 +299,11 @@ class IdolRepository extends CountBaseRepository
      */
     public function previous($idol)
     {
-        $query = $this->createQuery('
+        $query = $this->_em->createQuery('
             SELECT i
             FROM \Dodici\Fansworld\WebBundle\Entity\Idol i
             WHERE i.id < :idolId
+            ORDER BY i.id DESC
         ')
             ->setParameter('idolId', $idol->getId())
             ->setMaxResults(1);

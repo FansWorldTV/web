@@ -32,6 +32,29 @@ class TeamController extends SiteController
     const LIMIT_ITEMS = 10;
 
     /**
+     * @Route("/{id}/next", name="team_next")
+     */
+    public function nextAction($id)
+    {
+        $team = $this->getRepository('Team')->find($id);
+        $next = $this->getRepository('Team')->next($team);
+
+
+        return $this->forward('DodiciFansworldWebBundle:Team:videosTab', array('slug'=> $next->getSlug()));
+    }
+
+    /**
+     * @Route("/{id}/previous", name="team_previous")
+     */
+    public function previousAction($id)
+    {
+        $team = $this->getRepository('Team')->find($id);
+        $previous = $this->getRepository('Team')->previous($team);
+
+        return $this->forward('DodiciFansworldWebBundle:Team:videosTab', array('slug'=> $previous->getSlug()));
+    }
+
+    /**
      * @Route("/list/{categorySlug}", name= "team_list", defaults = {"categorySlug" = null})
      * @Template()
      */

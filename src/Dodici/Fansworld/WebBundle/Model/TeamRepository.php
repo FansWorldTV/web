@@ -281,10 +281,11 @@ class TeamRepository extends CountBaseRepository
      */
     public function next($team)
     {
-        $query = $this->createQuery('
+        $query = $this->_em->createQuery('
             SELECT t
             FROM \Dodici\Fansworld\WebBundle\Entity\Team t
             WHERE t.id > :teamId
+            ORDER BY t.id DESC
         ')
             ->setParameter('teamId', $team->getId())
             ->setMaxResults(1);
@@ -298,10 +299,11 @@ class TeamRepository extends CountBaseRepository
      */
     public function previous($team)
     {
-        $query = $this->createQuery('
+        $query = $this->_em->createQuery('
             SELECT t
             FROM \Dodici\Fansworld\WebBundle\Entity\Team t
-            WHERE i.id < :teamId
+            WHERE t.id < :teamId
+            ORDER BY t.id DESC
         ')
             ->setParameter('teamId', $team->getId())
             ->setMaxResults(1);
