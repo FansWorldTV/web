@@ -592,7 +592,7 @@ class TeamController extends SiteController
                         "originalFile" => $originalFileName,
                         "extension" => $ext
                     );
-                    $media = $this->_GenerateMediaCrop($cropOptions);
+                    $media = $this->get('cutter')->cutImage($cropOptions);
 
                     if ('profile' == $type) {
                         $team->setImage($media);
@@ -640,22 +640,5 @@ class TeamController extends SiteController
             ->add('h', 'hidden', array('required' => false, 'data' => 0))
             ->getForm();
         return $form;
-    }
-
-    private function _GenerateMediaCrop(array $options)
-    {
-        $imagine = new Imagine();
-        $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $options['tempFile'];
-        $format = $this->get('appmedia')->getType($path);
-
-        $imageStream = $imagine->open($path);
-
-        if ($options['cropW'] && $options['cropH']) {
-            $imageStream = $imageStream
-                ->crop(new Point($options['cropX'], $options['cropY']), new Box($options['cropW'], $options['cropH']));
-        }
-
-        $metaData = array('filename' => $options['originalFile']);
-        return $this->get('appmedia')->createImageFromBinary($imageStream->get($format), $metaData);
     }
 }
