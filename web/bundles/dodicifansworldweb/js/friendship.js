@@ -74,7 +74,7 @@ var friendship = {
     },
 
     cancel: function(){
-        $(".btn_friendship.remove:not('.loading-small'), [data-remove-friendship]:not('.loading-small')").live('click', function(e){
+        $(".btn_friendship.remove:not('.loading-small'), [data-remove-friendship]:not('.loading-small')").on('click', function(e){
             e.preventDefault();
             e.stopImmediatePropagation();
             var self = $(this);
@@ -88,9 +88,15 @@ var friendship = {
                 var parentElement = self.attr('data-remove-element');
             }
 
+            console.log("friendshipId: " + friendshipId + " userId: " + userId);
             if(confirm('Seguro deseas dejar de seguir a este usuario?')){
                 self.addClass('loading-small');
-                ajax.cancelFriendAction(friendshipId, userId, function(response){
+                $.ajax({url: Routing.generate(appLocale + '_friendship_ajaxcancelfriend'),
+                    data: {
+                        user: null,
+                        friendship: null
+                    }
+                }).then(function(response){
                     if(!response.error) {
                         if(!dontRefresh){
                             window.location.reload();
@@ -101,6 +107,9 @@ var friendship = {
                         error(response.error);
                         self.removeClass('loading-small');
                     }
+                }).fail(function(error){
+                    error(error.responseText);
+                    self.removeClass('loading-small');
                 });
             }
         });
