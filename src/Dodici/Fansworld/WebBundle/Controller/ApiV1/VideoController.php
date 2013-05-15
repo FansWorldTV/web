@@ -336,15 +336,15 @@ class VideoController extends BaseController
 
 	/**
      * Video - streams
-     * 
+     *
      * @Route("/video/{id}/streams/{protocol}", name="api_v1_video_streams", requirements = {"id" = "\d+"}, defaults = {"protocol" = "progressive"})
      * @Method({"GET"})
      *
      * Get params: none
      * Url params:
      * - protocol: 'progressive'(default)|'rtmp'|'hls'
-     * 
-     * @return 
+     *
+     * @return
      * array (
      * 			provider: 'youtube'|'vimeo'|'kaltura',
      * 			streams:
@@ -541,6 +541,11 @@ class VideoController extends BaseController
             $user = null;
             if ($userid) {
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
+            }
+
+            if ('user' == $entityType && !$userid) {
+                $user = $entity;
+                $entity = null;
             }
 
             $allowedfields = array('author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount', 'watchlisted', 'url', 'liked');
