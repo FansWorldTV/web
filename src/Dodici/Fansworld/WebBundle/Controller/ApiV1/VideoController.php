@@ -577,4 +577,91 @@ class VideoController extends BaseController
             return $this->plainException($e);
         }
     }
+
+
+
+    /**
+     * Video test juan
+     *
+     * @Route("/video/testjuan2", name="api_v1_video_tesjuan2")
+     * @Method({"GET"})
+     *
+     */
+    public function tesjuan2Action()
+    {
+
+        $user = $this->getRepository('User')->findOneBy(array('id' => 30));
+
+        $tags = $this->get("Tagger")->ofUserVideos('popular');
+
+        $return = array();
+        foreach ($tags as $tag) {
+            $return[] = $this->get("serializer")->values($tag);
+        }
+
+        $count = count($return);
+
+        return $this->result($return);
+    }
+
+
+
+    /**
+     * Video test juan
+     *
+     * @Route("/video/testjuan", name="api_v1_video_tesjuan")
+     * @Method({"GET"})
+     *
+     */
+    public function tesjuanAction()
+    {
+
+        $user = $this->getRepository('User')->findOneBy(array('id' => 30));
+
+        $videos = $this->getRepository('Video')->recommendedForUser($user);
+
+        $return = array();
+        foreach ($videos as $video) {
+            $return[] = $this->get("serializer")->values($video);
+        }
+
+        $count = count($return);
+
+        return $this->result($return);
+    }
+
+
+    /**
+     * Video genre test
+     *
+     * @Route("/video/genretest", name="api_v1_video_genretest")
+     * @Method({"GET"})
+     *
+     */
+    public function genreTestAction()
+    {
+
+        //$user = $this->getRepository('User')->findOneBy(array('id' => 30));
+        //$video = $this->getRepository('Video')->findOneBy(array('id' => 89));
+
+        $genero = $this->getRepository('Genre')->findOneBy(array('id' => 2));
+
+        if ($genero->getType() == 'genre') {
+            $children = $genero->getChildren();
+        } else {
+            $children = $genero->getParent()->getChildren();
+        }
+
+        $resu = array();
+        foreach ($children as $child) {
+            $resu[] = $child->getTitle();
+        }
+
+        return $this->result($resu);
+    }
+
+
+
+
+
 }
