@@ -425,17 +425,17 @@ class UserRepository extends CountBaseRepository
                 AND tms.team IN (:tmarr)
                 ';
         if ($sortby !== null) {
-          $orderby = 'ORDER BY u.'.$sortby.' DESC';
-          $dql = $dql.$orderby;
+            $orderby = 'ORDER BY u.'.$sortby.' DESC';
+            $dql = $dql.$orderby;
         }
 
         $query = $this->_em->createQuery($dql)
-                ->setParameter('tmarr', $tmarr);
+            ->setParameter('tmarr', $tmarr);
 
         if ($limit !== null)
-          $query = $query->setMaxResults($limit);
+            $query = $query->setMaxResults($limit);
         if ($offset !== null)
-          $query = $query->setFirstResult($offset);
+            $query = $query->setFirstResult($offset);
 
         return $query->getResult();
     }
@@ -1086,5 +1086,41 @@ class UserRepository extends CountBaseRepository
         $condition = '(' . join(' OR ', $conditions) . ')';
 
         return $condition;
+    }
+
+    /**
+     * Return the next user
+     * @param User $user
+     */
+    public function next($user)
+    {
+        $query = $this->_em->createQuery('
+            SELECT u
+            FROM Application\Sonata\UserBundle\Entity\User u
+            WHERE u.id > :userId
+            ORDER BY u.id DESC
+        ')
+            ->setParameter('userId', $user->getId())
+            ->setMaxResults(1);
+
+        return $query->getSingleResult();
+    }
+
+    /**
+     * Return previous user
+     * @param User $user
+     */
+    public function previous($user)
+    {
+        $query = $this->_em->createQuery('
+            SELECT u
+            FROM Application\Sonata\UserBundle\Entity\User u
+            WHERE u.id < :userId
+            ORDER BY u.id DESC
+        ')
+            ->setParameter('userId', $user->getId())
+            ->setMaxResults(1);
+
+        return $query->getSingleResult();
     }
 }

@@ -31,6 +31,29 @@ class UserController extends SiteController
     const LIMIT_LIST_IDOLS = 15;
 
     /**
+     * @Route("/u/{id}/next", name="user_next")
+     */
+    public function nextAction($id)
+    {
+        $user = $this->getRepository('User')->find($id);
+        $next = $this->getRepository('User')->next($user);
+
+
+        return $this->forward('DodiciFansworldWebBundle:User:videosTab', array('username'=> $next->getUsername()));
+    }
+
+    /**
+     * @Route("/u/{id}/previous", name="user_previous")
+     */
+    public function previousAction($id)
+    {
+        $user = $this->getRepository('User')->find($id);
+        $previous = $this->getRepository('User')->previous($user);
+
+        return $this->forward('DodiciFansworldWebBundle:User:videosTab', array('username'=> $previous->getUsername()));
+    }
+
+    /**
      * @Route("/u/{username}", name="user_land")
      * @Route("/u/{username}/wall", name="user_wall")
      * @Template

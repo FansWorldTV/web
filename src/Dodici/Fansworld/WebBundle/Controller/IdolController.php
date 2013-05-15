@@ -55,6 +55,29 @@ class IdolController extends SiteController
     }
 
     /**
+     * @Route("/{id}/next", name="idol_next")
+     */
+    public function nextAction($id)
+    {
+        $idol = $this->getRepository('Idol')->find($id);
+        $next = $this->getRepository('Idol')->next($idol);
+
+
+        return $this->forward('DodiciFansworldWebBundle:Idol:videosTab', array('slug'=> $next->getSlug()));
+    }
+
+    /**
+     * @Route("/{id}/previous", name="idol_previous")
+     */
+    public function previousAction($id)
+    {
+        $idol = $this->getRepository('Idol')->find($id);
+        $previous = $this->getRepository('Idol')->previous($idol);
+
+        return $this->forward('DodiciFansworldWebBundle:Idol:videosTab', array('slug'=> $previous->getSlug()));
+    }
+
+    /**
      * @Route("/ajax/list", name="idol_ajaxlist")
      */
     public function ajaxListAction()
