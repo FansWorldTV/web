@@ -93,8 +93,8 @@ var friendship = {
                 self.addClass('loading-small');
                 $.ajax({url: Routing.generate(appLocale + '_friendship_ajaxcancelfriend'),
                     data: {
-                        user: null,
-                        friendship: null
+                        user: userId,
+                        friendship: friendshipId
                     }
                 }).then(function(response){
                     if(!response.error) {
