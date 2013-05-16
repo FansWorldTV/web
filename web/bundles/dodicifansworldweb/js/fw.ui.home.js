@@ -140,96 +140,6 @@ $(document).ready(function () {
 
     var $container = $('section.highlights');
 
-    function createIsotope(x) {
-        $container.find('.video').css({
-            'width': '16%',
-            'height': '160px',
-            'margin-top': '5px',
-            'margin-bottom': '5px',
-            'border': '1px solid #333',
-            'border-radius': '4px',
-            'overflow': 'hidden'
-        });
-        $container.find('.video.double').css({
-            'width': '32.5%',
-            'height': '332px'
-        });
-        $container.find('.video img').css({
-            'width': '100%',
-            'height': '100%'
-        });
-
-        // initialize Isotope
-        $container.isotope({
-            // options...
-            itemSelector: '.video',
-            resizable: false, // disable normal resizing
-            animationOptions: {
-                duration: 2750,
-                easing: 'linear',
-                queue: false
-            },
-            // set columnWidth to a percentage of container width
-            masonry: { columnWidth: $container.width() / 6 }
-        });
-
-        // update columnWidth on window resize
-        $(window).smartresize(function(){
-            $container.isotope({
-                // update columnWidth to a percentage of container width
-                masonry: { columnWidth: $container.width() / 6 }
-            });
-        });
-    }
-    function appendVideos(videoCategory) {
-        var i = 0;
-        var cnt = 0;
-        createIsotope();
-        // ajax.genericAction('home_ajaxfilter', {paginate:{'page':1, 'block':'popular','vc': 6}}, function(r){console.log(r);});
-        // $.ajax({url: Routing.generate('es_home_ajaxfilter'), data: {'vc': 1}}).then(function(r){console.log(r)})
-        var feed = Routing.generate(appLocale + '_home_ajaxfilter');
-        $.ajax({url: feed, data: {'vc': videoCategory}}).then(function(response){
-            for(i in response.highlighted) {
-                if (response.highlighted.hasOwnProperty(i)) {
-                    var video = response.highlighted[i];
-                    var thumb = document.createElement('article');
-                    thumb.classList.add('video');
-                    
-                    var image = document.createElement('img');
-                    //thumb.className('video');
-                    $thumb = $('<article class="video"><img src="' + video.image + '" title="' + video.title + '"/></article>');
-
-                    $thumb.css({
-                        'width': '16%',
-                        'height': '160px',
-                        'margin-top': '5px',
-                        'margin-bottom': '5px',
-                        'border': '1px solid #333',
-                        'border-radius': '4px',
-                        'overflow': 'hidden'
-                    });
-                    if(cnt === 1) {
-                        $thumb.css({
-                            'width': '32.5%',
-                            'height': '332px'
-                        });
-                    }
-                    $thumb.find('.video img').css({
-                        'width': '100%',
-                        'height': '100%'
-                    });
-                    cnt += 1;
-                    $container.append($thumb).isotope('appended', $thumb);
-                }
-            }
-            $container.isotope('reLayout');
-            $container.isotope('reloadItems');
-            $container.isotope({
-                // update columnWidth to a percentage of container width
-                masonry: { columnWidth: $container.width() / 6 }
-            });
-        });
-    }
 
     function appendFollowed(videoCategory) {
         var i = 0;
@@ -311,11 +221,6 @@ $(document).ready(function () {
                         if(cnt === 1) {
                             $thumb.addClass('double');
                         }
-
-                        $thumb.find('img').css({
-                            'width': '100%',
-                            'height': '100%'
-                        });
                         cnt += 1;
 
                         $('section.highlights').append($thumb);
@@ -328,7 +233,7 @@ $(document).ready(function () {
     }
 
     var videoCategory = $('.filter-home').find('.active').attr('data-category-id');
-    makePackery(8);
+    makePackery(videoCategory);
     appendFollowed(videoCategory);
     appendPopular(videoCategory);
 });
