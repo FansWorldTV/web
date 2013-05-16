@@ -9,21 +9,17 @@ use Imagine\Gd\Imagine;
 
 class Cutter
 {
-    protected $request;
-    protected $em;
-    protected $appstate;
+    protected $appmedia;
 
-    function __construct(EntityManager $em, $appstate)
+    public function __construct($appmedia)
     {
-        $this->request = Request::createFromGlobals();
-        $this->em = $em;
-        $this->appstate = $appstate;
+        $this->appmedia = $appmedia;
     }
 
     public function cutImage(array $options) {
         $imagine = new Imagine();
         $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $options['tempFile'];
-        $format = $this->get('appmedia')->getType($path);
+        $format = $this->appmedia->getType($path);
 
         $imageStream = $imagine->open($path);
 
@@ -33,6 +29,6 @@ class Cutter
         }
 
         $metaData = array('filename' => $options['originalFile']);
-        return $this->get('appmedia')->createImageFromBinary($imageStream->get($format), $metaData);
+        return $this->appmedia->createImageFromBinary($imageStream->get($format), $metaData);
     }
 }

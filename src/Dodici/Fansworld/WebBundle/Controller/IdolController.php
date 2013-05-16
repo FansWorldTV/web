@@ -435,6 +435,7 @@ class IdolController extends SiteController
                         "originalFile" => $originalFileName,
                         "extension" => $ext
                     );
+
                     $media = $this->get('cutter')->cutImage($cropOptions);
 
                     if ('profile' == $type) {
