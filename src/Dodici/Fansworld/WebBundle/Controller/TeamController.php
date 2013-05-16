@@ -21,6 +21,9 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Collection;
 use Dodici\Fansworld\WebBundle\Entity\Team;
+use Imagine\Image\Box;
+use Imagine\Image\Point;
+use Imagine\Gd\Imagine;
 
 /**
  * Team controller.
@@ -30,6 +33,29 @@ class TeamController extends SiteController
 {
 
     const LIMIT_ITEMS = 10;
+
+    /**
+     * @Route("/{id}/next", name="team_next")
+     */
+    public function nextAction($id)
+    {
+        $team = $this->getRepository('Team')->find($id);
+        $next = $this->getRepository('Team')->next($team);
+
+
+        return $this->forward('DodiciFansworldWebBundle:Team:videosTab', array('slug'=> $next->getSlug()));
+    }
+
+    /**
+     * @Route("/{id}/previous", name="team_previous")
+     */
+    public function previousAction($id)
+    {
+        $team = $this->getRepository('Team')->find($id);
+        $previous = $this->getRepository('Team')->previous($team);
+
+        return $this->forward('DodiciFansworldWebBundle:Team:videosTab', array('slug'=> $previous->getSlug()));
+    }
 
     /**
      * @Route("/list/{categorySlug}", name= "team_list", defaults = {"categorySlug" = null})
@@ -519,4 +545,100 @@ class TeamController extends SiteController
         );
     }
 
+    /**
+     * @Route("/change/image", name="team_change_imageSave")
+     * @Secure(roles="ROLE_ADMIN")
+     * @Template
+     */
+    public function changeImageSaveAction()
+    {
+        $request = $this->getRequest();
+        $teamId = $request->get('team', null);
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $tempFile = $request->get('tempFile');
+        $originalFileName = $request->get('originalFile');
+        $realWidth = $request->get('width');
+        $realHeight = $request->get('height');
+        $type = $request->get('type');
+
+        $lastdot = strrpos($originalFileName, '.');
+        $originalFile = substr($originalFileName, 0, $lastdot);
+        $ext = substr($originalFileName, $lastdot);
+
+        $finish = false;
+        $form = $this->_createForm();
+
+        if($teamId){
+            $team = $this->getRepository('Team')->find($teamId);
+        }else{
+            throw new Exception('No Team');
+        }
+
+        if ($request->getMethod() == 'POST') {
+            try {
+                $form->bindRequest($request);
+                $data = $form->getData();
+
+                if ($form->isValid()) {
+                    $mediaManager = $this->get("sonata.media.manager.media");
+
+                    $cropOptions = array(
+                        "cropX" => $data['x'],
+                        "cropY" => $data['y'],
+                        "cropW" => $data['w'],
+                        "cropH" => $data['h'],
+                        "tempFile" => $tempFile,
+                        "originalFile" => $originalFileName,
+                        "extension" => $ext
+                    );
+                    $media = $this->get('cutter')->cutImage($cropOptions);
+
+                    if ('profile' == $type) {
+                        $team->setImage($media);
+                    } else {
+                        $team->setSplash($media);
+                    }
+
+                    $em->persist($team);
+                    $em->flush();
+
+                    $this->get('session')->setFlash('success', $this->trans('upload_sucess'));
+                    $finish = true;
+                }
+            } catch (\Exception $e) {
+                $form->addError(new FormError('Error subiendo foto de perfil'));
+            }
+        }
+
+        return array(
+            'team' => $team,
+            'form' => $form->createView(),
+            'tempFile' => $tempFile,
+            'originalFile' => $originalFileName,
+            'ext' => $ext,
+            'finish' => $finish,
+            'realWidth' => $realWidth,
+            'realHeight' => $realHeight,
+            'type' => $type
+        );
+    }
+
+    private function _createForm()
+    {
+        $defaultData = array();
+        $collectionConstraint = new Collection(array(
+            'x' => array(),
+            'y' => array(),
+            'w' => array(),
+            'h' => array()
+        ));
+        $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
+            ->add('x', 'hidden', array('required' => false, 'data' => 0))
+            ->add('y', 'hidden', array('required' => false, 'data' => 0))
+            ->add('w', 'hidden', array('required' => false, 'data' => 0))
+            ->add('h', 'hidden', array('required' => false, 'data' => 0))
+            ->getForm();
+        return $form;
+    }
 }
