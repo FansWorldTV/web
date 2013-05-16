@@ -232,8 +232,35 @@ $(document).ready(function () {
         });
     }
 
+    function makeTags(channel, filter, page) {
+        $.ajax({
+            url: Routing.generate(appLocale + '_tag_ajaxgetusedinvideos'),
+            data: {
+                channel: channel,
+                filter: filter,
+                page: page
+            }
+        }).then(function(response){
+            var i = 0;
+            var tags = response.tags;
+            var container = $('section.'+filter+'-tags > ul'); //$('section.followed-tags > ul');
+            $(container).empty();
+            for(i in tags){
+                if (tags.hasOwnProperty(i)) {
+                    $(container).append("<li>"+tags[i].title+"</li>");
+                    console.log("adding tag number: " + i)
+                    if(i > 5) {
+                        break;
+                    }
+                }
+            }
+        })
+    }
+
     var videoCategory = $('.filter-home').find('.active').attr('data-category-id');
     makePackery(videoCategory);
     appendFollowed(videoCategory);
     appendPopular(videoCategory);
+    makeTags(videoCategory, 'popular', 1);
+    makeTags(videoCategory, 'followed', 1);
 });
