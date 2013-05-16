@@ -466,10 +466,10 @@ var site = {
         });
     },
     watchLaterButtons: function() {
-        $('.btn.watchlater:not(.disabled)').live('click', function(e) {
+        $('[data-watch-later]:not(.disabled)').live('click', function(e) {
             e.preventDefault();
             var el = $(this);
-            var videoid = el.attr('data-videoid');
+            var videoid = el.attr('data-video-id');
             var action = 'playlist_ajaxadd';
 
             if (el.attr('data-later') == 'true') {

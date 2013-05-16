@@ -11,7 +11,7 @@ app/spool/*
 app/config/parameters.ini
 app/config/parameters.yml
 web/bundles/dodicifansworldweb/css/base.css
-
+.idea/*
 
 #trash
 web/bundles/dodicifansworldweb/js/compiled/*

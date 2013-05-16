@@ -886,13 +886,29 @@ $(document).ready(function () {
                     var xhr = event.target.xhr;
                     var data = JSON.parse(xhr.responseText);
                     var formHtml = null;
-                    var href = Routing.generate(appLocale + '_user_change_imageSave', {
+                    var entity = $(that.element).attr('data-entity-type');
+                    var route = null;
+                    var ajaxData = {
                         'originalFile': data.originalFile,
                         'tempFile':data.tempFile,
                         'width': data.width,
                         'type': that.options.imageType,
                         'height': data.height
-                    });
+                    };
+                    switch(entity) {
+                        case 'idol':
+                            route = '_idol_change_imageSave';
+                            ajaxData.idol = $(that.element).attr('data-entity-id');
+                            break;
+                        case 'team':
+                            route = '_team_change_imageSave';
+                            ajaxData.team = $(that.element).attr('data-entity-id');
+                            break;
+                        case 'user':
+                            route = '_user_change_imageSave';
+                            break;
+                    }
+                    var href = Routing.generate(appLocale + route, ajaxData);
                     $.ajax({url: href, type: 'GET'}).then(function(response){
                         formHtml = $(response).clone();
                         boot.find('.modal-body').html(formHtml);

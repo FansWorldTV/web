@@ -63,6 +63,7 @@ class TagController extends SiteController
      */
     public function ajaxTagsUsedInVideos()
     {
+        $tagger = $this->get('tagger');
         $request = $this->getRequest();
         $page = $request->get('page');
         $limit = null;
@@ -83,7 +84,12 @@ class TagController extends SiteController
         );
 
         try {
-            $response['tags'] = $this->get('tagger')->usedInVideos($filterType, $videoCategory, $limit, $offset);
+            if($filterType == 'follow'){
+                $user = $this->getUser();
+                $response['tags'] = $tagger->ofUserVideos($user, $limit, $offset);
+            }else{
+                $response['tags'] = $tagger->usedInVideos($filterType, $videoCategory, $limit, $offset);
+            }
         } catch (Exception $exc) {
             $response['error'] = $exc->getMessage();
         }
