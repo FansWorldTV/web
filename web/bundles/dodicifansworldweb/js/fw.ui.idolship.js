@@ -106,14 +106,29 @@ $(document).ready(function () {
             self.addClass('disabled');
             self.removeClass('add');
             self.text("YA ERES FAN");
-            var number = $('.numbers-info .fans-info .numero').text() + 1;
+            var number = 0;
+
+            if ($('.numbers-info .fans-info .numero') == []) {
+                number = Number($('.numbers-info .fans-info .numero').text()) + 1;
+                $('.numbers-info .fans-info .numero').text(number);
+            }
+            else {
+                number = Number(self.prev().text()) + 1;
+                self.prev().text(number);
+            }
+        }
+    });
+
+    $(".btn_idolship:not('.remove')").fwIdolship({
+        onAddIdol: function(plugin, data) {
+            var number = Number($('.numbers-info .fans-info .numero').text()) + 1;
             $('.numbers-info .fans-info .numero').text(number);
         }
     });
 
     $(".btn_idolship.remove").fwIdolship({
         onRemoveIdol: function(plugin, data) {
-            location.reload();
+            window.location.reload();
         }
     });
 });
