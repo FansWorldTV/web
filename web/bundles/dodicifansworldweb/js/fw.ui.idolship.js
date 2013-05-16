@@ -106,8 +106,16 @@ $(document).ready(function () {
             self.addClass('disabled');
             self.removeClass('add');
             self.text("YA ERES FAN");
-            var number = Number($('.numbers-info .fans-info .numero').text()) + 1;
-            $('.numbers-info .fans-info .numero').text(number);
+            var number = 0;
+
+            if ($('.numbers-info .fans-info .numero') == []) {
+                number = Number($('.numbers-info .fans-info .numero').text()) + 1;
+                $('.numbers-info .fans-info .numero').text(number);
+            }
+            else {
+                number = Number(self.prev().text()) + 1;
+                self.prev().text(number);
+            }
         }
     });
 
