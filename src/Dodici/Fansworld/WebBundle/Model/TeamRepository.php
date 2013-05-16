@@ -290,7 +290,7 @@ class TeamRepository extends CountBaseRepository
             ->setParameter('teamId', $team->getId())
             ->setMaxResults(1);
 
-        return $query->getSingleResult();
+        return $query->getOneOrNullResult();
     }
 
     /**
@@ -308,6 +308,6 @@ class TeamRepository extends CountBaseRepository
             ->setParameter('teamId', $team->getId())
             ->setMaxResults(1);
 
-        return $query->getSingleResult();
+        return $query->getOneOrNullResult();
     }
 }

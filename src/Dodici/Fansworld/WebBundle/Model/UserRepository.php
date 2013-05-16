@@ -1103,7 +1103,7 @@ class UserRepository extends CountBaseRepository
             ->setParameter('userId', $user->getId())
             ->setMaxResults(1);
 
-        return $query->getSingleResult();
+        return $query->getOneOrNullResult();
     }
 
     /**
@@ -1121,6 +1121,6 @@ class UserRepository extends CountBaseRepository
             ->setParameter('userId', $user->getId())
             ->setMaxResults(1);
 
-        return $query->getSingleResult();
+        return $query->getOneOrNullResult();
     }
 }

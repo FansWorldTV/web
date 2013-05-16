@@ -290,7 +290,7 @@ class IdolRepository extends CountBaseRepository
         ->setParameter('idolId', $idol->getId())
         ->setMaxResults(1);
 
-        return $query->getSingleResult();
+        return $query->getOneOrNullResult();
     }
 
     /**
@@ -308,6 +308,6 @@ class IdolRepository extends CountBaseRepository
             ->setParameter('idolId', $idol->getId())
             ->setMaxResults(1);
 
-        return $query->getSingleResult();
+        return $query->getOneOrNullResult();
     }
 }
