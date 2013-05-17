@@ -1,10 +1,9 @@
 <?php
 
 namespace Dodici\Fansworld\WebBundle\Model;
-
 use Dodici\Fansworld\WebBundle\Entity\Video;
-
 use Dodici\Fansworld\WebBundle\Entity\VideoCategory;
+use Dodici\Fansworld\WebBundle\Entity\Genre;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
 use Dodici\Fansworld\WebBundle\Entity\Tag;
 use Application\Sonata\UserBundle\Entity\User;

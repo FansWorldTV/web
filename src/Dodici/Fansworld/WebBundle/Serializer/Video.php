@@ -9,13 +9,13 @@ class Video
 {
     protected $serializer;
     protected $router;
-    
+
     function __construct($serializer, $router)
     {
         $this->serializer = $serializer;
         $this->router = $router;
     }
-    
+
     public function values($entity)
     {
         return array(
@@ -24,6 +24,8 @@ class Video
             'visitCount' => $entity->getVisitCount(),
             'commentCount' => $entity->getCommentCount(),
             'videocategory' => $entity->getVideocategory() ? (int)$entity->getVideocategory()->getId() : null,
+            'genre_id' => $entity->getGenre() ? (int)$entity->getGenre()->getId() : null,
+            'genreparent_id' => $entity->getGenre()->getParent() ? (int)$entity->getGenre()->getParent()->getId() : null,
             'weight' => $entity->getWeight(),
             'duration' => $entity->getDuration(),
             'url' => $this->router->generate('video_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()))
