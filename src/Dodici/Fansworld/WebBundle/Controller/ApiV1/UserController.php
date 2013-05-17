@@ -187,7 +187,7 @@ class UserController extends BaseController
     /**
      * [signed] User Teams
      *
-     * @Route("/user/teams", name="api_v1_user_teams")
+     * @Route("/user/{id}/teams", name="api_v1_user_teams", requirements = {"id" = "\d+"})
      * @Method({"GET"})
      *
      * Get params:
@@ -203,12 +203,12 @@ class UserController extends BaseController
      * array (Serializer of team)
      *
      */
-    public function teamsListAction()
+    public function teamsListAction($id)
     {
         try {
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
-                $targetid = $request->get('target_id');
+                $targetid = $id;
 
                 if (!$targetid) throw new HttpException(400, 'Invalid target_id');
                 $target = $this->getRepository('User')->find($targetid);
@@ -263,11 +263,10 @@ class UserController extends BaseController
      /**
      * [signed] User Idols
      *
-     * @Route("/user/idols", name="api_v1_user_idols")
+     * @Route("/user/{id}/idols", name="api_v1_user_idols", requirements = {"id" = "\d+"})
      * @Method({"GET"})
      *
      * Get params:
-     * - target_id: int
      * - [user_token]
      * - <optional> user_id: int
      * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
@@ -279,14 +278,14 @@ class UserController extends BaseController
      * array (Serializer of idol)
      *
      */
-    public function idolsListAction()
+    public function idolsListAction($id)
     {
         try {
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
-                $targetid = $request->get('target_id');
+                $targetid = $id;
 
-                if (!$targetid) throw new HttpException(400, 'Invalid target_id');
+                if (!$targetid) throw new HttpException(400, 'Invalid target id');
                 $target = $this->getRepository('User')->find($targetid);
 
                 if (!($target instanceof User)) throw new HttpException(404, 'Target user not found');
