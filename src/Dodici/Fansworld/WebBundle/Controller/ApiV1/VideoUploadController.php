@@ -79,6 +79,8 @@ class VideoUploadController extends BaseController
 
 	/**
      * [signed] Create entry
+     * After entry creation, user will have to wait until the video is processed via batch
+     * He will receive a TYPE_VIDEO_PROCESSED notification when it is ready
      * 
      * @Route("/video/upload/entry", name="api_v1_video_upload_entry")
      * @Method({"POST"})
