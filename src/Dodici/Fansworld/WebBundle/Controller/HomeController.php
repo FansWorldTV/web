@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
+use Dodici\Fansworld\WebBundle\Entity\VideoCategory;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -53,6 +55,10 @@ class HomeController extends SiteController
             $vc = $request->get('vc', false);
             $vc = $this->getRepository('VideoCategory')->find($vc);
 
+            if(!$vc instanceof VideoCategory){
+                throw new Exception("No video category");
+            }
+
             $response = array(
                 'home' => null,
                 'highlighted' => array(),
@@ -68,7 +74,7 @@ class HomeController extends SiteController
             $videos = $videoRepo->search(null, null, $limitWithTheHighlighted, 0, $vc, true, null, null, null, null, null, $homeVideo);
             $response['highlighted'] = $serializer->values($videos, 'home_video');
 
-            $videos = $videoRepo->recommended($user, null, self::LIMIT_VIDEO);
+            $videos = $videoRepo->search(null, $user, self::LIMIT_VIDEO, 0, $vc->getId(), true, null, null, null, 'default', null, $homeVideo);
             $response['followed'] = $serializer->values($videos, 'home_video');
 
             $videos = $videoRepo->search(null, null, self::LIMIT_VIDEO, 0, $vc->getId(), false);
@@ -78,16 +84,18 @@ class HomeController extends SiteController
             $block = $paginate['block'];
             $page = $paginate['page'];
             $offset = ($page -1)*self::LIMIT_VIDEO;
+            $homeVideo = $this->getRepository('HomeVideo')->findOneBy(array('videocategory' => $vc->getId()));
+            $homeVideo = $homeVideo->getVideo();
 
             $response = array('videos' => array());
 
             switch($block){
                 case 'follow':
-                    $videos = $videoRepo->recommended($user, null, self::LIMIT_VIDEO, $offset);
+                    $videos = $videoRepo->search(null, $user, self::LIMIT_VIDEO, $offset, $vc->getId(), true, null, null, null, 'default', null, $homeVideo);
                     $response['videos'] = $serializer->values($videos, 'home_video');
                     break;
                 case 'popular':
-                    $videos = $videoRepo->search(null, null, self::LIMIT_VIDEO, $offset, $vc->getId(), false);
+                    $videos = $videoRepo->search(null, null, self::LIMIT_VIDEO, $offset, $vc->getId(), false, null, null, null, 'default', null, $homeVideo);
                     $response['videos'] = $serializer->values($videos, 'home_video');
                     break;
             }
