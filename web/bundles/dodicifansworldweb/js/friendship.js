@@ -22,7 +22,7 @@ var friendship = {
     },
 
     add: function(){
-        $(".btn_friendship.add:not('.loading-small')").live('click', function(e){
+        $(".btn_friendship.add:not('.loading-small')").on('click', function(e){
             e.stopImmediatePropagation();
             var self = $(this);
             self.addClass('loading-small');
@@ -59,6 +59,8 @@ var friendship = {
                 if(!response.error) {
                     if (response.active) {
                         self.after('<span class="label">'+ response.buttontext +'</span>');
+                        var number = Number($('.numbers-info .fans-info .numero').text()) + 1;
+                        $('.numbers-info .fans-info .numero').text(number);
                         self.remove();
                     } else {
                         self.removeClass('add').removeClass('btn-success').addClass('remove').attr('friendshipId', response.friendship).html(response.buttontext);
@@ -93,8 +95,8 @@ var friendship = {
                 self.addClass('loading-small');
                 $.ajax({url: Routing.generate(appLocale + '_friendship_ajaxcancelfriend'),
                     data: {
-                        user: null,
-                        friendship: null
+                        user: userId,
+                        friendship: friendshipId
                     }
                 }).then(function(response){
                     if(!response.error) {
