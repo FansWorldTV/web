@@ -41,7 +41,21 @@ class VideoUploadController extends BaseController
      * 
      * @return 
      * array (
-     *     video_id: int
+     *     video_id: int,
+     *     url: string,
+     *     token: string,
+     *     params: array(
+     *         uploadTokenId: string,
+     *         service: 'uploadToken',
+     *         action: 'upload',
+     *         ks: string
+     *         
+     *         //you then have to add these:
+     *         fileData: file,
+     *         <optional> resume: boolean,
+     *         <optional> resumeAt: float,
+     *         <optional> finalChunk: boolean
+     *     )
      * )
      */
     public function createEntryAction()
@@ -91,7 +105,8 @@ class VideoUploadController extends BaseController
                     'params' => array(
                         'uploadTokenId' => $uploadtoken,
                         'service' => $service,
-                        'action' => $action
+                        'action' => $action,
+                        'ks' => $kaltura->getKs()
                     )
                 ));
                 
