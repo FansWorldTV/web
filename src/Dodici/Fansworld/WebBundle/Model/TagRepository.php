@@ -47,7 +47,7 @@ class TagRepository extends CountBaseRepository
     /**
      * Returns most popular/latest tags used in videos lately
      * Please use Tagger service if possible
-     * 
+     *
      * @param 'popular'|'latest' $filtertype
      * @param VideoCategory|null $videocategory - filter by video category
      * @param int|null $limit
@@ -86,7 +86,7 @@ class TagRepository extends CountBaseRepository
                 FROM
                 has' . $type . '
                 INNER JOIN ' . $type . ' ON has' . $type . '.' . $type . '_id = ' . $type . '.id
-                INNER JOIN video ON has' . $type . '.video_id = video.id AND video.active = true 
+                INNER JOIN video ON has' . $type . '.video_id = video.id AND video.active = true
                 ' .
                     (($videocategory) ?
                             'WHERE
@@ -104,7 +104,7 @@ class TagRepository extends CountBaseRepository
 
         $query = $this->_em->createNativeQuery(
                 join(' UNION ', $sqls) . '
-            ORDER BY 
+            ORDER BY
             ' . $order . '
             ' .
                 (($limit !== null) ? ' LIMIT :limit ' : '') .
@@ -128,7 +128,7 @@ class TagRepository extends CountBaseRepository
     /**
      * Matches against a string for user/team/idol entities, for autocomplete, etc
      * entities of which the user is a fan
-     * 
+     *
      * @param string $match
      * @param User|null $user
      * @param int|null $limit
@@ -193,7 +193,7 @@ class TagRepository extends CountBaseRepository
     /**
      * Matches against a string for user/team/idol/tag entities, for tagging autocomplete, etc
      * all entities found, except for user, which shows only friends
-     * 
+     *
      * @param string $match
      * @param User|null $user
      * @param int|null $limit
@@ -280,7 +280,7 @@ class TagRepository extends CountBaseRepository
     /**
      * Returns latest trending tags
      * Please use Tagger service if possible
-     * 
+     *
      * @param int|null $limit
      * @param null|'video'|'photo'|'event' $taggedtype - filter by tagged entity type
      * @param null|'tag'|'idol'|'team' $resulttype - filter by result tag type
@@ -329,10 +329,10 @@ class TagRepository extends CountBaseRepository
                 LEFT JOIN video ON has' . $type . '.video_id = video.id
                 LEFT JOIN photo ON has' . $type . '.photo_id = photo.id
                 WHERE has' . $type . '.created_at > :datebefore
-                
+
                 AND (has' . $type . '.video_id IS NULL OR video.active = true)
                 AND (has' . $type . '.photo_id IS NULL OR photo.active = true)
-                
+
                 ' .
                     ($taggedtype ? '
                 	AND has' . $type . '.' . $taggedtype . '_id IS NOT NULL
@@ -345,7 +345,7 @@ class TagRepository extends CountBaseRepository
 
         $query = $this->_em->createNativeQuery(
                 join(' UNION ', $sqls) . '
-            ORDER BY 
+            ORDER BY
             usecount DESC
             ' .
                 (($limit !== null) ? ' LIMIT :limit ' : '')
@@ -358,6 +358,80 @@ class TagRepository extends CountBaseRepository
             $query = $query->setParameter('limit', (int) $limit, Type::INTEGER);
 
 
+        return $query->getResult();
+    }
+
+
+    public function getTags($filtertype, $limit = null, $offset = null)
+    {
+        $filtertypes = array('popular', 'latest');
+
+        if (!in_array($filtertype, $filtertypes))
+            throw new \InvalidArgumentException('Invalid filter type');
+
+
+        $order = null;
+        if ($filtertype == 'popular')
+            $order = 'avgweight DESC';
+        if ($filtertype == 'latest')
+            $order = 'latest DESC';
+
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('id', 'id');
+        $rsm->addScalarResult('title', 'title');
+        $rsm->addScalarResult('slug', 'slug');
+        $rsm->addScalarResult('type', 'type');
+        $rsm->addScalarResult('usecount', 'count');
+        $rsm->addScalarResult('avgweight', 'weight');
+
+        $sqls = array();
+        foreach (array('tag', 'idol', 'team') as $type) {
+            $sqls[] = '
+                SELECT
+                ' . $type . '.id as id,
+                ' .
+                    (($type == 'idol') ?
+                            ('CONCAT(' . $type . '.firstname, \' \', ' . $type . '.lastname) AS title,') :
+                            ($type . '.title as title,'))
+                    . '
+                ' . $type . '.slug as slug,
+                COUNT(has' . $type . '.id) AS usecount,
+                AVG(video.weight) AS avgweight,
+                MAX(has' . $type . '.created_at) as latest,
+                \'' . $type . '\' as type
+                FROM
+                has' . $type . '
+                INNER JOIN ' . $type . ' ON has' . $type . '.' . $type . '_id = ' . $type . '.id
+                INNER JOIN video ON has' . $type . '.video_id = video.id AND video.active = true
+                ' .
+
+                'WHERE
+                (has'. $type . '.video_id IN (:videoIds))'
+                    . '
+                GROUP BY ' . $type . '.id';
+        }
+
+        $query = $this->_em->createNativeQuery(
+                join(' UNION ', $sqls) . '
+            ORDER BY
+            ' . $order . '
+            ' .
+                (($limit !== null) ? ' LIMIT :limit ' : '') .
+                (($offset !== null) ? ' OFFSET :offset ' : '')
+                , $rsm
+        );
+
+
+        /*
+        $videoIds = "";
+        foreach ($videos as $video) $videoIds = $videoIds.','.$video->getId();
+        */
+        $query = $query->setParameter('videoIds', 86);
+
+        if ($limit !== null)
+            $query = $query->setParameter('limit', (int) $limit, Type::INTEGER);
+        if ($offset !== null)
+            $query = $query->setParameter('offset', (int) $offset, Type::INTEGER);
         return $query->getResult();
     }
 
