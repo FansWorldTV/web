@@ -13,7 +13,8 @@ class Idol
         return array(
             'firstname' => $entity->getFirstname(),
             'lastname' => $entity->getLastname(),
-            'fanCount' => $entity->getFanCount()
+            'fanCount' => $entity->getFanCount(),
+            'videoCount' => $entity->getVideoCount()
         );
     }
 }
