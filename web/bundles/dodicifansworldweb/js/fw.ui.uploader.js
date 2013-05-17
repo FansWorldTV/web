@@ -299,12 +299,16 @@ $(document).ready(function () {
                 function onVideoUploadComplete(event) {
                     var xhr = event.target.xhr;
                     var name = $(xhr.responseText).find('name').text();
+                    var entryId = $(xhr.responseText).find('id').text();
+
+                    console.log("Video subido correctamente ID: " + entryId);
 
                     var formHtml = null;
                     var href = Routing.generate(appLocale + '_video_fileupload');
                     $.ajax({url: href, type: 'GET'}).then(function(response){
                         formHtml = $(response).clone();
                         formHtml.find('input[type="submit"]').hide();
+                        formHtml.find('#form_entryid').val(entryId);
                         boot.find('.modal-body').html(formHtml);
                         boot.find("#modal-btn-save").removeAttr("disabled");
                         // Set default title
