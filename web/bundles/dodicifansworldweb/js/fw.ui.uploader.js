@@ -275,10 +275,11 @@ $(document).ready(function () {
 
                         boot.find("#modal-btn-save").one("click", null, null, function(){
                             $(this).addClass('loading-small');
-                            boot.find('form').find('input[type="submit"]').click();
+                            //boot.find('form').find('input[type="submit"]').click();
+                            boot.find('form').submit();
                         });
 
-                        boot.find('form').submit(function() {
+                        boot.find('form').submit(function(event) {
                             var data = $(this).serializeArray();
                             var action = $(this).attr('action');
                             var method = $(this).attr('method');
@@ -288,9 +289,9 @@ $(document).ready(function () {
                                 data: data,
                                 type: method
                             })
-                                .then(function(response){
-                                    location.href = Routing.generate(appLocale + '_things_videos');
-                                });
+                            .then(function(response){
+                                location.href = Routing.generate(appLocale + '_things_videos');
+                            });
                             return false;
                         });
 
@@ -308,21 +309,21 @@ $(document).ready(function () {
 //                        $(this).addClass('loading-small');
 //                        boot.find('form').find('input[type="submit"]').click();
 //                    });
-                    boot.find('form').submit(function() {
-                        var data = $(this).serializeArray();
-                        var action = $(this).attr('action');
-                        var method = $(this).attr('method');
-                        boot.find('form').find('input[type="submit"]').addClass('loading-small');
-                        $.ajax({
-                            url: this.getAttribute('action'),
-                            data: data,
-                            type: method
-                        })
-                            .then(function(response){
-                                location.reload();
-                            });
-                        return false;
-                    });
+//                    boot.find('form').submit(function() {
+//                        var data = $(this).serializeArray();
+//                        var action = $(this).attr('action');
+//                        var method = $(this).attr('method');
+//                        boot.find('form').find('input[type="submit"]').addClass('loading-small');
+//                        $.ajax({
+//                            url: this.getAttribute('action'),
+//                            data: data,
+//                            type: method
+//                        })
+//                            .then(function(response){
+//                                location.reload();
+//                            });
+//                        return false;
+//                    });
                     // Enable saving
                     boot.find("#modal-btn-save").removeAttr("disabled");
                     return;
