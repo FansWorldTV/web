@@ -46,12 +46,14 @@
       h3 {
         font-weight: 400;
       }
+
       .cant {
         line-height: 27px;
         font-size: 18px;
         font-weight: 100;
         margin-left: 15px;
       }
+
       .topics {
         h3 {  margin-right: 15px; font-size: 13px; }
         ul {
@@ -69,6 +71,24 @@
             }
           }
         }
+      }
+
+    }
+
+    .add-more {
+      .hexagono(30px, 17px, @orange);
+      color: white;
+      font-size: 22px;
+      font-weight: 500;
+      margin: 0 auto;
+      line-height: 27px;
+      cursor: pointer;
+      opacity: 0.6;
+      .transition(all 0.5s ease);
+
+      &:hover {
+        .rotate(360deg);
+        opacity: 1;
       }
     }
 
