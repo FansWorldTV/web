@@ -22,64 +22,10 @@ use Dodici\Fansworld\WebBundle\Controller\ApiV1\BaseController;
  */
 class VideoUploadController extends BaseController
 {
-	/**
-     * [signed] Get upload url and token
-     * 
-     * @Route("/video/upload/token", name="api_v1_video_upload_token")
-     * @Method({"GET"})
-     *
-     * Get params:
-     * - [signature params]
-     * 
-     * @return 
-     * array(
-     *     url: string,
-     *     params: array(
-     *         uploadTokenId: string,
-     *         service: 'uploadToken',
-     *         action: 'upload'
-     *         
-     *         //you then have to add these:
-     *         fileData: file,
-     *         <optional> resume: boolean,
-     *         <optional> resumeAt: float,
-     *         <optional> finalChunk: boolean
-     *     )
-     * )
-     */
-    public function tokenAction()
-    {
-        try {
-            if ($this->hasValidSignature()) {
-                $kaltura = $this->get('kaltura');
-                $url = $kaltura->getApiUrl();
-                $service = 'uploadToken';
-                $action = 'upload';
-                $token = $kaltura->getUploadToken();
-                
-                return $this->result(
-                    array(
-                        'url' => $url,
-                        'token' => $token,
-                        'params' => array(
-                            'uploadTokenId' => $token,
-                            'service' => $service,
-                            'action' => $action
-                        )
-                    )
-                );
-                
-            } else {
-                throw new HttpException(401, 'Invalid signature');
-            }
-        } catch (\Exception $e) {
-            return $this->plainException($e);
-        }
-    }
 
 	/**
      * [signed] Create entry
-     * After entry creation, user will have to wait until the video is processed via batch
+     * After uploading to the token, user will have to wait until the video is processed via batch
      * He will receive a TYPE_VIDEO_PROCESSED notification when it is ready
      * 
      * @Route("/video/upload/entry", name="api_v1_video_upload_entry")
@@ -88,7 +34,6 @@ class VideoUploadController extends BaseController
      * Post params:
      * - user_id: int
      * - [user token]
-     * - upload_token: int
      * - video_title: string
      * - video_content: string
      * - video_category: int
@@ -109,8 +54,6 @@ class VideoUploadController extends BaseController
                 $userid = $request->get('user_id');
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
                 
-                $token = $request->get('upload_token');
-                
                 $title = $request->get('video_title');
                 $content = $request->get('video_content');
                 $vcid = $request->get('video_category');
@@ -120,10 +63,10 @@ class VideoUploadController extends BaseController
                 if (!$vcid) throw new HttpException(400, 'Requires video_category');
                 if (!$vc) throw new HttpException(400, 'Invalid video_category');
                 
-                $entryid = $kaltura->addEntryFromToken($token, $title);
+                $uploadtoken = $kaltura->getUploadToken();
+                $entryid = $kaltura->addEntryFromToken($uploadtoken, $title);
                 
                 if (!$entryid) throw new HttpException(500, 'Entry could not be created');
-                
                 
                 $video = new Video();
                 $video->setAuthor($user);
@@ -137,8 +80,19 @@ class VideoUploadController extends BaseController
                 $em->persist($video);
                 $em->flush();
                 
+                $url = $kaltura->getApiUrl();
+                $service = 'uploadToken';
+                $action = 'upload';
+                
                 return $this->result(array(
-                    'video_id' => $video->getId()
+                    'video_id' => $video->getId(),
+                    'url' => $url,
+                    'token' => $uploadtoken,
+                    'params' => array(
+                        'uploadTokenId' => $uploadtoken,
+                        'service' => $service,
+                        'action' => $action
+                    )
                 ));
                 
             } else {
