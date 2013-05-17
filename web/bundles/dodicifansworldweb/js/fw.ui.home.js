@@ -248,7 +248,7 @@ $(document).ready(function () {
             for(i in tags){
                 if (tags.hasOwnProperty(i)) {
                     $(container).append("<li>"+tags[i].title+"</li>");
-                    if(i > 5) {
+                    if(i >= 4) {
                         break;
                     }
                 }
