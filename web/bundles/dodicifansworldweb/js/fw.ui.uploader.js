@@ -255,9 +255,9 @@ $(document).ready(function () {
                                 data: data,
                                 type: 'POST'
                             })
-                            .then(function(response){
-                                location.reload();
-                            });
+                                .then(function(response){
+                                    location.reload();
+                                });
                             return false;
                         });
                     });
@@ -288,13 +288,13 @@ $(document).ready(function () {
                                 data: data,
                                 type: method
                             })
-                            .then(function(response){
-                                location.href = Routing.generate(appLocale + '_things_videos');
-                            });
+                                .then(function(response){
+                                    location.href = Routing.generate(appLocale + '_things_videos');
+                                });
                             return false;
                         });
 
-                    });                    
+                    });
                 }
                 function onVideoUploadComplete(event) {
                     var xhr = event.target.xhr;
@@ -304,10 +304,10 @@ $(document).ready(function () {
                     console.log("Video subido correctamente ID: " + entryId);
 
                     boot.find('#form_entryid').val(entryId);
-                    boot.find("#modal-btn-save").one("click", null, null, function(){
-                        $(this).addClass('loading-small');
-                        boot.find('form').find('input[type="submit"]').click();
-                    });
+//                    boot.find("#modal-btn-save").one("click", null, null, function(){
+//                        $(this).addClass('loading-small');
+//                        boot.find('form').find('input[type="submit"]').click();
+//                    });
                     boot.find('form').submit(function() {
                         var data = $(this).serializeArray();
                         var action = $(this).attr('action');
@@ -352,75 +352,75 @@ $(document).ready(function () {
                         uploader.addFile(file);
 
                         $.when(that.getImage(file))
-                        .then(function(image){
-                            var container = null;
-                            var infobox = null;
-                            var uploadBtt = $("<button class='btn upload'>upload</button>");
-                            if(files.length > 1) {
-                                container = $("<div class='thumbnail' style='width:64px;height:64px;'></div>");
-                                infobox = $("<div class='fileinfo' style='height:64px;'></div>")
-                                .append("<h5 class='title'>" + image.alt + "</h5>")
-                                .append("<div class='progress progress-striped active' style='margin-top:4px;'><div class='bar' style='width: 0%;'></div></div>")
-                                .append(uploadBtt);
-                            } else {
-                                container = $("<div class='thumbnail' style='width: 256px;height:256px;'></div>");
-                                infobox = $("<div class='fileinfo' style='width: 200px;''></div>")
-                                .append("<h5 class='title'>" + image.alt + "</h5>")
-                                .append("<div class='progress progress-striped active' style='margin-top:10px;'><div class='bar' style='width: 0%;'></div></div>")
-                                .append("<div class='well'>"+ "file: " + image.alt + "<br /> size: " + file.size +"</div>")
-                                .append(uploadBtt);
-                            }
-                            uploadBtt.one("click", null, null, function(){
-                                console.log("upload button clicked");
+                            .then(function(image){
+                                var container = null;
+                                var infobox = null;
+                                var uploadBtt = $("<button class='btn upload'>upload</button>");
+                                if(files.length > 1) {
+                                    container = $("<div class='thumbnail' style='width:64px;height:64px;'></div>");
+                                    infobox = $("<div class='fileinfo' style='height:64px;'></div>")
+                                        .append("<h5 class='title'>" + image.alt + "</h5>")
+                                        .append("<div class='progress progress-striped active' style='margin-top:4px;'><div class='bar' style='width: 0%;'></div></div>")
+                                        .append(uploadBtt);
+                                } else {
+                                    container = $("<div class='thumbnail' style='width: 256px;height:256px;'></div>");
+                                    infobox = $("<div class='fileinfo' style='width: 200px;''></div>")
+                                        .append("<h5 class='title'>" + image.alt + "</h5>")
+                                        .append("<div class='progress progress-striped active' style='margin-top:10px;'><div class='bar' style='width: 0%;'></div></div>")
+                                        .append("<div class='well'>"+ "file: " + image.alt + "<br /> size: " + file.size +"</div>")
+                                        .append(uploadBtt);
+                                }
+                                uploadBtt.one("click", null, null, function(){
+                                    console.log("upload button clicked");
+                                    uploader.start();
+                                });
+                                that.placeImage(image, container);
+                                var cosa = $("<li></li>").append(container).append(infobox);
+                                boot.find('output ul').append(cosa);
                                 uploader.start();
                             });
-                            that.placeImage(image, container);
-                            var cosa = $("<li></li>").append(container).append(infobox);
-                            boot.find('output ul').append(cosa);
-                            uploader.start();
-                        });
                     } else if (file.type.match('video.*')) {
                         ///////////////////////////////////// VIDEO //
                         $.when(that.getKs())
-                        .then(function(ks) {
-                            var dfd = new jQuery.Deferred();
-                            $.when(that.getMediaId(file.name, ks), that.getUploadToken(file.name, ks))
-                            .then(function (mediaId, token){
-                                return {kalturaKeys: [that.options.ks, mediaId, token]};
+                            .then(function(ks) {
+                                var dfd = new jQuery.Deferred();
+                                $.when(that.getMediaId(file.name, ks), that.getUploadToken(file.name, ks))
+                                    .then(function (mediaId, token){
+                                        return {kalturaKeys: [that.options.ks, mediaId, token]};
+                                    })
+                                    .done(function (kaltura){
+                                        console.log(JSON.stringify(kaltura));
+                                        dfd.resolve(kaltura);
+                                    })
+                                    .fail(function (error) {
+                                        that.options.onError(error);
+                                        dfd.reject(new Error(error));
+                                    });
+                                return dfd.promise();
                             })
-                            .done(function (kaltura){
-                                console.log(JSON.stringify(kaltura));
-                                dfd.resolve(kaltura);
+                            .done(function (kaltura) {
+                                console.log("ks: %s id: %s tk: %s", JSON.stringify(kaltura));
+                                videoUploader.addFile(file, {
+                                    service: 'media',
+                                    action: 'addContent',
+                                    entryId: that.options.entryId,
+                                    ks: that.options.ks,
+                                    'resource:objectType': 'KalturaUploadedFileResource'
+                                });
+                                videoUploader.start();
+                                $('progress').show();
+                                getVideoUploadForm(file.name);
+                                /*
+                                 $.when(templateHelper.htmlTemplate('general-progress_modal', modal))
+                                 .then(function(html) {
+                                 var progress = $(html).find('.modal-body').clone();
+                                 boot.find('.modal-body').html(progress);
+                                 });
+                                 */
                             })
                             .fail(function (error) {
-                                that.options.onError(error);
-                                dfd.reject(new Error(error));
+                                return error;
                             });
-                            return dfd.promise();
-                        })
-                        .done(function (kaltura) {
-                            console.log("ks: %s id: %s tk: %s", JSON.stringify(kaltura));
-                            videoUploader.addFile(file, {
-                                service: 'media',
-                                action: 'addContent',
-                                entryId: that.options.entryId,
-                                ks: that.options.ks,
-                                'resource:objectType': 'KalturaUploadedFileResource'
-                            });
-                            videoUploader.start();
-                            $('progress').show();
-                            getVideoUploadForm(file.name);
-                            /*
-                            $.when(templateHelper.htmlTemplate('general-progress_modal', modal))
-                            .then(function(html) {
-                                var progress = $(html).find('.modal-body').clone();
-                                boot.find('.modal-body').html(progress);
-                            });
-                            */
-                        })
-                        .fail(function (error) {
-                            return error;
-                        });
                     }
                 }
             }
@@ -432,10 +432,10 @@ $(document).ready(function () {
                 // Hide dialog submit
                 dialog.find('input[type="submit"]').hide();
                 // Passthrough
-                dialog.find("#modal-btn-save").one("click", null, null, function(){
-                    $(this).addClass('loading-small');
-                    dialog.find('form').find('input[type="submit"]').click();
-                });
+//                dialog.find("#modal-btn-save").one("click", null, null, function(){
+//                    $(this).addClass('loading-small');
+//                    dialog.find('form').find('input[type="submit"]').click();
+//                });
                 dialog.find('form').submit(function(event) {
                     event.preventDefault();
                     var data = $(this).serializeArray();
@@ -446,24 +446,24 @@ $(document).ready(function () {
                         data: data,
                         type: method
                     })
-                    .then(function(response){
-                        // Remove spinner
-                        dialog.find("#modal-btn-save").removeClass('loading-small');
-                        // Process all forms
-                        var formHtml = $(response).clone();
-                        dialog.find('.modal-body').html(formHtml);
-                        console.log(formHtml.find('form').length);
-                        if (formHtml.find('form').length) {
-                            hookForm(dialog);
-                        } else {
-                            dialog.find("#modal-btn-save").text('continuar');
-                            // No more forms ? ok then we're done
-                            dialog.find("#modal-btn-save").one("click", null, null, function(){
-                                $(this).addClass('loading-small');
-                                location.href = Routing.generate(appLocale + '_things_videos');
-                            })
-                        }
-                    });
+                        .then(function(response){
+                            // Remove spinner
+                            dialog.find("#modal-btn-save").removeClass('loading-small');
+                            // Process all forms
+                            var formHtml = $(response).clone();
+                            dialog.find('.modal-body').html(formHtml);
+                            console.log(formHtml.find('form').length);
+                            if (formHtml.find('form').length) {
+                                hookForm(dialog);
+                            } else {
+                                dialog.find("#modal-btn-save").text('continuar');
+                                // No more forms ? ok then we're done
+                                dialog.find("#modal-btn-save").one("click", null, null, function(){
+                                    $(this).addClass('loading-small');
+                                    location.href = Routing.generate(appLocale + '_things_videos');
+                                })
+                            }
+                        });
                     return false;
                 });
             }
@@ -506,44 +506,18 @@ $(document).ready(function () {
                         $('[data-dropdownshare]').addClass("dropdown");
                         var link = Routing.generate(appLocale + '_video_youtubeupload', {link: youtube_link});
                         $.ajax({url: link, type: 'GET'}).
-                        then(function(response) {
-                            self.removeClass('loading-small');
-                            console.log('VIDEO DE YOUTUBE SUBIDO');
+                            then(function(response) {
+                                self.removeClass('loading-small');
+                                console.log('VIDEO DE YOUTUBE SUBIDO');
 
-                            var formHtml = $(response).clone();
-                            formHtml.find('input[type="submit"]').hide();
+                                var formHtml = $(response).clone();
+                                formHtml.find('input[type="submit"]').hide();
 
-                            boot.find('.modal-body').html(formHtml);
+                                boot.find('.modal-body').html(formHtml);
 
-                            hookForm(boot);
-                            return;
-
-                            boot.find("#modal-btn-save").removeAttr("disabled");
-
-                            boot.find("#modal-btn-save").one("click", null, null, function(){
-                                $(this).addClass('loading-small');
-                                boot.find('form').find('input[type="submit"]').click();
+                                hookForm(boot);
+                                return;
                             });
-
-                            boot.find('form').submit(function(event) {
-                                event.preventDefault();
-                                var data = $(this).serializeArray();
-                                var action = $(this).attr('action');
-                                var method = $(this).attr('method');
-                                boot.find('form').find('input[type="submit"]').addClass('loading-small');
-                                $.ajax({
-                                    url: this.getAttribute('action'),
-                                    data: data,
-                                    type: method
-                                })
-                                .then(function(response){
-                                    //location.reload();
-                                    //console.log(response)
-                                    boot.find('.modal-body').html(response);
-                                });
-                                return false;
-                            });
-                        })
                     } else {
                         console.log('Invalid Youtube Link');
                         $('[data-youtubelink]').val('');
@@ -576,39 +550,39 @@ $(document).ready(function () {
                             continue;
                         } else {
                             $.when(that.getImage(file))
-                            .then(function(image){
-                                console.log(file.name);
-                            });
+                                .then(function(image){
+                                    console.log(file.name);
+                                });
                         }
                     }
                 });
                 boot.find('#drop_zone')
-                .on('dragenter', function(event) {
-                    if(event.target === this) {
-                        $(this).animate({ 'background-color': '#c0c0c0', 'border-color': '#444' } );
-                        console.log('dragenter');
-                    }
-                }).on('dragover', function(event) {
-                    event.stopPropagation();
-                    event.preventDefault();
-                    if(event.target === this) {
-                        event.originalEvent.dataTransfer.dropEffect = 'copy';
-                    }
-                }).on('dragleave', function(event) {
-                    if(event.target === this) {
-                        $(this).animate({ 'background-color': 'transparent', 'border-color': '#bbb' } );
-                        console.log('dragleave');
-                    }
-                }).on('drop', function(event) {
-                    var i;
-                    event.stopPropagation();
-                    event.preventDefault();
-                    if(event.target === this) {
-                        var files = event.originalEvent.dataTransfer.files;
-                        processFiles(files);
-                        return;
-                    }
-                });
+                    .on('dragenter', function(event) {
+                        if(event.target === this) {
+                            $(this).animate({ 'background-color': '#c0c0c0', 'border-color': '#444' } );
+                            console.log('dragenter');
+                        }
+                    }).on('dragover', function(event) {
+                        event.stopPropagation();
+                        event.preventDefault();
+                        if(event.target === this) {
+                            event.originalEvent.dataTransfer.dropEffect = 'copy';
+                        }
+                    }).on('dragleave', function(event) {
+                        if(event.target === this) {
+                            $(this).animate({ 'background-color': 'transparent', 'border-color': '#bbb' } );
+                            console.log('dragleave');
+                        }
+                    }).on('drop', function(event) {
+                        var i;
+                        event.stopPropagation();
+                        event.preventDefault();
+                        if(event.target === this) {
+                            var files = event.originalEvent.dataTransfer.files;
+                            processFiles(files);
+                            return;
+                        }
+                    });
                 boot.find("#modal-btn-close").one("click", null, null, function(){
                     boot.modal('hide');
                     $('body').removeClass('modal-open');
@@ -619,15 +593,15 @@ $(document).ready(function () {
                 boot.modal({
                     backdrop: true
                 }).css({
-                    width: '700px',
-                    'margin-left': '-350px'
-                }).on('hide', function() {
-                    uploader.stopAll();
-                    videoUploader.stopAll();
-                    $('.modal-backdrop').remove();
-                    $(this).data('modal', null);
-                    $(this).remove();
-                });
+                        width: '700px',
+                        'margin-left': '-350px'
+                    }).on('hide', function() {
+                        uploader.stopAll();
+                        videoUploader.stopAll();
+                        $('.modal-backdrop').remove();
+                        $(this).data('modal', null);
+                        $(this).remove();
+                    });
             });
             return false;
         },
@@ -705,28 +679,28 @@ $(document).ready(function () {
                     };
 
                     $.when(templateHelper.htmlTemplate('general-progress_modal', modal))
-                    .then(function(html) {
-                        boot = $(html).clone();
-                        boot.find("#modal-btn-close").one("click", null, null, function(){
-                            boot.modal('hide');
-                            $('body').removeClass('modal-open');
-                            $('.modal-backdrop').remove();
-                            uploader.stopAll();
+                        .then(function(html) {
+                            boot = $(html).clone();
+                            boot.find("#modal-btn-close").one("click", null, null, function(){
+                                boot.modal('hide');
+                                $('body').removeClass('modal-open');
+                                $('.modal-backdrop').remove();
+                                uploader.stopAll();
+                            });
+                            boot.modal({
+                                //backdrop: false
+                            })
+                                .css({
+                                    width: '700px',
+                                    'margin-left': '-350px'
+                                })
+                                .on('hide', function() {
+                                    console.log("modal hide");
+                                    $('.modal-backdrop').remove();
+                                    $(this).data('modal', null);
+                                    $(this).remove();
+                                });
                         });
-                        boot.modal({
-                            //backdrop: false
-                        })
-                        .css({
-                            width: '700px',
-                            'margin-left': '-350px'
-                        })
-                        .on('hide', function() {
-                            console.log("modal hide");
-                            $('.modal-backdrop').remove();
-                            $(this).data('modal', null);
-                            $(this).remove();
-                        });
-                    });
                 },
                 onProgress: function(event) {
                     var percentComplete = parseInt(((event.source.loaded / event.source.total) * 100), 10);
@@ -778,10 +752,10 @@ $(document).ready(function () {
                                 data: data,
                                 type: 'POST'
                             })
-                            .then(function(response){
-                                location.reload();
-                            });
-                              return false;
+                                .then(function(response){
+                                    location.reload();
+                                });
+                            return false;
                         });
                     });
                 }
@@ -806,38 +780,38 @@ $(document).ready(function () {
                 },
                 dataType: 'xml' // Kaltura uses XML
             })
-            .then(function (responseXML){
-                if($(responseXML).find('id').text()) {
-                    that.options.uploadtoken = $(responseXML).find('id').text();
-                    return that.options.uploadtoken;
-                } else {
-                    that.options.onError($(responseXML).find('error').text());
-                    deferred.reject($(responseXML).find('error').text());
-                }
-            })
-            .done(function (token) {
-                deferred.resolve(token);
-            })
-            .fail(function (error) {
-                that.options.onError(error);
-                deferred.reject(new Error(error));
-            });
+                .then(function (responseXML){
+                    if($(responseXML).find('id').text()) {
+                        that.options.uploadtoken = $(responseXML).find('id').text();
+                        return that.options.uploadtoken;
+                    } else {
+                        that.options.onError($(responseXML).find('error').text());
+                        deferred.reject($(responseXML).find('error').text());
+                    }
+                })
+                .done(function (token) {
+                    deferred.resolve(token);
+                })
+                .fail(function (error) {
+                    that.options.onError(error);
+                    deferred.reject(new Error(error));
+                });
             return deferred.promise();
         },
         getKs: function() {
             var that = this;
             var deferred = new jQuery.Deferred();
             $.ajax({url: Routing.generate(appLocale + '_video_kaltura_ks')})
-            .then(function (responseJSON) {
-                that.options.ks = responseJSON.ks;
-                return that.options.ks;
-            })
-            .done(function (ks){
-                deferred.resolve(ks);
-            })
-            .fail(function (jqXHR, status, error) {
-                deferred.reject(new Error(error));
-            });
+                .then(function (responseJSON) {
+                    that.options.ks = responseJSON.ks;
+                    return that.options.ks;
+                })
+                .done(function (ks){
+                    deferred.resolve(ks);
+                })
+                .fail(function (jqXHR, status, error) {
+                    deferred.reject(new Error(error));
+                });
             return deferred.promise();
         },
         getMediaId: function(fileName, ks) {
@@ -855,21 +829,21 @@ $(document).ready(function () {
                 },
                 dataType: 'xml' // Kaltura uses XML
             })
-            .then(function(responseXML) {
-                if($(responseXML).find('id').text()) {
-                    that.options.entryId = $(responseXML).find('id').text();
-                    return that.options.entryId;
-                } else {
-                    that.options.onError($(responseXML).find('error').text());
-                    deferred.reject(new Error($(responseXML).find('error').text()));
-                }
-            })
-            .done(function (mediaId){
-                deferred.resolve(mediaId);
-            })
-            .fail(function (jqXHR, status, error) {
-                deferred.reject(new Error(error));
-            });
+                .then(function(responseXML) {
+                    if($(responseXML).find('id').text()) {
+                        that.options.entryId = $(responseXML).find('id').text();
+                        return that.options.entryId;
+                    } else {
+                        that.options.onError($(responseXML).find('error').text());
+                        deferred.reject(new Error($(responseXML).find('error').text()));
+                    }
+                })
+                .done(function (mediaId){
+                    deferred.resolve(mediaId);
+                })
+                .fail(function (jqXHR, status, error) {
+                    deferred.reject(new Error(error));
+                });
             return deferred.promise();
         },
         isAllowedExtension: function(fileName){
