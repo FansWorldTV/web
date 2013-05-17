@@ -125,6 +125,7 @@ class Kaltura
         $uts = $this->getClient()->getUploadTokenService();
         $token = $uts->add();
         if ($token) return $token->id;
+        return false;
     }
     
     /**
