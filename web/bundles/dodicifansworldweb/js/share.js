@@ -4,7 +4,7 @@ share.init = function() {
     console.log("SHARE INIT")
     $("[data-share-button], i.close-share").on('click', function(event) {
         $("[data-share-button]").toggleClass('active');
-        $("[data-sharebox-gral]").slideToggle();
+        $("[data-sharebox-gral]").toggle();
     });
 
     $(".btn-checkbox").on('click', function() {
