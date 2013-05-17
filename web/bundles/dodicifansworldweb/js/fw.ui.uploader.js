@@ -303,16 +303,11 @@ $(document).ready(function () {
 
                     console.log("Video subido correctamente ID: " + entryId);
 
-
-
                     boot.find('#form_entryid').val(entryId);
-                    boot.find("#form_title").val(name);
-
                     boot.find("#modal-btn-save").one("click", null, null, function(){
                         $(this).addClass('loading-small');
                         boot.find('form').find('input[type="submit"]').click();
                     });
-
                     boot.find('form').submit(function() {
                         var data = $(this).serializeArray();
                         var action = $(this).attr('action');
