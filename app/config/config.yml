@@ -351,7 +351,7 @@ services:
       arguments: [@doctrine.orm.entity_manager, @appstate]
     visitator:
       class: Dodici\Fansworld\WebBundle\Services\Visitator
-      arguments: [@security.context, @doctrine.orm.entity_manager, @session, @appstate]
+      arguments: [@security.context, @doctrine.orm.entity_manager, @session, @appstate, @video.playlist]
     friender:
       class: Dodici\Fansworld\WebBundle\Services\Friender
       arguments: [@security.context, @doctrine.orm.entity_manager, @appstate, @user.feed.logger, @app.facebook]

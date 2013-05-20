@@ -5,6 +5,7 @@ namespace Dodici\Fansworld\WebBundle\Services;
 use Symfony\Component\Security\Core\SecurityContext;
 use Dodici\Fansworld\WebBundle\Model\VisitableInterface;
 use Dodici\Fansworld\WebBundle\Entity\Visit;
+use Dodici\Fansworld\WebBundle\Entity\Video;
 use Symfony\Component\HttpFoundation\Request;
 use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
@@ -17,9 +18,10 @@ class Visitator
     protected $user;
     protected $session;
     protected $appstate;
+    protected $videoplaylist;
     const LIMIT_VISIT = 10;
 
-    function __construct(SecurityContext $security_context, EntityManager $em, $session,$appstate)
+    function __construct(SecurityContext $security_context, EntityManager $em, $session,$appstate, $videoplaylist)
     {
         $this->request = Request::createFromGlobals();
         $this->security_context = $security_context;
@@ -27,6 +29,7 @@ class Visitator
         $this->user = null;
         $this->session = $session;
         $this->appstate = $appstate;
+        $this->videoplaylist = $videoplaylist;
         $user = $security_context->getToken() ? $security_context->getToken()->getUser() : null;
         if ($user instanceof User) {
             $this->user = $user;
@@ -40,10 +43,19 @@ class Visitator
     public function visit(VisitableInterface $entity, $device=null)
     {
         $visit = null;
-        if($this->shouldAddVisit($entity)){
+        if ($this->shouldAddVisit($entity)) {
             $visit = $this->addVisit($entity, $device);
             $this->updateLastVisit($entity);
         }
+
+        $user = $this->user;
+
+        if ($user && $entity instanceof Video) {
+            if ($this->videoplaylist->isInPlaylist($entity, $user)) {
+                $this->videoplaylist->remove($entity, $user);
+            }
+        }
+
     	return $visit;
     }
 
