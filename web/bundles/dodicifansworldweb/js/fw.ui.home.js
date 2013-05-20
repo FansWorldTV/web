@@ -69,40 +69,6 @@ $(document).ready(function () {
 
             return true;
         },
-        makePackery: function(videoCategory) {
-            var that = this;
-            var i = 0;
-            var cnt = 0;
-            var container = document.querySelector('section.highlights');
-            var packery = new Packery(container, {
-                itemSelector: '.video',
-                gutter: ".gutter-sizer",
-                columnWidth: ".grid-sizer"
-            });
-
-            var feed = Routing.generate(appLocale + '_home_ajaxfilter');
-
-            $.ajax({url: that.options.videoFeed, data: {'vc': videoCategory}}).then(function(response){
-                for(i in response.highlighted) {
-                    if (response.highlighted.hasOwnProperty(i)) {
-                        var video = response.highlighted[i];
-                        $.when(templateHelper.htmlTemplate('video-home_element', video))
-                        .then(function(response){
-                            var $thumb = $(response).clone();
-                            $thumb.addClass('video');
-                            if(cnt === 1) {
-                                $thumb.addClass('double');
-                            }
-                            cnt += 1;
-
-                            $('section.highlights').append($thumb);
-                            packery.appended($thumb);
-                            packery.layout();
-                        });
-                    }
-                }
-            });
-        },
         destroy: function() {
             var that = this;
             $(that.element).unbind("destroyed", that.teardown);
@@ -129,10 +95,116 @@ $(document).ready(function () {
     };
 });
 
+
+
+
+
+$(document).ready(function () {
+    "use strict";
+    var pluginName = "fwHomeThumbs";
+    var defaults = {
+        videoCategory: null,
+        videoFeed: Routing.generate(appLocale + '_home_ajaxfilter'),
+        page: 1,
+        block: null
+    };
+    function Plugin(element, options) {
+        this.element = element;
+        this.options = $.extend({}, defaults, options);
+        this._defaults = defaults;
+        this._name = pluginName;
+        this.init();
+    }
+    Plugin.prototype = {
+        init: function () {
+            var that = this;
+            var self = $(that.element);
+            self.bind("destroyed", $.proxy(that.teardown, that));
+            self.addClass(that._name);
+            self.empty();
+            that.appendThumbs();
+
+            $('section.' + that.options.block + ' > .add-more').on('click', function(event){
+                that.options.page += 1;
+                var button = $(this);
+                button.addClass('rotate');
+                $.when(that.appendThumbs()).then(function(response){
+                    button.removeClass('rotate');
+                });
+            });
+            return true;
+        },
+        appendThumbs: function() {
+            var that = this;
+            var i = 0;
+            var deferred = new jQuery.Deferred();
+            console.log("adding thumbs")
+            $.ajax({
+                url: that.options.videoFeed,
+                data: {
+                    paginate:{
+                        page: that.options.page,
+                        block: that.options.block,
+                        vc: that.options.videoCategory
+                    }
+                }
+            }).then(function(response) {
+                for(i in response.videos) {
+                    if (response.videos.hasOwnProperty(i)) {
+                        var video = response.videos[i];
+                        $.when(templateHelper.htmlTemplate('video-home_element', video))
+                            .then(function(response){
+                                var $thumb = $(response).clone();
+                                $(that.element).append($thumb);
+                            });
+                    }
+                }
+                return response.videos;
+            }).done(function(videos){
+                deferred.resolve(videos);
+            }).fail(function(error){
+                deferred.reject(new Error(error));
+            });
+            return deferred.promise();
+        },
+        destroy: function() {
+            var that = this;
+            $(that.element).unbind("destroyed", that.teardown);
+            that.teardown();
+            return true;
+        },
+        teardown: function() {
+            var that = this;
+            $.removeData($(that.element)[0], that._name);
+            $(that.element).removeClass(that._name);
+            that.unbind();
+            that.element = null;
+            return that.element;
+        },
+        bind: function() { },
+        unbind: function() { }
+    };
+    $.fn[pluginName] = function (options) {
+        return this.each(function () {
+            if (!$.data(this, pluginName)) {
+                $.data(this, pluginName, new Plugin(this, options));
+            }
+        });
+    };
+});
 //Attach plugin to all matching element
 $(document).ready(function () {
     "use strict";
     //$('section.highlights').fwHomeGallery({});
+    $('section.popular > .videos-container').fwHomeThumbs({
+        videoCategory: $('.filter-home').find('.active').attr('data-category-id'),
+        block: 'popular'
+    })
+
+    $('section.followed > .videos-container').fwHomeThumbs({
+        videoCategory: $('.filter-home').find('.active').attr('data-category-id'),
+        block: 'followed'
+    })
 });
 
 $(document).ready(function () {
@@ -258,8 +330,26 @@ $(document).ready(function () {
 
     var videoCategory = $('.filter-home').find('.active').attr('data-category-id');
     makePackery(videoCategory);
-    appendFollowed(videoCategory);
-    appendPopular(videoCategory);
+    //appendFollowed(videoCategory);
+    //appendPopular(videoCategory);
     makeTags(videoCategory, 'popular', 1);
     makeTags(videoCategory, 'followed', 1);
+
+
+    $('section.followed > .add-more').on('click', function(event){
+
+        /*
+        Routing.generate(appLocale + '_home_ajaxfilter')
+        $.ajax({url: Routing.generate(appLocale + '_home_ajaxfilter'), data: {'vc': 6}}).then(function(response){console.log(response)})
+
+
+        ajax.genericAction('home_ajaxfilter', {paginate:{'page':1, 'block':'popular','vc': 6}}, function(r){console.log(r);});
+
+        $.ajax({url: Routing.generate(appLocale + '_home_ajaxfilter'), data: {paginate:{'page':1, 'block':'popular','vc': 6}}}).then(function(response){console.log(response)})
+
+
+        */
+
+
+    });
 });
