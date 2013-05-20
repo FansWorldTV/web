@@ -588,14 +588,10 @@ class VideoController extends BaseController
      /**
      * Video - genres list
      *
-     * @Route("/video/genres", name="api_v1_video_genre_list")
+     * @Route("/video/genres/list", name="api_v1_video_genre_list")
      * @Method({"GET"})
      *
      * Get params:
-     * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
-     * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
-     * - <optional> sort: 'title' (default: title)
-     * - <optional> sort_order: 'asc'|'desc' (default: desc)
      *
      * @return
      * array (
@@ -603,70 +599,23 @@ class VideoController extends BaseController
      *          id: int,
      *          title: string,
      *          type: string,
-     *          parent_id: int|null
+     *          children: array( id, title, type ) , ...
      *      ),
      *      ...
-     *      )
+     * )
      *
      */
     public function genresAction()
     {
         try {
-            $pagination = $this->pagination(array('parent_id'), 'parent_id', 'ASC');
 
-            $genres = $this->getRepository('Genre')->findBy(
-                array(),
-                array($pagination['sort'] => $pagination['sort_order']),
-                $pagination['limit'],
-                $pagination['offset']
-            );
+            $genreRepo = $this->getRepository('Genre');
+            $parents = $genreRepo->getParents();
 
             $return = array();
-            foreach ($genres as $genre) {
-                $return[] = array(
-                    'id' => $genre->getId(),
-                    'title' => $genre->getTitle(),
-                    'type' => $genre->getType(),
-                    'parent_id' => $genre->getParent() ? (int)$genre->getParent()->getId() : null
-                );
+            foreach ($parents as $parent) {
+                $return[] = $this->get('serializer')->values($parent);
             }
-
-            return $this->result($return, $pagination);
-        } catch (\Exception $e) {
-            return $this->plainException($e);
-        }
-    }
-
-    /**
-     * Video - genre detail
-     *
-     * @Route("/video/genres/{id}", name="api_v1_video_genre_show", requirements = {"id" = "\d+"})
-     * @Method({"GET"})
-     *
-     * Get params: none
-     *
-     * @return
-     * array (
-     *     id: int,
-     *     title: string,
-     *     type: string,
-     *     parent_id: int|null
-     * )
-     *
-     */
-    public function genreshowAction($id)
-    {
-        try {
-            $genre = $this->getRepository('Genre')->find($id);
-
-            if (!$genre) throw new HttpException(404, 'Genre not found');
-
-            $return = array(
-                'id' => $genre->getId(),
-                'title' => $genre->getTitle(),
-                'type' => $genre->getType(),
-                'parent_id' => $genre->getParent() ? (int)$genre->getParent()->getId() : null
-            );
 
             return $this->result($return);
         } catch (\Exception $e) {
@@ -675,58 +624,35 @@ class VideoController extends BaseController
     }
 
 
-
-    /**
-     * Video test juan
+     /**
+     * Video - genre detail
      *
-     * @Route("/video/testjuan2", name="api_v1_video_tesjuan2")
+     * @Route("/video/genres/{id}", name="api_v1_video_genre_show", requirements = {"id" = "\d+"})
      * @Method({"GET"})
      *
-     */
-    public function tesjuan2Action()
-    {
-
-        $user = $this->getRepository('User')->findOneBy(array('id' => 30));
-
-        $tags = $this->get("Tagger")->ofUserVideos('popular');
-
-        $return = array();
-        foreach ($tags as $tag) {
-            $return[] = $this->get("serializer")->values($tag);
-        }
-
-        $count = count($return);
-
-        return $this->result($return);
-    }
-
-    /**
-     * Video genre test
+     * Get params:
+     * id:Int, Id of genre
      *
-     * @Route("/video/genretest", name="api_v1_video_genretest")
-     * @Method({"GET"})
+     * @return
+     * array (
+     *        id: int,
+     *        title: string,
+     *        type: string,
+     *        children: array( id, title, type ) , ...
+     * )
      *
      */
-    public function genreTestAction()
+    public function genreshowAction($id)
     {
+        try {
+            $genre = $this->getRepository('Genre')->find($id);
+            if (!$genre) throw new HttpException(404, 'Genre not found');
 
-        //$user = $this->getRepository('User')->findOneBy(array('id' => 30));
-        //$video = $this->getRepository('Video')->findOneBy(array('id' => 89));
+            $return = $this->get('serializer')->values($genre);
 
-        $genero = $this->getRepository('Genre')->findOneBy(array('id' => 2));
-
-        if ($genero->getType() == 'genre') {
-            $children = $genero->getChildren();
-        } else {
-            $children = $genero->getParent()->getChildren();
+            return $this->result($return);
+        } catch (\Exception $e) {
+            return $this->plainException($e);
         }
-
-        $resu = array();
-        foreach ($children as $child) {
-            $resu[] = $child->getTitle();
-        }
-
-        return $this->result($resu);
     }
-
 }
