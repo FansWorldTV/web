@@ -153,10 +153,10 @@ $(document).ready(function () {
                     if (response.videos.hasOwnProperty(i)) {
                         var video = response.videos[i];
                         $.when(templateHelper.htmlTemplate('video-home_element', video))
-                            .then(function(response){
-                                var $thumb = $(response).clone();
-                                $(that.element).append($thumb);
-                            });
+                        .then(function(response){
+                            var $thumb = $(response).clone();
+                            $thumb.hide().appendTo(that.element).fadeIn();
+                        });
                     }
                 }
                 return response.videos;
@@ -195,7 +195,6 @@ $(document).ready(function () {
 //Attach plugin to all matching element
 $(document).ready(function () {
     "use strict";
-    //$('section.highlights').fwHomeGallery({});
     $('section.popular > .videos-container').fwHomeThumbs({
         videoCategory: $('.filter-home').find('.active').attr('data-category-id'),
         block: 'popular'
@@ -212,49 +211,6 @@ $(document).ready(function () {
 
     var $container = $('section.highlights');
 
-
-    function appendFollowed(videoCategory) {
-        var i = 0;
-        var cnt = 0;
-        var $container = $('section.followed > .videos-container');
-        $container.empty();
-        var feed = Routing.generate(appLocale + '_home_ajaxfilter');
-        $.ajax({url: feed, data: {'vc': videoCategory}}).then(function(response){
-            for(i in response.followed) {
-                if (response.followed.hasOwnProperty(i)) {
-                    var video = response.followed[i];
-                    $thumb = $('<article class="video"><img width="220" src="' + video.image + '" title="' + video.title + '"/></article>');
-                    $.when(templateHelper.htmlTemplate('video-home_element', video))
-                        .then(function(response){
-                            $thumb = $(response).clone();
-                            $container.append($thumb);
-                        });
-                }
-            }
-        });
-    }
-
-    function appendPopular(videoCategory) {
-        var i = 0;
-        var cnt = 0;
-        var $container = $('section.popular > .videos-container');
-        $container.empty();
-        var feed = Routing.generate(appLocale + '_home_ajaxfilter');
-        $.ajax({url: feed, data: {'vc': videoCategory}}).then(function(response){
-            for(i in response.popular) {
-                if (response.popular.hasOwnProperty(i)) {
-                    var video = response.popular[i];
-                    //console.log(video);
-                    $thumb = $('<article class="video"><img width="220" src="' + video.image + '" title="' + video.title + '"/></article>');
-                    $.when(templateHelper.htmlTemplate('video-home_element', video))
-                        .then(function(response){
-                            $thumb = $(response).clone();
-                            $container.append($thumb);;
-                    });
-                }
-            }
-        });
-    }
 
     function makePackery(videoCategory) {
         var i = 0;
