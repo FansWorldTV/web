@@ -433,10 +433,10 @@ $(document).ready(function () {
                 // Hide dialog submit
                 dialog.find('input[type="submit"]').hide();
                 // Passthrough
-//                dialog.find("#modal-btn-save").one("click", null, null, function(){
-//                    $(this).addClass('loading-small');
-//                    dialog.find('form').find('input[type="submit"]').click();
-//                });
+                dialog.find("#modal-btn-save").one("click", null, null, function(){
+                    $(this).addClass('loading-small');
+                    dialog.find('form').find('input[type="submit"]').click();
+                });
                 dialog.find('form').submit(function(event) {
                     event.preventDefault();
                     var data = $(this).serializeArray();
@@ -447,24 +447,24 @@ $(document).ready(function () {
                         data: data,
                         type: method
                     })
-                        .then(function(response){
-                            // Remove spinner
-                            dialog.find("#modal-btn-save").removeClass('loading-small');
-                            // Process all forms
-                            var formHtml = $(response).clone();
-                            dialog.find('.modal-body').html(formHtml);
-                            console.log(formHtml.find('form').length);
-                            if (formHtml.find('form').length) {
-                                hookForm(dialog);
-                            } else {
-                                dialog.find("#modal-btn-save").text('continuar');
-                                // No more forms ? ok then we're done
-                                dialog.find("#modal-btn-save").one("click", null, null, function(){
-                                    $(this).addClass('loading-small');
-                                    location.href = Routing.generate(appLocale + '_things_videos');
-                                })
-                            }
-                        });
+                    .then(function(response){
+                        // Remove spinner
+                        dialog.find("#modal-btn-save").removeClass('loading-small');
+                        // Process all forms
+                        var formHtml = $(response).clone();
+                        dialog.find('.modal-body').html(formHtml);
+                        console.log(formHtml.find('form').length);
+                        if (formHtml.find('form').length) {
+                            hookForm(dialog);
+                        } else {
+                            dialog.find("#modal-btn-save").text('continuar');
+                            // No more forms ? ok then we're done
+                            dialog.find("#modal-btn-save").one("click", null, null, function(){
+                                $(this).addClass('loading-small');
+                                location.href = Routing.generate(appLocale + '_things_videos');
+                            })
+                        }
+                    });
                     return false;
                 });
             }
@@ -522,7 +522,11 @@ $(document).ready(function () {
                     } else {
                         console.log('Invalid Youtube Link');
                         $('[data-youtubelink]').val('');
+                        self.removeClass('loading-small');
                         shareStatusUpdate('Link invalido', 'red');
+                        setTimeout(function() {
+                            shareStatusUpdate('', '');
+                        }, 1500);
                     }
 
                     function shareStatusUpdate(text, color) {
