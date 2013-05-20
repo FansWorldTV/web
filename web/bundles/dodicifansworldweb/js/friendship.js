@@ -22,7 +22,7 @@ var friendship = {
     },
 
     add: function(){
-        $(".btn_friendship.add:not('.loading-small')").live('click', function(e){
+        $(".btn_friendship.add:not('.loading-small')").on('click', function(e){
             e.stopImmediatePropagation();
             var self = $(this);
             self.addClass('loading-small');
