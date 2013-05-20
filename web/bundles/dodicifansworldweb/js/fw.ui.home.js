@@ -97,7 +97,98 @@ $(document).ready(function () {
 
 
 
-
+$(document).ready(function () {
+    "use strict";
+    var pluginName = "fwHomePackery";
+    var defaults = {
+        videoCategory: null,
+        videoFeed: Routing.generate(appLocale + '_home_ajaxfilter'),
+        selector: 'section.highlights',
+        itemSelector: '.video',
+        packery: null
+    };
+    function Plugin(element, options) {
+        this.element = element;
+        this.options = $.extend({}, defaults, options);
+        this._defaults = defaults;
+        this._name = pluginName;
+        this.init();
+    }
+    Plugin.prototype = {
+        init: function () {
+            var that = this;
+            var self = $(that.element);
+            self.bind("destroyed", $.proxy(that.teardown, that));
+            self.addClass(that._name);
+            that.makePackery();
+            return true;
+        },
+        makePackery: function() {
+            var that = this;
+            var i = 0;
+            var cnt = 0;
+            var container = document.querySelector(that.options.selector);
+            that.options.packery = new Packery(container, {
+                itemSelector: '.video',
+                gutter: ".gutter-sizer",
+                columnWidth: ".grid-sizer"
+            });
+            $.ajax({
+                url: that.options.videoFeed,
+                data: {
+                    'vc': that.options.videoCategory
+                }
+            }).then(function(response) {
+                for(i in response.highlighted) {
+                    if (response.highlighted.hasOwnProperty(i)) {
+                        var video = response.highlighted[i];
+                        $.when(templateHelper.htmlTemplate('video-home_element', video))
+                            .then(function(response){
+                                var $thumb = $(response).clone();
+                                $thumb.addClass('video');
+                                if(cnt === 1) {
+                                    $thumb.addClass('double');
+                                }
+                                cnt += 1;
+                                $(that.options.selector).append($thumb);
+                                that.options.packery.appended($thumb);
+                                that.options.packery.layout();
+                            });
+                    }
+                }
+            });
+        },
+        removeAll: function() {
+            var that = this;
+            $(that.options.selector).find('.video').each(function(elem){
+                that.options.packery.remove($(this));
+            });
+        },
+        destroy: function() {
+            var that = this;
+            $(that.element).unbind("destroyed", that.teardown);
+            that.teardown();
+            return true;
+        },
+        teardown: function() {
+            var that = this;
+            $.removeData($(that.element)[0], that._name);
+            $(that.element).removeClass(that._name);
+            that.unbind();
+            that.element = null;
+            return that.element;
+        },
+        bind: function() { },
+        unbind: function() { }
+    };
+    $.fn[pluginName] = function (options) {
+        return this.each(function () {
+            if (!$.data(this, pluginName)) {
+                $.data(this, pluginName, new Plugin(this, options));
+            }
+        });
+    };
+});
 
 $(document).ready(function () {
     "use strict";
@@ -121,18 +212,24 @@ $(document).ready(function () {
             var self = $(that.element);
             self.bind("destroyed", $.proxy(that.teardown, that));
             self.addClass(that._name);
-            self.empty();
+            that.clearThumbs();
             that.appendThumbs();
 
-            $('section.' + that.options.block + ' > .add-more').on('click', function(event){
-                that.options.page += 1;
-                var button = $(this);
-                button.addClass('rotate');
-                $.when(that.appendThumbs()).then(function(response){
-                    button.removeClass('rotate');
-                });
-            });
+            $('section.' + that.options.block + ' > .add-more').on('click', that.addMoreThumbs);
             return true;
+        },
+        clearThumbs: function() {
+            var that = this;
+            $(that.element).empty();
+        },
+        addMoreThumbs: function(event) {
+            var that = this;
+            var button = $(event.srcElement);
+            that.options.page += 1;
+            button.addClass('rotate');
+            $.when(that.appendThumbs()).then(function(response){
+                button.removeClass('rotate');
+            });
         },
         appendThumbs: function() {
             var that = this;
@@ -195,15 +292,17 @@ $(document).ready(function () {
 //Attach plugin to all matching element
 $(document).ready(function () {
     "use strict";
+    $('section.highlights').fwHomePackery({
+        videoCategory: $('.filter-home').find('.active').attr('data-category-id'),
+    })
     $('section.popular > .videos-container').fwHomeThumbs({
         videoCategory: $('.filter-home').find('.active').attr('data-category-id'),
         block: 'popular'
-    })
-
+    });
     $('section.followed > .videos-container').fwHomeThumbs({
         videoCategory: $('.filter-home').find('.active').attr('data-category-id'),
         block: 'followed'
-    })
+    });
 });
 
 $(document).ready(function () {
@@ -285,27 +384,33 @@ $(document).ready(function () {
     }
 
     var videoCategory = $('.filter-home').find('.active').attr('data-category-id');
-    makePackery(videoCategory);
+    //makePackery(videoCategory);
     //appendFollowed(videoCategory);
     //appendPopular(videoCategory);
     makeTags(videoCategory, 'popular', 1);
     makeTags(videoCategory, 'followed', 1);
 
 
-    $('section.followed > .add-more').on('click', function(event){
-
-        /*
-        Routing.generate(appLocale + '_home_ajaxfilter')
-        $.ajax({url: Routing.generate(appLocale + '_home_ajaxfilter'), data: {'vc': 6}}).then(function(response){console.log(response)})
 
 
-        ajax.genericAction('home_ajaxfilter', {paginate:{'page':1, 'block':'popular','vc': 6}}, function(r){console.log(r);});
+    $('.filter-home > li').on('click', function(){
+        $(this).parent().find('.active').removeClass('active');
+        //$(this).toggleClass('active', 125);
+        $(this).addClass('active');
+        var videoCategory = $(this).attr('data-category-id');
+        var popularThumbs = $('section.popular > .videos-container').data('fwHomeThumbs');
+        var followedThumbs = $('section.followed > .videos-container').data('fwHomeThumbs');
+        var highlightsThumbs = $('section.highlights').data('fwHomePackery');
 
-        $.ajax({url: Routing.generate(appLocale + '_home_ajaxfilter'), data: {paginate:{'page':1, 'block':'popular','vc': 6}}}).then(function(response){console.log(response)})
+        popularThumbs.clearThumbs();
+        followedThumbs.clearThumbs();
+        highlightsThumbs.options.videoCategory = popularThumbs.options.videoCategory = followedThumbs.options.videoCategory = videoCategory;
 
+        popularThumbs.appendThumbs();
+        followedThumbs.appendThumbs();
 
-        */
-
+        highlightsThumbs.removeAll();
+        highlightsThumbs.makePackery();
 
     });
 });
