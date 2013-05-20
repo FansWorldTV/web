@@ -220,7 +220,11 @@ class SearchController extends BaseController
                     }
 
                     if ($this->_evaluateConditions($type, array('user', 'team', 'idol'))) {
-                        if ('user' == $type) $data['username'] = $this->userArray($i);
+                        //if ('user' == $type) $data['username'] = $this->userArray($i);
+                        if ('user' == $type && $userid) {
+                             $data['followed'] =  $this->get('friender')->isFan($user, $i);
+                        }
+
                         if ('user' == $type || 'idol' == $type) {
                             $data['firstname'] = $i->getFirstname();
                             $data['lastname'] = $i->getLastname();
