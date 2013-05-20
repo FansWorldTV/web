@@ -522,7 +522,11 @@ $(document).ready(function () {
                     } else {
                         console.log('Invalid Youtube Link');
                         $('[data-youtubelink]').val('');
+                        self.removeClass('loading-small');
                         shareStatusUpdate('Link invalido', 'red');
+                        setTimeout(function() {
+                            shareStatusUpdate('', '');
+                        }, 1500);
                     }
 
                     function shareStatusUpdate(text, color) {
