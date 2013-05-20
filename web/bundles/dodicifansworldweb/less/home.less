@@ -8,6 +8,11 @@
   text-align: center;
   padding-top: 10px;
 
+  .spinner {
+    .spinnerize(20px);
+    margin: 10px auto 10px;
+  }
+
   .filter-home {
     display: inline-block;
     margin: 0 auto;
@@ -69,6 +74,10 @@
               color: @orange;
               font-weight: 500;
             }
+
+            &:hover {
+              color: @orange;
+            }
           }
         }
       }
@@ -88,8 +97,27 @@
       margin-top: 40px;
 
       &:hover {
-        .rotate(360deg);
         opacity: 1;
+      }
+
+      &.rotate {
+        .animation(add-more-loading 0.7s infinite linear);
+      }
+
+      @-webkit-keyframes add-more-loading {
+        to { -webkit-transform: rotate(360deg); }
+      }
+
+      @-moz-keyframes add-more-loading {
+        to { -moz-transform: rotate(360deg); }
+      }
+
+      @-ms-keyframes add-more-loading {
+        to { -ms-transform: rotate(360deg); }
+      }
+
+      @keyframes add-more-loading {
+        to { transform: rotate(360deg); }
       }
     }
 
@@ -110,6 +138,7 @@
 
       div.image {
         position: relative;
+        margin-bottom: 10px;
 
         img {
           width: 100%;
@@ -193,17 +222,18 @@
 
       @media screen and (max-width: 480px) {
         .column(12);
-        margin-bottom: 10px;
       }
 
       @media screen and (min-width: 481px) and (max-width: 767px) {
         .column(6,12);
-        margin-bottom: 10px;
       }
 
       @media screen and (min-width: 768px) and (max-width: 980px) {
         .column(3,12);
-        margin-bottom: 10px;
+      }
+
+      @media screen and (min-width: 1470px) {
+        .column(1.5, 12);
       }
     }
   }

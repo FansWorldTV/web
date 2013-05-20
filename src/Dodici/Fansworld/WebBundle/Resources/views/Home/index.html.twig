@@ -19,6 +19,10 @@
 {% block main_content %}
     <div class="home-content">
 
+        <div class="spinner">
+            <span class="mask"></span>
+        </div>
+
         <ul class="filter-home">
             {% for category in categories %}
                 <li {% if loop.first %}class="active"{% endif %} data-category-id = "{{ category.id }}">{{ category.title }}</li>
