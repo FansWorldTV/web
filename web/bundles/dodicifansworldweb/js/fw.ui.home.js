@@ -155,7 +155,7 @@ $(document).ready(function () {
                         $.when(templateHelper.htmlTemplate('video-home_element', video))
                         .then(function(response){
                             var $thumb = $(response).clone();
-                            $thumb.hide().appendTo(that.element).fadeIn();
+                            $thumb.hide().appendTo(that.element).fadeIn('slow');
                         });
                     }
                 }
