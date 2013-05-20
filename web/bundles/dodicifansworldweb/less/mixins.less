@@ -115,3 +115,50 @@
     border-bottom: (@height/2) solid transparent;
   }
 }
+
+//animation crossbrowser
+.animation(@how) {
+  -webkit-animation: @how;
+  -moz-animation: @how;
+  -ms-animation: @how;
+  animation: @how;
+}
+
+// CSS3 Spinner
+.spinnerize(@size: 26px, @color: #999, @thickness: 6px) {
+  position:relative;
+  width:@size; height:@size;
+  border:@thickness solid @color;
+  border-radius:100%;
+  .animation(spin 1s infinite linear);
+
+  .mask {
+    overflow:hidden; position:absolute;
+    top:-@thickness; bottom:-@thickness;
+    right:@size/2; left:-@thickness;
+
+    &:after {
+      content:''; position:absolute; top:0; left:0;
+      border-radius:100%;
+      width:@size; height:@size;
+      border:@thickness solid lighten(@color, 10%);
+      overflow:hidden;
+    }
+  }
+
+  @-webkit-keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
+  }
+
+  @-moz-keyframes spin {
+    to { -moz-transform: rotate(360deg); }
+  }
+
+  @-ms-keyframes spin {
+    to { -ms-transform: rotate(360deg); }
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+}
