@@ -227,18 +227,13 @@ class Friender
      * @param User|User $who
      * @param User|User $target
      */
-    public function isFan(User $who, User $target)
+    public function isFan(User $target, User $who)
     {
         if (!$who) throw new \Exception('Invalid who-(user) parameter');
         if (!$target) throw new \Exception('Invalid target entity parameter');
 
         if ($who instanceof User && $target instanceof User) {
-            $res =  $this->em->getRepository('DodiciFansworldWebBundle:Friendship')->findOneBy(array('author' => $who->getId(), 'target' => $target->getId()));
-            if (count($res) > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return  $this->em->getRepository('DodiciFansworldWebBundle:Friendship')->findOneBy(array('author' => $who->getId(), 'target' => $target->getId()));
         } else {
             throw new \Exception('Invalid entity');
         }
