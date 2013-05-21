@@ -34,9 +34,6 @@
  *      FOS Routing                                                            *
  ******************************************************************************/
 
-///////////////////////////////////////////////////////////////////////////////
-// Plugin wrapper para galerias semantic grid                                //
-///////////////////////////////////////////////////////////////////////////////
 $(document).ready(function () {
     "use strict";
     var pluginName = "fwHomeGallery";
@@ -195,6 +192,9 @@ $(document).ready(function () {
     };
 });
 
+///////////////////////////////////////////////////////////////////////////////
+// Plugin wrapper para galerias semantic grid                                //
+///////////////////////////////////////////////////////////////////////////////
 $(document).ready(function () {
     "use strict";
     var pluginName = "fwHomeThumbs";
@@ -298,13 +298,96 @@ $(document).ready(function () {
 });
 
 ///////////////////////////////////////////////////////////////////////////////
+// Plugin generador de tags                                                  //
+///////////////////////////////////////////////////////////////////////////////
+$(document).ready(function () {
+    "use strict";
+    var pluginName = "fwHomeTags";
+    var defaults = {
+        tagSource: Routing.generate(appLocale + '_tag_ajaxgetusedinvideos'),
+        channel: null,
+        filter: null,
+        maxTags: 4,
+        page: 1
+
+    };
+    function Plugin(element, options) {
+        this.element = element;
+        this.options = $.extend({}, defaults, options);
+        this._defaults = defaults;
+        this._name = pluginName;
+        this.init();
+    }
+    Plugin.prototype = {
+        init: function () {
+            var that = this;
+            var self = $(that.element);
+            self.bind("destroyed", $.proxy(that.teardown, that));
+            self.addClass(that._name);
+            that.makeTags();
+            return true;
+        },
+        makeTags: function() {
+            var that = this;
+            $.ajax({
+                url: that.options.tagSource,
+                data: {
+                    channel: that.options.channel,
+                    filter: that.options.filter,
+                    page: that.options.page
+                }
+            }).then(function(response){
+                    var i = 0;
+                    var tags = response.tags;
+                    $(that.element).empty();
+                    for(i in tags){
+                        if (tags.hasOwnProperty(i)) {
+                            $(that.element).append("<li>"+tags[i].title+"</li>");
+                            if(i >= that.options.maxTags) {
+                                break;
+                            }
+                        }
+                    }
+                });
+        },
+        destroy: function() {
+            var that = this;
+            $(that.element).unbind("destroyed", that.teardown);
+            that.teardown();
+            return true;
+        },
+        teardown: function() {
+            var that = this;
+            $.removeData($(that.element)[0], that._name);
+            $(that.element).removeClass(that._name);
+            that.unbind();
+            that.element = null;
+            return that.element;
+        },
+        bind: function() { },
+        unbind: function() { }
+    };
+    $.fn[pluginName] = function (options) {
+        return this.each(function () {
+            if (!$.data(this, pluginName)) {
+                $.data(this, pluginName, new Plugin(this, options));
+            }
+        });
+    };
+});
+
+
+///////////////////////////////////////////////////////////////////////////////
 // Attach plugin to all matching element                                     //
 ///////////////////////////////////////////////////////////////////////////////
 $(document).ready(function () {
     "use strict";
+
+    // Packery
     $('section.highlights').fwHomePackery({
         videoCategory: $('.filter-home').find('.active').attr('data-category-id'),
     })
+    // Semantic
     $('section.popular > .videos-container').fwHomeThumbs({
         videoCategory: $('.filter-home').find('.active').attr('data-category-id'),
         block: 'popular'
@@ -312,6 +395,15 @@ $(document).ready(function () {
     $('section.followed > .videos-container').fwHomeThumbs({
         videoCategory: $('.filter-home').find('.active').attr('data-category-id'),
         block: 'followed'
+    });
+    // Tags
+    $('section.popular-tags > ul').fwHomeTags({
+        channel: $('.filter-home').find('.active').attr('data-category-id'),
+        filter: 'popular'
+    });
+    $('section.followed-tags > ul').fwHomeTags({
+        channel: $('.filter-home').find('.active').attr('data-category-id'),
+        filter: 'followed'
     });
 });
 
@@ -397,8 +489,8 @@ $(document).ready(function () {
     //makePackery(videoCategory);
     //appendFollowed(videoCategory);
     //appendPopular(videoCategory);
-    makeTags(videoCategory, 'popular', 1);
-    makeTags(videoCategory, 'followed', 1);
+//    makeTags(videoCategory, 'popular', 1);
+//    makeTags(videoCategory, 'followed', 1);
 
 
 
