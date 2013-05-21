@@ -135,12 +135,18 @@ $(document).ready(function () {
             var that = this;
             var i = 0;
             var cnt = 0;
+
+            $(that.element).append('<div class="spinner"><div class="mask"></div></div>');
+
             $.ajax({
                 url: that.options.videoFeed,
                 data: {
                     'vc': that.options.videoCategory
                 }
             }).then(function(response) {
+
+                $(that.element).find('.spinner').remove();
+
                 for(i in response.highlighted) {
                     if (response.highlighted.hasOwnProperty(i)) {
                         var video = response.highlighted[i];
@@ -242,7 +248,8 @@ $(document).ready(function () {
             var that = this;
             var i = 0;
             var deferred = new jQuery.Deferred();
-            console.log("adding thumbs")
+            console.log("adding thumbs");
+
             $.ajax({
                 url: that.options.videoFeed,
                 data: {
