@@ -3,6 +3,7 @@
 namespace Dodici\Fansworld\WebBundle\Controller;
 
 use Dodici\Fansworld\WebBundle\Entity\Idol;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use JMS\SecurityExtraBundle\Annotation\Secure;
@@ -17,6 +18,9 @@ use Application\Sonata\UserBundle\Entity\User;
 use Dodici\Fansworld\WebBundle\Entity\Team;
 use Dodici\Fansworld\WebBundle\Entity\IdolCareer;
 use Application\Sonata\UserBundle\Entity\Notification;
+use Imagine\Image\Box;
+use Imagine\Image\Point;
+use Imagine\Gd\Imagine;
 
 /**
  * Idol controller
@@ -51,6 +55,29 @@ class IdolController extends SiteController
             'categories' => $categories,
             'gotMore' => $gotMore
         );
+    }
+
+    /**
+     * @Route("/{id}/next", name="idol_next")
+     */
+    public function nextAction($id)
+    {
+        $idol = $this->getRepository('Idol')->find($id);
+        $next = $this->getRepository('Idol')->next($idol);
+
+
+        return $this->forward('DodiciFansworldWebBundle:Idol:videosTab', array('slug'=> $next->getSlug()));
+    }
+
+    /**
+     * @Route("/{id}/previous", name="idol_previous")
+     */
+    public function previousAction($id)
+    {
+        $idol = $this->getRepository('Idol')->find($id);
+        $previous = $this->getRepository('Idol')->previous($idol);
+
+        return $this->forward('DodiciFansworldWebBundle:Idol:videosTab', array('slug'=> $previous->getSlug()));
     }
 
     /**
@@ -361,4 +388,101 @@ class IdolController extends SiteController
         return $return;
     }
 
+    /**
+     * @Route("/change/image", name="idol_change_imageSave")
+     * @Secure(roles="ROLE_ADMIN")
+     * @Template
+     */
+    public function changeImageSaveAction()
+    {
+        $request = $this->getRequest();
+        $idolId = $request->get('idol', null);
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $tempFile = $request->get('tempFile');
+        $originalFileName = $request->get('originalFile');
+        $realWidth = $request->get('width');
+        $realHeight = $request->get('height');
+        $type = $request->get('type');
+
+        $lastdot = strrpos($originalFileName, '.');
+        $originalFile = substr($originalFileName, 0, $lastdot);
+        $ext = substr($originalFileName, $lastdot);
+
+        $finish = false;
+        $form = $this->_createForm();
+
+        if($idolId){
+            $idol = $this->getRepository('Idol')->find($idolId);
+        }else{
+            throw new Exception('No idol');
+        }
+
+        if ($request->getMethod() == 'POST') {
+            try {
+                $form->bindRequest($request);
+                $data = $form->getData();
+
+                if ($form->isValid()) {
+                    $mediaManager = $this->get("sonata.media.manager.media");
+
+                    $cropOptions = array(
+                        "cropX" => $data['x'],
+                        "cropY" => $data['y'],
+                        "cropW" => $data['w'],
+                        "cropH" => $data['h'],
+                        "tempFile" => $tempFile,
+                        "originalFile" => $originalFileName,
+                        "extension" => $ext
+                    );
+
+                    $media = $this->get('cutter')->cutImage($cropOptions);
+
+                    if ('profile' == $type) {
+                        $idol->setImage($media);
+                    } else {
+                        $idol->setSplash($media);
+                    }
+
+                    $em->persist($idol);
+                    $em->flush();
+
+                    $this->get('session')->setFlash('success', $this->trans('upload_sucess'));
+                    $finish = true;
+                }
+            } catch (\Exception $e) {
+                $form->addError(new FormError('Error subiendo foto de perfil'));
+            }
+        }
+
+        return array(
+            'idol' => $idol,
+            'form' => $form->createView(),
+            'tempFile' => $tempFile,
+            'originalFile' => $originalFileName,
+            'ext' => $ext,
+            'finish' => $finish,
+            'realWidth' => $realWidth,
+            'realHeight' => $realHeight,
+            'type' => $type
+        );
+    }
+
+    private function _createForm()
+    {
+        $defaultData = array();
+        $collectionConstraint = new Collection(array(
+            'x' => array(),
+            'y' => array(),
+            'w' => array(),
+            'h' => array()
+        ));
+        $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
+            ->add('x', 'hidden', array('required' => false, 'data' => 0))
+            ->add('y', 'hidden', array('required' => false, 'data' => 0))
+            ->add('w', 'hidden', array('required' => false, 'data' => 0))
+            ->add('h', 'hidden', array('required' => false, 'data' => 0))
+            ->getForm();
+        return $form;
+    }
 }

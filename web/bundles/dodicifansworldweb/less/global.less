@@ -137,26 +137,21 @@
       }
 
       .share-box {
-        .size(184px, 505px);
+        .size(auto, 505px);
         position: absolute;
         bottom: 0;
         left: -202px;
-        background-color:  #ffffff;
-        border:  2px solid #e2e2e4;
-        border-radius: 3px;
+        background-color:  transparent;
         position: absolute;
         color: @black;
         z-index: 9;
+        box-sizing: border-box;
 
         .arrow {
-          top: -6px;
+          top: -4px;
           position: absolute;
           left: 50%;
-        }
-
-        h4 {
-          color: @black;
-          float: left;
+          z-index: 10;
         }
 
         .btn {
@@ -166,7 +161,6 @@
         input {
           border: 2px solid #e2e2e4;
           background-color: @white;
-          float: left;
 
           &.ui-widget-content {
             border: 0;
@@ -174,12 +168,22 @@
         }
 
         .top {
+          position: relative;
+          display: block;
           color: @black;
           height:  70px;
+          background-color: white;
+          text-align: center;
+          width: 100%;
+          border: 2px solid #e2e2e4;
+          border-bottom: 0;
+          .clearfix;
+          border-top-left-radius: 3px;
+          border-top-right-radius: 3px;
 
           i.close-share {
             display: block;
-            z-index: 99999999999999;
+            z-index: 10;
             position: absolute;
             top: 5px;
             right: 5px;
@@ -196,43 +200,45 @@
           input.wywtsay{
             border: 2px solid #e2e2e4;
             background-color: @white;
-            width: 80%;
-            float: left;
-            margin-left: 45px;
-            margin-top: 20px;
-          }
-
-          p{
-            text-align: left;
-            font-size: 15px;
-            color: #333333;
-            font-weight: bold;
-            margin-left: 30px;
+            width: 400px;
             margin-top: 20px;
           }
         }
 
         .bottom{
+          width: 100%;
+          position: relative;
+          display: block;
+          .clearfix;
+          padding-bottom: 15px;
+          border: 2px solid #e2e2e4;
+          background-color: #f9f9f9;
+          padding-top: 10px;
+          text-align: center;
+          border-bottom-left-radius: 3px;
+          border-bottom-right-radius: 3px;
 
           div.sharewith{
-            margin-left: 5px;
-            margin-bottom: 15px;
-
-            input{
-              width:  411px;
-            }
+            width: 412px;
+            margin: 0 auto;
+            cursor: text;
 
             ul.tagit {
               margin-left: -1px;
+              border: 2px solid #e2e2e4;
             }
           }
 
-          border-top: 2px solid #e2e2e4;
-          background-color: #f9f9f9;
-          height: 85px;
-          padding-left: 41px;
-          padding-right: 44px;
-          padding-top: 10px;
+          div.share-buttons {
+            width: 412px;
+            margin: 15px auto;
+
+            div.pull-left {
+              button {
+                float: left;
+              }
+            }
+          }
         }
 
       }

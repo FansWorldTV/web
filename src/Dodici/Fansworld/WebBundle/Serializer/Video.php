@@ -25,8 +25,9 @@ class Video
             'commentCount' => $entity->getCommentCount(),
             'videocategory' => $entity->getVideocategory() ? (int)$entity->getVideocategory()->getId() : null,
             'weight' => $entity->getWeight(),
-            'duration' => $entity->getDuration(),
-            'url' => $this->router->generate('video_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()))
+            'duration' => date("i:s", $entity->getDuration()),
+            'url' => $this->router->generate('video_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug())),
+            'modalUrl' => $this->router->generate('modal_media', array('type' => 'video', 'id' => $entity->getId()))
         );
     }
 }

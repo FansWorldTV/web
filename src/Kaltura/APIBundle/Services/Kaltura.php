@@ -10,6 +10,8 @@ use Kaltura\Client\ClientException;
 use Kaltura\Client\Type\MediaEntry;
 use Kaltura\Client\Plugin\Metadata\Enum\MetadataObjectType;
 use Kaltura\Client\Plugin\Metadata\MetadataPlugin;
+use Kaltura\Client\Type\UploadedFileTokenResource;
+use Kaltura\Client\Enum\MediaType;
 
 /**
  * Service interface to Kaltura API client
@@ -97,6 +99,33 @@ class Kaltura
         $es = $this->getClient()->getMediaService();
         $updatedentry = $es->update($entryId, $entry);
         return $updatedentry;
+    }
+    
+    public function addEntryFromToken($token, $name)
+    {
+        $uploadedresource = new UploadedFileTokenResource();
+        $uploadedresource->token = $token;
+        
+        $entry = new MediaEntry();
+        $entry->mediaType = MediaType::VIDEO;
+        $entry->name = $name;
+        $es = $this->getClient()->getMediaService();
+        $entry = $es->add($entry);
+        if ($entry->id) {
+            $entry = $es->addContent($entry->id, $uploadedresource);
+            if ($entry->id) return $entry->id;
+            else return false;
+        } else {
+            return false;
+        }
+    }
+    
+    public function getUploadToken()
+    {
+        $uts = $this->getClient()->getUploadTokenService();
+        $token = $uts->add();
+        if ($token) return $token->id;
+        return false;
     }
     
     /**
