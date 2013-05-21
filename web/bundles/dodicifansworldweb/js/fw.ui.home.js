@@ -135,36 +135,30 @@ $(document).ready(function () {
             var that = this;
             var i = 0;
             var cnt = 0;
-
-            $(that.element).append('<div class="spinner"><div class="mask"></div></div>');
-
             $.ajax({
                 url: that.options.videoFeed,
                 data: {
                     'vc': that.options.videoCategory
                 }
             }).then(function(response) {
-
-                $(that.element).find('.spinner').remove();
-
-                for(i in response.highlighted) {
-                    if (response.highlighted.hasOwnProperty(i)) {
-                        var video = response.highlighted[i];
-                        $.when(templateHelper.htmlTemplate('video-home_element', video))
-                            .then(function(response){
-                                var $thumb = $(response).clone();
-                                $thumb.addClass('video');
-                                if(cnt === 1) {
-                                    $thumb.addClass('double');
-                                }
-                                cnt += 1;
-                                $(that.options.selector).append($thumb);
-                                that.options.packery.appended($thumb);
-                                that.options.packery.layout();
-                            });
+                    for(i in response.highlighted) {
+                        if (response.highlighted.hasOwnProperty(i)) {
+                            var video = response.highlighted[i];
+                            $.when(templateHelper.htmlTemplate('video-home_element', video))
+                                .then(function(response){
+                                    var $thumb = $(response).clone();
+                                    $thumb.addClass('video');
+                                    if(cnt === 1) {
+                                        $thumb.addClass('double');
+                                    }
+                                    cnt += 1;
+                                    $(that.options.selector).append($thumb);
+                                    that.options.packery.appended($thumb);
+                                    that.options.packery.layout();
+                                });
+                        }
                     }
-                }
-            });
+                });
         },
         removeAll: function() {
             var that = this;
@@ -233,6 +227,8 @@ $(document).ready(function () {
         },
         clearThumbs: function() {
             var that = this;
+            //$(that.element).parent().hide('slow');
+            $(that.element).parent().slideUp('slow', function() {})
             $(that.element).empty();
         },
         addMoreThumbs: function(event) {
@@ -248,8 +244,7 @@ $(document).ready(function () {
             var that = this;
             var i = 0;
             var deferred = new jQuery.Deferred();
-            console.log("adding thumbs");
-
+            console.log("adding thumbs")
             $.ajax({
                 url: that.options.videoFeed,
                 data: {
@@ -260,22 +255,25 @@ $(document).ready(function () {
                     }
                 }
             }).then(function(response) {
-                for(i in response.videos) {
-                    if (response.videos.hasOwnProperty(i)) {
-                        var video = response.videos[i];
-                        $.when(templateHelper.htmlTemplate('video-home_element', video))
-                        .then(function(response){
-                            var $thumb = $(response).clone();
-                            $thumb.hide().appendTo(that.element).fadeIn('slow');
-                        });
+                    for(i in response.videos) {
+                        if (response.videos.hasOwnProperty(i)) {
+                            var video = response.videos[i];
+                            $.when(templateHelper.htmlTemplate('video-home_element', video))
+                                .then(function(response){
+                                    var $thumb = $(response).clone();
+                                    $thumb.hide().appendTo(that.element).fadeIn('slow');
+                                });
+                        }
                     }
-                }
-                return response.videos;
-            }).done(function(videos){
-                deferred.resolve(videos);
-            }).fail(function(error){
-                deferred.reject(new Error(error));
-            });
+                    if(response.videos.length > 0 ) {
+                        $(that.element).parent().slideDown('slow', function() {})
+                    }
+                    return response.videos;
+                }).done(function(videos){
+                    deferred.resolve(videos);
+                }).fail(function(error){
+                    deferred.reject(new Error(error));
+                });
             return deferred.promise();
         },
         destroy: function() {
@@ -391,7 +389,7 @@ $(document).ready(function () {
     "use strict";
 
     // Packery
-    $('section.highlights').fwHomePackery({
+    $('section.highlights > .videos-container').fwHomePackery({
         videoCategory: $('.filter-home').find('.active').attr('data-category-id'),
     })
     // Semantic
@@ -450,19 +448,19 @@ $(document).ready(function () {
                     $thumb = $('<article class="video"><img src="' + video.image + '" title="' + video.title + '"/></article>');
 
                     $.when(templateHelper.htmlTemplate('video-home_element', video))
-                    .then(function(response){
-                        $thumb = $(response).clone();
+                        .then(function(response){
+                            $thumb = $(response).clone();
 
-                        $thumb.addClass('video');
-                        if(cnt === 1) {
-                            $thumb.addClass('double');
-                        }
-                        cnt += 1;
+                            $thumb.addClass('video');
+                            if(cnt === 1) {
+                                $thumb.addClass('double');
+                            }
+                            cnt += 1;
 
-                        $('section.highlights').append($thumb);
-                        packery.appended($thumb);
-                        packery.layout();
-                    });
+                            $('section.highlights').append($thumb);
+                            packery.appended($thumb);
+                            packery.layout();
+                        });
                 }
             }
         });
@@ -477,19 +475,19 @@ $(document).ready(function () {
                 page: page
             }
         }).then(function(response){
-            var i = 0;
-            var tags = response.tags;
-            var container = $('section.'+filter+'-tags > ul'); //$('section.followed-tags > ul');
-            $(container).empty();
-            for(i in tags){
-                if (tags.hasOwnProperty(i)) {
-                    $(container).append("<li>"+tags[i].title+"</li>");
-                    if(i >= 4) {
-                        break;
+                var i = 0;
+                var tags = response.tags;
+                var container = $('section.'+filter+'-tags > ul'); //$('section.followed-tags > ul');
+                $(container).empty();
+                for(i in tags){
+                    if (tags.hasOwnProperty(i)) {
+                        $(container).append("<li>"+tags[i].title+"</li>");
+                        if(i >= 4) {
+                            break;
+                        }
                     }
                 }
-            }
-        })
+            })
     }
 
     var videoCategory = $('.filter-home').find('.active').attr('data-category-id');
@@ -511,7 +509,7 @@ $(document).ready(function () {
         // Get a plugin handler
         var popularThumbs = $('section.popular > .videos-container').data('fwHomeThumbs');
         var followedThumbs = $('section.followed > .videos-container').data('fwHomeThumbs');
-        var highlightsThumbs = $('section.highlights').data('fwHomePackery');
+        var highlightsThumbs = $('section.highlights > .videos-container').data('fwHomePackery');
 
         // Clear semantic grid thumbs
         popularThumbs.clearThumbs();
