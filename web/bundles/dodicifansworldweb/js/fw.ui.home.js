@@ -34,6 +34,9 @@
  *      FOS Routing                                                            *
  ******************************************************************************/
 
+///////////////////////////////////////////////////////////////////////////////
+// Plugin wrapper para galerias semantic grid                                //
+///////////////////////////////////////////////////////////////////////////////
 $(document).ready(function () {
     "use strict";
     var pluginName = "fwHomeGallery";
@@ -95,8 +98,9 @@ $(document).ready(function () {
     };
 });
 
-
-
+///////////////////////////////////////////////////////////////////////////////
+// Plugin wrapper para galerias packery                                      //
+///////////////////////////////////////////////////////////////////////////////
 $(document).ready(function () {
     "use strict";
     var pluginName = "fwHomePackery";
@@ -105,7 +109,8 @@ $(document).ready(function () {
         videoFeed: Routing.generate(appLocale + '_home_ajaxfilter'),
         selector: 'section.highlights',
         itemSelector: '.video',
-        packery: null
+        packery: null,
+        container: null
     };
     function Plugin(element, options) {
         this.element = element;
@@ -120,9 +125,8 @@ $(document).ready(function () {
             var self = $(that.element);
             self.bind("destroyed", $.proxy(that.teardown, that));
             self.addClass(that._name);
-
-            var container = document.querySelector(that.options.selector);
-            that.options.packery = new Packery(container, {
+            that.options.container = document.querySelector(that.options.selector);
+            that.options.packery = new Packery(that.options.container, {
                 itemSelector: '.video',
                 gutter: ".gutter-sizer",
                 columnWidth: ".grid-sizer"
@@ -134,12 +138,6 @@ $(document).ready(function () {
             var that = this;
             var i = 0;
             var cnt = 0;
-            var container = document.querySelector(that.options.selector);
-//            that.options.packery = new Packery(container, {
-//                itemSelector: '.video',
-//                gutter: ".gutter-sizer",
-//                columnWidth: ".grid-sizer"
-//            });
             $.ajax({
                 url: that.options.videoFeed,
                 data: {
@@ -222,7 +220,9 @@ $(document).ready(function () {
             that.clearThumbs();
             that.appendThumbs();
 
-            $('section.' + that.options.block + ' > .add-more').on('click', that.addMoreThumbs);
+            $('section.' + that.options.block + ' > .add-more').on('click', function(event) {
+                that.addMoreThumbs(event);
+            });
             return true;
         },
         clearThumbs: function() {
@@ -296,7 +296,10 @@ $(document).ready(function () {
         });
     };
 });
-//Attach plugin to all matching element
+
+///////////////////////////////////////////////////////////////////////////////
+// Attach plugin to all matching element                                     //
+///////////////////////////////////////////////////////////////////////////////
 $(document).ready(function () {
     "use strict";
     $('section.highlights').fwHomePackery({
@@ -405,12 +408,17 @@ $(document).ready(function () {
         //$(this).toggleClass('active', 125);
         $(this).addClass('active');
         var videoCategory = $(this).attr('data-category-id');
+
+        // Get a plugin handler
         var popularThumbs = $('section.popular > .videos-container').data('fwHomeThumbs');
         var followedThumbs = $('section.followed > .videos-container').data('fwHomeThumbs');
         var highlightsThumbs = $('section.highlights').data('fwHomePackery');
 
+        // Clear semantic grid thumbs
         popularThumbs.clearThumbs();
         followedThumbs.clearThumbs();
+
+        // Set the internal variable TODO: refactor !
         highlightsThumbs.options.videoCategory = popularThumbs.options.videoCategory = followedThumbs.options.videoCategory = videoCategory;
 
         popularThumbs.appendThumbs();
