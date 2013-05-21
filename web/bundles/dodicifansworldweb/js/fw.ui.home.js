@@ -120,6 +120,13 @@ $(document).ready(function () {
             var self = $(that.element);
             self.bind("destroyed", $.proxy(that.teardown, that));
             self.addClass(that._name);
+
+            var container = document.querySelector(that.options.selector);
+            that.options.packery = new Packery(container, {
+                itemSelector: '.video',
+                gutter: ".gutter-sizer",
+                columnWidth: ".grid-sizer"
+            });
             that.makePackery();
             return true;
         },
@@ -128,11 +135,11 @@ $(document).ready(function () {
             var i = 0;
             var cnt = 0;
             var container = document.querySelector(that.options.selector);
-            that.options.packery = new Packery(container, {
-                itemSelector: '.video',
-                gutter: ".gutter-sizer",
-                columnWidth: ".grid-sizer"
-            });
+//            that.options.packery = new Packery(container, {
+//                itemSelector: '.video',
+//                gutter: ".gutter-sizer",
+//                columnWidth: ".grid-sizer"
+//            });
             $.ajax({
                 url: that.options.videoFeed,
                 data: {
