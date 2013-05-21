@@ -100,7 +100,7 @@ class UserController extends BaseController
      * [signed] User - fan/unfan
      *
      * @Route("/user/fan/{action}", name="api_v1_user_fan", requirements = {"action" = "add|remove"})
-     * @Method({"GET"})
+     * @Method({"POST"})
      *
      * Post params:
 	 * - user_id: int
@@ -112,16 +112,13 @@ class UserController extends BaseController
     public function fanAction($action)
     {
         try {
-            //if ($this->hasValidSignature()) {
+            if ($this->hasValidSignature()) {
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
                 $target = $this->getRepository('User')->find($request->get('target_id'));
                 if (!$target) throw new HttpException(404, 'Target user not found');
 
-
-                $user = $this->getRepository('User')->find($userid);
-
-                //$user = $this->checkUserToken($userid, $request->get('user_token'));
+                $user = $this->checkUserToken($userid, $request->get('user_token'));
 
                 if ($action == 'add') {
                     $this->get('friender')->friend($target, null, $user);
@@ -132,9 +129,9 @@ class UserController extends BaseController
                 }
 
                 return $this->result(true);
-         //   } else {
-           //     throw new HttpException(401, 'Invalid signature');
-            //}
+            } else {
+                throw new HttpException(401, 'Invalid signature');
+            }
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
