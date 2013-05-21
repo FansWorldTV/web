@@ -1,3 +1,4 @@
+{#
 {% extends 'DodiciFansworldWebBundle:Profile:header_large_base.html.twig' %}
 			
 {% block splash_container %}  
@@ -18,4 +19,31 @@
     {% if entity.teamname %}
         {{ entity.teamname }}
     {% endif %}
-{% endblock %}
+{% endblock %}#}
+
+<div class="header-large-new">
+    <div class="splash-container">
+        {% thumbnail entity.splash, 'splash' %}
+    </div>
+    <div class="info-container">
+        <p class="description">{{ entity.content|raw()|truncate(128) }}</p>
+        <ul class="quantities">
+            <li class="item">
+                91
+                <span class="item-type">FOTOS</span>
+            </li>
+            <li class="item">
+                91
+                <span class="item-type">FOTOS</span>
+            </li>
+            <li class="item">
+                91
+                <span class="item-type">FOTOS</span>
+            </li>
+            <li class="item">
+                91
+                <span class="item-type">FOTOS</span>
+            </li>
+        </ul>
+    </div>
+</div>

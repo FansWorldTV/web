@@ -782,3 +782,90 @@ div.entityBlock {
         margin-right: 0;
     }
 }
+
+.header-large-new {
+  display: block;
+  position: relative;
+
+  @fixedWidth: 450px;
+  @height: 300px;
+
+  .splash-container {
+    margin-right: @fixedWidth;
+    height: @height;
+    overflow: hidden;
+    position: relative;
+
+    img {
+      .size(100%, auto);
+    }
+  }
+
+  .info-container {
+    background-color: #2f2f2f;
+    height: @height;
+    width: @fixedWidth;
+    position: absolute;
+    right:0;
+    top: 0;
+
+    .title {
+      color: @green;
+    }
+
+    .description {
+      color: @grayLight;
+      font-size: 15px;
+      font-weight: 400;
+    }
+
+    ul.quantities {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      li.item {
+        background-color: #3b3b3b;
+        .pull-left();
+        width: (@fixedWidth/4)-2;
+        height: 100px;
+        border-right: 1px solid #5b5b5b;
+        position: relative;
+        margin-left: 2px;
+        color: white;
+        font-size: 55px;
+        text-align: center;
+        .box-sizing(border-box);
+        padding-top: 30px;
+        line-height: 22px;
+
+        .item-type {
+          color: @white;
+          font-size: 12px;
+          font-weight: 500;
+        }
+
+        &:after {
+          content: "";
+          border-right: 1px solid black;
+          width: (@fixedWidth/4)-2;
+          height: 100px;
+          top: 0;
+          right: -2px;
+          position: absolute;
+          z-index: 9;
+        }
+
+        &:first-child {
+          margin: 0;
+        }
+
+        &:last-child {
+          border: 0;
+          &:after {
+            border: 0;
+          }
+        }
+      }
+    }
+  }
+}
