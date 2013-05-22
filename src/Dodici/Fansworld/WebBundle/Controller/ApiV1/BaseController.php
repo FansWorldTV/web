@@ -160,26 +160,30 @@ class BaseController extends SiteController
         return $data;
     }
 
-    protected function userArray(User $user)
+    protected function userArray(User $user, array $excludefields = null)
     {
-        $idolcount = $this->getRepository('Idolship')->countBy(array('author' => $user->getId()));
-        $teamcount = $this->getRepository('Teamship')->countBy(array('author' => $user->getId()));
-        $followcount = $this->getRepository('Friendship')->countBy(array('author' => $user->getId(), 'active' => true));
+        $r = array();
+        if (!$excludefields) $excludefields=array();
+        if (!in_array('id', $excludefields)) $r['id'] = $user->getId();
+        if (!in_array('username', $excludefields)) $r['username'] = $user->getUsername();
+        if (!in_array('email', $excludefields)) $r['email'] = $user->getEmail();
+        if (!in_array('firstname', $excludefields)) $r['firstname'] = $user->getFirstname();
+        if (!in_array('lastname', $excludefields)) $r['lastname'] = $user->getLastname();
+        if (!in_array('image', $excludefields)) $r['image'] = $this->imageValues($user->getImage());
+        if (!in_array('splash', $excludefields)) $r['splash'] = $this->imageValues($user->getSplash(), $this->getImageFormat('splash'));
+        if (!in_array('fanCount', $excludefields)) $r['fanCount'] = $user->getFanCount();
+        if (!in_array('videoCount', $excludefields)) $r['videoCount'] = $user->getVideoCount();
 
-        return array(
-            'id' => $user->getId(),
-            'username' => $user->getUsername(),
-            'email' => $user->getEmail(),
-            'firstname' => $user->getFirstname(),
-            'lastname' => $user->getLastname(),
-            'image' => $this->imageValues($user->getImage()),
-            'splash' => $this->imageValues($user->getSplash(), $this->getImageFormat('splash')),
-            'fanCount' => $user->getFanCount(),
-            'videoCount' => $user->getVideoCount(),
-            'idolFollowCount' => $idolcount,
-            'teamFollowCount' => $teamcount,
-            'fanFollowCount' => $followcount
-        );
+        if (!in_array('idolFollowCount', $excludefields))
+            $r['idolFollowCount'] = $this->getRepository('Idolship')->countBy(array('author' => $user->getId()));
+
+        if (!in_array('teamFollowCount', $excludefields))
+            $r['teamFollowCount'] = $this->getRepository('Teamship')->countBy(array('author' => $user->getId()));
+
+        if (!in_array('fanFollowCount', $excludefields))
+            $r['fanFollowCount'] =  $this->getRepository('Friendship')->countBy(array('author' => $user->getId(), 'active' => true));
+
+        return $r;
     }
 
     protected function jsonComment(Comment $comment, $event=false, $user=null)
