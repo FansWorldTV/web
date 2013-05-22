@@ -34,6 +34,12 @@
  *      FOS Routing                                                            *
  ******************************************************************************/
 
+// WARNING GLOBAL VARIABLE
+// EventEmitter is taken from packery but can be download from https://github.com/Wolfy87/EventEmitter
+$(document).ready(function () {
+    window.fansWorldEvents = new EventEmitter();
+});
+
 $(document).ready(function () {
     "use strict";
     var pluginName = "fwHomeGallery";
@@ -215,7 +221,8 @@ $(document).ready(function () {
         videoCategory: null,
         videoFeed: Routing.generate(appLocale + '_home_ajaxfilter'),
         page: 1,
-        block: null
+        block: null,
+        newEvent: null
     };
     function Plugin(element, options) {
         this.element = element;
@@ -232,6 +239,19 @@ $(document).ready(function () {
             self.addClass(that._name);
             that.clearThumbs();
             that.appendThumbs();
+
+            that.options.newVideoCategory = (function nvc(videoCategory){
+                var vc = parseInt(videoCategory, 10);
+                if($.isNumeric(vc)) {
+                    that.options.videoCategory = vc;
+                }
+                console.log("New video category event triggered for VC: " + that.options.videoCategory + " block: " + that.options.block);
+                that.clearThumbs();
+                that.appendThumbs();
+                return nvc;
+            })(this);
+
+            fansWorldEvents.addListener('newVideoCategory', that.options.newVideoCategory);
 
             $('section.' + that.options.block + ' > .add-more').on('click', function(event) {
                 that.addMoreThumbs(event);
@@ -297,6 +317,7 @@ $(document).ready(function () {
         },
         teardown: function() {
             var that = this;
+            fansWorldEvents.removeListener('newVideoCategory', that.options.newVideoCategory);
             $.removeData($(that.element)[0], that._name);
             $(that.element).removeClass(that._name);
             that.unbind();
@@ -440,16 +461,18 @@ $(document).ready(function () {
         var highlightsThumbs = $('section.highlights').data('fwHomePackery');
 
         // Clear semantic grid thumbs
-        popularThumbs.clearThumbs();
-        followedThumbs.clearThumbs();
+        //popularThumbs.clearThumbs();
+        //followedThumbs.clearThumbs();
 
         // Set the internal variable TODO: refactor !
         highlightsThumbs.options.videoCategory = popularThumbs.options.videoCategory = followedThumbs.options.videoCategory = videoCategory;
 
-        popularThumbs.appendThumbs();
-        followedThumbs.appendThumbs();
+        //popularThumbs.appendThumbs();
+        //followedThumbs.appendThumbs();
 
         highlightsThumbs.removeAll();
         highlightsThumbs.makePackery();
+
+        window.fansWorldEvents.emitEvent('newVideoCategory', [videoCategory]);
     });
 });
