@@ -33,7 +33,7 @@ class AppMedia
         $this->absoluteaux = $absoluteaux;
     }
 
-    public function getImageUrl($media, $sizeFormat = 'small')
+    public function getImageUrl($media, $sizeFormat = 'small', $mode = 'url')
     {
         $imageUrl = null;
         
@@ -47,7 +47,9 @@ class AppMedia
             $format = $provider->getFormatName($media, $sizeFormat);
             $imageUrl = $provider->generatePublicUrl($media, $format);
             
-            return $host . $imageUrl;
+            $fullurl = $host . $imageUrl;
+            if ($mode == 'object') return array('id' => $media->getId(), 'url' => $fullurl);
+            else return $fullurl;
         }
         
         return false;

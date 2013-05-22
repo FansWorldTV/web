@@ -259,7 +259,7 @@ class VideoController extends BaseController
             foreach ($extrafields as $x) {
                 switch ($x) {
                     case 'author':
-                        $return['author'] = $video->getAuthor() ? $this->userArray($video->getAuthor()) : null;
+                        $return['author'] = $video->getAuthor() ? $this->userArray($video->getAuthor(), array('fanFollowCount', 'teamFollowCount', 'idolFollowCount', 'videoCount', 'fanCount')) : null;
                         break;
                     case 'createdAt':
                         $return['createdAt'] = (int)$video->getCreatedAt()->format('U');
@@ -317,7 +317,7 @@ class VideoController extends BaseController
                         $t = array();
                         foreach ($has as $h) {
                             $ent = $h->getTarget();
-                            $t[] = $this->userArray($ent);
+                            $t[] = $this->userArray($ent, array('fanFollowCount', 'teamFollowCount', 'idolFollowCount', 'videoCount', 'fanCount'));
                         }
                         $return[$x] = $t;
                         break;
@@ -543,8 +543,9 @@ class VideoController extends BaseController
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
             }
 
-            if ('user' == $entityType && !$userid) {
-                $user = $entity;
+            $author = null;
+            if ('user' == $entityType) {
+                $author = $entity;
                 $entity = null;
             }
 
@@ -557,17 +558,17 @@ class VideoController extends BaseController
             if ($sortcriteria == 'createdAt') $sortcriteria = 'date';
 
             $videos = $this->getRepository('Video')->search(
-                $entity,
+                null,
                 $user,
                 $pagination['limit'],
                 $pagination['offset'],
                 $categoryid,
                 $highlight,
-                null,
+                $author,
                 null,
                 null,
                 $sortcriteria,
-                null,
+                $entity,
                 null,
                 null,
                 $recommended,

@@ -227,9 +227,12 @@ class IdolController extends BaseController
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
 
                 $idolids = $request->get('idol_id');
+                if (!$idolids) throw new HttpException(400, 'Requires idol_id');
                 if (!is_array($idolids)) $idolids = array($idolids);
                 if (array_unique($idolids) !== $idolids) throw new HttpException(400, 'Duplicate idol_id');
-
+                
+                $updates = array();
+                
                 foreach ($idolids as $idolid) {
                     $idol = $this->getRepository('Idol')->find($idolid);
                     if (!$idol) throw new HttpException(404, 'Idol not found - id: ' . $idolid);
@@ -241,13 +244,18 @@ class IdolController extends BaseController
                     } else {
                         throw new HttpException(400, 'Invalid fan action');
                     }
+                    
+                    $updates[] = $idol;
                 }
 
                 if ($action == 'add') {
                     $this->getDoctrine()->getEntityManager()->flush();
                 }
+                
+                $result = array();
+                foreach ($updates as $ui) $result[] = array('id' => $ui->getId(), 'fanCount' => $ui->getFanCount()); 
 
-                return $this->result(true);
+                return $this->result((count($result) == 1) ? $result[0] : $result);
             } else {
                 throw new HttpException(401, 'Invalid signature');
             }
