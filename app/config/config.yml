@@ -484,7 +484,6 @@ services:
         class: Dodici\Fansworld\WebBundle\Serializer\Idol
     serializer.team:
         class: Dodici\Fansworld\WebBundle\Serializer\Team
-        arguments: [@appmedia]
     serializer.video:
         class: Dodici\Fansworld\WebBundle\Serializer\Video
         arguments: [@serializer, @router]
@@ -496,7 +495,7 @@ services:
         arguments: [@router, @appstate, @appmedia]
     serializer.album:
         class: Dodici\Fansworld\WebBundle\Serializer\Album
-        arguments: [@appmedia, @router]
+        arguments: [@router]
     serializer.photo:
         class: Dodici\Fansworld\WebBundle\Serializer\Photo
         arguments: [@serializer]

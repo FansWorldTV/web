@@ -238,9 +238,6 @@ class UserController extends BaseController
                 $pagination['sort_order'] = null;
                 $pagination['sort'] = null;
 
-                $imageformat = $request->get('imageformat');
-                if (null == $imageformat) $imageformat = 'small';
-
                 $teamships = $this->getRepository('Teamship')->byUser(
                     $target,
                     $pagination['limit'],
@@ -248,7 +245,7 @@ class UserController extends BaseController
 
                 $return = array();
                 foreach ($teamships as $teamship) {
-                    $return[] = $this->get('serializer')->values($teamship->getTeam(), $imageformat);
+                    $return[] = $this->get('serializer')->values($teamship->getTeam(), $this->getImageFormat(), $this->getImageFormat('splash'), 'object');
                 }
 
                 if ($userid) {
@@ -313,9 +310,6 @@ class UserController extends BaseController
                 $pagination['sort_order'] = null;
                 $pagination['sort'] = null;
 
-                $imageformat = $request->get('imageformat');
-                if (null == $imageformat) $imageformat = 'small';
-
                 $idolships = $this->getRepository('Idolship')->byUser(
                     $target,
                     $pagination['limit'],
@@ -323,7 +317,7 @@ class UserController extends BaseController
 
                 $return = array();
                 foreach ($idolships as $idolship) {
-                    $return[] = $this->get('serializer')->values($idolship->getIdol(), $imageformat);
+                    $return[] = $this->get('serializer')->values($idolship->getIdol(), $this->getImageFormat(), $this->getImageFormat('splash'), 'object');
                 }
 
                  if ($userid) {
@@ -386,9 +380,6 @@ class UserController extends BaseController
                 $pagination = $this->pagination();
                 $pagination['sort_order'] = null;
                 $pagination['sort'] = null;
-
-                $imageformat = $request->get('imageformat');
-                if (null == $imageformat) $imageformat = 'small';
 
                 $fansOfUser = $this->getRepository('User')->FriendUsers($user, null, $pagination['limit'], $pagination['offset'], 'score');
 
