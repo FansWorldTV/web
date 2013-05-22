@@ -113,7 +113,10 @@ $(document).ready(function () {
         selector: 'section.highlights',
         itemSelector: '.video',
         packery: null,
-        container: null
+        container: null,
+        queue: null,
+        queueDelay: 100,
+        newVideoCategoryEvent: null
     };
     function Plugin(element, options) {
         this.element = element;
@@ -129,13 +132,31 @@ $(document).ready(function () {
             self.bind("destroyed", $.proxy(that.teardown, that));
             self.addClass(that._name);
             that.options.container = document.querySelector(that.options.selector);
+
+            that.options.newVideoCategoryEvent = (function nvc(videoCategory){
+                var vc = parseInt(videoCategory, 10);
+                if($.isNumeric(vc)) {
+                    that.options.videoCategory = vc;
+                    fansWorldEvents.removeListener('newVideoCategory', that.options.newVideoCategoryEvent);
+                    $.when(that.removeAll()).then(function(){
+                        $.when(that.makePackery()).then(function(){
+                            fansWorldEvents.addListener('newVideoCategory', that.options.newVideoCategoryEvent);
+                        }).progress(function() {
+                            //console.log("adding thumbnails to packery");
+                        }).fail(function(error){
+                            alert(error.message);
+                            fansWorldEvents.addListener('newVideoCategory', that.options.newVideoCategoryEvent);
+                        });
+                    });
+                }
+                return nvc;
+            })(this);
+
+            fansWorldEvents.addListener('newVideoCategory', that.options.newVideoCategoryEvent);
             that.options.packery = new Packery(that.options.container, {
                 itemSelector: '.video',
                 gutter: ".gutter-sizer",
                 columnWidth: ".grid-sizer"
-            });
-            that.options.packery.on( 'layoutComplete', function( pckryInstance, laidOutItems ) {
-                console.log('Packery layout completed on ' + laidOutItems.length + ' items');
             });
             that.makePackery();
             return true;
@@ -144,14 +165,45 @@ $(document).ready(function () {
             var that = this;
             var i = 0;
             var cnt = 0;
+            var totalVideos = 0;
+            var queue = null;
+            var deferred = new jQuery.Deferred();
+            var itemElements = that.options.packery.getItemElements();
+            var onAdd = function(pckryInstance, laidOutItems) {
+                var items = pckryInstance.getItemElements();
+                deferred.notify(laidOutItems);
+                if(0 === queue.size() && totalVideos === laidOutItems.length) {
+                    deferred.resolve();
+                    pckryInstance.off('layoutComplete', onAdd);
+                }
+            };
+            that.options.packery.on('layoutComplete', onAdd);
+            queue = $.jqmq({
+                // Queue items will be processed every queueDelay milliseconds.
+                delay: that.options.queueDelay,
+                // Process queue items one-at-a-time.
+                batch: 1,
+                // For each queue item, execute this function.
+                callback: function( thumb ) {
+                    $(that.options.selector).append(thumb);
+                    that.options.packery.appended(thumb);
+                    that.options.packery.layout();
+                },
+                // When the queue completes naturally, execute this function.
+                complete: function(){
+                }
+            });
             $.ajax({
                 url: that.options.videoFeed,
                 data: {
                     'vc': that.options.videoCategory
                 }
             }).then(function(response) {
-                var elems = [];
-                var fragment = document.createDocumentFragment();
+                var i = 0;
+                totalVideos = response.highlighted.length;
+                if(totalVideos <= 0) {
+                    deferred.reject(new Error("Video category does not contain any video"));
+                }
                 for(i in response.highlighted) {
                     if (response.highlighted.hasOwnProperty(i)) {
                         var video = response.highlighted[i];
@@ -163,27 +215,46 @@ $(document).ready(function () {
                                 $thumb.addClass('double');
                             }
                             cnt += 1;
-                            $(that.options.selector).append($thumb);
-                            that.options.packery.appended($thumb);
-                            that.options.packery.layout();
+                            queue.add($thumb);
                         });
                     }
                 }
-
-                //that.options.packery.appended($(that.options.selector));
-                if(response.highlighted.length > 0 ) {
-                    setTimeout(function() {
-                        that.options.packery.layout()
-                    }, 250);
-                }
             });
+            return deferred.promise();
         },
         removeAll: function() {
             var that = this;
-            $(that.options.selector).find('.video').each(function(elem){
-                var video = $(this);
-                that.options.packery.remove(video);
+            var deferred = new jQuery.Deferred();
+            var itemElements = that.options.packery.getItemElements();
+            var onRemove = function(pckryInstance, removedItems) {
+                var items = pckryInstance.getItemElements();
+                deferred.notify(removedItems);
+                if(items.length <= 0) {
+                    pckryInstance.off('removeComplete', onRemove);
+                    deferred.resolve();
+                }
+            };
+            that.options.packery.on('removeComplete', onRemove);
+            var queue = $.jqmq({
+                // Queue items will be processed every queueDelay milliseconds.
+                delay: that.options.queueDelay,
+                // Process queue items one-at-a-time.
+                batch: 1,
+                // For each queue item, execute this function.
+                callback: function( thumb ) {
+                    that.options.packery.remove(thumb);
+                },
+
+                // When the queue completes naturally, execute this function.
+                complete: function(){
+
+                }
             });
+            $(that.options.selector).find('.video').each(function(elem){
+                queue.add($(this));
+            });
+
+            return deferred.promise();
         },
         destroy: function() {
             var that = this;
@@ -193,6 +264,7 @@ $(document).ready(function () {
         },
         teardown: function() {
             var that = this;
+            fansWorldEvents.removeListener('newVideoCategory', that.options.newVideoCategoryEvent);
             $.removeData($(that.element)[0], that._name);
             $(that.element).removeClass(that._name);
             that.unbind();
@@ -245,7 +317,6 @@ $(document).ready(function () {
                 if($.isNumeric(vc)) {
                     that.options.videoCategory = vc;
                 }
-                console.log("New video category event triggered for VC: " + that.options.videoCategory + " block: " + that.options.block);
                 that.clearThumbs();
                 that.appendThumbs();
                 return nvc;
@@ -277,7 +348,6 @@ $(document).ready(function () {
             var that = this;
             var i = 0;
             var deferred = new jQuery.Deferred();
-            console.log("adding thumbs")
             $.ajax({
                 url: that.options.videoFeed,
                 data: {
@@ -415,7 +485,6 @@ $(document).ready(function () {
     };
 });
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // Attach plugin to all matching element                                     //
 ///////////////////////////////////////////////////////////////////////////////
@@ -456,23 +525,25 @@ $(document).ready(function () {
         var videoCategory = $(this).attr('data-category-id');
 
         // Get a plugin handler
-        var popularThumbs = $('section.popular > .videos-container').data('fwHomeThumbs');
-        var followedThumbs = $('section.followed > .videos-container').data('fwHomeThumbs');
-        var highlightsThumbs = $('section.highlights').data('fwHomePackery');
+        //var popularThumbs = $('section.popular > .videos-container').data('fwHomeThumbs');
+        //var followedThumbs = $('section.followed > .videos-container').data('fwHomeThumbs');
+        //var highlightsThumbs = $('section.highlights').data('fwHomePackery');
 
         // Clear semantic grid thumbs
         //popularThumbs.clearThumbs();
         //followedThumbs.clearThumbs();
 
-        // Set the internal variable TODO: refactor !
-        highlightsThumbs.options.videoCategory = popularThumbs.options.videoCategory = followedThumbs.options.videoCategory = videoCategory;
+        // Set the internal variable TODO: refactor ! (DONE)
+        //highlightsThumbs.options.videoCategory = popularThumbs.options.videoCategory = followedThumbs.options.videoCategory = videoCategory;
 
         //popularThumbs.appendThumbs();
         //followedThumbs.appendThumbs();
 
-        highlightsThumbs.removeAll();
-        highlightsThumbs.makePackery();
-
+        //highlightsThumbs.removeAll();
+        //highlightsThumbs.makePackery();
+        ///////////////////////////////////////////////////////////////////////
+        // Decoupled EventTrigger                                            //
+        ///////////////////////////////////////////////////////////////////////
         window.fansWorldEvents.emitEvent('newVideoCategory', [videoCategory]);
     });
 });
