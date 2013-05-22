@@ -368,7 +368,7 @@ class TagRepository extends CountBaseRepository
      * @param int|null $limit
      * @param int|null $offset
     */
-    public function getTagsOfUserVideos($user, $limit = null, $offset = null)
+    public function trendingInRecommended($user, $limit = null, $offset = null)
     {
         if (!$user) throw new \Exception('User parameter is missing');
         $order = 'avgweight DESC';

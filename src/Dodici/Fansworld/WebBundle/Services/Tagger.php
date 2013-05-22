@@ -159,9 +159,9 @@ class Tagger
      * @param int|null $offset
      *
      */
-    public function ofUserVideos($user, $limit=null, $offset=null)
+    public function trendingInRecommended($user, $limit=null, $offset=null)
     {
         $tagrepo = $this->em->getRepository('DodiciFansworldWebBundle:Tag');
-        return $tagrepo->getTagsOfUserVideos($user, $limit, $offset);
+        return $tagrepo->trendingInRecommended($user, $limit, $offset);
     }
 }
