@@ -543,8 +543,9 @@ class VideoController extends BaseController
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
             }
 
-            if ('user' == $entityType && !$userid) {
-                $user = $entity;
+            $author = null;
+            if ('user' == $entityType) {
+                $author = $entity;
                 $entity = null;
             }
 
@@ -557,17 +558,17 @@ class VideoController extends BaseController
             if ($sortcriteria == 'createdAt') $sortcriteria = 'date';
 
             $videos = $this->getRepository('Video')->search(
-                $entity,
+                null,
                 $user,
                 $pagination['limit'],
                 $pagination['offset'],
                 $categoryid,
                 $highlight,
-                null,
+                $author,
                 null,
                 null,
                 $sortcriteria,
-                null,
+                $entity,
                 null,
                 null,
                 $recommended,

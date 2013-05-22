@@ -115,20 +115,34 @@ class UserController extends BaseController
             if ($this->hasValidSignature()) {
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
-                $target = $this->getRepository('User')->find($request->get('target_id'));
-                if (!$target) throw new HttpException(404, 'Target user not found');
-
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
-
-                if ($action == 'add') {
-                    $this->get('friender')->friend($target, null, $user);
-                } elseif ($action == 'remove') {
-                    $this->get('friender')->remove($target, $user);
-                } else {
-                    throw new HttpException(400, 'Invalid fan action');
+                
+                $targetids = $request->get('target_id');
+                if (!$targetids) throw new HttpException(400, 'Requires target_id');
+                if (!is_array($targetids)) $targetids = array($targetids);
+                if (array_unique($targetids) !== $targetids) throw new HttpException(400, 'Duplicate target_id');
+                
+                $updates = array();
+                
+                foreach ($targetids as $targetid) {
+                    $target = $this->getRepository('User')->find($targetid);
+                    if (!$target) throw new HttpException(404, 'Target user not found');
+    
+                    if ($action == 'add') {
+                        $this->get('friender')->friend($target, null, $user);
+                    } elseif ($action == 'remove') {
+                        $this->get('friender')->remove($target, $user);
+                    } else {
+                        throw new HttpException(400, 'Invalid fan action');
+                    }
+                    
+                    $updates[] = $target;
                 }
 
-                return $this->result(true);
+                $result = array();
+                foreach ($updates as $ui) $result[] = array('id' => $ui->getId(), 'fanCount' => $ui->getFanCount()); 
+
+                return $this->result((count($result) == 1) ? $result[0] : $result);
             } else {
                 throw new HttpException(401, 'Invalid signature');
             }
