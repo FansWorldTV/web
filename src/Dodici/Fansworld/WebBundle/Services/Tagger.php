@@ -152,21 +152,16 @@ class Tagger
         return $tagrepo->trending($limit, $taggedtype, $resulttype, $daysbefore);
     }
 
-
     /**
-     * Returns tags used in list of videos
-     * @param string $filtertype - see below
-     * @param array() of Video entities $videos
+     * Returns tags used in user recommended list videos
+     * @param User $user
      * @param int|null $limit
      * @param int|null $offset
      *
-     * filter types:
-     * popular: most popular tags of the moment, uses average weight
-     * latest: most recently applied tags
      */
-    public function ofUserVideos($filtertype, $limit=null, $offset=null)
+    public function ofUserVideos($user, $limit=null, $offset=null)
     {
         $tagrepo = $this->em->getRepository('DodiciFansworldWebBundle:Tag');
-        return $tagrepo->getTags($filtertype, $limit, $offset);
+        return $tagrepo->getTagsOfUserVideos($user, $limit, $offset);
     }
 }

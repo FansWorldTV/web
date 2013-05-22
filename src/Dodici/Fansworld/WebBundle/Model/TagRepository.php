@@ -361,20 +361,17 @@ class TagRepository extends CountBaseRepository
         return $query->getResult();
     }
 
-
-    public function getTags($filtertype, $limit = null, $offset = null)
+    /**
+     * Return tags related to user recommended videos
+     *
+     * @param User $user
+     * @param int|null $limit
+     * @param int|null $offset
+    */
+    public function getTagsOfUserVideos($user, $limit = null, $offset = null)
     {
-        $filtertypes = array('popular', 'latest');
-
-        if (!in_array($filtertype, $filtertypes))
-            throw new \InvalidArgumentException('Invalid filter type');
-
-
-        $order = null;
-        if ($filtertype == 'popular')
-            $order = 'avgweight DESC';
-        if ($filtertype == 'latest')
-            $order = 'latest DESC';
+        if (!$user) throw new \Exception('User parameter is missing');
+        $order = 'avgweight DESC';
 
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('id', 'id');
@@ -386,6 +383,7 @@ class TagRepository extends CountBaseRepository
 
         $sqls = array();
         foreach (array('tag', 'idol', 'team') as $type) {
+
             $sqls[] = '
                 SELECT
                 ' . $type . '.id as id,
@@ -396,19 +394,46 @@ class TagRepository extends CountBaseRepository
                     . '
                 ' . $type . '.slug as slug,
                 COUNT(has' . $type . '.id) AS usecount,
-                AVG(video.weight) AS avgweight,
+                AVG(v.weight) AS avgweight,
                 MAX(has' . $type . '.created_at) as latest,
                 \'' . $type . '\' as type
                 FROM
                 has' . $type . '
                 INNER JOIN ' . $type . ' ON has' . $type . '.' . $type . '_id = ' . $type . '.id
-                INNER JOIN video ON has' . $type . '.video_id = video.id AND video.active = true
-                ' .
+                INNER JOIN video v
 
-                'WHERE
-                (has'. $type . '.video_id IN (:videoIds))'
-                    . '
-                GROUP BY ' . $type . '.id';
+                WHERE
+
+                (v.author_id IN
+                    (SELECT frship.target_id FROM friendship frship
+                        WHERE frship.author_id = :user)
+                )
+
+                OR
+
+                (
+                    (v.id IN
+                        (
+                            (SELECT hteam.video_id FROM hasteam hteam
+                             WHERE hteam.team_id IN (SELECT tmship.team_id
+                                                    FROM teamship tmship
+                                                        WHERE tmship.author_id = :user)
+                            )
+                        )
+                    )
+                    AND
+                    (v.id IN
+                        (
+                            (SELECT hidol.video_id FROM hasidol hidol
+                             WHERE hidol.idol_id IN (SELECT idlship.idol_id
+                                                    FROM idolship idlship
+                                                        WHERE idlship.author_id = :user)
+                            )
+                        )
+                    )
+                )'
+                .
+                'GROUP BY ' . $type . '.id';
         }
 
         $query = $this->_em->createNativeQuery(
@@ -421,12 +446,9 @@ class TagRepository extends CountBaseRepository
                 , $rsm
         );
 
-
-        /*
-        $videoIds = "";
-        foreach ($videos as $video) $videoIds = $videoIds.','.$video->getId();
-        */
-        $query = $query->setParameter('videoIds', 86);
+        $query = $query->setParameter(
+            'user', ($user instanceof User) ? $user->getId() : $user, Type::BIGINT
+        );
 
         if ($limit !== null)
             $query = $query->setParameter('limit', (int) $limit, Type::INTEGER);
@@ -434,5 +456,6 @@ class TagRepository extends CountBaseRepository
             $query = $query->setParameter('offset', (int) $offset, Type::INTEGER);
         return $query->getResult();
     }
+
 
 }
