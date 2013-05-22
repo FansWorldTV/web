@@ -186,7 +186,7 @@ class SearchController extends BaseController
                     if ($i instanceof Event) {
                         $data['showdate'] = ($i->getFromtime() ? $i->getFromtime()->format('U') : null);
                         foreach($i->getHasTeams() as $ht){
-                            $data['teams'][] = $this->get('serializer')->values($ht->getTeam());
+                            $data['teams'][] = $this->get('serializer')->values($ht->getTeam(), $this->getImageFormat(), $this->getImageFormat('splash'), 'object');
                         }
                     }
 

@@ -203,9 +203,12 @@ class TeamController extends BaseController
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
 
                 $teamids = $request->get('team_id');
+                if (!$teamids) throw new HttpException(400, 'Requires team_id');
                 if (!is_array($teamids)) $teamids = array($teamids);
                 if (array_unique($teamids) !== $teamids) throw new HttpException(400, 'Duplicate team_id');
 
+                $updates = array();
+                
                 foreach ($teamids as $teamid) {
                     $team = $this->getRepository('Team')->find($teamid);
                     if (!$team) throw new HttpException(404, 'Team not found - id: ' . $teamid);
@@ -217,13 +220,18 @@ class TeamController extends BaseController
                     } else {
                         throw new HttpException(400, 'Invalid fan action');
                     }
+                    
+                    $updates[] = $team;
                 }
 
                 if ($action == 'add') {
                     $this->getDoctrine()->getEntityManager()->flush();
                 }
 
-                return $this->result(true);
+                $result = array();
+                foreach ($updates as $ui) $result[] = array('id' => $ui->getId(), 'fanCount' => $ui->getFanCount()); 
+
+                return $this->result((count($result) == 1) ? $result[0] : $result);
             } else {
                 throw new HttpException(401, 'Invalid signature');
             }
