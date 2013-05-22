@@ -386,11 +386,9 @@ class UserController extends BaseController
                 }
 
                 if ($userid) {
-                    $friendsOfUserByGet = $this->getRepository('User')->FriendUsers($userByGet, null, null, null, 'score');
-                    $friendsIds = array();
-                    foreach ($friendsOfUserByGet as $friend) $friendsIds[] = $friend->getId();
                     foreach ($response as &$rta) {
-                        in_array($rta['id'], $friendsIds) ? $rta['followed'] = true : $rta['followed'] = false;
+                        $friendShip = $this->getRepository('Friendship')->findOneBy(array('author' => $userid, 'target'=> $rta['id'], 'active' => true));
+                        $friendShip ? $rta['followed'] = true : $rta['followed'] = false;
                     }
                 }
 

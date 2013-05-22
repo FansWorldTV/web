@@ -307,11 +307,9 @@ class IdolController extends BaseController
                 }
 
                 if ($userid) {
-                    $friendsOfUser = $this->getRepository('User')->FriendUsers($user, null, null, null, 'score');
-                    $friendsIds = array();
-                    foreach ($friendsOfUser as $friend) $friendsIds[] = $friend->getId();
                     foreach ($response as &$rta) {
-                        in_array($rta['id'], $friendsIds) ? $rta['followed'] = true : $rta['followed'] = false;
+                        $friendShip = $this->getRepository('Friendship')->findOneBy(array('author' => $userid, 'target'=> $rta['id'], 'active' => true));
+                        $friendShip ? $rta['followed'] = true : $rta['followed'] = false;
                     }
                 }
 

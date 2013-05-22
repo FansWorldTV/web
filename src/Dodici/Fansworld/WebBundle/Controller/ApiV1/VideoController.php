@@ -259,7 +259,7 @@ class VideoController extends BaseController
             foreach ($extrafields as $x) {
                 switch ($x) {
                     case 'author':
-                        $return['author'] = $video->getAuthor() ? $this->userArray($video->getAuthor()) : null;
+                        $return['author'] = $video->getAuthor() ? $this->userArray($video->getAuthor(), array('fanFollowCount', 'teamFollowCount', 'idolFollowCount', 'videoCount', 'fanCount')) : null;
                         break;
                     case 'createdAt':
                         $return['createdAt'] = (int)$video->getCreatedAt()->format('U');
@@ -317,7 +317,7 @@ class VideoController extends BaseController
                         $t = array();
                         foreach ($has as $h) {
                             $ent = $h->getTarget();
-                            $t[] = $this->userArray($ent);
+                            $t[] = $this->userArray($ent, array('fanFollowCount', 'teamFollowCount', 'idolFollowCount', 'videoCount', 'fanCount'));
                         }
                         $return[$x] = $t;
                         break;
