@@ -58,7 +58,7 @@ class VideoSubscriptionController extends BaseController
                 $return = array();
                 foreach ($wls as $wl) $return[] = $wl->getVideoCategory();
                 
-                return $this->result($this->get('serializer')->values($return), $pagination);
+                return $this->result($this->get('serializer')->values($return, $this->getImageFormat(), $this->getImageFormat('splash'), 'object'), $pagination);
             } else {
                 throw new HttpException(401, 'Invalid signature');
             }

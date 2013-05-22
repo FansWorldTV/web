@@ -7,12 +7,10 @@ namespace Dodici\Fansworld\WebBundle\Serializer;
  */
 class Album
 {
-    protected $appmedia;
     protected $router;
     
-    function __construct($appmedia, $router)
+    function __construct($router)
     {
-        $this->appmedia = $appmedia;
         $this->router = $router;
     }
     
@@ -20,8 +18,7 @@ class Album
     {
         return array(
             'url'=> $this->router->generate('user_showalbum', array('id' => $entity->getId(), 'username' => $entity->getAuthor()->getUsername())),
-            'photoCount' => $entity->getPhotoCount(),
-            'image' => $this->appmedia->getImageUrl($entity->getImage(), $imageFormat)
+            'photoCount' => $entity->getPhotoCount()
         );
     }
 }

@@ -19,7 +19,7 @@ class User
         $this->appmedia = $appmedia;
     }
 
-    public function values($entity, $imageformat='small', $splashformat='big')
+    public function values($entity, $imageformat='small', $splashformat='big', $mode='url')
     {
         $location = array();
         if ($entity->getCity()) $location[] = $entity->getCity();
@@ -29,7 +29,7 @@ class User
             'firstname' => $entity->getFirstname(),
             'lastname' => $entity->getLastname(),
             'fanCount' => $entity->getFanCount(),
-            'splash' => $this->appmedia->getImageUrl($entity->getSplash(), $splashformat),
+            'splash' => $this->appmedia->getImageUrl($entity->getSplash(), $splashformat, $mode),
             'sex' => $entity->getSex(),
             'username' => $entity->getUsername(),
             'url' => $this->router->generate('user_wall', array('username' => $entity->getUsername())),

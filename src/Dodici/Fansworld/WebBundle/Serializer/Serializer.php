@@ -24,9 +24,9 @@ class Serializer
      * @param mixed $entity
      * @param string $imageformat
      */
-    public function json($entity, $imageformat = 'small')
+    public function json($entity, $imageformat = 'small', $splashformat = 'big', $mode = 'url')
     {
-        return json_encode($this->values($entity, $imageformat));
+        return json_encode($this->values($entity, $imageformat, $splashformat, $mode));
     }
 
     /**
@@ -34,7 +34,7 @@ class Serializer
      * @param mixed $entity
      * @param string $imageformat
      */
-    public function values($entity, $imageformat = 'small', $splashformat = 'big')
+    public function values($entity, $imageformat = 'small', $splashformat = 'big', $mode = 'url')
     {
         if (!$entity && !is_array($entity)) return null;
         if ($entity instanceof Collection) $entity = $entity->toArray();
@@ -53,7 +53,7 @@ class Serializer
             if (method_exists($entity, 'getImage')) {
                 $appmedia = $this->container->get('appmedia');
                 $image = $entity->getImage();
-                $imageurl = $image ? $appmedia->getImageUrl($entity->getImage(), $imageformat) : null;
+                $imageurl = $image ? $appmedia->getImageUrl($entity->getImage(), $imageformat, $mode) : null;
                 $props['image'] = $imageurl;
             }
 
@@ -64,7 +64,7 @@ class Serializer
             $type = $this->getType($entity);
             if ($this->container->has('serializer.'.$type)) {
                 $entserializer = $this->container->get('serializer.'.$type);
-                $extrafields = $entserializer->values($entity, $imageformat, $splashformat);
+                $extrafields = $entserializer->values($entity, $imageformat, $splashformat, $mode);
 
                 $props = array_merge($props, $extrafields);
             }
@@ -73,7 +73,7 @@ class Serializer
         } elseif (is_array($entity)) {
             $arr = array();
             foreach ($entity as $k => $e) {
-                $arr[$k] = $this->values($e, $imageformat, $splashformat);
+                $arr[$k] = $this->values($e, $imageformat, $splashformat, $mode);
             }
             return $arr;
         } else {

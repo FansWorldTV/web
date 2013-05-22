@@ -53,7 +53,7 @@ class TagController extends BaseController
             $tags = $this->get('tagger')->trending(
                 $pagination['limit']
             );
-            $return = $this->get('serializer')->values($tags);
+            $return = $this->get('serializer')->values($tags, $this->getImageFormat(), $this->getImageFormat('splash'), 'object');
             
             return $this->result($return, $pagination);
         } catch (\Exception $e) {
