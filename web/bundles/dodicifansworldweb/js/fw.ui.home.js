@@ -147,7 +147,16 @@ $(document).ready(function () {
                             alert(error.message);
                             fansWorldEvents.addListener('newVideoCategory', that.options.newVideoCategoryEvent);
                         });
-                    });
+                    }).fail(function(error){
+                        $.when(that.makePackery()).then(function(){
+                            fansWorldEvents.addListener('newVideoCategory', that.options.newVideoCategoryEvent);
+                        }).progress(function() {
+                            //console.log("adding thumbnails to packery");
+                        }).fail(function(error){
+                            alert(error.message);
+                            fansWorldEvents.addListener('newVideoCategory', that.options.newVideoCategoryEvent);
+                        });
+                    });;
                 }
                 return nvc;
             })(this);
@@ -250,10 +259,14 @@ $(document).ready(function () {
 
                 }
             });
-            $(that.options.selector).find('.video').each(function(elem){
-                queue.add($(this));
-            });
-
+            var videos = $(that.options.selector).find('.video');
+            if(videos.length > 0) {
+                videos.each(function(elem){
+                    queue.add($(this));
+                });
+            } else {
+                deferred.reject(new Error("Video container is empty !"));
+            }
             return deferred.promise();
         },
         destroy: function() {
