@@ -64,7 +64,7 @@ $(document).ready(function () {
 
             console.log('fwModalDialog');
             that.options.url = $(that.element).attr('href');
-            that.options.modal.modalTitle = $(that.element).attr('title');
+            that.options.modal.modalTitle = $(that.element).attr('title') || $(that.element).attr('data-original-title');
 
             $(that.element).on("click", function(event) {
                 event.preventDefault();
@@ -79,12 +79,7 @@ $(document).ready(function () {
         open: function(href) {
             var that = this;
             var id = parseInt((Math.random() * 1000), 10);
-            var modal = {
-                modalId: id,
-                modalLabel: 'label',
-                modalTitle: 'Upload Photo',
-                modalBody: 'Uploader'
-            };
+            var modal = that.options.modal;
 
             $.get(href)
             .then(function(response){
