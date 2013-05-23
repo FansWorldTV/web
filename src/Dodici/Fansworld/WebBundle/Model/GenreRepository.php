@@ -15,23 +15,26 @@ class GenreRepository extends CountBaseRepository
 {
     public function getChildren($genre)
     {
-        $query = $this->_em->createQuery('
+        $dql = '
             SELECT g FROM \Dodici\Fansworld\WebBundle\Entity\Genre g
-            WHERE g.parent = :genre
-            ORDER BY g.id ASC
-        ')
-            ->setParameter('genre', $genre->getId(), Type::BIGINT);
+                WHERE
+                    (g.parent = :genre)
+                    AND
+                    (g.id IN (SELECT vg FROM \Dodici\Fansworld\WebBundle\Entity\Video v JOIN v.genre vg WHERE vg = g.id))
+                    ORDER BY g.id ASC';
 
+        $query = $this->_em->createQuery($dql);
+        $query->setParameter('genre', $genre->getId(), Type::BIGINT);
         return $query->getResult();
     }
 
     public function getParents($limit=null, $offset=null)
     {
-        $query = $this->_em->createQuery('
+        $dql = '
             SELECT g FROM \Dodici\Fansworld\WebBundle\Entity\Genre g
-            WHERE g.parent is NULL
-            ORDER BY g.id ASC
-        ');
+                WHERE g.parent is NULL ORDER BY g.id ASC';
+
+        $query = $this->_em->createQuery($dql);
 
         if ($limit !== null)
             $query = $query->setMaxResults((int) $limit);
