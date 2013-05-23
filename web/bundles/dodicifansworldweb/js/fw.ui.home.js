@@ -253,7 +253,6 @@ $(document).ready(function () {
                 callback: function( thumb ) {
                     that.options.packery.remove(thumb);
                 },
-
                 // When the queue completes naturally, execute this function.
                 complete: function(){
 
@@ -524,7 +523,7 @@ $(document).ready(function () {
     });
     $('section.followed-tags > ul').fwHomeTags({
         channel: $('.filter-home').find('.active').attr('data-category-id'),
-        filter: 'followed'
+        filter: 'follow'
     });
 });
 

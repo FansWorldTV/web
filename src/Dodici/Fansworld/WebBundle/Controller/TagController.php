@@ -86,7 +86,7 @@ class TagController extends SiteController
         try {
             if($filterType == 'follow'){
                 $user = $this->getUser();
-                $response['tags'] = $tagger->ofUserVideos($user, $limit, $offset);
+                $response['tags'] = $tagger->trendingInRecommended($user, $limit, $offset);
             }else{
                 $response['tags'] = $tagger->usedInVideos($filterType, $videoCategory, $limit, $offset);
             }
