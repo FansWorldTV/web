@@ -43,51 +43,51 @@ class Tagger
     	if (!is_array($tag)) {
     		$tag = array($tag);
     	}
-    	
+
     	$tagrepo = $this->em->getRepository('DodiciFansworldWebBundle:Tag');
     	$hasrepo = $this->em->getRepository('DodiciFansworldWebBundle:HasTag');
     	$hasurepo = $this->em->getRepository('DodiciFansworldWebBundle:HasUser');
     	$hastrepo = $this->em->getRepository('DodiciFansworldWebBundle:HasTeam');
     	$hasirepo = $this->em->getRepository('DodiciFansworldWebBundle:HasIdol');
     	$classname = $this->appstate->getType($entity);
-    	
+
     	foreach ($tag as $t) {
     		if ($t instanceof User) {
     			$exists = $hasurepo->findOneBy(array('target' => $t->getId(), 'author' => $user->getId(), strtolower($classname) => $entity->getId()));
-	    		
+
 	    		if (!$exists) {
 		    		$hasuser = new HasUser();
 		    		$hasuser->setAuthor($user);
 		    		$hasuser->setTarget($t);
 		    		$methodname = 'set'.$classname;
 		    		$hasuser->$methodname($entity);
-		    		
+
 		    		$entity->addHasUser($hasuser);
 		    		$this->em->persist($entity);
 	    		}
     		} elseif ($t instanceof Team) {
     			$exists = $hastrepo->findOneBy(array('team' => $t->getId(), 'author' => $user->getId(), strtolower($classname) => $entity->getId()));
-	    		
+
 	    		if (!$exists) {
 		    		$hasteam = new HasTeam();
 		    		$hasteam->setAuthor($user);
 		    		$hasteam->setTeam($t);
 		    		$methodname = 'set'.$classname;
 		    		$hasteam->$methodname($entity);
-		    		
+
 		    		$entity->addHasTeam($hasteam);
 		    		$this->em->persist($entity);
 	    		}
     		} elseif ($t instanceof Idol) {
     			$exists = $hasirepo->findOneBy(array('idol' => $t->getId(), 'author' => $user->getId(), strtolower($classname) => $entity->getId()));
-	    		
+
 	    		if (!$exists) {
 		    		$hasidol = new HasIdol();
 		    		$hasidol->setAuthor($user);
 		    		$hasidol->setIdol($t);
 		    		$methodname = 'set'.$classname;
 		    		$hasidol->$methodname($entity);
-		    		
+
 		    		$entity->addHasIdol($hasidol);
 		    		$this->em->persist($entity);
 	    		}
@@ -95,39 +95,39 @@ class Tagger
     			$slugt = GedmoUrlizer::urlize($t);
     			if ($slugt) {
 		    		$tagent = $tagrepo->findOneBy(array('slug' => $slugt));
-		    		
+
 		    		if (!$tagent) {
 		    			$tagent = new Tag();
 		    			$tagent->setTitle($t);
 		    			$this->em->persist($tagent);
 		    		}
-		    		
+
 		    		$exists = $hasrepo->findOneBy(array('tag' => $tagent->getId(), 'author' => $user->getId(), strtolower($classname) => $entity->getId()));
-		    		
+
 		    		if (!$exists) {
 			    		$hastag = new HasTag();
 			    		$hastag->setAuthor($user);
 			    		$hastag->setTag($tagent);
 			    		$methodname = 'set'.$classname;
 			    		$hastag->$methodname($entity);
-			    		
+
 			    		$entity->addHasTag($hastag);
 			    		$this->em->persist($entity);
 		    		}
     			}
     		}
     	}
-    	
+
     	$this->em->flush();
     }
-    
+
     /**
      * Returns tags used in videos according to video filter type
      * @param string $filtertype - see below
      * @param VideoCategory|int|null $videocategory
      * @param int|null $limit
      * @param int|null $offset
-     * 
+     *
      * filter types:
      * popular: most popular tags of the moment, uses average weight
      * latest: most recently applied tags
@@ -137,10 +137,10 @@ class Tagger
         $tagrepo = $this->em->getRepository('DodiciFansworldWebBundle:Tag');
         return $tagrepo->usedInVideos($filtertype, $videocategory, $limit, $offset);
     }
-    
+
 	/**
      * Returns latest trending tags
-     * 
+     *
      * @param int|null $limit
      * @param null|'video'|'photo'|'event' $taggedtype - filter by tagged entity type
      * @param null|'tag'|'idol'|'team' $resulttype - filter by result tag type
@@ -150,5 +150,18 @@ class Tagger
     {
         $tagrepo = $this->em->getRepository('DodiciFansworldWebBundle:Tag');
         return $tagrepo->trending($limit, $taggedtype, $resulttype, $daysbefore);
+    }
+
+    /**
+     * Returns tags used in user recommended list videos
+     * @param User $user
+     * @param int|null $limit
+     * @param int|null $offset
+     *
+     */
+    public function trendingInRecommended($user, $limit=null, $offset=null)
+    {
+        $tagrepo = $this->em->getRepository('DodiciFansworldWebBundle:Tag');
+        return $tagrepo->trendingInRecommended($user, $limit, $offset);
     }
 }
