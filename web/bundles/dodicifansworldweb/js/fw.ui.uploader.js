@@ -304,6 +304,8 @@ $(document).ready(function () {
 
                     console.log("Video subido correctamente ID: " + entryId);
 
+                    boot.find('.modal-body').prepend('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Aviso: </strong> su video se ha subido con éxito !</div>');
+
                     boot.find('#form_entryid').val(entryId);
 //                    boot.find("#modal-btn-save").one("click", null, null, function(){
 //                        $(this).addClass('loading-small');
