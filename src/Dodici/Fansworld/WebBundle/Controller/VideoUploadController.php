@@ -229,6 +229,7 @@ class VideoUploadController extends SiteController
                     $video->setStream($data['entryid']);
                     $video->setPrivacy($data['privacy']);
                     $video->setVideocategory($videoCategory);
+                    $video->setActive(false);
                     $em->persist($video);
                     $em->flush();
 
