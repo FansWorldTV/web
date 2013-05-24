@@ -787,8 +787,8 @@ div.entityBlock {
   display: block;
   position: relative;
 
-  @fixedWidth: 450px;
-  @height: 300px;
+  @fixedWidth: 300px;
+  @height: 225px;
 
   .splash-container {
     margin-right: @fixedWidth;
@@ -798,6 +798,42 @@ div.entityBlock {
 
     img {
       .size(100%, auto);
+      max-width: none;
+    }
+
+    .action-block {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 75px;
+      background-color: transparent;
+
+      &:before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 75px;
+        background-color: #3b3b3b;
+        opacity: 0.4;
+      }
+
+      .name {
+        position: relative;
+        .pull-left();
+        font-size: 24px;
+        font-weight: 500;
+        color: @grayLight;
+        margin: 25px 0 0 25px;
+      }
+
+      button {
+        position: relative;
+        .pull-right();
+        margin: 25px;
+      }
     }
   }
 
@@ -814,29 +850,35 @@ div.entityBlock {
     }
 
     .description {
-      color: @grayLight;
+      color: @white;
       font-size: 15px;
       font-weight: 400;
+      padding: 15px;
+      height: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     ul.quantities {
       position: absolute;
       bottom: 0;
       left: 0;
+      width: 100%;
+      background-color: #3b3b3b;
+
       li.item {
         background-color: #3b3b3b;
         .pull-left();
-        width: (@fixedWidth/4)-2;
-        height: 100px;
-        border-right: 1px solid #5b5b5b;
+        .size(75px, ((@fixedWidth/4)-2));
         position: relative;
-        margin-left: 2px;
         color: white;
-        font-size: 55px;
+        font-size: 40px;
         text-align: center;
         .box-sizing(border-box);
-        padding-top: 30px;
+        padding-top: 14px;
         line-height: 22px;
+        border-right: 1px solid #5b5b5b;
+        border-left: 1px solid black;
 
         .item-type {
           color: @white;
@@ -844,23 +886,12 @@ div.entityBlock {
           font-weight: 500;
         }
 
-        &:after {
-          content: "";
-          border-right: 1px solid black;
-          width: (@fixedWidth/4)-2;
-          height: 100px;
-          top: 0;
-          right: -2px;
-          position: absolute;
-          z-index: 9;
-        }
-
         &:first-child {
-          margin: 0;
+          border-left: 0;
         }
 
         &:last-child {
-          border: 0;
+          border-right: 0;
           &:after {
             border: 0;
           }
