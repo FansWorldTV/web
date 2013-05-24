@@ -158,8 +158,10 @@ class UserController extends BaseController
      * @Method({"GET"})
      *
      * Get params:
-	 * - <optional> [user_token]
-     * - [signature params]
+     * - <optional> user_id: int
+	 * - <optional> imageformat: string
+     * - <required if user_id given> [user token]
+     * - [signature params if user_id given]
      *
      * @return
      * array (
@@ -173,7 +175,8 @@ class UserController extends BaseController
      *      fanCount: int,
      *      idolFollowCount: int,
      *      teamFollowCount: int,
-     *      fanFollowCount: int
+     *      fanFollowCount: int,
+     *      <if user_id> followed: boolean
      * )
      */
     public function showAction($id)
@@ -181,17 +184,20 @@ class UserController extends BaseController
         try {
                 $request = $this->getRequest();
                 if (!$id) throw new HttpException(400, 'Invalid user_id');
-
-                if ($request->get('user_token')) {
-                    $user = $this->checkUserToken($id, $request->get('user_token'));
-                    $hastoken = true;
-                } else {
-                    $user = $this->getRepository('User')->findOneBy(array('id' => $id, 'enabled' => true));
-                    if (!$user) throw new HttpException(404, 'User not found');
-                    $hastoken = false;
+                
+                $userid = $request->get('user_id');
+                $user = null;
+                if ($userid) {
+                    $user = $this->checkUserToken($userid, $request->get('user_token'));
                 }
 
-                return $this->result($this->userArray($user));
+                $showuser = $this->getRepository('User')->findOneBy(array('id' => $id, 'enabled' => true));
+                if (!$showuser) throw new HttpException(404, 'User not found');
+
+                $showuserarray = $this->userArray($showuser);
+                if ($user) $showuserarray['followed'] = $this->get('friender')->isFan($showuser, $user) ? true : false;
+                
+                return $this->result($showuserarray);
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
