@@ -95,7 +95,7 @@ class IdolController extends BaseController
     }
 
 	/**
-     * Idol - show
+     * [signed if user_id given] Idol - show
      *
      * @Route("/idol/{id}", name="api_v1_idol_show", requirements = {"id" = "\d+"})
      * @Method({"GET"})
@@ -103,6 +103,9 @@ class IdolController extends BaseController
      * Get params:
 	 * - <optional> extra_fields: comma-separated extra fields to return (see below)
 	 * - <optional> imageformat: string
+     * - <optional> user_id: int
+     * - <required if user_id given> [user token]
+     * - [signature params if user_id given]
      *
      * @return
      * array (
@@ -143,6 +146,13 @@ class IdolController extends BaseController
     public function showAction($id)
     {
         try {
+            $request = $this->getRequest();
+            $userid = $request->get('user_id');
+            $user = null;
+            if ($userid) {
+                $user = $this->checkUserToken($userid, $request->get('user_token'));
+            }
+            
             $idol = $this->getRepository('Idol')->find($id);
             if (!$idol) throw new HttpException(404, 'Idol not found');
 
@@ -154,6 +164,10 @@ class IdolController extends BaseController
                 'fanCount' => $idol->getFanCount(),
                 'videoCount' => $idol->getVideoCount()
             );
+            
+            if ($user) {
+                $return['followed'] = $this->get('fanmaker')->isFan($idol, $user) ? true : false;
+            }
 
             $allowedfields = array(
             	'content', 'birthday', 'splash', 'country', 'sex', 'twitter', 'careers', 'photoCount', 'visitCount'

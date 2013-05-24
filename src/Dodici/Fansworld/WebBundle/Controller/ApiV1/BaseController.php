@@ -407,7 +407,7 @@ class BaseController extends SiteController
         foreach ($extrafields as $x) {
             switch ($x) {
                 case 'author':
-                    $rv['author'] = $video->getAuthor() ? $this->userArray($video->getAuthor()) : null;
+                    $rv['author'] = $video->getAuthor() ? $this->userArray($video->getAuthor(), array('fanCount', 'videoCount', 'idolFollowCount', 'teamFollowCount', 'fanFollowCount')) : null;
                     break;
                 case 'createdAt':
                     $rv['createdAt'] = (int)$video->getCreatedAt()->format('U');
