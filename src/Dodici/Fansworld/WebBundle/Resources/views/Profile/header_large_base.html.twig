@@ -1,90 +1,41 @@
 {% block header_main %}
     {% set entityType = appstate.type(entity) %}
 
-    <section class='header_main row-fluid header_large'>
-	    <div class='main_left span8' >
-	        {% block avatar_container %}
-                    <div class="avatar">
-                        {% block avatar_content %}
-                            {% set avatar_format = 'small_square' %}
-
-                            {% if entity.image %}
-                                {% thumbnail entity.image, avatar_format %}
-                            {% else %}
-                                <img src="{{ asset('bundles/dodicifansworldweb/images/profile_no_image.png' )}}" />
-                            {% endif %}
-                        {% endblock %}
-
-                        {% if entity == app.user or is_granted('ROLE_ADMIN') %}
-                            <a href="#" class="edit-image avatar" rel="tooltip" title="Cambiar imagen de perfil" id="avatar-uploader" data-entity-type="{{ entityType }}" data-entity-id="{{ entity.id }}" data-ismodal="false" data-upload="photo" data-type="profile" data-uploader-selector="avatar-uploader"><i class="icon-pencil icon-white"></i></a>
-                        {% endif %}
-                    </div>
+    <div class="header-large-new">
+        <div class="splash-container">
+            {% block splash_container %}
+                {% thumbnail entity.splash, 'splash' %}
+            {% endblock %}
+            <div class="action-block">
+                <span class="name">{% block header_title %}{{ entity }}{% endblock %}</span>
+                {% block header_fship %}
+                    {% include "DodiciFansworldWebBundle:Default:blocks/fan_button.html.twig" with { entity:  entity } %}
                 {% endblock %}
+            </div>
 
-                {% if entity == app.user or is_granted('ROLE_ADMIN') %}
-                    <a href="#" class="edit-image splash" rel="tooltip" title="Cambiar portada" id="splash-uploader" data-entity-type="{{ entityType }}" data-entity-id="{{ entity.id }}" data-ismodal="false" data-upload="photo" data-type="splash" data-uploader-selector="splash-uploader"><i class="icon-pencil icon-white"></i></a>
-                {% endif %}
+            {% if entity == app.user or is_granted('ROLE_ADMIN') %}
+                <a href="#" class="edit-image splash" rel="tooltip" title="Cambiar portada" id="splash-uploader" data-entity-type="{{ entityType }}" data-entity-id="{{ entity.id }}" data-ismodal="false" data-upload="photo" data-type="splash" data-uploader-selector="splash-uploader"><i class="icon-pencil icon-white"></i></a>
+            {% endif %}
+        </div>
+        <div class="info-container">
+            {% set entityType = appstate.getType(entity) %}
+            {% if entityType == 'user' %}
+                {% set pathparams = {username: entity.username} %}
+            {% else %}
+                {% set pathparams = {slug: entity.slug} %}
+            {% endif %}
+            <p class="description">{{ entity.content|raw|striptags|truncate(160) }}</p>
 
-                {% block splash_container %}
-
+            <ul class="quantities">
+                {% block header_numbersinfo %}
+                    <li class="item">{% if entity.photoCount > 0 %}<a href="{{ path(entityType ~ '_photos', pathparams) }}">{% endif %}{{ entity.photoCount }}{% if entity.photoCount > 0 %}</a>{%endif%}</span><br/><span class="item-type">FOTOS</span></li>
+                    <li class="item">{% if entity.videoCount > 0 %}<a href="{{ path(entityType ~ '_videos', pathparams) }}">{% endif %}{{ entity.videoCount }}{% if entity.videoCount > 0 %}</a>{%endif%}<br/><span class="item-type">VIDEOS</span></li>
+                    {% if entityType == 'user' and entity.username != 'fansworld' %}
+                        <li class="item">{% include "DodiciFansworldWebBundle:Default:blocks/puntos.html.twig" with { score: entity.score } %}<br/><span class="item-type">PTS</span></li>
+                    {% endif %}
+                    <li class="item">{% if entity.fanCount > 0 %}<a href="{{ path(entityType ~ '_fans', pathparams) }}">{% endif %}{{ entity.fanCount }}{% if entity.fanCount > 0 %}</a>{%endif%}<br/><span class="item-type">FANS</span></li>
                 {% endblock %}
-	    </div>
-	    <div class='main_right span4 row-fluid' >
-	        <div class='span9 user-info'>
-	            <h1>
-					{% block header_title %}
-    	                {{ entity }}
-    	            {% endblock %}
-	            </h1>
-
-	            <div class='header-subtitle'>
-					{% block header_subtitle %}
-
-                	{% endblock %}
-                </div>
-
-                <div class='header-fship'>
-    	            {% block header_fship %}
-                                        {% if entity != app.user %}
-                                            {% include "DodiciFansworldWebBundle:Default:blocks/fan_button.html.twig" with { entity:  entity, buttonSize: 'btn-large', fType: appstate.type(entity) } %}
-                                        {% endif %}
-    	            {% endblock %}
-	            </div>
-
-	        </div>
-	        <div class='span3 numbers-info'>
-                    {% block header_numbersinfo %}
-                            {% set entityType = appstate.getType(entity) %}
-                            {% if entityType == 'user' %}
-                                {% set pathparams = {username: entity.username} %}
-                            {% else %}
-                                {% set pathparams = {slug: entity.slug} %}
-                            {% endif %}
-                            <section class='fotos-info'>
-                                <div class='numero'>{% if entity.photoCount > 0 %}<a href="{{ path(entityType ~ '_photos', pathparams) }}" style="color: white">{% endif %}{{ entity.photoCount }}{% if entity.photoCount > 0 %}</a>{%endif%}</div>
-                                <div class='tipo'>Fotos</div>
-                                <div class='separador' />
-                            </section>
-                            <section class='videos-info'>
-                                <div class='numero'>{% if entity.videoCount > 0 %}<a href="{{ path(entityType ~ '_videos', pathparams) }}" style="color: white">{% endif %}{{ entity.videoCount }}{% if entity.videoCount > 0 %}</a>{%endif%}</div>
-                                <div class='tipo'>Videos</div>
-                                <div class='separador' />
-                            </section>
-                            {% if entityType == 'user' %}
-                                <section class='ptos-info'>
-                                    <div class='numero'>
-                            {% include "DodiciFansworldWebBundle:Default:blocks/puntos.html.twig" with { score: entity.score } %}
-                                    </div>
-                                    <div class='tipo'>Puntos</div>
-                                    <div class='separador' />
-                                </section>
-                            {% endif %}
-                            <section class='fans-info'>
-                                <div class='numero'>{% if entity.fanCount > 0 %}<a href="{{ path(entityType ~ '_fans', pathparams) }}" style="color: white">{% endif %}{{ entity.fanCount }}{% if entity.fanCount > 0 %}</a>{%endif%}</div>
-                                <div class='tipo'>Fans</div>
-                            </section>
-	            {% endblock %}
-	        </div>
-	    </div>
-    </section>
+            </ul>
+        </div>
+    </div>
 {% endblock %}

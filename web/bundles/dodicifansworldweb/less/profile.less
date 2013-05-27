@@ -1,784 +1,931 @@
 header.login-header-mosaic {
-    display: block;
-    width: 100%;
-    height: 136px;
-    background: url('../images/bg-mosaic-registro.png') no-repeat;
-    background-position: right;
-    background-color: black;
-    .clearfix();
-    
-    h2 {
-        .pull-left();
-        color: @greenDark;
-        width: 100%;
-        display: block;
-        font-size: 30px;
-        margin-top: 25px;
-        margin-left: 25px;
-        margin-bottom: 10px;
-        font-weight: 300;
-    }
-    span {
-        margin-left: 25px;
-        color: @gray;
-        .pull-left();
-        width: 100%;
-        display: block;
-        font-size: 15px;
-        font-weight: 400;
-    }
+	display: block;
+	width: 100%;
+	height: 136px;
+	background: url('../images/bg-mosaic-registro.png') no-repeat;
+	background-position: right;
+	background-color: black;
+	.clearfix();
+
+	h2 {
+		.pull-left();
+		color: @greenDark;
+		width: 100%;
+		display: block;
+		font-size: 30px;
+		margin-top: 25px;
+		margin-left: 25px;
+		margin-bottom: 10px;
+		font-weight: 300;
+	}
+	span {
+		margin-left: 25px;
+		color: @gray;
+		.pull-left();
+		width: 100%;
+		display: block;
+		font-size: 15px;
+		font-weight: 400;
+	}
 }
 
 .album-detail {
-    .title {
-        h4 {
-            text-transform: capitalize;
-            &.more {
-                margin-left: 40px;
-            }
-        }
-    }
-    .am-container {
-        margin-top: 15px;
-        margin-bottom: 30px;
-    }
+	.title {
+		h4 {
+			text-transform: capitalize;
+			&.more {
+				margin-left: 40px;
+			}
+		}
+	}
+	.am-container {
+		margin-top: 15px;
+		margin-bottom: 30px;
+	}
 
-    .content {
-        .clearfix();
-        width: 100%;
-        display: block;
-        margin-top: 15px;
-    }
+	.content {
+		.clearfix();
+		width: 100%;
+		display: block;
+		margin-top: 15px;
+	}
 
-    .relatedTags {
-        .tags {
-            margin-bottom: 20px;
-            li {
-                .pull-left();
-                float: left;
-                margin-right: 5px;
-                span {
-                    text-transform: uppercase;
-                }
-            }
-        }
-    }
+	.relatedTags {
+		.tags {
+			margin-bottom: 20px;
+			li {
+				.pull-left();
+				float: left;
+				margin-right: 5px;
+				span {
+					text-transform: uppercase;
+				}
+			}
+		}
+	}
 }
 
 .nav-tabs-profile {
-    .nav-tabs;
+	.nav-tabs;
 
-    margin: 0;
-    margin-top: 6px;
-    border: 0;
-    height: 24px;
-    position: relative;
-    top: 2px;
+	margin: 0;
+	margin-top: 6px;
+	border: 0;
+	height: 24px;
+	position: relative;
+	top: 2px;
 
-    > li {
-        .pull-left();
-        margin-right: 10px;
-        height: 22px;
-        padding-left: 7px;
-        padding-right: 7px;
+	> li {
+		.pull-left();
+		margin-right: 10px;
+		height: 22px;
+		padding-left: 7px;
+		padding-right: 7px;
 
-        &.active {
-            border-bottom: 2px solid @green;
-            a {
-                color: @green;
-            }
-        }
+		&.active {
+			border-bottom: 2px solid @green;
+			a {
+				color: @green;
+			}
+		}
 
-        > a  {
-            font-size: 12px;
-            color: @black;
-            background-color: white !important;
-            &:hover{
-                color: @green;
-            }
-        }
-    }
+		> a  {
+			font-size: 12px;
+			color: @black;
+			background-color: white !important;
+			&:hover{
+				color: @green;
+			}
+		}
+	}
 }
 
 
 #headerProfile {
-    border-bottom: 2px solid #d2d2d2;
-    margin-bottom: 25px;
+	border-bottom: 2px solid #d2d2d2;
+	margin-bottom: 25px;
 
-    .avatar{
-        margin-right: 10px;
-    }
+	.avatar{
+		margin-right: 10px;
+	}
 
-    .avatar, .menu {
-        float: left;
-    }
+	.avatar, .menu {
+		float: left;
+	}
 }
 
 #restrictedMode .icon-question-sign{
-    position: relative;
-    left: 5px;
-    top: 6px;
+	position: relative;
+	left: 5px;
+	top: 6px;
 }
 
 #socialConnect{
-    margin-top: 50px;
+	margin-top: 50px;
 }
 
 #avatar {
-    width: 100px;
-    img{
-        .square(100px);
-    }
+	width: 100px;
+	img{
+		.square(100px);
+	}
 }
 
 .numbered{
-    margin-top: 10px;
-    span {
-        display: block;
-        .size(22px, 26px);
-        .border-radius(5em);
-        .pull-left();
-        margin-top: -5px;
-        margin-left: 0;
-        margin-right: 11px;
-        background-color: #b8ce01;
-        border-color: #b8ce01;
-        text-align: center;
-        padding-top: 5px;
-        color: white;
-    }
+	margin-top: 10px;
+	span {
+		display: block;
+		.size(22px, 26px);
+		.border-radius(5em);
+		.pull-left();
+		margin-top: -5px;
+		margin-left: 0;
+		margin-right: 11px;
+		background-color: #b8ce01;
+		border-color: #b8ce01;
+		text-align: center;
+		padding-top: 5px;
+		color: white;
+	}
 }
 
 dl.with-circles {
-    dd {
-        margin-top: 15px;
-        margin-left: 37px;
+	dd {
+		margin-top: 15px;
+		margin-left: 37px;
 
-        div.row{
-            margin-left:1px;
-        }
+		div.row{
+			margin-left:1px;
+		}
 
-        .error-passwords {
-            color: @grayDark;
-            font-size: 10px;
-            width: 100%;
-        }
+		.error-passwords {
+			color: @grayDark;
+			font-size: 10px;
+			width: 100%;
+		}
 
-        span.accept-terms {
-            p {
-                text-decoration: underline;
-            }
-            input{
-                margin-right: 10px;
-            }
-        }
-    }
+		span.accept-terms {
+			p {
+				text-decoration: underline;
+			}
+			input{
+				margin-right: 10px;
+			}
+		}
+	}
 }
 
 div.form-profile.row {
-    margin: 0;
+	margin: 0;
 
-    div.column {
-        padding-left: 37px;
-    }
+	div.column {
+		padding-left: 37px;
+	}
 }
 
 dl.privacies {
-    dd {
-        margin-bottom: 10px;
-    }
+	dd {
+		margin-bottom: 10px;
+	}
 }
 
 ul.list-labels {
-    li {
-        .size(auto, auto);
-        display: block;
-        .pull-left();
-        padding: 3px;
-        vertical-align: middle;
-        margin-right: 5px;
+	li {
+		.size(auto, auto);
+		display: block;
+		.pull-left();
+		padding: 3px;
+		vertical-align: middle;
+		margin-right: 5px;
 
-        button.deleteinterest {
-            margin-left: 5px;
-        }
-    }
+		button.deleteinterest {
+			margin-left: 5px;
+		}
+	}
 }
 
 ul.idolships{
-        li{
-            display:block;
-            .square(114px);
-            border: 1px solid @gray;
-            .pull-left();
-            margin-right: 4px;
-            margin-bottom: 37px;
-        }
-        button, span{
-            position: relative;
-        }
-        button{
-            top:-25px;
-            margin-left: 5px;
-        }
-        span.fan-quantity {
-            top: -24px;
-            .pull-right();
-            margin-right: 5px;
-            -webkit-text-shadow:0 0 15px black;
-            -moz-text-shadow: 0 0 15px black;
-            text-shadow:0 0 15px black;
-            color: @white;
-            font-size: 15px;
-            font-weight: bold;
-        }
-        span.idol-name{
-            background-color: transparent;
-            border: 1px solid @gray;
-            top: -20px;
-            left: -1px;
-            display: block;
-            .size(auto, 100px);
-            padding: 7px;
-            text-align: left;
-            color: @grayDark;
-            font-weight: bold;
-        }
+	li{
+		display:block;
+		.square(114px);
+		border: 1px solid @gray;
+		.pull-left();
+		margin-right: 4px;
+		margin-bottom: 37px;
+	}
+	button, span{
+		position: relative;
+	}
+	button{
+		top:-25px;
+		margin-left: 5px;
+	}
+	span.fan-quantity {
+		top: -24px;
+		.pull-right();
+		margin-right: 5px;
+		-webkit-text-shadow:0 0 15px black;
+		-moz-text-shadow: 0 0 15px black;
+		text-shadow:0 0 15px black;
+		color: @white;
+		font-size: 15px;
+		font-weight: bold;
+	}
+	span.idol-name{
+		background-color: transparent;
+		border: 1px solid @gray;
+		top: -20px;
+		left: -1px;
+		display: block;
+		.size(auto, 100px);
+		padding: 7px;
+		text-align: left;
+		color: @grayDark;
+		font-weight: bold;
+	}
 
 }
 
 header.profile_head{
-    border-bottom: 1px solid #ebebeb;
-    margin-bottom: 20px;
-    overflow: hidden;
-    height: auto;
-    padding-bottom: 35px;
-    position: relative;
+	border-bottom: 1px solid #ebebeb;
+	margin-bottom: 20px;
+	overflow: hidden;
+	height: auto;
+	padding-bottom: 35px;
+	position: relative;
 
-    div.navigate-entity {
-      position: absolute;
-      bottom: 10px;
-      right: 0;
+	div.navigate-entity {
+		position: absolute;
+		bottom: 10px;
+		right: 0;
 
-      i {
-        cursor: pointer;
-      }
-    }
+		i {
+			cursor: pointer;
+		}
+	}
 
-    nav {
-        position: absolute;
-    }
+	nav {
+		position: absolute;
+	}
 
-    section.header_main{
-        color: @white !important;
-        background-color: #292929;
-        overflow: hidden;
-        div.main_left{
-            background-color: #292929;
-            //height: 225px;
-            > img{
-                width:100%
-            }
-        }
+	section.header_main{
+		color: @white !important;
+		background-color: #292929;
+		overflow: hidden;
+		div.main_left{
+			background-color: #292929;
+			//height: 225px;
+			> img{
+				width:100%
+			}
+		}
 
-        div.main_right{
-            background-color: #292929;
+		div.main_right{
+			background-color: #292929;
 
-        }
-    }
+		}
+	}
 
-    section.header_main.header_small{
-        height: 60px;
-        div.user-info{
-            margin-top:0;
-            .avatar{
-                float:left;
-                img{
-                    max-width: 60px;
-                    max-height: 60px;
-                }
-            }
-            .text-info{
-                float: left;
-                margin-top: 5px;
-                padding-left: 15px;
-            }
-
-
-            h1{
-                font-size: 22px;
-                line-height: 26px;
-                font-weight: 600;
-            }
+	section.header_main.header_small{
+		height: 60px;
+		div.user-info{
+			margin-top:0;
+			.avatar{
+				float:left;
+				img{
+					max-width: 60px;
+					max-height: 60px;
+				}
+			}
+			.text-info{
+				float: left;
+				margin-top: 5px;
+				padding-left: 15px;
+			}
 
 
-            .header-subtitle{
-                font-size: 13px;
-            }
-        }
-
-        .numbers-info{
-            .pull-right();
-            margin-right: -19px;
-            padding: 5px 0;
-
-            a:hover {
-                color: @white;
-            }
-
-            > section{
-                float: left;
-                height: 40px;
-                padding-top: 10px;
-
-            }
-
-            section.with-border{
-                border-left: 1px solid gray;
-                border-right: 1px solid gray;
-                height: 33px;
-                margin-top: 3px;
-
-                .numero {
-                    margin-top: -4px;
-                }
-            }
-
-            .fotos-info, .videos-info, .fans-info, .ptos-info {
-                text-align: center;
-                width: 24%;
-                height: 60px;
-
-                div.numero{
-                    font-size: 17px;
-                    color: @white !important;
-
-                    a {
-                        color: @white !important;
-                    }
-                }
-                div.tipo{
-                    font-size: 11px;
-                    text-transform: uppercase;
-                    color: @white !important;
-
-                    a {
-                        color: @white !important;
-                    }
-                }
-            }
-        }
-
-        .header-fship{
-            margin-top: 5px;
-            .btn_friendship, .btn_idolship, .btn_teamship{
-
-                font-size: 20px;
-                font-weight: bold;
-                text-transform: uppercase;
-            }
-
-        }
+			h1{
+				font-size: 22px;
+				line-height: 26px;
+				font-weight: 600;
+			}
 
 
+			.header-subtitle{
+				font-size: 13px;
+			}
+		}
+
+		.numbers-info{
+			.pull-right();
+			margin-right: -19px;
+			padding: 5px 0;
+
+			a:hover {
+				color: @white;
+			}
+
+			> section{
+				float: left;
+				height: 40px;
+				padding-top: 10px;
+
+			}
+
+			section.with-border{
+				border-left: 1px solid gray;
+				border-right: 1px solid gray;
+				height: 33px;
+				margin-top: 3px;
+
+				.numero {
+					margin-top: -4px;
+				}
+			}
+
+			.fotos-info, .videos-info, .fans-info, .ptos-info {
+				text-align: center;
+				width: 24%;
+				height: 60px;
+
+				div.numero{
+					font-size: 17px;
+					color: @white !important;
+
+					a {
+						color: @white !important;
+					}
+				}
+				div.tipo{
+					font-size: 11px;
+					text-transform: uppercase;
+					color: @white !important;
+
+					a {
+						color: @white !important;
+					}
+				}
+			}
+		}
+
+		.header-fship{
+			margin-top: 5px;
+			.btn_friendship, .btn_idolship, .btn_teamship{
+
+				font-size: 20px;
+				font-weight: bold;
+				text-transform: uppercase;
+			}
+
+		}
 
 
 
-    }
-
-    section.header_main.header_large{
-        position: relative;
-
-        #myCarousel {
-            a.carousel-control {
-                display: none;
-            }
-        }
-
-        a.edit-image {
-            display: none;
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            background-color: @black;
-            padding: 7px;
-            padding-bottom: 3px;
-            border-radius: 16px;
-            border: 2px solid white;
-            opacity: 0.5;
-        }
-
-        div.main_left{
-            position: relative;
-
-            div.avatar{
-                position: absolute;
-                z-index: 99;
-                top: 10px;
-                left: 10px;
-                img{
-                    max-width: 100px;
-                    max-height: 100px;
-                }
-
-                &:hover {
-                    a.edit-image.avatar {
-                        display: block;
-                    }
-                }
-            }
-
-            &:hover {
-                a.edit-image.splash {
-                    display: block;
-                }
-            }
-        }
 
 
-        div.main_right{
-            div.user-info{
-                margin-top: 10%;
-                h1{
-                    line-height: 23px;
-                    height: 72px;
-                    font-size: 600;
-                    font-size: 23px;
-                    max-width: 100%;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                }
+	}
 
-                .addFriend{
-                    margin-top: 22%;
-                }
+	section.header_main.header_large{
+		position: relative;
 
-                a:hover {
-                    color: @white;
-                }
+		#myCarousel {
+			a.carousel-control {
+				display: none;
+			}
+		}
 
-                .header-fship{
-                    .btn_friendship, .btn_idolship, .btn_teamship{
-                        font-size: 20px;
-                        font-weight: bold;
-                        text-transform: uppercase;
-                        position: absolute;
-                        bottom: 23px;
-                    }
-                }
+		a.edit-image {
+			display: none;
+			position: absolute;
+			bottom: 5px;
+			right: 5px;
+			background-color: @black;
+			padding: 7px;
+			padding-bottom: 3px;
+			border-radius: 16px;
+			border: 2px solid white;
+			opacity: 0.5;
+		}
 
-                .header-subtitle{
-                    font-size: 13px;
-                }
-            }
+		div.main_left{
+			position: relative;
 
-            .numbers-info{
-                margin-top: 10px;
+			div.avatar{
+				position: absolute;
+				z-index: 99;
+				top: 10px;
+				left: 10px;
+				img{
+					max-width: 100px;
+					max-height: 100px;
+				}
 
-                .fotos-info, .videos-info, .fans-info, .ptos-info{
-                    padding-right: 20%;
-                    text-align: right;
-                    height: 60px;
+				&:hover {
+					a.edit-image.avatar {
+						display: block;
+					}
+				}
+			}
 
-                    div.numero{
-                        font-size: 17px;
-                    }
-                    div.tipo{
-                        font-size: 11px;
-                        text-transform: uppercase;
-                        padding-top: 5px;
-                    }
-                    div.separador{
-                        border-bottom: 1px solid gray;
-                        float: right;
-                        height: 0;
-                        margin: 7px 0;
-                        width: 99%;
-                    }
-                }
-            }
-        }
+			&:hover {
+				a.edit-image.splash {
+					display: block;
+				}
+			}
+		}
 
-    }
 
-    .nav-tabs-profile{
-        margin-top: 10px;
-        font-size: 16px;
-        color: @navbarprofilelinks;
-        li
-        {
-            margin-right: 10px;
-            line-height: 10px;
-        }
-    }
+		div.main_right{
+			div.user-info{
+				margin-top: 10%;
+				h1{
+					line-height: 23px;
+					height: 72px;
+					font-size: 600;
+					font-size: 23px;
+					max-width: 100%;
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
+
+				.addFriend{
+					margin-top: 22%;
+				}
+
+				a:hover {
+					color: @white;
+				}
+
+				.header-fship{
+					.btn_friendship, .btn_idolship, .btn_teamship{
+						font-size: 20px;
+						font-weight: bold;
+						text-transform: uppercase;
+						position: absolute;
+						bottom: 23px;
+					}
+				}
+
+				.header-subtitle{
+					font-size: 13px;
+				}
+			}
+
+			.numbers-info{
+				margin-top: 10px;
+
+				.fotos-info, .videos-info, .fans-info, .ptos-info{
+					padding-right: 20%;
+					text-align: right;
+					height: 60px;
+
+					div.numero{
+						font-size: 17px;
+					}
+					div.tipo{
+						font-size: 11px;
+						text-transform: uppercase;
+						padding-top: 5px;
+					}
+					div.separador{
+						border-bottom: 1px solid gray;
+						float: right;
+						height: 0;
+						margin: 7px 0;
+						width: 99%;
+					}
+				}
+			}
+		}
+
+	}
+
+	.nav-tabs-profile{
+		margin-top: 10px;
+		font-size: 16px;
+		color: @navbarprofilelinks;
+		li
+		{
+			margin-right: 10px;
+			line-height: 10px;
+		}
+	}
 
 }
 
 div.twitter-tab {
-    h2 { font-size: 22px; color: #6ee6e7; margin-bottom: 20px; text-transform:capitalize;}
-    p.big { font-size: 26px; line-height: 36px; margin-bottom: 40px;}
-    p { font-size: 14px; color: #4e4c4d; line-height: 19px; margin-bottom: 20px;}
+	h2 { font-size: 22px; color: #6ee6e7; margin-bottom: 20px; text-transform:capitalize;}
+	p.big { font-size: 26px; line-height: 36px; margin-bottom: 40px;}
+	p { font-size: 14px; color: #4e4c4d; line-height: 19px; margin-bottom: 20px;}
 }
 
 //Estilos avatar grid
 section.avatar-grid{
-    overflow: hidden;
-    margin-bottom: 15px;
+	overflow: hidden;
+	margin-bottom: 15px;
 
-    header.title{
-        h4{
-            color: #4d4d4d;
-        }
-    }
+	header.title{
+		h4{
+			color: #4d4d4d;
+		}
+	}
 
-    ul.avatar-list{
-        &.fans {
-            margin-top: 15px;
-        }
+	ul.avatar-list{
+		&.fans {
+			margin-top: 15px;
+		}
 
-        .fan-container:hover, .idol-container:hover, .team-container:hover {
-            .name a, .friendCount, scoreCount {
-                display: block;
-            }
-        }
+		.fan-container:hover, .idol-container:hover, .team-container:hover {
+			.name a, .friendCount, scoreCount {
+				display: block;
+			}
+		}
 
-        >li{
-            margin-right: 6px;
-            margin-bottom: 8px;
-            .pull-left();
-            line-height: 24px;
+		>li{
+			margin-right: 6px;
+			margin-bottom: 8px;
+			.pull-left();
+			line-height: 24px;
 
-            .fan-container, .idol-container, .team-container{
-                position: relative;
-                overflow: hidden;
-                height: 145px;
+			.fan-container, .idol-container, .team-container{
+				position: relative;
+				overflow: hidden;
+				height: 145px;
 
-                .name{
-                    a{
-                        display: block;
-                        color: @white;
-                        font-size: 12px;
-                        font-weight: bold;
-                        position: absolute;
-                        text-align: left;
-                        top: 10px;
-                        left: 10px;
-                        max-width: 100%;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
-                        line-height: 15px;
-                    }
-                }
-                .addFriend{
-                    bottom: 10px;
-                    left: 10px;
-                    position: absolute;
-                    .btn_friendship, .btn_idolship, .btn_teamship{
-                        text-transform: uppercase;
-                        font-weight: bold;
-                        width: 60px;
-                        font-size: 12px;
-                        padding: 0px;
-                        height: auto;
-                    }
-                }
+				.name{
+					a{
+						display: block;
+						color: @white;
+						font-size: 12px;
+						font-weight: bold;
+						position: absolute;
+						text-align: left;
+						top: 10px;
+						left: 10px;
+						max-width: 100%;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+						line-height: 15px;
+					}
+				}
+				.addFriend{
+					bottom: 10px;
+					left: 10px;
+					position: absolute;
+					.btn_friendship, .btn_idolship, .btn_teamship{
+						text-transform: uppercase;
+						font-weight: bold;
+						width: 60px;
+						font-size: 12px;
+						padding: 0px;
+						height: auto;
+					}
+				}
 
-                .friendCount {
-                    bottom: 5px;
-                    color: white;
-                    font-size: 12px;
-                    font-weight: bold;
-                    position: absolute;
-                    right: 10px;
-                    text-shadow: 1px 1px 0 rgba(128,128,128,.5);
-                    display: block;
-                }
+				.friendCount {
+					bottom: 5px;
+					color: white;
+					font-size: 12px;
+					font-weight: bold;
+					position: absolute;
+					right: 10px;
+					text-shadow: 1px 1px 0 rgba(128,128,128,.5);
+					display: block;
+				}
 
-                .scoreCount {
-                    bottom: 24px;
-                    color: white;
-                    font-size: 12px;
-                    font-weight: bold;
-                    position: absolute;
-                    right: 10px;
-                    text-shadow: 1px 1px 0 rgba(128,128,128,.5);
-                    display: block;
-                }
-            }
+				.scoreCount {
+					bottom: 24px;
+					color: white;
+					font-size: 12px;
+					font-weight: bold;
+					position: absolute;
+					right: 10px;
+					text-shadow: 1px 1px 0 rgba(128,128,128,.5);
+					display: block;
+				}
+			}
 
-            .team-container .name a {
-                display: none;
-            }
+			.team-container .name a {
+				display: none;
+			}
 
-        }
-        >li:last-child {
-            margin-right: 0;
-        }
-    }
+		}
+		>li:last-child {
+			margin-right: 0;
+		}
+	}
 
 }
 
 section#entity-data {
-    width: 45%;
-    margin-right: 4%;
-    display: block;
-    float: left;
+	width: 45%;
+	margin-right: 4%;
+	display: block;
+	float: left;
 }
 section#entity-content {
-    width: 45%;
-    display: block;
-    float: right;
-    h4 {
-        margin-bottom: 10px;
-    }
+	width: 45%;
+	display: block;
+	float: right;
+	h4 {
+		margin-bottom: 10px;
+	}
 }
 
 
 
 div.change-password {
-    div.row div {
-        clear: both;
-    }
+	div.row div {
+		clear: both;
+	}
 
-    .actual-password, .new-password {
-        label {
-            float: left;
-            width: 140px;
-            display: block;
-        }
-        input:not([type='checkbox']) {
-            float: left;
-            width: 55% !important;
-        }
-        button {
-            margin-left: 140px;
-        }
-    }
+	.actual-password, .new-password {
+		label {
+			float: left;
+			width: 140px;
+			display: block;
+		}
+		input:not([type='checkbox']) {
+			float: left;
+			width: 55% !important;
+		}
+		button {
+			margin-left: 140px;
+		}
+	}
 
-    .errors.row{
-        color: red;
-        font-weight: bold;
-        padding-left: 20%;
-        padding-bottom: 5px;
-    }
+	.errors.row{
+		color: red;
+		font-weight: bold;
+		padding-left: 20%;
+		padding-bottom: 5px;
+	}
 }
 
 section#personal-data {
-    dl {
-        dt {
-            text-transform: capitalize;
-        }
-    }
+	dl {
+		dt {
+			text-transform: capitalize;
+		}
+	}
 }
 
 .selectedteam {
-    .delete {
-        width:14px;
-        height:14px;
-        cursor:pointer;
-        float:right;
-        background:url(../images/ui/closealert.png) top;
+	.delete {
+		width:14px;
+		height:14px;
+		cursor:pointer;
+		float:right;
+		background:url(../images/ui/closealert.png) top;
 
-        &:hover {
-            background-position:bottom;
-        }
-    }
+		&:hover {
+			background-position:bottom;
+		}
+	}
 }
 
 div.entityBlock {
-    background-color: #1e181f;
-    position: relative;
-    border: 1px solid @gray;
-    width: 30%;
-    display: block;
-    height: auto;
-    float: left;
-    margin-right: 5%;
-    margin-bottom: 15px;
-    .box-sizing(border-box);
-    .border-radius(10px);
+	background-color: #1e181f;
+	position: relative;
+	border: 1px solid @gray;
+	width: 30%;
+	display: block;
+	height: auto;
+	float: left;
+	margin-right: 5%;
+	margin-bottom: 15px;
+	.box-sizing(border-box);
+	.border-radius(10px);
 
-    div.btn-group {
-        position: absolute;
-        bottom: 10px;
-        right: 10px;
-    }
+	div.btn-group {
+		position: absolute;
+		bottom: 10px;
+		right: 10px;
+	}
 
-    .splash {
-        height: 100px;
-        overflow: hidden;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-    }
+	.splash {
+		height: 100px;
+		overflow: hidden;
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;
+	}
 
-    .logo {
-        background-color: white;
-        .box-shadow(0 0 5px #888);
-        .border-radius(5px);
-        position: absolute;
-        right: 10px;
-        top: 64px;
-        padding: 1px;
+	.logo {
+		background-color: white;
+		.box-shadow(0 0 5px #888);
+		.border-radius(5px);
+		position: absolute;
+		right: 10px;
+		top: 64px;
+		padding: 1px;
 
-        img {
-            .border-radius(5px);
-            .size(75px, auto);
-            background: -moz-linear-gradient(-45deg,  rgba(15,15,15,0.65) 0%, rgba(3,3,3,0) 50%, rgba(0,0,0,0) 63%); /* FF3.6+ */
-            background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(15,15,15,0.65)), color-stop(50%,rgba(3,3,3,0)), color-stop(63%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
-            background: -webkit-linear-gradient(-45deg,  rgba(15,15,15,0.65) 0%,rgba(3,3,3,0) 50%,rgba(0,0,0,0) 63%); /* Chrome10+,Safari5.1+ */
-            background: -o-linear-gradient(-45deg,  rgba(15,15,15,0.65) 0%,rgba(3,3,3,0) 50%,rgba(0,0,0,0) 63%); /* Opera 11.10+ */
-            background: -ms-linear-gradient(-45deg,  rgba(15,15,15,0.65) 0%,rgba(3,3,3,0) 50%,rgba(0,0,0,0) 63%); /* IE10+ */
-            background: linear-gradient(135deg,  rgba(15,15,15,0.65) 0%,rgba(3,3,3,0) 50%,rgba(0,0,0,0) 63%); /* W3C */
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a60f0f0f', endColorstr='#00000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-        }
-    }
+		img {
+			.border-radius(5px);
+			.size(75px, auto);
+			background: -moz-linear-gradient(-45deg,  rgba(15,15,15,0.65) 0%, rgba(3,3,3,0) 50%, rgba(0,0,0,0) 63%); /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(15,15,15,0.65)), color-stop(50%,rgba(3,3,3,0)), color-stop(63%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(-45deg,  rgba(15,15,15,0.65) 0%,rgba(3,3,3,0) 50%,rgba(0,0,0,0) 63%); /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(-45deg,  rgba(15,15,15,0.65) 0%,rgba(3,3,3,0) 50%,rgba(0,0,0,0) 63%); /* Opera 11.10+ */
+			background: -ms-linear-gradient(-45deg,  rgba(15,15,15,0.65) 0%,rgba(3,3,3,0) 50%,rgba(0,0,0,0) 63%); /* IE10+ */
+			background: linear-gradient(135deg,  rgba(15,15,15,0.65) 0%,rgba(3,3,3,0) 50%,rgba(0,0,0,0) 63%); /* W3C */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a60f0f0f', endColorstr='#00000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+		}
+	}
 
-    .name {
-        font-size: 14px;
-        width: 70%;
-        display: block;
-        color: @white;
-        font-family: "Open Sans";
-        margin-left: 10px;
-        margin-top: 13px;
+	.name {
+		font-size: 14px;
+		width: 70%;
+		display: block;
+		color: @white;
+		font-family: "Open Sans";
+		margin-left: 10px;
+		margin-top: 13px;
 
-        &:hover {
-            text-decoration: none;
-        }
-    }
+		&:hover {
+			text-decoration: none;
+		}
+	}
 
-    ul.stats {
-        width: auto;
-        float: left;
-        margin-left: 10px;
-        margin-top: 25px;
-        margin-bottom: 17px;
+	ul.stats {
+		width: auto;
+		float: left;
+		margin-left: 10px;
+		margin-top: 25px;
+		margin-bottom: 17px;
 
-        li {
-            float: left;
-            border-right: 1px dotted #686469;
-            padding-right: 10px;
-            padding-left: 10px;
-            text-align: center;
-            font-size: 12px;
-            color: @white;
+		li {
+			float: left;
+			border-right: 1px dotted #686469;
+			padding-right: 10px;
+			padding-left: 10px;
+			text-align: center;
+			font-size: 12px;
+			color: @white;
 
-            span {
-                font-size: 30px;
-                color: @green;
-            }
+			span {
+				font-size: 30px;
+				color: @green;
+			}
 
-            &:first-child {
-                padding-left: 0;
-            }
-            &:last-child {
-                border: none;
-                padding-right: 0;
-            }
-        }
-    }
+			&:first-child {
+				padding-left: 0;
+			}
+			&:last-child {
+				border: none;
+				padding-right: 0;
+			}
+		}
+	}
 
-    &.third {
-        margin-right: 0;
-    }
+	&.third {
+		margin-right: 0;
+	}
+}
+
+.header-large-new {
+	display: block;
+	position: relative;
+
+	@fixedWidth: 300px;
+	@height: 225px;
+
+	@media screen and (max-width: 625px) {
+		.splash-container {
+			margin: 0;
+			width: 100%;
+			img {
+				width: 100% !important;
+				height: auto !important;
+			}
+		}
+		.info-container {
+			position: relative !important;
+			height: 160px !important;
+			width: 100% !important;
+		}
+	}
+
+	.splash-container {
+		margin-right: @fixedWidth;
+		height: @height;
+		overflow: hidden;
+		position: relative;
+
+		img {
+			.size(100%, auto);
+			max-width: none;
+			max-height: none;
+
+			@media screen and (min-width: 800px) {
+				.size(auto, 100%);
+			}
+		}
+
+		.action-block {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 75px;
+			background-color: transparent;
+
+			&:before {
+				content: "";
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				height: 75px;
+				background-color: #3b3b3b;
+				opacity: 0.4;
+			}
+
+			.name {
+				position: relative;
+				.pull-left();
+				font-size: 24px;
+				font-weight: 500;
+				color: @grayLight;
+				margin: 25px 0 0 25px;
+
+				@media screen and (max-width: 725px) {
+					font-size: 15px;
+				}
+			}
+
+			button {
+				position: relative;
+				.pull-right();
+				margin: 25px 25px 25px 0;
+			}
+		}
+	}
+
+	.info-container {
+		background-color: #2f2f2f;
+		height: @height;
+		width: @fixedWidth;
+		position: absolute;
+		right:0;
+		top: 0;
+
+		.title {
+			color: @green;
+		}
+
+		.description {
+			color: @white;
+			font-size: 15px;
+			font-weight: 400;
+			padding: 15px;
+			height: 100px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		ul.quantities {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			background-color: #3b3b3b;
+
+			li.item {
+				background-color: #3b3b3b;
+				.pull-left();
+				.size(75px, ((@fixedWidth/4)-2));
+				position: relative;
+				color: white;
+				font-size: 35px;
+				text-align: center;
+				.box-sizing(border-box);
+				padding-top: 14px;
+				line-height: 22px;
+				border-right: 1px solid #5b5b5b;
+				border-left: 1px solid black;
+
+				.item-type {
+					color: @white;
+					font-size: 12px;
+					font-weight: 500;
+				}
+
+				&:first-child {
+					border-left: 0;
+				}
+
+				a {
+					color: white;
+				}
+
+				&:last-child {
+					border-right: 0;
+					&:after {
+						border: 0;
+					}
+				}
+			}
+		}
+	}
 }
