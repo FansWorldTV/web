@@ -253,3 +253,14 @@ a {
 strong {
   font-weight: 500;
 }
+
+/* TEMPORARY PATCH FOR ISSUE #227 */
+div[data-videocontainer-parent] {
+  .square(100%);
+  div[data-videocontainer] {
+    .square(100%);
+    span {
+      .square(100%);
+    }
+  }
+}
