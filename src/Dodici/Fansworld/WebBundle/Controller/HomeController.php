@@ -90,7 +90,7 @@ class HomeController extends SiteController
             $response = array('videos' => array());
 
             switch($block){
-                case 'follow':
+                case 'followed':
                     $videos = $videoRepo->search(null, $user, self::LIMIT_VIDEO, $offset, $vc->getId(), true, null, null, null, 'default', null, $homeVideo);
                     $response['videos'] = $serializer->values($videos, 'home_video');
                     break;

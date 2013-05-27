@@ -107,10 +107,13 @@
 .modal-footer progress::-moz-progress-value {
   .progress-value;
 }
+.modal-footer progress[value="100"]::-moz-progress-value {
+  background: @green;
+}
 .modal-footer progress:not([value])::-moz-progress-bar {
   .progress-bar-not-value;
 }
- 
+
 /* Chrome */
 .modal-footer progress::-webkit-progress-bar {
   .progress-bar;
@@ -118,9 +121,13 @@
 .modal-footer progress::-webkit-progress-value {
   .progress-value;
 }
+.modal-footer progress[value="100"]::-webkit-progress-value {
+  background: @green;
+}
 .modal-footer progress:not([value])::-webkit-progress-bar {
   .progress-bar-not-value;
 }
+
 
 
 .modal-body .youtube_share {
