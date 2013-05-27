@@ -40,7 +40,13 @@ $(document).ready(function () {
             var self = $(that.element);
             that.options.teamId = self.attr('data-team-id');
             self.addClass(that._name);
-            self.on('click', that.addTeam);
+            
+            if (window.isLoggedIn) {
+                self.on('click', that.addTeam);
+            }
+            esle {
+                $('[data-login-btn]').click();
+            }             
         },
         addTeam: function(event) {
             var that = this;
