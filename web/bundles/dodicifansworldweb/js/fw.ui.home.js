@@ -334,7 +334,28 @@ $(document).ready(function () {
                 return nvc;
             })(this);
 
+            that.options.onFindVideosByTag = (function on(tag){
+                console.log(tag);
+                var url = Routing.generate(appLocale + "_video_ajaxsearchbytag");
+                var data = {
+                    id: 544,
+                    entity: 'tag',
+                    page: that.options.page,
+                };
+                $.ajax({
+                    url: url,
+                    data: data
+                })
+                .then(function(r){
+                    console.log(r);
+                 });
+                //that.clearThumbs();
+                //that.appendThumbs();
+                return on;
+            })(this);
+
             fansWorldEvents.addListener('newVideoCategory', that.options.newVideoCategory);
+            fansWorldEvents.addListener('onFindVideosByTag', that.options.onFindVideosByTag);
 
             $('section.' + that.options.block + ' > .add-more').on('click', function(event) {
                 that.addMoreThumbs(event);
@@ -374,10 +395,10 @@ $(document).ready(function () {
                         if (response.videos.hasOwnProperty(i)) {
                             var video = response.videos[i];
                             $.when(templateHelper.htmlTemplate('video-home_element', video))
-                                .then(function(response){
-                                    var $thumb = $(response).clone();
-                                    $thumb.hide().appendTo(that.element).fadeIn('slow');
-                                });
+                            .then(function(response){
+                                var $thumb = $(response).clone();
+                                $thumb.hide().appendTo(that.element).fadeIn('slow');
+                            });
                         }
                     }
                     if(response.videos.length > 0 ) {
@@ -450,6 +471,31 @@ $(document).ready(function () {
         },
         makeTags: function() {
             var that = this;
+            var queue = $.jqmq({
+                // Queue items will be processed every queueDelay milliseconds.
+                delay: 250,
+                // Process queue items one-at-a-time.
+                batch: 1,
+                // For each queue item, execute this function.
+                callback: function( videoTag ) {
+                    var fragment = document.createDocumentFragment();
+                    var tag = document.createElement('li');
+                    tag.innerText = videoTag.title;
+                    tag.setAttribute('id', videoTag.id);
+                    tag.setAttribute('data-list-filter-type', videoTag.type);
+                    tag.setAttribute('data-id', videoTag.id);
+                    fragment.appendChild( tag );
+                    //$(fragment).hide().appendTo(that.element).fadeIn(150);
+                    $(that.element).append(fragment);
+                    $(tag).on('click', function(event){
+                        console.log("emitiendo evento")
+                        window.fansWorldEvents.emitEvent('onFindVideosByTag', [videoTag]);
+                    });
+                },
+                // When the queue completes naturally, execute this function.
+                complete: function(){
+                }
+            });
             $.ajax({
                 url: that.options.tagSource,
                 data: {
@@ -463,7 +509,7 @@ $(document).ready(function () {
                     $(that.element).empty();
                     for(i in tags){
                         if (tags.hasOwnProperty(i)) {
-                            $(that.element).append("<li>"+tags[i].title+"</li>");
+                            queue.add(tags[i]);
                             if(i >= that.options.maxTags) {
                                 break;
                             }
