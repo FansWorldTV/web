@@ -44,7 +44,7 @@ $(document).ready(function () {
             if (window.isLoggedIn) {
                 self.on('click', that.addTeam);
             }
-            esle {
+            else {
                 $('[data-login-btn]').click();
             }             
         },
