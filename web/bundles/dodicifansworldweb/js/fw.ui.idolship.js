@@ -35,8 +35,7 @@ $(document).ready(function () {
 
             if (window.isLoggedIn) {
                 self.on('click', that.addIdol);
-            }
-            esle {
+            } else {
                 $('[data-login-btn]').click();
             }            
         },
