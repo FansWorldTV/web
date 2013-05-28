@@ -3,12 +3,12 @@ var complaint = {
     pageList : 2,
     init: function(){
         complaint.changeType();
-        $("#addMore.complaints").live('click', function(){
+        $("#addMore.complaints").on('click', function(){
             return complaint.pager()
         });
     },
     changeType: function(){
-        $(".complaints .complaintType li a").live('click', function(){
+        $(".complaints .complaintType li a").on('click', function(){
             $(".cont ul.listComplaints li").remove();
             var self = $(this);
             self.toggleClass('bold');

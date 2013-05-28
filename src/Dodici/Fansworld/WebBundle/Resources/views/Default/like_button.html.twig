@@ -5,7 +5,7 @@
 {% set candislike = appstate.candislike(entity) %}
 
 {% if 'video' == type %}
-    <button class="btn watchlater" data-watch-later data-video-id="{{ entity.id }}" data-later="false">
+    <button class="btn watchlater" data-login-required data-watch-later data-video-id="{{ entity.id }}"rel="tooltip" title="Add to playlist" data-later="false" data-placement="bottom">
         <i></i>
     </button>
 {% endif %}

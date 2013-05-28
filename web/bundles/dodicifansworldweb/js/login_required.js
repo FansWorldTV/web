@@ -1,6 +1,8 @@
 // TODO: login required modal
 
 $(function(){
+    $('[data-login-required]').off();
+
     $('body').on('click', '[data-login-required]', function(e){
         if (!isLoggedIn) {
             e.preventDefault();

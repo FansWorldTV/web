@@ -35,7 +35,7 @@ $(function(){
 		});
 	});
 	
-	$('.selectedtags .deletetag').live('click',function(e){
+	$('.selectedtags .deletetag').on('click',function(e){
 		e.preventDefault();
 		var el = $(this);
 		var li = el.closest('li');
@@ -47,7 +47,7 @@ $(function(){
 		});		
 	});
 	
-	$('.completer').live('keydown', function (e) {
+	$('.completer').on('keydown', function (e) {
      var el = $(this);
      var ul = el.siblings('.selectedtags');
 		if ( e.keyCode == 13 ){
