@@ -24,7 +24,7 @@
         </div>
         <script type="text/javascript">
             $(document).ready(function(){
-                $("#complaintReport").live('submit', function(){
+                $("#complaintReport").on('submit', function(){
                     ajax.genericAction('complaint_make', {
                         'type': '{{ entityType }}',
                         'id': {{ entityId }},
