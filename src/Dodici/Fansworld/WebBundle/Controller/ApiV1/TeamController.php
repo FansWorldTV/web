@@ -90,7 +90,7 @@ class TeamController extends BaseController
     }
 
 	/**
-     * Team - show
+     * [signed if user_id given] Team - show
      *
      * @Route("/team/{id}", name="api_v1_team_show", requirements = {"id" = "\d+"})
      * @Method({"GET"})
@@ -98,6 +98,9 @@ class TeamController extends BaseController
      * Get params:
 	 * - <optional> extra_fields: comma-separated extra fields to return (see below)
 	 * - <optional> imageformat: string
+     * - <optional> user_id: int
+     * - <required if user_id given> [user token]
+     * - [signature params if user_id given]
      *
      * @return
      * array (
@@ -129,6 +132,13 @@ class TeamController extends BaseController
     public function showAction($id)
     {
         try {
+            $request = $this->getRequest();
+            $userid = $request->get('user_id');
+            $user = null;
+            if ($userid) {
+                $user = $this->checkUserToken($userid, $request->get('user_token'));
+            }
+            
             $team = $this->getRepository('Team')->find($id);
             if (!$team) throw new HttpException(404, 'Team not found');
 
@@ -139,6 +149,10 @@ class TeamController extends BaseController
                 'fanCount' => $team->getFanCount(),
                 'videoCount' => $team->getVideoCount()
             );
+            
+            if ($user) {
+                $return['followed'] = $this->get('fanmaker')->isFan($team, $user) ? true : false;
+            }
 
             $allowedfields = array(
             	'content', 'foundedAt', 'splash', 'categories', 'country', 'twitter', 'photoCount', 'visitCount'
