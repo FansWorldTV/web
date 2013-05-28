@@ -770,66 +770,14 @@ class VideoRepository extends CountBaseRepository
     }
 
     /**
-     * Get videos related to Genre
-     * @param Genre: Id of genre (Int) or Entity type Genre $genre
+     * Get videos related to Genre/Category
+     * @param Genre: null | Id of genre (Int) or Entity type Genre $genre
+     * @param VideoCategory: null|$category
      * @param int|null $limit
      * @param int|null $offset
      */
-    public function moreFromGenre($genre, $limit=null, $offset=null)
+    public function moreFromGenre($genre=null, $category=null, $limit=null, $offset=null)
     {
-        return $this->search(null, null, $limit, $offset, null, null, null, null ,null, null, null, null, null, null, null, null, $genre);
-    }
-
-     /**
-     * Return videos recommended for user
-     *
-     * @param User|null $user
-     * @param int|null $limit
-     * @param int|null $offset
-     */
-    public function recommendedForUser($user, $limit = null, $offset = null)
-    {
-        if (!$user) throw new \Exception('User parameter is missing');
-
-        $dql = '
-        SELECT v, vi, va, (COUNT(vhrecteam) + COUNT(vhrecidol)) commonrec
-        FROM \Dodici\Fansworld\WebBundle\Entity\Video v
-        LEFT JOIN v.author va
-        LEFT JOIN v.image vi
-        LEFT JOIN v.hasteams vhrecteam
-            WITH (vhrecteam.team IN (SELECT recishteam.id FROM \Dodici\Fansworld\WebBundle\Entity\Teamship rectship JOIN rectship.team recishteam WHERE rectship.author = :user))
-        LEFT JOIN v.hasidols vhrecidol
-            WITH (vhrecidol.idol IN (SELECT recishidol.id FROM \Dodici\Fansworld\WebBundle\Entity\Idolship reciship JOIN reciship.idol recishidol WHERE reciship.author = :user))
-        WHERE v.active = true';
-
-        $dql .= '
-        AND
-        (
-            (v.privacy = :everyone)
-            OR
-            (v.privacy = :friendsonly AND (:user IS NOT NULL) AND (
-                (:user = v.author) OR
-                ((SELECT COUNT(f.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.target = v.author AND f.author = :user) AND f.active=true) >= 1)
-            ))
-        )
-        AND v.videocategory IS NULL
-        AND v.highlight IS NULL
-        GROUP BY v HAVING commonrec > 0 ORDER BY commonrec DESC, v.weight DESC';
-
-        $query = $this->_em->createQuery($dql)
-                ->setParameter('everyone', Privacy::EVERYONE)
-                ->setParameter('friendsonly', Privacy::FRIENDS_ONLY)
-                ->setParameter('user', ($user instanceof User) ? $user->getId() : $user);
-
-
-        if ($limit !== null)
-            $query = $query->setMaxResults((int) $limit);
-        if ($offset !== null)
-            $query = $query->setFirstResult((int) $offset);
-
-        $res = $query->getResult();
-        $arr = array();
-        foreach ($res as $r) $arr[] = $r[0];
-        return $arr;
+        return $this->search(null, null, $limit, $offset, $category, null, null, null ,null, null, null, null, null, null, null, null, $genre);
     }
 }

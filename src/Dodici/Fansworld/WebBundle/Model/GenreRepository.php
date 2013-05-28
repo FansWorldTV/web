@@ -43,4 +43,18 @@ class GenreRepository extends CountBaseRepository
 
         return $query->getResult();
     }
+
+    public function getRelatedToCategory($categoryid)
+    {
+        $dql = '
+            SELECT g FROM \Dodici\Fansworld\WebBundle\Entity\Genre g
+                WHERE
+                    (g.id IN (SELECT vg FROM \Dodici\Fansworld\WebBundle\Entity\Video v JOIN v.videocategory vc JOIN v.genre vg WHERE vc = :catid))
+                    ORDER BY g.id ASC';
+
+        $query = $this->_em->createQuery($dql);
+        $query->setParameter('catid', $categoryid, Type::BIGINT);
+        return $query->getResult();
+    }
+
 }
