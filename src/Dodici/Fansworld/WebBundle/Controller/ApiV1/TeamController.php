@@ -151,7 +151,7 @@ class TeamController extends BaseController
             );
             
             if ($user) {
-                $return['followed'] = $this->get('fanmaker')->isFan($team, $user) ? true : false;
+                $return['followed'] = $this->get('fanmaker')->status($team, $user);
             }
 
             $allowedfields = array(
@@ -297,16 +297,12 @@ class TeamController extends BaseController
                 $fansOfTeam = $this->getRepository('User')->byTeams($team, $pagination['limit'], 'score', $pagination['offset']);
 
                 $response = array();
+                $friender = $this->get('friender');
                 foreach ($fansOfTeam as $aFan) {
                     if($aFan->getId() != $userid) {
-                        $response[] = $this->userArray($aFan);
-                    }
-                }
-
-                if ($userid) {
-                    foreach ($response as &$rta) {
-                        $friendShip = $this->getRepository('Friendship')->findOneBy(array('author' => $userid, 'target'=> $rta['id'], 'active' => true));
-                        $friendShip ? $rta['followed'] = true : $rta['followed'] = false;
+                        $arr = $this->userArray($aFan);
+                        if ($userid) $arr['followed'] = $friender->status($aFan, $user);
+                        $response[] = $arr;
                     }
                 }
 

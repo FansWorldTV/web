@@ -14,6 +14,9 @@ use Doctrine\ORM\EntityManager;
 
 class Fanmaker
 {
+    const FOLLOWED_NONE = 'NONE';
+    const FOLLOWED_FAN = 'FAN';
+    
     protected $security_context;
     protected $em;
     protected $user;
@@ -105,6 +108,13 @@ class Fanmaker
         } else {
             throw new \Exception('Invalid entity');
         }
+    }
+    
+    public function status($entity, User $user=null)
+    {
+        $isfan = $this->isFan($entity, $user);
+        if ($isfan) return self::FOLLOWED_FAN;
+        else return self::FOLLOWED_NONE;
     }
     
 }

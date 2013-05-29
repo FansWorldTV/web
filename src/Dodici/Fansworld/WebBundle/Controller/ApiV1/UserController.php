@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller\ApiV1;
 
+use Dodici\Fansworld\WebBundle\Services\Fanmaker;
+
 use Dodici\Fansworld\WebBundle\Entity\Apikey;
 use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -195,7 +197,7 @@ class UserController extends BaseController
                 if (!$showuser) throw new HttpException(404, 'User not found');
 
                 $showuserarray = $this->userArray($showuser);
-                if ($user) $showuserarray['followed'] = $this->get('friender')->isFan($showuser, $user) ? true : false;
+                if ($user) $showuserarray['followed'] = $this->get('friender')->status($showuser, $user);
                 
                 return $this->result($showuserarray);
         } catch (\Exception $e) {
@@ -264,9 +266,9 @@ class UserController extends BaseController
 
                     foreach ($return as &$rta) {
                         if ($userid != $targetid) {
-                            in_array($rta['id'], $teamIds) ? $rta['followed'] = true : $rta['followed'] = false;
+                            in_array($rta['id'], $teamIds) ? $rta['followed'] = Fanmaker::FOLLOWED_FAN : $rta['followed'] = Fanmaker::FOLLOWED_NONE;
                         } else {
-                            $rta['followed'] = true;
+                            $rta['followed'] = Fanmaker::FOLLOWED_FAN;
                         }
                     }
                 }
@@ -336,9 +338,9 @@ class UserController extends BaseController
 
                     foreach ($return as &$rta) {
                         if ($userid != $targetid) {
-                            in_array($rta['id'], $idolIds) ? $rta['followed'] = true : $rta['followed'] = false;
+                            in_array($rta['id'], $idolIds) ? $rta['followed'] = Fanmaker::FOLLOWED_FAN : $rta['followed'] = Fanmaker::FOLLOWED_NONE;
                         } else {
-                            $rta['followed'] = true;
+                            $rta['followed'] = Fanmaker::FOLLOWED_FAN;
                         }
                     }
                 }
@@ -390,16 +392,12 @@ class UserController extends BaseController
                 $fansOfUser = $this->getRepository('User')->FriendUsers($user, null, $pagination['limit'], $pagination['offset'], 'score');
 
                 $response = array();
+                $friender = $this->get('friender');
                 foreach ($fansOfUser as $aFan) {
                     if($aFan->getId() != $userid) {
-                        $response[] = $this->userArray($aFan);
-                    }
-                }
-
-                if ($userid) {
-                    foreach ($response as &$rta) {
-                        $friendShip = $this->getRepository('Friendship')->findOneBy(array('author' => $userid, 'target'=> $rta['id'], 'active' => true));
-                        $friendShip ? $rta['followed'] = true : $rta['followed'] = false;
+                        $arr = $this->userArray($aFan);
+                        if ($userid) $arr['followed'] = $friender->status($aFan, $user);
+                        $response[] = $arr;
                     }
                 }
 
