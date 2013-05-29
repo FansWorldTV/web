@@ -221,11 +221,11 @@ class SearchController extends BaseController
 
                     if ($this->_evaluateConditions($type, array('user', 'team', 'idol'))) {
                         if ('user' == $type && $userid) {
-                            $data['followed'] = $this->get('friender')->isFan($i, $user) ? true : false;
+                            $data['followed'] = $this->get('friender')->status($i, $user);
                         }
 
                         if ($userid && ('team' == $type || 'idol' == $type)) {
-                            $data['followed'] = $this->get('fanmaker')->isFan($i, $user) ? true : false;
+                            $data['followed'] = $this->get('fanmaker')->status($i, $user);
                         }
 
                         if ('user' == $type || 'idol' == $type) {

@@ -15,6 +15,10 @@ use Doctrine\ORM\EntityManager;
 
 class Friender
 {
+    const FOLLOWED_NONE = 'NONE';
+    const FOLLOWED_FAN = 'FAN';
+    const FOLLOWED_PENDING = 'PENDING';
+    
     protected $security_context;
     protected $em;
     protected $appstate;
@@ -140,6 +144,29 @@ class Friender
 
         $this->em->flush();
     }
+    
+    /**
+     * Returns whether $who is a fan of $target
+     * @param User|User $who
+     * @param User|User $target
+     */
+    public function isFan(User $target, User $who)
+    {
+        return $this->between($who, $target);
+    }
+    
+    public function status(User $target, User $who)
+    {
+        $friendship = $this->between($who, $target);
+        if ($friendship && $friendship->getActive()) return self::FOLLOWED_FAN;
+        elseif ($friendship) return self::FOLLOWED_PENDING;
+        else return self::FOLLOWED_NONE;
+    }
+    
+    private function between(User $author, User $target)
+    {
+        return $this->em->getRepository('DodiciFansworldWebBundle:Friendship')->findOneBy(array('author' => $author->getId(), 'target' => $target->getId()));
+    }
 
     private function notifyAccept(Friendship $friendship)
     {
@@ -219,23 +246,5 @@ class Friender
 
 	    	$this->em->persist($user);
     	}
-    }
-
-
-    /**
-     * Returns whether $who is a fan of $target
-     * @param User|User $who
-     * @param User|User $target
-     */
-    public function isFan(User $target, User $who)
-    {
-        if (!$who) throw new \Exception('Invalid who-(user) parameter');
-        if (!$target) throw new \Exception('Invalid target entity parameter');
-
-        if ($who instanceof User && $target instanceof User) {
-            return  $this->em->getRepository('DodiciFansworldWebBundle:Friendship')->findOneBy(array('author' => $who->getId(), 'target' => $target->getId()));
-        } else {
-            throw new \Exception('Invalid entity');
-        }
     }
 }

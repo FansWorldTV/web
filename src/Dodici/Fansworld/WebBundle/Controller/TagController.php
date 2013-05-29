@@ -84,7 +84,7 @@ class TagController extends SiteController
         );
 
         try {
-            if($filterType == 'follow'){
+            if($filterType == 'followed'){
                 $user = $this->getUser();
                 $response['tags'] = $tagger->trendingInRecommended($user, $limit, $offset);
             }else{

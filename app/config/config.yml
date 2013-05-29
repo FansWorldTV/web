@@ -499,3 +499,6 @@ services:
     serializer.photo:
         class: Dodici\Fansworld\WebBundle\Serializer\Photo
         arguments: [@serializer]
+    serializer.genre:
+        class: Dodici\Fansworld\WebBundle\Serializer\Genre
+        arguments: [@serializer]
