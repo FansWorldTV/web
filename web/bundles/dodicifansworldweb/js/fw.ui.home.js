@@ -334,23 +334,19 @@ $(document).ready(function () {
                 return nvc;
             })(this);
 
-            that.options.onFindVideosByTag = (function on(tag){
-                console.log(tag);
-                var url = Routing.generate(appLocale + "_video_ajaxsearchbytag");
-                var data = {
-                    id: 544,
-                    entity: 'tag',
-                    page: that.options.page,
-                };
-                $.ajax({
-                    url: url,
-                    data: data
-                })
-                .then(function(r){
-                    console.log(r);
-                 });
-                //that.clearThumbs();
-                //that.appendThumbs();
+            that.options.onFindVideosByTag = (function on(tag, filter){
+                console.log(arguments);
+                console.log(filter + " local: " + that.options.block);
+                if(filter === that.options.block) {
+                    var url = Routing.generate(appLocale + "_video_ajaxsearchbytag");
+                    var data = {
+                        id: tag.id,
+                        entity: tag.type,
+                        page: that.options.page
+                    };
+                    that.clearThumbs();
+                    that.insetThumbs(url, data);
+                }
                 return on;
             })(this);
 
@@ -365,7 +361,7 @@ $(document).ready(function () {
         clearThumbs: function() {
             var that = this;
             //$(that.element).parent().hide('slow');
-            $(that.element).parent().slideUp('slow', function() {})
+            //$(that.element).parent().slideUp('slow', function() {})
             $(that.element).empty();
         },
         addMoreThumbs: function(event) {
@@ -402,7 +398,36 @@ $(document).ready(function () {
                         }
                     }
                     if(response.videos.length > 0 ) {
-                        $(that.element).parent().slideDown('slow', function() {})
+                        //$(that.element).parent().slideDown('slow', function() {})
+                    }
+                    return response.videos;
+                }).done(function(videos){
+                    deferred.resolve(videos);
+                }).fail(function(error){
+                    deferred.reject(new Error(error));
+                });
+            return deferred.promise();
+        },
+        insetThumbs: function(feed, data) {
+            var that = this;
+            var i = 0;
+            var deferred = new jQuery.Deferred();
+            $.ajax({
+                url: feed,
+                data: data
+            }).then(function(response) {
+                    for(i in response.videos) {
+                        if (response.videos.hasOwnProperty(i)) {
+                            var video = response.videos[i];
+                            $.when(templateHelper.htmlTemplate('video-home_element', video))
+                                .then(function(response){
+                                    var $thumb = $(response).clone();
+                                    $thumb.hide().appendTo(that.element).fadeIn('slow');
+                                });
+                        }
+                    }
+                    if(response.videos.length > 0 ) {
+                        //$(that.element).parent().slideDown('slow', function() {})
                     }
                     return response.videos;
                 }).done(function(videos){
@@ -488,8 +513,9 @@ $(document).ready(function () {
                     //$(fragment).hide().appendTo(that.element).fadeIn(150);
                     $(that.element).append(fragment);
                     $(tag).on('click', function(event){
-                        console.log("emitiendo evento")
-                        window.fansWorldEvents.emitEvent('onFindVideosByTag', [videoTag]);
+                        $(this).parent().find('.active').removeClass('active');
+                        $(this).addClass('active');
+                        window.fansWorldEvents.emitEvent('onFindVideosByTag', [videoTag, that.options.filter]);
                     });
                 },
                 // When the queue completes naturally, execute this function.
