@@ -13,18 +13,29 @@ use Doctrine\ORM\EntityRepository;
  */
 class GenreRepository extends CountBaseRepository
 {
-    public function getChildren($genre)
+    public function getChildren($genre=null, $category=null)
     {
-        $dql = '
-            SELECT g FROM \Dodici\Fansworld\WebBundle\Entity\Genre g
-                WHERE
-                    (g.parent = :genre)
-                    AND
-                    (g.id IN (SELECT vg FROM \Dodici\Fansworld\WebBundle\Entity\Video v JOIN v.genre vg WHERE vg = g.id))
-                    ORDER BY g.id ASC';
+        if (!$genre && !$category) throw new \Exception('You must provide a genre or category');
+
+        if ($genre) {
+            $dql = '
+                SELECT g FROM \Dodici\Fansworld\WebBundle\Entity\Genre g
+                    WHERE
+                        (g.parent = :genre)
+                        AND
+                        (g.id IN (SELECT vg FROM \Dodici\Fansworld\WebBundle\Entity\Video v JOIN v.genre vg WHERE vg = g.id))
+                        ORDER BY g.id ASC';
+        } else {
+            $dql = '
+                SELECT g FROM \Dodici\Fansworld\WebBundle\Entity\Genre g
+                    WHERE
+                        (g.id IN (SELECT vg FROM \Dodici\Fansworld\WebBundle\Entity\Video v JOIN v.videocategory vc JOIN v.genre vg WHERE vc = :cat))
+                        ORDER BY g.id ASC';
+        }
 
         $query = $this->_em->createQuery($dql);
-        $query->setParameter('genre', $genre->getId(), Type::BIGINT);
+        if ($genre) $query->setParameter('genre', ($genre instanceof Genre) ? $genre->getId() : $genre, Type::BIGINT);
+        if ($category) $query->setParameter('cat', ($category instanceof VideoCategory) ? $category->getId() : $category, Type::BIGINT);
         return $query->getResult();
     }
 
@@ -35,26 +46,10 @@ class GenreRepository extends CountBaseRepository
                 WHERE g.parent is NULL ORDER BY g.id ASC';
 
         $query = $this->_em->createQuery($dql);
-
         if ($limit !== null)
             $query = $query->setMaxResults((int) $limit);
         if ($offset !== null)
             $query = $query->setFirstResult((int) $offset);
-
         return $query->getResult();
     }
-
-    public function getRelatedToCategory($categoryid)
-    {
-        $dql = '
-            SELECT g FROM \Dodici\Fansworld\WebBundle\Entity\Genre g
-                WHERE
-                    (g.id IN (SELECT vg FROM \Dodici\Fansworld\WebBundle\Entity\Video v JOIN v.videocategory vc JOIN v.genre vg WHERE vc = :catid))
-                    ORDER BY g.id ASC';
-
-        $query = $this->_em->createQuery($dql);
-        $query->setParameter('catid', $categoryid, Type::BIGINT);
-        return $query->getResult();
-    }
-
 }
