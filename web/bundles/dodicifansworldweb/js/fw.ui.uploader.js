@@ -197,7 +197,7 @@ $(document).ready(function () {
             var uploader = new window.UPLOADER({
                 element: $(that.options.uploaderSelector)[0],
                 multiple: false,
-                autoUpload: true,
+                autoUpload: false,
                 action: that.options.action[that.options.mediaType],
                 maxConnections: 1,
                 allowedExtensions: that.options.mediaExtensions.all,
@@ -353,35 +353,28 @@ $(document).ready(function () {
                     if (file.type.match('image.*')) {
                         ///////////////////////////////////// IMAGES //
                         uploader.addFile(file);
-
                         $.when(that.getImage(file))
-                            .then(function(image){
-                                var container = null;
-                                var infobox = null;
-                                var uploadBtt = $("<button class='btn upload'>upload</button>");
-                                if(files.length > 1) {
-                                    container = $("<div class='thumbnail' style='width:64px;height:64px;'></div>");
-                                    infobox = $("<div class='fileinfo' style='height:64px;'></div>")
-                                        .append("<h5 class='title'>" + image.alt + "</h5>")
-                                        .append("<div class='progress progress-striped active' style='margin-top:4px;'><div class='bar' style='width: 0%;'></div></div>")
-                                        .append(uploadBtt);
-                                } else {
-                                    container = $("<div class='thumbnail' style='width: 256px;height:256px;'></div>");
-                                    infobox = $("<div class='fileinfo' style='width: 200px;''></div>")
-                                        .append("<h5 class='title'>" + image.alt + "</h5>")
-                                        .append("<div class='progress progress-striped active' style='margin-top:10px;'><div class='bar' style='width: 0%;'></div></div>")
-                                        .append("<div class='well'>"+ "file: " + image.alt + "<br /> size: " + file.size +"</div>")
-                                        .append(uploadBtt);
-                                }
-                                uploadBtt.one("click", null, null, function(){
-                                    console.log("upload button clicked");
-                                    uploader.start();
-                                });
-                                that.placeImage(image, container);
-                                var cosa = $("<li></li>").append(container).append(infobox);
-                                boot.find('output ul').append(cosa);
-                                uploader.start();
-                            });
+                        .then(function(image){
+                            var container = null;
+                            var infobox = null;
+                            //var uploadBtt = $("<button class='btn upload'>upload</button>");
+                            if(files.length > 1) {
+                                container = $("<div class='thumbnail' style='width:64px;height:64px;'></div>");
+                                infobox = $("<div class='fileinfo' style='height:64px;'></div>")
+                                    .append("<h5 class='title'>" + image.alt + "</h5>")
+                                    .append("<div class='progress progress-striped active' style='margin-top:4px;'><div class='bar' style='width: 0%;'></div></div>")
+                            } else {
+                                container = $("<div class='thumbnail' style='width: 256px;height:256px;'></div>");
+                                infobox = $("<div class='fileinfo' style=';''></div>")
+                                    .append("<h5 class='title'>" + image.alt + "</h5>")
+                                    .append("<div class='progress progress-striped active' style='margin-top:10px;'><div class='bar' style='width: 0%;'></div></div>")
+                                    .append("<div class='well'>"+ "<strong>nombre: </strong>" + image.alt + "<br /><strong>tamaño:</strong> " + uploader.formatSize(file.size) +"</div>")
+                            }
+                            that.placeImage(image, container);
+                            var cosa = $("<li></li>").append(container).append(infobox);
+                            boot.find('output ul').append(cosa);
+                            uploader.start();
+                        });
                     } else if (file.type.match('video.*')) {
                         ///////////////////////////////////// VIDEO //
                         $.when(that.getKs())
@@ -546,22 +539,7 @@ $(document).ready(function () {
                 boot.find('input[type="file"]').on('change', function(event) {
                     var i;
                     var files = event.target.files; // FileList object
-                    var file = null;
                     processFiles(files);
-
-                    // Loop through the FileList and render image files as thumbnails.
-                    for (i = 0; i < files.length; i += 1) {
-                        // Only process image files.
-                        file = files[i];
-                        if (!file.type.match('image.*')) {
-                            continue;
-                        } else {
-                            $.when(that.getImage(file))
-                                .then(function(image){
-                                    console.log(file.name);
-                                });
-                        }
-                    }
                 });
                 boot.find('#drop_zone')
                     .on('dragenter', function(event) {
