@@ -13,13 +13,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class GenreRepository extends CountBaseRepository
 {
-    public function getChildren($genre=null, $category=null)
+    public function getActives($genre=null, $category=null)
     {
         if (!$genre && !$category) throw new \Exception('You must provide a genre or category');
 
         if ($genre) {
             $dql = '
                 SELECT g FROM \Dodici\Fansworld\WebBundle\Entity\Genre g
+
                     WHERE
                         (g.parent = :genre)
                         AND

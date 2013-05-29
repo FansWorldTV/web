@@ -39,7 +39,7 @@ class Genre implements Translatable
     private $slug;
 
     /**
-     * @var Parent
+     * @var Genre
      *
      * @ORM\ManyToOne(targetEntity="Genre")
      * @ORM\JoinColumns({
@@ -49,7 +49,7 @@ class Genre implements Translatable
     private $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="Genre", mappedBy="genre", cascade={"remove", "persist"}, orphanRemoval="true")
+     * @ORM\OneToMany(targetEntity="Genre", mappedBy="parent", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $children;
 

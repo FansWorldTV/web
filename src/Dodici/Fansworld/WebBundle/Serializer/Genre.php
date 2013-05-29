@@ -8,39 +8,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
  */
 class Genre
 {
+    protected $serializer;
 
-    protected $em;
-
-    function __construct($em)
+    function __construct($serializer)
     {
-        $this->em = $em;
+        $this->serializer = $serializer;
     }
-
 
     public function values($entity)
     {
-
-        $genreRepo = $this->em->getRepository('DodiciFansworldWebBundle:Genre');
-        $type = $entity->getType();
-        $childrenArray = array();
-
-        if ('genre' == $type) {
-            $children = $genreRepo->getChildren($entity);
-            $childrenCount = count($children);
-
-            $childrenInfo = array();
-            foreach ($children as $achildren) {
-                $childrenInfo['id'] = $achildren->getId();
-                $childrenInfo['title'] = $achildren->getTitle();
-                $childrenInfo['type'] = $achildren->getType();
-                $childrenArray[] = $childrenInfo;
-            }
-        }
-
-
         return array(
-            'type' => $type,
-            'children' => $childrenArray
+            'type' => $entity->getType(),
+            'children' => $this->serializer->values($entity->getChildren())
         );
     }
 }
