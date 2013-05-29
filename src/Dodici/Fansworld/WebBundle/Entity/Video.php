@@ -250,6 +250,18 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
      */
     private $weight;
 
+    /**
+     * @var Genre
+     *
+     * @Assert\NotNull()
+     *
+     * @ORM\ManyToOne(targetEntity="Genre")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="genre_id", referencedColumnName="id")
+     * })
+     */
+    private $genre;
+
 	/**
 	 * @Gedmo\Locale
 	 * Used locale to override Translation listener`s locale
@@ -1067,6 +1079,27 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
     {
         return $this->weight;
     }
+
+     /**
+     * Set Genre
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Genre $genre
+     */
+    public function setGenre(\Dodici\Fansworld\WebBundle\Entity\Genre $genre)
+    {
+        $this->genre = $genre;
+    }
+
+    /**
+     * Get Genre
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Genre
+     */
+    public function getGenre()
+    {
+        return $this->genre;
+    }
+
 
     public function removeHas($item)
     {

@@ -39,6 +39,7 @@ class VideoController extends BaseController
      * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
      * - <optional> sort: 'weight'|'createdAt' (default: weight)
      * - <optional> sort_order: 'asc'|'desc' (default: desc)
+     * - <optional> genre_id: filter by video genre id
      * - [signature params if user_id given]
      *
      * @return
@@ -50,6 +51,8 @@ class VideoController extends BaseController
      * 			highlight: boolean,
      * 			category_id: int,
      * 			provider: kaltura|youtube,
+     *          genre: int,
+     *          genreparent: int | null
      *
      * 			// extra fields
      * 			author: @see SecurityController::loginAction() - without token,
@@ -76,6 +79,7 @@ class VideoController extends BaseController
             $userid = $request->get('user_id');
             $highlight = $request->get('highlight');
             $categoryid = $request->get('category_id');
+            $genreid = $request->get('genre_id');
 
             $user = null;
             if ($userid) {
@@ -105,7 +109,9 @@ class VideoController extends BaseController
                 null,
                 null,
                 $recommended,
-                $pagination['sort_order']
+                $pagination['sort_order'],
+                null,
+                $genreid
             );
 
             $return = array();
@@ -239,6 +245,8 @@ class VideoController extends BaseController
                 'image' => $this->imageValues($video->getImage()),
                 'highlight' => $video->getHighlight(),
                 'category_id' => $video->getVideocategory()->getId(),
+                'genre_id' => $video->getGenre() ? (int)$video->getGenre()->getId() : null,
+                'genreparent_id' => $video->getGenre()->getParent() ? (int)$video->getGenre()->getParent()->getId() : null,
                 'provider' => ($video->getYoutube() ? 'youtube' : 'kaltura')
             );
 
@@ -248,7 +256,6 @@ class VideoController extends BaseController
             if ($userid) {
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
             }
-
 
             $allowedfields = array(
             	'author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount', 'watchlisted', 'url', 'liked',
@@ -421,6 +428,7 @@ class VideoController extends BaseController
         try {
             $pagination = $this->pagination(array('title'), 'title', 'ASC');
 
+
             $categories = $this->getRepository('VideoCategory')->findBy(
                 array(),
                 array($pagination['sort'] => $pagination['sort_order']),
@@ -429,7 +437,6 @@ class VideoController extends BaseController
             );
 
             $return = array();
-
             foreach ($categories as $category) {
                 $return[] = array(
                     'id' => $category->getId(),
@@ -582,6 +589,77 @@ class VideoController extends BaseController
             }
 
             return $this->result($return, $pagination);
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
+
+     /**
+     * Video - genres list
+     *
+     * @Route("/video/genres/list", name="api_v1_video_genre_list")
+     * @Method({"GET"})
+     *
+     * Get params:
+     *
+     * @return
+     * array (
+     *      array (
+     *          id: int,
+     *          title: string,
+     *          type: string,
+     *          children: array( id, title, type ) , ...
+     *      ),
+     *      ...
+     * )
+     *
+     */
+    public function genresAction()
+    {
+        try {
+
+            $genreRepo = $this->getRepository('Genre');
+            $parents = $genreRepo->getParents();
+
+            $return = array();
+            foreach ($parents as $parent) {
+                $return[] = $this->get('serializer')->values($parent);
+            }
+
+            return $this->result($return);
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
+
+
+     /**
+     * Video - genre detail
+     *
+     * @Route("/video/genres/{id}", name="api_v1_video_genre_show", requirements = {"id" = "\d+"})
+     * @Method({"GET"})
+     *
+     * Get params:
+     * id:Int, Id of genre
+     *
+     * @return
+     * array (
+     *        id: int,
+     *        title: string,
+     *        type: string,
+     *        children: array( id, title, type ) , ...
+     * )
+     *
+     */
+    public function genreshowAction($id)
+    {
+        try {
+            $genre = $this->getRepository('Genre')->find($id);
+            if (!$genre) throw new HttpException(404, 'Genre not found');
+
+            $return = $this->get('serializer')->values($genre);
+
+            return $this->result($return);
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
