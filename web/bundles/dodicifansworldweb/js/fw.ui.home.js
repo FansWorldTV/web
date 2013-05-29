@@ -595,7 +595,7 @@ $(document).ready(function () {
     });
     $('section.followed-tags > ul').fwHomeTags({
         channel: $('.filter-home').find('.active').attr('data-category-id'),
-        filter: 'follow'
+        filter: 'followed'
     });
 });
 
