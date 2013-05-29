@@ -225,6 +225,63 @@ class PhotoController extends SiteController
     }
 
     /**
+     *  @Route("/ajax/get_tags", name = "photo_get_tags")
+     */
+    public function ajaxGetPhotoTags() {
+        $request = $this->getRequest();
+        $user = $this->getUser();
+        $appstate = $this->get('appstate');
+        $entityId = $request->get('entityId');
+        $entityType = $request->get('entityType');
+
+        $repo = $this->getRepository($entityType);
+        $entity = $repo->find($entityId);
+        $response = array();
+
+        if (!$entity->getActive())
+            throw new \Exception('Entity has been deleted');
+
+        $response['tags']['teams'] = array();
+        $response['tags']['idols'] = array();
+        $response['tags']['users'] = array();
+        if ($appstate->canEdit($entity)) {
+
+            foreach ($entity->getHasteams() as $hasteam) {
+                $id = $hasteam->getTeam()->getId();
+                $name = $hasteam->getTeam();
+                $response['tags']['teams'][] = array(
+                    'id' => $id,
+                    'name' => (string) $name
+                );
+            }
+
+            foreach ($entity->getHasidols() as $hasidol) {
+                $id = $hasidol->getIdol()->getId();
+                $name = $hasidol->getIdol();
+                $response['tags']['idols'][] = array(
+                    'id' => $id,
+                    'name' => (string) $name
+                );
+            }
+
+            foreach ($entity->getHasusers() as $hasuser) {
+                $id = $hasuser->getTarget()->getId();
+                $name = $hasuser->getTarget();
+                $response['tags']['users'][] = array(
+                    'id' => $id,
+                    'name' => (string) $name
+                );
+            }
+        } else {
+            if (!($user instanceof User)) {
+                throw new \Exception('User not logged in');
+            } else {
+                throw new \Exception('User cannot edit entity');
+            }
+        }
+        return $this->jsonResponse($response);
+    }
+    /**
      * @Route("/fileupload", name="photo_fileupload")
      * @Secure(roles="ROLE_USER")
      * @Template
