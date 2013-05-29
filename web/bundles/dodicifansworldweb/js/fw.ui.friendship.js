@@ -32,7 +32,12 @@ $(document).ready(function () {
             var self = $(that.element);
             that.options.idolId = self.attr('data-idol-id');
             self.addClass(that._name);
-            self.on('click', that.addIdol);
+
+            if (window.isLoggedIn) {
+                self.on('click', that.addIdol);
+            } else {
+                $('[data-login-btn]').click();
+            }
         },
         addIdol: function(event) {
             var that = this;
@@ -59,7 +64,7 @@ $(document).ready(function () {
                     self.removeClass('loading-small');
                 },
                 function(error) {
-                    error(error);
+                    window.error(error.responseText);
                     self.removeClass('loading-small');
                     return that.options.onError(error);
                 });

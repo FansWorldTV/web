@@ -22,7 +22,7 @@ var friendship = {
     },
 
     add: function(){
-        $(".btn_friendship.add:not('.loading-small')").live('click', function(e){
+        $(".btn_friendship.add:not('.loading-small')").on('click', function(e){
             e.stopImmediatePropagation();
             var self = $(this);
             self.addClass('loading-small');
@@ -59,6 +59,8 @@ var friendship = {
                 if(!response.error) {
                     if (response.active) {
                         self.after('<span class="label">'+ response.buttontext +'</span>');
+                        var number = Number($('.numbers-info .fans-info .numero').text()) + 1;
+                        $('.numbers-info .fans-info .numero').text(number);
                         self.remove();
                     } else {
                         self.removeClass('add').removeClass('btn-success').addClass('remove').attr('friendshipId', response.friendship).html(response.buttontext);
@@ -74,7 +76,7 @@ var friendship = {
     },
 
     cancel: function(){
-        $(".btn_friendship.remove:not('.loading-small'), [data-remove-friendship]:not('.loading-small')").live('click', function(e){
+        $(".btn_friendship.remove:not('.loading-small'), [data-remove-friendship]:not('.loading-small')").on('click', function(e){
             e.preventDefault();
             e.stopImmediatePropagation();
             var self = $(this);
@@ -88,9 +90,15 @@ var friendship = {
                 var parentElement = self.attr('data-remove-element');
             }
 
+            console.log("friendshipId: " + friendshipId + " userId: " + userId);
             if(confirm('Seguro deseas dejar de seguir a este usuario?')){
                 self.addClass('loading-small');
-                ajax.cancelFriendAction(friendshipId, userId, function(response){
+                $.ajax({url: Routing.generate(appLocale + '_friendship_ajaxcancelfriend'),
+                    data: {
+                        user: userId,
+                        friendship: friendshipId
+                    }
+                }).then(function(response){
                     if(!response.error) {
                         if(!dontRefresh){
                             window.location.reload();
@@ -101,6 +109,9 @@ var friendship = {
                         error(response.error);
                         self.removeClass('loading-small');
                     }
+                }).fail(function(error){
+                    error(error.responseText);
+                    self.removeClass('loading-small');
                 });
             }
         });

@@ -101,11 +101,13 @@
                     // Attach bindings to 'idolship' button
                     $(".list-idols dl").find(".btn_idolship.add:not('.loading-small')").each(function() {
                         $(this).fwIdolship({
-                            onAddIdol: function(plugin, data) {
+                            onAddIdol: function(plugin, data) {                                
                                 var self = $(plugin.element);
                                 self.addClass('disabled');
                                 self.removeClass('add');
                                 self.text("YA ERES FAN");
+                                var number = Number(self.prev().find('span:first').text()) + 1;
+                                self.prev().find('span:first').text(number);
                             }
                         });
                     });

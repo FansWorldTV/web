@@ -186,7 +186,7 @@ class SearchController extends BaseController
                     if ($i instanceof Event) {
                         $data['showdate'] = ($i->getFromtime() ? $i->getFromtime()->format('U') : null);
                         foreach($i->getHasTeams() as $ht){
-                            $data['teams'][] = $this->get('serializer')->values($ht->getTeam());
+                            $data['teams'][] = $this->get('serializer')->values($ht->getTeam(), $this->getImageFormat(), $this->getImageFormat('splash'), 'object');
                         }
                     }
 
@@ -205,7 +205,7 @@ class SearchController extends BaseController
                             if (in_array('commentCount', $extrafields)) $data['commentCount'] =  $i->getCommentCount();
                             if (in_array('liked', $extrafields)) $data['liked'] = $this->get('liker')->isLiking($i, $user) ? true : false;
                             if (in_array('url', $extrafields)) $data['url'] =  $this->get('router')->generate($type.'_show', array('id' => $i->getId(), 'slug' => $i->getSlug()), true);
-                            if (in_array('author', $extrafields)) $data['author'] = ($i->getAuthor() ? $this->userArray($i->getAuthor()) : null);
+                            if (in_array('author', $extrafields)) $data['author'] = ($i->getAuthor() ? $this->userArray($i->getAuthor(), array('fanFollowCount', 'teamFollowCount', 'idolFollowCount', 'videoCount', 'fanCount')) : null);
 
                             if ('video' == $type) {
                                 if (in_array('watchlisted', $extrafields)) $data['watchlisted'] = $this->get('video.playlist')->isInPlaylist($i, $user);
@@ -220,7 +220,14 @@ class SearchController extends BaseController
                     }
 
                     if ($this->_evaluateConditions($type, array('user', 'team', 'idol'))) {
-                        if ('user' == $type) $data['username'] = $this->userArray($i);
+                        if ('user' == $type && $userid) {
+                            $data['followed'] = $this->get('friender')->status($i, $user);
+                        }
+
+                        if ($userid && ('team' == $type || 'idol' == $type)) {
+                            $data['followed'] = $this->get('fanmaker')->status($i, $user);
+                        }
+
                         if ('user' == $type || 'idol' == $type) {
                             $data['firstname'] = $i->getFirstname();
                             $data['lastname'] = $i->getLastname();

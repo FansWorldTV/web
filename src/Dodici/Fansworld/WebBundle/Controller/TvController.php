@@ -84,6 +84,11 @@ class TvController extends SiteController
     public function videoDetailAction($id, $slug)
     {
         $video = $this->getRepository('Video')->find($id);
+
+        if(!$video->getActive()){
+            throw new HttpException(404, 'Video not found');
+        }
+
         $user = $this->getUser();
         $videosRelated = $this->getRepository('Video')->related($video, $user, self::LIMIT_VIDEOS);
         $videosRecommended = $this->getRepository('Video')->recommended($user, $video, self::LIMIT_VIDEOS);

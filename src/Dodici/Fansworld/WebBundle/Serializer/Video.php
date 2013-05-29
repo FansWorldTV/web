@@ -27,8 +27,9 @@ class Video
             'genre_id' => $entity->getGenre() ? (int)$entity->getGenre()->getId() : null,
             'genreparent_id' => $entity->getGenre()->getParent() ? (int)$entity->getGenre()->getParent()->getId() : null,
             'weight' => $entity->getWeight(),
-            'duration' => $entity->getDuration(),
-            'url' => $this->router->generate('video_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()))
+            'duration' => date("i:s", $entity->getDuration()),
+            'url' => $this->router->generate('video_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug())),
+            'modalUrl' => $this->router->generate('modal_media', array('type' => 'video', 'id' => $entity->getId()))
         );
     }
 }

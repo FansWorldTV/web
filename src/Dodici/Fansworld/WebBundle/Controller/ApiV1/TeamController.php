@@ -90,7 +90,7 @@ class TeamController extends BaseController
     }
 
 	/**
-     * Team - show
+     * [signed if user_id given] Team - show
      *
      * @Route("/team/{id}", name="api_v1_team_show", requirements = {"id" = "\d+"})
      * @Method({"GET"})
@@ -98,6 +98,9 @@ class TeamController extends BaseController
      * Get params:
 	 * - <optional> extra_fields: comma-separated extra fields to return (see below)
 	 * - <optional> imageformat: string
+     * - <optional> user_id: int
+     * - <required if user_id given> [user token]
+     * - [signature params if user_id given]
      *
      * @return
      * array (
@@ -129,6 +132,13 @@ class TeamController extends BaseController
     public function showAction($id)
     {
         try {
+            $request = $this->getRequest();
+            $userid = $request->get('user_id');
+            $user = null;
+            if ($userid) {
+                $user = $this->checkUserToken($userid, $request->get('user_token'));
+            }
+            
             $team = $this->getRepository('Team')->find($id);
             if (!$team) throw new HttpException(404, 'Team not found');
 
@@ -139,6 +149,10 @@ class TeamController extends BaseController
                 'fanCount' => $team->getFanCount(),
                 'videoCount' => $team->getVideoCount()
             );
+            
+            if ($user) {
+                $return['followed'] = $this->get('fanmaker')->status($team, $user);
+            }
 
             $allowedfields = array(
             	'content', 'foundedAt', 'splash', 'categories', 'country', 'twitter', 'photoCount', 'visitCount'
@@ -203,9 +217,12 @@ class TeamController extends BaseController
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
 
                 $teamids = $request->get('team_id');
+                if (!$teamids) throw new HttpException(400, 'Requires team_id');
                 if (!is_array($teamids)) $teamids = array($teamids);
                 if (array_unique($teamids) !== $teamids) throw new HttpException(400, 'Duplicate team_id');
 
+                $updates = array();
+                
                 foreach ($teamids as $teamid) {
                     $team = $this->getRepository('Team')->find($teamid);
                     if (!$team) throw new HttpException(404, 'Team not found - id: ' . $teamid);
@@ -217,13 +234,18 @@ class TeamController extends BaseController
                     } else {
                         throw new HttpException(400, 'Invalid fan action');
                     }
+                    
+                    $updates[] = $team;
                 }
 
                 if ($action == 'add') {
                     $this->getDoctrine()->getEntityManager()->flush();
                 }
 
-                return $this->result(true);
+                $result = array();
+                foreach ($updates as $ui) $result[] = array('id' => $ui->getId(), 'fanCount' => $ui->getFanCount()); 
+
+                return $this->result((count($result) == 1) ? $result[0] : $result);
             } else {
                 throw new HttpException(401, 'Invalid signature');
             }
@@ -275,18 +297,12 @@ class TeamController extends BaseController
                 $fansOfTeam = $this->getRepository('User')->byTeams($team, $pagination['limit'], 'score', $pagination['offset']);
 
                 $response = array();
+                $friender = $this->get('friender');
                 foreach ($fansOfTeam as $aFan) {
                     if($aFan->getId() != $userid) {
-                        $response[] = $this->userArray($aFan);
-                    }
-                }
-
-                if ($userid) {
-                    $friendsOfUser = $this->getRepository('User')->FriendUsers($user, null, null, null, 'score');
-                    $friendsIds = array();
-                    foreach ($friendsOfUser as $friend) $friendsIds[] = $friend->getId();
-                    foreach ($response as &$rta) {
-                        in_array($rta['id'], $friendsIds) ? $rta['followed'] = true : $rta['followed'] = false;
+                        $arr = $this->userArray($aFan);
+                        if ($userid) $arr['followed'] = $friender->status($aFan, $user);
+                        $response[] = $arr;
                     }
                 }
 

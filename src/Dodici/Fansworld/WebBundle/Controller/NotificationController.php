@@ -43,6 +43,23 @@ class NotificationController extends SiteController
 //      return $html;
 //    }
 
+
+    /**
+     * @Route("/testregister", name="notification_test_register")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function testAction(){
+        $user = $this->getUser();        
+        $html = $this->render(
+                'DodiciFansworldWebBundle:Mail:welcome.html.twig', 
+                array('targetUser' => $user)
+              ); 
+     
+        $this->get('fansworldmailer')->send('jam@fansworld.tv', '[BENCH] fw mail test', $html);
+      
+        return $html;
+    }    
+
     /**
      * @Route("/preferences", name="notification_preferences")
      * @Secure(roles="ROLE_USER")
@@ -94,7 +111,6 @@ class NotificationController extends SiteController
 
         return array('form' => $form->createView(), 'preftypes' => $preftypes);
     }
-
 
     /**
      * @Route("/details", name="notification_details")

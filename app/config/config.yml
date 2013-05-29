@@ -129,6 +129,8 @@ sonata_media:
                 big:   { width: 500 , quality: 90, constraint: false}
                 wall: { width: 800 , quality: 90, constraint: false }
                 huge:   { width: 1024 , quality: 90, constraint: false}
+                home_video: { width: 220, height: 137, quality: 100 }
+                home_video_double: { width: 440, height: 214, quality: 100 }
 
     cdn:
         server:
@@ -311,6 +313,9 @@ services:
     appstate:
       class: Dodici\Fansworld\WebBundle\Services\AppState
       arguments: [@security.context, @doctrine.orm.entity_manager, %google.shortener.apikey%]
+    cutter:
+      class: Dodici\Fansworld\WebBundle\Services\Cutter
+      arguments: [@appmedia]
     app.facebook:
       class: Dodici\Fansworld\WebBundle\Services\AppFacebook
       arguments: [@security.context, @doctrine.orm.entity_manager, @fos_facebook.api, @router, @translator,@appmedia, %fos_facebook.permissions%, %facebook.feed.enabled%, %facebook.namespace%]
@@ -346,7 +351,7 @@ services:
       arguments: [@doctrine.orm.entity_manager, @appstate]
     visitator:
       class: Dodici\Fansworld\WebBundle\Services\Visitator
-      arguments: [@security.context, @doctrine.orm.entity_manager, @session, @appstate]
+      arguments: [@security.context, @doctrine.orm.entity_manager, @session, @appstate, @video.playlist]
     friender:
       class: Dodici\Fansworld\WebBundle\Services\Friender
       arguments: [@security.context, @doctrine.orm.entity_manager, @appstate, @user.feed.logger, @app.facebook]
@@ -479,7 +484,6 @@ services:
         class: Dodici\Fansworld\WebBundle\Serializer\Idol
     serializer.team:
         class: Dodici\Fansworld\WebBundle\Serializer\Team
-        arguments: [@appmedia]
     serializer.video:
         class: Dodici\Fansworld\WebBundle\Serializer\Video
         arguments: [@serializer, @router]
@@ -491,7 +495,7 @@ services:
         arguments: [@router, @appstate, @appmedia]
     serializer.album:
         class: Dodici\Fansworld\WebBundle\Serializer\Album
-        arguments: [@appmedia, @router]
+        arguments: [@router]
     serializer.photo:
         class: Dodici\Fansworld\WebBundle\Serializer\Photo
         arguments: [@serializer]

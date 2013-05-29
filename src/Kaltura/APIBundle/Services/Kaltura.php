@@ -10,6 +10,8 @@ use Kaltura\Client\ClientException;
 use Kaltura\Client\Type\MediaEntry;
 use Kaltura\Client\Plugin\Metadata\Enum\MetadataObjectType;
 use Kaltura\Client\Plugin\Metadata\MetadataPlugin;
+use Kaltura\Client\Type\UploadedFileTokenResource;
+use Kaltura\Client\Enum\MediaType;
 
 /**
  * Service interface to Kaltura API client
@@ -22,7 +24,7 @@ class Kaltura
     protected $usersecret;
     protected $adminsecret;
     protected $username;
-    protected $urlpattern;
+    protected $patterns;
     protected $apiurl;
     protected $metaid;
     protected $metasiteval;
@@ -36,12 +38,18 @@ class Kaltura
         // init kaltura client
         $this->client = new KalturaClient($config);
         
+        $this->patterns = array(
+            'base' => $urlpattern,
+            'progressive' => '/format/url/flavorId/%3$s/video.%4$s',
+            'hls' => '/format/applehttp/protocol/http/a.m3u8',
+            'rtmp' => '/format/rtmp'
+        );
+        
         $this->partnerid = $partnerid;
         $this->subpartnerid = $subpartnerid;
         $this->usersecret = $usersecret;
         $this->adminsecret = $adminsecret;
         $this->username = $username;
-        $this->urlpattern = $urlpattern;
         $this->apiurl = $apiurl;
         $this->metaid = $metaid;
         $this->metasiteval = $metasiteval;
@@ -93,51 +101,94 @@ class Kaltura
         return $updatedentry;
     }
     
+    public function addEntryFromToken($token, $name)
+    {
+        $uploadedresource = new UploadedFileTokenResource();
+        $uploadedresource->token = $token;
+        
+        $entry = new MediaEntry();
+        $entry->mediaType = MediaType::VIDEO;
+        $entry->name = $name;
+        $es = $this->getClient()->getMediaService();
+        $entry = $es->add($entry);
+        if ($entry->id) {
+            $entry = $es->addContent($entry->id, $uploadedresource);
+            if ($entry->id) return $entry->id;
+            else return false;
+        } else {
+            return false;
+        }
+    }
+    
+    public function getUploadToken()
+    {
+        $uts = $this->getClient()->getUploadTokenService();
+        $token = $uts->add();
+        if ($token) return $token->id;
+        return false;
+    }
+    
     /**
      * Return an entry's streams in its available flavors
      * @param string $entryId
      */
-    public function streams($entryId)
+    public function streams($entryId, $protocol='progressive')
     {
-        $fas = $this->getClient()->getFlavorAssetService();
-        $flavors = $fas->getFlavorAssetsWithParams($entryId);
         
-        $ext = 'mp4';
-        
-        $streams = array();
-        
-        if ($flavors) {
-            foreach ($flavors as $flavor) {
-                $asset = $flavor->flavorAsset;
+        switch ($protocol) {
+            case 'rtmp':
+            case 'hls':
+                $pattern = $this->patterns['base'].$this->patterns[$protocol];
+                return sprintf($pattern, $this->partnerid, $entryId);
+                break;
+            case 'progressive':
+                $fas = $this->getClient()->getFlavorAssetService();
+                $flavors = $fas->getFlavorAssetsWithParams($entryId);
+                $pattern = $this->patterns['base'].$this->patterns[$protocol];
                 
-                if ($asset) {
-                    $params = $flavor->flavorParams;
-                    $width = $asset->width;
-                    $height = $asset->height;
-                    $bitrate = $asset->bitrate;
-                    $flavorId = $asset->flavorParamsId;
-                    $partnerId = $asset->partnerId;
-                    $size = $asset->size;
-                    
-                    $name = $params->name;
-                    $desc = $params->description;
-                    
-                    $streamurl = sprintf($this->urlpattern, $partnerId, $entryId, $flavorId, $ext);
-                    
-                    $streams[] = array(
-                        'url' => $streamurl,
-                        'format' => array(
-                            'id' => $flavorId,
-                            'name' => $name,
-                            'description' => $desc
-                        ),
-                        'bitrate' => $bitrate,
-                        'size' => $size,
-                        'width' => $width,
-                        'height' => $height
-                    );
+                $ext = 'mp4';
+                
+                $streams = array();
+                
+                if ($flavors) {
+                    foreach ($flavors as $flavor) {
+                        $asset = $flavor->flavorAsset;
+                        
+                        if ($asset) {
+                            $params = $flavor->flavorParams;
+                            $width = $asset->width;
+                            $height = $asset->height;
+                            $bitrate = $asset->bitrate;
+                            $flavorId = $asset->id;
+                            $flavorParamsId = $asset->flavorParamsId;
+                            $partnerId = $asset->partnerId;
+                            $size = $asset->size;
+                            
+                            $name = $params->name;
+                            $desc = $params->description;
+                            
+                            $streamurl = sprintf($pattern, $partnerId, $entryId, $flavorId, $ext);
+                            
+                            $streams[] = array(
+                                'url' => $streamurl,
+                                'format' => array(
+                                    'id' => $flavorParamsId,
+                                    'fid' => $flavorId,
+                                    'name' => $name,
+                                    'description' => $desc
+                                ),
+                                'bitrate' => $bitrate,
+                                'size' => $size,
+                                'width' => $width,
+                                'height' => $height
+                            );
+                        }
+                    }
                 }
-            }
+                break;
+            default:
+                throw new \Exception('Invalid stream protocol: '.$protocol);
+                break;
         }
         
         return $streams;

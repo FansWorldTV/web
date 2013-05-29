@@ -1,26 +1,26 @@
 {% if likebutton is not defined %}
-	{% set likebutton = true %}
+    {% set likebutton = true %}
 {% endif %}
 
 {% if sharebutton is not defined %}
-	{% set sharebutton = true %}
+    {% set sharebutton = true %}
 {% endif %}
 
 {% if reportbutton is not defined %}
-	{% set reportbutton = true %}
+    {% set reportbutton = true %}
 {% endif %}
 
 {% if editbutton is not defined %}
-	{% set editbutton = true %}
+    {% set editbutton = true %}
 {% endif %}
 
 {% set type = appstate.type(entity) %}
 {#{% set share_url = url(type ~ "_show", {'id': entity.id, 'slug': entity.slug }) %}#}
 <div class="share_content clearfix">
     {#
-	<!--a target="_blank" href="http://www.facebook.com/sharer.php?u={{ share_url|url_encode }}"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/facebook.png') }}" alt="facebook"></a>
-	<a target="_blank" href="https://twitter.com/share?url={{ share_url|url_encode }}"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/twitter.png') }}" alt="twitter"></a>
-	<g:plusone annotation="none"></g:plusone-->
+    <!--a target="_blank" href="http://www.facebook.com/sharer.php?u={{ share_url|url_encode }}"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/facebook.png') }}" alt="facebook"></a>
+    <a target="_blank" href="https://twitter.com/share?url={{ share_url|url_encode }}"><img src="{{ asset('bundles/dodicifansworldweb/images/ico/twitter.png') }}" alt="twitter"></a>
+    <g:plusone annotation="none"></g:plusone-->
     #}
 
     <div class="internal_buttons">
@@ -35,11 +35,11 @@
         {% if (type == 'photo' or type == 'video' ) %}
 
             {% if reportbutton %}
-                <a class="btn report" href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}" rel="tooltip" title="Reportar">
+                <a class="btn report" data-login-required href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}" rel="tooltip" data-placement="bottom" title="Reportar">
                     <i></i>
                 </a>
             {% else %}
-                <a class="btn report" href="{{ path('complaint_formPage', {'entityId': entity.id, 'entityType': type}) }}" rel="tooltip" title="Reportar">
+                <a class="btn report" data-login-required href="{{ path('complaint_formPage', {'entityId': entity.id, 'entityType': type}) }}" rel="tooltip" data-placement="bottom" title="Reportar">
                     <i></i>
                 </a>
             {% endif %}

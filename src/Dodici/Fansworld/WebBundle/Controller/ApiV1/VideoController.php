@@ -266,7 +266,7 @@ class VideoController extends BaseController
             foreach ($extrafields as $x) {
                 switch ($x) {
                     case 'author':
-                        $return['author'] = $video->getAuthor() ? $this->userArray($video->getAuthor()) : null;
+                        $return['author'] = $video->getAuthor() ? $this->userArray($video->getAuthor(), array('fanFollowCount', 'teamFollowCount', 'idolFollowCount', 'videoCount', 'fanCount')) : null;
                         break;
                     case 'createdAt':
                         $return['createdAt'] = (int)$video->getCreatedAt()->format('U');
@@ -324,7 +324,7 @@ class VideoController extends BaseController
                         $t = array();
                         foreach ($has as $h) {
                             $ent = $h->getTarget();
-                            $t[] = $this->userArray($ent);
+                            $t[] = $this->userArray($ent, array('fanFollowCount', 'teamFollowCount', 'idolFollowCount', 'videoCount', 'fanCount'));
                         }
                         $return[$x] = $t;
                         break;
@@ -344,17 +344,20 @@ class VideoController extends BaseController
 	/**
      * Video - streams
      *
-     * @Route("/video/{id}/streams", name="api_v1_video_streams", requirements = {"id" = "\d+"})
+     * @Route("/video/{id}/streams/{protocol}", name="api_v1_video_streams", requirements = {"id" = "\d+"}, defaults = {"protocol" = "progressive"})
      * @Method({"GET"})
      *
      * Get params: none
+     * Url params:
+     * - protocol: 'progressive'(default)|'rtmp'|'hls'
      *
      * @return
      * array (
      * 			provider: 'youtube'|'vimeo'|'kaltura',
      * 			streams:
 	 *              - youtube/vimeo id string, or
-	 *              - array(
+	 *              - (hls/rtmp) url string, or
+	 *              - (progressive) array(
      * 					url: string (stream url),
      *                  format: array(
      *                      id: stream format id,
@@ -369,7 +372,7 @@ class VideoController extends BaseController
      * 		)
      *
      */
-    public function streamsAction($id)
+    public function streamsAction($id, $protocol)
     {
         try {
             $video = $this->getRepository('Video')->find($id);
@@ -388,7 +391,7 @@ class VideoController extends BaseController
             } else {
                 $return = array(
                     'provider' => 'kaltura',
-                    'streams' => $this->get('kaltura')->streams($video->getStream())
+                    'streams' => $this->get('kaltura')->streams($video->getStream(), $protocol)
                 );
             }
 
@@ -547,6 +550,12 @@ class VideoController extends BaseController
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
             }
 
+            $author = null;
+            if ('user' == $entityType) {
+                $author = $entity;
+                $entity = null;
+            }
+
             $allowedfields = array('author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount', 'watchlisted', 'url', 'liked');
             $extrafields = $this->getExtraFields($allowedfields);
 
@@ -556,17 +565,17 @@ class VideoController extends BaseController
             if ($sortcriteria == 'createdAt') $sortcriteria = 'date';
 
             $videos = $this->getRepository('Video')->search(
-                $entity,
+                null,
                 $user,
                 $pagination['limit'],
                 $pagination['offset'],
                 $categoryid,
                 $highlight,
-                null,
+                $author,
                 null,
                 null,
                 $sortcriteria,
-                null,
+                $entity,
                 null,
                 null,
                 $recommended,

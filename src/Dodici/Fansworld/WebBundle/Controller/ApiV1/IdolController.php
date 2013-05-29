@@ -95,7 +95,7 @@ class IdolController extends BaseController
     }
 
 	/**
-     * Idol - show
+     * [signed if user_id given] Idol - show
      *
      * @Route("/idol/{id}", name="api_v1_idol_show", requirements = {"id" = "\d+"})
      * @Method({"GET"})
@@ -103,6 +103,9 @@ class IdolController extends BaseController
      * Get params:
 	 * - <optional> extra_fields: comma-separated extra fields to return (see below)
 	 * - <optional> imageformat: string
+     * - <optional> user_id: int
+     * - <required if user_id given> [user token]
+     * - [signature params if user_id given]
      *
      * @return
      * array (
@@ -143,6 +146,13 @@ class IdolController extends BaseController
     public function showAction($id)
     {
         try {
+            $request = $this->getRequest();
+            $userid = $request->get('user_id');
+            $user = null;
+            if ($userid) {
+                $user = $this->checkUserToken($userid, $request->get('user_token'));
+            }
+            
             $idol = $this->getRepository('Idol')->find($id);
             if (!$idol) throw new HttpException(404, 'Idol not found');
 
@@ -154,6 +164,10 @@ class IdolController extends BaseController
                 'fanCount' => $idol->getFanCount(),
                 'videoCount' => $idol->getVideoCount()
             );
+            
+            if ($user) {
+                $return['followed'] = $this->get('fanmaker')->status($idol, $user);
+            }
 
             $allowedfields = array(
             	'content', 'birthday', 'splash', 'country', 'sex', 'twitter', 'careers', 'photoCount', 'visitCount'
@@ -227,9 +241,12 @@ class IdolController extends BaseController
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
 
                 $idolids = $request->get('idol_id');
+                if (!$idolids) throw new HttpException(400, 'Requires idol_id');
                 if (!is_array($idolids)) $idolids = array($idolids);
                 if (array_unique($idolids) !== $idolids) throw new HttpException(400, 'Duplicate idol_id');
-
+                
+                $updates = array();
+                
                 foreach ($idolids as $idolid) {
                     $idol = $this->getRepository('Idol')->find($idolid);
                     if (!$idol) throw new HttpException(404, 'Idol not found - id: ' . $idolid);
@@ -241,13 +258,18 @@ class IdolController extends BaseController
                     } else {
                         throw new HttpException(400, 'Invalid fan action');
                     }
+                    
+                    $updates[] = $idol;
                 }
 
                 if ($action == 'add') {
                     $this->getDoctrine()->getEntityManager()->flush();
                 }
+                
+                $result = array();
+                foreach ($updates as $ui) $result[] = array('id' => $ui->getId(), 'fanCount' => $ui->getFanCount()); 
 
-                return $this->result(true);
+                return $this->result((count($result) == 1) ? $result[0] : $result);
             } else {
                 throw new HttpException(401, 'Invalid signature');
             }
@@ -300,18 +322,12 @@ class IdolController extends BaseController
                 $fansOfIdol = $this->getRepository('User')->byIdols($idol, $pagination['limit'], 'score', $pagination['offset']);
 
                 $response = array();
+                $friender = $this->get('friender');
                 foreach ($fansOfIdol as $aFan) {
                     if($aFan->getId() != $userid) {
-                        $response[] = $this->userArray($aFan);
-                    }
-                }
-
-                if ($userid) {
-                    $friendsOfUser = $this->getRepository('User')->FriendUsers($user, null, null, null, 'score');
-                    $friendsIds = array();
-                    foreach ($friendsOfUser as $friend) $friendsIds[] = $friend->getId();
-                    foreach ($response as &$rta) {
-                        in_array($rta['id'], $friendsIds) ? $rta['followed'] = true : $rta['followed'] = false;
+                        $arr = $this->userArray($aFan);
+                        if ($userid) $arr['followed'] = $friender->status($aFan, $user);
+                        $response[] = $arr;
                     }
                 }
 

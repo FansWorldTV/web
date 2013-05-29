@@ -187,8 +187,10 @@ class BatchController extends SiteController
         foreach ($idols as $idol) {
             $cntvideo = $this->getRepository('Idol')->countTagged($idol, 'video');
             $cntphoto = $this->getRepository('Idol')->countTagged($idol, 'photo');
+            $cntfans = $this->getRepository('Idolship')->countBy(array('idol' => $idol->getId()));
             $idol->setVideoCount($cntvideo);
             $idol->setPhotoCount($cntphoto);
+            $idol->setFanCount($cntfans);
             $em->persist($idol);
         }
         
@@ -196,8 +198,10 @@ class BatchController extends SiteController
         foreach ($teams as $team) {
             $cntvideo = $this->getRepository('Team')->countTagged($team, 'video');
             $cntphoto = $this->getRepository('Team')->countTagged($team, 'photo');
+            $cntfans = $this->getRepository('Teamship')->countBy(array('team' => $team->getId()));
             $team->setVideoCount($cntvideo);
             $team->setPhotoCount($cntphoto);
+            $team->setFanCount($cntfans);
             $em->persist($team);
         }
         
@@ -205,8 +209,10 @@ class BatchController extends SiteController
         foreach ($users as $user) {
             $cntvideo = $this->getRepository('Video')->countBy(array('author' => $user->getId(), 'active' => true));
             $cntphoto = $this->getRepository('Photo')->countBy(array('author' => $user->getId(), 'active' => true));
+            $cntfans = $this->getRepository('Friendship')->countBy(array('target' => $user->getId(), 'active' => true));
             $user->setVideoCount($cntvideo);
             $user->setPhotoCount($cntphoto);
+            $user->setFanCount($cntfans);
             $em->persist($user);
         }
         

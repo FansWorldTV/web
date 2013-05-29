@@ -49,7 +49,7 @@ var site = {
             $(this).find('i.icon-search').removeClass('icon-search').addClass('loading-small');
         });
 
-        $("#video-search-form").live('submit', function() {
+        $("#video-search-form").on('submit', function() {
             $(this).addClass('loading');
         });
 
@@ -71,14 +71,28 @@ var site = {
             innerHeight: 220
         });
 
-        $('.report').colorbox({
-            href: this.href,
-            innerWidth: 350,
-            innerHeight: 250,
-            onComplete: function() {
-                //resizePopup();
-            }
-        });
+        if (isLoggedIn) {
+            $('.report').colorbox({
+                href: this.href,
+                innerWidth: 350,
+                innerHeight: 250,
+                onComplete: function() {
+                    //resizePopup();
+                }
+            });
+        }
+        else {
+            $('.report').on('click', function (e) {
+                $(this).off();
+                $(this).removeAttr('href');
+                e.stopImmediatePropagation();
+                //e.preventDefault();
+                //e.stopPropagation();
+                $('[data-login-btn]').click();
+
+                //return false;
+            });
+        }
 
         $(".editbutton").colorbox({
             iframe: true,
@@ -228,14 +242,14 @@ var site = {
         });
     },
     showCommentForm: function() {
-        $(".showCommentForm").live('click', function() {
+        $(".showCommentForm").on('click', function() {
             $(this).parent().find('div.form').toggleClass('hidden');
             return false;
         });
     },
     getNotifications: function() {
         $("li.notifications_user ul li").addClass('hidden');
-        $("li.notifications_user a").live('click', function() {
+        $("li.notifications_user a").on('click', function() {
             $("li.notifications_user ul li").toggleClass('hidden');
             if ($("li.notifications_user ul li.hidden").size() > 0) {
                 site.isClosedNotificationess = true;
@@ -360,7 +374,7 @@ var site = {
         });
     },
     likeButtons: function() {
-        $('.btn.like:not(.disabled)').live('click', function(e) {
+        $('.btn.like:not(.disabled)').on('click', function(e) {
             e.preventDefault();
             var el = $(this);
             var type = el.attr('data-type');
@@ -393,7 +407,7 @@ var site = {
         });
     },
     shareButtons: function() {
-        $('.sharebutton:not(.loading-small,.disabled)').live('click', function(e) {
+        $('.sharebutton:not(.loading-small,.disabled)').on('click', function(e) {
             e.preventDefault();
             var el = $(this);
 
@@ -423,7 +437,7 @@ var site = {
         });
     },
     globalCommentButtons: function() {
-        $('.comment_button:not(.loading)').live('click', function(e) {
+        $('.comment_button:not(.loading)').on('click', function(e) {
             e.preventDefault();
             var el = $(this),
                     textAreaElement = el.parent().closest('.commentform').find('textarea.comment_message'),
@@ -445,7 +459,7 @@ var site = {
             return false;
         });
 
-        $('textarea.comment_message:not(.loading)').live('keydown', function(e) {
+        $('textarea.comment_message:not(.loading)').on('keydown', function(e) {
             if (e.keyCode == 13) {
                 var textAreaElement = $(this),
                         type = textAreaElement.attr('data-type'),
@@ -466,11 +480,16 @@ var site = {
         });
     },
     watchLaterButtons: function() {
-        $('.btn.watchlater:not(.disabled)').live('click', function(e) {
+        $('[data-watch-later]:not(.disabled)').on('click', function(e) {
             e.preventDefault();
             var el = $(this);
-            var videoid = el.attr('data-videoid');
+            var videoid = el.attr('data-video-id');
             var action = 'playlist_ajaxadd';
+
+            if (!window.isLoggedIn) {
+                $('[data-login-btn]').click();
+                return false;
+            }
 
             if (el.attr('data-later') == 'true') {
                 action = 'playlist_ajaxremove';
@@ -545,7 +564,7 @@ var site = {
         });
     },
     globalDeleteButtons: function() {
-        $('.deletebutton:not(.loading)').live('click', function(e) {
+        $('.deletebutton:not(.loading)').on('click', function(e) {
             e.preventDefault();
 
             var el = $(this);
@@ -574,7 +593,7 @@ var site = {
             }
         });
 
-        $('.deletecomment:not(.loading)').live('click', function(e) {
+        $('.deletecomment:not(.loading)').on('click', function(e) {
             e.preventDefault();
 
             var el = $(this);

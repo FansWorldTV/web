@@ -2,6 +2,8 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller\ApiV1;
 
+use Dodici\Fansworld\WebBundle\Services\Fanmaker;
+
 use Dodici\Fansworld\WebBundle\Entity\Apikey;
 use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -115,20 +117,34 @@ class UserController extends BaseController
             if ($this->hasValidSignature()) {
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
-                $target = $this->getRepository('User')->find($request->get('target_id'));
-                if (!$target) throw new HttpException(404, 'Target user not found');
-
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
-
-                if ($action == 'add') {
-                    $this->get('friender')->friend($target, null, $user);
-                } elseif ($action == 'remove') {
-                    $this->get('friender')->remove($target, $user);
-                } else {
-                    throw new HttpException(400, 'Invalid fan action');
+                
+                $targetids = $request->get('target_id');
+                if (!$targetids) throw new HttpException(400, 'Requires target_id');
+                if (!is_array($targetids)) $targetids = array($targetids);
+                if (array_unique($targetids) !== $targetids) throw new HttpException(400, 'Duplicate target_id');
+                
+                $updates = array();
+                
+                foreach ($targetids as $targetid) {
+                    $target = $this->getRepository('User')->find($targetid);
+                    if (!$target) throw new HttpException(404, 'Target user not found');
+    
+                    if ($action == 'add') {
+                        $this->get('friender')->friend($target, null, $user);
+                    } elseif ($action == 'remove') {
+                        $this->get('friender')->remove($target, $user);
+                    } else {
+                        throw new HttpException(400, 'Invalid fan action');
+                    }
+                    
+                    $updates[] = $target;
                 }
 
-                return $this->result(true);
+                $result = array();
+                foreach ($updates as $ui) $result[] = array('id' => $ui->getId(), 'fanCount' => $ui->getFanCount()); 
+
+                return $this->result((count($result) == 1) ? $result[0] : $result);
             } else {
                 throw new HttpException(401, 'Invalid signature');
             }
@@ -144,8 +160,10 @@ class UserController extends BaseController
      * @Method({"GET"})
      *
      * Get params:
-	 * - <optional> [user_token]
-     * - [signature params]
+     * - <optional> user_id: int
+	 * - <optional> imageformat: string
+     * - <required if user_id given> [user token]
+     * - [signature params if user_id given]
      *
      * @return
      * array (
@@ -159,7 +177,8 @@ class UserController extends BaseController
      *      fanCount: int,
      *      idolFollowCount: int,
      *      teamFollowCount: int,
-     *      fanFollowCount: int
+     *      fanFollowCount: int,
+     *      <if user_id> followed: boolean
      * )
      */
     public function showAction($id)
@@ -167,17 +186,20 @@ class UserController extends BaseController
         try {
                 $request = $this->getRequest();
                 if (!$id) throw new HttpException(400, 'Invalid user_id');
-
-                if ($request->get('user_token')) {
-                    $user = $this->checkUserToken($id, $request->get('user_token'));
-                    $hastoken = true;
-                } else {
-                    $user = $this->getRepository('User')->findOneBy(array('id' => $id, 'enabled' => true));
-                    if (!$user) throw new HttpException(404, 'User not found');
-                    $hastoken = false;
+                
+                $userid = $request->get('user_id');
+                $user = null;
+                if ($userid) {
+                    $user = $this->checkUserToken($userid, $request->get('user_token'));
                 }
 
-                return $this->result($this->userArray($user));
+                $showuser = $this->getRepository('User')->findOneBy(array('id' => $id, 'enabled' => true));
+                if (!$showuser) throw new HttpException(404, 'User not found');
+
+                $showuserarray = $this->userArray($showuser);
+                if ($user) $showuserarray['followed'] = $this->get('friender')->status($showuser, $user);
+                
+                return $this->result($showuserarray);
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
@@ -187,7 +209,7 @@ class UserController extends BaseController
     /**
      * [signed] User Teams
      *
-     * @Route("/user/teams", name="api_v1_user_teams")
+     * @Route("/user/{id}/teams", name="api_v1_user_teams", requirements = {"id" = "\d+"})
      * @Method({"GET"})
      *
      * Get params:
@@ -203,12 +225,12 @@ class UserController extends BaseController
      * array (Serializer of team)
      *
      */
-    public function teamsListAction()
+    public function teamsListAction($id)
     {
         try {
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
-                $targetid = $request->get('target_id');
+                $targetid = $id;
 
                 if (!$targetid) throw new HttpException(400, 'Invalid target_id');
                 $target = $this->getRepository('User')->find($targetid);
@@ -224,9 +246,6 @@ class UserController extends BaseController
                 $pagination['sort_order'] = null;
                 $pagination['sort'] = null;
 
-                $imageformat = $request->get('imageformat');
-                if (null == $imageformat) $imageformat = 'small';
-
                 $teamships = $this->getRepository('Teamship')->byUser(
                     $target,
                     $pagination['limit'],
@@ -234,7 +253,7 @@ class UserController extends BaseController
 
                 $return = array();
                 foreach ($teamships as $teamship) {
-                    $return[] = $this->get('serializer')->values($teamship->getTeam(), $imageformat);
+                    $return[] = $this->get('serializer')->values($teamship->getTeam(), $this->getImageFormat(), $this->getImageFormat('splash'), 'object');
                 }
 
                 if ($userid) {
@@ -247,9 +266,9 @@ class UserController extends BaseController
 
                     foreach ($return as &$rta) {
                         if ($userid != $targetid) {
-                            in_array($rta['id'], $teamIds) ? $rta['followed'] = true : $rta['followed'] = false;
+                            in_array($rta['id'], $teamIds) ? $rta['followed'] = Fanmaker::FOLLOWED_FAN : $rta['followed'] = Fanmaker::FOLLOWED_NONE;
                         } else {
-                            $rta['followed'] = true;
+                            $rta['followed'] = Fanmaker::FOLLOWED_FAN;
                         }
                     }
                 }
@@ -263,11 +282,10 @@ class UserController extends BaseController
      /**
      * [signed] User Idols
      *
-     * @Route("/user/idols", name="api_v1_user_idols")
+     * @Route("/user/{id}/idols", name="api_v1_user_idols", requirements = {"id" = "\d+"})
      * @Method({"GET"})
      *
      * Get params:
-     * - target_id: int
      * - [user_token]
      * - <optional> user_id: int
      * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
@@ -279,14 +297,14 @@ class UserController extends BaseController
      * array (Serializer of idol)
      *
      */
-    public function idolsListAction()
+    public function idolsListAction($id)
     {
         try {
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
-                $targetid = $request->get('target_id');
+                $targetid = $id;
 
-                if (!$targetid) throw new HttpException(400, 'Invalid target_id');
+                if (!$targetid) throw new HttpException(400, 'Invalid target id');
                 $target = $this->getRepository('User')->find($targetid);
 
                 if (!($target instanceof User)) throw new HttpException(404, 'Target user not found');
@@ -300,9 +318,6 @@ class UserController extends BaseController
                 $pagination['sort_order'] = null;
                 $pagination['sort'] = null;
 
-                $imageformat = $request->get('imageformat');
-                if (null == $imageformat) $imageformat = 'small';
-
                 $idolships = $this->getRepository('Idolship')->byUser(
                     $target,
                     $pagination['limit'],
@@ -310,7 +325,7 @@ class UserController extends BaseController
 
                 $return = array();
                 foreach ($idolships as $idolship) {
-                    $return[] = $this->get('serializer')->values($idolship->getIdol(), $imageformat);
+                    $return[] = $this->get('serializer')->values($idolship->getIdol(), $this->getImageFormat(), $this->getImageFormat('splash'), 'object');
                 }
 
                  if ($userid) {
@@ -323,9 +338,9 @@ class UserController extends BaseController
 
                     foreach ($return as &$rta) {
                         if ($userid != $targetid) {
-                            in_array($rta['id'], $idolIds) ? $rta['followed'] = true : $rta['followed'] = false;
+                            in_array($rta['id'], $idolIds) ? $rta['followed'] = Fanmaker::FOLLOWED_FAN : $rta['followed'] = Fanmaker::FOLLOWED_NONE;
                         } else {
-                            $rta['followed'] = true;
+                            $rta['followed'] = Fanmaker::FOLLOWED_FAN;
                         }
                     }
                 }
@@ -374,24 +389,15 @@ class UserController extends BaseController
                 $pagination['sort_order'] = null;
                 $pagination['sort'] = null;
 
-                $imageformat = $request->get('imageformat');
-                if (null == $imageformat) $imageformat = 'small';
-
                 $fansOfUser = $this->getRepository('User')->FriendUsers($user, null, $pagination['limit'], $pagination['offset'], 'score');
 
                 $response = array();
+                $friender = $this->get('friender');
                 foreach ($fansOfUser as $aFan) {
                     if($aFan->getId() != $userid) {
-                        $response[] = $this->userArray($aFan);
-                    }
-                }
-
-                if ($userid) {
-                    $friendsOfUserByGet = $this->getRepository('User')->FriendUsers($userByGet, null, null, null, 'score');
-                    $friendsIds = array();
-                    foreach ($friendsOfUserByGet as $friend) $friendsIds[] = $friend->getId();
-                    foreach ($response as &$rta) {
-                        in_array($rta['id'], $friendsIds) ? $rta['followed'] = true : $rta['followed'] = false;
+                        $arr = $this->userArray($aFan);
+                        if ($userid) $arr['followed'] = $friender->status($aFan, $user);
+                        $response[] = $arr;
                     }
                 }
 

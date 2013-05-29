@@ -1,0 +1,496 @@
+
+.packery {
+  background: #FDD;
+  background: hsla(45, 100%, 40%, 0.2);
+}
+
+/* clearfix */
+.packery:after {
+  content: ' ';
+  display: block;
+  clear: both;
+}
+
+#home-gallery .gutter-sizer{width:0px;}
+#home-gallery .grid-sizer{width:0px;}
+
+/* MOBILE ONE COLLUMN*/
+@media screen and (max-width:480px) {
+  #home-gallery .gutter-sizer{width: 5%;}
+  #home-gallery .grid-sizer { width: 5%; }
+  #home-gallery .video {
+    width: 100%;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    overflow: hidden
+  }
+  #home-gallery .video div.image {
+    margin-bottom: 10px;
+    position: relative;
+    img {
+      width: 100%;
+    }
+
+    &:hover {
+      i.ico-channels, i.ico-watchlater {
+        display: block;
+        .transition(opacity .15s ease-in-out);
+      }
+    }
+
+    span.duration {
+      position: absolute;
+      right: 5px;
+      bottom: 5px;
+      color: @white;
+      text-shadow: 1px 1px 10px black;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    i.ico-channels, i.ico-watchlater {
+      @size: 32px;
+      position: absolute;
+      right: 5px;
+      .square(@size);
+      background-size: @size;
+      display: none;
+      opacity: 0.5 !important;
+
+      &:hover {
+        opacity: 1 !important;
+      }
+
+      &.ico-channels {
+        top: 40px;
+        background-image: url('../images/ico-qv-channels.png');
+      }
+
+      &.ico-watchlater {
+        cursor: pointer;
+        top: 5px;
+        background-image: url('../images/ico-watchlater-channels.png');
+      }
+    }
+  }
+  #home-gallery .video div.info {
+    display: block;
+    text-align: left;
+    padding-top: 12px;
+
+    a.title {
+      color: @black;
+      font-size: 14px;
+      font-weight: 600;
+      width: 100%;
+      height: 39px;
+      .pull-left();
+      overflow: hidden;
+      display: block;
+
+      &:hover {
+        color: @orange;
+      }
+    }
+
+    span.author {
+      .pull-left();
+      color: @grayDark;
+      font-size: 11px;
+      font-weight: 300;
+
+      strong, a {
+        color: @grayDarker;
+        font-weight: 600;
+      }
+    }
+  }
+  #home-gallery .double {
+    width: 100%;
+  }
+}
+@media screen and (min-width:481px) and (max-width:767px){
+  #home-gallery .gutter-sizer{width:1%;}
+  #home-gallery .grid-sizer { width: 2%; }
+  #home-gallery .video {
+    width: 30%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 2.0%;
+    overflow: hidden
+  }
+  #home-gallery .video div.image {
+    margin-bottom: 10px;
+    position: relative;
+    img {
+      width: 100%;
+    }
+
+    &:hover {
+      i.ico-channels, i.ico-watchlater {
+        display: block;
+        .transition(opacity .15s ease-in-out);
+      }
+    }
+
+    span.duration {
+      position: absolute;
+      right: 5px;
+      bottom: 5px;
+      color: @white;
+      text-shadow: 1px 1px 10px black;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    i.ico-channels, i.ico-watchlater {
+      @size: 32px;
+      position: absolute;
+      right: 5px;
+      .square(@size);
+      background-size: @size;
+      display: none;
+      opacity: 0.5 !important;
+
+      &:hover {
+        opacity: 1 !important;
+      }
+
+      &.ico-channels {
+        top: 40px;
+        background-image: url('../images/ico-qv-channels.png');
+      }
+
+      &.ico-watchlater {
+        cursor: pointer;
+        top: 5px;
+        background-image: url('../images/ico-watchlater-channels.png');
+      }
+    }
+  }
+  #home-gallery .video div.info {
+    display: block;
+    text-align: left;
+    padding-top: 12px;
+
+    a.title {
+      color: @black;
+      font-size: 14px;
+      font-weight: 600;
+      width: 100%;
+      height: 39px;
+      .pull-left();
+      overflow: hidden;
+      display: block;
+
+      &:hover {
+        color: @orange;
+      }
+    }
+
+    span.author {
+      .pull-left();
+      color: @grayDark;
+      font-size: 11px;
+      font-weight: 300;
+
+      strong, a {
+        color: @grayDarker;
+        font-weight: 600;
+      }
+    }
+  }
+  #home-gallery .double {
+    width: 63%;
+  }
+}
+@media screen and (min-width:768px) and (max-width:979px){
+  #home-gallery .gutter-sizer{width:1%;}
+  #home-gallery .grid-sizer { width: 1%; }
+  #home-gallery .video {
+    width: 22%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 1%;
+    overflow: hidden
+  }
+  #home-gallery .video div.image {
+    margin-bottom: 10px;
+    position: relative;
+    img {
+      width: 100%;
+    }
+
+    &:hover {
+      i.ico-channels, i.ico-watchlater {
+        display: block;
+        .transition(opacity .15s ease-in-out);
+      }
+    }
+
+    span.duration {
+      position: absolute;
+      right: 5px;
+      bottom: 5px;
+      color: @white;
+      text-shadow: 1px 1px 10px black;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    i.ico-channels, i.ico-watchlater {
+      @size: 32px;
+      position: absolute;
+      right: 5px;
+      .square(@size);
+      background-size: @size;
+      display: none;
+      opacity: 0.5 !important;
+
+      &:hover {
+        opacity: 1 !important;
+      }
+
+      &.ico-channels {
+        top: 40px;
+        background-image: url('../images/ico-qv-channels.png');
+      }
+
+      &.ico-watchlater {
+        cursor: pointer;
+        top: 5px;
+        background-image: url('../images/ico-watchlater-channels.png');
+      }
+    }
+  }
+  #home-gallery .video div.info {
+    display: block;
+    text-align: left;
+    padding-top: 12px;
+
+    a.title {
+      color: @black;
+      font-size: 14px;
+      font-weight: 600;
+      width: 100%;
+      height: 39px;
+      .pull-left();
+      overflow: hidden;
+      display: block;
+
+      &:hover {
+        color: @orange;
+      }
+    }
+
+    span.author {
+      .pull-left();
+      color: @grayDark;
+      font-size: 11px;
+      font-weight: 300;
+
+      strong, a {
+        color: @grayDarker;
+        font-weight: 600;
+      }
+    }
+  }
+  #home-gallery .double {
+    width: 46%;
+  }
+}
+@media screen and (min-width:980px) and (max-width:1199px){
+  #home-gallery .gutter-sizer{width:1%;}
+  #home-gallery .grid-sizer { width: 1%; }
+  #home-gallery .video {
+    width: 22%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 1.5%;
+    overflow: hidden
+  }
+  #home-gallery .video div.image {
+    margin-bottom: 10px;
+    position: relative;
+    img {
+      width: 100%;
+    }
+
+    &:hover {
+      i.ico-channels, i.ico-watchlater {
+        display: block;
+        .transition(opacity .15s ease-in-out);
+      }
+    }
+
+    span.duration {
+      position: absolute;
+      right: 5px;
+      bottom: 5px;
+      color: @white;
+      text-shadow: 1px 1px 10px black;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    i.ico-channels, i.ico-watchlater {
+      @size: 32px;
+      position: absolute;
+      right: 5px;
+      .square(@size);
+      background-size: @size;
+      display: none;
+      opacity: 0.5 !important;
+
+      &:hover {
+        opacity: 1 !important;
+      }
+
+      &.ico-channels {
+        top: 40px;
+        background-image: url('../images/ico-qv-channels.png');
+      }
+
+      &.ico-watchlater {
+        cursor: pointer;
+        top: 5px;
+        background-image: url('../images/ico-watchlater-channels.png');
+      }
+    }
+  }
+  #home-gallery .video div.info {
+    display: block;
+    text-align: left;
+    padding-top: 12px;
+
+    a.title {
+      color: @black;
+      font-size: 14px;
+      font-weight: 600;
+      width: 100%;
+      height: 39px;
+      .pull-left();
+      overflow: hidden;
+      display: block;
+
+      &:hover {
+        color: @orange;
+      }
+    }
+
+    span.author {
+      .pull-left();
+      color: @grayDark;
+      font-size: 11px;
+      font-weight: 300;
+
+      strong, a {
+        color: @grayDarker;
+        font-weight: 600;
+      }
+    }
+  }
+  #home-gallery .double {
+    width: 46%;
+  }
+}
+@media screen and (min-width: 1200px) {
+  /* 10 columns for larger screens */
+  #home-gallery .gutter-sizer{width:0.5%;}
+  #home-gallery .grid-sizer { width: 0%; }
+  #home-gallery .video {
+    width: 15%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 1%;
+    overflow: hidden;
+  }
+  #home-gallery .video div.image {
+    margin-bottom: 10px;
+    position: relative;
+    img {
+      width: 100%;
+    }
+
+    &:hover {
+      i.ico-channels, i.ico-watchlater {
+        display: block;
+        .transition(opacity .15s ease-in-out);
+      }
+    }
+
+    span.duration {
+      position: absolute;
+      right: 5px;
+      bottom: 5px;
+      color: @white;
+      text-shadow: 1px 1px 10px black;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    i.ico-channels, i.ico-watchlater {
+      @size: 32px;
+      position: absolute;
+      right: 5px;
+      .square(@size);
+      background-size: @size;
+      display: none;
+      opacity: 0.5 !important;
+
+      &:hover {
+        opacity: 1 !important;
+      }
+
+      &.ico-channels {
+        top: 40px;
+        background-image: url('../images/ico-qv-channels.png');
+      }
+
+      &.ico-watchlater {
+        cursor: pointer;
+        top: 5px;
+        background-image: url('../images/ico-watchlater-channels.png');
+      }
+    }
+  }
+  #home-gallery .video div.info {
+    display: block;
+    text-align: left;
+
+    a.title {
+      color: @black;
+      font-size: 14px;
+      font-weight: 600;
+      width: 100%;
+      .pull-left();
+      overflow: hidden;
+      display: block;
+
+      &:hover {
+        color: @orange;
+      }
+    }
+
+    span.author {
+      .pull-left();
+      color: @grayDark;
+      font-size: 11px;
+      font-weight: 300;
+
+      strong, a {
+        color: @grayDarker;
+        font-weight: 600;
+      }
+    }
+  }
+  #home-gallery .double {
+    width: 31%;
+  }
+  #home-gallery .double div.image {
+    img {
+      height: 85%;
+    }
+  }
+}
+
