@@ -56,20 +56,6 @@ class HomeController extends SiteController
             $vc = $request->get('vc', null);
             $genre = $request->get('genre', null);
 
-            if($vc){
-                $vc = $this->getRepository('VideoCategory')->find($vc);
-
-                if(!$vc instanceof VideoCategory){
-                    throw new Exception("No video category");
-                }
-            }else if($genre){
-                $genre = $this->getRepository('Genre')->find($genre);
-
-                if(!$genre instanceof Genre){
-                    throw new Exception("No genre");
-                }
-            }
-
             $response = array(
                 'home' => null,
                 'highlighted' => array(),
@@ -77,36 +63,46 @@ class HomeController extends SiteController
                 'popular' => array()
             );
 
-            $homeVideo = $this->getRepository('HomeVideo')->findOneBy(array('videocategory' => $vc->getId()));
-            $homeVideo = $homeVideo->getVideo();
+            if($genre){
+                $homeVideo = $this->getRepository('Video')->findOneBy(array('genre'=>$genre, 'highlight' => true));
+            }else{
+                $homeVideo = $this->getRepository('HomeVideo')->findOneBy(array('videocategory' => $vc));
+                $homeVideo = $homeVideo->getVideo();
+            }
             $response['home'] = $serializer->values($homeVideo, 'home_video_double');
 
             $limitWithTheHighlighted = (self::LIMIT_VIDEO-3);
-            $videos = $videoRepo->searchHome(null, $genre, $vc, null, null, $homeVideo, $limitWithTheHighlighted, 0);
+            $videos = $videoRepo->searchHome(null, $genre, $vc, true, null, $homeVideo, $limitWithTheHighlighted, 0);
             $response['highlighted'] = $serializer->values($videos, 'home_video');
 
-            $videos = $videoRepo->searchHome($user, $genre, $vc->getId(), true, 'default', $homeVideo, self::LIMIT_VIDEO, 0);
+            $videos = $videoRepo->searchHome($user, $genre, $vc, false, 'default', $homeVideo, self::LIMIT_VIDEO, 0);
             $response['followed'] = $serializer->values($videos, 'home_video');
 
-            $videos = $videoRepo->searchHome(null, $genre, $vc->getId(), false, null, null, self::LIMIT_VIDEO, 0);
+            $videos = $videoRepo->searchHome(null, $genre, $vc, false, null, null, self::LIMIT_VIDEO, 0);
             $response['popular'] = $serializer->values($videos, 'home_video');
         }else{
-            $vc = $this->getRepository('VideoCategory')->find($paginate['vc']);
+            $genre = isset($paginate['genre']) ? $paginate['genre'] : null;
+            $vc = isset($paginate['vc']) ? $paginate['vc'] : null;
             $block = $paginate['block'];
             $page = $paginate['page'];
             $offset = ($page -1)*self::LIMIT_VIDEO;
-            $homeVideo = $this->getRepository('HomeVideo')->findOneBy(array('videocategory' => $vc->getId()));
-            $homeVideo = $homeVideo->getVideo();
+
+            if($genre){
+                $homeVideo = $this->getRepository('Video')->findOneBy(array('genre'=>$genre, 'highlight' => true));
+            }else{
+                $homeVideo = $this->getRepository('HomeVideo')->findOneBy(array('videocategory' => $vc));
+                $homeVideo = $homeVideo->getVideo();
+            }
 
             $response = array('videos' => array());
 
             switch($block){
                 case 'followed':
-                    $videos = $videoRepo->searchHome($user, $genre, $vc->getId(), true, 'default', $homeVideo, self::LIMIT_VIDEO, $offset);
+                    $videos = $videoRepo->searchHome($user, $genre, $vc, false, 'default', $homeVideo, self::LIMIT_VIDEO, $offset);
                     $response['videos'] = $serializer->values($videos, 'home_video');
                     break;
                 case 'popular':
-                    $videos = $videoRepo->searchHome(null, $genre, $vc->getId(), false, 'default', $homeVideo, self::LIMIT_VIDEO, $offset);
+                    $videos = $videoRepo->searchHome(null, $genre, $vc, false, 'default', $homeVideo, self::LIMIT_VIDEO, $offset);
                     $response['videos'] = $serializer->values($videos, 'home_video');
                     break;
             }
