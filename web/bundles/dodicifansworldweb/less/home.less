@@ -25,12 +25,30 @@
 			.pull-left();
 			margin-right: 5px;
 			cursor: pointer;
+			position: relative;
 
 			&.active {
 				color: white;
-				background-color: @lightGreen;
-				border: 1px solid green;
+				background-color: @green;
 				.border-radius(3px);
+			}
+
+			// add the close button
+			&.can-close {
+				&:after {
+					content:"x";
+					.square(15px);
+					.border-radius(15px);
+					background-color: black;
+					font-weight: 800;
+					font-size: 11px;
+					color: white;
+					position: absolute;
+					top: -7px;
+					right: -7px;
+					line-height: 15px;
+					cursor: pointer;
+				}
 			}
 
 			&:last-child {

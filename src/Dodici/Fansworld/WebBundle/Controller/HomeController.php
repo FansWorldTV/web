@@ -3,6 +3,7 @@
 namespace Dodici\Fansworld\WebBundle\Controller;
 
 use Dodici\Fansworld\WebBundle\Entity\VideoCategory;
+use Dodici\Fansworld\WebBundle\Entity\Genre;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,8 +33,8 @@ class HomeController extends SiteController
         if ($checkfbreq) return $checkfbreq;
 
         return array(
-            'testvideos' => $this->getRepository('Video')->findBy(array(), array(), 10),
-            'categories' => $this->getRepository('VideoCategory')->findAll()
+            'categories' => $this->getRepository('VideoCategory')->findAll(),
+            'genres' => $this->getRepository('Genre')->getParents()
         );
     }
 
@@ -53,10 +54,20 @@ class HomeController extends SiteController
 
         if(!$paginate){
             $vc = $request->get('vc', false);
-            $vc = $this->getRepository('VideoCategory')->find($vc);
+            $genreId = $request->get('genre', false);
 
-            if(!$vc instanceof VideoCategory){
-                throw new Exception("No video category");
+            if($vc){
+                $vc = $this->getRepository('VideoCategory')->find($vc);
+
+                if(!$vc instanceof VideoCategory){
+                    throw new Exception("No video category");
+                }
+            }else if($genreId){
+                $genre = $this->getRepository('Genre')->find($genreId);
+
+                if(!$genre instanceof Genre){
+                    throw new Exception("No genre");
+                }
             }
 
             $response = array(
@@ -72,7 +83,7 @@ class HomeController extends SiteController
 
             $limitWithTheHighlighted = (self::LIMIT_VIDEO-3);
             $videos = $videoRepo->search(null, null, $limitWithTheHighlighted, 0, $vc, true, null, null, null, null, null, $homeVideo);
-            $response['highlighted'] = $serializer->values($videos, 'home_video');
+            $response['highlighted'] = $serializer->values($videos, 'home_video');+
 
             $videos = $videoRepo->search(null, $user, self::LIMIT_VIDEO, 0, $vc->getId(), true, null, null, null, 'default', null, $homeVideo);
             $response['followed'] = $serializer->values($videos, 'home_video');
