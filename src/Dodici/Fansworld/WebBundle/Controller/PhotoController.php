@@ -251,7 +251,7 @@ class PhotoController extends SiteController
                 $name = $hasteam->getTeam();
                 $response['tags']['teams'][] = array(
                     'id' => $id,
-                    'name' => (string) $name
+                    'label' => (string) $name
                 );
             }
 
@@ -260,7 +260,7 @@ class PhotoController extends SiteController
                 $name = $hasidol->getIdol();
                 $response['tags']['idols'][] = array(
                     'id' => $id,
-                    'name' => (string) $name
+                    'label' => (string) $name
                 );
             }
 
@@ -269,7 +269,7 @@ class PhotoController extends SiteController
                 $name = $hasuser->getTarget();
                 $response['tags']['users'][] = array(
                     'id' => $id,
-                    'name' => (string) $name
+                    'label' => (string) $name
                 );
             }
         } else {
