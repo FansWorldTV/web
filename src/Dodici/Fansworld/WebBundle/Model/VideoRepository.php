@@ -771,13 +771,16 @@ class VideoRepository extends CountBaseRepository
 
     /**
      * Get videos related to Genre/Category
+     * @param User|null $user
      * @param Genre: null | Id of genre (Int) or Entity type Genre $genre
      * @param VideoCategory: null|$category
+     * @param 'default'(weight)|'views'|'likes'|null $sortcriteria
+     * @param array<Video|int>|Video|int|null $excludes
      * @param int|null $limit
      * @param int|null $offset
      */
-    public function moreFromGenre($genre=null, $category=null, $limit=null, $offset=null)
+    public function searchHome($user=null, $genre=null, $category=null, $sortcriteria=null, $excludes=null, $limit=null, $offset=null)
     {
-        return $this->search(null, null, $limit, $offset, $category, null, null, null ,null, null, null, null, null, null, null, null, $genre);
+        return $this->search(null, $user, $limit, $offset, $category, null, null, null ,null, $sortcriteria, null, $excludes, null, null, null, null, $genre);
     }
 }
