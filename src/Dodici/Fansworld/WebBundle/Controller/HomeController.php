@@ -83,7 +83,7 @@ class HomeController extends SiteController
 
             $limitWithTheHighlighted = (self::LIMIT_VIDEO-3);
             $videos = $videoRepo->search(null, null, $limitWithTheHighlighted, 0, $vc, true, null, null, null, null, null, $homeVideo);
-            $response['highlighted'] = $serializer->values($videos, 'home_video');+
+            $response['highlighted'] = $serializer->values($videos, 'home_video');
 
             $videos = $videoRepo->search(null, $user, self::LIMIT_VIDEO, 0, $vc->getId(), true, null, null, null, 'default', null, $homeVideo);
             $response['followed'] = $serializer->values($videos, 'home_video');
@@ -116,7 +116,7 @@ class HomeController extends SiteController
     }
 
     /**
-     * Ajax method 
+     * Ajax method
      * @Route("/home/ajax/enjoy", name="home_ajaxenjoy")
      */
     public function ajaxEnjoyAction()
@@ -278,7 +278,7 @@ class HomeController extends SiteController
 
         return $this->jsonResponse($results);
     }
-    
+
     private function checkFacebookRequest()
     {
         $request = $this->getRequest();
