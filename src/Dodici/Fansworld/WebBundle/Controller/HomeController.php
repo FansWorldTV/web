@@ -53,8 +53,8 @@ class HomeController extends SiteController
         $videoRepo = $this->getRepository('Video');
 
         if(!$paginate){
-            $vc = $request->get('vc', false);
-            $genreId = $request->get('genre', false);
+            $vc = $request->get('vc', null);
+            $genre = $request->get('genre', null);
 
             if($vc){
                 $vc = $this->getRepository('VideoCategory')->find($vc);
@@ -62,8 +62,8 @@ class HomeController extends SiteController
                 if(!$vc instanceof VideoCategory){
                     throw new Exception("No video category");
                 }
-            }else if($genreId){
-                $genre = $this->getRepository('Genre')->find($genreId);
+            }else if($genre){
+                $genre = $this->getRepository('Genre')->find($genre);
 
                 if(!$genre instanceof Genre){
                     throw new Exception("No genre");
@@ -82,13 +82,13 @@ class HomeController extends SiteController
             $response['home'] = $serializer->values($homeVideo, 'home_video_double');
 
             $limitWithTheHighlighted = (self::LIMIT_VIDEO-3);
-            $videos = $videoRepo->search(null, null, $limitWithTheHighlighted, 0, $vc, true, null, null, null, null, null, $homeVideo);
+            $videos = $videoRepo->searchHome(null, $genre, $vc, null, null, $homeVideo, $limitWithTheHighlighted, 0);
             $response['highlighted'] = $serializer->values($videos, 'home_video');
 
-            $videos = $videoRepo->search(null, $user, self::LIMIT_VIDEO, 0, $vc->getId(), true, null, null, null, 'default', null, $homeVideo);
+            $videos = $videoRepo->searchHome($user, $genre, $vc->getId(), true, 'default', $homeVideo, self::LIMIT_VIDEO, 0);
             $response['followed'] = $serializer->values($videos, 'home_video');
 
-            $videos = $videoRepo->search(null, null, self::LIMIT_VIDEO, 0, $vc->getId(), false);
+            $videos = $videoRepo->searchHome(null, $genre, $vc->getId(), false, null, null, self::LIMIT_VIDEO, 0);
             $response['popular'] = $serializer->values($videos, 'home_video');
         }else{
             $vc = $this->getRepository('VideoCategory')->find($paginate['vc']);
@@ -102,11 +102,11 @@ class HomeController extends SiteController
 
             switch($block){
                 case 'followed':
-                    $videos = $videoRepo->search(null, $user, self::LIMIT_VIDEO, $offset, $vc->getId(), true, null, null, null, 'default', null, $homeVideo);
+                    $videos = $videoRepo->searchHome($user, $genre, $vc->getId(), true, 'default', $homeVideo, self::LIMIT_VIDEO, $offset);
                     $response['videos'] = $serializer->values($videos, 'home_video');
                     break;
                 case 'popular':
-                    $videos = $videoRepo->search(null, null, self::LIMIT_VIDEO, $offset, $vc->getId(), false, null, null, null, 'default', null, $homeVideo);
+                    $videos = $videoRepo->searchHome(null, $genre, $vc->getId(), false, 'default', $homeVideo, self::LIMIT_VIDEO, $offset);
                     $response['videos'] = $serializer->values($videos, 'home_video');
                     break;
             }
