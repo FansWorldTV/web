@@ -19,11 +19,11 @@
 {% block main_content %}
     <div class="home-content">
         <ul class="filter-home">
-            {% for category in categories %}
-                <li {% if loop.first %}class="active"{% endif %} data-category-id = "{{ category.id }}">{{ category.title }}</li>
-            {% endfor %}
             {% for genre in genres %}
                 <li data-genre-id = "{{ genre.id }}">{{ genre.title }}</li>
+            {% endfor %}
+            {% for category in categories %}
+                <li {% if loop.first %}class="active"{% endif %} data-category-id = "{{ category.id }}">{{ category.title }}</li>
             {% endfor %}
             {#<li><i class="icon-cog"></i></li>#}
         </ul>
