@@ -16,10 +16,13 @@
 #home-gallery {
 	.video {
 		overflow: hidden;
+		margin-bottom: 15px;
 		&.double {
 			background-color: black;
 
 			.info {
+				padding: 10px 0 10px 15px;
+
 				a.title {
 					color: white;
 				}
@@ -35,7 +38,6 @@
 		}
 
 		div.image {
-			margin-bottom: 10px;
 			position: relative;
 
 			img {
@@ -57,7 +59,7 @@
 				color: @white;
 				text-shadow: 1px 1px 10px black;
 				font-size: 11px;
-				font-weight: bold;
+				font-weight: 500;
 			}
 
 			i.ico-channels, i.ico-watchlater {
@@ -89,16 +91,13 @@
 		div.info {
 			display: block;
 			text-align: left;
-			padding-bottom: 20px;
-			padding-top: 10px;
-			padding-left: 10px;
-			padding-right: 10px;
+			padding-top: 3px;
 
 			a.title {
 				color: @black;
 				font-size: 14px;
 				font-weight: 600;
-				width: 100%;
+				.size(39px, 100%);
 				.pull-left();
 				overflow: hidden;
 				display: block;

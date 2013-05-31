@@ -111,7 +111,7 @@
 			line-height: 27px;
 			cursor: pointer;
 			opacity: 0.6;
-			.transition(all 0.5s ease);
+			.transition(opacity 0.5s ease);
 			margin-top: 40px;
 
 			&:hover {
@@ -148,7 +148,7 @@
 	.videos-container {
 		.video {
 			.column(2,12);
-			margin-bottom: 10px;
+			margin-bottom: 15px;
 
 			&.double {
 				//.column(4.8, 12);
@@ -156,7 +156,6 @@
 
 			div.image {
 				position: relative;
-				margin-bottom: 10px;
 
 				img {
 					width: 100%;
@@ -176,7 +175,7 @@
 					color: @white;
 					text-shadow: 1px 1px 10px black;
 					font-size: 11px;
-					font-weight: bold;
+					font-weight: 500;
 				}
 
 				i.ico-channels, i.ico-watchlater {
@@ -208,14 +207,14 @@
 			div.info {
 				display: block;
 				text-align: left;
-				padding-top: 12px;
+				padding-top: 3px;
 
 				a.title {
 					color: @black;
 					font-size: 14px;
 					font-weight: 600;
 					width: 100%;
-					height: 39px;
+					.size(39px, 100%);
 					.pull-left();
 					overflow: hidden;
 					display: block;
