@@ -116,7 +116,7 @@ $(document).ready(function () {
         container: null,
         queue: null,
         queueDelay: 100,
-        newVideoCategoryEvent: null
+        onVideoCategoryEvent: null
     };
     function Plugin(element, options) {
         this.element = element;
@@ -133,35 +133,35 @@ $(document).ready(function () {
             self.addClass(that._name);
             that.options.container = document.querySelector(that.options.selector);
 
-            that.options.newVideoCategoryEvent = (function nvc(videoCategory){
+            that.options.onVideoCategoryEvent = (function nvc(videoCategory){
                 var vc = parseInt(videoCategory, 10);
                 if($.isNumeric(vc)) {
                     that.options.videoCategory = vc;
-                    fansWorldEvents.removeListener('newVideoCategory', that.options.newVideoCategoryEvent);
+                    fansWorldEvents.removeListener('onVideoCategory', that.options.onVideoCategoryEvent);
                     $.when(that.removeAll()).then(function(){
                         $.when(that.makePackery()).then(function(){
-                            fansWorldEvents.addListener('newVideoCategory', that.options.newVideoCategoryEvent);
+                            fansWorldEvents.addListener('onVideoCategory', that.options.onVideoCategoryEvent);
                         }).progress(function() {
                             //console.log("adding thumbnails to packery");
                         }).fail(function(error){
                             alert(error.message);
-                            fansWorldEvents.addListener('newVideoCategory', that.options.newVideoCategoryEvent);
+                            fansWorldEvents.addListener('onVideoCategory', that.options.onVideoCategoryEvent);
                         });
                     }).fail(function(error){
                         $.when(that.makePackery()).then(function(){
-                            fansWorldEvents.addListener('newVideoCategory', that.options.newVideoCategoryEvent);
+                            fansWorldEvents.addListener('onVideoCategory', that.options.onVideoCategoryEvent);
                         }).progress(function() {
                             //console.log("adding thumbnails to packery");
                         }).fail(function(error){
                             alert(error.message);
-                            fansWorldEvents.addListener('newVideoCategory', that.options.newVideoCategoryEvent);
+                            fansWorldEvents.addListener('onVideoCategory', that.options.onVideoCategoryEvent);
                         });
                     });;
                 }
                 return nvc;
             })(this);
 
-            fansWorldEvents.addListener('newVideoCategory', that.options.newVideoCategoryEvent);
+            fansWorldEvents.addListener('onVideoCategory', that.options.onVideoCategoryEvent);
             that.options.packery = new Packery(that.options.container, {
                 itemSelector: '.video',
                 gutter: ".gutter-sizer",
@@ -276,7 +276,7 @@ $(document).ready(function () {
         },
         teardown: function() {
             var that = this;
-            fansWorldEvents.removeListener('newVideoCategory', that.options.newVideoCategoryEvent);
+            fansWorldEvents.removeListener('onVideoCategory', that.options.onVideoCategoryEvent);
             $.removeData($(that.element)[0], that._name);
             $(that.element).removeClass(that._name);
             that.unbind();
@@ -303,6 +303,7 @@ $(document).ready(function () {
     var pluginName = "fwHomeThumbs";
     var defaults = {
         videoCategory: null,
+        videoGenre: null,
         videoFeed: Routing.generate(appLocale + '_home_ajaxfilter'),
         page: 1,
         block: null,
@@ -324,17 +325,34 @@ $(document).ready(function () {
             that.clearThumbs();
             that.appendThumbs();
 
-            that.options.newVideoCategory = (function nvc(videoCategory){
+            that.options.onVideoCategory = function(videoCategory){
                 var vc = parseInt(videoCategory, 10);
                 if($.isNumeric(vc)) {
                     that.options.videoCategory = vc;
                 }
                 that.clearThumbs();
                 that.appendThumbs();
-                return nvc;
-            })(this);
+                return true;
+            };
 
-            that.options.onFindVideosByTag = (function on(tag, filter){
+            that.options.onVideoGenre = function(videoGenre){
+                var v_genre = parseInt(videoGenre, 10);
+                if($.isNumeric(v_genre)) {
+                    that.options.videoGenre = v_genre;
+                }
+                console.log("onVideoGenre: " + that.options.videoGenre)
+                that.clearThumbs();
+                that.appendThumbs({
+                    paginate:{
+                        page: that.options.page,
+                        block: that.options.block,
+                        genre: that.options.videoGenre
+                    }
+                });
+                return true;
+            };
+
+            that.options.onFindVideosByTag = function(tag, filter){
                 console.log(arguments);
                 console.log(filter + " local: " + that.options.block);
                 if(filter === that.options.block) {
@@ -347,10 +365,11 @@ $(document).ready(function () {
                     that.clearThumbs();
                     that.insetThumbs(url, data);
                 }
-                return on;
-            })(this);
+                return true;
+            };
 
-            fansWorldEvents.addListener('newVideoCategory', that.options.newVideoCategory);
+            fansWorldEvents.addListener('onVideoCategory', that.options.onVideoCategory);
+            fansWorldEvents.addListener('onVideoGenre', that.options.onVideoGenre);
             fansWorldEvents.addListener('onFindVideosByTag', that.options.onFindVideosByTag);
 
             $('section.' + that.options.block + ' > .add-more').on('click', function(event) {
@@ -360,9 +379,10 @@ $(document).ready(function () {
         },
         clearThumbs: function() {
             var that = this;
-            //$(that.element).parent().hide('slow');
-            //$(that.element).parent().slideUp('slow', function() {})
             $(that.element).empty();
+            $(that.element).parent().find('.spinner').removeClass('hidden');
+            $(that.element).parent().find('.add-more').hide();
+            $(that.element).parent().find('.spinner').show();
         },
         addMoreThumbs: function(event) {
             var that = this;
@@ -373,13 +393,13 @@ $(document).ready(function () {
                 button.removeClass('rotate');
             });
         },
-        appendThumbs: function() {
+        appendThumbs: function(data, source) {
             var that = this;
             var i = 0;
             var deferred = new jQuery.Deferred();
             $.ajax({
-                url: that.options.videoFeed,
-                data: {
+                url: source || that.options.videoFeed,
+                data: data || {
                     paginate:{
                         page: that.options.page,
                         block: that.options.block,
@@ -387,25 +407,27 @@ $(document).ready(function () {
                     }
                 }
             }).then(function(response) {
-                    for(i in response.videos) {
-                        if (response.videos.hasOwnProperty(i)) {
-                            var video = response.videos[i];
-                            $.when(templateHelper.htmlTemplate('video-home_element', video))
-                            .then(function(response){
-                                var $thumb = $(response).clone();
+                for(i in response.videos) {
+                    if (response.videos.hasOwnProperty(i)) {
+                        var video = response.videos[i];
+                        $.when(templateHelper.htmlTemplate('video-home_element', video))
+                        .then(function(response){
+                            var $thumb = $(response).clone();
+                            $thumb.find('img').load(function() {
+                                $(that.element).parent().find('.spinner').addClass('hidden');
+                                $(that.element).parent().find('.spinner').hide();
+                                $(that.element).parent().find('.add-more').show();
                                 $thumb.hide().appendTo(that.element).fadeIn('slow');
-                            });
-                        }
+                            })
+                        });
                     }
-                    if(response.videos.length > 0 ) {
-                        //$(that.element).parent().slideDown('slow', function() {})
-                    }
-                    return response.videos;
-                }).done(function(videos){
-                    deferred.resolve(videos);
-                }).fail(function(error){
-                    deferred.reject(new Error(error));
-                });
+                }
+                return response.videos;
+            }).done(function(videos){
+                deferred.resolve(videos);
+            }).fail(function(error){
+                deferred.reject(new Error(error));
+            });
             return deferred.promise();
         },
         insetThumbs: function(feed, data) {
@@ -416,25 +438,28 @@ $(document).ready(function () {
                 url: feed,
                 data: data
             }).then(function(response) {
-                    for(i in response.videos) {
-                        if (response.videos.hasOwnProperty(i)) {
-                            var video = response.videos[i];
-                            $.when(templateHelper.htmlTemplate('video-home_element', video))
-                                .then(function(response){
-                                    var $thumb = $(response).clone();
-                                    $thumb.hide().appendTo(that.element).fadeIn('slow');
-                                });
-                        }
+                for(i in response.videos) {
+                    if (response.videos.hasOwnProperty(i)) {
+                        var video = response.videos[i];
+                        $.when(templateHelper.htmlTemplate('video-home_element', video))
+                        .then(function(response){
+                            var $thumb = $(response).clone();
+                            $thumb.find('img').load(function() {
+                                $(that.element).parent().find('.spinner').addClass('hidden');
+                                $(that.element).parent().find('.spinner').hide();
+                                if(response.addMore) {}
+                                $(that.element).parent().find('.add-more').show();
+                                $thumb.hide().appendTo(that.element).fadeIn('slow');
+                            });
+                        });
                     }
-                    if(response.videos.length > 0 ) {
-                        //$(that.element).parent().slideDown('slow', function() {})
-                    }
-                    return response.videos;
-                }).done(function(videos){
-                    deferred.resolve(videos);
-                }).fail(function(error){
-                    deferred.reject(new Error(error));
-                });
+                }
+                return response.videos;
+            }).done(function(videos){
+                deferred.resolve(videos);
+            }).fail(function(error){
+                deferred.reject(new Error(error));
+            });
             return deferred.promise();
         },
         destroy: function() {
@@ -445,7 +470,7 @@ $(document).ready(function () {
         },
         teardown: function() {
             var that = this;
-            fansWorldEvents.removeListener('newVideoCategory', that.options.newVideoCategory);
+            fansWorldEvents.removeListener('onVideoCategory', that.options.onVideoCategory);
             $.removeData($(that.element)[0], that._name);
             $(that.element).removeClass(that._name);
             that.unbind();
@@ -600,34 +625,25 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-
-
-    $('.filter-home > li').on('click', function(){
+    $(".filter-home > li").on('click', function(){
+        if($(this).hasClass('active')) {
+            return;
+        }
         $(this).parent().find('.active').removeClass('active');
         //$(this).toggleClass('active', 125);
         $(this).addClass('active');
         var videoCategory = $(this).attr('data-category-id');
+        var videoGenre = $(this).attr('data-genre-id');
 
-        // Get a plugin handler
-        //var popularThumbs = $('section.popular > .videos-container').data('fwHomeThumbs');
-        //var followedThumbs = $('section.followed > .videos-container').data('fwHomeThumbs');
-        //var highlightsThumbs = $('section.highlights').data('fwHomePackery');
 
-        // Clear semantic grid thumbs
-        //popularThumbs.clearThumbs();
-        //followedThumbs.clearThumbs();
-
-        // Set the internal variable TODO: refactor ! (DONE)
-        //highlightsThumbs.options.videoCategory = popularThumbs.options.videoCategory = followedThumbs.options.videoCategory = videoCategory;
-
-        //popularThumbs.appendThumbs();
-        //followedThumbs.appendThumbs();
-
-        //highlightsThumbs.removeAll();
-        //highlightsThumbs.makePackery();
         ///////////////////////////////////////////////////////////////////////
         // Decoupled EventTrigger                                            //
         ///////////////////////////////////////////////////////////////////////
-        window.fansWorldEvents.emitEvent('newVideoCategory', [videoCategory]);
+        if(videoCategory.length > 0) {
+            window.fansWorldEvents.emitEvent('onVideoCategory', [videoCategory]);
+        } else if(videoGenre.length > 0) {
+            console.log("call onVideoGenre")
+            window.fansWorldEvents.emitEvent('onVideoGenre', [videoGenre]);
+        }
     });
 });
