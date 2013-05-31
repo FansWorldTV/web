@@ -109,6 +109,7 @@ $(document).ready(function () {
     var pluginName = "fwHomePackery";
     var defaults = {
         videoCategory: null,
+        videoGenre: null,
         videoFeed: Routing.generate(appLocale + '_home_ajaxfilter'),
         selector: 'section.highlights',
         itemSelector: '.video',
@@ -133,7 +134,35 @@ $(document).ready(function () {
             self.addClass(that._name);
             that.options.container = document.querySelector(that.options.selector);
 
-            that.options.onVideoCategoryEvent = (function nvc(videoCategory){
+            that.options.onVideoGenre = function(videoGenre){
+                var v_genre = parseInt(videoGenre, 10);
+                if($.isNumeric(v_genre)) {
+                    that.options.videoGenre = v_genre;
+                    fansWorldEvents.removeListener('onVideoGenre', that.options.onVideoGenre);
+                    $.when(that.removeAll()).then(function(){
+                        $.when(that.makePackery()).then(function(){
+                            fansWorldEvents.addListener('onVideoGenre', that.options.onVideoGenre);
+                        }).progress(function() {
+                            //console.log("adding thumbnails to packery");
+                        }).fail(function(error){
+                            alert(error.message);
+                            fansWorldEvents.addListener('onVideoGenre', that.options.onVideoGenre);
+                        });
+                    }).fail(function(error){
+                        $.when(that.makePackery()).then(function(){
+                            fansWorldEvents.addListener('onVideoGenre', that.options.onVideoGenre);
+                        }).progress(function() {
+                            //console.log("adding thumbnails to packery");
+                        }).fail(function(error){
+                            alert(error.message);
+                            fansWorldEvents.addListener('onVideoGenre', that.options.onVideoGenre);
+                        });
+                    });
+
+                }
+            };
+
+            that.options.onVideoCategoryEvent = function (videoCategory){
                 var vc = parseInt(videoCategory, 10);
                 if($.isNumeric(vc)) {
                     that.options.videoCategory = vc;
@@ -158,19 +187,29 @@ $(document).ready(function () {
                         });
                     });;
                 }
-                return nvc;
-            })(this);
+                return true;
+            };
 
-            fansWorldEvents.addListener('onVideoCategory', that.options.onVideoCategoryEvent);
+            //fansWorldEvents.addListener('onVideoCategory', that.options.onVideoCategoryEvent);
+            //fansWorldEvents.addListener('onVideoGenre', that.options.onVideoGenre);
             that.options.packery = new Packery(that.options.container, {
                 itemSelector: '.video',
                 gutter: ".gutter-sizer",
                 columnWidth: ".grid-sizer"
             });
-            that.makePackery();
+            console.log("going to make packery with vc: " + that.options.videoCategory + " and data: " + $('.filter-home').find('.active').attr('data-category-id'))
+            if($.isNumeric(that.options.videoCategory)) {
+                that.makePackery({
+                    'vc': that.options.videoCategory
+                });
+            } else if ($.isNumeric(that.options.videoGenre)) {
+                that.makePackery({
+                    'genre': that.options.videoGenre
+                });
+            }
             return true;
         },
-        makePackery: function() {
+        makePackery: function(data) {
             var that = this;
             var i = 0;
             var cnt = 0;
@@ -204,7 +243,7 @@ $(document).ready(function () {
             });
             $.ajax({
                 url: that.options.videoFeed,
-                data: {
+                data: data || {
                     'vc': that.options.videoCategory
                 }
             }).then(function(response) {
@@ -368,9 +407,27 @@ $(document).ready(function () {
                 return true;
             };
 
+
+            that.options.onFilterChange = function(type, id) {
+                console.log("onFilterChange")
+                var filter = {
+                    paginate: {
+                        page: that.options.page,
+                        block: that.options.block,
+                    }
+                };
+                filter.paginate[type] = parseInt(id, 10);;
+                console.log(filter);
+                that.clearThumbs();
+                //that.appendThumbs(filter);
+                return;
+            }
+
             fansWorldEvents.addListener('onVideoCategory', that.options.onVideoCategory);
             fansWorldEvents.addListener('onVideoGenre', that.options.onVideoGenre);
             fansWorldEvents.addListener('onFindVideosByTag', that.options.onFindVideosByTag);
+
+            fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
 
             $('section.' + that.options.block + ' > .add-more').on('click', function(event) {
                 that.addMoreThumbs(event);
@@ -601,25 +658,40 @@ $(document).ready(function () {
     "use strict";
 
     // Packery
+    var type = parseInt($(".filter-home").find('.active').attr('data-entity-type'), 10);
+    var id = parseInt($(".filter-home").find('.active').attr('data-entity-id'), 10);
+
+    var videoCategory = 0;
+    var videoGenre = 0;
+
+    console.log("creando packery");
+    console.log("VC: " + videoCategory);
+    console.log($(".filter-home").find('.active'));
+
     $('section.highlights').fwHomePackery({
-        videoCategory: $('.filter-home').find('.active').attr('data-category-id'),
-    })
+        videoCategory: videoCategory,
+        videoGenre: videoGenre
+    });
     // Semantic
     $('section.popular > .videos-container').fwHomeThumbs({
-        videoCategory: $('.filter-home').find('.active').attr('data-category-id'),
+        videoCategory: videoCategory,
+        videoGenre: videoGenre,
         block: 'popular'
     });
     $('section.followed > .videos-container').fwHomeThumbs({
-        videoCategory: $('.filter-home').find('.active').attr('data-category-id'),
+        videoCategory: videoCategory,
+        videoGenre: videoGenre,
         block: 'followed'
     });
     // Tags
     $('section.popular-tags > ul').fwHomeTags({
-        channel: $('.filter-home').find('.active').attr('data-category-id'),
+        videoCategory: videoCategory,
+        videoGenre: videoGenre,
         filter: 'popular'
     });
     $('section.followed-tags > ul').fwHomeTags({
-        channel: $('.filter-home').find('.active').attr('data-category-id'),
+        videoCategory: videoCategory,
+        videoGenre: videoGenre,
         filter: 'followed'
     });
 });
@@ -634,16 +706,22 @@ $(document).ready(function () {
         $(this).addClass('active');
         var videoCategory = $(this).attr('data-category-id');
         var videoGenre = $(this).attr('data-genre-id');
+        var type = $(this).attr('data-entity-type');
+        var id = $(this).attr('data-entity-id');
 
 
         ///////////////////////////////////////////////////////////////////////
         // Decoupled EventTrigger                                            //
         ///////////////////////////////////////////////////////////////////////
+        /*
         if(videoCategory.length > 0) {
             window.fansWorldEvents.emitEvent('onVideoCategory', [videoCategory]);
         } else if(videoGenre.length > 0) {
             console.log("call onVideoGenre")
             window.fansWorldEvents.emitEvent('onVideoGenre', [videoGenre]);
         }
+        */
+        window.fansWorldEvents.emitEvent('onFilterChange', [type, id]);
+
     });
 });
