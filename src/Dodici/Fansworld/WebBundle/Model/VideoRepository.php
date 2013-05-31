@@ -780,8 +780,8 @@ class VideoRepository extends CountBaseRepository
      * @param int|null $limit
      * @param int|null $offset
      */
-    public function searchHome($user=null, $genre=null, $category=null, $highlighted=null, $sortcriteria=null, $excludes=null, $limit=null, $offset=null)
+    public function searchHome($user=null, $genre=null, $category=null, $recommended = null, $highlighted=null, $sortcriteria=null, $excludes=null, $limit=null, $offset=null)
     {
-        return $this->search(null, $user, $limit, $offset, $category, $highlighted, null, null ,null, $sortcriteria, null, $excludes, null, null, null, null, $genre);
+        return $this->search(null, $user, $limit, $offset, $category, $highlighted, null, null ,null, $sortcriteria, null, $excludes, null, $recommended, null, null, $genre);
     }
 }
