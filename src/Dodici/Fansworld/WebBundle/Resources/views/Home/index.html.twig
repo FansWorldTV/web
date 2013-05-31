@@ -20,10 +20,10 @@
     <div class="home-content">
         <ul class="filter-home">
             {% for genre in genres %}
-                <li {% if loop.first %}class="active"{% endif %} data-genre-id = "{{ genre.id }}">{{ genre.title }}</li>
+                <li {% if loop.first %}class="active"{% endif %} data-entity-type="genre" data-entity-id = "{{ genre.id }}">{{ genre.title }}</li>
             {% endfor %}
             {% for category in categories %}
-                <li data-category-id = "{{ category.id }}">{{ category.title }}</li>
+                <li data-entity-type="vc" data-entity-id = "{{ category.id }}">{{ category.title }}</li>
             {% endfor %}
             {#<li><i class="icon-cog"></i></li>#}
         </ul>
