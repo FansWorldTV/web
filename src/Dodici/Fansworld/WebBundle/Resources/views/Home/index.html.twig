@@ -18,7 +18,6 @@
 
 {% block main_content %}
     <div class="home-content">
-
         <ul class="filter-home">
             {% for category in categories %}
                 <li {% if loop.first %}class="active"{% endif %} data-category-id = "{{ category.id }}">{{ category.title }}</li>
@@ -44,6 +43,7 @@
                 </header>
                 <div class="videos-container"></div>
                 <div class="clearfix"></div>
+                <div class="spinner hidden"><div class="mask"></div></div>
                 <div class="add-more">+</div>
             </section>
         {% endif %}
@@ -60,6 +60,7 @@
             </header>
             <div class="videos-container"></div>
             <div class="clearfix"></div>
+            <div class="spinner hidden"><div class="mask"></div></div>
             <div class="add-more">+</div>
         </section>
     </div>

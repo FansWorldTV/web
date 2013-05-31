@@ -166,7 +166,7 @@ class IdolController extends BaseController
             );
             
             if ($user) {
-                $return['followed'] = $this->get('fanmaker')->isFan($idol, $user) ? true : false;
+                $return['followed'] = $this->get('fanmaker')->status($idol, $user);
             }
 
             $allowedfields = array(
@@ -322,16 +322,12 @@ class IdolController extends BaseController
                 $fansOfIdol = $this->getRepository('User')->byIdols($idol, $pagination['limit'], 'score', $pagination['offset']);
 
                 $response = array();
+                $friender = $this->get('friender');
                 foreach ($fansOfIdol as $aFan) {
                     if($aFan->getId() != $userid) {
-                        $response[] = $this->userArray($aFan);
-                    }
-                }
-
-                if ($userid) {
-                    foreach ($response as &$rta) {
-                        $friendShip = $this->getRepository('Friendship')->findOneBy(array('author' => $userid, 'target'=> $rta['id'], 'active' => true));
-                        $friendShip ? $rta['followed'] = true : $rta['followed'] = false;
+                        $arr = $this->userArray($aFan);
+                        if ($userid) $arr['followed'] = $friender->status($aFan, $user);
+                        $response[] = $arr;
                     }
                 }
 

@@ -401,6 +401,8 @@ class BaseController extends SiteController
             'image' => $this->imageValues($video->getImage()),
             'highlight' => $video->getHighlight(),
             'category_id' => $video->getVideocategory()->getId(),
+            'genre_id' => $video->getGenre() ? (int)$video->getGenre()->getId() : null,
+            'genreparent_id' => $video->getGenre()->getParent() ? (int)$video->getGenre()->getParent()->getId() : null,
             'provider' => ($video->getYoutube() ? 'youtube' : 'kaltura')
         );
 
