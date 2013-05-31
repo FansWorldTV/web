@@ -2,35 +2,36 @@
 // ------=
 
 .tooltip {
-  position: absolute;
-  z-index: @zindexTooltip;
-  display: block;
-  visibility: visible;
-  padding: 5px;
-  font-size: 11px;
-  .opacity(0);
-  &.in     { .opacity(100); }
-  &.top    { margin-top:  -2px; }
-  &.right  { margin-left:  2px; }
-  &.bottom { margin-top:   2px; }
-  &.left   { margin-left: -2px; }
-  &.top .tooltip-arrow    { #popoverArrow > .top(5px, #e0e0e0); }
-  &.left .tooltip-arrow   { #popoverArrow > .left(5px, #e0e0e0); }
-  &.bottom .tooltip-arrow { #popoverArrow > .bottom(5px, #e0e0e0); }
-  &.right .tooltip-arrow  { #popoverArrow > .right(5px, #e0e0e0); }
+	position: absolute;
+	z-index: @zindexTooltip;
+	display: block;
+	visibility: visible;
+	padding: 5px;
+	font-size: 11px;
+	.opacity(0);
+	&.in     { .opacity(100); }
+	&.top    { margin-top:  -2px; }
+	&.right  { margin-left:  2px; }
+	&.bottom { margin-top:   2px; }
+	&.left   { margin-left: -2px; }
+	&.top .tooltip-arrow    { #popoverArrow > .top(5px, white); }
+	&.left .tooltip-arrow   { #popoverArrow > .left(5px, white); }
+	&.bottom .tooltip-arrow { #popoverArrow > .bottom(5px, white); }
+	&.right .tooltip-arrow  { #popoverArrow > .right(5px, white); }
 }
 .tooltip-inner {
-  max-width: 200px;
-  padding: 3px 8px;
-  color: #333;
-  text-align: center;
-  text-decoration: none;
-  background-color: @white;
-  border: 1px solid #e0e0e0;
-  .border-radius(4px);
+	max-width: 200px;
+	padding: 3px 8px;
+	color: #333;
+	text-align: center;
+	text-decoration: none;
+	background-color: @white;
+	border: 1px solid #e0e0e0;
+	.border-radius(4px);
 }
 .tooltip-arrow {
-  position: absolute;
-  width: 0;
-  height: 0;
+	position: absolute;
+	width: 0;
+	height: 0;
+	z-index: (@zindexTooltip+1);
 }

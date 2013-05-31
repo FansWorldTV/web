@@ -396,7 +396,7 @@ class UserController extends BaseController
                 foreach ($fansOfUser as $aFan) {
                     if($aFan->getId() != $userid) {
                         $arr = $this->userArray($aFan);
-                        if ($userid) $arr['followed'] = $friender->status($aFan, $user);
+                        if ($userid) $arr['followed'] = $friender->status($aFan, $userByGet);
                         $response[] = $arr;
                     }
                 }
