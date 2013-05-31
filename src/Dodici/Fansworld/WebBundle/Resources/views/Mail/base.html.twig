@@ -9,18 +9,18 @@
         @import url('http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800');
     </style>
     <div style="font-family: 'Open Sans', 'Verdana', 'Helvetica', 'Arial', 'sans-serif' ;font-weight: 300;width: 600px;display: block;margin: 0 auto;height: auto;border: 1px solid lightgray;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;overflow: hidden;margin-top: 40px;">
-      <div style="width: 580px;height: 50px;background-color: #000000;color: white;padding: 10px;display: inline-block;">
-        <div style="display: inline-block;height: 100%; padding-top: 9px; float:left;">
+      <div style="width: 580px;height: 50px;background-color: #000000;color: white;padding: 10px;display: inline-block; text-align: right;">
+        <div style="display: inline-block;padding-top: 9px; float:left;">
           <img src="{{ appmedia.absolute( asset('bundles/dodicifansworldweb/images/mail/fw-logo.jpg') ) }}" alt="Comparti tu pasion" style="float: left;"/>
         </div>
         {% if targetUser is defined %}
-        <div style="display: inline-block;height: 100%;float:right;">
-          <p style="text-align: right; text-align: right;line-height: 14px;margin: 7px;float: left;">
+        <div style="display: inline-block; height: 50px;">
+          <div style="line-height: 14px; margin: 0; display: inline-block;">
             <span class="fullname" style="font-size: 11px; font-weight: 600;">{{ targetUser }}</span>
             <br/>
             <span class="username" style="font-size: 10px;">({{ targetUser.username }})</span>
-          </p>
-          <a href="{{ url('user_wall', {'username': targetUser.username}) }}" style="float: left;"><img src="{{ appmedia.imageurl(targetUser.image, 'avatar') }}"  /></a>
+          </div>
+          <a href="{{ url('user_wall', {'username': targetUser.username}) }}" style=""><img src="{{ appmedia.imageurl(targetUser.image, 'avatar') }}"  /></a>
         </div>
         {% endif %}
       </div>
@@ -29,6 +29,6 @@
         {% block extratext %}{% endblock %}
       </div>
     </div>
-    <p style="font-size: 12px;font-weight: 500;color: lightgray;text-align: center;margin-top: 10px; font-family: 'Open Sans'; font-weight: 400;">Copyright 2013, todos los derechos reservados</p>
+    <div style="font-size: 12px;font-weight: 500;color: lightgray;text-align: center;margin-top: 10px; font-family: 'Open Sans'; font-weight: 400;">Copyright 2013, todos los derechos reservados</div>
   </body>
 </html>
