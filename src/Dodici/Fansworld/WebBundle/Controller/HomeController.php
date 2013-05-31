@@ -2,6 +2,7 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
+use Dodici\Fansworld\WebBundle\Entity\HomeVideo;
 use Dodici\Fansworld\WebBundle\Entity\VideoCategory;
 use Dodici\Fansworld\WebBundle\Entity\Genre;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -67,7 +68,9 @@ class HomeController extends SiteController
                 $homeVideo = $this->getRepository('Video')->findOneBy(array('genre' => $genre, 'highlight' => true));
             } else {
                 $homeVideo = $this->getRepository('HomeVideo')->findOneBy(array('videocategory' => $vc));
-                $homeVideo = $homeVideo->getVideo();
+                if($homeVideo instanceof HomeVideo){
+                    $homeVideo = $homeVideo->getVideo();
+                }
             }
             $response['home'] = $serializer->values($homeVideo, 'home_video_double');
 
@@ -91,7 +94,9 @@ class HomeController extends SiteController
                 $homeVideo = $this->getRepository('Video')->findOneBy(array('genre' => $genre, 'highlight' => true));
             } else {
                 $homeVideo = $this->getRepository('HomeVideo')->findOneBy(array('videocategory' => $vc));
-                $homeVideo = $homeVideo->getVideo();
+                if($homeVideo instanceof HomeVideo){
+                    $homeVideo = $homeVideo->getVideo();
+                }
             }
 
             $response = array('videos' => array());

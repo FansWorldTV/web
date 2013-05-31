@@ -20,10 +20,10 @@
     <div class="home-content">
         <ul class="filter-home">
             {% for genre in genres %}
-                <li data-genre-id = "{{ genre.id }}">{{ genre.title }}</li>
+                <li {% if loop.first %}class="active"{% endif %} data-genre-id = "{{ genre.id }}">{{ genre.title }}</li>
             {% endfor %}
             {% for category in categories %}
-                <li {% if loop.first %}class="active"{% endif %} data-category-id = "{{ category.id }}">{{ category.title }}</li>
+                <li data-category-id = "{{ category.id }}">{{ category.title }}</li>
             {% endfor %}
             {#<li><i class="icon-cog"></i></li>#}
         </ul>
@@ -31,6 +31,7 @@
         <section class="row-fluid gray highlights" id="home-gallery">
             <div class="grid-sizer"></div>
             <div class="gutter-sizer"></div>
+            <div class="spinner hidden"><div class="mask"></div></div>
         </section>
 
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
