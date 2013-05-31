@@ -72,13 +72,13 @@ class HomeController extends SiteController
             $response['home'] = $serializer->values($homeVideo, 'home_video_double');
 
             $limitWithTheHighlighted = (self::LIMIT_VIDEO - 3);
-            $videos = $videoRepo->searchHome(null, $genre, $vc, true, null, $homeVideo, $limitWithTheHighlighted, 0);
+            $videos = $videoRepo->searchHome(null, $genre, $vc, null, true, null, $homeVideo, $limitWithTheHighlighted, 0);
             $response['highlighted'] = $serializer->values($videos, 'home_video');
 
-            $videos = $videoRepo->searchHome($user, $genre, $vc, false, 'default', $homeVideo, self::LIMIT_VIDEO, 0);
+            $videos = $videoRepo->searchHome($user, $genre, $vc, true, false, 'default', $homeVideo, self::LIMIT_VIDEO, 0);
             $response['followed'] = $serializer->values($videos, 'home_video');
 
-            $videos = $videoRepo->searchHome(null, $genre, $vc, false, null, null, self::LIMIT_VIDEO, 0);
+            $videos = $videoRepo->searchHome(null, $genre, $vc, null, false, null, null, self::LIMIT_VIDEO, 0);
             $response['popular'] = $serializer->values($videos, 'home_video');
         } else {
             $genre = isset($paginate['genre']) ? $paginate['genre'] : null;
@@ -98,12 +98,12 @@ class HomeController extends SiteController
 
             switch ($block) {
                 case 'followed':
-                    $videos = $videoRepo->searchHome($user, $genre, $vc, false, 'default', $homeVideo, self::LIMIT_VIDEO, $offset);
+                    $videos = $videoRepo->searchHome($user, $genre, $vc, true, false, 'default', $homeVideo, self::LIMIT_VIDEO, $offset);
                     $response['videos'] = $serializer->values($videos, 'home_video');
-                    $videosCount = $videoRepo->countSearch(null, $user, $vc, false, null, null, null, null, $homeVideo, null, null, null, $genre);
+                    $videosCount = $videoRepo->countSearch(null, $user, $vc, false, null, null, null, null, $homeVideo, null, null, true, $genre);
                     break;
                 case 'popular':
-                    $videos = $videoRepo->searchHome(null, $genre, $vc, false, 'default', $homeVideo, self::LIMIT_VIDEO, $offset);
+                    $videos = $videoRepo->searchHome(null, $genre, $vc, null, false, 'default', $homeVideo, self::LIMIT_VIDEO, $offset);
                     $response['videos'] = $serializer->values($videos, 'home_video');
                     $videosCount = $videoRepo->countSearch(null, null, $vc, false, null, null, null, null, $homeVideo, null, null, null, $genre);
                     break;
