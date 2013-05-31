@@ -354,9 +354,9 @@ class VideoController extends SiteController
 
 
         return $this->jsonResponse(array(
-                    'videos' => $videos,
-                    'addMore' => $addMore
-                ));
+            'videos' => $videos,
+            'addMore' => $addMore
+        ));
     }
 
     /**

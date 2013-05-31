@@ -52,7 +52,7 @@ class HomeController extends SiteController
 
         $videoRepo = $this->getRepository('Video');
 
-        if(!$paginate){
+        if (!$paginate) {
             $vc = $request->get('vc', null);
             $genre = $request->get('genre', null);
 
@@ -63,15 +63,15 @@ class HomeController extends SiteController
                 'popular' => array()
             );
 
-            if($genre){
-                $homeVideo = $this->getRepository('Video')->findOneBy(array('genre'=>$genre, 'highlight' => true));
-            }else{
+            if ($genre) {
+                $homeVideo = $this->getRepository('Video')->findOneBy(array('genre' => $genre, 'highlight' => true));
+            } else {
                 $homeVideo = $this->getRepository('HomeVideo')->findOneBy(array('videocategory' => $vc));
                 $homeVideo = $homeVideo->getVideo();
             }
             $response['home'] = $serializer->values($homeVideo, 'home_video_double');
 
-            $limitWithTheHighlighted = (self::LIMIT_VIDEO-3);
+            $limitWithTheHighlighted = (self::LIMIT_VIDEO - 3);
             $videos = $videoRepo->searchHome(null, $genre, $vc, true, null, $homeVideo, $limitWithTheHighlighted, 0);
             $response['highlighted'] = $serializer->values($videos, 'home_video');
 
@@ -80,32 +80,36 @@ class HomeController extends SiteController
 
             $videos = $videoRepo->searchHome(null, $genre, $vc, false, null, null, self::LIMIT_VIDEO, 0);
             $response['popular'] = $serializer->values($videos, 'home_video');
-        }else{
+        } else {
             $genre = isset($paginate['genre']) ? $paginate['genre'] : null;
             $vc = isset($paginate['vc']) ? $paginate['vc'] : null;
             $block = $paginate['block'];
             $page = $paginate['page'];
-            $offset = ($page -1)*self::LIMIT_VIDEO;
+            $offset = ($page - 1) * self::LIMIT_VIDEO;
 
-            if($genre){
-                $homeVideo = $this->getRepository('Video')->findOneBy(array('genre'=>$genre, 'highlight' => true));
-            }else{
+            if ($genre) {
+                $homeVideo = $this->getRepository('Video')->findOneBy(array('genre' => $genre, 'highlight' => true));
+            } else {
                 $homeVideo = $this->getRepository('HomeVideo')->findOneBy(array('videocategory' => $vc));
                 $homeVideo = $homeVideo->getVideo();
             }
 
             $response = array('videos' => array());
 
-            switch($block){
+            switch ($block) {
                 case 'followed':
                     $videos = $videoRepo->searchHome($user, $genre, $vc, false, 'default', $homeVideo, self::LIMIT_VIDEO, $offset);
                     $response['videos'] = $serializer->values($videos, 'home_video');
+                    $videosCount = $videoRepo->countSearch(null, $user, $vc, false, null, null, null, null, $homeVideo, null, null, null, $genre);
                     break;
                 case 'popular':
                     $videos = $videoRepo->searchHome(null, $genre, $vc, false, 'default', $homeVideo, self::LIMIT_VIDEO, $offset);
                     $response['videos'] = $serializer->values($videos, 'home_video');
+                    $videosCount = $videoRepo->countSearch(null, null, $vc, false, null, null, null, null, $homeVideo, null, null, null, $genre);
                     break;
             }
+
+            $response['addmore'] = $videosCount > (($page) * self::LIMIT_VIDEO) ? true : false;
         }
 
         return $this->jsonResponse($response);
@@ -120,7 +124,7 @@ class HomeController extends SiteController
         $serializer = $this->get('serializer');
         $request = $this->getRequest();
         $filter = $request->get('filter', 0);
-        $filter = (int) $filter;
+        $filter = (int)$filter;
         $byTag = $request->get('tag', false);
 
         $video = $this->getRepository('Video');
@@ -144,9 +148,9 @@ class HomeController extends SiteController
 
 
         return $this->jsonResponse(array(
-                    'videos' => $serializer->values($videos, 'big'),
-                    'trending' => $trending
-                ));
+            'videos' => $serializer->values($videos, 'big'),
+            'trending' => $trending
+        ));
     }
 
     /**
@@ -170,7 +174,7 @@ class HomeController extends SiteController
 
         for ($i = 0; $i < 40; $i++) {
             $isPhoto = rand(0, 1);
-            $isPhoto = (bool) $isPhoto;
+            $isPhoto = (bool)$isPhoto;
 
             if ($isPhoto && $photoCountAdded < 20) {
                 if (isset($photo[$photoCountAdded])) {
@@ -192,8 +196,8 @@ class HomeController extends SiteController
         }
 
         return $this->jsonResponse(array(
-                    'elements' => $elements
-                ));
+            'elements' => $elements
+        ));
     }
 
     /**
@@ -206,8 +210,8 @@ class HomeController extends SiteController
         $fans = $this->getRepository('User')->findBy(array('enabled' => true), array('score' => 'DESC'), 20);
 
         return $this->jsonResponse(array(
-                    'fans' => $serializer->values($fans, 'big_square')
-                ));
+            'fans' => $serializer->values($fans, 'big_square')
+        ));
     }
 
     /**
@@ -220,8 +224,8 @@ class HomeController extends SiteController
         $events = $this->getRepository('Event')->findBy(array('finished' => false), array('weight' => 'desc'), 20);
 
         return $this->jsonResponse(array(
-                    'events' => $serializer->values($events, 'small')
-                ));
+            'events' => $serializer->values($events, 'small')
+        ));
     }
 
     /**
@@ -294,7 +298,7 @@ class HomeController extends SiteController
                     // set some flash
                     $this->get('session')->setFlash('error', 'Error procesando invitación');
                 }
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 // failed to get requester user, set some flash
                 $this->get('session')->setFlash('error', 'Error procesando invitación');
             }
