@@ -5,7 +5,7 @@
 {% endif %}
 
 {% block main %}
-    <div id="main-content-frame" class="container-fluid {{ preferences.get('toolbar_pos')|default('top') }}">
+    <div id="main-content-frame" class="container-fluid">
         <div class='row-fluid'>
             {# fullwidth content #}
             <section id="content" class="{% if fullwidth %} fullwidth {% else %} span12 {% endif %}">            
