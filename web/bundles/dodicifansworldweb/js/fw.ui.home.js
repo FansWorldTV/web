@@ -358,7 +358,6 @@ $(document).ready(function () {
                 return true;
             };
             that.options.onFilterChange = function(type, id) {
-                console.log("semantic onFilterChange: block: %s type: %s, id: %s", that.options.block, type, id);
                 id = parseInt(id, 10);
                 that.options.type = type;
                 that.options.id = id;
@@ -366,7 +365,7 @@ $(document).ready(function () {
                 var filter = {
                     paginate: {
                         page: that.options.page,
-                        block: that.options.block,
+                        block: that.options.block
                     }
                 };
                 filter.paginate[type] = parseInt(id, 10);
@@ -374,11 +373,11 @@ $(document).ready(function () {
                 that.insetThumbs(that.options.videoFeed, filter);
             };
 
-            fansWorldEvents.addListener('onFindVideosByTag', that.options.onFindVideosByTag);
-            fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
+            window.fansWorldEvents.addListener('onFindVideosByTag', that.options.onFindVideosByTag);
+            window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
 
             $('section.' + that.options.block + ' > .add-more').on('click', function(event) {
-                that.addMoreThumbs(event)
+                that.addMoreThumbs(event);
             });
             return true;
         },
@@ -408,14 +407,20 @@ $(document).ready(function () {
         },
         insetThumbs: function(feed, data) {
             var that = this;
-            var i = 0;
             var deferred = new jQuery.Deferred();
             $.ajax({
                 url: feed,
                 data: data
             }).then(function(response) {
+                var i = 0;
+                if(response.videos.length < 1) {
+                    $(that.element).parent().fadeOut('slow');
+                } else {
+                    $(that.element).parent().fadeIn('slow');
+                }
                 for(i in response.videos) {
                     if (response.videos.hasOwnProperty(i)) {
+                        var addmore = response.addmore;
                         var video = response.videos[i];
                         $.when(templateHelper.htmlTemplate('video-home_element', video))
                         .then(function(response){
@@ -423,8 +428,10 @@ $(document).ready(function () {
                             $thumb.find('img').load(function() {
                                 $(that.element).parent().find('.spinner').addClass('hidden');
                                 $(that.element).parent().find('.spinner').hide();
-                                if(response.addMore) {}
-                                $(that.element).parent().find('.add-more').show();
+                                console.log("response.addmore: " + addmore)
+                                if(addmore) {
+                                    $(that.element).parent().find('.add-more').show();
+                                }
                                 $thumb.hide().appendTo(that.element).fadeIn('slow');
                             });
                         });
@@ -634,7 +641,10 @@ $(document).ready(function () {
                 data: data
             }).then(function(response) {
                 var total = response.totals[that.options.filter];
-                $(that.element).text(total + ' videos');
+                //$(that.element).text(total + ' videos');
+                $(that.element).fadeOut(function() {
+                    $(this).text(total + ' videos');
+                }).fadeIn();
             });
         },
         destroy: function() {
