@@ -493,11 +493,29 @@ $(document).ready(function () {
             var self = $(that.element);
             self.bind("destroyed", $.proxy(that.teardown, that));
             self.addClass(that._name);
-            that.makeTags();
+            var reqData = {
+                filter: that.options.filter,
+                page: that.options.page
+            };
+            reqData[that.options.type] = parseInt(that.options.id, 10);
+            that.makeTags(reqData);
 
+            that.options.onFilterChange = function(type, id) {
+                id = parseInt(id, 10);
+                that.options.type = type;
+                that.options.id = id;
+                var reqData = {
+                    filter: that.options.filter,
+                    page: that.options.page
+                };
+                reqData[that.options.type] = that.options.id;
+                that.makeTags(reqData);
+            };
+
+            window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
             return true;
         },
-        makeTags: function() {
+        makeTags: function(data) {
             var that = this;
             var queue = $.jqmq({
                 // Queue items will be processed every queueDelay milliseconds.
@@ -528,24 +546,20 @@ $(document).ready(function () {
             });
             $.ajax({
                 url: that.options.tagSource,
-                data: {
-                    channel: that.options.channel,
-                    filter: that.options.filter,
-                    page: that.options.page
-                }
+                data: data
             }).then(function(response){
-                    var i = 0;
-                    var tags = response.tags;
-                    $(that.element).empty();
-                    for(i in tags){
-                        if (tags.hasOwnProperty(i)) {
-                            queue.add(tags[i]);
-                            if(i >= that.options.maxTags) {
-                                break;
-                            }
+                var i = 0;
+                var tags = response.tags;
+                $(that.element).empty();
+                for(i in tags){
+                    if (tags.hasOwnProperty(i)) {
+                        queue.add(tags[i]);
+                        if(i >= that.options.maxTags) {
+                            break;
                         }
                     }
-                });
+                }
+            });
         },
         destroy: function() {
             var that = this;
