@@ -243,7 +243,7 @@ class TeamController extends BaseController
                 }
 
                 $result = array();
-                foreach ($updates as $ui) $result[] = array('id' => $ui->getId(), 'fanCount' => $ui->getFanCount()); 
+                foreach ($updates as $ui) $result[] = array('id' => $ui->getId(), 'fanCount' => $ui->getFanCount(), 'status' => $this->get('fanmaker')->status($team, $user)); 
 
                 return $this->result((count($result) == 1) ? $result[0] : $result);
             } else {
