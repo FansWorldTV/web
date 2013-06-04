@@ -110,6 +110,8 @@ $(document).ready(function () {
     var defaults = {
         videoCategory: null,
         videoGenre: null,
+        type: null,
+        id: null,
         videoFeed: Routing.generate(appLocale + '_home_ajaxfilter'),
         selector: 'section.highlights',
         itemSelector: '.video',
@@ -133,86 +135,47 @@ $(document).ready(function () {
             self.bind("destroyed", $.proxy(that.teardown, that));
             self.addClass(that._name);
             that.options.container = document.querySelector(that.options.selector);
-            console.log("packery do type: %s id: %s", that.options.type, that.options.id)
 
-
-            that.options.onVideoGenre = function(videoGenre){
-                var v_genre = parseInt(videoGenre, 10);
-                if($.isNumeric(v_genre)) {
-                    that.options.videoGenre = v_genre;
-                    fansWorldEvents.removeListener('onVideoGenre', that.options.onVideoGenre);
+            that.options.onFilterChange = function (type, id){
+                id = parseInt(id, 10);
+                if($.isNumeric(id)) {
+                    that.options.type = type;
+                    that.options.id = id;
+                    fansWorldEvents.removeListener('onFilterChange', that.options.onFilterChange);
                     $.when(that.removeAll()).then(function(){
-                        $.when(that.makePackery()).then(function(){
-                            fansWorldEvents.addListener('onVideoGenre', that.options.onVideoGenre);
+                        var reqData = {};
+                        reqData[that.options.type] = parseInt(that.options.id, 10);
+                        $.when(that.makePackery(reqData)).then(function(){
+                            fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
                         }).progress(function() {
-                            //console.log("adding thumbnails to packery");
-                        }).fail(function(error){
-                            alert(error.message);
-                            fansWorldEvents.addListener('onVideoGenre', that.options.onVideoGenre);
-                        });
+                            }).fail(function(error){
+                                alert(error.message);
+                                fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
+                            });
                     }).fail(function(error){
-                        $.when(that.makePackery()).then(function(){
-                            fansWorldEvents.addListener('onVideoGenre', that.options.onVideoGenre);
-                        }).progress(function() {
-                            //console.log("adding thumbnails to packery");
-                        }).fail(function(error){
-                            alert(error.message);
-                            fansWorldEvents.addListener('onVideoGenre', that.options.onVideoGenre);
-                        });
-                    });
-
-                }
-            };
-
-            that.options.onVideoCategoryEvent = function (videoCategory){
-                var vc = parseInt(videoCategory, 10);
-                if($.isNumeric(vc)) {
-                    that.options.videoCategory = vc;
-                    fansWorldEvents.removeListener('onVideoCategory', that.options.onVideoCategoryEvent);
-                    $.when(that.removeAll()).then(function(){
-                        $.when(that.makePackery()).then(function(){
-                            fansWorldEvents.addListener('onVideoCategory', that.options.onVideoCategoryEvent);
-                        }).progress(function() {
-                            //console.log("adding thumbnails to packery");
-                        }).fail(function(error){
-                            alert(error.message);
-                            fansWorldEvents.addListener('onVideoCategory', that.options.onVideoCategoryEvent);
-                        });
-                    }).fail(function(error){
-                        $.when(that.makePackery()).then(function(){
-                            fansWorldEvents.addListener('onVideoCategory', that.options.onVideoCategoryEvent);
-                        }).progress(function() {
-                            //console.log("adding thumbnails to packery");
-                        }).fail(function(error){
-                            alert(error.message);
-                            fansWorldEvents.addListener('onVideoCategory', that.options.onVideoCategoryEvent);
-                        });
-                    });;
+                            var reqData = {};
+                            reqData[that.options.type] = parseInt(that.options.id, 10);
+                            $.when(that.makePackery(reqData)).then(function(){
+                                fansWorldEvents.addListener('onVideoCategory', that.options.onFilterChange);
+                            }).progress(function() {
+                                }).fail(function(error){
+                                    alert(error.message);
+                                    fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
+                                });
+                        });;
                 }
                 return true;
             };
-
-            //fansWorldEvents.addListener('onVideoCategory', that.options.onVideoCategoryEvent);
-            //fansWorldEvents.addListener('onVideoGenre', that.options.onVideoGenre);
+            fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
             that.options.packery = new Packery(that.options.container, {
                 itemSelector: '.video',
                 gutter: ".gutter-sizer",
                 columnWidth: ".grid-sizer"
             });
-            console.log("going to make packery with vc: " + that.options.videoCategory + " and data: " + $('.filter-home').find('.active').attr('data-category-id'))
-            /*if($.isNumeric(that.options.videoCategory)) {
-                that.makePackery({
-                    'vc': that.options.videoCategory
-                });
-            } else if ($.isNumeric(that.options.videoGenre)) {
-                that.makePackery({
-                    'genre': that.options.videoGenre
-                });
-            }
-            */
-            that.makePackery({
-                'genre': that.options.id
-            });
+            var reqData = {};
+            reqData[that.options.type] = parseInt(that.options.id, 10);
+            that.makePackery(reqData);
+
             return true;
         },
         makePackery: function(data) {
