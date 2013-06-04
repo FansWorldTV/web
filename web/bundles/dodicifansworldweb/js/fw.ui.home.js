@@ -141,28 +141,30 @@ $(document).ready(function () {
                 if($.isNumeric(id)) {
                     that.options.type = type;
                     that.options.id = id;
-                    fansWorldEvents.removeListener('onFilterChange', that.options.onFilterChange);
+//                    window.fansWorldEvents.removeListener('onFilterChange', that.options.onFilterChange);
                     $.when(that.removeAll()).then(function(){
                         var reqData = {};
                         reqData[that.options.type] = parseInt(that.options.id, 10);
                         $.when(that.makePackery(reqData)).then(function(){
-                            fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
+//                            window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
                         }).progress(function() {
-                            }).fail(function(error){
-                                alert(error.message);
-                                fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
-                            });
+                            console.log("adding thumbnails to packery");
+                        }).fail(function(error){
+                            alert(error.message);
+//                            window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
+                        });
                     }).fail(function(error){
-                            var reqData = {};
-                            reqData[that.options.type] = parseInt(that.options.id, 10);
-                            $.when(that.makePackery(reqData)).then(function(){
-                                fansWorldEvents.addListener('onVideoCategory', that.options.onFilterChange);
-                            }).progress(function() {
-                                }).fail(function(error){
-                                    alert(error.message);
-                                    fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
-                                });
-                        });;
+                        var reqData = {};
+                        reqData[that.options.type] = parseInt(that.options.id, 10);
+                        $.when(that.makePackery(reqData)).then(function(){
+//                                window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
+                        }).progress(function() {
+                            console.log("adding thumbnails to packery");
+                        }).fail(function(error){
+                            alert(error.message);
+//                                window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
+                        });
+                    });
                 }
                 return true;
             };
@@ -333,47 +335,16 @@ $(document).ready(function () {
             self.bind("destroyed", $.proxy(that.teardown, that));
             self.addClass(that._name);
             that.clearThumbs();
-            //that.appendThumbs();
-            console.log("semantic do type: %s id: %s", that.options.type, that.options.id)
             var fii = {
                 paginate: {
                     page: that.options.page,
                     block: that.options.block,
                 }
             };
-            fii.paginate[that.options.type] = parseInt(that.options.id, 10);
-
+            fii.paginate[that.options.type] = that.options.id;
             that.insetThumbs(Routing.generate(appLocale + '_home_ajaxfilter'), fii);
 
-
-            that.options.onVideoCategory = function(videoCategory){
-                var vc = parseInt(videoCategory, 10);
-                if($.isNumeric(vc)) {
-                    that.options.videoCategory = vc;
-                }
-                that.clearThumbs();
-                that.appendThumbs();
-                return true;
-            };
-            that.options.onVideoGenre = function(videoGenre){
-                var v_genre = parseInt(videoGenre, 10);
-                if($.isNumeric(v_genre)) {
-                    that.options.videoGenre = v_genre;
-                }
-                console.log("onVideoGenre: " + that.options.videoGenre)
-                that.clearThumbs();
-                that.appendThumbs({
-                    paginate:{
-                        page: that.options.page,
-                        block: that.options.block,
-                        genre: that.options.videoGenre
-                    }
-                });
-                return true;
-            };
             that.options.onFindVideosByTag = function(tag, filter){
-                console.log(arguments);
-                console.log(filter + " local: " + that.options.block);
                 if(filter === that.options.block) {
                     var url = Routing.generate(appLocale + "_video_ajaxsearchbytag");
                     var data = {
@@ -387,7 +358,11 @@ $(document).ready(function () {
                 return true;
             };
             that.options.onFilterChange = function(type, id) {
-                console.log("onFilterChange")
+                console.log("semantic onFilterChange: block: %s type: %s, id: %s", that.options.block, type, id);
+                id = parseInt(id, 10);
+                that.options.type = type;
+                that.options.id = id;
+                that.options.page = 1;
                 var filter = {
                     paginate: {
                         page: that.options.page,
@@ -395,19 +370,15 @@ $(document).ready(function () {
                     }
                 };
                 filter.paginate[type] = parseInt(id, 10);
-                console.log(filter);
                 that.clearThumbs();
-                that.appendThumbs(filter);
-                return;
-            }
+                that.insetThumbs(that.options.videoFeed, filter);
+            };
 
-            fansWorldEvents.addListener('onVideoCategory', that.options.onVideoCategory);
-            fansWorldEvents.addListener('onVideoGenre', that.options.onVideoGenre);
             fansWorldEvents.addListener('onFindVideosByTag', that.options.onFindVideosByTag);
             fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
 
             $('section.' + that.options.block + ' > .add-more').on('click', function(event) {
-                that.addMoreThumbs(event);
+                that.addMoreThumbs(event)
             });
             return true;
         },
@@ -422,47 +393,18 @@ $(document).ready(function () {
             var that = this;
             var button = $(event.srcElement);
             that.options.page += 1;
+            var filter = {
+                paginate: {
+                    page: that.options.page,
+                    block: that.options.block,
+                }
+            };
+            filter.paginate[that.options.type] = parseInt(that.options.id, 10);
             button.addClass('rotate');
-            $.when(that.appendThumbs()).then(function(response){
+
+            $.when(that.insetThumbs(that.options.videoFeed, filter)).then(function(response){
                 button.removeClass('rotate');
             });
-        },
-        appendThumbs: function(data, source) {
-            var that = this;
-            var i = 0;
-            var deferred = new jQuery.Deferred();
-            $.ajax({
-                url: source || that.options.videoFeed,
-                data: data || {
-                    paginate:{
-                        page: that.options.page,
-                        block: that.options.block,
-                        vc: that.options.videoCategory
-                    }
-                }
-            }).then(function(response) {
-                for(i in response.videos) {
-                    if (response.videos.hasOwnProperty(i)) {
-                        var video = response.videos[i];
-                        $.when(templateHelper.htmlTemplate('video-home_element', video))
-                        .then(function(response){
-                            var $thumb = $(response).clone();
-                            $thumb.find('img').load(function() {
-                                $(that.element).parent().find('.spinner').addClass('hidden');
-                                $(that.element).parent().find('.spinner').hide();
-                                $(that.element).parent().find('.add-more').show();
-                                $thumb.hide().appendTo(that.element).fadeIn('slow');
-                            })
-                        });
-                    }
-                }
-                return response.videos;
-            }).done(function(videos){
-                deferred.resolve(videos);
-            }).fail(function(error){
-                deferred.reject(new Error(error));
-            });
-            return deferred.promise();
         },
         insetThumbs: function(feed, data) {
             var that = this;
@@ -504,7 +446,8 @@ $(document).ready(function () {
         },
         teardown: function() {
             var that = this;
-            fansWorldEvents.removeListener('onVideoCategory', that.options.onVideoCategory);
+            fansWorldEvents.removeListener('onFindVideosByTag', that.options.onFindVideosByTag);
+            fansWorldEvents.removeListener('onFilterChange', that.options.onFilterChange);
             $.removeData($(that.element)[0], that._name);
             $(that.element).removeClass(that._name);
             that.unbind();
@@ -551,13 +494,14 @@ $(document).ready(function () {
             self.bind("destroyed", $.proxy(that.teardown, that));
             self.addClass(that._name);
             that.makeTags();
+
             return true;
         },
         makeTags: function() {
             var that = this;
             var queue = $.jqmq({
                 // Queue items will be processed every queueDelay milliseconds.
-                delay: 250,
+                delay: 125,
                 // Process queue items one-at-a-time.
                 batch: 1,
                 // For each queue item, execute this function.
@@ -568,14 +512,15 @@ $(document).ready(function () {
                     tag.setAttribute('id', videoTag.id);
                     tag.setAttribute('data-list-filter-type', videoTag.type);
                     tag.setAttribute('data-id', videoTag.id);
-                    fragment.appendChild( tag );
-                    //$(fragment).hide().appendTo(that.element).fadeIn(150);
-                    $(that.element).append(fragment);
                     $(tag).on('click', function(event){
+                        if($(this).hasClass('active')) {
+                            return;
+                        }
                         $(this).parent().find('.active').removeClass('active');
                         $(this).addClass('active');
                         window.fansWorldEvents.emitEvent('onFindVideosByTag', [videoTag, that.options.filter]);
                     });
+                    $(tag).hide().appendTo(that.element).fadeIn('slow');
                 },
                 // When the queue completes naturally, execute this function.
                 complete: function(){
@@ -629,6 +574,81 @@ $(document).ready(function () {
 });
 
 ///////////////////////////////////////////////////////////////////////////////
+// Show count plugins                                                        //
+///////////////////////////////////////////////////////////////////////////////
+$(document).ready(function () {
+    "use strict";
+    var pluginName = "fwShowCount";
+    var defaults = {
+        filter: null,
+        type: null,
+        id: null,
+        feed: Routing.generate(appLocale + '_home_ajaxfilter')
+    };
+    function Plugin(element, options) {
+        this.element = element;
+        this.options = $.extend({}, defaults, options);
+        this._defaults = defaults;
+        this._name = pluginName;
+        this.init();
+    }
+    Plugin.prototype = {
+        init: function () {
+            var that = this;
+            var self = $(that.element);
+            self.bind("destroyed", $.proxy(that.teardown, that));
+            self.addClass(that._name);
+
+            that.options.onFilterChange = function(type, id) {
+                that.options.type = type;
+                that.options.id = id;
+                var reqData = {};
+                reqData[that.options.type] = parseInt(that.options.id, 10);
+                that.getTotal(that.options.feed, reqData);
+                return;
+            };
+            fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
+            var reqData = {};
+            reqData[that.options.type] = parseInt(that.options.id, 10);
+            that.getTotal(that.options.feed, reqData);
+            return true;
+        },
+        getTotal: function(feed, data) {
+            var that  = this;
+            $.ajax({
+                url: feed,
+                data: data
+            }).then(function(response) {
+                var total = response.totals[that.options.filter];
+                $(that.element).text(total + ' videos');
+            });
+        },
+        destroy: function() {
+            var that = this;
+            $(that.element).unbind("destroyed", that.teardown);
+            that.teardown();
+            return true;
+        },
+        teardown: function() {
+            var that = this;
+            $.removeData($(that.element)[0], that._name);
+            $(that.element).removeClass(that._name);
+            that.unbind();
+            that.element = null;
+            return that.element;
+        },
+        bind: function() { },
+        unbind: function() { }
+    };
+    $.fn[pluginName] = function (options) {
+        return this.each(function () {
+            if (!$.data(this, pluginName)) {
+                $.data(this, pluginName, new Plugin(this, options));
+            }
+        });
+    };
+});
+///////////////////////////////////////////////////////////////////////////////
 // Attach plugin to all matching element                                     //
 ///////////////////////////////////////////////////////////////////////////////
 $(document).ready(function () {
@@ -641,17 +661,14 @@ $(document).ready(function () {
     var videoCategory = 0;
     var videoGenre = 0;
 
-    console.log("creando packery");
-    console.log("VC: " + videoCategory);
-    console.log($(".filter-home").find('.active'));
-
+    // Video Packery Gallery
     $('section.highlights').fwHomePackery({
         videoCategory: videoCategory,
         videoGenre: videoGenre,
         type: type,
         id: id
     });
-    // Semantic
+    // Video Grid
     $('section.popular > .videos-container').fwHomeThumbs({
         videoCategory: videoCategory,
         videoGenre: videoGenre,
@@ -666,7 +683,7 @@ $(document).ready(function () {
         id: id,
         block: 'followed'
     });
-    // Tags
+    // Video Tags
     $('section.popular-tags > ul').fwHomeTags({
         videoCategory: videoCategory,
         videoGenre: videoGenre,
@@ -681,6 +698,19 @@ $(document).ready(function () {
         id: id,
         filter: 'followed'
     });
+
+    // Video Counters
+    $('[data-total-followed]').fwShowCount({
+        type: type,
+        id: id,
+        filter: 'followed'
+    });
+
+    $('[data-total-popular]').fwShowCount({
+        type: type,
+        id: id,
+        filter: 'popular'
+    });
 });
 
 $(document).ready(function () {
@@ -689,26 +719,14 @@ $(document).ready(function () {
             return;
         }
         $(this).parent().find('.active').removeClass('active');
-        //$(this).toggleClass('active', 125);
         $(this).addClass('active');
-        var videoCategory = $(this).attr('data-category-id');
-        var videoGenre = $(this).attr('data-genre-id');
         var type = $(this).attr('data-entity-type');
-        var id = $(this).attr('data-entity-id');
-
+        var id = parseInt($(this).attr('data-entity-id'), 10);
 
         ///////////////////////////////////////////////////////////////////////
         // Decoupled EventTrigger                                            //
         ///////////////////////////////////////////////////////////////////////
-        /*
-        if(videoCategory.length > 0) {
-            window.fansWorldEvents.emitEvent('onVideoCategory', [videoCategory]);
-        } else if(videoGenre.length > 0) {
-            console.log("call onVideoGenre")
-            window.fansWorldEvents.emitEvent('onVideoGenre', [videoGenre]);
-        }
-        */
         window.fansWorldEvents.emitEvent('onFilterChange', [type, id]);
-
     });
+
 });
