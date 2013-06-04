@@ -3,16 +3,16 @@
 namespace Dodici\Fansworld\WebBundle\Entity;
 
 use Dodici\Fansworld\WebBundle\Model\VisitableInterface;
-
 use Dodici\Fansworld\WebBundle\Model\SearchableInterface;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\Idol
- * 
+ *
  * A sports player or similar. Can be followed by users (become a fan, Idolship).
  * Contents can be tagged with idols (HasIdol).
  *
@@ -24,7 +24,7 @@ class Idol implements SearchableInterface, VisitableInterface
 {
     const SEX_MALE = 'm';
     const SEX_FEMALE = 'f';
-    
+
     /**
      * @var bigint $id
      *
@@ -40,28 +40,28 @@ class Idol implements SearchableInterface, VisitableInterface
      * @ORM\Column(name="firstname", type="string", length=100, nullable=false)
      */
     private $firstname;
-    
+
     /**
      * @var string $lastname
      *
      * @ORM\Column(name="lastname", type="string", length=100, nullable=false)
      */
     private $lastname;
-    
+
     /**
      * @var text $nicknames
      *
      * @ORM\Column(name="nicknames", type="text", nullable=true)
      */
     private $nicknames;
-    
+
     /**
      * @var text $content
      *
      * @ORM\Column(name="content", type="text", nullable=true)
      */
     private $content;
-    
+
     /**
      * @var datetime $birthday
      *
@@ -75,35 +75,35 @@ class Idol implements SearchableInterface, VisitableInterface
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     private $createdAt;
-        
+
     /**
      * @var boolean $active
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
     private $active;
-    
+
     /**
      * @var Application\Sonata\MediaBundle\Entity\Media
      * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
      */
     private $image;
-    
+
     /**
      * @var Application\Sonata\MediaBundle\Entity\Media
      * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="splash", referencedColumnName="id")
      */
     private $splash;
-        
+
     /**
      * @var string $origin
      *
      * @ORM\Column(name="origin", type="string", length=250, nullable=true)
      */
     private $origin;
-    
+
     /**
      * @var Country
      *
@@ -113,89 +113,101 @@ class Idol implements SearchableInterface, VisitableInterface
      * })
      */
     private $country;
-    
+
     /**
      * @var string $sex
-     * 
+     *
      * @ORM\Column(name="sex", type="string", length=10, nullable=true)
      */
     private $sex;
-    
+
     /**
      * @var string $twitter
      *
      * @ORM\Column(name="twitter", type="string", length=100, nullable=true)
      */
     private $twitter;
-    
+
     /**
      * @var string $external
      *
      * @ORM\Column(name="external", type="string", length=100, nullable=true)
      */
     private $external;
-    
+
     /**
      * @var string $jobname
      *
      * @ORM\Column(name="jobname", type="string", length=250, nullable=true)
      */
     private $jobname;
-        
+
     /**
      * @ORM\OneToMany(targetEntity="IdolCareer", mappedBy="idol", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $idolcareers;
-    
+
     /**
      * @Gedmo\Slug(fields={"firstname", "lastname"}, unique=true)
      * @ORM\Column(length=250)
      */
     private $slug;
-    
+
     /**
      * @var integer $fanCount
      *
      * @ORM\Column(name="fancount", type="integer", nullable=false)
      */
     private $fanCount;
-    
+
     /**
      * @var integer $photoCount
      * @ORM\Column(name="photocount", type="bigint", nullable=false)
      */
     private $photoCount;
-    
+
     /**
      * @var integer $videoCount
      * @ORM\Column(name="videocount", type="bigint", nullable=false)
      */
     private $videoCount;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Visit", mappedBy="idol", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $visits;
-    
+
     /**
      * @var integer $visitCount
      *
      * @ORM\Column(name="visitcount", type="integer", nullable=false)
      */
     private $visitCount;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Idolship", mappedBy="idol", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $idolships;
-    
+
+    /**
+     * @var Genre
+     *
+     * @Assert\NotNull()
+     *
+     * @ORM\ManyToOne(targetEntity="Genre")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="genre_id", referencedColumnName="id")
+     * })
+     */
+    private $genre;
+
     public function __construct()
     {
         $this->visits = new \Doctrine\Common\Collections\ArrayCollection();
         $this->visitCount = 0;
         $this->idolcareers = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * @ORM\PrePersist()
      */
@@ -213,13 +225,13 @@ class Idol implements SearchableInterface, VisitableInterface
         if (null === $this->photoCount) {
             $this->setPhotoCount(0);
         }
-        
+
         if (null === $this->videoCount) {
             $this->setVideoCount(0);
         }
-        
+
     }
-    
+
     public function __toString()
     {
         return $this->getFirstname() . ' ' . $this->getLastname();
@@ -238,7 +250,7 @@ class Idol implements SearchableInterface, VisitableInterface
             }
         }
     }
-    
+
     public function getTitle()
     {
         return (string)$this;
@@ -247,7 +259,7 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get id
      *
-     * @return bigint 
+     * @return bigint
      */
     public function getId()
     {
@@ -267,7 +279,7 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get firstname
      *
-     * @return string 
+     * @return string
      */
     public function getFirstname()
     {
@@ -287,7 +299,7 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get lastname
      *
-     * @return string 
+     * @return string
      */
     public function getLastname()
     {
@@ -307,7 +319,7 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get nicknames
      *
-     * @return text 
+     * @return text
      */
     public function getNicknames()
     {
@@ -327,7 +339,7 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get content
      *
-     * @return text 
+     * @return text
      */
     public function getContent()
     {
@@ -347,7 +359,7 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get birthday
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getBirthday()
     {
@@ -367,7 +379,7 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get createdAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedAt()
     {
@@ -387,7 +399,7 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get active
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActive()
     {
@@ -407,7 +419,7 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get origin
      *
-     * @return string 
+     * @return string
      */
     public function getOrigin()
     {
@@ -427,7 +439,7 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get sex
      *
-     * @return string 
+     * @return string
      */
     public function getSex()
     {
@@ -447,7 +459,7 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
@@ -467,13 +479,13 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get image
      *
-     * @return Application\Sonata\MediaBundle\Entity\Media 
+     * @return Application\Sonata\MediaBundle\Entity\Media
      */
     public function getImage()
     {
         return $this->image;
     }
-    
+
     /**
      * Add idolcareers
      *
@@ -483,7 +495,7 @@ class Idol implements SearchableInterface, VisitableInterface
     {
         $this->addIdolcareer($idolcareers);
     }
-    
+
     /**
      * Add idolcareers
      *
@@ -498,13 +510,13 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get idolcareers
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getIdolcareers()
     {
         return $this->idolcareers;
     }
-    
+
     /**
      * Set idolcareers
      *
@@ -514,7 +526,7 @@ class Idol implements SearchableInterface, VisitableInterface
     {
         $this->idolcareers = $idolcareers;
     }
-    
+
     /**
      * Set twitter
      *
@@ -528,7 +540,7 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get twitter
      *
-     * @return string 
+     * @return string
      */
     public function getTwitter()
     {
@@ -548,13 +560,13 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get fanCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getFanCount()
     {
         return $this->fanCount;
     }
-    
+
     /**
      * Set photoCount
      *
@@ -564,7 +576,7 @@ class Idol implements SearchableInterface, VisitableInterface
     {
         $this->photoCount = $photoCount;
     }
-    
+
     /**
      * Get photoCount
      *
@@ -574,7 +586,7 @@ class Idol implements SearchableInterface, VisitableInterface
     {
         return $this->photoCount;
     }
-    
+
     /**
      * Set videoCount
      *
@@ -584,7 +596,7 @@ class Idol implements SearchableInterface, VisitableInterface
     {
         $this->videoCount = $videoCount;
     }
-    
+
     /**
      * Get videoCount
      *
@@ -594,8 +606,8 @@ class Idol implements SearchableInterface, VisitableInterface
     {
         return $this->videoCount;
     }
-    
-    
+
+
     /**
      * Set splash
      *
@@ -609,7 +621,7 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get splash
      *
-     * @return Application\Sonata\MediaBundle\Entity\Media 
+     * @return Application\Sonata\MediaBundle\Entity\Media
      */
     public function getSplash()
     {
@@ -629,13 +641,13 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get country
      *
-     * @return Dodici\Fansworld\WebBundle\Entity\Country 
+     * @return Dodici\Fansworld\WebBundle\Entity\Country
      */
     public function getCountry()
     {
         return $this->country;
     }
-    
+
     /**
      * Add visits
      *
@@ -647,7 +659,7 @@ class Idol implements SearchableInterface, VisitableInterface
         $this->setVisitCount($this->getVisitCount() + 1);
         $this->visits[] = $visits;
     }
-    
+
     public function addVisits(\Dodici\Fansworld\WebBundle\Entity\Visit $visits)
     {
         $this->addVisit($visits);
@@ -656,13 +668,13 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get visits
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getVisits()
     {
         return $this->visits;
     }
-    
+
     public function setVisits($visits)
     {
         $this->visits = $visits;
@@ -681,7 +693,7 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get visitCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getVisitCount()
     {
@@ -701,7 +713,7 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get external
      *
-     * @return string 
+     * @return string
      */
     public function getExternal()
     {
@@ -721,7 +733,7 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get idolships
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getIdolships()
     {
@@ -741,10 +753,31 @@ class Idol implements SearchableInterface, VisitableInterface
     /**
      * Get jobname
      *
-     * @return string 
+     * @return string
      */
     public function getJobname()
     {
         return $this->jobname;
     }
+
+    /**
+     * Set Genre
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Genre $genre
+     */
+    public function setGenre(\Dodici\Fansworld\WebBundle\Entity\Genre $genre)
+    {
+        $this->genre = $genre;
+    }
+
+    /**
+     * Get Genre
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Genre
+     */
+    public function getGenre()
+    {
+        return $this->genre;
+    }
+
 }

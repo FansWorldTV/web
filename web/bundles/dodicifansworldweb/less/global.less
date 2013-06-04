@@ -475,7 +475,14 @@
 #header {
     .navbar-inner {
         background-image: none;
-        background-color: black;
+	    background: #3f3f3f; /* Old browsers */
+	    background: -moz-linear-gradient(top,  #3f3f3f 0%, #191919 100%); /* FF3.6+ */
+	    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3f3f3f), color-stop(100%,#191919)); /* Chrome,Safari4+ */
+	    background: -webkit-linear-gradient(top,  #3f3f3f 0%,#191919 100%); /* Chrome10+,Safari5.1+ */
+	    background: -o-linear-gradient(top,  #3f3f3f 0%,#191919 100%); /* Opera 11.10+ */
+	    background: -ms-linear-gradient(top,  #3f3f3f 0%,#191919 100%); /* IE10+ */
+	    background: linear-gradient(to bottom,  #3f3f3f 0%,#191919 100%); /* W3C */
+	    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3f3f3f', endColorstr='#191919',GradientType=0 ); /* IE6-9 */
 
         .container {
             .left-container {
