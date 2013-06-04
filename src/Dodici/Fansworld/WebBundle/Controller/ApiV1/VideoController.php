@@ -113,6 +113,12 @@ class VideoController extends BaseController
                 null,
                 $genreid
             );
+            
+            if ($recommended && !$videos) {
+                $recommended = false;
+                $videos = $this->getRepository('Video')->search(null, $user, $pagination['limit'], $pagination['offset'], $categoryid,
+                $highlight, null, null, null, $sortcriteria, null, null, null, $recommended, $pagination['sort_order'], null, $genreid);
+            }
 
             $return = array();
 
