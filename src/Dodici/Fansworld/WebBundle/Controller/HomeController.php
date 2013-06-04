@@ -83,6 +83,9 @@ class HomeController extends SiteController
 
             $videos = $videoRepo->searchHome(null, $genre, $vc, null, false, null, null, self::LIMIT_VIDEO, 0);
             $response['popular'] = $serializer->values($videos, 'home_video');
+
+            $response['totals']['followed'] = $videoRepo->countSearch(null, $user, $vc, false, null, null, null, null, $homeVideo, null, null, true, $genre);
+            $response['totals']['popular'] = $videoRepo->countSearch(null, null, $vc, false, null, null, null, null, $homeVideo, null, null, null, $genre);;
         } else {
             $genre = isset($paginate['genre']) ? $paginate['genre'] : null;
             $vc = isset($paginate['vc']) ? $paginate['vc'] : null;
