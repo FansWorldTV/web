@@ -90,9 +90,10 @@ class TagRepository extends CountBaseRepository
                 has' . $type . '
                 INNER JOIN ' . $type . ' ON has' . $type . '.' . $type . '_id = ' . $type . '.id
                 INNER JOIN video ON has' . $type . '.video_id = video.id AND video.active = true
+                LEFT JOIN genre gn ON gn.id = video.genre_id
                 WHERE'
                     .(($videocategory) ? ' (:videocategory IS NULL OR (video.videocategory_id = :videocategory))' : '')
-                    .(($genre) ? ' (:genre IS NULL OR (video.genre_id = :genre))' : '')
+                    .(($genre) ? ' (:genre IS NULL OR (video.genre_id = :genre) OR (gn.parent_id = :genre))' : '')
                 .'GROUP BY ' . $type . '.id';
         }
 
