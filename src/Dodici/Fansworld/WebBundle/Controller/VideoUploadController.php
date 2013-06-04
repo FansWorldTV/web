@@ -108,6 +108,12 @@ class VideoUploadController extends SiteController
         foreach ($categories as $cat)
             $choicecat[$cat->getId()] = $cat;
 
+        $genres = $this->getRepository('Genre')->findBy(array(), array('parent' => 'ASC'));
+        $choisegenre = array();
+        foreach ($genres as $gen)
+            $choisegenre[$gen->getId()] = $gen;
+
+
         $video = null;
 
         $defaultData = array();
@@ -119,7 +125,8 @@ class VideoUploadController extends SiteController
                     'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
                     'youtube' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
                     'tagtext' => array(),
-                    'taguser' => array()
+                    'taguser' => array(),
+                    'genre' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\Choice(array_keys($choisegenre)))
                 ));
 
         $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
@@ -130,6 +137,7 @@ class VideoUploadController extends SiteController
                 ->add('privacy', 'choice', array('required' => true, 'choices' => $privacies, 'label' => 'Privacidad'))
                 ->add('tagtext', 'hidden', array('required' => false))
                 ->add('taguser', 'hidden', array('required' => false))
+                ->add('genre', 'choice', array('required' => true, 'choices' => $choisegenre, 'label' => 'Genero'))
                 ->getForm();
 
 
@@ -155,6 +163,7 @@ class VideoUploadController extends SiteController
                         }
 
                         $videocategory = $this->getRepository('VideoCategory')->find($data['videocategory']);
+                        $genre = $this->getRepository('Genre')->find($data['genre']);
 
                         $video = new Video();
                         $video->setAuthor($user);
@@ -164,6 +173,7 @@ class VideoUploadController extends SiteController
                         $video->setImage($image);
                         $video->setPrivacy($data['privacy']);
                         $video->setVideocategory($videocategory);
+                        $video->setGenre($genre);
                         $em->persist($video);
                         $em->flush();
 
@@ -221,6 +231,7 @@ class VideoUploadController extends SiteController
 
                     $em = $this->getDoctrine()->getEntityManager();
                     $videoCategory = $this->getRepository('VideoCategory')->find($data['categories']);
+                    $genre = $this->getRepository('Genre')->find($data['genre']);
 
                     $video = new Video();
                     $video->setAuthor($user);
@@ -229,6 +240,7 @@ class VideoUploadController extends SiteController
                     $video->setStream($data['entryid']);
                     $video->setPrivacy($data['privacy']);
                     $video->setVideocategory($videoCategory);
+                    $video->setGenre($genre);
                     $video->setActive(false);
                     $em->persist($video);
                     $em->flush();
@@ -315,6 +327,9 @@ class VideoUploadController extends SiteController
                     $videoCategory = $this->getRepository('VideoCategory')->find($data['categories']);
                     $video->setVideocategory($videoCategory);
 
+                    $genre = $this->getRepository('Genre')->find($data['genre']);
+                    $video->setGenre($genre);
+
                     $videoImage = $this->getImageUrl($video->getImage());
 
                     $em = $this->getDoctrine()->getEntityManager();
@@ -366,6 +381,13 @@ class VideoUploadController extends SiteController
         $categoriesChoices = array();
         foreach ($videoCategories as $ab)
             $categoriesChoices[$ab->getId()] = $ab->getTitle();
+
+        $genres = $this->getRepository('Genre')->findAll();
+        $genrechoises = array();
+        foreach ($genres as $gen)
+            $genrechoises[$gen->getId()] = $gen->getTitle();
+
+
         $defaultData = array();
         $collectionConstraint = new Collection(array(
             'title' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
@@ -382,7 +404,8 @@ class VideoUploadController extends SiteController
             'fb' => array(),
             'tw' => array(),
             'fw' => array(),
-            'entryid' => array()
+            'entryid' => array(),
+            'genre' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($genrechoises)))
         ));
 
         $formVideo = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
@@ -401,6 +424,7 @@ class VideoUploadController extends SiteController
             ->add('tw', 'hidden', array('required' => false))
             ->add('fw', 'hidden', array('required' => false))
             ->add('entryid', 'hidden', array('required' => true))
+            ->add('genre', 'choice', array('required' => true, 'choices' => $genrechoises, 'label' => 'Genero'))
             ->getForm();
         return $formVideo;
     }
@@ -411,6 +435,12 @@ class VideoUploadController extends SiteController
         $categoriesChoices = array();
         foreach ($videoCategories as $ab)
             $categoriesChoices[$ab->getId()] = $ab->getTitle();
+
+        $genres = $this->getRepository('Genre')->findAll();
+        $genrechoises = array();
+        foreach ($genres as $gen)
+            $genrechoises[$gen->getId()] = $gen->getTitle();
+
         $defaultData = array();
         $collectionConstraint = new Collection(array(
             'title' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
@@ -427,7 +457,8 @@ class VideoUploadController extends SiteController
             'fb' => array(),
             'tw' => array(),
             'fw' => array(),
-            'youtubelink' => array()
+            'youtubelink' => array(),
+            'genre' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($genrechoises)))
         ));
 
         $defaultData['title'] = $videotemp->getTitle();
@@ -450,6 +481,7 @@ class VideoUploadController extends SiteController
             ->add('tw', 'hidden', array('required' => false))
             ->add('fw', 'hidden', array('required' => false))
             ->add('youtubelink', 'hidden', array('required' => true))
+            ->add('genre', 'choice', array('required' => true, 'choices' => $genrechoises, 'label' => 'Genero'))
             ->getForm();
         return $formVideo;
     }
