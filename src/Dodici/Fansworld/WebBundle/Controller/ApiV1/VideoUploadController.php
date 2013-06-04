@@ -37,6 +37,7 @@ class VideoUploadController extends BaseController
      * - video_title: string
      * - video_content: string
      * - video_category: int
+     * - video_genre: int
      * - [signature params]
      * 
      * @return 
@@ -71,11 +72,16 @@ class VideoUploadController extends BaseController
                 $title = $request->get('video_title');
                 $content = $request->get('video_content');
                 $vcid = $request->get('video_category');
+                $genreid = $request->get('video_genre');
                 $vc = $this->getRepository('VideoCategory')->find($vcid);
+                $genre = $this->getRepository('Genre')->find($genreid);
+                
                 if (!$title) throw new HttpException(400, 'Requires video_title');
                 if (!$content) throw new HttpException(400, 'Requires video_content');
                 if (!$vcid) throw new HttpException(400, 'Requires video_category');
                 if (!$vc) throw new HttpException(400, 'Invalid video_category');
+                if (!$genreid) throw new HttpException(400, 'Requires video_genre');
+                if (!$genre->getParent())  throw new HttpException(400, 'Genre must not be a parent genre');
                 
                 $uploadtoken = $kaltura->getUploadToken();
                 $entryid = $kaltura->addEntryFromToken($uploadtoken, $title);
@@ -87,6 +93,7 @@ class VideoUploadController extends BaseController
                 $video->setTitle($title);
                 $video->setContent($content);
                 $video->setVideocategory($vc);
+                $video->setGenre($genre);
                 $video->setActive(false);
                 $video->setStream($entryid);
                 
