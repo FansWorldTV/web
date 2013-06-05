@@ -468,6 +468,36 @@ class IdolController extends SiteController
         );
     }
 
+    /**
+     *  get params (all optional):
+     *  - genre
+     *  - limit
+     *  - offset
+     *  @Route("/ajax/getPopularIdols", name="idolsPopular_ajaxget")
+     */
+    public function popularIdolsByGenre()
+    {
+        $request = $this->getRequest();
+        $genre = $request->get('genre');
+        $limit = $request->get('limit');
+        $offset = $request->get('offset');
+
+        $idols = $this->getRepository('Idol')->byGenre($genre, $limit, $offset);
+
+        $response = array();
+        foreach ($idols as $idol) {
+            $response[] = array(
+                'id' => $idol->getId(),
+                'name' => (string) $idol,
+                'slug' => $idol->getSlug(),
+                'fancount' => $idol->getFanCount(),
+                'genre' => $this->get('serializer')->values($idol->getGenre())
+            );
+        }
+
+        return $this->jsonResponse($response);
+    }
+
     private function _createForm()
     {
         $defaultData = array();

@@ -624,6 +624,37 @@ class TeamController extends SiteController
         );
     }
 
+
+    /**
+     *  get params (all optional):
+     *  - genre
+     *  - limit
+     *  - offset
+     *  @Route("/ajax/getPopularTeams", name="teamsPopular_ajaxget")
+     */
+    public function popularTeamsByGenre()
+    {
+        $request = $this->getRequest();
+        $genre = $request->get('genre');
+        $limit = $request->get('limit');
+        $offset = $request->get('offset');
+
+        $teams = $this->getRepository('Team')->byGenre($genre, $limit, $offset);
+
+        $response = array();
+        foreach ($teams as $team) {
+            $response[] = array(
+                'id' => $team->getId(),
+                'name' => (string) $team,
+                'slug' => $team->getSlug(),
+                'fancount' => $team->getFanCount(),
+                'genre' => $this->get('serializer')->values($team->getGenre())
+            );
+        }
+
+        return $this->jsonResponse($response);
+    }
+
     private function _createForm()
     {
         $defaultData = array();
