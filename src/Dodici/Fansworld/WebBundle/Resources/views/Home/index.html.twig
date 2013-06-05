@@ -19,8 +19,9 @@
 {% block main_content %}
     <div class="home-content">
         <ul class="filter-home">
+            <li class="active" data-entity-type="null" data-entity-id="null">TODOS</li>
             {% for genre in genres %}
-                <li {% if loop.first %}class="active"{% endif %} data-entity-type="genre" data-entity-id = "{{ genre.id }}">{{ genre.title }}</li>
+                <li {#{% if loop.first %}class="active"{% endif %}#} data-entity-type="genre" data-entity-id = "{{ genre.id }}">{{ genre.title }}</li>
             {% endfor %}
             {% for category in categories %}
                 <li data-entity-type="vc" data-entity-id = "{{ category.id }}">{{ category.title }}</li>
