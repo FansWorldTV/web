@@ -1,10 +1,10 @@
 [symfony]
     git=http://github.com/symfony/symfony.git
-    version=v2.0.18
+    version=v2.0.23
 
 [twig]
     git=http://github.com/fabpot/Twig.git
-    version=v1.9.1
+    version=v1.13.0
 
 [monolog]
     git=http://github.com/Seldaek/monolog.git

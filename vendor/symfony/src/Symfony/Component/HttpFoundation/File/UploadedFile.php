@@ -94,9 +94,7 @@ class UploadedFile extends File
             throw new FileException(sprintf('Unable to create UploadedFile because "file_uploads" is disabled in your php.ini file (%s)', get_cfg_var('cfg_file_path')));
         }
 
-        $originalName = str_replace('\\', '/', $originalName);
-        $pos = strrpos($originalName, '/');
-        $this->originalName = false === $pos ? $originalName : substr($originalName, $pos + 1);
+        $this->originalName = $this->getName($originalName);
         $this->mimeType = $mimeType ?: 'application/octet-stream';
         $this->size = $size;
         $this->error = $error ?: UPLOAD_ERR_OK;
@@ -168,7 +166,7 @@ class UploadedFile extends File
     /**
      * Returns whether the file was uploaded successfully.
      *
-     * @return Boolean  True if no error occurred during uploading
+     * @return Boolean True if no error occurred during uploading
      *
      * @api
      */
@@ -191,8 +189,21 @@ class UploadedFile extends File
      */
     public function move($directory, $name = null)
     {
-        if ($this->isValid() && ($this->test || is_uploaded_file($this->getPathname()))) {
-            return parent::move($directory, $name);
+        if ($this->isValid()) {
+            if ($this->test) {
+                return parent::move($directory, $name);
+            } elseif (is_uploaded_file($this->getPathname())) {
+                $target = $this->getTargetFile($directory, $name);
+
+                if (!@move_uploaded_file($this->getPathname(), $target)) {
+                    $error = error_get_last();
+                    throw new FileException(sprintf('Could not move the file "%s" to "%s" (%s)', $this->getPathname(), $target, strip_tags($error['message'])));
+                }
+
+                @chmod($target, 0666 & ~umask());
+
+                return $target;
+            }
         }
 
         throw new FileException(sprintf('The file "%s" has not been uploaded via Http', $this->getPathname()));
