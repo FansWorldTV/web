@@ -18,13 +18,16 @@ class AboutController extends SiteController
 {
     /**
      * terms and condition's view
-     * @Route("/terms", name="about_terms")
+     * @Route("/terms/{format}", name="about_terms", defaults = {"format" = null})
      * @Template
      */
-    public function termsAction()
+    public function termsAction($format = null)
     {
-		
-        return array();
+		if ($format == 'text') {
+		    return $this->render('DodiciFansworldWebBundle:About:terms_mobile.html.twig');
+		} else {
+		    return array();
+		}
     }
     
 }

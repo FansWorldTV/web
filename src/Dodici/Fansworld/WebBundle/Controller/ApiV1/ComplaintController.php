@@ -26,12 +26,13 @@ class ComplaintController extends BaseController
      * [signed] List
      * 
      * @Route("/report/{entityType}/{entityId}", name= "api_v1_complaint")
-     * @Method({"GET"})
+     * @Method({"POST"})
      *
-     * Get params:
+     * Entity types: video|photo|comment
+     *
+     * Post params:
      * - user_id: int
      * - [user token]
-     * - video_id: int
      * - [signature params]
      * - category: int
      * - comment: string
@@ -42,6 +43,8 @@ class ComplaintController extends BaseController
         try {
             if ($this->hasValidSignature()) {
                 $request = $this->getRequest();
+                if (!in_array($entityType, array('video','photo','comment'))) throw new HttpException(401, 'Invalid entity type');
+                
                 $userid = $request->get('user_id');
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
 
