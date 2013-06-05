@@ -26,7 +26,7 @@ class IdolRepository extends CountBaseRepository
         $terms = array();
         $xp = explode(' ', $filtername);
         foreach ($xp as $x) if (trim($x)) $terms[] = trim($x);
-        
+
         $querystring = '
     	SELECT i
     	FROM \Dodici\Fansworld\WebBundle\Entity\Idol i
@@ -50,7 +50,7 @@ class IdolRepository extends CountBaseRepository
             		(i.lastname LIKE :term'.$k.')
             	)
             	';
-                
+
             }
         }
 
@@ -77,7 +77,7 @@ class IdolRepository extends CountBaseRepository
 
         if ($terms) {
             foreach ($terms as $k => $t) $query = $query->setParameter('term'.$k, '%' . $t . '%');
-        }   
+        }
 
         if ($limit !== null)
             $query = $query->setMaxResults($limit);
@@ -98,7 +98,7 @@ class IdolRepository extends CountBaseRepository
         $terms = array();
         $xp = explode(' ', $filtername);
         foreach ($xp as $x) if (trim($x)) $terms[] = trim($x);
-        
+
         $querystring = '
     	SELECT COUNT(i)
     	FROM \Dodici\Fansworld\WebBundle\Entity\Idol i
@@ -122,7 +122,7 @@ class IdolRepository extends CountBaseRepository
             		(i.lastname LIKE :term'.$k.')
             	)
             	';
-                
+
             }
         }
 
@@ -145,7 +145,7 @@ class IdolRepository extends CountBaseRepository
 
         if ($terms) {
             foreach ($terms as $k => $t) $query = $query->setParameter('term'.$k, '%' . $t . '%');
-        }  
+        }
 
         if ($limit !== null)
             $query = $query->setMaxResults($limit);
@@ -309,5 +309,32 @@ class IdolRepository extends CountBaseRepository
             ->setMaxResults(1);
 
         return $query->getOneOrNullResult();
+    }
+
+    /**
+     * Returns the Idols related to $genre(if genre given) order by popularity
+     * @param Genre entity or Genre_id (Int)  $genre
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function byGenre($genre=null, $limit=null, $offset=null)
+    {
+        $query = $this->_em->createQuery('
+            SELECT i
+            FROM \Dodici\Fansworld\WebBundle\Entity\Idol i
+            LEFT JOIN i.genre igen
+            WHERE i.active = true
+            AND
+            ((:genre IS NULL OR (igen = :genre OR igen.parent = :genre)))
+            ORDER BY i.fanCount DESC
+        ')
+            ->setParameter('genre', ($genre instanceof Genre) ? $genre->getId() : $genre);
+
+        if ($limit !== null)
+            $query = $query->setMaxResults($limit);
+        if ($offset !== null)
+            $query = $query->setFirstResult($offset);
+
+        return $query->getResult();
     }
 }
