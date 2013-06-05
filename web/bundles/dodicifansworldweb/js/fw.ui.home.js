@@ -139,6 +139,7 @@ $(document).ready(function () {
             that.options.onFilterChange = function (type, id){
                 id = parseInt(id, 10);
                 if($.isNumeric(id)) {
+                    console.log("PACKERY ON FILTER-CHANGE");return;
                     that.options.type = type;
                     that.options.id = id;
 //                    window.fansWorldEvents.removeListener('onFilterChange', that.options.onFilterChange);
@@ -146,29 +147,29 @@ $(document).ready(function () {
                         var reqData = {};
                         reqData[that.options.type] = parseInt(that.options.id, 10);
                         $.when(that.makePackery(reqData)).then(function(){
-//                            window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
+//                          window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
                         }).progress(function() {
                             console.log("adding thumbnails to packery");
                         }).fail(function(error){
                             alert(error.message);
-//                            window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
+//                          window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
                         });
                     }).fail(function(error){
                         var reqData = {};
                         reqData[that.options.type] = parseInt(that.options.id, 10);
                         $.when(that.makePackery(reqData)).then(function(){
-//                                window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
+//                          window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
                         }).progress(function() {
                             console.log("adding thumbnails to packery");
                         }).fail(function(error){
                             alert(error.message);
-//                                window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
+//                          window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
                         });
                     });
                 }
                 return true;
             };
-            fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
+            window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
             that.options.packery = new Packery(that.options.container, {
                 itemSelector: '.video',
                 gutter: ".gutter-sizer",
@@ -355,7 +356,6 @@ $(document).ready(function () {
                     that.clearThumbs();
                     that.insetThumbs(url, data);
                 }
-                return true;
             };
             that.options.onFilterChange = function(type, id) {
                 id = parseInt(id, 10);
@@ -518,7 +518,6 @@ $(document).ready(function () {
                 reqData[that.options.type] = that.options.id;
                 that.makeTags(reqData);
             };
-
             window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
             return true;
         },
@@ -672,6 +671,7 @@ $(document).ready(function () {
         });
     };
 });
+
 ///////////////////////////////////////////////////////////////////////////////
 // Attach plugin to all matching element                                     //
 ///////////////////////////////////////////////////////////////////////////////
