@@ -177,10 +177,11 @@ $(document).ready(function () {
             var onAdd = function(pckryInstance, laidOutItems) {
                 var items = pckryInstance.getItemElements();
                 deferred.notify(laidOutItems);
-                if(0 === queue.size() && totalVideos === laidOutItems.length) {
+                if(0 === queue.size() && totalVideos === laidOutItems.length) {                    
                     deferred.resolve();
                     pckryInstance.off('layoutComplete', onAdd);
                 }
+                that.show();
             };
             that.options.packery.on('layoutComplete', onAdd);
             queue = $.jqmq({
@@ -208,8 +209,6 @@ $(document).ready(function () {
                 totalVideos = response.highlighted.length;
                 if(totalVideos <= 0) {
                     deferred.reject(new Error("Video category does not contain any video"));
-                } else {
-                    that.show();
                 }
                 for(i in response.highlighted) {
                     if (response.highlighted.hasOwnProperty(i)) {
@@ -422,8 +421,6 @@ $(document).ready(function () {
                 var i = 0;
                 if(response.videos.length < 1) {
                     $(that.element).parent().fadeOut('slow');
-                } else {
-                    $(that.element).parent().fadeIn('slow');
                 }
                 for(i in response.videos) {
                     if (response.videos.hasOwnProperty(i)) {
@@ -435,6 +432,7 @@ $(document).ready(function () {
                             $thumb.find('img').load(function() {
                                 $(that.element).parent().find('.spinner').addClass('hidden');
                                 $(that.element).parent().find('.spinner').hide();
+                                $(that.element).parent().fadeIn('slow');
                                 console.log("response.addMore: " + addMore)
                                 if(addMore) {
                                     $(that.element).parent().find('.add-more').show();
