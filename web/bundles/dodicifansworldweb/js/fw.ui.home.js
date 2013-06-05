@@ -454,6 +454,8 @@ $(document).ready(function () {
                                 console.log("response.addMore: " + addMore)
                                 if(addMore) {
                                     $(that.element).parent().find('.add-more').show();
+                                } else {
+                                    $(that.element).parent().find('.add-more').hide();
                                 }
                                 $thumb.hide().appendTo(that.element).fadeIn('slow');
                             });
