@@ -274,6 +274,7 @@ $(document).ready(function () {
         },
         show: function() {
             var that = this;
+            $(that.element).removeClass('hidden');
             $(that.element).fadeIn(function() {
                 $(that.element).parent().find('.spinner').addClass('hidden');
                 $(that.element).parent().find('.spinner').hide();
@@ -432,6 +433,7 @@ $(document).ready(function () {
                             $thumb.find('img').load(function() {
                                 $(that.element).parent().find('.spinner').addClass('hidden');
                                 $(that.element).parent().find('.spinner').hide();
+                                $(that.element).parent().removeClass('hidden');
                                 $(that.element).parent().fadeIn('slow');
                                 console.log("response.addMore: " + addMore)
                                 if(addMore) {

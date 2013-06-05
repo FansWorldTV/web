@@ -28,13 +28,13 @@
             {% endfor %}
         </ul>
 
-        <section class="row-fluid gray highlights" id="home-gallery">
+        <section class="row-fluid gray highlights hidden" id="home-gallery">
             <div class="grid-sizer"></div>
             <div class="gutter-sizer"></div>
         </section>
 
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            <section class="row-fluid followed">
+            <section class="row-fluid followed hidden">
                 <header class="clearfix">
                     <h3 class="pull-left">Sigues</h3>
                     <span class="cant pull-left"><span data-total-followed></span> videos</span>
@@ -50,7 +50,7 @@
             </section>
         {% endif %}
 
-        <section class="row-fluid gray popular">
+        <section class="row-fluid gray popular hidden">
             <header class="clearfix">
                 <h3 class="pull-left">Popular</h3>
                 <span class="cant pull-left"><span data-total-popular></span> videos</span>
