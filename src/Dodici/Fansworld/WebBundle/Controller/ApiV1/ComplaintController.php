@@ -76,5 +76,41 @@ class ComplaintController extends BaseController
             return $this->plainException($e);
         }
     }
+
+    /**
+     * Complaint - categories list
+     *
+     * @Route("/complaint/categories", name="api_v1_complaint_category_list")
+     * @Method({"GET"})
+     *
+     * Get params:
+     * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
+     * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
+     * - <optional> sort: 'title' (default: title)
+     * - <optional> sort_order: 'asc'|'desc' (default: desc)
+     *
+     * @return
+     * array (
+     *      array (
+     *          id: int,
+     *          title: string
+     *      ),
+     *      ...
+     *      )
+     *
+     */
+    public function categoriesAction()
+    {
+        try {
+            $categories = $this->getRepository('ComplaintCategory')->findAll();
+
+            $return = $this->get('serializer')->values($categories);
+
+            return $this->result($return);
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
+
 }
 
