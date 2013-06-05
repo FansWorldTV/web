@@ -85,7 +85,6 @@ class ComplaintController extends BaseController
      *
      * Get params:
      * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
-     * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
      * - <optional> sort: 'title' (default: title)
      * - <optional> sort_order: 'asc'|'desc' (default: desc)
      *
