@@ -47,19 +47,6 @@ $(document).ready(function () {
     var pluginName = "fwHomeGallery";
     var defaults = {
         videoCategory: null,
-        videoFeed: Routing.generate(window.appLocale + '_home_ajaxfilter'),
-        imteStyle: {
-            'width': '16%',
-            'height': '160px',
-            'margin-top': '5px',
-            'margin-bottom': '5px',
-            'border': '1px solid #333',
-            'border-radius': '4px',
-            'overflow': 'hidden'
-        },
-        itemSelector: '.video',
-        feedSource: '',
-        feedfilter: {}
     };
     function Plugin(element, options) {
         this.element = element;
@@ -287,7 +274,7 @@ $(document).ready(function () {
         },
         teardown: function() {
             var that = this;
-            fansWorldEvents.removeListener('onVideoCategory', that.options.onVideoCategoryEvent);
+            window.fansWorldEvents.removeListener('onFilterChange', that.options.onFilterChange);
             $.removeData($(that.element)[0], that._name);
             $(that.element).removeClass(that._name);
             that.unbind();
@@ -351,11 +338,6 @@ $(document).ready(function () {
                 if(filter === that.options.block) {
                     var url = Routing.generate(appLocale + "_video_ajaxsearchbytag");
                     that.options.videoFeed = Routing.generate(appLocale + "_video_ajaxsearchbytag");
-//                    var data = {
-//                        id: tag.id,
-//                        entity: tag.type,
-//                        page: that.options.page
-//                    };
                     that.options.getFilter = function() {
                         return {
                             id: tag.id,
@@ -373,13 +355,6 @@ $(document).ready(function () {
                 that.options.id = id;
                 that.options.page = 1;
                 that.options.videoFeed = Routing.generate(appLocale + '_home_ajaxfilter');
-//                var filter = {
-//                    paginate: {
-//                        page: that.options.page,
-//                        block: that.options.block
-//                    }
-//                };
-//                filter.paginate[type] = parseInt(id, 10);
                 that.options.getFilter = function() {
                     var filter = {
                         paginate: {
@@ -413,15 +388,6 @@ $(document).ready(function () {
             var that = this;
             var button = $(event.srcElement);
             that.options.page += 1;
-            /*
-            var filter = {
-                paginate: {
-                    page: that.options.page,
-                    block: that.options.block,
-                }
-            };
-            filter.paginate[that.options.type] = parseInt(that.options.id, 10);
-            */
             button.addClass('rotate');
 
             $.when(that.insetThumbs(that.options.videoFeed, that.options.getFilter())).then(function(response){
@@ -478,8 +444,8 @@ $(document).ready(function () {
         },
         teardown: function() {
             var that = this;
-            fansWorldEvents.removeListener('onFindVideosByTag', that.options.onFindVideosByTag);
-            fansWorldEvents.removeListener('onFilterChange', that.options.onFilterChange);
+            window.fansWorldEvents.removeListener('onFindVideosByTag', that.options.onFindVideosByTag);
+            window.fansWorldEvents.removeListener('onFilterChange', that.options.onFilterChange);
             $.removeData($(that.element)[0], that._name);
             $(that.element).removeClass(that._name);
             that.unbind();
@@ -652,7 +618,7 @@ $(document).ready(function () {
                 that.getTotal(that.options.feed, reqData);
                 return;
             };
-            fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
+            window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
             var reqData = {};
             reqData[that.options.type] = parseInt(that.options.id, 10);
             that.getTotal(that.options.feed, reqData);
