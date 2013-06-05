@@ -123,6 +123,8 @@ $(document).ready(function () {
             var self = $(that.element);
             self.bind("destroyed", $.proxy(that.teardown, that));
             self.addClass(that._name);
+            that.hide();
+
             that.options.container = document.querySelector(that.options.selector);
 
             that.options.onFilterChange = function (type, id){
@@ -130,28 +132,24 @@ $(document).ready(function () {
                 if($.isNumeric(id)) {
                     that.options.type = type;
                     that.options.id = id;
-//                    window.fansWorldEvents.removeListener('onFilterChange', that.options.onFilterChange);
                     $.when(that.removeAll()).then(function(){
+                        that.hide();
                         var reqData = {};
                         reqData[that.options.type] = parseInt(that.options.id, 10);
                         $.when(that.makePackery(reqData)).then(function(){
-//                          window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
                         }).progress(function() {
                             console.log("adding thumbnails to packery");
                         }).fail(function(error){
                             alert(error.message);
-//                          window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
                         });
                     }).fail(function(error){
                         var reqData = {};
                         reqData[that.options.type] = parseInt(that.options.id, 10);
                         $.when(that.makePackery(reqData)).then(function(){
-//                          window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
                         }).progress(function() {
                             console.log("adding thumbnails to packery");
                         }).fail(function(error){
                             alert(error.message);
-//                          window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
                         });
                     });
                 }
@@ -210,6 +208,8 @@ $(document).ready(function () {
                 totalVideos = response.highlighted.length;
                 if(totalVideos <= 0) {
                     deferred.reject(new Error("Video category does not contain any video"));
+                } else {
+                    that.show();
                 }
                 for(i in response.highlighted) {
                     if (response.highlighted.hasOwnProperty(i)) {
@@ -265,6 +265,20 @@ $(document).ready(function () {
                 deferred.reject(new Error("Video container is empty !"));
             }
             return deferred.promise();
+        },
+        hide: function() {
+            var that = this;
+            $(that.element).fadeOut(function() {
+                $(that.element).parent().find('.spinner').removeClass('hidden');
+                $(that.element).parent().find('.spinner').show();
+            });
+        },
+        show: function() {
+            var that = this;
+            $(that.element).fadeIn(function() {
+                $(that.element).parent().find('.spinner').addClass('hidden');
+                $(that.element).parent().find('.spinner').hide();
+            });
         },
         destroy: function() {
             var that = this;
@@ -381,10 +395,12 @@ $(document).ready(function () {
         },
         clearThumbs: function() {
             var that = this;
-            $(that.element).empty();
-            $(that.element).parent().find('.spinner').removeClass('hidden');
-            $(that.element).parent().find('.add-more').hide();
-            $(that.element).parent().find('.spinner').show();
+            $(that.element).parent().fadeOut(function() {
+                $(that.element).empty();
+                $(that.element).parent().find('.spinner').removeClass('hidden');
+                $(that.element).parent().find('.add-more').hide();
+                $(that.element).parent().find('.spinner').show();
+            });
         },
         addMoreThumbs: function(event) {
             var that = this;
