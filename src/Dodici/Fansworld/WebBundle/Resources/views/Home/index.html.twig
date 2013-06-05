@@ -21,18 +21,16 @@
         <ul class="filter-home">
             <li class="active" data-entity-type="null" data-entity-id="null">TODOS</li>
             {% for genre in genres %}
-                <li {#{% if loop.first %}class="active"{% endif %}#} data-entity-type="genre" data-entity-id = "{{ genre.id }}">{{ genre.title }}</li>
+                <li data-entity-type="genre" data-entity-id = "{{ genre.id }}">{{ genre.title }}</li>
             {% endfor %}
             {% for category in categories %}
                 <li data-entity-type="vc" data-entity-id = "{{ category.id }}">{{ category.title }}</li>
             {% endfor %}
-            {#<li><i class="icon-cog"></i></li>#}
         </ul>
 
         <section class="row-fluid gray highlights" id="home-gallery">
             <div class="grid-sizer"></div>
             <div class="gutter-sizer"></div>
-            <div class="spinner hidden"><div class="mask"></div></div>
         </section>
 
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -48,7 +46,6 @@
                 </header>
                 <div class="videos-container"></div>
                 <div class="clearfix"></div>
-                <div class="spinner hidden"><div class="mask"></div></div>
                 <div class="add-more">+</div>
             </section>
         {% endif %}
@@ -65,8 +62,9 @@
             </header>
             <div class="videos-container"></div>
             <div class="clearfix"></div>
-            <div class="spinner hidden"><div class="mask"></div></div>
             <div class="add-more">+</div>
         </section>
+
+        <div class="spinner"><div class="mask"></div></div>
     </div>
 {% endblock %}
