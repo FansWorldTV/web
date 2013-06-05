@@ -324,15 +324,17 @@ $(document).ready(function () {
             self.bind("destroyed", $.proxy(that.teardown, that));
             self.addClass(that._name);
             that.clearThumbs();
-            var fii = {
-                paginate: {
-                    page: that.options.page,
-                    block: that.options.block,
-                }
+            that.options.getFilter = function() {
+                var filter = {
+                    paginate: {
+                        page: that.options.page,
+                        block: that.options.block
+                    }
+                };
+                filter.paginate[that.options.type] = parseInt(that.options.id, 10);
+                return filter;
             };
-
-            fii.paginate[that.options.type] = that.options.id;
-            that.insetThumbs(Routing.generate(appLocale + '_home_ajaxfilter'), fii);
+            that.insetThumbs(Routing.generate(appLocale + '_home_ajaxfilter'), that.options.getFilter());
 
             that.options.onFindVideosByTag = function(tag, filter){
                 if(filter === that.options.block) {
@@ -631,9 +633,8 @@ $(document).ready(function () {
                 data: data
             }).then(function(response) {
                 var total = response.totals[that.options.filter];
-                //$(that.element).text(total + ' videos');
                 $(that.element).fadeOut(function() {
-                    $(this).text(total + ' videos');
+                    $(this).text(total);
                 }).fadeIn();
             });
         },
