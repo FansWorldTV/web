@@ -117,7 +117,7 @@ class HomeController extends SiteController
                     break;
             }
 
-            $response['addmore'] = $videosCount > (($page) * self::LIMIT_VIDEO) ? true : false;
+            $response['addMore'] = $videosCount > (($page) * self::LIMIT_VIDEO) ? true : false;
         }
 
         return $this->jsonResponse($response);
