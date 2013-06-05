@@ -6,6 +6,7 @@
  endless,
  ajax,
  templateHelper,
+ EventEmitter,
  Routing,
  appLocale,
  exports,
@@ -37,6 +38,7 @@
 // WARNING GLOBAL VARIABLE
 // EventEmitter is taken from packery but can be download from https://github.com/Wolfy87/EventEmitter
 $(document).ready(function () {
+    "use strict";
     window.fansWorldEvents = new EventEmitter();
 });
 
@@ -45,7 +47,7 @@ $(document).ready(function () {
     var pluginName = "fwHomeGallery";
     var defaults = {
         videoCategory: null,
-        videoFeed: Routing.generate(appLocale + '_home_ajaxfilter'),
+        videoFeed: Routing.generate(window.appLocale + '_home_ajaxfilter'),
         imteStyle: {
             'width': '16%',
             'height': '160px',
@@ -139,7 +141,6 @@ $(document).ready(function () {
             that.options.onFilterChange = function (type, id){
                 id = parseInt(id, 10);
                 if($.isNumeric(id)) {
-                    console.log("PACKERY ON FILTER-CHANGE");return;
                     that.options.type = type;
                     that.options.id = id;
 //                    window.fansWorldEvents.removeListener('onFilterChange', that.options.onFilterChange);
@@ -167,7 +168,6 @@ $(document).ready(function () {
                         });
                     });
                 }
-                return true;
             };
             window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
             that.options.packery = new Packery(that.options.container, {
@@ -320,7 +320,8 @@ $(document).ready(function () {
         videoFeed: Routing.generate(appLocale + '_home_ajaxfilter'),
         page: 1,
         block: null,
-        newEvent: null
+        newEvent: null,
+        getFilter: function() {}
     };
     function Plugin(element, options) {
         this.element = element;
@@ -342,19 +343,28 @@ $(document).ready(function () {
                     block: that.options.block,
                 }
             };
+
             fii.paginate[that.options.type] = that.options.id;
             that.insetThumbs(Routing.generate(appLocale + '_home_ajaxfilter'), fii);
 
             that.options.onFindVideosByTag = function(tag, filter){
                 if(filter === that.options.block) {
                     var url = Routing.generate(appLocale + "_video_ajaxsearchbytag");
-                    var data = {
-                        id: tag.id,
-                        entity: tag.type,
-                        page: that.options.page
+                    that.options.videoFeed = Routing.generate(appLocale + "_video_ajaxsearchbytag");
+//                    var data = {
+//                        id: tag.id,
+//                        entity: tag.type,
+//                        page: that.options.page
+//                    };
+                    that.options.getFilter = function() {
+                        return {
+                            id: tag.id,
+                            entity: tag.type,
+                            page: that.options.page
+                        };
                     };
                     that.clearThumbs();
-                    that.insetThumbs(url, data);
+                    that.insetThumbs(that.options.videoFeed, that.options.getFilter());
                 }
             };
             that.options.onFilterChange = function(type, id) {
@@ -362,15 +372,26 @@ $(document).ready(function () {
                 that.options.type = type;
                 that.options.id = id;
                 that.options.page = 1;
-                var filter = {
-                    paginate: {
-                        page: that.options.page,
-                        block: that.options.block
-                    }
+                that.options.videoFeed = Routing.generate(appLocale + '_home_ajaxfilter');
+//                var filter = {
+//                    paginate: {
+//                        page: that.options.page,
+//                        block: that.options.block
+//                    }
+//                };
+//                filter.paginate[type] = parseInt(id, 10);
+                that.options.getFilter = function() {
+                    var filter = {
+                        paginate: {
+                            page: that.options.page,
+                            block: that.options.block
+                        }
+                    };
+                    filter.paginate[type] = parseInt(id, 10);
+                    return filter;
                 };
-                filter.paginate[type] = parseInt(id, 10);
                 that.clearThumbs();
-                that.insetThumbs(that.options.videoFeed, filter);
+                that.insetThumbs(that.options.videoFeed, that.options.getFilter());
             };
 
             window.fansWorldEvents.addListener('onFindVideosByTag', that.options.onFindVideosByTag);
@@ -392,6 +413,7 @@ $(document).ready(function () {
             var that = this;
             var button = $(event.srcElement);
             that.options.page += 1;
+            /*
             var filter = {
                 paginate: {
                     page: that.options.page,
@@ -399,9 +421,10 @@ $(document).ready(function () {
                 }
             };
             filter.paginate[that.options.type] = parseInt(that.options.id, 10);
+            */
             button.addClass('rotate');
 
-            $.when(that.insetThumbs(that.options.videoFeed, filter)).then(function(response){
+            $.when(that.insetThumbs(that.options.videoFeed, that.options.getFilter())).then(function(response){
                 button.removeClass('rotate');
             });
         },
@@ -420,7 +443,7 @@ $(document).ready(function () {
                 }
                 for(i in response.videos) {
                     if (response.videos.hasOwnProperty(i)) {
-                        var addmore = response.addmore;
+                        var addMore = response.addMore;
                         var video = response.videos[i];
                         $.when(templateHelper.htmlTemplate('video-home_element', video))
                         .then(function(response){
@@ -428,8 +451,8 @@ $(document).ready(function () {
                             $thumb.find('img').load(function() {
                                 $(that.element).parent().find('.spinner').addClass('hidden');
                                 $(that.element).parent().find('.spinner').hide();
-                                console.log("response.addmore: " + addmore)
-                                if(addmore) {
+                                console.log("response.addMore: " + addMore)
+                                if(addMore) {
                                     $(that.element).parent().find('.add-more').show();
                                 }
                                 $thumb.hide().appendTo(that.element).fadeIn('slow');
