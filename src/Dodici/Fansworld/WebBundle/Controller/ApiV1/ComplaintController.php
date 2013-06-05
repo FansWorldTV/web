@@ -33,6 +33,8 @@ class ComplaintController extends BaseController
      * - [user token]
      * - video_id: int
      * - [signature params]
+     * - category: int
+     * - comment: string
      *
      */
     public function reportAction($entityType, $entityId)
