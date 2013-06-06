@@ -26,7 +26,7 @@ class IdolRepository extends CountBaseRepository
         $terms = array();
         $xp = explode(' ', $filtername);
         foreach ($xp as $x) if (trim($x)) $terms[] = trim($x);
-        
+
         $querystring = '
     	SELECT i
     	FROM \Dodici\Fansworld\WebBundle\Entity\Idol i
@@ -50,7 +50,7 @@ class IdolRepository extends CountBaseRepository
             		(i.lastname LIKE :term'.$k.')
             	)
             	';
-                
+
             }
         }
 
@@ -77,7 +77,7 @@ class IdolRepository extends CountBaseRepository
 
         if ($terms) {
             foreach ($terms as $k => $t) $query = $query->setParameter('term'.$k, '%' . $t . '%');
-        }   
+        }
 
         if ($limit !== null)
             $query = $query->setMaxResults($limit);
@@ -98,7 +98,7 @@ class IdolRepository extends CountBaseRepository
         $terms = array();
         $xp = explode(' ', $filtername);
         foreach ($xp as $x) if (trim($x)) $terms[] = trim($x);
-        
+
         $querystring = '
     	SELECT COUNT(i)
     	FROM \Dodici\Fansworld\WebBundle\Entity\Idol i
@@ -122,7 +122,7 @@ class IdolRepository extends CountBaseRepository
             		(i.lastname LIKE :term'.$k.')
             	)
             	';
-                
+
             }
         }
 
@@ -145,7 +145,7 @@ class IdolRepository extends CountBaseRepository
 
         if ($terms) {
             foreach ($terms as $k => $t) $query = $query->setParameter('term'.$k, '%' . $t . '%');
-        }  
+        }
 
         if ($limit !== null)
             $query = $query->setMaxResults($limit);
