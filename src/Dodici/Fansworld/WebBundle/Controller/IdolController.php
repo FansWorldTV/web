@@ -468,6 +468,46 @@ class IdolController extends SiteController
         );
     }
 
+    /**
+     *  Get params:
+     *  - type: 'all' | 'idol' | 'team'
+     *  - filterby: 'popular' | 'activity'
+     *  - genre: (Int) genreId of parent(genre) | genreId of child(subgenre) | null
+     *  - limit (Int) | null
+     *  - offset (Int) | null
+     *  @Route("/ajax/getProfiles", name="getprofiles_ajaxget")
+     */
+    public function getProfiles()
+    {
+        $request = $this->getRequest();
+        $type = $request->get('type');
+        $filterby = $request->get('filterby');
+        $genre = $request->get('genre');
+        $limit = $request->get('limit');
+        $offset = $request->get('offset');
+
+        if (!$type) $type = 'all';
+        if (!$filterby) $filterby = 'popular';
+
+        $entities = $this->getRepository('Profile')->latestOrPopular($type, $filterby, $genre, $limit, $offset);
+
+        $response = array();
+        foreach ($entities as $entity) {
+            $response[] = array(
+                'id' => $entity['id'],
+                'type' => $entity['type'],
+                'title' => $entity['title'],
+                'slug' => $entity['slug'],
+                'genre' => $entity['genre'],
+                'fancount' => $entity['fancount'],
+                'photocount' => $entity['photocount'],
+                'videocount' => $entity['videocount']
+            );
+        }
+
+        return $this->jsonResponse($response);
+    }
+
     private function _createForm()
     {
         $defaultData = array();
