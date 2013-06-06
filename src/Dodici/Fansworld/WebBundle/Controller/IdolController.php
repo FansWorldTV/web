@@ -470,28 +470,33 @@ class IdolController extends SiteController
 
     /**
      *  get params (all optional):
+     *  - type: all (default) | idol | team
      *  - genre
      *  - limit
      *  - offset
-     *  @Route("/ajax/getPopularIdols", name="idolsPopular_ajaxget")
+     *  @Route("/ajax/getPopularProfiles", name="popularprofiles_ajaxget")
      */
-    public function popularIdolsByGenre()
+    public function popularProfiles()
     {
         $request = $this->getRequest();
+        $type = $request->get('type');
         $genre = $request->get('genre');
         $limit = $request->get('limit');
         $offset = $request->get('offset');
 
-        $idols = $this->getRepository('Idol')->byGenre($genre, $limit, $offset);
+        if (!$type) $type = 'all';
+        $entities = $this->getRepository('Profile')->search($type, $genre, $limit, $offset);
 
         $response = array();
-        foreach ($idols as $idol) {
+        foreach ($entities as $entity) {
             $response[] = array(
-                'id' => $idol->getId(),
-                'name' => (string) $idol,
-                'slug' => $idol->getSlug(),
-                'fancount' => $idol->getFanCount(),
-                'genre' => $this->get('serializer')->values($idol->getGenre())
+                'id' => $entity['id'],
+                'type' => $entity['type'],
+                'title' => $entity['title'],
+                'slug' => $entity['slug'],
+                'fancount' => $entity['fancount'],
+                'photocount' => $entity['photocount'],
+                'videocount' => $entity['videocount']
             );
         }
 
