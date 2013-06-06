@@ -140,7 +140,8 @@ $(document).ready(function () {
                         }).progress(function() {
                             console.log("adding thumbnails to packery");
                         }).fail(function(error){
-                            alert(error.message);
+//                            alert(error.message);
+                            that.hide();
                         });
                     }).fail(function(error){
                         var reqData = {};
@@ -149,7 +150,8 @@ $(document).ready(function () {
                         }).progress(function() {
                             console.log("adding thumbnails to packery");
                         }).fail(function(error){
-                            alert(error.message);
+//                            alert(error.message);
+                            that.hide();
                         });
                     });
                 }
