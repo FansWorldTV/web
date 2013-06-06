@@ -34,7 +34,7 @@ class ProfileController extends SiteController
      *  - genre: (Int) genreId of parent(genre) | genreId of child(subgenre) | null
      *  - limit (Int) | null
      *  - offset (Int) | null
-     *  @Route("/ajax/getProfiles", name="getprofilesP_ajaxget")
+     *  @Route("/ajax/getProfiles", name="getprofiles_ajaxget")
      */
     public function getProfiles()
     {
