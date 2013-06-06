@@ -17,6 +17,25 @@
 			.row(9);
 
 			div.profile {
+				@media screen and (max-width: 416px) {
+					.column(4.5, 9);
+				}
+				@media screen and (min-width: 416px) and (max-width: 536px) {
+					.column(3, 9);
+				}
+				@media screen and (min-width: 537px) and (max-width: 767px) {
+					.column(2.25, 9);
+				}
+				@media screen and (min-width: 768px) and (max-width: 792px) {
+					.column(1.8, 9);
+				}
+				@media screen and (min-width: 793px) and (max-width: 1000px) {
+					.column(1.5, 9);
+				}
+				@media screen and (min-width: 1470px) {
+					.column(1, 9);
+				}
+
 				.column(1, 9);
 				margin-bottom: @gutter-width;
 				position: relative;
