@@ -16,17 +16,22 @@ use Doctrine\ORM\Query\ResultSetMapping;
 class ProfileRepository extends CountBaseRepository
 {
     /**
-     * Returns the Profiles (Idols/Teams) related to $genre(if genre given) order by popularity
-     * @param String ('all' | 'idol' | 'team') $filter
-     * @param Genre|null or Genre_id(Int)|null  $genre
+     * Returns the Profiles (Idols/Teams) related to $genre(if genre given) OR alls types of profiles, filter by popularity|activity
+     * @param String ('all' | 'idol' | 'team') $type
+     * @param String ('popular' | 'activity') $filterby
+     * @param Genre|null Genre_id(Int)|null  $genre
      * @param int|null $limit
      * @param int|null $offset
      */
-    public function search($filter, $genre=null, $limit=null, $offset=null)
+    public function latestOrPopular($type, $filterby, $genre=null, $limit=null, $offset=null)
     {
-        if (!$filter) throw new \Exception('Filter parameter is missing');
-        if ('all' != $filter && 'idol' != $filter && 'team' != $filter) throw new \Exception('Invalid filter parameter');
-        $order = 'fancount DESC';
+        if (!$type) throw new \Exception('Type parameter is missing');
+        if (!$filterby) throw new \Exception('Filterby parameter is missing');
+        if ('all' != $type && 'idol' != $type && 'team' != $type) throw new \Exception('Invalid value of type parameter');
+        if ('popular' != $filterby && 'activity' != $filterby) throw new \Exception('Invalid value of filterby parameter');
+
+        ('popular' == $filterby) ? $order = 'fancount DESC' : $order = 'activity DESC';
+        $datebefore = new \DateTime('-60 days');
 
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('id', 'id');
@@ -36,23 +41,44 @@ class ProfileRepository extends CountBaseRepository
         $rsm->addScalarResult('videocount', 'videocount');
         $rsm->addScalarResult('type', 'type');
         $rsm->addScalarResult('title', 'title');
+        $rsm->addScalarResult('genre', 'genre');
+        if ('activity' == $filterby) $rsm->addScalarResult('activity', 'activity');
 
         $sqls = array();
-        foreach (array('idol', 'team') as $type) {
-            $sqls[$type] = '
-                SELECT ' . $type . '.id as id, ' . $type . '.slug as slug, ' . $type . '.fancount as fancount, "' . $type . '" as type, '.
-                $type . '.photocount as photocount, ' . $type . '.videocount as videocount, '
-                    .(('idol' == $type) ?
-                        ('CONCAT(' . $type . '.firstname, \' \', ' . $type . '.lastname) AS title') : ($type . '.title as title'))
-                .' FROM ' . $type . '
-                LEFT JOIN genre gen ON gen.id = ' . $type . '.genre_id
-                WHERE
-                active = true
-                AND
-                (:genre IS NULL OR (genre_id = :genre OR gen.parent_id = :genre))';
+        foreach (array('idol', 'team') as $etype) {
+            if ('popular' == $filterby) {
+                $sqls[$etype] = '
+                    SELECT ' . $etype . '.id as id, ' . $etype . '.slug as slug, ' . $etype . '.fancount as fancount, "' . $etype . '" as type, '.
+                    $etype . '.photocount as photocount, ' . $etype . '.videocount as videocount, ' . $etype . '.genre_id as genre, '
+                    .(('idol' == $etype) ?
+                        ('CONCAT(' . $etype . '.firstname, \' \', ' . $etype . '.lastname) AS title') : ($etype . '.title as title'))
+                    .' FROM ' . $etype . '
+                    LEFT JOIN genre gen ON gen.id = ' . $etype . '.genre_id
+                    WHERE
+                    active = true
+                    AND
+                    (:genre IS NULL OR (genre_id = :genre OR gen.parent_id = :genre))';
+            } else {
+                $sqls[$etype] = '
+                    SELECT v.' . $etype . '_id AS id, COUNT( v.' . $etype . '_id ) AS activity,
+                    e.fancount AS fancount, e.videocount AS videocount, e.photocount AS photocount, '
+                    .(('idol' == $etype) ? ('CONCAT(e.firstname, \' \', e.lastname) AS title') : ('e.title as title')).',
+                    e.genre_id as genre, e.slug as slug, "' . $etype . '" as type'
+                    .' FROM visit v
+                    INNER JOIN ' . $etype . ' e ON e.id = v.' . $etype . '_id
+                    LEFT JOIN genre gen ON gen.id = e.genre_id
+                    WHERE
+                    e.active = true
+                    AND
+                    (:genre IS NULL OR (genre_id = :genre OR gen.parent_id = :genre))
+                    AND
+                    v.created_at > :datebefore
+                    GROUP BY v.' . $etype . '_id
+                    HAVING COUNT( v.'. $etype .'_id ) > 0';
+            }
         }
 
-        ('all' == $filter) ? $sql = join(' UNION ', $sqls) : $sql = $sqls[$filter];
+        ('all' == $type) ? $sql = join(' UNION ', $sqls) : $sql = $sqls[$type];
 
         $query = $this->_em->createNativeQuery($sql.' ORDER BY '. $order . '' .
                 (($limit !== null) ? ' LIMIT :limit ' : '') .
@@ -61,6 +87,8 @@ class ProfileRepository extends CountBaseRepository
 
         $query = $query->setParameter(
             'genre', ($genre instanceof Genre) ? $genre->getId() : $genre, Type::BIGINT);
+
+        if ('activity' == $filterby) $query = $query->setParameter('datebefore', $datebefore);
 
         if ($limit !== null)
             $query = $query->setParameter('limit', (int) $limit, Type::INTEGER);

@@ -469,23 +469,27 @@ class IdolController extends SiteController
     }
 
     /**
-     *  get params (all optional):
-     *  - type: all (default) | idol | team
-     *  - genre
-     *  - limit
-     *  - offset
-     *  @Route("/ajax/getPopularProfiles", name="popularprofiles_ajaxget")
+     *  Get params:
+     *  - type: 'all' | 'idol' | 'team'
+     *  - filterby: 'popular' | 'activity'
+     *  - genre: (Int) genreId of parent(genre) | genreId of child(subgenre) | null
+     *  - limit (Int) | null
+     *  - offset (Int) | null
+     *  @Route("/ajax/getProfiles", name="getprofiles_ajaxget")
      */
-    public function popularProfiles()
+    public function getProfiles()
     {
         $request = $this->getRequest();
         $type = $request->get('type');
+        $filterby = $request->get('filterby');
         $genre = $request->get('genre');
         $limit = $request->get('limit');
         $offset = $request->get('offset');
 
         if (!$type) $type = 'all';
-        $entities = $this->getRepository('Profile')->search($type, $genre, $limit, $offset);
+        if (!$filterby) $filterby = 'popular';
+
+        $entities = $this->getRepository('Profile')->latestOrPopular($type, $filterby, $genre, $limit, $offset);
 
         $response = array();
         foreach ($entities as $entity) {
@@ -494,6 +498,7 @@ class IdolController extends SiteController
                 'type' => $entity['type'],
                 'title' => $entity['title'],
                 'slug' => $entity['slug'],
+                'genre' => $entity['genre'],
                 'fancount' => $entity['fancount'],
                 'photocount' => $entity['photocount'],
                 'videocount' => $entity['videocount']
