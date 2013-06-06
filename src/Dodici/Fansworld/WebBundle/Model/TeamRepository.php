@@ -310,31 +310,4 @@ class TeamRepository extends CountBaseRepository
 
         return $query->getOneOrNullResult();
     }
-
-    /**
-     * Returns the Teams related to $genre(if genre given) order by popularity
-     * @param Genre entity or Genre_id (Int)  $genre
-     * @param int|null $limit
-     * @param int|null $offset
-     */
-    public function byGenre($genre=null, $limit=null, $offset=null)
-    {
-        $query = $this->_em->createQuery('
-            SELECT t
-            FROM \Dodici\Fansworld\WebBundle\Entity\Team t
-            LEFT JOIN t.genre tgen
-            WHERE t.active = true
-            AND
-            ((:genre IS NULL OR (tgen = :genre OR tgen.parent = :genre)))
-            ORDER BY t.fanCount DESC
-        ')
-            ->setParameter('genre', ($genre instanceof Genre) ? $genre->getId() : $genre);
-
-        if ($limit !== null)
-            $query = $query->setMaxResults($limit);
-        if ($offset !== null)
-            $query = $query->setFirstResult($offset);
-
-        return $query->getResult();
-    }
 }
