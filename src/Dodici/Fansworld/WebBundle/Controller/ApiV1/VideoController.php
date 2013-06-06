@@ -604,6 +604,7 @@ class VideoController extends BaseController
      * Video - genres list
      *
      * @Route("/video/genres", name="api_v1_video_genre_list")
+     * @Route("/video/genres/list", name="api_v1_video_genre_list_alt")
      * @Method({"GET"})
      *
      * Get params:
