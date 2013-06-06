@@ -69,8 +69,8 @@ class VideoUploadController extends BaseController
                 $userid = $request->get('user_id');
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
                 
-                $title = $request->get('video_title');
-                $content = $request->get('video_content');
+                $title = trim($request->get('video_title'));
+                $content = trim($request->get('video_content'));
                 $vcid = $request->get('video_category');
                 $genreid = $request->get('video_genre');
                 $vc = $this->getRepository('VideoCategory')->find($vcid);
@@ -81,7 +81,10 @@ class VideoUploadController extends BaseController
                 if (!$vcid) throw new HttpException(400, 'Requires video_category');
                 if (!$vc) throw new HttpException(400, 'Invalid video_category');
                 if (!$genreid) throw new HttpException(400, 'Requires video_genre');
+                if (!$genre) throw new HttpException(400, 'Invalid video_genre');
                 if (!$genre->getParent())  throw new HttpException(400, 'Genre must not be a parent genre');
+                
+                if (!preg_match('/^[\p{L}\p{N}\-.\s\!¡\?¿=()|&]+$/', $title)) throw new HttpException('610-400', 'video_title contains illegal characters. Legal characters: a-Z, 0-9, -.¡!¿?=()|&');
                 
                 $uploadtoken = $kaltura->getUploadToken();
                 $entryid = $kaltura->addEntryFromToken($uploadtoken, $title);
