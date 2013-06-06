@@ -1,0 +1,87 @@
+.home-content.profiles {
+	section.popular {
+		@import "third-plugins/grid.less";
+		@columns: 12;
+		@column-width: 150px;
+		@gutter-width: 1px;
+		@total-width: 100%;
+
+		padding: 0 1em 0 1em;
+		.box-sizing(border-box);
+
+		header {
+			padding: 0;
+		}
+
+		.videos-container {
+			.row(9);
+
+			div.profile {
+				.column(1, 9);
+				margin-bottom: @gutter-width;
+				position: relative;
+				cursor: pointer;
+
+				&:hover {
+					.info {
+						opacity: 1;
+
+						&:before {
+							opacity: 0.65;
+						}
+					}
+				}
+
+				.info {
+					.square(100%);
+					.box-sizing(border-box);
+					.background-transparent(@black, 0);
+					.transition(opacity 0.3s ease);
+
+					position: absolute;
+					top: 0;
+					left: 0;
+					opacity: 0;
+					color: white;
+					font-weight: 300;
+					text-align: left;
+					padding: 0.6em;
+
+					* { position: relative; }
+
+					.title {
+						font-size: 20px;
+						line-height: 22px;
+					}
+
+					div.bottom-container {
+						position: absolute;
+						display: block;
+						bottom: 0;
+						left: 0;
+						padding: inherit;
+						width: 100%;
+						.box-sizing(border-box);
+
+						button {
+							float: right;
+						}
+
+						.data-cant {
+							float: left;
+							font-size: 18px;
+							font-weight: 600;
+							text-align: center;
+							line-height: 27px;
+
+							span {
+								font-weight: 300;
+								font-size: 14px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

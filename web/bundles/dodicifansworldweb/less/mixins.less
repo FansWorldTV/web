@@ -42,7 +42,7 @@
     background-repeat:  no-repeat;
     background-position:  @bgPosition;
     &:hover{
-        background-position:  @bgPosition + !important;    
+        background-position: @bgPosition + !important;
     }
 }
 
@@ -161,4 +161,16 @@
   @keyframes spin {
     to { transform: rotate(360deg); }
   }
+}
+
+.background-transparent(@color: @black, @opacity: 0.5) {
+	&:before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		.square(100%);
+		background-color: @color;
+		opacity: @opacity;
+	}
 }
