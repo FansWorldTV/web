@@ -78,6 +78,7 @@ class ProfileController extends SiteController
                 'videoCount' => $entity['videocount'],
                 'fanCount' => $entity['fancount'],
                 'image' => $this->getImageUrl($entity['imageid'], 'big_square'),
+                'image_double' => $this->getImageUrl($entity['imageid'], 'huge_square'),
                 'highlight' => false
             );
             
