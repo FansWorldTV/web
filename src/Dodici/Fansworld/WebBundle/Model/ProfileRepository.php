@@ -42,6 +42,7 @@ class ProfileRepository extends CountBaseRepository
         $rsm->addScalarResult('type', 'type');
         $rsm->addScalarResult('title', 'title');
         $rsm->addScalarResult('genre', 'genre');
+        $rsm->addScalarResult('imageid', 'imageid');
         if ('activity' == $filterby) $rsm->addScalarResult('activity', 'activity');
 
         $sqls = array();
@@ -49,7 +50,8 @@ class ProfileRepository extends CountBaseRepository
             if ('popular' == $filterby) {
                 $sqls[$etype] = '
                     SELECT ' . $etype . '.id as id, ' . $etype . '.slug as slug, ' . $etype . '.fancount as fancount, "' . $etype . '" as type, '.
-                    $etype . '.photocount as photocount, ' . $etype . '.videocount as videocount, ' . $etype . '.genre_id as genre, '
+                    $etype . '.photocount as photocount, ' . $etype . '.videocount as videocount, ' . $etype . '.genre_id as genre, '.
+                    $etype . '.image_id as imageid, '
                     .(('idol' == $etype) ?
                         ('CONCAT(' . $etype . '.firstname, \' \', ' . $etype . '.lastname) AS title') : ($etype . '.title as title'))
                     .' FROM ' . $etype . '
@@ -61,7 +63,7 @@ class ProfileRepository extends CountBaseRepository
             } else {
                 $sqls[$etype] = '
                     SELECT v.' . $etype . '_id AS id, COUNT( v.' . $etype . '_id ) AS activity,
-                    e.fancount AS fancount, e.videocount AS videocount, e.photocount AS photocount, '
+                    e.fancount AS fancount, e.videocount AS videocount, e.photocount AS photocount, e.image_id as imageid, '
                     .(('idol' == $etype) ? ('CONCAT(e.firstname, \' \', e.lastname) AS title') : ('e.title as title')).',
                     e.genre_id as genre, e.slug as slug, "' . $etype . '" as type'
                     .' FROM visit v
