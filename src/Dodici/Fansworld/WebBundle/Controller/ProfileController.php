@@ -1,4 +1,5 @@
 <?php
+
 namespace Dodici\Fansworld\WebBundle\Controller;
 
 use Dodici\Fansworld\WebBundle\Entity\Profile;
@@ -23,10 +24,24 @@ use Imagine\Gd\Imagine;
 
 /**
  * Profile controller
- * @Route("/profile")
  */
 class ProfileController extends SiteController
 {
+    
+    const LIMIT_PROFILES_HOME = 20;
+
+    /**
+     * @Route("/profiles", name="profiles_index")
+     * @Template()
+     */
+    public function listAction()
+    {
+        return array(
+            'genres' => $this->getRepository('Genre')->getParents(),
+            'profiles' => $this->getRepository('Idol')->findBy(array(), null, 30)
+        );
+    }
+
     /**
      *  Get params:
      *  - type: 'all' | 'idol' | 'team'
@@ -34,36 +49,55 @@ class ProfileController extends SiteController
      *  - genre: (Int) genreId of parent(genre) | genreId of child(subgenre) | null
      *  - limit (Int) | null
      *  - offset (Int) | null
-     *  @Route("/ajax/getProfiles", name="getprofiles_ajaxget")
+     *  @Route("/profiles/ajax/get", name="profile_ajaxgetprofiles")
      */
-    public function getProfiles()
+    public function ajaxGetAction()
     {
         $request = $this->getRequest();
-        $type = $request->get('type');
-        $filterby = $request->get('filterby');
+        
+        $type = $request->get('type', 'all');
+        $filterby = $request->get('filterby', 'popular');
         $genre = $request->get('genre');
-        $limit = $request->get('limit');
-        $offset = $request->get('offset');
+        $page = $request->get('page', 1);
+        
+        $offset = ($page - 1) * self::LIMIT_PROFILES_HOME;
+        
+        if (!$type)
+            $type = 'all';
+        if (!$filterby)
+            $filterby = 'popular';
 
-        if (!$type) $type = 'all';
-        if (!$filterby) $filterby = 'popular';
-
-        $entities = $this->getRepository('Profile')->latestOrPopular($type, $filterby, $genre, $limit, $offset);
+        $entities = $this->getRepository('Profile')->latestOrPopular($type, $filterby, $genre, self::LIMIT_PROFILES_HOME, $offset);
 
         $response = array();
         foreach ($entities as $entity) {
-            $response[] = array(
+            $profile = array(
                 'id' => $entity['id'],
                 'type' => $entity['type'],
                 'title' => $entity['title'],
                 'slug' => $entity['slug'],
                 'image' => $this->getImageUrl($entity['imageid']),
-                'genre' => $entity['genre'],
-                'fancount' => $entity['fancount'],
-                'photocount' => $entity['photocount'],
-                'videocount' => $entity['videocount']
+                'fanCount' => $entity['fancount'],
+                'highlight' => false,
+                'videoCount' => $entity['videocount']
             );
+
+            $response['profiles'][$profile['id']] = $profile;
         }
+
+        if ($filterby == 'activity') {
+            $highlights = array();
+
+            foreach ($response['profiles'] as $profile)
+                $highlights[$profile['id']] = $profile['videoCount'];
+
+            arsort($highlights);
+            $top5 = array_slice($highlights, 0, 5, true);
+
+            foreach ($top5 as $key => $profile)
+                $response['profiles'][$key]['highlight'] = true;
+        }
+        
 
         return $this->jsonResponse($response);
     }
