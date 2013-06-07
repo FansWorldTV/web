@@ -182,14 +182,18 @@ $(document).ready(function () {
                     for(i in response.profiles) {
                         if (response.profiles.hasOwnProperty(i)) {
                             var profile = response.profiles[i];
+                            if(profile.highlight) {
+
+                                profile.image = profile.image_double;
+                            }
+                            console.log(profile);
                             $.when(templateHelper.htmlTemplate('profile-home_element', profile))
                             .then(function(response){
                                 var $thumb = $(response).clone();
                                 $thumb.addClass('profile');
-                                if(cnt === 1) {
+                                if(profile.highlight == 'true') {
                                     $thumb.addClass('double');
                                 }
-                                cnt += 1;
                                 queue.add($thumb);
                             });
                         }
