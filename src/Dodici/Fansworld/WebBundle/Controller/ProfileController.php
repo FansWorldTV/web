@@ -55,7 +55,7 @@ class ProfileController extends SiteController
         $request = $this->getRequest();
         
         $type = $request->get('type', 'all');
-        $filterby = $request->get('filterby', 'popular');
+        $filterBy = $request->get('filterby', 'popular');
         $genre = $request->get('genre');
         $page = $request->get('page', 1);
         
@@ -63,10 +63,10 @@ class ProfileController extends SiteController
         
         if (!$type)
             $type = 'all';
-        if (!$filterby)
-            $filterby = 'popular';
+        if (!$filterBy)
+            $filterBy = 'popular';
 
-        $entities = $this->getRepository('Profile')->latestOrPopular($type, $filterby, $genre, self::LIMIT_PROFILES_HOME, $offset);
+        $entities = $this->getRepository('Profile')->latestOrPopular($type, $filterBy, $genre, self::LIMIT_PROFILES_HOME, $offset);
 
         $response = array();
         foreach ($entities as $entity) {
@@ -81,7 +81,7 @@ class ProfileController extends SiteController
                 'highlight' => false
             );
             
-            if($filterby == 'popular'){
+            if($filterBy == 'popular'){
                 $profile['dataCount'] = $profile['fanCount'];
                 $profile['dataText'] = 'fans';
             }else{
@@ -92,7 +92,7 @@ class ProfileController extends SiteController
             $response['profiles'][$profile['id']] = $profile;
         }
 
-        if ($filterby == 'activity') {
+        if ($filterBy == 'activity') {
             $highlights = array();
 
             foreach ($response['profiles'] as $profile)
@@ -105,7 +105,13 @@ class ProfileController extends SiteController
                 $response['profiles'][$key]['highlight'] = true;
         }
         
-
+        $i = 0;
+        foreach($response['profiles'] as $k => $profile){
+            $response['profiles'][$i] = $profile;
+            unset($response['profiles'][$k]);
+            $i++;
+        }
+        
         return $this->jsonResponse($response);
     }
 
