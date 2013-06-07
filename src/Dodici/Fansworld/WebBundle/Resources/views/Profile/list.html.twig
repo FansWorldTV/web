@@ -25,11 +25,12 @@
             {% endfor %}
         </ul>
 
-        <section class="row-fluid most-recent">
-
+        <section class="row-fluid most-recent" id="profile-gallery">
+            <div class="grid-sizer"></div>
+            <div class="gutter-sizer"></div>
         </section>
 
-        <section class="row-fluid popular">
+        <section class="row-fluid popular hidden">
             <header class="clearfix">
                 <h3 class="pull-left">Populares</h3>
                 <span class="cant pull-left" data-total-popular></span>
@@ -40,21 +41,6 @@
                 </section>
             </header>
             <div class="profiles-container">
-                {% for idol in  profiles %}
-                    <div class="profile">
-                        {% thumbnail idol.image, 'big_square' with {'title':''}%}
-                        <div class="info">
-                            <span class="title">{{ idol }}</span>
-                            <div class="bottom-container clearfix">
-                                <div class="data-cant">
-                                    {{ idol.fanCount }}
-                                    <span>fans</span>
-                                </div>
-                                <button class="btn btn-success add-fan" data-idolship-add="true" data-idol-id="{{ idol.id }}">+</button>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
             </div>
             <div class="clearfix"></div>
             <div class="add-more">+</div>

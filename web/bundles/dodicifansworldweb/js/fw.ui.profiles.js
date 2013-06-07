@@ -62,13 +62,14 @@ $(document).ready(function () {
         videoGenre: null,
         type: null,
         id: null,
-        videoFeed: Routing.generate(appLocale + '_home_ajaxfilter'),
-        selector: 'section.highlights',
-        itemSelector: '.video',
+        block: null,
+        videoFeed: Routing.generate(appLocale + '_profile_ajaxgetprofiles'),
+        selector: 'section.most-recent',
+        itemSelector: '.profile',
         packery: null,
         container: null,
         queue: null,
-        queueDelay: 100,
+        queueDelay: 10,
         onVideoCategoryEvent: null
     };
     function Plugin(element, options) {
@@ -117,12 +118,18 @@ $(document).ready(function () {
             };
             window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
             that.options.packery = new Packery(that.options.container, {
-                itemSelector: '.video',
+                itemSelector: '.profile',
                 gutter: ".gutter-sizer",
                 columnWidth: ".grid-sizer"
             });
-            var reqData = {};
-            reqData[that.options.type] = parseInt(that.options.id, 10);
+            var reqData =  {
+                type: 'all',
+                page: that.options.page,
+                filterby: that.options.block
+            };
+            if(!isNaN(that.options.id)) {
+                reqData.genre = that.options.id;
+            }
             that.makePackery(reqData);
 
             return true;
@@ -166,24 +173,25 @@ $(document).ready(function () {
                     'vc': that.options.videoCategory
                 }
             }).then(function(response) {
+                    console.log(response)
                     var i = 0;
-                    totalVideos = response.highlighted.length;
+                    totalVideos = response.profiles.length;
                     if(totalVideos <= 0) {
                         deferred.reject(new Error("Video category does not contain any video"));
                     }
-                    for(i in response.highlighted) {
-                        if (response.highlighted.hasOwnProperty(i)) {
-                            var video = response.highlighted[i];
-                            $.when(templateHelper.htmlTemplate('video-home_element', video))
-                                .then(function(response){
-                                    var $thumb = $(response).clone();
-                                    $thumb.addClass('video');
-                                    if(cnt === 1) {
-                                        $thumb.addClass('double');
-                                    }
-                                    cnt += 1;
-                                    queue.add($thumb);
-                                });
+                    for(i in response.profiles) {
+                        if (response.profiles.hasOwnProperty(i)) {
+                            var profile = response.profiles[i];
+                            $.when(templateHelper.htmlTemplate('profile-home_element', profile))
+                            .then(function(response){
+                                var $thumb = $(response).clone();
+                                $thumb.addClass('profile');
+                                if(cnt === 1) {
+                                    $thumb.addClass('double');
+                                }
+                                cnt += 1;
+                                queue.add($thumb);
+                            });
                         }
                     }
                 });
@@ -216,7 +224,7 @@ $(document).ready(function () {
 
                 }
             });
-            var videos = $(that.options.selector).find('.video');
+            var videos = $(that.options.selector).find('.profile');
             if(videos.length > 0) {
                 videos.each(function(elem){
                     queue.add($(this));
@@ -399,7 +407,6 @@ $(document).ready(function () {
                                         $(that.element).parent().find('.spinner').hide();
                                         $(that.element).parent().removeClass('hidden');
                                         $(that.element).parent().fadeIn('slow');
-                                        console.log("response.addMore: " + addMore)
                                         if(addMore) {
                                             $(that.element).parent().find('.add-more').show();
                                         } else {
@@ -458,14 +465,15 @@ $(document).ready(function () {
     var id = parseInt($(".filter-home").find('.active').attr('data-entity-id'), 10);
 
     // Video Packery Gallery
-/*    $('section.most-recent').fwHomePackery({
+    $('section.most-recent').fwHomePackery({
         type: type,
         id: id,
-        selector: 'section.most-recent'
-    });*/
+        selector: 'section.most-recent',
+        block: 'activity'
+    });
 
     // Video Grid
-    $('section.popular > .videos-container').fwHomeThumbs({
+    $('section.popular > .profiles-container').fwHomeThumbs({
         type: type,
         id: id,
         block: 'popular'
