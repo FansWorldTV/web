@@ -75,7 +75,7 @@ class ProfileController extends SiteController
                 'type' => $entity['type'],
                 'title' => $entity['title'],
                 'slug' => $entity['slug'],
-                'image' => $this->getImageUrl($entity['imageid']),
+                'image' => $this->getImageUrl($entity['imageid'], 'big_square'),
                 'highlight' => false
             );
             
