@@ -443,3 +443,39 @@ $(document).ready(function () {
     };
 });
 
+
+///////////////////////////////////////////////////////////////////////////////
+// Attach plugin to all matching element                                     //
+///////////////////////////////////////////////////////////////////////////////
+$(document).ready(function () {
+    "use strict";
+
+    // Packery
+    var type = $(".filter-home").find('.active').attr('data-entity-type');
+    var id = parseInt($(".filter-home").find('.active').attr('data-entity-id'), 10);
+
+    // Video Grid
+    $('section.popular > .videos-container').fwHomeThumbs({
+        type: type,
+        id: id,
+        block: 'popular'
+    });
+});
+
+$(document).ready(function () {
+    $(".filter-home > li").on('click', function(){
+        if($(this).hasClass('active')) {
+            return;
+        }
+        $(this).parent().find('.active').removeClass('active');
+        $(this).addClass('active');
+        var type = $(this).attr('data-entity-type');
+        var id = parseInt($(this).attr('data-entity-id'), 10);
+
+        ///////////////////////////////////////////////////////////////////////
+        // Decoupled EventTrigger                                            //
+        ///////////////////////////////////////////////////////////////////////
+        window.fansWorldEvents.emitEvent('onFilterChange', [type, id]);
+    });
+
+});
