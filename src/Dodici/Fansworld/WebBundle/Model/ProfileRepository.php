@@ -31,7 +31,7 @@ class ProfileRepository extends CountBaseRepository
         if ('popular' != $filterby && 'activity' != $filterby) throw new \Exception('Invalid value of filterby parameter');
 
         ('popular' == $filterby) ? $order = 'fancount DESC' : $order = 'activity DESC';
-        $datebefore = new \DateTime('-60 days');
+        $datebefore = new \DateTime('-365 days');
 
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('id', 'id');

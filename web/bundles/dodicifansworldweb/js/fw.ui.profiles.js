@@ -99,19 +99,19 @@ $(document).ready(function () {
                         reqData[that.options.type] = parseInt(that.options.id, 10);
                         $.when(that.makePackery(reqData)).then(function(){
                         }).progress(function() {
-                                console.log("adding thumbnails to packery");
-                            }).fail(function(error){
-                                alert(error.message);
-                            });
+                            console.log("adding thumbnails to packery");
+                        }).fail(function(error){
+                            alert(error.message);
+                        });
                     }).fail(function(error){
                             var reqData = {};
                             reqData[that.options.type] = parseInt(that.options.id, 10);
                             $.when(that.makePackery(reqData)).then(function(){
                             }).progress(function() {
-                                    console.log("adding thumbnails to packery");
-                                }).fail(function(error){
-                                    alert(error.message);
-                                });
+                                console.log("adding thumbnails to packery");
+                            }).fail(function(error){
+                                alert(error.message);
+                            });
                         });
                 }
             };
@@ -279,7 +279,7 @@ $(document).ready(function () {
         videoGenre: null,
         type: null,
         id: null,
-        videoFeed: Routing.generate(appLocale + '_home_ajaxfilter'),
+        videoFeed: Routing.generate(appLocale + '_profile_ajaxgetprofiles'),
         page: 1,
         block: null,
         newEvent: null,
@@ -301,16 +301,18 @@ $(document).ready(function () {
             that.clearThumbs();
             that.options.getFilter = function() {
                 var filter = {
-                    paginate: {
-                        page: that.options.page,
-                        block: that.options.block
-                    }
+                    type: 'all',
+                    page: that.options.page,
+                    filterby: that.options.block
                 };
-                filter.paginate[that.options.type] = parseInt(that.options.id, 10);
+                if(!isNaN(that.options.id)) {
+                    filter.genre = that.options.id;
+                }
                 return filter;
             };
-            that.insetThumbs(Routing.generate(appLocale + '_home_ajaxfilter'), that.options.getFilter());
+            that.insetThumbs(that.options.videoFeed, that.options.getFilter());
 
+/*
             that.options.onFindVideosByTag = function(tag, filter){
                 if(filter === that.options.block) {
                     var url = Routing.generate(appLocale + "_video_ajaxsearchbytag");
@@ -326,6 +328,7 @@ $(document).ready(function () {
                     that.insetThumbs(that.options.videoFeed, that.options.getFilter());
                 }
             };
+*/
             that.options.onFilterChange = function(type, id) {
                 id = parseInt(id, 10);
                 that.options.type = type;
@@ -381,14 +384,14 @@ $(document).ready(function () {
                 data: data
             }).then(function(response) {
                     var i = 0;
-                    if(response.videos.length < 1) {
+                    if(response.profiles.length < 1) {
                         $(that.element).parent().fadeOut('slow');
                     }
-                    for(i in response.videos) {
-                        if (response.videos.hasOwnProperty(i)) {
+                    for(i in response.profiles) {
+                        if (response.profiles.hasOwnProperty(i)) {
                             var addMore = response.addMore;
-                            var video = response.videos[i];
-                            $.when(templateHelper.htmlTemplate('video-home_element', video))
+                            var profile = response.profiles[i];
+                            $.when(templateHelper.htmlTemplate('profile-home_element', profile))
                                 .then(function(response){
                                     var $thumb = $(response).clone();
                                     $thumb.find('img').load(function() {
@@ -453,6 +456,13 @@ $(document).ready(function () {
     // Packery
     var type = $(".filter-home").find('.active').attr('data-entity-type');
     var id = parseInt($(".filter-home").find('.active').attr('data-entity-id'), 10);
+
+    // Video Packery Gallery
+/*    $('section.most-recent').fwHomePackery({
+        type: type,
+        id: id,
+        selector: 'section.most-recent'
+    });*/
 
     // Video Grid
     $('section.popular > .videos-container').fwHomeThumbs({
