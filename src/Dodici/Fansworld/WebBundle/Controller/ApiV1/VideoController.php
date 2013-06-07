@@ -603,7 +603,8 @@ class VideoController extends BaseController
      /**
      * Video - genres list
      *
-     * @Route("/video/genres/list", name="api_v1_video_genre_list")
+     * @Route("/video/genres", name="api_v1_video_genre_list")
+     * @Route("/video/genres/list", name="api_v1_video_genre_list_alt")
      * @Method({"GET"})
      *
      * Get params:
@@ -623,16 +624,11 @@ class VideoController extends BaseController
     public function genresAction()
     {
         try {
-
+            $pagination = $this->pagination(array('title'), 'title', 'ASC');
             $genreRepo = $this->getRepository('Genre');
-            $parents = $genreRepo->getParents();
+            $parents = $genreRepo->getParents($pagination['limit'], $pagination['offset']);
 
-            $return = array();
-            foreach ($parents as $parent) {
-                $return[] = $this->get('serializer')->values($parent);
-            }
-
-            return $this->result($return);
+            return $this->result($this->get('serializer')->values($parents), $pagination);
         } catch (\Exception $e) {
             return $this->plainException($e);
         }

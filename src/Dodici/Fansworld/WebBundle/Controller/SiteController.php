@@ -41,9 +41,14 @@ class SiteController extends Controller
 
     public function getImageUrl($media, $sizeFormat = 'small')
     {
+        if (!($media instanceof Media)) {
+            $mediarepo = $this->getDoctrine()->getRepository("ApplicationSonataMediaBundle:Media");
+            $media = $mediarepo->find($media);
+        }
+
         return $this->get('appmedia')->getImageUrl($media, $sizeFormat);
     }
-    
+
     public function jsonResponse($response, $code = 200)
     {
         $response = new Response(json_encode($response), $code);
@@ -54,10 +59,10 @@ class SiteController extends Controller
     public function securityCheck($entity)
     {
     	$user = $this->getUser();
-    	
+
     	if (!$entity || (property_exists($entity, 'active') && !$entity->getActive()))
             throw new HttpException(404, 'Contenido no encontrado');
-            
+
         if (property_exists($entity, 'privacy')) {
 	    	if ($entity->getPrivacy() != Privacy::EVERYONE) {
 	        	if ($user instanceof User) {
@@ -70,13 +75,13 @@ class SiteController extends Controller
 	        }
         }
     }
-    
+
     public function getUser()
     {
         $user = $this->get('security.context')->getToken()->getUser();
         return ($user instanceof User) ? $user : null;
     }
-    
+
     public function trans($term)
     {
     	return $this->get('translator')->trans($term);
