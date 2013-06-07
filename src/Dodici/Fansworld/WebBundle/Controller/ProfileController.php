@@ -47,8 +47,7 @@ class ProfileController extends SiteController
      *  - type: 'all' | 'idol' | 'team'
      *  - filterby: 'popular' | 'activity'
      *  - genre: (Int) genreId of parent(genre) | genreId of child(subgenre) | null
-     *  - limit (Int) | null
-     *  - offset (Int) | null
+     *  - page: (Int) | null
      *  @Route("/profiles/ajax/get", name="profile_ajaxgetprofiles")
      */
     public function ajaxGetAction()
@@ -77,10 +76,16 @@ class ProfileController extends SiteController
                 'title' => $entity['title'],
                 'slug' => $entity['slug'],
                 'image' => $this->getImageUrl($entity['imageid']),
-                'fanCount' => $entity['fancount'],
-                'highlight' => false,
-                'videoCount' => $entity['videocount']
+                'highlight' => false
             );
+            
+            if($filterby == 'popular'){
+                $profile['dataCount'] = $profile['fanCount'];
+                $profile['dataText'] = 'fans';
+            }else{
+                $profile['dataCount'] = $profile['videoCount'];
+                $profile['dataText'] = 'videos';
+            }
 
             $response['profiles'][$profile['id']] = $profile;
         }
