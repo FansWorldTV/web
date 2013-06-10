@@ -675,15 +675,15 @@ class VideoController extends BaseController
      * [signed] Share Video
      *
      * @Route("/video/share/{id}", name="api_v1_video_share")
-     * @Method({"GET"})
+     * @Method({"POST"})
      *
      * Post params:
      * - user_id: int
      * - [user token]
      * - <optional> title: String
-     * - <optional> shareidols: comma-separated Ids (Int)
-     * - <optional> shareteams: comma-separated Ids (Int)
-     * - <optional> shareusers: comma-separated Ids (Int)
+     * - <optional> shareidols: comma-separated Ids (String)
+     * - <optional> shareteams: comma-separated Ids (String)
+     * - <optional> shareusers: comma-separated Ids (String)
      * - <optional> wall: boolean,
      * - <optional> tofb: boolean,
      * - <optional> totw: boolean,
@@ -692,13 +692,13 @@ class VideoController extends BaseController
     public function shareVideoAction($id)
     {
         try {
-            //if ($this->hasValidSignature()) {
+            if ($this->hasValidSignature()) {
                 if (!$id) throw new HttpException(400, 'Requires id of Video');
                 $request = $this->getRequest();
 
                 $userid = $request->get('user_id');
-                $user = $this->getRepository('User')->findOneBy(array('id'=>$userid));
-                //$user = $this->checkUserToken($userid, $request->get('user_token'));
+                //$user = $this->getRepository('User')->findOneBy(array('id'=>$userid));
+                $user = $this->checkUserToken($userid, $request->get('user_token'));
 
                 $video = $this->getRepository('Video')->findOneBy(array('id'=>$id));
                 if (!$video) throw new HttpException(400, 'Video not found');
@@ -773,9 +773,9 @@ class VideoController extends BaseController
 
                 return $this->result($response);
 
-            //} else {
-              //  throw new HttpException(401, 'Invalid signature');
-            //}
+            } else {
+                throw new HttpException(401, 'Invalid signature');
+            }
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
