@@ -183,8 +183,14 @@ $(document).ready(function () {
                         if (response.profiles.hasOwnProperty(i)) {
                             var profile = response.profiles[i];
                             if(profile.highlight) {
-
-                                profile.image = profile.image_double;
+                                if(profile.type === 'team') {
+                                    profile.image = profile.splash_double;
+                                } else {
+                                    profile.image = profile.image_double;
+                                }
+                            }
+                            if(profile.type === 'team') {
+                                profile.image = profile.splash;
                             }
                             console.log(profile);
                             $.when(templateHelper.htmlTemplate('profile-home_element', profile))
