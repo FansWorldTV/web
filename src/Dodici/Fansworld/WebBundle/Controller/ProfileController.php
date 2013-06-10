@@ -74,15 +74,17 @@ class ProfileController extends SiteController
 
         foreach ($entities as $entity) {
             $profile = array(
-                'id'           => $entity['id'],
-                'type'         => $entity['type'],
-                'title'        => $entity['title'],
-                'slug'         => $entity['slug'],
-                'videoCount'   => $entity['videocount'],
-                'fanCount'     => $entity['fancount'],
-                'image'        => $this->getImageUrl($entity['imageid'], 'big_square'),
-                'image_double' => $this->getImageUrl($entity['imageid'], 'huge_square'),
-                'highlight'    => false
+                'id'            => $entity['id'],
+                'type'          => $entity['type'],
+                'title'         => $entity['title'],
+                'slug'          => $entity['slug'],
+                'videoCount'    => $entity['videocount'],
+                'fanCount'      => $entity['fancount'],
+                'image'         => $this->getImageUrl($entity['imageid'], 'big_square'),
+                'image_double'  => $this->getImageUrl($entity['imageid'], 'huge_square'),
+                'splash'        => $this->getImageUrl($entity['splashid'], 'big_square'),
+                'splash_double' => $this->getImageUrl($entity['splashid'], 'huge_square'),
+                'highlight'     => false
             );
 
             if ($filterBy == 'popular') {
