@@ -5,6 +5,7 @@ namespace Dodici\Fansworld\WebBundle\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Application\Sonata\UserBundle\Entity\User;
+use Application\Sonata\UserBundle\Entity\Media;
 
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
 
@@ -41,7 +42,7 @@ class SiteController extends Controller
 
     public function getImageUrl($media, $sizeFormat = 'small')
     {
-        if (!($media instanceof Media)) {
+        if (!is_object($media)) {
             $mediarepo = $this->getDoctrine()->getRepository("ApplicationSonataMediaBundle:Media");
             $media = $mediarepo->find($media);
         }
