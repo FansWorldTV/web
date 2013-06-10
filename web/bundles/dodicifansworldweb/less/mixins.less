@@ -83,6 +83,15 @@
   -webkit-appearance: @style;
 }
 
+// Filter cross-browser
+.filter(@style: none) {
+    -webkit-filter: @style; 
+    -moz-filter: @style; 
+    -o-filter: @style; 
+    -ms-filter: @style; 
+    filter: @style;
+}
+
 // Hexagono
 .hexagono(@height: 100px, @width: 55px, @color: black){
   width: @width;

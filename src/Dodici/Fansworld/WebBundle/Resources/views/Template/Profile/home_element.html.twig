@@ -1,6 +1,7 @@
 {% raw %}
-    <div class="profile">
-        <img src="{{>image}}" />
+    <div class="profile {{>type}}">
+        <img src="{{>splash}}" class="splash" />
+        <img src="{{>image}}" class="image"/>
         <div class="info">
             <a href="{{>slug}}">
                 <span class="title">{{>title}}</span>

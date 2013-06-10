@@ -4,6 +4,9 @@
         padding: 0 1em 0 1em;
         div.profile {
             position: relative;
+            .box-sizing(border-box);
+            overflow: hidden;
+            border: 1px solid white;
 
             &:hover {
                 .info {
@@ -12,6 +15,25 @@
                     &:before {
                         opacity: 0.65;
                     }
+                }
+            }
+
+            &.team {
+                .image {
+                    position: absolute;
+                    top: 10%;
+                    left: 10%;
+                    display: block;
+                    height: 80%;
+                }
+                .splash {
+                    .filter(blur(1px));
+                }
+            }
+
+            &.idol {
+                .splash {
+                    display: none;
                 }
             }
 
@@ -41,7 +63,7 @@
                     color: white;
 
                     &:hover {
-                        color: @green;
+                        color: white;
                     }
                 }
 
@@ -120,6 +142,29 @@
 				.column(1, 9);
 				margin-bottom: @gutter-width;
 				position: relative;
+                .box-sizing(border-box);
+                overflow: hidden;
+                border: 1px solid white;
+
+
+                &.team {
+                    .image {
+                        position: absolute;
+                        top: 10%;
+                        left: 10%;
+                        display: block;
+                        height: 80%;
+                    }
+                    .splash {
+                        .filter(blur(1px));
+                    }
+                }
+                
+                &.idol {
+                    .splash {
+                        display: none;
+                    }
+                }
 
 				&:hover {
 					.info {
@@ -157,7 +202,7 @@
                         color: white;
 
                         &:hover {
-                            color: @green;
+                            color: white;
                         }
                     }
 
