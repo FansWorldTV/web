@@ -78,7 +78,7 @@ class ProfileRepository extends CountBaseRepository
                     AND
                     v.created_at > :datebefore
                     GROUP BY v.' . $etype . '_id
-                    HAVING COUNT( v.'. $etype .'_id ) > 0';
+                    HAVING COUNT( v.'. $etype .'_id ) >= 0';
             }
         }
 
