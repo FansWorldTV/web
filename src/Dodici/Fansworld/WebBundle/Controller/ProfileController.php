@@ -27,7 +27,7 @@ use Imagine\Gd\Imagine;
  */
 class ProfileController extends SiteController
 {
-    
+
     const LIMIT_PROFILES_HOME = 20;
 
     /**
@@ -37,7 +37,7 @@ class ProfileController extends SiteController
     public function listAction()
     {
         return array(
-            'genres' => $this->getRepository('Genre')->getParents(),
+            'genres'   => $this->getRepository('Genre')->getParents(),
             'profiles' => $this->getRepository('Idol')->findBy(array(), null, 30)
         );
     }
@@ -53,66 +53,71 @@ class ProfileController extends SiteController
     public function ajaxGetAction()
     {
         $request = $this->getRequest();
-        
-        $type = $request->get('type', 'all');
+
+        $type     = $request->get('type', 'all');
         $filterBy = $request->get('filterby', 'popular');
-        $genre = $request->get('genre');
-        $page = $request->get('page', 1);
-        
+        $genre    = $request->get('genre');
+        $page     = $request->get('page', 1);
+
         $offset = ($page - 1) * self::LIMIT_PROFILES_HOME;
-        
+
         if (!$type)
-            $type = 'all';
+            $type     = 'all';
         if (!$filterBy)
             $filterBy = 'popular';
 
         $entities = $this->getRepository('Profile')->latestOrPopular($type, $filterBy, $genre, self::LIMIT_PROFILES_HOME, $offset);
 
-        $response = array();
+        $response = array(
+            'profiles' => array()
+        );
+
         foreach ($entities as $entity) {
             $profile = array(
-                'id' => $entity['id'],
-                'type' => $entity['type'],
-                'title' => $entity['title'],
-                'slug' => $entity['slug'],
-                'videoCount' => $entity['videocount'],
-                'fanCount' => $entity['fancount'],
-                'image' => $this->getImageUrl($entity['imageid'], 'big_square'),
+                'id'           => $entity['id'],
+                'type'         => $entity['type'],
+                'title'        => $entity['title'],
+                'slug'         => $entity['slug'],
+                'videoCount'   => $entity['videocount'],
+                'fanCount'     => $entity['fancount'],
+                'image'        => $this->getImageUrl($entity['imageid'], 'big_square'),
                 'image_double' => $this->getImageUrl($entity['imageid'], 'huge_square'),
-                'highlight' => false
+                'highlight'    => false
             );
-            
-            if($filterBy == 'popular'){
+
+            if ($filterBy == 'popular') {
                 $profile['dataCount'] = $profile['fanCount'];
-                $profile['dataText'] = 'fans';
-            }else{
+                $profile['dataText']  = 'fans';
+            } else {
                 $profile['dataCount'] = $profile['videoCount'];
-                $profile['dataText'] = 'videos';
+                $profile['dataText']  = 'videos';
             }
 
             $response['profiles'][$profile['id']] = $profile;
         }
 
-        if ($filterBy == 'activity') {
-            $highlights = array();
+        if (isset($response['profiles']) && count($response['profiles']) > 0) {
+            if ($filterBy == 'activity') {
+                $highlights = array();
 
-            foreach ($response['profiles'] as $profile)
-                $highlights[$profile['id']] = $profile['videoCount'];
+                foreach ($response['profiles'] as $profile)
+                    $highlights[$profile['id']] = $profile['videoCount'];
 
-            arsort($highlights);
-            $top5 = array_slice($highlights, 0, 5, true);
+                arsort($highlights); 
+               $top5 = array_slice($highlights, 0, 5, true);
 
-            foreach ($top5 as $key => $profile)
-                $response['profiles'][$key]['highlight'] = true;
+                foreach ($top5 as $key => $profile)
+                    $response['profiles'][$key]['highlight'] = true;
+            }
+
+            $i = 0;
+            foreach ($response['profiles'] as $k => $profile) {
+                $response['profiles'][$i] = $profile;
+                unset($response['profiles'][$k]);
+                $i++;
+            }
         }
-        
-        $i = 0;
-        foreach($response['profiles'] as $k => $profile){
-            $response['profiles'][$i] = $profile;
-            unset($response['profiles'][$k]);
-            $i++;
-        }
-        
+
         return $this->jsonResponse($response);
     }
 
