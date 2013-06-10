@@ -78,6 +78,7 @@ class ProfileController extends SiteController
                 'type'          => $entity['type'],
                 'title'         => $entity['title'],
                 'slug'          => $entity['slug'],
+                'url'           => $this->generateUrl($entity['type'] . '_land', array('slug' => $entity['slug'])),
                 'videoCount'    => $entity['videocount'],
                 'fanCount'      => $entity['fancount'],
                 'image'         => $this->getImageUrl($entity['imageid'], 'big_square'),
