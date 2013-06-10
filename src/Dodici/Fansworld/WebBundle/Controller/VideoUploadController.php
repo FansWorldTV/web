@@ -382,11 +382,17 @@ class VideoUploadController extends SiteController
         foreach ($videoCategories as $ab)
             $categoriesChoices[$ab->getId()] = $ab->getTitle();
 
-        $genres = $this->getRepository('Genre')->findAll();
+        $genres = $this->getRepository('Genre')->findBy(array('parent' => null));
         $genrechoises = array();
-        foreach ($genres as $gen)
-            $genrechoises[$gen->getId()] = $gen->getTitle();
+        foreach ($genres as $gen) {
+            $children = $gen->getChildren();
+            $childarray = array();
+            foreach ($children as $child) {
+                $childarray[$child->getId()] = $child->getTitle();
+            }
 
+            $genrechoises[$gen->getTitle()] = $childarray;
+        }
 
         $defaultData = array();
         $collectionConstraint = new Collection(array(
