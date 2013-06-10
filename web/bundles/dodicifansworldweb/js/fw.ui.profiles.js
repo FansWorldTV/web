@@ -473,7 +473,7 @@ $(document).ready(function () {
         type: type,
         id: id,
         selector: 'section.most-recent',
-        block: 'activity'
+        block: 'popular'
     });
 
     // Video Grid
