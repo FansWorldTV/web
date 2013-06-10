@@ -7,8 +7,15 @@
             .box-sizing(border-box);
             overflow: hidden;
             border: 1px solid white;
+            .transition(0.3 filter ease);
 
             &:hover {
+                .image {
+                    .filter(blur(3.5px));
+                }
+                .splash {
+                    .filter(blur(3.5px));
+                }
                 .info {
                     opacity: 1;
 
@@ -80,6 +87,7 @@
                         float: right;
                         font-size: 20px;
                         font-weight: 600;
+                        padding: 5px 8px 5px 8px;
                     }
 
                     .data-cant {
@@ -145,6 +153,7 @@
                 .box-sizing(border-box);
                 overflow: hidden;
                 border: 1px solid white;
+                .transition(0.3 filter ease);
 
 
                 &.team {
@@ -167,6 +176,12 @@
                 }
 
 				&:hover {
+                    .image {
+                        .filter(blur(3.5px));
+                    }
+                    .splash {
+                        .filter(blur(3.5px));
+                    }
 					.info {
 						opacity: 1;
 
@@ -219,6 +234,7 @@
 							float: right;
 							font-size: 20px;
 							font-weight: 600;
+                            padding: 5px 8px 5px 8px;
 						}
 
 						.data-cant {
