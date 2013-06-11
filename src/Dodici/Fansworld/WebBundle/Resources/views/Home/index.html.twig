@@ -19,22 +19,25 @@
 {% block main_content %}
     <div class="home-content">
         <ul class="filter-home">
-            {% for category in categories %}
-                <li {% if loop.first %}class="active"{% endif %} data-category-id = "{{ category.id }}">{{ category.title }}</li>
+            <li class="active" data-entity-type="null" data-entity-id="null">TODOS</li>
+            {% for genre in genres %}
+                <li data-entity-type="genre" data-entity-id = "{{ genre.id }}">{{ genre.title }}</li>
             {% endfor %}
-            {#<li><i class="icon-cog"></i></li>#}
+            {% for category in categories %}
+                <li data-entity-type="vc" data-entity-id = "{{ category.id }}">{{ category.title }}</li>
+            {% endfor %}
         </ul>
 
-        <section class="row-fluid gray highlights" id="home-gallery">
+        <section class="row-fluid gray highlights hidden" id="home-gallery">
             <div class="grid-sizer"></div>
             <div class="gutter-sizer"></div>
         </section>
 
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            <section class="row-fluid followed">
+            <section class="row-fluid followed hidden">
                 <header class="clearfix">
                     <h3 class="pull-left">Sigues</h3>
-                    <span class="cant pull-left">30 videos</span>
+                    <span class="cant pull-left"><span data-total-followed></span> videos</span>
 
                     <section class="pull-right followed-tags topics">
                         <ul class="pull-right"></ul>
@@ -43,15 +46,14 @@
                 </header>
                 <div class="videos-container"></div>
                 <div class="clearfix"></div>
-                <div class="spinner hidden"><div class="mask"></div></div>
                 <div class="add-more">+</div>
             </section>
         {% endif %}
 
-        <section class="row-fluid gray popular">
+        <section class="row-fluid gray popular hidden">
             <header class="clearfix">
                 <h3 class="pull-left">Popular</h3>
-                <span class="cant pull-left">30 videos</span>
+                <span class="cant pull-left"><span data-total-popular></span> videos</span>
 
                 <section class="pull-right popular-tags topics">
                     <ul class="pull-right"></ul>
@@ -60,8 +62,9 @@
             </header>
             <div class="videos-container"></div>
             <div class="clearfix"></div>
-            <div class="spinner hidden"><div class="mask"></div></div>
             <div class="add-more">+</div>
         </section>
+
+        <div class="spinner"><div class="mask"></div></div>
     </div>
 {% endblock %}

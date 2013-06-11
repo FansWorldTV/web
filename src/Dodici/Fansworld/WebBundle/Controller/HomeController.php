@@ -2,7 +2,9 @@
 
 namespace Dodici\Fansworld\WebBundle\Controller;
 
+use Dodici\Fansworld\WebBundle\Entity\HomeVideo;
 use Dodici\Fansworld\WebBundle\Entity\VideoCategory;
+use Dodici\Fansworld\WebBundle\Entity\Genre;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,8 +34,8 @@ class HomeController extends SiteController
         if ($checkfbreq) return $checkfbreq;
 
         return array(
-            'testvideos' => $this->getRepository('Video')->findBy(array(), array(), 10),
-            'categories' => $this->getRepository('VideoCategory')->findAll()
+            'categories' => $this->getRepository('VideoCategory')->findAll(),
+            'genres' => $this->getRepository('Genre')->getParents()
         );
     }
 
@@ -51,13 +53,9 @@ class HomeController extends SiteController
 
         $videoRepo = $this->getRepository('Video');
 
-        if(!$paginate){
-            $vc = $request->get('vc', false);
-            $vc = $this->getRepository('VideoCategory')->find($vc);
-
-            if(!$vc instanceof VideoCategory){
-                throw new Exception("No video category");
-            }
+        if (!$paginate) {
+            $vc = $request->get('vc', null);
+            $genre = $request->get('genre', null);
 
             $response = array(
                 'home' => null,
@@ -66,46 +64,67 @@ class HomeController extends SiteController
                 'popular' => array()
             );
 
-            $homeVideo = $this->getRepository('HomeVideo')->findOneBy(array('videocategory' => $vc->getId()));
-            $homeVideo = $homeVideo->getVideo();
+            if ($genre) {
+                $homeVideo = $this->getRepository('Video')->findOneBy(array('genre' => $genre, 'highlight' => true));
+            } else {
+                $homeVideo = $this->getRepository('HomeVideo')->findOneBy(array('videocategory' => $vc));
+                if($homeVideo instanceof HomeVideo){
+                    $homeVideo = $homeVideo->getVideo();
+                }
+            }
             $response['home'] = $serializer->values($homeVideo, 'home_video_double');
 
-            $limitWithTheHighlighted = (self::LIMIT_VIDEO-3);
-            $videos = $videoRepo->search(null, null, $limitWithTheHighlighted, 0, $vc, true, null, null, null, null, null, $homeVideo);
+            $limitWithTheHighlighted = (self::LIMIT_VIDEO - 3);
+            $videos = $videoRepo->searchHome(null, $genre, $vc, null, true, null, $homeVideo, $limitWithTheHighlighted, 0);
             $response['highlighted'] = $serializer->values($videos, 'home_video');
 
-            $videos = $videoRepo->search(null, $user, self::LIMIT_VIDEO, 0, $vc->getId(), true, null, null, null, 'default', null, $homeVideo);
+            $videos = $videoRepo->searchHome($user, $genre, $vc, true, false, 'default', $homeVideo, self::LIMIT_VIDEO, 0);
             $response['followed'] = $serializer->values($videos, 'home_video');
 
-            $videos = $videoRepo->search(null, null, self::LIMIT_VIDEO, 0, $vc->getId(), false);
+            $videos = $videoRepo->searchHome(null, $genre, $vc, null, false, null, null, self::LIMIT_VIDEO, 0);
             $response['popular'] = $serializer->values($videos, 'home_video');
-        }else{
-            $vc = $this->getRepository('VideoCategory')->find($paginate['vc']);
+
+            $response['totals']['followed'] = $videoRepo->countSearch(null, $user, $vc, false, null, null, null, null, $homeVideo, null, null, true, $genre);
+            $response['totals']['popular'] = $videoRepo->countSearch(null, null, $vc, false, null, null, null, null, $homeVideo, null, null, null, $genre);;
+        } else {
+            $genre = isset($paginate['genre']) ? $paginate['genre'] : null;
+            $vc = isset($paginate['vc']) ? $paginate['vc'] : null;
             $block = $paginate['block'];
             $page = $paginate['page'];
-            $offset = ($page -1)*self::LIMIT_VIDEO;
-            $homeVideo = $this->getRepository('HomeVideo')->findOneBy(array('videocategory' => $vc->getId()));
-            $homeVideo = $homeVideo->getVideo();
+            $offset = ($page - 1) * self::LIMIT_VIDEO;
+
+            if ($genre) {
+                $homeVideo = $this->getRepository('Video')->findOneBy(array('genre' => $genre, 'highlight' => true));
+            } else {
+                $homeVideo = $this->getRepository('HomeVideo')->findOneBy(array('videocategory' => $vc));
+                if($homeVideo instanceof HomeVideo){
+                    $homeVideo = $homeVideo->getVideo();
+                }
+            }
 
             $response = array('videos' => array());
 
-            switch($block){
+            switch ($block) {
                 case 'followed':
-                    $videos = $videoRepo->search(null, $user, self::LIMIT_VIDEO, $offset, $vc->getId(), true, null, null, null, 'default', null, $homeVideo);
+                    $videos = $videoRepo->searchHome($user, $genre, $vc, true, false, 'default', $homeVideo, self::LIMIT_VIDEO, $offset);
                     $response['videos'] = $serializer->values($videos, 'home_video');
+                    $videosCount = $videoRepo->countSearch(null, $user, $vc, false, null, null, null, null, $homeVideo, null, null, true, $genre);
                     break;
                 case 'popular':
-                    $videos = $videoRepo->search(null, null, self::LIMIT_VIDEO, $offset, $vc->getId(), false, null, null, null, 'default', null, $homeVideo);
+                    $videos = $videoRepo->searchHome(null, $genre, $vc, null, false, 'default', $homeVideo, self::LIMIT_VIDEO, $offset);
                     $response['videos'] = $serializer->values($videos, 'home_video');
+                    $videosCount = $videoRepo->countSearch(null, null, $vc, false, null, null, null, null, $homeVideo, null, null, null, $genre);
                     break;
             }
+
+            $response['addMore'] = $videosCount > (($page) * self::LIMIT_VIDEO) ? true : false;
         }
 
         return $this->jsonResponse($response);
     }
 
     /**
-     * Ajax method 
+     * Ajax method
      * @Route("/home/ajax/enjoy", name="home_ajaxenjoy")
      */
     public function ajaxEnjoyAction()
@@ -113,7 +132,7 @@ class HomeController extends SiteController
         $serializer = $this->get('serializer');
         $request = $this->getRequest();
         $filter = $request->get('filter', 0);
-        $filter = (int) $filter;
+        $filter = (int)$filter;
         $byTag = $request->get('tag', false);
 
         $video = $this->getRepository('Video');
@@ -137,9 +156,9 @@ class HomeController extends SiteController
 
 
         return $this->jsonResponse(array(
-                    'videos' => $serializer->values($videos, 'big'),
-                    'trending' => $trending
-                ));
+            'videos' => $serializer->values($videos, 'big'),
+            'trending' => $trending
+        ));
     }
 
     /**
@@ -163,7 +182,7 @@ class HomeController extends SiteController
 
         for ($i = 0; $i < 40; $i++) {
             $isPhoto = rand(0, 1);
-            $isPhoto = (bool) $isPhoto;
+            $isPhoto = (bool)$isPhoto;
 
             if ($isPhoto && $photoCountAdded < 20) {
                 if (isset($photo[$photoCountAdded])) {
@@ -185,8 +204,8 @@ class HomeController extends SiteController
         }
 
         return $this->jsonResponse(array(
-                    'elements' => $elements
-                ));
+            'elements' => $elements
+        ));
     }
 
     /**
@@ -199,8 +218,8 @@ class HomeController extends SiteController
         $fans = $this->getRepository('User')->findBy(array('enabled' => true), array('score' => 'DESC'), 20);
 
         return $this->jsonResponse(array(
-                    'fans' => $serializer->values($fans, 'big_square')
-                ));
+            'fans' => $serializer->values($fans, 'big_square')
+        ));
     }
 
     /**
@@ -213,8 +232,8 @@ class HomeController extends SiteController
         $events = $this->getRepository('Event')->findBy(array('finished' => false), array('weight' => 'desc'), 20);
 
         return $this->jsonResponse(array(
-                    'events' => $serializer->values($events, 'small')
-                ));
+            'events' => $serializer->values($events, 'small')
+        ));
     }
 
     /**
@@ -267,7 +286,7 @@ class HomeController extends SiteController
 
         return $this->jsonResponse($results);
     }
-    
+
     private function checkFacebookRequest()
     {
         $request = $this->getRequest();
@@ -287,7 +306,7 @@ class HomeController extends SiteController
                     // set some flash
                     $this->get('session')->setFlash('error', 'Error procesando invitación');
                 }
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 // failed to get requester user, set some flash
                 $this->get('session')->setFlash('error', 'Error procesando invitación');
             }

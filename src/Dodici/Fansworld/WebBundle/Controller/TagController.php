@@ -76,8 +76,8 @@ class TagController extends SiteController
         }
 
         $filterType = $request->get('filter', 'popular');
-        $videoCategory = $request->get('channel');
-        $genre = $request->get('genre');
+        $videoCategory = $request->get('vc', null);
+        $genre = $request->get('genre', null);
 
         $response = array(
             'tags' => false,

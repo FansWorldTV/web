@@ -321,6 +321,7 @@ class VideoController extends SiteController
      */
     public function ajaxSearchByTagAction()
     {
+        $serializer = $this->get('serializer');
         $request = $this->getRequest();
         $page = (int) $request->get('page', 1);
         $id = $request->get('id', false);
@@ -345,39 +346,17 @@ class VideoController extends SiteController
                 $videosRepo = $this->getRepository('Video')->search(null, $user, self::cantVideos, $offset, null, null, null, null, null, 'default', $info_entity);
                 $countAll = $this->getRepository('Video')->countSearch(null, $user, null, null, null, null, null, $info_entity);
             }
-            foreach ($videosRepo as $video) {
-                $tags = array();
-                foreach ($video->getHastags() as $tag) {
-                    array_push($tags, array(
-                        'title' => $tag->getTag()->getTitle(),
-                        'slug' => $tag->getTag()->getSlug()
-                            )
-                    );
-                }
 
-                $videos[] = array(
-                    'id' => $video->getId(),
-                    'title' => $video->getTitle(),
-                    'image' => $this->getImageUrl($video->getImage(), 'medium'),
-                    'author' => array(
-                        'name' => (string) $video->getAuthor(),
-                        'id' => $video->getAuthor()->getId(),
-                        'avatar' => $this->getImageUrl($video->getAuthor()->getImage())
-                    ),
-                    'date' => $video->getCreatedAt()->format('c'),
-                    'content' => substr($video->getContent(), 0, 100),
-                    'slug' => $video->getSlug(),
-                    'tags' => $tags
-                );
-            }
+            $videos = $serializer->values($videosRepo, 'home_video');
         }
+
         $addMore = $countAll > (($page) * self::cantVideos) ? true : false;
 
 
         return $this->jsonResponse(array(
-                    'videos' => $videos,
-                    'addMore' => $addMore
-                ));
+            'videos' => $videos,
+            'addMore' => $addMore
+        ));
     }
 
     /**
