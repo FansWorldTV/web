@@ -100,19 +100,19 @@ $(document).ready(function () {
                         reqData[that.options.type] = parseInt(that.options.id, 10);
                         $.when(that.makePackery(reqData)).then(function(){
                         }).progress(function() {
-                            console.log("adding thumbnails to packery");
-                        }).fail(function(error){
-                            alert(error.message);
-                        });
+                                console.log("adding thumbnails to packery");
+                            }).fail(function(error){
+                                alert(error.message);
+                            });
                     }).fail(function(error){
                             var reqData = {};
                             reqData[that.options.type] = parseInt(that.options.id, 10);
                             $.when(that.makePackery(reqData)).then(function(){
                             }).progress(function() {
-                                console.log("adding thumbnails to packery");
-                            }).fail(function(error){
-                                alert(error.message);
-                            });
+                                    console.log("adding thumbnails to packery");
+                                }).fail(function(error){
+                                    alert(error.message);
+                                });
                         });
                 }
             };
@@ -182,16 +182,15 @@ $(document).ready(function () {
                     for(i in response.profiles) {
                         if (response.profiles.hasOwnProperty(i)) {
                             var profile = response.profiles[i];
-                            console.log(profile);
                             $.when(templateHelper.htmlTemplate('profile-home_element', profile))
-                            .then(function(response){
-                                var $thumb = $(response).clone();
-                                $thumb.addClass('profile');
-                                if(profile.highlight == 'true') {
-                                    $thumb.addClass('double');
-                                }
-                                queue.add($thumb);
-                            });
+                                .then(function(response){
+                                    var $thumb = $(response).clone();
+                                    $thumb.addClass('profile');
+                                    if(profile.highlight == 'true') {
+                                        $thumb.addClass('double');
+                                    }
+                                    queue.add($thumb);
+                                });
                         }
                     }
                 });
@@ -318,25 +317,9 @@ $(document).ready(function () {
                 }
                 return filter;
             };
-            that.insetThumbs(that.options.videoFeed, that.options.getFilter());
+            $.when(that.insetThumbs(that.options.videoFeed, that.options.getFilter())).then(function(response){
+            });
 
-/*
-            that.options.onFindVideosByTag = function(tag, filter){
-                if(filter === that.options.block) {
-                    var url = Routing.generate(appLocale + "_video_ajaxsearchbytag");
-                    that.options.videoFeed = Routing.generate(appLocale + "_video_ajaxsearchbytag");
-                    that.options.getFilter = function() {
-                        return {
-                            id: tag.id,
-                            entity: tag.type,
-                            page: that.options.page
-                        };
-                    };
-                    that.clearThumbs();
-                    that.insetThumbs(that.options.videoFeed, that.options.getFilter());
-                }
-            };
-*/
             that.options.onFilterChange = function(type, id) {
                 id = parseInt(id, 10);
                 that.options.type = type;
@@ -354,7 +337,8 @@ $(document).ready(function () {
                     return filter;
                 };
                 that.clearThumbs();
-                that.insetThumbs(that.options.videoFeed, that.options.getFilter());
+                $.when(that.insetThumbs(that.options.videoFeed, that.options.getFilter())).then(function(response){
+                });
             };
 
             window.fansWorldEvents.addListener('onFindVideosByTag', that.options.onFindVideosByTag);
@@ -402,6 +386,33 @@ $(document).ready(function () {
                             $.when(templateHelper.htmlTemplate('profile-home_element', profile))
                                 .then(function(response){
                                     var $thumb = $(response).clone();
+                                    $thumb.find("[data-idolship-add]").fwIdolship({
+                                        onAddIdol: function(plugin, data) {
+                                            var self = $(plugin.element);
+                                            self.addClass('disabled');
+                                            self.removeClass('add');
+                                            self.text("-");
+                                            console.log(self.parent().find('.data-cant'))
+                                            var fc = self.parent().find('.data-cant').text();
+                                            fc += 1;
+                                            self.parent().find('.data-cant').text(fc);
+                                        },
+                                        onRemoveIdol: function(plugin, data) {
+                                            window.location.reload();
+                                        }
+                                    });
+                                    $thumb.find('[data-teamship-add]').fwTeamship({
+                                        onAddTeam: function(plugin, data) {
+                                            var self = $(plugin.element);
+                                            self.addClass('disabled');
+                                            self.removeClass('add');
+                                            self.text("-");
+                                            self.parent().find('[data-cant]').text('KK');
+                                        },
+                                        onRemoveTeam: function(plugin, data) {
+                                            window.location.reload();
+                                        }
+                                    });
                                     $thumb.find('img').load(function() {
                                         $(that.element).parent().find('.spinner').addClass('hidden');
                                         $(that.element).parent().find('.spinner').hide();
