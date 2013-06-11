@@ -182,10 +182,6 @@ $(document).ready(function () {
                     for(i in response.profiles) {
                         if (response.profiles.hasOwnProperty(i)) {
                             var profile = response.profiles[i];
-                            if(profile.highlight) {
-                                profile.image = profile.image_double;
-                                profile.splash = profile.splash_double;
-                            }
                             console.log(profile);
                             $.when(templateHelper.htmlTemplate('profile-home_element', profile))
                             .then(function(response){

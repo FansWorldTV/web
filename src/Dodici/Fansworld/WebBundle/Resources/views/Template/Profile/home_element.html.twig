@@ -1,7 +1,7 @@
 {% raw %}
-    <div class="profile {{>type}}">
-        <img src="{{>splash}}" class="splash" />
-        <img src="{{>image}}" class="image"/>
+    <div class="profile {{>type}}" data-profile-highlighted = "{{>highlight}}">
+        <img src="{{if highlight}}{{>splash_double}}{{else}}{{>splash}}{{/if}}" class="splash" />
+        <img src="{{if highlight}}{{>image_double}}{{else}}{{>image}}{{/if}}" class="image"/>
         <div class="info">
             <a href="{{>slug}}">
                 <span class="title">{{>title}}</span>
