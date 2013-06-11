@@ -100,19 +100,19 @@ $(document).ready(function () {
                         reqData[that.options.type] = parseInt(that.options.id, 10);
                         $.when(that.makePackery(reqData)).then(function(){
                         }).progress(function() {
-                                console.log("adding thumbnails to packery");
-                            }).fail(function(error){
-                                alert(error.message);
-                            });
+                            console.log("adding thumbnails to packery");
+                        }).fail(function(error){
+                            alert(error.message);
+                        });
                     }).fail(function(error){
                             var reqData = {};
                             reqData[that.options.type] = parseInt(that.options.id, 10);
                             $.when(that.makePackery(reqData)).then(function(){
                             }).progress(function() {
-                                    console.log("adding thumbnails to packery");
-                                }).fail(function(error){
-                                    alert(error.message);
-                                });
+                                console.log("adding thumbnails to packery");
+                            }).fail(function(error){
+                                alert(error.message);
+                            });
                         });
                 }
             };
