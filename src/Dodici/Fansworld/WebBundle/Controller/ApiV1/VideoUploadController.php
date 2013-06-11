@@ -83,7 +83,8 @@ class VideoUploadController extends BaseController
                 if (!$genreid) throw new HttpException(400, 'Requires video_genre');
                 if (!$genre) throw new HttpException(400, 'Invalid video_genre');
                 if (!$genre->getParent())  throw new HttpException(400, 'Genre must not be a parent genre');
-                                
+
+                $kaltura->init(false, $user->getId());
                 $uploadtoken = $kaltura->getUploadToken();
                 $entryid = $kaltura->addEntryFromToken($uploadtoken, $title);
                 
@@ -114,7 +115,7 @@ class VideoUploadController extends BaseController
                         'uploadTokenId' => $uploadtoken,
                         'service' => $service,
                         'action' => $action,
-                        'ks' => $kaltura->getKs()
+                        'ks' => $kaltura->getKs(false, $user->getId())
                     )
                 ));
                 
