@@ -118,18 +118,18 @@ class UserController extends BaseController
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
-                
+
                 $targetids = $request->get('target_id');
                 if (!$targetids) throw new HttpException(400, 'Requires target_id');
                 if (!is_array($targetids)) $targetids = array($targetids);
                 if (array_unique($targetids) !== $targetids) throw new HttpException(400, 'Duplicate target_id');
-                
+
                 $updates = array();
-                
+
                 foreach ($targetids as $targetid) {
                     $target = $this->getRepository('User')->find($targetid);
                     if (!$target) throw new HttpException(404, 'Target user not found');
-    
+
                     if ($action == 'add') {
                         $this->get('friender')->friend($target, null, $user);
                     } elseif ($action == 'remove') {
@@ -137,12 +137,12 @@ class UserController extends BaseController
                     } else {
                         throw new HttpException(400, 'Invalid fan action');
                     }
-                    
+
                     $updates[] = $target;
                 }
 
                 $result = array();
-                foreach ($updates as $ui) $result[] = array('id' => $ui->getId(), 'fanCount' => $ui->getFanCount(), 'followed' => $this->get('friender')->status($target, $user)); 
+                foreach ($updates as $ui) $result[] = array('id' => $ui->getId(), 'fanCount' => $ui->getFanCount(), 'followed' => $this->get('friender')->status($target, $user));
 
                 return $this->result((count($result) == 1) ? $result[0] : $result);
             } else {
@@ -186,7 +186,7 @@ class UserController extends BaseController
         try {
                 $request = $this->getRequest();
                 if (!$id) throw new HttpException(400, 'Invalid user_id');
-                
+
                 $userid = $request->get('user_id');
                 $user = null;
                 if ($userid) {
@@ -198,7 +198,7 @@ class UserController extends BaseController
 
                 $showuserarray = $this->userArray($showuser);
                 if ($user) $showuserarray['followed'] = $this->get('friender')->status($showuser, $user);
-                
+
                 return $this->result($showuserarray);
         } catch (\Exception $e) {
             return $this->plainException($e);
@@ -405,6 +405,42 @@ class UserController extends BaseController
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
-
     }
+
+    /**
+     * User - follow
+     *
+     * @Route("/user/{id}/follows", name="api_v1_user_follow")
+     * @Method({"GET"})
+     *
+     * Get params:
+     * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
+     * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
+     *
+     * @return
+     * array(array('user'=> array(), 'idol'=> arrray(), 'team' => array()))
+     */
+    public function followListAction($id)
+    {
+        try {
+            $request = $this->getRequest();
+            $user = $this->getRepository('User')->find($id);
+            if (!$user) throw new HttpException(404, 'User not found');
+            $pagination = $this->pagination();
+
+            $followingProfiles =
+                $this->getRepository('Profile')->followingProfiles($id, $pagination['limit'], $pagination['offset']);
+
+            $return = array();
+            foreach ($followingProfiles as $fp) {
+                $entity = $this->getRepository(ucwords($fp['type']))->findBy(array('id' => $fp['target']));
+                $return[$fp['type']][] =  $this->get('Serializer')->values($entity);
+            }
+
+            return $this->result($return, $pagination);
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
+
 }
