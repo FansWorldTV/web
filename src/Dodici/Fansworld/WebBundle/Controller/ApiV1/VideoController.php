@@ -719,22 +719,14 @@ class VideoController extends BaseController
                 if ($tofb) {
                     $facebook = $this->get('app.facebook');
                     $facebook instanceof AppFacebook;
-                    try {
-                        $facebook->entityShare($video, $title);
-                    } catch (\Exception $exc) {
-                        return $this->plainException($exc);
-                    }
+                    $facebook->entityShare($video, $title);
                 }
 
                 // TW Share
                 if ($totw) {
                     $twitter = $this->get('app.twitter');
                     $twitter instanceof AppTwitter;
-                    try {
-                        $twitter->entityShare($video, $title);
-                    } catch (\Exception $exc) {
-                        return $this->plainException($exc);
-                    }
+                    $twitter->entityShare($video, $title);
                 }
 
                 $idolrepo = $this->getRepository('Idol');
