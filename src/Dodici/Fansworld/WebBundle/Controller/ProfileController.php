@@ -53,6 +53,7 @@ class ProfileController extends SiteController
     public function ajaxGetAction()
     {
         $request = $this->getRequest();
+        $serializer = $this->get('serializer');
 
         $type     = $request->get('type', 'all');
         $filterBy = $request->get('filterby', 'popular');
@@ -82,9 +83,9 @@ class ProfileController extends SiteController
                 'videoCount'    => $entity['videocount'],
                 'fanCount'      => $entity['fancount'],
                 'image'         => $this->getImageUrl($entity['imageid'], 'big_square'),
-                'image_double'  => $this->getImageUrl($entity['imageid'], 'huge_square'),
+                'imageDouble'  => $this->getImageUrl($entity['imageid'], 'huge_square'),
                 'splash'        => $this->getImageUrl($entity['splashid'], 'big_square'),
-                'splash_double' => $this->getImageUrl($entity['splashid'], 'huge_square'),
+                'splashDouble' => $this->getImageUrl($entity['splashid'], 'huge_square'),
                 'highlight'     => false
             );
 
@@ -100,18 +101,23 @@ class ProfileController extends SiteController
         }
 
         if (isset($response['profiles']) && count($response['profiles']) > 0) {
-            if ($filterBy == 'activity') {
+            //if ($filterBy == 'activity') {
                 $highlights = array();
 
                 foreach ($response['profiles'] as $profile)
                     $highlights[$profile['id']] = $profile['videoCount'];
 
-                arsort($highlights); 
-               $top5 = array_slice($highlights, 0, 5, true);
+                arsort($highlights);
+                $top5 = array_slice($highlights, 0, 5, true);
 
-                foreach ($top5 as $key => $profile)
+                foreach ($top5 as $key => $profile) {
+                    $entityProfile = $this->getRepository(ucfirst($entity['type']))->find($entity['id']);
+                    $lastVideo = $this->getRepository('Video')->highlights($entityProfile, 1);
+
+                    $response['profiles'][$key]['lastVideo'] = $serializer->values(reset($lastVideo), 'small');
                     $response['profiles'][$key]['highlight'] = true;
-            }
+                }
+            //}
 
             $i = 0;
             foreach ($response['profiles'] as $k => $profile) {

@@ -83,6 +83,50 @@
                     width: 100%;
                     .box-sizing(border-box);
 
+	                .last-video {
+		                .size(75px, 100%);
+		                margin-bottom: 15px;
+		                position: relative;
+		                overflow: hidden;
+
+		                figure {
+			                margin: 0;
+			                width: 100px;
+			                position: absolute;
+			                top: 0;
+			                left: 0;
+
+			                a.play {
+				                position: absolute;
+				                top: 30%;
+				                left: 35%;
+
+								i {
+									background: url('../images/ico-qv-channels.png');
+									height: 30px;
+									display: block;
+									width: 30px;
+									background-size: 30px;
+								}
+			                }
+		                }
+
+		                p {
+			                margin-left: 100px;
+			                text-align: left;
+			                text-overflow: ellipsis;
+			                height: 75px;
+			                overflow: hidden;
+			                box-sizing: border-box;
+			                padding-left: 10px;
+			                font-weight: 300;
+
+			                &.title {
+				                font-size: 17px;
+			                }
+		                }
+	                }
+
                     button.add-fan {
                         float: right;
                         font-size: 20px;
