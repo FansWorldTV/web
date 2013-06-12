@@ -1,0 +1,56 @@
+-
+  id: 10
+  title: {es: Deportes, en: Sports}
+  children:
+      -
+        id: 11
+        title: {es: Fútbol, en: Soccer}
+      -
+        id: 12
+        title: {es: Básquet, en: Basketball}
+      -
+        id: 13
+        title: {es: Automovilismo, en: Racing}
+      -
+        id: 14
+        title: {es: Ténis, en: Tennis}
+      -
+        id: 15
+        title: {es: Boxeo, en: Boxing}
+      -
+        id: 19
+        title: {es: Otros Deportes, en: Other Sports}
+-
+  id: 20
+  title: {es: Música, en: Music}
+  children:
+      -
+        id: 21
+        title: {es: Pop/Melódico, en: Pop/Melodic}
+      -
+        id: 22
+        title: {es: Rock/Metal/Punk, en: Rock/Metal/Punk}
+      -
+        id: 23
+        title: {es: Indie/Alternativo, en: Indie/Alternative}
+      -
+        id: 24
+        title: {es: Reggae/Ska, en: Reggae/Ska}
+      -
+        id: 25
+        title: {es: Dance/Electrónica, en: Dance/Electronica}
+      -
+        id: 26
+        title: {es: Urbano/Hip Hop, en: Urban/Hip Hop}
+      -
+        id: 27
+        title: {es: Cumbia/Reggaeton/Cuarteto, en: Tropical/Reggaeton}
+      -
+        id: 28
+        title: {es: Folklore, en: Folk}
+      -
+        id: 29
+        title: {es: Blues/Jazz/R&B, en: Blues/Jazz/R&B}
+      -
+        id: 30
+        title: {es: Otros Géneros, en: Other Genres}

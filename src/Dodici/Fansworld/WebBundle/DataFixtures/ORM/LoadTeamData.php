@@ -59,6 +59,10 @@ class LoadTeamData extends AbstractFixture implements FixtureInterface, Containe
 	        		$country = $manager->merge($this->getReference('country-'.$ct['country']));
 	        		$team->setCountry($country);
 	        	}
+                if (isset($ct['genre']) && $ct['genre']) {
+                    $genre = $manager->merge($this->getReference('genre-'.$ct['genre']));
+                    $team->setGenre($genre);
+                }
 	        	
 	        	$image = null; $splash = null; $ireal = null; $sreal = null;
 	        	$path = __DIR__.'/'.self::IMAGE_FILE_PATH.'/';

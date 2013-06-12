@@ -53,6 +53,10 @@ class LoadIdolData extends AbstractFixture implements FixtureInterface, Containe
 	        	        $idol->setOrigin($ct['country']);
 	        	    }
 	        	}
+                if (isset($ct['genre']) && $ct['genre']) {
+                    $genre = $manager->merge($this->getReference('genre-'.$ct['genre']));
+                    $idol->setGenre($genre);
+                }
 	        	
 	        	/* TEAMS */
 	        	if (isset($ct['teams']) && $ct['teams']) {
