@@ -15,6 +15,10 @@ use Dodici\Fansworld\WebBundle\Services\Search;
 use Symfony\Component\HttpFoundation\Request;
 use Application\Sonata\UserBundle\Entity\User;
 use Dodici\Fansworld\WebBundle\Entity\SearchHistory;
+use Elastica_Search;
+use Elastica_Query;
+use Elastica_Query_Term;
+use Elastica_Facet_Terms;
 
 class SearchController extends SiteController
 {
@@ -212,6 +216,179 @@ class SearchController extends SiteController
         }
 
         $response['addMore'] = $countAll > ($limit * $page) ? true : false;
+
+        return $this->jsonResponse($response);
+    }
+
+    /**
+     *  @Route("/ajax/search/autocomplete", name="search_ajaxsearch_autocomplete")
+     */
+    public function ajaxSearchAutocompleteAction(Request $request) {
+        $finder = $this->get('fos_elastica.index.website.user');
+        $searchTerm = $request->query->get('q');
+     
+        $resultSet = $finder->search($searchTerm);
+
+        $response = array();
+
+        foreach($resultSet as $result){
+            $data = $result->getData();
+            $response[] = array('value' => $data['username'], 'tokens' => $data['username'] . ', ' . $data['firstName'] . ', ' . $data['lastName']);
+        }
+
+        return $this->jsonResponse($response);
+    }
+
+    /**
+     *  @Route("/ajax/search/autocomplete3", name="search_ajaxsearch_autocomplete3")
+     */
+    public function ajaxSearchAutocomplete3Action(Request $request) {
+
+        /*
+        $finder = $this->get('fos_elastica.index.website.user');
+        $searchTerm = $request->query->get('q');
+
+        $elasticaQueryString = new Elastica\Query\QueryString($searchTerm);
+        $elasticaQuery = new Elastica\Query();
+        $elasticaQuery->setQuery($elasticaQueryString);
+
+        $facets = array();
+        $elasticaFacet = new \Elastica\Facet\Terms('term');
+        $elasticaFacet->setField('term');
+        $elasticaFacet->setSize(10);
+        $facets[] = $elasticaFacet;
+
+        $elasticaQuery->setFacets($facets);
+
+        $resultSet = $finder->search($searchTerm);
+
+        $response = array();
+
+        foreach($resultSet as $result){
+            $data = $result->getData();
+            $response[] = array('value' => $data['username'], 'tokens' => $data['username'] . ', ' . $data['firstName'] . ', ' . $data['lastName']);
+        }
+
+        return $this->jsonResponse($response);
+
+*/
+        $query = new Elastica_Query;
+
+        // Create the facet
+        $facet = new Elastica_Facet_Terms('term');
+        $facet->setField('term')
+              ->setAllTerms(true)
+              ->setSize(200);
+
+        // Add facet to "global" query
+        $query->addFacet($facet);
+
+
+
+        $client = $this->get('fos_elastica.client');
+        $search = new Elastica_Search($client);
+
+        $search_history = $this->get('fos_elastica.index.website.search_history');
+
+        $types = array($search_history);
+        $search->addTypes($types);
+
+        $index = $this->get('fos_elastica.index');
+        
+        $search->addIndex($index);
+
+        $resultSet = $search->search($query);  // Configure and execute the search
+
+        //return $this->jsonResponse($query->toArray());
+
+        $response = array();
+
+        foreach($resultSet as $result){
+            $data = $result->getData();
+            $explanation = $result->getExplanation();
+            $response[] = array('value' => $data['term'], 'tokens' => $data['term']); //, 'count' => $data['count']
+        }
+
+        return $this->jsonResponse($response);
+    }
+
+
+    /**
+     *  @Route("/ajax/search/autocomplete2", name="search_ajaxsearch_autocomplete2")
+     */
+    public function ajaxSearchAutocomplete2Action(Request $request) {
+        $searchHistoryType = $this->get('fos_elastica.index.website.search_history');
+        $userType = $this->get('fos_elastica.index.website.user');
+        $idolType = $this->get('fos_elastica.index.website.idol');
+        $teamType = $this->get('fos_elastica.index.website.team');
+
+        $searchTerm = $request->query->get('q');
+
+        $em = $this->container->get('sonata.media.entity_manager');
+
+        $log = new SearchHistory();
+        $log->setTerm($searchTerm);
+        $log->setAuthor($this->getUser());
+        $log->setIp($request->getClientIp());
+        $log->setDevice('web');
+        $em->persist($log);
+        $em->flush();
+
+        $client = $this->get('fos_elastica.client');
+        $search = new Elastica_Search($client);
+
+        // Configure and execute the search
+        $types = array($userType, $idolType, $teamType);
+        //$types = array($searchHistoryType, $userType, $idolType, $teamType);
+
+        $search = $search->addTypes($types);
+
+        /*$index = $this->get('fos_elastica.index');
+        
+        $search->addIndex($index);*/
+
+        $resultSet = $search->search($searchTerm . '*');
+
+        $response = array();
+
+        foreach($resultSet as $result){
+            $data = $result->getData();
+            $type = $result->getType();
+            $score = $result->getScore();
+
+            switch ($type) {
+                case 'search_history':
+                    $response[] = array('value' => $data['term'], 'tokens' => $data['term'], 'type' => $type, 'score' => $score);
+                    break;
+                case 'user':
+                    $id = $data['id'];
+                    $user = $this->getRepository('User')->find($id);
+
+                    $image = $this->getImageUrl($user->getImage(), 'small');
+                    $response[] = array('value' => $data['firstName'] . ' ' . $data['lastName'] , 'tokens' => $data['username'] . ', ' . $data['firstName'] . ', ' . $data['lastName'], 'type' => $type, 'score' => $score, 'image' => $image);
+                    break;
+                //case 'photo':
+                //    $response[] = array('value' => $data['username'], 'tokens' => $data['username'] . ', ' . $data['firstName'] . ', ' . $data['lastName']);
+                //    break;
+                //case 'video':
+                //    $response[] = array('value' => $data, 'tokens' => $data);
+                //    break;
+                case 'idol':
+                    $id =   $data['id'];
+                    $idol = $this->getRepository('idol')->find($id);
+
+                    $image = $this->getImageUrl($idol->getImage(), 'small');
+                    $response[] = array('value' => $data['firstName'] . ' ' . $data['lastName'], 'tokens' => $data['firstName'] . ', ' . $data['lastName'], 'type' => $type, 'score' => $score, 'image' => $image);
+                    break;
+                case 'team':
+                    $id = $data['id'];
+                    $team = $this->getRepository('team')->find($id);
+
+                    $image = $this->getImageUrl($team->getImage(), 'small');
+                    $response[] = array('value' => $data['title'], 'tokens' => $data['title'] . ', ' . $data['nicknames'], 'type' => $type, 'score' => $score, 'image' => $image);
+                    break;
+            }
+        }
 
         return $this->jsonResponse($response);
     }

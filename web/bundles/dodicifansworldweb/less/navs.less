@@ -182,6 +182,47 @@ footer.navbar{
                 .box-shadow(none)
             }
           }
+
+            .tt-dropdown-menu {
+              background-color: @white;
+              width: 100%;
+
+              .tt-suggestion {
+                float: left;
+                width: 100%;
+
+                .container {
+                    .name {
+                        color: @black;
+                        margin-left: 10px;
+                        float: left;
+                        max-width: 178px;
+                        line-height: 32px;
+                    }
+
+                    float: left;
+                    border-bottom: 1px solid @grayLight;
+                }
+
+                .image {
+                    float: left;
+                }
+              }
+
+              .tt-is-under-cursor {
+                background-color: @green;
+                color: @white;
+              }
+            }
         }
     }
 }
+
+.typeahead_wrapper { display: block; height: 30px; }
+.typeahead_photo { float: left; max-width: 30px; max-height: 30px; margin-right: 5px; }
+.typeahead_labels { float: left; height: 30px; }
+.typeahead_primary { font-weight: bold; }
+.typeahead_secondary { font-size: .8em; margin-top: -5px; }
+
+
+

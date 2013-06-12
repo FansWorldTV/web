@@ -213,6 +213,26 @@ var site = {
             $(this).modalPopup({'href': urlModal});
         });
 
+
+        var typeaheadTemplate = '<div class="container"><img width="32px" height="32px" class="image" src="$image"/><span class="name">$value</span></div>';
+
+        $('.navbar-search input').typeahead({
+            minLength: 3
+            , remote: '/app_dev.php/ajax/search/autocomplete2?q=%QUERY'
+            , template: typeaheadTemplate
+            , engine: {
+                compile: function(template) {
+                  return {
+                    render: function(ctx) {
+                      return template.replace(/\$(\w+)/g, function(msg) {
+                        return ctx[msg.substring(1)];
+                      });
+                    }
+                  };
+                }
+            }
+        });
+
         site.parseTimes();
         site.denyFriendRequest();
         site.acceptFriendRequest();
@@ -749,5 +769,6 @@ if (!Object.keys) {
             }
         }
         return keys;
-    };
+    };  
 }
+

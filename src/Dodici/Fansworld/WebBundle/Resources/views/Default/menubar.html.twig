@@ -26,15 +26,10 @@
             </ul>
         </div>
         <div class="right-container">
-            <form class="navbar-search" name="search" method="post" data-search-box action="{{ path('search_home', {}) }}">
-                <div class="input-append">
-                    <input name="query" type="text" class="search-query" id="appendedInput" placeholder="Buscar..." data-search-input>
-                    <span style="position: relative;">
-                        <input type="submit" class="add-on search-button" data-search-action value=""/>
-                        <i class="icon-search"></i>
-                    </span>
-                </div>
-            </form>
+            <form class="navbar-search" name="search" method="post">
+                <input id="" type="text"/>
+                <i class="icon-search"></i>
+             </form>
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <!-- div class="dropdown share" data-dropdownshare>
                     <a href="{{ path('photo_fileupload') }}" data-upload="photo"><i class="icon-circle-arrow-up icon-white"></i>Subir Video</a>
