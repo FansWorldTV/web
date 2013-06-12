@@ -1,118 +1,115 @@
 .home-content.profiles {
 	.profile-block(){
-	position: relative;
-	.box-sizing(border-box);
-	overflow: hidden;
-	border: 1px solid white;
-	.transition(0.3s filter ease);
-
-
-	&.team {
-		.image {
-			position: absolute;
-			top: 10%;
-			left: 10%;
-			display: block;
-			height: 80%;
-		}
-		.splash {
-			.filter(blur(3px));
-		}
-	}
-
-	&.idol {
-		.splash {
-			display: none;
-		}
-	}
-
-	&:hover {
-		.image {
-			.filter(blur(3.5px));
-		}
-		.splash {
-			.filter(blur(3.5px));
-		}
-		.info {
-			opacity: 1;
-
-			&:before {
-				opacity: 0.65;
-			}
-		}
-	}
-
-	.info {
-		.square(100%);
+		position: relative;
 		.box-sizing(border-box);
-		.background-transparent(@black, 0);
-		.transition(opacity 0.3s ease);
+		overflow: hidden;
+		border: 1px solid white;
+		.transition(0.5s filter ease);
 
-		position: absolute;
-		top: 0;
-		left: 0;
-		opacity: 0;
-		color: white;
-		font-weight: 300;
-		text-align: left;
-		padding: 0.6em;
 
-		* { position: relative; }
-
-		.title {
-			font-size: 20px;
-			line-height: 22px;
-		}
-
-		a {
-			color: white;
-
-			&:hover {
-				color: white;
+		&.team {
+			.image {
+				position: absolute;
+				top: 10%;
+				left: 10%;
+				display: block;
+				height: 80%;
+			}
+			.splash {
+				.filter(blur(3px));
 			}
 		}
 
-		div.bottom-container {
-			position: absolute;
-			display: block;
-			bottom: 0;
-			left: 0;
-			padding: inherit;
-			width: 100%;
+		&.idol {
+			.splash {
+				display: none;
+			}
+		}
+
+		&:hover {
+			.image, .splash {
+				.filter(blur(7px));
+			}
+			.info {
+				opacity: 1;
+
+				&:before {
+					opacity: 0.4;
+				}
+			}
+		}
+
+		.info {
+			.square(100%);
 			.box-sizing(border-box);
+			.background-transparent(@black, 0);
+			.transition(opacity 0.3s ease);
 
-			button.add-fan {
-				float: right;
+			position: absolute;
+			top: 0;
+			left: 0;
+			opacity: 0;
+			color: white;
+			font-weight: 300;
+			text-align: left;
+			padding: 0.6em;
+
+			* { position: relative; }
+
+			.title {
 				font-size: 20px;
-				font-weight: 600;
-				padding: 5px 8px 5px 8px;
+				line-height: 22px;
 			}
 
-			.data-cant {
-				float: left;
-				font-size: 18px;
-				font-weight: 600;
-				text-align: center;
-				line-height: 27px;
+			a {
+				color: white;
 
-				span {
-					font-weight: 300;
-					font-size: 14px;
+				&:hover {
+					color: white;
+				}
+			}
+
+			div.bottom-container {
+				position: absolute;
+				display: block;
+				bottom: 0;
+				left: 0;
+				padding: inherit;
+				width: 100%;
+				.box-sizing(border-box);
+
+				button.add-fan {
+					float: right;
+					font-size: 20px;
+					font-weight: 600;
+					padding: 5px 8px 5px 8px;
+				}
+
+				.data-cant {
+					float: left;
+					font-size: 18px;
+					font-weight: 600;
+					text-align: center;
+					line-height: 27px;
+
+					span {
+						font-weight: 300;
+						font-size: 14px;
+					}
 				}
 			}
 		}
 	}
-}
 
-    section.most-recent {
-        padding: 0 1em 0 1em;
-        div.profile {
-	        .profile-block();
-        }
-    }
+	section.most-recent {
+		padding: 0 1em 0 1em;
+		div.profile {
+			.profile-block();
+		}
+	}
 
 	section.popular {
-		@import "third-plugins/grid.less";
+	@import "third-plugins/grid.less";
 		@columns: 12;
 		@column-width: 150px;
 		@gutter-width: 1px;
