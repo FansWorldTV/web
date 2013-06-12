@@ -1,153 +1,113 @@
 .home-content.profiles {
+	.profile-block(){
+	position: relative;
+	.box-sizing(border-box);
+	overflow: hidden;
+	border: 1px solid white;
+	.transition(0.3s filter ease);
+
+
+	&.team {
+		.image {
+			position: absolute;
+			top: 10%;
+			left: 10%;
+			display: block;
+			height: 80%;
+		}
+		.splash {
+			.filter(blur(3px));
+		}
+	}
+
+	&.idol {
+		.splash {
+			display: none;
+		}
+	}
+
+	&:hover {
+		.image {
+			.filter(blur(3.5px));
+		}
+		.splash {
+			.filter(blur(3.5px));
+		}
+		.info {
+			opacity: 1;
+
+			&:before {
+				opacity: 0.65;
+			}
+		}
+	}
+
+	.info {
+		.square(100%);
+		.box-sizing(border-box);
+		.background-transparent(@black, 0);
+		.transition(opacity 0.3s ease);
+
+		position: absolute;
+		top: 0;
+		left: 0;
+		opacity: 0;
+		color: white;
+		font-weight: 300;
+		text-align: left;
+		padding: 0.6em;
+
+		* { position: relative; }
+
+		.title {
+			font-size: 20px;
+			line-height: 22px;
+		}
+
+		a {
+			color: white;
+
+			&:hover {
+				color: white;
+			}
+		}
+
+		div.bottom-container {
+			position: absolute;
+			display: block;
+			bottom: 0;
+			left: 0;
+			padding: inherit;
+			width: 100%;
+			.box-sizing(border-box);
+
+			button.add-fan {
+				float: right;
+				font-size: 20px;
+				font-weight: 600;
+				padding: 5px 8px 5px 8px;
+			}
+
+			.data-cant {
+				float: left;
+				font-size: 18px;
+				font-weight: 600;
+				text-align: center;
+				line-height: 27px;
+
+				span {
+					font-weight: 300;
+					font-size: 14px;
+				}
+			}
+		}
+	}
+}
 
     section.most-recent {
         padding: 0 1em 0 1em;
         div.profile {
-            position: relative;
-            .box-sizing(border-box);
-            overflow: hidden;
-            border: 1px solid white;
-            .transition(0.3s filter ease);
-
-            &:hover {
-                .image {
-                    .filter(blur(3.5px));
-                }
-                .splash {
-                    .filter(blur(3.5px));
-                }
-                .info {
-                    opacity: 1;
-
-                    &:before {
-                        opacity: 0.65;
-                    }
-                }
-            }
-
-            &.team {
-                .image {
-                    position: absolute;
-                    top: 10%;
-                    left: 10%;
-                    display: block;
-                    height: 80%;
-                }
-                .splash {
-                    .filter(blur(1px));
-                }
-            }
-
-            &.idol {
-                .splash {
-                    display: none;
-                }
-            }
-
-            .info {
-                .square(100%);
-                .box-sizing(border-box);
-                .background-transparent(@black, 0);
-                .transition(opacity 0.3s ease);
-
-                position: absolute;
-                top: 0;
-                left: 0;
-                opacity: 0;
-                color: white;
-                font-weight: 300;
-                text-align: left;
-                padding: 0.6em;
-
-                * { position: relative; }
-
-                .title {
-                    font-size: 20px;
-                    line-height: 22px;
-                }
-
-                a {
-                    color: white;
-
-                    &:hover {
-                        color: white;
-                    }
-                }
-
-                div.bottom-container {
-                    position: absolute;
-                    display: block;
-                    bottom: 0;
-                    left: 0;
-                    padding: inherit;
-                    width: 100%;
-                    .box-sizing(border-box);
-
-	                .last-video {
-		                .size(75px, 100%);
-		                margin-bottom: 15px;
-		                position: relative;
-		                overflow: hidden;
-
-		                figure {
-			                margin: 0;
-			                width: 100px;
-			                position: absolute;
-			                top: 0;
-			                left: 0;
-
-			                a.play {
-				                position: absolute;
-				                top: 30%;
-				                left: 35%;
-
-								i {
-									background: url('../images/ico-qv-channels.png');
-									height: 30px;
-									display: block;
-									width: 30px;
-									background-size: 30px;
-								}
-			                }
-		                }
-
-		                p {
-			                margin-left: 100px;
-			                text-align: left;
-			                text-overflow: ellipsis;
-			                height: 75px;
-			                overflow: hidden;
-			                box-sizing: border-box;
-			                padding-left: 10px;
-			                font-weight: 300;
-
-			                &.title {
-				                font-size: 17px;
-			                }
-		                }
-	                }
-
-                    button.add-fan {
-                        float: right;
-                        font-size: 20px;
-                        font-weight: 600;
-                        padding: 5px 8px 5px 8px;
-                    }
-
-                    .data-cant {
-                        float: left;
-                        font-size: 18px;
-                        font-weight: 600;
-                        text-align: center;
-                        line-height: 27px;
-
-                        span {
-                            font-weight: 300;
-                            font-size: 14px;
-                        }
-                    }
-                }
-            }
+	        .profile-block();
         }
     }
 
@@ -161,9 +121,7 @@
 		padding: 0 1em 0 1em;
 		.box-sizing(border-box);
 
-		header {
-			padding: 0;
-		}
+		header { padding: 0; }
 
 		.profiles-container {
 			.row(9);
@@ -193,108 +151,7 @@
 
 				.column(1, 9);
 				margin-bottom: @gutter-width;
-				position: relative;
-                .box-sizing(border-box);
-                overflow: hidden;
-                border: 1px solid white;
-                .transition(0.3s filter ease);
-
-
-                &.team {
-                    .image {
-                        position: absolute;
-                        top: 10%;
-                        left: 10%;
-                        display: block;
-                        height: 80%;
-                    }
-                    .splash {
-                        .filter(blur(1px));
-                    }
-                }
-                
-                &.idol {
-                    .splash {
-                        display: none;
-                    }
-                }
-
-				&:hover {
-                    .image {
-                        .filter(blur(3.5px));
-                    }
-                    .splash {
-                        .filter(blur(3.5px));
-                    }
-					.info {
-						opacity: 1;
-
-						&:before {
-							opacity: 0.65;
-						}
-					}
-				}
-
-				.info {
-					.square(100%);
-					.box-sizing(border-box);
-					.background-transparent(@black, 0);
-					.transition(opacity 0.3s ease);
-
-					position: absolute;
-					top: 0;
-					left: 0;
-					opacity: 0;
-					color: white;
-					font-weight: 300;
-					text-align: left;
-					padding: 0.6em;
-
-					* { position: relative; }
-
-					.title {
-						font-size: 20px;
-						line-height: 22px;
-					}
-
-                    a {
-                        color: white;
-
-                        &:hover {
-                            color: white;
-                        }
-                    }
-
-					div.bottom-container {
-						position: absolute;
-						display: block;
-						bottom: 0;
-						left: 0;
-						padding: inherit;
-						width: 100%;
-						.box-sizing(border-box);
-
-						button.add-fan {
-							float: right;
-							font-size: 20px;
-							font-weight: 600;
-                            padding: 5px 8px 5px 8px;
-						}
-
-						.data-cant {
-							float: left;
-							font-size: 18px;
-							font-weight: 600;
-							text-align: center;
-							line-height: 27px;
-
-							span {
-								font-weight: 300;
-								font-size: 14px;
-							}
-						}
-					}
-				}
+				.profile-block();
 			}
 		}
 	}
