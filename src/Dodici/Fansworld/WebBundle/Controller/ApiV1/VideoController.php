@@ -708,8 +708,7 @@ class VideoController extends BaseController
                 $totw = $request->get('totw');
                 $title = $request->get('title');
 
-                $response= array();
-                $response['response'] = true;
+                $response = true;
 
                 // FB Share
                 if ($tofb) {
@@ -756,7 +755,7 @@ class VideoController extends BaseController
                     $sharer = $this->get('sharer');
                     $sharer->share($video, $shareEntities, $title, $user, $tofw);
                 } else {
-                    $response['response']  = false;
+                    $response = false;
                 }
 
                 return $this->result($response);
