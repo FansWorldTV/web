@@ -53,6 +53,9 @@ class HomeController extends SiteController
 
         $videoRepo = $this->getRepository('Video');
 
+        if(!($user instanceof User))
+            $user = null;
+
         if (!$paginate) {
             $vc = $request->get('vc', null);
             $genre = $request->get('genre', null);
@@ -78,13 +81,14 @@ class HomeController extends SiteController
             $videos = $videoRepo->searchHome(null, $genre, $vc, null, true, null, $homeVideo, $limitWithTheHighlighted, 0);
             $response['highlighted'] = $serializer->values($videos, 'home_video');
 
-            $videos = $videoRepo->searchHome($user, $genre, $vc, true, false, 'default', $homeVideo, self::LIMIT_VIDEO, 0);
-            $response['followed'] = $serializer->values($videos, 'home_video');
+            if($user){
+                $videos = $videoRepo->searchHome($user, $genre, $vc, true, false, 'default', $homeVideo, self::LIMIT_VIDEO, 0);
+                $response['followed'] = $serializer->values($videos, 'home_video');
+                $response['totals']['followed'] = $videoRepo->countSearch(null, $user, $vc, false, null, null, null, null, $homeVideo, null, null, true, $genre);
+            }
 
             $videos = $videoRepo->searchHome(null, $genre, $vc, null, false, null, null, self::LIMIT_VIDEO, 0);
             $response['popular'] = $serializer->values($videos, 'home_video');
-
-            $response['totals']['followed'] = $videoRepo->countSearch(null, $user, $vc, false, null, null, null, null, $homeVideo, null, null, true, $genre);
             $response['totals']['popular'] = $videoRepo->countSearch(null, null, $vc, false, null, null, null, null, $homeVideo, null, null, null, $genre);;
         } else {
             $genre = isset($paginate['genre']) ? $paginate['genre'] : null;
