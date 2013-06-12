@@ -186,7 +186,28 @@ $(document).ready(function () {
                                 .then(function(response){
                                     var $thumb = $(response).clone();
                                     $thumb.addClass('profile');
-                                    console.log(profile.highlight);
+                                    $thumb.find("[data-idolship-add]").fwIdolship({
+                                        onAddIdol: function(plugin, data) {
+                                            var self = $(plugin.element);
+                                            self.addClass('disabled');
+                                            self.removeClass('add');
+                                            self.text("-");
+                                        },
+                                        onRemoveIdol: function(plugin, data) {
+                                            window.location.reload();
+                                        }
+                                    });
+                                    $thumb.find('[data-teamship-add]').fwTeamship({
+                                        onAddTeam: function(plugin, data) {
+                                            var self = $(plugin.element);
+                                            self.addClass('disabled');
+                                            self.removeClass('add');
+                                            self.text("-");
+                                        },
+                                        onRemoveTeam: function(plugin, data) {
+                                            window.location.reload();
+                                        }
+                                    });
                                     if(profile.highlight == true) {
                                         $thumb.addClass('double');
                                     }
@@ -393,10 +414,6 @@ $(document).ready(function () {
                                             self.addClass('disabled');
                                             self.removeClass('add');
                                             self.text("-");
-                                            console.log(self.parent().find('.data-cant'))
-                                            var fc = self.parent().find('.data-cant').text();
-                                            fc += 1;
-                                            self.parent().find('.data-cant').text(fc);
                                         },
                                         onRemoveIdol: function(plugin, data) {
                                             window.location.reload();
@@ -408,7 +425,6 @@ $(document).ready(function () {
                                             self.addClass('disabled');
                                             self.removeClass('add');
                                             self.text("-");
-                                            self.parent().find('[data-cant]').text('KK');
                                         },
                                         onRemoveTeam: function(plugin, data) {
                                             window.location.reload();
