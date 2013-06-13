@@ -218,7 +218,7 @@ var site = {
 
         $('.navbar-search input').typeahead({
             minLength: 3
-            , remote: '/app_dev.php/ajax/search/autocomplete2?q=%QUERY'
+            , remote: '/app_dev.php/ajax/search/autocomplete?q=%QUERY'
             , template: typeaheadTemplate
             , engine: {
                 compile: function(template) {

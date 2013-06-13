@@ -223,7 +223,7 @@ class SearchController extends SiteController
     /**
      *  @Route("/ajax/search/autocomplete", name="search_ajaxsearch_autocomplete")
      */
-    public function ajaxSearchAutocompleteAction(Request $request) {
+    /*public function ajaxSearchAutocompleteAction(Request $request) {
         $finder = $this->get('fos_elastica.index.website.user');
         $searchTerm = $request->query->get('q');
      
@@ -237,12 +237,12 @@ class SearchController extends SiteController
         }
 
         return $this->jsonResponse($response);
-    }
+    }*/
 
     /**
      *  @Route("/ajax/search/autocomplete3", name="search_ajaxsearch_autocomplete3")
      */
-    public function ajaxSearchAutocomplete3Action(Request $request) {
+    //public function ajaxSearchAutocomplete3Action(Request $request) {
 
         /*
         $finder = $this->get('fos_elastica.index.website.user');
@@ -272,7 +272,7 @@ class SearchController extends SiteController
         return $this->jsonResponse($response);
 
 */
-        $query = new Elastica_Query;
+        /*$query = new Elastica_Query;
 
         // Create the facet
         $facet = new Elastica_Facet_Terms('term');
@@ -310,13 +310,13 @@ class SearchController extends SiteController
         }
 
         return $this->jsonResponse($response);
-    }
+    }*/
 
 
     /**
-     *  @Route("/ajax/search/autocomplete2", name="search_ajaxsearch_autocomplete2")
+     *  @Route("/ajax/search/autocomplete", name="search_ajaxsearch_autocomplete")
      */
-    public function ajaxSearchAutocomplete2Action(Request $request) {
+    public function ajaxSearchAutocompleteAction(Request $request) {
         $searchHistoryType = $this->get('fos_elastica.index.website.search_history');
         $userType = $this->get('fos_elastica.index.website.user');
         $idolType = $this->get('fos_elastica.index.website.idol');

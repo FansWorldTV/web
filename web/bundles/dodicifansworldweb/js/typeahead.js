@@ -800,8 +800,9 @@
                 var $suggestion = this._getSuggestions().first();
                 return $suggestion.length > 0 ? extractSuggestion($suggestion) : null;
             },
-            renderSuggestions: function(dataset, suggestions) {
+            renderSuggestions: function(dataset, suggestions, query) {
                 var datasetClassName = "tt-dataset-" + dataset.name, wrapper = '<div class="tt-suggestion">%body</div>', compiledHtml, $suggestionsList, $dataset = this.$menu.find("." + datasetClassName), elBuilder, fragment, $el;
+                that = this;
                 if ($dataset.length === 0) {
                     $suggestionsList = $(html.suggestionsList).css(css.suggestionsList);
                     $dataset = $("<div></div>").addClass(datasetClassName).append(dataset.header).append($suggestionsList).append(dataset.footer).appendTo(this.$menu);
@@ -816,7 +817,7 @@
                         elBuilder.innerHTML = wrapper.replace("%body", compiledHtml);
                         $el = $(elBuilder.firstChild).css(css.suggestion).data("suggestion", suggestion);
                         $el.children().each(function() {
-                            $(this).css(css.suggestionChild);
+                            $(this).css(css.suggestionChild).html(that.highlighter(suggestion.value, query));
                         });
                         fragment.appendChild($el[0]);
                     });
@@ -825,6 +826,15 @@
                     this.clearSuggestions(dataset.name);
                 }
                 this.trigger("suggestionsRendered");
+            },
+            highlighter: function(suggestion, query) {
+                utils.each(utils.tokenizeQuery(query), function(i, token) {
+                    token = token.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&');
+                    suggestion = suggestion.replace(new RegExp('(' + token + ')', 'ig'), function ($1, suggestion) {
+                        return '<strong>' + suggestion + '</strong>';
+                    });
+                });
+                return suggestion;
             },
             clearSuggestions: function(datasetName) {
                 var $datasets = datasetName ? this.$menu.find(".tt-dataset-" + datasetName) : this.$menu.find('[class^="tt-dataset-"]'), $suggestions = $datasets.find(".tt-suggestions");
@@ -981,7 +991,7 @@
                 utils.each(this.datasets, function(i, dataset) {
                     dataset.getSuggestions(query, function(suggestions) {
                         if (query === that.inputView.getQuery()) {
-                            that.dropdownView.renderSuggestions(dataset, suggestions);
+                            that.dropdownView.renderSuggestions(dataset, suggestions, query);
                         }
                     });
                 });
