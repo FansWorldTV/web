@@ -155,4 +155,19 @@ class TemplateController extends SiteController
         );
     }
     
+    /**
+     * Get Profiles template
+     * @Route("/ajax/get/profile", name="template_profile")
+     * @Template
+     */
+    public function profileAction()
+    {
+        $request = $this->getRequest();
+        $type = $request->get('type');
+
+        return array(
+            'typename' => $type
+        );
+    }
+    
 }

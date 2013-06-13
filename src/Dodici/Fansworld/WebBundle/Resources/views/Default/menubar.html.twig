@@ -11,18 +11,21 @@
             </a>
 
             <ul class="nav sections">
-              {#<li {% if sectionSelected == 'tv' %} class="active" {% endif %}>
-                  <a href="{{ path('teve_home') }}">Canales</a>
-              </li>#}
-              <li {% if sectionSelected == 'idols' %} class="active" {% endif %}>
-                  <a href="{{ path('idol_home') }}">Idolos</a>
-              </li>
-              <li {% if sectionSelected == 'teams' %} class="active" {% endif %}>
-                  <a href="{{ path('team_list') }}">Equipos</a>
-              </li>
-              <!--li {% if sectionSelected == 'events' %} class="active" {% endif %}>
-                  <a href="{{ path('event_home') }}">Eventos</a>
-              </li-->
+                <li {% if sectionSelected == 'profiles' %} class="active" {% endif %}>
+                    <a href="{{ path('profiles_index') }}">Perfiles</a>
+                </li>
+                {#<li {% if sectionSelected == 'tv' %} class="active" {% endif %}>
+                    <a href="{{ path('teve_home') }}">Canales</a>
+                </li>
+                <li {% if sectionSelected == 'idols' %} class="active" {% endif %}>
+                    <a href="{{ path('idol_home') }}">Idolos</a>
+                </li>
+                <li {% if sectionSelected == 'teams' %} class="active" {% endif %}>
+                    <a href="{{ path('team_list') }}">Equipos</a>
+                </li>
+                <li {% if sectionSelected == 'events' %} class="active" {% endif %}>
+                    <a href="{{ path('event_home') }}">Eventos</a>
+                </li>#}
             </ul>
         </div>
         <div class="right-container">
@@ -85,7 +88,7 @@
         </div>
         <ul id="collapse-me" class="collapse">
             <li>
-                  <a href="{{ path('teve_home') }}">Canales</a>
+                <a href="{{ path('teve_home') }}">Canales</a>
             </li>
             <li>
                 <a href="{{ path('idol_home') }}">Idolos</a>

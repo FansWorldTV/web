@@ -432,4 +432,12 @@ class AppState
         $dateTime->setTimestamp($timestamp);
         return $dateTime;
     }
+
+    public function getHighlightVideos($entity, $limit = 1)
+    {
+        $type = $this->getType($entity);
+        $videos = $this->getRepository('DodiciFansworldWebBundle:Video')->highlights($entity, $limit);
+
+        return $videos;
+    }
 }

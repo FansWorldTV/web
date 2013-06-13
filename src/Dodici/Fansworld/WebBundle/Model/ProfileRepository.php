@@ -31,7 +31,7 @@ class ProfileRepository extends CountBaseRepository
         if ('popular' != $filterby && 'activity' != $filterby) throw new \Exception('Invalid value of filterby parameter');
 
         ('popular' == $filterby) ? $order = 'fancount DESC' : $order = 'activity DESC';
-        $datebefore = new \DateTime('-60 days');
+        $datebefore = new \DateTime('-365 days');
 
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('id', 'id');
@@ -43,6 +43,8 @@ class ProfileRepository extends CountBaseRepository
         $rsm->addScalarResult('title', 'title');
         $rsm->addScalarResult('genre', 'genre');
         $rsm->addScalarResult('imageid', 'imageid');
+        $rsm->addScalarResult('splashid', 'splashid');
+        
         if ('activity' == $filterby) $rsm->addScalarResult('activity', 'activity');
 
         $sqls = array();
@@ -51,7 +53,7 @@ class ProfileRepository extends CountBaseRepository
                 $sqls[$etype] = '
                     SELECT ' . $etype . '.id as id, ' . $etype . '.slug as slug, ' . $etype . '.fancount as fancount, "' . $etype . '" as type, '.
                     $etype . '.photocount as photocount, ' . $etype . '.videocount as videocount, ' . $etype . '.genre_id as genre, '.
-                    $etype . '.image_id as imageid, '
+                    $etype . '.image_id as imageid, ' . $etype.'.splash as splashid, '
                     .(('idol' == $etype) ?
                         ('CONCAT(' . $etype . '.firstname, \' \', ' . $etype . '.lastname) AS title') : ($etype . '.title as title'))
                     .' FROM ' . $etype . '
