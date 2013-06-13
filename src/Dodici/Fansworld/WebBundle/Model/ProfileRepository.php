@@ -100,4 +100,43 @@ class ProfileRepository extends CountBaseRepository
             $query = $query->setParameter('offset', (int) $offset, Type::INTEGER);
         return $query->getResult();
     }
+
+     /**
+     * Return User following profiles
+     * @param User|user_id(Int) $user
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function followingProfiles($user, $limit=null, $offset=null)
+    {
+        if (!$user) throw new \Exception('User parameter is missing');
+
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('target', 'target');
+        $rsm->addScalarResult('type', 'type');
+
+        $sql = '
+            SELECT target_id AS target, ' . '"user"' . ' AS type
+            FROM friendship WHERE author_id = :user AND active = true
+            UNION
+            SELECT idol_id AS target,  ' . '"idol"' . ' AS type
+            FROM idolship WHERE author_id = :user
+            UNION
+            SELECT team_id AS target,  ' . '"team"' . ' AS type
+            FROM teamship WHERE author_id = :user';
+
+        $query = $this->_em->createNativeQuery($sql .
+                (($limit !== null) ? ' LIMIT :limit ' : '') .
+                (($offset !== null) ? ' OFFSET :offset ' : ''), $rsm
+        );
+
+        $query = $query->setParameter(
+            'user', ($user instanceof User) ? $user->getId() : $user, Type::BIGINT);
+
+        if ($limit !== null)
+            $query = $query->setParameter('limit', (int) $limit, Type::INTEGER);
+        if ($offset !== null)
+            $query = $query->setParameter('offset', (int) $offset, Type::INTEGER);
+        return $query->getResult();
+    }
 }
