@@ -164,26 +164,7 @@ $(document).ready(function () {
                 };
             }
 
-            // Precargo tags autogenerados
-            var pre = $("#form_prepopulate").val();
-            pre = "719:team:Boca,721:team:Newell´s,722:team:All Boys,282:idol:Roberto Carlos Abbondanzieri,26:user:Juan Pérez,";
-/*            if(typeof(pre) !== 'undefined' && pre.length > 0) {
-                pre.split(',').forEach(function(val) {
-                    if(val.length > 0) {
-                        var tagInfo = val.split(':');
-                        var item = {
-                            id: tagInfo[0],
-                            label: tagInfo[2],
-                            value: tagInfo[2],
-                            result: {
-                                id: tagInfo[0],
-                                type: tagInfo[1].toLowerCase()
-                            }
-                        };
-                        that.options.prePopulate.push(item);
-                    }
-                });
-            }*/
+            $(that.element).tagit(tagParams);
 
             $.ajax({
                 url: Routing.generate(appLocale + '_photo_get_tags'),
@@ -197,6 +178,7 @@ $(document).ready(function () {
                 var teams = tags.teams;
                 var idols = tags.idols;
                 var users = tags.users;
+                var texts = tags.texts;
                 var i = 0;
 
                 for(i in teams) {
@@ -241,8 +223,21 @@ $(document).ready(function () {
                         });
                     }
                 }
-                $(that.element).tagit(tagParams);
 
+                for(i in texts) {
+                    if (texts.hasOwnProperty(i)) {
+                        console.log(texts[i])
+                        that.options.prePopulate.push({
+                            id: texts[i].id,
+                            label: texts[i].label,
+                            value: texts[i].label,
+                            result: {
+                                id: texts[i].id,
+                                type: 'text'
+                            }
+                        });
+                    }
+                }
                 for(i = 0; i < that.options.prePopulate.length; i += 1) {
                     if (that.options.prePopulate.hasOwnProperty(i)) {
                         var item  = that.options.prePopulate[i];
@@ -251,8 +246,6 @@ $(document).ready(function () {
                 }
 
             });
-
-
         },
         addEntityItem: function (item) {
             var that = this;

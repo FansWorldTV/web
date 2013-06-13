@@ -244,6 +244,7 @@ class PhotoController extends SiteController
         $response['tags']['teams'] = array();
         $response['tags']['idols'] = array();
         $response['tags']['users'] = array();
+        $response['tags']['texts'] = array();
         if ($appstate->canEdit($entity)) {
 
             foreach ($entity->getHasteams() as $hasteam) {
@@ -272,6 +273,16 @@ class PhotoController extends SiteController
                     'label' => (string) $name
                 );
             }
+
+            foreach ($entity->getHastags() as $hastext) {
+                $id = $hastext->getTag()->getId();
+                $name = $hastext->getTag();
+                $response['tags']['texts'][] = array(
+                    'id' => $id,
+                    'label' => (string) $name
+                );
+            }
+
         } else {
             if (!($user instanceof User)) {
                 throw new \Exception('User not logged in');
