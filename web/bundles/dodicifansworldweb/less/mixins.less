@@ -2,174 +2,174 @@
 // -----------
 
 .nav-stacked() {
-    height: auto;
+	height: auto;
 
-    > li:first-child > a {
-        border-top: 1px solid @gray;
-        border-radius: 4px 4px 0 0;
-    }
+	> li:first-child > a {
+		border-top: 1px solid @gray;
+		border-radius: 4px 4px 0 0;
+	}
 
-    > li {
-        float: none;
-        height: auto;
-        .active{
-            background: none;
-        }      
-        > a {
-            padding: 8px 12px 8px 12px;
-            line-height: 18px;
-            border: 1px solid @gray;
-            border-top: none;
-            margin-right: 0; 
-            .border-radius(0);
-        }
-        
-        
-        > a:hover {
-            border-color: #ddd;
-            z-index: 2;
-        }
-    }
+	> li {
+		float: none;
+		height: auto;
+		.active{
+			background: none;
+		}
+		> a {
+			padding: 8px 12px 8px 12px;
+			line-height: 18px;
+			border: 1px solid @gray;
+			border-top: none;
+			margin-right: 0;
+			.border-radius(0);
+		}
 
-    > li:last-child > a {
-        border-radius: 0 0 4px 4px;
-    }
+
+		> a:hover {
+			border-color: #ddd;
+			z-index: 2;
+		}
+	}
+
+	> li:last-child > a {
+		border-radius: 0 0 4px 4px;
+	}
 }
-    
+
 //Estilos de loading
 .loading(@loadingSize: @loadingImageNormal,@bgPosition: 0 0){
-    background-image: url("@{loadingSize}"); 
-    background-repeat:  no-repeat;
-    background-position:  @bgPosition;
-    &:hover{
-        background-position: @bgPosition + !important;
-    }
+	background-image: url("@{loadingSize}");
+	background-repeat:  no-repeat;
+	background-position:  @bgPosition;
+	&:hover{
+		background-position: @bgPosition + !important;
+	}
 }
 
 // Gradients de dos colores
 .doublegradient (@startColor1: #555, @endColor1: #333,@startColor2: #555, @endColor2: #333,@size1: 50%, @size2: 50%) {
-    background-color: mix(@startColor1, @endColor1, 60%);
-    background-image: -moz-linear-gradient(top, @startColor1, @endColor1),-moz-linear-gradient(top, @startColor2, @endColor2); // FF 3.6+
-    background-image: -ms-linear-gradient(top, @startColor1, @endColor1),-ms-linear-gradient(top, @startColor2, @endColor2); // IE10
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@startColor1), to(@endColor1)),-webkit-gradient(linear, 0 0, 0 100%, from(@startColor2), to(@endColor2)); // Safari 4+, Chrome 2+
-    background-image: -webkit-linear-gradient(top, @startColor1, @endColor1),-webkit-linear-gradient(top, @startColor2, @endColor2); // Safari 5.1+, Chrome 10+
-    background-image: -o-linear-gradient(top, @startColor1, @endColor1),-o-linear-gradient(top, @startColor2, @endColor2); // Opera 11.10
-    background-image: linear-gradient(top, @startColor1, @endColor1),linear-gradient(top, @startColor2, @endColor2); // The standard
-    background-repeat: repeat-y, repeat;
-    background-size: @size1,@size2;
-    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColor1str='%d', endColor1str='%d', GradientType=0)",@startColor1,@endColor1)); // IE9 and down
+	background-color: mix(@startColor1, @endColor1, 60%);
+	background-image: -moz-linear-gradient(top, @startColor1, @endColor1),-moz-linear-gradient(top, @startColor2, @endColor2); // FF 3.6+
+	background-image: -ms-linear-gradient(top, @startColor1, @endColor1),-ms-linear-gradient(top, @startColor2, @endColor2); // IE10
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@startColor1), to(@endColor1)),-webkit-gradient(linear, 0 0, 0 100%, from(@startColor2), to(@endColor2)); // Safari 4+, Chrome 2+
+	background-image: -webkit-linear-gradient(top, @startColor1, @endColor1),-webkit-linear-gradient(top, @startColor2, @endColor2); // Safari 5.1+, Chrome 10+
+	background-image: -o-linear-gradient(top, @startColor1, @endColor1),-o-linear-gradient(top, @startColor2, @endColor2); // Opera 11.10
+	background-image: linear-gradient(top, @startColor1, @endColor1),linear-gradient(top, @startColor2, @endColor2); // The standard
+	background-repeat: repeat-y, repeat;
+	background-size: @size1,@size2;
+	filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColor1str='%d', endColor1str='%d', GradientType=0)",@startColor1,@endColor1)); // IE9 and down
 }
 
 //Flecha
 #flecha{
-    .derecha(@tamano,@color){
-        &:after {
-            @tamanotop: @tamano - 2;
-            border-bottom: @tamano solid transparent;
-            border-left: @tamano solid  @color;
-            border-top: @tamano  solid transparent;
-            content: "";
-            position: absolute;
-            right: @tamano *-1;
-            top: @tamanotop;
-        } 
-    }
+	.derecha(@tamano,@color){
+		&:after {
+			@tamanotop: @tamano - 2;
+			border-bottom: @tamano solid transparent;
+			border-left: @tamano solid  @color;
+			border-top: @tamano  solid transparent;
+			content: "";
+			position: absolute;
+			right: @tamano *-1;
+			top: @tamanotop;
+		}
+	}
 }
 
 // Appearance cross browser
 .appearance(@style: none){
-  appearance: @style;
-  -moz-appearance: @style;
-  -webkit-appearance: @style;
+	appearance: @style;
+	-moz-appearance: @style;
+	-webkit-appearance: @style;
 }
 
 // Filter cross-browser
 .filter(@style: none) {
-    -webkit-filter: @style; 
-    -moz-filter: @style; 
-    -o-filter: @style; 
-    -ms-filter: @style; 
-    filter: @style;
+	-webkit-filter: @style;
+	-moz-filter: @style;
+	-o-filter: @style;
+	-ms-filter: @style;
+	filter: @style;
 }
 
 // Hexagono
 .hexagono(@height: 100px, @width: 55px, @color: black){
-  width: @width;
-  height: @height;
-  background: @color;
-  position: relative;
+	width: @width;
+	height: @height;
+	background: @color;
+	position: relative;
 
-  &:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -((@height/2)-1);
-    width: 0;
-    height: 0;
-    border-left: (@height/4) solid transparent;
-    border-right: (@height/4) solid @color;
-    border-top: (@height/2) solid transparent;
-    border-bottom: (@height/2) solid transparent;
-  }
+	&:before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: -((@height/2)-1);
+		width: 0;
+		height: 0;
+		border-left: (@height/4) solid transparent;
+		border-right: (@height/4) solid @color;
+		border-top: (@height/2) solid transparent;
+		border-bottom: (@height/2) solid transparent;
+	}
 
-  &:after {
-    content: "";
-    position: absolute;
-    right: -((@height/2)-1);
-    width: 0;
-    height: 0;
-    border-left: (@height/4) solid @color;
-    border-right: (@height/4) solid transparent;
-    border-top: (@height/2) solid transparent;
-    border-bottom: (@height/2) solid transparent;
-  }
+	&:after {
+		content: "";
+		position: absolute;
+		right: -((@height/2)-1);
+		width: 0;
+		height: 0;
+		border-left: (@height/4) solid @color;
+		border-right: (@height/4) solid transparent;
+		border-top: (@height/2) solid transparent;
+		border-bottom: (@height/2) solid transparent;
+	}
 }
 
 //animation crossbrowser
 .animation(@how) {
-  -webkit-animation: @how;
-  -moz-animation: @how;
-  -ms-animation: @how;
-  animation: @how;
+	-webkit-animation: @how;
+	-moz-animation: @how;
+	-ms-animation: @how;
+	animation: @how;
 }
 
 // CSS3 Spinner
 .spinnerize(@size: 26px, @color: #999, @thickness: 6px) {
-  position:relative;
-  width:@size; height:@size;
-  border:@thickness solid @color;
-  border-radius:100%;
-  .animation(spin 1s infinite linear);
+	position:relative;
+	width:@size; height:@size;
+	border:@thickness solid @color;
+	border-radius:100%;
+	.animation(spin 1s infinite linear);
 
-  .mask {
-    overflow:hidden; position:absolute;
-    top:-@thickness; bottom:-@thickness;
-    right:@size/2; left:-@thickness;
+	.mask {
+		overflow:hidden; position:absolute;
+		top:-@thickness; bottom:-@thickness;
+		right:@size/2; left:-@thickness;
 
-    &:after {
-      content:''; position:absolute; top:0; left:0;
-      border-radius:100%;
-      width:@size; height:@size;
-      border:@thickness solid lighten(@color, 10%);
-      overflow:hidden;
-    }
-  }
+		&:after {
+			content:''; position:absolute; top:0; left:0;
+			border-radius:100%;
+			width:@size; height:@size;
+			border:@thickness solid lighten(@color, 10%);
+			overflow:hidden;
+		}
+	}
 
-  @-webkit-keyframes spin {
-    to { -webkit-transform: rotate(360deg); }
-  }
+	@-webkit-keyframes spin {
+		to { -webkit-transform: rotate(360deg); }
+	}
 
-  @-moz-keyframes spin {
-    to { -moz-transform: rotate(360deg); }
-  }
+	@-moz-keyframes spin {
+		to { -moz-transform: rotate(360deg); }
+	}
 
-  @-ms-keyframes spin {
-    to { -ms-transform: rotate(360deg); }
-  }
+	@-ms-keyframes spin {
+		to { -ms-transform: rotate(360deg); }
+	}
 
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
+	@keyframes spin {
+		to { transform: rotate(360deg); }
+	}
 }
 
 .background-transparent(@color: @black, @opacity: 0.5) {
@@ -182,4 +182,11 @@
 		background-color: @color;
 		opacity: @opacity;
 	}
+}
+
+// Crossbrowser transform
+.transform(@style) {
+	transform: @style;
+	-ms-transform: @style; /* IE 9 */
+	-webkit-transform: @style; /* Safari and Chrome */
 }

@@ -19,12 +19,31 @@
         </div>
         <div class="info-container">
             {% set entityType = appstate.getType(entity) %}
+            {% set videos = appstate.getHighlightVideos(entity, 1) %}
+
+            {% if videos|length > 0 %}
+                {% set video = videos[0] %}
+            {% else %}
+                {% set video = false %}
+            {% endif %}
+
             {% if entityType == 'user' %}
                 {% set pathparams = {username: entity.username} %}
             {% else %}
                 {% set pathparams = {slug: entity.slug} %}
             {% endif %}
-            <p class="description">{{ entity.content|raw|striptags|truncate(160) }}</p>
+
+            {% if video and video.image %}
+                <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                    <figure>
+                        {% thumbnail video.image, 'medium' with {'title': ''} %}
+                        <figcaption class="last-video">Ultimo Video</figcaption>
+                        <figcaption class="title">{{ video.title }}</figcaption>
+                    </figure>
+                </a>
+            {% else %}
+                <p class="description">{{ entity.content|raw|striptags|truncate(160) }}</p>
+            {% endif %}
 
             <ul class="quantities">
                 {% block header_numbersinfo %}
