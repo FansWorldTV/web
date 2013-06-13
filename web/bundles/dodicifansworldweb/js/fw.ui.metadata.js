@@ -53,6 +53,8 @@ $(document).ready(function () {
         prePopulate: [],
         action: null,
         dataSource: null,
+        entityType: null,
+        entityId: null,
         onEntityAdd: function(entity) {},
         onEntityDelete: function(entity) {}
     };
@@ -80,7 +82,8 @@ $(document).ready(function () {
             var that = this;
             var i;
             $(that.element).bind("destroyed", $.proxy(that.teardown, that));
-            //that.options.dataSource = Routing.generate(appLocale + '_tag_ajaxmatch');
+            that.options.entityType = $(that.element).attr('data-entity-type');
+            that.options.entityId = $(that.element).attr('data-entity-id');
             that.options.magic = parseInt(Math.random() * 9999);
             that.options[that.options.magic] = {
                 team: {
@@ -166,86 +169,89 @@ $(document).ready(function () {
 
             $(that.element).tagit(tagParams);
 
-            $.ajax({
-                url: Routing.generate(appLocale + '_photo_get_tags'),
-                data: {
-                    entityType: $(that.element).attr('data-entity-type'),
-                    entityId: $(that.element).attr('data-entity-id')
-                }
-            })
-            .then(function(response){
-                var tags = response.tags;
-                var teams = tags.teams;
-                var idols = tags.idols;
-                var users = tags.users;
-                var texts = tags.texts;
-                var i = 0;
+            if(that.options.entityType && that.options.entityId) {
+                console.log("going to call _photo_get_tags type: %s, id: %s", that.options.entityType, that.options.entityId);
+                $.ajax({
+                    url: Routing.generate(appLocale + '_photo_get_tags'),
+                    data: {
+                        entityType: that.options.entityType,
+                        entityId: that.options.entityId
+                    }
+                })
+                .then(function(response){
+                    var tags = response.tags;
+                    var teams = tags.teams;
+                    var idols = tags.idols;
+                    var users = tags.users;
+                    var texts = tags.texts;
+                    var i = 0;
 
-                for(i in teams) {
-                    if (teams.hasOwnProperty(i)) {
-                        console.log(teams[i])
-                        that.options.prePopulate.push({
-                            id: teams[i].id,
-                            label: teams[i].label,
-                            value: teams[i].label,
-                            result: {
+                    for(i in teams) {
+                        if (teams.hasOwnProperty(i)) {
+                            console.log(teams[i])
+                            that.options.prePopulate.push({
                                 id: teams[i].id,
-                                type: 'team'
-                            }
-                        });
+                                label: teams[i].label,
+                                value: teams[i].label,
+                                result: {
+                                    id: teams[i].id,
+                                    type: 'team'
+                                }
+                            });
+                        }
                     }
-                }
-                for(i in idols) {
-                    if (idols.hasOwnProperty(i)) {
-                        console.log(idols[i])
-                        that.options.prePopulate.push({
-                            id: idols[i].id,
-                            label: idols[i].label,
-                            value: idols[i].label,
-                            result: {
+                    for(i in idols) {
+                        if (idols.hasOwnProperty(i)) {
+                            console.log(idols[i])
+                            that.options.prePopulate.push({
                                 id: idols[i].id,
-                                type: 'idol'
-                            }
-                        });
+                                label: idols[i].label,
+                                value: idols[i].label,
+                                result: {
+                                    id: idols[i].id,
+                                    type: 'idol'
+                                }
+                            });
+                        }
                     }
-                }
-                for(i in users) {
-                    if (users.hasOwnProperty(i)) {
-                        console.log(users[i])
-                        that.options.prePopulate.push({
-                            id: users[i].id,
-                            label: users[i].label,
-                            value: users[i].label,
-                            result: {
+                    for(i in users) {
+                        if (users.hasOwnProperty(i)) {
+                            console.log(users[i])
+                            that.options.prePopulate.push({
                                 id: users[i].id,
-                                type: 'user'
-                            }
-                        });
+                                label: users[i].label,
+                                value: users[i].label,
+                                result: {
+                                    id: users[i].id,
+                                    type: 'user'
+                                }
+                            });
+                        }
                     }
-                }
 
-                for(i in texts) {
-                    if (texts.hasOwnProperty(i)) {
-                        console.log(texts[i])
-                        that.options.prePopulate.push({
-                            id: texts[i].id,
-                            label: texts[i].label,
-                            value: texts[i].label,
-                            result: {
+                    for(i in texts) {
+                        if (texts.hasOwnProperty(i)) {
+                            console.log(texts[i])
+                            that.options.prePopulate.push({
                                 id: texts[i].id,
-                                type: 'text'
-                            }
-                        });
+                                label: texts[i].label,
+                                value: texts[i].label,
+                                result: {
+                                    id: texts[i].id,
+                                    type: 'text'
+                                }
+                            });
+                        }
                     }
-                }
-                for(i = 0; i < that.options.prePopulate.length; i += 1) {
-                    if (that.options.prePopulate.hasOwnProperty(i)) {
-                        var item  = that.options.prePopulate[i];
-                        $(that.element).tagit('createTag', item.value, null, null, item.result);
+                    for(i = 0; i < that.options.prePopulate.length; i += 1) {
+                        if (that.options.prePopulate.hasOwnProperty(i)) {
+                            var item  = that.options.prePopulate[i];
+                            $(that.element).tagit('createTag', item.value, null, null, item.result);
+                        }
                     }
-                }
 
-            });
+                });
+            }
         },
         addEntityItem: function (item) {
             var that = this;
