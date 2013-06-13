@@ -99,6 +99,8 @@ $(document).ready(function () {
                         $('body').removeClass('modal-open');
                         $('.modal-backdrop').remove();
                     });
+                    // Enable tagifier
+                    dialog.find("#form_tagtextac").fwTagify({action: 'tag'});
                     // Bind save button to form submit
                     dialog.find("#modal-btn-save").one("click", null, null, function(){
                         $(this).addClass('loading-small');
