@@ -220,5 +220,104 @@ class BatchController extends SiteController
         
         return new Response('Ok');
     }
-    
+
+    /**
+     * Generate some yaml
+     * @Route("/generate-yaml-idol-sports-other", name="admin_batch_generate_yaml_idol_sports_other")
+     */
+    public function generateYamlIdolSportsOtherAction()
+    {
+        $request = $this->getRequest();
+        $result = '';
+        if ($request->getMethod() == 'POST') {
+            $string = $request->get('string');
+
+            $archivo = 'd:\\programas\\imple\\temp.csv';
+            file_put_contents($archivo, $string);
+
+            $file = new \SplFileObject($archivo, 'rb');
+            $file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY);
+            $file->setCsvControl(';', '"', '\\');
+
+            foreach ($file as $exp) {
+                $result .= "-\n";
+                $result .= "  id: ".($exp[0]+10000)."\n";
+                $result .= "  firstname: ".$exp[1]."\n";
+                $result .= "  lastname: ".$exp[2]."\n";
+                $date = $exp[3];
+                $birthday = null;
+                if ($date) {
+                    $bdayxp = explode('/', $date);
+                    $birthday = $bdayxp[2] . '-' . $bdayxp[1] . '-' . $bdayxp[0];
+                }
+                $result .= "  birthday: ".$birthday."\n";
+                $result .= "  nicknames: ".$exp[4]."\n";
+                $result .= "  country: ".$exp[6]."\n";
+                $result .= "  twitter: ".$exp[7]."\n";
+                $result .= "  genre: ".($exp[8]+10)."\n";
+                $result .= "  content: |\n";
+                $xpc = explode("\n", $exp[9]);
+                foreach($xpc as $xc) $result .= "    ". $xc;
+                $result .= "\n";
+
+                if ($exp[5]) {
+                    $result .= "  teams:\n";
+                    $xpteams = explode("\n", $exp[5]);
+                    foreach ($xpteams as $xpteam) {
+                        $result .= "      -\n";
+                        if (intval($xpteam))
+                        $result .= "        id: ".(intval($xpteam)+10000)."\n";
+                        else
+                        $result .= "        name: $xpteam\n";
+
+                        $result .= "        debut: false\n";
+                        $result .= "        actual: true\n";
+                        $result .= "        highlight: true\n";
+                        $result .= "        manager: false\n";
+                    }
+                }
+
+            }
+        }
+
+        return new Response('<form action="" method="post"><textarea name="string"></textarea><input type="submit"></form><br><br><textarea>'.$result.'</textarea>');
+    }
+
+    /**
+     * Generate some yaml
+     * @Route("/generate-yaml-team-sports-other", name="admin_batch_generate_yaml_team_sports_other")
+     */
+    public function generateYamlTeamSportsOtherAction()
+    {
+        $request = $this->getRequest();
+        $result = '';
+        if ($request->getMethod() == 'POST') {
+            $string = $request->get('string');
+
+            $archivo = 'd:\\programas\\imple\\temp.csv';
+            file_put_contents($archivo, $string);
+
+            $file = new \SplFileObject($archivo, 'rb');
+            $file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY);
+            $file->setCsvControl(';', '"', '\\');
+
+            foreach ($file as $exp) {
+                $result .= "-\n";
+                $result .= "  id: ".($exp[0]+10000)."\n";
+                $result .= "  title: ".$exp[1]."\n";
+                $result .= "  foundedAt: ".$exp[2]."-01-01\n";
+                $result .= "  nicknames: ".$exp[3]."\n";
+                $result .= "  twitter: ".$exp[4]."\n";
+                $result .= "  genre: ".($exp[5]+10)."\n";
+                $result .= "  country: ".$exp[6]."\n";
+                $result .= "  content: |\n";
+                $xpc = explode("\n", $exp[7]);
+                foreach($xpc as $xc) $result .= "    ". $xc;
+                $result .= "\n";
+
+            }
+        }
+
+        return new Response('<form action="" method="post"><textarea name="string"></textarea><input type="submit"></form><br><br><textarea>'.$result.'</textarea>');
+    }
 }
