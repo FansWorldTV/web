@@ -81,6 +81,13 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     private $content;
 
     /**
+     * @var text $achievements
+     *
+     * @ORM\Column(name="achievements", type="text", nullable=true)
+     */
+    private $achievements;
+
+    /**
      * @var text $nicknames
      * @Gedmo\Translatable
      *
@@ -351,6 +358,26 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * Set achievements
+     *
+     * @param text $achievements
+     */
+    public function setAchievements($achievements)
+    {
+        $this->achievements = $achievements;
+    }
+
+    /**
+     * Get achievements
+     *
+     * @return text
+     */
+    public function getAchievements()
+    {
+        return $this->achievements;
     }
 
     /**

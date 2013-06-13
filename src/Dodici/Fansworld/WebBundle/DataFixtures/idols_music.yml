@@ -1,0 +1,1112 @@
+-
+  id: 20001
+  firstname: Abel
+  lastname: Pintos
+  birthday: 1984-05-11
+  nicknames:
+  achievements: |
+    1998 - Para Cantar He Nacido
+    1999 - Todos los Dias un Poco
+    2001 - Cosas Del Corazon
+    2004 - Sentidos
+    2005 - Reflejo Real
+    2007 - La Llave
+    2010 - Reevolucion
+  country: 13
+  twitter: AbelPintos
+  genre: [28, 21]
+  content: |
+    Abel Federico Pintos, conocido simplemente como Abel Pintos, es un cantante argentino de folclore nacido en la localidad de Bahía Blanca, Provincia de Buenos Aires.
+    Comenzó su carrera como solista a los 13 años con su disco "Para cantar he nacido", apadrinado por León Gieco. Tras cuatro álbumes de estudio publicados, comenzó a escribir sus propias canciones, dando lugar a los temas que le dieron apertura fuera del ámbito eminentemente folclórico tradicional.
+    Su consolidación llegaría con "La llave", aunque el CD y DVD "Sueño dorado", que celebra sus quince años de trayectoria musical, fue el más vendido de 2012. Es considerado dentro de la camada de nuevas promesas del folclore nacional junto a otros artistas como Soledad Pastorutti y Luciano Pereyra.
+-
+  id: 20002
+  firstname: Abril
+  lastname: Sosa
+  birthday: 1981-07-22
+  nicknames:
+  achievements: |
+    2012 - El Piloto Ciego
+  country: 13
+  twitter: abril_sosa
+  genre: [22, 23]
+  content: |
+    Luego de la disolución de Cuentos Borgeanos en Junio de 2010, banda que había fundado en paralelo mientras formaba parte de Catupecu Machu, Miguel Abril Sosa se fue a vivir a New York por un tiempo para ahora regresar con proyecto solista, nuevo disco y presentaciones en vivo que destacan una gran madurez personal, artística y profesional.
+    Comenzó a tocar la batería en Catupecu Machu con sólo 14 años de edad en 1995, grabando los discos Dale!, A Morir!!!, Cuentos Decapitados y el DVD en vivo Eso Vive. En 2002, decide dejar la banda en pleno apogeo y se dedica tiempo completo a su proyecto Cuentos Borgeanos, donde cambiaría la batería por la guitarra y el mic.
+    Ahora, en esta nueva etapa solista, presenta “El Piloto Ciego”, disco que contó con las colaboraciones de grandes artistas de la escena local.
+  teams:
+      -
+        id: 20029
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 20035
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+-
+  id: 20003
+  firstname: Adele
+  lastname:
+  birthday: 1988-05-05
+  nicknames:
+  achievements: |
+    2008 - 19
+    2011 - 21
+  country: 181
+  twitter: OfficialAdele
+  genre: [21, 29]
+  content: |
+    Adele Laurie Blue Adkins nació en Tottenham, Londres, Inglaterra. Comenzó a interesarse por el mundo de la música cuando actuó en una presentación de su colegio donde cantaba el tema «Rise» de Gabrielle, y poco a poco adquirió influencias de otras artistas como Ella Fitzgerald. Cuando estaba en el último año de sus estudios en la Brit School of Performing Arts of Croydon (patrocinados por los Brit Awards)  grabó unos demos para su clase. Uno de sus amigos, Allan Rose, creó una página de Myspace y subió sus videos interpretando algunas canciones, entre ellos "Chasing Pavements". Poco a poco ganó seguidores y se fue abriendo un espacio dentro de un mundo donde sólo los que tiene verdadero talento logran sobresalir. Adele subió al escenario de los Premios Oscar 2013 y deleitó a los invitados con la interpretación del tema "Skyfall" de la  película de James Bond homónima. Adele, quien además había obtenido el Globo de Oro por esa canción, se emocionó cuando junto al coautor del tema, Paul Epworth, recibió el galardón de la Academia por mejor canción original. REF: wikipedia
+-
+  id: 20004
+  firstname: Alannis
+  lastname: Morrisette
+  birthday: 1974-06-01
+  nicknames:
+  achievements: |
+    1991 - Alanis
+    1992 - Now is the Time
+    1995 - Jagged Little Pill
+    1998 - Supposed Former Infatuation Junkie
+    2002 - Under Rug Swept
+    2004 - So-Called Chaos
+    2008 - Flavors of Entanglement
+    2012 - Havoc and Bright Lights
+  country: 42
+  twitter: morissette
+  genre: [21, 22]
+  content: |
+    Alanis Nadine Morissette es una cantante, compositora, guitarrista, productora y actriz ocasional canadiense.
+    Se ha posicionado como una de las cantantes de mayores ventas de la historia, debido en gran parte a su tercer álbum "Jagged little pill", que alcanzó alrededor de 33 millones de copias vendidas en todo el mundo convirtiéndose en el álbum debut de una artista femenina más vendido de la historia y uno de los álbumes más exitosos de todos los tiempos. Además de haber sido incluido en la Lista de los 500 Mejores Álbumes de la Historia según la revista Rolling Stone. A lo largo de su carrera ha sido galardonada con siete Premios Grammy, incluyendo Álbum del año en 1996, 16 premios Juno y una preselección para los Oscars. En el 2002 la ONU le otorgó el premio «Global Tolerance Award» por su «gran labor en promoveer la tolerancia».
+    Alanis ha vendido más de 70 millones de discos en todo el mundo.
+-
+  id: 20005
+  firstname: Alejandro
+  lastname: Sanz
+  birthday: 1968-12-18
+  nicknames:
+  achievements: |
+    1991 - Viviendo Deprisa
+    1993 - Si Tú Me Miras
+    1995 - 3
+    1997 - Más
+    2000 - El Alma Al Aire
+    2003 - No Es Lo Mismo
+    2006 - El Tren De Los Momentos
+    2009 - Paraíso Express
+    2012 - La Música No Se Toca
+  country: 68
+  twitter: alejandrosanz
+  genre: [21]
+  content: |
+    Alejandro Sanz es uno de los artistas latinos más reconocidos a nivel internacional. Compositor y autor de todas sus canciones, ha vendido más de 22 millones de discos. Es el artista español con mayor número de premios Grammy (16 latinos y 3 americanos). Cuenta con 15 álbumes publicados, entre ellos 9 de estudio. Todos han obtenido la categoría de Disco de Platino en España, Latinoamérica y Estados Unidos. A lo largo de su carrera ha realizado importantes colaboraciones con artistas como Shakira, Alicia Keys, The Corrs, René de Calle 13, Joaquín Sabina, Dani Martin, Ivete Sangalo o el legendario Tony Bennett, entre otros.
+
+-
+  id: 20006
+  firstname: Alejandro
+  lastname: Lerner
+  birthday: 1957-06-08
+  nicknames:
+  achievements: |
+    1979: Sus primeras canciones
+    1982: Alejandro Lerner y la magia
+    1983: Todo a pulmón
+    1984: Lernertres
+    1985: Conciertos
+    1987: Algo que decir
+    1988: Canciones
+    1990: Entrelíneas
+    1992: Amor infinito
+    1994: Permiso de volar
+    1995: La magia continúa
+    1997: Magic hotel
+    1998: Volver a empezar
+    1999: 20 años
+    2001: Si quieres saber quién soy
+    2002: Lerner vivo
+    2004: Buen viaje
+    2006: Canciones para gente niña
+    2007: Enojado
+  country: 13
+  twitter: alelernerok
+  genre: [21, 22]
+  content: |
+    Nació en 1957 y ya en la escuela secundaria integró algunas bandas juveniles. Pero a mediados de los '70, Raúl Porchetto descubrió el talento de este porteño que por entonces tenía sólo 17 años y lo convocó para participar de su grupo Reino de Munt. Muy poco después, debutó discográficamente como invitado en el segundo LP de León Gieco, "La banda de los caballos cansados", de 1974. Y tuvo un paso fugaz por Los Desconocidos de Siempre, el grupo que armó Nito Mestre luego de la disolución de Sui Generis.
+    Luego de varias colaboraciones finalmente grabó su primer album solista en 1982 titulado "Alejandro Lerner y la Magia". Con ese disco, que incluía temas como "Nena neurótica" y "Por un minuto de amor" -dos clásicos de su repertorio- su nombre se hizo definitivamente popular.
+-
+  id: 20007
+  firstname: Alejandro
+  lastname: Fernández
+  birthday: 1971-04-24
+  nicknames: Alex
+  achievements: |
+    1992: Alejandro Fernández
+    1993: Piel de niña
+    1994: Grandes éxitos a la manera de Alejandro Fernández
+    1995: Que seas muy feliz
+    1996: Muy dentro de mi corazón
+    1997: Me estoy enamorando
+    1999: Mi verdad
+    2000: Entre tus brazos
+    2001: Orígenes
+    2003: Niña amada mía
+    2004: Zapata: el sueño del héroe (banda sonora)
+    2004: A corazón abierto
+    2007: viento a favor
+    2009: Dos mundos (Evolución)
+    2009: Dos mundos (Tradición)
+    2013: Lo que viste, fue pasado
+  country: 154
+  twitter: alexoficial
+  genre: [21]
+  content: |
+    Alejandro Fernández Abarca comenzó especializandose en la música tradicional y regional mexicana como ranchera y mariachi. Posteriormente se ha diversificado hacia el pop latino con toques urbanos, la balada y los boleros, sin abandonar nunca la música vernácula.
+    Posee una sólida carrera discográfica y ha sido acreedor a dos Grammys y dos premios Billboard. Ha logrado vender alrededor del mundo aproximadamente veinte millones de álbumes y se estima que en sus conciertos ha reunido a más de quince millones de personas, en varios países.
+    Ha cantado junto a varias personalidades del mundo de la música como Plácido Domingo, Christina Aguilera, Beyoncé, Nelly Furtado, José Carreras, Chayanne, Marc Anthony, Amaia Montero, Gloria Estefan, Julio Iglesias, Miguel Bosé, Franco De Vita, Marco Antonio Solís, José Luis Perales entre otros.
+-
+  id: 20008
+  firstname: Alejo
+  lastname: Stivel
+  birthday: 1959-01-01
+  nicknames:
+  achievements: |
+    2011 - Deciamos ayer
+  country: 13
+68
+
+  twitter: alejostivel
+  genre: [22]
+  content: |
+    Alejo Stivelberg Katz es un cantante, compositor y productor musical. Fue voz de la banda hispano-argentina Tequila en los años 70 y 80, y en el retorno de la banda en 2008. Tras un periodo sabático, hacia 1987, trabaja en la producción de jingles. Al principio se dedicaría de forma exclusiva y unos tres años después, compartió dicha actividad con la producción discográfica. A esta actividad se dedicaría de manera intensa hasta la actualidad, produciendo más de cien discos en su trayectoria, gran parte de ellos de género pop. Entre ellos están "19 días y 500 noches" de Joaquín Sabina y varios discos de debut de artistas que alcazarían la fama, como "Dile al sol" (primer disco del grupo La Oreja de Van Gogh) o el primer álbum de estudio de El Canto del Loco, bajo título homónimo "El Canto del Loco".
+-
+  id: 20009
+  firstname: Alex
+  lastname: Ubago
+  birthday: 1981-01-29
+  nicknames:
+  achievements: |
+    2001 - ¿Qué pides tú?
+    2004 - Fantasía o realidad
+    2006 - Aviones de cristal
+    2009 - Calle ilusión14
+    2012 - Mentiras sinceras
+  country: 68
+  twitter: AlexUbagoficial
+  genre: [21]
+  content: |
+    Alejandro Martínez de Ubago Rodríguez (nacido en Vitoria, País Vasco, España) mejor conocido como Álex Ubago , es un cantautor español de música pop, quien se dio a conocer en 2001 con la publicación de su álbum debut ¿Qué pides tú? del cual se desprende el tema «Sin miedo a nada» a dueto con Amaia Montero. Luego vinieron 4 albums más y en 2010 participó de un proyecto muy especial junto a Jorge Villamizar (ex Bacilos) y Lena. Los tres editaron un disco llamado "Alex, Jorge y Lena", un álbum rico y variado en matices.
+-
+  id: 20010
+  firstname: Alicia
+  lastname: Keys
+  birthday: 1981-01-25
+  nicknames:
+  achievements: |
+    2001 - Songs in A Minor
+    2003 - The Diary of Alicia Keys
+    2007 - As I Am
+    2009 - The Element of Freedom
+    2012 - Girl on Fire
+  country: 69
+  twitter: aliciakeys
+  genre: [21, 22, 29]
+  content: |
+    Alicia Augello Cook, mejor conocida como Alicia Keys, es una cantante, actriz, compositora de R&B y soul y considerada la actual reina del Rhythm & Blues.
+    Nacida en Manhattan, Nueva York, desde los dos años vivió con su madre ante la separación de sus padres. Ha vendido internacionalmente más de 30 millones de discos y ganado numerosos premios, incluidos 14 Grammys, 17 Premios Billboard entre otros. Su álbum debut "Songs in A Minor" ganó 5 grammys en una sola noche, un récord para las mujeres artistas, que ella comparte con Lauryn Hill (1999), Norah Jones (2003), Beyoncé (2004) y Amy Winehouse (2008), pero años más tarde fue superado con 6 Grammy's en una sola noche por Beyoncé (2010) y Adele (2012).
+-
+  id: 20011
+  firstname: Amaia
+  lastname: Montero
+  birthday: 1976-08-26
+  nicknames:
+  achievements: |
+    2008 - Amaia Montero
+    2011 - 2
+  country: 68
+  twitter: AmaiaMontero
+  genre: [21]
+  content: |
+    Amaia Montero Saldías es una cantautora española de pop y baladas, reconocible por su peculiar estilo melismático. Se dió a conocer como vocalista de La Oreja de Van Gogh en diciembre de 1996. El 19 de noviembre de 2007 anunció su retirada del grupo, comenzando una nueva etapa para componer e interpretar como solista.
+  teams:
+      -
+        id: 20075
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+-
+  id: 20012
+  firstname: Amy
+  lastname: Winehouse
+  birthday: 1983-09-14
+  nicknames:
+  achievements: |
+    2003: Frank
+    2006: Back to Black
+    2011: Lioness: Hidden Treasures
+  country: 181
+  twitter: amywinehouse
+  genre: [23]
+  content: |
+    Amy Jade Winehouse fue una cantante y compositora británica, conocida por sus mezclas de diversos géneros musicales, incluidos entre ellos el jazz, R&B, soul y ska. En 2003 Winehouse lanzó su álbum debut, "Frank", que obtuvo críticas positivas y fue comercialmente exitoso en su país natal, el Reino Unido, y fue nominado por los premios Mercury Prize. Su segundo álbum de estudio, Back to black, fue publicado en 2006. Por este disco la cantante consiguió seis nominaciones a los Premios Grammy, de las cuales ganó cinco, entre ellas, Canción del año, Grabación del año y Mejor artista nuevo. El 23 de Julio de 2011 Amy fue encontrada muerta en su apartamento a los 27 años de edad.
+-
+  id: 20013
+  firstname: Ana paula
+  lastname: Rodriguez
+  birthday:
+  nicknames: Anna Pau
+  country: 13
+  twitter: ANNAPAUOK
+  genre: [21]
+  content: |
+    Ana Paula fue paricipante de Latin American Idol 2009 siendo la unica finalista por Argentina. En el 2010 siguió componiendo sus temas y con proyecto para solista. Al mismo tiempo estuvo como coro de Dante Spinetta hasta fines del 2010. En el 2011 participó en la filmación de la película "cruzadas" que se estreno el 21/04/11. También concursó en el Cantando por un Sueño 2011 junto a Alvaro "Waldo" Navia saliendo subcampeones. En el 2012 esta por sacar su primer material discografico.Y esta a cargo de las aperturas del Soñando por Cantar. REF: blog oficial
+-
+  id: 20014
+  firstname: Andres
+  lastname: Calamaro
+  birthday: 1961-08-22
+  nicknames: El Salmón
+  achievements: |
+    1984 - Hotel Calamaro
+    1985 - Vida cruel
+    1988 - Por mirarte
+    1990 - Nadie sale vivo de aquí
+    1997 - Alta Suciedad
+    1999 - Honestidad brutal
+    2000 - El Salmón
+    2001 - Duetos
+    2004 - El Cantante
+    2005 - El Regreso
+    2006 - Tinta Roja
+    2006 - El Palacio de las Flores
+    2007 - La Lengua Popular
+    2009 - Nada se Pierde
+    2010 - On the Rock
+    2012 - Salmonalipsis Now
+  country: 1
+  twitter: Barksdale666
+  genre: [22]
+  content: |
+    Andrés Calamaro aprendió a tocar el bandoneón a los 8 años y a los 17 ya manipulaba los teclados en el grupo de candombe-rock Raíces, con quienes debutó en las bateas en el disco “B.O.V.”.
+    Luego de participar como músico invitado en varias bandas,  se incorporó a Los Abuelos de la Nada, la agrupación de Miguel Abuelo que grabó cinco discos entre 1982 y 1986. Compuso dos de los hits más destacados de la banda: "Mil horas" y "Sin gamulán".
+    En 1984 hizo su debut solista, con "Hotel Calamaro". La producción de algunos temas estuvo a cargo de Charly García.
+    En septiembre de 1991 emigró a España, en donde fundó la banda Los Rodríguez, junto a Ariel Rot, Julián Infante y Germán Vilella. Con este grupo hispanoargentino grabó cuatro placas y consiguió mayor éxito con "Sin Documentos" (1993).
+    Ya en 1997, cuando la exitosa etapa junto a Los Rodríguez había concluido, Calamaro emprendió un nuevo proyecto que lo llevaría a Estados Unidos. En este país grabó, junto a músicos de sesión, los temas de su nuevo trabajo como solista, que se tituló “Alta suciedad” e incluyó canciones como “Flaca”, “Media Verónica”, “Crímenes perfectos”, y “Loco”.
+    Andres sigue publicando discos exitosos hasta el día de hoy .
+  teams:
+      -
+        id: 20081
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 20090
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+-
+  id: 20015
+  firstname: Andrew
+  lastname: Bird
+  birthday: 1973-07-11
+  nicknames:
+  achievements: |
+    1996: Music of Hair.
+    1998: Thrills.
+    1999: Oh! The Grandeur.
+    2001: The Swimming Hour.
+    2003: Weather Systems.
+    2005: Andrew Bird & the Mysterious Production of Eggs.
+    2007: Armchair Apocrypha.
+    2008: Soldier On.
+    2009: Noble Beast.
+    2012: Break It Yourself.
+    2012: Hands of Glory.
+  country: 69
+  twitter: andrewbird
+  genre: [29]
+  content: |
+    Andrew Wegman Bird es un cantautor de indie rock y neoswing nacido en Illinois, Estados Unidos. Alcanzó reconocimiento a mediados de los noventa como violinista auxiliar de los Squirrel Nut Zippers, una agrupación de jazz que reinterpretaba el sonido clásico del swing de la década del 30. En 1996 lanzó su álbum debut titulado "Music of hair" que mezclaba estilos como el blues, el jazz y el folk. Después lideró la agrupación llamada "Andrew Bird's Bowls of Fire" con los que lanzó dos trabajos y en 1999, bajo su propio nombre, grabó "Oh! the Grandeur". La coyuntura vino en 2003 con "The Weather Systems", un disco menos experimental que los anteriores. Además de la guitarra y el violín, Andrew Bird ha proclamado ser un "silbador profesional".
+-
+  id: 20016
+  firstname: Austin
+  lastname: Mahone
+  birthday: 1996-04-04
+  nicknames:
+  country: 69
+  twitter: AustinMahone
+  genre: [21]
+  content: |
+    Austin Mahone empezó a publicar vídeos en YouTube con su amigo Alex Constancio en junio de 2010. Los vídeos musicales siguieron en enero de 2011 y rápidamente saltó a la fama.
+    Se le denominó como la segunda versión de Justin Bieber dado que hizo un cover de "Mistletoe" que se hizo tan popular que eclipsó al original.
+    En septiembre de 2011, Mahone debutó en el número 38 de Billboard Social 50 siendo el más joven en aparecer en la lista y saltó a la posición nº 28 poco tiempo despues. En 2012, Mahone obtuvo más de 1.000.000 de seguidores en Twitter y 400.000 suscriptores en YouTube.
+
+-
+  id: 20017
+  firstname: Avril
+  lastname: Lavigne
+  birthday: 1984-09-27
+  nicknames:
+  achievements: |
+    2002: Let Go
+    2004: Under My Skin
+    2007: The Best Damn Thing
+    2011: Goodbye Lullaby
+    2013: All Over The Place
+  country: 42
+  twitter: AvrilLavigne
+  genre: [21]
+  content: |
+    Avril Ramona Lavigne es una cantautora, diseñadora de moda y actriz canadiense. Algunos medios de comunicación y críticos desde sus inicios la llaman la princesa del pop punk.
+    Comenzó su carrera musical en 2001, cuando después de una presentación en una feria country, despertó el interés del productor L.A. Reid y firmó para Arista Records. Luego del lanzamiento de cuatro álbumes de estudio, Lavigne ha vendido más de 35 millones de álbumes y 45 millones de sencillos en todo el mundo, teniendo Cinco número uno mundialmente; «Complicated», «Sk8er Boi», «I'm With You», «My Happy Ending», «Girlfriend».
+     La cantante es también poseedora del récord guinness como la cantante femenina más joven en llevar un álbum debut a las listas de popularidad del Reino Unido, con 18 años y 106 días de edad.
+    Según la revista Billboard, Lavigne se encuentra en la lista de los 100 artistas más populares de la década del 2000 en los Estados Unidos, ubicándose en la posición 27.
+-
+  id: 20018
+  firstname: Axel
+  lastname:
+  birthday: 1977-01-01
+  nicknames: Axel Fernando
+  achievements: |
+    1999 - La clave para conquistarte
+    2001 - Mi forma de amar
+    2003 - Amo
+    2005 - Hoy
+    2008 - Universo
+    2001 - Un nuevo sol
+  country: 13
+  twitter: AxelOficial
+  genre: [21]
+  content: |
+    Axel es el nombre artístico del cantautor argentino Axel Patricio Fernando Witteveen Pardo. Comenzó su incursión en el mundo artístico a fines de la década del 90 y hoy se ha erigido en uno de los cantantes pop más exitosos de su país. Asimismo, en ese camino a la fama, Axel también probaría suerte como actor y conductor de televisión. Comenzó en Canal 26 como conductor del programa musical Ranking26 donde la compañía discográfica SonyMusic le edita su primer disco. En televisión además, se lo pudo ver como entrenador de "La Voz Argentina", versión local del concurso de talentos de Estados Unidos, "The Voice".
+    Actualmente es uno de los artistas argentinos más reconocidos.
+
+
+-
+  id: 20019
+  firstname: Bebe
+  lastname:
+  birthday: 1978-05-09
+  nicknames:
+  achievements: |
+    2004 - Pafuera Telarañas
+    2009 - Y.
+    2012 - Un pokito de rocanrol
+  country: 68
+  twitter: LaBebeBellota
+  genre: [23, 22, 21]
+  content: |
+    María Nieves Rebolledo Vila es una cantautora y actriz española. A los 14 años, luego de mudarse varias veces con sus padres, Bebe comienza a presentarse como solista en diferentes lugares públicos, hasta que presenta a sus padres la decisión de irse a Madrid a estudiar Arte Dramático. Fue así que se mudó y siguió cantando en bares; más tarde su hermano se fue a vivir con ella y la acompañó en su carrera artística.
+    En el año 2004 presenta su primer material discográfico bajo el nombre de “Pafuera telarañas”, un disco que contiene 13 canciones y con las cuales comienza a hacerse acreedora de varios premios como Artista revelación, Autora revelación, Mejor álbum pop, mejor video clip por “Malo” y el Grammy Latino como Artista Revelación. Su canción “Malo” es incluida como cortina musical de la serie televisiva argentina "Mujeres Asesinas" y recibe el Disco de Oro por más de 20 mil unidades vendidas.
+    En el año 2009 lanza al mercado su nuevo material, titulado "Y".
+    El 7 de Febrero de 2012 se edita "Un pokito de rocanrol", un disco compuesto por 11 canciones originales.
+-
+  id: 20020
+  firstname: Beck
+  lastname:
+  birthday: 1970-07-08
+  nicknames:
+  achievements: |
+    1993 - Golden Felling
+    1994 - Stereopathetic Soul Manure
+    1994 - Mellow Gold
+    1994 - One Foot in the Grave
+    1996 - Odelay
+    1998 - Mutations
+    1999 - Midnite Vultures
+    2002 - Sea Change
+    2005 - Guero
+    2006 - The Information
+    2008 -Modern Guilt
+    2012 - Song Reader
+  country: 69
+  twitter: beck
+  genre: [22, 23]
+  content: |
+    Bek David Campbell, conocido en el mundo artístico como Beck Hansen o simplemente Beck, es un músico, cantante, compositor y multiinstrumentista estadounidense. Con una gran variedad de estilos musicales, irónicas letras de canciones, posmodernos arreglos que incorporan samples, cajas de ritmos, instrumentos y efectos de sonido en vivo, Beck ha sido aclamado por los críticos a lo largo de su carrera musical como uno de los músicos más creativos e idiosincrásicos de 1990 y 2000.
+    Dos de las grabaciones más populares y aclamadas de Beck son "Odelay" (1996) y "Sea Change" (2002). "Odelay" fue galardonado con el álbum del año por la revista estadounidense Rolling Stone y en Reino Unido por las revistas NME y Mojo. Este álbum también recibió una nominación al Grammy como Álbum del Año. Tanto "Odelay" como "Sea Change" aparecieron en la lista de Los 500 mejores álbumes de todos los tiempos según Rolling Stone.
+-
+  id: 20021
+  firstname: Belinda
+  lastname:
+  birthday: 1989-08-15
+  nicknames:
+  achievements: |
+    2003: Belinda
+    2006: Utopía
+    2010: Carpe Diem
+    2013: Catarsis
+  country: 154
+  twitter: belindapop
+  genre: [21]
+  content: |
+    Belinda Peregrín Schüll es una actriz y cantautora mexicana, nacida en España. De padre español, Ignacio Peregrín Gutiérrez, y madre francesa, Belinda Schüll Moreno.
+    Comenzó a actuar desde niña, a través de papeles en programas de televisión. En 2002 firmó con BMG y dos años más tarde lanzó su álbum debut, "Belinda", uno de los álbums más vendido de una solista adolescente en América Latina.
+    Sus primeros dos álbumes la establecieron como un icono pop y rompieron récords de ventas, mientras que canciones como «Boba niña nice» y «Ángel» se tornaron en éxitos internacionales.
+    En 2006, lanzó su segundo álbum, "Utopía", del que se desprendió «Luz sin gravedad», y debutó en el cine con un papel protagónico en la película "The Cheetah Girls 2" de Disney. En este álbum asume el control creativo y es la compositora de todas sus canciones.
+-
+  id: 20022
+  firstname: Beto
+  lastname: Cuevas
+  birthday: 1967-09-12
+  nicknames:
+  achievements: |
+    2008: Miedo escénico
+    2012: Transformación
+  country: 44
+  twitter: iambetocuevas
+  genre: [21, 22]
+  content: |
+    Luis Alberto Cuevas Olmedo, más conocido como Beto Cuevas, es un cantante, diseñador gráfico y actor chileno.
+    Comenzando su adolescencia, debió mudarse a Montreal, Canadá. En ese país finaliza sus estudios y comienza a manifestar una fuerte inclinación por el cine y la actuación. Aún no se acercaba a la música, aunque le dedicaba un poco de tiempo. Junto a una de sus hermanas hacía imitaciones de Michael Jackson y Pimpinela. Una vez egresado opta por la carrera de Diseño Gráfico donde se titula e incluso instala una oficina de diseño. Pero sus planes cambiarían radicalmente cuando su padre regresa a Chile en 1987. A través de una de sus hermanas, Beto Cuevas conoce a Mauricio Clavería (baterista), quien, en esa época, le ofrece incorporarse a la banda que recién formaba con Andrés Bobe y Luciano Rojas y nacería enotnces "La Ley". En 2004, la banda entra en receso, luego de lanzar un Cd+Dvd titulado "Historias e histeria".
+    Beto Cuevas comienza a dar forma a su carrera solista, y en 2008 edita su primer álbum, titulado "Miedo escénico" y en 2012 vuelve al ruedo con "Transformación".
+  teams:
+      -
+        id: 20074
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+-
+  id: 20023
+  firstname: Beyonce
+  lastname:
+  birthday: 1981-09-04
+  nicknames:
+  achievements: |
+
+    2003: Dangerously in Love
+    2006: B'Day
+    2008: I Am... Sasha Fierce
+    2011: 4
+  country: 69
+  twitter: Beyonce
+  genre: [21, 29]
+  content: |
+    Beyoncé Giselle Knowles, conocida simplemente como Beyoncé, es una cantante y compositora de R&B, productora discográfica, bailarina, modelo, diseñadora de moda, y actriz estadounidense. Su carrera musical comenzó a finales de los 90s como la vocalista principal del grupo "Destiny's Child", junto a Kelly Rowland y Michelle Williams.
+    Durante el receso temporal del grupo, en el año 2003, Beyoncé lanzó su primer álbum como solista, titulado "Dangerously in Love", del cual se desprendieron sencillos como «Crazy in Love» y «Baby Boy», los cuales alcanzaron #1 en la lista Billboard Hot 100. El mismo, se convirtió en uno de los álbumes más exitosos del año, ganando 5 Premios Grammy en una sola noche en el año 2004.
+    Luego de la disolución definitiva del grupo, en el año 2006, Beyoncé lanzó su segundo álbum como solista, titulado "B'Day". El álbum debutó en el primer lugar de la lista Billboard 200 e incluyó los éxitos «Déjà Vu», «Irreplaceable» (#1 en Billboard Hot 100) y «Beautiful Liar» junto a Shakira.
+    Su tercer álbum, "I Am... Sasha Fierce", fue lanzado a finales de 2008 e incluye éxitos como «If I Were a Boy», «Single Ladies (Put a Ring on It)», (#1 en Billboard Hot 100). El álbum y sus sencillos hicieron que Beyoncé rompiera récords en la ceremonia de los Premios Grammy de 2010, siendo galardonada con 6 de los 10 premios a los que optaba. En junio de 2011 lanzó su cuarto álbum de estudio, 4, que debutó en el número 1 del Billboard 200. De él se desprenden los éxitos «Run the World (Girls)», «Best Thing I Never Had», «Countdown», «Love on top» y «End of Time».
+    Cuenta con un total de 17 Premios Grammy en solitario, 12 MTV Video Music Awards, un premio Billboard del Milenio, y una estrella con Destiny's Child en el Paseo de la Fama de Hollywood.
+
+-
+  id: 20024
+  firstname: Billy Idol
+  lastname:
+  birthday: 1955-11-30
+  nicknames:
+  achievements: |
+    1982 - Billy Idol
+    1983 - Rebel Yell
+    1986 - Whiplash Smile
+    1990 - Charmed Life
+    1993 - Cyberpunk
+    2005 - Devil's Playground
+    2006 - Happy Holidays
+  country: 181
+  twitter: BillyIdol
+  genre: [21, 22]
+  content: |
+    William Michael Albert Broad mejor conocido como Billy Idol, es un músico de rock británico. Inspirado en Sex Pistols, el dieario punk de la época, armó su primer grupo en 1976 al que bautizó “Chelsea”. La idea duró poco tiempo aunque dejó su nombre artístico: Billy Idol.
+    Se abocó entonces a una nueva banda “Generation X” en donde estuvo hasta 1981, cuando decidió empezar su carrera como solista. El grupo logró el éxito con “Dancin' With My Self”, pero debido a problemas administrativos decidieron separarse.
+    Su disco debut en solitario fue “Don't Stop”. En él se incluyó “Dancin' With My Self” que se convirtió en su primer gran éxito luego de que fuera remezclada para las discotecas. Su timbre de voz carrasposo impulsó una sucesión de éxitos que incluyó "Hot In The City","Eyes Without A Face", "White Wedding”, "Rebel Yell" y "To Be A Lover".
+    A finales de los 80 diversificó su carrera, audicionó para ser Jim Morrison en la película de Oliver Stone, “The Doors”.
+    En la década del 90 su imagen decayó pero siguió vigente y en la década del 2000 volvió con disco y con una gira con Def Lepard muy exitosa.
+
+-
+  id: 20025
+  firstname: Bjork
+  lastname:
+  birthday: 1965-11-21
+  nicknames:
+  achievements: |
+    1993 - Debut
+    1995 - Post
+    1997 - Homogenic
+    2001 - Vespertine
+    2004 - Medúlla
+    2007 - Volta
+    2011 - Biophilia
+  country: 106
+  twitter: bjork
+  genre: [21, 23]
+  content: |
+    Björk Guðmundsdóttir es una cantante, compositora, y productora islandesa, así como actriz ocasional. Inicialmente fue vocalista del grupo The Sugarcubes, para después emprender una carrera como solista.
+    Es reconocida por su expresiva y potente voz, así como por sus composiciones innovadoras y desafiantes, en las que se denota una influencia ecléctica de gran variedad de géneros, que van desde la música clásica, folklore y la electrónica, hasta el jazz y el pop.
+    Su disco “Biophilia” se convirtió en el primer álbum de la historia (y actualmente el único) en ser lanzado en formato "App-Álbum", el cual es un eBook con objetos 3D interactivos, películas, animaciones y diagramas basado en datos científicos reales.
+    Björk ha vendido más de 15 millones de álbumes,1 además de ser nominada al Oscar a la mejor canción por la película "Dancer in the Dark", y recibir 14 nominaciones al Grammy, así como el galardón a la Mejor Actriz en el Festival de Cine de Cannes. También, en el año 2010, fue galardonada con el Polar Music Prize, prestigioso premio que concedió la Real Academia Sueca de Música, por "su música innovadora, letras profundamente personales, y la extensión en su registro vocal". Actualmente se encuentra en la lista hecha por Rolling Stone entre "Los 100 Mejores Cantantes de Todos Los Tiempos".
+
+-
+  id: 20026
+  firstname: Blake
+  lastname: Shelton
+  birthday: 1976-06-18
+  nicknames:
+  achievements: |
+    2001 - Blake Shelton
+    2003 - The Dreamer
+    2004 - Blake Shelton's Barn & Grill
+    2007 - Pure BS
+    2008 - Startin' Fires
+    2011 - Red River Blue
+  country: 69
+  twitter: blakeshelton
+  genre: [22, 30]
+  content: |
+    Blake Tollison Shelton es un cantante estadounidense de música country. En 2001, hizo su debut con el sencillo "Austin" del álbum homónimo pasó cinco semanas en el Número Uno en Hot Country Songs. Esta canción fue el primer sencillo de su álbum certificado de oro, que también produjo dos Top 20.
+    Su segundo y tercer álbum, "The Dreamer" (su primero en Warner Bros.) y "Blake Shelton's Barn & Grill" en 2004, fueron certificados oro. El cuarto álbum de Shelton, "Pure BS", fue publicado en 2007, y reeditado en 2008 con un cover de la canción de Michael Bublé, "Home" como uno de los bonus track. Este cover fue el tercer sencillo del álbum. Un quinto álbum,”Startin' Fires”, fue lanzado en noviembre de 2008. Fue seguido por EP "All About Tonight" en 2010 y el álbum "Red River Blue" en 2011. Actualmente es entrenador (coach) en el reality show de NBC, "The Voice", con Shakira, Adam Levine y Usher Raymond.
+    En general, Shelton ha trazado 17 sencillos en las listas de country, incluyendo diez éxitos Número Uno.
+
+-
+  id: 20027
+  firstname: Bob
+  lastname: Dylan
+  birthday: 1941-05-24
+  nicknames:
+  achievements: |
+    Algunos de los discos más reconocidos entre los más de 40 discos en su haber:
+    1962: Bob Dylan
+    1963: The Freewheelin' Bob Dylan
+    1965: Bringing It All Back Home
+    1965: Highway 61 Revisited
+    1966: Blonde on Blonde
+    1967: John Wesley Harding
+    1969: Nashville Skyline
+    1975: Blood on the Tracks
+    1976: Desire
+    1989: Oh Mercy
+    1997: Time Out of Mind
+  country: 69
+  twitter: bobdylan
+  genre: [22, 23]
+  content: |
+    Bob Dylan nacido como Robert Allen Zimmerman, es un músico, cantante y poeta estadounidense.
+    Ha sido, durante cinco décadas, una de las mayores figuras en la música popular, siendo considerado uno de los compositores y músicos más influyentes del siglo XX.
+    Las primeras letras de Dylan abordaban temas sociales y filosóficos y mientras expandía y personalizaba estilos musicales, mostraba una firme devoción por muchas tradiciones de la música americana. Desde el folk, el country, el blues, el gospel, el rock and roll y el rockabilly pasando por la música folk inglesa, escocesa e irlandesa, pasando por el jazz y el swing.Muchos de los más célebres trabajos de Dylan son de la década de 1960, en la cual se convirtió en un cronista informal de los conflictos estadounidenses.
+    A lo largo de su carrera, Dylan ha sido reconocido y honrado por sus composiciones, interpretaciones y grabaciones. Sus discos le han valido varios Grammys, Globos de Oro ypremios de la Academia, y su nombre se halla en el Salón de la Fama del Rock and Roll, el Salón de la Fama de Compositores de Nashville y el Salón de la Fama de los Compositores y en 2004 alcanzó el segundo puesto en la lista de los 100 mejores artistas de todos los tiempos elaborada por la revista Rolling Stone, después de The Beatles.
+    Uno de los últimos álbumes de estudio de Dylan, "Modern Times", publicado en 2006, entró directamente en el primer puesto de la lista Billboard 200 y fue nombrado álbum del año por la revista musical Rolling Stone.
+
+-
+  id: 20028
+  firstname: Bob
+  lastname: Marley
+  birthday: 1945-02-06
+  nicknames:
+  achievements: |
+
+    1965 - The Wailing Wailers
+    1970 - Soul Rebels
+    1971 - Soul Revolution
+    1971 - Soul Revolution Part II
+    1972 - Best of the Wailers
+    1973 - African Herbsman
+    1973 - Catch a Fire
+    1973 - Burnin' The Wailers
+    1974 - Rasta Revolution
+    1974 - Natty Dread
+    1975 - Live!
+    1976 - Rastaman Vibration
+    1977 - Exodus
+    1978 - Kaya
+    1979 - Survival
+    1980 - Uprising
+    1983 - Confrontation (álbum póstumo).
+
+  country: 119
+  twitter: bobmarley
+  genre: [24]
+  content: |
+    Robert Nesta Marley Booker (6 de febrero de 1945 – 11 de mayo de 1981), más conocido como Bob Marley, fue un músico, guitarrista y compositor jamaiquino. Durante su carrera musical fue el líder, compositor y guitarrista de las bandas de ska, rocksteady y reggae The Wailers (1964–1974) y Bob Marley & The Wailers (1974–1981). Marley sigue siendo el más conocido y respetado intérprete de la música reggae y es acreditado por ayudar a difundir tanto la música de Jamaica como el movimiento rastafari (del que era un miembro comprometido) a una audiencia mundial. Entre sus mayores éxitos se encuentran los sencillos "I Shot the Sheriff", "No Woman, No Cry", "Jamming", "Redemption Song" y, junto a The Wailers, "Three Little Birds", así como el lanzamiento póstumo "Buffalo Soldier". El álbum recopilatorio “Legend”, lanzado en 1984 tres años después de su muerte, es el álbum de reggae más vendido de la historia con 10 discos de platino en los Estados Unidos y 20 millones de copias en todo el mundo.
+-
+  id: 20030
+  firstname: Britney
+  lastname: Spears
+  birthday: 1981-12-02
+  nicknames: Princesa del Pop
+  achievements: |
+    1999 - ...Baby One More Time
+    2000 - Oops!... I Did It Again
+    2001 - Britney
+    2003 - In the Zone
+    2007 - Blackout
+    2008 - Circus
+    2011 - Femme Fatale
+  country: 69
+  twitter: britneyspears
+  genre: [21]
+  content: |
+    Britney Jean Spears es una cantante estadounidense que nació en McComb, Misisipi, y se crio en Kentwood, Luisiana. Comenzó a actuar desde niña, a través de papeles en producciones teatrales y programas de televisión. En 1997 firmó con Jive Records y dos años más tarde lanzó su álbum debut, “...Baby One More Time”, el álbum más vendido de una solista adolescente. Durante su primera década en la industria, Spears se convirtió en una figura prominente en la música pop y en la cultura popular, con una vida personal muy publicitada. Sus primeros dos álbumes la establecieron como un icono pop y rompieron récords de ventas, mientras que canciones como «...Baby One More Time» y «Oops!... I Did It Again» se tornaron en éxitos internacionales. Los especialistas la acreditaron como la principal fuerza impulsora detrás del renacimiento que experimentó el pop adolescente durante la década de 1990 y la catalogaron como la mejor artista adolescente de todos los tiempos antes de que cumpliera 20 años, por lo que la honorificaron como «Princesa del Pop».
+    En 2001, lanzó su tercer álbum, “Britney”, del que se desprendió «I'm a Slave 4 U», y debutó en el cine con un papel protagónico en la película Crossroads. Dos años después asumió el control creativo de su cuarto álbum, “In the Zone”, el que produjo los éxitos «Me Against the Music», «Toxic» y «Everytime». Tras el lanzamiento de dos álbumes compilatorios y de sencillos como «My Prerogative», Spears sufrió una serie de problemas personales y su carrera entró en receso.
+    En 2007, volvió a la industria con su quinto álbum de estudio “Blackout”, el que además de ser elogiado por la crítica, generó los éxitos «Gimme More» y «Piece of Me», pese a recibir una escasa promoción.
+    A finales del mismo año, lanzó su sexto álbum de estudio, “Circus”, el que antecedió con el éxito «Womanizer».
+    En 2011, lanzó su séptimo disco, “Femme Fatale”, el que generó los éxitos «Hold It Against Me», «Till the World Ends» y «I Wanna Go» y colaboró en una remezcla del éxito «S&M» de Rihanna. En 2012 fue juez en The X Factor USA y colaboró con will.i.am de The Black Eyed Peas en el éxito «Scream & Shout».
+
+-
+  id: 20042
+  firstname: Charlie
+  lastname: Hole
+  birthday: 1905-06-17
+  nicknames:
+  achievements: |
+    2013 - The Joy Of A Caged Bird
+  country: 181
+  twitter: charliehole
+  genre: [22]
+  content: |
+    Charlie Hole es un cantautor ingles que hace apenas un año terminó el colegio. Desde los once años ha escrito música y en los últimos años ha estado tocando en  bares y clubs nocturnos. Esta experiencia nutrió su talento permitiéndole crecer continuamente como artista.
+    Luego de conocerse accidentalmente con el productor Jim Cregan (Rod Stewart entre otros), grabó algunas de sus canciones en su estudio y durante el receso de verano de la escuela, Charlie grabó su primer disco aclamado por el mismo Rod Stewart y Andy Hill.
+
+-
+  id: 20056
+  firstname: Deborah
+  lastname: De Corral
+  birthday: 1975-09-16
+  nicknames:
+  achievements: |
+    2011 - Nunca o Una Eternidad
+  country: 13
+  twitter: deborahdecorral
+  genre: [21, 22, 23]
+  content: |
+    Deborah De Corral comenzó como modelo publicitaria y conductora del programa de televisión "El Rayo", primero por América 2 y luego en Canal 13. Incursionó en la música acompañada por el en aquél momento su novio, Charly Alberti (ex baterista de Soda Stereo), en el grupo Plum.
+    En el 2002 hizo coros en el disco de su siguiente pareja, Gustavo Cerati. Luego de varias participaciones con otros músicos, a mediados del 2005 formó la banda Imperfectos, junto a Ezequiel Araujo y Leha.
+    En Marzo de 2010, Deborah es convocada por INXS como invitada en su gira. Así se presenta en los Juegos Olímpicos de Invierno (Vancouver) y en Australia, donde graban una versión folk de “New Sensation” para el último disco de reversiones de la banda australiana.
+
+    En 2011, en el concierto que INXS dio en Argentina en el Estadio Luna Park, De Corral se hizo presente en el escenario y se ganó un efusivo aplauso. Era un momento propicio para lanzar “Nunca o Una Eternidad”, el primer disco de la cantante. Las canciones nacieron, en su mayoría, entre Agosto y Diciembre del 2010, algunas basadas en ideas de hace años. El álbum se grabó en Montevideo, Buenos Aires, Chile y Miami entre los meses de Noviembre de 2010 y Febrero de 2011. El primer corte de difusión es “Algo”, con un ritmo pop divertido.
+    Deborah ejecuta guitarra acústica, ukulele y piano eléctrico y la acompañan Gonzalo Aloras en guitarra, Nico Porta en bajo, Alejandro Oaky Castellani en batería, percusión y coros y Julieta Brotsky en coros, teclados y percusión.
+
+-
+  id: 20063
+  firstname: Elton
+  lastname: John
+  birthday: 1947-03-25
+  nicknames:
+  achievements: |
+    Algunos de los discos de Elton John:
+    1973 - Goodbye Yellow Brick Road
+    2006 - The Captain & The Kid
+    1975 - Rock of the Westies
+    1980 - 21 at 33
+    1972 - Honky Château
+    1981 -  The Fox
+    1985 -  Ice on Fire
+    1984 - Breaking Hearts
+    1993 - Duets
+     1976 -Blue Moves
+
+  country: 181
+  twitter: eltonjohndotcom
+  genre: [21, 22, 29]
+  content: |
+    Reginald Kenneth Dwight, más conocido como Sir Elton John, empezó  sus estudios de piano a los 4 años y a los 11 obtuvo  una beca para estudiar en la Royal Academy of Music pero la abandonó a los 16 para trabajar como pianista en un bar de hotel. Creó la banda Bluesology, integrada por Long John Baldry (voz y guitarra) y en el saxo Elton Dean. Más tarde tomaría prestado estos nombres para crear el suyo y pasarse a llamar Elton John.
+
+    En este tiempo conoce a quien sería su compañero en la composición de muchas de sus canciones, el poeta Bernie Taupin. Juntos serán los creadores de grandes éxitos como “Skyline Pigeon”, “Your Song”, “Rocket Man” por mencionar algunos.
+    Es considerado una da las más grandes estrellas del rock, siendo íntimo amigo de muchas de ellas.
+    En el año 2004 la revista Rolling Stone le situó en el puesto 49 de su lista de los 100 mejores artistas de la historia. Amigo de Eric Clapton, Phil Collins,Rod Stewart, Tina Turner, Jon Bon Jovi, Goerge Michael,Michael Jackson,Little Richard, Sting, Joe Cocker y los desaparecidos Luciano Pavarotti, Freddie Mercury y John Lennon, de cuyo hijo menor Sean es padrino
+    Ganador de múltiples premios Grammys y de un Oscar por la canción “Can you feel the love tonight” de la película de Disney, El Rey León.
+    Se recuperó el solo de su adicción al alcohol y a las drogas y se ofrece permanentemente para recitales a beneficio de causas humanitarias y sobre todo en favor de la lucha contra el Sida a través de la fundación que lleva su nombre.
+
+-
+  id: 20071
+  firstname: Eros
+  lastname: Ramazzotti
+  birthday: 1963-10-28
+  nicknames:
+  achievements: |
+    2012 - SOMOS
+    2012 - BEST LOVE SONGS
+    2010 - ALAS Y RAICES
+    2009 - E²
+    2007 - CALMA APARENTE
+    2005 - ER9S
+    2003 - ESTILO LIBRE
+    1998 - EROS
+    1997 - DONDE HAY MÚSICA
+    1996 - TODO HISTORIAS
+    1991 - EN TODOS LOS SENTIDOS
+    1990 - MÚSICA ES
+    1988 - EN CIERTOS MOMENTOS
+    1987 - HEROES DE HOY
+    1986 - CUORE AGITATI
+
+  country: 118
+  twitter: RamazzottiEros
+  genre: [21]
+  content: |
+    En 1981 participa en el Concurso Voces Nuevas de Castrocaro; llega a la final con “Rock 80”, una canción escrita por él mismo y que le permite obtener su primer contrato discográfico. Eros se muda a Milán, donde vive en la sede de la casa discográfica. En 1982 publica su primer sencillo “A un amigo”. Tras un duro año de trabajo llega de repente el éxito, ya que Eros triunfa en “las nuevas propuestas” del Festival de San Remo 1984 con “Tierra prometida”, escrita con Renato Brioschi y Alberto Salerno.
+    Después de dos albums, en 1987 sale “En ciertos momentos”. El álbum obtiene resultados excepcionales, con más de tres millones de copias vendidas en todo el mundo pero la consagración de Eros Ramazzotti como artista internacional llega en Abril de 1990 cuando 200 periodistas provenientes de todo el mundo, participan de la rueda de prensa de Venecia para la presentación de su quinto álbum, ”En todos los sentidos”.
+    En el verano de 1995 participa en el evento musical europeo Summer Festival junto a Rod Stewart, Elton John y Joe Cocker.
+    En Mayo de 1998 participa en el “Pavarotti and Friends” cantando con Luciano Pavarotti “Si bastasen un par de canciones”. Publica el disco en directo “Eros Live” con dos dúos grabados durante la gira mundial con Tina Turner y con Joe Cocker.
+    Durante la década del 2000, Eros no dejó de cosechar éxitos a nivel mundial.
+
+-
+  id: 20079
+  firstname: Geronimo
+  lastname: Rauch
+  birthday: 1978-02-11
+  nicknames:
+  achievements: |
+    Con Mambru:
+    2002 - Mambrú
+    2003 - Creciendo
+    2004 - Tres
+  country: 13
+  twitter: GeronimoRauch
+  genre: [21]
+  content: |
+    Gerónimo Rauch es un cantante y actor nacido en Buenos Aires.
+    En Argentina se dio a conocer como uno de los ganadores del reality show PopStars y más tarde en España, con el musical Jesucristo Superstar. Desde el 18 de Noviembre de 2010 interpreta a Jean Valjean en la nueva versión de Les Misérables1 en la Gran Vía madrileña.
+    En el año 2000 empezó su andadura en el terreno de los musicales con Los Miserables2 en Argentina interpretando a Feuilly y en 2001 pisó las tablas del Teatro Astral (Buenos Aires) con el musical Grease,3 4 donde interpretó a Doody, su primer papel cómico.
+    Entre tanto, Gerónimo formó parte del grupo Voxpop.5 6 sexteto que cantaba canciones de Queen a capela.
+    En 2002 se presentó al casting de Popstars cuyo objetivo final era crear un grupo musical con cinco integrantes. Fue uno de los ganadores junto con cuatro más de sus compañeros (Emanuel Ntaka, Milton Amadeo, Germán Tripel, Pablo Silberberg) que pasaron a fomar parte del grupo Mambrú7 8 9 10
+    Con el primer álbum de la banda llegaron a ser triple platino (vendieron más de 120.000 unidades).11 A mediados de 2005 Mambrú anunció su separación. Tras la disolución del grupo es cuando Gerónimo emprendió su camino en solitario, llegando a ser el intérprete de una canción en Telefé (TV Argentina) para el mundial de fútbol de 2006, titulada "Dale Argentina". Pero Gerónimo nunca se apartó del teatro musical y en 2007 reapareció con Jesús Christ Superstar14 en el Teatro Bristol (Argentina) interpretando el papel de Jesús. El idioma no supuso un problema ya que habla un inglés fluido. Según dijo el propio Gerónimo «fue una producción semiprofesional con un presupuesto pequeñito, pero artísticamente con muy buen contenido de elenco y músicos». La productora grabó un vídeo y lo subió a Internet. Gracias a ese video, la versión madrileña lo contrató.
+    A finales de 2009 estrenó en la Gran Vía madrileña el musical Chicago. Por su papel fue nominado por segunda vez a los Premios del Teatro musical esta vez como mejor actor de reparto.40
+    Gerónimo interpretó a Jean Valjean (personaje principal) en la nueva adaptación de Los Miserables' que se estrenó el 18 de Noviembre en el Teatro Lope de Vega de Madrid hasta diciembre de 2011.
+    Gerónimo hizo su debut en el mundo de la lírica el 29 de Diciembre de 2011, en el Auditorio Nacional de Música de Madrid.
+    Hasta la fecha Gerónimo sigue actuando, casi a diario, en el Queen's Theatre interpretando su papel de Jean Valjean.125
+
+-
+  id: 20082
+  firstname: Gustavo
+  lastname: Cerati
+  birthday: 1959-08-11
+  nicknames:
+  achievements: |
+    1993 - Amor Amarillo
+    1999 - Bocanada
+    2002 - Siempre Es Hoy
+    2006 - Ahí Vamos
+    2009 - Fuerza Natural
+  country: 13
+  twitter: cerati
+  genre: [22]
+  content: |
+    Gustavo Adrián Cerati Clark  es un músico, cantautor, compositor y productor discográfico argentino de música rock.
+    Se hizo conocido por haber sido el vocalista, guitarrista y compositor principal de la banda de rock Soda Stereo (1982-1997), una de las bandas más importantes e influyentes de la música en español. Su trabajo, tanto en solitario como junto a Soda Stereo, lo posicionan como uno de los más reconocidos músicos de rock iberoamericano y como una leyenda del rock argentino.
+    Su carrera como solista se inició a comienzos de los años 1990 en paralelo a dicha banda debido a un receso que se había tomado el grupo por una fuerte crisis. En esa instancia Cerati publicó su primer álbum como solista, “Amor Amarillo” pero con el regreso de Soda Stereo su carrera solista quedó en suspenso hasta la disolución absoluta de la banda en 1997. Diez años después, el grupo regresó en una gira llamada “Me verás volver”, luego de la cual sus integrantes retomaron sus actividades por separado.
+    Después de Soda Stereo, Cerati ha experimentado desde la música electrónica (Plan V) hasta la música sinfónica (“11 Episodios Sinfónicos”, grabado en el Teatro Avenida en el año 2001 junto a la Orquesta Sinfónica de Buenos Aires). Grabó un álbum con Daniel Melero (“Colores Santos” en 1992) e hizo la banda sonora de la película “+ Bien”. A lo largo de su carrera como solista grabó cinco discos y ha ganado numerosos premios, entre ellos Grammy Latino, MTV y Gardel.
+    Durante la gira de su último trabajo “Fuerza Natural”, Gustavo sufrió un ACV al final de un concierto en Venezuela que lo mantiene en coma desde 2010.
+
+  teams:
+      -
+        id: 20149
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+-
+  id: 20098
+  firstname: Joe
+  lastname: Fernández
+  birthday:
+  nicknames:
+  achievements: |
+    2006 - Formas
+    2008 - Aire
+    2010 - Cursi
+  country: 13
+  twitter: joefernandezok
+  genre: [21, 22, 23]
+  content: |
+    Joe Fernández formó durante algunos años bandas de rock, blues y funk, hasta que decidió lanzar su carrera solista.
+    Rescatando antiguas canciones y componiendo nuevas, Joe preparó en 2006 su primer álbum, “Formas”, que transita por el pop-rock. Este material fue co-producido por Ezequiel Araujo (ex El Otro Yo y actual integrante de la banda de Deborah De Corral), productor artístico además, de Leo García, Intoxicados y Antonio Birabent, y editado por PopArt.
+    Fernández comenzó a llevar su música por todo el país y realizó durante los meses de Marzo y Abril de 2006, un ciclo todos los viernes en Hard Rock Café de Capital Federal. Luego llevó su música hasta Nueva York y Los Angeles, Estados Unidos.
+    En 2008, Ezequiel Araujo vuelve a trabajar con Joe y co-producen el segundo álbum, “Aire”. Participaron músicos de renombre, como el “Negro” Daniel Colombres (ex Fito Páez, Skay Beilinson, Litto Nebbia) en batería, Ezequiel Araujo en el bajo, Leha Martínez en guitarras (actual músico de Deborah De Corral) y Manuel Schaller (integrante del Sexteto Irreal) en sintetizadores y programaciones; también aportaron su voz para los coros Rosario Ortega y Malena Márquez. La presentación de este disco tuvo lugar en La Trastienda Club y contó con Luciano Pereyra como invitado.
+    En 2010 editó su tercera producción discográfica bajo el nombre de “Cursi”, disco compuesto por 10 canciones de amor.
+
+-
+  id: 20099
+  firstname: John
+  lastname: Lennon
+  birthday: 1940-10-09
+  nicknames:
+  achievements: |
+    1970 - John Lennon/Plastic Ono Band
+    1971 - Imagine
+    1972 - Some Time in New York City (con Y?ko Ono)
+    1973 - Mind Games
+    1974 - Walls and Bridges
+    1975 - Rock 'n' Roll
+    1980 - Double Fantasy (con Y?ko Ono)
+    1984 - Milk and Honey (con Y?ko Ono)
+  country: 181
+  twitter:
+  genre: [22]
+  content: |
+    John Winston Lennon (Liverpool, Reino Unido, 9 de octubre de 1940 – Nueva York, Estados Unidos, 8 de diciembre de 1980), fue un músico multiinstrumentista y compositor que saltó a la fama como uno de los miembros fundadores de The Beatles. Junto con Paul McCartney, formó una de las parejas de compositores más exitosas del siglo XX.
+    Nació y creció en Liverpool, donde siendo adolescente se familiarizó con el género musical skiffle, formando la banda The Quarrymen, que posteriormente se convertiría en 1960 en The Beatles. Cuando el grupo comenzó a desintegrarse hasta su disolución a finales de esa década, Lennon inició una carrera como solista, marcada por varios álbumes aclamados por la crítica, incluyendo “John Lennon/Plastic Ono Band” e “Imagine”, y canciones icónicas como «Give Peace a Chance» e «Imagine».
+    Demostró un carácter rebelde y un ingenio mordaz en la música, el cine, la literatura y el dibujo, así como en sus declaraciones en conferencias de prensa y entrevistas en pro de de la paz mientras, sus canciones fueron adoptadas como himnos por el movimiento contra la guerra. Después de su autoimpuesto retiro de la industria musical en 1975 para dedicar tiempo a su familia, Lennon volvió en 1980 con “Double Fantasy”. Lennon fue asesinado tres semanas después de ese lanzamiento. REF: Wikipedia
+
+  teams:
+      -
+        id: 20161
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+-
+  id: 20121
+  firstname: Leo
+  lastname: Garcia
+  birthday:
+  nicknames:
+  achievements: |
+    1999 - Vital
+    2000 - Clap Beat
+    2001 - Mar
+    2003 - Vos
+    2005 - Cuarto creciente
+    2008 - El milagro del pop
+    2009 - El milagro dance
+    2010 - Común y especial
+
+  country: 13
+  twitter: leogarciapop
+  genre: [21]
+  content: |
+
+    Leo García tiene una larga trayectoria dentro del panorama under de Buenos Aires. Desde 1990 y hasta 1997 lideró Avant Press, un grupo de techno pop que marcó un espacio en la escena independiente. Con esta banda grabó tres álbumes "Amor Entre Rosas" (1994) "Avant Press"(1996) y un maxi llamado "Boutique", producido por Gustavo Cerati. Precisamente, Avant Press fue telonero de la despedida de Soda Stereo cuando este trío dio su último show en el estadio de River Plate en 1997.
+    En 1999, por esos avatares del destino, Leo disuelve Avant Press y se entrega a lo que sería su primer trabajo como solista llamado "Vital". Transcurridos unos pocos meses, Leo registra un sorprendente trabajo llamado "Clap Beat", sonidos extraídos en el Clap o Aplauso, que se encuentra en la memoria de la caja de ritmos utilizada por los músicos y compone piezas bailables.
+    Siguiendo su larga trayectoria, crea en el año 2000 junto a Gustavo Lamas, otro artista electrónico, "Rascacielos", música que surge con un dúo de samplers. En el mismo año editó "Morrisey", corte que le dio popularidad a nivel nacional.
+    La primera vez que tocó en New York fue en el Roxy, cuando Gustavo Cerati presenta su album "Bocanada", desarrollándose en los teclados, la guitarra y voz.
+    Luego sale su álbum llamado "Mar", un disco producido y masterizado en Los Angeles, contando de nuevo con la participación del ex guitarrista y vocalista de Soda Stereo en la producción.
+    En el 2004 Leo García se centró en el trabajo de un nuevo disco, con el cual demuestra un gran crecimiento y que se encuentra en una de las mejores etapas de su vida musical. Leo es uno de los artistas que más elogios ha recibido por parte de sus colegas.
+    En 2007, Leo fue invitado a ser parte de la gira de regreso de Soda Stereo "Me Verás Volver".
+    En 2009 regresa con "El milagro dance", compuesto por 6 temas.
+    En 2010, edita "Común y especial".
+
+-
+  id: 20143
+  firstname: Mick
+  lastname: Jagger
+  birthday: 1943-07-26
+  nicknames:
+  achievements: |
+    1985 - She's The Boss
+    1987 - Primitive Cool
+    1993 - Wandering Spirit
+    2001 - Goddess In The Doorway
+  country: 181
+  twitter: MickJagger
+  genre: [22]
+  content: |
+    Sir Michael Philip Jagger más conocido como Mick Jagger, es un músico de rock británico conocido, sobre todo, por ser el vocalista,compositor y cofundador del grupo The Rolling Stones. También ha trabajado como productor musical y cinematográfico, actor y empresario. Además, el grupo ha ganado dos Grammy y él, en solitario, un Globo de Oro, además es uno de los grandes iconos de la música de los últimos años.
+    REF: Wikipedia
+
+  teams:
+      -
+        id: 20139
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 20154
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+-
+  id: 20150
+  firstname: Natalia
+  lastname: Lafourcade
+  birthday: 1984-02-26
+  nicknames:
+  achievements: |
+
+    1998 - Twist (como Twist)
+    2002: Natalia Lafourcade
+    2005: Casa (como Natalia y La Forquetina)
+    2009: Hu Hu Hu
+    2007: Las 4 Estaciones Del Amor
+    2012: Mujer Divina, Homenaje a Agustín Lara
+  country: 154
+  twitter: lafourcade
+  genre: [21]
+  content: |
+    Desde que era muy pequeña se sentía atraída por la música ya que sus padres se dedicaban a ello. A los tres años empezó a cantar y a los cuatro descubrió que quería ser artista. En su adolescencia tomó clases de pintura, música, piano, flauta, teatro, baile, guitarra, actuación, saxofón y canto y le encantaba hacer imitaciones de Gloria Trevi, Alicia Villareal y de Garibaldi.
+    En 1998 fue parte del grupo Twist (un grupo sólo de mujeres) cantando canciones de amor. Pero se desintegraron al año de haber sido lanzado. Esto le sirvió a Natalia para lograr ser mejor artista.
+
+    Al convertirse en solista lanzó su primer disco llamado "Natalia Lafourcade", producido por Aureo Baqueiro y Loris Ceroni. Regresa en 2005 como Natalia y la Forquetina, grupo cuyo nuevo álbum se titula "Casa". Después del gran éxito que tuvo con su disco debut superando el Disco de Platino en México, "Casa" cuenta con 14 canciones y un bonus track, de las cuales 11 fueron producidas por Meme (tecladista de Café Tacuva).
+    Después de una gira por México y Estados Unidos, el 2 de Junio de 2006 Natalia y la Forquetina anunciaron su separación para trabajar en proyectos diferentes. Tiempo después, La Forquetina volvió a juntarse, esta vez con un vocal diferente y conformaron Camper.
+    Por su parte, Natalia Lafourcade se trasladó a Canadá para aprender inglés y regresó a México y comenzó a trabajar en "Las 4 estaciones del amor", su primer disco instrumental, editado en 2007.
+    En el año 2008 comenzó a grabar su cuarto álbum, el cual se titula "Uh, uh, uh" y es editado en 2009 bajo la producción de Meme y la colaboración de Julieta Venegas. Su primer corte de difusión se titula "Ella es bonita".
+    En 2012 llega "Mujer divina - Homenaje a Agustín Lara". Esta producción cuenta con importantes colaboraciones, entre ellas la de Miguel Bosé, Kevin Johansen, Adrián Dárgelos de Babasónicos, Vicentico, entre otros.
+
+-
+  id: 20156
+  firstname: Paul
+  lastname: Mc Cartney
+  birthday: 1942-06-18
+  nicknames:
+  achievements: |
+    Algunos discos:
+    1970 – McCartney
+    1971 – RAM (Paul y Linda)
+    1971 – Wild Life (Con Wings)
+    1975 – Venus And Mars (Con Wings)
+    1978 – London Town (con Wings)
+    1980 – McCartney II
+    1983 – Pipes of Peace
+    1989 -  Flowers in the Dirt
+    1993 – Off the Ground
+    1997 – Flaming Pie
+    2001 – Driving Rain
+    2012 – Kisses on the Bottom
+
+  country: 181
+  twitter: PaulMcCartney
+  genre: [22]
+  content: |
+    Sir James Paul McCartney es un músico multiinstrumentista, empresario, cantante, compositor, productor musical, pintor y activista pro-derechos de los animales.
+    Ex integrante de The Quarrymen (1957 - 1959), The Beatles (1960 - 1970) y Wings (1971 - 1981), McCartney es el compositor de mayor éxito comercial en la historia de la música popular, de acuerdo con Libro Guinness de los récords.
+    McCartney ganó fama mundial como miembro de The Beatles, junto a John Lennon, George Harrison y Ringo Starr. McCartney y Lennon formaron una de las parejas de compositores más influyentes y exitosas y escribieron algunas de las canciones más populares en la historia de la música rock.
+    Después de dejar The Beatles, McCartney emprendió una exitosa carrera en solitario y formó el grupo Wings con su primera esposa, Linda Eastman, y el cantante y compositor Denny Laine.
+    El medio británico BBC News nombró a McCartney el "mayor compositor del milenio" y citó la canción de los Beatles «Yesterday» como la canción más versionada en la historia de la música, grabada por más de 2.200 artistas y repetida, desde su publicación en 1965, más de 7.000.000 de veces en la televisión estadounidense y la radio.
+    McCartney ha compuesto bandas sonoras para películas, música clásica y electrónica, dio a conocer un amplio catálogo de canciones como artista en solitario, y ha participado en proyectos para ayudar a organizaciones benéficas internacionales.
+
+  teams:
+      -
+        id: 20161
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+-
+  id: 20157
+  firstname: Paul
+  lastname: Young
+  birthday: 1956-01-17
+  nicknames:
+  achievements: |
+    1983 - No Parlez
+    1985 - The Secret of Association
+    1986 - Between Two Fires
+    1990 - Other Voices
+    1990 - From Time To Time - The Singles Collection
+    1993 - The Crossing
+    1994 - Reflections
+    1997 - Paul Young
+    2003 - The Essential Paul Young
+    2006 - Rock Swings - On the Wild Side of Swing
+
+  country: 181
+  twitter:
+  genre: [22]
+  content: |
+    Paul Young es un cantante de Rock y músico británico.
+    Su primer gran éxito llegó con la canción de 1985, “Everytime you go away”. En 1991, cantó a dúo con el cantante italiano Zucchero la balada-pop "Senza una Donna" que también fue un éxito. En 1992 participó en el Tributo a Freddie Mercury junto con los miembros restantes de Queen interpretando la canción "Radio Ga Ga".
+    Lanzó una colección de sus canciones más famosas. Sin embargo, su mayor popularidad la obtuvo haciendo nuevas interpretaciones de canciones conocidas como "Wherever I lay may hat (that's my home") de Marvin Gaye. Su último disco de versiones y canciones escritas por él se editó en 1997 bajo el título "Paul Young".
+    En la actualidad participa regularmente en una serie de conciertos - nostalgia de los 80 en Gran Bretaña llamados "Here and Now" con estrellas del tipo Martin Fry ("ABC"), Peter Cox (Go West), Kim Wilde, Tony Hadley (Spandau Ballet) y también participa en la SAS BAND formada por músicos británicos de los 70 y 80. Desde hace un tiempo milita en un grupo musico-vocal de rock "Tex-Mex" llamada Los Pacaminos junto con Jamie Moses, guitarrista que ha tocado como segunda guitarra de "The Brian May Band" y en las dos giras de "Queen + Paul Rodgers"
+
+-
+  id: 20164
+  firstname: Poli
+  lastname: Sallustro
+  birthday: 1988-05-22
+  nicknames:
+  achievements: |
+    2012 - Volando
+  country: 13
+  twitter: polisallustro
+  genre: [21]
+  content: |
+    Paola Sallustro, o Poli,  comienza a relacionarse con la música desde pequeña, junto a su padre, abuela y hermanos. A los 7 años decide tomar clases de piano, y a los 13 años de canto y teatro.
+
+    Años más tarde, POLI entra en el mundo televisivo. Recorrió varios programas con personajes que dejaron sus marcas en Argentina, Latinoamérica, Israel y países europeos, en especial aquel interpretado en Floricienta.
+
+    Luego de semejante éxito, POLI decide alejarse de la TV para dedicarse a su verdadero amor, la música, en paralelo a su carrera de dirección cinematográfica. El cine, el guión y la actuación complementaron su oído musical para poder volcar hoy en su música una perspectiva y una paleta de colores que cautivan.
+
+    En el 2010 comienza los shows en vivo, junto a su banda, los cuales actualmente continúan dando cada vez más que hablar.
+
+    El 2012 empezó con la elaboración de su primer disco LP, el cual consta de 10 temas compuestos por POLI, con la producción de Tweety González y arreglos de Afredo García Tau, en el estudio El Pie.
+
+    Recorriendo historias de desamor, deseo y locura femenina, “Volando” te hará volar através de POLI, la mujer del abismo.
+
+-
+  id: 20181
+  firstname: Shakira
+  lastname:
+  birthday: 1977-02-02
+  nicknames: Shak / Shaki / La Reina del Pop Latino
+  achievements: |
+    1995 - Pies Descalzos
+    1998 - Dónde Están Los Ladrones?
+    2000 - Mtv Unplugged
+    2001- Laundry Service / Servicio de Lavandería
+    2005 - Fijación Oral Vol 1
+    2005 - Oral Fixation Vol 2
+    2009 - Loba / She Wolf
+    2010 - Sale El Sol
+  country: 47
+  twitter: shakira
+  genre: [22]
+  content: |
+    Shakira Isabel Mebarak Ripoll, conocida simplemente como Shakira, es una cantautora, productora discográfica, bailarina, empresaria, música, filántropa y embajadora de buena voluntad de la UNICEF colombiana.
+    Luego de dos álbumes que se editaron sólo en en su tierra natal, debutó en el mercado discográfico hispanoamericano en 1995 con el álbum Pies descalzos. Tres años después llegaría el disco que lograría afirmarla en todo Latinoamérica. “¿Dónde Están Los Ladrones?” supondría el pasaporte al éxito dado que filmó un año más tarde “Shakira MTV Unplugged” en Nueva York. Fue el primer concierto MTV retransmitido en Estados Unidos íntegramente en español.  Pero el éxito internacional le llegó en el 2001 con Servicio de lavandería/Laundry Service que marcaría su crossover con 9 canciones en inglés y 4 en español escritas por ella.
+    Es la artista femenina internacional con más ventas en la década del 2000 en España. Ha sido ganadora de dos Premios Grammy y ocho Premios Grammy Latino. La empresa Live Nation considera a Shakira la artista más importante de su generación por su impacto global claramente consolidado y la ubica con este contrato dentro de los artistas más importantes del mundo. Actualmente, superó los U$S140.000.000 en ganancias. Según la revista Forbes, es una de las cantantes que más dinero gana y está dentro de las 100 mujeres más influyentes del planeta. Se estima que Shakira ha vendido más de 70 millones de sus producciones musicales en todo el mundo, de las cuales 9,9 millones de discos fueron vendidos solamente en Estados Unidos.
+    Su última gira musical, Sale el Sol World Tour, recaudó más de U$S 100 millones, y logró reunir a más de 2 millones de personas, siendo la segunda gira consecutiva de Shakira en lograr esto.
+
+-
+  id: 20192
+  firstname: Valeria
+  lastname: Gastaldi
+  birthday: 1981-12-05
+  nicknames:
+  achievements: |
+    2007: Cuando no estas
+    2011: Contigo
+  country: 13
+  twitter: valeriagastaldi
+  genre: [21]
+  content: |
+    Valeria Gastaldi Canton, más conocida como Valeria Gastaldi, es una actriz y cantante de pop latino.
+    Desde chica se dedicó a la actuación y a la música. Participó en algunas series televisivas como “Mi Familia es un Dibujo” y “Chiquititas” pero, con la disyuntiva del trabajo o la escuela, Valeria se dio tiempo para los estudios  y los amigos. Posteriormente viajó a Nueva York para el aprendizaje y preparación vocal lo que la llevó a formar parte de un grupo de comedia musical independiente.
+    En 2001 llegó el éxito de la mano de Bandana, un grupo pop que salió del reality televisivo Popstars, de gran éxito a nivel latinoamerica. Grabó tres discos junto al grupo, un DVD y una película que fue vista por más de un millón de personas en Argentina.
+    Luego de tres años de intenso trabajo y éxito, el grupo puso punto final al proyecto. La causa, en el caso de Valeria, fue dedicarse a su deseo de hacer música.
+    Desde 2005, Valeria se ha estado preparando para su nuevo reto. En 2007 publicó su primera placa solista “Cuando No Estás” producido por Cachorro López. En 2011 lanzó su segundo trabajo titulado “Contigo”.
+    Actualmente está conduciendo un programa de radio y armando su próximo álbum.
+
+-
+  id: 20194
+  firstname: Virginia
+  lastname: Da Cunha
+  birthday: 1981-06-15
+  nicknames:
+  achievements: |
+    Con Bandana:
+    2001 - Bandana
+    2002 - Noche
+    2003 - Vivir Intentando
+    2004 - Hasta siempre
+    Con Virgin Pancakes:
+    2008 - Iluminate
+
+  country: 13
+  twitter: VirginDaCunha
+  genre: [21]
+  content: |
+    Virginia Da Cunha es una cantante, compositora, actriz y modelo argentina.
+    Desde muy chica se interesó por lo artístico. Estudió canto, expresión corporal, actuación escénica y varios estilos de danza.
+    En 2001 llegó el éxito de la mano de Bandana, un grupo pop que salió del reality televisivo Popstars, de gran éxito a nivel latinoamerica. Grabó tres discos junto al grupo, un DVD y una película que fue vista por más de un millón de personas en Argentina.
+    Finalizado el grupo en 2004, comenzó a actuar en obras teatrales y en la serie de TV Sin Código. Realizó conducciones de programas infantiles en el Canal Nickelodeon y la la TV Pública, y condujo un programa de radio en AM 950.
+    En 2007 formó Virgin Pancakes con su hermano Fernando y grabaron un disco “Iluminate” con giras y presentaciones en Argentina y el exterior.
+    En la actualidad Virginia y Fernando están enfocados en su nuevo proyecto musical llamado “V”. Ya tienen un single lanzado “Live”, un tema que combina el idioma inglés con el español y de estilo power-pop  y es, según ella, la evolución de Virgin Pancakes.
+
+-
+  id: 20198
+  firstname: James
+  lastname: Cregan
+  birthday: 1946-03-09
+  nicknames:
+  country: 181
+  twitter:
+  genre: [22]
+  content: |
+    James “Jim” Cregan es un guitarrista y bajista de rock inglés, más conocido por sus asociaciones con Family, Steve Harley & Cockney Rebel y Rod Stewart.
