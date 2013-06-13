@@ -14,7 +14,19 @@
             </div>
 
             {% if entity == app.user or is_granted('ROLE_ADMIN') %}
-                <a href="#" class="edit-image splash" rel="tooltip" title="Cambiar portada" id="splash-uploader" data-entity-type="{{ entityType }}" data-entity-id="{{ entity.id }}" data-ismodal="false" data-upload="photo" data-type="splash" data-uploader-selector="splash-uploader"><i class="icon-pencil icon-white"></i></a>
+                <div class="btn-group edit">
+                    <a href="#" class="edit-image" rel="tooltip" title="Cambiar imágen" data-toggle="dropdown">
+                        <i class="icon-gear-splash"></i>
+                    </a>
+                    <ul class="dropdown-menu pull-right">
+                        <li>
+                            <a href="#" id="splash-uploader" data-entity-type="{{ entityType }}" data-entity-id="{{ entity.id }}" data-ismodal="false" data-upload="photo" data-type="splash" data-uploader-selector="splash-uploader">Cambiar imágen de portada</a>
+                        </li>
+                        <li>
+                            <a href="#" class="edit-image avatar" rel="tooltip" title="Cambiar imágen de perfil" id="avatar-uploader" data-entity-type="{{ entityType }}" data-ismodal="false" data-upload="photo" data-type="profile" data-uploader-selector="avatar-uploader">Cambiar imágen de perfil</a>
+                        </li>
+                    </ul>
+                </div>
             {% endif %}
         </div>
         <div class="info-container">
