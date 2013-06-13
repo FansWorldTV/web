@@ -53,6 +53,8 @@ $(document).ready(function () {
         prePopulate: [],
         action: null,
         dataSource: null,
+        entityType: null,
+        entityId: null,
         onEntityAdd: function(entity) {},
         onEntityDelete: function(entity) {}
     };
@@ -80,7 +82,8 @@ $(document).ready(function () {
             var that = this;
             var i;
             $(that.element).bind("destroyed", $.proxy(that.teardown, that));
-            //that.options.dataSource = Routing.generate(appLocale + '_tag_ajaxmatch');
+            that.options.entityType = $(that.element).attr('data-entity-type');
+            that.options.entityId = $(that.element).attr('data-entity-id');
             that.options.magic = parseInt(Math.random() * 9999);
             that.options[that.options.magic] = {
                 team: {
@@ -102,31 +105,13 @@ $(document).ready(function () {
             }
             that.options.action = $(that.element).attr('data-action');
 
-            // Precargo tags autogenerados
-            var pre = $("#form_prepopulate").val();
-            if(typeof(pre) !== 'undefined' && pre.length > 0) {
-                pre.split(',').forEach(function(val) {
-                    if(val.length > 0) {
-                        var tagInfo = val.split(':');
-                        var item = {
-                            id: tagInfo[0],
-                            label: tagInfo[2],
-                            value: tagInfo[2],
-                            result: {
-                                id: tagInfo[0],
-                                type: tagInfo[1].toLowerCase()
-                            }
-                        };
-                        that.options.prePopulate.push(item);
-                    }
-                });
-            }
             // Si estoy en un profile base agrego el tag automaticamente
             if ($(".profile_head").length > 0) {
                 var profile_type = $(".profile_head").attr("data-profile-type");
                 var profile_title = $(".profile_head").attr("data-profile-title");
                 var profile_id = $(".profile_head").attr("data-profile-id");
-                var item = {
+                console.log("creating auto tag for type: %s, title: %s. id: %s", profile_type, profile_title, profile_id)
+                that.options.prePopulate.push({
                     id: profile_id,
                     label: profile_title,
                     value: profile_title,
@@ -134,9 +119,7 @@ $(document).ready(function () {
                         id: profile_id,
                         type: profile_type.toLowerCase()
                     }
-                };
-                console.log("creating auto tag for type: %s, title: %s. id: %s", profile_type, profile_title, profile_id)
-                that.options.prePopulate.push(item);
+                });
             }
             var tagParams = {
                 availableTags: that.options.sampleTags,
@@ -159,7 +142,6 @@ $(document).ready(function () {
             if(that.options.dataSource) {
                 tagParams.autocomplete = {
                     source: function( request, response ) {
-                        console.log("tagit llama autocomplete request.term: " + request.term);
                         $.ajax({
                             url: that.options.dataSource,
                             dataType: "JSON",
@@ -184,23 +166,98 @@ $(document).ready(function () {
                     minLength: 1
                 };
             }
+
             $(that.element).tagit(tagParams);
 
-            for(i = 0; i < that.options.prePopulate.length; i += 1) {
-                if (that.options.prePopulate.hasOwnProperty(i)) {
-                    var item  = that.options.prePopulate[i];
-                    $(that.element).tagit('createTag', item.value, null, null, item.result);
-                }
+            if(that.options.entityType && that.options.entityId) {
+                console.log("going to call _photo_get_tags type: %s, id: %s", that.options.entityType, that.options.entityId);
+                $.ajax({
+                    url: Routing.generate(appLocale + '_photo_get_tags'),
+                    data: {
+                        entityType: that.options.entityType,
+                        entityId: that.options.entityId
+                    }
+                })
+                .then(function(response){
+                    var tags = response.tags;
+                    var teams = tags.teams;
+                    var idols = tags.idols;
+                    var users = tags.users;
+                    var texts = tags.texts;
+                    var i = 0;
+
+                    for(i in teams) {
+                        if (teams.hasOwnProperty(i)) {
+                            console.log(teams[i])
+                            that.options.prePopulate.push({
+                                id: teams[i].id,
+                                label: teams[i].label,
+                                value: teams[i].label,
+                                result: {
+                                    id: teams[i].id,
+                                    type: 'team'
+                                }
+                            });
+                        }
+                    }
+                    for(i in idols) {
+                        if (idols.hasOwnProperty(i)) {
+                            console.log(idols[i])
+                            that.options.prePopulate.push({
+                                id: idols[i].id,
+                                label: idols[i].label,
+                                value: idols[i].label,
+                                result: {
+                                    id: idols[i].id,
+                                    type: 'idol'
+                                }
+                            });
+                        }
+                    }
+                    for(i in users) {
+                        if (users.hasOwnProperty(i)) {
+                            console.log(users[i])
+                            that.options.prePopulate.push({
+                                id: users[i].id,
+                                label: users[i].label,
+                                value: users[i].label,
+                                result: {
+                                    id: users[i].id,
+                                    type: 'user'
+                                }
+                            });
+                        }
+                    }
+
+                    for(i in texts) {
+                        if (texts.hasOwnProperty(i)) {
+                            console.log(texts[i])
+                            that.options.prePopulate.push({
+                                id: texts[i].id,
+                                label: texts[i].label,
+                                value: texts[i].label,
+                                result: {
+                                    id: texts[i].id,
+                                    type: 'text'
+                                }
+                            });
+                        }
+                    }
+                    for(i = 0; i < that.options.prePopulate.length; i += 1) {
+                        if (that.options.prePopulate.hasOwnProperty(i)) {
+                            var item  = that.options.prePopulate[i];
+                            $(that.element).tagit('createTag', item.value, null, null, item.result);
+                        }
+                    }
+
+                });
             }
         },
         addEntityItem: function (item) {
             var that = this;
             item.result.type = item.result.type || 'text'; // override to custom tag 'text'
-            //that.options[that.options.magic].selected.push(item);
             var a = that.options[that.options.magic];
             a[item.result.type].selected.push(item);
-            //that.options[item.result.type].selected.push(item);
-            //that.options[this.options.magic].selected.push(item);
             that.updateInput('#form_' + that.options.action + item.result.type, a[item.result.type].selected);
             console.log("will add: " + JSON.stringify(item) + " to: #form_" + that.options.action + item.result.type);
         },
