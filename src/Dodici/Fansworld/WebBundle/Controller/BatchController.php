@@ -419,15 +419,26 @@ class BatchController extends SiteController
 
             foreach ($file as $exp) {
                 $result .= "-\n";
-                $result .= "  id: ".($exp[0]+10000)."\n";
+                $result .= "  id: ".($exp[0]+20000)."\n";
                 $result .= "  title: ".$exp[1]."\n";
                 $result .= "  foundedAt: ".$exp[2]."-01-01\n";
                 $result .= "  nicknames: ".$exp[3]."\n";
-                $result .= "  twitter: ".$exp[4]."\n";
-                $result .= "  genre: ".($exp[5]+10)."\n";
-                $result .= "  country: ".$exp[6]."\n";
+                if ($exp[4]) {
+                    $result .= "  achievements: |\n";
+                    $xpc = explode("\n", $exp[4]);
+                    foreach($xpc as $xc) $result .= "    ". $xc;
+                    $result .= "\n";
+                }
+                $result .= "  twitter: ".$exp[5]."\n";
+
+                $genres = array();
+                $genresxp = explode("\n", $exp[6]);
+                foreach ($genresxp as $gx) if (intval($gx)) $genres[] = (intval($gx) + 20);
+                $result .= "  genre: [".(implode(', ', $genres))."]\n";
+
+                $result .= "  country: ".$exp[7]."\n";
                 $result .= "  content: |\n";
-                $xpc = explode("\n", $exp[7]);
+                $xpc = explode("\n", $exp[8]);
                 foreach($xpc as $xc) $result .= "    ". $xc;
                 $result .= "\n";
 
