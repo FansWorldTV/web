@@ -111,11 +111,13 @@ class ProfileController extends SiteController
                 $top5 = array_slice($highlights, 0, 5, true);
 
                 foreach ($top5 as $key => $profile) {
-                    $entityProfile = $this->getRepository(ucfirst($entity['type']))->find($entity['id']);
-                    $lastVideo = $this->getRepository('Video')->highlights($entityProfile, 1);
+                    $iProfile = &$response['profiles'][$key]; // Var passed by reference to simplify the code
 
-                    $response['profiles'][$key]['lastVideo'] = $serializer->values(reset($lastVideo), 'small');
-                    $response['profiles'][$key]['highlight'] = true;
+                    $entityProfile = $this->getRepository(ucfirst($iProfile['type']))->find($iProfile['id']);
+                    $lastVideo = $this->getRepository('Video')->getVideosTaggedWith($entityProfile, 1);
+
+                    $iProfile['lastVideo'] = $serializer->values(reset($lastVideo), 'small');
+                    $iProfile['highlight'] = true;
                 }
             //}
 
