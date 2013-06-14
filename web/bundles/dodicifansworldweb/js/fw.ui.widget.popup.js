@@ -105,7 +105,7 @@
             // Get total unreaded notifications
             /*this.getTotal();*/
             // Get a limited set of unreaded notifications to populate activity widget
-            this.getNotifications();
+            //this.getNotifications();
         }
         NOTIFICACION.prototype.join = function() {
             var that = this;
@@ -332,8 +332,8 @@
 // TODO: refactor inside curl
 $(document).ready(function () {
     "use strict";
-    window.fansworld = window.fansworld || {};
-    window.fansworld.notificacion = new window.NOTIFICACION();
+    //window.fansworld = window.fansworld || {};
+    //window.fansworld.notificacion = new window.NOTIFICACION();
     return;
 });
 
