@@ -332,8 +332,8 @@
 // TODO: refactor inside curl
 $(document).ready(function () {
     "use strict";
-    //window.fansworld = window.fansworld || {};
-    //window.fansworld.notificacion = new window.NOTIFICACION();
+    window.fansworld = window.fansworld || {};
+    window.fansworld.notificacion = new window.NOTIFICACION();
     return;
 });
 
