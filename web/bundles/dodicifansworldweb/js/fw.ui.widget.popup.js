@@ -328,16 +328,6 @@
     return NOTIFICACION;
 }));
 
-// implicit init that adds module to global scope
-// TODO: refactor inside curl
-$(document).ready(function () {
-    "use strict";
-    window.fansworld = window.fansworld || {};
-    window.fansworld.notificacion = new window.NOTIFICACION();
-    return;
-});
-
-
 ////////////////////////////////////////////////////////////////////////////////
 // FansWorld Activity handler                                                 //
 ////////////////////////////////////////////////////////////////////////////////
@@ -372,7 +362,7 @@ $(document).ready(function () {
             this.activity = {};
             this.pushTimer = null;
             // Get total unreaded activityes
-//            this.getTotal();
+            // this.getTotal();
             // Get a limited set of unreaded activityes to populate activity widget
             this.getActivity();
         }
@@ -489,15 +479,6 @@ $(document).ready(function () {
     // can return a function as the exported value.
     return ACTIVITY;
 }));
-
-// implicit init that adds module to global scope
-// TODO: refactor inside curl
-$(document).ready(function () {
-    "use strict";
-    window.fansworld = window.fansworld || {};
-    window.fansworld.activity = new window.ACTIVITY();
-    return;
-});
 
 ////////////////////////////////////////////////////////////////////////////////
 // FansWorld widget plugin 1.0 initial                                        //
@@ -696,16 +677,6 @@ $(document).ready(function () {
     };
 });
 
-///////////////////////////////////////////////////////////////////////////////
-// Descomentar para activar plugin de Notificaciones                         //
-///////////////////////////////////////////////////////////////////////////////
-/*
-$(document).ready(function () {
-    "use strict";
-    $('.widget-container').fwWidget({});
-});
-*/
-
 ////////////////////////////////////////////////////////////////////////////////
 // FansWorld activity widget plugin 1.0 initial                               //
 ////////////////////////////////////////////////////////////////////////////////
@@ -902,14 +873,6 @@ $(document).ready(function () {
     };
 });
 
-$(document).ready(function () {
-    "use strict";
-    $('.widget-container').fwActivityWidget({
-        title: "Actividad Reciente"
-    });
-});
-
-
 ////////////////////////////////////////////////////////////////////////////////
 // FansWorld footer news buttons plugin 1.0 initial                           //
 ////////////////////////////////////////////////////////////////////////////////
@@ -1040,9 +1003,21 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     "use strict";
-    $('footer').fwFooterNews({
-        name: 'Actividad',
-        title: 'Actividad reciente',
-        id: 'act-reciente'
-    });
+    if (window.isLoggedIn) {
+        // Init Notifications plugin
+        window.fansworld = window.fansworld || {};
+        window.fansworld.notificacion = new window.NOTIFICACION();
+        // Init Activity plugin
+        window.fansworld = window.fansworld || {};
+        window.fansworld.activity = new window.ACTIVITY(); 
+        $('footer').fwFooterNews({
+            name: 'Actividad',
+            title: 'Actividad reciente',
+            id: 'act-reciente'
+        });
+            $('.widget-container').fwActivityWidget({
+            title: "Actividad Reciente"
+        });
+    }
+    return;
 });
