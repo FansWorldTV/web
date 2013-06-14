@@ -84,8 +84,8 @@ class ProfileController extends SiteController
                 'fanCount'      => $entity['fancount'],
                 'image'         => $this->getImageUrl($entity['imageid'], 'big_square'),
                 'imageDouble'  => $this->getImageUrl($entity['imageid'], 'huge_square'),
-                'splash'        => $this->getImageUrl($entity['splashid'], 'big_square'),
-                'splashDouble' => $this->getImageUrl($entity['splashid'], 'huge_square'),
+                'splash'        => isset($entity['splashid']) ? $this->getImageUrl($entity['splashid'], 'big_square') : null,
+                'splashDouble' => isset($entity['splashid']) ? $this->getImageUrl($entity['splashid'], 'huge_square') : null,
                 'highlight'     => false
             );
 
@@ -101,7 +101,7 @@ class ProfileController extends SiteController
         }
 
         if (isset($response['profiles']) && count($response['profiles']) > 0) {
-            //if ($filterBy == 'activity') {
+//            if ($filterBy == 'activity') {
                 $highlights = array();
 
                 foreach ($response['profiles'] as $profile)
@@ -119,7 +119,7 @@ class ProfileController extends SiteController
                     $iProfile['lastVideo'] = $serializer->values(reset($lastVideo), 'small');
                     $iProfile['highlight'] = true;
                 }
-            //}
+//            }
 
             $i = 0;
             foreach ($response['profiles'] as $k => $profile) {
