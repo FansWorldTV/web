@@ -192,7 +192,8 @@ class EditController extends SiteController
                             $teams = array('type' => 'team', 'tags' => $tagteam, 'has' => $entity->getHasteams());
                             $idols = array('type' => 'idol', 'tags' => $tagidol, 'has' => $entity->getHasidols());
                             $users = array('type' => 'target', 'tags' => $taguser, 'has' => $entity->getHasusers());
-                            $entitiesTag = array($teams, $idols, $users);
+                            $texts = array('type' => 'tag', 'tags' => $tagtext, 'has' => $entity->getHastags());
+                            $entitiesTag = array($teams, $idols, $users, $texts);
 
                             foreach ($entitiesTag as $ent) {
                                 foreach ($ent['has'] as $has) {
