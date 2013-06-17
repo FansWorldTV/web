@@ -91,8 +91,7 @@ class UserController extends SiteController
             $this->get('visitator')->visit($user);
         }
 
-        $loggedUser = $this->getUser();
-        $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
+        $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $user->getId()));
         $userTeams = $this->getRepository('Teamship')->byUser($user);
 
         return array(
