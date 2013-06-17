@@ -76,7 +76,8 @@ class TagController extends SiteController
         }
 
         $filterType = $request->get('filter', 'popular');
-        $videoCategory = $request->get('channel');
+        $videoCategory = $request->get('vc', null);
+        $genre = $request->get('genre', null);
 
         $response = array(
             'tags' => false,
@@ -88,7 +89,7 @@ class TagController extends SiteController
                 $user = $this->getUser();
                 $response['tags'] = $tagger->trendingInRecommended($user, $limit, $offset);
             }else{
-                $response['tags'] = $tagger->usedInVideos($filterType, $videoCategory, $limit, $offset);
+                $response['tags'] = $tagger->usedInVideos($filterType, $videoCategory, $genre, $limit, $offset);
             }
         } catch (Exception $exc) {
             $response['error'] = $exc->getMessage();

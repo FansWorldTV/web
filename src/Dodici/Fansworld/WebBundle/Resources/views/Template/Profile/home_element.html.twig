@@ -1,0 +1,34 @@
+{% raw %}
+    <div class="profile {{>type}}" data-profile-highlighted = "{{>highlight}}">
+        <img src="{{if highlight}}{{>splashDouble}}{{else}}{{>splash}}{{/if}}" class="splash" />
+        <img src="{{if highlight}}{{>imageDouble}}{{else}}{{>image}}{{/if}}" class="image"/>
+        <div class="info">
+            <a href="{{>slug}}">
+                <span class="title">{{>title}}</span>
+            </a>
+
+            <div class="bottom-container clearfix">
+                {{if highlight}}
+                    {{if lastVideo}}
+                        <div class="last-video">
+                            <figure>
+                                <img src="{{:lastVideo.image}}" />
+                                <a href="{{:lastVideo.url}}" class="play"><i></i></a>
+                            </figure>
+                            {{if lastVideo.content.length > 0}}
+                                <p>{{>lastVideo.content}}</p>
+                            {{else}}
+                                <p class="title">{{>lastVideo.title}}</p>
+                            {{/if}}
+                        </div>
+                    {{/if}}
+                {{/if}}
+                <div class="data-cant">
+                    {{>dataCount}}
+                    <span>{{>dataText}}</span>
+                </div>
+                <button class="btn btn-success add-fan" data-{{>type}}ship-add="true" data-{{>type}}-id="{{>id}}">+</button>
+            </div>
+        </div>
+    </div>
+{% endraw %}

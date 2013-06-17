@@ -20,6 +20,7 @@ class Video
     {
         return array(
             'author' => $this->serializer->values($entity->getAuthor(), 'small_square'),
+            'content' => $entity->getContent(),
             'likeCount' => $entity->getLikeCount(),
             'visitCount' => $entity->getVisitCount(),
             'commentCount' => $entity->getCommentCount(),

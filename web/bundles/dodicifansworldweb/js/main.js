@@ -559,7 +559,7 @@ var site = {
             errorCallback: function(response) {
                 textAreaElement.removeClass('loading-small');
                 textAreaElement.removeAttr('disabled');
-                error(response);
+                error(response.responseText);
             }
         });
     },
