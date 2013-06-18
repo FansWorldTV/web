@@ -32,10 +32,10 @@ class BatchController extends SiteController
         $df = $this->get('feeder.event');
         $df->feed();
 		$df->pending();
-		
+
 		return new Response('Ok');
     }
-    
+
 	/**
      * Feed event incidents
      * @Route("/eventminutefeeding", name="admin_batch_eventminutefeeding")
@@ -45,10 +45,10 @@ class BatchController extends SiteController
         $df = $this->get('feeder.event.minute');
         $df->feed();
 		$df->pending();
-		
+
 		return new Response('Ok');
     }
-    
+
     /**
      * Finish open, expired events (sanity check)
      * @Route("/eventfinishing", name="admin_batch_eventfinishing")
@@ -57,19 +57,19 @@ class BatchController extends SiteController
     {
         $events = $this->getRepository('Event')->expired();
         $em = $this->getDoctrine()->getEntityManager();
-        
+
         if ($events) {
             foreach ($events as $event) {
                 $event->setFinished(true);
                 $em->persist($event);
             }
-            
+
             $em->flush();
         }
-        
+
         return new Response('Ok');
     }
-    
+
 	/**
      * Retrieve event tweets
      * @Route("/eventtweets", name="admin_batch_eventtweets")
@@ -79,28 +79,28 @@ class BatchController extends SiteController
         $teams = $this->getRepository('Team')->withEvents(1);
         $eventtweetrepo = $this->getRepository('EventTweet');
         $em = $this->getDoctrine()->getEntityManager();
-        
+
         $topush = array();
-        
+
         foreach ($teams as $t) {
             $team = $t['team'];
             $event = $t['event'];
-            
+
             $maxtweetid = $eventtweetrepo->maxExternal($team);
             $twitter = $team->getTwitter();
-            
+
             $apptwitter = $this->get('app.twitter');
-            
+
             $latest = $apptwitter->latestSinceId($twitter, $maxtweetid);
-            
+
             foreach ($latest as $l) {
                 if ($l && is_object($l)) {
                     $date = new \DateTime($l->created_at);
                     $external = $l->id_str;
                     $content = $l->text;
-                    
+
                     $exists = $eventtweetrepo->countBy(array('external' => $external));
-                    
+
                     if (!$exists) {
                         $et = new EventTweet();
                         $et->setTeam($team);
@@ -108,20 +108,20 @@ class BatchController extends SiteController
                         $et->setCreatedAt($date);
                         $et->setExternal($external);
                         $et->setContent($content);
-                        
+
                         $em->persist($et);
-                        
+
                         $topush[] = $et;
                     }
                 }
             }
-            
+
             $em->flush();
         }
-        
+
         $meteor = $this->get('meteor');
         foreach ($topush as $tp) $meteor->push($tp);
-		
+
 		return new Response('Ok');
     }
 
@@ -135,7 +135,7 @@ class BatchController extends SiteController
         $videos = $this->getRepository('Video')->pendingProcessing(10);
         $uploader = $this->get('video.uploader');
         $kaltura = $this->get('kaltura');
-        
+
         foreach ($videos as $video) {
             try {
                 $entry = $kaltura->getEntry($video->getStream());
@@ -148,10 +148,10 @@ class BatchController extends SiteController
                 // entry doesn't exist or something went wrong, do nothing for now
             }
         }
-        
+
         return new Response('Ok');
     }
-    
+
 	/**
      * Clean up timed out users from "watching video" lists
      * @Route("/videoaudienceclean", name="admin_batch_videoaudienceclean")
@@ -159,10 +159,10 @@ class BatchController extends SiteController
     public function videoAudienceCleanAction()
     {
         $this->get('video.audience')->cleanup();
-        
+
         return new Response('Ok');
     }
-    
+
     /**
      * Convert CSV fixture files to YML
      * Ask before running
@@ -171,10 +171,10 @@ class BatchController extends SiteController
     public function convertCSVtoYML()
     {
         $this->get('fixture.csvtoyml')->convertAll();
-        
+
         return new Response('Ok');
     }
-    
+
     /**
      * Update video/photocounts
      * @Route("/updatecounts", name="admin_batch_updatecounts")
@@ -182,7 +182,7 @@ class BatchController extends SiteController
     public function updateCounts()
     {
         $em = $this->getDoctrine()->getEntityManager();
-        
+
         $idols = $this->getRepository('Idol')->findAll();
         foreach ($idols as $idol) {
             $cntvideo = $this->getRepository('Idol')->countTagged($idol, 'video');
@@ -193,7 +193,7 @@ class BatchController extends SiteController
             $idol->setFanCount($cntfans);
             $em->persist($idol);
         }
-        
+
         $teams = $this->getRepository('Team')->findAll();
         foreach ($teams as $team) {
             $cntvideo = $this->getRepository('Team')->countTagged($team, 'video');
@@ -204,7 +204,7 @@ class BatchController extends SiteController
             $team->setFanCount($cntfans);
             $em->persist($team);
         }
-        
+
         $users = $this->getRepository('User')->findBy(array('enabled' => true));
         foreach ($users as $user) {
             $cntvideo = $this->getRepository('Video')->countBy(array('author' => $user->getId(), 'active' => true));
@@ -215,9 +215,9 @@ class BatchController extends SiteController
             $user->setFanCount($cntfans);
             $em->persist($user);
         }
-        
+
         $em->flush();
-        
+
         return new Response('Ok');
     }
 
@@ -440,6 +440,36 @@ class BatchController extends SiteController
                 $result .= "  content: |\n";
                 $xpc = explode("\n", $exp[8]);
                 foreach($xpc as $xc) $result .= "    ". $xc;
+                $result .= "\n";
+
+            }
+        }
+
+        return new Response('<form action="" method="post"><textarea name="string"></textarea><input type="submit"></form><br><br><textarea>'.$result.'</textarea>');
+    }
+
+        /**
+     * Generate some yaml
+     * @Route("/generate-yaml-juan", name="admin_batch_generate_yaml_juan")
+     */
+    public function generateYamlJuanAction()
+    {
+        $request = $this->getRequest();
+        $result = '';
+        if ($request->getMethod() == 'POST') {
+            $string = $request->get('string');
+
+            $archivo = 'C:\\imple\\temp.csv';
+            file_put_contents($archivo, $string);
+
+            $file = new \SplFileObject($archivo, 'rb');
+            $file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY);
+            $file->setCsvControl(';', '"', '\\');
+
+            foreach ($file as $exp) {
+                $result .= "-\n";
+                $result .= "  id: ".($exp[0]+20000)."\n";
+                $result .= "  title: ".$exp[1]."\n";
                 $result .= "\n";
 
             }
