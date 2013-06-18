@@ -236,6 +236,12 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
      */
     private $genre;
 
+    /**
+     * @ORM\OneToMany(targetEntity="HasGenres", mappedBy="team", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $hasgenres;
+
+
 	/**
      * @ORM\PrePersist()
      */

@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\HasIdol
- * 
+ *
  * Tags a content with an idol. Refactor a content superclass some day.
  *
  * @ORM\Table(name="hasidol")
@@ -33,7 +33,7 @@ class HasIdol
      * })
      */
     private $author;
-    
+
     /**
      * @var Idol
      *
@@ -43,14 +43,14 @@ class HasIdol
      * })
      */
     private $idol;
-    
+
     /**
      * @var datetime $createdAt
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     private $createdAt;
-    
+
     /**
      * @var NewsPost
      *
@@ -60,7 +60,7 @@ class HasIdol
      * })
      */
     private $newspost;
-        
+
     /**
      * @var Video
      *
@@ -70,7 +70,7 @@ class HasIdol
      * })
      */
     private $video;
-    
+
     /**
      * @var Photo
      *
@@ -80,7 +80,7 @@ class HasIdol
      * })
      */
     private $photo;
-    
+
     /**
      * @var Album
      *
@@ -90,7 +90,7 @@ class HasIdol
      * })
      */
     private $album;
-    	
+
 	/**
      * @var Contest
      *
@@ -100,7 +100,7 @@ class HasIdol
      * })
      */
     private $contest;
-    
+
     /**
      * @var Event
      *
@@ -110,7 +110,7 @@ class HasIdol
      * })
      */
     private $event;
-    
+
     /**
      * @var Meeting
      *
@@ -120,7 +120,7 @@ class HasIdol
      * })
      */
     private $meeting;
-    
+
     /**
      * @var Comment
      *
@@ -130,7 +130,7 @@ class HasIdol
      * })
      */
     private $comment;
-    
+
     /**
      * @var ForumThread
      *
@@ -140,7 +140,7 @@ class HasIdol
      * })
      */
     private $forumthread;
-    
+
     /**
      * @var Activity
      *
@@ -150,7 +150,7 @@ class HasIdol
      * })
      */
     private $activity;
-    
+
 	/**
      * @ORM\PrePersist()
      */
@@ -166,7 +166,7 @@ class HasIdol
     /**
      * Get id
      *
-     * @return bigint 
+     * @return bigint
      */
     public function getId()
     {
@@ -186,7 +186,7 @@ class HasIdol
     /**
      * Get createdAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedAt()
     {
@@ -206,7 +206,7 @@ class HasIdol
     /**
      * Get author
      *
-     * @return Application\Sonata\UserBundle\Entity\User 
+     * @return Application\Sonata\UserBundle\Entity\User
      */
     public function getAuthor()
     {
@@ -226,7 +226,7 @@ class HasIdol
     /**
      * Get idol
      *
-     * @return Dodici\Fansworld\WebBundle\Entity\Idol 
+     * @return Dodici\Fansworld\WebBundle\Entity\Idol
      */
     public function getIdol()
     {
@@ -246,7 +246,7 @@ class HasIdol
     /**
      * Get newspost
      *
-     * @return Dodici\Fansworld\WebBundle\Entity\NewsPost 
+     * @return Dodici\Fansworld\WebBundle\Entity\NewsPost
      */
     public function getNewspost()
     {
@@ -266,7 +266,7 @@ class HasIdol
     /**
      * Get video
      *
-     * @return Dodici\Fansworld\WebBundle\Entity\Video 
+     * @return Dodici\Fansworld\WebBundle\Entity\Video
      */
     public function getVideo()
     {
@@ -286,7 +286,7 @@ class HasIdol
     /**
      * Get photo
      *
-     * @return Dodici\Fansworld\WebBundle\Entity\Photo 
+     * @return Dodici\Fansworld\WebBundle\Entity\Photo
      */
     public function getPhoto()
     {
@@ -306,7 +306,7 @@ class HasIdol
     /**
      * Get album
      *
-     * @return Dodici\Fansworld\WebBundle\Entity\Album 
+     * @return Dodici\Fansworld\WebBundle\Entity\Album
      */
     public function getAlbum()
     {
@@ -326,7 +326,7 @@ class HasIdol
     /**
      * Get contest
      *
-     * @return Dodici\Fansworld\WebBundle\Entity\Contest 
+     * @return Dodici\Fansworld\WebBundle\Entity\Contest
      */
     public function getContest()
     {
@@ -346,7 +346,7 @@ class HasIdol
     /**
      * Get event
      *
-     * @return Dodici\Fansworld\WebBundle\Entity\Event 
+     * @return Dodici\Fansworld\WebBundle\Entity\Event
      */
     public function getEvent()
     {
@@ -366,7 +366,7 @@ class HasIdol
     /**
      * Get meeting
      *
-     * @return Dodici\Fansworld\WebBundle\Entity\Meeting 
+     * @return Dodici\Fansworld\WebBundle\Entity\Meeting
      */
     public function getMeeting()
     {
@@ -386,7 +386,7 @@ class HasIdol
     /**
      * Get comment
      *
-     * @return Dodici\Fansworld\WebBundle\Entity\Comment 
+     * @return Dodici\Fansworld\WebBundle\Entity\Comment
      */
     public function getComment()
     {
@@ -406,7 +406,7 @@ class HasIdol
     /**
      * Get forumthread
      *
-     * @return Dodici\Fansworld\WebBundle\Entity\ForumThread 
+     * @return Dodici\Fansworld\WebBundle\Entity\ForumThread
      */
     public function getForumthread()
     {
@@ -426,7 +426,7 @@ class HasIdol
     /**
      * Get activity
      *
-     * @return Dodici\Fansworld\WebBundle\Entity\Activity 
+     * @return Dodici\Fansworld\WebBundle\Entity\Activity
      */
     public function getActivity()
     {

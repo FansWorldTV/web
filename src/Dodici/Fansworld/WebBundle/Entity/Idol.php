@@ -201,6 +201,12 @@ class Idol implements SearchableInterface, VisitableInterface
      */
     private $genre;
 
+    /**
+     * @ORM\OneToMany(targetEntity="HasGenres", mappedBy="idol", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $hasgenres;
+
+
     public function __construct()
     {
         $this->visits = new \Doctrine\Common\Collections\ArrayCollection();
