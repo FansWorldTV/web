@@ -1,64 +1,64 @@
 /* General */
 .navbar{
-    .nav-collapse .nav > li > a{
-        color: #E4E1BC;
-    }
-    
-    .btn-navbar{
-        position: relative !important;
-    }
-    
-    .nav > li > a{
-        color: #e4e1bc;
-        font-size: 15px;
-        &:hover {
-            color: @white;
-        }
-    }
-    
-    .nav  li.show-on-collapse{
-        display: none;  
-    }
-    
-    .user-menu li > a {
-        font-size: 13px;
-    }
-    
-    .avatar {
-        .square(40px);
-        .pull-right();
-        img {
-            .square(40px);
-        }
-    }
-    .brand{
-        margin-left: 0;
-        padding-bottom: 10px; 
-    }
+	.nav-collapse .nav > li > a{
+		color: #E4E1BC;
+	}
+
+	.btn-navbar{
+		position: relative !important;
+	}
+
+	.nav > li > a{
+		color: #e4e1bc;
+		font-size: 15px;
+		&:hover {
+			color: @white;
+		}
+	}
+
+	.nav  li.show-on-collapse{
+		display: none;
+	}
+
+	.user-menu li > a {
+		font-size: 13px;
+	}
+
+	.avatar {
+		.square(40px);
+		.pull-right();
+		img {
+			.square(40px);
+		}
+	}
+	.brand{
+		margin-left: 0;
+		padding-bottom: 10px;
+	}
 }
 
 /* Header Only */
 header.navbar{
-    ul.nav li.dropdown a.dropdown-toggle.username{
-        padding: 0;
-        span{
-            max-width: 105px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            display: inline-block;
-            position: relative;
-            top: 3px;
-        }
-        
-        b#overimage{
-            position: absolute;
-            right: 4px;
-            top: 14px;
-            visibility: hidden;
-        }
-    }
-        
+	ul.nav li.dropdown a.dropdown-toggle.username{
+		padding: 0;
+		span{
+			max-width: 105px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			display: inline-block;
+			position: relative;
+			top: 3px;
+		}
+
+		b#overimage{
+			position: absolute;
+			right: 4px;
+			top: 14px;
+			visibility: hidden;
+		}
+	}
+
 
 
 }
@@ -67,121 +67,143 @@ header.navbar{
 
 /* Footer  Only*/
 footer.navbar{
-    font-size: 13px;
-    .nav > li > a{
-        font-size: 13px;
-        .icon{
-            padding-top: 7px;
-        }
-    }
-    
-    .institutional > li {
-        > a {
-            font-size: 12px;
-        }
-        
-        > .icon {
-            padding-left: 2px;
-            padding-right: 2px;
-        }
-        &:last-child > .icon {
-            padding-right: 10px;
-        }
-    }
-    div.navbar-inner{
-        min-height: 36px;
-        div.container{
-            overflow: hidden;
-            height: 36px;
-        }
-     }
+	font-size: 13px;
+
+	.nav > li > a{
+		font-size: 13px;
+		color: white;
+
+		&:hover {
+			color: @green;
+		}
+
+		.icon{
+			padding-top: 7px;
+		}
+	}
+
+	p.navbar-text {
+		line-height: 37px;
+	}
+
+	.institutional > li {
+		> a {
+			font-size: 12px;
+		}
+
+		> .icon {
+			padding-left: 2px;
+			padding-right: 2px;
+		}
+		&:last-child > .icon {
+			padding-right: 10px;
+		}
+	}
+
+	div.navbar-inner{
+		min-height: 36px;
+		background-image: none;
+		background: #3f3f3f; /* Old browsers */
+		background: -moz-linear-gradient(top,  #3f3f3f 0%, #191919 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3f3f3f), color-stop(100%,#191919)); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top,  #3f3f3f 0%,#191919 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top,  #3f3f3f 0%,#191919 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top,  #3f3f3f 0%,#191919 100%); /* IE10+ */
+		background: linear-gradient(to bottom,  #3f3f3f 0%,#191919 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3f3f3f', endColorstr='#191919',GradientType=0 ); /* IE6-9 */
+
+		div.container{
+			overflow: hidden;
+			height: 36px;
+		}
+	}
 }
 
 
 .navbar-fixed-top , .navbar-fixed-bottom {
-    .container{
-        width:100% !important;
-    }
+	.container{
+		width:100% !important;
+	}
 }
 
 #header .navbar-inner .container {
-    .left-container {
-        .pull-left();
-    }
-    .right-container {
-        .pull-right();
-        .navbar-search {
-          position: relative;
-          .navbarVerticalAlign(26px); // Vertically center in navbar
-          margin-bottom: 0;
+	.left-container {
+		.pull-left();
+	}
+	.right-container {
+		.pull-right();
+		.navbar-search {
+			position: relative;
+			.navbarVerticalAlign(26px); // Vertically center in navbar
+			margin-bottom: 0;
 
-            .search-button {
-                margin-left: -5px;
-                height: 26px;
-                border-radius: 0 3px 3px 0;
-                width: 26px;
-                background-color: white;
-                .transition(none);
-                .box-shadow(none);
-                border: 0;
-            }
+			.search-button {
+				margin-left: -5px;
+				height: 26px;
+				border-radius: 0 3px 3px 0;
+				width: 26px;
+				background-color: white;
+				.transition(none);
+				.box-shadow(none);
+				border: 0;
+			}
 
-            i{
-                &.icon-search {
-                    position: absolute;
-                    right: 8px;
-                    top: 4px;
-                }
-                &.loading-small {
-                    position: absolute;
-                    .size(16px, 19px);
-                    left: -2px;
-                    top: 3px;
-                }
-            }
+			i{
+				&.icon-search {
+					position: absolute;
+					right: 8px;
+					top: 4px;
+				}
+				&.loading-small {
+					position: absolute;
+					.size(16px, 19px);
+					left: -2px;
+					top: 3px;
+				}
+			}
 
-          .search-query {
-            padding: 4px 10px;
-            outline: 0;
-            border: 0;
-            color: @black;
-            background-color: @navbarSearchBackgroundFocus;
-            .transition(none);
-            .border-radius(3px 0 0 3px);
-            .box-shadow(none);
-            width: 525px;
+			.search-query {
+				padding: 4px 10px;
+				outline: 0;
+				border: 0;
+				color: @black;
+				background-color: @navbarSearchBackgroundFocus;
+				.transition(none);
+				.border-radius(3px 0 0 3px);
+				.box-shadow(none);
+				width: 525px;
 
-            @media(max-width: 1210px) {
-                width: 400px;
-            }
+				@media(max-width: 1210px) {
+					width: 400px;
+				}
 
-            @media(max-width: 1100px) {
-                width: 200px;
-            }
+				@media(max-width: 1100px) {
+					width: 200px;
+				}
 
-            @media(max-width: 1099px){
-                width: 154px;
-            }
+				@media(max-width: 1099px){
+					width: 154px;
+				}
 
-            @media(max-width: 605px) {
-                width: 100px;
-            }
-            
-            @media(max-width: 455px) {
-                width: 50px;
-            }
+				@media(max-width: 605px) {
+					width: 100px;
+				}
 
-            // Focus states (we use .focused since IE7-8 and down doesn't support :focus)
-            &:focus,
-            &.focused {
-                padding: 4px 10px;
-                color: @black;
-                background-color: @navbarSearchBackgroundFocus;
-                border: 0;
-                outline: 0;
-                .box-shadow(none)
-            }
-          }
-        }
-    }
+				@media(max-width: 455px) {
+					width: 50px;
+				}
+
+				// Focus states (we use .focused since IE7-8 and down doesn't support :focus)
+				&:focus,
+				&.focused {
+					padding: 4px 10px;
+					color: @black;
+					background-color: @navbarSearchBackgroundFocus;
+					border: 0;
+					outline: 0;
+					.box-shadow(none)
+				}
+			}
+		}
+	}
 }

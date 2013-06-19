@@ -14,17 +14,48 @@
             </div>
 
             {% if entity == app.user or is_granted('ROLE_ADMIN') %}
-                <a href="#" class="edit-image splash" rel="tooltip" title="Cambiar portada" id="splash-uploader" data-entity-type="{{ entityType }}" data-entity-id="{{ entity.id }}" data-ismodal="false" data-upload="photo" data-type="splash" data-uploader-selector="splash-uploader"><i class="icon-pencil icon-white"></i></a>
+                <div class="btn-group edit">
+                    <a href="#" class="edit-image" rel="tooltip" title="Cambiar imágen" data-toggle="dropdown">
+                        <i class="icon-gear-splash"></i>
+                    </a>
+                    <ul class="dropdown-menu pull-right">
+                        <li>
+                            <a href="#" id="splash-uploader" data-entity-type="{{ entityType }}" data-entity-id="{{ entity.id }}" data-ismodal="false" data-upload="photo" data-type="splash" data-uploader-selector="splash-uploader">Cambiar imágen de portada</a>
+                        </li>
+                        <li>
+                            <a href="#" class="edit-image avatar" rel="tooltip" title="Cambiar imágen de perfil" id="avatar-uploader" data-entity-type="{{ entityType }}" data-ismodal="false" data-upload="photo" data-type="profile" data-uploader-selector="avatar-uploader">Cambiar imágen de perfil</a>
+                        </li>
+                    </ul>
+                </div>
             {% endif %}
         </div>
         <div class="info-container">
             {% set entityType = appstate.getType(entity) %}
+            {% set videos = appstate.getHighlightVideos(entity, 1) %}
+
+            {% if videos|length > 0 %}
+                {% set video = videos[0] %}
+            {% else %}
+                {% set video = false %}
+            {% endif %}
+
             {% if entityType == 'user' %}
                 {% set pathparams = {username: entity.username} %}
             {% else %}
                 {% set pathparams = {slug: entity.slug} %}
             {% endif %}
-            <p class="description">{{ entity.content|raw|striptags|truncate(160) }}</p>
+
+            {% if video and video.image %}
+                <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
+                    <figure>
+                        {% thumbnail video.image, 'medium' with {'title': ''} %}
+                        <figcaption class="last-video">Ultimo Video</figcaption>
+                        <figcaption class="title">{{ video.title }}</figcaption>
+                    </figure>
+                </a>
+            {% else %}
+                <p class="description">{{ entity.content|raw|striptags|truncate(160) }}</p>
+            {% endif %}
 
             <ul class="quantities">
                 {% block header_numbersinfo %}

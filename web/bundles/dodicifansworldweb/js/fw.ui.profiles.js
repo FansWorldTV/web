@@ -186,7 +186,8 @@ $(document).ready(function () {
                                 .then(function(response){
                                     var $thumb = $(response).clone();
                                     $thumb.addClass('profile');
-                                    if(profile.highlight == 'true') {
+                                    console.log(profile.highlight);
+                                    if(profile.highlight == true) {
                                         $thumb.addClass('double');
                                     }
                                     queue.add($thumb);

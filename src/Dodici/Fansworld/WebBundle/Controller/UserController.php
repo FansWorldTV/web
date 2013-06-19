@@ -80,6 +80,7 @@ class UserController extends SiteController
 
     /**
      * @Route("/u/{username}/teams", name="user_teams")
+     * @Secure(roles="ROLE_USER")
      * @Template
      */
     public function teamsTabAction($username)
@@ -91,8 +92,7 @@ class UserController extends SiteController
             $this->get('visitator')->visit($user);
         }
 
-        $loggedUser = $this->getUser();
-        $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
+        $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $user->getId()));
         $userTeams = $this->getRepository('Teamship')->byUser($user);
 
         return array(
@@ -535,6 +535,7 @@ class UserController extends SiteController
 
     /**
      * @Route("/u/{username}/photos", name="user_photos")
+     * @Secure(roles="ROLE_USER")
      * @Template
      */
     public function photosTabAction($username)
@@ -546,9 +547,6 @@ class UserController extends SiteController
         }else
             $this->get('visitator')->visit($user);
 
-        $loggedUser = $this->getUser();
-        $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
-
         $photos = $this->getRepository('Photo')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
         $albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
 
@@ -558,12 +556,10 @@ class UserController extends SiteController
         $viewMorePhotos = $photosTotalCount > self::LIMIT_PHOTOS ? true : false;
         $viewMoreAlbums = $albumsTotalCount > self::LIMIT_PHOTOS ? true : false;
 
-        $loggedUser = $this->getUser();
-        $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
+        $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $user->getId()));
 
         return array(
             'user' => $user,
-            'isLoggedUser' => $isLoggedUser,
             'photos' => $photos,
             'albums' => $albums,
             'viewMorePhotos' => $viewMorePhotos,
@@ -575,6 +571,7 @@ class UserController extends SiteController
     /**
      * @Route("/u/{username}/photos/list", name="user_listphotos")
      * @Template
+     * @Secure(roles="ROLE_USER")
      */
     public function listPhotosAction($username)
     {
@@ -584,8 +581,6 @@ class UserController extends SiteController
         }else
             $this->get('visitator')->visit($user);
 
-        $loggedUser = $this->getUser();
-        $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
         $photos = $this->getRepository('Photo')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
         $totalCount = $this->getRepository('Photo')->countBy(array('author' => $user->getId(), 'active' => true));
 
@@ -608,9 +603,6 @@ class UserController extends SiteController
             throw new HttpException(404, "No existe el usuario");
         }else
             $this->get('visitator')->visit($user);
-
-        $loggedUser = $this->getUser();
-        $isLoggedUser = $user->getId() == $loggedUser->getId() ? true : false;
 
         $photos = $this->getRepository('Photo')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
         $albums = $this->getRepository('Album')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_PHOTOS);
@@ -674,10 +666,9 @@ class UserController extends SiteController
      */
     public function changeImageAction()
     {
-        $request = $this->getRequest();
         $user = $this->getUser();
-        $em = $this->getDoctrine()->getEntityManager();
         $media = $user->getImage();
+
         return array('media' => $media, 'user' => $user);
     }
 
@@ -808,8 +799,6 @@ class UserController extends SiteController
             'idolship' => array()
         );
 
-
-
         if (!$userId) {
             $user = $this->getUser();
         } else {
@@ -904,6 +893,7 @@ class UserController extends SiteController
      *
      * @Route("/u/{username}/videos", name="user_videos")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function videosTabAction($username)
     {
@@ -968,6 +958,7 @@ class UserController extends SiteController
         $notificationRepo = $this->getRepository('Notification');
         $response = $notificationRepo->typeCounts($user, false);
         //return $this->jsonResponse(array('number' => $number));
+
         return $this->jsonResponse($response);
     }
 
@@ -1057,70 +1048,70 @@ class UserController extends SiteController
             $beFan = array();
 
             switch ($activity->getType()) {
-                    case Activity::TYPE_NEW_VIDEO:
-                        // TYPE_NEW_VIDEO
-                        $video = $activity->getVideo();
-                        $mediaEntity['video'] = $this->get('serializer')->values($video , 'big');
-                        break;
-                    case Activity::TYPE_NEW_PHOTO:
-                        // TYPE_NEW_PHOTO
-                        $photo = $activity->getPhoto();
-                        $mediaEntity['photo'] = $this->get('serializer')->values($photo , 'big');
-                        break;
-                    case Activity::TYPE_BECAME_FAN:
-                        // TYPE_BECAME_FAN
+                case Activity::TYPE_NEW_VIDEO:
+                    // TYPE_NEW_VIDEO
+                    $video = $activity->getVideo();
+                    $mediaEntity['video'] = $this->get('serializer')->values($video , 'big');
+                    break;
+                case Activity::TYPE_NEW_PHOTO:
+                    // TYPE_NEW_PHOTO
+                    $photo = $activity->getPhoto();
+                    $mediaEntity['photo'] = $this->get('serializer')->values($photo , 'big');
+                    break;
+                case Activity::TYPE_BECAME_FAN:
+                    // TYPE_BECAME_FAN
 
-                        // FOR IDOL
-                        $idolRepo = $this->getRepository('HasIdol');
-                        $beIdols = $idolRepo->findOneBy(array('activity' => $activity->getId()));
-                        // FOR TEAM
-                        $teamRepo = $this->getRepository('HasTeam');
-                        $beTeams = $teamRepo->findOneBy(array('activity' => $activity->getId()));
-                        // FOR USER
-                        $userRepo = $this->getRepository('HasUser');
-                        $beUsers = $userRepo->findOneBy(array('activity' => $activity->getId()));
+                    // FOR IDOL
+                    $idolRepo = $this->getRepository('HasIdol');
+                    $beIdols = $idolRepo->findOneBy(array('activity' => $activity->getId()));
+                    // FOR TEAM
+                    $teamRepo = $this->getRepository('HasTeam');
+                    $beTeams = $teamRepo->findOneBy(array('activity' => $activity->getId()));
+                    // FOR USER
+                    $userRepo = $this->getRepository('HasUser');
+                    $beUsers = $userRepo->findOneBy(array('activity' => $activity->getId()));
 
-                        if ($beIdols != null) {
-                            $beFan = array('idol' => $this->get('serializer')->values($beIdols->getIdol(), 'small_square'));
-                        } elseif ($beTeams != null) {
-                            $beFan = array('team' => $this->get('serializer')->values($beTeams->getTeam(), 'small_square'));
-                        } elseif ($beUsers != null) {
-                            $target = $beUsers->getTarget()->getId();
-                            $repo = $this->getRepository('User');
-                            $targetUser = $repo->findOneBy(array('id' => $target));
-                            $beFan = array('user' => $this->get('serializer')->values($targetUser, 'small_square'));
-                        }
-                        //$beFan = $act->getId();
-                        //$beFan = $this->get('serializer')->values($beTeams->getTeam(), 'small_square');
-                        break;
-                    case Activity::TYPE_CHECKED_IN:
-                        // TYPE_CHECKED_IN
-                        break;
-                    case Activity::TYPE_LABELLED_IN:
-                        // TYPE_LABELLED_IN
-                        if ($activity->getPhoto() != null) {
-                            $mediaEntity['photo'] = $this->get('serializer')->values($activity->getPhoto(), 'big');
-                        } else {
-                            $mediaEntity['video'] = $this->get('serializer')->values($activity->getVideo(), 'big');
-                        }
-                        break;
-                    case Activity::TYPE_LIKED:
-                        // TYPE_LIKED
-                        if ($activity->getPhoto() != null) {
-                            $mediaEntity['photo'] = $this->get('serializer')->values($activity->getPhoto(), 'big');
-                        } else {
-                            $mediaEntity['video'] = $this->get('serializer')->values($activity->getVideo(), 'big');
-                        }
-                        break;
-                    case Activity::TYPE_SHARED:
-                        // TYPE_SHARED
-                        if ($activity->getPhoto() != null) {
-                            $mediaEntity['photo'] = $this->get('serializer')->values($activity->getPhoto(), 'big');
-                        } else {
-                            $mediaEntity['video'] = $this->get('serializer')->values($activity->getVideo(), 'big');
-                        }
-                        break;
-                }
+                    if ($beIdols != null) {
+                        $beFan = array('idol' => $this->get('serializer')->values($beIdols->getIdol(), 'small_square'));
+                    } elseif ($beTeams != null) {
+                        $beFan = array('team' => $this->get('serializer')->values($beTeams->getTeam(), 'small_square'));
+                    } elseif ($beUsers != null) {
+                        $target = $beUsers->getTarget()->getId();
+                        $repo = $this->getRepository('User');
+                        $targetUser = $repo->findOneBy(array('id' => $target));
+                        $beFan = array('user' => $this->get('serializer')->values($targetUser, 'small_square'));
+                    }
+                    //$beFan = $act->getId();
+                    //$beFan = $this->get('serializer')->values($beTeams->getTeam(), 'small_square');
+                    break;
+                case Activity::TYPE_CHECKED_IN:
+                    // TYPE_CHECKED_IN
+                    break;
+                case Activity::TYPE_LABELLED_IN:
+                    // TYPE_LABELLED_IN
+                    if ($activity->getPhoto() != null) {
+                        $mediaEntity['photo'] = $this->get('serializer')->values($activity->getPhoto(), 'big');
+                    } else {
+                        $mediaEntity['video'] = $this->get('serializer')->values($activity->getVideo(), 'big');
+                    }
+                    break;
+                case Activity::TYPE_LIKED:
+                    // TYPE_LIKED
+                    if ($activity->getPhoto() != null) {
+                        $mediaEntity['photo'] = $this->get('serializer')->values($activity->getPhoto(), 'big');
+                    } else {
+                        $mediaEntity['video'] = $this->get('serializer')->values($activity->getVideo(), 'big');
+                    }
+                    break;
+                case Activity::TYPE_SHARED:
+                    // TYPE_SHARED
+                    if ($activity->getPhoto() != null) {
+                        $mediaEntity['photo'] = $this->get('serializer')->values($activity->getPhoto(), 'big');
+                    } else {
+                        $mediaEntity['video'] = $this->get('serializer')->values($activity->getVideo(), 'big');
+                    }
+                    break;
+            }
 
             $actValues = array(
                 'id' => $activity->getId(),
@@ -1153,17 +1144,17 @@ class UserController extends SiteController
     {
         $defaultData = array();
         $collectionConstraint = new Collection(array(
-                    'x' => array(),
-                    'y' => array(),
-                    'w' => array(),
-                    'h' => array()
-                ));
+            'x' => array(),
+            'y' => array(),
+            'w' => array(),
+            'h' => array()
+        ));
         $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
-                ->add('x', 'hidden', array('required' => false, 'data' => 0))
-                ->add('y', 'hidden', array('required' => false, 'data' => 0))
-                ->add('w', 'hidden', array('required' => false, 'data' => 0))
-                ->add('h', 'hidden', array('required' => false, 'data' => 0))
-                ->getForm();
+            ->add('x', 'hidden', array('required' => false, 'data' => 0))
+            ->add('y', 'hidden', array('required' => false, 'data' => 0))
+            ->add('w', 'hidden', array('required' => false, 'data' => 0))
+            ->add('h', 'hidden', array('required' => false, 'data' => 0))
+            ->getForm();
         return $form;
     }
 }

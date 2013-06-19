@@ -113,7 +113,7 @@ class VideoController extends BaseController
                 null,
                 $genreid
             );
-            
+
             if ($recommended && !$videos) {
                 $recommended = false;
                 $videos = $this->getRepository('Video')->search(null, $user, $pagination['limit'], $pagination['offset'], $categoryid,
@@ -662,6 +662,107 @@ class VideoController extends BaseController
             $return = $this->get('serializer')->values($genre);
 
             return $this->result($return);
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
+
+    /**
+     * [signed] Share Video
+     *
+     * @Route("/video/share/{id}", name="api_v1_video_share")
+     * @Method({"POST"})
+     *
+     * Post params:
+     * - user_id: int
+     * - [user token]
+     * - <optional> title: String
+     * - <optional> shareidols: comma-separated Ids (String)
+     * - <optional> shareteams: comma-separated Ids (String)
+     * - <optional> shareusers: comma-separated Ids (String)
+     * - <optional> wall: boolean,
+     * - <optional> tofb: boolean,
+     * - <optional> totw: boolean,
+     * - [signature params]
+     */
+    public function shareVideoAction($id)
+    {
+        try {
+            if ($this->hasValidSignature()) {
+                if (!$id) throw new HttpException(400, 'Requires id of Video');
+                $request = $this->getRequest();
+
+                $userid = $request->get('user_id');
+                //$user = $this->getRepository('User')->findOneBy(array('id'=>$userid));
+                $user = $this->checkUserToken($userid, $request->get('user_token'));
+
+                $video = $this->getRepository('Video')->findOneBy(array('id'=>$id));
+                if (!$video) throw new HttpException(400, 'Video not found');
+
+                $shareidols = $request->get('shareidols');
+                $shareteams = $request->get('shareteams');
+                $shareusers = $request->get('shareusers');
+
+                $tofw = $request->get('wall');
+                $tofb = $request->get('tofb');
+                $totw = $request->get('totw');
+                $title = $request->get('title');
+
+                $response = true;
+
+                // FB Share
+                if ($tofb) {
+                    $facebook = $this->get('app.facebook');
+                    $facebook instanceof AppFacebook;
+                    $facebook->entityShare($video, $title);
+                }
+
+                // TW Share
+                if ($totw) {
+                    $twitter = $this->get('app.twitter');
+                    $twitter instanceof AppTwitter;
+                    $twitter->entityShare($video, $title);
+                }
+
+                $idolrepo = $this->getRepository('Idol');
+                $teamrepo = $this->getRepository('Team');
+                $userrepo = $this->getRepository('User');
+
+                $shareEntities = array();
+                $idols = explode(',', $shareidols);
+                $teams = explode(',', $shareteams);
+                $users = explode(',', $shareusers);
+
+                foreach ($idols as $eIdol) {
+                    $idolEntity = $idolrepo->find($eIdol);
+                    if ($idolEntity instanceof Idol)
+                        $shareEntities[] = $idolEntity;
+                }
+
+                foreach ($teams as $eTeam) {
+                    $teamEntity = $teamrepo->find($eTeam);
+                    if ($teamEntity instanceof Team)
+                        $shareEntities[] = $teamEntity;
+                }
+
+                foreach ($users as $eUser) {
+                    $userEntity = $userrepo->find($eUser);
+                    if ($userEntity instanceof User)
+                        $shareEntities[] = $userEntity;
+                }
+
+                if ($tofw || count($shareEntities) > 0) {
+                    $sharer = $this->get('sharer');
+                    $sharer->share($video, $shareEntities, $title, $user, $tofw);
+                } else {
+                    $response = false;
+                }
+
+                return $this->result($response);
+
+            } else {
+                throw new HttpException(401, 'Invalid signature');
+            }
         } catch (\Exception $e) {
             return $this->plainException($e);
         }

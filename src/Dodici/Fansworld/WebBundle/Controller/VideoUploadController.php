@@ -4,6 +4,7 @@ namespace Dodici\Fansworld\WebBundle\Controller;
 
 use Application\Sonata\MediaBundle\Entity\Media;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Form\FormError;
@@ -31,30 +32,16 @@ class VideoUploadController extends SiteController
 {
 
     /**
-     * @Route("/test/upload", name="video_test_upload")
-     * @Template
-     */
-    public function testAction()
-    {
-        $kaltura = $this->get('kaltura');
-        $ks = $kaltura->getKs();
-        $partnerid = $kaltura->getPartnerId();
-
-        return array(
-            'ks' => $ks,
-            'partnerid' => $partnerid,
-            'url' => 'http://www.kaltura.com/api_v3/index.php'
-        );
-    }
-
-    /**
      * @Route("/test/ks", name="video_test_ks")
      * @Route("/upload/ks", name="video_kaltura_ks")
      */
     public function kalturaKsAction()
     {
+        $user = $this->getUser();
+        if (!$user) throw new AccessDeniedHttpException('User not logged in');
+
         $kaltura = $this->get('kaltura');
-        $ks = $kaltura->getKs();
+        $ks = $kaltura->getKs(false, $user->getId());
         $url = $kaltura->getApiUrl();
 
         return $this->jsonResponse(
