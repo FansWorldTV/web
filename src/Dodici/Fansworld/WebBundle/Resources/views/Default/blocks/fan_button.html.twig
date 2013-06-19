@@ -27,12 +27,15 @@
 
 {% if fship is defined %}
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and (fship) %}
-        <!--div class="addFriend" ">
-            <button class="btn {{ buttonSize }} btn_{{ btnType }} remove btn-success {% if btnType == 'idolship' %} disabled {% endif %}" data-{{ btnType }}-id="{{ fship.id }}">{{ 'remove_idol'|trans }}</button>
-        </div-->
         <div class="addFriend">
-            <!-- <span class="label">YA ERES FAN</span> -->
-            <!--<button class="btn btn-large btn_idolship fwIdolship disabled" data-idol-id="228">YA ERES FAN</button>-->
+            <button class="btn {{ buttonSize }} btn_{{ btnType }} remove" data-{{ fType }}ship-remove="true" data-{{ fType }}-id="{{ entity.id }}">
+                <div class="spinner ten-pixels hidden"><div class="mask"></div></div>
+                {% if fship.active %}
+                    {{ 'remove_idol'|trans }}
+                {% else %}
+                    cancelar solicitud
+                {% endif %}
+            </button>
         </div>
     {% else %}
         {% if app.user != entity %}

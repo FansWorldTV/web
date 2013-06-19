@@ -2,6 +2,10 @@
     width: 100% !important;
 }
 
+.btn {
+	line-height: 21px;
+}
+
 .loadmore {
     .btn;
     width: 100%;
@@ -947,4 +951,15 @@ button.tw_button {
         font-weight: 400;
         float: left;
     }
+}
+
+.btn .spinner.ten-pixels {
+	margin-right: 5px;
+	top: 3px;
+	display: inline-block;
+}
+.spinner {
+	&.ten-pixels {
+		.spinnerize(10px, #999, 3px);
+	}
 }

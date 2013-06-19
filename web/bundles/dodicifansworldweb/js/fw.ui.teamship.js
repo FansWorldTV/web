@@ -127,4 +127,9 @@ $(document).ready(function () {
             self.text("YA ERES FAN");
         }
     });
+    $("[data-teamship-remove]:not('[data-override]')").fwTeamship({
+        onRemoveTeam: function(){
+            window.location.reload();
+        }
+    });
 });
