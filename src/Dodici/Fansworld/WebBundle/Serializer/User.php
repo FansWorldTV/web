@@ -24,12 +24,12 @@ class User
         $location = array();
         if ($entity->getCity()) $location[] = $entity->getCity();
         if ($entity->getCountry()) $location[] = $entity->getCountry();
-        
+
         return array(
             'firstname' => $entity->getFirstname(),
             'lastname' => $entity->getLastname(),
             'fanCount' => $entity->getFanCount(),
-            'splash' => $this->appmedia->getImageUrl($entity->getSplash(), $splashformat, $mode),
+            'splash' => $entity->getSplash() ? $this->appmedia->getImageUrl($entity->getSplash(), $splashformat, $mode) : null,
             'sex' => $entity->getSex(),
             'username' => $entity->getUsername(),
             'url' => $this->router->generate('user_wall', array('username' => $entity->getUsername())),
