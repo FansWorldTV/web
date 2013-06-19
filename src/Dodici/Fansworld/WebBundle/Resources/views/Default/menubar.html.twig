@@ -26,8 +26,8 @@
             </ul>
         </div>
         <div class="right-container">
-            <form class="navbar-search" name="search" method="post">
-                <input id="" type="text"/>
+            <form class="navbar-search" name="search" method="post" action="{{ path('search_home') }}">
+                <input name="query" type="text"/>
                 <i class="icon-search"></i>
              </form>
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}

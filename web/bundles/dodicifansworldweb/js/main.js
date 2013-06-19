@@ -213,20 +213,31 @@ var site = {
             $(this).modalPopup({'href': urlModal});
         });
 
+        var typeaheadTemplate = '<div class="container"><a href="$url"><div class="image-container"><img width="32px" height="32px" class="image" src="$image"/></div><span class="name">$value</span></a></div>';
+        var typeaheadTemplate2 = '<div class="container search-history"><a href="$url"><div class="image-container"></div><span class="name">$value</span></a></div>';        
 
-        var typeaheadTemplate = '<div class="container"><img width="32px" height="32px" class="image" src="$image"/><span class="name">$value</span></div>';
+        var searchHistoryCount = 0;
 
         $('.navbar-search input').typeahead({
             minLength: 3
-            , remote: '/app_dev.php/ajax/search/autocomplete?q=%QUERY'
+            , remote: Routing.generate(appLocale + '_search_ajaxsearch_autocomplete') + '?q=%QUERY'
             , template: typeaheadTemplate
+            , template2: typeaheadTemplate2
             , engine: {
                 compile: function(template) {
                   return {
                     render: function(ctx) {
-                      return template.replace(/\$(\w+)/g, function(msg) {
-                        return ctx[msg.substring(1)];
-                      });
+                      if(ctx.type == 'search_history') {
+                          searchHistoryCount++;
+                          return typeaheadTemplate2.replace(/\$(\w+)/g, function(msg) {
+                            return ctx[msg.substring(1)];
+                          });
+                      }
+                      else {
+                          return template.replace(/\$(\w+)/g, function(msg) {
+                            return ctx[msg.substring(1)];
+                          });
+                      }
                     }
                   };
                 }

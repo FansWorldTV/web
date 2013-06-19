@@ -19,6 +19,7 @@ use Elastica_Search;
 use Elastica_Query;
 use Elastica_Query_Term;
 use Elastica_Facet_Terms;
+use Elastica_Type_Mapping;
 
 class SearchController extends SiteController
 {
@@ -220,28 +221,7 @@ class SearchController extends SiteController
         return $this->jsonResponse($response);
     }
 
-    /**
-     *  @Route("/ajax/search/autocomplete", name="search_ajaxsearch_autocomplete")
-     */
-    /*public function ajaxSearchAutocompleteAction(Request $request) {
-        $finder = $this->get('fos_elastica.index.website.user');
-        $searchTerm = $request->query->get('q');
-     
-        $resultSet = $finder->search($searchTerm);
 
-        $response = array();
-
-        foreach($resultSet as $result){
-            $data = $result->getData();
-            $response[] = array('value' => $data['username'], 'tokens' => $data['username'] . ', ' . $data['firstName'] . ', ' . $data['lastName']);
-        }
-
-        return $this->jsonResponse($response);
-    }*/
-
-    /**
-     *  @Route("/ajax/search/autocomplete3", name="search_ajaxsearch_autocomplete3")
-     */
     //public function ajaxSearchAutocomplete3Action(Request $request) {
 
         /*
@@ -338,8 +318,8 @@ class SearchController extends SiteController
         $search = new Elastica_Search($client);
 
         // Configure and execute the search
-        $types = array($userType, $idolType, $teamType);
-        //$types = array($searchHistoryType, $userType, $idolType, $teamType);
+        //$types = array($userType, $idolType, $teamType);
+        $types = array($searchHistoryType, $userType, $idolType, $teamType);
 
         $search = $search->addTypes($types);
 
@@ -347,9 +327,11 @@ class SearchController extends SiteController
         
         $search->addIndex($index);*/
 
-        $resultSet = $search->search($searchTerm . '*');
+        $resultSet = $search->search('*' . $searchTerm . '*');
 
         $response = array();
+
+        $searchHistoryCount = 0;
 
         foreach($resultSet as $result){
             $data = $result->getData();
@@ -358,15 +340,37 @@ class SearchController extends SiteController
 
             switch ($type) {
                 case 'search_history':
-                    $response[] = array('value' => $data['term'], 'tokens' => $data['term'], 'type' => $type, 'score' => $score);
+                    if ($searchHistoryCount < 3) {
+                        $searchHistoryCount++;
+
+                        $response['search_history'][] = array(
+                            'value' => $data['term']
+                            , 'tokens' => $data['term']
+                            , 'type' => $type
+                            , 'score' => $score
+                        );
+                    }
+
                     break;
+
                 case 'user':
                     $id = $data['id'];
                     $user = $this->getRepository('User')->find($id);
 
                     $image = $this->getImageUrl($user->getImage(), 'small');
-                    $response[] = array('value' => $data['firstName'] . ' ' . $data['lastName'] , 'tokens' => $data['username'] . ', ' . $data['firstName'] . ', ' . $data['lastName'], 'type' => $type, 'score' => $score, 'image' => $image);
+                    $url = $this->generateUrl('user_land', array('username' => $user->getUsername()));
+
+                    $response['suggestions'][] = array(
+                        'value' => $data['firstName'] . ' ' . $data['lastName']
+                        , 'tokens' => $data['username'] . ', ' . $data['firstName'] . ', ' . $data['lastName']
+                        , 'type' => $type
+                        , 'score' => $score
+                        , 'image' => $image
+                        , 'url' => $url
+                    );
+
                     break;
+
                 //case 'photo':
                 //    $response[] = array('value' => $data['username'], 'tokens' => $data['username'] . ', ' . $data['firstName'] . ', ' . $data['lastName']);
                 //    break;
@@ -378,17 +382,40 @@ class SearchController extends SiteController
                     $idol = $this->getRepository('idol')->find($id);
 
                     $image = $this->getImageUrl($idol->getImage(), 'small');
-                    $response[] = array('value' => $data['firstName'] . ' ' . $data['lastName'], 'tokens' => $data['firstName'] . ', ' . $data['lastName'], 'type' => $type, 'score' => $score, 'image' => $image);
+                    $url = $this->generateUrl('idol_land', array('slug' => $idol->getSlug()));
+
+                    $response['suggestions'][] = array(
+                        'value' => $data['firstName'] . ' ' . $data['lastName']
+                        , 'tokens' => $data['firstName'] . ', ' . $data['lastName']
+                        , 'type' => $type
+                        , 'score' => $score
+                        , 'image' => $image
+                        , 'url' => $url
+                    );
+
                     break;
+
                 case 'team':
                     $id = $data['id'];
                     $team = $this->getRepository('team')->find($id);
 
                     $image = $this->getImageUrl($team->getImage(), 'small');
-                    $response[] = array('value' => $data['title'], 'tokens' => $data['title'] . ', ' . $data['nicknames'], 'type' => $type, 'score' => $score, 'image' => $image);
+                    $url = $this->generateUrl('team_land', array('slug' => $team->getSlug()));
+
+                    $response['suggestions'][] = array(
+                        'value' => $data['title']
+                        , 'tokens' => $data['title'] . ', ' . $data['nicknames']
+                        , 'type' => $type
+                        , 'score' => $score
+                        , 'image' => $image
+                        , 'url' => $url
+                    );
+
                     break;
             }
         }
+
+        $response['search_history_count'] = $searchHistoryCount;
 
         return $this->jsonResponse($response);
     }

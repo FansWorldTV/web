@@ -115,15 +115,17 @@ footer.navbar{
           .navbarVerticalAlign(26px); // Vertically center in navbar
           margin-bottom: 0;
 
-            .search-button {
-                margin-left: -5px;
-                height: 26px;
-                border-radius: 0 3px 3px 0;
-                width: 26px;
-                background-color: white;
-                .transition(none);
-                .box-shadow(none);
-                border: 0;
+            .button-container {
+                float: left;
+                width: 255px;
+                padding: 10px;
+
+                .search-button {
+                    width: 100%;
+                    background: none;
+                    border: none;
+                    font-weight: bold;
+                }
             }
 
             i{
@@ -181,35 +183,75 @@ footer.navbar{
                 outline: 0;
                 .box-shadow(none)
             }
-          }
+        }
 
-            .tt-dropdown-menu {
-              background-color: @white;
-              width: 100%;
+        .tt-hint {
+            margin-bottom: 0;
+        }
 
-              .tt-suggestion {
-                float: left;
+        .tt-dropdown-menu {
+            background-color: @white;
+            width: 275px;
+            border-radius: 3px;
+            box-shadow: 1px 1px 10px black;
+
+            .search-history {
+                padding-top: 10px;
+
+                p {
+                    padding-left: 44px;
+                    color: @grayDark;
+                    font-style: italic;
+
+                    &:hover {
+                        background-color: @green;
+                    }
+                }
+            }
+
+            .perfiles {
+                padding: 1px 5px 1px 5px;
+                text-transform: uppercase;
+                color: @black;
+                font-size: 9px;
+                font-weight: bold;
+                background-color: #e8e8e8;
+                border-top: 1px solid @grayLight;
+                border-bottom: 1px solid @grayLight;
+            }
+
+            .tt-suggestion {
                 width: 100%;
+                float: left;
 
                 .container {
+                    a {
+                        float: left;
+                        width: 100%;
+                    }
+
                     .name {
                         color: @black;
-                        margin-left: 10px;
+                        margin-left: 12px;
                         float: left;
                         max-width: 178px;
                         line-height: 32px;
                     }
 
                     float: left;
-                    border-bottom: 1px solid @grayLight;
+                    border-bottom: 1px solid #e8e8e8;
 
                     strong {
                         font-weight: bold;
                     }
-                }
 
-                .image {
-                    float: left;
+                    .image-container {
+                        float: left;
+
+                        .image {
+                            float: left;
+                        }
+                    }
                 }
               }
 

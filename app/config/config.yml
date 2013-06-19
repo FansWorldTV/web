@@ -185,6 +185,14 @@ fos_elastica:
     indexes:
         website:
             client: default
+            settings:
+                index:
+                    analysis:
+                        analyzer:
+                            default:
+                                type: snowball
+                                tokenizer: standard
+                                filter: [ standard, lowercase, stop, asciifolding]
             types:
                 search_history:
                     mappings:

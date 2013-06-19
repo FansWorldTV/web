@@ -386,6 +386,7 @@
             this.footer = o.footer;
             this.valueKey = o.valueKey || "value";
             this.template = compileTemplate(o.template, o.engine, this.valueKey);
+            this.template2 = compileTemplate(o.template2, o.engine, this.valueKey);
             this.local = o.local;
             this.prefetch = o.prefetch;
             this.remote = o.remote;
@@ -518,6 +519,7 @@
                 return deferred;
             },
             getSuggestions: function(query, cb) {
+                console.log(123);
                 var that = this, terms, suggestions, cacheHit = false;
                 if (query.length < this.minLength) {
                     return;
@@ -530,7 +532,7 @@
                 !cacheHit && cb && cb(suggestions);
                 function processRemoteData(data) {
                     suggestions = suggestions.slice(0);
-                    utils.each(data, function(i, datum) {
+                    utils.each(data.suggestions, function(i, datum) {
                         var item = that._transformDatum(datum), isDuplicate;
                         isDuplicate = utils.some(suggestions, function(suggestion) {
                             return item.value === suggestion.value;
@@ -539,6 +541,33 @@
                         return suggestions.length < that.limit;
                     });
                     cb && cb(suggestions);
+                    console.log(99999);
+                }
+            },
+            getHistory: function(query, cb) {
+                console.log(123);
+                var that = this, terms, suggestions, cacheHit = false;
+                if (query.length < this.minLength) {
+                    return;
+                }
+                terms = utils.tokenizeQuery(query);
+                suggestions = this._getLocalSuggestions(terms).slice(0, this.limit);
+                if (suggestions.length < this.limit && this.transport) {
+                    cacheHit = this.transport.get(query, processRemoteData);
+                }
+                !cacheHit && cb && cb(suggestions);
+                function processRemoteData(data) {
+                    suggestions = suggestions.slice(0);
+                    utils.each(data.search_history, function(i, datum) {
+                        var item = that._transformDatum(datum), isDuplicate;
+                        isDuplicate = utils.some(suggestions, function(suggestion) {
+                            return item.value === suggestion.value;
+                        });
+                        !isDuplicate && suggestions.push(item);
+                        return suggestions.length < that.limit;
+                    });
+                    cb && cb(suggestions);
+                    console.log(99999);
                 }
             }
         });
@@ -802,10 +831,14 @@
             },
             renderSuggestions: function(dataset, suggestions, query) {
                 var datasetClassName = "tt-dataset-" + dataset.name, wrapper = '<div class="tt-suggestion">%body</div>', compiledHtml, $suggestionsList, $dataset = this.$menu.find("." + datasetClassName), elBuilder, fragment, $el;
-                that = this;
+                var that = this;
                 if ($dataset.length === 0) {
                     $suggestionsList = $(html.suggestionsList).css(css.suggestionsList);
-                    $dataset = $("<div></div>").addClass(datasetClassName).append(dataset.header).append($suggestionsList).append(dataset.footer).appendTo(this.$menu);
+                    $dataset = $("<div></div>").addClass(datasetClassName).append(dataset.header).append($suggestionsList).append(dataset.footer);
+                    return {
+                        menu: this.$menu, 
+                        dataset: $dataset
+                    };
                 }
                 if (suggestions.length > 0) {
                     this.isEmpty = false;
@@ -817,7 +850,7 @@
                         elBuilder.innerHTML = wrapper.replace("%body", compiledHtml);
                         $el = $(elBuilder.firstChild).css(css.suggestion).data("suggestion", suggestion);
                         $el.children().each(function() {
-                            $(this).css(css.suggestionChild).html(that.highlighter(suggestion.value, query));
+                            $(this).css(css.suggestionChild).find('.name').html(that.highlighter(suggestion.value, query));
                         });
                         fragment.appendChild($el[0]);
                     });
@@ -988,12 +1021,45 @@
                 if (utils.isBlankString(query)) {
                     return;
                 }
-                utils.each(this.datasets, function(i, dataset) {
-                    dataset.getSuggestions(query, function(suggestions) {
-                        if (query === that.inputView.getQuery()) {
-                            that.dropdownView.renderSuggestions(dataset, suggestions, query);
-                        }
+                var $menu = {};
+                $.when(templateHelper.htmlTemplate('general-search_dropdown', {}))
+                .then(function(html) {
+                    var dropdown = $(html).clone();
+                    var $history = {};
+                    var $suggestions = {};
+                    var $buscar = {};
+                    var rendered = {};
+
+                    utils.each(that.datasets, function(i, dataset) {
+                        dataset.getHistory(query, function(suggestions) {
+                            if (query === that.inputView.getQuery()) {
+                                rendered = that.dropdownView.renderSuggestions(dataset, suggestions, query);
+                                if (rendered) {
+                                    $history = rendered.dataset;
+                                    $menu = rendered.menu;
+                                }
+                            }
+                        });
                     });
+
+                    utils.each(that.datasets, function(i, dataset) {
+                        dataset.getSuggestions(query, function(suggestions) {
+                            if (query === that.inputView.getQuery()) {
+                                rendered = that.dropdownView.renderSuggestions(dataset, suggestions, query);
+                                if (rendered) {
+                                    $suggestions = rendered.dataset;
+                                }
+                            }
+                        });
+                    });
+
+                    console.log($history);
+                    console.log($suggestions);
+                    dropdown.find('.search-history').html($history);
+                    dropdown.find('.dataset').html($suggestions);
+                    return dropdown;
+                }).done(function(dropdown){
+                    dropdown.appendTo($menu);
                 });
             },
             _autocomplete: function(e) {
