@@ -434,7 +434,8 @@ class UserController extends BaseController
             $return = array();
             foreach ($followingProfiles as $fp) {
                 $entity = $this->getRepository(ucwords($fp['type']))->findBy(array('id' => $fp['target']));
-                $return[$fp['type']][] =  $this->get('Serializer')->values($entity);
+                $return[$fp['type']][] = $this->get('Serializer')->values($entity, $this->getImageFormat(), $this->getImageFormat('splash'), 'object');
+
             }
 
             return $this->result($return, $pagination);

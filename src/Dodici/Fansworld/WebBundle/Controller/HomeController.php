@@ -53,6 +53,9 @@ class HomeController extends SiteController
 
         $videoRepo = $this->getRepository('Video');
 
+        if(!($user instanceof User))
+            $user = null;
+
         if (!$paginate) {
             $vc = $request->get('vc', null);
             $genre = $request->get('genre', null);
