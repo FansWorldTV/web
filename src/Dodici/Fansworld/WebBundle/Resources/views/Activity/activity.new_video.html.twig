@@ -2,7 +2,7 @@
 	<div class="avatar">
 		<img src="{{activity.target.image}}" />
 	</div>
-	{% if activity.media.video is not null %}
+	{% if activity.media.video is defined %}
 		{% set media_type = 'un video' %}
 		{% set media_href = path('video_show', {'id': activity.media.video.id, 'slug': activity.media.video.slug}) %}
 		{% set media_title = activity.media.video.title %}
