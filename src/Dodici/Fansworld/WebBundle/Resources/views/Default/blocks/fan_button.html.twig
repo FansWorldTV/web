@@ -30,7 +30,7 @@
         <div class="addFriend">
             <button class="btn {{ buttonSize }} btn_{{ btnType }} remove" data-{{ fType }}ship-remove="true" data-{{ fType }}-id="{{ entity.id }}">
                 <div class="spinner ten-pixels hidden"><div class="mask"></div></div>
-                {% if fship.active %}
+                {% if fship.active is not defined or fship.active %}
                     {{ 'remove_idol'|trans }}
                 {% else %}
                     cancelar solicitud
@@ -39,8 +39,8 @@
         </div>
     {% else %}
         {% if app.user != entity %}
-            <div class="addFriend"  data-add-fan data-login-required >
-                <button class="btn {{ buttonSize }} btn_{{ btnType }} add btn-success" data-{{ fType }}ship-add="true" data-{{ fType }}-id="{{ entity.id }}"> {{ 'add_idol'|trans }}</button>
+            <div class="addFriend"  data-add-fan>
+                <button class="btn {{ buttonSize }} btn_{{ btnType }} add btn-success" data-{{ fType }}ship-add="true" data-{{ fType }}-id="{{ entity.id }}" data-login-required > {{ 'add_idol'|trans }}</button>
             </div>
         {% endif %}
     {% endif %}
