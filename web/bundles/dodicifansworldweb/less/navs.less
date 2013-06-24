@@ -195,20 +195,6 @@ footer.navbar{
             border-radius: 3px;
             box-shadow: 1px 1px 10px black;
 
-            .search-history {
-                padding-top: 10px;
-
-                p {
-                    padding-left: 44px;
-                    color: @grayDark;
-                    font-style: italic;
-
-                    &:hover {
-                        background-color: @green;
-                    }
-                }
-            }
-
             .perfiles {
                 padding: 1px 5px 1px 5px;
                 text-transform: uppercase;
@@ -218,13 +204,22 @@ footer.navbar{
                 background-color: #e8e8e8;
                 border-top: 1px solid @grayLight;
                 border-bottom: 1px solid @grayLight;
+                float: left;
+                width: 265px;
+            }
+
+            .tt-suggestions {
+                width: 275px;
             }
 
             .tt-suggestion {
                 width: 100%;
                 float: left;
 
-                .container {
+                .container:not(.search-history-term) {
+                    float: left;
+                    border-bottom: 1px solid #e8e8e8;
+
                     a {
                         float: left;
                         width: 100%;
@@ -237,9 +232,6 @@ footer.navbar{
                         max-width: 178px;
                         line-height: 32px;
                     }
-
-                    float: left;
-                    border-bottom: 1px solid #e8e8e8;
 
                     strong {
                         font-weight: bold;
@@ -257,8 +249,28 @@ footer.navbar{
 
               .tt-is-under-cursor {
                 background-color: @green;
-                color: @white;
+
+                a {
+                    color: @white;
+                }
               }
+            }
+
+            .search-history {
+                float: left;
+                padding: 10px 0 10px 0;
+
+                .container {
+                    border-bottom: none;
+
+                    p {
+                        padding-left: 44px;
+                        color: @grayDark;
+                        font-style: italic;
+                        margin: 0;
+                        line-height: 22px;
+                    }
+                }
             }
         }
     }

@@ -214,7 +214,7 @@ var site = {
         });
 
         var typeaheadTemplate = '<div class="container"><a href="$url"><div class="image-container"><img width="32px" height="32px" class="image" src="$image"/></div><span class="name">$value</span></a></div>';
-        var typeaheadTemplate2 = '<div class="container search-history"><a href="$url"><div class="image-container"></div><span class="name">$value</span></a></div>';        
+        var typeaheadTemplate2 = '<div class="container search-history-term"><p>$value</span></p></div>';
 
         var searchHistoryCount = 0;
 
@@ -242,6 +242,11 @@ var site = {
                   };
                 }
             }
+        });
+
+        $('.twitter-typeahead .tt-query').on('input', function(e){
+            console.log( $('.tt-dropdown-menu .search-button')).text();
+            $('.tt-dropdown-menu .search-button').text('Buscar "' + $(this).val() + '"');
         });
 
         site.parseTimes();

@@ -829,7 +829,7 @@
                 var $suggestion = this._getSuggestions().first();
                 return $suggestion.length > 0 ? extractSuggestion($suggestion) : null;
             },
-            renderSuggestions: function(dataset, suggestions, query) {
+            renderHistory: function(dataset, suggestions, query) {
                 var datasetClassName = "tt-dataset-" + dataset.name, wrapper = '<div class="tt-suggestion">%body</div>', compiledHtml, $suggestionsList, $dataset = this.$menu.find("." + datasetClassName), elBuilder, fragment, $el;
                 var that = this;
                 if ($dataset.length === 0) {
@@ -855,6 +855,38 @@
                         fragment.appendChild($el[0]);
                     });
                     $dataset.show().find(".tt-suggestions").html(fragment);
+                } else {
+                    this.clearSuggestions(dataset.name);
+                }
+                this.trigger("suggestionsRendered");
+            },
+            renderSuggestions: function(dataset, suggestions, query) {
+                var datasetClassName = "tt-dataset-" + dataset.name, wrapper = '<div class="tt-suggestion">%body</div>', compiledHtml, $suggestionsList, $dataset = this.$menu.find("." + datasetClassName), elBuilder, fragment, $el;
+                var that = this;
+                if ($dataset.length === 0) {
+                    $suggestionsList = $(html.suggestionsList).css(css.suggestionsList);
+                    $dataset = $("<div></div>").addClass(datasetClassName).append(dataset.header).append($suggestionsList).append(dataset.footer);
+                    return {
+                        menu: this.$menu, 
+                        dataset: $dataset
+                    };
+                }
+                if (suggestions.length > 0) {
+                    this.isEmpty = false;
+                    this.isOpen && this._show();
+                    elBuilder = document.createElement("div");
+                    fragment = document.createDocumentFragment();
+                    utils.each(suggestions, function(i, suggestion) {
+                        compiledHtml = dataset.template(suggestion.datum);
+                        elBuilder.innerHTML = wrapper.replace("%body", compiledHtml);
+                        $el = $(elBuilder.firstChild).css(css.suggestion).data("suggestion", suggestion);
+                        $el.children().each(function() {
+                            $(this).css(css.suggestionChild).find('.name').html(that.highlighter(suggestion.value, query));
+                        });
+                        fragment.appendChild($el[0]);
+                    });
+                    console.log($dataset.show().find(".tt-suggestions"));
+                    $($dataset.show().find(".tt-suggestions")[1]).html(fragment);
                 } else {
                     this.clearSuggestions(dataset.name);
                 }
@@ -1029,11 +1061,13 @@
                     var $suggestions = {};
                     var $buscar = {};
                     var rendered = {};
+                    var rendered2 = {};
+                    var rendered3 = {};
 
                     utils.each(that.datasets, function(i, dataset) {
-                        dataset.getHistory(query, function(suggestions) {
+                        dataset.getHistory(query, function(history) {
                             if (query === that.inputView.getQuery()) {
-                                rendered = that.dropdownView.renderSuggestions(dataset, suggestions, query);
+                                rendered = that.dropdownView.renderHistory(dataset, history, query);
                                 if (rendered) {
                                     $history = rendered.dataset;
                                     $menu = rendered.menu;
@@ -1045,16 +1079,22 @@
                     utils.each(that.datasets, function(i, dataset) {
                         dataset.getSuggestions(query, function(suggestions) {
                             if (query === that.inputView.getQuery()) {
-                                rendered = that.dropdownView.renderSuggestions(dataset, suggestions, query);
-                                if (rendered) {
-                                    $suggestions = rendered.dataset;
+                                rendered2 = that.dropdownView.renderSuggestions(dataset, suggestions, query);
+                                if (rendered2) {
+                                    $suggestions = rendered2.dataset;
+                                    //$menu = rendered2.menu;
                                 }
                             }
                         });
                     });
 
-                    console.log($history);
-                    console.log($suggestions);
+                    query === 'Buscar "' + that.inputView.getQuery() + '"';
+                    rendered2 = that.dropdownView.renderSuggestions(query, query, query);
+                    if (rendered2) {
+                        $buscar = rendered3.dataset;
+                        //$menu = rendered3.menu;
+                    }
+
                     dropdown.find('.search-history').html($history);
                     dropdown.find('.dataset').html($suggestions);
                     return dropdown;

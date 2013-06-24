@@ -302,7 +302,7 @@ class SearchController extends SiteController
         $idolType = $this->get('fos_elastica.index.website.idol');
         $teamType = $this->get('fos_elastica.index.website.team');
 
-        $searchTerm = $request->query->get('q');
+        $searchTerm = trim($request->query->get('q'));
 
         $em = $this->container->get('sonata.media.entity_manager');
 
