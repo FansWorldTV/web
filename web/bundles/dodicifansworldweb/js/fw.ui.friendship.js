@@ -13,11 +13,11 @@ $(document).ready(function () {
     var pluginName = "fwFriendship";
     var defaults = {
         propertyName: "fansworld",
-        idolId: null,
+        userId: null,
         // custom callback events
         onError: function(error) {},
-        onAddIdol: function(data) {},
-        onRemoveIdol: function(data) {}
+        addFriend: function(data) {},
+        onRemoveFriend: function(data) {}
     };
     function Plugin(element, options) {
         this.element = element;
@@ -30,35 +30,45 @@ $(document).ready(function () {
         init: function () {
             var that = this;
             var self = $(that.element);
-            that.options.idolId = self.attr('data-idol-id');
+            that.options.userId = self.attr('data-user-id');
             self.addClass(that._name);
 
             if (window.isLoggedIn) {
-                self.on('click', that.addIdol);
+                self.on('click', that.addFriend);
             } else {
-                $('[data-login-btn]').click();
+                self.on('click',function(event) {
+                    $('[data-login-btn]').click();
+                });
             }
         },
-        addIdol: function(event) {
+        addFriend: function(event) {
             var that = this;
             var self = $(this);
-            $(this).off();      // remove event listeners
-            var plugin = $(this).data(pluginName);
-            plugin.toggleIdolship($(this).attr('data-idol-id'));
+            console.log("addFriend")
+            $(event.srcElement).off();      // remove event listeners
+            var plugin = $(event.srcElement).data(pluginName);
+            plugin.toggleFriendship($(event.srcElement).attr('data-user-id'));
         },
-        toggleIdolship: function(idolId) {
+        toggleFriendship: function(userId) {
             var that = this;
             var self = $(that.element);
+            var targetId = self.attr('data-user-id');
+            var friendGroups = [];
+            $("ul.friendgroupsList li input:checkbox:checked").each(function(k, el){
+                friendgroups[k] = $(el).val();
+            });
+
             self.addClass('loading-small');
             ajax.genericAction(
-                'idolship_ajaxtoggle',
-                { 'idol-id': idolId },
+                'friendship_ajaxaddfriend',
+                {
+                    'target': targetId,
+                    'friendgroups': friendGroups
+                },
                 function(responseJSON) {
                     if(responseJSON) {
-                        if(responseJSON.isFan) {
-                            that.onAddIdol(responseJSON);
-                        } else {
-                            that.onRemoveIdol(responseJSON);
+                        if(responseJSON.friendship) {
+                            that.onAddFriend(responseJSON);
                         }
                     }
                     self.removeClass('loading-small');
@@ -69,20 +79,15 @@ $(document).ready(function () {
                     return that.options.onError(error);
                 });
         },
-        onAddIdol: function(data) {
+        onAddFriend: function(data) {
             var that = this;
-            var self = $(that.element);
-            self.addClass('disabled');
-            self.removeClass('add');
-            self.text("YA ERES FAN");
-            console.log("onAddIdol: " + JSON.stringify(data))
-            return that.options.onAddIdol(data);
+            return that.options.onAddFriend(that, data);
         },
-        onRemoveIdol: function(data){
+        onRemoveFriend: function(data){
             var that = this;
             var self = $(that.element);
-            console.log("onRemoveIdol: " + JSON.stringify(data))
-            return that.options.onRemoveIdol(data);
+            console.log("onRemoveFriend: " + JSON.stringify(data))
+            return that.options.onRemoveFriend(data);
         },
         destroy: function() {
             var that = this;
@@ -110,5 +115,13 @@ $(document).ready(function () {
 //Attach plugin to all matching element
 $(document).ready(function () {
     "use strict";
-    $(".btn_idolship.add:not('.loading-small')").fwIdolship();
+    $(".btn_friendship.add:not('.loading-small')").fwFriendship({
+        onAddFriend: function(plugin, data) {
+            var self = $(plugin.element);
+            self.addClass('disabled');
+            self.removeClass('add');
+            self.text(data.buttontext);
+            window.notice(data.message);
+        }
+    });
 });
