@@ -40,7 +40,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#" class="btn_teamship remove" data-teamship-add="true" data-team-id="{{ entity.id }}">Dejar de ser fan</a>
+                            <a href="#" class="btn_teamship remove" data-teamship-remove="true" data-team-id="{{ entity.id }}">Dejar de ser fan</a>
                         </li>
                     </ul>
                 {% elseif entityType == 'idol' %}
@@ -59,7 +59,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#" class="btn_idolship remove" data-idol-id="{{ entity.id }}">Dejar de ser fan</a>
+                            <a href="#" class="btn_idolship remove" data-idolship-remove="true" data-idol-id="{{ entity.id }}">Dejar de ser fan</a>
                         </li>
                     </ul>
                 {% endif %}
