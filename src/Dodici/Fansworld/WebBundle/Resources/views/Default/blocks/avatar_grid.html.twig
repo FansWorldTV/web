@@ -15,8 +15,6 @@
     {% if avatars.list is defined and avatars.list|length > 0 %}
         <ul class="avatar-list {{ avatars.ulClass }}">
             {% for avatar in avatars.list %}
-                {% set fship     = appstate.friendshipwith(avatar) %}
-
                 {% if avatar.idol is defined %}
                     {% set avatar = avatar.idol %}
                 {% endif %}
