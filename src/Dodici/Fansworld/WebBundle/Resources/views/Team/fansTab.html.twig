@@ -4,23 +4,11 @@
 
 
 {% block profile_tabs %}
-	{% set active_tab = 'fans' %}
-	{{ parent() }}
+    {% set active_tab = 'fans' %}
+    {{ parent() }}
 {% endblock %}
 
 
 {% block profile_body %}
- {% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_rsidebar.html.twig" %}
-        {% block inner_content %}
-
-        	{% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { avatars: fans, type: 'fans'  } %}
-
-        {% endblock %}
-
-        {% block inner_sidebar %}
-            {% include "DodiciFansworldWebBundle:Default:blocks/sidebarexplainranking.html.twig" %}
-        {% endblock %}
-
-
-    {% endembed %}
+    {% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { avatars: fans, type: 'fans'  } %}
 {% endblock %}

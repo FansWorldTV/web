@@ -20,7 +20,13 @@
             
             <div class="row-fluid">
                 <h3>Otras fotos ( {{ photos|length }} )</h3>
-                {% include 'DodiciFansworldWebBundle:Photo:blocks/montage.html.twig' with {photos: photos} %}
+                <div class="am-container other-photos">
+                    {% for photo in photos %}
+                        <a href="{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}" rel="tooltip" title="{{ photo.title }}">
+                            {% thumbnail photo.image, 'small_square' with {title: photo.title} %}
+                        </a>
+                    {% endfor %}
+                </div>
                 
                 {% if viewMorePhotos %}
                     <div class="clearfix"></div>
@@ -38,6 +44,15 @@
                     </span>
                 </a>
             </div>
+
+            <script type="text/javascript">
+                /**
+                 * @todo benja
+                 * hay que cambiar esto del montage
+                 */
+               montageHelper.doMontage($(".am-container.albums"), {minw: null, liquid: null, fillLastRow:false});
+                montageHelper.doMontage($(".am-container.other-photos"), {minw: null, liquid: null, fillLastRow:false});
+            </script>
         {% endblock %}
     {% endembed %}		
 {% endblock %}

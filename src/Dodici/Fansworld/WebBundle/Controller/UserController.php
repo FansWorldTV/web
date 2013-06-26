@@ -876,7 +876,8 @@ class UserController extends SiteController
         $friends = array(
             'ulClass' => 'fans',
             'containerClass' => 'fan-container',
-            'list' => $this->getRepository('User')->FriendUsers($user, null, self::LIMIT_SEARCH, null, 'score')
+            //'list' => $this->getRepository('User')->FriendUsers($user, null, self::LIMIT_SEARCH, null, 'score')
+            'list' => $this->getRepository('User')->fans($user, true)
         );
 
         $return = array(
