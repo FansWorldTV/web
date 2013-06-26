@@ -75,6 +75,14 @@ header.login-header-mosaic {
 	position: relative;
 	top: 2px;
 
+	@media(max-width: 767px) {
+		li {
+			padding: 0 !important;
+			margin: 0 !important;
+			width: 100% !important;
+		}
+	}
+
 	> li {
 		.pull-left();
 		margin-right: 10px;
@@ -89,23 +97,22 @@ header.login-header-mosaic {
 			}
 		}
 
-		> a  {
+		> a {
 			font-size: 12px;
 			color: @black;
 			background-color: white !important;
-			&:hover{
+			&:hover {
 				color: @green;
 			}
 		}
 	}
 }
 
-
 #headerProfile {
 	border-bottom: 2px solid #d2d2d2;
 	margin-bottom: 25px;
 
-	.avatar{
+	.avatar {
 		margin-right: 10px;
 	}
 
@@ -114,24 +121,24 @@ header.login-header-mosaic {
 	}
 }
 
-#restrictedMode .icon-question-sign{
+#restrictedMode .icon-question-sign {
 	position: relative;
 	left: 5px;
 	top: 6px;
 }
 
-#socialConnect{
+#socialConnect {
 	margin-top: 50px;
 }
 
 #avatar {
 	width: 100px;
-	img{
+	img {
 		.square(100px);
 	}
 }
 
-.numbered{
+.numbered {
 	margin-top: 10px;
 	span {
 		display: block;
@@ -154,8 +161,8 @@ dl.with-circles {
 		margin-top: 15px;
 		margin-left: 37px;
 
-		div.row{
-			margin-left:1px;
+		div.row {
+			margin-left: 1px;
 		}
 
 		.error-passwords {
@@ -168,7 +175,7 @@ dl.with-circles {
 			p {
 				text-decoration: underline;
 			}
-			input{
+			input {
 				margin-right: 10px;
 			}
 		}
@@ -204,34 +211,34 @@ ul.list-labels {
 	}
 }
 
-ul.idolships{
-	li{
-		display:block;
+ul.idolships {
+	li {
+		display: block;
 		.square(114px);
 		border: 1px solid @gray;
 		.pull-left();
 		margin-right: 4px;
 		margin-bottom: 37px;
 	}
-	button, span{
+	button, span {
 		position: relative;
 	}
-	button{
-		top:-25px;
+	button {
+		top: -25px;
 		margin-left: 5px;
 	}
 	span.fan-quantity {
 		top: -24px;
 		.pull-right();
 		margin-right: 5px;
-		-webkit-text-shadow:0 0 15px black;
+		-webkit-text-shadow: 0 0 15px black;
 		-moz-text-shadow: 0 0 15px black;
-		text-shadow:0 0 15px black;
+		text-shadow: 0 0 15px black;
 		color: @white;
 		font-size: 15px;
 		font-weight: bold;
 	}
-	span.idol-name{
+	span.idol-name {
 		background-color: transparent;
 		border: 1px solid @gray;
 		top: -20px;
@@ -246,7 +253,7 @@ ul.idolships{
 
 }
 
-header.profile_head{
+header.profile_head {
 	border-bottom: 1px solid #ebebeb;
 	margin-bottom: 20px;
 	overflow: hidden;
@@ -268,55 +275,53 @@ header.profile_head{
 		position: absolute;
 	}
 
-	section.header_main{
+	section.header_main {
 		color: @white !important;
 		background-color: #292929;
 		overflow: hidden;
-		div.main_left{
+		div.main_left {
 			background-color: #292929;
 			//height: 225px;
-			> img{
-				width:100%
+			> img {
+				width: 100%
 			}
 		}
 
-		div.main_right{
+		div.main_right {
 			background-color: #292929;
 
 		}
 	}
 
-	section.header_main.header_small{
+	section.header_main.header_small {
 		height: 60px;
-		div.user-info{
-			margin-top:0;
-			.avatar{
-				float:left;
-				img{
+		div.user-info {
+			margin-top: 0;
+			.avatar {
+				float: left;
+				img {
 					max-width: 60px;
 					max-height: 60px;
 				}
 			}
-			.text-info{
+			.text-info {
 				float: left;
 				margin-top: 5px;
 				padding-left: 15px;
 			}
 
-
-			h1{
+			h1 {
 				font-size: 22px;
 				line-height: 26px;
 				font-weight: 600;
 			}
 
-
-			.header-subtitle{
+			.header-subtitle {
 				font-size: 13px;
 			}
 		}
 
-		.numbers-info{
+		.numbers-info {
 			.pull-right();
 			margin-right: -19px;
 			padding: 5px 0;
@@ -325,14 +330,14 @@ header.profile_head{
 				color: @white;
 			}
 
-			> section{
+			> section {
 				float: left;
 				height: 40px;
 				padding-top: 10px;
 
 			}
 
-			section.with-border{
+			section.with-border {
 				border-left: 1px solid gray;
 				border-right: 1px solid gray;
 				height: 33px;
@@ -348,7 +353,7 @@ header.profile_head{
 				width: 24%;
 				height: 60px;
 
-				div.numero{
+				div.numero {
 					font-size: 17px;
 					color: @white !important;
 
@@ -356,7 +361,7 @@ header.profile_head{
 						color: @white !important;
 					}
 				}
-				div.tipo{
+				div.tipo {
 					font-size: 11px;
 					text-transform: uppercase;
 					color: @white !important;
@@ -368,24 +373,20 @@ header.profile_head{
 			}
 		}
 
-		.header-fship{
+		.header-fship {
 			margin-top: 5px;
-			.btn_friendship, .btn_idolship, .btn_teamship{
-
-				font-size: 20px;
-				font-weight: bold;
+			.btn_friendship, .btn_idolship, .btn_teamship {
+				font-size: 15px;
+				font-weight: 300;
 				text-transform: uppercase;
+				margin-top: 10px;
 			}
 
 		}
 
-
-
-
-
 	}
 
-	section.header_main.header_large{
+	section.header_main.header_large {
 		position: relative;
 
 		#myCarousel {
@@ -407,15 +408,15 @@ header.profile_head{
 			opacity: 0.5;
 		}
 
-		div.main_left{
+		div.main_left {
 			position: relative;
 
-			div.avatar{
+			div.avatar {
 				position: absolute;
 				z-index: 99;
 				top: 10px;
 				left: 10px;
-				img{
+				img {
 					max-width: 100px;
 					max-height: 100px;
 				}
@@ -434,11 +435,10 @@ header.profile_head{
 			}
 		}
 
-
-		div.main_right{
-			div.user-info{
+		div.main_right {
+			div.user-info {
 				margin-top: 10%;
-				h1{
+				h1 {
 					line-height: 23px;
 					height: 72px;
 					font-size: 600;
@@ -448,7 +448,7 @@ header.profile_head{
 					text-overflow: ellipsis;
 				}
 
-				.addFriend{
+				.addFriend {
 					margin-top: 22%;
 				}
 
@@ -456,38 +456,28 @@ header.profile_head{
 					color: @white;
 				}
 
-				.header-fship{
-					.btn_friendship, .btn_idolship, .btn_teamship{
-						font-size: 20px;
-						font-weight: bold;
-						text-transform: uppercase;
-						position: absolute;
-						bottom: 23px;
-					}
-				}
-
-				.header-subtitle{
+				.header-subtitle {
 					font-size: 13px;
 				}
 			}
 
-			.numbers-info{
+			.numbers-info {
 				margin-top: 10px;
 
-				.fotos-info, .videos-info, .fans-info, .ptos-info{
+				.fotos-info, .videos-info, .fans-info, .ptos-info {
 					padding-right: 20%;
 					text-align: right;
 					height: 60px;
 
-					div.numero{
+					div.numero {
 						font-size: 17px;
 					}
-					div.tipo{
+					div.tipo {
 						font-size: 11px;
 						text-transform: uppercase;
 						padding-top: 5px;
 					}
-					div.separador{
+					div.separador {
 						border-bottom: 1px solid gray;
 						float: right;
 						height: 0;
@@ -500,12 +490,11 @@ header.profile_head{
 
 	}
 
-	.nav-tabs-profile{
+	.nav-tabs-profile {
 		margin-top: 10px;
 		font-size: 16px;
 		color: @navbarprofilelinks;
-		li
-		{
+		li {
 			margin-right: 10px;
 			line-height: 10px;
 		}
@@ -514,23 +503,37 @@ header.profile_head{
 }
 
 div.twitter-tab {
-	h2 { font-size: 22px; color: #6ee6e7; margin-bottom: 20px; text-transform:capitalize;}
-	p.big { font-size: 26px; line-height: 36px; margin-bottom: 40px;}
-	p { font-size: 14px; color: #4e4c4d; line-height: 19px; margin-bottom: 20px;}
+	h2 {
+		font-size: 22px;
+		color: #6ee6e7;
+		margin-bottom: 20px;
+		text-transform: capitalize;
+	}
+	p.big {
+		font-size: 26px;
+		line-height: 36px;
+		margin-bottom: 40px;
+	}
+	p {
+		font-size: 14px;
+		color: #4e4c4d;
+		line-height: 19px;
+		margin-bottom: 20px;
+	}
 }
 
 //Estilos avatar grid
-section.avatar-grid{
+section.avatar-grid {
 	overflow: hidden;
 	margin-bottom: 15px;
 
-	header.title{
-		h4{
+	header.title {
+		h4 {
 			color: #4d4d4d;
 		}
 	}
 
-	ul.avatar-list{
+	ul.avatar-list {
 		&.fans {
 			margin-top: 15px;
 		}
@@ -541,19 +544,20 @@ section.avatar-grid{
 			}
 		}
 
-		>li{
+		>li {
 			margin-right: 6px;
 			margin-bottom: 8px;
 			.pull-left();
 			line-height: 24px;
 
-			.fan-container, .idol-container, .team-container{
+			.fan-container, .idol-container, .team-container {
 				position: relative;
 				overflow: hidden;
-				height: 145px;
+				height: 150px;
+				width: 150px;
 
-				.name{
-					a{
+				.name {
+					a {
 						display: block;
 						color: @white;
 						font-size: 12px;
@@ -569,11 +573,11 @@ section.avatar-grid{
 						line-height: 15px;
 					}
 				}
-				.addFriend{
+				.addFriend {
 					bottom: 10px;
 					left: 10px;
 					position: absolute;
-					.btn_friendship, .btn_idolship, .btn_teamship{
+					.btn_friendship, .btn_idolship, .btn_teamship {
 						text-transform: uppercase;
 						font-weight: bold;
 						width: 60px;
@@ -590,7 +594,7 @@ section.avatar-grid{
 					font-weight: bold;
 					position: absolute;
 					right: 10px;
-					text-shadow: 1px 1px 0 rgba(128,128,128,.5);
+					text-shadow: 1px 1px 0 rgba(128, 128, 128, .5);
 					display: block;
 				}
 
@@ -601,7 +605,7 @@ section.avatar-grid{
 					font-weight: bold;
 					position: absolute;
 					right: 10px;
-					text-shadow: 1px 1px 0 rgba(128,128,128,.5);
+					text-shadow: 1px 1px 0 rgba(128, 128, 128, .5);
 					display: block;
 				}
 			}
@@ -624,6 +628,7 @@ section#entity-data {
 	display: block;
 	float: left;
 }
+
 section#entity-content {
 	width: 45%;
 	display: block;
@@ -632,8 +637,6 @@ section#entity-content {
 		margin-bottom: 10px;
 	}
 }
-
-
 
 div.change-password {
 	div.row div {
@@ -655,7 +658,7 @@ div.change-password {
 		}
 	}
 
-	.errors.row{
+	.errors.row {
 		color: red;
 		font-weight: bold;
 		padding-left: 20%;
@@ -673,28 +676,24 @@ section#personal-data {
 
 .selectedteam {
 	.delete {
-		width:14px;
-		height:14px;
-		cursor:pointer;
-		float:right;
-		background:url(../images/ui/closealert.png) top;
+		width: 14px;
+		height: 14px;
+		cursor: pointer;
+		float: right;
+		background: url(../images/ui/closealert.png) top;
 
 		&:hover {
-			background-position:bottom;
+			background-position: bottom;
 		}
 	}
 }
 
-div.entityBlock {
+.entityBlock {
 	background-color: #1e181f;
 	position: relative;
 	border: 1px solid @gray;
-	width: 30%;
 	display: block;
 	height: auto;
-	float: left;
-	margin-right: 5%;
-	margin-bottom: 15px;
 	.box-sizing(border-box);
 	.border-radius(10px);
 
@@ -723,13 +722,13 @@ div.entityBlock {
 		img {
 			.border-radius(5px);
 			.size(75px, auto);
-			background: -moz-linear-gradient(-45deg,  rgba(15,15,15,0.65) 0%, rgba(3,3,3,0) 50%, rgba(0,0,0,0) 63%); /* FF3.6+ */
-			background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(15,15,15,0.65)), color-stop(50%,rgba(3,3,3,0)), color-stop(63%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
-			background: -webkit-linear-gradient(-45deg,  rgba(15,15,15,0.65) 0%,rgba(3,3,3,0) 50%,rgba(0,0,0,0) 63%); /* Chrome10+,Safari5.1+ */
-			background: -o-linear-gradient(-45deg,  rgba(15,15,15,0.65) 0%,rgba(3,3,3,0) 50%,rgba(0,0,0,0) 63%); /* Opera 11.10+ */
-			background: -ms-linear-gradient(-45deg,  rgba(15,15,15,0.65) 0%,rgba(3,3,3,0) 50%,rgba(0,0,0,0) 63%); /* IE10+ */
-			background: linear-gradient(135deg,  rgba(15,15,15,0.65) 0%,rgba(3,3,3,0) 50%,rgba(0,0,0,0) 63%); /* W3C */
-			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a60f0f0f', endColorstr='#00000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+			background: -moz-linear-gradient(-45deg, rgba(15, 15, 15, 0.65) 0%, rgba(3, 3, 3, 0) 50%, rgba(0, 0, 0, 0) 63%); /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, rgba(15, 15, 15, 0.65)), color-stop(50%, rgba(3, 3, 3, 0)), color-stop(63%, rgba(0, 0, 0, 0))); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(-45deg, rgba(15, 15, 15, 0.65) 0%, rgba(3, 3, 3, 0) 50%, rgba(0, 0, 0, 0) 63%); /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(-45deg, rgba(15, 15, 15, 0.65) 0%, rgba(3, 3, 3, 0) 50%, rgba(0, 0, 0, 0) 63%); /* Opera 11.10+ */
+			background: -ms-linear-gradient(-45deg, rgba(15, 15, 15, 0.65) 0%, rgba(3, 3, 3, 0) 50%, rgba(0, 0, 0, 0) 63%); /* IE10+ */
+			background: linear-gradient(135deg, rgba(15, 15, 15, 0.65) 0%, rgba(3, 3, 3, 0) 50%, rgba(0, 0, 0, 0) 63%); /* W3C */
+			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#a60f0f0f', endColorstr='#00000000', GradientType=1); /* IE6-9 fallback on horizontal gradient */
 		}
 	}
 
@@ -777,10 +776,6 @@ div.entityBlock {
 			}
 		}
 	}
-
-	&.third {
-		margin-right: 0;
-	}
 }
 
 .header-large-new {
@@ -799,6 +794,7 @@ div.entityBlock {
 				height: auto !important;
 			}
 		}
+
 		.info-container {
 			position: relative !important;
 			height: 160px !important;
@@ -887,7 +883,7 @@ div.entityBlock {
 		height: @height;
 		width: @fixedWidth;
 		position: absolute;
-		right:0;
+		right: 0;
 		top: 0;
 
 		.title {
@@ -995,6 +991,31 @@ div.entityBlock {
 						border: 0;
 					}
 				}
+			}
+		}
+	}
+}
+
+section.teams-tab {
+	&.gs {
+		@import "third-plugins/grid.less";
+		@columns: 3;
+		@gutter-width: 1px;
+		@total-width: 100%;
+
+		.row(9);
+
+		div.entityBlock {
+			margin-bottom: @gutter-width;
+			.column(3, 9);
+
+			@media screen and (max-width: 540px) {
+				.column(9, 9);
+				margin-bottom: 5px;
+			}
+
+			@media screen and (min-width: 541px) and (max-width: 722px) {
+				.column(4.5, 9);
 			}
 		}
 	}
