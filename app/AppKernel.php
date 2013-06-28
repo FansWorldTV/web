@@ -41,6 +41,7 @@ class AppKernel extends Kernel
             new DataFactory\FeedBundle\DataFactoryFeedBundle(),
             new Bazinga\ExposeTranslationBundle\BazingaExposeTranslationBundle(),
             new Kaltura\APIBundle\KalturaAPIBundle(),
+            new FOS\ElasticaBundle\FOSElasticaBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

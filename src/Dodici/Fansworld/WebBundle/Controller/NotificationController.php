@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 class NotificationController extends SiteController
 {
     const LIMIT_NOTIFICATIONS = 30;
-    
+
     /**
      * Only for testing purpose
      * @Route("/test", name="notification_test")
