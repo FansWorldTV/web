@@ -308,6 +308,10 @@ services:
         class: Dodici\Fansworld\WebBundle\Listener\PhotoVideoCounter
         tags:
             - { name: doctrine.event_listener, event: postRemove }
+    photovideocounter.listener.update:
+        class: Dodici\Fansworld\WebBundle\Listener\PhotoVideoCounter
+        tags:
+            - { name: doctrine.event_listener, event: postUpdate }
     my.facebook.user:
         class: Dodici\Fansworld\WebBundle\Security\FacebookProvider
         arguments:

@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace Dodici\Fansworld\WebBundle\Listener;
 
 use Dodici\Fansworld\WebBundle\Entity\HasIdol;
@@ -17,18 +17,23 @@ class PhotoVideoCounter
 	{
 		$this->updateCounts($eventArgs->getEntity(), $eventArgs->getEntityManager());
 	}
-	
+
 	public function postRemove(LifecycleEventArgs $eventArgs)
 	{
 	    $this->updateCounts($eventArgs->getEntity(), $eventArgs->getEntityManager());
 	}
-	
+
+	public function postUpdate(LifecycleEventArgs $eventArgs)
+	{
+	    $this->updateCounts($eventArgs->getEntity(), $eventArgs->getEntityManager());
+	}
+
 	private function updateCounts($entity, $em)
 	{
 	    if ($entity instanceof Photo || $entity instanceof Video) {
 			$type = ($entity instanceof Photo) ? 'Photo' : 'Video';
 			$setcountmethodname = 'set'.$type.'Count';
-		    
+
 		    if ($entity->getAuthor()) {
     		    $user = $entity->getAuthor();
     			if ($entity->getActive()){
@@ -46,12 +51,12 @@ class PhotoVideoCounter
 			    $taggedtype = ($entity->getPhoto()) ? 'Photo' : 'Video';
 			    $taggedentity = ($entity instanceof HasTeam ? $entity->getTeam() : $entity->getIdol());
 			    $setcountmethodname = 'set'.$taggedtype.'Count';
-			    
+
 			    $counts =  $em->getRepository('DodiciFansworldWebBundle:'.$tagtype)->countTagged(
 			        $taggedentity,
 			        strtolower($taggedtype)
 			    );
-			    
+
 			    $taggedentity->$setcountmethodname($counts);
 			    $em->persist($taggedentity);
 			    $em->flush();
