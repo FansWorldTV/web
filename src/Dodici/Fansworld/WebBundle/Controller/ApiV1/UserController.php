@@ -438,6 +438,8 @@ class UserController extends BaseController
 
             }
 
+            $pagination['count'] = count($followingProfiles);
+
             return $this->result($return, $pagination);
         } catch (\Exception $e) {
             return $this->plainException($e);
