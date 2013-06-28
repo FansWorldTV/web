@@ -118,13 +118,13 @@ footer.navbar{
             .button-container {
                 float: left;
                 width: 255px;
-                padding: 10px;
 
                 .search-button {
                     width: 100%;
                     background: none;
                     border: none;
                     font-weight: bold;
+                    padding: 10px;
                 }
             }
 
@@ -208,17 +208,17 @@ footer.navbar{
                 width: 265px;
             }
 
-            .tt-suggestions {
-                width: 275px;
+            .dataset .tt-suggestion {
+                border-bottom: 1px solid #e8e8e8;
             }
 
-            .tt-suggestion {
-                width: 100%;
+            .tt-suggestions {
+                width: 275px;
                 float: left;
 
-                .container:not(.search-history-term) {
+                .tt-suggestion {
+                    width: 100%;
                     float: left;
-                    border-bottom: 1px solid #e8e8e8;
 
                     a {
                         float: left;
@@ -245,31 +245,28 @@ footer.navbar{
                         }
                     }
                 }
-              }
 
-              .tt-is-under-cursor {
-                background-color: @green;
+                .tt-is-under-cursor {
+                    background-color: @green;
 
-                a {
-                    color: @white;
+                    p, .name {
+                        color: @white !important;
+                    }
                 }
-              }
             }
+          }
 
             .search-history {
                 float: left;
                 padding: 10px 0 10px 0;
+                border-bottom: none;
 
-                .container {
-                    border-bottom: none;
-
-                    p {
-                        padding-left: 44px;
-                        color: @grayDark;
-                        font-style: italic;
-                        margin: 0;
-                        line-height: 22px;
-                    }
+                p {
+                    padding-left: 44px;
+                    color: @grayDark;
+                    font-style: italic;
+                    margin: 0;
+                    line-height: 22px;
                 }
             }
         }

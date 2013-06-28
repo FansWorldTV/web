@@ -519,7 +519,7 @@
                 return deferred;
             },
             getSuggestions: function(query, cb) {
-                console.log(123);
+                console.log('getSuggestions');
                 var that = this, terms, suggestions, cacheHit = false;
                 if (query.length < this.minLength) {
                     return;
@@ -533,6 +533,7 @@
                 function processRemoteData(data) {
                     suggestions = suggestions.slice(0);
                     utils.each(data.suggestions, function(i, datum) {
+                        console.log(data.suggestions);
                         var item = that._transformDatum(datum), isDuplicate;
                         isDuplicate = utils.some(suggestions, function(suggestion) {
                             return item.value === suggestion.value;
@@ -541,11 +542,11 @@
                         return suggestions.length < that.limit;
                     });
                     cb && cb(suggestions);
-                    console.log(99999);
                 }
+                console.log('getSuggestions END');
             },
             getHistory: function(query, cb) {
-                console.log(123);
+                console.log('getHistory');
                 var that = this, terms, suggestions, cacheHit = false;
                 if (query.length < this.minLength) {
                     return;
@@ -559,6 +560,7 @@
                 function processRemoteData(data) {
                     suggestions = suggestions.slice(0);
                     utils.each(data.search_history, function(i, datum) {
+                        console.log(data.suggestions);
                         var item = that._transformDatum(datum), isDuplicate;
                         isDuplicate = utils.some(suggestions, function(suggestion) {
                             return item.value === suggestion.value;
@@ -567,8 +569,8 @@
                         return suggestions.length < that.limit;
                     });
                     cb && cb(suggestions);
-                    console.log(99999);
                 }
+                console.log('getHistory END');
             }
         });
         return Dataset;
@@ -624,7 +626,7 @@
             },
             _handleSpecialKeyEvent: function($e) {
                 var keyName = this.specialKeyCodeMap[$e.which || $e.keyCode];
-                keyName && this.trigger(keyName + "Keyed", $e);
+                keyName && this.trigger(keyName, $e);
             },
             _compareQueryToInputValue: function() {
                 var inputValue = this.getInputValue(), isSameQuery = compareQueries(this.query, inputValue), isSameQueryExceptWhitespace = isSameQuery ? this.query.length !== inputValue.length : false;
@@ -659,14 +661,16 @@
                 return this.$input.val();
             },
             setInputValue: function(value, silent) {
+                /*
                 this.$input.val(value);
                 !silent && this._compareQueryToInputValue();
+                */
             },
             getHintValue: function() {
                 return this.$hint.val();
             },
             setHintValue: function(value) {
-                this.$hint.val(value);
+                //this.$hint.val(value);
             },
             getLanguageDirection: function() {
                 return (this.$input.css("direction") || "ltr").toLowerCase();
@@ -846,7 +850,7 @@
                     elBuilder = document.createElement("div");
                     fragment = document.createDocumentFragment();
                     utils.each(suggestions, function(i, suggestion) {
-                        compiledHtml = dataset.template(suggestion.datum);
+                        compiledHtml = dataset.template2(suggestion.datum);
                         elBuilder.innerHTML = wrapper.replace("%body", compiledHtml);
                         $el = $(elBuilder.firstChild).css(css.suggestion).data("suggestion", suggestion);
                         $el.children().each(function() {
@@ -885,7 +889,6 @@
                         });
                         fragment.appendChild($el[0]);
                     });
-                    console.log($dataset.show().find(".tt-suggestions"));
                     $($dataset.show().find(".tt-suggestions")[1]).html(fragment);
                 } else {
                     this.clearSuggestions(dataset.name);
@@ -907,7 +910,7 @@
                 $suggestions.empty();
                 if (this._getSuggestions().length === 0) {
                     this.isEmpty = true;
-                    this._hide();
+                    //this._hide();
                 }
             }
         });
@@ -1021,11 +1024,15 @@
                 this.dropdownView.clearSuggestions();
             },
             _setInputValueToQuery: function() {
+                /*
                 this.inputView.setInputValue(this.inputView.getQuery());
+                */
             },
             _setInputValueToSuggestionUnderCursor: function(e) {
+                /*
                 var suggestion = e.data;
                 this.inputView.setInputValue(suggestion.value, true);
+                */
             },
             _openDropdown: function() {
                 this.dropdownView.open();
@@ -1059,13 +1066,15 @@
                     var dropdown = $(html).clone();
                     var $history = {};
                     var $suggestions = {};
-                    var $buscar = {};
                     var rendered = {};
                     var rendered2 = {};
-                    var rendered3 = {};
+
+                    var searchQuery = that.inputView.getQuery();
 
                     utils.each(that.datasets, function(i, dataset) {
                         dataset.getHistory(query, function(history) {
+                            console.log('dataset.getHistory');
+                            console.log(history);
                             if (query === that.inputView.getQuery()) {
                                 rendered = that.dropdownView.renderHistory(dataset, history, query);
                                 if (rendered) {
@@ -1074,11 +1083,11 @@
                                 }
                             }
                         });
-                    });
 
-                    utils.each(that.datasets, function(i, dataset) {
                         dataset.getSuggestions(query, function(suggestions) {
-                            if (query === that.inputView.getQuery()) {
+                            console.log('dataset.getSuggestions');
+                            console.log(suggestions);
+                            if (query === searchQuery) {
                                 rendered2 = that.dropdownView.renderSuggestions(dataset, suggestions, query);
                                 if (rendered2) {
                                     $suggestions = rendered2.dataset;
@@ -1088,15 +1097,10 @@
                         });
                     });
 
-                    query === 'Buscar "' + that.inputView.getQuery() + '"';
-                    rendered2 = that.dropdownView.renderSuggestions(query, query, query);
-                    if (rendered2) {
-                        $buscar = rendered3.dataset;
-                        //$menu = rendered3.menu;
-                    }
-
                     dropdown.find('.search-history').html($history);
                     dropdown.find('.dataset').html($suggestions);
+
+
                     return dropdown;
                 }).done(function(dropdown){
                     dropdown.appendTo($menu);

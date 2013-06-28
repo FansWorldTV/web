@@ -213,8 +213,8 @@ var site = {
             $(this).modalPopup({'href': urlModal});
         });
 
-        var typeaheadTemplate = '<div class="container"><a href="$url"><div class="image-container"><img width="32px" height="32px" class="image" src="$image"/></div><span class="name">$value</span></a></div>';
-        var typeaheadTemplate2 = '<div class="container search-history-term"><p>$value</span></p></div>';
+        var typeaheadTemplate = '<a href="$url"><div class="image-container"><img width="32px" height="32px" class="image" src="$image"/></div><span class="name">$value</span></a>';
+        var typeaheadTemplate2 = '<a href="$url" class="search-history-term"><p>$value</span></p></a>';
 
         var searchHistoryCount = 0;
 
@@ -244,10 +244,15 @@ var site = {
             }
         });
 
-        $('.twitter-typeahead .tt-query').on('input', function(e){
-            console.log( $('.tt-dropdown-menu .search-button')).text();
-            $('.tt-dropdown-menu .search-button').text('Buscar "' + $(this).val() + '"');
+        window.hola = 0;
+
+        $('.twitter-typeahead .tt-query').keyup(function(e) {
+          if ( e.which == 13 ) {
+             e.preventDefault();
+           }
+           $('.tt-dropdown-menu .search-button').text('Buscar "' + $(this).val() + '"');
         });
+
 
         site.parseTimes();
         site.denyFriendRequest();
