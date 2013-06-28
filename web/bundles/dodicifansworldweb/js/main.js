@@ -213,6 +213,47 @@ var site = {
             $(this).modalPopup({'href': urlModal});
         });
 
+        var typeaheadTemplate = '<a href="$url"><div class="image-container"><img width="32px" height="32px" class="image" src="$image"/></div><span class="name">$value</span></a>';
+        var typeaheadTemplate2 = '<a href="$url" class="search-history-term"><p>$value</span></p></a>';
+
+        var searchHistoryCount = 0;
+
+        $('.navbar-search input').typeahead({
+            minLength: 3
+            , remote: Routing.generate(appLocale + '_search_ajaxsearch_autocomplete') + '?q=%QUERY'
+            , template: typeaheadTemplate
+            , template2: typeaheadTemplate2
+            , engine: {
+                compile: function(template) {
+                  return {
+                    render: function(ctx) {
+                      if(ctx.type == 'search_history') {
+                          searchHistoryCount++;
+                          return typeaheadTemplate2.replace(/\$(\w+)/g, function(msg) {
+                            return ctx[msg.substring(1)];
+                          });
+                      }
+                      else {
+                          return template.replace(/\$(\w+)/g, function(msg) {
+                            return ctx[msg.substring(1)];
+                          });
+                      }
+                    }
+                  };
+                }
+            }
+        });
+
+        window.hola = 0;
+
+        $('.twitter-typeahead .tt-query').keyup(function(e) {
+          if ( e.which == 13 ) {
+             e.preventDefault();
+           }
+           $('.tt-dropdown-menu .search-button').text('Buscar "' + $(this).val() + '"');
+        });
+
+
         site.parseTimes();
         site.denyFriendRequest();
         site.acceptFriendRequest();
@@ -749,5 +790,6 @@ if (!Object.keys) {
             }
         }
         return keys;
-    };
+    };  
 }
+
