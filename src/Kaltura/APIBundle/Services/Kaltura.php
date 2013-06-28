@@ -8,6 +8,7 @@ use Kaltura\Client\Enum\SessionType as KalturaSessionType;
 use Kaltura\Client\ApiException;
 use Kaltura\Client\ClientException;
 use Kaltura\Client\Type\MediaEntry;
+use Kaltura\Client\Type\User as KalturaUser;
 use Kaltura\Client\Plugin\Metadata\Enum\MetadataObjectType;
 use Kaltura\Client\Plugin\Metadata\MetadataPlugin;
 use Kaltura\Client\Type\UploadedFileTokenResource;
@@ -60,12 +61,19 @@ class Kaltura
      * Get kaltura session
      * @param boolean $admin
      */
-    public function getKs($admin = true)
+    public function getKs($admin = true, $userId = null)
     {
+        $username = null;
+        if (!$admin && $userId) {
+            $user = $this->getUser($userId);
+            if (!$user) throw new \Exception('Failed creating user');
+            $username = $user->id;
+        }
+
         // generate session
         $ks = $this->client->generateSession(
-            $admin ? $this->adminsecret : $this->usersecret, 
-            $this->username,
+            $this->adminsecret,
+            $username ?: $this->username,
             $admin ? KalturaSessionType::ADMIN : KalturaSessionType::USER,
             $this->partnerid
         );
@@ -126,6 +134,23 @@ class Kaltura
         $token = $uts->add();
         if ($token) return $token->id;
         return false;
+    }
+
+    public function getUser($userId)
+    {
+        $this->client->setKs($this->getKs());
+        $user = null;
+        try {
+            $user = $this->client->user->get($this->getUsername($userId));
+        } catch(\Exception $e) {
+
+        }
+        if (!$user) {
+            $user = new KalturaUser();
+            $user->id = $this->getUsername($userId);
+            $user = $this->client->user->add($user);
+        }
+        return $user;
     }
     
     /**
@@ -208,12 +233,17 @@ class Kaltura
      * Get client
      * @param boolean $admin
      */
-    public function getClient($admin = true)
+    public function getClient()
     {
         if (!$this->client->getKs()) {
-            $this->client->setKs($this->getKs($admin));
+            $this->client->setKs($this->getKs());
         }
         return $this->client;
+    }
+
+    public function init($admin = true, $userId = null)
+    {
+        $this->client->setKs($this->getKs($admin, $userId));
     }
     
     public function getPartnerId()
@@ -239,6 +269,11 @@ class Kaltura
     public function getApiUrl()
     {
         return $this->apiurl;
+    }
+
+    protected function getUsername($userId)
+    {
+        return 'fw-user-'.$userId;
     }
     
     protected function setMeta($entryId, $metaid, $xml)

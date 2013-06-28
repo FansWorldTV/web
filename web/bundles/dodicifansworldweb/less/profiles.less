@@ -1,0 +1,155 @@
+.home-content.profiles {
+	.profile-block(){
+		position: relative;
+		.box-sizing(border-box);
+		overflow: hidden;
+		border: 1px solid white;
+		.transition(0.5s filter ease);
+
+
+		&.team {
+			.image {
+				position: absolute;
+				top: 10%;
+				left: 10%;
+				display: block;
+				height: 80%;
+			}
+			.splash {
+				.filter(blur(3px));
+			}
+		}
+
+		&.idol {
+			.splash {
+				display: none;
+			}
+		}
+
+		&:hover {
+			.image, .splash {
+				.filter(blur(7px));
+			}
+			.info {
+				opacity: 1;
+
+				&:before {
+					opacity: 0.4;
+				}
+			}
+		}
+
+		.info {
+			.square(100%);
+			.box-sizing(border-box);
+			.background-transparent(@black, 0);
+			.transition(opacity 0.6s ease);
+
+			position: absolute;
+			top: 0;
+			left: 0;
+			opacity: 0;
+			color: white;
+			font-weight: 300;
+			text-align: left;
+			padding: 0.6em;
+
+			* { position: relative; }
+
+			.title {
+				font-size: 20px;
+				line-height: 22px;
+			}
+
+			a {
+				color: white;
+
+				&:hover {
+					color: white;
+				}
+			}
+
+			div.bottom-container {
+				position: absolute;
+				display: block;
+				bottom: 0;
+				left: 0;
+				padding: inherit;
+				width: 100%;
+				.box-sizing(border-box);
+
+				button.add-fan {
+					float: right;
+					font-size: 20px;
+					font-weight: 600;
+					padding: 5px 8px 5px 8px;
+				}
+
+				.data-cant {
+					float: left;
+					font-size: 18px;
+					font-weight: 600;
+					text-align: center;
+					line-height: 27px;
+
+					span {
+						font-weight: 300;
+						font-size: 14px;
+					}
+				}
+			}
+		}
+	}
+
+	section.most-recent {
+		padding: 0 1em 0 1em;
+		div.profile {
+			.profile-block();
+		}
+	}
+
+	section.popular {
+		@import "third-plugins/grid.less";
+		@columns: 12;
+		@column-width: 150px;
+		@gutter-width: 1px;
+		@total-width: 100%;
+
+		padding: 0 1em 0 1em;
+		.box-sizing(border-box);
+
+		header { padding: 0; }
+
+		.profiles-container {
+			.row(9);
+
+			div.profile {
+				@media screen and (max-width: 416px) {
+					.column(4.5, 9);
+				}
+				@media screen and (min-width: 416px) and (max-width: 536px) {
+					.column(3, 9);
+				}
+				@media screen and (min-width: 537px) and (max-width: 767px) {
+					.column(2.25, 9);
+				}
+				@media screen and (min-width: 768px) and (max-width: 792px) {
+					.column(1.8, 9);
+				}
+				@media screen and (min-width: 793px) and (max-width: 1000px) {
+					.column(1.5, 9);
+				}
+				@media screen and (min-width: 1001px) and (max-width: 1399px) {
+					.column(1, 9);
+				}
+				@media screen and (min-width: 1400px) {
+					.column(0.64, 9);
+				}
+
+				.column(1, 9);
+				margin-bottom: @gutter-width;
+				.profile-block();
+			}
+		}
+	}
+}

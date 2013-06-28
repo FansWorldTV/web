@@ -131,6 +131,11 @@ sonata_media:
                 huge:   { width: 1024 , quality: 90, constraint: false}
                 home_video: { width: 220, height: 137, quality: 100 }
                 home_video_double: { width: 440, height: 214, quality: 100 }
+                mobile_320x208: { width: 640, height: 416 }
+                mobile_150x150 : { width: 300, height: 300 }
+                mobile_65x65 : { width: 130, height: 130 }
+                mobile_30x30 : { width: 60, height: 60 }
+                mobile_320x210 : { width: 640, height: 420 }
 
     cdn:
         server:

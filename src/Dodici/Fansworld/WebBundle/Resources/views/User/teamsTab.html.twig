@@ -14,16 +14,11 @@
 
 {% set c = 0 %}
 {% block profile_body %}
-    {% for ts in userTeams %}
-        {% set team = ts.team %}
-        {% set c = c+1 %}
-        {% if c == 3 %}
-            {% set c = 0 %}
-            {% set third = true %}
-        {% else %}
-            {% set third = false %}
-        {% endif %}
-    
-        {% include 'DodiciFansworldWebBundle:Default:blocks/entity_widget.html.twig' with {'entity': team, 'third': third} %}
-    {% endfor %}
+    <section class="teams-tab gs">
+        {% for ts in userTeams %}
+            {% set team = ts.team %}
+
+            {% include 'DodiciFansworldWebBundle:Default:blocks/entity_widget.html.twig' with {'entity': team, 'dropdown': true} %}
+        {% endfor %}
+    </section>
 {% endblock %}

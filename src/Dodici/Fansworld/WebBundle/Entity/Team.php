@@ -3,17 +3,17 @@
 namespace Dodici\Fansworld\WebBundle\Entity;
 
 use Dodici\Fansworld\WebBundle\Model\VisitableInterface;
-
 use Dodici\Fansworld\WebBundle\Model\SearchableInterface;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\Team
- * 
+ *
  * A sports team or similar. Can be followed by users (become a fan, Teamship).
  * Contents can be tagged with teams (HasTeam).
  * Involved in Events. Belongs to a TeamCategory, and therefore a Sport.
@@ -40,7 +40,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
      * @ORM\Column(name="title", type="string", length=100, nullable=false)
      */
     private $title;
-    
+
     /**
      * @var string $shortname
      * @Gedmo\Translatable
@@ -48,7 +48,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
      * @ORM\Column(name="shortname", type="string", length=100, nullable=true)
      */
     private $shortname;
-    
+
     /**
      * @var string $letters
      * @Gedmo\Translatable
@@ -56,7 +56,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
      * @ORM\Column(name="letters", type="string", length=100, nullable=true)
      */
     private $letters;
-    
+
     /**
      * @var string $stadium
      * @Gedmo\Translatable
@@ -64,14 +64,14 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
      * @ORM\Column(name="stadium", type="string", length=100, nullable=true)
      */
     private $stadium;
-    
+
     /**
      * @var string $website
      *
      * @ORM\Column(name="website", type="string", length=100, nullable=true)
      */
     private $website;
-    
+
     /**
      * @var text $content
      * @Gedmo\Translatable
@@ -79,7 +79,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
      * @ORM\Column(name="content", type="text", nullable=true)
      */
     private $content;
-    
+
     /**
      * @var text $nicknames
      * @Gedmo\Translatable
@@ -94,35 +94,35 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     private $createdAt;
-    
+
     /**
      * @var datetime $foundedAt
      *
      * @ORM\Column(name="founded_at", type="datetime", nullable=true)
      */
     private $foundedAt;
-    
+
     /**
      * @var boolean $active
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
     private $active;
-    
+
     /**
      * @var Application\Sonata\MediaBundle\Entity\Media
      * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
      */
     private $image;
-    
+
     /**
      * @var Application\Sonata\MediaBundle\Entity\Media
      * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="splash", referencedColumnName="id")
      */
     private $splash;
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="TeamCategory")
      * @ORM\JoinTable(name="team_teamcategory",
@@ -131,7 +131,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
      *      )
      */
     protected $teamcategories;
-    
+
     /**
      * @var Country
      *
@@ -141,54 +141,54 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
      * })
      */
     private $country;
-    
+
     /**
      * @var string $external
      *
      * @ORM\Column(name="external", type="string", length=100, nullable=true)
      */
     private $external;
-    
+
     /**
      * @var string $twitter
      *
      * @ORM\Column(name="twitter", type="string", length=100, nullable=true)
      */
     private $twitter;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Teamship", mappedBy="team", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $teamships;
-    
+
     /**
      * @Gedmo\Slug(fields={"title"}, unique=true)
      * @ORM\Column(length=128)
      */
     private $slug;
-    
+
 	/**
 	 * @Gedmo\Locale
 	 * Used locale to override Translation listener`s locale
 	 * this is not a mapped field of entity metadata, just a simple property
 	 */
 	private $locale;
-	
+
 	public function setTranslatableLocale($locale)
 	{
 	    $this->locale = $locale;
 	}
-    
+
     /**
      * @ORM\OneToMany(targetEntity="IdolCareer", mappedBy="team")
      */
     protected $idolcareers;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="team", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $comments;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="HasTeam", mappedBy="team", cascade={"remove", "persist"}, orphanRemoval="true")
      */
@@ -199,31 +199,43 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
      * @ORM\Column(name="fancount", type="bigint", nullable=false)
      */
     private $fanCount;
-    
+
     /**
      * @var integer $photoCount
      * @ORM\Column(name="photocount", type="bigint", nullable=false)
      */
     private $photoCount;
-    
+
     /**
      * @var integer $videoCount
      * @ORM\Column(name="videocount", type="bigint", nullable=false)
      */
     private $videoCount;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Visit", mappedBy="team", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $visits;
-    
+
     /**
      * @var integer $visitCount
      *
      * @ORM\Column(name="visitcount", type="integer", nullable=false)
      */
     private $visitCount;
-    
+
+    /**
+     * @var Genre
+     *
+     * @Assert\NotNull()
+     *
+     * @ORM\ManyToOne(targetEntity="Genre")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="genre_id", referencedColumnName="id")
+     * })
+     */
+    private $genre;
+
 	/**
      * @ORM\PrePersist()
      */
@@ -238,11 +250,11 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
         if (null === $this->fanCount) {
         	$this->setFanCount(0);
         }
-        
+
         if (null === $this->photoCount) {
             $this->setPhotoCount(0);
         }
-        
+
         if (null === $this->videoCount) {
             $this->setVideoCount(0);
         }
@@ -255,12 +267,12 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
         $this->teamcategories = new \Doctrine\Common\Collections\ArrayCollection();
         $this->visitCount = 0;
     }
-    
+
     public function __toString()
     {
     	return $this->getShortname() ?: $this->getTitle();
     }
-    
+
 	/**
      * Add comments
      *
@@ -270,7 +282,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     {
         $this->comments[] = $comments;
     }
-    
+
 	public function addComments(\Dodici\Fansworld\WebBundle\Entity\Comment $comments)
     {
         $this->comments[] = $comments;
@@ -279,22 +291,22 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get comments
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getComments()
     {
         return $this->comments;
     }
-    
+
 	public function setComments($comments)
     {
         $this->comments = $comments;
     }
-    
+
     /**
      * Get id
      *
-     * @return bigint 
+     * @return bigint
      */
     public function getId()
     {
@@ -314,7 +326,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -334,7 +346,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get content
      *
-     * @return text 
+     * @return text
      */
     public function getContent()
     {
@@ -354,7 +366,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get createdAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedAt()
     {
@@ -374,13 +386,13 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get active
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActive()
     {
         return $this->active;
     }
-    
+
     /**
      * Set image
      *
@@ -394,7 +406,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get image
      *
-     * @return Application\Sonata\MediaBundle\Entity\Media 
+     * @return Application\Sonata\MediaBundle\Entity\Media
      */
     public function getImage()
     {
@@ -414,7 +426,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
@@ -430,7 +442,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     {
         $this->teamcategories[] = $teamcategories;
     }
-    
+
     public function addTeamcategories(\Dodici\Fansworld\WebBundle\Entity\TeamCategory $teamcategories)
     {
         $this->addTeamcategory($teamcategories);
@@ -439,18 +451,18 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get teamcategories
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getTeamcategories()
     {
         return $this->teamcategories;
     }
-    
+
     public function setTeamcategories($teamcategories)
     {
         $this->teamcategories = $teamcategories;
     }
-    
+
     /**
      * Set fanCount
      *
@@ -464,13 +476,13 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get fanCount
      *
-     * @return bigint 
+     * @return bigint
      */
     public function getFanCount()
     {
         return $this->fanCount;
     }
-    
+
     /**
      * Set photoCount
      *
@@ -480,7 +492,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     {
         $this->photoCount = $photoCount;
     }
-    
+
     /**
      * Get photoCount
      *
@@ -490,7 +502,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     {
         return $this->photoCount;
     }
-    
+
     /**
      * Set videoCount
      *
@@ -500,7 +512,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     {
         $this->videoCount = $videoCount;
     }
-    
+
     /**
      * Get videoCount
      *
@@ -510,7 +522,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     {
         return $this->videoCount;
     }
-    
+
     /**
      * Set external
      *
@@ -524,7 +536,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get external
      *
-     * @return string 
+     * @return string
      */
     public function getExternal()
     {
@@ -544,7 +556,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get twitter
      *
-     * @return string 
+     * @return string
      */
     public function getTwitter()
     {
@@ -564,7 +576,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get shortname
      *
-     * @return string 
+     * @return string
      */
     public function getShortname()
     {
@@ -584,7 +596,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get letters
      *
-     * @return string 
+     * @return string
      */
     public function getLetters()
     {
@@ -604,7 +616,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get stadium
      *
-     * @return string 
+     * @return string
      */
     public function getStadium()
     {
@@ -624,7 +636,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get website
      *
-     * @return string 
+     * @return string
      */
     public function getWebsite()
     {
@@ -644,7 +656,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get nicknames
      *
-     * @return text 
+     * @return text
      */
     public function getNicknames()
     {
@@ -664,7 +676,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get foundedAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getFoundedAt()
     {
@@ -684,7 +696,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get splash
      *
-     * @return Application\Sonata\MediaBundle\Entity\Media 
+     * @return Application\Sonata\MediaBundle\Entity\Media
      */
     public function getSplash()
     {
@@ -704,13 +716,13 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get country
      *
-     * @return Dodici\Fansworld\WebBundle\Entity\Country 
+     * @return Dodici\Fansworld\WebBundle\Entity\Country
      */
     public function getCountry()
     {
         return $this->country;
     }
-    
+
 	/**
      * Add hasteams
      *
@@ -725,13 +737,13 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get hasteams
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getHasteams()
     {
         return $this->hasteams;
     }
-    
+
 	public function setHasteams($hasteams)
     {
         $this->hasteams = $hasteams;
@@ -740,7 +752,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     {
         $this->addHasTeam($hasteams);
     }
-    
+
 	/**
      * Add visits
      *
@@ -752,7 +764,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
         $this->setVisitCount($this->getVisitCount() + 1);
         $this->visits[] = $visits;
     }
-    
+
 	public function addVisits(\Dodici\Fansworld\WebBundle\Entity\Visit $visits)
     {
         $this->addVisit($visits);
@@ -761,13 +773,13 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get visits
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getVisits()
     {
         return $this->visits;
     }
-    
+
 	public function setVisits($visits)
     {
         $this->visits = $visits;
@@ -786,7 +798,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get visitCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getVisitCount()
     {
@@ -806,7 +818,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get teamships
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getTeamships()
     {
@@ -826,10 +838,31 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     /**
      * Get idolcareers
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getIdolcareers()
     {
         return $this->idolcareers;
     }
+
+    /**
+     * Set Genre
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\Genre $genre
+     */
+    public function setGenre(\Dodici\Fansworld\WebBundle\Entity\Genre $genre)
+    {
+        $this->genre = $genre;
+    }
+
+    /**
+     * Get Genre
+     *
+     * @return Dodici\Fansworld\WebBundle\Entity\Genre
+     */
+    public function getGenre()
+    {
+        return $this->genre;
+    }
+
 }

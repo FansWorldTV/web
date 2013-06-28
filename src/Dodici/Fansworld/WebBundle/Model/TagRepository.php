@@ -1,5 +1,4 @@
 <?php
-
 namespace Dodici\Fansworld\WebBundle\Model;
 
 use Application\Sonata\UserBundle\Entity\User;
@@ -50,15 +49,19 @@ class TagRepository extends CountBaseRepository
      *
      * @param 'popular'|'latest' $filtertype
      * @param VideoCategory|null $videocategory - filter by video category
+     * @param Genre|null $genre - filter by video genre
      * @param int|null $limit
      * @param int|null $offset
      */
-    public function usedInVideos($filtertype, $videocategory = null, $limit = null, $offset = null)
+    public function usedInVideos($filtertype, $videocategory = null, $genre=null, $limit = null, $offset = null)
     {
         $filtertypes = array('popular', 'latest');
 
         if (!in_array($filtertype, $filtertypes))
             throw new \InvalidArgumentException('Invalid filter type');
+
+        if ($videocategory && $genre)
+            throw new \InvalidArgumentException('VideoCategory and genre are mutually exclusive in this query');
 
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('id', 'id');
@@ -87,13 +90,11 @@ class TagRepository extends CountBaseRepository
                 has' . $type . '
                 INNER JOIN ' . $type . ' ON has' . $type . '.' . $type . '_id = ' . $type . '.id
                 INNER JOIN video ON has' . $type . '.video_id = video.id AND video.active = true
-                ' .
-                    (($videocategory) ?
-                            'WHERE
-                (:videocategory IS NULL OR (video.videocategory_id = :videocategory))' : '')
-                    . '
-                GROUP BY ' . $type . '.id
-                ';
+                LEFT JOIN genre gn ON gn.id = video.genre_id
+                '
+                    .(($videocategory) ? ' WHERE (:videocategory IS NULL OR (video.videocategory_id = :videocategory)) ' : '')
+                    .(($genre) ? ' WHERE (:genre IS NULL OR (video.genre_id = :genre) OR (gn.parent_id = :genre)) ' : '')
+                .' GROUP BY ' . $type . '.id';
         }
 
         $order = null;
@@ -112,11 +113,11 @@ class TagRepository extends CountBaseRepository
                 , $rsm
         );
 
-        if ($videocategory) {
-            $query = $query->setParameter(
-                    'videocategory', ($videocategory instanceof VideoCategory) ? $videocategory->getId() : $videocategory, Type::BIGINT
-            );
-        }
+        if ($videocategory)
+            $query = $query->setParameter('videocategory', ($videocategory instanceof VideoCategory) ? $videocategory->getId() : $videocategory, Type::BIGINT);
+
+        if ($genre)
+            $query = $query->setParameter('genre', ($genre instanceof Genre) ? $genre->getId() : $genre, Type::BIGINT);
 
         if ($limit !== null)
             $query = $query->setParameter('limit', (int) $limit, Type::INTEGER);

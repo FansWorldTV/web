@@ -77,17 +77,21 @@
             $("[data-idolship-add]").fwIdolship({
                 onAddIdol: function(plugin, data) {
                     var self = $(plugin.element);
-                    self.addClass('disabled');
-                    self.removeClass('add');
+                    self.remove();
+                    /*self.removeClass('add');
                     self.find('i').removeClass().addClass('icon-minus-sign');
+                    self.addClass('remove');
+                    self.attr("title", "SER FAN");*/
                 }
             });
             $('[data-teamship-add]').fwTeamship({
                 onAddTeam: function(plugin, data) {
                     var self = $(plugin.element);
-                    self.addClass('disabled');
+                    self.remove();
+                    /*self.addClass('remove');
+                    self.attr("title", "SER FAN");
                     self.removeClass('add');
-                    self.find('i').removeClass().addClass('icon-minus-sign');;
+                    self.find('i').removeClass().addClass('icon-minus-sign');;*/
                 }
             });
             $("[data-share-content]").fwModalDialog();

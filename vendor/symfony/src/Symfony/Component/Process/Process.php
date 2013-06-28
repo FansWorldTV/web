@@ -53,7 +53,11 @@ class Process
         }
 
         $this->commandline = $commandline;
-        $this->cwd = null === $cwd ? getcwd() : $cwd;
+        $this->cwd = $cwd;
+        // on windows, if the cwd changed via chdir(), proc_open defaults to the dir where php was started
+        if (null === $this->cwd && defined('PHP_WINDOWS_VERSION_BUILD')) {
+            $this->cwd = getcwd();
+        }
         if (null !== $env) {
             $this->env = array();
             foreach ($env as $key => $value) {
@@ -359,6 +363,13 @@ class Process
      */
     public function getWorkingDirectory()
     {
+        // This is for BC only
+        if (null === $this->cwd) {
+            // getcwd() will return false if any one of the parent directories does not have
+            // the readable or search mode set, even if the current directory does
+            return getcwd() ?: null;
+        }
+
         return $this->cwd;
     }
 

@@ -467,22 +467,4 @@ class IdolController extends SiteController
             'type' => $type
         );
     }
-
-    private function _createForm()
-    {
-        $defaultData = array();
-        $collectionConstraint = new Collection(array(
-            'x' => array(),
-            'y' => array(),
-            'w' => array(),
-            'h' => array()
-        ));
-        $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
-            ->add('x', 'hidden', array('required' => false, 'data' => 0))
-            ->add('y', 'hidden', array('required' => false, 'data' => 0))
-            ->add('w', 'hidden', array('required' => false, 'data' => 0))
-            ->add('h', 'hidden', array('required' => false, 'data' => 0))
-            ->getForm();
-        return $form;
-    }
 }

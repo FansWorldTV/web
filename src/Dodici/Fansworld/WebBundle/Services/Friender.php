@@ -89,6 +89,8 @@ class Friender
 		$this->em->persist($notification);
 
         $this->em->flush();
+        
+        if ($friendship->getActive()) $this->updateFanCount($friendship->getTarget());
 
         // notify new?
 
@@ -110,10 +112,13 @@ class Friender
         $friendship->setActive(true);
 
         $this->notifyAccept($friendship);
+        
         $this->scoreAdd($friendship);
 
         $this->em->persist($friendship);
         $this->em->flush();
+        
+        $this->updateFanCount($friendship->getTarget());
     }
 
 	/**
@@ -143,6 +148,8 @@ class Friender
         $this->em->remove($friendship);
 
         $this->em->flush();
+        
+        $this->updateFanCount($friendship->getTarget());
     }
     
     /**
@@ -215,16 +222,6 @@ class Friender
         $scoreadd = ScoreHandler::SCORE_NEW_FRIENDSHIP;
 		if ($friendship->getInvitation() && !$remove) $scoreadd += ScoreHandler::SCORE_INVITE_FRIEND;
         $this->addScoreToUser($friendship->getTarget(), $remove ? -$scoreadd : $scoreadd);
-
-        $target = $friendship->getTarget();
-        $fancount = $this->em->getRepository('DodiciFansworldWebBundle:Friendship')->countBy(array(
-            'target' => $target->getId(),
-            'active' => true
-        ));
-        if ($remove) $fancount--;
-        else $fancount++;
-        $target->setFanCount($fancount);
-        $this->em->persist($target);
     }
 
     private function scoreRemove(Friendship $friendship)
@@ -246,5 +243,17 @@ class Friender
 
 	    	$this->em->persist($user);
     	}
+    }
+    
+    private function updateFanCount(User $user)
+    {
+        $fancount = $this->em->getRepository('DodiciFansworldWebBundle:Friendship')->countBy(array(
+            'target' => $user->getId(),
+            'active' => true
+        ));
+        
+        $user->setFanCount($fancount);
+        $this->em->persist($user);
+        $this->em->flush();
     }
 }

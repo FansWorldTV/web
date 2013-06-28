@@ -58,13 +58,16 @@ var friendship = {
             }, function(response) {
                 if(!response.error) {
                     if (response.active) {
-                        self.after('<span class="label">'+ response.buttontext +'</span>');
+                        self.html(response.buttontext);
+                        self.addClass('disabled');
+                        self.removeClass('add');
+
                         var number = Number($('.numbers-info .fans-info .numero').text()) + 1;
                         $('.numbers-info .fans-info .numero').text(number);
-                        self.remove();
                     } else {
                         self.removeClass('add').removeClass('btn-success').addClass('remove').attr('friendshipId', response.friendship).html(response.buttontext);
                     }
+
                     success(response.message);
                 }else{
                     error(response.error);

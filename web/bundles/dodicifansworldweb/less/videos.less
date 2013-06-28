@@ -180,7 +180,7 @@ section.related_videos {
 }
 
 .video.bottom-container {
-    padding-left: 15px;
+	.box-sizing(border-box);
 
     #bottom-right {
       h3 {
@@ -189,4 +189,9 @@ section.related_videos {
         color: @black;
       }
     }
+
+	#bottom-left {
+		.box-sizing(border-box);
+		padding-left: 15px;
+	}
 }

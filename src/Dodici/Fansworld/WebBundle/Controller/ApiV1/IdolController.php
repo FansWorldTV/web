@@ -267,7 +267,7 @@ class IdolController extends BaseController
                 }
                 
                 $result = array();
-                foreach ($updates as $ui) $result[] = array('id' => $ui->getId(), 'fanCount' => $ui->getFanCount()); 
+                foreach ($updates as $ui) $result[] = array('id' => $ui->getId(), 'fanCount' => $ui->getFanCount(), 'followed' => $this->get('fanmaker')->status($idol, $user)); 
 
                 return $this->result((count($result) == 1) ? $result[0] : $result);
             } else {
