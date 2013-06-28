@@ -206,4 +206,16 @@ class SearchHistory
     {
         return $this->device;
     }
+
+    /*public function findBygroupByTerm() {
+        $qb = $this->_em->createQueryBuilder();
+        
+        $qb
+        ->add('select', 'sh.term, count(sh.term)')
+        ->add('from', $this->_entityName.' sh');
+
+        $query = $qb->getQuery();
+        
+        return $query->getSingleScalarResult();
+    }*/
 }

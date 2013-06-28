@@ -127,83 +127,176 @@ footer.navbar{
 }
 
 #header .navbar-inner .container {
-	.left-container {
-		.pull-left();
-	}
-	.right-container {
-		.pull-right();
-		.navbar-search {
-			position: relative;
-			.navbarVerticalAlign(26px); // Vertically center in navbar
-			margin-bottom: 0;
+    .left-container {
+        .pull-left();
+    }
+    .right-container {
+        .pull-right();
+        .navbar-search {
+          position: relative;
+          .navbarVerticalAlign(26px); // Vertically center in navbar
+          margin-bottom: 0;
 
-			.search-button {
-				margin-left: -5px;
-				height: 26px;
-				border-radius: 0 3px 3px 0;
-				width: 26px;
-				background-color: white;
-				.transition(none);
-				.box-shadow(none);
-				border: 0;
-			}
+            .button-container {
+                float: left;
+                width: 255px;
 
-			i{
-				&.icon-search {
-					position: absolute;
-					right: 8px;
-					top: 4px;
-				}
-				&.loading-small {
-					position: absolute;
-					.size(16px, 19px);
-					left: -2px;
-					top: 3px;
-				}
-			}
+                .search-button {
+                    width: 100%;
+                    background: none;
+                    border: none;
+                    font-weight: bold;
+                    padding: 10px;
+                }
+            }
 
-			.search-query {
-				padding: 4px 10px;
-				outline: 0;
-				border: 0;
-				color: @black;
-				background-color: @navbarSearchBackgroundFocus;
-				.transition(none);
-				.border-radius(3px 0 0 3px);
-				.box-shadow(none);
-				width: 525px;
+            i{
+                &.icon-search {
+                    position: absolute;
+                    right: 8px;
+                    top: 4px;
+                }
+                &.loading-small {
+                    position: absolute;
+                    .size(16px, 19px);
+                    left: -2px;
+                    top: 3px;
+                }
+            }
 
-				@media(max-width: 1210px) {
-					width: 400px;
-				}
+          .search-query {
+            padding: 4px 10px;
+            outline: 0;
+            border: 0;
+            color: @black;
+            background-color: @navbarSearchBackgroundFocus;
+            .transition(none);
+            .border-radius(3px 0 0 3px);
+            .box-shadow(none);
+            width: 525px;
 
-				@media(max-width: 1100px) {
-					width: 200px;
-				}
+            @media(max-width: 1210px) {
+                width: 400px;
+            }
 
-				@media(max-width: 1099px){
-					width: 154px;
-				}
+            @media(max-width: 1100px) {
+                width: 200px;
+            }
 
-				@media(max-width: 605px) {
-					width: 100px;
-				}
+            @media(max-width: 1099px){
+                width: 154px;
+            }
 
-				@media(max-width: 455px) {
-					width: 50px;
-				}
+            @media(max-width: 605px) {
+                width: 100px;
+            }
+            
+            @media(max-width: 455px) {
+                width: 50px;
+            }
 
-				// Focus states (we use .focused since IE7-8 and down doesn't support :focus)
-				&:focus,
-				&.focused {
-					padding: 4px 10px;
-					color: @black;
-					background-color: @navbarSearchBackgroundFocus;
-					border: 0;
-					outline: 0;
-					.box-shadow(none)
-				}
-			}
-		}
-	}
+            // Focus states (we use .focused since IE7-8 and down doesn't support :focus)
+            &:focus,
+            &.focused {
+                padding: 4px 10px;
+                color: @black;
+                background-color: @navbarSearchBackgroundFocus;
+                border: 0;
+                outline: 0;
+                .box-shadow(none)
+            }
+        }
+
+        .tt-hint {
+            margin-bottom: 0;
+        }
+
+        .tt-dropdown-menu {
+            background-color: @white;
+            width: 275px;
+            border-radius: 3px;
+            box-shadow: 1px 1px 10px black;
+
+            .perfiles {
+                padding: 1px 5px 1px 5px;
+                text-transform: uppercase;
+                color: @black;
+                font-size: 9px;
+                font-weight: bold;
+                background-color: #e8e8e8;
+                border-top: 1px solid @grayLight;
+                border-bottom: 1px solid @grayLight;
+                float: left;
+                width: 265px;
+            }
+
+            .dataset .tt-suggestion {
+                border-bottom: 1px solid #e8e8e8;
+            }
+
+            .tt-suggestions {
+                width: 275px;
+                float: left;
+
+                .tt-suggestion {
+                    width: 100%;
+                    float: left;
+
+                    a {
+                        float: left;
+                        width: 100%;
+                    }
+
+                    .name {
+                        color: @black;
+                        margin-left: 12px;
+                        float: left;
+                        max-width: 178px;
+                        line-height: 32px;
+                    }
+
+                    strong {
+                        font-weight: bold;
+                    }
+
+                    .image-container {
+                        float: left;
+
+                        .image {
+                            float: left;
+                        }
+                    }
+                }
+
+                .tt-is-under-cursor {
+                    background-color: @green;
+
+                    p, .name {
+                        color: @white !important;
+                    }
+                }
+            }
+          }
+
+            .search-history {
+                float: left;
+                padding: 10px 0 10px 0;
+                border-bottom: none;
+
+                p {
+                    padding-left: 44px;
+                    color: @grayDark;
+                    font-style: italic;
+                    margin: 0;
+                    line-height: 22px;
+                }
+            }
+        }
+    }
 }
+
+.typeahead_wrapper { display: block; height: 30px; }
+.typeahead_photo { float: left; max-width: 30px; max-height: 30px; margin-right: 5px; }
+.typeahead_labels { float: left; height: 30px; }
+.typeahead_primary { font-weight: bold; }
+.typeahead_secondary { font-size: .8em; margin-top: -5px; }

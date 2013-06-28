@@ -68,4 +68,40 @@ class SearchHistoryRepository extends CountBaseRepository
     	
     	return $query->getResult();
 	}
+
+/*
+	public function groupByTerm() {
+		$dql = 'SELECT sh.term, count(sh.term) cnt FROM \Dodici\Fansworld\WebBundle\Entity\SearchHistory sh GROUP BY sh.term';
+
+		$query = $this->_em->createQuery($dql);
+		
+    	return $query;
+	}
+*/
+
+	/*
+public function groupByTerm()
+	{
+		$queryBuilder = $this->getEntityManager()
+		->createQueryBuilder()
+		->select('sh.term, count(sh.term)')
+		->from('\Dodici\Fansworld\WebBundle\Entity\SearchHistory', 'sh');
+		//->groupBy('sh.term');
+
+		return $queryBuilder;
+	}
+	*/
+
+	/*public function groupByTerm() {
+        $qb = $this->_em->createQueryBuilder();
+        
+        $qb
+        ->add('select', 'sh.term, count(sh.term)')
+        ->add('from', $this->_entityName.' sh');
+
+    	$query = $qb->getQuery();
+    	
+    	return $query->getSingleScalarResult();
+	}*/
+
 }

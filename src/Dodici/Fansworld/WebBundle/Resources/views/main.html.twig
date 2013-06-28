@@ -67,6 +67,7 @@
                            'bundles/dodicifansworldweb/js/jsviews/jsrender.js'
                            'bundles/dodicifansworldweb/js/jsviews/jquery.observable.js'
                            'bundles/dodicifansworldweb/js/jsviews/jquery.views.js'
+                           'bundles/dodicifansworldweb/js/typeahead.js'                           
                            'bundles/dodicifansworldweb/js/file-uploader/fileuploader.js'
                            'bundles/dodicifansworldweb/js/base.js'
                            'bundles/dodicifansworldweb/js/wall.js'
@@ -101,7 +102,6 @@
                 <script src="http://cdnapi.kaltura.com/p/{{ kalturatwig.partnerid() }}/sp/{{ kalturatwig.subpartnerid() }}/embedIframeJs/uiconf_id/{{ kalturatwig.playerid }}/partner_id/{{ kalturatwig.partnerid() }}"></script>
                 <script type="text/javascript" src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
                 <script type="text/javascript" src="{{ path('bazinga_exposetranslation_js') }}"></script>
-
             {% endblock %}
 
             {% block flashmessage %}
