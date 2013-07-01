@@ -158,7 +158,8 @@ class CommentController extends BaseController
             //if ($this->hasValidSignature()) {
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
-                $user = $this->checkUserToken($userid, $request->get('user_token'));
+                $user = $this->getRepository('User')->find($userid);
+                //$user = $this->checkUserToken($userid, $request->get('user_token'));
 
                 $entity = $this->getRepository(ucfirst($entitytype))->find($id);
                 if (!$entity) throw new HttpException(404, ucfirst($entitytype) . ' not found');
