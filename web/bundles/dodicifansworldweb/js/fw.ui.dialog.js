@@ -39,7 +39,8 @@ $(document).ready(function () {
             modalId: 123,
             modalLabel: 'label',
             modalTitle: 'Upload Photo',
-            modalBody: 'Uploader'
+            modalBody: 'Uploader',
+            deleteButton: false
         }
     };
 
@@ -93,6 +94,42 @@ $(document).ready(function () {
                     dialog.find('.modal-body').html(modalBody);
                     // Enable save button
                     dialog.find("#modal-btn-save").removeAttr("disabled");
+                    // Enable delete
+                    if(that.options.modal.deleteButton){
+                        dialog.find("#modal-btn-delete").removeClass('hidden');
+                        dialog.find("#modal-btn-delete").click(function(){
+                            var confirmText = 'Esta seguro de querer eliminar este comentario?';
+                            if(!confirm(confirmText)) {
+                                return false;
+                            }
+
+                            var self = $(this);
+                            self.addClass('loading-small');
+
+                            var id = $(that.element).attr('data-entity-id');
+                            var type = $(that.element).attr('data-entity-type');
+
+                            console.log("ID:"+id);
+                            console.log("TYPE:"+type);
+
+                            ajax.genericAction({
+                                route: 'delete_ajax',
+                                params: {
+                                    'id': id,
+                                    'type': type
+                                },
+                                callback: function(response) {
+                                    self.removeClass('loading-small');
+                                    success(response.message);
+                                    window.location.href = response.redirect;
+                                },
+                                errorCallback: function(responsetext) {
+                                    self.removeClass('loading-small');
+                                    error(responsetext);
+                                }
+                            });
+                        });
+                    }
                     // Bind close button
                     dialog.find("#modal-btn-close").one("click", null, null, function(){
                         dialog.modal('hide');

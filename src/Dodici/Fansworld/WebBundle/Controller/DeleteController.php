@@ -54,7 +54,8 @@ class DeleteController extends SiteController
 	        	$message = $translator->trans('You have deleted') . ' ' . (((string)$entity) ? ('"' . (string)$entity.'"') : $translator->trans('the item'));
 	        	
 	        	switch ($type) {
-	        		case 'photo': $redirect = $this->generateUrl('album_show', array('id' => $entity->getAlbum()->getId(), 'slug' => $entity->getAlbum()->getId())); break;
+	        		//case 'photo': $redirect = $this->generateUrl('album_show', array('id' => $entity->getAlbum()->getId(), 'slug' => $entity->getAlbum()->getId())); break;
+                    case 'photo': $redirect = $this->generateUrl('user_photos', array('username' => $user->getUsername())); break;
 	        		case 'video': $redirect = $this->generateUrl('user_videos', array('username' => $user->getUsername())); break;
 	        		case 'album': $redirect = $this->generateUrl('user_listalbums', array('username' => $user->getUsername())); break;
 	        	}

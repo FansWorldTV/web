@@ -150,11 +150,18 @@ var site = {
         });
 
         // Edit Photo-info
-        $("[data-edit='photo']").fwModalDialog();
+        $("[data-edit='photo']").fwModalDialog({
+            modal: {
+                'deleteButton': true
+            }
+        });
 
         // Edit Video-info
-        $("[data-edit='video']").fwModalDialog();
-
+        $("[data-edit='video']").fwModalDialog({
+            modal: {
+                'deleteButton': true
+            }
+        });
 
         // Edit Album-info
         $("[data-edit='album']").fwModalDialog();
