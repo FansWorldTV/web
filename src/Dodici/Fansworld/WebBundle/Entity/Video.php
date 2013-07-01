@@ -17,7 +17,7 @@ use Gedmo\Translatable\Translatable;
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\VideoRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Video implements Translatable, SearchableInterface, VisitableInterface
+class Video implements SearchableInterface, VisitableInterface
 {
     const WEIGHT_OUTDATE_FACTOR = 0.2;
     const WEIGHT_LIKES_FACTOR = 1.5;
@@ -35,7 +35,6 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
 
     /**
      * @var string $title
-     * @Gedmo\Translatable
      *
      * @ORM\Column(name="title", type="string", length=250, nullable=false)
      */
@@ -53,7 +52,6 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
 
     /**
      * @var text $content
-     * @Gedmo\Translatable
      *
      * @ORM\Column(name="content", type="text", nullable=true)
      */
@@ -160,7 +158,6 @@ class Video implements Translatable, SearchableInterface, VisitableInterface
 
     /**
      * @Gedmo\Slug(fields={"title"}, unique=false)
-     * @Gedmo\Translatable
      * @ORM\Column(length=250)
      */
     private $slug;
