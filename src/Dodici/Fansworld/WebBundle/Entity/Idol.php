@@ -212,6 +212,7 @@ class Idol implements SearchableInterface, VisitableInterface
         $this->visits = new \Doctrine\Common\Collections\ArrayCollection();
         $this->visitCount = 0;
         $this->idolcareers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->hasgenres = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -784,6 +785,26 @@ class Idol implements SearchableInterface, VisitableInterface
     public function getGenre()
     {
         return $this->genre;
+    }
+
+     /**
+     * Add hasgenre
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\HasGenres $hasgenres
+     */
+    public function addHasGenre(\Dodici\Fansworld\WebBundle\Entity\HasGenres $hasgenres)
+    {
+        $this->hasgenres[] = $hasgenres;
+    }
+
+    /**
+     * Get hasgenres
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getHasGenre()
+    {
+        return $this->hasgenres;
     }
 
 }
