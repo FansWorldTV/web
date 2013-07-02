@@ -39,27 +39,27 @@ class VideoPlaylist
     {
         if (!$user) $user = $this->user;
         if (!($user instanceof User)) throw new AccessDeniedException('Tried to add video to playlist with no user logged in');
-        
+
         if (!$this->appstate->canView($video, $user)) throw new AccessDeniedException('User cannot view that video');
-        
+
         $wl = $this->em->getRepository('DodiciFansworldWebBundle:WatchLater')->findOneBy(
             array('author' => $user->getId(), 'video' => $video->getId())
         );
-        
+
         if (!$wl) {
             $wl = new WatchLater();
             $wl->setVideo($video);
             $wl->setAuthor($user);
-    		
+
         	$this->em->persist($wl);
             $this->em->flush();
-    		
+
     		return $wl;
         } else {
             return false;
         }
     }
-    
+
 	/**
      * Remove a video from the user's playlist
      * @param $entity
@@ -68,21 +68,21 @@ class VideoPlaylist
     {
         if (!$user) $user = $this->user;
         if (!($user instanceof User)) throw new AccessDeniedException('Tried to add video to playlist with no user logged in');
-        
+
         if (!$this->appstate->canView($video, $user)) throw new AccessDeniedException('User cannot view that video');
-        
+
         $wl = $this->em->getRepository('DodiciFansworldWebBundle:WatchLater')->findOneBy(
             array('author' => $user->getId(), 'video' => $video->getId())
         );
-		
+
         if ($wl) {
         	$this->em->remove($wl);
             $this->em->flush();
         }
-		
+
 		return $wl;
     }
-    
+
 	/**
      * Get a user's video playlist
      * @param $entity
@@ -91,26 +91,44 @@ class VideoPlaylist
     {
         if (!$user) $user = $this->user;
         if (!($user instanceof User)) throw new AccessDeniedException('Invalid user for playlist');
-        
+
         $wls = $this->em->getRepository('DodiciFansworldWebBundle:WatchLater')->findBy(
             array('author' => $user->getId()),
             $sort,
             $limit,
             $offset
         );
-		
+
+
+
 		return $wls;
     }
-    
+
+    /**
+     * Get count for a user's video playlist
+     * @param $entity
+    */
+    public function getCount($user=null)
+    {
+        if (!$user) $user = $this->user;
+        if (!($user instanceof User)) throw new AccessDeniedException('Invalid user for playlist');
+
+        $totalCount = $this->em->getRepository('DodiciFansworldWebBundle:WatchLater')->countBy(
+            array('author' => $user->getId())
+        );
+
+        return $totalCount;
+    }
+
     public function isInPlaylist(Video $video, $user = null)
     {
         if (!$user) $user = $this->user;
         if (!($user instanceof User)) throw new AccessDeniedException('Invalid user for playlist');
-        
+
         $wls = $this->em->getRepository('DodiciFansworldWebBundle:WatchLater')->findOneBy(
             array('author' => $user->getId(), 'video' => $video->getId())
         );
-        
+
         return $wls ? true : false;
     }
 }
