@@ -790,10 +790,6 @@ section#personal-data {
 		.splash-container {
 			margin: 0;
 			width: 100%;
-			img {
-				width: 100% !important;
-				height: auto !important;
-			}
 		}
 
 		.info-container {
@@ -814,6 +810,13 @@ section#personal-data {
 			max-width: none;
 			max-height: none;
 
+			@media screen and (max-width: 550px) {
+				height: 100% !important;
+				width: auto !important;
+			}
+			@media screen and (max-width: 625px) {
+				.size(auto, 100%);
+			}
 			@media screen and (min-width: 800px) {
 				.size(auto, 100%);
 			}
