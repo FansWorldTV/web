@@ -23,7 +23,7 @@ class VideoPlaylistController extends BaseController
 {
 	/**
      * [signed] List
-     * 
+     *
      * @Route("/video/playlist/list", name="api_v1_video_playlist_list")
      * @Method({"GET"})
      *
@@ -36,8 +36,8 @@ class VideoPlaylistController extends BaseController
      * - <optional> sort: 'createdAt' (default: createdAt)
      * - <optional> sort_order: 'asc'|'desc' (default: asc)
      * - [signature params]
-     * 
-     * @return 
+     *
+     * @return
      * @see VideoController::listAction()
      */
     public function listAction()
@@ -46,23 +46,26 @@ class VideoPlaylistController extends BaseController
             if ($this->hasValidSignature()) {
                 $request = $this->getRequest();
                 $pagination = $this->pagination(array('createdAt'), 'createdAt', 'ASC');
-                
+
                 $userid = $request->get('user_id');
+                //$user = $this->getRepository('User')->find($userid);
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
-                
+
                 $wls = $this->get('video.playlist')->get(
                     $user,
                     $pagination['limit'],
                     $pagination['offset'],
                     array($pagination['sort'] => $pagination['sort_order'])
                 );
-                
+
                 $allowedfields = array('author', 'content', 'createdAt', 'duration', 'visitCount', 'likeCount', 'commentCount', 'watchlisted', 'url', 'liked');
                 $extrafields = $this->getExtraFields($allowedfields);
-                
+
                 $return = array();
                 foreach ($wls as $wl) $return[] = $this->videoValues($wl->getVideo(), $extrafields, $user);
-                
+
+                $pagination['totalcount'] = (Int) $this->get('video.playlist')->getCount($user);
+
                 return $this->result($return, $pagination);
             } else {
                 throw new HttpException(401, 'Invalid signature');
@@ -71,10 +74,10 @@ class VideoPlaylistController extends BaseController
             return $this->plainException($e);
         }
     }
-    
+
 	/**
      * [signed] Add/remove
-     * 
+     *
      * @Route("/video/playlist/{action}", name="api_v1_video_playlist_modify", requirements = {"action" = "add|remove"})
      * @Method({"POST"})
      *
@@ -91,18 +94,18 @@ class VideoPlaylistController extends BaseController
                 $request = $this->getRequest();
                 $userid = $request->get('user_id');
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
-                
+
                 $videoid = $request->get('video_id');
                 if (!$videoid) throw new HttpException(400, 'Invalid video_id');
                 $video = $this->getRepository('Video')->find($videoid);
                 if (!$video) throw new HttpException(404, 'Video not found');
-                
+
                 if ($action == 'add') {
                     $this->get('video.playlist')->add($video, $user);
                 } elseif ($action == 'remove') {
                     $this->get('video.playlist')->remove($video, $user);
                 }
-                
+
                 return $this->result(true);
             } else {
                 throw new HttpException(401, 'Invalid signature');
