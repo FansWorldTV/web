@@ -33,13 +33,14 @@ $(document).ready(function () {
             that.options.idolId = self.attr('data-idol-id');
             self.addClass(that._name);
 
-            if (window.isLoggedIn) {
-                self.on('click', that.addIdol);
-            } else {
-                $('[data-login-btn]').click();
-            }            
+            self.on('click', that.addIdol);
         },
         addIdol: function(event) {
+            if (!window.isLoggedIn) {
+                $('[data-login-btn]').click();
+                return false;
+            }
+
             var that = this;
             var self = $(this);
             $(this).off();      // remove event listeners
@@ -47,6 +48,7 @@ $(document).ready(function () {
             plugin.toggleIdolship($(this).attr('data-idol-id'));
         },
         toggleIdolship: function(idolId) {
+            alert(1);
             var that = this;
             var self = $(that.element);
             self.addClass('loading-small');
