@@ -13,9 +13,7 @@
     {% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_rsidebar.html.twig" %}
 
         {% block inner_content %}
-            <div class="cont">
-                {% include 'DodiciFansworldWebBundle:Comment/blocks:list.html.twig' with {entity: user} %}
-            </div>
+            {% include 'DodiciFansworldWebBundle:Comment/blocks:list.html.twig' with {entity: user} %}
         {% endblock %}
 
         {% block inner_sidebar %}

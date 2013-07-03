@@ -3,21 +3,26 @@
 .user_profile_body{
     //background-color: #f8f8f8;
     .inner-content{
-        padding-left: 15px;
+        padding-left: 5px;
+	    .box-sizing(border-box);
     }
 
 }
 
+.actualizaciones {
+	min-height: 360px;
+	padding-bottom: 60px;
+	position: relative;
+	.box-sizing(border-box);
+}
+
 //Estilos de loading endless scroll
 .comment-loading{
-    bottom: 45px;
-    position: fixed;
-    left:  25%;
+    position: absolute !important;
+    left:  48%;
+	bottom: 0;
     display: none;
-    > div{
-        height: 32px;
-        width: 32px;
-    }
+    .spinnerize();
 }
 
 
@@ -46,9 +51,9 @@ div.shortcommentform{
         .border-radius(5px);
 
         div.cam-container{
-            position: absolute;
-            top: 5%;
-            right: 1%;
+	        position: absolute;
+	        top: 5px;
+	        right: 1.7%;
         }
 
         textarea{
@@ -69,7 +74,8 @@ div.shortcommentform{
         }
         div.who-container{
             input{
-                width: 100%;
+	            .box-sizing(border-box);
+	            .size(25px, 100%);
             }
         }
         border-top: 1px solid #ebebeb;
@@ -77,6 +83,8 @@ div.shortcommentform{
         button{
             .pull-right();
             margin-right: 10px;
+	        height: 25px;
+	        line-height: 15px;
         }
         img{
            vertical-align: text-bottom;
