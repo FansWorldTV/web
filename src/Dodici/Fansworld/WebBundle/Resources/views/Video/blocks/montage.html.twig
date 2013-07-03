@@ -65,11 +65,11 @@
 
 {% set listParams = listFilters ~ listFiltersElement ~ listChannels ~ listResult ~ listScrollable ~ listFetchMoreButton ~ listIsMontage %}
 <div class="row-fluid">
-    <script>
-    $(document).ready(function () {
-        var videos = [
-         {% if videos|length>0 %}
-            {% for video in videos %}
+    {#<script>
+        $(document).ready(function () {
+            var videos = [
+                {% if videos|length>0 %}
+                {% for video in videos %}
                 {
                     'id': {{video.id}},
                     'type': "video",
@@ -79,47 +79,43 @@
                     'author': {'username': "{{video.author.username}}"},
                     'authorImage': "{{ appmedia.imageurl(video.author.image, 'avatar')}}"
                 },
-            {% endfor %}
-        {% else %}
-        {% endif %}
-                ]
-                return;
+                {% endfor %}
+                {% else %}
+                {% endif %}
+            ]
+            return;
             var $container = $('body').find('.isotope_container').last();
             $container.empty();
             $container.addClass("isotope_container");
             $container.attr('data-feed-source', 'home_ajaxpopularfeed');
-            if(!$container.parent().hasClass('isIso')) {
-                $container.parent().addClass('loading');
+
+            var $spinner = $container.parent().find('.spinner');
+
+            if (!$container.parent().hasClass('isIso')) {
+                $spinner.removeClass('hidden');
                 $container.fwGalerizer({
                     preoloadData: videos,
-                    onEndless: function(plugin) {
-                        $container.parent().addClass('loading');
+                    onEndless: function (plugin) {
+                        $spinner.removeClass('hidden');
                         var lastDate = $('section.home-content .content-container[data-type-tab="popularFeed"] #elements .post').last().attr('data-element-date');
                         plugin.options.feedfilter = {
                             'date': lastDate
                         };
                         return plugin.options.feedfilter;
                     },
-                    onGallery: function() {
-                        $container.parent().removeClass('loading');
+                    onGallery: function () {
+                        $spinner.addClass('hidden');
                     }
                 });
                 $container.parent().addClass('isIso');
-            };
-    });
-    </script>
-    <div {{ listId|raw }} class="isotope_container" {{ listParams|raw }} {{feedSource|raw}} data-ima-test="deadbeef" data-list-result>
-        {#
-        {% if videos|length>0 %}
-            {% for video in videos %}
-                <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}" {{ listWithModal }} data-dummy="cosa" data-modal-url = "{{ path('video_modal_show', {'id': video.id, 'slug': video.slug}) }}" >
-                    <span class="title">{{ video.title }}</span>
-                    {% thumbnail video.image, thumbnailSize with {"title": video.title} %}
-                </a>
-            {% endfor %}
-        {% else %}
-            <h2>No se encontraron videos.</h2>
-        {% endif %}
-        #}
+            }
+            ;
+        });
+    </script>#}
+    <div {{ listId|raw }} class="isotope_container" {{ listParams|raw }} {{ feedSource|raw }} data-ima-test="deadbeef"
+                          data-list-result>
+    </div>
+    <div class="spinner hidden">
+        <div class="mask"></div>
     </div>
 </div>
