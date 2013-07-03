@@ -29,6 +29,8 @@
             </ul>
         </div>
         <div class="right-container">
+            <button class="btn-widget" href="/app_dev.php/photo/fileupload"><i class="icon-circle-arrow-up icon-white"></i></button>
+
             <form class="navbar-search" name="search" method="post" action="{{ path('search_home') }}">
                 <input name="query" type="text"/>
                 <i class="icon-search"></i>
@@ -133,5 +135,50 @@
             </form>
         </div>
         <a class="register" href="{{ path('fos_user_registration_register') }}">Crear nueva cuenta</a>
+    </div>
+{% endif %}
+
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    <div class="widget-container" style="opacity:0;display:block;">
+        <div class="widget-content">
+            <h4 class="widget-title">Title</h4>
+            <i class="close-share"></i>
+            <div class="widget-inner">
+                <div class="widget-app">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='notification-widget'>
+        <div class='arrow-up'></div>
+        <div class='arrow-up-border'></div>
+        <div style="padding: 15px; width: 222px;">
+            <button class="fb_button" data-facebook-login></button>
+
+            <form class="login clearfix" action="{{ path("fos_user_security_check") }}" method="post">
+                <span class="pull-left">Login</span>
+                <span class="pull-right"><a href='{{ path('fos_user_resetting_request') }}'>Olvidaste Contraseña?</a></span>
+                <ul>
+                    <li>
+                        <input type="text" id="username" name="_username" placeholder="Usuario"/>
+                    </li>
+                    <li>
+                        <input type="password" id="password" name="_password" placeholder="Contraseña"/>
+                    </li>
+                </ul>
+                <div class='bottom-login'>
+                    <div class="recordar">
+                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                        <label for="remember_me">Recordarme</label>
+                    </div>
+
+                    <input type="hidden" name="_target_path" value="{{ app.request.uri }}" />
+                    <button type='submit' class='btn-submit'>ingresar</button>
+
+                </div>
+            </form>
+        </div>
     </div>
 {% endif %}
