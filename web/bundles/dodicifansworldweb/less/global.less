@@ -51,20 +51,20 @@
 }
 
 .btn-widget {
-  background-color: rgb(162, 27, 196);
+  background-color: transparent;
   color: white;
   font-size: 12px;
-  border: 0;
+  border: 1px solid transparent;
   .border-radius(3px);
   height: 28px;
   max-width: 32px;
-  padding-left: 10px;
+  padding-left: 8px;
   padding-bottom: 2px;
   font-weight: 500;
   text-transform: uppercase;
   float: left;
   margin-top: 7px;
-  margin-left: 5px;
+  margin-left: 1px;
   margin-right: 5px;
 
   i {
@@ -72,9 +72,16 @@
     vertical-align: middle;
     margin-right: 6px;
   }
-
+  span.label {
+    position: relative;
+    z-index: 999;
+    top: -26px;
+    right: -10px;
+    float: right;
+  }
   &:hover {
-    background-color: rgb(199, 52, 236);
+    background-color: rgba(255, 255, 255, 0.15);
+    /*border: 1px solid @green;*/
   }
 }
 
