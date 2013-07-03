@@ -48,7 +48,6 @@ $(document).ready(function () {
             plugin.toggleIdolship($(this).attr('data-idol-id'));
         },
         toggleIdolship: function(idolId) {
-            alert(1);
             var that = this;
             var self = $(that.element);
             self.addClass('loading-small');
