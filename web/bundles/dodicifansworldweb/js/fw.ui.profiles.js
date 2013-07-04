@@ -173,25 +173,56 @@ $(document).ready(function () {
                     'vc': that.options.videoCategory
                 }
             }).then(function(response) {
-                    console.log(response)
                     var i = 0;
                     totalVideos = response.profiles.length;
                     if(totalVideos <= 0) {
                         deferred.reject(new Error("Video category does not contain any video"));
                     }
+                    for(var key in response.profiles) {
+                        if (response.profiles.hasOwnProperty(key)) {
+                            //console.log(response.profiles[key]);
+                            var profile = response.profiles[key];
+                            //console.log("profile.highlight: " + profile.highlight)
+
+                        }
+                    }
+                    function render_profile(profile) {
+                        $.when(templateHelper.htmlTemplate('profile-home_element', profile))
+                        .then(function(thumb){
+                            var $thumb = $(thumb).clone();
+                            $thumb.addClass('profile');
+                            $thumb.find("[data-idolship-add]").fwIdolship({
+                                onAddIdol: function(plugin, data) {
+                                    var self = $(plugin.element);
+                                    self.addClass('disabled');
+                                    self.removeClass('add');
+                                    self.text("-");
+                                },
+                                onRemoveIdol: function(plugin, data) {
+                                    window.location.reload();
+                                }
+                            });
+                            $thumb.find('[data-teamship-add]').fwTeamship({
+                                onAddTeam: function(plugin, data) {
+                                    var self = $(plugin.element);
+                                    self.addClass('disabled');
+                                    self.removeClass('add');
+                                    self.text("-");
+                                },
+                                onRemoveTeam: function(plugin, data) {
+                                    window.location.reload();
+                                }
+                            });
+                            if(profile.highlight) {
+                                $thumb.addClass('double');
+                            }
+                            queue.add($thumb);
+                        });
+                    }
                     for(i in response.profiles) {
                         if (response.profiles.hasOwnProperty(i)) {
                             var profile = response.profiles[i];
-                            $.when(templateHelper.htmlTemplate('profile-home_element', profile))
-                                .then(function(response){
-                                    var $thumb = $(response).clone();
-                                    $thumb.addClass('profile');
-                                    console.log(profile.highlight);
-                                    if(profile.highlight == true) {
-                                        $thumb.addClass('double');
-                                    }
-                                    queue.add($thumb);
-                                });
+                            render_profile(profile);
                         }
                     }
                 });
@@ -393,10 +424,6 @@ $(document).ready(function () {
                                             self.addClass('disabled');
                                             self.removeClass('add');
                                             self.text("-");
-                                            console.log(self.parent().find('.data-cant'))
-                                            var fc = self.parent().find('.data-cant').text();
-                                            fc += 1;
-                                            self.parent().find('.data-cant').text(fc);
                                         },
                                         onRemoveIdol: function(plugin, data) {
                                             window.location.reload();
@@ -408,7 +435,6 @@ $(document).ready(function () {
                                             self.addClass('disabled');
                                             self.removeClass('add');
                                             self.text("-");
-                                            self.parent().find('[data-cant]').text('KK');
                                         },
                                         onRemoveTeam: function(plugin, data) {
                                             window.location.reload();
@@ -481,7 +507,7 @@ $(document).ready(function () {
         type: type,
         id: id,
         selector: 'section.most-recent',
-        block: 'popular'
+        block: 'activity'
     });
 
     // Video Grid
