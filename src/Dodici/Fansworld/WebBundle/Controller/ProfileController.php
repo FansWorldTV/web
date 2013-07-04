@@ -84,8 +84,8 @@ class ProfileController extends SiteController
                 'fanCount'      => $entity['fancount'],
                 'image'         => $this->getImageUrl($entity['imageid'], 'big_square'),
                 'imageDouble'  => $this->getImageUrl($entity['imageid'], 'huge_square'),
-                'splash'        => $this->getImageUrl($entity['splashid'], 'big_square'),
-                'splashDouble' => $this->getImageUrl($entity['splashid'], 'huge_square'),
+                'splash'        => isset($entity['splashid']) ? $this->getImageUrl($entity['splashid'], 'big_square') : null,
+                'splashDouble' => isset($entity['splashid']) ? $this->getImageUrl($entity['splashid'], 'huge_square') : null,
                 'highlight'     => false
             );
 
@@ -111,14 +111,17 @@ class ProfileController extends SiteController
                 $top5 = array_slice($highlights, 0, 5, true);
 
                 foreach ($top5 as $key => $profile) {
-                    $entityProfile = $this->getRepository(ucfirst($entity['type']))->find($entity['id']);
-                    $lastVideo = $this->getRepository('Video')->highlights($entityProfile, 1);
+                    $iProfile = &$response['profiles'][$key]; // Var passed by reference to simplify the code
 
-                    $response['profiles'][$key]['lastVideo'] = $serializer->values(reset($lastVideo), 'small');
-                    $response['profiles'][$key]['highlight'] = true;
+                    $entityProfile = $this->getRepository(ucfirst($iProfile['type']))->find($iProfile['id']);
+                    $lastVideo = $this->getRepository('Video')->getVideosTaggedWith($entityProfile, 1);
+
+                    $iProfile['lastVideo'] = $serializer->values(reset($lastVideo), 'small');
+                    $iProfile['highlight'] = true;
                 }
             }
     
+
             $i = 0;
             foreach ($response['profiles'] as $k => $profile) {
                 $response['profiles'][$i] = $profile;
