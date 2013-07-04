@@ -232,7 +232,7 @@ class BatchController extends SiteController
         if ($request->getMethod() == 'POST') {
             $string = $request->get('string');
 
-            $archivo = 'd:\\programas\\imple\\temp.csv';
+            $archivo = 'C:\\imple\\temp.csv';
             file_put_contents($archivo, $string);
 
             $file = new \SplFileObject($archivo, 'rb');
@@ -277,6 +277,13 @@ class BatchController extends SiteController
                     }
                 }
 
+                if ($exp[12]) {
+                    $result .= "  youtube:\n";
+                    $links = explode(",", $exp[12]);
+                    foreach ($links as $link) {
+                        $result .= "    - ". $link."\n";
+                    }
+                }
             }
         }
 
@@ -294,12 +301,12 @@ class BatchController extends SiteController
         if ($request->getMethod() == 'POST') {
             $string = $request->get('string');
 
-            $archivo = 'd:\\programas\\imple\\temp.csv';
+            $archivo = 'C:\\imple\\temp.csv';
             file_put_contents($archivo, $string);
 
             $file = new \SplFileObject($archivo, 'rb');
             $file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY);
-            $file->setCsvControl(';', '"', '\\');
+            $file->setCsvControl(',', '"', '\\');
 
             foreach ($file as $exp) {
                 $result .= "-\n";
@@ -314,6 +321,14 @@ class BatchController extends SiteController
                 $xpc = explode("\n", $exp[7]);
                 foreach($xpc as $xc) $result .= "    ". $xc;
                 $result .= "\n";
+
+                if ($exp[8]) {
+                    $result .= "  youtube:\n";
+                    $links = explode(",", $exp[8]);
+                    foreach ($links as $link) {
+                        $result .= "    - ". $link."\n";
+                    }
+                }
 
             }
         }
@@ -334,14 +349,16 @@ class BatchController extends SiteController
         if ($request->getMethod() == 'POST') {
             $string = $request->get('string');
 
-            $archivo = 'd:\\programas\\imple\\temp.csv';
+            $archivo = 'C:\\imple\\temp.csv';
             file_put_contents($archivo, $string);
 
             $file = new \SplFileObject($archivo, 'rb');
             $file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY);
-            $file->setCsvControl(';', '"', '\\');
+            $file->setCsvControl(',', '"', '\\');
+
 
             foreach ($file as $exp) {
+
                 $result .= "-\n";
                 $result .= "  id: ".($exp[0]+20000)."\n";
                 $result .= "  firstname: ".$exp[1]."\n";
@@ -410,12 +427,12 @@ class BatchController extends SiteController
         if ($request->getMethod() == 'POST') {
             $string = $request->get('string');
 
-            $archivo = 'd:\\programas\\imple\\temp.csv';
+            $archivo = 'C:\\imple\\temp.csv';
             file_put_contents($archivo, $string);
 
             $file = new \SplFileObject($archivo, 'rb');
             $file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY);
-            $file->setCsvControl(';', '"', '\\');
+            $file->setCsvControl(',', '"', '\\');
 
             foreach ($file as $exp) {
                 $result .= "-\n";
@@ -448,11 +465,11 @@ class BatchController extends SiteController
         return new Response('<form action="" method="post"><textarea name="string"></textarea><input type="submit"></form><br><br><textarea>'.$result.'</textarea>');
     }
 
-        /**
+    /**
      * Generate some yaml
-     * @Route("/generate-yaml-juan", name="admin_batch_generate_yaml_juan")
+     * @Route("/generate-yaml-team-futbol", name="admin_batch_generate_yaml_team_futbol")
      */
-    public function generateYamlJuanAction()
+    public function generateYamlTeamFutbolAction()
     {
         $request = $this->getRequest();
         $result = '';
@@ -464,12 +481,24 @@ class BatchController extends SiteController
 
             $file = new \SplFileObject($archivo, 'rb');
             $file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY);
-            $file->setCsvControl(';', '"', '\\');
+            $file->setCsvControl(',', '"', '\\');
 
             foreach ($file as $exp) {
                 $result .= "-\n";
-                $result .= "  id: ".($exp[0]+20000)."\n";
+                $result .= "  id: ".($exp[0])."\n";
                 $result .= "  title: ".$exp[1]."\n";
+                $result .= "  foundedAt: ".$exp[2]."\n";
+                $result .= "  nicknames: ".$exp[3]."\n";
+                $result .= "  letters: ".$exp[4]."\n";
+                $result .= "  shortname: ".$exp[1]."\n";
+                $result .= "  stadium: ".$exp[5]."\n";
+                $result .= "  website: ".$exp[6]."\n";
+                $result .= "  twitter: ".$exp[7]."\n";
+                $result .= "  country: ".$exp[10]."\n";
+
+                $result .= "  content: |\n";
+                $xpc = explode("\n", $exp[11]);
+                foreach($xpc as $xc) $result .= "    ". $xc;
                 $result .= "\n";
 
             }
@@ -477,4 +506,375 @@ class BatchController extends SiteController
 
         return new Response('<form action="" method="post"><textarea name="string"></textarea><input type="submit"></form><br><br><textarea>'.$result.'</textarea>');
     }
+
+    /**
+     * Generate some yaml
+     * @Route("/generate-yaml-videos-music", name="admin_batch_generate_yaml_videos_music")
+     */
+    public function generateYamlVideosMusicAction()
+    {
+        $request = $this->getRequest();
+        $result = '';
+        if ($request->getMethod() == 'POST') {
+            $string = $request->get('string');
+
+            $archivo = 'C:\\imple\\tmp.csv';
+            file_put_contents($archivo, $string);
+
+            $file = new \SplFileObject($archivo, 'rb');
+            $file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY);
+            $file->setCsvControl(',', '"', '\\');
+
+
+            foreach ($file as $exp) {
+                $result .= "-\n";
+                $result .= "  author: ".$exp[0]."\n";
+                $result .= "  stream: ".$exp[1]."\n";
+                $result .= "  highlight: ".$exp[2]."\n";
+                $result .= "  videocategory: ".$exp[3]."\n";
+                $result .= "  genre: ".($exp[4]+20)."\n";
+
+                $createAt = null;
+                if ($exp[5]) {
+                    $cadayxp = explode('/', $exp[5]);
+                    $createAt = $cadayxp[2] . '-' . $cadayxp[1] . '-' . $cadayxp[0];
+                }
+                $result .= "  createdAt: ".$createAt."\n";
+
+                $result .= "  title: ".$exp[6]."\n";
+
+
+                if ($exp[7]) {
+                    $result .= "  tagidols: \n";
+                    $tagidolsExp = explode(",", $exp[7]+20000);
+                    foreach($tagidolsExp  as $idolId) $result .= "    - ". $idolId."\n";
+                }
+
+                if ($exp[8]) {
+                    $result .= "  tagteams: \n";
+                    $tagteamsExp = explode(",", $exp[8]+20000);
+                    foreach($tagteamsExp  as $teamId) $result .= "    - ". $teamId."\n";
+                }
+
+                if ($exp[9]) {
+                    $result .= "  tagtexts: \n";
+                    $tagtextExp = explode(",", $exp[9]);
+                    foreach($tagtextExp  as $text) $result .= "    - ". $text."\n";
+                }
+
+                if ($exp[10]) {
+                    $result .= "  content: |\n";
+                    $xpc = explode("\n", $exp[10]);
+                    foreach($xpc as $xc) $result .= "    ". $xc;
+                    $result .= "\n";
+                }
+            }
+        }
+
+        return new Response('<form action="" method="post"><textarea name="string"></textarea><input type="submit"></form><br><br><textarea>'.$result.'</textarea>');
+    }
+
+
+     /**
+     * Generate some yaml
+     * @Route("/generate-yaml-idol-futbolLocal", name="admin_batch_generate_yaml_idol_futbolLocal")
+     */
+    public function generateYamlIdolFutbolLocalAction()
+    {
+        $request = $this->getRequest();
+        $result = '';
+        if ($request->getMethod() == 'POST') {
+            $string = $request->get('string');
+
+            $archivo = 'C:\\imple\\temp.csv';
+            file_put_contents($archivo, $string);
+
+            $file = new \SplFileObject($archivo, 'rb');
+            $file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY);
+            $file->setCsvControl(',', '"', '\\');
+
+
+            foreach ($file as $exp) {
+
+                $result .= "-\n";
+                $result .= "  id: ".($exp[0])."\n";
+                $result .= "  firstname: ".$exp[1]."\n";
+                $result .= "  lastname: ".$exp[2]."\n";
+                $date = $exp[8];
+                $birthday = null;
+                if ($date) {
+                    $bdayxp = explode('/', $date);
+                    if (count($bdayxp) == 3) {
+                        $birthday = $bdayxp[2] . '-' . $bdayxp[1] . '-' . $bdayxp[0];
+                        $result .= "  birthday: ".$birthday."\n";
+                    }
+                }
+                $result .= "  nicknames: ".$exp[7]."\n";
+
+                $result .= "  country: ".$exp[9]."\n";
+                $result .= "  twitter: ".$exp[10]."\n";
+
+                $result .= "  genre: [11]\n";
+
+                $result .= "  content: |\n";
+                $xpc = explode("\n", $exp[11]);
+                foreach($xpc as $xc) $result .= "    ". $xc;
+                $result .= "\n";
+
+
+                if ($exp[3] || $exp[5]) {
+                    $result .= "  teams:\n";
+
+                    if ($exp[3]) {
+                        $teamPlayer = explode("\n", $exp[3]);
+                        foreach ($teamPlayer as $team) {
+                            $result .= "      -\n";
+                            if (intval($team))
+                                $result .= "        id: ".(intval($team))."\n";
+                            else
+                                $result .= "        name: $team\n";
+
+                            $result .= "        debut: false\n";
+                            $result .= "        actual: true\n";
+                            $result .= "        highlight: true\n";
+                            $result .= "        manager: false\n";
+                        }
+                    }
+
+                    if ($exp[5]) {
+                        $teamDt = explode("\n", $exp[5]);
+                        foreach ($teamDt as $team) {
+                            $result .= "      -\n";
+                            if (intval($team))
+                                $result .= "        id: ".(intval($team))."\n";
+                            else
+                                $result .= "        name: $team\n";
+
+                            $result .= "        debut: false\n";
+                            $result .= "        actual: true\n";
+                            $result .= "        highlight: true\n";
+                            $result .= "        manager: true\n";
+                        }
+                    }
+
+                }
+            }
+        }
+
+        return new Response('<form action="" method="post"><textarea name="string"></textarea><input type="submit"></form><br><br><textarea>'.$result.'</textarea>');
+    }
+
+     /**
+     * Generate some yaml
+     * @Route("/generate-yaml-idol-futbolInternacional", name="admin_batch_generate_yaml_idol_futbolInternacional")
+     */
+    public function generateYamlIdolFutbolInternacionalAction()
+    {
+        $request = $this->getRequest();
+        $result = '';
+        if ($request->getMethod() == 'POST') {
+            $string = $request->get('string');
+
+            $archivo = 'C:\\imple\\temp.csv';
+            file_put_contents($archivo, $string);
+
+            $file = new \SplFileObject($archivo, 'rb');
+            $file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY);
+            $file->setCsvControl(',', '"', '\\');
+
+
+            foreach ($file as $exp) {
+
+                $result .= "-\n";
+                $result .= "  id: ".($exp[0])."\n";
+                $result .= "  firstname: ".$exp[1]."\n";
+                $result .= "  lastname: ".$exp[2]."\n";
+                $date = $exp[3];
+                $birthday = null;
+                if ($date) {
+                    $bdayxp = explode('/', $date);
+                    if (count($bdayxp) == 3) {
+                        $birthday = $bdayxp[2] . '-' . $bdayxp[1] . '-' . $bdayxp[0];
+                        $result .= "  birthday: ".$birthday."\n";
+                    }
+                }
+
+                $result .= "  nicknames: ".$exp[4]."\n";
+                $result .= "  country: ".$exp[6]."\n";
+                $result .= "  twitter: ".$exp[7]."\n";
+                $result .= "  genre: [11]\n";
+
+                if ($exp[5]) {
+                    $result .= "  teams:\n";
+                    $teamPlayer = explode("\n", $exp[5]);
+                    foreach ($teamPlayer as $team) {
+                        $result .= "      -\n";
+                        if (intval($team))
+                            $result .= "        id: ".(intval($team))."\n";
+                        else
+                            $result .= "        name: $team\n";
+
+                        $result .= "        debut: false\n";
+                        $result .= "        actual: true\n";
+                        $result .= "        highlight: true\n";
+                        $result .= "        manager: false\n";
+                    }
+                }
+
+                if ($exp[12]) {
+                    $result .= "  youtube:\n";
+                    $links = explode(",", $exp[12]);
+                    foreach ($links as $link) {
+                        $result .= "    - ". $link."\n";
+                    }
+                }
+
+                $result .= "  content: |\n";
+                $xpc = explode("\n", $exp[9]);
+                foreach($xpc as $xc) $result .= "    ". $xc;
+                $result .= "\n";
+
+            }
+
+        }
+
+        return new Response('<form action="" method="post"><textarea name="string"></textarea><input type="submit"></form><br><br><textarea>'.$result.'</textarea>');
+    }
+
+     /**
+     * Generate some yaml
+     * @Route("/generate-yaml-videos-futbol", name="admin_batch_generate_yaml_videos_futbol")
+     */
+    public function generateYamlVideosFutbolAction()
+    {
+        $request = $this->getRequest();
+        $result = '';
+        if ($request->getMethod() == 'POST') {
+            $string = $request->get('string');
+
+            $archivo = 'C:\\imple\\tmp.csv';
+            file_put_contents($archivo, $string);
+
+            $file = new \SplFileObject($archivo, 'rb');
+            $file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY);
+            $file->setCsvControl(',', '"', '\\');
+
+
+            foreach ($file as $exp) {
+                $result .= "-\n";
+                $result .= "  author: ".$exp[0]."\n";
+                $result .= "  stream: ".$exp[1]."\n";
+                $result .= "  highlight: ".$exp[2]."\n";
+                $result .= "  videocategory: ".$exp[3]."\n";
+                $result .= "  genre: ".($exp[4] + 10)."\n";
+
+                $createAt = null;
+                if ($exp[5]) {
+                    $cadayxp = explode('/', $exp[5]);
+                    $createAt = $cadayxp[2] . '-' . $cadayxp[1] . '-' . $cadayxp[0];
+                }
+                $result .= "  createdAt: ".$createAt."\n";
+
+                $result .= "  title: ".$exp[6]."\n";
+
+
+                if ($exp[7]) {
+                    $result .= "  tagidols: \n";
+                    $tagidolsExp = explode(",", $exp[7]);
+                    foreach($tagidolsExp  as $idolId) $result .= "    - ". $idolId."\n";
+                }
+
+                if ($exp[8]) {
+                    $result .= "  tagteams: \n";
+                    $tagteamsExp = explode(",", $exp[8]);
+                    foreach($tagteamsExp  as $teamId) $result .= "    - ". $teamId."\n";
+                }
+
+                if ($exp[9]) {
+                    $result .= "  tagtexts: \n";
+                    $tagtextExp = explode(",", $exp[9]);
+                    foreach($tagtextExp  as $text) $result .= "    - ". $text."\n";
+                }
+
+                if ($exp[10]) {
+                    $result .= "  content: |\n";
+                    $xpc = explode("\n", $exp[10]);
+                    foreach($xpc as $xc) $result .= "    ". $xc;
+                    $result .= "\n";
+                }
+            }
+        }
+
+        return new Response('<form action="" method="post"><textarea name="string"></textarea><input type="submit"></form><br><br><textarea>'.$result.'</textarea>');
+    }
+
+      /**
+     * Generate some yaml
+     * @Route("/generate-yaml-videos-sports-other", name="admin_batch_generate_yaml_videos_sports_other")
+     */
+    public function generateYamlVideosSportsOtherAction()
+    {
+        $request = $this->getRequest();
+        $result = '';
+        if ($request->getMethod() == 'POST') {
+            $string = $request->get('string');
+
+            $archivo = 'C:\\imple\\tmp.csv';
+            file_put_contents($archivo, $string);
+
+            $file = new \SplFileObject($archivo, 'rb');
+            $file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY);
+            $file->setCsvControl(',', '"', '\\');
+
+
+            foreach ($file as $exp) {
+                $result .= "-\n";
+                $result .= "  author: ".$exp[0]."\n";
+                $result .= "  stream: ".$exp[1]."\n";
+                $result .= "  highlight: ".$exp[2]."\n";
+                $result .= "  videocategory: ".$exp[3]."\n";
+                $result .= "  genre: ".($exp[4] + 10)."\n";
+
+                $createAt = null;
+                if ($exp[5]) {
+                    $cadayxp = explode('/', $exp[5]);
+                    $createAt = $cadayxp[2] . '-' . $cadayxp[1] . '-' . $cadayxp[0];
+                }
+                $result .= "  createdAt: ".$createAt."\n";
+
+                $result .= "  title: ".$exp[6]."\n";
+
+
+                if ($exp[7]) {
+                    $result .= "  tagidols: \n";
+                    $tagidolsExp = explode(",", $exp[7]);
+                    foreach($tagidolsExp  as $idolId) $result .= "    - ". $idolId."\n";
+                }
+
+                if ($exp[8]) {
+                    $result .= "  tagteams: \n";
+                    $tagteamsExp = explode(",", $exp[8]);
+                    foreach($tagteamsExp  as $teamId) $result .= "    - ". $teamId."\n";
+                }
+
+                if ($exp[9]) {
+                    $result .= "  tagtexts: \n";
+                    $tagtextExp = explode(",", $exp[9]);
+                    foreach($tagtextExp  as $text) $result .= "    - ". $text."\n";
+                }
+
+                if ($exp[10]) {
+                    $result .= "  content: |\n";
+                    $xpc = explode("\n", $exp[10]);
+                    foreach($xpc as $xc) $result .= "    ". $xc;
+                    $result .= "\n";
+                }
+            }
+        }
+
+        return new Response('<form action="" method="post"><textarea name="string"></textarea><input type="submit"></form><br><br><textarea>'.$result.'</textarea>');
+    }
+
+
+
 }
