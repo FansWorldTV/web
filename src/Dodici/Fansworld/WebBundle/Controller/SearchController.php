@@ -306,20 +306,21 @@ class SearchController extends SiteController
 
         $em = $this->container->get('sonata.media.entity_manager');
 
-        $log = new SearchHistory();
+        /*$log = new SearchHistory();
         $log->setTerm($searchTerm);
         $log->setAuthor($this->getUser());
         $log->setIp($request->getClientIp());
         $log->setDevice('web');
         $em->persist($log);
         $em->flush();
+        */
 
         $client = $this->get('fos_elastica.client');
         $search = new Elastica_Search($client);
 
         // Configure and execute the search
-        //$types = array($userType, $idolType, $teamType);
-        $types = array($searchHistoryType, $userType, $idolType, $teamType);
+        $types = array($userType, $idolType, $teamType);
+        //$types = array($searchHistoryType, $userType, $idolType, $teamType);
 
         $search = $search->addTypes($types);
 
@@ -377,6 +378,7 @@ class SearchController extends SiteController
                 //case 'video':
                 //    $response[] = array('value' => $data, 'tokens' => $data);
                 //    break;
+
                 case 'idol':
                     $id =   $data['id'];
                     $idol = $this->getRepository('idol')->find($id);
@@ -415,7 +417,7 @@ class SearchController extends SiteController
             }
         }
 
-        $response['search_history_count'] = $searchHistoryCount;
+        //$response['search_history_count'] = $searchHistoryCount;
 
         return $this->jsonResponse($response);
     }
