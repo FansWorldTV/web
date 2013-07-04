@@ -661,16 +661,15 @@
                 return this.$input.val();
             },
             setInputValue: function(value, silent) {
-                /*
                 this.$input.val(value);
                 !silent && this._compareQueryToInputValue();
-                */
+                //a
             },
             getHintValue: function() {
                 return this.$hint.val();
             },
             setHintValue: function(value) {
-                //this.$hint.val(value);
+                this.$hint.val(value); //a
             },
             getLanguageDirection: function() {
                 return (this.$input.css("direction") || "ltr").toLowerCase();
@@ -910,7 +909,7 @@
                 $suggestions.empty();
                 if (this._getSuggestions().length === 0) {
                     this.isEmpty = true;
-                    //this._hide();
+                    this._hide();
                 }
             }
         });
@@ -1024,15 +1023,13 @@
                 this.dropdownView.clearSuggestions();
             },
             _setInputValueToQuery: function() {
-                /*
+                //a
                 this.inputView.setInputValue(this.inputView.getQuery());
-                */
             },
             _setInputValueToSuggestionUnderCursor: function(e) {
-                /*
+                //a
                 var suggestion = e.data;
                 this.inputView.setInputValue(suggestion.value, true);
-                */
             },
             _openDropdown: function() {
                 this.dropdownView.open();
