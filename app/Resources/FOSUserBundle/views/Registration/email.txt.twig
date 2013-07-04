@@ -8,6 +8,13 @@
 {{ 'registration.email.message'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}, 'FOSUserBundle') }}
 {% endautoescape %}
 {% endblock %}
+
+{% block body_with_link %}
+{% autoescape false %}
+{{ 'registration.email.message'|trans({'%username%': user.username, '%confirmationUrl%': '<a href="' ~ confirmationUrl ~ '">' ~ confirmationUrl ~ '</a>'}, 'FOSUserBundle') }}
+{% endautoescape %}
+{% endblock %}
+
 {% block body_html %}
-	{% include 'DodiciFansworldWebBundle:Mail:user_message.html.twig' with {content: block('body_text') } %}
+	{% include 'DodiciFansworldWebBundle:Mail:user_message.html.twig' with {content: block('body_with_link') } %}
 {% endblock %}
