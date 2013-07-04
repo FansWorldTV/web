@@ -784,4 +784,12 @@ class VideoRepository extends CountBaseRepository
     {
         return $this->search(null, $user, $limit, $offset, $category, $highlighted, null, null ,null, $sortcriteria, null, $excludes, null, $recommended, null, null, $genre);
     }
+
+    /**
+     *
+     */
+    public function getVideosTaggedWith($entity, $limit = null, $offset = null)
+    {
+        return $this->search(null, null, $limit, $offset, null, null, null, null, null, null, $entity, null, null, null, 'desc');
+    }
 }
