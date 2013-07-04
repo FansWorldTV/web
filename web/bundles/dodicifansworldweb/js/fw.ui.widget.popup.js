@@ -840,10 +840,11 @@ $(document).ready(function () {
             that.options.target = event.target;
 
             // Get target window positioning
+            console.log("$(event.target).height(): " + $(event.target).height())
             var offset = $(event.target).offset();
-            offset.top += 40;
+            offset.top += $(event.target).height() + 20;
             //offset.top -= parseInt(($(that.element).height() + $(event.target).height() + 10), 10);
-            //offset.left -= parseInt(($(that.element).width() / 2) - ($(event.target).width() / 2), 10);
+            offset.left -= parseInt(($(that.element).width() / 2) - ($(event.target).width() / 2), 10);
             // Set popup position
             $(that.element).offset({
                 top: offset.top,
