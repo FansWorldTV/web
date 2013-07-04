@@ -507,7 +507,7 @@ $(document).ready(function () {
         type: type,
         id: id,
         selector: 'section.most-recent',
-        block: 'popular'
+        block: 'activity'
     });
 
     // Video Grid
