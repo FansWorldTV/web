@@ -787,7 +787,7 @@ $(document).ready(function () {
         },
         popIn: function(event) {
             var that = this;
-            that.setPosition(event.target);
+            //that.setPosition(event.target);
             $(that.element).animate({
                 opacity: 1
             });
@@ -822,6 +822,8 @@ $(document).ready(function () {
         toggle: function (event) {
             var that = this;
             event.preventDefault();
+            console.log("widget toggle!!!!!")
+            console.log(event.target)
             if(!$(event.target).hasClass('active') && that.options.isPoped) {
                 that.popOut(event);
                 $(that.options.target).removeClass('active');
@@ -839,8 +841,9 @@ $(document).ready(function () {
 
             // Get target window positioning
             var offset = $(event.target).offset();
-            offset.top -= parseInt(($(that.element).height() + $(event.target).height() + 10), 10);
-            offset.left -= parseInt(($(that.element).width() / 2) - ($(event.target).width() / 2), 10);
+            offset.top += 40;
+            //offset.top -= parseInt(($(that.element).height() + $(event.target).height() + 10), 10);
+            //offset.left -= parseInt(($(that.element).width() / 2) - ($(event.target).width() / 2), 10);
             // Set popup position
             $(that.element).offset({
                 top: offset.top,
@@ -940,9 +943,9 @@ $(document).ready(function () {
             var label = that.makeLabel('id', 0);
             button.insertBefore(label, button.firstChild);
 
-            $(button).on("click", function(e) {
+            $(button).on("click", function(event) {
                 //$('.widget-container').data('fwWidget').toggle(e); // To activate Notifications widget
-                $('.widget-container').data('fwActivityWidget').toggle(e);
+                $('.widget-container').data('fwActivityWidget').toggle(event);
             });
             return button;
         },
@@ -950,6 +953,131 @@ $(document).ready(function () {
             var span = document.createElement("span");
             span.setAttribute('id', id);
             span.className = "label label-important label-footer";
+            span.innerText = count;
+            return span;
+        },
+        updateLabel: function(id, message) {
+            var that = this;
+            $(that.options.buttons[0].node).find('#id').html(message);
+            $(that.options.buttons[0].node).find('#id').effect("highlight", {color: "#a0c882"}, 2000);
+        },
+        guidGenerator: function() {
+            var s = [];
+            var itoh = '0123456789ABCDEF';
+            var i = 0;
+            // Make array of random hex digits. The UUID only has 32 digits in it, but we
+            // allocate an extra items to make room for the '-'s we'll be inserting.
+            for (i = 0; i < 36; i += 1) {
+                s[i] = Math.floor(Math.random()*0x10);
+            }
+            // Conform to RFC-4122, section 4.4
+            s[14] = 4;  // Set 4 high bits of time_high field to version
+            s[19] = (s[19] && 0x3) || 0x8;  // Specify 2 high bits of clock sequence
+            // Convert to hex chars
+            for (i = 0; i < 36; i += 1) {
+                s[i] = itoh[s[i]];
+            }
+            // Insert '-'s
+            s[8] = s[13] = s[18] = s[23] = '-';
+
+            return s.join('');
+        },
+        getVersion: function() {
+
+        }
+    };
+    // A really lightweight plugin wrapper around the constructor,
+    // preventing against multiple instantiations
+    $.fn[pluginName] = function (options) {
+        // If the first parameter is an object (options), or was omitted,
+        // instantiate a new instance of the plugin.
+        if (typeof options === "object" || !options) {
+            return this.each(function () {
+                // Only allow the plugin to be instantiated once.
+                if (!$.data(this, pluginName)) {
+                    // Pass options to Plugin constructor, and store Plugin
+                    // instance in the elements jQuery data object.
+                    $.data(this, pluginName, new Plugin(this, options));
+                }
+            });
+        }
+    };
+});
+
+$(document).ready(function () {
+    "use strict";
+    // Create the defaults once
+    var pluginName = "fwHeaderToolBar";
+    var defaults = {
+        footer: null,
+        buttons: [],
+        title: null,
+        name: null
+    };
+
+    // The actual plugin constructor
+
+    function Plugin(element, options) {
+        this.element = element;
+        // jQuery has an extend method which merges the contents of two or
+        // more objects, storing the result in the first object. The first object
+        // is generally empty as we don't want to alter the default options for
+        // future instances of the plugin
+        this.options = $.extend({}, defaults, options);
+        this._defaults = defaults;
+        this._name = pluginName;
+        this.init();
+    }
+    Plugin.prototype = {
+        init: function () {
+            var that = this;
+            that.options.header = $('.right-container');
+            that.options.buttons.push({
+                id: that.guidGenerator(),
+                node: that.makeButton(parseInt((Math.random()*0x10), 10), that.options.name),
+                count: 0
+            });
+            that.options.header.prepend(that.options.buttons[0].node);
+
+            /*fansworld.notificacion.addListener('ongettotal', function(response){
+                that.updateLabel('id', response.result);
+            });*/
+            // Listen notifications
+            fansworld.notificacion.addListener('onnotificationreceived', function(response){
+                that.updateLabel('id', fansworld.notificacion.total);
+            });
+        },
+        makeButton: function(id, name, icon) {
+            var that = this;
+            var button = document.createElement("button");
+            button.setAttribute('id', id);
+            button.setAttribute('data-toggle', 'dropdown');
+            button.setAttribute('title', name);
+            //button.setAttribute('rel', 'tooltip');  // Enable tootlit (overlaps widget !)
+            button.setAttribute('type', 'button');
+            button.setAttribute('data-original-title', that.options.title);
+            button.className = "btn-widget";
+            button.innerText = name;
+
+            var label = that.makeLabel('id', 0);
+            button.insertBefore(label, button.firstChild);
+
+            var icon = document.createElement("i");
+            icon.classList.add('icon-film');
+            icon.classList.add('icon-white');
+            button.insertBefore(icon, button.firstChild);
+
+            $(button).on("click", function(event) {
+                //$('.widget-container').data('fwWidget').toggle(e); // To activate Notifications widget
+                event.target = button;
+                $('.widget-container').data('fwActivityWidget').toggle(event);
+            });
+            return button;
+        },
+        makeLabel: function(id, count) {
+            var span = document.createElement("span");
+            span.setAttribute('id', id);
+            span.className = "label label-warning label-header";
             span.innerText = count;
             return span;
         },
@@ -1015,8 +1143,18 @@ $(document).ready(function () {
             title: 'Actividad reciente',
             id: 'act-reciente'
         });
-            $('.widget-container').fwActivityWidget({
+        $('.widget-container').fwActivityWidget({
             title: "Actividad Reciente"
+        });
+
+        $('header:first').fwHeaderToolBar({
+            name: 'Actividad',
+            title: 'Actividad reciente',
+            id: 'head-act-reciente'
+        });
+
+        $('#btn-widget-video').on('click', function(event){
+            console.log("widget-video")
         });
     }
     return;
