@@ -101,7 +101,7 @@ class ProfileController extends SiteController
         }
 
         if (isset($response['profiles']) && count($response['profiles']) > 0) {
-            //if ($filterBy == 'activity') {
+            if ($filterBy == 'activity') {
                 $highlights = array();
 
                 foreach ($response['profiles'] as $profile)
@@ -117,8 +117,8 @@ class ProfileController extends SiteController
                     $response['profiles'][$key]['lastVideo'] = $serializer->values(reset($lastVideo), 'small');
                     $response['profiles'][$key]['highlight'] = true;
                 }
-            //}
-
+            }
+    
             $i = 0;
             foreach ($response['profiles'] as $k => $profile) {
                 $response['profiles'][$i] = $profile;
