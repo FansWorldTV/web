@@ -29,10 +29,10 @@
             </ul>
         </div>
         <div class="right-container">
-            <button class="btn-widget" href="/app_dev.php/photo/fileupload"><i class="icon-list icon-white"></i></button>
-            <button class="btn-widget" href="/app_dev.php/photo/fileupload"><i class="icon-user icon-white"></i></button>
-            <button class="btn-widget" href="/app_dev.php/photo/fileupload"><i class="icon-film icon-white"></i><span class="label label-warning">10</span></button>
-            <button class="btn-widget" href="/app_dev.php/photo/fileupload"><i class="icon-camera icon-white"></i></button>
+            <button class="btn-widget"><i class="icon-list icon-white"></i></button>
+            <button class="btn-widget"><i class="icon-user icon-white"></i></button>
+            <button class="btn-widget"><i class="icon-film icon-white"></i><span class="label label-warning">10</span></button>
+            <button id="actividad-reciente-button" class="btn-widget"><i class="icon-camera icon-white"></i></button>
 
             <form class="navbar-search" name="search" method="post" action="{{ path('search_home') }}">
                 <input name="query" type="text"/>
@@ -152,36 +152,6 @@
                     </ul>
                 </div>
             </div>
-        </div>
-    </div>
-    <div id='notification-widget'>
-        <div class='arrow-up'></div>
-        <div class='arrow-up-border'></div>
-        <div style="padding: 15px; width: 222px;">
-            <button class="fb_button" data-facebook-login></button>
-
-            <form class="login clearfix" action="{{ path("fos_user_security_check") }}" method="post">
-                <span class="pull-left">Login</span>
-                <span class="pull-right"><a href='{{ path('fos_user_resetting_request') }}'>Olvidaste Contraseña?</a></span>
-                <ul>
-                    <li>
-                        <input type="text" id="username" name="_username" placeholder="Usuario"/>
-                    </li>
-                    <li>
-                        <input type="password" id="password" name="_password" placeholder="Contraseña"/>
-                    </li>
-                </ul>
-                <div class='bottom-login'>
-                    <div class="recordar">
-                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-                        <label for="remember_me">Recordarme</label>
-                    </div>
-
-                    <input type="hidden" name="_target_path" value="{{ app.request.uri }}" />
-                    <button type='submit' class='btn-submit'>ingresar</button>
-
-                </div>
-            </form>
         </div>
     </div>
 {% endif %}
