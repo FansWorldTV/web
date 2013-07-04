@@ -2,7 +2,7 @@
   id: 20001
   firstname: Abel
   lastname: Pintos
-  birthday: 1984-05-11
+  birthday: 1984-11-5
   nicknames:
   achievements: |
     1998 - Para Cantar He Nacido
@@ -23,7 +23,7 @@
   id: 20002
   firstname: Abril
   lastname: Sosa
-  birthday: 1981-07-22
+  birthday: 1981-22-7
   nicknames:
   achievements: |
     2012 - El Piloto Ciego
@@ -51,7 +51,6 @@
   id: 20003
   firstname: Adele
   lastname:
-  birthday: 1988-05-05
   nicknames:
   achievements: |
     2008 - 19
@@ -65,7 +64,6 @@
   id: 20004
   firstname: Alannis
   lastname: Morrisette
-  birthday: 1974-06-01
   nicknames:
   achievements: |
     1991 - Alanis
@@ -87,7 +85,6 @@
   id: 20005
   firstname: Alejandro
   lastname: Sanz
-  birthday: 1968-12-18
   nicknames:
   achievements: |
     1991 - Viviendo Deprisa
@@ -109,7 +106,6 @@
   id: 20006
   firstname: Alejandro
   lastname: Lerner
-  birthday: 1957-06-08
   nicknames:
   achievements: |
     1979: Sus primeras canciones
@@ -141,7 +137,6 @@
   id: 20007
   firstname: Alejandro
   lastname: Fernández
-  birthday: 1971-04-24
   nicknames: Alex
   achievements: |
     1992: Alejandro Fernández
@@ -171,7 +166,6 @@
   id: 20008
   firstname: Alejo
   lastname: Stivel
-  birthday: 1959-01-01
   nicknames:
   achievements: |
     2011 - Deciamos ayer
@@ -186,7 +180,6 @@
   id: 20009
   firstname: Alex
   lastname: Ubago
-  birthday: 1981-01-29
   nicknames:
   achievements: |
     2001 - ¿Qué pides tú?
@@ -203,7 +196,6 @@
   id: 20010
   firstname: Alicia
   lastname: Keys
-  birthday: 1981-01-25
   nicknames:
   achievements: |
     2001 - Songs in A Minor
@@ -221,7 +213,6 @@
   id: 20011
   firstname: Amaia
   lastname: Montero
-  birthday: 1976-08-26
   nicknames:
   achievements: |
     2008 - Amaia Montero
@@ -242,7 +233,6 @@
   id: 20012
   firstname: Amy
   lastname: Winehouse
-  birthday: 1983-09-14
   nicknames:
   achievements: |
     2003: Frank
@@ -257,7 +247,6 @@
   id: 20013
   firstname: Ana paula
   lastname: Rodriguez
-  birthday:
   nicknames: Anna Pau
   country: 13
   twitter: ANNAPAUOK
@@ -268,7 +257,6 @@
   id: 20014
   firstname: Andres
   lastname: Calamaro
-  birthday: 1961-08-22
   nicknames: El Salmón
   achievements: |
     1984 - Hotel Calamaro
@@ -314,7 +302,6 @@
   id: 20015
   firstname: Andrew
   lastname: Bird
-  birthday: 1973-07-11
   nicknames:
   achievements: |
     1996: Music of Hair.
@@ -337,7 +324,6 @@
   id: 20016
   firstname: Austin
   lastname: Mahone
-  birthday: 1996-04-04
   nicknames:
   country: 69
   twitter: AustinMahone
@@ -351,7 +337,6 @@
   id: 20017
   firstname: Avril
   lastname: Lavigne
-  birthday: 1984-09-27
   nicknames:
   achievements: |
     2002: Let Go
@@ -371,7 +356,6 @@
   id: 20018
   firstname: Axel
   lastname:
-  birthday: 1977-01-01
   nicknames: Axel Fernando
   achievements: |
     1999 - La clave para conquistarte
@@ -392,7 +376,6 @@
   id: 20019
   firstname: Bebe
   lastname:
-  birthday: 1978-05-09
   nicknames:
   achievements: |
     2004 - Pafuera Telarañas
@@ -410,7 +393,7 @@
   id: 20020
   firstname: Beck
   lastname:
-  birthday: 1970-07-08
+  birthday: 1970-8-7
   nicknames:
   achievements: |
     1993 - Golden Felling
@@ -435,7 +418,6 @@
   id: 20021
   firstname: Belinda
   lastname:
-  birthday: 1989-08-15
   nicknames:
   achievements: |
     2003: Belinda
@@ -454,7 +436,6 @@
   id: 20022
   firstname: Beto
   lastname: Cuevas
-  birthday: 1967-09-12
   nicknames:
   achievements: |
     2008: Miedo escénico
@@ -477,7 +458,6 @@
   id: 20023
   firstname: Beyonce
   lastname:
-  birthday: 1981-09-04
   nicknames:
   achievements: |
 
@@ -499,7 +479,6 @@
   id: 20024
   firstname: Billy Idol
   lastname:
-  birthday: 1955-11-30
   nicknames:
   achievements: |
     1982 - Billy Idol
@@ -523,7 +502,6 @@
   id: 20025
   firstname: Bjork
   lastname:
-  birthday: 1965-11-21
   nicknames:
   achievements: |
     1993 - Debut
@@ -546,7 +524,6 @@
   id: 20026
   firstname: Blake
   lastname: Shelton
-  birthday: 1976-06-18
   nicknames:
   achievements: |
     2001 - Blake Shelton
@@ -567,7 +544,7 @@
   id: 20027
   firstname: Bob
   lastname: Dylan
-  birthday: 1941-05-24
+  birthday: 1941-24-5
   nicknames:
   achievements: |
     Algunos de los discos más reconocidos entre los más de 40 discos en su haber:
@@ -596,7 +573,7 @@
   id: 20028
   firstname: Bob
   lastname: Marley
-  birthday: 1945-02-06
+  birthday: 1945-6-2
   nicknames:
   achievements: |
 
@@ -627,7 +604,7 @@
   id: 20030
   firstname: Britney
   lastname: Spears
-  birthday: 1981-12-02
+  birthday: 1981-2-12
   nicknames: Princesa del Pop
   achievements: |
     1999 - ...Baby One More Time
@@ -651,7 +628,6 @@
   id: 20042
   firstname: Charlie
   lastname: Hole
-  birthday: 1905-06-17
   nicknames:
   achievements: |
     2013 - The Joy Of A Caged Bird
@@ -666,7 +642,7 @@
   id: 20056
   firstname: Deborah
   lastname: De Corral
-  birthday: 1975-09-16
+  birthday: 1975-16-9
   nicknames:
   achievements: |
     2011 - Nunca o Una Eternidad
@@ -685,7 +661,7 @@
   id: 20063
   firstname: Elton
   lastname: John
-  birthday: 1947-03-25
+  birthday: 1947-25-3
   nicknames:
   achievements: |
     Algunos de los discos de Elton John:
@@ -716,7 +692,7 @@
   id: 20071
   firstname: Eros
   lastname: Ramazzotti
-  birthday: 1963-10-28
+  birthday: 1963-28-10
   nicknames:
   achievements: |
     2012 - SOMOS
@@ -749,7 +725,7 @@
   id: 20079
   firstname: Geronimo
   lastname: Rauch
-  birthday: 1978-02-11
+  birthday: 1978-11-2
   nicknames:
   achievements: |
     Con Mambru:
@@ -775,7 +751,7 @@
   id: 20082
   firstname: Gustavo
   lastname: Cerati
-  birthday: 1959-08-11
+  birthday: 1959-11-8
   nicknames:
   achievements: |
     1993 - Amor Amarillo
@@ -804,7 +780,6 @@
   id: 20098
   firstname: Joe
   lastname: Fernández
-  birthday:
   nicknames:
   achievements: |
     2006 - Formas
@@ -824,7 +799,7 @@
   id: 20099
   firstname: John
   lastname: Lennon
-  birthday: 1940-10-09
+  birthday: 1940-9-10
   nicknames:
   achievements: |
     1970 - John Lennon/Plastic Ono Band
@@ -854,7 +829,6 @@
   id: 20121
   firstname: Leo
   lastname: Garcia
-  birthday:
   nicknames:
   achievements: |
     1999 - Vital
@@ -885,7 +859,6 @@
   id: 20143
   firstname: Mick
   lastname: Jagger
-  birthday: 1943-07-26
   nicknames:
   achievements: |
     1985 - She's The Boss
@@ -916,7 +889,7 @@
   id: 20150
   firstname: Natalia
   lastname: Lafourcade
-  birthday: 1984-02-26
+  birthday: 1984-26-2
   nicknames:
   achievements: |
 
@@ -943,7 +916,7 @@
   id: 20156
   firstname: Paul
   lastname: Mc Cartney
-  birthday: 1942-06-18
+  birthday: 1942-18-6
   nicknames:
   achievements: |
     Algunos discos:
@@ -982,7 +955,7 @@
   id: 20157
   firstname: Paul
   lastname: Young
-  birthday: 1956-01-17
+  birthday: 1956-17-1
   nicknames:
   achievements: |
     1983 - No Parlez
@@ -1009,7 +982,7 @@
   id: 20164
   firstname: Poli
   lastname: Sallustro
-  birthday: 1988-05-22
+  birthday: 1988-22-5
   nicknames:
   achievements: |
     2012 - Volando
@@ -1033,7 +1006,7 @@
   id: 20181
   firstname: Shakira
   lastname:
-  birthday: 1977-02-02
+  birthday: 1977-2-2
   nicknames: Shak / Shaki / La Reina del Pop Latino
   achievements: |
     1995 - Pies Descalzos
@@ -1057,7 +1030,7 @@
   id: 20192
   firstname: Valeria
   lastname: Gastaldi
-  birthday: 1981-12-05
+  birthday: 1981-5-12
   nicknames:
   achievements: |
     2007: Cuando no estas
@@ -1077,7 +1050,7 @@
   id: 20194
   firstname: Virginia
   lastname: Da Cunha
-  birthday: 1981-06-15
+  birthday: 1981-15-6
   nicknames:
   achievements: |
     Con Bandana:
@@ -1103,7 +1076,7 @@
   id: 20198
   firstname: James
   lastname: Cregan
-  birthday: 1946-03-09
+  birthday: 1946-9-3
   nicknames:
   country: 181
   twitter:
