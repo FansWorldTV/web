@@ -3,24 +3,24 @@
 {% block title %}{{ parent() }} - Videos{% endblock %}
 
 {% block profile_tabs %}
-	{% set active_tab = 'videos' %}
-	{{ parent() }}
+    {% set active_tab = 'videos' %}
+    {{ parent() }}
 {% endblock %}
 
 {% block profile_body %}
     {% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_fullwidth.html.twig" %}
         {% block inner_content %}
-        <div data-list="video" data-entity-type="user" data-entity-id="{{user.id}}">
-            <div class="row-fluid clearfix"> 
+            <div data-list="video" data-entity-type="user" data-entity-id="{{ user.id }}">
+                <div class="row-fluid clearfix">
                 <span class="pull-right">
-                    {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %}
+                    {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig' %}
                 </span>
+                </div>
+
+
+                {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with {'entityId': user.id, 'entityType': 'user', 'listWithModal': true} %}
             </div>
-            
-            
-            {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with {'entityId': user.id, 'entityType': 'user', 'listWithModal': true} %}
-        </div>
         {% endblock %}
-    {% endembed %}		
+    {% endembed %}
 {% endblock %}
     
