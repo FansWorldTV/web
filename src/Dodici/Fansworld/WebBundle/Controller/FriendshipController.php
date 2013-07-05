@@ -39,6 +39,8 @@ class FriendshipController extends SiteController
 
             $target = $this->getRepository('User')->find($targetId);
 
+            if ($target->getType() == User::TYPE_STAFF) throw new \Exception('El usuario es parte de nuestro equipo');
+
             $friendgroups = array();
             foreach ($friendgroupids as $id) {
                 $friendgroup = $this->getRepository('FriendGroup')->find($id);
