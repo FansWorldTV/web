@@ -1,0 +1,2786 @@
+-
+  id: 302
+  firstname: Éric
+  lastname: Abidal
+  birthday: 1979-9-11
+  nicknames: Abi
+  country: 75
+  twitter: EAbidalOfficial
+  genre: [11]
+  teams:
+      -
+        id: 89
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 61
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Eric Abidal comenzó su carrera profesional en el Mónaco cuando debutó en la Primera División de Francia en la temporada 2000/01. En sus comienzos como futbolista, Abidal se ganó el apodo de El Keniata debido a su fuerza y resistencia física. Además, ganó la Supercopa de Francia 2000.
+    Después de disputar 22 partidos ligueros con el Mónaco, el lateral izquierdo siguió sumando experiencia en el Lille, de Francia. Allí también permaneció durante dos temporadas y fue protagonista en 62 partidos de Liga.
+    El gran salto de su carrera profesional lo dio en la temporada 2004/05 cuando fue fichado por el Olympique de Lyon, uno de los clubes más importantes de la liga gala. Abidal se consagró tricampeón de la Ligue 1 en los años 2005, 2006 y 2007 y también ganó las Supercopa de Francia en 2005, 2006 y 2007.
+    El 17 de enero de 2007, Abidal marcó el primer gol de su carrera cuando convirtió en la victoria del Lyon ante Le Mans por 1 a 0 en la semifinal de la Copa de la Liga de Francia.
+    Tras disputar 107 encuentros con el equipo multicampeón, Abidal fue fichado el 28 de junio de 2007 por el Barcelona de España. Ese mismo año, el futbolista francés fue nombrado el mejor lateral izquierdo de Europa al integrar el equipo ideal de la FIFA.
+    Abidal fue protagonista del histórico equipo de Barcelona que hizo una temporada perfecta en 2008/09 cuando conquistó todos los títulos disputados: Liga Española, Copa del Rey, Supercopa de España, Champions League, Supercopa de Europa, y Mundial de Clubes.
+    Además, el lateral francés repitió los títulos de Liga de España (2009/10, 2010/11 y 2012/2013), Supercopa de España (2010 y 2011), Copa del Rey (2012). Además, ganó otra vez la Champions League en 2011, la Supercopa Europea del mismo año y el Mundial de Clubes disputado en Japón.
+    Abidal tuvo el partido más complicado de toda su vida en 2011. El 15 de marzo de ese año, Barcelona anunció mediante un comunicado oficial que al futbolista francés le habían detectado un tumor en el hígado.
+    Luego, el 2 de mayo de ese año, Abidal volvió a las canchas contra todos los pronósticos cuando disputó unos minutos en las semifinales de la Copa del Rey ante el Real Madrid. Ese día fue ovacionado por todo el Camp Nou.
+    Sin embargo, el 15 de marzo de 2012, justo un año después de la detección del tumor, Éric Abidal fue sometido a un trasplante de hígado, que fue donado por su primo para poder tener un órgano compatible. Hoy, ya recuperado totalmente de su enfermedad, Abidal es un agente libre y tiene un futuro incierto en el mundo del fútbol.
+
+-
+  id: 303
+  firstname: Emmanuel
+  lastname: Adebayor
+  birthday: 1984-2-26
+  nicknames: Serpiente
+  country: 49
+  twitter: E_Adebayor
+  genre: [11]
+  teams:
+      -
+        id: 367
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 102
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 103
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Nacido en Togo  y de padres nigerianos de la etnia Yoruba, Emmanuel Adebayor comenzó su carrera deportiva en su país natal jugando en el Sporting Club de Lomé.
+    Luego el delantero fue descubierto por el club Metz en 1999 por lo que decidió mudarse a Francia. En su primera temporada oficial, jugó 9 partidos y marcó 2 goles. Y en la siguiente anotó 17 tantos en 35 partidos.
+    Tras su paso por Metz, Adebayor  firmó un nuevo contrato con el Mónaco en 2003. En el conjunto del Principado, el delantero marcó 7 goles en 17 partidos y fue clave en el  equipo que logró alcanzar la final de la UEFA Champions League 2004, anotando 2 goles en 10 encuentros. Ya para ese entonces, el mundo futbolístico ya ponía los ojos en el talentoso delantero togolés.
+    Por este motivo, Adebayor fichó por el Arsenal  y se le dio el apodo de Baby Kanu por su parecido con el ex jugador del equipo inglés Nwankwo Kanu, quien Adebayor había idolatrado en su juventud. En el equipo londinense, el delantero participó en 143 partidos y anotó 62 goles durante tres temporadas.
+    Tras su paso por el Arsenal,  Adebayor se mudó al Manchester City en 2009 para intentar sumar algún título en su vitrina personal. Sin embargo, al togolés le costó mucho ganarse un lugar y siempre estuvo por detrás de Carlos Tevez, Edin Džeko y Mario Balotelli en la consideración del director técnico. En sus dos temporadas en Manchester, el delantero jugó 46 partidos y anotó 19 goles.
+    Con poco lugar en el Manchester City, Adebayor fue cedido a préstamo para jugar en el Real Madrid en el año 2010. En el conjunto merengue, el togolés jugó 14 partidos, hizo 5 goles y se consagró campeón de la Copa del Rey. En 2011, el delantero pasó al Tottenham para ganarse la titularidad y tener más minutos en cancha. En dos temporadas, lleva anotados 26 goles en 71 partidos.
+    A nivel internacional, Adebayor es una de las figuras y piezas claves de la Selección de Togo. Participó del Mundial de Alemania 2006 y  de la Copa de África del mismo año.
+    El 8 de enero de 2010, Adebayor estuvo presente en el autobús del equipo de Togo que fue objeto de un ataque de fuego en el camino a la Copa Africana en Angola. Ese día tres integrantes del plantel perdieron la vida. Tras el violento episodio, el delantero anunció su retiro oficial de la Selección de su país.
+
+-
+  id: 304
+  firstname: Xavi
+  lastname: Alonso
+  birthday: 1981-11-25
+  nicknames: Xabi
+  country: 68
+  twitter: XabiAlonso
+  genre: [11]
+  teams:
+      -
+        id: 71
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 107
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 60
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Criado en el seno de una familia futbolera, Xabi Alonso comenzó a dar sus primeros pasos en el fútbol en el modesto equipo Antiguoko. De ahí da el salto a la Real Sociedad, debutando en Primera División en 1998. En el equipo vasco, jugó 162 partidos y convirtió 12 goles.
+    En la temporada 2004/05, el mediocampista español fichó para el Liverpool, donde impresionó por sus pases en profundidad, su rapidez en la distribución del balón, su visión de juego y su potente disparo.
+    En su primera temporada en el fútbol inglés, Xabi Alonso se consagró campeón de la Champions League 2005 y fue protagonista de la gran final ante el Milan tras anotar el gol que determinó el empate 3 a 3 (luego ganaron 3 a 2 en la tanda de penales).
+    Además, con el equipo el Liverpool, el mediocampista fue campeón de la FA Cup 2006, de la Supercopa Europea 2005 y de la Community Shield 2006. En total, disputó 209 partidos y anotó 19 tantos.
+    El 5 de agosto de 2009, Xabi Alonso fue confirmado como el nuevo fichaje del Real Madrid tras pasar la revisación médica. El debut oficial del futbolista con la camiseta del Merengue fue el 30 de agosto de ese año en la primera jornada de la Liga de España frente al Deportivo La Coruña en el Santiago Bernabéu.
+    El 2 de mayo de 2012, Xabi Alonso se proclamó campeón de Liga Española por primera vez en su carrera deportiva siendo una pieza clave del equipo madrileño durante toda la temporada. Además, obtuvo la Copa del Rey 2011 y la Supercopa de España 2012. En total con la camiseta blanca disputó 180 partidos y marcó 6 goles.
+    A nivel internacional, Xabi Alonso fue protagonista en los siete partidos de la Selección Española de Fútbol que se consagró campeona del mundo por primera vez en el Mundial de Sudáfrica 2010. Además, el mediocampista ganó la Eurocopa Austria/Suiza 2008 y Polonia/Ucrania 2012.
+
+-
+  id: 306
+  firstname: Juan
+  lastname: Arango
+  birthday: 1980-5-17
+  nicknames: Arangol
+  country: 231
+  twitter: ArangoOfficial
+  genre: [11]
+  teams:
+      -
+        id: 67
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 45
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Conocido por el público venezolano como Arangol, Juan Fernando Arango Sáenz es uno de los máximos representantes del fútbol venezolano en los últimos años y mayor responsable de dar a conocer el fútbol venezolano en el exterior.
+    El futbolista nacido en Maracay se hizo conocido en el ambiente futbolístico a nivel mundial gracias a su estilo de juego, su técnica y su potente zurda.
+    Arango comenzó su carrera profesional en el Nueva Cádiz Fútbol Club de la Segunda División Venezolana a los 17 años en 1996. Luego de conseguir el ascenso a la Primera División, el futbolista continuó su carrera en Caracas Fútbol Club y seis meses después pasó a Monterrey de la Primera División de México.
+    Después de un paso por Pachuca y por Puebla (ambos equipos de México), Arango da el salto al fútbol europeo por primera vez en 2004 para desembarcar en Mallorca, de España.
+    En el conjunto rojinegro, Arango fue uno de los intocables del equipo titular mallorquín durante 5 temporadas consecutivas. En total, disputó 195 partidos, hizo 50 goles y 32 asistencias.
+    Tras su exitoso paso por Mallorca, Arango fichó para el Borussia Mönchengladbach, de Alemania, en el año 2009.  En su primera temporada, el mediocampista ofensivo fue el líder en asistencias del club con 10 y se dio el lujo de ponerse la cinta de capitán. Incluso, fue incluido en el once ideal de la temporada 2012/13 de la Bundesliga.
+    A nivel internacional, Juan Arango debutó de manera oficial con la Selección Venezolana de Fútbol el 29 de marzo de 2000 ante Ecuador por las Eliminatorias para el Mundial 2002. Durante el ciclo del seleccionador nacional César Farías, fue nombrado como capitán de Venezuela.
+    Con la Vinotinto, Arango logró convertirse en el cuarto jugador en marcar goles en cuatro eliminatorias diferentes. El récord lo comparte con José Luis Chilavert, Marcelo Salas y Edison Méndez. Además, el 16 de octubre de 2012, con sus 21 goles, se convirtió en el máximo goleador de la Selección Venezolana de Fútbol en las eliminatorias.
+
+-
+  id: 307
+  firstname: Pablo
+  lastname: Armero
+  birthday: 1986-11-2
+  nicknames: Miñia, Correcaminos
+  country: 47
+  twitter: PabloArmero27
+  genre: [11]
+  teams:
+      -
+        name: América de Cali
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 175
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 120
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 122
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 47
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Pablo Armero inició su carrera profesional en el América de Cali en 2004. Allí jugó como lateral izquierdo y se destacó cuando tuvo una gran actuación el Torneo Finalización de Colombia ganado por Los Diablos Rojos en 2008.
+    Antes de su esperado debut en la Primera División, el lateral izquierdo jugó en todas las categorías inferiores de la Selección Colombiana de Fútbol hasta el 2010 que tuvo su debut en la Selección Mayor.
+    Después de consagrarse campeón con el América de Cali, Armero fue fichado por Palmeiras de Brasil para disputar la temporada 2009/10. Y, luego de alternar buenas y malas actuaciones, el lateral colombiano desembarcó en el fútbol europeo para desempeñarse en  el Udinese, de Italia.
+    La excelente actuación de Armero en el conjunto italiano tuvo muchos elogios de la prensa especializada y de muchos técnicos del Calcio. Incluso, el futbolista colombiano fue nombrado el mejor lateral izquierdo de la Serie A Italiana en el año 2011.
+    Después de su exitoso paso por Udinese, Armero fichó para el Nápoli el 4 de enero de 2013 en condición de préstamo por un año para intentar sumar un título en su vitrina personal.
+    A nivel internacional, Armero participó en 9 ocasiones con la Selección Colombiana de Fútbol en las Eliminatorias Sudamericanas para el Mundial 2010 y jugó 12 partidos en las Eliminatorias para el Mundial 2014. Además, integró el plantel que disputó la Copa América Argentina 2011.
+
+-
+  id: 308
+  firstname: Roberto
+  lastname: Baggio
+  birthday: 1967-2-12
+  nicknames: Roby, il Divino
+  country: 118
+  twitter: BaggioOfficial
+  genre: [11]
+  teams:
+      -
+        id: 130
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 135
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        name: Brescia
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Roberto Baggio es considerado unos de los mejores futbolistas italianos en la historia. El mediocampista ofensivo se destacó por su técnica, su juego a un toque y su creatividad dentro del campo de juego. Además, tuvo una gran efectividad delante del arco: en total convirtió 314 goles oficiales (27 de ellos con su Selección convirtiéndose en el quinto máximo goleador de la historia azzurra).
+    En 1982, il Divino comenzó su carrera deportiva en el Vicenza, equipo de su ciudad natal, con tan sólo 15 años. Allí jugó tres temporadas en la Serie B (Segunda División del fútbol italiano), donde sumó minutos en 36 partidos y anotó 13 goles.
+    En 1985, con tan solo 18 años, Baggio fue fichado por la Fiorentina para disputar la Serie A. Sin embargo, el mediapunta debutó en la máxima categoría un año después en el encuentro contra la Sampdoria. Y su primer gol lo marcó en 1987 ante el Nápoles de Diego Armando Maradona.
+    En 1990, Baggio se incorporó al plantel de la Juventus con el objetivo de ganar un Scudetto. Y así fue que Roby fue una de las figuras del campeón de la Serie A y de la Copa Italia en la temporada 1994/95. Además, fue una pieza clave en la Copa UEFA ganada en 1993.
+    Baggio repitió el título de Serie A una temporada después pero con la camiseta de Milan.  Ese año disputó 28 partidos y convirtió 7 goles.  El mediocampista llegó al equipo rossonero gracias al esfuerzo económico que hizo Silvio Berlusconi.
+    En 1997, fue transferido al Bologna, donde solo permaneció una temporada.  Y, tras el Mundial de Francia 1998, el futbolista italiano fichó para el Inter de Milán. Sin embargo, Baggio siempre dijo que fue una mala decisión porque no fue tenido en cuenta por el entrenador Marcelo Lippi.
+    Con pocos minutos en el Inter, Baggio se incorporó al Brescia de Italia para darle un cierre a su espectacular carrera profesional. Finalmente, Il Divino se retiró en el año 2004 jugando su último partido en el San Siro contra el Milan. Ese día, el entrenador del Brescia lo sustituyó en el minuto 88 para que reciba la merecida ovación del público.
+    A nivel internacional, Baggio es el quinto máximo goleador de la Selección Italiana de Fútbol con sus 27 tantos. Además participó de los Mundiales de Italia 1990, Estados Unidos 1994 y Francia 1998, jugando 16 partidos y convirtiendo 9 goles.
+    Su mejor actuación en un Mundial fue haber llegado a la final de Estados Unidos 1994. Tras empatar el partido definitorio ante Brasil, el campeón se definía en la tanda de penales. Ese día, Baggio es recordado por errar el penal definitorio que permitió a los brasileños consagrarse campeones del mundo.
+
+-
+  id: 310
+  firstname: Gareth
+  lastname: Bale
+  birthday: 1989-7-16
+  nicknames:
+  country: 240
+  twitter: GarethBale11
+  genre: [11]
+  teams:
+      -
+        id: 103
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Gareth Bale es considerado uno de los grandes talentos de la Premier League en la actualidad. El lateral izquierdo galés se caracteriza por su gran destreza y su excelente disparo desde largas distancias. A pesar de jugar en posiciones defensivas, el futbolista marcó 61 goles en 185 partidos en toda su carrera.
+    Con sólo 9 años, Bale ya había llamado la atención del Southampton (equipo que en aquel entonces militaba en la Segunda División de Inglaterra) mientras jugaba en un torneo de fútbol 5 en Cardiff Civil Service Football Club.
+    Con tan sólo 15 años, Bale se mudó a la ciudad de Southampton con la ilusión de poder desarrollar su carrera deportiva. Y así fue que un año después de su llegada debutó en la en el primer equipo con sólo 16 años (se convirtió en el segundo jugador más joven de Los Santos en debutar). En la siguiente temporada, Bale se afianzó como titular y jugó los 38 partidos de su quipo anotando 5 goles.
+    Gracias a su excelente desempeño, Bale fue fichado por el Tottenham  en 2007. Su primer partido oficial en la Premier League fue el 26 de agosto de ese año el campo del  Manchester United y su primer gol lo marcó en su segundo partido ante el Fulham.
+     En 2008, Bale integró el equipo que se consagró campeón de la Copa de la Liga obtenida por el Tottenham. Ese año, el galés fue nombrado el mejor jugador joven del año.
+    Sin embargo, recién en 2011 Bale se ganó el reconocimiento a nivel mundial cuando fue elegido el mejor jugador de la Premier League en la temporada 2010/11.
+    A nivel internacional, Bale se destacó en la Selección Sub-17 de Gales. Luego, el director técnico John Benjamin Toshack le ofreció la oportunidad de debutar con la Selección Mayor el 27 de mayo de 2006 en un partido contra Trinidad y Tobago.
+    En su segunda aparición con Gales, Bale hizo un gol con una de sus especialidades: los lanzamientos de tiro libre, convirtiéndose así en el jugador galés más joven en marcar en partido oficial.
+
+-
+  id: 311
+  firstname: Mario
+  lastname: Balotelli
+  birthday: 1990-8-12
+  nicknames: Super Mario, Loco, Turbo Mario
+  country: 118
+  twitter: FinallyMario
+  genre: [11]
+  teams:
+      -
+        id: 136
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Mario Balotelli, nacido en Palermo -Italia- y de padres ghaneses, de chico sufrió algunos problemas de salud que finalmente terminaron cambiando su vida.
+    Con severas complicaciones en sus intestinos, las condiciones como vivían los Barwuah –el apellido de la familia de sangre del futbolista- no eran las mejores y entonces Super Mario fue dado en adopción a Francesco y Silvia Balotelli cuando tenía tres años.
+    Así, el delantero comenzaría a superar sus dificultades y con el correr del tiempo daría sus primeros pasos el en fútbol. Goleador récord de las juveniles del Lumezzane, a los 15 años fue promocionado al plantel profesional y en 2006 debutaría en la Serie C1 frente al Pádova.
+    Sus notables condiciones llamaron la atención de varios clubes importantes de Europa, pero el Loco se quedaría en Italia y su destino sería el Inter. Destacándose en los equipos Sub-19 y Sub-20 del Nerazzurri, el punta tendría su estreno en la Serie A el 16 de agosto de 2007 ante el Cagliari.
+    Potente y de gran técnica, lograría 6 títulos -3 Ligas, 1 Supercopa Italiana, 1 Champions y 1 Copa Italia- aunque luego de unas temporadas, su temperamento comenzaría a jugarle en contra. Tras varios conflictos con Mourinho, se marcharía al Manchester City a mediados de 2010.
+    Ya con los Citizens, el Nene mostraría su mejor versión y se alzaría con 3 conquistas más -FA Cup, Premier League y Community Shield-, para posicionarse como delantero de elite.
+    En cuanto a su trayectoria con la Selección Italiana, Mario recién pudo obtener la ciudadanía a los 18 años. Luego de declinar el llamado del equipo nacional de Ghana, su estreno con la Nazionale sería el 10 de agosto de 2010 frente a Costa de Marfil.
+    Tan polémico como talentoso, Balotelli cuenta con un importante potencial para convertirse en uno de los mejores futbolistas del mundo.
+
+-
+  id: 312
+  firstname: Franco
+  lastname: Baresi
+  birthday: 1960-5-8
+  nicknames:
+  country: 118
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 136
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Franco Baresi es considerado uno de los mejores defensores de toda la historia. El central italiano desarrolló toda su carrera en el Milan y se dio el lujo de ganar prácticamente todos los títulos posibles con el conjunto rossonero: Scudetto, Supercopa Italiana, Champions League, Supercopa de Europa y Copa Intercontinental. Además, integró el equipo italiano que se consagró campeón del Mundial España 1982.
+    El fútbol tiene historias insólitas. Y la carrera deportiva de Baresi tiene un detalle muy peculiar en sus comienzos. Con tan sólo 13 años, el joven Franco fue a probarse al Inter, pero no quedó seleccionado al no pasar la prueba de ingreso. Sin embargo, un año después, se probó en el clásico rival de toda la vida, el Milan, e ingresó a las juveniles rossonera.
+    Disputó su primer partido con el Milan el 23 de abril de 1978 ante el Verona. Y en su segunda temporada logró afianzarse como titular del equipo que se consagró campeón del Scudetto en 1979. Luego, Baresi sufriría el descenso a la Serie B y disputaría las dos temporadas en la Segunda División.
+     En 1986 Silvio Berlusconi asumió la presidencia del Milan y revolucionó en el club rossonero trayendo grandes figuras como Marco Van Basten, Ruud Gullit, Frank Rijkaard y Paolo Maldini, entre otros.
+    Durante esa época dorada, Milan ganó 5 Scudettos (1988, 1992, 1993, 1994 y 1996), 4 Supercopa Italiana (1988, 1992, 1993 y 1994), 3 Champions League (1989, 1990 y 1994), 2 Copas Intercontinentales (1989 y 1990) y 3 Supercopas Europeas (1989, 1990 y 1994). Aquella defensa estaba formada por: Mauro Tassotti, Alessandro Costacurta, Franco Baresi, Paolo Maldini y Frank Rijkaard.
+    En la temporada 1996/97, con 37 años, Baresi decidió ponerle punto final a su exitosa carrera. En su honor el Milan retiró la camiseta número 6 como reconocimiento a su trayectoria exitosa. Además, se lo considera hoy en día como uno de los mejores líberos del mundo.
+    Como si esto fuera poco, Baresi integró el equipo italiano que se consagró campeón del Mundial de España 1982. Sin embargo, no jugó ningún partido como titular. Además, fue una pieza clave en el tercer puesto logrado en Italia 1990 y el subcampeonato en el Mundial Estados Unidos 1994.
+
+-
+  id: 313
+  firstname:
+  lastname: Bebeto
+  birthday: 1964-2-16
+  nicknames:
+  country: 31
+  twitter: bebetotetra94
+  genre: [11]
+  teams:
+      -
+        id: 174
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 171
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 77
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Bebeto es un ex futbolista brasileño que ganó reconocimiento a nivel mundial por su excelente actuación en el Mundial ganado por Brasil en Estados Unidos  1994. Fue protagonista de la conocida dupla de atacantes que formó con Romario y que también ganó la Copa América de 1989.
+    Bebeto debutó como futbolista profesional en el Vitoria de Bahía. Luego jugó seis temporadas en Flamengo entre los años 1982 y 1988. Después fichó para el Vasco Da Gama, equipo con el que jugó  dos temporadas hasta pegar el salto al fútbol europeo.
+    El delantero brasilero llegó al punto más alto de su carrera en el Deportivo La Coruña, un equipo muy humilde de España que durante esos años estuvo en los primeros planos. Allí, Bebeto se consagró campeón de la Copa del Rey 1995, de la Supercopa de España 1995 y logró los subcampeonatos de la Liga en 1994 y 1995.
+    Con el Deportivo La Coruña, Bebeto marcó 118 goles en 131 partidos durante cuatro temporadas, convirtiéndose así en el máximo goleador del equipo hasta ese entonces. Además, fue Pichichi (así lo llaman al goleador de la Liga) en la temporada 1992/93, algo que nunca había logrado un jugador del club.
+    En 1994, Bebeto obtuvo sin dudas uno de sus mayores logros: fue una pieza clave en la Selección Brasileña de Fútbol que se consagró campeona del Mundial de Estados Unidos.
+    Luego su carrera deportiva continuó alternando buenas y malas en Sevilla, Flamengo, Cruzeiro, Toros Neza, Botafogo, Kashima Antlers (Japón) y Al-Ittihad (Arabia Saudita).
+    Otro punto alto de su carrera fue el excelente Mundial que tuvo en Francia 1998 formando dupla de atacante con el joven Ronaldo. Ese campeonato anotó 3 goles y fue una pieza importante en el subcampeonato logrado, tras perder en la final contra Francia.
+
+-
+  id: 315
+  firstname: David Robert Joseph
+  lastname: Beckham
+  birthday: 1975-5-2
+  nicknames: Becks, Spice Boy
+  country: 181
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 101
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 60
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 366
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 81
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    David Beckham se destacó por su capacidad goleadora en Inglaterra y es considerado por muchos especialistas como el mejor lanzador de tiros libres del mundo debido a su gran precisión de tiro y potencia.
+    Su debut profesional fue en el Manchester United dirigido por el Sir Alex Ferguson en la temporada de 1995. Desde ese año en adelante, el Spice Boy se convirtió en una pieza clave del equipo inglés, que logró títulos nacionales e internacionales durante esa época.
+    El mediocampista inglés se destacó en la temporada 1998/99 cuando su equipo consiguió la Triple Corona (campeón de la Premier League, la FA Cup y la Champions League) junto a grandes jugadores como Ryan Giggs, Paul Scholes, Roy Keane y Peter Schemeichel, entre otros. Además, ganó la Copa Intercontinental de 1999 y las Premier League en los años 1999, 2000 y 2001.
+    En 2003, Beckham fichó para el Real Madrid y, ni bien llegó, ya había sido protagonista en la Supercopa de España que ganó ese año. Sin embargo, el equipo madridista no tuvo buenos campeonatos y sus jugadores fueron muy criticados. Finalmente, obtuvieron la Liga en 2007, pero Beckham ya no estaba en los planes de Fabio Capello.
+    En 2007, el Spice Boy decidió seguir su carrera en el equipo estadounidense de Los Angeles Galaxy, de la Major League Soccer. Dos años después volvió al fútbol europeo cuando fue cedido a préstamo al Milan con el objetivo de ser convocado al Mundial de 2010. Sin embargo, sufrió la rotura del tendón de Aquiles y su sueño mundialista quedó en la nada.
+    Finalmente, Beckham termina su contrato con el equipo inglés y firma con Paris Saint Germain en enero de 2013. Tras finalizar la temporada como campeón de la Ligue 1, el Spice Boy anunció que se retiraba de la actividad profesional a los 38 años.
+    Con la Selección Inglesa de Fútbol, Beckham ostenta el récord de ser el único jugador inglés en convertir goles en tres Mundiales distintos (Francia 1998, Corea/Japón 2002 y Alemania 2006).
+
+-
+  id: 317
+  firstname: Karim Mostafa
+  lastname: Benzema
+  birthday: 1987-12-19
+  nicknames: Gato, Monsieur
+  country: 75
+  twitter: 9Benzema
+  genre: [11]
+  teams:
+      -
+        id: 83
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 60
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Benzema tuvo una breve participación en las infantiles del Bron Terraillon, para posteriormente desembarcar con 9 años a la cantera del Lyon. Siempre destacándose por su técnica y capacidad goleadora, su estreno en Primera llegaría en enero de 2005 frente al Metz.
+    Tras dos temporadas en busca de continuidad, comenzaría a demostrar todo su potencial para consagrarse como máximo artillero y jugador del año de la Ligue 1 de 2007/2008. Con el Lyon lograría 8 títulos -4 Ligas, 3 Supercopas y 1 Copa de Francia-, dejando una excelente recuerdo y transformándose en ídolo del club.
+    Entonces en julio de 2009 su gran nivel le permitiría ser transferido al Real Madrid, que lo compraría por 35 millones de euros. Ya en el Merengue, el punta mostraría su mejor versión y se alzaría con 3 conquistas -1 Liga, 1 Copa del Rey y 1 Supercopa Española.
+    En cuanto a su trayectoria con la Selección Francesa, el Gato integró todos los equipos juveniles y en 2004 fue campeón de la Eurocopa Sub-17. En 2006 el goleador sería convocado al combinado nacional de Argelia -sus padres son Argelinos-, pero declinaría la propuesta y en marzo de 2007 tendría su estreno con les Bleus frente a Austria.
+    Considerado uno de los mejores delanteros del mundo, Benzema busca liderar el recambio generacional de Francia y así poder disputar su primer Mundial.
+
+-
+  id: 318
+  firstname: Dennis
+  lastname: Bergkamp
+  birthday: 1969-5-10
+  nicknames: Iceman
+  country: 96
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 298
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 102
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Dennis Bergkamp es considerado uno de los mejores futbolistas de Holanda de toda la historia. Además, con sus 37 goles internacionales, es el segundo goleador histórico de la Selección Holandesa de Fútbol.
+    Bergkamp comenzó a dar sus primeros pasos en el fútbol a los 11 años cuando se incorporó en las categorías inferiores del Ajax. Su debut profesional fue el 4 de diciembre de 1986 de la mano de Johan Cruyff, jugando 14 partidos en esa temporada.
+    En el equipo holandés, Bergkamp fue protagonista en los títulos logrados de la Liga 1990, de la Recopa de Europa de 1987, la Copa de la UEFA de 1992 y la Copa Holandesa de 1993. Además, el delantero fue goleador y considerado el mejor jugador en las temporadas de 1992 y 1993. En total anotó 122 goles en 239 partidos.
+    Para entonces era evidente que la calidad del futbolista necesitaba probarse en una liga más importante. Es por esto que Bergkamp se incorporó al plantel del Inter de Milan. Allí fue una de las figuras en la Copa UEFA obtenida en 1994.
+    Un años después, Bergkamp se incorporó al Arsenal de Inglaterra con el objetivo de seguir sumando títulos a su carrera deportiva. Sin embargo, fue en la temporada 1997/98 cuando el delantero se destapó anotando 22 goles y siendo la pieza clave del equipo que ganó la Premier League y la FA Cup. Luego repitió los títulos de la Premier League en los años 2002 y 2004, la FA Cup 2002, 2003 y 2004.
+    El 16 de abril de 2006, Bergkamp jugó su último partido profesional con el Arsenal en el encuentro contra el West Bromwich. Ese día fue nombrado “El día de Bergkamp” ya que recibió un gran homenaje del público londinense: todos llevaron camisetas naranjas con el número 10 y la iniciales DB.
+    Con la Selección Holandesa de Fútbol, Bergkamp jugó los Mundiales de Estados Unidos 1994 y Francia 1998. Además, disputó la Eurocopa de 1992, 1996 y 2000. En total disputó 79 partidos internacionales y anotó 37 goles.
+
+-
+  id: 320
+  firstname: Gianluigi
+  lastname: Buffon
+  birthday: 1978-1-28
+  nicknames: Gigi, Supergigi, Superman
+  country: 118
+  twitter: gianluigibuffon
+  genre: [11]
+  teams:
+      -
+        id: 125
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 135
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Gianluigi Buffon es considerado uno de los mejores arqueros del mundo de los últimas 3 décadas. Además, el guardameta italiano fue una de las figuras en la gran final del Mundial de Alemania 2006 que terminó ganando al Azzurra por definición desde el punto de penal.
+    A los 13 años, Buffon fue incorporado al equipo de juveniles del Parma tras pasar con éxito la prueba, en la que se desempeñó como delantero. Sin embargo, un año después, los dos arqueros del equipo se lesionaron y el joven Gianluigi se ofreció para ocupar ese puesto. Dos semanas después, ya era el arquero titular del equipo.
+    En 1995, Buffon fue promovido al primer equipo y debutó en la Serie A con 17 años en un encuentro contra el Milan con resultado final de 0 a 0.
+    Tras afianzarse en el arco de Parma, Buffon alcanzó su mejor nivel cuando se consagró campeón de la Copa Italia 1999 y la Supercopa Italiana de ese mismo año. Además, ganó la Copa UEFA de 1999.
+    En 2001, Buffon se incorporó al plantel profesional de la Juventus por una cifra récord de 47 millones de euros (es el arquero más caro hasta la actualidad). Con la Vecchia Signora, el portero italiano logró los títulos de Serie A 2002 y 2003, y las Supercopa de Italia de los mismos años.
+    En 2006, debido al escándalo de manipulación de encuentros, la Juventus descendió a la Serie B y Buffon fue uno de los pocos futbolistas que se quedó en el equipo. Después de un excelente año en la segunda división, Juventus volvió a la Serie A y Buffon renovó el contrato hasta 2012.
+    A pesar del mal momento que vivió con la Juventus, el 2006 es un año muy especial para Buffon porque fue una de las grandes figuras de la Selección Italiana de Fútbol que logró consagrarse campeón del Mundial de Alemania 2006.
+    Los éxitos con la Juventus volvieron recién 2012 cuando se consagró campeón de la Serie A, título que repitió en la temporada siguiente. Además, obtuvo la Supercopa Italiana de 2012.
+
+-
+  id: 321
+  firstname: Sergio
+  lastname: Busquets
+  birthday: 1988-7-16
+  nicknames: Busi, Pulpo
+  country: 68
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 61
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Sergio Busquets es uno de los mejores mediocampistas defensivos de la actualidad.  El futbolista español ganó todos los campeonatos posibles con el Barcelona y se dio el lujo de consagrarse campeón del Mundial de Alemania 2006 y de la Eurocopa de Polonia/Ucrania 2012 con la Selección Española de Fútbol.
+    Busquets ingresó en las categorías de juveniles de Barcelona en 2005 con 17 años. Tuvo un gran progreso en los equipos de inferiores y en 2007 Frank Rijkaard (entrenador de Barcelona en aquella época) puso los ojos en el joven español cuando lo convocó para disputar la Copa de Cataluña.
+    En la temporada 2007/08, Busquets fue una de las grandes figuras del Barcelona B que consiguió el ascenso a la Segunda División B de la mano de justamente Pep Guardiola, su futuro entrenador en la primera.
+    En la siguiente temporada, Guardiola fue nombrado entrenador del primer equipo de Barcelona y decide llevar al joven Busquets a la pretemporada.
+    Su debut oficial fue el 13 de septiembre de 2008 cuando jugó los 90 minutos ante el Racing de Santander.  El 22 de octubre de 2008, Sergio consiguió su primer gol oficial con el primer equipo catalán en su debut en la Champions League en el encuentro contra Basilea.
+    Busquets es una pieza clave del Barcelona que ganó todo y que es considerado uno de los mejores equipos de todos los tiempos. Allí ganó 4 Ligas (2009, 2010, 2011 y 2013), 2 Copas del Rey (2009 y 2012), 3 Supercopas de España (2009, 2010 y 2011), 2 Champions League (2009 y 2011), 2 Supercopas de Europa (2009 y 2011) y 2 Mundiales de Clubes (2009 y 2011).
+    Busquets también consiguió un logro único. El mediocampista fue titular en los siete partidos que llevaron a la Selección Española de Fútbol a consagrarse campeona del mundo por primera vez en su historia en Sudáfrica 2010. Además, ganó la Eurocopa Polonia/Ucrania 2012.
+
+-
+  id: 322
+  firstname:
+  lastname: Cafú
+  birthday: 1970-6-7
+  nicknames: il Pendolino
+  country: 31
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 186
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 124
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 136
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Marcos Evangelista de Moraes, más conocido como Cafú, debutaría en 1988 con el San Pablo y con el Tricolor ganaría todo -2 Campeonatos Paulistas, 2 Libertadores, 2 Intercontinentales, 2 Recopas Sudamericanas y 1 Supercopa-.
+
+    En 1995 se mudaría a España para jugar en el Zaragoza, aunque su paso sería breve y regresaría a Brasil. Su destino sería el Palmeiras y con el Verdão conquistaría el Torneo Paulista de 1996.
+
+    Un año después, el talentoso lateral sería transferido a la Roma y allí mostraría su mejor versión. Il Pendolino -es un tipo de tren de alta velocidad- , cómo lo apodaron en el Calcio, se coronaría con la Serie A de 2001 logrando la idolatría de los hinchas romanos.
+
+    Ya en 2003, se marcharía al Milan para continuar consiguiendo objetivos y se alzaría con 6 títulos -1 Copa Italia, 1 Liga, 1 Supercopa italiana, 1 Champions, 1 Mundial de Clubes y 1 Supercopa de Europa-.
+    Siendo el jugador con mayor cantidad de presencias en la historia del Seleccionado Brasilero, Cafú disputó 4 Mundiales de los cuáles fue campeón en 2 de ellos -1998 y 2002-. Líder y referente de la Verde Amarela, tiene el récord de ser el primer futbolista en disputar 3 finales del Mundo consecutivas.
+    Capitán del Scratch durante muchos años, es un ganador absoluto al cual se lo considera el mejor lateral derecho de todos los tiempos.
+
+-
+  id: 323
+  firstname: Felipe
+  lastname: Caicedo
+  birthday: 1988-9-5
+  nicknames: Felipao, El Hijo del Pueblo
+  country: 60
+  twitter: FelipaoCaicedo
+  genre: [11]
+  teams:
+      -
+        id: 65
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 320
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Felipe Caicedo es un futbolista ecuatoriano que hace varios años que juega en el fútbol europeo en clubes de los más importantes. Además, es uno de los delanteros fijos en las convocatorias de la Selección Ecuatoriana de Fútbol.
+    Caicedo se formó futbolísticamente en Rocafuerte Fútbol Club. Desde el año 2000 hasta 2006, el delantero ecuatoriano jugó varios torneos de segunda categoría. Ya en ese momento equipos como Olympique de Lyon y Basilea pusieron los ojos sobre el joven  gracias a sus grandes actuaciones en los partidos disputados con la Selección Sub 17.
+    Por este motivo, con tan sólo 16 años, Caicedo se incorporó al Basilea en la temporada 2005/06. Debido a su juventud, el delantero comenzó jugando en las inferiores y al poco tiempo pasó a jugar al primer equipo, con el que disputó 20 partidos.
+    Después de convertir 11 goles en 47 partidos con el equipo suizo, Caicedo fichó por el Manchester City en 2008. El delantero anotó su primer gol con el equipo inglés en la temporada siguiente en un partido de Copa UEFA contra el Racing de Santander. Sin embargo, Caicedo no logró ganar continuidad.
+    Al no tener oportunidades en el City, Caicedo fue cedido a préstamo por un año al Sporting de Lisboa. Sin embargo, sólo jugó 10 partidos y no pudo convertir. Por este motivo, al año siguiente se sumó a la plantilla de Málaga de España.
+    En 2010,  una hora antes del cierre del período de traspasos en Europa, Caicedo firmó un contrato con el Levante tras ser cedido una vez más por el Manchester City. Allí anotó 14 goles en 28 partidos.
+    Finalmente, en 2011, Caicedo arregló por cuatro temporadas con el Lokomotiv de Moscú. En el equipo ruso, el delantero ecuatoriano lleva anotados 11 goles en 28 partidos.
+    Caicedo jugó en todas las selecciones juveniles de su país y fue convocado a la Selección Mayor por primera vez en 2007. El delantero integró los equipos ecuatorianos que jugaron las Copas Américas de 2007 y 2011.
+
+-
+  id: 325
+  firstname: Óscar
+  lastname: Cardozo
+  birthday: 1983-5-20
+  nicknames: Tacuara
+  country: 174
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 241
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 3
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 141
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Oscar Cardozo comenzó su carrera jugando en 3 de Febrero de Ciudad del Este en Paraguay antes de pasar al Nacional, donde rápidamente se estableció como máximo goleador del equipo.
+    Su gran desempeño en su país natal y los 17 goles que hizo en la Primera División de Paraguay, fueron claves para que Newell´s de Rosario ponga los ojos en el joven delantero. Y fue así que en 2006 Tacuara fue transferido al equipo argentino en una cifra de más de 1 millón de dólares.
+    Cardozo comenzó a hacerse conocido en el ambiente futbolero gracias a su excelente performance en Newell´s. En su primer campeonato, el delantero paraguayo anotó 11 goles en 16 partidos y en el Torneo Clausura convirtió 10 tantos y fue una pieza clave para que el equipo rosarino se salve del descenso. Gracias a esto, Tacuara fue nombrado el mejor futbolista paraguayo de esa temporada y fue convocado para disputar la Copa América 2007.
+    El 21 de junio de 2007, Cardozo firmó contrato con el Benfica por un monto aproximado de 11 millones de euros, convirtiéndose en el segundo fichaje más caro de la historia del club hasta ese entonces.
+    El precio pagado por el delantero paraguayo fue rápidamente compensado con goles. En el equipo portugués, Cardozo jugó más de 200 partidos en seis temporadas y anotó más de 150 goles. Además, fue una pieza clave en las Copas de la Liga ganadas en 2009, 2010 y 2011 y en la Primera División de Portugal 2010.
+    Con la Selección Paraguaya de Fútbol, Cardozo integró los equipos que disputaron las eliminatorias para el Mundial de Sudáfrica 2010 bajo la conducción de Gerardo Martino. Y, gracias a su gran desempeño, el delantero paraguayo fue uno de los 23 jugadores que integraron el plantel de Paraguay en el Mundial.
+
+-
+  id: 326
+  firstname: Iker
+  lastname: Casillas
+  birthday: 191-5-22
+  nicknames: San Iker, El Santo
+  country: 68
+  twitter: ICasillas2081
+  genre: [11]
+  teams:
+      -
+        id: 60
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Casillas ingresó a la cantera del Real Madrid con 8 años, para finalmente en 1997 tener su primera convocatoria con la Primera Merengue.
+    Así, a sus 15 Iker fue al banco de suplentes de un partido de Champions frente al Rosenborg. Aunque su estreno oficial sería recién el 12 de septiembre de 1999 de visitante frente al Athletic.
+    Trofeo Bravo -mejor promesa- en 2000, se quedaría con el récord de ser el portero más joven en disputar y ganar una final de Champions. Cuando su carrera parecía no tener tope, perdería el arco de la Casa Blanca a manos de César. Sin embargo, San Iker aparecería en el momento más difícil ingresando la última media hora de una final -vs Bayern Leverkusen- para ser determinante en la consagración.
+    Multicampeón y capitán madridista, Casillas es todo un referente de la historia del Real Madrid considerado el mejor arquero de la historia del club. Ídolo blanco, el Águila de Móstoles ha marcado una época bajo los tres palos del Real.
+    En cuanto a su trayectoria con la Furia, Iker empezó su recorrido coronándose campeón europeo Sub-16 en 1997 y luego logró el Campeonato del Mundo Sub-20 de 1999. Si su experiencia con los Seleccionados Juveniles fue buena, su etapa con la Mayor sería aún mejor.
+    Desde su debut internacional el 3 de junio de 2000 frente a Suecia, el Santo empezaría a hacer historia con España. Siendo el jugador con más presencias de todos los tiempos de la Roja, como capitán Casillas fue el encargado de levantar la Copa del Mundo en 2010.
+    Siendo toda una gloria de la portería española, es considerado por muchos como el arquero más destacado de los últimos años.
+
+-
+  id: 327
+  firstname: Antonio
+  lastname: Cassano
+  birthday: 1982-7-12
+  nicknames: Peter Pan, il Bambino, Tony
+  country: 118
+  twitter: CassanoOfficial
+  genre: [11]
+  teams:
+      -
+        id: 124
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 139
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 136
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 123
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Antonio Cassano comenzó a jugar al fútbol en las difíciles calles del barrio más peligroso de Bari. Un día un ojeador del Associazione Sportiva Bari se fijó en el joven cuando tenía 5 años y lo llevó a los equipos de inferiores del club.
+    Il Bambino debutó en el año 1999 con el Bari en el derby del sur ante el Lecce, consiguiendo ese mismo año el ascenso a la Serie A del Calcio. En su segundo partido en la máxima categoría, Cassano anotó el primero gol de su carrera ante el Inter de Milan.
+    Tras demostrar su gran calidad en la temporada 2000/01, la Roma desembolsó 30 millones de euros por el mediapunta de Bari. En sus primeras temporadas con el equipo de la capital italiana, Cassano mostró su mejor nivel gracias a su técnico Fabio Capello. Sin embargo, cuando el DT emigró para Juventus, il Bambino nunca pudo recuperar su  nivel. Además, estuvo mucho tiempo apartado y sin jugar.
+    En 2006, sin lugar en la Roma, Cassano fue presentado por Florentino Pérez como la nueva incorporación del Real Madrid. Sin embargo, la fama de niño malo se notó más que nunca. Además de varios conflictos, el delantero aumentó de peso considerablemente y su nivel futbolístico bajó. De hecho, se perdió la oportunidad ser convocado para el Mundial 2006 que luego Italia lograría ganar.
+    Una temporada después, Cassano pasó a la Sampdoria de Italia. No lejos de los conflictos, il Bambino a pesar de todo mostró un nivel aceptable durante 4 temporadas. Gracias a esto, el delantero volvió a la Selección Italiana de Fútbol.
+    El día 30 de octubre de 2011, Cassano sufrió un ictus isquémico, que parte del problema se debe a que se le descubrió que sufría una enfermedad cardíaca. Fue intervenido quirúrgicamente con éxito y estuvo alejado de las canchas durante seis meses.
+    El 29 de abril, seis meses después de su recuperación, Cassano volvió a jugar en el Milan con gol incluido en la victoria por Serie A ante el Siena. Finalmente, il Bambino fichó por el Inter en la temporada siguiente.
+
+-
+  id: 328
+  firstname: Petr
+  lastname: Cech
+  birthday: 1982-5-20
+  nicknames: The Czech Wall, The Angel, Big Pete
+  country: 183
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 105
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Petr Cech es un futbolista checo que es considerado uno de los mejores arqueros del mundo en la actualidad y fue galardonado como el premio al mejor portero del planeta en 2006.
+    Además, en su vitrina de honores figuran tres premios al mejor arquero de la Champions League (2005, 2007 y 2008), dos Guantes de Oro (2005 y 2009), y una medalla al mejor portero de la Eurocopa 2004.
+    Actualmente posee dos récords: 855 minutos con portería invicta en la Liga Checa jugando para el Sparta Praga y 1.025 minutos en la Premier League durante la temporada 2004/05 con el Chelsea.
+    Cech empezó a jugar como mediocampista para el equipo juvenil de su ciudad natal anotando un gol de cabeza. A los 10 años sufrió una lesión en una de sus piernas y comenzó a jugar de arquero.
+    Debutó profesionalmente a los 17 años en Chmel Blsany. Al año siguiente fue transferido al Sparta Praga, donde partió el record de minutos (855) con la valla invicta en la Liga Checa. Tras cerrar un gran año en su país natal, firmó con el Stade Rennais FC en julio de 2002, donde jugó durante dos temporadas
+    En 2004, Cech fue fichado por el Chelsea, el poderoso equipo inglés del ruso Abramovich. Sin embargo, su comienzo se vio opacado por una fuerte lesión que sufrió en 2006. El arquero checo fue víctima de un duro golpe en la cabeza con la rodilla del mediocampista del Reading que le provocó varias fracturas de cráneo.
+    Su regreso a los terrenos de juego se produjo el 20 de enero del 2007, con un casco de rugby como prevención a los golpes, el cual luce desde ese entonces en todos los partidos y entrenamientos.
+    En el Chelsea, Cech ganó 3 Premier League (2005, 2006 y 2010), 4 FA Cup (2007, 2009, 2010 y 2012), 2 Community Shield (2005 y 2009), 1 Champions League (2012) y 1 Liga Europea (2013).
+    Actualmente, Cech está muy cerca de lograr el récord de más apariciones con el Seleccionado Checo de Fútbol situándose segundo en la lista de jugadores solo por detrás de Karel Poborsky, quien acumula 118 partidos jugados.
+
+-
+  id: 329
+  firstname: Antonio
+  lastname: Conte
+  birthday: 1969-7-31
+  nicknames:
+  country: 118
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 135
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Antonio Conte es uno de los directores técnicos más reconocidos en la actualidad del Calcio italiano. Es el actual entrenador de la Juventus, que salió bicampeona de la Serie A.
+    Como futbolista, Conte inició su carrera deportiva en el Lecce, equipo de su ciudad natal, donde jugó durante 6 temporadas. Luego, el ex futbolista pasó a la Juventus para conquistar en fútbol italiano. Allí, jugó 14 temporadas y obtuvo 15 títulos. Entre los más importantes se encuentran la Champions League en 1996 y la Copa Intercontinental del mismo año.
+    Fue internacional con la Selección Italiana de Fútbol en 20 ocasiones y marcó 2 goles. Debutó el 27 de mayo de 1994, en un encuentro amistoso ante la selección de Finlandia. En 1994, fue convocado  para participar en el Mundial de Estados Unidos 1994, donde la selección italiana obtuvo el subcampeonato.
+    En 2005 inició su carrera como entrenador siendo el asistente técnico de Luigi De Canio en el Siena. En la temporada siguiente se convirtió en el entrenador del Arezzo en la Serie B. Luego entrenó al Bari, a Atalanta y volvió al Siena.
+    Finalmente, en 2011, Conte firmó un contrato por dos años con la Juventus. Bajo su conducción, la Vecchia Signora se consagró campeona invicto de la Serie A 2001/12. Luego revalidó el título en 2012/13 el 5 de mayo venciendo por 1 a 0 a Palermo. Además, ganó la Supercopa de Italia en 2012.
+
+-
+  id: 330
+  firstname: Iván Ramiro
+  lastname: Córdoba
+  birthday: 1976-8-11
+  nicknames: Mariscal
+  country: 47
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 198
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 13
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 123
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Iván Ramiro Córdoba es un ex futbolista colombiano nacionalizado italiano que se destacó a nivel mundial por su excelente paso por el Inter de Milán de la Serie A italiana.
+    En 1993, Córdoba inició su carrera profesional en la Categoría Primera B del fútbol colombiano con el equipo Deportivo Rionegro, club de su ciudad natal. Luego de mostrar sus excelentes cualidades, el defensor central pasó al Atlético Nacional, uno de los equipos más importantes de su país.
+    El gran salto de su carrera lo dio cuando fue transferido a San Lorenzo de Almagro, de Argentina. Allí demostró todas sus cualidades y fue uno de los mejores del fútbol argentino en su puesto.
+    Una temporada después, Córdoba siguió su carrera profesional en el Inter de Milan, club en el que jugó hasta el final de su carrera.
+    A lo largo de los años, Córdoba se convirtió en un pilar del Inter de Milán formando una sociedad altamente eficaz en la defensa central con Marco Materazzi. Su larga carrera en el Inter lo llevó a ser nombrado vice-capitán detrás de Javier Zanetti, debido a esto tuvo el honor de levantar la Copa de Italia en 2005.
+    Con el equipo neroazzurro, el Mariscal se consagró campeón de 5 Scudettos (2006, 2007, 2008, 2009 y 2010), 4 Copas de Italia (2006, 2007, 2010 y 2011), 4 Supercopas Italianas (2006, 2007, 2009 y 2010), 1 Champions League (2010) y 1 Mundial de Clubes (2010).
+    Finalmente, anunció mediante la página oficial del Inter que su último partido con la camiseta nerazzurra sería el 6 de Mayo de 2012 en un partido por la fecha 37 de la Liga Italiana contra el Milan.
+    Su mayor logró con la Selección Colombiana de Fútbol fue en 2001 cuando se consagró campeón de la Copa América organizada en su país. Además, participó de las Copas Américas de 1997, 1999 y 2007.
+
+-
+  id: 331
+  firstname: Óscar
+  lastname: Córdoba
+  birthday: 1970-2-3
+  nicknames:
+  country: 47
+  twitter: OCordobaBBVA
+  genre: [11]
+  teams:
+      -
+        id: 368
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 1
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 199
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Oscar Córdoba es un ex arquero colombiano que fue parte de la gran generación de futbolistas de su país en los comienzos de los noventa junto a Carlos Valderrama, René Higuita, Faustino Asprilla, Freddy Rincón, El Tren Valencia, entre otros.  Además, es uno de los pocos futbolistas colombianos que se consagró campeón en tres ligas de distintos países (Colombia, Argentina y Turquía).
+    Dadas a sus buenas condiciones, Córdoba fue recomendado al Atlético Nacional, club con el que debutó en 1988 a nivel profesional. En 1989 fue contratado por el Deportivo Cali, pero no logró continuidad.
+    Al año siguiente se fue a préstamo al Deportes Quindío y fue convocado a la Selección Juvenil que estuvo presente en el Mundial de Arabia Saudita de 1989.
+    En 1991 fue traspasado al Millonarios y en 1993 pasó al Once Caldas. Uno de sus mejores años fue en 1996 con el América de Cali cuando fue subcampeón de la Copa Libertadores  y, por si esto fuera poco, ganó la Liga Colombiana en 1997.
+    Ese año emigró a Boca Juniors de Argentina siendo su debut oficial se produjo el 30 de agosto de 1997 frente a Platense bajo la dirección técnica de Carlos Bianchi. Con el conjunto xeneize, el arquero colombiano ganó 3 Ligas Argentinas (1998, 1999 y 2000), 2 Copas Libertadores (2000 y 2001) y 1 Copa Intercontinental (2000).
+    En 2002, Córdoba se sumó a la plantilla del Perugia de Italia. Sin embargo, le costó adaptarse y no pudo ganarse la titularidad. Por este motivo, al año siguiente se mudó a Turquía para sumarse al Besiktas. Allí ganó la Super Liga Turca en 2003 y la Copa Nacional en 2006.
+    Luego continuó en Ankaraspor de Turquía, Deportivo Cali y cerró su excelente carrera en el año 2009 jugando para Millonarios de Bogotá de su país natal.
+    Su mayor logró con la Selección Colombiana de Fútbol fue en 2001 cuando se consagró campeón de la Copa América organizada en su país. Además, disputó el Mundial de Estados Unidos 1994.
+
+-
+  id: 332
+  firstname: Rui
+  lastname: Costa
+  birthday: 1972-3-29
+  nicknames: Maestro
+  country: 78
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 130
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 136
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 141
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Rui Costa es un exfutbolista portugués que es recordado por su sublime técnica mostrada durante sus años en la Fiorentina. Además, el mediocampista ofensivo convirtió el penal con el que Portugal se consagró campeón del Mundial Sub 20 1991 organizado en el país de la península Ibérica.
+    Con tan sólo 5 años, Rui Costa comenzó a jugar al fútbol en las categorías juveniles del Benfica. Allí Rui Costa jugó 107 partidos en tres temporadas y anotó 18 goles. Además, ganó la Liga de Portugal en 1994 y la Copa Nacional de1993.
+    En 1996, Rui Costa fue transferido a la Fiorentina de Italia. Allí jugó sus mejores años y ganó la Copa Italia de 1996 y la Supercopa italiana de ese mismo año. Además, a pesar de haber grandes mediocampistas ofensivos como Zinedine Zidane, entre otros, el portugués fue nombrado el mejor jugador en su posición en varias ocasiones.
+    Tras los problemas económicos de la Fiorentina, Rui Costa quedó con el pase en su poder en 2001 y decidió incorporarse a la plantilla del poderoso Milan. Allí jugó durante cinco temporadas y ganó la Champions League de 2003.
+    El 25 de mayo de 2006, Rui Costa retornó al Benfica para jugar sus últimas temporadas de su exitosa carrera deportiva en el club de sus amores. El afecto del ex futbolista por el club es público, de tal modo que el portugués quiso terminar su carrera jugando para el Benfica.
+    Finalmente, Rui Costa jugó su último partido como profesional el 11 de mayo de 2008 contra el Vitória Setúbal. Al día siguiente, Costa fue presentado como nuevo líder del departamento de fútbol, actividad que aún hoy en la actualidad sigue manteniendo.
+    A nivel internacional, Rui Costa integró los planteles que disputaron el Mundial de Corea y Japón 2002 y las Eurocopas de 1996, 2000 y 2004. En total, disputó 94 partidos y anotó 26 goles.
+
+-
+  id: 333
+  firstname: Johan
+  lastname: Cruyff
+  birthday: 1947-4-25
+  nicknames: Flaco, Mago
+  country: 96
+  twitter: JohanCruyff
+  genre: [11]
+  teams:
+      -
+        id: 298
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 61
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Johan Cruyff es un ex futbolista holandés que es considerado por la FIFA como uno de los cuatro mejores jugadores del siglo XX, junto a Pelé, Diego Maradona y Alfredo Di Stéfano. Y además, es nombrado por muchos especialistas como el mejor futbolista europeo de todos los tiempos.
+    El partido de su debut oficial fue el15 de noviembre de 1964 contra GVAV Groningen. Sin embargo, Cruyff comenzó a ganarse la titularidad recién en la siguiente temporada tras anotar dos goles en el Torneo Olímpico contra el DWS Amsterdam.
+    Durante su primera etapa en el equipo holandés, Cruyff consiguió 6 Ligas (1966, 1967, 1968, 1970, 1972 y 1973, 4 Copas Nacionales (1967, 1970, 1971 y 1972), 3 Champions League (1971, 1972 y 1973), 1 Copa Intercontinental (1972) y 1 Supercopa de Europa (1972). En total, disputó 328 partidos y convirtió 246 goles.
+    Después de ganar todo en el Ajax, Cruyff continuó su carrera en el Barcelona de España. Allí el delantero disputó 184 partidos y convirtió en 51 ocasiones. Además, ganó la Liga de España en 1974 y la Copa del Rey de 1978.
+    Tras su paso por Barcelona, el Mago continuó su carrera en el fútbol estadounidense en los equipos de Los Angeles Aztecs y Washington Diplomats. En tres temporadas, Cruyff jugó 59 partidos y anotó 26 goles.
+    Cuando la carrera de Cruyff parecía estar llegando a su fin, la leyenda fichó de nuevo para el Ajax con la edad de 34 años en 1981. En su segunda etapa en el equipo holandés, ganó 2 Ligas (1982 y 1983) y la Copa Nacional (1983). Finalmente, Cruyff cerró su campaña como jugador en el Feyenoord.
+    En la Selección Holandesa de Fútbol, Cruyff fue protagonista cuando su equipo llegó a la final del Mundial de Alemania 1974, que perdió el partido decisivo contra el país organizador.
+    Como director técnico, Cruyff dirigió durante tres temporadas al Ajax en las que ganó 2 Copas Nacionales (1986 y 1987) y la Recopa Europea (1987).
+    Luego continuó su carrera como entrenador en Barcelona durante 8 años con el que ganó todo: 4 Ligas (1991, 1992, 1993 y 1994), 1 Copa del Rey (1990), 3 Supercopas Españolas (1991, 1992 y 1994), 1 Champions League (1992), 1 Recopa Europea (1989) y 1 Supercopa Europea (1992). En la actualidad, desde 2009, Cruyff es el entrenador oficial de la Selección de Catalunya.
+
+-
+  id: 334
+  firstname: Teófilo Juan
+  lastname: Cubillas
+  birthday: 1949-3-8
+  nicknames: Nene
+  country: 175
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 259
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 140
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Teófilo Cubillas es un ex futbolista peruano reconocido por ser el máximo ídolo del Club Alianza Lima y de la Selección Nacional de Perú. Además, es considerado uno de mejores futbolistas sudamericanos de la historia.
+    El Nene fue el conductor y goleador de la Selección de Perú que ganó la Copa América 1975 y que llegó a cuartos de final en los mundiales de México 1970 y Argentina 1978. Fue un mediocampista ofensivo dotado de una técnica exquisita, potencia, cambio de ritmo, habilidad para el regate y una gran capacidad goleadora.
+    Cubillas ha sido galardonado como Futbolista sudamericano del año en 1972 y fue nombrado el mejor futbolista peruano del siglo XX. Además, es el octavo goleador en la historia de los Mundiales y  el mediocampista que más goles anotó en la máxima competición de la FIFA. Incluso superando en goles y en promedio a genios como Maradona, Cruyff, Zico, Zidane y Platini.
+    En 1966, Cubillas debutó profesionalmente en su querido Alianza de Lima. Luego de seis temporadas, el Nene pasó al Basilea, donde ganó la Super Liga de Suiza. Una temporada después, fichó para el Porto de Portugal.
+    En 1977, Cubillas volvió a Alianza de Lima para lograr consagrarse campeón con su querido equipo. Anhelo que cumplió cuando ganó las Ligas Peruanas de 1977 y 1978.
+    Luego de dos temporadas muy exitosas en Alianza, Cubillas desembarcó en el fútbol estadounidense para desempeñarse en el Fort Lauderdale Strikers. Finalmente, el ídolo peruano decidió colgar los botines en 1988 cuando disputó su último encuentro con su querido y amado Alianza de Lima.
+
+-
+  id: 335
+  firstname: Edgar
+  lastname: Davids
+  birthday: 1973-3-13
+  nicknames: Pitbull
+  country: 96
+  twitter: esdavids
+  genre: [11]
+  teams:
+      -
+        id: 298
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 135
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Edgar Davids se destacó como uno de los mejores centrocampistas de perfil mixto de Europa en las últimas décadas. Dotado de un gran poderío físico, es un trabajador que desarrolla una gran actividad en el centro del campo robando balones.
+    El surinamés (nacionalizado holandés) jugó en cinco de los mejores clubes europeos como el Ajax, Milan, Juventus, Barcelona e Inter de Milán.
+    Su carrera deportiva  arrancó en el Ajax, donde fue protagonista en una de las mejores épocas del conjunto holandés. Allí ganó 3 Ligas (1994, 1995 y 1996), 1 Copa Nacional (1993), 1 Champions League (1995), 1 Supercopa Europea (1996) y 1 Copa UEFA (1992).
+    Luego de su paso sin pena ni gloria por el Milan, Davids se incorporó al plantel de la Juventus de Italia. Durante siete temporadas, ganó 3 Scudettos (1998, 2002 y 2003), 2 Supercopas Italianas (2002 y 2003) y 1 Copa Intertoto (1999).
+    Tras un breve paso por Barcelona (a préstamo por seis meses), Davids continuó su carrera deportiva en Inter de Milán para jugar la temporada 2004/05. En su única temporada en el neroazzurro, el holandés se consagró campeón de la Copa Italia.
+    En 2006, Davids retornó a su querido Ajax para conseguir los títulos de Copa Nacional y de Supercopa Holandesa en 2007. Y, cuando su carrera parecía llegar a su fin, el holandés pasó a jugar al fútbol inglés para el Crystal Palace a los 37 años.
+    En la actualidad, con 40 años, Davids sigue jugando al fútbol defendiendo los colores de Barnett Fútbol Club de la Segunda División de Inglaterra. Además, tiene el puesto de entrenador del equipo.
+    A nivel internacional, Davids defendió los colores de la Selección Holandesa de Fútbol en los Mundiales de Estados Unidos 1994 y de Francia 1998. Jugó más de 60 con la camiseta holandesa y además participó en la Eurocopa de 1996, 2000 y 2004.
+
+-
+  id: 336
+  firstname: Frank
+  lastname: De Boer
+  birthday: 1970-5-15
+  nicknames:
+  country: 96
+  twitter: FrankRonald1970
+  genre: [11]
+  teams:
+      -
+        id: 298
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 61
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Frank De Boer es un ex futbolista holandés que se destacó en la década del 90 cuando fue una de las figuras del Ajax que ganó todo lo que jugó.
+    Se caracterizó por ser un defensa elegante, con un gran sentido de la colocación  y con una gran capacidad para el juego ofensivo. Desde el centro de la defensa organizaba el ataque del equipo, gracias a su carácter y capacidad de mando.
+    De Boer comenzó su carrera profesional jugando para el Ajax en 1988. Allí estuvo durante 10 temporadas y ganó todos los torneos posibles a nivel nacional e internacional.
+    En el equipo más popular de Holanda obtuvo 5 Ligas (1990, 1994, 1995, 1996 y 1998), 2 Copas Nacionales (1993 y 1998), 3 Supercopas holandesas (1993, 1994 y 1995), 1 Champions League (1995), 1 Copa Intercontinental (1995), 1 Supercopa de Europa (1996) y la Copa UEFA (1992).
+    En 1998, De Boer fue fichado por el Barcelona de España. En el equipo catalán estuvo durante cinco temporadas y sólo obtuvo el título de Liga en 1999.
+    Luego su carrera deportiva continuó en Galatasaray de Turquía (2003/2004), Rangers de Escocia (2004), Al Rayyan de Qatar (2004/05) y Al Shamal del mismo país (2005/06).
+    Frank de Boer fue titular de la Selección Holandesa de Fútbol en 112 ocasiones marcando 13 goles. Además participó en grandes eventos como el Mundial de Estados Unidos 1994 y Francia 1998. También estuvo presente en la Eurocopa de 1996, 2000 y 2004.
+    Tras su retiro como futbolista, Frank De Boer fue nombrado director técnico del Ajax en 2010. Allí ganó la Liga holandesa en tres ocasiones en los años 2011, 2012 y 2013. Actualmente, sigue al mando del equipo más popular de Holanda.
+
+-
+  id: 337
+  firstname: Ronald
+  lastname: De Boer
+  birthday: 1970-5-15
+  nicknames:
+  country: 96
+  twitter: FrankRonald1970
+  genre: [11]
+  teams:
+      -
+        id: 298
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Ronald De Boer es un ex futbolista profesional holandés que se destacó como centrocampista por el sector derecho, como también en la posición de delantero. Es el hermano gemelo del también futbolista Frank de Boer.
+    Desde pequeño se inició en las inferiores del Ajax hasta que fue convocado al primer equipo por el entonces por entrenador del equipo Johan Cruyff.  De Boer desarrolló mayoritariamente toda su carrera en el conjunto más popular de Holanda y logró todos los títulos posibles a nivel nacional e internacional.
+    En total, obtuvo 5 Ligas (1990, 1994, 1995, 1996 y 1998), 2 Copas Nacionales (1993 y 1998), 3 Supercopas holandesas (1993, 1994 y 1995), 1 Champions League (1995), 1 Copa Intercontinental (1995) y 1 Supercopa de Europa (1996).
+    En 1998, De Boer fue fichado por el Barcelona de España, donde estuvo durante dos temporadas y sólo obtuvo el título de Liga en 1999.
+    En 2000, De Boer pasó al fútbol escocés para incorporarse al Rangers para jugar durante 4 temporadas completas. Allí obtuvo la Liga Nacional en 2003.
+    Luego, junto a su hermano, fue al fútbol de Qatar para experimentar un nuevo desafío cuando se incorporó al Al Rayyan y Al Shamal, equipo en el que se retiró en 2008.
+    Con la Selección Holandesa de Fútbol, De Boer fue internacional en 63 oportunidades y anotó 13 goles. Además, participó en el Mundial de Estados Unidos 1994 y en Francia 1998. También jugó en la Eurocopa de 2000.
+
+-
+  id: 338
+  firstname: David
+  lastname: De Gea
+  birthday: 1990-11-7
+  nicknames: Pantera, Ruso
+  country: 68
+  twitter: D_DeGea
+  genre: [11]
+  teams:
+      -
+        id: 64
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 101
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Formado en las categorías inferiores del Atlético de Madrid, David De Gea debutó con el primer equipo madridista en 2009. Gracias a sus excelentes actuaciones, el joven arquero español rápidamente se ganó la titularidad.
+    En el equipo colchonero, la Pantera De Gea jugó dos temporadas en las que disputó 84 partidos y logró dos títulos a nivel internacional: la UEFA Europa League 2009/10 y tres meses después, la Supercopa de Europa 2010.
+    En junio de 2011 se confirmó el fichaje de De Gea al Manchester United, que pagó al Atlético de Madrid aproximadamente 20 millones de euros. De esta manera, se convirtió en el arquero más caro de la Premier League.
+    En el Manchester United (club en el que milita en la actualidad), De Gea disputó dos temporadas y ganó los títulos de Community Shield 2011 y la Premier League 2013.
+    A nivel internacional, la Pantera jugó en todas las categorías juveniles de la Selección Española de Fútbol. Entre sus principales logros, obtuvo los títulos del  Europeo Sub 17 en 2007 y el Europeo Sub 21 de 2011.
+    En 2010, Vicente del Bosque lo incluyó en la preselección de 30 jugadores que podrían representar a España en la Copa Mundial de Sudáfrica de 2010. Sin embargo, fue descartado en la lista definitiva de 23 jugadores. Además, fue incluido en la lista de los Juegos Olímpicos de Londres 2012.
+-
+  id: 339
+  firstname: Daniele
+  lastname: De Rossi
+  birthday: 1983-7-24
+  nicknames: Danielino
+  country: 118
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 124
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Daniele De Rossi se formó en las categorías inferiores de la Roma, club en el que su propio padre trabaja en la actualidad como formador de jóvenes promesas.
+    En 2001, Danielino jugó su primer partido en la primera de Roma a los 18 años contra el Anderlecht por la Champions League. Curiosamente, su debut oficial en la Serie A se dio dos años después ante el Torino y solamente una semana despué hizo gritar a la hinchada de la Roma con sus primeros goles.
+    Con la Roma (club en el que jugó toda su vida hasta el momento), consiguió los títulos de Copa Italia en los años 2007 y 2008 y la Supercopa de Italia de 2007.
+    De Rossi es muy recordado por su acto de Fair Play en el partido contra el Messina en la temporada 2005/06. El árbitro había dado por válido su gol con la mano, pero el propio futbolista italiano le explicó que no era válido el gol y finalmente el árbitro anuló el gol.
+    A nivel internacional, De Rossi integró todas las selecciones juveniles. De hecho, estuvo presente en el equipo que logró coronarse campeón de la Eurocopa Sub 21 en 2004.
+    Con la Selección Mayor de Italia, De Rossi fue internacional en 87 ocasiones y anotó un total de 14 goles. Su debut con la azzurra fue el 4 de septiembre ante Noruega por las Eliminatorias Europeas.
+    Sin dudas, el mayor logro en la carrera de De Rossi fue haber integrado la Selección Italiana de Fútbol que se consagró campeona del Mundial de Alemania 2006. Sin embargo, a pesar de la consagración a nivel grupal, el futbolista italiano no la pasó nada bien: fue expulsado en el segundo partido de la primera fase tras propinarle un codazo a un rival y fue expulsado por cuatro fechas, por lo que sólo pudo disputar la final.
+
+-
+  id: 341
+  firstname: Alessandro
+  lastname: Del Piero
+  birthday: 1974-11-9
+  nicknames: Pinturicchio, Alex
+  country: 118
+  twitter: delpieroale
+  genre: [11]
+  teams:
+      -
+        id: 135
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Alessandro Del Piero es considerado uno de los mejores futbolistas italianos de las últimas 2 décadas. Alex jugó casi toda su carrera en la Juventus hasta que decidió seguir su aventura futbolística por un fútbol desconocido como la Liga Australiana.
+    Del Piero tuvo sus primeros contactos con una pelota de fútbol cuando jugaba de arquero para el equipo de la Parroquia de Saccon, ubicada en su ciudad natal. A pesar de su corta edad, ya sorprendía a propios y extraños con su técnica. Fue así que el Padova Calcio puso sus ojos en el joven talento.
+     A los 16 años, Alex debutó con el Padova en la Serie B bajo la dirección técnica de Mauro Sandreani. Y en la temporada siguiente disputó diez encuentros y anotó su primer gol en la victoria de su equipo sobre el Ternana Calcio por 5 a 0.
+    En 1993, tras ser rechazado por el Milan, Del Piero firmó contrato con la Juventus, club con el que ganaría todos los títulos posibles y en el que jugó 19 temporadas. Su debut oficial fue ese mismo año en el encuentro de la Vecchia Signora contra el Foggia.
+    Con la Juventus, Del Piero ganó 6 Scudettos (1995, 1997, 1998, 2002, 2003 y 2012), 1 Copa de Italia (1995), 4 Supercopas Italianas (1995, 1997, 2002 y 2003), 1 Champions League (1996), 1 Copa Intercontinental (1996), 1 Supercopa de Europa (1996) y una Copa Intertoto (1999).
+    Entre sus principales récords, Del Piero alcanzó los 400 partidos en la Serie A y llegó a los 300 goles, convirtiéndose así en el quinto jugador en pasar esa cifra junto a grandes leyendas como  Giuseppe Meazza, Silvio Piola, Roberto Baggio y Filippo Inzaghi.
+    Con 38 años y tras abandonar a la Juventus, Del Piero anunció su incorporación al Sidney Football Club de Australia. Hasta el momento, allí jugó 24 partidos y convirtió 14 goles.
+    A nivel internacional, Del Piero integró las selecciones juveniles que ganaron  las Eurocopas Sub 21 disputadas en 1994 y 1996. Sin embargo, su mayor logro fue haber integrado el Seleccionado que se consagró campeón del Mundial de Alemania 2006. En total, anotó 27 goles en 91 partidos la azzurra.
+
+-
+  id: 342
+  firstname: Demba
+  lastname: Ba
+  birthday: 1985-5-25
+  nicknames:
+  country: 198
+  twitter: dembabafoot
+  genre: [11]
+  teams:
+      -
+        id: 52
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 104
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 105
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Demba Ba es un futbolista de origen senegalés nacido en Francia que juega como delantero y cuyo club actual es el Chelsea de la Premier League de Inglaterra.
+    Ba comenzó su carrera profesional en el equipo francés de Rouen en 2005. Un año después, el delantero francés se mudó a Bélgica para jugar en Mouscron.
+    Sin embargo, el salto al fútbol grande lo dio cuando firmó contrato con el Hoffenheim en Alemania en 2007. En la Bundesliga, el delantero disputó 97 partidos y anotó un total de 37 goles. A partir de ese momento, varios equipos grandes de Europa pusieron los ojos en el joven talento.
+    Finalmente, el West Ham de Inglaterra compró el pase de Demba Ba. Su debut en la Premier League fue el 6 de febrero de 2011, como sustituto de Robbie Keane en el minuto 75 durante una derrota en casa por 1-0 ante el Birmingham City. Tras su paso por el West Ham, Demba fichó para el Newcastle, donde jugó 34 partidos en dos temporadas y anotó 29 goles.
+    Finalmente, el salto de calidad lo dio en la temporada 2012/13 cuando fue fichado por el poderoso Chelsea de la Premier League de Inglaterra. Durante su primera experiencia en el conjunto inglés, Ba jugó 14 partidos y anotó 2 goles.
+    Con la Selección Nacional de Senegal, Demba Ba debutó en el año 2007 en el encuentro contra Tanzania, ese mismo día anotó su primer gol con la Selección. En total disputó 17 encuentros y anotó 4 goles.
+
+-
+  id: 343
+  firstname: Didier
+  lastname: Deschamps
+  birthday: 1968-10-15
+  nicknames: Didi
+  country: 75
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 89
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 135
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Didier Deschamps es un ex futbolista y actual entrenador francés que es reconocido por ser una pieza clave y el capitán de la Selección Francesa de Fútbol que se consagró campeón del Mundial de Francia 1998 y de la Eurocopa de Bélgica y Holanda 2000.
+    Como futbolista, Deschamps comenzó su carrera profesional en 1985 cuando debutó en la Primera División de Francia con el FC Nantes.  Tras cuatro temporadas sin ningún logro deportivo, Didi pasó a jugar al Olympique de Masella.
+    Tras un breve paso por el Girondins de Burdeos en la temporada 1990/91, Deschamps regresó a Marsella para ser uno de los pilares del equipo y ser el capitán. En su retorno, Didi consiguió dos  Ligue 1. Además, se consagró campeón de la Champions League en 1993.
+    Un año después, Deschamps se sumó a la plantilla de la Juventus que se consagró campeona de la Champions League de 1996 y la Copa Intercontinental del mismo año. Además, ganó 3 Scudettos (1995, 1997 y 1998), 1 Copa Italia (1995) y 2 Supercopas Italianas (1995 y 1997).
+    En 1999, pasó al Chelsea, donde jugó una temporada y ganó la FA Cup. Finalmente, Didi se incorporó al Valencia pero no jugó ningún partido por problemas de adaptación. Por este motivo, con tan sólo 32 años, el francés le puso punto final a su carrera.
+    Como entrenador, Deschamps debutó con el Mónaco en la temporada 2001/02 y luego continuó en su querido Olympique de Marsella, con el que logró 1 Liga (2010), 3 Copas de Francia (2010, 2011 y 2012) y 2 Supercopas de Francia (2010 y 2011).
+    Además fue el entrenador que devolvió a la Juventus a la Serie A Italiana tras pasar por la Segunda División por casos de corrupción en el fútbol. En la actualidad, es el director técnico de la Selección Francesa de Fútbol.
+
+-
+  id: 344
+  firstname:
+  lastname: Djalminha
+  birthday: 1970-12-9
+  nicknames: O Mago
+  country: 31
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 174
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 175
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 77
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Cuando tenía 16 años, Djalminha fue llamado para completar una Selección Brasilera de veteranos. Ese día el joven sorprendió hasta al propio Pelé con sus grandes cualidades futbolísticas y su sobresaliente técnica. Por este motivo, el Flamengo lo incorporó a las categorías juveniles del club.
+    En el equipo de Rio de Janeiro, Djalminha jugó 4 temporadas en las que logró consagrarse campeón de la Liga Brasilera en 1992 y del Campeonato de Rio de Janeiro en 1991. Luego continuó su carrera en el Palmeiras, con el que ganó el Campeonato de Sao Paulo 1996. Además, ese mismo año fue elegido el mejor jugador del torneo brasilero.
+    Sin lugar a dudas, su mejor época como futbolista fue en el Deportivo La Coruña. El jugador brasilero consiguió los títulos de Liga en 2000, la Copa del Rey en 2002 y dos Supercopas españolas en 2000 y 2002. Además, dejó una huella imborrable en la Liga Española.
+    Luego de ganar todo en España, Djalminha emigró al fútbol mexicano para jugar en el popular equipo de América. Su debut fue en 2004 en el estadio Corona ante Santos Laguna anotando un gol que dio el empate a las Águilas. Finalmente, el brasilero decidió poner punto final a su carrera en el conjunto mexicano.
+    En toda su carrera deportiva, Djalminha anotó 170 goles de manera oficial en 528 encuentros. Y, con la Selección Brasilera de Fútbol, convirtió 6 tantos en total ante equipos como Noruega, Costa Rica, Camerún, Perú y Arabia Saudita.
+
+-
+  id: 345
+  firstname: Edin
+  lastname: Dzeko
+  birthday: 1986-3-17
+  nicknames:
+  country: 28
+  twitter: EdDzeko
+  genre: [11]
+  teams:
+      -
+        id: 49
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 100
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Edin Dzeko inició su carrera deportiva en el Željezni?ar de Bosnia como mediocampista en el año 2003. Sin embargo, el joven futbolista no tuvo éxito porque lo consideraban alto y de pobre técnica. Dos años después, el ojeador Ji?í Plíšek quedó encantado con las cualidades del jugador bosnio y lo aconsejo al FK Teplice de República Checa.
+    Con 13 goles en 30 partidos, Dzeko fue el máximo goleador de la Liga Gambrinus en la temporada 2006-07. Y debido a sus destacadas actuaciones, el entonces director Félix Magath del Wolfsburgo decidió ficharlo por 4 millones euros.
+    Al llegar a Wolfsburgo, Dzeko logró un éxito inmediato marcando cinco goles y registrando 3 asistencias en 11 partidos. También fue nombrado el mejor delantero en la liga en la temporada 2007/08 y ganó la Bundesliga 2008/09.
+    Su racha continuó cuando fue el máximo goleador de la Bundesliga en la temporada 2009/10 con 22 goles. Además, el 28 de agosto de 2010, el delantero bosnio se convirtió en el máximo goleador en la historia del club con 59 goles en 96 partidos, superando así a Diego Klimowicz, quien anotó 57 goles en 149 partidos.
+    En 2011, se confirmó el fichaje de Dzeko al Manchester City por una suma de 32 millones de euros. Con los ciudadanos, el delantero bosnio ganó la Premier League en 2012, la FA Cup en 2011 y la Community Shield 2012.
+    Con la Selección Bosnia de Fútbol, Dzeko no pudo participar de ningún torneo importante a nivel mundial ni europeo. En total, disputó 47 partidos y anotó 25 goles.
+
+-
+  id: 346
+  firstname: Stephan
+  lastname: El Sharaawy
+  birthday: 1992-10-27
+  nicknames: Faraón
+  country: 118
+  twitter: OfficialEl92
+  genre: [11]
+  teams:
+      -
+        id: 135
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    A pesar de haber nacido en Italia, varias Federaciones se interesaron en contar con los servicios de Stephan El Sharaawy. Su padre nació en Egipto, pero estuvo viviendo mucho tiempo en Venezuela por lo que adquirió la doble ciudadanía. Es por esto que tanto Egipto, Venezuela e Italia lucharon por contar con la joven estrella.
+    Finalmente, Al Shawaawy decidió representar a su país cuando debutó en un amistoso el 15 de agosto de 2012 en un encuentro amistoso contra la Selección de Inglaterra. Su primer gol lo anotó el 14 de noviembre de ese mismo año en la derrota de Italia por 2 a 1 ante Francia. En total, con la camiseta azzurra jugó 8 partidos y convirtió 1 gol.
+    Su carrera como futbolista comenzó en el Genoa disputando tan solo tres encuentros oficiales sin poder convertir ningún gol durante las temporadas de 2008/09 y 2009/10. Al año siguiente, el joven pasó a jugar al modesto equipo de Padova con el que jugó 30 partidos y anotó 9 goles.
+    Finalmente, con tan solo 19 años, el poderoso Milan puso los ojos en el joven talento italiano. Con el rossonero, El Sharaawy disputó un total de 74 partidos en dos temporadas y anotó 23 goles. Además, se consagró campeón de la Supercopa Italiana en 2011.
+
+-
+  id: 347
+  firstname: Samuel
+  lastname: Eto'o
+  birthday: 1981-3-10
+  nicknames: Sami, Samu
+  country: 41
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 67
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 61
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 123
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 323
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Samuel Eto´o es considerado uno de los mejores futbolistas africanos de la historia gracias a la obtención del premio al Mejor Futbolista Africano del  Año  varias ocasiones en 2003, 2004, 2005 y 2010. Además,  es el único jugador de la historia en haber ganado dos triples coronas de manera consecutiva con el Barcelona en 2009 y con el Inter de Milán en 2010.
+    El 18 de diciembre de 2010 se convirtió en el único jugador del mundo que consiguió marcar en siete torneos oficiales distintos en la misma temporada (Serie A, Copa de Italia, Supercopa de Italia, Champions League, Mundial de Clubes, Mundial de Sudáfrica y Copa Africana de Naciones).
+    Entre otros de sus principales récords, es el máximo goleador de la historia de la Selección de Camerún con 44 goles en 94 partidos. Además, es el cuarto máximo goleador de la historia del Barcelona con 130 goles.
+    Eto´o comenzó su carrera en un equipo de su país, el Kadji Sports Academy. En 1996 fichó para el Real Madrid B y a los pocos meses fue cedido Club Deportivo Leganés. Allí disputó 28 partidos y convirtió 3 goles.
+    Luego de disputar tan solo 3 encuentros en dos temporadas en Real Madrid, Sami pasó al Mallorca de España para ganar más minutos en cancha. Allí anotó 69 goles en 163 partidos y se consagró campeón de la Copa del Rey en 2003.
+    En 2004, Eto´o se sumó a las filas del poderoso Barcelona para cosechar más títulos. En el blaugrana ganó 3 Ligas (2005, 2006 y 2009), 1 Copa del Rey (2009), 2 Supercopas de España (2005 y 2006), 2 Champions League (2006 y 2009). Además, anotó 130 goles en 200 partidos.
+    En 2009, Eto´o pasó al fútbol italiano para desempañarse en el Inter de Milan. En tan sólo dos temporadas, ganó la Champions League 2010, el Mundial de Clubes 2010, la Liga italiana 2010, la Copa de Italia 2011 y la Supercopa Italiana 2010.
+    Finalmente, el futbolista camerunés se mudó a Rusia para jugar en el Anzhi Majachkalá. Allí sigue deleitando a los fans con sus goles anotando 34 tantos en 50 partidos.
+    Con la Selección de Camerún, Eto´o ganó las Copas de Africanas de Ghana/Nigeria 2000 y Mali 2002. Además, fue medalla de oro en los Juegos Olímpicos de Sidney 2000. También participó en los Mundiales de Francia 1998, Corea/Japón 2002 y Sudáfrica 2010. En total, jugó 111 partidos y convirtió 53 goles.
+
+-
+  id: 348
+  firstname: Patrice
+  lastname: Evra
+  birthday: 1981-5-15
+  nicknames: Supatrice, Paddy
+  country: 75
+  twitter: PatriceEvraGMF
+  genre: [11]
+  teams:
+      -
+        id: 367
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 101
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Hijo de un diplomático, Patrice Evra, que nació en Senegal en 1981, llegó a Bruselas cuando su padre fue enviado para desarrollar su tarea y luego  vivió en Francia durante 14 años. En esas épocas, el pequeño Patrice mostraba sus cualidades en las categorías juveniles del París Saint Germain.
+    Luego su padre fue trasladado a Marsala, Italia, y Evra se sumó al equipo de la ciudad que militaba en la Serie C Italiana. Cuando pasó al Monza de la Serie B, el senegalés nacionalizado francés ya sabía que el fútbol iba a ser gran parte de su vida.
+    Evra se ganó un nombre en el ambiente futbolístico cuando fue fichado por el Mónaco. Allí fue parte del equipo que se coronó campeón de la Copa de la Liga Francesa y que llegó a la final de la UEFA Champions League en 2004.
+    En 2006, Evra dio el gran salto de su carrera deportiva cuando firmó un contrato con el Manchester United por 3 años. Hizo su debut en el poderoso equipo inglés el 14 de enero de ese año en la derrota ante el Manchester City. Desde su llegada al equipo de Old Trafford se consolidó como titular indiscutible en el lateral izquierdo.
+    Con el Manchester United, Evra ganó 5 Premier League (2007, 2008, 2009, 2011 y 2013), 3 Copas (2006, 2009 y 2010), 4 Community Shield (2007, 2008, 2010 y 2011), 1 Champions League (2008) y 1 Mundial de Clubes (2008).
+    Con la Selección Francesa de Fútbol, Evra disputó la Copa Mundial de Sudáfrica 2010. Además, disputó Eurocopas y las Eliminatorias europeas para los Mundiales de Fútbol.
+
+-
+  id: 349
+  firstname: Cesc
+  lastname: Fabregas
+  birthday: 1987-5-4
+  nicknames: Pelucas, Arquitecto
+  country: 68
+  twitter: cesc4official
+  genre: [11]
+  teams:
+      -
+        id: 102
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 61
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Cesc Fábregas inició su carrera deportiva en las categorías inferiores del Mataró y del  Barcelona. En las juveniles del Barca anotó más de 200 goles en dos temporadas jugando como mediocampista ofensivo.
+    Los cazatalentos del Arsenal de Inglaterra se enteraron del altísimo rendimiento del joven español y fue así que, en 2003, Fábregas fichó con el conjunto inglés con tan sólo 16 años porque pensaba que en el Barcelona no iba a tener oportunidades.
+    En la temporada 2004/05, Cesc debutó en el primer equipo inglés en la Premier League contra el poderoso Manchester United. Sin embargo, la titularidad en los Gunners la ganó cuando se marchó del equipo el francés Patrick Vieira. Ese año jugó 46 partidos y anotó 3 goles.
+    Con el Arsenal, Fábregas se consagró campeón de la Community Shield 2004 y la FA Cup 2005. En total, con la camiseta de los Gunners jugó 303 partidos en 8 temporadas y convirtió 57 goles.
+    En 2011, Fábregas regresó a Barcelona con el objetivo de sumar títulos en su vitrina. En tan sólo dos temporadas, el Arquitecto ganó la Liga Español 2013, la Copa del Rey 2012, la Supercopa Española 2011, la Supercopa Europea 2011 y el Mundial de Clubes 2011.
+    A nivel internacional, Fábregas integró la Selección Española de Fútbol que se consagró campeona del Mundial de Fútbol Sudáfrica 2010 por primera vez en su historia. Además, ganó las Eurocopas de Austria/Suiza 2008 y Polonia/Ucrania 2012.
+
+-
+  id: 350
+  firstname: Jefferson
+  lastname: Farfán
+  birthday: 1984-10-26
+  nicknames: Foquita, Jeffry
+  country: 175
+  twitter: jerffesonfarfan
+  genre: [11]
+  teams:
+      -
+        id: 259
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 300
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 44
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Jefferson Farfán es considerado por muchos especialistas como el sucesor del gran futbolista peruano Teófilo Cubillas. La Foquita se caracteriza por su potencia, su juego desequilibrante y su velocidad con el balón en los pies.
+    Farfán tuvo una infancia muy complicada ya que su padre abandonó a su madre. Sin embargo, el pequeño siempre mostró su pasión por el fútbol a pesar de las adversidades.   Comenzó jugando en las divisiones menores del club Deportivo Municipal cuando el profesor Montalvo lo descubrió en el asentamiento donde vivía.
+    En 1999, La Foquita fue transferido a Alianza de Lima con tan sólo 14 años de edad. Y, cuando tenía 16, debutó en la Primera División de Perú en el encuentro contra Deportivo Wanka.
+    A partir del 2002, Farfán fue titular indiscutible en Alianza. Además, fue nombrado el jugador revelación del año,  fue considerado el mejor jugador del campeonato y anotó el gol decisivo en la final ante Sporting Cristal que le dio el título a Alianza.
+    En  2004, Farfán desembarcó en el fútbol europeo para jugar en el PSV Eindhoven de Holanda. Allí ganó 4 Ligas (2005, 2006, 2007 y 2008) y la Copa de Liga (2005). En total, jugó 163 partidos en 4 temporadas y convirtió 67 goles.
+    En 2008, Farfán se sumó a las filas del Schalke 04 de Alemania para seguir sumando experiencia en el Viejo Continente. Allí ganó la Copa de la Liga 2011 y la Supercopa Alemana del mismo año.
+    Con la Selección Peruana del Fútbol, Farfán disputó las Copas América de 2004 y 2007 y participó en las Eliminatorias para el Mundial 2006 y 2010. Su cuenta pendiente es jugar un Mundial. En total, disputó más de 50 partidos y superó los 15 goles.
+
+-
+  id: 351
+  firstname: Rio
+  lastname: Ferdinand
+  birthday: 1978-11-7
+  nicknames: Ferdy
+  country: 181
+  twitter: rioferdy5
+  genre: [11]
+  teams:
+      -
+        id: 101
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 119
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Rio Ferdinand es un reconocido defensor central inglés que actualmente juega en el Manchester United.  Su ascendente carrera lo llevó a debutar con la Selección de Inglaterra a los 19 años cuando enfrentó a Camerún. Además, asistió a tres Mundiales (Francia 98, Corea/Japón 2002 y Alemania 2006).
+     La carrera deportiva de Ferdinand empezó en 1992 dando sus primeros pasos en la cantera del West Ham United. Con el equipo londinense jugó por  primera vez en la Premier League el 5 de mayo de 1996 a los 18 años. En total, jugó 127 partidos en 4 temporadas y convirtió 2 goles.
+    En 2000, Ferdinand firmó contraro con el Leeds United por 25 millones de euros, un récord en Inglaterra para un defensor central. Allí solo estuvo dos temporadas en las que disputó 54 partidos.
+    Después destacarse con la Selección de Inglaterra en el Mundial de Corea/Japón 2002, Ferdinand fichó por el poderoso Manchester United por 45 millones de euros, convirtiéndose así en el jugador más caro en Inglaterra por segunda vez.
+    Con los Diablos Rojos, Ferdinand ganó todos los torneos posibles: 6 Premier League (2003, 2007, 2008, 2009, 2011 y 2013), 3 Carling Cup (2006, 2009 y 2010), 1 FA Cup (2004),  1 Champions League (2008) y 1 Mundial de Clubes (2008). En total, jugó más de 300 partidos en 11 temporadas y convirtió 7 goles.
+    A nivel internacional, Ferdinand disputó un total de 81 encuentros con la Selección de Inglaterra y marcó 3 goles. Además, asistió a tres Copas Mundiales (Francia 98, Corea/Japón 2002 y Alemania 2006).
+
+-
+  id: 353
+  firstname: Luis
+  lastname: Figo
+  birthday: 1972-12-4
+  nicknames: Lucho
+  country: 178
+  twitter: luis_figo
+  genre: [11]
+  teams:
+      -
+        id: 143
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 60
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 123
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Luis Figo es un ex futbolista portugués que jugó en Sporting de Lisboa, Barcelona, Real Madrid e Inter de Milán, con los que obtuvo 22 títulos nacionales e internacionales. Además, fue premiado con el Balón de Oro en el año 2000 y el FIFA World Player en 2001.
+    A los 16 años, Figo se sumó a las categorías juveniles del Sporting de Lisboa tras jugar en las infantiles de un modesto equipo de su barrio. El delantero debutó en 1989 en el popular equipo portugués y en total disputó 169 partidos en 6 temporadas convirtiendo 20 goles. Además, en su último año en el club ganó la Copa de Portugal 1995.
+    Luego Figo se sumó a la plantilla del poderoso Barcelona de España. Con el conjunto catalán, ganó 2 Ligas españolas (1998 y 1999), 2 Copas del Rey (1997 y 1998), la Supercopa de España (1996), la Recopa de Europa (1997) y la Supercopa de Europa (1997), Además, disputó 249 partidos, convirtió 49 goles y llegó ser el capitán del equipo.
+    En 2000, Figo firmó contrato con el Real Madrid después de arreglar de palabra con Florentino Pérez. El traspaso fue muy polémico porque un año antes el delantero portugués había declarado que nunca jugaría en el conjunto madridista.
+    En el Real Madrid, Figo ganó 2 Ligas de España (2001 y 2003), 2 Supercopas de España (2001 y 2003), la Champions League (2002), 1 Supercopa Europea (2002) y 1 Copa Intercontinental (2002). En total, jugó 241 partidos y convirtió 55 goles.
+    El último club de su exitosa carrera fue el Inter de Milán. Allí jugó cuatro temporadas entre el 2005 y el 2009. Ganó 4 Scudettos (2006, 2007, 2008 y 2009), 3 Supercopas de Italia (2005, 2006 y 2008).
+    Figo integró el plantel de la Selección Portuguesa de Fútbol que logró un meritorio cuarto puesto en el Mundial de Alemania 2006. Además, disputó el Mundial de Corea/Japón 2002 y de Alemania 2006. En total, jugó 127 partidos y anotó 32 goles.
+
+-
+  id: 354
+  firstname: Gennaro
+  lastname: Gattuso
+  birthday: 1978-1-9
+  nicknames: Rino, Ringhio, Braveheart
+  country: 118
+  twitter: gattuso_gennaro
+  genre: [11]
+  teams:
+      -
+        id: 135
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Gennaro Gattuso es un futbolista italiano que se destacó por su potencia física, su entrega y su lucha en cada partido. La mayor parte de su carrera deportiva la desarrolló en el poderoso Milan de Italia, donde ganó varios campeonatos a nivel nacional e internacional.
+    Gattuso jugó al fútbol y al rugby en su infancia. Sin embargo, cuando tenía  15 años, decidió dedicarse al fútbol cuando se sumó a las categorías juveniles del Perugia.
+    Con tan sólo 19 años y tras jugar 10 partidos oficiales con el Perugia, Gattuso decidió irse a jugar a la Premier League de Escocia para el Glasgow Rangers. En poco tiempo se ganó la titularidad y fue clave en los títulos de Liga (1997) y de la Copa Nacional (1998).
+    En 1998, Gattuso retornó a su país natal para jugar en el Salernitana. Y luego de disputar 25 partidos en el equipo del sur, Ringo fue transferido al poderoso Milan. A partir de ese momento, Gennaro ganó reconocimiento a nivel mundial y tuvo sus primeras convocatorias a la Selección Italiana de Fútbol.
+    Con el conjunto rossonero, Gattuso ganó todos los títulos posibles: 2 Scudettos (2004 y 2011), 1 Copa Italia (2003), 2 Supercopas italianas (2004 y 2011), 2 Champions League (2003 y 2007), 2 Supercopas de Europa (2003 y 2007) y 1 Mundial de Clubes (2007). En total jugó 468 partidos en 13 temporadas y convirtió 11 goles.
+    A nivel internacional, Gattuso logró lo que todo jugador profesional sueña: se consagró campeón del Mundial de Alemania 2006. Además disputó los Mundiales de 2002 y 2010 y las Eurocopas 2004 y 2008.
+    Finalmente, en 2012, Gattuso anunció que no iba a jugar más en el Milan y se sumó al modesto equipo del  Sion de Suiza. Tras jugar 27 partidos y anotar un gol, el mediocampista italiano se retiró de la actividad profesional.  Ni bien se retiró, Gennaro comenzó a sumar experiencia como entrenador del equipo suizo y en la actualidad es director técnico de Palermo.
+
+-
+  id: 355
+  firstname: Steven
+  lastname: Gerrard
+  birthday: 1980-5-30
+  nicknames: Stevie G, Captain Fantastic
+  country: 181
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 107
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Steven Gerrard es considerado uno de los mejores jugadores del mundo gracias a su habilidad en la recuperación del balón, su preciso y potente disparo y su gran visión de juego. El gran capitán jugó toda su vida en el Liverpool a pesar de ser pretendido por poderosos equipos como el Real Madrid, Chelsea, Manchester United y el Manchester City, entre otros.
+    Entre sus principales marcas, Gerrard es el noveno jugador con más partidos jugados en el Liverpool con más de 630 apariciones. Además, con sus 159 goles, es el noveno goleador de la rica historia del club.
+    El 29 de noviembre de 1998, Stevie G debutó con el primer equipo del Liverpool cuando ingresó al campo de juego ante el Blackburn Rovers. Poco después tuvo su primer partido como titular ante el Celta de Vigo por la Copa UEFA. Esa misma temporada, Gerrard anotó su primer gol en la victoria de su equipo por 4 a 1 ante el Sheffield.
+    Con el equipo de sus amores, Gerrard ganó 2 FA Cup (2001 y 2006), 2 Carling Cup (2003 y 2012), 2 Community Shield (2002 y 2007), 1 Copa UEFA (2001), 2 Supercopas de Europa (2001 y 2006) y 1 Champions League (2005).
+     Con la Selección Inglesa de Fútbol, Gerrard debutó el 31 de mayo de 2000 en un encuentro disputado en Londres ante Ucrania. A pesar de su corta experiencia con la selección, el mediocampista ofensivo fue convocado para jugar la Eurocopa 2000.
+    También disputó los Mundiales de Alemania 2006 y Sudáfrica 2010, jugando en total 9 partidos en el máximo torneo del mundo y anotando 3 goles.
+    Debido a las continuas ausencias de Rio Ferdinand por lesiones, Gerrard fue el elegido para llevar puesta la cinta de capitán en el partido inicial de clasificación para la Eurocopa 2012 contra Bulgaria.
+
+-
+  id: 356
+  firstname:
+  lastname: Gervinho
+  birthday: 1987-5-27
+  nicknames:
+  country: 53
+  twitter: GervinhOfficial
+  genre: [11]
+  teams:
+      -
+        id: 82
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 102
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Gervais Yao Kouassi, más conocido como Gervinho (apodo brasilero derivado de Gervais), comenzó su carrera deportiva en la respetada academia para jóvenes Abidjan. Allí, el marfileño  pasó cinco años y compartió equipo con jugadores reconocidos a nivel mundial como de Touré Yaya, Arthur Boka, Didier Zokora y Roy Taylor. Más tarde, el delantero fichó para el Toumodi F.C. de la Segunda División de Costa de Marfil.
+    Tras jugar dos temporadas en el modesto equipo africano, Gervinho desembarcó en el fútbol europeo por primera vez cuando se incorporó a la plantilla de Bereven de Bélgica.
+    Tras disputar 66 partidos y convertir 15 goles en el fútbol belga, el delantero marfileño fue a sumar experiencia al fútbol francés al sumarse al Le Mans en la temporada 2007/08.
+    Después de sus excelentes actuaciones en la Ligue 1, el Arsenal de Inglaterra puso los ojos en el delantero africano. Sin embargo, firmó contrato con el Lille de  Francia. Sus números mejoraron notablemente y en dos temporadas anotó 36 goles.
+    Finalmente, en 2011, Gervinho firmó contrato con el poderoso Arsenal de Inglaterra por una suma de 12 millones de euros. El marfileño debutó el 23 de julio de ese año en un partido amistoso contra el Colonia anotando dos goles.
+    Gervinho disputó 45 partidos con la Selección de Costa de Marfil y anotó un total de 13 goles. Además, llegó como una de las figuras marfileñas para el Mundial de Sudáfrica 2010. Sin embargo, su técnico lo dejó en el banco y le dio pocos minutos de juego.
+
+-
+  id: 357
+  firstname: Ryan
+  lastname: Giggs
+  birthday: 1973-11-29
+  nicknames: Giggsy, The Welsh Wizard
+  country: 240
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 101
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Ryan Giggs es un reconocido futbolista galés que desarrolló toda su carrera profesional en el Manchester United.  Además, es el jugador que obtuvo la mayor cantidad de títulos oficiales en la historia del fútbol mundial con 35 torneos ganados en total.
+    Después de pasar por las categorías juveniles del United, Giggs debutó oficialmente el 29 de noviembre de 1990 (justo en el día de su cumpleaños número 17) en un encuentro correspondiente a la FA Cup.
+    Sin embargo, Giggs disputó su primer partido en la Premier League contra el Everton en el Old Trafford recién 1991 y su primer gol llegó el 4 de mayo del mismo año en la victoria por 1 a 0 ante el Manchester City.
+    Giggs jugó en el Manchester United más años que cualquiera y es el jugador más ganador en la historia del club. Es el único jugador que anotó en cada una de las temporadas de la Premier League desde su fundación en el año 1992. Y el que más partidos disputó con los Diablos Rojos: en total 623 partidos y convirtió 123 goles.
+    Entre otros récords, es el jugador de mayor edad en marcar en la Champions League, con 37 años y 289 días. Y es el futbolista más grande en convertir un tanto en los Juegos Olímpicos, con 38 años y 246 días.
+    Sin embargo, una cuenta pendiente para Giggs es disputar un Mundial. Algo que nunca pudo concretar porque la Selección de Gales nunca logró clasificarse al evento futbolístico más importante del mundo. Una curiosidad es que la única roja que recibió en toda su carrera fue con la Selección de su país en el partido contra Noruega en 2001.
+
+-
+  id: 358
+  firstname: Sebastian
+  lastname: Giovinco
+  birthday: 1987-1-26
+  nicknames: Hormiga Atómica
+  country: 118
+  twitter: SebaGiovinco
+  genre: [11]
+  teams:
+      -
+        id: 125
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 135
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Sebastian Giovinco llegó a las categorías juveniles de la Juventus con tan sólo 9 años, donde alternó su estadía entre las inferiores y los torneos amateur. Finalmente, a los 14 años se dedicó al 100% a la Vecchia Signora con la idea de ser un jugador profesional.
+    En los juveniles estuvo cinco años hasta que tuvo su primera oportunidad con el primer equipo a los 19 años cuando la Juventus disputaba la Serie B en la temporada 2006/07.
+    Sin embargo, una vez concretado el ascenso de la Juventus a la Serie A, se confirmó que Giovinco pasaría a préstamo al modesto equipo de Empoli. Allí se ganó rápidamente la titularidad jugando 35 partidos y anotando 6 goles.
+    Tras regresar a la Vecchia Signora, Giovinco jugó su primer partido de la temporada el 26 de agosto en el encuentro por la tercera ronda de la clasificación a la Champions League 2008/09 ante el Artmedia Bratislava. Durante esas temporadas con la Juve, el joven ya se mostraba como uno de los principales asistidores de la Serie A.
+    Sin embargo, en 2010, Giovinco tenía poco lugar en el equipo de estrellas de la Juventus y fue cedido a préstamo al Parma con el objetivo de seguir sumando experiencia. Allí, en su primer año, consiguió marcar 7 goles y sumar 5 asistencias en 30 partidos. Y a la temporada siguiente, terminó con 36 partidos, 15 goles y 12 asistencias.
+    Finalmente, Giovinco retornó a la Juventus para ganarse la titularidad. Y en su primera temporada tras su regreso consiguió consagrarse campeón de la Serie A.
+    Con la Selección Italiana de Fútbol, Giovinco jugó un total de 16 partidos y anotó un tanto. Su primer torneo importante lo jugó en la Copa de las Confederaciones de Brasil 2013.
+
+-
+  id: 359
+  firstname: Mario
+  lastname: Gómez
+  birthday: 1985-7-10
+  nicknames: Super Mario
+  country: 3
+  twitter: MarioGomezG
+  genre: [11]
+  teams:
+      -
+        id: 47
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 43
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Mario Gómez es un futbolista alemán con descendencia española que actualmente es el delantero del poderoso Bayern Munich y es uno de los jugadores que siempre está en las convocatorias de la Selección Alemana de Fútbol.
+    En 2003, SuperMario inició su carrera profesional en el Stuttgart de Alemania cuando tan sólo tenía 18 años. Sin embargo, recién en la temporada 2006/07 fue cuando el delantero alemán comenzó  a jugar con continuidad. Ese año anotó 14 goles en 25 partidos. Además, logró ser finalista de la Copa de Alemania 2007, donde el Stuttgart cayó frente al 1. FC Nürnberg. También Gómez integró el plantel que se coronó campeón de la Bundesliga por quinta vez en su historia.
+    Después de ser figura en el Stuttgart, en 2009 se confirmó la transferencia de Mario Gómez al equipo más importante de Alemania: el Bayern Munich. En su primera temporada, el delantero logró marcar sólo 10 goles pero fue figura en los títulos conseguidos (Bundesliga, Supercopa Alemana y Copa de Alemania).
+    En 2010/11, Gómez fue el  máximo goleador de la Liga Alemana con 28 goles y además fue el segundo goleador de la Champions League, por detrás de Lionel Messi. En la siguiente temporada, siguió marcando goles: 37 tantos en 41 encuentros. En total, con la camiseta del Munich, Gómez hizo más de 100 goles en más de 150 partidos.
+    SuperMario debutó con la Selección de Alemania en 2007 en el encuentro ante Suiza. Tuvo su primera participación en un Mundial el 13 de junio de 2010 en Sudáfrica en la victoria por 4 a 0 ante Australia.
+
+-
+  id: 360
+  firstname: Raúl
+  lastname: González
+  birthday: 1977-6-27
+  nicknames: Ángel de Madrid, 7 bravo
+  country: 68
+  twitter: RaulGonzalez
+  genre: [11]
+  teams:
+      -
+        id: 60
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 44
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Raúl González Blanco, más conocido como Raúl, es un destacado futbolista español que jugó casi toda su carrera deportiva en el Real Madrid. Es considerado uno de los mejores jugadores de la historia del conjunto madridista junto a Alfredo Di Stéfano y Zinedine Zidane.
+    Raúl es el máximo goleador histórico en actividad de la Primera División de España y es el tercero con más goles de la Liga detrás de Zarra y Hugo Sánchez. Además, es el jugador español con más goles en la historia de los torneos europeos de Primera División con sus 228 goles anotados en España y los 28 en el Schalke 04 en la Bundesliga.
+    Raúl es también el máximo goleador de la historia de competiciones oficiales de clubes de la UEFA con sus 77 goles, superando a grandes delanteros como Filippo Inzaghi y Gerd Müller. Y es el futbolista con más anotaciones en la historia de la Champions League con 71 tantos .
+    Raúl posee el récord de más partidos disputados en la historia del Real Madrid con 741 participaciones y es el máximo goleador histórico desde 1902 hasta la actualidad con 324 goles por delante de Alfredo Di Stéfano, que logró 307.
+    Raúl inició su carrera en las categorías juveniles del Atlético Madrid, equipo del cual toda su familia es fanática. Sin embargo, tras la eliminación de las inferiores en el colchonero por problemas económicos, Raúl pasó al Real Madrid, equipo en el que debutó en 1994.
+    Tras ganar todo con el Real Madrid, Raúl fichó para el Schalke 04 de Alemania para disputar la temporada 2010/11. Con el conjunto alemán, el delantero español logró consagrarse campeón de la Copa de Alemania y la Supercopa.
+    Finalmente, en 2012, Raúl fichó para Al Sadd de Qatar para darle un cierre a su carrea profesional. En su primer año, el delantero español logró coronarse campeón de la Liga Catarí.
+    Con la Selección Española de Fútbol, Raúl disputó los Mundiales de Francia 1998, Corea/Japón de 2002 y Alemania 2006, jugando 11 partidos mundialistas y convirtiendo 5 goles. En total, Raúl hizo 44 goles en 102 encuentros.
+
+-
+  id: 361
+  firstname: Mario
+  lastname: Götze
+  birthday: 1992-6-3
+  nicknames: Mago, Götzinho, Super Mario
+  country: 3
+  twitter: MarioGoetze
+  genre: [11]
+  teams:
+      -
+        id: 42
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 43
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Mario Götze es un futbolista alemán que se destaca por su gran visión de juego, su velocidad y su capacidad para asociarse con sus compañeros. Su apodo es Gotzinho por su técnica similar a la de los brasileros y su gran descaro dentro del campo de juego.
+    Götze llegó al Borussia Dortmund en 2001 cuando tenía tan sólo 9 años. Allí jugó en todas las categorías juveniles hasta su esperado debut en la Bundesliga en 2009, en un empate 0 a 0 ante el Mainz.
+    Sin dudas su mejor temporada fue la 2012/13 cuando fue una de las figuras principales del Borussia Dortmund que clasificó a la final de la Champions League tras eliminar a poderosos equipos como el Real Madrid, Manchester City, Ajax y Málaga. Además ganó las Bundesligas de 2011 y 2012 y la Copa Alemana 2012.
+    Tras su excelente actuación en la competición europea, equipos como Real Madrid y Barcelona pusieron los ojos en el joven futbolista alemán. Sin embargo, el Bayern Munich ganó la pulseada y oficializó el fichaje en una suma de 37 millones de euros.
+    Después de participar de los equipos juveniles de la Selección Alemana de Fútbol, Götze fue convocado para su primer partido el 17 de noviembre de 2010 ante Suecia. Y su segunda aparición se produjo el 9 de febrero de 2011 en un partido amistoso contra Italia.
+
+-
+  id: 362
+  firstname: Andrés
+  lastname: Guardado
+  birthday: 1986-9-28
+  nicknames: Principito, Zorro Plateado
+  country: 154
+  twitter: andresgua18
+  genre: [11]
+  teams:
+      -
+        id: 290
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 77
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 62
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Andrés Guardado es uno de los mejores futbolistas mexicanos de la actualidad.  Además, el extremo izquierdo es una de las fijas en cada convocatoria de la Selección Mexicana de Fútbol.
+    El 20 de agosto de 2005, con tan sólo 19 años, Guardado tuvo su debut profesional con el Atlas en la Liga Mexicana en el encuentro ante el Pachuca. Tres semanas después, fue titular por primera vez, puesto que no dejaría durante 24 partidos consecutivos.
+    Rápidamente Guardado comenzó a destacarse en la Liga Mexicana por lo que varios clubes europeos pusieron los ojos en el extremo izquierdo. De hecho, el Real Madrid había acercado una propuesta de incorporarlo al Real Madrid Castilla tras su buena actuación en el Mundial de Alemania 2006.
+    Sin embargo, tras su excelente actuación en la Copa América 2007, Guardado fue fichado oficialmente por el Deportivo La Coruña de España. El primer gol de El Principito con el Depor fue en la tercera fecha del campeonato español, el 16 de septiembre de 2007, enfrentando al Real Betis.
+    Después de dos temporadas irregulares, Guardado vivió uno de los peores momentos de su carrera cuando descendió con La Coruña a la Segunda División de España. Sin embargo, en la siguiente temporada, levantó su nivel y fue una pieza clave en el retorno del equipo a la Primera División.
+    Finalmente, en 2012, Guardado fue fichado por el Valencia para internar luchar por entrar en un torneo internacional a nivel europeo.
+    Con la Selección Mexicana de Fútbol, Guardado disputó los Mundiales de Alemania 2006 y Sudáfrica 2010, la Copa de las Confederaciones 2013 y la Copa América 2007.
+
+-
+  id: 363
+  firstname: Josep
+  lastname: Guardiola
+  birthday: 1971-1-18
+  nicknames: Pep, Noi de Santpedor
+  country: 68
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 61
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 43
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Guardiola comenzó a jugar en el Gimnastic de Manresa, para en junio de 1984 ingresar a las inferiores del Barcelona.
+
+    Tras poco más de 6 años en la cantera Culé, tendría su gran estreno en Primera el 16 de diciembre de 1990 enfrentando al Cádiz. Una temporada después, se ganaría un lugar como titular de la mano de Johan Cruyff como DT.
+
+    De notable técnica y gran personalidad, tiempo más tarde se quedaría con la capitanía blaugrana liderando a su equipo hacia varios éxitos. Como mediocentro del Barça se alzaría con 16 títulos para luego dejar el club en 2001.
+
+    Entonces emigraría al Calcio y su nuevo destino sería el Brescia. Allí lograría un gran nivel y la Roma lo ficharía, aunque su paso sería breve porque Fabio Capello no lo tendría en cuenta y retornaría al Biancoazzurri.
+
+    Ya en 2003, Pep se mudaría a Catar para jugar en el Al-Ahli durante dos años. Entonces iniciaría su preparación como entrenador y cuando parecía haberse alejado de la práctica profesional, disputaría en 2006 un torneo con los Dorados de Sinaloa en la Liga Azteca para finalmente retirarse.
+
+    En junio de 2007 Guardiola iniciaría su recorrido como DT del Barcelona B; y en mayo de 2008 sería designado técnico del primer equipo. Su gran capacidad traería resultados inmediatos y en su primera temporada alcanzaría la triple corona -Champions, Liga y Copa del Rey-.
+    Este sería solo el comienzo de Guardiola al frente de uno de los mejores equipos de todos los tiempos. Vendrían más consagraciones -14 en total-, para que el Noi de Santpedor comandara a los culés en la etapa más exitosa del club en la historia.
+    Mejor entrenador FIFA 2011, con su idea futbolística marcaría un estilo de juego que será recordado por siempre. Considerado el DT más importante del mundo, Pep es una gloria azulgrana.
+
+    En enero de 2013, finalmente acordó su llega a Bayern Munich para mediados de ese año.
+
+-
+  id: 364
+  firstname: Freddy
+  lastname: Guarín
+  birthday: 1986-6-30
+  nicknames: Guaro, Guepardo
+  country: 47
+  twitter: fguarin13
+  genre: [11]
+  teams:
+      -
+        id: 140
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 123
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Freddy Guarín comenzó a jugar el fútbol en el modesto equipo de Deportes Tuluá de la Primera C de Colombia. Luego la familia se mudó a Ibagué y el joven se sumó a las inferiores de Deportes Tolima.
+    Sin embargo, su debut profesional fue en Huila de Colombia en el año 2002 gracias a la confianza brindada por el técnico Bernardo Redín. Y después de su destacada actuación en el Mundial Sub 20 en 2003, fue contratado por Envigado.
+    Al año siguiente, y tras un nuevo éxito con la Selección Sub 20 en el Sudamericano 2005, Guarín fue cedido a Boca Juniors de Argentina para jugar en las categorías juveniles. Sin embargo, el colombiano disputó dos encuentros oficiales en el torneo que ganó Boca Juniors  en 2006.
+    En 2006, el conjunto argentino intentó fichar a Freddy, pero finalmente se marchó al Saint-Étienne de Francia, teniendo su debut en la Ligue 1  el 14 de octubre en un partido contra el Olympique de Lyon.
+    En 2008, Guaro firmó contrato con el FC Porto de Portugal y allí logró un gran reconocimiento a nivel mundial gracias a sus excelentes actuaciones. Ganó 3 Ligas de Portugal, 3 Supercopas de Portugal, 2 Copas Nacionales y 1 Europa League.
+    Finalmente, en 2012, Guarín se incorporó a las filas del poderoso Inter de Milan para seguir sumando experiencia en una de las ligas más importantes del mundo.
+    Guarín jugó en total 8 partidos con la Selección Colombiana de Fútbol, siendo su debut el 24 de mayo de 2006 ante Ecuador. Su primer tanto lo marcó el 26 de marzo de 2011 contra Ecuador de tiro libre.
+
+-
+  id: 365
+  firstname: Paolo
+  lastname: Guerrero
+  birthday: 1984-1-1
+  nicknames: Depredador, Mosquetero, Cabecinha de Ouro
+  country: 175
+  twitter: PaoloGuerrero_
+  genre: [11]
+  teams:
+      -
+        id: 56
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 184
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Paolo Guerrero es un destacado futbolista peruano que ostenta el récord de ser el máximo goleador de la historia de la Selección Peruana de Fútbol. En la actualidad, el Matador se desempeña en el Corinthians de Brasil.
+    Paolo Guerrero inició su carrera deportiva  en las divisiones inferiores de Alianza Lima a los siete años de edad. En 2001, el delantero fue ascendido al primer equipo junto a Jefferson Farfán. Sin embargo, no disputó ningún partido de manera oficial en el conjunto peruano.
+    Luego, Guerrero fue fichado por el Bayern Munich a muy corta edad para integrarse en las divisiones inferiores del conjunto alemán. En sus primeros años jugó en el Bayern Munich II, que militaba en la Tercera División de Alemania.
+    Recién en 2004, el goleador tuvo su debut oficial en el prestigioso equipo del Bayern Munich. En total, disputó 44 partidos y convirtió13 goles. Además, ganó 2 Bundesligas y 2 Copas Alemanas.
+    En 2006, Guerrero se unió a las filas del Hamburgo de Alemania. Allí jugó 183 partidos en seis temporadas, convirtió 51 goles y ganó la Copa Intertoto 2007.
+    Finalmente, con 28 años, Guerrero decidió volver a Sudamérica para seguir su carrera profesional en el Corinthians de Brasil. Su principal logró fue haber anotado el gol del triunfo ante el Chelsea de Inglaterra con el que el equipo brasilero se consagró campeón del Mundial de Clubes 2012.
+    A nivel internacional, Guerrero fue una de las principales figuras y máximo goleador de la Copa América 2011 disputada en Argentina, en la que la Selección de Perú terminó en el tercer puesto. En la actualidad, es considerado una de las figuras del conjunto peruano.
+
+-
+  id: 367
+  firstname: Ilkay
+  lastname: Gündogan
+  birthday: 1990-10-24
+  nicknames:
+  country: 3
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 42
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Nacido en Alemania  y de padres turcos, Ilkay Gündogan es un reconocido centrocampista que se destaca por su clase, su capacidad de creación y poseedor de un potente disparo. Además, fue una de las figuras en el Borussia Dortmund que llegó a la final de la Champions League 2013.
+    Con 18 años y tras jugar en las inferiores del Bochum, Gündogan se sumó a las divisiones juveniles del Nürnberg. Un año después, el futbolista tuvo su esperado debut en la Bundesliga el 19 de septiembre de 2009 ante el Bayern Munich. Justamente, su primer gol lo convirtió un año después ante el mismo equipo.
+    Tras jugar 48 partidos y convertir 6 goles, Gündogan firmó contrató con el Borussia Dortmund con el objetivo de lograr títulos. Fue así que en 2011 ganó la Bundesliga y en 2012 logró el doblete al coronarse nuevamente en la Liga y ganar la Copa Alemana.
+    Su gol más importante lo convirtió en la final de la Champions League 2012/13 ante el Bayern Munich de penal en el estadio Wembley. Sin embargo, finalmente perdería el partido 2 a 1 ypor lo que se consagró el conjunto bávaro.
+    Con tan sólo la corta edad de 22 años, Güngogan ya se dio el lujo de participar en un importante torneo a nivel internacional cuando fue convocado para disputar la Eurocopa de Polonia/Ucrania 2012.
+
+-
+  id: 368
+  firstname: Nelson
+  lastname: Haedo Valdez
+  birthday: 1983-11-28
+  nicknames: León Guaraní, Corazón de León
+  country: 174
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 50
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 322
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 62
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Nacido en una familia muy humilde de Paraguay,  Nelson Haedo Valdéz inició su carrera deportiva en el modesto equipo Temberary con el objetivo de poder vivir del fútbol. Allí reconoció que durmió debajo de los tablones de la tribuna después de abandonar su hogar.
+    Tras debutar en la primera y jugar 22 partidos, Haedo Valdéz viajó a Alemania en 2001 para probar suerte en el Werder Bremen. Dos años después, el delantero guaraní fue ascendido al primer equipo de la mano de Thomas Schaaf. En total jugó 129 partidos en 4 temporadas y convirtió 41 goles. Además, integró el equipo que ganó la Bundesliga 2004.
+    Con poco lugar en el Bremen, y tras participar en el Mundial de Alemania 2006 con Paraguay, el León Guaraní se sumó al Borussia Dortmund. Allí jugó 118 partidos en 4 temporadas y convirtió 16 tantos.
+    En 2010, Haedo Valdéz firmó contrato con el Hércules de España, equipo en el que formó dupla con David Trezeguet. El delantero paraguayo debutó en la Liga el 11 de septiembre de 2010, siendo autor de un doblete para la victoria de su equipo ante el Barcelona en el Camp Nou.
+    Su buen rendimiento en España lo relacionaron con el Real Madrid. Sin embargo, en 2011, Valdéz fue fichado por el Rubin Kazan de Rusia. Finalmente, el León fue cedido a préstamo al Valencia de España.
+    Con la Selección Paraguaya de Fútbol, Haedo Valdéz disputó los Mundiales de Alemania 2006 y Sudáfrica 2010 y las Copas Américas de 2007 y 2011.
+
+-
+  id: 369
+  firstname: Joe
+  lastname: Hart
+  birthday: 1986-4-19
+  nicknames: Tenazas, Iron Claw
+  country: 181
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 100
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Joe Hart comenzó su carrera profesional en el modesto equipo Shrewsbury Town de la Segunda División de Inglaterra cuando debutó en la temporada 2003 con tan sólo 17 años.
+    Tras tres temporadas en el Shrewsbury, Hart fue fichado por el Manchester City en 2006. Sin embargo, en su primera temporada sólo disputó sólo un partido por lo que fue cedido a préstamo al Tranmere de la Segunda División. Al regresar, fue nuevamente cedido al Blackpool, siendo decisivo en los últimos cinco partidos.
+    Sus buenas actuaciones llamaron la atención de Sven-Göran Eriksson, por entonces técnico del Manchester City, que a su regreso lo nombró el arquero titular del conjunto inglés.
+    Sin embargo, en la temporada 2009/10, Hart fue cedido a préstamo al Birmingham City tras la incorporación del arquero irlandés Shay Given. Fue tan alto su nivel en el modesto equipo inglés que Fabio Capello lo incluyó en la lista como el tercer portero de la Selección Inglesa de Fútbol en el  Mundial de Sudáfrica 2010.
+    Tras su regreso al Manchester City, Hart le ganó la pulseada al Shay Given y se quedó con la titularidad del poderoso conjunto inglés.  Además, fue una de las figuras del equipo que ganó la Premier League 2012 después de muchos años y la FA Cup 2011.
+    A nivel internacional, Hart fue el arquero titular de la Selección de Inglaterra en la Eurocopa de Polonia/Ucrania 2012. En total, jugó 22 partidos con el equipo inglés.
+
+-
+  id: 370
+  firstname: Eden
+  lastname: Hazard
+  birthday: 1991-1-7
+  nicknames: Duque, Principito
+  country: 38
+  twitter: hazardeden10
+  genre: [11]
+  teams:
+      -
+        id: 82
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 105
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Eden Hazard comenzó su carrera futbolística en el modesto equipo de su ciudad natal: el Royal Stade Brainois. Después de estar cinco años en las categorías juveniles, el extremo belga fue descubierto por el Lille de Francia.
+    En 2005, cuando sólo tenía 14 años, Hazard se sumó a las categorías de juveniles del equipo francés.  Dos años después, el futbolista firmó su primer contrato profesional por tres temporadas.
+    Hazard se ganó la titularidad en el Lille recién en la temporada  2010/11. Además, fue una pieza clave en el equipo que al finalizar el año se consagró campeón de la Ligue 1 y de la Copa de Francia. En total, jugó 188 partidos en cinco temporadas y convirtió 48 goles.
+    El 28 de mayo del 2012, el poderoso Chelsea de Inglaterra anunció la incorporación de Hazard en un traspaso récord que costó 40 millones de euros. el belga debutó y marcó su primer gol como jugador del Chelsea en un amistoso de pretemporada ante el Seattle Sounders.
+    Rápidamente, el centrocampista ofensivo se ganó la titularidad en el conjunto inglés, disputando 62 partidos en su primera temporada y anotando 13 tantos. Además, fue una pieza clave en la Europa League ganada por el Chelsea  en 2013.
+    A nivel internacional, Hazard debutó en la Selección de Bélgica en 2009 con tan sólo 17 años, convirtiéndose así en el octavo jugador belga más joven en tener su primer partido internacional. En total, con 22 años, ya jugó 36 partidos y convirtió 5 goles.
+
+-
+  id: 371
+  firstname: Thierry
+  lastname: Henry
+  birthday: 1977-8-17
+  nicknames: Tití, Mimo
+  country: 75
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 367
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 102
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 349
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Thierry Henry se destaca en el ambiente futbolístico por ser el máximo goleador de todos los tiempos de la Selección de Francia, el máximo goleador en la historia del Arsenal de Inglaterra y el cuarto mayor anotador de la Champions League.
+    Tití comenzó su carrera profesional en el Mónaco cuando debutó en la Ligue 1 el 31 de agosto de 1994 en el encuentro ante el Niza. Pocos meses después, anotó sus primeros goles cuando hizo un doblete en el triunfo por 6 a 0 ante el Lens. Además, ganó la Liga en 1997 y la Supercopa de Francia en el mismo año.
+    Henry siguió su carrera profesional en la Juventus de Italia cuando firmó contrato para jugar en la temporada 1997/98. Sin embargo, el delantero francés tuvo mucha competencia y terminó jugando de interior izquierdo, puesto que no convencía a Titi. Por este motivo, sólo jugó 16 partidos.
+    En 1998, Henry logró el reconocimiento en todo el planeta cuando se consagró campeón del Mundial de Francia 1998 con su Selección. Además, con tan sólo 21 años, ya se daba el lujo de convertir 3 goles en la máxima competición FIFA.
+    En 1999, Henry llegó al poderoso Arsenal de Inglaterra de la mano de su anterior entrenador en el Mónaco: Arsene Wenger. En el conjunto inglés, Tití vivió sus mejores años como futbolista. Con sus 226 goles en 369 partidos, se convirtió en el goleador histórico de los Gunners. Además, ganó 2 Premier League (2002 y 2004), 3 FA Cup  (2003, 2004 y 2005) y 2 Community Shield (2002 y 2004).
+    Tras 8 temporadas en el Arsenal, Henry se incorporó al primer equipo del Barcelona. En su segunda temporada  en el conjunto catalán conquistó la Triple Corona: Liga Española, Copa del Rey y la Champions League. Sin embargo, su lesión en la rodilla le hizo perder terreno en el equipo titular.
+    Finalmente, en 2010, Henry se sumó al New York Red Bulls para buscar disfrutar del fútbol y jugar sin tantas presiones. En total jugó 58 partidos y convirtió 32 goles.
+    Pero no todo terminó ahí. En enero de 2012, Henry regresó al Arsenal para jugar dos meses con el conjunto inglés. En su vuelta ante el Leeds, Tití fue ovacionado por más de 50 mil Gunners que lo proclamaron una leyenda del club.
+
+-
+  id: 372
+  firstname: Xavi
+  lastname: Hernández
+  birthday: 1980-1-25
+  nicknames: Pelopo, Humphrey Bogart, Arquitecto
+  country: 68
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 61
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Xavi ingresó a la cantera del Barcelona en 1991, cuando tenía 11 años. Tras cumplir el sueño de formar parte de la Masía, Hernández iría por más y el 18 de agosto de 1998 tendría su estreno en la Primera blaugrana.
+
+    En su debut de la mano de Louis Van Gaal, el talentoso volante enfrentaría al Mallorca por la Supercopa de España y marcaría un gol. Sus comienzos con el Barça serían muy auspiciosos, aunque recién se consolidaría en la temporada 1999-2000 con la salida de su referente, Josep Guardiola.
+
+    Desde entonces, empezaría a transformarse en líder del mediocampo culé hasta llegar a ser sub capitán del equipo. Dueño de una técnica notable y una excelente pegada, se convertiría en ídolo barcelonista coronándose con 20 títulos -6 Ligas, 5 Supercopas de España, 2 Copas del Rey, 3 Champions, 2 Supercopas de Europa y 2 Mundiales de Clubes-.
+
+    Símbolo blaugrana, es uno de los futbolistas más importantes de la historia del equipo catalán. Récord de presencias y títulos de todos los tiempos, Xavi es toda una gloria del Barcelona.
+
+    En cuanto a su trayectoria con la Selección Española, ha sido uno de los principales exponentes de los éxitos de la Furia. Campeón del Mundo en 2010 y Bi Campeón de la Eurocopa -2008 y 2012-, Hernández se encuentra entre los jugadores más destacados del planeta desde hace ya varios años.
+
+-
+  id: 373
+  firstname: Javier
+  lastname: Hernández
+  birthday: 1988-6-1
+  nicknames: Chicharito
+  country: 154
+  twitter: CH14_
+  genre: [11]
+  teams:
+      -
+        id: 294
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 101
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Javier Hernández, más conocido como Chicharito, se unió a las categorías juveniles de las Chivas de Guadalajara con tan sólo 9 años de edad. En la temporada 2005/06 se sumó a las Chivas de Coras, equipo filial de Tepic. Allí demostró un gran nivel que lo llevó a entrenar con la primera del prestigioso equipo mexicano al año siguiente.
+    El 9 de septiembre de 2006, Chicharito tuvo su debut profesional en la Liga Mexicana anotando el último gol en la victoria de las Chivas sobre Necaxa por 4 a 0. Ese año jugó 8 partidos en la primera y sólo anotó un gol.
+    Hernández dio el salto de calidad en el Torneo Clausura 2009 cuando disputó 24 partidos y convirtió 7 goles. Ya para ese entonces, el delantero mexicano sobresalía por su gran nivel.
+    Sin embargo, el gran campeonato que tuvo en el Bicentenario 2010 anotando 10 goles en 11 partidos despertó el interés de varios equipos europeos. Fue así que el poderoso Manchester United decidió sumar al mexicano a su plantel profesional.
+    El 8 de agosto de 2010, Chicharito anotó su primer gol con el Manchester United en una competición oficial en la victoria por 2 a 1 ante el Chelsea. En su primer año en Inglaterra, el delantero jugó 45 partidos, anotó 20 goles y se dio el lujo ganar la Premier League.
+    Chicharito repitió el título de Premier League en la temporada 2012/13, contribuyendo con 18 goles en 36 partidos en toda el año.
+    Hernández debutó en la Selección de México el 130 de septiembre de 2009 contra Colombia. Además, gracias a sus buenas actuaciones en Inglaterra, fue convocado para integrar el equipo de México en el Mundial de Sudáfrica 2010. En dicha competición jugó los 4 partidos de su selección y anotó 2 goles. También jugó la Copa de las Confederaciones Brasil 2013.
+
+-
+  id: 376
+  firstname: Fernando
+  lastname: Hierro
+  birthday: 1968-3-23
+  nicknames: Mariscal
+  country: 68
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 60
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Fernando Hierro es reconocido a nivel mundial por ser uno de los defensores más destacados de las últimas 4 décadas.  El Mariscal sobresalió por combinar su sólida labor defensiva con precisión en los pases y su gran juego aéreo.
+    El defensor español jugó casi toda su carrera en el Real Madrid, donde disputó 598 partidos y ganó 5 Ligas Españolas y 3 Champions League. Además, disputó 100 partidos con la Selección Española de Fútbol durante sus más de 15 años de carrera futbolística.
+    Hierro se formó en las categorías juveniles de Vélez FC, un modesto equipo de su municipio natal. Tras ser rechazado por el Málaga, el defensor español se sumó al Valladolid en 1986 gracias a su hermano que ya jugaba en el club.
+    Su esperado debut en la Primera División  fue el  4 de octubre de 1987 en el encuentro de su Valladolid ante el Espanyol de Barcelona. Tras jugar 58 partidos en 2 temporadas y anotar 3 tantos, Hierro fue fichado por el poderoso Real Madrid.
+    En el conjunto merengue, Hierro rápidamente se convirtió en uno de los pilares de la defensa y se ganó el aplauso del Santiago Bernabeú en muy poco tiempo. Allí jugó 598 partidos en 14 temporadas y ganó 5 Ligas Españolas y 3 Champions League.
+    Después de ganar todo con el Real Madrid, Hierro se fue a jugar al fútbol de Qatar cuando se sumó a Al Rayyan en 2003. Finalmente, en 2005, el central español puso punto final en su carrera en el Bolton de Inglaterra tras disputar 29 partidos.
+    Hierro es uno de los pocos jugadores que se dio el lujo de disputar cuatro Mundiales de manera consecutiva (Italia 1990, Estados Unidos 1994, Francia 1998 y Corea/Japón 2002), disputando 12 partidos y anotando 5 goles. En total, con la Furia Roja, jugó 89 veces y anotó 29 goles, siendo el cuarto goleador histórico de la Selección.
+
+-
+  id: 377
+  firstname:
+  lastname: Hulk
+  birthday: 1986-7-25
+  nicknames: El increíble Hulk, The Avenger
+  country: 31
+  twitter: HulkGivanildo_V
+  genre: [11]
+  teams:
+      -
+        id: 140
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 316
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Hulk empezó a jugar profesionalmente en Esporte Clube Vitória en Salvador de Bahía, Brasil. Sin embargo, con tan sólo 19 años, emigró al fútbol japonés para jugar en Kawasaki Frontale.
+    En sus primeros años en el fútbol asiático, el delantero brasilero alternó jugando en equipo de la Segunda División como por ejemplo Consadole Sapporo o Tokyo Verdy. Finalmente, en 2008, tras finalizar los préstamos, regresó al Kawasaki convirtiendo 7 goles en 13 partidos disputados.
+    En 2008, Hulk emigró al fútbol europeo para sumarse al plantel del Porto de Portugal. En su primera temporada, el delantero brasilero se ganó la titularidad y en poco tiempo fue un indiscutido.
+    En el conjunto de Porto, Hulk ganó 3 Ligas de Portugal (2009, 2011 y 2012), 3 Copas de Portugal (2009, 2010 y 2011), 3 Supercopas Nacionales (2009, 2010 y 2012) y 1 Europa League (2011). Además, fue el máximo goleador de la liga  en 2011 y recibió el premio al Futbolista del Año en Portugal.
+    En 2012 se anunció el fichaje del delantero brasilero por  el FC Zenit de San Petersburgo de la Liga Premier de Rusia  por cinco años por la cantidad de 60 millones de euros.
+    Su primer torneo FIFA disputado con la Selección Brasilera de Fútbol fue en la última Copa de las Confederaciones Brasil 2013. Además, fue medalla de plata en los Juegos Olímpicos de Londres 2012.
+
+-
+  id: 378
+  firstname: Mats
+  lastname: Hummels
+  birthday: 1988-12-16
+  nicknames:
+  country: 3
+  twitter: MatsHummels
+  genre: [11]
+  teams:
+      -
+        id: 42
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Mats Hummels es un reconocido futbolista alemán que se destaca por ser uno los mejores defensores centrales de su generación. En la actualidad, es una de las figuras del Borussia Dortmund que sorprendió al mundo futbolístico cuando llegó a la final de la Champions League 2012/13.
+    Desde los 6 años, Hummels comenzó  jugar en las categorías de juveniles del Bayern Munich, donde justamente su padre era el coordinador. Comenzó jugando como delantero, pero su propio padre vio en el joven muchas condiciones para desarrollar su carrera en la defensa.
+    El debut profesional de Hummels en el primer equipo fue el equipo el 19 de mayo de 2007 frente al Mainz 05 por la última fecha de la temporada. Sin embargo, a pesar de dar el salto al fútbol grande, el defensor no tuvo otra chance para mostrar sus cualidades.
+    Sin oportunidades en el Bayern Munich, Hummels firmó contrato con el Borussia Dortmund para disputar la temporada 2008/09. En esa primera experiencia, el defensor central se ganó rápidamente la titularidad. De hecho, fue una de las figuras del equipo que logró el bicampeonato de la Bundesliga y el título de Copa de Alemania.
+    A nivel internacional, Hummels ya se puso la camiseta de la Selección Alemana de Fútbol en 24 ocasiones y convirtió 1 gol. Su debut fue el 26 de mayo de 2010 en un amistoso ante Malta e integró el equipo que jugó la Eurocopa 2012.
+
+-
+  id: 379
+  firstname: Zlatan
+  lastname: Ibrahimovic
+  birthday: 1981-10-3
+  nicknames: Ibra, Ibracadabra, Zíngaro
+  country: 209
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 298
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 123
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 81
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Ibrahimovic empezó a jugar a los 8 años en el Malmö BI y posteriormente en el FBK Balkan, para luego iniciar su carrera como profesional en el Malmö FF donde debutaría en 1999.
+    Sus notables condiciones técnicas le posibilitarían dar un salto en su carrera, para en julio de 2001 desembarcar en el Ajax por 7,8 millones de euros. En el conjunto holandés el Zíngaro brillaría, coronándose con 4 campeonatos -2 Ligas, 1 Copa y 1 Supercopa de Holanda-.
+    Ya en 2004, el goleador sueco se mudaría al Calcio y su nuevo destino sería la Juventus. Allí conseguiría 2 títulos locales, aunque finalmente serían quitados por vinculación a apuestas deportivas y la Vecchia Signora descendería. Entonces a mediados de 2006, Zlatan se marcharía al Inter por 24,8 millones de euros para mostrar su mejor versión.
+    Con el Nerazurro el talentoso punta lograría 5 trofeos -3 Serie A y 2 Supercopa de Italia- y se posicionaría como uno de los mejores centrodelanteros del mundo. Luego de 3 temporadas interistas, el crack pasaría al Barcelona en julio de 2009 para continuar cosechando éxitos -1 Liga, 2 Supercopas de España, 1 Supercopa de Europa y 1 Mundial de Clubes-.
+    Permanecería sólo un año en el club Culé y regresaría a Italia para vestir la camiseta del Milan. Con el Rossonero volvería a su mejor forma, liderándolo a consagrarse con la Serie A y la Supercopa Italiana de 2011.
+    Devenido en referente milanista, a mediados de 2012 Ibracadabra cambiaría nuevamente de rumbo desembarcando en el Paris Saint Germain. Demostrando toda su capacidad con les Parisiens, se convertiría en nuevo ídolo del PSG.
+    Mundialista en dos oportunidades -2002 y 2006-, desde su estreno en la Selección de Suecia en enero 2001, Ibra es la figura excluyente del conjunto amarillo y azul. Considerado por muchos como el centrodelantero más importante del mundo, busca llevar a su combinado nacional al Mundial de Brasil 2014.
+
+-
+  id: 380
+  firstname: Andrés
+  lastname: Iniesta
+  birthday: 1984-5-11
+  nicknames: Cerebro, Gasparín, Don Andrés
+  country: 68
+  twitter: andresiniesta8
+  genre: [11]
+  teams:
+      -
+        id: 61
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Iniesta se inició en las infantiles del Albacete cuando tenía sólo 8 años. Ya en 1996, ingresaría a la cantera del Barcelona y desde entonces, comenzaría su notable recorrido por la Masía.
+
+    Su primera experiencia con la Primera blaugrana le llegaría a sus 15 años, cuando Lorenzo Serra Ferrer lo convocatoria para entrenar con el plantel superior. Sin embargo, su debut sería recién en la temporada 2002/2003 de la mano de Louis van Gaal.
+
+    Tras un período de adaptación, el Cerebro se consolidaría en 2004 bajo la dirección técnica de Frank Rijkaard demostrando todo su potencial. Así, el Mago se iría transformando en un referente futbolístico del Barça para alzarse con 19 títulos -5 Ligas, 5 Supercopas Españolas, 2 Copas del Rey, 3 Champions, 2 Supercopa de Europa y 2 Mundiales de Clubes-.
+
+    En cuanto a su trayectoria con la Selección Española, este talentoso volante empezó su camino desde la Sub-16. Su estreno con la Mayor de la Furia sería el 27 de mayo de 2006 ante Rusia, para posteriormente formar parte del Mundial de Alemania.
+
+    Aunque todavía faltaba para su momento dorado con el Seleccionado, en 2008 lograría la Eurocopa. Dos años después, precisamente el 11 de julio de 2010, Don Andrés dejaría guardado por siempre su nombre en la historia del fútbol español. Marcando el único gol de la final ante Holanda, Iniesta le dio el Campeonato del Mundo a España.
+
+    Mejor jugador de Europa en 2011/2012, es todo un símbolo culé considerado dentro de los 5 futbolistas más importantes del planeta.
+
+-
+  id: 381
+  firstname: Jorge
+  lastname: Jesus
+  birthday: 1954-7-24
+  nicknames: Mestre da Táctica
+  country: 178
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 142
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 141
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Jorge Jesús es un ex futbolista que se desempeñó principalmente en el puesto de mediocampista derecho  y actualmente  es el entrenador del Benfica de Portugal.
+    Como futbolista, Jesús comenzó dando sus primeros pasos en el Sporting de Lisboa. Sin embargo, sólo pudo jugar unos pocos partidos en uno de los clubes más importantes de Portugal. Luego continuó su carrera en Olhanense, Os Belenenses,  Grupo Desportivo Riopele, Juventude de Évora, União de Leiria y Vitória de Setúbal. Finalmente, con 35 años, puso punto final a su carrera cuando anunció que se retiraba de la actividad profesional en su querido Estrela da Amadora.
+    Como entrenador, Jesús comenzó siendo la cabeza del grupo del modesto equipo de Amora.  Luego se unió al Felgueiras en 1993 y ayudó al equipo a conseguir el ascenso a la máxima categoría.  Se mantuvo allí durante 8 temporadas hasta que el equipo descendió a la Segunda División.
+    Su primer título lo consiguió en 2008 cuando fue el entrenador del Braga que se consagró campeón de la Copa Intertoto UEFA.
+    Tras este éxito, Jesús fue nombrado director técnico del poderoso Benfica para la temporada 2009/10. En su primera campaña, el entrenador llevó a las Aguilas a ganar la Liga Portuguesa y la Copa de Portugal. En la temporada siguiente, el Mestre de Táctica repitió el título de Copa.
+    Sin embargo, Jesús ganó reconocimiento a nivel mundial cuando logró clasificar con el Benfica a la final de la Europa League 2013. A pesar de perder la final por 2 a 1 en Holanda ante el Chelsea de Inglaterra, ese equipo portugués y el entrenador se ganaron el respeto del ambiente futbolístico.
+
+-
+  id: 382
+  firstname: Stevan
+  lastname: Jovetic
+  birthday: 1989-11-2
+  nicknames: Jojo
+  country: 199
+  twitter: StevanJovetic8
+  genre: [11]
+  teams:
+      -
+        id: 130
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Stevan Jovetic es un reconocido futbolista montenegrino que es comparado por su estilo de juego y su gran técnica con Roberto Baggio, la gran leyenda de la Selección Italiana de Fútbol.
+    Con tan sólo 16 años, Jovetic debutó en el primer equipo de Partizán de Belgrado en un encuentro correspondiente a la Liga de Serbia 2006 ante el modesto conjunto de Voždovac. En la temporada siguiente, ya se había afianzado entre los titulares.
+    Con tan sólo 18 años, Jovetic fue nombrado  el capitán del Partizán  convirtiéndose así en el jugador más joven del equipo serbio en llevar la cinta en su brazo. Ese año, también fue la figura del equipo que ganó la SuperLiga Sebia y la Copa Nacional.
+    En 2008, Fiorentina de Italia pagó 8 millones de euros por el joven futbolista montenegrino. Su primer tanto con su nuevo equipo lo anotó de penal el 5 de abril de 2009, en un partido frente a la Atalanta. Además, convirtió diversos goles decisivos en partidos de liga frente a Palermo, Sampdoria, Livorno o de Champions League frente al Liverpool.
+    A nivel internacional, Jovetic fue uno de los miembros fundadores de la Selección de Fútbol de Montenegro y jugó su primer partido ante Hungría en abril de 2007. En la actualidad, se sitúa como el segundo máximo goleador de la misma, con 10 tantos en 23 partidos.
+
+-
+  id: 383
+  firstname: Shinji
+  lastname: Kagawa
+  birthday: 1989-3-17
+  nicknames:
+  country: 120
+  twitter: S_Kagawa0317
+  genre: [11]
+  teams:
+      -
+        id: 42
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 101
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Shinji Kagawa comenzó a jugar al fútbol cuando se unió al Kobe NK FC, un modesto equipo de Japón. Sin embargo,  Cerezo Osaka rápidamente notó su talento por lo que le hizo firmar un contrato cuando la joven promesa sólo tenía 17 años. De esta manera, se convirtió en el primer jugador nipón en firmar un contrato profesional antes de terminar el colegio secundario.
+    En la temporada 2007, se ganó el puesto de titular en el equipo pero el club no logró el ascenso a la Primera División de Japón. Sin embargo, dos años después, su equipo ascendió a la máxima categoría y el joven se dio el lujo de jugar en la League 1 por primera vez. En total, disputó 127 partidos y anotó 30 goles.
+    Gracias a sus destacadas actuaciones en la Selección Japonesa de Fútbol, Kagawa fue contratado por el Borussia Dortmund de Alemania para disputar la temporada 2010/11. Ese año, jugó 28 partidos, anotó 12 goles y ganó la Bundesliga.
+    Su racha ganadora continuó  cuando tuvo más protagonismo en el nuevo título de de Bundesliga y en la Copa de Alemania conseguida en la temporada 2011/12. En total, jugó 43 partidos en el año y anotó 17 tantos.
+    Finalmente, en 2012, Kagawa fue fichado por el poderoso Manchester United de Inglaterra. En su primera experiencia en el fútbol inglés, el futbolista japonés disputó 20 partidos y anotó 6 goles en la Premier League ganada por uno de los equipos más importantes del mundo.
+    A nivel internacional, Kagawa integró la Selección Sub 20 que disputó el Mundial Sub 20 de Canadá 2007 y también fue a los Juegos Olímpicos de Beijing 2008. Además fue una de las figuras de Japón en el Mundial de Sudáfrica 2010.
+
+-
+  id: 384
+  firstname:
+  lastname: Kaká
+  birthday: 1982-4-22
+  nicknames: Ricky, Smoking Bianco
+  country: 31
+  twitter: KAKA
+  genre: [11]
+  teams:
+      -
+        id: 186
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 136
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 60
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Kaká es uno de los mejores futbolistas del mundo de su generación. De hecho, fue galardonado con el FIFA World Player y el Balón de Oro 2007. Además, el Real Madrid pagó 65 millones de euros por el mediocampista ofensivo brasilero, convirtiéndose así en la cuarta transferencia más cara de la historia detrás de Cristiano Ronaldo, Zinedine Zidane y Zlatan Ibrahimovic.
+    Kaká comenzó a jugar al fútbol en Sao Paulo cuando sólo tenía 8 años. Su primer contrato lo firmó a los 15 años cuando ya era una de las principales promesas del  club. En 2001, tuvo su esperado debut en el profesionalismo anotando 12 goles en 27 partidos y ganando el Torneo Río-São Paulo 2001. En la temporada siguiente anotó 10 goles en 22 partidos y se coronó campeón del Supercampeonato Paulista 2002.
+    Gracias a sus buenas actuaciones en Sao Paulo, el Milan de Italia decidió fichar al joven mediocampista ofensivo por una suma de 8 millones de dólares. A partir de ese momento, Kaká sería reconocido a nivel mundial por el ambiente futbolístico. En total, disputó 270 partidos y convirtió 95 goles. Además, ganó 1 Scudetto (2004), 1 Copa de Italia (2004), 1 Champions League (2007), 2 Supercopas de Europa (2003 y 2007) y 1 Mundial de Clubes (2007).
+     En 2009, Kaká fue fichado por el Real Madrid en una suma récord en la historia del fútbol. Sin embargo, sus dos primeros años se vieron opacados por algunas lesiones. En la temporada 2011/12, el futbolista brasilero se recuperó y pudo disputar más de 40 partidos en un año.  Encima ganó la Liga Española y la Copa del Rey de esa temporada.
+    A nivel internacional, Kaká se dio el lujo de consagrarse campeón del Mundial de Corea/Japón 2002, en el que sólo disputó un solo encuentro. Después jugó los Mundiales de Alemania 2006 y de Sudáfrica 2010. Además, integró los equipos que ganaron las Copas de las Confederaciones en 2005 y 2009. En total, se puso la Verdeamarella en 82 oportunidades y anotó 28 tantos.
+
+-
+  id: 385
+  firstname: Roy
+  lastname: Keane
+  birthday: 1971-8-10
+  nicknames: Psycho
+  country: 103
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 101
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Roy Keane  es un ex futbolista irlandés reconocido por ser el capitán del poderoso Manchester United que ganó todo bajo la dirección técnica de Sir Alex Ferguson. Es recordado por su garra, sacrificio, su temperamento y su precisión en los pases.
+    Keane comenzó su carrera profesional en el Nottingham Forest, donde jugó durante dos temporadas hasta que fue transferido al Manchester United en 1993.
+    Keane se dio el lujo de ser el capitán y una de las figuras del equipo de Old Trafford. Allí ganó la Premier League, la FA Cup, la Champions League y la tradicional Copa Intercontinental. En total, tuvo 480 participaciones y marcó 51 goles.
+    El mediocampista defensivo es recordado por la terrible patada que le propinó a Alf Inge Haaland por una venganza (cuatro años antes Keane se rompió los ligamentos en una confusa jugada con el jugador del Leeds) que le provocó la rotura del ligamento cruzado anterior. Por este motivo y tras 4 intervenciones quirúrgicas, Haaland tuvo que abandonar el fútbol a los 30 años.
+    En 2006, Keane decidió dejar el Manchester para sumarse al Celtic de Escocia. Allí jugó una sola temporada hasta que se retiró de la actividad profesional a los 35 años.
+    Como entrenador,  consiguió el ascenso a la Premier League con el Sunderland de Inglaterra. Luego continuó su carrera en el Ipswich.
+    A nivel internacional, Keane jugó para la Selección de Irlanda en el Mundial de Estados Unidos 1994. También tuvo una destacada actuación en Corea/Japón 2002 cuando su equipo quedó afuera en octavos de final por penales ante España. En total, jugó 66 partidos y convirtió 9 goles.
+
+-
+  id: 386
+  firstname: Oliver
+  lastname: Kahn
+  birthday: 1969-6-15
+  nicknames: El Mono, Bulldog, Der Titan
+  country: 3
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 43
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Oliver Kahn es considerado  uno de los mejores arqueros del mundo de las últimas 3 décadas y actualmente ocupa el quinto puesto en el Ranking Histórico de Porteros. Además, con 557 encuentros disputados, es el tercer futbolista y el primer guardameta con más encuentros disputados en la historia de la Bundesliga. Entre otras cosas, tiene el récord de menos goles concedidos en una temporada.
+    Kahn comenzó su carrera deportiva en el modesto equipo de Karlsruher SC en 1987. Sin embargo, su debut profesional fue en 1990 cuando fue designado el arquero titular por su entrenador. Su mayor logro fue haber accedido a las semifinales de la Copa UEFA 1994. Allí jugó 128 partidos en total.
+    Gracias a sus notables actuaciones en Karlsruher, Kahn fue fichado por el Bayern Munich de Alemania. En poco tiempo se ganó la titularidad y la cinta de capitán. Además, ya era considerado el mejor arquero de la Bundesliga y uno de los mejores del mundo.
+    Con el conjunto Bávaro, el Mono se dio el lujo de ganar 8 Bundesligas, 6 Copas de Alemania, 6 Copas de Liga, 1 Copa UEFA, 1 Champions League y 1 Copa Intercontinental.
+    Finalmente, el 17 de mayo de 2008, Kahn disputó su último partido en la Bundesliga con la camiseta del Bayern de Múnich en el encuentro ante el Hertha de Berlín. Ese día Kahn fue sustituido en el minuto 89 por Michael Rensing para recibir la merecida ovación de los fanáticos.
+    A nivel internacional, Kahn integró el plantel de la Selección de Alemania que se consagró campeona de la Eurocopa 1996. Luego el Mono fue una pieza clave en el subcampeonato logrado por los alemanes en el Mundial de Corea/Japón 2002. De hecho, ganó el Balón de Oro al mejor jugador del Mundial.
+
+-
+  id: 389
+  firstname: Miroslav
+  lastname: Klose
+  birthday: 1978-6-9
+  nicknames: Miro , Bomber
+  country: 3
+  twitter: MiroslavJKlose
+  genre: [11]
+  teams:
+      -
+        id: 50
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 43
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 121
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Miroslav Klose es un reconocido futbolista polaco de nacionalidad alemana que se destaca por su fuerte capacidad goleadora, su gran salto, su precisión en los remates con la cabeza y su gran poderío ofensivo.
+    El Bomber comenzó su carrera profesional en el Kaiserslautern, donde jugó 147 partidos durante 4 temporadas y anotó 52 goles. Gracias a sus notables actuaciones, fue transferido al Werder Bremen. Allí comenzó a romper redes  desde que llegó anotando 63 goles en 3 temporadas.
+    El gran salto de su carrera lo dio cuando fue fichado por el poderoso Bayern Munich de Alemania en 2007. Rápidamente se hizo conocido a nivel mundial con su gran capacidad goleadora. En total convirtió 52 goles en  149 partidos. Además ganó 2 Bundesliga, 1 Copa de Liga, 1 Copa de Alemania y 1 Supercopa nacional.
+    Finalmente, en 2011, Klose decidió seguir su carrera deportiva en la Lazio de Italia ya que tenía poco logar en el Bayer Munich. En su segunda temporada en el conjunto romano consiguió consagrarse campeón de la Copa Italia.
+    Con sus 67 goles, Klose es el segundo máximo anotador de la historia de la Selección Alemana de Fútbol. Además, es el segundo máximo goleador de la historia de los Mundiales con sus 14 tantos detrás del brasilero Ronaldo que tiene 15 anotaciones. Fue Bota de Plata en el Mundial de Corea/Japón 2002 y Bota de Oro en el de Alemania 2006.
+
+-
+  id: 412
+  firstname: José
+  lastname: Mourinho
+  birthday: 1963-1-21
+  nicknames: Mou, The Special One
+  country: 178
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 140
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 123
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 105
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Mourinho comenzó a trabajar como colaborador de Manuel Fernández en el Estrela de Amadora y posteriormente fue asistente en el Vitoria de Setúbal. Luego llegaría su paso por Sporting Lisboa y Porto, siempre al lado de Bobby Robson.
+    En 1996 seguiría al lado del inglés, pero ya en el Barcelona. Robson dejaría el cargo y Mou continuaría, aunque esta vez junto a Van Gaal. Entonces en la temporada 2000-2001 el portugués tendría su oportunidad como primer entrenador del Benfica. Sin embargo, su experiencia sería breve -9 fechas- debido a un cambio en la presidencia del club.
+    Unión de Leiria, de la segunda de Portugal, fue su próximo equipo. Aunque también cambiaría de rumbo y el nada menos que el Porto sería su destino en enero de 2002. Con el Dragão ganaría todo -2 Ligas, 1 Copa y 1 Supercopa de Portugal, 1 UEFA y 1 Champions- para transformarse en máximo ídolo del club de Oporto.
+    Consolidado como uno de los entrenadores más importantes del mundo, tendría su chance en la Premier League dirigiendo al Chelsea. Y allí volvería a dejar su huella consiguiendo 6 títulos en 3 años, para convertirse en el técnico más exitoso de la historia Blue.
+    En 2008 iniciaría su etapa frente al Inter y nuevamente lograría ser múltiple campeón -2 Serie A, 1 Champions, 1 Copa y 1 Supercopa de Italia-, posicionándose como uno de los DTs más ganadores de todos los tiempos.
+    En mayo de 2010, Mourinho desembarcaría en la Casa Blanca para entrenar al Real Madrid y perdería la costumbre, se alzaría con varios trofeos.
+    De perfil muy alto y un estilo muy polémico, Mou es indudablemente uno de los técnicos más exitosos de las últimas décadas.
+
+-
+  id: 417
+  firstname:
+  lastname: Neymar
+  birthday: 1992-2-5
+  nicknames: Menino da Vila, Magrelo, El Gallo, Ney,
+  country: 31
+  twitter: Njr92
+  genre: [11]
+  teams:
+      -
+        id: 181
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 61
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Neymar ingresó a la cantera del Santos en 2003 y desde entonces, comenzó a despuntar con su enorme potencial técnico y notables cualidades.
+    Tras superar una prueba en España, estuvo a punto de fichar con el Real Madrid cuando tenía 14 años. Sin embargo, el Santos logró retenerlo y el crack debutó en la Primera del Peixe el 7 de marzo de 2009 ante el club Oeste.
+    Desequilibrante y talentoso, tardaría muy poco tiempo en consolidarse como la estrella del fútbol brasilero. En 2010 comenzaría a mostrar su mejor versión, siendo el goleador de la Copa de Brasil y consagrándose con el Campeonato Paulista -elegido mejor jugador-.
+    Un año después, todo seguiría en alza y el punta lideraría a su equipo en continuar conquistando títulos. Campeón del Paulista y Libertadores 2011, Ney sería elegido como el futbolista más destacado en ambas competiciones.
+    Ya en 2012, conseguiría dos trofeos más -Paulista y Recopa Sudamericana- y junto a su Seleccionado, se quedaría con la medalla de plata en los Juegos Olímpicos de Londres. Con pasado por las juveniles Sub-17 y Sub-20de la Canarinha, desde su estreno en la Mayor en agosto de 2010, el Menino da Vila ha empezado a transformarse en el líder futbolístico de Brasil pese a su juventud.
+    Considerado como uno de los mejores jugadores del mundo y sin dudas el de mayor proyección, Neymar tiene todo para triunfar en el corto plazo en Europa. Figura del Scratch, el Gallo -como lo apodaron por su corte de pelo- muestra toda la alegría brasilera dentro del campo de la cancha.
+    En mayo de 2013 fue vendido al Barcelona.
+
+-
+  id: 427
+  firstname: Andrea
+  lastname: Pirlo
+  birthday: 1979-5-19
+  nicknames: Il'Architetto, Il Metronomo
+  country: 118
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 136
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 135
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Andrea Pirlo se formó en el Brescia, donde en 1995 tuvo su estreno en Primera enfrentando a la Reggina.
+
+    En 1998, el Inter se quedaría con sus servicios seducido por sus notables condiciones técnicas y su excelente pegada. En el Neroazzurri el talentoso volante disputaría una temporada y luego pasaría a préstamo al Reggina, para posteriormente retornar al Inter. Aunque no contaría con muchas posibilidades y sería prestado al Brescia.
+
+    Ya en 2001, el Milan depositaría su confianza en la jerarquía de il Architetto y el crack desembarcaría en el Rossonero para mostrar su mejor versión. Allí lograría 9 títulos -1 Copa Italia, 2 Serie A, 1 Supercopa Italiana, 2 Champions, 2 Supercopas de Europa y 1 Mundial de Clubes- y se transformaría en ídolo.
+
+    Tras 10 años muy exitosos, il Metrónomo se mudó a la Juventus para continuar cosechando trofeos. Referente y figura de la Vecchia Signora, lideraría a su equipo para lograr 2 campeonatos -Serie A y Supercopa Italiana 2012- y meterse en el corazón de los hinchas.
+
+    Mundialista en 2 oportunidades -2006 y 2010-, con la Selección Azzurra debutó en 2002 frente a Azerbaiyán. Siendo clave en la obtención de la Copa del Mundo de Alemania, Pirlo es considerado todo un símbolo de la Nazionale y uno de los mejores volantes del planeta.
+
+-
+  id: 442
+  firstname:
+  lastname: Roberto Carlos
+  birthday: 1973-4-10
+  nicknames: El Hombre Bala, Dinamita
+  country: 31
+  twitter: Oficial_RC3
+  genre: [11]
+  teams:
+      -
+        id: 175
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 60
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Roberto Carlos comenzó a jugar para el União Sao Joao, de la ciudad de Araras perteneciente al estado de San Pablo. Tras convertirse en revelación y debutar en el primer equipo con sólo 14 años, a los 19 tendría su estreno en la Primera División jugando para el Atlético Mineiro.
+
+    Luego pasaría al Palmeiras y en 1995 emigraría al Inter de Milán. Un año después, desembarcaría en el Real Madrid donde el talentoso lateral zurdo disputaría 11 temporadas. En la Casa Blanca se convertiría en todo un símbolo alzándose con 13 títulos, destacándose 3 Champions y 2 Intercontinentales.
+
+    En junio de 2007 dejaría el Merengue para marcharse al Fenerbahçe, dónde ganaría 2 Supercopas Turcas. A fines de 2009 retornaría a Brasil para vestir la camiseta del Corinthians, aunque su paso no sería muy bueno y en 2011 cambiaría de rumbo mudándose al Anzhi de Rusia.
+
+    Tras disputar una temporada en la Premier Rusa, Roberto Carlos cumplió un interinato como DT de su equipo y luego realizó tareas dirigenciales en el club de la ciudad de Majachkalá. Desde la temporada 13/14, es el entrenador del Sivasspor de Turquía.
+
+-
+  id: 445
+  firstname:
+  lastname: Ronaldinho
+  birthday: 1980-3-21
+  nicknames: Dinho, Ronnie, R10
+  country: 31
+  twitter: 10Ronaldinho
+  genre: [11]
+  teams:
+      -
+        id: 182
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 81
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 61
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 135
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 174
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 172
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Cuando tenía 12 años, Ronaldinho ingresó a las inferiores del Gremio donde debutaría en Primera en 1997. En su estreno, suplantaría a su hermano Roberto y con el correr de los partidos se convertiría en la estrella del Tricolor Gaúcho.
+
+    Dos años más tarde, se alzaría con el Campeonato Gaúcho y en enero de 2001 emigraría a Francia para jugar en el PSG. En el equipo parisino, Roonie demostraría todo su potencial ganándose todo el cariño de los hinchas Rouge et Bleu.
+
+    Su notable nivel le permitiría dar un salto en su carrera y en 2003 el talentoso brasilero desembarcaría en el Barcelona a cambio de 30 millones de euros. Con los Culés lograría 5 títulos -2 Ligas, 2 Supercopas de España y 1 Champions- y se transformaría en ídolo. Jar Jar Binks mostraría su mejor versión en el Barça, siendo elegido Balón de Oro en 2005 y MVP de la Champions en 2006.
+
+    En junio de 2008 cambiaría de rumbo y su destino estaría en el Calcio. Milan sería un nuevo club, dónde pasaría casi tres temporadas. Ya en 2011, el crack retornaría a Brasil para vestir la casaca del Flamengo. Allí volvería a alcanzar un rendimiento destacado coronándose con el Campeonato Carioca 2011.
+
+    Considerado el mejor futbolista del mundo durante años, Ronaldinho ha sido todo un símbolo de la Canarinha. Campeón del Mundo en 2002 y mejor jugador FIFA en 2004 y 2005, R10 es sin dudas uno de los más destacados de todos los tiempos.
+
+    Desde mediados de 2012, Dinho busca liderar a Atlético Mineiro a los primeros puestos del fútbol brasilero.
+
+-
+  id: 446
+  firstname: Cristiano
+  lastname: Ronaldo
+  nicknames: CR7, Batipibe, Wonder Kid
+  country: 178
+  twitter: Cristiano
+  genre: [11]
+  teams:
+      -
+        id: 143
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 101
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 60
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Cuando tenía 10 años, Ronaldo ya comenzaba a demostrar todas sus condiciones en las categorías menores del Andorinha de su Funchal natal, donde su padre trabaja como utilero del club.
+    Posteriormente, el crack pasaría a Nacional -el conjunto más grande de la Isla de Madeira- y 6 meses más tarde cambiaría de equipo nuevamente. Tras superar con éxito una prueba en el Sporting, el Batipibe ingresaría a la cantera de los Leones a cambio de una deuda que tenía su anterior club con el combinado de Lisboa.
+    Ya con 15 años, le diagnosticarían un problema de corazón que pondría en riesgo su carrera. Aunque una cirugía láser simplificaría las cosas y el talentoso delantero continuaría jugando con normalidad.
+    Entonces llegaría el momento de su estreno en Primera en 2001, nada menos que en Pre-Champions ante el Inter. Su nivel le permitiría convertirse rápidamente en titular y con su aporte, el Sporting se quedaría con 3 trofeos -Liga, Copa y Supercopa de Portugal- en 2002.
+    Luego de un amistoso frente al Manchester United a mediados de 2003 donde Cristiano brillaría, los Diablos Rojos lo contratarían por poco más de 18 millones de euros. Su debut en la Premier llegaría el 16 de agosto ante el Bolton, para un partido convertir su primer gol frente al Portsmouth.
+    En sus 6 temporadas con el United, el portugués se transformaría en ídolo rojo alzándose con 10 títulos -1 FA Cup, 3 Premier, 2 Copas de Liga, 2 Community Shield, 1 Champions y 1 Mundial de Clubes-.
+    Goleador y figura en todas las consagraciones, en junio de 2009 se mudaría al Real Madrid a cambio de 94 millones de euros, siendo el traspaso más caro de todos los tiempos. CR9 -fue su dorsal inicial con el Merengue pagaría con goles y mostraría su mejor versión en la Casa Blanca, coronándose con 3 campeonatos en el Real -Copa del Rey 2011, Liga y Supercopa Española 2012-.
+    Mundialista en 2 oportunidades -2006 y 2010-, Ronaldo es considerado uno de los delanteros más destacados de la historia. Mejor jugador FIFA y Balón de Oro 2008, CR7 es para muchos el futbolista más importante de la actualidad.
+
+-
+  id: 447
+  firstname:
+  lastname: Ronaldo
+  birthday: 1976-9-22
+  nicknames: O Fenómeno, R9, Gordo
+  country: 31
+  twitter: ClaroRonaldo
+  genre: [11]
+  teams:
+      -
+        id: 178
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 300
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 61
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 60
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 123
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 184
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Luis Nazario de Lima, más conocido como Ronaldo, se crió en Bento Ribeiro -barrio periférico de Rio de Janeiro- donde comenzó a jugar al futsal en el club Valqueire.
+    Ya en su adolescencia, el crack pasaría por el São Cristóvão y se probaría en Flamengo, que no lo ficharía porque vivía muy lejos y debían pagarle el transporte.
+    Finalmente recalaría en Cruzeiro donde tendría su estreno en 1993 y se alzaría con el Campeonato Mineiro -siendo el goleador más joven de la historia- y la Copa de Brasil.
+    Tras convertirse en la figura del equipo de Belo Horizonte con apenas 17 años, el delantero emigraría al fútbol holandés. Su destino sería el PSV y allí brillaría siendo clave en la consagración de la Copa de Holanda de 1996. Con 42 goles en 46 partidos, conseguiría ser otra vez el top scorer de la liga.
+    Entonces sería el Barcelona quien lo contrataría y en Cataluña mostraría su mejor versión. Con el Barça lograría 3 campeonatos -Supercopa de España, Copa del Rey y Recopa de Europa-, sería el Pichichi ‘96/97 –el de menor edad de todos los tiempos- y alcanzaría una marca de 47 goles en 49 partidos.
+    Pese a su notable rendimiento, no se podrían de acuerdo en su renovación y Ronaldo se mudaría al Inter. Con el Nerazzurro obtendría la Copa UEFA ‘97/98, aunque sus dos lesiones de rodilla sólo le permitirían disputar apenas 50 encuentros en 4 años.
+    Recuperado en 2002, se marcharía al Real Madrid para regresar a su nivel más alto y volver a ser campeón. Con el Merengue conquistaría 4 títulos -1 Liga, 1 Supercopa Española, 1 Supercopa de Europa y 1 Intercontinental- y así el Gordo se posicionaría otra vez entre los mejores.
+    A mediados de 2006, R9 retornaría al Calcio y se pondría la casaca del Milan. En el Rossonero sufriría nuevamente problemas de lesiones y tras finalizar su contrato en junio de 2008, volvería a Brasil.
+    Corinthians sería su nuevo y último club, donde el Fenómeno lograría la Copa de Brasil y el Torneo Paulista 2009, para dos años después retirarse con el Timao.
+    Mundialista en 4 oportunidades, con la Verde Amarela fue campeón del mundo en 1994 y 2006; y también logró 2 Copa América -’97 y ’99-.
+    Máximo goleador de la historia de los Mundiales -con 15 goles- y 3 veces mejor jugador del mundo -1996, 1997 y 2002-; Ronaldo es considerado como el centrodelantero más destacado de todos los tiempos.
+
+-
+  id: 448
+  firstname: Wayne
+  lastname: Rooney
+  birthday: 1985-10-24
+  nicknames: Wazza, Roo, Baby, Bad Boy, Jabalí
+  country: 181
+  twitter: WayneRooney
+  genre: [11]
+  teams:
+      -
+        id: 106
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 101
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Wayne Rooney empezó a jugar en el Liverpool Schoolboys y luego en el Dynamo Brownwings, para posteriormente ingresar en 1996 a la cantera del Everton. Su estreno en la Premier llegaría el 17 de agosto de 2002 frente al Tottenham; y en su segundo partido marcaría su primer gol ante el Arsenal.
+
+    En sus dos temporadas con los Toffees, The Wonder Boy mostraría un excelente nivel y entonces cambiaría de club. El Manchester United sería su nuevo destino y en su debut el 28 de septiembre de 2004, anotaría un hattrick frente al Fenerbahçe.
+
+    Consolidado como uno de los mejores delanteros de la Premier, Wazza comenzaría a demostrar todo su potencial para convertirse en figura de los Diablos Rojos. Talentoso y goleador, lideraría a su equipo hacia la conquista de 13 títulos -4 Premier, 3 Copa de Liga, 4 Community Shield, 1 Champions y 1 Mundial de Clubes- en 6 años.
+
+    Referente y máximo ídolo del United, es considerado uno de los mejores jugadores de la historia del club. Siendo uno de los puntas más completos del mundo, Rooney es sin dudas uno de los más destacados en su puesto hace ya varios años.
+
+    Desde su estreno con la Selección Inglesa en 2003 ante Australia, Roo ha sido una constante en el equipo de la Rosa y ha participado de 2 Mundiales -2006 y 2010-.
+
+-
+  id: 449
+  firstname: Alexis
+  lastname: Sánchez
+  birthday: 1988-12-19
+  nicknames: Niño Maravilla
+  country: 44
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 213
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 211
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 120
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 61
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Alexis Sánchez comenzó a jugar desde chico en la filial de la Universidad Católica en la ciudad de Rancagua, para en 2011 unirse finalmente a las inferiores del club. Sin embargo, su estadía sería breve y se mudaría a Tocopilla donde formaría parte del club amateur Arauco.
+    Posteriormente, el habilidoso delantero empieza a jugar con el seleccionado de la ciudad de Taltal y en 2004 ingresa a la escuela del Cobreloa, donde se destaca notablemente y al poco tiempo es subido al plantel profesional por Nelson Acosta.
+    Su estreno oficial con los Zorros del Desierto llegaría el 12 de Febrero de 2005, enfrentando a Deportes Temuco. Alexis tenía 16 años y sus condiciones lo convertían en una gran promesa.
+    Consolidado como revelación del fútbol chileno, el Udinese decide comprarle el pase en 2006 y cederlo al Colo Colo. Ya en el Cacique, el punta mostraría su mejor versión y sería clave en los títulos de 2006 y 2007.
+    Su nivel sobresaliente le permitió desembarcar en River, donde el Niño Maravilla conseguiría el Clausura 2008. Así, tras una temporada en el Millo, Sánchez emigraría al Calcio para brillar en el Udinese.
+    Devenido en una de las revelaciones de la Serie A, sería nombrado como el mejor futbolista del torneo 2010/2011, convirtiéndose en ídolo del conjunto Bianconeri. Entonces en julio de 2011, daría el paso más trascendente de su carrera fichando con el Barcelona.
+    Mundialista en 2010, Alexis es la máxima estrella de la Selección Chilena y uno de los atacantes más importantes del mundo.
+
+-
+  id: 467
+  firstname: Francesco
+  lastname: Totti
+  birthday: 1976-9-27
+  nicknames: Il Capitano, el Gladiador, el Emperador
+  country: 118
+  twitter:
+  genre: [11]
+  teams:
+      -
+        id: 124
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Totti empezó a jugar de chico en el Fortiudo, el equipo de su barrio en Roma, para posteriormente ingresar a las inferiores del club Lodigiani.
+
+    Tras desestimar la posibilidad de formar parte de la cantera del Milan para no dejar su ciudad natal, Francesco se uniría a la Roma en 1989. Con 16 años, tendría su debut en la Primera Giallorossi el 28 de marzo de 1993 frente al Brescia.
+
+    Ya en 1995, el talentoso mediapunta se transformaría en titular y comenzaría a destacarse por su gran capacidad goleadora. Con presencia y gran personalidad, a sus 21 años ya se había ganado el respeto de todos siendo el capitán de la Loba.
+
+    Oscar del Calcio en 7 oportunidades, el Emperador se convirtió en uno de los máximos ídolos conquistando 5 títulos -2 Copas Italia, 1 Serie A y 2 Supercopas Italianas-. Siendo el jugador con más presencias y goles en la historia del club, ha marcado una época como símbolo del romano.
+
+    En cuanto a su trayectoria con el Seleccionado Italiano, su recorrido comenzó en las juveniles Sub-15. Finalmente, su estreno en la Mayor se daría en octubre de 1998 en un amistoso ante Suiza.
+
+    Referente de la Nazionale durante varios años, Totti es de los mejores exponentes que dio el Calcio en los últimos tiempos. Dejando su marca en la Azzurra, se coronó Campeón del Mundo en Alemania 2006.
+
+-
+  id: 487
+  firstname: Zinedine
+  lastname: Zidane
+  birthday: 1972-6-23
+  nicknames: Zizou, Mago
+  country: 75
+  twitter: ZidaneOfficial_
+  genre: [11]
+  teams:
+      -
+        id: 84
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 135
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+      -
+        id: 60
+        debut: false
+        actual: true
+        highlight: true
+        manager: false
+  content: |
+    Zinedine Zidane desembarcó en el Cannes con 14 años, para finalmente tener su estreno en la Ligue 1 en 1989 cuando ya tenía 17.
+
+    Luego de su debut frente al Nantes, comenzaría a demostrar todo su talento y tras cuatro temporadas en gran nivel, pasaría al Bordeaux dando un salto de calidad. Con les Girondins conseguiría la Copa Intertoto 1995 y un año después, se marcharía a la Juventus.
+
+    En la Vecchia Signora el Mago mostraría su mejor versión y se transformaría en una estrella del fútbol mundial. Con el club de Turín lograría 6 títulos -1 Intercontinental, 1 Supercopa de Europa, 2 Serie A, 1 Supercopa de Italia y 1 Intertoto- para dejar su huella y convertirse en ídolo Bianconeri.
+
+    En julio de 2001 Zizou se mudaría a España y su destino sería el Real Madrid, que lo compraría por 73.5 millones de euros. Integrante del equipo de los Galácticos, con el Merengue cosecharía 6 campeonatos más -2 Supercopas de España, 1 Liga, 1 Champions, 1 Intercontinental y 1 Supercopa de Europa- quedando en la historia de la Casa Blanca.
+
+    En cuanto a su trayectoria con la Selección Francesa, su estreno con les Blues sería el 17 de agosto de 1994 ante República Checa. Líder futbolístico del equipo galo, Zidane fue Campeón del Mundo en 1998, Sub Campeón en 2006 y se coronó con la Eurocopa en 2000.
+
+    Mejor jugador del mundo en tres oportunidades -1998, 2000 y 2002-, Zizou marcó una era con su seleccionado. Siendo considerado el futbolista francés más destacado de todos los tiempos, el Mago quedará para siempre en la memoria de todos.
+
