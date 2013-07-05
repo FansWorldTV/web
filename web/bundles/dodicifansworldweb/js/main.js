@@ -251,8 +251,6 @@ var site = {
             }
         });
 
-        window.hola = 0;
-
         $('.twitter-typeahead .tt-query').keyup(function(e) {
           if ( e.which == 13 ) {
              e.preventDefault();
