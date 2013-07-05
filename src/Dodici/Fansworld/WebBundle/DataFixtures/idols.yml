@@ -13307,7 +13307,8 @@
       1980 - Uprising
       1983 - Confrontation (álbum póstumo).
   birthday: 1945-02-06
-  content: "Robert Nesta Marley Booker (6 de febrero de 1945 – 11 de mayo de 1981), más conocido como Bob Marley, fue un músico, guitarrista y compositor jamaiquino. Durante su carrera musical fue el líder, compositor y guitarrista de las bandas de ska, rocksteady y reggae The Wailers (1964–1974) y Bob Marley & The Wailers (1974–1981). Marley sigue siendo el más conocido y respetado intérprete de la música reggae y es acreditado por ayudar a difundir tanto la música de Jamaica como el movimiento rastafari (del que era un miembro comprometido) a una audiencia mundial. Entre sus mayores éxitos se encuentran los sencillos "I Shot the Sheriff", "No Woman, No Cry", "Jamming", "Redemption Song" y, junto a The Wailers, "Three Little Birds", así como el lanzamiento póstumo "Buffalo Soldier". El álbum recopilatorio “Legend”, lanzado en 1984 tres años después de su muerte, es el álbum de reggae más vendido de la historia con 10 discos de platino en los Estados Unidos y 20 millones de copias en todo el mundo. "
+  content: |
+      Robert Nesta Marley Booker (6 de febrero de 1945 – 11 de mayo de 1981), más conocido como Bob Marley, fue un músico, guitarrista y compositor jamaiquino. Durante su carrera musical fue el líder, compositor y guitarrista de las bandas de ska, rocksteady y reggae The Wailers (1964–1974) y Bob Marley & The Wailers (1974–1981). Marley sigue siendo el más conocido y respetado intérprete de la música reggae y es acreditado por ayudar a difundir tanto la música de Jamaica como el movimiento rastafari (del que era un miembro comprometido) a una audiencia mundial. Entre sus mayores éxitos se encuentran los sencillos "I Shot the Sheriff", "No Woman, No Cry", "Jamming", "Redemption Song" y, junto a The Wailers, "Three Little Birds", así como el lanzamiento póstumo "Buffalo Soldier". El álbum recopilatorio “Legend”, lanzado en 1984 tres años después de su muerte, es el álbum de reggae más vendido de la historia con 10 discos de platino en los Estados Unidos y 20 millones de copias en todo el mundo.
   country: 119
   firstname: Bob
   genre:
@@ -13723,7 +13724,6 @@
       debut: false
       highlight: true
       id: 20153
-      manager: false
   twitter: garciasaynomore
 -
   achievements: "2011 - Nunca o Una Eternidad"
@@ -13796,9 +13796,9 @@
   birthday: 1963-10-28
   content: |
       En 1981 participa en el Concurso Voces Nuevas de Castrocaro; llega a la final con “Rock 80”, una canción escrita por él mismo y que le permite obtener su primer contrato discográfico. Eros se muda a Milán, donde vive en la sede de la casa discográfica. En 1982 publica su primer sencillo “A un amigo”. Tras un duro año de trabajo llega de repente el éxito, ya que Eros triunfa en “las nuevas propuestas” del Festival de San Remo 1984 con “Tierra prometida”, escrita con Renato Brioschi y Alberto Salerno.
-      Después de dos albums, en 1987 sale “En ciertos momentos”. El álbum obtiene resultados excepcionales, con más de tres millones de copias vendidas en todo el mundo pero la consagración de Eros Ramazzotti como artista internacional llega en Abril de 1990 cuando 200 periodistas provenientes de todo el mundo, participan de la rueda de prensa de Venecia para la presentación de su quinto álbum, ”En todos los sentidos”. 
-      En el verano de 1995 participa en el evento musical europeo Summer Festival junto a Rod Stewart, Elton John y Joe Cocker. 
-      En Mayo de 1998 participa en el “Pavarotti and Friends” cantando con Luciano Pavarotti “Si bastasen un par de canciones”. Publica el disco en directo “Eros Live” con dos dúos grabados durante la gira mundial con Tina Turner y con Joe Cocker. 
+      Después de dos albums, en 1987 sale “En ciertos momentos”. El álbum obtiene resultados excepcionales, con más de tres millones de copias vendidas en todo el mundo pero la consagración de Eros Ramazzotti como artista internacional llega en Abril de 1990 cuando 200 periodistas provenientes de todo el mundo, participan de la rueda de prensa de Venecia para la presentación de su quinto álbum, ”En todos los sentidos”.
+      En el verano de 1995 participa en el evento musical europeo Summer Festival junto a Rod Stewart, Elton John y Joe Cocker.
+      En Mayo de 1998 participa en el “Pavarotti and Friends” cantando con Luciano Pavarotti “Si bastasen un par de canciones”. Publica el disco en directo “Eros Live” con dos dúos grabados durante la gira mundial con Tina Turner y con Joe Cocker.
       Durante la década del 2000, Eros no dejó de cosechar éxitos a nivel mundial.
   country: 118
   firstname: Eros
