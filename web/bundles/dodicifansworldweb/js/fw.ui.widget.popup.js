@@ -32,7 +32,12 @@
  */
 
 
-
+// WARNING GLOBAL VARIABLE
+// EventEmitter is taken from packery but can be download from https://github.com/Wolfy87/EventEmitter
+$(document).ready(function () {
+    "use strict";
+    window.fansWorldEvents = new EventEmitter();
+});
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // NOTIFICATIONS API:                                                                                                        //
 // $.get('/bench/meteor/send')                                                                                               //
@@ -822,12 +827,11 @@ $(document).ready(function () {
         toggle: function (event) {
             var that = this;
             event.preventDefault();
-            console.log("widget toggle!!!!!")
-            console.log(event.target)
-            if(!$(event.target).hasClass('active') && that.options.isPoped) {
-                that.popOut(event);
+
+            if($(event.target).hasClass('active') && that.options.isPoped) {
                 $(that.options.target).removeClass('active');
-                //$(event.target).toggleClass('active');
+                $(event.target).removeClass('active');
+                that.popOut(event);                
                 return;
             }
             // Set new title
@@ -840,11 +844,12 @@ $(document).ready(function () {
             that.options.target = event.target;
 
             // Get target window positioning
-            console.log("$(event.target).height(): " + $(event.target).height())
-            var offset = $(event.target).offset();
-            offset.top += $(event.target).height() + 20;
+            var offset = $('nav .widget-bar').offset();
+            offset.top += $('nav .widget-bar').height() + 20;
             //offset.top -= parseInt(($(that.element).height() + $(event.target).height() + 10), 10);
-            offset.left -= parseInt(($(that.element).width() / 2) - ($(event.target).width() / 2), 10);
+            offset.left -= parseInt(($(that.element).width() / 2) - ($('nav .widget-bar').width() / 2), 10);
+
+
             // Set popup position
             $(that.element).offset({
                 top: offset.top,
@@ -855,8 +860,12 @@ $(document).ready(function () {
                 that.popIn(event);
             }
             else {
-                that.popOut(event);
+                console.log("mover flecha")
+                $(that.element).find('.widget-title').css('color', '#f00');
             }
+            /*else {
+                that.popOut(event);
+            }*/
         }
     };
     // A really lightweight plugin wrapper around the constructor,
@@ -1032,17 +1041,15 @@ $(document).ready(function () {
     Plugin.prototype = {
         init: function () {
             var that = this;
-            that.options.header = $('.right-container');
-            that.options.buttons.push({
-                id: that.guidGenerator(),
-                node: that.makeButton(parseInt((Math.random()*0x10), 10), that.options.name),
-                count: 0
+            that.options.header = document.querySelector('nav .widget-bar');
+            that.options.buttons.forEach(function(element, index, array) {
+                console.log("a[" + index + "] = " + element);
+                element.node = that.makeButton(parseInt((Math.random()*0x10), 10), element.name, element.icon);
+                that.options.header.insertBefore(element.node, that.options.header.firstChild);
             });
-            that.options.header.prepend(that.options.buttons[0].node);
-
-            /*fansworld.notificacion.addListener('ongettotal', function(response){
+            fansworld.notificacion.addListener('ongettotal', function(response){
                 that.updateLabel('id', response.result);
-            });*/
+            });
             // Listen notifications
             fansworld.notificacion.addListener('onnotificationreceived', function(response){
                 that.updateLabel('id', fansworld.notificacion.total);
@@ -1054,19 +1061,19 @@ $(document).ready(function () {
             button.setAttribute('id', id);
             button.setAttribute('data-toggle', 'dropdown');
             button.setAttribute('title', name);
-            //button.setAttribute('rel', 'tooltip');  // Enable tootlit (overlaps widget !)
             button.setAttribute('type', 'button');
             button.setAttribute('data-original-title', that.options.title);
             button.className = "btn-widget";
             button.innerText = name;
 
             var label = that.makeLabel('id', 0);
+            label.style.opacity = 0;
             button.insertBefore(label, button.firstChild);
 
-            var icon = document.createElement("i");
-            icon.classList.add('icon-film');
-            icon.classList.add('icon-white');
-            button.insertBefore(icon, button.firstChild);
+            var image = document.createElement("i");
+            image.classList.add(icon);
+            image.classList.add('icon-white');
+            button.insertBefore(image, button.firstChild);
 
             $(button).on("click", function(event) {
                 //$('.widget-container').data('fwWidget').toggle(e); // To activate Notifications widget
@@ -1084,8 +1091,10 @@ $(document).ready(function () {
         },
         updateLabel: function(id, message) {
             var that = this;
+            /*
             $(that.options.buttons[0].node).find('#id').html(message);
             $(that.options.buttons[0].node).find('#id').effect("highlight", {color: "#a0c882"}, 2000);
+            */
         },
         guidGenerator: function() {
             var s = [];
@@ -1151,7 +1160,8 @@ $(document).ready(function () {
         $('header:first').fwHeaderToolBar({
             name: 'Actividad',
             title: 'Actividad reciente',
-            id: 'head-act-reciente'
+            id: 'head-act-reciente',
+            buttons: [{name: 'video', icon: 'icon-film'}, {name: 'activity', icon: 'icon-list'}, {name: 'photos', icon: 'icon-camera'}, {name: 'profile', icon: 'icon-user'}]
         });
 
         $('#btn-widget-video').on('click', function(event){

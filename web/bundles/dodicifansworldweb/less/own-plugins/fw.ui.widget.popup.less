@@ -10,6 +10,9 @@
 
 *:focus {outline: none;}
 
+nav .widget-bar {
+  float: left;
+}
 .jspTrack {
   background: rgba(0,0,0,0.25);
   border-radius: 10px;
@@ -30,7 +33,7 @@
 .widget-container {
   position: absolute;
   border: 1px solid #24171a;
-  border-radius: 6px;
+  border-radius: 3px;
   height: 250px;
   width: 320px;
   /*margin-top: -60px;*/
@@ -43,36 +46,44 @@
 }
 
 .widget-container:after {
-  content: "";
-  border-color: #24171a #24171a transparent transparent ;
-  border-style: solid;
-  border-width: 8px;
-  width: 0;
-  height: 0;
-  position: absolute;
-  bottom: 0%;
-  left: 50%;
-  margin-left: -4px;
-  margin-bottom: -8px;
-  -webkit-transform: rotate(135deg); /* Prefixes... */
-  z-index: -100;
+  content:"";
+  border-color: transparent transparent #fff #fff;
+  border-style:solid;
+  border-width:8px;
+  width:0;
+  height:0;
+  position:absolute;
+  top:-8px;
+  left:50%;
+  margin-left:-4px;
+  margin-bottom:-8px;
+  -webkit-transform:rotate(135deg);
+  z-index:-100;
 }
 
+.widget-container:before{
+  content:"";
+  border-color: transparent transparent #000 #000;
+  border-style:solid;
+  border-width:8px;
+  width:0;
+  height:0;
+  position:absolute;
+  top:-9px;
+  left:50%;
+  margin-left:-4px;
+  margin-bottom:-9px;
+  -webkit-transform:rotate(135deg);
+  z-index:-100;
+}
 .widget-container .widget-title {
   font-size: 16px;
   font-weight: 600;
-  color: @white;
+  color: #000;
   padding: 10px 10px;
   line-height: 1;
   border-radius: 3px 3px 0 0;
-  background-color:#2e282a;
-  background-image:-moz-linear-gradient(top, #343434, #24171a);
-  background-image:-ms-linear-gradient(top, #343434, #24171a);
-  background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#343434), to(#24171a));
-  background-image:-webkit-linear-gradient(top, #343434, #24171a);
-  background-image:-o-linear-gradient(top, #343434, #24171a);
-  background-image:linear-gradient(top, #343434, #24171a);
-  background-repeat:repeat-x;
+  background-color:#fff;
 }
 .widget-container i.close-share{
   display:block;
@@ -95,14 +106,6 @@
   width: 100%;
   height: 100%;
   position:relative;
-  background-image:-moz-linear-gradient(top, #343434, #24171a);
-  background-image:-ms-linear-gradient(top, #343434, #24171a);
-  background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#343434), to(#24171a));
-  background-image:-webkit-linear-gradient(top, #343434, #24171a);
-  background-image:-o-linear-gradient(top, #343434, #24171a);
-  background-image:linear-gradient(top, #343434, #24171a);
-  background-repeat:repeat-x;
-
   border-radius:3px;
   overflow: hidden;
   overflow-y: hidden;
@@ -134,7 +137,6 @@
   font-weight: 400;
   color: black;
 }
-
 
 .widget-container .widget-content .widget-inner .widget-app a {
   color: black;

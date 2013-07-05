@@ -29,10 +29,8 @@
             </ul>
         </div>
         <div class="right-container">
-                <button class="btn-widget"><i class="icon-list icon-white"></i></button>
-                <button class="btn-widget"><i class="icon-user icon-white"></i></button>
-                <button class="btn-widget" id="btn-widget-video" data-notif-videos='{"count":"0"}'><i class="icon-film icon-white"></i><span class="label label-warning">10</span></button>
-                <button id="actividad-reciente-button" class="btn-widget"><i class="icon-camera icon-white"></i></button>
+            <nav class="widget-bar">
+            </nav>
             <form class="navbar-search" name="search" method="post" action="{{ path('search_home') }}">
                 <input name="query" type="text"/>
                 <i class="icon-search"></i>
@@ -142,6 +140,8 @@
 
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
     <div class="widget-container" style="opacity:0;display:block;">
+        <div class='arrow-up'></div>
+        <div class='arrow-up-border'></div>
         <div class="widget-content">
             <h4 class="widget-title">Title</h4>
             <i class="close-share"></i>
