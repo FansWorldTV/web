@@ -525,6 +525,7 @@ class BatchController extends SiteController
                 $result .= "  id: ".($exp[0])."\n";
                 $result .= "  title: ".$exp[1]."\n";
                 $result .= "  foundedAt: ".$exp[2]."\n";
+                $result .= "  genre: 11\n";
                 $result .= "  nicknames: ".$exp[3]."\n";
                 $result .= "  letters: ".$exp[4]."\n";
                 $result .= "  shortname: ".$exp[1]."\n";
