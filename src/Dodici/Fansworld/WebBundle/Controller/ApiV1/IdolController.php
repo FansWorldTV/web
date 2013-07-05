@@ -152,7 +152,7 @@ class IdolController extends BaseController
             if ($userid) {
                 $user = $this->checkUserToken($userid, $request->get('user_token'));
             }
-            
+
             $idol = $this->getRepository('Idol')->find($id);
             if (!$idol) throw new HttpException(404, 'Idol not found');
 
@@ -164,7 +164,7 @@ class IdolController extends BaseController
                 'fanCount' => $idol->getFanCount(),
                 'videoCount' => $idol->getVideoCount()
             );
-            
+
             if ($user) {
                 $return['followed'] = $this->get('fanmaker')->status($idol, $user);
             }
@@ -244,9 +244,9 @@ class IdolController extends BaseController
                 if (!$idolids) throw new HttpException(400, 'Requires idol_id');
                 if (!is_array($idolids)) $idolids = array($idolids);
                 if (array_unique($idolids) !== $idolids) throw new HttpException(400, 'Duplicate idol_id');
-                
+
                 $updates = array();
-                
+
                 foreach ($idolids as $idolid) {
                     $idol = $this->getRepository('Idol')->find($idolid);
                     if (!$idol) throw new HttpException(404, 'Idol not found - id: ' . $idolid);
@@ -258,16 +258,16 @@ class IdolController extends BaseController
                     } else {
                         throw new HttpException(400, 'Invalid fan action');
                     }
-                    
+
                     $updates[] = $idol;
                 }
 
                 if ($action == 'add') {
                     $this->getDoctrine()->getEntityManager()->flush();
                 }
-                
+
                 $result = array();
-                foreach ($updates as $ui) $result[] = array('id' => $ui->getId(), 'fanCount' => $ui->getFanCount(), 'followed' => $this->get('fanmaker')->status($idol, $user)); 
+                foreach ($updates as $ui) $result[] = array('id' => $ui->getId(), 'fanCount' => $ui->getFanCount(), 'followed' => $this->get('fanmaker')->status($idol, $user));
 
                 return $this->result((count($result) == 1) ? $result[0] : $result);
             } else {
