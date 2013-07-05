@@ -305,7 +305,7 @@
 
 -
   id: 313
-  firstname:
+  firstname: Bebeto
   lastname: Bebeto
   birthday: 1964-2-16
   nicknames:
@@ -502,7 +502,7 @@
 
 -
   id: 322
-  firstname:
+  firstname: Cafú
   lastname: Cafú
   birthday: 1970-6-7
   nicknames: il Pendolino
@@ -1139,7 +1139,7 @@
 
 -
   id: 344
-  firstname:
+  firstname: Djalminha
   lastname: Djalminha
   birthday: 1970-12-9
   nicknames: O Mago
@@ -1485,7 +1485,7 @@
 
 -
   id: 356
-  firstname:
+  firstname: Gervinho
   lastname: Gervinho
   birthday: 1987-5-27
   nicknames:
@@ -2032,7 +2032,7 @@
 
 -
   id: 377
-  firstname:
+  firstname: Hulk
   lastname: Hulk
   birthday: 1986-7-25
   nicknames: El increíble Hulk, The Avenger
@@ -2234,7 +2234,7 @@
 
 -
   id: 384
-  firstname:
+  firstname: Kaká
   lastname: Kaká
   birthday: 1982-4-22
   nicknames: Ricky, Smoking Bianco
@@ -2390,7 +2390,7 @@
 
 -
   id: 417
-  firstname:
+  firstname: Neymar
   lastname: Neymar
   birthday: 1992-2-5
   nicknames: Menino da Vila, Magrelo, El Gallo, Ney,
@@ -2454,7 +2454,7 @@
 
 -
   id: 442
-  firstname:
+  firstname: Roberto Carlos
   lastname: Roberto Carlos
   birthday: 1973-4-10
   nicknames: El Hombre Bala, Dinamita
@@ -2485,7 +2485,7 @@
 
 -
   id: 445
-  firstname:
+  firstname: Ronaldinho
   lastname: Ronaldinho
   birthday: 1980-3-21
   nicknames: Dinho, Ronnie, R10
@@ -2581,7 +2581,7 @@
 
 -
   id: 447
-  firstname:
+  firstname: Ronaldo
   lastname: Ronaldo
   birthday: 1976-9-22
   nicknames: O Fenómeno, R9, Gordo
@@ -8577,7 +8577,7 @@
         manager: false
 -
   id: 168
-  firstname:
+  firstname: Nené
   lastname: Nené
   birthday: 1981-7-19
   nicknames:
@@ -9708,7 +9708,7 @@
         manager: false
 -
   id: 201
-  firstname:
+  firstname: Robinho
   lastname: Robinho
   birthday: 1984-1-25
   nicknames: Robi, O'Principe
