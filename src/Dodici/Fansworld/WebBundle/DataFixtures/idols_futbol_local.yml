@@ -38,18 +38,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 2
   firstname: Alberto Federico
@@ -90,18 +78,6 @@
         manager: false
       -
         id: 143
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -234,18 +210,6 @@
         actual: true
         highlight: true
         manager: true
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: true
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: true
 -
   id: 7
   firstname: Héctor Alfredo
@@ -274,12 +238,6 @@
   teams:
       -
         id: 8
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -327,12 +285,6 @@
         highlight: true
         manager: false
       -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
         id: 121
         debut: false
         actual: true
@@ -340,12 +292,6 @@
         manager: false
       -
         id: 125
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -522,12 +468,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 14
   firstname: Rodolfo Martín
@@ -556,12 +496,6 @@
         manager: false
       -
         id: 23
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -614,12 +548,6 @@
         actual: true
         highlight: true
         manager: true
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: true
 -
   id: 16
   firstname: Leonardo Rubén
@@ -654,12 +582,6 @@
         manager: false
       -
         id: 182
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -704,18 +626,6 @@
         manager: false
       -
         id: 62
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -906,12 +816,6 @@
     En 2012 tuvo un paso como Manager de Colón, aunque tras 12 meses dejó su cargo.
   teams:
       -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
         id: 1
         debut: false
         actual: true
@@ -925,12 +829,6 @@
         manager: false
       -
         id: 124
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -992,12 +890,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 25
   firstname: Jorge Hernán
@@ -1040,30 +932,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 26
   firstname: Lucas Ademar
@@ -1092,12 +960,6 @@
         manager: false
       -
         id: 367
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -1145,12 +1007,6 @@
         highlight: true
         manager: false
       -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
         id: 8
         debut: false
         actual: true
@@ -1158,12 +1014,6 @@
         manager: true
       -
         id: 1
-        debut: false
-        actual: true
-        highlight: true
-        manager: true
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -1246,12 +1096,6 @@
         actual: true
         highlight: true
         manager: true
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: true
 -
   id: 31
   firstname: Ricardo Enrique
@@ -1318,12 +1162,6 @@
         actual: true
         highlight: true
         manager: true
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: true
 -
   id: 33
   firstname: Diego Mario
@@ -1353,12 +1191,6 @@
   teams:
       -
         id: 19
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -1544,19 +1376,7 @@
         highlight: true
         manager: false
       -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
         id: 5
-        debut: false
-        actual: true
-        highlight: true
-        manager: true
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -1651,19 +1471,7 @@
         highlight: true
         manager: false
       -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
         id: 2
-        debut: false
-        actual: true
-        highlight: true
-        manager: true
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -1708,12 +1516,6 @@
         manager: false
       -
         id: 5
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -1914,12 +1716,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 49
   firstname: Claudio Paul
@@ -1964,12 +1760,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 50
   firstname: Fabio
@@ -2004,12 +1794,6 @@
         manager: false
       -
         id: 60
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -2058,12 +1842,6 @@
         manager: true
       -
         id: 60
-        debut: false
-        actual: true
-        highlight: true
-        manager: true
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -2185,12 +1963,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 55
   firstname: Juan Pablo
@@ -2219,12 +1991,6 @@
   teams:
       -
         id: 19
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -2550,12 +2316,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 66
   firstname: Hernán Jorge
@@ -2596,12 +2356,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 67
   firstname: Fabián
@@ -2624,12 +2378,6 @@
   teams:
       -
         id: 8
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -2667,12 +2415,6 @@
         manager: false
       -
         id: 236
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -2853,12 +2595,6 @@
     Consolidado como uno de los centrodelanteros más importantes del Calcio, Denis es un referente de área de los que no abundan en el mercado.
   teams:
       -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
         id: 5
         debut: false
         actual: true
@@ -2956,12 +2692,6 @@
         manager: false
       -
         id: 20
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -3089,12 +2819,6 @@
         manager: true
       -
         id: 13
-        debut: false
-        actual: true
-        highlight: true
-        manager: true
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -3251,12 +2975,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 85
   firstname: Didier Yves
@@ -3282,12 +3000,6 @@
     Elegido como el mejor goleador del mundo del siglo XXI, Drogba ha marcado sin dudas una etapa en la historia de los centrodelanteros. En enero de 2013, fue contratado por el Galatasaray de Turquía.
   teams:
       -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
         id: 89
         debut: false
         actual: true
@@ -3295,12 +3007,6 @@
         manager: false
       -
         id: 105
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -3437,12 +3143,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 90
   firstname: Radamel
@@ -3556,12 +3256,6 @@
   teams:
       -
         id: 7
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -3719,12 +3413,6 @@
         highlight: true
         manager: false
       -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
         id: 18
         debut: false
         actual: true
@@ -3866,12 +3554,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 102
   firstname: Esteban Oscar
@@ -3930,12 +3612,6 @@
   teams:
       -
         id: 1
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -4030,18 +3706,6 @@
         actual: true
         highlight: true
         manager: true
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: true
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: true
 -
   id: 107
   firstname: Martín Sebastián
@@ -4066,12 +3730,6 @@
   teams:
       -
         id: 2
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -4329,12 +3987,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 117
   firstname: Jonás Manuel
@@ -4405,12 +4057,6 @@
         manager: false
       -
         id: 16
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -4495,12 +4141,6 @@
         manager: false
       -
         id: 89
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -4603,12 +4243,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 125
   firstname: Juan Manuel
@@ -4631,12 +4265,6 @@
 
     De notable firmeza y solidez para marcar, el Chaqueño se ha consolidado como uno de los mejores marcadores centrales del medio local. Ganándose el respeto de todos con trabajo y humildad, en agosto de 2012 fue transferido al Spartak de Moscú.
   teams:
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
       -
         id: 3
         debut: false
@@ -4721,12 +4349,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 128
   firstname: Juan
@@ -4759,12 +4381,6 @@
         manager: false
       -
         id: 124
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -4816,19 +4432,7 @@
         highlight: true
         manager: false
       -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
         id: 156
-        debut: false
-        actual: true
-        highlight: true
-        manager: true
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -4972,12 +4576,6 @@
         manager: false
       -
         id: 128
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -5194,12 +4792,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 140
   firstname: Carlos Ariel
@@ -5303,12 +4895,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 143
   firstname: Diego Armando
@@ -5361,12 +4947,6 @@
         manager: false
       -
         id: 122
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -5655,12 +5235,6 @@
   teams:
       -
         id: 23
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -5959,12 +5533,6 @@
         actual: true
         highlight: true
         manager: true
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: true
 -
   id: 160
   firstname: Diego
@@ -6021,12 +5589,6 @@
         manager: false
       -
         id: 282
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -6287,12 +5849,6 @@
         manager: false
       -
         id: 136
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -6708,12 +6264,6 @@
         highlight: true
         manager: false
       -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
         id: 17
         debut: false
         actual: true
@@ -6831,12 +6381,6 @@
   teams:
       -
         id: 12
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -7078,12 +6622,6 @@
         manager: false
       -
         id: 64
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -7378,12 +6916,6 @@
         manager: false
       -
         id: 1
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -7853,18 +7385,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 214
   firstname: Miguel Ángel
@@ -7950,12 +7470,6 @@
   teams:
       -
         id: 7
-        debut: false
-        actual: true
-        highlight: true
-        manager: true
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -8048,12 +7562,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 218
   firstname: Santiago Gabriel
@@ -8088,12 +7596,6 @@
         manager: false
       -
         id: 237
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -8234,12 +7736,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 222
   firstname: José Gustavo
@@ -8318,12 +7814,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 224
   firstname: Facundo
@@ -8362,12 +7852,6 @@
         manager: false
       -
         id: 16
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -8421,30 +7905,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 226
   firstname: Rolando
@@ -8493,12 +7953,6 @@
         manager: false
       -
         id: 7
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -8616,12 +8070,6 @@
         highlight: true
         manager: false
       -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
         id: 6
         debut: false
         actual: true
@@ -8719,12 +8167,6 @@
         manager: false
       -
         id: 8
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -9105,12 +8547,6 @@
         manager: false
       -
         id: 35
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -9691,12 +9127,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 256
   firstname: Mario Alberto
@@ -9779,12 +9209,6 @@
         manager: false
       -
         id: 123
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -10003,12 +9427,6 @@
         highlight: true
         manager: false
       -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
         id: 236
         debut: false
         actual: true
@@ -10042,12 +9460,6 @@
         manager: false
       -
         id: 322
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -10106,18 +9518,6 @@
         actual: true
         highlight: true
         manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
 -
   id: 267
   firstname: Claudio Omar
@@ -10148,12 +9548,6 @@
         manager: false
       -
         id: 16
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
@@ -10255,12 +9649,6 @@
   teams:
       -
         id: 16
-        debut: false
-        actual: true
-        highlight: true
-        manager: false
-      -
-        name:
         debut: false
         actual: true
         highlight: true
