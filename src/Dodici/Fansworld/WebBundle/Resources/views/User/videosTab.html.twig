@@ -12,6 +12,9 @@
         {% block inner_content %}
             <div data-list="video" data-entity-type="user" data-entity-id="{{ user.id }}">
                 <div class="row-fluid clearfix">
+                <span class="pull-left">
+                    <button class="btn-upload-video" href="{{ path('photo_fileupload') }}" data-upload="photo"><i class="icon-circle-arrow-up icon-white"></i>Subir Video</button>
+                </span>
                 <span class="pull-right">
                     {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig' %}
                 </span>
