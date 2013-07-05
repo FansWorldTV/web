@@ -12,6 +12,7 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Yaml\Yaml;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Dodici\Fansworld\WebBundle\Entity\HasGenres;
 
 class LoadIdolData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
 {
