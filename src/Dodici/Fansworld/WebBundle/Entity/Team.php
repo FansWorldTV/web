@@ -81,6 +81,13 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     private $content;
 
     /**
+     * @var text $achievements
+     *
+     * @ORM\Column(name="achievements", type="text", nullable=true)
+     */
+    private $achievements;
+
+    /**
      * @var text $nicknames
      * @Gedmo\Translatable
      *
@@ -236,6 +243,12 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
      */
     private $genre;
 
+    /**
+     * @ORM\OneToMany(targetEntity="HasGenres", mappedBy="team", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $hasgenres;
+
+
 	/**
      * @ORM\PrePersist()
      */
@@ -266,6 +279,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
         $this->visits = new \Doctrine\Common\Collections\ArrayCollection();
         $this->teamcategories = new \Doctrine\Common\Collections\ArrayCollection();
         $this->visitCount = 0;
+        $this->hasgenres = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function __toString()
@@ -351,6 +365,26 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * Set achievements
+     *
+     * @param text $achievements
+     */
+    public function setAchievements($achievements)
+    {
+        $this->achievements = $achievements;
+    }
+
+    /**
+     * Get achievements
+     *
+     * @return text
+     */
+    public function getAchievements()
+    {
+        return $this->achievements;
     }
 
     /**
@@ -863,6 +897,26 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
     public function getGenre()
     {
         return $this->genre;
+    }
+
+    /**
+     * Add hasgenre
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\HasGenres $hasgenres
+     */
+    public function addHasGenre(\Dodici\Fansworld\WebBundle\Entity\HasGenres $hasgenres)
+    {
+        $this->hasgenres[] = $hasgenres;
+    }
+
+    /**
+     * Get hasgenres
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getHasGenre()
+    {
+        return $this->hasgenres;
     }
 
 }

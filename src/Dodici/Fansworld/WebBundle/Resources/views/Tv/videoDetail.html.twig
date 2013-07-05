@@ -1,3 +1,4 @@
+{% set fullwidth = true %}
 {% extends "DodiciFansworldWebBundle:Tv:base.html.twig" %}
 
 {% block title %}{{ parent() }} - Video detail{% endblock %}
@@ -19,6 +20,8 @@
             {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %}
             
             {% include 'DodiciFansworldWebBundle:Video:blocks/grid.html.twig' with {videos: videosRelated, sectionId:'videos-related-sort',dataGridRelatedId: video.id} %}
+
+            <div class="spinner hidden"><div class="mask"></div></div>
         {% endblock %}
         
         {% block bottom_left_content %}
