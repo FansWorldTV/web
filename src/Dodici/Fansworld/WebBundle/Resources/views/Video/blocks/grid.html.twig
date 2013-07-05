@@ -12,7 +12,7 @@
                 <span class="video-duration">{{ video.duration|date("i:s") }}</span>
             </a>
             <span data-title class="title">{{ video.title }}</span>
-            <p data-content>{{ video.content|truncate(55) }}</p>
+            {#<p data-content>{{ video.content|truncate(55) }}</p>#}
         </div>
     {% endfor %}
 </section>

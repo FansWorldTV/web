@@ -595,7 +595,12 @@
                     var self = $(this);
                     $(".sort-videos .btn.active").removeClass('active');
                     $(this).addClass('active');
-                    $("#videos-related-sort").parent().addClass('loading');
+
+                    var $container = $("#videos-related-sort");
+                    var $spinner = $container.parent().find('.spinner');
+                    $container.hide();
+                    $spinner.removeClass('hidden');
+
                     console.log($("#videos-related-sort"));
                     ajax.genericAction('teve_ajaxsortdetail', {
                         'video': $('[data-grid-related]').attr('data-grid-related'),
@@ -627,7 +632,8 @@
                         }).then(function() {
                             $(this).fadeIn('slow');
                         });
-                        $("#videos-related-sort").parent().removeClass('loading');
+                        $container.show();
+                        $spinner.addClass('hidden');
                         ajaxActive = false;
                     }, function(e){
                         error(e);
