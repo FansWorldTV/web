@@ -413,6 +413,33 @@ section#videos-related, section#videos-related-sort {
 			word-wrap: break-word;
 			text-overflow: ellipsis;
 		}
+
+		i.ico-watchlater {
+			position: absolute;
+			top: 2px;
+			right: 2px;
+
+			@size: 32px;
+			.square(@size);
+			background-size: @size;
+			display: none;
+			opacity: 0.5 !important;
+
+			cursor: pointer;
+			top: 5px;
+			background-image: url('../images/ico-watchlater-channels.png');
+
+			&:hover {
+				opacity: 1 !important;
+			}
+		}
+
+		&:hover {
+			i.ico-watchlater {
+				display: block;
+				.transition(opacity .15s ease-in-out);
+			}
+		}
 	}
 }
 

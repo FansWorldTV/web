@@ -619,6 +619,7 @@
                                 if (r.videos.hasOwnProperty(i)) {
                                     var video = r.videos[i];
                                     var data = {
+                                        id: video.id,
                                         href: Routing.generate(appLocale + '_video_show', {'id': video.id, 'slug': video.slug}),
                                         imageSrc: video.image,
                                         videoAlt: video.title,
