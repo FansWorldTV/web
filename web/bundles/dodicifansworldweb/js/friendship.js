@@ -94,29 +94,28 @@ var friendship = {
             }
 
             console.log("friendshipId: " + friendshipId + " userId: " + userId);
-            if(confirm('Seguro deseas dejar de seguir a este usuario?')){
-                self.addClass('loading-small');
-                $.ajax({url: Routing.generate(appLocale + '_friendship_ajaxcancelfriend'),
-                    data: {
-                        user: userId,
-                        friendship: friendshipId
-                    }
-                }).then(function(response){
-                    if(!response.error) {
-                        if(!dontRefresh){
-                            window.location.reload();
-                        }else{
-                            self.parents(parentElement).remove();
-                        }
+
+            self.addClass('loading-small');
+            $.ajax({url: Routing.generate(appLocale + '_friendship_ajaxcancelfriend'),
+                data: {
+                    user: userId,
+                    friendship: friendshipId
+                }
+            }).then(function(response){
+                if(!response.error) {
+                    if(!dontRefresh){
+                        window.location.reload();
                     }else{
-                        error(response.error);
-                        self.removeClass('loading-small');
+                        self.parents(parentElement).remove();
                     }
-                }).fail(function(error){
-                    error(error.responseText);
+                }else{
+                    error(response.error);
                     self.removeClass('loading-small');
-                });
-            }
+                }
+            }).fail(function(error){
+                error(error.responseText);
+                self.removeClass('loading-small');
+            });
         });
     }
 };

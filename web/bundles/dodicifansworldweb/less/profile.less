@@ -801,26 +801,31 @@ section#personal-data {
 
 	.splash-container {
 		margin-right: @fixedWidth;
-		height: @height;
-		overflow: hidden;
 		position: relative;
 
-		img {
-			.size(100%, auto);
-			max-width: none;
-			max-height: none;
+		.container {
+			overflow: hidden;
+			height: @height;
 
-			@media screen and (max-width: 550px) {
-				height: 100% !important;
-				width: auto !important;
-			}
-			@media screen and (max-width: 625px) {
-				.size(auto, 100%);
-			}
-			@media screen and (min-width: 800px) {
-				.size(auto, 100%);
+			img {
+				.size(100%, auto);
+				max-width: none;
+				max-height: none;
+
+				@media screen and (max-width: 550px) {
+					height: 100% !important;
+					width: auto !important;
+				}
+				@media screen and (max-width: 625px) {
+					.size(auto, 100%);
+				}
+				@media screen and (min-width: 800px) {
+					.size(auto, 100%);
+				}
 			}
 		}
+
+
 
 		.btn-group.edit {
 			position: absolute;
@@ -836,6 +841,10 @@ section#personal-data {
 					background-position: 0;
 				}
 			}
+		}
+
+		.dropdown {
+			position: absolute;
 		}
 
 		.action-block {
@@ -872,12 +881,15 @@ section#personal-data {
 				}
 			}
 
-			button {
+			button:not(.dropdown-toggle), .dropdown {
 				position: absolute;
 				bottom: 19px;
 				right: 22px;
-				text-transform: uppercase;
 				font-weight: 600;
+			}
+
+			button:not(.dropdown-toggle) {
+				text-transform: uppercase;
 			}
 		}
 	}
