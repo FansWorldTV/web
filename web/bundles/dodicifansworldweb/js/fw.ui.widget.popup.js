@@ -845,10 +845,17 @@ $(document).ready(function () {
 
             // Get target window positioning
             var offset = $('nav .widget-bar').offset();
-            offset.top += $('nav .widget-bar').height() + 20;
+            offset.top += $('nav .widget-bar').height();
             //offset.top -= parseInt(($(that.element).height() + $(event.target).height() + 10), 10);
             offset.left -= parseInt(($(that.element).width() / 2) - ($('nav .widget-bar').width() / 2), 10);
 
+            var targetOffset = $(event.target).offset();
+            var arrowOffset = $(that.element).find('.arrow-up').offset();
+
+            $(that.element).find('.arrow-up').offset({
+                top: arrowOffset.top,
+                left: targetOffset.left
+            });
 
             // Set popup position
             $(that.element).offset({

@@ -32,7 +32,7 @@ nav .widget-bar {
 
 .widget-container {
   position: absolute;
-  border: 1px solid #24171a;
+  /*border: 1px solid #24171a;*/
   border-radius: 3px;
   height: 250px;
   width: 320px;
@@ -40,7 +40,7 @@ nav .widget-bar {
   /*margin-left: 50px;*/
   z-index: 1010;
   padding: 0px;
-  background-color: #fff;
+  background-color: transparent;
   /*top: 0px;*/
   /*left: 0px;*/
 }
@@ -79,21 +79,32 @@ nav .widget-bar {
 */
 
 .widget-container .arrow-up {
-  border-color: transparent transparent #000 #000;
+  border-color: transparent transparent #000 transparent;
   border-style:solid;
-  border-width:8px;
+  border-width:12px;
+  width:0;
+  height:0;
   position: relative;
   left: 50%;
   z-index: 99999;
   visibility: visible;
   opacity: 1;
   display: block;
-  color: #f00;
-  background-color: #f00;
-  width: 10px;
-  border: 1px solid black;
-  height: 10px;
 }
+.widget-container .arrow-up:after {
+  content:"";
+  border-color: transparent transparent #fff #fff;
+  border-style:solid;
+  border-width:8px;
+  width:0;
+  height:0;
+  position:absolute;
+  top:5px;
+  margin-left:-8px;
+  -webkit-transform:rotate(135deg);
+  z-index:-100;
+}
+
 .widget-container .widget-title {
   font-size: 16px;
   font-weight: 600;
@@ -125,6 +136,8 @@ nav .widget-bar {
   height: 100%;
   position:relative;
   border-radius:3px;
+  border: 1px solid #24171a;
+  background-color: #fff;
   overflow: hidden;
   overflow-y: hidden;
 }
