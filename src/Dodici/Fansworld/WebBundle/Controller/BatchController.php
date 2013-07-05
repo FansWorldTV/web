@@ -229,6 +229,7 @@ class BatchController extends SiteController
     {
         $request = $this->getRequest();
         $result = '';
+        $youtubeVideos = '';
         if ($request->getMethod() == 'POST') {
             $string = $request->get('string');
 
@@ -237,7 +238,7 @@ class BatchController extends SiteController
 
             $file = new \SplFileObject($archivo, 'rb');
             $file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY);
-            $file->setCsvControl(';', '"', '\\');
+            $file->setCsvControl(',', '"', '\\');
 
             foreach ($file as $exp) {
                 $result .= "-\n";
@@ -248,7 +249,7 @@ class BatchController extends SiteController
                 $birthday = null;
                 if ($date) {
                     $bdayxp = explode('/', $date);
-                    $birthday = $bdayxp[2] . '-' . $bdayxp[1] . '-' . $bdayxp[0];
+                    $birthday = '"'.$bdayxp[2] . '-' . $bdayxp[0] . '-' . $bdayxp[1].'"';
                 }
                 $result .= "  birthday: ".$birthday."\n";
                 $result .= "  nicknames: ".$exp[4]."\n";
@@ -278,16 +279,23 @@ class BatchController extends SiteController
                 }
 
                 if ($exp[12]) {
-                    $result .= "  youtube:\n";
                     $links = explode(",", $exp[12]);
                     foreach ($links as $link) {
-                        $result .= "    - ". $link."\n";
+                        $youtubeVideos .= "-\n";
+                        $youtubeVideos .= "  author: ".(rand(11,20))."\n";
+                        $youtubeVideos .= "  url: ". trim($link)."\n";
+                        $youtubeVideos .= "  videocategory: ".(rand(2,7))."\n";
+                        $youtubeVideos .= "  genre: 19\n";
+                        $youtubeVideos .= "  highlight: false\n";
+                        $youtubeVideos .= "  tagidols: \n";
+                        $youtubeVideos .= "    - ".($exp[0]+10000)."\n";
                     }
                 }
+
             }
         }
 
-        return new Response('<form action="" method="post"><textarea name="string"></textarea><input type="submit"></form><br><br><textarea>'.$result.'</textarea>');
+        return new Response('<form action="" method="post"><textarea name="string"></textarea><input type="submit"></form><br><br><textarea>'.$result.'</textarea><h1>Youtube</h1><textarea>'.$youtubeVideos.'</textarea>');
     }
 
     /**
@@ -298,6 +306,7 @@ class BatchController extends SiteController
     {
         $request = $this->getRequest();
         $result = '';
+        $youtubeVideos = '';
         if ($request->getMethod() == 'POST') {
             $string = $request->get('string');
 
@@ -322,18 +331,23 @@ class BatchController extends SiteController
                 foreach($xpc as $xc) $result .= "    ". $xc;
                 $result .= "\n";
 
-                if ($exp[8]) {
-                    $result .= "  youtube:\n";
-                    $links = explode(",", $exp[8]);
+                if ($exp[10]) {
+                    $links = explode(",", $exp[10]);
                     foreach ($links as $link) {
-                        $result .= "    - ". $link."\n";
+                        $youtubeVideos .= "-\n";
+                        $youtubeVideos .= "  author: ".(rand(11,20))."\n";
+                        $youtubeVideos .= "  url: ". trim($link)."\n";
+                        $youtubeVideos .= "  videocategory: ".(rand(2,7))."\n";
+                        $youtubeVideos .= "  genre: ".($exp[5]+10)."\n";
+                        $youtubeVideos .= "  highlight: false\n";
+                        $youtubeVideos .= "  tagteams: \n";
+                        $youtubeVideos .= "    - ".($exp[0]+10000)."\n";
                     }
                 }
-
             }
         }
 
-        return new Response('<form action="" method="post"><textarea name="string"></textarea><input type="submit"></form><br><br><textarea>'.$result.'</textarea>');
+        return new Response('<form action="" method="post"><textarea name="string"></textarea><input type="submit"></form><br><br><textarea>'.$result.'</textarea><h1>Youtube</h1><textarea>'.$youtubeVideos.'</textarea>');
     }
 
     //-------------------------------------------------------------------------------------------------------
@@ -346,6 +360,7 @@ class BatchController extends SiteController
     {
         $request = $this->getRequest();
         $result = '';
+        $youtubeVideos = '';
         if ($request->getMethod() == 'POST') {
             $string = $request->get('string');
 
@@ -363,15 +378,7 @@ class BatchController extends SiteController
                 $result .= "  id: ".($exp[0]+20000)."\n";
                 $result .= "  firstname: ".$exp[1]."\n";
                 $result .= "  lastname: ".$exp[2]."\n";
-                $date = $exp[3];
-                $birthday = null;
-                if ($date) {
-                    $bdayxp = explode('/', $date);
-                    if (count($bdayxp) == 3) {
-                        $birthday = $bdayxp[2] . '-' . $bdayxp[1] . '-' . $bdayxp[0];
-                        $result .= "  birthday: ".$birthday."\n";
-                    }
-                }
+                $result .= "  birthday: ".$exp[3]."\n";
                 $result .= "  nicknames: ".$exp[4]."\n";
 
                 if ($exp[5]) {
@@ -397,23 +404,38 @@ class BatchController extends SiteController
                     $result .= "  teams:\n";
                     $xpteams = explode("\n", $exp[6]);
                     foreach ($xpteams as $xpteam) {
-                        $result .= "      -\n";
                         if (intval($xpteam))
-                            $result .= "        id: ".(intval($xpteam)+20000)."\n";
+                            $result .= "      -\n"."        id: ".(intval($xpteam)+20000)."\n";
                         else
-                            $result .= "        name: $xpteam\n";
+                            if (strlen($xpteam) > 1) $result .= "      -\n"."        name: $xpteam\n";
 
-                        $result .= "        debut: false\n";
-                        $result .= "        actual: true\n";
-                        $result .= "        highlight: true\n";
-                        $result .= "        manager: false\n";
+                        if (intval($xpteam) || strlen($xpteam) > 1 ) {
+                            $result .= "        debut: false\n";
+                            $result .= "        actual: true\n";
+                            $result .= "        highlight: true\n";
+                            $result .= "        manager: false\n";
+                        }
+                    }
+                }
+
+                if ($exp[13]) {
+                    $links = explode(",", $exp[13]);
+                    foreach ($links as $link) {
+                        $youtubeVideos .= "-\n";
+                        $youtubeVideos .= "  author: ".(rand(11,20))."\n";
+                        $youtubeVideos .= "  url: ". trim($link)."\n";
+                        $youtubeVideos .= "  videocategory: ".(rand(2,7))."\n";
+                        $youtubeVideos .= "  genre: ".($genresxp[0]+20)."\n";
+                        $youtubeVideos .= "  highlight: false\n";
+                        $youtubeVideos .= "  tagidols: \n";
+                        $youtubeVideos .= "    - ".($exp[0]+20000)."\n";
                     }
                 }
 
             }
         }
 
-        return new Response('<form action="" method="post"><textarea name="string"></textarea><input type="submit"></form><br><br><textarea>'.$result.'</textarea>');
+        return new Response('<form action="" method="post"><textarea name="string"></textarea><input type="submit"></form><br><br><textarea>'.$result.'</textarea><h1>Youtube</h1><textarea>'.$youtubeVideos.'</textarea>');
     }
 
     /**
@@ -424,6 +446,7 @@ class BatchController extends SiteController
     {
         $request = $this->getRequest();
         $result = '';
+        $youtubeVideos = '';
         if ($request->getMethod() == 'POST') {
             $string = $request->get('string');
 
@@ -459,10 +482,24 @@ class BatchController extends SiteController
                 foreach($xpc as $xc) $result .= "    ". $xc;
                 $result .= "\n";
 
+                if ($exp[9]) {
+                    $links = explode(",", $exp[9]);
+                    foreach ($links as $link) {
+                        $youtubeVideos .= "-\n";
+                        $youtubeVideos .= "  author: ".(rand(11,20))."\n";
+                        $youtubeVideos .= "  url: ". trim($link)."\n";
+                        $youtubeVideos .= "  videocategory: ".(rand(2,7))."\n";
+                        $youtubeVideos .= "  genre: ".($genresxp[0]+20)."\n";
+                        $youtubeVideos .= "  highlight: false\n";
+                        $youtubeVideos .= "  tagteams: \n";
+                        $youtubeVideos .= "    - ".($exp[0]+20000)."\n";
+                    }
+                }
+
             }
         }
 
-        return new Response('<form action="" method="post"><textarea name="string"></textarea><input type="submit"></form><br><br><textarea>'.$result.'</textarea>');
+        return new Response('<form action="" method="post"><textarea name="string"></textarea><input type="submit"></form><br><br><textarea>'.$result.'</textarea><h1>Youtube</h1><textarea>'.$youtubeVideos.'</textarea>');
     }
 
     /**
@@ -537,29 +574,28 @@ class BatchController extends SiteController
                 $createAt = null;
                 if ($exp[5]) {
                     $cadayxp = explode('/', $exp[5]);
-                    $createAt = $cadayxp[2] . '-' . $cadayxp[1] . '-' . $cadayxp[0];
+                    $createAt = $cadayxp[2] . '-' . $cadayxp[0] . '-' . $cadayxp[1];
                 }
                 $result .= "  createdAt: ".$createAt."\n";
-
                 $result .= "  title: ".$exp[6]."\n";
 
 
                 if ($exp[7]) {
                     $result .= "  tagidols: \n";
                     $tagidolsExp = explode(",", $exp[7]+20000);
-                    foreach($tagidolsExp  as $idolId) $result .= "    - ". $idolId."\n";
+                    foreach($tagidolsExp  as $idolId) $result .= "    - ".trim($idolId)."\n";
                 }
 
                 if ($exp[8]) {
                     $result .= "  tagteams: \n";
                     $tagteamsExp = explode(",", $exp[8]+20000);
-                    foreach($tagteamsExp  as $teamId) $result .= "    - ". $teamId."\n";
+                    foreach($tagteamsExp  as $teamId) $result .= "    - ".trim($teamId)."\n";
                 }
 
                 if ($exp[9]) {
                     $result .= "  tagtexts: \n";
                     $tagtextExp = explode(",", $exp[9]);
-                    foreach($tagtextExp  as $text) $result .= "    - ". $text."\n";
+                    foreach($tagtextExp  as $text) if (strlen($text > 1)) $result .= "    - ".trim($text)."\n";
                 }
 
                 if ($exp[10]) {
@@ -628,32 +664,34 @@ class BatchController extends SiteController
                     if ($exp[3]) {
                         $teamPlayer = explode("\n", $exp[3]);
                         foreach ($teamPlayer as $team) {
-                            $result .= "      -\n";
                             if (intval($team))
-                                $result .= "        id: ".(intval($team))."\n";
+                                $result .= "      -\n"."        id: ".(intval($team))."\n";
                             else
-                                $result .= "        name: $team\n";
+                                if (strlen($team) > 1 ) $result .= "      -\n"."        name: $team\n";
 
-                            $result .= "        debut: false\n";
-                            $result .= "        actual: true\n";
-                            $result .= "        highlight: true\n";
-                            $result .= "        manager: false\n";
+                            if (intval($team) || strlen($team) > 1 ) {
+                                $result .= "        debut: false\n";
+                                $result .= "        actual: true\n";
+                                $result .= "        highlight: true\n";
+                                $result .= "        manager: false\n";
+                            }
                         }
                     }
 
                     if ($exp[5]) {
                         $teamDt = explode("\n", $exp[5]);
                         foreach ($teamDt as $team) {
-                            $result .= "      -\n";
                             if (intval($team))
-                                $result .= "        id: ".(intval($team))."\n";
+                                $result .= "      -\n"."        id: ".(intval($team))."\n";
                             else
-                                $result .= "        name: $team\n";
+                                if (strlen($team) > 1 )  $result .= "      -\n"."        name: $team\n";
 
-                            $result .= "        debut: false\n";
-                            $result .= "        actual: true\n";
-                            $result .= "        highlight: true\n";
-                            $result .= "        manager: true\n";
+                            if (intval($team) || strlen($team) > 1 ) {
+                                $result .= "        debut: false\n";
+                                $result .= "        actual: true\n";
+                                $result .= "        highlight: true\n";
+                                $result .= "        manager: true\n";
+                            }
                         }
                     }
 
@@ -672,6 +710,7 @@ class BatchController extends SiteController
     {
         $request = $this->getRequest();
         $result = '';
+        $youtubeVideos = '';
         if ($request->getMethod() == 'POST') {
             $string = $request->get('string');
 
@@ -722,10 +761,16 @@ class BatchController extends SiteController
                 }
 
                 if ($exp[12]) {
-                    $result .= "  youtube:\n";
                     $links = explode(",", $exp[12]);
                     foreach ($links as $link) {
-                        $result .= "    - ". $link."\n";
+                        $youtubeVideos .= "-\n";
+                        $youtubeVideos .= "  author: ".(rand(11,20))."\n";
+                        $youtubeVideos .= "  url: ". trim($link)."\n";
+                        $youtubeVideos .= "  videocategory: ".(rand(2,7))."\n";
+                        $youtubeVideos .= "  genre: 11\n";
+                        $youtubeVideos .= "  highlight: false\n";
+                        $youtubeVideos .= "  tagidols: \n";
+                        $youtubeVideos .= "    - ".$exp[0]."\n";
                     }
                 }
 
@@ -738,7 +783,7 @@ class BatchController extends SiteController
 
         }
 
-        return new Response('<form action="" method="post"><textarea name="string"></textarea><input type="submit"></form><br><br><textarea>'.$result.'</textarea>');
+        return new Response('<form action="" method="post"><textarea name="string"></textarea><input type="submit"></form><br><br><h1>Info</h1><textarea>'.$result.'</textarea><h1>Videos Youtube</h1><textarea>'.$youtubeVideos.'</textarea>');
     }
 
      /**
@@ -771,29 +816,28 @@ class BatchController extends SiteController
                 $createAt = null;
                 if ($exp[5]) {
                     $cadayxp = explode('/', $exp[5]);
-                    $createAt = $cadayxp[2] . '-' . $cadayxp[1] . '-' . $cadayxp[0];
+                    $createAt = $cadayxp[2] . '-' . $cadayxp[0] . '-' . $cadayxp[1];
                 }
                 $result .= "  createdAt: ".$createAt."\n";
 
                 $result .= "  title: ".$exp[6]."\n";
 
-
                 if ($exp[7]) {
                     $result .= "  tagidols: \n";
                     $tagidolsExp = explode(",", $exp[7]);
-                    foreach($tagidolsExp  as $idolId) $result .= "    - ". $idolId."\n";
+                    foreach($tagidolsExp  as $idolId) $result .= "    - ".trim($idolId)."\n";
                 }
 
                 if ($exp[8]) {
                     $result .= "  tagteams: \n";
                     $tagteamsExp = explode(",", $exp[8]);
-                    foreach($tagteamsExp  as $teamId) $result .= "    - ". $teamId."\n";
+                    foreach($tagteamsExp  as $teamId) $result .= "    - ".trim($teamId)."\n";
                 }
 
                 if ($exp[9]) {
                     $result .= "  tagtexts: \n";
                     $tagtextExp = explode(",", $exp[9]);
-                    foreach($tagtextExp  as $text) $result .= "    - ". $text."\n";
+                    foreach($tagtextExp  as $text) if (strlen($text) > 1) $result .= "    - ".trim($text)."\n";
                 }
 
                 if ($exp[10]) {
