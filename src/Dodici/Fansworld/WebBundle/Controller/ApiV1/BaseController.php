@@ -183,6 +183,14 @@ class BaseController extends SiteController
         if (!in_array('fanFollowCount', $excludefields))
             $r['fanFollowCount'] =  $this->getRepository('Friendship')->countBy(array('author' => $user->getId(), 'active' => true));
 
+        if (!in_array('role', $excludefields)) {
+            $role = 'user';
+            if ($user->getType() == User::TYPE_STAFF) $role = 'staff';
+            if ($user->hasRole('ROLE_ADMIN')) $role = 'admin';
+            if ($user->hasRole('ROLE_SUPER_ADMIN')) $role = 'super_admin';
+            $r['role'] = $role;
+        }
+
         return $r;
     }
 

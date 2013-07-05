@@ -129,6 +129,7 @@ class UserController extends BaseController
                 foreach ($targetids as $targetid) {
                     $target = $this->getRepository('User')->find($targetid);
                     if (!$target) throw new HttpException(404, 'Target user not found');
+                    if ($target->getType() == User::TYPE_STAFF) throw new HttpException(400, 'Target is a staff user');
 
                     if ($action == 'add') {
                         $this->get('friender')->friend($target, null, $user);
