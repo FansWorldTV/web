@@ -75,19 +75,21 @@ class LoadIdolData extends AbstractFixture implements FixtureInterface, Containe
 	        	/* TEAMS */
 	        	if (isset($ct['teams']) && $ct['teams']) {
 	        		foreach ($ct['teams'] as $cy) {
-		        		$career = new IdolCareer();
+                        if ($this->hasReference('team-'.$cy['id'])) {
+                            $career = new IdolCareer();
 
-	        			if (isset($cy['id'])) {
-		        			$team = $manager->merge($this->getReference('team-'.$cy['id']));
-		        			$career->setTeam($team);
-		        		} elseif (isset($cy['name'])) {
-		        			$career->setTeamname($cy['name']);
-		        		}
-		        		$career->setManager($cy['manager']);
-		        		$career->setDebut($cy['debut']);
-		        		$career->setActual($cy['actual']);
-		        		$career->setHighlight($cy['highlight']);
-		        		$idol->addIdolCareer($career);
+                            if (isset($cy['id'])) {
+                                $team = $manager->merge($this->getReference('team-'.$cy['id']));
+                                $career->setTeam($team);
+                            } elseif (isset($cy['name'])) {
+                                $career->setTeamname($cy['name']);
+                            }
+                            $career->setManager($cy['manager']);
+                            $career->setDebut($cy['debut']);
+                            $career->setActual($cy['actual']);
+                            $career->setHighlight($cy['highlight']);
+                            $idol->addIdolCareer($career);
+                        }
 	        		}
 	        	}
 	        	/* END TEAMS */
