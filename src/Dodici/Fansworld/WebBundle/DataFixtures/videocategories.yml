@@ -13,3 +13,18 @@
 -
   id: 6
   title: {es: Entrevistas, en: Interviews}
+-
+  id: 7
+  title: {es: Desafíos, en: Tips and tricks}
+-
+  id: 8
+  title: {es: Eco tips, en: Eco tips}
+-
+  id: 9
+  title: {es: Detrás de escena, en: Backstage}
+-
+  id: 10
+  title: {es: FW Sessions, en: FW Sessions}
+-
+  id: 11
+  title: {es: Vivo, en: Live}

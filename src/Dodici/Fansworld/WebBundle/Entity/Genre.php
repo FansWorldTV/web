@@ -161,6 +161,7 @@ class Genre implements Translatable
      */
     public function addChildren(\Dodici\Fansworld\WebBundle\Entity\Genre $genre)
     {
+        $genre->setParent($this);
         $this->children[] = $genre;
     }
 

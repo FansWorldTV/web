@@ -234,6 +234,8 @@ class FixtureCsvToYaml
             foreach ($xp as $x) {
                 $yml .= "    ".utf8_encode($x)."\n";
             }
+        } else {
+            $yml .= "  content: ~\n";
         }
         
         return $yml;

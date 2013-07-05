@@ -23,30 +23,30 @@ class LoadVideoData extends AbstractFixture implements FixtureInterface, Contain
 {
 	const YAML_PATH = '../videos.yml';
 	const IMAGE_FILE_PATH = '../Files/videos';
-	
+
 	private $container;
 
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
     }
-	
+
 	function load(ObjectManager $manager)
     {
     	if (file_exists(__DIR__.'/'.self::YAML_PATH)) {
 	    	$loader = Yaml::parse(__DIR__.'/'.self::YAML_PATH);
-	    	
+
 	    	set_time_limit(36000);
-	    	
+
 	    	$uploader = $this->container->get('video.uploader');
 	    	$toprocess = array();
 	    	$cnt = count($loader);
 	    	$x = 0;
-	    	
+
 	        foreach ($loader as $ct) {
 	            $x++;
 	            echo "Creating video $x / $cnt ... ";
-	            
+
 	            try {
     	            $user = null;
     	            if (isset($ct['author'])) {
@@ -59,26 +59,26 @@ class LoadVideoData extends AbstractFixture implements FixtureInterface, Contain
     	        	}
     	        	if ($user) $video->setAuthor($user);
     	        	echo 'a';
-    	        	
+
     	        	$videocategory = $manager->merge($this->getReference('videocategory-'.$ct['videocategory']));
     	        	$video->setVideocategory($videocategory);
     	        	if (isset($ct['title']) && $ct['title']) $video->setTitle($ct['title']);
     	        	if (isset($ct['content']) && $ct['content']) $video->setContent($ct['content']);
-    	        	
+
     	        	if (isset($ct['createdAt']) && $ct['createdAt']) {
     	        	    $date = \DateTime::createFromFormat('Y-m-d', $ct['createdAt']);
     	        	    if ($date) $video->setCreatedAt($date);
     	        	}
     	        	echo 'b';
-    	        	
+
     	        	$video->setPrivacy(Privacy::EVERYONE);
     	        	$video->setHighlight($ct['highlight']);
-    	        	
+
     	        	if (isset($ct['stream']) && $ct['stream']) {
     	        	    $video->setStream($ct['stream']);
     	        	    $video->setActive(false);
     	        	}
-    	        	
+
     	            if (isset($ct['splash']) && $ct['splash']) {
     		        	$imagepath = __DIR__.'/'.self::IMAGE_FILE_PATH.'/'.$ct['splash'];
     		        	if (is_file($imagepath)) {
@@ -88,28 +88,33 @@ class LoadVideoData extends AbstractFixture implements FixtureInterface, Contain
     	                    $media->setContext('default');
     	                    $media->setProviderName('sonata.media.provider.image');
     	                    $mediaManager->save($media);
-    	                    
+
     	                    $video->setSplash($media);
     		        	}
     		        }
-    	            
+
+                    if (isset($ct['genre']) && $ct['genre']) {
+                        $genre = $manager->merge($this->getReference('genre-'.$ct['genre']));
+                        $video->setGenre($genre);
+                    }
+
     		        $manager->persist($video);
-    		        
+
     		        if (isset($ct['home']) && $ct['home']) {
     		            $hv = new HomeVideo();
     		            $hv->setVideo($video);
     		            $hv->setVideoCategory($videocategory);
     		            $manager->persist($hv);
     		        }
-    		        
+
     		        echo 'c';
-    		        
+
     		        if ($user) {
         		        if (isset($ct['tagtexts']) && $ct['tagtexts']) {
         		            foreach ($ct['tagtexts'] as $tid) {
         		                echo 'd';
         		                echo '*'.$tid.'*';
-        		                
+
         		                $slug = GedmoUrlizer::urlize($tid);
         		                if ($this->hasReference('tag-'.$slug)) {
         		                    $tag = $manager->merge($this->getReference('tag-'.$slug));
@@ -124,46 +129,46 @@ class LoadVideoData extends AbstractFixture implements FixtureInterface, Contain
         			    		$hastag->setAuthor($user);
         			    		$hastag->setTag($tag);
         			    		$hastag->setVideo($video);
-        			    		
+
         			    		$video->addHasTag($hastag);
         			    		$manager->persist($video);
         			    		echo 'f';
         		            }
         		        }
-        		        
+
     		            if (isset($ct['tagteams']) && $ct['tagteams']) {
         		            foreach ($ct['tagteams'] as $tid) {
         		                echo 'g';
         		                echo '*'.$tid.'*';
-        		                
+
         		                if ($this->hasReference('team-'.$tid)) {
             		                $team = $manager->merge($this->getReference('team-'.$tid));
-            		                
+
             		                $hasteam = new HasTeam();
                 		    		$hasteam->setAuthor($user);
                 		    		$hasteam->setTeam($team);
                 		    		$hasteam->setVideo($video);
-                		    		
+
                 		    		$video->addHasTeam($hasteam);
                 		    		$manager->persist($video);
                 		    		echo 'h';
         		                }
         		            }
         		        }
-        		        
+
     		            if (isset($ct['tagidols']) && $ct['tagidols']) {
     		                foreach ($ct['tagidols'] as $tid) {
         		                echo 'i';
         		                echo '*'.$tid.'*';
-        		                
+
         		                if ($this->hasReference('idol-'.$tid)) {
         		                    $idol = $manager->merge($this->getReference('idol-'.$tid));
-            		                
+
             		                $hasidol = new HasIdol();
                 		    		$hasidol->setAuthor($user);
                 		    		$hasidol->setIdol($idol);
                 		    		$hasidol->setVideo($video);
-                		    		
+
                 		    		$video->addHasIdol($hasidol);
                 		    		$manager->persist($video);
                 		    		echo 'j';
@@ -171,7 +176,7 @@ class LoadVideoData extends AbstractFixture implements FixtureInterface, Contain
         		            }
         		        }
     		        }
-    		        
+
     		        if ($video->getStream()) $toprocess[] = $video;
     		        echo 'k';
 	            } catch(\Exception $e) {
@@ -180,9 +185,9 @@ class LoadVideoData extends AbstractFixture implements FixtureInterface, Contain
 	            echo "\n";
 	            $manager->flush();
 	        }
-	        
-	        
-	        
+
+
+
 	        $x = 0;
 	        $cnt = count($toprocess);
 	        /*
@@ -196,7 +201,7 @@ class LoadVideoData extends AbstractFixture implements FixtureInterface, Contain
         	throw new \Exception('Fixture file does not exist');
         }
     }
-    
+
 	public function getOrder()
     {
         return 10; // the order in which fixtures will be loaded
