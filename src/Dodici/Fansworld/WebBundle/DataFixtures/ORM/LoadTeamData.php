@@ -10,6 +10,7 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Yaml\Yaml;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Dodici\Fansworld\WebBundle\Entity\HasGenres;
 
 class LoadTeamData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
 {
@@ -32,6 +33,8 @@ class LoadTeamData extends AbstractFixture implements FixtureInterface, Containe
 
 	        foreach ($loader as $ct) {
 	        	$team = new Team();
+
+	        	echo $ct['id'] . ' ... ';
 
 	        	if (isset($ct['teamcategory']) && $ct['teamcategory']) {
 	        	    $teamcategory = $manager->merge($this->getReference('teamcategory-'.$ct['teamcategory']));
@@ -56,17 +59,27 @@ class LoadTeamData extends AbstractFixture implements FixtureInterface, Containe
 	        	}
 	        	$team->setContent($ct['content']);
 	        	if (isset($ct['country'])) {
-	        		$country = $manager->merge($this->getReference('country-'.$ct['country']));
-	        		$team->setCountry($country);
+	        		if ($this->hasReference('country-'.$ct['country'])) {
+		        		$country = $manager->merge($this->getReference('country-'.$ct['country']));
+		        		$team->setCountry($country);
+	        		}
 	        	}
 
                 if (isset($ct['genre']) && $ct['genre']) {
                     $genres = $ct['genre'];
+
                     if (!is_array($genres)) $genres = array($genres);
                     foreach ($genres as $genreid) {
-                    	$genre = $manager->merge($this->getReference('genre-'.$genreid));
-						//juan
-                    	$team->addGenre($genre);
+                    	if ($genreid) {
+                    		if ($this->hasReference('genre-'.$genreid)) {
+	                    		$genre = $manager->merge($this->getReference('genre-'.$genreid));
+
+				                $hasgenre = new HasGenres();
+				                $hasgenre->setTeam($team);
+				                $hasgenre->setGenre($genre);
+		                		$team->addHasGenre($hasgenre);
+	                		}
+                		}
                 	}
                 }
 
@@ -107,6 +120,7 @@ class LoadTeamData extends AbstractFixture implements FixtureInterface, Containe
 	        }
 
 	        $manager->flush();
+	        echo "\n";
         } else {
         	throw new \Exception('Fixture file does not exist');
         }
