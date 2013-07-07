@@ -39,7 +39,7 @@
 // EventEmitter is taken from packery but can be download from https://github.com/Wolfy87/EventEmitter
 $(document).ready(function () {
     "use strict";
-    window.fansWorldEvents = new EventEmitter();
+    window.fansWorldEvents = window.fansWorldEvents || new EventEmitter();
 });
 
 $(document).ready(function () {
