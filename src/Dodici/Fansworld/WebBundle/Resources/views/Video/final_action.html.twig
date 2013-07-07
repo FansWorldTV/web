@@ -62,12 +62,14 @@
         <button class="btn-fb" href="https://www.facebook.com/sharer/sharer.php?u={{ shareUrl }}" data-share-content></button>
         <button class="btn-gplus" href="https://plus.google.com/share?url={{ shareUrl }}" data-share-content></button>
         <button class="btn-upload-video" data-cta-upload><i class="icon-circle-arrow-up icon-white"></i>SUBIR VIDEO</button>
+        <button class="btn-invite" data-invite-modal>INVITAR AMIGOS</button>
 
         <script src="{{ asset('bundles/dodicifansworldweb/js/elastislide/jquery.elastislide.js') }}" type="text/javascript"></script>
         <script type="text/javascript">
             $( '#idols_carousel' ).elastislide();$( '#teams_carousel' ).elastislide();
             $('[data-nextvideo]').click(function () {
                 var url = $("[data-grid-related] .video:first a").attr('href');
+
                 if (url) {window.location.href = url}
             });
             $('[data-cta-upload]').click(function () {
