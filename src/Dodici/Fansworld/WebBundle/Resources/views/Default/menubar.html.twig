@@ -14,10 +14,10 @@
                 <li {% if sectionSelected == 'profiles' %} class="active" {% endif %}>
                     <a href="{{ path('profiles_index') }}">Perfiles</a>
                 </li>
-                {#<li {% if sectionSelected == 'tv' %} class="active" {% endif %}>
-                    <a href="{{ path('teve_home') }}">Canales</a>
+                <li {% if sectionSelected == 'home' %} class="active" {% endif %}>
+                    <a href="{{ path('homepage') }}">Canales</a>
                 </li>
-                <li {% if sectionSelected == 'idols' %} class="active" {% endif %}>
+                {#<li {% if sectionSelected == 'idols' %} class="active" {% endif %}>
                     <a href="{{ path('idol_home') }}">Idolos</a>
                 </li>
                 <li {% if sectionSelected == 'teams' %} class="active" {% endif %}>
