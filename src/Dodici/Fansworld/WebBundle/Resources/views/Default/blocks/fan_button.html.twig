@@ -27,16 +27,23 @@
 
 {% if fship is defined %}
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and (fship) %}
-        <div class="addFriend">
-            <button class="btn {{ buttonSize }} btn_{{ btnType }} remove" data-{{ fType }}ship-remove="true" data-{{ fType }}-id="{{ entity.id }}">
+        <span class="dropdown i-am-fan">
+            <button class="btn dropdown-toggle" role="button" data-toggle="dropdown" >Ya soy fan
+                <icon class="caret"></icon>
                 <div class="spinner ten-pixels hidden"><div class="mask"></div></div>
-                {% if fship.active is not defined or fship.active %}
-                    {{ 'remove_idol'|trans }}
-                {% else %}
-                    cancelar solicitud
-                {% endif %}
             </button>
-        </div>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="drop4">
+                <li>
+                    {% if fType == 'user' %}
+                        <a tabindex="-1" href="#" class="btn_friendship remove" data-{{ fType }}ship-remove="true" data-{{ fType }}-id="{{ entity.id }}">Dejar de ser fan</a>
+                    {% elseif fType == 'idol' %}
+                        <a tabindex="-1" href="#" class="btn_idolship remove" data-{{ fType }}ship-remove="true" data-{{ fType }}-id="{{ entity.id }}">Dejar de ser fan</a>
+                    {% elseif fType == 'team' %}
+                        <a tabindex="-1" href="#" class="btn_teamship remove" data-{{ fType }}ship-remove="true" data-{{ fType }}-id="{{ entity.id }}">Dejar de ser fan</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </span>
     {% else %}
         {% if app.user != entity %}
             <div class="addFriend"  data-add-fan>
@@ -45,3 +52,5 @@
         {% endif %}
     {% endif %}
 {% endif %}
+
+
