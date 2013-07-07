@@ -36,7 +36,7 @@
 // EventEmitter is taken from packery but can be download from https://github.com/Wolfy87/EventEmitter
 $(document).ready(function () {
     "use strict";
-    window.fansWorldEvents = new EventEmitter();
+    window.fansWorldEvents = window.fansWorldEvents || new EventEmitter();
 });
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // NOTIFICATIONS API:                                                                                                        //
@@ -739,6 +739,9 @@ $(document).ready(function () {
                     }
                 }
             });
+            window.fansWorldEvents.addListener('fwHeaderToolBar-button-click', function(button, event) {
+                //console.log(button)
+            });
             // Bind close button
             $('.close-share').on("click", function(event) {
                 that.popOut(event);
@@ -793,10 +796,13 @@ $(document).ready(function () {
         popIn: function(event) {
             var that = this;
             //that.setPosition(event.target);
+            event.stopPropagation();
+            event.preventDefault();
             $(that.element).animate({
                 opacity: 1
             });
             that.options.isPoped = true;
+            that.checkBounds(true);
         },
         popOut: function(event) {
             var that = this;
@@ -811,13 +817,21 @@ $(document).ready(function () {
         },
         checkBounds: function(check) {
             var that = this;
+            var offset = $(that.element).offset();
+            var height = $(that.element).height();
+            var width = $(that.element).width();
+
             if(check) {
                 $("body").on('click', function(event) {
-                    if (event.target.id === "widget-popup" || $(event.target).parents("#widget-popup").size()) {
-                        //alert("Inside div");
+                    console.log(event.target.classList.contains('btn-widget'))
+                    if((event.pageY >= offset.top && event.pageY <= offset.top + height) && (event.pageX >= offset.left && event.pageX <= offset.left + width)){
                     } else {
-                        that.popOut(event);
-                        $(this).off();
+                        if(that.options.isPoped && !event.target.classList.contains('btn-widget')) {
+                            // TODO: buscar un mejor nombre para el boton asociado al evento
+                            $(that.options.target).removeClass('active');               
+                            $(this).off();
+                            that.popOut(event);                            
+                        }                            
                     }
                 });
             } else {
@@ -865,15 +879,12 @@ $(document).ready(function () {
             });    
             // Toggle visibility
             if (!that.options.isPoped) {
-                $(that.element).find('.widget-title').css('color', '#0f0');            
+                $(that.element).find('.widget-title').css('color', '#0f0');
                 that.popIn(event);
             }
             else {
-                $(that.element).find('.widget-title').css('color', '#f00');             
+                $(that.element).find('.widget-title').css('color', '#f00');
             }
-            /*else {
-                that.popOut(event);
-            }*/
         }
     };
     // A really lightweight plugin wrapper around the constructor,
@@ -1055,7 +1066,7 @@ $(document).ready(function () {
             that.options.header = document.querySelector('nav .widget-bar');
             that.options.buttons.forEach(function(element, index, array) {
                 console.log("a[" + index + "] = " + element);
-                element.node = that.makeButton(parseInt((Math.random()*0x10), 10), element.name, element.icon);
+                element.node = that.makeButton(that.guidGenerator(), element.name, element.icon);
                 that.options.header.insertBefore(element.node, that.options.header.firstChild);
             });
             fansworld.notificacion.addListener('ongettotal', function(response){
@@ -1090,6 +1101,7 @@ $(document).ready(function () {
                 //$('.widget-container').data('fwWidget').toggle(e); // To activate Notifications widget
                 event.target = button;
                 $('.widget-container').data('fwActivityWidget').toggle(event);
+                window.fansWorldEvents.emitEvent('fwHeaderToolBar-button-click', [this, event]);
             });
             return button;
         },
@@ -1106,25 +1118,25 @@ $(document).ready(function () {
             $(that.options.buttons[0].node).find('#id').effect("highlight", {color: "#a0c882"}, 2000);
         },
         guidGenerator: function() {
-            var s = [];
+            var stack = [];
             var itoh = '0123456789ABCDEF';
             var i = 0;
             // Make array of random hex digits. The UUID only has 32 digits in it, but we
             // allocate an extra items to make room for the '-'s we'll be inserting.
             for (i = 0; i < 36; i += 1) {
-                s[i] = Math.floor(Math.random()*0x10);
+                stack[i] = Math.floor(Math.random()*0x10);
             }
             // Conform to RFC-4122, section 4.4
-            s[14] = 4;  // Set 4 high bits of time_high field to version
-            s[19] = (s[19] && 0x3) || 0x8;  // Specify 2 high bits of clock sequence
+            stack[14] = 4;  // Set 4 high bits of time_high field to version
+            stack[19] = (stack[19] && 0x3) || 0x8;  // Specify 2 high bits of clock sequence
             // Convert to hex chars
             for (i = 0; i < 36; i += 1) {
-                s[i] = itoh[s[i]];
+                stack[i] = itoh[stack[i]];
             }
             // Insert '-'s
-            s[8] = s[13] = s[18] = s[23] = '-';
+            stack[8] = stack[13] = stack[18] = stack[23] = '-';
 
-            return s.join('');
+            return stack.join('');
         },
         getVersion: function() {
 
@@ -1151,28 +1163,29 @@ $(document).ready(function () {
 $(document).ready(function () {
     "use strict";
     if (window.isLoggedIn) {
-        // Init Notifications plugin
+        window.fansWorldEvents = window.fansWorldEvents || new EventEmitter();
+        // Init Notifications core plugin
         window.fansworld = window.fansworld || {};
         window.fansworld.notificacion = new window.NOTIFICACION();
-        // Init Activity plugin
+        // Init Activity core plugin
         window.fansworld = window.fansworld || {};
         window.fansworld.activity = new window.ACTIVITY(); 
-        $('footer').fwFooterNews({
-            name: 'Actividad',
-            title: 'Actividad reciente',
-            id: 'act-reciente'
-        });
+
+        //var widgetTemplate = document.querySelector('.widget-container').cloneNode(true);
+        //var fragment = document.createDocumentFragment();
+        //fragment.appendChild(widgetTemplate);
+
+        //$('header').append($(fragment));
+
         $('.widget-container').fwActivityWidget({
             title: "Actividad Reciente"
         });
-
         $('header:first').fwHeaderToolBar({
             name: 'Actividad',
             title: 'Actividad reciente',
             id: 'head-act-reciente',
             buttons: [{name: 'video', icon: 'icon-film'}, {name: 'activity', icon: 'icon-list'}, {name: 'photos', icon: 'icon-camera'}, {name: 'profile', icon: 'icon-user'}]
         });
-
         $('#btn-widget-video').on('click', function(event){
             console.log("widget-video")
         });
