@@ -849,26 +849,27 @@ $(document).ready(function () {
             //offset.top -= parseInt(($(that.element).height() + $(event.target).height() + 10), 10);
             offset.left -= parseInt(($(that.element).width() / 2) - ($('nav .widget-bar').width() / 2), 10);
 
-            var targetOffset = $(event.target).offset();
-            var arrowOffset = $(that.element).find('.arrow-up').offset();
 
-            $(that.element).find('.arrow-up').offset({
-                top: arrowOffset.top,
-                left: targetOffset.left
-            });
 
             // Set popup position
             $(that.element).offset({
                 top: offset.top,
                 left: offset.left
             });
+            var targetOffset = $(event.target).offset();
+            var arrowOffset = $(that.element).find('.arrow-up').offset();
+
+            $(that.element).find('.arrow-up').offset({
+                top: arrowOffset.top,
+                left: targetOffset.left
+            });    
             // Toggle visibility
             if (!that.options.isPoped) {
+                $(that.element).find('.widget-title').css('color', '#0f0');            
                 that.popIn(event);
             }
             else {
-                console.log("mover flecha")
-                $(that.element).find('.widget-title').css('color', '#f00');
+                $(that.element).find('.widget-title').css('color', '#f00');             
             }
             /*else {
                 that.popOut(event);
@@ -1021,6 +1022,9 @@ $(document).ready(function () {
     };
 });
 
+////////////////////////////////////////////////////////////////////////////////
+// FansWorld header toolbar                                                   //
+////////////////////////////////////////////////////////////////////////////////
 $(document).ready(function () {
     "use strict";
     // Create the defaults once
@@ -1098,10 +1102,8 @@ $(document).ready(function () {
         },
         updateLabel: function(id, message) {
             var that = this;
-            /*
             $(that.options.buttons[0].node).find('#id').html(message);
             $(that.options.buttons[0].node).find('#id').effect("highlight", {color: "#a0c882"}, 2000);
-            */
         },
         guidGenerator: function() {
             var s = [];
