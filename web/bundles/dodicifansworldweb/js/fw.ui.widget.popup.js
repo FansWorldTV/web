@@ -108,9 +108,9 @@ $(document).ready(function () {
             // Listen for Meteor messages
             this.join();
             // Get total unreaded notifications
-            /*this.getTotal();*/
+            this.getTotal();
             // Get a limited set of unreaded notifications to populate activity widget
-            //this.getNotifications();
+            this.getNotifications();
         }
         NOTIFICATION.prototype.join = function() {
             var that = this;
@@ -1256,7 +1256,7 @@ $(document).ready(function () {
 
         $('header').append($(fragment).clone());
         $('header').append($(fragment).clone());
-        
+
         $('.widget-container:eq(0)').fwActivityWidget({
             title: "Actividad"
         });
