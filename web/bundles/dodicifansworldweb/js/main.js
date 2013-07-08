@@ -122,7 +122,7 @@ var site = {
          */
 
         // Invite modal popup
-        $(".btn[data-invite-modal]").modalPopup({
+        $("[data-invite-modal]").modalPopup({
             'href': Routing.generate(appLocale + '_modal_invite', {}),
             'width': 1000,
             'close': '.invite-modal .close-button'
@@ -203,6 +203,10 @@ var site = {
             });
         }
 
+        $('[data-subscribe-channel]').click(function () {
+            TV.prototype.subscribe($(this));
+        });
+
         //$('[data-modal-url]').modalPopup();
 
         $("body").delegate("a[data-modal-url]", "click", function(e) {
@@ -250,8 +254,6 @@ var site = {
                 }
             }
         });
-
-        window.hola = 0;
 
         $('.twitter-typeahead .tt-query').keyup(function(e) {
           if ( e.which == 13 ) {

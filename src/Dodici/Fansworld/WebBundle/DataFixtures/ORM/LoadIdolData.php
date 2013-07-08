@@ -12,6 +12,7 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Yaml\Yaml;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Dodici\Fansworld\WebBundle\Entity\HasGenres;
 
 class LoadIdolData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
 {
@@ -19,19 +20,19 @@ class LoadIdolData extends AbstractFixture implements FixtureInterface, Containe
 	const YAML_PATH = '../idols.yml';
 	const SPLASH_FILENAME = 'idolo_%d_portada';
 	const IMAGE_FILENAME = 'idolo_%d_avatar';
-	
+
 	private $container;
 
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
     }
-	
+
 	function load(ObjectManager $manager)
     {
     	if (file_exists(__DIR__.'/'.self::YAML_PATH)) {
 	    	$loader = Yaml::parse(__DIR__.'/'.self::YAML_PATH);
-	    	
+
 	        foreach ($loader as $ct) {
 	        	echo $ct['id'] . "\n";
 	            $idol = new Idol();
@@ -47,44 +48,63 @@ class LoadIdolData extends AbstractFixture implements FixtureInterface, Containe
 	        	$idol->setContent($ct['content']);
 	        	if (isset($ct['country'])) {
 	        	    if (is_numeric($ct['country'])) {
-    	        		$country = $manager->merge($this->getReference('country-'.$ct['country']));
-    	        		$idol->setCountry($country);
+    	        		if ($this->hasReference('country-'.$ct['country'])) {
+	    	        		$country = $manager->merge($this->getReference('country-'.$ct['country']));
+	    	        		$idol->setCountry($country);
+    	        		}
 	        	    } else {
 	        	        $idol->setOrigin($ct['country']);
 	        	    }
 	        	}
-	        	
+
+	        	if (isset($ct['genre']) && $ct['genre']) {
+                    $genres = $ct['genre'];
+                    if (!is_array($genres)) $genres = array($genres);
+                    foreach ($genres as $genreid) {
+                    	if ($this->hasReference('genre-'.$genreid)) {
+	                    	$genre = $manager->merge($this->getReference('genre-'.$genreid));
+
+			                $hasgenre = new HasGenres();
+			                $hasgenre->setIdol($idol);
+			                $hasgenre->setGenre($genre);
+	                		$idol->addHasGenre($hasgenre);
+                		}
+                	}
+                }
+
 	        	/* TEAMS */
 	        	if (isset($ct['teams']) && $ct['teams']) {
 	        		foreach ($ct['teams'] as $cy) {
-		        		$career = new IdolCareer();
-		        		
-	        			if (isset($cy['id'])) {
-		        			$team = $manager->merge($this->getReference('team-'.$cy['id']));
-		        			$career->setTeam($team);
-		        		} elseif (isset($cy['name'])) {
-		        			$career->setTeamname($cy['name']);
-		        		}
-		        		$career->setManager($cy['manager']);
-		        		$career->setDebut($cy['debut']);
-		        		$career->setActual($cy['actual']);
-		        		$career->setHighlight($cy['highlight']);
-		        		$idol->addIdolCareer($career);
+                        if ($this->hasReference('team-'.$cy['id'])) {
+                            $career = new IdolCareer();
+
+                            if (isset($cy['id'])) {
+                                $team = $manager->merge($this->getReference('team-'.$cy['id']));
+                                $career->setTeam($team);
+                            } elseif (isset($cy['name'])) {
+                                $career->setTeamname($cy['name']);
+                            }
+                            $career->setManager($cy['manager']);
+                            $career->setDebut($cy['debut']);
+                            $career->setActual($cy['actual']);
+                            $career->setHighlight($cy['highlight']);
+                            $idol->addIdolCareer($career);
+                        }
 	        		}
 	        	}
 	        	/* END TEAMS */
-	        	
+
 	        	/* IMAGES */
 	        	$image = null; $splash = null; $ireal = null; $sreal = null;
 	        	$path = __DIR__.'/'.self::IMAGE_FILE_PATH.'/';
 	        	$imagefn = sprintf(self::IMAGE_FILENAME, $ct['id']);
 	        	$splashfn = sprintf(self::SPLASH_FILENAME, $ct['id']);
-	        	
+
 	        	if (is_file($path . $imagefn . '.png')) $ireal = $path . $imagefn . '.png';
 	        	elseif (is_file($path . $imagefn . '.jpg')) $ireal = $path . $imagefn . '.jpg';
 	        	if (is_file($path . $splashfn . '.png')) $sreal = $path . $splashfn . '.png';
 	        	elseif (is_file($path . $splashfn . '.jpg')) $sreal = $path . $splashfn . '.jpg';
-	        	
+
 		        if ($ireal) {
 		        	$mediaManager = $this->container->get("sonata.media.manager.media");
 	                $media = new Media();
@@ -92,10 +112,10 @@ class LoadIdolData extends AbstractFixture implements FixtureInterface, Containe
 	                $media->setContext('default');
 	                $media->setProviderName('sonata.media.provider.image');
 	                $mediaManager->save($media);
-	                   
+
 	                $idol->setImage($media);
 		        }
-		        
+
 	        	if ($sreal) {
 		        	$mediaManager = $this->container->get("sonata.media.manager.media");
 	                $media = new Media();
@@ -103,22 +123,22 @@ class LoadIdolData extends AbstractFixture implements FixtureInterface, Containe
 	                $media->setContext('default');
 	                $media->setProviderName('sonata.media.provider.image');
 	                $mediaManager->save($media);
-	                   
+
 	                $idol->setSplash($media);
 		        }
 		        /* END IMAGES */
-		
+
 		        $manager->persist($idol);
 		        $this->addReference('idol-'.$ct['id'], $idol);
 		        $manager->flush();
 	        }
-	        
+
 	        $manager->flush();
         } else {
         	throw new \Exception('Fixture file does not exist');
         }
     }
-    
+
 	public function getOrder()
     {
         return 6; // the order in which fixtures will be loaded

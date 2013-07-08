@@ -28,6 +28,26 @@
 	margin: 15px auto;
 }
 
+.btn-invite {
+	background-color: @green;
+	color: white;
+	border: 0;
+	.border-radius(3px);
+	height: 26px;
+	padding-left: 13px;
+	padding-right: 13px;
+	font-weight: 500;
+	text-transform: uppercase;
+	float: left;
+	margin-top: 7px;
+	margin-left: 5px;
+	margin-right: 5px;
+
+	&:hover {
+		background-color: darken(@green, 10%);
+	}
+}
+
 .btn-upload-video {
     background-color: #FC6C00;
     color: white;
@@ -54,6 +74,50 @@
         background-color: #F98E00;
     }
 }
+
+.btn-widget {
+  background-color: transparent;
+  color: white;
+  font-size: 12px;
+  border: 1px solid transparent;
+  .border-radius(3px);
+  /*border-style: inset;*/
+  height: 28px;
+  max-width: 32px;
+  padding-left: 8px;
+  padding-bottom: 2px;
+  font-weight: 500;
+  text-transform: uppercase;
+  float: left;
+  margin-top: 7px;
+  margin-left: 1px;
+  margin-right: 5px;
+
+  i {
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 6px;
+    margin-top: 2px;
+  }
+  span.label {
+    position: relative;
+    z-index: 999;
+    top: -26px;
+    right: -10px;
+    float: right;
+  }
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    /*border: 1px solid @green;*/
+  }
+}
+
+.btn-widget.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 1px 1px rgba(255,255,255,1);
+}
+
+
 
 .btn.edit {
     i {
@@ -547,7 +611,6 @@
                         background-color: #B8DD1B;
                     }
                 }
-
                 .btn-upload-video.notlogged {
                     margin-top: 7px;
                     margin-left: 7px;

@@ -1,0 +1,251 @@
+-
+  id: 10367
+  title: Ford
+  foundedAt: 1903-01-01
+  nicknames: El Óvalo, La Raza Fuerte
+  twitter: ford
+  genre: 13
+  country: 69
+  content: |
+    Ford es una de las marcas que integra el selecto grupo de los denominados “Los cuatro grandes del automovilismo argentino”.  El Óvalo, como lo llaman sus fanáticos, es la marca más campeona del Turismo Carretera. Además, tiene una gran rivalidad con Chevrolet.
+    En total, Ford obtuvo 38 campeonatos desde 1939 y se llevó los dos primeros Campeonatos Argentinos de Velocidad en 1937 y 1938. Sus títulos los obtuvo con los modelos Ford V8 en la era de las Coupé de Carretera y Ford Falcon en la era de los automóviles compactos de serie.
+    La particularidad de esta marca es que fue la única en presentar modelos con motores V8, además de tener a sus dos modelos posicionados al tope del historial por su gran cantidad de títulos.
+    Juan Gálvez es uno de los mayores ídolos de Ford. El legendario piloto es el más campeón de la categoría con 9 títulos y todos los ganó con un Ford V8 Cuopé en los años 1949, 1950, 1951, 1952, 1955, 1956, 1957, 1958 y 1960.
+    Durante dos décadas consecutivas el Ford V8 Cupé tuvo un dominio absoluto en el Turismo Carretera ganando 20 campeonatos de manera continua gracias a los hermanos Juan y Oscar Gálvez y Dante Emiliozzi. Este último, además, fue el primer tetracampeón de la categoría.
+    Por otro lado, desde que se inauguró el Turismo Carretera, Ford lleva ganadas más de 550 carreras. El triunfo número 500 se lo adjudicó Diego Aventín al comando de un Ford Falcon.
+    Entre otros de los grandes hitos de la marca, Ángel Lo Valvo ganó la primera carrera de la historia y fue campeón del primer campeonato del Turismo Carretera en 1939 al comando de un Ford V8 Cuopé.
+    Hasta el día de hoy, el Ford V8 Coupé es el coche más campeón de Turismo Carretera con 20 títulos y el Ford Falcon se ubica segundo con 18 campeonatos y con la probabilidad de superar esa marca.
+    En la última década, El Gurí Martínez (2004), Pato Silva (2005), Emanuel Moriatis (2009) y Mauro Giallombardo (2012) fueron campeones del Turismo Carretera arriba de un Ford Falcon.
+
+-
+  id: 10368
+  title: Chevrolet
+  foundedAt: 1911-01-01
+  nicknames: Chivo
+  twitter: chevrolet
+  genre: 13
+  country: 69
+  content: |
+    Chevrolet es una de las marcas que integra el selecto grupo de los denominados “Los cuatro grandes del automovilismo argentino”. Chivo, como lo llaman sus fanáticos, es la segunda marca más campeona del Turismo Carretera y su gran rival de toda la vida es Ford.
+    En total ganó 17 campeonatos y tiene más de 350 victorias en el campeonato de automovilismo más importante y con mayor convocatoria del país.
+    Además,  es la única marca que al menos consiguió un título en las diferentes etapas del TC: La de las antiguas Coupé de Carretera (1940, 1941 y 1966), la de los Sport Prototipos (1968) y la de los automóviles compactos de serie (12 lauros con la Coupé Chevy).
+    El primer campeón del TC arriba de un Chevrolet fue Juan Manuel Fangio, uno de los mejores pilotos en la historia mundial y quíntuple campeón de la Fórmula Uno.  Como si fuera poco, el Chueco logró el primer bicampeonato en la historia del TC con su Chevrolet Máster en los años 1940 y 1941.
+    Otro de los grandes pilotos que tuvo la marca fue Juan María Traverso. El Flaco rompió con una larga hegemonía de Ford  y Dodge cuando logró el recordado tricampeonato en los años 1995, 1996 y 1997 con su Chevrolet Chevy.
+    Traverso había pasado a Ford y Chevrolet parecía perder a su gran campeón. Sin embargo, Guillermo Ortelli arrasó con todo y se convirtió en uno de los pilotos más importantes de la marca. Incluso, hoy en día, es el automovilista más campeón arriba de un Chevrolet en la historia del TC (1998, 2000, 2001, 2002, 2008 y 2011).
+    En la actualidad, junto a Ortelli, Christian Ledesma (salió campeón 2007) y Agustín Canapino (campeón en 2010) siguen escribiendo páginas doradas en la gran historia de Chevrolet.
+
+-
+  id: 10369
+  title: Dodge
+  foundedAt: 1914-01-01
+  nicknames:
+  twitter: Dodge
+  genre: 13
+  country: 69
+  content: |
+    Dodge es una de las marcas que integra el selecto grupo de los denominados “Los cuatro grandes del automovilismo argentino”.  A través de los años, Dodge ganó 10 campeonatos en el Turismo Carretera y obtuvo la victoria en cerca de 150 carreras en toda su historia.
+    Un detalle a tener en cuenta es que Dodge logró todos sus títulos con el mismo modelo, pero en diferentes épocas y con diferente motorización.  La mayoría de ellos los obtuvo durante la década del 80 con el modelo Dodge Polara en su versión Coupé.
+    Obtuvo campeonatos nacionales en manos de pilotos de la talla de Antonio Aventín, Roberto Mouras, Oscar Angeletti, Oscar Castellano, Norberto Fontana y Ernesto Bessone
+    A pesar de que su debut en la categoría fue en la década del 60, Dodge tuvo su década de gloria en los años 80. El Polara tuvo un dominio en las pistas siendo campeón 8 veces (6 de manera consecutiva):  Roberto Mouras (1981, 1983, 1984 y 1985), Oscar Castellano (1987 y 1988) Antonio Aventín (1980 y 1981) y Oscar Angeletti (1986).
+    Después de la exitosa época, Dodge se tomó un gran paréntesis debido a los sucesivos cambios reglamentarios que hicieron que los motores Slant-Six de Dodge se vieran en inferioridad de condiciones frente a los Ford y Chevrolet.
+    Finalmente, en 1995, un Dodge fue equipado a modo experimental con un motor de 6 cilindros de un Jeep Cherokee. A este modelo evolucionado se los comenzó a llamar Dodge Cherokee.
+    De esta manera y con este nuevo modelo, Ernesto Bessone consiguió el primer título de la marca luego de 13 años en el 2003 y, tres años después, en 2006, Norberto Fontana repetiría el logro más ansiado.
+
+-
+  id: 10370
+  title: Torino
+  foundedAt: 1966-01-01
+  nicknames: Toro
+  twitter:
+  genre: 13
+  country: 13
+  content: |
+    Torino es una de las marcas que integra el selecto grupo de los denominados “Los cuatro grandes del automovilismo argentino”. Es uno de los autos más queridos por el público argentino y es la marca que menos campeonatos de Turismo Carretera ganó: sólo salió campeón en cinco oportunidades en toda su historia.
+    Torino obtuvo los títulos nacionales de la mano de grandes pilotos como Eduardo Copello (1967 y 1970 Fórmula B), Gastón Perkins (1969) y Luis Rubén Di Palma (1970 Fórmula A y 1971).
+    A pesar de que tuvo su época dorada en la década del '60, Torino fue un coche muy perjudicado con el reglamento del Turismo Carretera a lo largo de los años. Luego de esos títulos obtenidos gracias a los autos preparados por el maestro Oreste Berta, llegaron las polémicas y el retiro de la marca de las pistas.
+    En 1995 hizo su presentación el Torino Cherokee, un coche equipado con motor de Jeep Cherokee, que fue evolucionando poco a poco hasta rendir frutos. Sin lugar a dudas, el más recordado es aquél Torino Cherokee que Luis Rubén Di Palma no pudo terminar por un accidente aéreo que le costó la vida. Por este motivo, su hijo Patricio continuó con el armado del Toro llegando a su estreno el 29 de octubre del 2000.
+    El 11 de mayo de 2003, en el autódromo de Buenos Aires, Patricio Di Palma ganó la primera carrera de Torino después de casi 30 años. Ese día ganó el automovilismo unificado bajo la figura del único piloto ganador con las cuatro marcas: El "Loco" Luis Rubén Di Palma.
+    En la última década, el Torino Cherokee tuvo un exitoso desempeño al alzarse con el subcampeonato de campeonato disputado en el año 2006 con Patricio Di Palma al volante.
+
+-
+  id: 10371
+  title: Ferrari
+  foundedAt: 1929-01-01
+  nicknames: Cavallino Rampante
+  twitter: InsideFerrari
+  genre: 13
+  country: 118
+  content: |
+    La primera participación de Ferrari en la Fórmula Uno fue en el Gran Premio de Mónaco de 1950. Es quizás una de las escuderías más emblemáticas del campeonato más importante del automovilismo mundial. Es el equipo más antiguo del campeonato, el que más victorias logró y el que más campeonatos consiguió a lo largo de su exitosa trayectoria.
+    El equipo Ferrari acumula un total de 16 campeonatos de constructores y 15 campeonatos de pilotos. El más ganador fue el alemán Michael Schumacher con cinco títulos de manera consecutiva en los años 2000, 2001, 2002, 2003 y 2004.
+    La primera carrera oficial ganada  por Ferrari fue en el circuito de Silverstone el 14 de julio de 1951 con el argentino José Froilán González como piloto. Un año más tarde, en 1952, Alberto Ascari con la Ferrari 500 F2 conquistó el título mundial de pilotos. Luego, el piloto italiano lograría el bicampeonato en 1953.
+    En 1956, Ferrari repetiría el título de la mano de Juan Manuel Fangio, el segundo piloto más ganador en la historia de la Formula Uno. La escudería siguió su racha ganadora gracias a Mike Hawthorn (1958), Phil Hill (1961), John Surtees (1964), Niki Lauda (1975 y 1977), Jody Scheckter (1979), Michael Schumacher (5 campeonatos) y Kimi Räikkönen (2007).
+    Los pilotos actuales son Fernando Alonso y Felipe Massa. Mientras que los de pruebas son Marc Gené y Davide Rigon, a los que se unió Pedro de la Rosa en enero de 2013. El director del equipo es Stefano Domenicali.
+
+-
+  id: 10372
+  title: Red Bull Racing
+  foundedAt: 2004-01-01
+  nicknames:
+  twitter: redbullracing
+  genre: 13
+  country: 17
+  content: |
+    A fines de  2004, Red Bull anunció la adquisición de Jaguar Racing. Tras la flamante noticia, la nueva escudería de la Formula Uno tendría su debut oficial en la temporada 2005 en el Gran Premio de Australia.
+    Los primeros pilotos fueron el veterano David Coulthard y el joven Christian Klien. Ambos debutaron en la temporada sumando puntos en sus dos primeras carreras. Finalmente, la escudería terminó en el séptimo puesto en su primera experiencia.
+    El 28 de mayo de 2006, Red Bull Racing consigue su primer podio de la historia de la mano de David Coulthard, quien finalizó en el tercer puesto en el Gran Premio de Mónaco de 2006.
+    En el año 2007, Mark Webber se incorpora a Red Bull Racing y hoy en la actualidad sigue siendo uno de los pilotos titulares de la escudería.
+    En el año 2009, el experimentado piloto escocés David Coulthard decide ponerle punto final a su carrera profesional y el joven piloto alemán Sebastian Vettel se suma al equipo para reemplazarlo. Precisamente, Vettel fue el que logró su primera victoria del equipo en la Fórmula 1 en el Gran Premio de China 2009
+    Ese año el Toro Rosso (Red Bull en italiano) se proclamó subcampeón del Campeonato de Constructores. Mientras que Sebastian Vettel consiguió el segundo puesto de pilotos y Mark Webber acabó cuarto.
+    En 2010, Red Bull se quedó con la primera posición del Campeonato de Constructores y Sebastian Vettel se proclamó el campeón más joven de la historia de la Fórmula Uno ganando en Yas Marina el último Gran Premio del campeonato. Al año siguiente, con un imbatible RB7, la escudería austríaca revalidó ambos campeonatos con una indiscutible superioridad.
+    En 2012, Sebastian Vettel consigue su tercer título consecutivo, y se proclamó el tricampeón más joven de la historia con tan sólo 25 años.
+
+-
+  id: 10373
+  title: Lotus F1 Team
+  foundedAt: 2012-01-01
+  nicknames:
+  twitter: Lotus_F1Team
+  genre: 13
+  country: 181
+  content: |
+    Lotus F1 Team es una escudería británica de Fórmula 1, que disputó su primera temporada en 2012 con Kimi Räikkönen y Romain Grosjean como pilotos. Por más que poco tenga que ver con el mítico Lotus preparado por Colin Chapman que compitió durante los años1958 y 1994, los fanáticos quieren volver a ver el nombre de la escudería en los primeros puestos de la categoría más importante del mundo.
+    Lotus ya había tenido un retorno a la Fórmula Uno en 2010 con el nombre de Lotus Racing, aunque es necesario destacar que este equipo se denominaba de igual manera que el recordado Lotus de Colin Chapman, pero poseía licencia malaya.
+    En el año 2012, el empresario malayo, Tony Fernandes, cambió el nombre de su equipo (lo llamó Caterham F1 Team) y desistió a su deseo de llevar a Lotus a repetir viejas hazañas. Por este motivo,  el Grupo Lotus utilizó la base del ex equipo Renault para mantener el nombre dentro de la Fórmula Uno.
+    Finalmente, en 2012, el equipo británico anunció el fichaje del campeón del mundo de 2007, Kimi Räikkönen y a Romain Grosjean como el piloto que acompañaría al finlandés.
+    El nuevo monoplaza Lotus E20 fue presentado el 5 de febrero de 2012 en la sede del equipo en Enstone. Con el regreso definitivo del mítico nombre a la máxima categoría y la contratación de Kimi Räikkönen, la escudería pretende volver a luchar por las victorias en los próximos años.
+    Tras unas prometedoras pruebas de pretemporada, Lotus logró la victoria en el Gran Premio de Australia de la mano de Kimi Räikkönen gracias a una estrategia de dos paradas favorecida por el cuidado de los neumáticos.
+
+-
+  id: 10374
+  title: Mercedes AMG F1 Team
+  foundedAt: 1954-01-01
+  nicknames:
+  twitter: MercedesAMGF1
+  genre: 13
+  country: 3
+  content: |
+    Mercedes AMG F1 Team es una escudería de Fórmula Uno dirigida por la empresa automovilística alemana Daimler AG a través de su marca Mercedes Benz. La escudería se formó en la década del 30 y tuvo su debut oficial n la Fórmula Uno en 1954, categoría que participó hasta 1955.
+    El día 16 de noviembre de 2009, Mercedes Benz anunció la compra del equipo campeón de la temporada 2009, Brawn GP, y así confirmó su vuelta a la categoría de automovilismo más importante del mundo.
+    En 2010, para la primera temporada del equipo en la Fórmula Uno moderna, Mercedes Benz fichó al heptacampeón mundial Michael Schumacher y a Nico Rosberg, proveniente de Williams.
+    Pese a que los inicios no eran del todo malos (Nico Rosberg logró dos podios consecutivos en Malasia y China), Mercedes no podía luchar con los monopostos punteros como Ferrari, McLaren y Red Bull. Además, la performance del piloto alemán Michael Schumacher no fue la esperada.
+    En la siguiente temporada, Schumacher se mostró mejor adaptado al auto y alcanzó los mejores resultados del equipo en la temporada. Sin embargo, nuevamente fue un año que no cubrió las expectativas planteadas a principio de temporada.
+    El 2012 aún fue peor para la nueva escudería. Mercedes estuvo cinco carreras consecutivas sin sumar puntos y estuvo a punto de perder el quinto puesto del Campeonato de Constructores. Nuevamente, un balance negativo para la escudería.
+    Para 2013, Mercedes cuenta con varias caras nuevas: Lewis Hamilton ocupa la vacante dejada por Michael Schumacher y Niki Lauda pasó al staff técnico sustituyendo a Norbert Haug.
+
+-
+  id: 10375
+  title: Force India Team
+  foundedAt: 2008-01-01
+  nicknames:
+  twitter: clubforce
+  genre: 13
+  country: 100
+  content: |
+    Force India Team es una escudería india de Fórmula Uno creada en octubre de 2007. Con la incorporación del Circuito Internacional de Buddh (Gran Premio de la India) en 2011 al calendario de la F1, el país asiático incrementó su participación notablemente en el automovilismo mundial.
+    En su primera experiencia en la Fórmula Uno, Force India apostó a Adrian Sutil y Giancarlo Fisichella como los pilotos titulares para la temporada 2008. Su mejor resultado final fue el décimo puesto de Fisichella en España. El equipo hindú no logró puntuar en su año de debut.
+    Finalmente, en el Gran Premio de Bélgica de 2009, Giancarlo Fisichella hizo historia al logar la primera pole position de Force India y sumó en la carrera los primeros puntos para el equipo. Ese mismo año, el piloto italiano se fue a Ferrari y Vitantonio Liuzzi fue su reemplazante.
+    En 2010, el equipo indio completó su mejor temporada en la máxima categoría al finalizar en séptimo lugar en la Clasificación de Constructores.
+    En 2011, Force India logró su objetivo y finalizó sexto en la clasificación final, quedando a tan sólo 4 puntos de Lotus Renault. Esta nueva escudería claramente fue de menos a más y la reacción le permitió conseguir su mejor posición en el mundial de constructores.
+    En 2012, Force India anunció a Nico Hülkenberg como el nuevo compañero de Paul di Resta. Desde ese año, la escudería pretende luchar por la quinta posición del mundial de constructores.  Finalmente, hasta el momento, no pudo conseguir dicha posición debido a los buenos resultados de Sauber en la primera parte del año.
+
+-
+  id: 10376
+  title: McLaren
+  foundedAt: 1966-01-01
+  nicknames:
+  twitter: McLarenAuto
+  genre: 13
+  country: 181
+  content: |
+    McLaren es una escudería británica con sede en Woking (Surrey, Inglaterra) fundada en 1963 por Bruce McLaren. Es la segunda escudería más exitosa en la Fórmula Uno gracias a sus 8 títulos en campeonatos de constructores.
+    Todo comenzó cuando Bruce McLaren quiso correr con un coche fabricado por él mismo. Así fue que el 22 de mayo de 1966, el innovador personaje debutó con su propio vehículo en Montecarlo. En 1969, McLaren queda tercero en el campeonato de pilotos con su M7.
+    En 1988, con motores Honda, el McLaren dominó la temporada ganando 15 de 16 carreras, coronándose Ayrton Senna como campeón de pilotos en el Gran Premio de Japón. En esa época ya se había iniciado la fuerte rivalidad entre el piloto brasilero y su compañero de escudería Alain Prost. En 1989 el dominio de McLaren seguía aún presente y ese año el título quedaría para el piloto francés.
+    A pesar de la partida de Alain Prost hacia Ferrari en 1990, McLaren dominó la Fórmula Uno durante dos años más. El recordado Senna ganaría el mundial de pilotos esos dos años.
+    Después de 3 temporadas sin poder ganar ninguna carrera (entre 1994 y 1996), McLaren se adjudicó el Campeonato de Constructores de 1998 y Mika Häkkinen el título de pilotos de ese año. También lo conseguiría en 1999 venciendo a la Ferrari de Michael Schumacher.
+    Desde 2000, McLaren luchó por mantenerse en los primeros lugares pero no logró igualar a Ferrari. Incluso perdió terreno frente a su eterno rival inglés Williams. En ese período, McLaren logró cuatro subcampeonatos de  la mano de Mika Häkkinen (2000), Kimi Räikkönen (2003 y 2005) y Lewis Hamilton (2007).
+    En 2008, Hamilton se consagró campeón del Campeonato de Pilotos y  fue el duodécimo título mundial de pilotos para la escudería.
+    Para el año 2010, McLaren fichó al vigente campeón del mundo Jenson Button (proveniente de Brawn) como compañero de Lewis Hamilton, devolviéndole así el número 1 al equipo.
+    En la actualidad, McLaren quiere seguir escribiendo páginas doradas de su gran historia de la mano de los pilotos Jenson Button y Sergio Pérez.
+
+-
+  id: 10377
+  title: Toro Rosso
+  foundedAt: 2005-01-01
+  nicknames:
+  twitter: ToroRossoSpy
+  genre: 13
+  country: 118
+  content: |
+    La Escudería Toro Rosso (traducción en italiano de Red Bull) fue creada a fines de 2005 después de que Red Bull comprara al equipo Minardi. Actúa como filial del  la escudería Red Bull Racing y tiene el objetivo de formar  jóvenes promesas. Sólo Sebastien Bourdais compitió con Toro Rosso sin formar parte del programa de jóvenes pilotos de Red Bull.
+    La primera experiencia del equipo fue en 2006 con Vitantonio Liuzzi como piloto oficial del equipo para su primera temporada. Mientras que Scott Speed fue su compañero.
+    En el Gran Premio de los Estados Unidos de 2006, Toro Rosso consiguió su primer punto al situar a Vitantonio Liuzzi en el octavo lugar de la competencia. Al año siguiente, el equipo que tiene la sede en Italia tuvo una leve mejora y terminó séptimo en la clasificación.
+    Para el Gran Premio de Hungría de 2007, Sebastian Vettel reemplaza a Scott Speed por su bajo rendimiento. Un año más tarde,  el piloto alemán dominó con autoridad el Gran Premio de Italia y consiguió la primera victoria para Toro Rosso en un día histórico para el modesto equipo italiano.
+    Sin embargo, durante la temporada 2009, Sebastien Buemi y Sebastien Bourdais no pudieron igualar los buenos resultados del año anterior. El equipo mostró un rendimiento aceptable en las primeras carreras, pero luego fue superado por casi todos sus rivales.
+    Después de dos años de malos resultados, la escudería mejoró notablemente y finalizó octava con 41 puntos en el Campeonato de Constructores 2011. En 2012, Toro Rosso afrontó una nueva temporada con aire fresco en sus filas, ya que había anunciado la contratación de Daniel Ricciardo y Jean-Éric Vergne como pilotos oficiales.
+
+-
+  id: 10378
+  title: Sauber F1 Team
+  foundedAt: 1993-01-01
+  nicknames:
+  twitter: OfficialSF1Team
+  genre: 13
+  country: 210
+  content: |
+    Sauber F1 Team es una escudería de Fórmula Uno con base en Suiza. Su nombre se debe al dueño y ex-director de la escudería Peter Sauber. El equipo compitió en la máxima categoría por primera vez en 1993.
+    Fue a partir de 1997 cuando empezó a estar ligado técnicamente con Ferrari. Durante 9 años, el equipo suizo licenciaba prácticamente todos los componentes que se pueden licenciar de las máquinas de Maranello. Incluso tenía a varios ingenieros de esa escudería en su plantilla.
+     El equipo completó su mejor temporada en 2001. Pese a contar con dos pilotos inexpertos como Nick Heidfeld y Kimi Räikkönen, Sauber obtuvo la cuarta posición en el campeonato mundial de constructores.
+    En 2005, la escudería  fue vendida a BMW  y estuvo cuatro temporadas sin participar en la categoría más importante del mundo.  Tras cuatro temporadas de ausencias y con la retirada de BMW de la Fórmula 1, el equipo suizo finalmente volvió a competir en 2010.
+    Hay que destacar que Sauber era un equipo privado, sin las herramientas de gigantes como Ferrari o McLaren. Y que del equipo suizo salieron varios pilotos de renombre como Heinz-Harald Frentzen, Nick Heidfeld, Kimi Räikkönen, Felipe Massa o Robert Kubica.
+    Fue en  2012 cuando llegaría el mejor año de la escudería: cerró la temporada con resultados radicalmente mejorados: 126 puntos, dos vueltas rápidas (China y Mónaco) y 4 podios (Malasia, Canadá, Italia y Japón).
+    Para la temporada 2013, Sauber anunció la contratación de Nico Hülkenberg (en reemplazo de Sergio Pérez, quien firmó para McLaren) como primer piloto y a Esteban Gutiérrez como el segundo volante titular.
+
+-
+  id: 10379
+  title: Williams
+  foundedAt: 1977-01-01
+  nicknames:
+  twitter: WilliamsF1Team
+  genre: 13
+  country: 181
+  content: |
+    Williams F1 Team es considerado uno de las cuatro grandes escuderías de la Fórmula Uno junto a Ferrari, McLaren y Team Lotus.  El equipo de Gran Bretaña fue fundado en 1977 por Frank Williams y Patrick Head, al asociarse con Walter Wolf Racing.
+    La primera carrera de Williams fue en el Gran Premio de España de 1977 cuando el equipo corrió con un chasis March con Patrick Neve como piloto. Dos años más tarde, el suizo Clay Regazzoni ganó la primera carrera para el equipo en el Gran Premio del Reino Unido de 1979.
+    Muchos pilotos famosos pasaron por Williams como el australiano Alan Jones, el argentino Carlos Reutemann, el finlandés Keke Rosberg, el italiano Gianclaudio Regazzoni, los británicos Nigel Mansell, Damon Hill y Jenson Button, el francés Alain Prost, los brasileños Nelson Piquet y Ayrton Senna y el canadiense Jacques Villeneuve.
+    Williams trabajó con muchos constructores de motores famosos. Sin embargo, con Renault logró ganar cinco de sus nueve Campeonatos de Constructores.
+    Junto a Ferrari, McLaren y Renault, Williams es una de las cuatro escuderías que ganó en todos los campeonatos de constructores desde 1979  y en todos los campeonatos de pilotos desde 1984.
+    Uno de los momentos más oscuros de la historia en la F1 tuvo como protagonista a la escudería Williams. En el Gran Premio de San Marino de 1994, Ayrton Senna, que era el súper fichaje de la escudería para intentar ampliar su dominio, tuvo un fatal accidente en su tercera carrera.
+    En la actualidad, el venezolano Pastor Maldonado y el finlandés Valtteri Bottas son los pilotos titulares del equipo que tiene su sede en Grove, Gran Bretaña.
+
+-
+  id: 10380
+  title: Marussia F1 Team
+  foundedAt: 2012-01-01
+  nicknames:
+  twitter: Marussia_F1Team
+  genre: 13
+  country: 189
+  content: |
+    Marussia F1 Team es una escudería de Fórmula Uno que forma parte de la categoría desde la temporada 2012. Está controlada por la empresa Marussia Motors tras adquirir dicha sociedad del antiguo equipo británico Virgin Racing.
+    De cara a su primera temporada en la Fórmula Uno, el equipo ruso mantuvo los motores Cosworth implementados por su antecesor Virgin y mantuvo las áreas del desarrollo del monoplaza en asociación con McLaren.
+    En 2012, la escudería confirmó la continuidad de Timo Glock (que había renovado a largo plazo con Virgin Racing) como primer piloto y la contratación del joven piloto francés Charles Pic, de 21 años y sin experiencia dentro de la máxima categoría del automovilismo.
+    A pesar de llegar a al Gran Premio de Australia prácticamente sin probar el Marussia MR01, la nueva escudería consiguió llegar en los puestos 14 y 15.
+    En un accidentada carrera en Singapur, Timo Glock da la sorpresa al terminar en el duodécimo lugar por lo que Marussia superó a Caterham en el Mundial. Sin embargo, la escudería malaya recuperó esa posición gracias a una gran performance en la última carrera que dejó finalmente a Marussia en la penúltima posición del campeonato.
+    En la temporada 2013 y tras la marcha de Charles Pic, Max Chilton fue contratado por la escudería. Mientras que el francés Jules Bianchi llegó al equipo inglés para ocupar el lugar de Glock.
+
+-
+  id: 10381
+  title: Caterham F1 Team
+  foundedAt: 2012-01-01
+  nicknames:
+  twitter: MyCaterhamF1
+  genre: 13
+  country: 139
+  content: |
+    Caterham F1 Team es una escudería malaya de Fórmula Uno. La base del actual equipo de Tony Fernandes fue Team Lotus (2011), anteriormente denominado Lotus Racing (2010) y originalmente Malaysia F1 Team (finales de 2009).
+    La historia de Caterham comenzó cuando, en el año 2012, el empresario malayo Tony Fernandes cambió el nombre de su equipo y desistió a su deseo de llevar a Lotus a repetir viejas hazañas.
+    El debut de Caterham fue en el Gran Premio de Australia 2012 y no tuvo los resultados deseados. Pese a superar a Marussia en la clasificación, todavía estaban muy lejos de los equipos más establecidos de la categoría. En carrera, ambos coches tuvieron que abandonar debido a fallos mecánicos.
+    La escudería obtuvo la décima posición del mundial de constructores tras el undécimo puesto conseguido por Vitaly Petrov en la última carrera en Brasil. El balance final fue algo decepcionante teniendo en cuenta las expectativas iniciales.
+    Las expectativas del equipo durante el 2013 siguen siendo bajas. Caterham confirmó a Charles Pic y a Giedo van der Garde como pilotos titulares. Sin embargo, el jefe de equipo, Cyril Abiteboul, se mostró realista y no confía mucho en las posibilidades de sumar algún punto durante esta temporada.
+

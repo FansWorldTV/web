@@ -63,6 +63,13 @@ class Idol implements SearchableInterface, VisitableInterface
     private $content;
 
     /**
+     * @var text $achievements
+     *
+     * @ORM\Column(name="achievements", type="text", nullable=true)
+     */
+    private $achievements;
+
+    /**
      * @var datetime $birthday
      *
      * @ORM\Column(name="birthday", type="datetime", nullable=true)
@@ -201,11 +208,18 @@ class Idol implements SearchableInterface, VisitableInterface
      */
     private $genre;
 
+    /**
+     * @ORM\OneToMany(targetEntity="HasGenres", mappedBy="idol", cascade={"remove", "persist"}, orphanRemoval="true")
+     */
+    protected $hasgenres;
+
+
     public function __construct()
     {
         $this->visits = new \Doctrine\Common\Collections\ArrayCollection();
         $this->visitCount = 0;
         $this->idolcareers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->hasgenres = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -327,10 +341,10 @@ class Idol implements SearchableInterface, VisitableInterface
     }
 
     /**
-     * Set content
-     *
-     * @param text $content
-     */
+ * Set content
+ *
+ * @param text $content
+ */
     public function setContent($content)
     {
         $this->content = $content;
@@ -344,6 +358,26 @@ class Idol implements SearchableInterface, VisitableInterface
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * Set achievements
+     *
+     * @param text $achievements
+     */
+    public function setAchievements($achievements)
+    {
+        $this->achievements = $achievements;
+    }
+
+    /**
+     * Get achievements
+     *
+     * @return text
+     */
+    public function getAchievements()
+    {
+        return $this->achievements;
     }
 
     /**
@@ -778,6 +812,26 @@ class Idol implements SearchableInterface, VisitableInterface
     public function getGenre()
     {
         return $this->genre;
+    }
+
+     /**
+     * Add hasgenre
+     *
+     * @param Dodici\Fansworld\WebBundle\Entity\HasGenres $hasgenres
+     */
+    public function addHasGenre(\Dodici\Fansworld\WebBundle\Entity\HasGenres $hasgenres)
+    {
+        $this->hasgenres[] = $hasgenres;
+    }
+
+    /**
+     * Get hasgenres
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getHasGenre()
+    {
+        return $this->hasgenres;
     }
 
 }

@@ -921,7 +921,7 @@
     var TypeaheadView = function() {
         var html = {
             wrapper: '<span class="twitter-typeahead"></span>',
-            hint: '<input class="tt-hint" type="text" autocomplete="off" spellcheck="off" disabled>',
+            hint: '<input class="tt-hint" type="submit" placeholder=" " autocomplete="off" spellcheck="off" disabled>',
             dropdown: '<span class="tt-dropdown-menu"></span>'
         }, css = {
             wrapper: {
@@ -1160,7 +1160,8 @@
             });
             $input.addClass("tt-query").attr({
                 autocomplete: "off",
-                spellcheck: false
+                spellcheck: false,
+                placeholder: "Buscar"
             }).css(css.query);
             try {
                 !$input.attr("dir") && $input.attr("dir", "auto");

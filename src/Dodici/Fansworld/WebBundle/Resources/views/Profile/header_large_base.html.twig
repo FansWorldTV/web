@@ -3,9 +3,11 @@
 
     <div class="header-large-new">
         <div class="splash-container">
+            <div class="container">
             {% block splash_container %}
                 {% thumbnail entity.splash, 'splash' %}
             {% endblock %}
+            </div>
             <div class="action-block">
                 <span class="name">{% block header_title %}{{ entity }}{% endblock %}</span>
                 {% block header_fship %}

@@ -576,9 +576,9 @@
                 $button.text(response.buttontext);
 
                 if (response.state === true) {
-                    $button.prepend($('<i>').attr('class', 'icon-remove').after(' '));
+                    $button.prepend($('<i>').attr('class', 'icon-remove icon-white').after(' '));
                 } else if (response.state === false) {
-                    $button.prepend($('<i>').attr('class', 'icon-ok').after(' '));
+                    $button.prepend($('<i>').attr('class', 'icon-ok icon-white').after(' '));
                 }
                 $button.removeClass('loading-small');
             }, function (msg) {
@@ -595,7 +595,12 @@
                     var self = $(this);
                     $(".sort-videos .btn.active").removeClass('active');
                     $(this).addClass('active');
-                    $("#videos-related-sort").parent().addClass('loading');
+
+                    var $container = $("#videos-related-sort");
+                    var $spinner = $container.parent().find('.spinner');
+                    $container.hide();
+                    $spinner.removeClass('hidden');
+
                     console.log($("#videos-related-sort"));
                     ajax.genericAction('teve_ajaxsortdetail', {
                         'video': $('[data-grid-related]').attr('data-grid-related'),
@@ -614,6 +619,7 @@
                                 if (r.videos.hasOwnProperty(i)) {
                                     var video = r.videos[i];
                                     var data = {
+                                        id: video.id,
                                         href: Routing.generate(appLocale + '_video_show', {'id': video.id, 'slug': video.slug}),
                                         imageSrc: video.image,
                                         videoAlt: video.title,
@@ -627,7 +633,8 @@
                         }).then(function() {
                             $(this).fadeIn('slow');
                         });
-                        $("#videos-related-sort").parent().removeClass('loading');
+                        $container.show();
+                        $spinner.addClass('hidden');
                         ajaxActive = false;
                     }, function(e){
                         error(e);
