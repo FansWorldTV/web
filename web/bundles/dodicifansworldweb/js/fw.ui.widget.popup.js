@@ -85,12 +85,12 @@ $(document).ready(function () {
         define(['jQuery', 'Routing', 'templateHelper', 'ajax', 'Meteor', 'notificationChannel'], factory);
     } else {
         // Browser globals (root is window)
-        root.NOTIFICACION = factory(root.jQuery, root.Routing, root.templateHelper, root.ajax, error, root.Meteor, root.notificationChannel);
+        root.NOTIFICATION = factory(root.jQuery, root.Routing, root.templateHelper, root.ajax, error, root.Meteor, root.notificationChannel);
     }
 }(this, function (jQuery, Routing, templateHelper, ajax, error, Meteor, notificationChannel) {
     "use strict";
-    var NOTIFICACION = (function() {
-        function NOTIFICACION() {
+    var NOTIFICATION = (function() {
+        function NOTIFICATION() {
             ///////////////////
             // Internal init //
             ///////////////////
@@ -112,7 +112,7 @@ $(document).ready(function () {
             // Get a limited set of unreaded notifications to populate activity widget
             //this.getNotifications();
         }
-        NOTIFICACION.prototype.join = function() {
+        NOTIFICATION.prototype.join = function() {
             var that = this;
             // ADD NOTIFICATION CHANNEL
             if ((typeof Meteor != 'undefined') && (typeof notificationChannel != 'undefined')) {
@@ -123,7 +123,7 @@ $(document).ready(function () {
                 console.log('Escuchando notifications..');
             }
         };
-        NOTIFICACION.prototype.leave = function() {
+        NOTIFICATION.prototype.leave = function() {
             var that = this;
             // REMOVE NOTIFICATION CHANNEL
             if ((typeof Meteor != 'undefined') && (typeof notificationChannel != 'undefined')) {
@@ -132,7 +132,7 @@ $(document).ready(function () {
             }
         };
 
-        NOTIFICACION.prototype.notificationReceived = function(response) {
+        NOTIFICATION.prototype.notificationReceived = function(response) {
             var that = this;
             var response = JSON.parse(response);
             console.log('Notification has arrived');
@@ -144,7 +144,7 @@ $(document).ready(function () {
                 }
             }
         };
-        NOTIFICACION.prototype.getTotal = function() {
+        NOTIFICATION.prototype.getTotal = function() {
             var that = this;
             var deferred = new jQuery.Deferred();
             $.ajax({
@@ -162,7 +162,7 @@ $(document).ready(function () {
             });
             return deferred.promise();
         };
-        NOTIFICACION.prototype.getTypeCounts = function() {
+        NOTIFICATION.prototype.getTypeCounts = function() {
             var that = this;
             var deferred = new jQuery.Deferred();
             $.ajax({
@@ -180,7 +180,7 @@ $(document).ready(function () {
             });
             return deferred.promise();
         };
-        NOTIFICACION.prototype.getNotification = function(id) {
+        NOTIFICATION.prototype.getNotification = function(id) {
             var that = this;
             var deferred = new jQuery.Deferred();
             $.ajax({
@@ -200,7 +200,7 @@ $(document).ready(function () {
             });
             return deferred.promise();
         };
-        NOTIFICACION.prototype.getLatest = function(parentname) {
+        NOTIFICATION.prototype.getLatest = function(parentname) {
             var that = this;
             var deferred = new jQuery.Deferred();
             $.ajax({
@@ -220,7 +220,7 @@ $(document).ready(function () {
             });
             return deferred.promise();
         };
-        NOTIFICACION.prototype.getNotifications = function(parentname) {
+        NOTIFICATION.prototype.getNotifications = function(parentname) {
             var that = this;
             var deferred = new jQuery.Deferred();
             $.ajax({
@@ -238,7 +238,7 @@ $(document).ready(function () {
             });
             return deferred.promise();
         };
-        NOTIFICACION.prototype.delete = function(id) {
+        NOTIFICATION.prototype.delete = function(id) {
             var that = this;
             var deferred = new jQuery.Deferred();
             $.ajax({
@@ -258,13 +258,13 @@ $(document).ready(function () {
         ////////////////////////////////////////////////////////////////////////
         //  CUSTOM EVENT HANDLERS                                             //
         ////////////////////////////////////////////////////////////////////////
-        NOTIFICACION.prototype.addListener = function(type, listener){
+        NOTIFICATION.prototype.addListener = function(type, listener){
             if (typeof this.listeners[type] === "undefined"){
                 this.listeners[type] = [];
             }
             this.listeners[type].push(listener);
         };
-        NOTIFICACION.prototype.removeListener = function(type, listener){
+        NOTIFICATION.prototype.removeListener = function(type, listener){
             if (this.listeners[type] instanceof Array){
                 var listeners = this.listeners[type];
                 var i, len;
@@ -276,7 +276,7 @@ $(document).ready(function () {
                 }
             }
         };
-        NOTIFICACION.prototype.fire = function(event){
+        NOTIFICATION.prototype.fire = function(event){
             var i, len;
             if (typeof event === "string"){
                 event = { type: event };
@@ -299,7 +299,7 @@ $(document).ready(function () {
         ////////////////////////////////////////////////////////////////////////
         // Create and return a "version 4" RFC-4122 UUID string.              //
         ////////////////////////////////////////////////////////////////////////
-        NOTIFICACION.prototype.guidGenerator = function() {
+        NOTIFICATION.prototype.guidGenerator = function() {
             var s = [];
             var itoh = '0123456789ABCDEF';
             var i = 0;
@@ -321,16 +321,16 @@ $(document).ready(function () {
             return s.join('');
         };
         //$.ajax({url: Routing.generate('es_user_ajaxgetnotifications_typecounts'), data: {}}).then(function(r){console.log(r)})
-        NOTIFICACION.prototype.getVersion = function() {
+        NOTIFICATION.prototype.getVersion = function() {
             console.log(this.version);
             return this.version;
         };
-        return NOTIFICACION;
+        return NOTIFICATION;
     }());
     // Just return a value to define the module export.
     // This example returns an object, but the module
     // can return a function as the exported value.
-    return NOTIFICACION;
+    return NOTIFICATION;
 }));
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -393,12 +393,6 @@ $(document).ready(function () {
             var that = this;
             var deferred = new jQuery.Deferred();
             console.log(document.domain)
-            setTimeout(function() {
-                that.activity = {"activity":[{"id":"1068","ts":"1373090407","type":1,"typeName":"new_video","media":{"video":{"id":"224","slug":"los-fans-y-el-tenis-segun-djokovic-y-federer","title":"Los fans y el tenis seg\u00fan Djokovic y Federer","image":"http:\/\/fansworld.svn.dodici.com.ar\/uploads\/media\/default\/0001\/03\/thumb_2301_default_big_a00654d5344eae2f19f99f5dee0e4b26f265e442.jpg","createdAt":"1373064932","author":{"id":1,"title":"Fansworld.TV ","image":"http:\/\/fansworld.svn.dodici.com.ar\/uploads\/media\/default\/0001\/01\/thumb_2_default_small_square_6a39865b3ad9d25f56b288de71b58a8d3d3f6f69.jpg","createdAt":"1373062435","firstname":"Fansworld.TV","lastname":null,"fanCount":0,"splash":null,"sex":null,"username":"fansworld","url":"\/u\/fansworld\/wall","location":null,"canFriend":true},"content":"En la conferencia de presentaci\u00f3n del Masters de Londres, Djokovic relata la historia que m\u00e1s recuerda de un fan suyo y a su vez, habla de la pasi\u00f3n de sus seguidores en Asia y Sudamerica. Por otro lado, Federer rescata lo exitante de viajar por el mundo conociendo culturas y  fan\u00e1ticos del tenis.\n","likeCount":0,"visitCount":0,"commentCount":0,"videocategory":5,"genre_id":5,"genreparent_id":1,"weight":3496,"duration":"03:40","url":"\/tv\/224\/los-fans-y-el-tenis-segun-djokovic-y-federer","modalUrl":"\/modal\/video\/show\/224"}},"target":{"id":1,"title":"Fansworld.TV ","image":"http:\/\/fansworld.svn.dodici.com.ar\/uploads\/media\/default\/0001\/01\/thumb_2_default_small_square_6a39865b3ad9d25f56b288de71b58a8d3d3f6f69.jpg","createdAt":"1373062435","firstname":"Fansworld.TV","lastname":null,"fanCount":0,"splash":null,"sex":null,"username":"fansworld","url":"\/u\/fansworld\/wall","location":null,"canFriend":true},"fanOf":[]},{"id":"1067","ts":"1373090119","type":1,"typeName":"new_video","media":{"video":{"id":"223","slug":"un-mano-a-mano-con-federer-el-mejor-tenista-de-la-historia-parte-2","title":"Un mano a mano con Federer, el mejor tenista de la historia Parte 2","image":"http:\/\/fansworld.svn.dodici.com.ar\/uploads\/media\/default\/0001\/03\/thumb_2300_default_big_74a3f99a64347159ec9856ca3c23db781eec7a92.jpg","createdAt":"1373064928","author":{"id":1,"title":"Fansworld.TV ","image":"http:\/\/fansworld.svn.dodici.com.ar\/uploads\/media\/default\/0001\/01\/thumb_2_default_small_square_6a39865b3ad9d25f56b288de71b58a8d3d3f6f69.jpg","createdAt":"1373062435","firstname":"Fansworld.TV","lastname":null,"fanCount":0,"splash":null,"sex":null,"username":"fansworld","url":"\/u\/fansworld\/wall","location":null,"canFriend":true},"content":"Roger y su motivaci\u00f3n para seguir jugando despu\u00e9s de haber ganado todo. Su mentalidad y su inspiraci\u00f3n; sus ganas de conocer Argentina -previo a la gira por el pa\u00eds- y el fanatismo de los fans sudamericanos por su tenis.\n","likeCount":0,"visitCount":0,"commentCount":0,"videocategory":5,"genre_id":5,"genreparent_id":1,"weight":3496,"duration":"04:59","url":"\/tv\/223\/un-mano-a-mano-con-federer-el-mejor-tenista-de-la-historia-parte-2","modalUrl":"\/modal\/video\/show\/223"}},"target":{"id":1,"title":"Fansworld.TV ","image":"http:\/\/fansworld.svn.dodici.com.ar\/uploads\/media\/default\/0001\/01\/thumb_2_default_small_square_6a39865b3ad9d25f56b288de71b58a8d3d3f6f69.jpg","createdAt":"1373062435","firstname":"Fansworld.TV","lastname":null,"fanCount":0,"splash":null,"sex":null,"username":"fansworld","url":"\/u\/fansworld\/wall","location":null,"canFriend":true},"fanOf":[]},{"id":"1066","ts":"1373090116","type":1,"typeName":"new_video","media":{"video":{"id":"222","slug":"un-mano-a-mano-con-federer-el-mejor-tenista-de-la-historia-parte-1","title":"Un mano a mano con Federer, el mejor tenista de la historia Parte 1","image":"http:\/\/fansworld.svn.dodici.com.ar\/uploads\/media\/default\/0001\/03\/thumb_2299_default_big_3a28a7d337091e51a9b091461eaa0618c444b68c.jpg","createdAt":"1373064924","author":{"id":1,"title":"Fansworld.TV ","image":"http:\/\/fansworld.svn.dodici.com.ar\/uploads\/media\/default\/0001\/01\/thumb_2_default_small_square_6a39865b3ad9d25f56b288de71b58a8d3d3f6f69.jpg","createdAt":"1373062435","firstname":"Fansworld.TV","lastname":null,"fanCount":0,"splash":null,"sex":null,"username":"fansworld","url":"\/u\/fansworld\/wall","location":null,"canFriend":true},"content":"En la previa del Masters de Londres, Federer habla sobre el orgullo de ser se\u00f1alado como el mejor tenista de la historia, aunque no se reconoce como tal. Adem\u00e1s, el suizo cuenta c\u00f3mo es su relaci\u00f3n con los fans, la importancia de ser un ejemplo dentro y fuera de la cancha; y tambi\u00e9n detalla parte del trabajo con su fundaci\u00f3n.\n","likeCount":0,"visitCount":0,"commentCount":0,"videocategory":5,"genre_id":5,"genreparent_id":1,"weight":3496,"duration":"05:17","url":"\/tv\/222\/un-mano-a-mano-con-federer-el-mejor-tenista-de-la-historia-parte-1","modalUrl":"\/modal\/video\/show\/222"}},"target":{"id":1,"title":"Fansworld.TV ","image":"http:\/\/fansworld.svn.dodici.com.ar\/uploads\/media\/default\/0001\/01\/thumb_2_default_small_square_6a39865b3ad9d25f56b288de71b58a8d3d3f6f69.jpg","createdAt":"1373062435","firstname":"Fansworld.TV","lastname":null,"fanCount":0,"splash":null,"sex":null,"username":"fansworld","url":"\/u\/fansworld\/wall","location":null,"canFriend":true},"fanOf":[]},{"id":"1065","ts":"1373090112","type":1,"typeName":"new_video","media":{"video":{"id":"221","slug":"fans-molotov","title":"Fans Molotov","image":"http:\/\/fansworld.svn.dodici.com.ar\/uploads\/media\/default\/0001\/03\/thumb_2298_default_big_139c607d212e2a17bce27f369359a7f84b452a7b.jpg","createdAt":"1373064923","author":{"id":1,"title":"Fansworld.TV ","image":"http:\/\/fansworld.svn.dodici.com.ar\/uploads\/media\/default\/0001\/01\/thumb_2_default_small_square_6a39865b3ad9d25f56b288de71b58a8d3d3f6f69.jpg","createdAt":"1373062435","firstname":"Fansworld.TV","lastname":null,"fanCount":0,"splash":null,"sex":null,"username":"fansworld","url":"\/u\/fansworld\/wall","location":null,"canFriend":true},"content":null,"likeCount":0,"visitCount":0,"commentCount":0,"videocategory":2,"genre_id":10,"genreparent_id":8,"weight":3496,"duration":"02:44","url":"\/tv\/221\/fans-molotov","modalUrl":"\/modal\/video\/show\/221"}},"target":{"id":1,"title":"Fansworld.TV ","image":"http:\/\/fansworld.svn.dodici.com.ar\/uploads\/media\/default\/0001\/01\/thumb_2_default_small_square_6a39865b3ad9d25f56b288de71b58a8d3d3f6f69.jpg","createdAt":"1373062435","firstname":"Fansworld.TV","lastname":null,"fanCount":0,"splash":null,"sex":null,"username":"fansworld","url":"\/u\/fansworld\/wall","location":null,"canFriend":true},"fanOf":[]},{"id":"1064","ts":"1373090109","type":1,"typeName":"new_video","media":{"video":{"id":"220","slug":"fans-pearl-jam","title":"Fans Pearl Jam","image":"http:\/\/fansworld.svn.dodici.com.ar\/uploads\/media\/default\/0001\/03\/thumb_2297_default_big_abf3e77719b617cf33f090e14e47bec59d7bdf72.jpg","createdAt":"1373064922","author":{"id":1,"title":"Fansworld.TV ","image":"http:\/\/fansworld.svn.dodici.com.ar\/uploads\/media\/default\/0001\/01\/thumb_2_default_small_square_6a39865b3ad9d25f56b288de71b58a8d3d3f6f69.jpg","createdAt":"1373062435","firstname":"Fansworld.TV","lastname":null,"fanCount":0,"splash":null,"sex":null,"username":"fansworld","url":"\/u\/fansworld\/wall","location":null,"canFriend":true},"content":"Te mostramos a los famosos m\u00e1s fan\u00e1ticos de Pearl Jam. Los actores Christian Sancho y Gast\u00f3n Soffritti nos cuentan que temas les gustan de la banda y c\u00f3mo empezaron a seguirla. Tambi\u00e9n, Leonardo De Cecco -baterista de Ataque 77- aporta su calificada opini\u00f3n.\n","likeCount":0,"visitCount":0,"commentCount":0,"videocategory":2,"genre_id":10,"genreparent_id":8,"weight":3496,"duration":"05:09","url":"\/tv\/220\/fans-pearl-jam","modalUrl":"\/modal\/video\/show\/220"}},"target":{"id":1,"title":"Fansworld.TV ","image":"http:\/\/fansworld.svn.dodici.com.ar\/uploads\/media\/default\/0001\/01\/thumb_2_default_small_square_6a39865b3ad9d25f56b288de71b58a8d3d3f6f69.jpg","createdAt":"1373062435","firstname":"Fansworld.TV","lastname":null,"fanCount":0,"splash":null,"sex":null,"username":"fansworld","url":"\/u\/fansworld\/wall","location":null,"canFriend":true},"fanOf":[]}],"view":["\t<div class=\"avatar\">\n\t\t<img src=\"http:\/\/fansworld.svn.dodici.com.ar\/uploads\/media\/default\/0001\/01\/thumb_2_default_small_square_6a39865b3ad9d25f56b288de71b58a8d3d3f6f69.jpg\" \/>\n\t<\/div>\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"notice-text\"><a class=\"notice-link\" href=\"\/u\/fansworld\">fansworld<\/a> Subi\u00f3 <a href=\"\/tv\/224\/los-fans-y-el-tenis-segun-djokovic-y-federer\" data-modal-url=\"\/modal\/video\/show\/224\">un video<\/a><\/span>\n","\t<div class=\"avatar\">\n\t\t<img src=\"http:\/\/fansworld.svn.dodici.com.ar\/uploads\/media\/default\/0001\/01\/thumb_2_default_small_square_6a39865b3ad9d25f56b288de71b58a8d3d3f6f69.jpg\" \/>\n\t<\/div>\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"notice-text\"><a class=\"notice-link\" href=\"\/u\/fansworld\">fansworld<\/a> Subi\u00f3 <a href=\"\/tv\/223\/un-mano-a-mano-con-federer-el-mejor-tenista-de-la-historia-parte-2\" data-modal-url=\"\/modal\/video\/show\/223\">un video<\/a><\/span>\n","\t<div class=\"avatar\">\n\t\t<img src=\"http:\/\/fansworld.svn.dodici.com.ar\/uploads\/media\/default\/0001\/01\/thumb_2_default_small_square_6a39865b3ad9d25f56b288de71b58a8d3d3f6f69.jpg\" \/>\n\t<\/div>\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"notice-text\"><a class=\"notice-link\" href=\"\/u\/fansworld\">fansworld<\/a> Subi\u00f3 <a href=\"\/tv\/222\/un-mano-a-mano-con-federer-el-mejor-tenista-de-la-historia-parte-1\" data-modal-url=\"\/modal\/video\/show\/222\">un video<\/a><\/span>\n","\t<div class=\"avatar\">\n\t\t<img src=\"http:\/\/fansworld.svn.dodici.com.ar\/uploads\/media\/default\/0001\/01\/thumb_2_default_small_square_6a39865b3ad9d25f56b288de71b58a8d3d3f6f69.jpg\" \/>\n\t<\/div>\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"notice-text\"><a class=\"notice-link\" href=\"\/u\/fansworld\">fansworld<\/a> Subi\u00f3 <a href=\"\/tv\/221\/fans-molotov\" data-modal-url=\"\/modal\/video\/show\/221\">un video<\/a><\/span>\n","\t<div class=\"avatar\">\n\t\t<img src=\"http:\/\/fansworld.svn.dodici.com.ar\/uploads\/media\/default\/0001\/01\/thumb_2_default_small_square_6a39865b3ad9d25f56b288de71b58a8d3d3f6f69.jpg\" \/>\n\t<\/div>\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"notice-text\"><a class=\"notice-link\" href=\"\/u\/fansworld\">fansworld<\/a> Subi\u00f3 <a href=\"\/tv\/220\/fans-pearl-jam\" data-modal-url=\"\/modal\/video\/show\/220\">un video<\/a><\/span>\n"],"offset":0};
-                that.fire({type: "ongetactivity", result: that.activity});
-                that.page += 1;
-                deferred.resolve(that.activity);
-            }, 1500);
             $.ajax({
                 url: Routing.generate(appLocale + '_getactivity_feed'),
                 data: {page: that.page},
@@ -616,6 +610,9 @@ $(document).ready(function () {
             event.stopPropagation();
             event.preventDefault();
             $(that.element).show();
+            $(that.element).animate({
+                opacity: 1
+            });
             that.options.isPoped = true;
             that.checkBounds(true);
         },
@@ -624,13 +621,10 @@ $(document).ready(function () {
             if (!that.options.isPoped) {
                 return;
             }
-            /*$(that.element).animate({
-                opacity: 0
-            }, 500, function() {
-                $(that.element).hide();
-            });
-            */
             $(that.element).hide();
+            $(that.element).animate({
+                opacity: 0
+            });            
             $(that.options.target).removeClass('active');
             that.options.isPoped = false;
             that.checkBounds(false);
@@ -682,7 +676,7 @@ $(document).ready(function () {
 
             // Get target window positioning
             var offset = $('nav .widget-bar').offset();
-            offset.top += $('nav .widget-bar').height();
+            offset.top = $('nav .widget-bar').height() + 2;
             //offset.top -= parseInt(($(that.element).height() + $(button).height() + 10), 10);
             offset.left -= parseInt(($(that.element).width() / 2) - ($('nav .widget-bar').width() / 2), 10);
 
@@ -845,7 +839,6 @@ $(document).ready(function () {
         },
         loadMoreActivities: function() {
             var that = this;
-            console.log("CARGANDO PAGINA: " + fansworld.activity.page + " isLoading: " + that.options.isLoadingActivities)
             $(that.element).find('.widget-app ul').append('<li><div class="loading"></div></li>');
             that.redrawScrollBar();
             fansworld.activity.getActivity();
@@ -866,10 +859,11 @@ $(document).ready(function () {
             var that = this;
             if (that.options.isPoped) {
                 return;
-            }
+            }            
             //that.setPosition(event.target);
             event.stopPropagation();
             event.preventDefault();
+            $(that.element).show();
             $(that.element).animate({
                 opacity: 1
             });
@@ -881,9 +875,10 @@ $(document).ready(function () {
             if (!that.options.isPoped) {
                 return;
             }
+            $(that.element).hide();
             $(that.element).animate({
                 opacity: 0
-            });
+            });            
             $(that.options.target).removeClass('active');
             that.options.isPoped = false;
             that.checkBounds(false);
@@ -899,7 +894,6 @@ $(document).ready(function () {
             var width = $(that.element).width();
 
             if(check) {
-                console.log("checking bounds")
                 $("body").on('click', function(event) {
                     if((event.pageY >= offset.top && event.pageY <= offset.top + height) && (event.pageX >= offset.left && event.pageX <= offset.left + width)){
                     } else {
@@ -936,8 +930,7 @@ $(document).ready(function () {
 
             // Get target window positioning
             var offset = $('nav .widget-bar').offset();
-            offset.top += $('nav .widget-bar').height();
-            //offset.top -= parseInt(($(that.element).height() + $(button).height() + 10), 10);
+            offset.top = $('nav .widget-bar').height() + 2;
             offset.left -= parseInt(($(that.element).width() / 2) - ($('nav .widget-bar').width() / 2), 10);
 
             $(that.element).css({
@@ -947,18 +940,13 @@ $(document).ready(function () {
             $(that.element).css({
                 display: 'block'
             });
-
             var targetOffset = $(button).offset();
             var arrowOffset = $(that.element).find('.arrow-up').offset();
+            var displacement = arrowOffset > targetOffset ? $(that.element).find('.arrow-up').position().left + (targetOffset.left - arrowOffset.left) : $(that.element).find('.arrow-up').position().left - (arrowOffset.left - targetOffset.left); 
 
-            var displacement = arrowOffset > targetOffset ? $(that.element).find('.arrow-up').position().left + (targetOffset.left - arrowOffset.left) : $(that.element).find('.arrow-up').position().left - (arrowOffset.left - targetOffset.left);
-
-            console.log("targetOffset: " + targetOffset.left + " arrowOffsetLeft: " + arrowOffset.left + " arrowLeft: " + $(that.element).find('.arrow-up').position().left + " move: " + displacement);
-            
             $(that.element).find('.arrow-up').css({
                 left: displacement + 'px'
             });
-               
             // Toggle visibility
             if (!that.options.isPoped) {
                 //$(that.element).find('.widget-title').css('color', '#0f0');
@@ -1257,7 +1245,7 @@ $(document).ready(function () {
         window.fansWorldEvents = window.fansWorldEvents || new EventEmitter();
         // Init Notifications core plugin
         window.fansworld = window.fansworld || {};
-        window.fansworld.notificacion = new window.NOTIFICACION();
+        window.fansworld.notificacion = new window.NOTIFICATION();
         // Init Activity core plugin
         window.fansworld = window.fansworld || {};
         window.fansworld.activity = new window.ACTIVITY(); 
@@ -1268,13 +1256,7 @@ $(document).ready(function () {
 
         $('header').append($(fragment).clone());
         $('header').append($(fragment).clone());
-        $('header').append($(fragment).clone());
-        $('header').append($(fragment).clone());
-        /*
-        $('.widget-container').fwWidget({
-            title: "Notificaciones"
-        });
-        */
+        
         $('.widget-container:eq(0)').fwActivityWidget({
             title: "Actividad"
         });
