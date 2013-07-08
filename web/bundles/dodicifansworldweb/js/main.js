@@ -122,7 +122,7 @@ var site = {
          */
 
         // Invite modal popup
-        $(".btn[data-invite-modal]").modalPopup({
+        $("[data-invite-modal]").modalPopup({
             'href': Routing.generate(appLocale + '_modal_invite', {}),
             'width': 1000,
             'close': '.invite-modal .close-button'

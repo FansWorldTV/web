@@ -6,18 +6,18 @@
     <div class='container'>
         <div class="left-container">
             <a class="brand" href="{{ path('homepage') }}">
-                <img class="big" src="{{ asset('bundles/dodicifansworldweb/images/logofw.png' )}}" />
-                <img class="tiny" src="{{ asset('bundles/dodicifansworldweb/images/fw_tiny_logo.png' )}}" />
+                <img class="big" src="{{ asset('bundles/dodicifansworldweb/images/logofw.png' ) }}"/>
+                <img class="tiny" src="{{ asset('bundles/dodicifansworldweb/images/fw_tiny_logo.png' ) }}"/>
             </a>
 
             <ul class="nav sections">
                 <li {% if sectionSelected == 'profiles' %} class="active" {% endif %}>
                     <a href="{{ path('profiles_index') }}">Perfiles</a>
                 </li>
-                {#<li {% if sectionSelected == 'tv' %} class="active" {% endif %}>
-                    <a href="{{ path('teve_home') }}">Canales</a>
+                <li {% if sectionSelected == 'home' %} class="active" {% endif %}>
+                    <a href="{{ path('homepage') }}">Canales</a>
                 </li>
-                <li {% if sectionSelected == 'idols' %} class="active" {% endif %}>
+                {#<li {% if sectionSelected == 'idols' %} class="active" {% endif %}>
                     <a href="{{ path('idol_home') }}">Idolos</a>
                 </li>
                 <li {% if sectionSelected == 'teams' %} class="active" {% endif %}>
@@ -31,13 +31,20 @@
         <div class="right-container">
             <form class="navbar-search" name="search" method="post" action="{{ path('search_home') }}">
                 <input name="query" type="text"/>
+<<<<<<< HEAD
                 <button type="submit" class="icon-search"></button>
              </form>
+=======
+                <i class="icon-search"></i>
+            </form>
+>>>>>>> e9f1273db3902244e040ed9307ab546173275cfe
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <!-- div class="dropdown share" data-dropdownshare>
                     <a href="{{ path('photo_fileupload') }}" data-upload="photo"><i class="icon-circle-arrow-up icon-white"></i>Subir Video</a>
                 </div -->
-                <button class="btn-upload-video" href="{{ path('photo_fileupload') }}" data-upload="photo"><i class="icon-circle-arrow-up icon-white"></i>Subir Video</button>
+                <button class="btn-upload-video" href="{{ path('photo_fileupload') }}" data-upload="photo"><i
+                            class="icon-circle-arrow-up icon-white"></i>Subir Video
+                </button>
                 <div class="dropdown user">
                     <a href="#" class="dropdown-toggle username" data-toggle="dropdown">
                         <!--span>{{ user.firstname }}<b class="caret"></b></span-->
@@ -67,13 +74,23 @@
                         <li class="divider"></li>
 
                         <li>
+                            <a href="#" data-invite-modal>Invitar amigos</a>
+                        </li>
+
+                        <li>
                             <a href="{{ path("fos_user_security_logout") }}">Cerrar Sesión</a>
                         </li>
                     </ul>
                 </div>
             {% else %}
-                <a href="{{ path('fos_user_registration_register') }}"><button class="btn-upload-video notlogged pull-left"><i class="icon-circle-arrow-up icon-white"></i>Subir video</button></a>
-                <button class='btn-login header-ingresar' href="{{ path('fos_user_security_login') }}" data-login-btn>Ingresar</button>
+                <a href="{{ path('fos_user_registration_register') }}">
+                    <button class="btn-upload-video notlogged pull-left"><i class="icon-circle-arrow-up icon-white"></i>Subir
+                        video
+                    </button>
+                </a>
+                <button class='btn-login header-ingresar' href="{{ path('fos_user_security_login') }}" data-login-btn>
+                    Ingresar
+                </button>
             {% endif %}
             <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#collapse-me">
                 <span class="icon-bar"></span>
@@ -111,7 +128,8 @@
 
             <form class="login clearfix" action="{{ path("fos_user_security_check") }}" method="post">
                 <span class="pull-left">Login</span>
-                <span class="pull-right"><a href='{{ path('fos_user_resetting_request') }}'>Olvidaste Contraseña?</a></span>
+                <span class="pull-right"><a href='{{ path('fos_user_resetting_request') }}'>Olvidaste
+                        Contraseña?</a></span>
                 <ul>
                     <li>
                         <input type="text" id="username" name="_username" placeholder="Usuario"/>
@@ -122,11 +140,11 @@
                 </ul>
                 <div class='bottom-login'>
                     <div class="recordar">
-                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                        <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
                         <label for="remember_me">Recordarme</label>
                     </div>
 
-                    <input type="hidden" name="_target_path" value="{{ app.request.uri }}" />
+                    <input type="hidden" name="_target_path" value="{{ app.request.uri }}"/>
                     <button type='submit' class='btn-submit'>ingresar</button>
 
                 </div>
