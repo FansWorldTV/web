@@ -52,11 +52,11 @@ class ProfileRepository extends CountBaseRepository
                     . (('idol' == $etype) ?
                         ('CONCAT(' . $etype . '.firstname, \' \', ' . $etype . '.lastname) AS title') : ($etype . '.title as title'))
                     . ' FROM ' . $etype . '
-                    LEFT JOIN genre gen ON gen.id = ' . $etype . '.genre_id
+                    LEFT JOIN hasgenres hg ON hg.' . $etype . '_id = ' . $etype . '.id
                     WHERE
                     active = true
                     AND
-                    (:genre IS NULL OR (genre_id = :genre OR gen.parent_id = :genre))';
+                    (:genre IS NULL OR ((hg.genre_id = :genre) OR (hg.genre_id IN (SELECT id FROM genre WHERE parent_id = :genre))))';
             } else {
                 $sqls[$etype] = '
                     SELECT v.' . $etype . '_id AS id, COUNT( v.' . $etype . '_id ) AS activity,
@@ -65,11 +65,11 @@ class ProfileRepository extends CountBaseRepository
                     e.genre_id as genre, e.slug as slug, "' . $etype . '" as type, ' . 'e.splash as splashid '
                     . ' FROM visit v
                     INNER JOIN ' . $etype . ' e ON e.id = v.' . $etype . '_id
-                    LEFT JOIN genre gen ON gen.id = e.genre_id
+                    LEFT JOIN hasgenres hg ON hg.' . $etype . '_id = e.id
                     WHERE
                     e.active = true
                     AND
-                    (:genre IS NULL OR (genre_id = :genre OR gen.parent_id = :genre))
+                    (:genre IS NULL OR ((hg.genre_id = :genre) OR (hg.genre_id IN (SELECT id FROM genre WHERE parent_id = :genre))))
                     AND
                     v.created_at > :datebefore
                     GROUP BY v.' . $etype . '_id
