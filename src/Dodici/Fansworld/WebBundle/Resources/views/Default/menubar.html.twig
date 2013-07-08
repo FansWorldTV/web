@@ -31,7 +31,7 @@
         <div class="right-container">
             <form class="navbar-search" name="search" method="post" action="{{ path('search_home') }}">
                 <input name="query" type="text"/>
-                <i class="icon-search"></i>
+                <button type="submit" class="icon-search"></button>
              </form>
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <!-- div class="dropdown share" data-dropdownshare>
