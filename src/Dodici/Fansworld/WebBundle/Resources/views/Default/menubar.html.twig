@@ -29,6 +29,8 @@
             </ul>
         </div>
         <div class="right-container">
+            <nav class="widget-bar">
+            </nav>
             <form class="navbar-search" name="search" method="post" action="{{ path('search_home') }}">
                 <input name="query" type="text"/>
                 <i class="icon-search"></i>
@@ -146,5 +148,21 @@
             </form>
         </div>
         <a class="register" href="{{ path('fos_user_registration_register') }}">Crear nueva cuenta</a>
+    </div>
+{% endif %}
+
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        <div class="widget-container" style="opacity:0;display:block;">
+        <div class='arrow-up'></div>
+        <div class="widget-content">
+            <h4 class="widget-title">Title</h4>
+            <i class="close-share"></i>
+            <div class="widget-inner">
+                <div class="widget-app">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 {% endif %}
