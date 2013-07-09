@@ -1268,8 +1268,7 @@ $(document).ready(function () {
         var fragment = document.createDocumentFragment();
         fragment.appendChild(widgetTemplate);
 
-        $('header').append($(fragment).clone());
-        $('header').append($(fragment).clone());
+        $('header:first').append($(fragment).clone());
 
         $('.widget-container:eq(0)').fwActivityWidget({
             title: "Actividad"
