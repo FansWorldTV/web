@@ -896,24 +896,31 @@ $(document).ready(function () {
         },
         checkBounds: function(check) {
             var that = this;
-            var offset = $(that.element).offset();
-            var height = $(that.element).height();
-            var width = $(that.element).width();
-
+            function handleClick(event) {
+                if(!that.checkBound(event.pageX, event.pageY, that.element)) {
+                    if(that.options.isPoped && !event.target.classList.contains('btn-widget')) {
+                        // TODO: buscar un mejor nombre para el boton asociado al evento
+                        $(that.options.target).removeClass('active'); 
+                        $(this).off();
+                        that.popOut(event);                            
+                    }                            
+                }                
+            }
             if(check) {
-                $("body").on('click', function(event) {
-                    if((event.pageY >= offset.top && event.pageY <= offset.top + height) && (event.pageX >= offset.left && event.pageX <= offset.left + width)){
-                    } else {
-                        if(that.options.isPoped && !event.target.classList.contains('btn-widget')) {
-                            // TODO: buscar un mejor nombre para el boton asociado al evento
-                            $(that.options.target).removeClass('active'); 
-                            $(this).off();
-                            that.popOut(event);                            
-                        }                            
-                    }
-                });
+                $("body").on('click', handleClick);
             } else {
-                $("body").off();
+                $("body").off('click', handleClick);
+            }
+        },
+        checkBound: function(x, y, element) {
+            var that = this;
+            var offset = $(element).offset();
+            var height = $(element).height();
+            var width = $(element).width();
+            if((event.pageY >= offset.top && event.pageY <= offset.top + height) && (event.pageX >= offset.left && event.pageX <= offset.left + width)) {
+                return true;
+            } else {
+                return false;
             }
         },
         toggle: function (button, event) {
