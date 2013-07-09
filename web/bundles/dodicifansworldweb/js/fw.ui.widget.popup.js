@@ -557,7 +557,7 @@ $(document).ready(function () {
                 that.toggle(button, event);
             });
             window.fansWorldEvents.addListener(that._name + '_togglebutton', function(plugin, button) {
-                button.label.innerText = response.result;                
+                button.label.innerText = that.options.notificationNumber;
                 that.options.toggleButton = button;
             });
             // Bind close button
