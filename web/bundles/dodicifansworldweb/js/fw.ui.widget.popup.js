@@ -496,7 +496,9 @@ $(document).ready(function () {
     var defaults = {
         title: "Notificaciones",
         isPoped: false,
-        target: null
+        target: null,
+        notificationNumber: 0,
+        toggleButton: null
     };
 
     // The actual plugin constructor
@@ -540,6 +542,12 @@ $(document).ready(function () {
                     }
                 }
             });
+            fansworld.notificacion.addListener('ongettotal', function(response){
+                that.options.notificationNumber = response.result;
+                if(that.options.toggleButton) {
+                    that.options.toggleButton.label.innerText = response.result;
+                }
+            });
             window.fansWorldEvents.addListener('widgets-off', function(button, event) {
                 if (that.options.isPoped) { 
                     that.popOut(event);
@@ -547,6 +555,11 @@ $(document).ready(function () {
             });            
             window.fansWorldEvents.addListener(that._name + '_toggle', function(button, event) {
                 that.toggle(button, event);
+            });
+            window.fansWorldEvents.addListener(that._name + '_togglebutton', function(plugin, button) {
+                console.log("_togglebutton");
+                button.label.innerText = response.result;                
+                that.options.toggleButton = button;
             });
             // Bind close button
             $(that.element).find('.close-share').on("click", function(event) {
@@ -711,7 +724,7 @@ $(document).ready(function () {
             var arrowOffset = $(that.element).find('.arrow-up').offset();
 
             var displacement = arrowOffset > targetOffset ? $(that.element).find('.arrow-up').position().left + (targetOffset.left - arrowOffset.left) : $(that.element).find('.arrow-up').position().left - (arrowOffset.left - targetOffset.left);
-            
+
             $(that.element).find('.arrow-up').css({
                 left: displacement + 'px'
             });
