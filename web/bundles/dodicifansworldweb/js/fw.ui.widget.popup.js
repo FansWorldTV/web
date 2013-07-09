@@ -101,7 +101,7 @@ $(document).ready(function () {
             this.listeners = {};
             this.channel = "notification_" + this.guidGenerator();
             this.total = 0;
-            this.typecounts = {};
+            this.typecounts = null;
             this.notificacion = null;
             this.notificacions = null;
             this.latest = null;
@@ -116,11 +116,9 @@ $(document).ready(function () {
             var that = this;
             // ADD NOTIFICATION CHANNEL
             if ((typeof Meteor != 'undefined') && (typeof notificationChannel != 'undefined')) {
-                console.log('Esta todo bien');
                 Meteor.registerEventCallback("process", that.notificationReceived);
                 Meteor.joinChannel(that.channel);
                 Meteor.connect();
-                console.log('Escuchando notifications..');
             }
         };
         NOTIFICATION.prototype.leave = function() {
@@ -135,7 +133,7 @@ $(document).ready(function () {
         NOTIFICATION.prototype.notificationReceived = function(response) {
             var that = this;
             var response = JSON.parse(response);
-            console.log('Notification has arrived');
+            console.log('Meteor Notification has arrived');
             console.log(response);
             if (response) {
                 if (response.t == 'n') {
@@ -714,7 +712,6 @@ $(document).ready(function () {
             // Get target window positioning
             var offset = $('nav .widget-bar').offset();
             offset.top = $('nav .widget-bar').height() + 2;
-            //offset.top -= parseInt(($(that.element).height() + $(button).height() + 10), 10);
             offset.left -= parseInt(($(that.element).width() / 2) - ($('nav .widget-bar').width() / 2), 10);
 
             $(that.element).css({
@@ -724,11 +721,11 @@ $(document).ready(function () {
             $(that.element).css({
                 display: 'block'
             });
-
             var targetOffset = $(button).offset();
+            targetOffset.left +=  $(button).width() / 2;
             var arrowOffset = $(that.element).find('.arrow-up').offset();
-
-            var displacement = arrowOffset > targetOffset ? $(that.element).find('.arrow-up').position().left + (targetOffset.left - arrowOffset.left) : $(that.element).find('.arrow-up').position().left - (arrowOffset.left - targetOffset.left);
+            var arrowPosition = $(that.element).find('.arrow-up').position();
+            var displacement = arrowOffset > targetOffset ? arrowPosition.left + (targetOffset.left - arrowOffset.left) : arrowPosition.left - (arrowOffset.left - targetOffset.left); 
 
             $(that.element).find('.arrow-up').css({
                 left: displacement + 'px'
@@ -980,8 +977,10 @@ $(document).ready(function () {
                 display: 'block'
             });
             var targetOffset = $(button).offset();
+            targetOffset.left +=  $(button).width() / 2;
             var arrowOffset = $(that.element).find('.arrow-up').offset();
-            var displacement = arrowOffset > targetOffset ? $(that.element).find('.arrow-up').position().left + (targetOffset.left - arrowOffset.left) : $(that.element).find('.arrow-up').position().left - (arrowOffset.left - targetOffset.left); 
+            var arrowPosition = $(that.element).find('.arrow-up').position();
+            var displacement = arrowOffset > targetOffset ? arrowPosition.left + (targetOffset.left - arrowOffset.left) : arrowPosition.left - (arrowOffset.left - targetOffset.left); 
 
             $(that.element).find('.arrow-up').css({
                 left: displacement + 'px'
