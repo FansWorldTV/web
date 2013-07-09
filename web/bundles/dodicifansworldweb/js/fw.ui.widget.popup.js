@@ -546,18 +546,24 @@ $(document).ready(function () {
                 that.options.notificationNumber = response.result;
                 if(that.options.toggleButton) {
                     that.options.toggleButton.label.innerText = response.result;
+                    $(that.options.toggleButton.label).animate({
+                        opacity: 1
+                    });
                 }
             });
             window.fansWorldEvents.addListener('widgets-off', function(button, event) {
                 if (that.options.isPoped) { 
                     that.popOut(event);
                 }
-            });            
+            });
             window.fansWorldEvents.addListener(that._name + '_toggle', function(button, event) {
                 that.toggle(button, event);
             });
             window.fansWorldEvents.addListener(that._name + '_togglebutton', function(plugin, button) {
                 button.label.innerText = that.options.notificationNumber;
+                $(button.label).animate({
+                    opacity: 1
+                });
                 that.options.toggleButton = button;
             });
             // Bind close button
