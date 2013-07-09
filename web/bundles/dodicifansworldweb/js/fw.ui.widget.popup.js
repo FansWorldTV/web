@@ -640,15 +640,15 @@ $(document).ready(function () {
                     if(that.options.isPoped && !event.target.classList.contains('btn-widget')) {
                         // TODO: buscar un mejor nombre para el boton asociado al evento
                         $(that.options.target).removeClass('active'); 
-                        $(this).off();
+                        document.body.removeEventListener("click", this, false);
                         that.popOut(event);                            
                     }                            
                 }                
             }
             if(check) {
-                $("body").on('click', handleClick);
+                document.body.addEventListener("click", handleClick, false);
             } else {
-                $("body").off('click', handleClick);
+                document.body.removeEventListener("click", handleClick, false);
             }
         },
         checkBound: function(x, y, element) {
@@ -901,15 +901,15 @@ $(document).ready(function () {
                     if(that.options.isPoped && !event.target.classList.contains('btn-widget')) {
                         // TODO: buscar un mejor nombre para el boton asociado al evento
                         $(that.options.target).removeClass('active'); 
-                        $(this).off();
+                        document.body.removeEventListener("click", this, false);
                         that.popOut(event);                            
                     }                            
                 }                
             }
             if(check) {
-                $("body").on('click', handleClick);
+                document.body.addEventListener("click", handleClick, false);
             } else {
-                $("body").off('click', handleClick);
+                document.body.removeEventListener("click", handleClick, false);
             }
         },
         checkBound: function(x, y, element) {
