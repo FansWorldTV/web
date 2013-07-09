@@ -552,12 +552,20 @@ $(document).ready(function () {
             $(that.element).find('.close-share').on("click", function(event) {
                 that.popOut(event);
             });
+            // Bind mouse actions & css transitions
+            $(that.element).on('mouseleave', function(event) {
+                $(this).animate({opacity: 0.5});
+            });            
+            $(that.element).on('mouseenter', function(event) {
+                $(this).animate({opacity: 1});
+            });
         },
         getMoreNews: function() {
 
         },
         makeScrollPane: function() {
             var that = this;
+            $(that.element).css('display', 'block');
             $(that.element).find('.widget-inner').jScrollPane();
             $(that.element).find('.widget-inner')
             .bind(
@@ -580,6 +588,8 @@ $(document).ready(function () {
                     }
                 }
             );
+            $(that.element).css('display', 'none');
+            return;
         },
         redrawScrollBar: function() {
             var that = this;
@@ -816,9 +826,17 @@ $(document).ready(function () {
             $(that.element).find('.close-share').on("click", function(event) {
                 that.popOut(event);
             });
+            // Bind mouse actions & css transitions
+            $(that.element).on('mouseleave', function(event) {
+                $(this).animate({opacity: 0.5});
+            });            
+            $(that.element).on('mouseenter', function(event) {
+                $(this).animate({opacity: 1});
+            });            
         },
         makeScrollPane: function() {
             var that = this;
+            $(that.element).css('display', 'block');
             $(that.element).find('.widget-inner').jScrollPane();
             $(that.element).find('.widget-inner')
             .bind(
@@ -837,6 +855,8 @@ $(document).ready(function () {
                     }
                 }
             );
+            $(that.element).css('display', 'none');
+            return;            
         },
         redrawScrollBar: function() {
             var that = this;
