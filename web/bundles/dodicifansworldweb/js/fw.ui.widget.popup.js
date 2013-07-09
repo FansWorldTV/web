@@ -572,6 +572,7 @@ $(document).ready(function () {
                 'jsp-initialised',
                 function(event, isScrollable) {
                     //console.log('Handle jsp-initialised', this, 'isScrollable=', isScrollable);
+                    that.options.isScrollable = isScrollable;
                 }
             )
             .bind(
@@ -588,7 +589,9 @@ $(document).ready(function () {
                     }
                 }
             );
-            $(that.element).css('display', 'none');
+            if(!that.options.isPoped) {
+                $(that.element).css('display', 'none');
+            }
             return;
         },
         redrawScrollBar: function() {
@@ -843,6 +846,7 @@ $(document).ready(function () {
                 'jsp-initialised',
                 function(event, isScrollable) {
                     //console.log('Handle jsp-initialised', this, 'isScrollable=', isScrollable);
+                    that.options.isScrollable = isScrollable;
                 }
             )
             .bind(
@@ -855,7 +859,9 @@ $(document).ready(function () {
                     }
                 }
             );
-            $(that.element).css('display', 'none');
+            if(!that.options.isPoped) {
+                $(that.element).css('display', 'none');
+            }
             return;            
         },
         redrawScrollBar: function() {
