@@ -557,7 +557,6 @@ $(document).ready(function () {
                 that.toggle(button, event);
             });
             window.fansWorldEvents.addListener(that._name + '_togglebutton', function(plugin, button) {
-                console.log("_togglebutton");
                 button.label.innerText = response.result;                
                 that.options.toggleButton = button;
             });
@@ -1170,10 +1169,9 @@ $(document).ready(function () {
             that.options.header = document.querySelector('nav .widget-bar');
             that.options.buttons.forEach(function(element, index, array) {
                 element.node = that.makeButton(that.guidGenerator(), element.name, element.title, element.icon, element.plugin);
+                element.label = element.node.querySelector('.label');
+                window.fansWorldEvents.emitEvent(element.plugin + '_togglebutton', [this, element]);
                 that.options.header.insertBefore(element.node, that.options.header.firstChild);
-            });
-            fansworld.notificacion.addListener('ongettotal', function(response){
-                that.updateLabel('id', response.result);
             });
             // Listen notifications
             fansworld.notificacion.addListener('onnotificationreceived', function(response){
