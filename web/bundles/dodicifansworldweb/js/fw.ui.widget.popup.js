@@ -572,7 +572,6 @@ $(document).ready(function () {
                 'jsp-initialised',
                 function(event, isScrollable) {
                     //console.log('Handle jsp-initialised', this, 'isScrollable=', isScrollable);
-                    that.options.isScrollable = isScrollable;
                 }
             )
             .bind(
@@ -700,14 +699,6 @@ $(document).ready(function () {
             //offset.top -= parseInt(($(that.element).height() + $(button).height() + 10), 10);
             offset.left -= parseInt(($(that.element).width() / 2) - ($('nav .widget-bar').width() / 2), 10);
 
-            console.log("left: " + offset.left)
-
-            // Set popup position
-            /*$(that.element).offset({
-                top: offset.top,
-                left: offset.left
-            });
-            */
             $(that.element).css({
                 top: offset.top,
                 left: offset.left
@@ -720,16 +711,10 @@ $(document).ready(function () {
             var arrowOffset = $(that.element).find('.arrow-up').offset();
 
             var displacement = arrowOffset > targetOffset ? $(that.element).find('.arrow-up').position().left + (targetOffset.left - arrowOffset.left) : $(that.element).find('.arrow-up').position().left - (arrowOffset.left - targetOffset.left);
-
-            console.log("targetOffset: " + targetOffset.left + " arrowOffsetLeft: " + arrowOffset.left + " arrowLeft: " + $(that.element).find('.arrow-up').position().left + " move: " + displacement);
             
             $(that.element).find('.arrow-up').css({
                 left: displacement + 'px'
             });
-            //var b = arrowOffset.left - targetOffset.left;
-            $(that.element).find('.arrow-up').css({
-                //left: b
-            })
             // Toggle visibility
             if (!that.options.isPoped) {
                 //$(that.element).find('.widget-title').css('color', '#0f0');
@@ -796,13 +781,10 @@ $(document).ready(function () {
             that.options.isLoadingActivities = true;
             fansworld.activity.addListener('ongetactivity', function(response){
                 var i;
-                console.log('ongetactivity')
-                console.log(response)
                 for(i in response.result.view) {
                     if (response.result.view.hasOwnProperty(i)) {
                         $(that.element).find('.widget-app ul li .loading').parent().remove();
                         var activity = response.result.view[i];
-                        //$(that.element).find('.widget-app ul').append('<li>' + activity + '<br /><span class="notice-text"><i class="icon-barcode" style="margin-top:2px;"></i>' + response.result.activity[i].id + '<i class="icon-time" style="margin-top:2px;"></i> ' + $.timeago(new Date(parseInt(response.result.activity[i].ts, 10) * 1000)) + '</span></li>');
                         $(that.element).find('.widget-app ul').append('<li>' + activity + '<br /><span class="notice-text"><i class="icon-time" style="margin-top:2px;"></i> ' + $.timeago(new Date(parseInt(response.result.activity[i].ts, 10) * 1000)) + '</span></li>');
                         that.options.isLoadingActivities = false;
                         // Make new scrollbars is none
@@ -846,7 +828,6 @@ $(document).ready(function () {
                 'jsp-initialised',
                 function(event, isScrollable) {
                     //console.log('Handle jsp-initialised', this, 'isScrollable=', isScrollable);
-                    that.options.isScrollable = isScrollable;
                 }
             )
             .bind(
