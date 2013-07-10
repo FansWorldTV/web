@@ -921,7 +921,7 @@
     var TypeaheadView = function() {
         var html = {
             wrapper: '<span class="twitter-typeahead"></span>',
-            hint: '<input class="tt-hint" type="submit" placeholder=" " autocomplete="off" spellcheck="off" disabled>',
+            hint: '<input class="tt-hint" type="text" autocomplete="off" spellcheck="off" disabled>',
             dropdown: '<span class="tt-dropdown-menu"></span>'
         }, css = {
             wrapper: {
