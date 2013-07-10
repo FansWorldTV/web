@@ -603,6 +603,11 @@ $(document).ready(function () {
                         */
                     }
                 }
+            ).bind(
+                'mousewheel',
+                function(event) {
+                    event.preventDefault();
+                }
             );
             if(!that.options.isPoped) {
                 $(that.element).css('display', 'none');
@@ -853,6 +858,11 @@ $(document).ready(function () {
                         that.options.isLoadingActivities = true;
                         that.loadMoreActivities();
                     }
+                }
+            ).bind(
+                'mousewheel',
+                function(event) {
+                    event.preventDefault();
                 }
             );
             if(!that.options.isPoped) {
