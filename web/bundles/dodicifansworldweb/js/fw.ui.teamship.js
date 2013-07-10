@@ -58,7 +58,7 @@ $(document).ready(function () {
         toggleTeamship: function(teamId) {
             var that = this;
             var self = $(that.element);
-            self.addClass('loading-small');
+            //self.addClass('loading-small');
             ajax.genericAction(
                 'teamship_ajaxtoggle',
                 { 'team': teamId },
@@ -70,11 +70,11 @@ $(document).ready(function () {
                             that.onRemoveTeam(responseJSON);
                         }
                     }
-                    self.removeClass('loading-small');
+                    //self.removeClass('loading-small');
                 },
                 function(error) {
                     window.error(error.responseText);
-                    self.removeClass('loading-small');
+                    //self.removeClass('loading-small');
                     return that.options.onError(error);
                 });
         },
