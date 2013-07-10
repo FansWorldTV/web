@@ -207,8 +207,19 @@ class EditController extends SiteController
                                     if ($key == 'album') {
                                         $entity->setAlbum($album);
                                     } else {
-                                        $methodname = 'set' . ucfirst($key);
-                                        $entity->$methodname($val);
+
+                                        if ('genre' == $key) {
+                                            $genre = $this->getRepository('Genre')->find($val);
+                                            $entity->setGenre($genre);
+                                        } else {
+                                            if ('videoCategory' == $key) {
+                                                $videoCat = $this->getRepository('VideoCategory')->find($val);
+                                                $entity->setVideoCategory($videoCat);
+                                            } else {
+                                                $methodname = 'set' . ucfirst($key);
+                                                $entity->$methodname($val);
+                                            }
+                                        }
                                     }
                                 }
                             }
