@@ -13,17 +13,14 @@
             <li {% if active_tab == 'videos' %}class="active"{% endif %}>
                 <a  href="{{ path('user_videos', {username: user.username}) }}">Videos</a>
             </li>
-            <li {% if active_tab == 'teams' %}class="active"{% endif %}>
-                <a href="{{ path('user_teams', {username: user.username}) }}">Equipos</a>
-            </li>
             <li {% if active_tab == 'photos' %}class="active"{% endif %}>
                 <a href="{{ path('user_photos', {username: user.username}) }}">{{ 'Photos'|trans }}</a>
             </li>
-            <li {% if active_tab == 'idols' %}class="active"{% endif %}>
-                <a href="{{ path('user_idols', {'username': user.username}) }}">Idolos</a>
-            </li>
             <li {% if active_tab == 'fans' %}class="active"{% endif %}>
                 <a href="{{ path('user_fans', {'username': user.username}) }}">Fans</a>
+            </li>
+            <li {% if active_tab == 'followers' %}class="active"{% endif %}>
+                <a href="{{ path('user_followers', {'username': user.username}) }}">Siguiendo</a>
             </li>
             
             {# BADGE_REM
