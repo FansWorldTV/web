@@ -1137,7 +1137,7 @@ class UserController extends SiteController
     {
         $user = $this->getUser();
         $activityRepo = $this->getRepository('Activity');
-        $number = $activityRepo->count(array('author' => $user->getId()));
+        $number = $activityRepo->countBy(array('author' => $user->getId()));
 
         return $this->jsonResponse(array('number' => $number));
     }
