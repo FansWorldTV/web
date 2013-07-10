@@ -160,8 +160,8 @@ class EditController extends SiteController
                     $genrechoises[$gen->getTitle()] = $childarray;
                 }
 
-                if (property_exists($entity, 'genre')) $defaultData['genre'] = $entity->getGenre();
-                if (property_exists($entity, 'videocategory')) $defaultData['videoCategory'] = $entity->getVideoCategory();
+                if (property_exists($entity, 'genre')) $defaultData['genre'] = $entity->getGenre()->getId();
+                if (property_exists($entity, 'videocategory')) $defaultData['videoCategory'] = $entity->getVideoCategory()->getId();
 
                 $constraints['genre'] = array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($genrechoises)));
                 $fields['genre'] = array('type' => 'choice', 'options' => array('required' => true, 'choices' => $genrechoises, 'label' => 'Genero'));
