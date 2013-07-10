@@ -163,10 +163,10 @@ class EditController extends SiteController
                 if (property_exists($entity, 'genre')) $defaultData['genre'] = $entity->getGenre()->getId();
                 if (property_exists($entity, 'videocategory')) $defaultData['videoCategory'] = $entity->getVideoCategory()->getId();
 
-                $constraints['genre'] = array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($genrechoises)));
+                $constraints['genre'] = array();
                 $fields['genre'] = array('type' => 'choice', 'options' => array('required' => true, 'choices' => $genrechoises, 'label' => 'Genero'));
 
-                $constraints['videoCategory'] = array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($categoriesChoices)));
+                $constraints['videoCategory'] = array();
                 $fields['videoCategory'] = array('type' => 'choice', 'options' => array('required' => true, 'choices' => $categoriesChoices, 'label' => 'Canal'));
 
                 $collectionConstraint = new Collection($constraints);
