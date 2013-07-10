@@ -161,10 +161,10 @@ class EditController extends SiteController
                 }
 
                 $constraints['genre'] = array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($genrechoises)));
-                $fields['genre'] = array('type' => 'choise', 'options' => array('required' => true, 'choices' => $genrechoises, 'label' => 'Genero'));
+                $fields['genre'] = array('type' => 'choice', 'options' => array('required' => true, 'choices' => $genrechoises, 'label' => 'Genero'));
 
                 $constraints['videoCategory'] = array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($categoriesChoices)));
-                $fields['videoCategory'] = array('type' => 'choise', 'options' => array('required' => true, 'choices' => $categoriesChoices, 'label' => 'Canal'));
+                $fields['videoCategory'] = array('type' => 'choice', 'options' => array('required' => true, 'choices' => $categoriesChoices, 'label' => 'Canal'));
 
 
                 $collectionConstraint = new Collection($constraints);
