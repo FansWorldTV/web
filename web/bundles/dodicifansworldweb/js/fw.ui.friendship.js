@@ -58,7 +58,7 @@ $(document).ready(function () {
                 friendgroups[k] = $(el).val();
             });
 
-            self.addClass('loading-small');
+            //self.addClass('loading-small');
             ajax.genericAction(
                 'friendship_ajaxaddfriend',
                 {
@@ -71,11 +71,11 @@ $(document).ready(function () {
                             that.onAddFriend(responseJSON);
                         }
                     }
-                    self.removeClass('loading-small');
+                    //self.removeClass('loading-small');
                 },
                 function(error) {
                     window.error(error.responseText);
-                    self.removeClass('loading-small');
+                    //self.removeClass('loading-small');
                     return that.options.onError(error);
                 });
         },

@@ -50,7 +50,7 @@ $(document).ready(function () {
         toggleIdolship: function(idolId) {
             var that = this;
             var self = $(that.element);
-            self.addClass('loading-small');
+            //self.addClass('loading-small');
             ajax.genericAction(
                 'idolship_ajaxtoggle',
                 { 'idol-id': idolId },
@@ -62,11 +62,11 @@ $(document).ready(function () {
                             that.onRemoveIdol(responseJSON);
                         }
                     }
-                    self.removeClass('loading-small');
+                    //self.removeClass('loading-small');
                 },
                 function(error) {
                     window.error(error.responseText);
-                    self.removeClass('loading-small');
+                    //self.removeClass('loading-small');
                     return that.options.onError(error);
                 });
         },
