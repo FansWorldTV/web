@@ -163,13 +163,13 @@ class EditController extends SiteController
                 }
 
                 if (property_exists($entity, 'genre')) $defaultData['genre'] = $entity->getGenre()->getId();
-                if (property_exists($entity, 'videocategory')) $defaultData['videoCategory'] = $entity->getVideoCategory()->getId();
+                if (property_exists($entity, 'videocategory')) $defaultData['videocategory'] = $entity->getVideoCategory()->getId();
 
                 $constraints['genre'] = array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($childChoices)));
                 $fields['genre'] = array('type' => 'choice', 'options' => array('required' => true, 'choices' => $genrechoises, 'label' => 'Genero'));
 
-                $constraints['videoCategory'] = array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($categoriesChoices)));
-                $fields['videoCategory'] = array('type' => 'choice', 'options' => array('required' => true, 'choices' => $categoriesChoices, 'label' => 'Canal'));
+                $constraints['videocategory'] = array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($categoriesChoices)));
+                $fields['videocategory'] = array('type' => 'choice', 'options' => array('required' => true, 'choices' => $categoriesChoices, 'label' => 'Canal'));
 
                 $collectionConstraint = new Collection($constraints);
                 $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint));
@@ -212,7 +212,7 @@ class EditController extends SiteController
                                             $genre = $this->getRepository('Genre')->find($val);
                                             $entity->setGenre($genre);
                                         } else {
-                                            if ('videoCategory' == $key) {
+                                            if ('videocategory' == $key) {
                                                 $videoCat = $this->getRepository('VideoCategory')->find($val);
                                                 $entity->setVideoCategory($videoCat);
                                             } else {
