@@ -150,11 +150,13 @@ class EditController extends SiteController
 
                 $genres = $this->getRepository('Genre')->findBy(array('parent' => null));
                 $genrechoises = array();
+                $childChoices = array();
                 foreach ($genres as $gen) {
                     $children = $gen->getChildren();
                     $childarray = array();
                     foreach ($children as $child) {
                         $childarray[$child->getId()] = $child->getTitle();
+                        $childChoices[] = $child->getId();
                     }
 
                     $genrechoises[$gen->getTitle()] = $childarray;
@@ -163,7 +165,7 @@ class EditController extends SiteController
                 if (property_exists($entity, 'genre')) $defaultData['genre'] = $entity->getGenre()->getId();
                 if (property_exists($entity, 'videocategory')) $defaultData['videoCategory'] = $entity->getVideoCategory()->getId();
 
-                $constraints['genre'] = array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($genrechoises)));
+                $constraints['genre'] = array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($childChoices)));
                 $fields['genre'] = array('type' => 'choice', 'options' => array('required' => true, 'choices' => $genrechoises, 'label' => 'Genero'));
 
                 $constraints['videoCategory'] = array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($categoriesChoices)));

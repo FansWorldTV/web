@@ -74,6 +74,8 @@ class ProfileController extends SiteController
         );
 
         foreach ($entities as $entity) {
+            $realEntity = $this->getRepository(ucfirst($entity['type']))->find($entity['id']);
+
             $profile = array(
                 'id'            => $entity['id'],
                 'type'          => $entity['type'],
@@ -86,7 +88,8 @@ class ProfileController extends SiteController
                 'imageDouble'  => $this->getImageUrl($entity['imageid'], 'huge_square'),
                 'splash'        => isset($entity['splashid']) ? $this->getImageUrl($entity['splashid'], 'big_square') : null,
                 'splashDouble' => isset($entity['splashid']) ? $this->getImageUrl($entity['splashid'], 'huge_square') : null,
-                'highlight'     => false
+                'highlight'     => false,
+                'isFan' => $this->get('fanmaker')->isFan($realEntity)
             );
 
             if ($filterBy == 'popular') {
