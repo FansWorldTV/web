@@ -812,7 +812,7 @@ $(document).ready(function () {
                     }
                 });
             });
-            $.when(fansworld.notificacion.getLatest()).then(function(latest){
+            $.when(fansworld.notificacion.getLatest('videos')).then(function(latest){
                 var i = 0;
                 for(i = 0; i <= that.options.batch; i +=1) {                    
                     $.when(fansworld.notificacion.getNotification(latest[i])).then(function(notification){
@@ -820,7 +820,7 @@ $(document).ready(function () {
                         that.makeScrollPane();
                     });
                 }
-            }),
+            });
             // Listen notifications
             fansworld.notificacion.addListener('onnotificationreceived', function(response){
                 var id = response.result.id;
@@ -1056,7 +1056,6 @@ $(document).ready(function () {
         }
     };
 });
-
 ////////////////////////////////////////////////////////////////////////////////
 // FansWorld activity widget plugin 1.0 initial                               //
 ////////////////////////////////////////////////////////////////////////////////
