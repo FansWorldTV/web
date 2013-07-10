@@ -69,12 +69,15 @@ class HomeController extends SiteController
 
             if ($genre) {
                 $homeVideo = $this->getRepository('Video')->findOneBy(array('genre' => $genre, 'highlight' => true));
-            } else {
+            } else if ($vc) {
                 $homeVideo = $this->getRepository('HomeVideo')->findOneBy(array('videocategory' => $vc));
                 if($homeVideo instanceof HomeVideo){
                     $homeVideo = $homeVideo->getVideo();
                 }
+            }else{
+                $homeVideo = $this->getRepository('Video')->findOneBy(array('highlight' => true));
             }
+
             $response['home'] = $serializer->values($homeVideo, 'home_video_double');
 
             $limitWithTheHighlighted = (self::LIMIT_VIDEO - 3);
