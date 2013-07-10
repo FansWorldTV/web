@@ -243,14 +243,14 @@ $(document).ready(function () {
                             });
                         }
                     }
-                    for(i = 0; i < that.options.prePopulate.length; i += 1) {
-                        if (that.options.prePopulate.hasOwnProperty(i)) {
-                            var item  = that.options.prePopulate[i];
-                            $(that.element).tagit('createTag', item.value, null, null, item.result);
-                        }
-                    }
-
                 });
+            }
+
+            for(i = 0; i < that.options.prePopulate.length; i += 1) {
+                if (that.options.prePopulate.hasOwnProperty(i)) {
+                    var item  = that.options.prePopulate[i];
+                    $(that.element).tagit('createTag', item.value, null, null, item.result);
+                }
             }
         },
         addEntityItem: function (item) {

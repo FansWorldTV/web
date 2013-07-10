@@ -478,7 +478,26 @@ span.nav-bar.tv {
 	font-size: 20px;
 
 	a {
+		text-transform: capitalize;
+		color: @green;
+	}
+
+	.bar {
+		font-weight: 300;
+		color: @grayLight;
+	}
+
+	.btn {
+		position: relative;
+		margin-right: 15px;
+		bottom: 5px;
+		.pull-right();
 		text-transform: uppercase;
+
+		i {
+			margin-top: 1px;
+			margin-right: 5px;
+		}
 	}
 }
 

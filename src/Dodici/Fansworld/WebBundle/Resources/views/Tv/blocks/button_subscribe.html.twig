@@ -1,9 +1,12 @@
-<button class="btn {% if large %} btn-large {% else %} btn-small {% endif %} btn-success" data-subscribe-channel="{{ channel.id }}" data-login-required>
+{% if large is not defined %}
+    {% set large = false %}
+{% endif %}
+<button class="btn {% if large %} btn-large {% else %} btn-small {% endif %} btn-success btn-subscribe" data-subscribe-channel="{{ channel.id }}" data-login-required>
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and (subscriptions.subscribed(channel)) %}
-        <i class="icon-remove"></i> 
+        <i class="icon-remove icon-white"></i>
         {{ 'unsubscribe'|trans }}
     {% else %}
-        <i class="icon-ok"></i> 
+        <i class="icon-plus-sign icon-white"></i>
         {{ 'subscribe'|trans }}
     {% endif %}
 </button>

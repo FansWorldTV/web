@@ -576,9 +576,9 @@
                 $button.text(response.buttontext);
 
                 if (response.state === true) {
-                    $button.prepend($('<i>').attr('class', 'icon-remove').after(' '));
+                    $button.prepend($('<i>').attr('class', 'icon-remove icon-white').after(' '));
                 } else if (response.state === false) {
-                    $button.prepend($('<i>').attr('class', 'icon-ok').after(' '));
+                    $button.prepend($('<i>').attr('class', 'icon-ok icon-white').after(' '));
                 }
                 $button.removeClass('loading-small');
             }, function (msg) {

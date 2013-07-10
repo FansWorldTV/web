@@ -39,7 +39,7 @@
 // EventEmitter is taken from packery but can be download from https://github.com/Wolfy87/EventEmitter
 $(document).ready(function () {
     "use strict";
-    window.fansWorldEvents = new EventEmitter();
+    window.fansWorldEvents = window.fansWorldEvents || new EventEmitter();
 });
 
 $(document).ready(function () {
@@ -140,7 +140,6 @@ $(document).ready(function () {
                         }).progress(function() {
                             console.log("adding thumbnails to packery");
                         }).fail(function(error){
-//                            alert(error.message);
                             that.hide();
                         });
                     }).fail(function(error){
@@ -150,7 +149,6 @@ $(document).ready(function () {
                         }).progress(function() {
                             console.log("adding thumbnails to packery");
                         }).fail(function(error){
-//                            alert(error.message);
                             that.hide();
                         });
                     });
@@ -201,6 +199,7 @@ $(document).ready(function () {
                 complete: function(){
                 }
             });
+            queue.pause();
             $.ajax({
                 url: that.options.videoFeed,
                 data: data || {
@@ -208,6 +207,7 @@ $(document).ready(function () {
                 }
             }).then(function(response) {
                 var i = 0;
+                var loadedImages = 0;
                 totalVideos = response.highlighted.length;
                 if(totalVideos <= 0) {
                     deferred.reject(new Error("Video category does not contain any video"));
@@ -223,7 +223,13 @@ $(document).ready(function () {
                                 $thumb.addClass('double');
                             }
                             cnt += 1;
-                            queue.add($thumb);
+                            $thumb.find('img').load(function() {
+                                queue.add($thumb);
+                                loadedImages += 1;
+                                if(loadedImages >= totalVideos) {
+                                    queue.start();
+                                }
+                            })
                         });
                     }
                 }

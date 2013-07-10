@@ -203,6 +203,10 @@ var site = {
             });
         }
 
+        $('[data-subscribe-channel]').click(function () {
+            TV.prototype.subscribe($(this));
+        });
+
         //$('[data-modal-url]').modalPopup();
 
         $("body").delegate("a[data-modal-url]", "click", function(e) {
