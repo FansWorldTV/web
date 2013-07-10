@@ -764,6 +764,300 @@ $(document).ready(function () {
 });
 
 ////////////////////////////////////////////////////////////////////////////////
+// FansWorld video processed plugin 1.0 initial                               //
+////////////////////////////////////////////////////////////////////////////////
+$(document).ready(function () {
+    "use strict";
+    // Create the defaults once
+    var pluginName = "fwVideoNotificationWidget";
+    var defaults = {
+        title: "Videos procesados",
+        isPoped: false,
+        target: null,
+        notificationNumber: 0,
+        batch: 10,
+        toggleButton: null
+    };
+
+    // The actual plugin constructor
+
+    function Plugin(element, options) {
+        this.element = element;
+        // jQuery has an extend method which merges the contents of two or
+        // more objects, storing the result in the first object. The first object
+        // is generally empty as we don't want to alter the default options for
+        // future instances of the plugin
+        this.options = $.extend({}, defaults, options);
+        this._defaults = defaults;
+        this._name = pluginName;
+        this.init();
+    }
+    Plugin.prototype = {
+        init: function () {
+            var that = this;
+            $(that.element).find('.widget-title').text(that.options.title);
+            $(that.element).attr('id', that._name);
+
+            // Get video notifications
+            $.when(fansworld.notificacion.getTypeCounts()).then(function(typecounts){
+                typecounts.forEach(function(element, index, array) {
+                    if(element.parent === 'videos') {
+                        that.options.notificationNumber = element.cnt;
+                        if(that.options.toggleButton) {
+                            that.options.toggleButton.label.innerText = that.options.notificationNumber;
+                            $(that.options.toggleButton.label).animate({
+                                opacity: 1
+                            });
+                        }
+                    }
+                });
+            });
+            $.when(fansworld.notificacion.getLatest()).then(function(latest){
+                var i = 0;
+                for(i = 0; i <= that.options.batch; i +=1) {                    
+                    $.when(fansworld.notificacion.getNotification(latest[i])).then(function(notification){
+                        $(that.element).find('.widget-app ul').prepend('<li>' + notification + '</li>');
+                        that.makeScrollPane();
+                    });
+                }
+            }),
+            // Listen notifications
+            fansworld.notificacion.addListener('onnotificationreceived', function(response){
+                var id = response.result.id;
+                var parent = response.result.p;
+
+                $.when(fansworld.notificacion.getNotification(id))
+                .then(function(notification){
+                    $(that.element).find('.widget-app ul').prepend('<li>' + notification + '</li>');
+                    that.redrawScrollBar();
+                })
+            });
+            // Get latest unread notifications
+            fansworld.notificacion.addListener('ongetnotifications', function(response){
+                var i;
+                for(i in response.result.notifications) {
+                    if (response.result.notifications.hasOwnProperty(i)) {
+                        var notification = response.result.notifications[i].view;
+                        $(that.element).find('.widget-app ul').prepend('<li>' + notification + '</li>');
+                        that.makeScrollPane();
+                    }
+                }
+            });
+            window.fansWorldEvents.addListener('widgets-off', function(button, event) {
+                if (that.options.isPoped) { 
+                    that.popOut(event);
+                }
+            });
+            window.fansWorldEvents.addListener(that._name + '_toggle', function(button, event) {
+                that.toggle(button, event);
+            });
+            window.fansWorldEvents.addListener(that._name + '_togglebutton', function(plugin, button) {
+                button.label.innerText = that.options.notificationNumber;
+                $(button.label).animate({
+                    opacity: 1
+                });
+                that.options.toggleButton = button;
+            });
+            // Bind close button
+            $(that.element).find('.close-share').on("click", function(event) {
+                that.popOut(event);
+            });
+            // Bind mouse actions & css transitions
+            $(that.element).on('mouseleave', function(event) {
+                $(this).animate({opacity: 0.5});
+            });            
+            $(that.element).on('mouseenter', function(event) {
+                $(this).animate({opacity: 1});
+            });
+        },
+        getMoreNews: function() {
+
+        },
+        makeScrollPane: function() {
+            var that = this;
+            $(that.element).css('display', 'block');
+            $(that.element).find('.widget-inner').jScrollPane();
+            $(that.element).find('.widget-inner')
+            .bind(
+                'jsp-initialised',
+                function(event, isScrollable) {
+                    //console.log('Handle jsp-initialised', this, 'isScrollable=', isScrollable);
+                }
+            )
+            .bind(
+                'jsp-scroll-y',
+                function(event, scrollPositionY, isAtTop, isAtBottom) {
+                    // console.log('Handle jsp-scroll-y', this, 'scrollPositionY=', scrollPositionY, 'isAtTop=', isAtTop, 'isAtBottom=', isAtBottom);
+                    if(isAtBottom) {
+                        /*
+                        $(this).find('.widget-app ul').append('<li><img title="" width="32" src="/uploads/media/default/0001/01/thumb_3_default_small_square_7c6b7e0426a40d52bf972747dac702eea26f5650.jpg">Contenido apendeado</li>');
+                        var pane = $(that.element).find('.widget-inner');
+                        var api = pane.data('jsp');
+                        api.reinitialise();
+                        */
+                    }
+                }
+            ).bind(
+                'mousewheel',
+                function(event) {
+                    event.preventDefault();
+                }
+            );
+            if(!that.options.isPoped) {
+                $(that.element).css('display', 'none');
+            }
+            return;
+        },
+        redrawScrollBar: function() {
+            var that = this;
+            var pane = $(that.element).find('.widget-inner');
+            var api = pane.data('jsp');
+            api.reinitialise();
+        },
+        ////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////
+        setPosition: function(target) {
+            var that = this;
+            // Get target window positioning
+            var offset = $(target).offset();
+            offset.top -= $(that.element).height() + $(target).height() + 10;
+            offset.left -= parseInt(($(that.element).width() / 2) - ($(target).width() / 2), 10);
+            // Set popup position
+            $(that.element).offset({
+                top: offset.top,
+                left: offset.left
+            });
+        },
+        popIn: function(event) {
+            var that = this;
+            if (that.options.isPoped) {
+                return;
+            }            
+            //that.setPosition(event.target);
+            event.stopPropagation();
+            event.preventDefault();
+            $(that.element).show();
+            $(that.element).animate({
+                opacity: 1
+            });
+            that.options.isPoped = true;
+            that.checkBounds(true);
+        },
+        popOut: function(event) {
+            var that = this;
+            if (!that.options.isPoped) {
+                return;
+            }
+            $(that.element).hide();
+            $(that.element).animate({
+                opacity: 0
+            });            
+            $(that.options.target).removeClass('active');
+            that.options.isPoped = false;
+            that.checkBounds(false);
+        },
+        setTitle: function(title) {
+            var that = this;
+            $(that.element).find('.widget-title').text(title);
+        },
+        checkBounds: function(check) {
+            var that = this;
+            function handleClick(event) {
+                if(!that.checkBound(event.pageX, event.pageY, that.element)) {
+                    if(that.options.isPoped && !event.target.classList.contains('btn-widget')) {
+                        // TODO: buscar un mejor nombre para el boton asociado al evento
+                        $(that.options.target).removeClass('active'); 
+                        document.body.removeEventListener("click", this, false);
+                        that.popOut(event);                            
+                    }                            
+                }                
+            }
+            if(check) {
+                document.body.addEventListener("click", handleClick, false);
+            } else {
+                document.body.removeEventListener("click", handleClick, false);
+            }
+        },
+        checkBound: function(x, y, element) {
+            var that = this;
+            var offset = $(element).offset();
+            var height = $(element).height();
+            var width = $(element).width();
+            if((event.pageY >= offset.top && event.pageY <= offset.top + height) && (event.pageX >= offset.left && event.pageX <= offset.left + width)) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        toggle: function (button, event) {
+            var that = this;
+            event.preventDefault();
+
+            if($(button).hasClass('active') && that.options.isPoped) {
+                $(that.options.target).removeClass('active');
+                $(button).removeClass('active');
+                that.popOut(event);                
+                return;
+            }
+            // Set new title
+            var title = $(button).attr("data-original-title");
+            that.setTitle(title);
+            // deselect
+            $(that.options.target).removeClass('active');
+            // select
+            $(button).addClass('active');
+            that.options.target = button;
+
+            // Get target window positioning
+            var offset = $('nav .widget-bar').offset();
+            offset.top = $('nav .widget-bar').height() + 2;
+            offset.left -= parseInt(($(that.element).width() / 2) - ($('nav .widget-bar').width() / 2), 10);
+
+            $(that.element).css({
+                top: offset.top,
+                left: offset.left
+            });
+            $(that.element).css({
+                display: 'block'
+            });
+            var targetOffset = $(button).offset();
+            targetOffset.left +=  $(button).width() / 2;
+            var arrowOffset = $(that.element).find('.arrow-up').offset();
+            var arrowPosition = $(that.element).find('.arrow-up').position();
+            var displacement = arrowOffset > targetOffset ? arrowPosition.left + (targetOffset.left - arrowOffset.left) : arrowPosition.left - (arrowOffset.left - targetOffset.left); 
+
+            $(that.element).find('.arrow-up').css({
+                left: displacement + 'px'
+            });
+            // Toggle visibility
+            if (!that.options.isPoped) {
+                //$(that.element).find('.widget-title').css('color', '#0f0');
+                that.popIn(event);
+            }
+            else {
+                //$(that.element).find('.widget-title').css('color', '#f00');
+            }
+        }
+    };
+    // A really lightweight plugin wrapper around the constructor,
+    // preventing against multiple instantiations
+    $.fn[pluginName] = function (options) {
+        // If the first parameter is an object (options), or was omitted,
+        // instantiate a new instance of the plugin.
+        if (typeof options === "object" || !options) {
+            return this.each(function () {
+                // Only allow the plugin to be instantiated once.
+                if (!$.data(this, pluginName)) {
+                    // Pass options to Plugin constructor, and store Plugin
+                    // instance in the elements jQuery data object.
+                    $.data(this, pluginName, new Plugin(this, options));
+                }
+            });
+        }
+    };
+});
+
+////////////////////////////////////////////////////////////////////////////////
 // FansWorld activity widget plugin 1.0 initial                               //
 ////////////////////////////////////////////////////////////////////////////////
 $(document).ready(function () {
@@ -1302,6 +1596,7 @@ $(document).ready(function () {
         fragment.appendChild(widgetTemplate);
 
         $('header:first').append($(fragment).clone());
+        $('header:first').append($(fragment).clone());
 
         $('.widget-container:eq(0)').fwActivityWidget({
             title: "Actividad"
@@ -1309,11 +1604,14 @@ $(document).ready(function () {
         $('.widget-container:eq(1)').fwWidget({
             title: "Notificaciones"
         });
+        $('.widget-container:eq(2)').fwVideoNotificationWidget({
+            title: "Videos procesados"
+        });
         $('header:first').fwHeaderToolBar({
             title: 'fwToolBar',
             id: 'head-toolbar',
             buttons: [
-                {plugin: '',name: 'video', title: '', icon: 'icon-film'}, 
+                {plugin: 'fwVideoNotificationWidget',name: 'video', title: 'Videos procesados', icon: 'icon-film'}, 
                 {plugin: 'fwActivityWidget', name: 'activity', title: 'Actividad reciente', icon: 'icon-list'}, 
                 {plugin: '', name: 'photos', title: '', icon: 'icon-camera'}, 
                 {plugin: 'fwWidget', name: 'Not', title: 'Notificaciones', icon: 'icon-user'}
