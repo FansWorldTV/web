@@ -142,6 +142,31 @@ class EditController extends SiteController
                 $fields['prepopulate'] = array('type' => 'hidden', 'options' => array('required' => false));
                 $defaultData['prepopulate'] = $prepopulate_info;
 
+
+                $videoCategories = $this->getRepository('VideoCategory')->findAll();
+                $categoriesChoices = array();
+                foreach ($videoCategories as $ab)
+                    $categoriesChoices[$ab->getId()] = $ab->getTitle();
+
+                $genres = $this->getRepository('Genre')->findBy(array('parent' => null));
+                $genrechoises = array();
+                foreach ($genres as $gen) {
+                    $children = $gen->getChildren();
+                    $childarray = array();
+                    foreach ($children as $child) {
+                        $childarray[$child->getId()] = $child->getTitle();
+                    }
+
+                    $genrechoises[$gen->getTitle()] = $childarray;
+                }
+
+                $constraints['genre'] = array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($genrechoises)));
+                $fields['genre'] = array('type' => 'choise', 'options' => array('required' => true, 'choices' => $genrechoises, 'label' => 'Genero'));
+
+                $constraints['videoCategory'] = array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($categoriesChoices)));
+                $fields['videoCategory'] = array('type' => 'choise', 'options' => array('required' => true, 'choices' => $categoriesChoices, 'label' => 'Canal'));
+
+
                 $collectionConstraint = new Collection($constraints);
                 $form = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint));
                 foreach ($fields as $key => $field) {
