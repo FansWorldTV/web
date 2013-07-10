@@ -59,6 +59,7 @@ $(document).ready(function () {
             var that = this;
             var self = $(that.element);
             //self.addClass('loading-small');
+            self.addClass('disabled');
             ajax.genericAction(
                 'teamship_ajaxtoggle',
                 { 'team': teamId },
@@ -71,10 +72,11 @@ $(document).ready(function () {
                         }
                     }
                     //self.removeClass('loading-small');
+                    self.removeClass('disabled');
                 },
                 function(error) {
                     window.error(error.responseText);
-                    //self.removeClass('loading-small');
+                    self.removeClass('disabled');
                     return that.options.onError(error);
                 });
         },
@@ -129,7 +131,7 @@ $(document).ready(function () {
     });
     $("[data-teamship-remove]:not('[data-override]')").fwTeamship({
         onRemoveTeam: function(){
-            window.location.reload();
+            //window.location.reload();
         }
     });
 });

@@ -199,7 +199,7 @@ $(document).ready(function () {
                                     self.text("-");
                                 },
                                 onRemoveIdol: function(plugin, data) {
-                                    window.location.reload();
+                                    //window.location.reload();
                                 }
                             });
                             $thumb.find('[data-teamship-add]').fwTeamship({
@@ -210,7 +210,7 @@ $(document).ready(function () {
                                     self.text("-");
                                 },
                                 onRemoveTeam: function(plugin, data) {
-                                    window.location.reload();
+                                    //window.location.reload();
                                 }
                             });
                             if(profile.highlight) {
@@ -423,10 +423,10 @@ $(document).ready(function () {
                                             var self = $(plugin.element);
                                             self.addClass('disabled');
                                             self.removeClass('add');
-                                            self.text("-");
+                                            self.hide();
                                         },
                                         onRemoveIdol: function(plugin, data) {
-                                            window.location.reload();
+                                            //window.location.reload();
                                         }
                                     });
                                     $thumb.find('[data-teamship-add]').fwTeamship({
@@ -434,10 +434,10 @@ $(document).ready(function () {
                                             var self = $(plugin.element);
                                             self.addClass('disabled');
                                             self.removeClass('add');
-                                            self.text("-");
+                                            self.hide();
                                         },
                                         onRemoveTeam: function(plugin, data) {
-                                            window.location.reload();
+                                            //window.location.reload();
                                         }
                                     });
                                     $thumb.find('img').load(function() {

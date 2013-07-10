@@ -30,6 +30,7 @@
         </div>
         <div class="right-container">
             <nav class="widget-bar">
+                <a title="Perfil" href="{{ path('user_land', { username: user.username }) }}" class="btn-widget"><i class="icon-user icon-white"></i></a>
             </nav>
             <form class="navbar-search" name="search" method="post" action="{{ path('search_home') }}">
                 <input name="query" type="text"/>

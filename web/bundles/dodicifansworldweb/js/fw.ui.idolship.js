@@ -134,7 +134,7 @@ $(document).ready(function () {
 
     $(".btn_idolship.remove").fwIdolship({
         onRemoveIdol: function(plugin, data) {
-            window.location.reload();
+            //window.location.reload();
         }
     });
 });
