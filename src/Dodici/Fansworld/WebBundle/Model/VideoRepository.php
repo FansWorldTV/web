@@ -611,9 +611,9 @@ class VideoRepository extends CountBaseRepository
      * @param int|null $limit
      * @param int|null $offset
      */
-    public function recommended(User $viewer=null, Video $video=null, $limit=null, $offset=null)
+    public function recommended(User $viewer=null, Video $video=null, $limit=null, $offset=null, $genre=null)
     {
-        return $this->search(null, $viewer, $limit, $offset, null, true, null, null, null, 'default', null, $video);
+        return $this->search(null, $viewer, $limit, $offset, null, true, null, null, null, 'default', null, $video, null, null, null, null, $genre);
     }
 
     /**
