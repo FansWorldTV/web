@@ -96,6 +96,7 @@ class DefaultController extends SiteController
 
             $matchs =  $this->getRepository('Event')->findBy(array('finished' => false), array('fromtime' => 'desc'), self::MATCHS_LIMIT);
 
+            $entityType = '';
         } else {
 
             if ($entity instanceof User) {
@@ -124,6 +125,8 @@ class DefaultController extends SiteController
                 $videos = $this->getRepository('Video')->findBy(array('author' => $entity->getId(), 'active' => true), array('createdAt' => 'desc'), self::VIDEOS_LIMIT);
 
                 $matchs = array();
+
+                $entityType = 'user';
             } else {
 
                 if ($entity instanceof Team) {
@@ -140,6 +143,8 @@ class DefaultController extends SiteController
 
                     // Related Fans to Team Entity
                     $topfans = $this->getRepository('User')->byTeams($entity, self::FANS_LIMIT);
+
+                    $entityType = 'team';
                 } else {
                     // Idol Entity
 
@@ -155,6 +160,8 @@ class DefaultController extends SiteController
 
                     // Related Fans to Idol Entity
                     $topfans = $this->getRepository('User')->byIdols($entity, self::IDOLS_LIMIT);
+
+                    $entityType = 'idol';
                 }
 
                 // Related videos to Team or Idol Entity
@@ -163,7 +170,7 @@ class DefaultController extends SiteController
             }
         }
 
-        return array('user' => $user, 'topfans' => $topfans, 'topidols' => $topidols, 'teams' => $teams, 'videos' => $videos, 'matchs' => $matchs);
+        return array('user' => $user, 'topfans' => $topfans, 'topidols' => $topidols, 'teams' => $teams, 'videos' => $videos, 'matchs' => $matchs, 'entity' => $entityType);
     }
 
     /**

@@ -1,9 +1,9 @@
 <div class="relatedsidebar">
     {% if (topidols|length > 0) or (teams|length > 0) %}
 
-        {% if (app.request.get('_route') == 'idol_land') or (app.request.get('_route') == 'team_land') %}
+        {% if (entityType == 'idol') or (entityType == 'team') %}
             <div class="title_section"><span>RELACIONADOS</span></div>
-        {% elseif app.request.get('_route') == 'user_land' %}
+        {% elseif entityType == 'user' %}
             <div class="title_section"><span>SIGUIENDO</span></div>
         {% endif %}
         <!-- IDOLS -->
