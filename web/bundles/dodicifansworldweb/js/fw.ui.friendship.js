@@ -119,7 +119,8 @@ $(document).ready(function () {
 //Attach plugin to all matching element
 $(document).ready(function () {
     "use strict";
-    $(".btn_friendship.add:not('.loading-small')").fwFriendship({
+    //$(".btn_friendship.add:not('.loading-small')").fwFriendship({
+    $("[data-friendship-add]:not('[data-override]')").fwFriendship({
         onAddFriend: function(plugin, data) {
             var self = $(plugin.element);
             self.addClass('disabled');

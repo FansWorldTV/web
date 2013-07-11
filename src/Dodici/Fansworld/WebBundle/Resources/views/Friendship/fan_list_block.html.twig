@@ -15,7 +15,7 @@
                                     <span class="name">{{ friend }}</span>
                                     <span class="friendCount">{{ friend.fanCount }}</span>
                                     <div class="addFriend" targetId="{{ friend.id }}">
-                                        <button class="btn btn_friendship add btn-success"> Ser fan{% if friend.restricted %} (solicitar){% endif %}</button>
+                                        <button class="btn btn_friendship add btn-success" data-friendship-add="true" data-user-id="{{friend.id}}"> Ser fan{% if friend.restricted %} (solicitar){% endif %}</button>
                                     </div>
                                 </a>
                             </div>

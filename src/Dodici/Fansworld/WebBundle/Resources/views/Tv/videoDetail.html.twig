@@ -37,7 +37,7 @@
                                     {% thumbnail video.author.image, 'mini_square' %}
                                 </a>
                                 {% if appstate.canFriend(video.author) %}
-                                    <button class="btn btn-success add-fan" data-friendship-add="true" data-user-id="{{video.author.id}}">+</button>
+                                    <button class="btn btn_friendship btn-success add-fan" data-friendship-add="true" data-user-id="{{video.author.id}}">+</button>
                                 {% endif %}
                             </figure>
                         {% endif %}
