@@ -130,7 +130,7 @@ sonata_media:
                 wall: { width: 800 , quality: 90, constraint: false }
                 huge:   { width: 1024 , quality: 90, constraint: false}
                 home_video: { width: 220, height: 137, quality: 100 }
-                home_video_double: { width: 500, height: 250, quality: 100 }
+                home_video_double: { width: 600, height: 400, quality: 100 }
                 mobile_320x208: { width: 640, height: 416 }
                 mobile_150x150 : { width: 300, height: 300 }
                 mobile_65x65 : { width: 130, height: 130 }
