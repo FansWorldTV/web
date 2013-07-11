@@ -10,6 +10,26 @@
             margin-bottom: 4px;
         }
 
+	    .avatar {
+		    position: relative;
+		    padding: 0;
+		    margin: 0;
+		    .square(60px);
+
+		    .add-fan {
+			    position: absolute;
+			    bottom: 2px;
+			    right: 2px;
+			    display: none;
+		    }
+
+		    &:hover {
+			    .add-fan {
+				    display: initial;
+			    }
+		    }
+	    }
+
         .name, .location, .videoCount {
             width: 230px;
             margin-left: 10px;
