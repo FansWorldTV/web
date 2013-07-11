@@ -111,7 +111,7 @@ class ProfileController extends SiteController
                     $highlights[$profile['id']] = $profile['videoCount'];
 
                 arsort($highlights);
-                $top5 = array_slice($highlights, 0, 5, true);
+                $top5 = array_slice($highlights, 0, 3, true);
 
                 foreach ($top5 as $key => $profile) {
                     $iProfile = &$response['profiles'][$key]; // Var passed by reference to simplify the code
