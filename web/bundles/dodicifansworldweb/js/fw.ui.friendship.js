@@ -44,8 +44,12 @@ $(document).ready(function () {
         addFriend: function(event) {
             var that = this;
             var self = $(this);
-            console.log("addFriend")
-            $(event.srcElement).off();      // remove event listeners
+            event.preventDefault();
+            if (!window.isLoggedIn) {
+                $('[data-login-btn]').click();
+                return false;
+            }
+            $(this).off();      // remove event listeners
             var plugin = $(event.srcElement).data(pluginName);
             plugin.toggleFriendship($(event.srcElement).attr('data-user-id'));
         },
