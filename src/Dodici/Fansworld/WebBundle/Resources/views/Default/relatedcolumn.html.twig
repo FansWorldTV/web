@@ -1,19 +1,36 @@
 <div class="relatedsidebar">
+    {% if (topidols|length > 0) or (teams|length > 0) %}
 
-    <!-- IDOLS -->
-    {% if topidols|length > 0 %}
-        <div class="title_section"><span>IDOLOS</span></div>
-        <div class="content_section" data-section-type="idols">
-            {% for idol in topidols %}
-                <a href="{{ path('idol_land', {slug: idol.slug}) }}" rel="tooltip" title="{{ idol.firstname ~ ' ' ~ idol.lastname }}">
-                    {% thumbnail idol.image, 'avatar' with {title: idol.firstname ~ ' ' ~ idol.lastname} %}
-                </a>
-            {% endfor %}
-            <!--
-                TODO / NEXT FEATURE
-                <br/><br/><button class="btn btn-success suggestIdols" data-suggest="">SUGERIR IDOLOS A FANSWORLD</button>
-            -->
-        </div>
+        {% if (app.request.get('_route') == 'idol_land') or (app.request.get('_route') == 'team_land') %}
+            <div class="title_section"><span>RELACIONADOS</span></div>
+        {% elseif app.request.get('_route') == 'user_land' %}
+            <div class="title_section"><span>SIGUIENDO</span></div>
+        {% endif %}
+        <!-- IDOLS -->
+        {% if topidols|length > 0 %}
+            <div class="content_section" data-section-type="idols">
+                {% for idol in topidols %}
+                    <a href="{{ path('idol_land', {slug: idol.slug}) }}" rel="tooltip" title="{{ idol.firstname ~ ' ' ~ idol.lastname }}">
+                        {% thumbnail idol.image, 'avatar' with {title: idol.firstname ~ ' ' ~ idol.lastname} %}
+                    </a>
+                {% endfor %}
+                <!--
+                    TODO / NEXT FEATURE
+                    <br/><br/><button class="btn btn-success suggestIdols" data-suggest="">SUGERIR IDOLOS A FANSWORLD</button>
+                -->
+            </div>
+        {% endif %}
+
+        <!-- TEAMS -->
+        {% if teams|length > 0 %}
+            <div class="content_section" data-section-type="teams">
+                {% for team in teams %}
+                    <a href="{{ path('team_land', {slug: team.slug}) }}" rel="tooltip" title="{{ team.title }}">
+                        {% thumbnail team.image, 'avatar' with {title: team.title} %}
+                    </a>
+                {% endfor %}
+            </div>
+        {% endif %}
     {% endif %}
 
     <!-- FANS -->
@@ -28,17 +45,7 @@
         </div>
     {% endif %}
 
-    <!-- TEAMS -->
-    {% if teams|length > 0 %}
-        <div class="title_section"><span>EQUIPOS</span></div>
-        <div class="content_section" data-section-type="teams">
-            {% for team in teams %}
-                <a href="{{ path('team_land', {slug: team.slug}) }}" rel="tooltip" title="{{ team.title }}">
-                    {% thumbnail team.image, 'avatar' with {title: team.title} %}
-                </a>
-            {% endfor %}
-        </div>
-    {% endif %}
+
 
     <!-- MATCHS -->
     {# EVENT_REM
