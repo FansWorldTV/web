@@ -26,12 +26,12 @@
                 <li data-entity-type="vc" data-entity-id = "{{ category.id }}">{{ category.title }}</li>
             {% endfor %}
         </ul>
-
-        <section class="row-fluid gray highlights hidden" id="home-gallery">
-            <div class="grid-sizer"></div>
-            <div class="gutter-sizer"></div>
-        </section>
-
+        <div class="highlights-container">
+            <section class="row-fluid gray highlights hidden" id="home-gallery">
+                <div class="grid-sizer"></div>
+                <div class="gutter-sizer"></div>
+            </section>
+        </div>
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <section class="row-fluid followed hidden">
                 <header class="clearfix">
