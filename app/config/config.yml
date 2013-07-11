@@ -186,7 +186,7 @@ artseld_openinviter:
 
 fos_elastica:
     clients:
-        default: { host: localhost, port: 9200 }
+        default: { host: %fos_elastica_host%, port: %fos_elastica_port% }
     indexes:
         website:
             client: default
