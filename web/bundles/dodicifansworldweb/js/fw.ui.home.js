@@ -138,7 +138,7 @@ $(document).ready(function () {
                         reqData[that.options.type] = parseInt(that.options.id, 10);
                         $.when(that.makePackery(reqData)).then(function(){
                         }).progress(function() {
-                            console.log("adding thumbnails to packery");
+                            //console.log("adding thumbnails to packery");
                         }).fail(function(error){
                             that.hide();
                         });
@@ -147,7 +147,7 @@ $(document).ready(function () {
                         reqData[that.options.type] = parseInt(that.options.id, 10);
                         $.when(that.makePackery(reqData)).then(function(){
                         }).progress(function() {
-                            console.log("adding thumbnails to packery");
+                            //console.log("adding thumbnails to packery");
                         }).fail(function(error){
                             that.hide();
                         });
@@ -223,13 +223,19 @@ $(document).ready(function () {
                                 $thumb.addClass('double');
                             }
                             cnt += 1;
-                            $thumb.find('img').load(function() {
-                                queue.add($thumb);
-                                loadedImages += 1;
-                                if(loadedImages >= totalVideos) {
+                            queue.add($thumb);
+                            $thumb.find('img').load(function() {                                
+                                if(cnt >= totalVideos) { 
                                     queue.start();
                                 }
                             })
+                            .error(function(error){
+                                console.log("error al cargar imagen")
+                                queue.start();
+                            })
+                            /*.onabort(function(){
+                                queue.start();
+                            })*/
                         });
                     }
                 }
@@ -443,7 +449,6 @@ $(document).ready(function () {
                                 $(that.element).parent().find('.spinner').hide();
                                 $(that.element).parent().removeClass('hidden');
                                 $(that.element).parent().fadeIn('slow');
-                                console.log("response.addMore: " + addMore)
                                 if(addMore) {
                                     $(that.element).parent().find('.add-more').show();
                                 } else {

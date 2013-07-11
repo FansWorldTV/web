@@ -75,7 +75,7 @@ class HomeController extends SiteController
                     $homeVideo = $homeVideo->getVideo();
                 }
             }else{
-                $homeVideo = $this->getRepository('Video')->findOneBy(array('highlight' => true));
+                $homeVideo = $this->getRepository('Video')->findOneBy(array('active' => true, 'highlight' => true));
             }
 
             $response['home'] = $serializer->values($homeVideo, 'home_video_double');
@@ -83,6 +83,8 @@ class HomeController extends SiteController
             $limitWithTheHighlighted = (self::LIMIT_VIDEO - 3);
             $videos = $videoRepo->searchHome(null, $genre, $vc, null, true, null, $homeVideo, $limitWithTheHighlighted, 0);
             $response['highlighted'] = $serializer->values($videos, 'home_video');
+
+            $response['highlighted'][1] = $serializer->values($homeVideo, 'home_video_double');
 
             if($user instanceof User) {
                 $videos = $videoRepo->searchHome($user, $genre, $vc, true, false, 'default', $homeVideo, self::LIMIT_VIDEO, 0);
