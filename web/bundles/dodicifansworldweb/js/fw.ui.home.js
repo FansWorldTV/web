@@ -199,7 +199,7 @@ $(document).ready(function () {
                 complete: function(){
                 }
             });
-            //queue.pause();
+            queue.pause();
             $.ajax({
                 url: that.options.videoFeed,
                 data: data || {
@@ -222,9 +222,12 @@ $(document).ready(function () {
                             if(cnt === 1) {
                                 $thumb.addClass('double');
                             }
-                            cnt += 1;                    
+                            cnt += 1;
+                            queue.add($thumb);
                             $thumb.find('img').load(function() {                                
-                                queue.add($thumb);
+                                if(cnt >= totalVideos) { 
+                                    queue.start();
+                                }
                             })
                         });
                     }
