@@ -32,9 +32,12 @@
                 {% if video.author %}
                     <div class="user-info">
                         {% if video.author.image %}
-                        <a class="avatar" href="{{ path('user_land', {username: video.author.username}) }}">
-                            {% thumbnail video.author.image, 'mini_square' %}
-                        </a>
+                            <figure class="avatar">
+                                <a href="{{ path('user_land', {username: video.author.username}) }}">
+                                    {% thumbnail video.author.image, 'mini_square' %}
+                                </a>
+                                <button class="btn btn-success add-fan" data-friendship-add="true" data-user-id="{{video.author.id}}">+</button>
+                            </figure>
                         {% endif %}
                         <a class="name" href="{{ path('user_land', {username: video.author.username}) }}">
                             {{ video.author }}
