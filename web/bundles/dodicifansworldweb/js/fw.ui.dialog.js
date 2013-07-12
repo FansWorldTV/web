@@ -40,7 +40,9 @@ $(document).ready(function () {
             modalLabel: 'label',
             modalTitle: 'Upload Photo',
             modalBody: 'Uploader',
-            deleteButton: false
+            deleteButton: false,
+            backdrop: true,
+            width: '700'
         }
     };
 
@@ -177,10 +179,11 @@ $(document).ready(function () {
                     });
                     // Set styles & bind hide event
                     dialog.modal({
-                        backdrop: true
+                        backdrop: that.options.modal.backdrop
                     }).css({
-                        width: '700px',
-                        'margin-left': '-350px'
+                        'z-index': '9999999999',
+                        'width': that.options.modal.width,
+                        'margin-left': -(that.options.modal.width / 2)
                     }).on('hide', function() {
                         $('.modal-backdrop').remove();
                         $(this).data('modal', null);
