@@ -26,6 +26,19 @@
                 <li data-entity-type="vc" data-entity-id = "{{ category.id }}">{{ category.title }}</li>
             {% endfor %}
         </ul>
+
+        <div class="category-menu row-fluid">
+          <h4 class="">Categorias</h4>
+            {% for genre in genres %}
+                <ul data-genre-title="{{ genre.title }}" data-genre-id="{{ genre.id }}">            
+                    {% for child in genre.children %}
+                        <li data-subgenre-id="{{ child.id}}">{{ child.title }}</li>
+                    {% endfor %}
+                </ul>                
+            {% endfor %}
+
+        </div>
+                
         <div class="highlights-container">
             <section class="row-fluid gray highlights hidden" id="home-gallery">
                 <div class="grid-sizer"></div>
