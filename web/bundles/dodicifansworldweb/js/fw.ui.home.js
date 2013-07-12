@@ -756,10 +756,20 @@ $(document).ready(function () {
         id: id,
         filter: 'popular'
     });
+
+    $('[data-menu-edit="true"]').on('click', function(event){
+        if($(this).hasClass('active')) {
+            $('.category-menu').hide();
+            $(this).removeClass('active');
+            return;
+        }
+        $(this).addClass('active');
+        $('.category-menu').show();
+    });
 });
 
 $(document).ready(function () {
-    $(".filter-home > li").on('click', function(){
+    $(".filter-home > li:not('[data-override]')").on('click', function(){
         if($(this).hasClass('active')) {
             return;
         }
@@ -773,5 +783,4 @@ $(document).ready(function () {
         ///////////////////////////////////////////////////////////////////////
         window.fansWorldEvents.emitEvent('onFilterChange', [type, id]);
     });
-
 });

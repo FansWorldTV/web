@@ -25,6 +25,7 @@
             {% for category in categories %}
                 <li data-entity-type="vc" data-entity-id = "{{ category.id }}">{{ category.title }}</li>
             {% endfor %}
+            <li rel="tooltip" data-original-title="Editar" data-override="true" data-menu-edit="true"><i class="icon-cog"></i></li>
         </ul>
 
         <div class="category-menu row-fluid">
@@ -38,7 +39,7 @@
             {% endfor %}
 
         </div>
-                
+
         <div class="highlights-container">
             <section class="row-fluid gray highlights hidden" id="home-gallery">
                 <div class="grid-sizer"></div>
