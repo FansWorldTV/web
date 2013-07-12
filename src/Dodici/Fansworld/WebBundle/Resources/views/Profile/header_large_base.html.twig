@@ -61,12 +61,29 @@
 
             <ul class="quantities">
                 {% block header_numbersinfo %}
-                    <li class="item">{% if entity.photoCount > 0 %}<a href="{{ path(entityType ~ '_photos', pathparams) }}">{% endif %}{{ entity.photoCount }}{% if entity.photoCount > 0 %}</a>{%endif%}</span><br/><span class="item-type">FOTOS</span></li>
-                    <li class="item">{% if entity.videoCount > 0 %}<a href="{{ path(entityType ~ '_videos', pathparams) }}">{% endif %}{{ entity.videoCount }}{% if entity.videoCount > 0 %}</a>{%endif%}<br/><span class="item-type">VIDEOS</span></li>
+                    <li class="item">
+                        {% if entity.photoCount > 0 %}<a href="{{ path(entityType ~ '_photos', pathparams) }}">{% endif %}
+                            <div class="count">{{ entity.photoCount }}</div>
+                            <span class="item-type">FOTOS</span>
+                        {% if entity.photoCount > 0 %}</a>{% endif %}<br/>
+                    </li>
+                    <li class="item">
+                        {% if entity.videoCount > 0 %}<a href="{{ path(entityType ~ '_videos', pathparams) }}">{% endif %}
+                            <div class="count">{{ entity.videoCount }}</div>
+                            <span class="item-type">VIDEOS</span>
+                        {% if entity.videoCount > 0 %}</a>{% endif %}<br/>
+                    </li>
                     {% if entityType == 'user' and entity.username != 'fansworld' %}
-                        <li class="item">{% include "DodiciFansworldWebBundle:Default:blocks/puntos.html.twig" with { score: entity.score } %}<br/><span class="item-type">PTS</span></li>
+                        <li class="item">{% include "DodiciFansworldWebBundle:Default:blocks/puntos.html.twig" with { score: entity.score } %}
+                            <br/><span class="item-type">PTS</span>
+                        </li>
                     {% endif %}
-                    <li class="item">{% if entity.fanCount > 0 %}<a href="{{ path(entityType ~ '_fans', pathparams) }}">{% endif %}{{ entity.fanCount }}{% if entity.fanCount > 0 %}</a>{%endif%}<br/><span class="item-type">FANS</span></li>
+                    <li class="item">{% if entity.fanCount > 0 %}
+                        <a href="{{ path(entityType ~ '_fans', pathparams) }}">{% endif %}
+                            <div class="count">{{ entity.fanCount }}</div>
+                            <span class="item-type">FANS</span>
+                        {% if entity.fanCount > 0 %}</a>{% endif %}<br/>
+                    </li>
                 {% endblock %}
             </ul>
         </div>

@@ -170,7 +170,7 @@ class DefaultController extends SiteController
             }
         }
 
-        return array('user' => $user, 'topfans' => $topfans, 'topidols' => $topidols, 'teams' => $teams, 'videos' => $videos, 'matchs' => $matchs, 'entity' => $entityType);
+        return array('user' => $user, 'topfans' => $topfans, 'topidols' => $topidols, 'teams' => $teams, 'videos' => $videos, 'matchs' => $matchs, 'entityType' => $entityType);
     }
 
     /**
