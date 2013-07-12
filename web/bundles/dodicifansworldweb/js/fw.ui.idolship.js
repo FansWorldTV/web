@@ -36,13 +36,13 @@ $(document).ready(function () {
             self.on('click', that.addIdol);
         },
         addIdol: function(event) {
+            var that = this;
+            var self = $(this);
+            event.preventDefault();
             if (!window.isLoggedIn) {
                 $('[data-login-btn]').click();
                 return false;
-            }
-
-            var that = this;
-            var self = $(this);
+            }            
             $(this).off();      // remove event listeners
             var plugin = $(this).data('fwIdolship');
             plugin.toggleIdolship($(this).attr('data-idol-id'));
