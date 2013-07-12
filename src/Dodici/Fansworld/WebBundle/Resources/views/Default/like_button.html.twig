@@ -10,7 +10,7 @@
     </button>
 {% endif %}
 
-{% if canlike or candislike %}
+{% if canlike or candislike or not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 	{% if showcount is not defined %}
 		{% set showcount = true %}
 	{% endif %}
@@ -27,7 +27,7 @@
                             <span class="likecount">{{entity.likecount}}</span>
                     {% endif %}
                 {% else %}
-                        <a class="btn like" data-id="{{ entity.id }}" data-type="{{ type }}">
+                        <a class="btn like" data-id="{{ entity.id }}" data-type="{{ type }}" data-login-required>
                             {% if canlike %}
                                 <i class="icon-star-empty"></i>
                             {% elseif candislike %}
