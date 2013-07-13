@@ -197,7 +197,8 @@ $(document).ready(function () {
                                         var self = $(plugin.element);
                                         self.addClass('disabled');
                                         self.removeClass('add');
-                                        self.text("-");
+                                        self.hide();
+                                        window.success(data.message);
                                     },
                                     onRemoveIdol: function(plugin, data) {
                                         //window.location.reload();
@@ -208,7 +209,8 @@ $(document).ready(function () {
                                         var self = $(plugin.element);
                                         self.addClass('disabled');
                                         self.removeClass('add');
-                                        self.text("-");
+                                        self.hide();
+                                        window.success(data.message);
                                     },
                                     onRemoveTeam: function(plugin, data) {
                                         //window.location.reload();
