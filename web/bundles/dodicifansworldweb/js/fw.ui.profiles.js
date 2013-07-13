@@ -191,28 +191,33 @@ $(document).ready(function () {
                         .then(function(thumb){
                             var $thumb = $(thumb).clone();
                             $thumb.addClass('profile');
-                            $thumb.find("[data-idolship-add]").fwIdolship({
-                                onAddIdol: function(plugin, data) {
-                                    var self = $(plugin.element);
-                                    self.addClass('disabled');
-                                    self.removeClass('add');
-                                    self.text("-");
-                                },
-                                onRemoveIdol: function(plugin, data) {
-                                    //window.location.reload();
-                                }
-                            });
-                            $thumb.find('[data-teamship-add]').fwTeamship({
-                                onAddTeam: function(plugin, data) {
-                                    var self = $(plugin.element);
-                                    self.addClass('disabled');
-                                    self.removeClass('add');
-                                    self.text("-");
-                                },
-                                onRemoveTeam: function(plugin, data) {
-                                    //window.location.reload();
-                                }
-                            });
+                            if(!profile.isFan) {
+                                $thumb.find("[data-idolship-add]").fwIdolship({
+                                    onAddIdol: function(plugin, data) {
+                                        var self = $(plugin.element);
+                                        self.addClass('disabled');
+                                        self.removeClass('add');
+                                        self.text("-");
+                                    },
+                                    onRemoveIdol: function(plugin, data) {
+                                        //window.location.reload();
+                                    }
+                                });
+                                $thumb.find('[data-teamship-add]').fwTeamship({
+                                    onAddTeam: function(plugin, data) {
+                                        var self = $(plugin.element);
+                                        self.addClass('disabled');
+                                        self.removeClass('add');
+                                        self.text("-");
+                                    },
+                                    onRemoveTeam: function(plugin, data) {
+                                        //window.location.reload();
+                                    }
+                                });
+                            } else {
+                                $thumb.find("[data-idolship-add]").hide();
+                                $thumb.find('[data-teamship-add]').hide();
+                            }
                             if(profile.highlight) {
                                 $thumb.addClass('double');
                             }
