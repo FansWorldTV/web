@@ -179,9 +179,11 @@ $(document).ready(function () {
                 }
             }).then(function(response) {
                     var i = 0;
-                    totalVideos = response.profiles.length;
-                    if(totalVideos <= 0) {
+                    if(typeof response.profiles === 'object' && Object.keys(response.profiles).length <= 0) {
+                        totalVideos  = Object.keys(response.profiles).length;
                         deferred.reject(new Error("Video category does not contain any video"));
+                    } else if(typeof response.profiles === "undefined") {
+                        deferred.reject(new Error("Bad response"));
                     }
                     function render_profile(profile) {
                         $.when(templateHelper.htmlTemplate('profile-home_element', profile))
@@ -323,6 +325,7 @@ $(document).ready(function () {
         type: null,
         id: null,
         videoFeed: Routing.generate(appLocale + '_profile_ajaxgetprofiles'),
+        limitProfilesHome: 20,  // Asoc. en ProfileController.php con LIMIT_PROFILES_HOME
         page: 1,
         block: null,
         newEvent: null,
@@ -412,8 +415,12 @@ $(document).ready(function () {
                 data: data
             }).then(function(response) {
                     var i = 0;
-                    if(typeof response.profiles === 'objct' && Object.keys(response.profiles).length < 1) {
+                    var addMore = response.addMore || false;
+                    if(typeof response.profiles === 'object' && Object.keys(response.profiles).length < 1) {
                         $(that.element).parent().fadeOut('slow');
+                    } else if(typeof response.profiles === 'object' && Object.keys(response.profiles).length >= that.options.limitProfilesHome) {
+                        addMore = true;
+                        $(that.element).parent().find('.add-more').show();
                     }
                     function render_profile(profile) {
                         $.when(templateHelper.htmlTemplate('profile-home_element', profile))
@@ -464,7 +471,6 @@ $(document).ready(function () {
                     }
                     for(i in response.profiles) {
                         if (response.profiles.hasOwnProperty(i)) {
-                            var addMore = response.addMore;
                             var profile = response.profiles[i];
                             render_profile(profile);
                         }
