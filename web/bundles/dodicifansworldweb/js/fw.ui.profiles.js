@@ -90,31 +90,35 @@ $(document).ready(function () {
             that.options.container = document.querySelector(that.options.selector);
 
             that.options.onFilterChange = function (type, id){
-                id = parseInt(id, 10);
-                if($.isNumeric(id)) {
+                id = parseInt(id, 10)
+                var reqData = {};
+                if(!isNaN(id)) {
                     that.options.type = type;
                     that.options.id = id;
-                    $.when(that.removeAll()).then(function(){
+                    reqData[that.options.type] = that.options.id;
+                } else {
+                    that.options.type = "";
+                    that.options.id = "";
+                }
+                $.when(that.removeAll()).then(function(){
+                    that.hide();
+                    $.when(that.makePackery(reqData)).then(function(){
+                    }).progress(function() {
+                        //console.log("adding thumbnails to packery");
+                    }).fail(function(error){
+                        //alert(error.message);
                         that.hide();
+                    });
+                }).fail(function(error){
                         var reqData = {};
-                        reqData[that.options.type] = parseInt(that.options.id, 10);
                         $.when(that.makePackery(reqData)).then(function(){
                         }).progress(function() {
-                            console.log("adding thumbnails to packery");
+                            //console.log("adding thumbnails to packery");
                         }).fail(function(error){
-                            alert(error.message);
+                            //alert(error.message);
+                            that.hide();
                         });
-                    }).fail(function(error){
-                            var reqData = {};
-                            reqData[that.options.type] = parseInt(that.options.id, 10);
-                            $.when(that.makePackery(reqData)).then(function(){
-                            }).progress(function() {
-                                console.log("adding thumbnails to packery");
-                            }).fail(function(error){
-                                alert(error.message);
-                            });
-                        });
-                }
+                    });
             };
             window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
             that.options.packery = new Packery(that.options.container, {
@@ -407,7 +411,7 @@ $(document).ready(function () {
                 data: data
             }).then(function(response) {
                     var i = 0;
-                    if(response.profiles.length < 1) {
+                    if(typeof response.profiles === 'objct' && Object.keys(response.profiles).length < 1) {
                         $(that.element).parent().fadeOut('slow');
                     }
                     function render_profile(profile) {
