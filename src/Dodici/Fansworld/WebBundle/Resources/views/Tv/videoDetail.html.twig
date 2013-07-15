@@ -9,7 +9,7 @@
 {% block tv_body %}
     {% embed "DodiciFansworldWebBundle:Layout/Embed:tv_videodetail.html.twig" %}
         {% block breadcrumb %}
-            <span class="nav-bar tv">TV {% if video.videocategory %}<span class="bar">|</span> <a class="channel" href="{{ path('teve_explorechannel', {id: video.videocategory.id, slug: video.videocategory.slug}) }}">{{ video.videocategory.title }}</a>{% endif %} <span class="bar">|</span> {{ video.title }} {% include 'DodiciFansworldWebBundle:Tv:blocks/button_subscribe.html.twig' with {channel: video.videoCategory} %}</span>
+            <span class="nav-bar tv">TV {% if video.videocategory %}<span class="bar">|</span> <a class="channel" href="{{ path('homepage') }}#vc_{{ video.videocategory.id }}">{{ video.videocategory.title }}</a>{% endif %} <span class="bar">|</span> {{ video.title }} {% include 'DodiciFansworldWebBundle:Tv:blocks/button_subscribe.html.twig' with {channel: video.videoCategory} %}</span>
         {% endblock %}
         
         {% block top_left_content %}

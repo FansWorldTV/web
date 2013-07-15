@@ -706,6 +706,22 @@ $(document).ready(function () {
     var videoCategory = 0;
     var videoGenre = 0;
 
+    // explore hashtag
+    if(location.hash !== ''){
+        var hash = location.hash;
+        hash = window.location.hash.slice(1).toLowerCase().split('_');
+        console.log(hash)
+        /*
+        setTimeout(function(){
+            $('[data-entity-type="'+ hash[0] +'"][data-entity-id="'+ hash[1] +'"]').click();
+        }, 2500)
+        */
+        //return;
+        type = hash[0];
+        id = hash[1];
+        $(".filter-home").find('.active').removeClass('active');
+        $('[data-entity-type="'+ hash[0] +'"][data-entity-id="'+ hash[1] +'"]').addClass('active');
+    }
     // Video Packery Gallery
     $('section.highlights').fwHomePackery({
         videoCategory: videoCategory,
