@@ -2,7 +2,7 @@
 	{% set type = appstate.type(entity) %}
 {% endif %}
 {% if appstate.canedit(entity) %}
-    <a class="btn edit{% if extraclasses is defined %} {{ extraclasses|join(' ') }}{% endif %}" href="{{ path('edit_popup',{id:entity.id, type:type}) }}" data-edit='{{type}}' data-entity-id="{{ entity.id }}" data-entity-type="{{ type }}" rel="tooltip" data-original-title='Editar {{ type }}'>
+    <a class="btn edit{% if extraclasses is defined %} {{ extraclasses|join(' ') }}{% endif %}" href="{{ path('edit_popup',{id:entity.id, type:type}) }}" data-edit='{{type}}' data-entity-id="{{ entity.id }}" data-entity-type="{{ type }}" rel="tooltip" data-placement="bottom" data-original-title='Editar {{ type }}'>
         <i></i>
     </a>
 {% endif %}

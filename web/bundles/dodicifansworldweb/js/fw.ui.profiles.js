@@ -178,41 +178,40 @@ $(document).ready(function () {
                     if(totalVideos <= 0) {
                         deferred.reject(new Error("Video category does not contain any video"));
                     }
-                    for(var key in response.profiles) {
-                        if (response.profiles.hasOwnProperty(key)) {
-                            //console.log(response.profiles[key]);
-                            var profile = response.profiles[key];
-                            //console.log("profile.highlight: " + profile.highlight)
-
-                        }
-                    }
                     function render_profile(profile) {
                         $.when(templateHelper.htmlTemplate('profile-home_element', profile))
                         .then(function(thumb){
                             var $thumb = $(thumb).clone();
                             $thumb.addClass('profile');
-                            $thumb.find("[data-idolship-add]").fwIdolship({
-                                onAddIdol: function(plugin, data) {
-                                    var self = $(plugin.element);
-                                    self.addClass('disabled');
-                                    self.removeClass('add');
-                                    self.text("-");
-                                },
-                                onRemoveIdol: function(plugin, data) {
-                                    //window.location.reload();
-                                }
-                            });
-                            $thumb.find('[data-teamship-add]').fwTeamship({
-                                onAddTeam: function(plugin, data) {
-                                    var self = $(plugin.element);
-                                    self.addClass('disabled');
-                                    self.removeClass('add');
-                                    self.text("-");
-                                },
-                                onRemoveTeam: function(plugin, data) {
-                                    //window.location.reload();
-                                }
-                            });
+                            if(!profile.isFan) {
+                                $thumb.find("[data-idolship-add]").fwIdolship({
+                                    onAddIdol: function(plugin, data) {
+                                        var self = $(plugin.element);
+                                        self.addClass('disabled');
+                                        self.removeClass('add');
+                                        self.hide();
+                                        window.success(data.message);
+                                    },
+                                    onRemoveIdol: function(plugin, data) {
+                                        //window.location.reload();
+                                    }
+                                });
+                                $thumb.find('[data-teamship-add]').fwTeamship({
+                                    onAddTeam: function(plugin, data) {
+                                        var self = $(plugin.element);
+                                        self.addClass('disabled');
+                                        self.removeClass('add');
+                                        self.hide();
+                                        window.success(data.message);
+                                    },
+                                    onRemoveTeam: function(plugin, data) {
+                                        //window.location.reload();
+                                    }
+                                });
+                            } else {
+                                $thumb.find("[data-idolship-add]").hide();
+                                $thumb.find('[data-teamship-add]').hide();
+                            }
                             if(profile.highlight) {
                                 $thumb.addClass('double');
                             }
@@ -411,48 +410,58 @@ $(document).ready(function () {
                     if(response.profiles.length < 1) {
                         $(that.element).parent().fadeOut('slow');
                     }
+                    function render_profile(profile) {
+                        $.when(templateHelper.htmlTemplate('profile-home_element', profile))
+                        .then(function(response){
+                            var $thumb = $(response).clone();
+                            if(!profile.isFan) {
+                                $thumb.find("[data-idolship-add]").fwIdolship({
+                                    onAddIdol: function(plugin, data) {
+                                        var self = $(plugin.element);
+                                        self.addClass('disabled');
+                                        self.removeClass('add');
+                                        self.hide();
+                                        window.success(data.message);
+                                    },
+                                    onRemoveIdol: function(plugin, data) {
+                                        //window.location.reload();
+                                    }
+                                });
+                                $thumb.find('[data-teamship-add]').fwTeamship({
+                                    onAddTeam: function(plugin, data) {
+                                        var self = $(plugin.element);
+                                        self.addClass('disabled');
+                                        self.removeClass('add');
+                                        self.hide();
+                                        window.success(data.message);
+                                    },
+                                    onRemoveTeam: function(plugin, data) {
+                                        //window.location.reload();
+                                    }
+                                });
+                            } else {
+                                $thumb.find("[data-idolship-add]").hide();
+                                $thumb.find('[data-teamship-add]').hide();
+                            }
+                            $thumb.find('img').load(function() {
+                                $(that.element).parent().find('.spinner').addClass('hidden');
+                                $(that.element).parent().find('.spinner').hide();
+                                $(that.element).parent().removeClass('hidden');
+                                $(that.element).parent().fadeIn('slow');
+                                if(addMore) {
+                                    $(that.element).parent().find('.add-more').show();
+                                } else {
+                                    $(that.element).parent().find('.add-more').hide();
+                                }
+                                $thumb.hide().appendTo(that.element).fadeIn('slow');
+                            });
+                        });
+                    }
                     for(i in response.profiles) {
                         if (response.profiles.hasOwnProperty(i)) {
                             var addMore = response.addMore;
                             var profile = response.profiles[i];
-                            $.when(templateHelper.htmlTemplate('profile-home_element', profile))
-                                .then(function(response){
-                                    var $thumb = $(response).clone();
-                                    $thumb.find("[data-idolship-add]").fwIdolship({
-                                        onAddIdol: function(plugin, data) {
-                                            var self = $(plugin.element);
-                                            self.addClass('disabled');
-                                            self.removeClass('add');
-                                            self.hide();
-                                        },
-                                        onRemoveIdol: function(plugin, data) {
-                                            //window.location.reload();
-                                        }
-                                    });
-                                    $thumb.find('[data-teamship-add]').fwTeamship({
-                                        onAddTeam: function(plugin, data) {
-                                            var self = $(plugin.element);
-                                            self.addClass('disabled');
-                                            self.removeClass('add');
-                                            self.hide();
-                                        },
-                                        onRemoveTeam: function(plugin, data) {
-                                            //window.location.reload();
-                                        }
-                                    });
-                                    $thumb.find('img').load(function() {
-                                        $(that.element).parent().find('.spinner').addClass('hidden');
-                                        $(that.element).parent().find('.spinner').hide();
-                                        $(that.element).parent().removeClass('hidden');
-                                        $(that.element).parent().fadeIn('slow');
-                                        if(addMore) {
-                                            $(that.element).parent().find('.add-more').show();
-                                        } else {
-                                            $(that.element).parent().find('.add-more').hide();
-                                        }
-                                        $thumb.hide().appendTo(that.element).fadeIn('slow');
-                                    });
-                                });
+                            render_profile(profile);
                         }
                     }
                     return response.videos;

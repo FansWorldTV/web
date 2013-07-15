@@ -530,7 +530,7 @@ var site = {
         });
     },
     watchLaterButtons: function() {
-        $('[data-watch-later]:not(.disabled)').on('click', function(e) {
+        $('body').on('click', '[data-watch-later]:not(.disabled)', function(e) {
             e.preventDefault();
             var el = $(this);
             var videoid = el.attr('data-video-id');
