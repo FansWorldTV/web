@@ -130,10 +130,13 @@ $(document).ready(function () {
             that.options.onFilterChange = function (type, id){
                 id = parseInt(id, 10);
                 var reqData = {};
-                if(isNaN(id)) {
+                if(!isNaN(id)) {
                     that.options.type = type;
                     that.options.id = id;
                     reqData[that.options.type] = that.options.id;
+                } else {
+                    that.options.type = "";
+                    that.options.id = "";
                 }
                 $.when(that.removeAll()).then(function(){
                     that.hide();
@@ -145,7 +148,6 @@ $(document).ready(function () {
                     });
                 }).fail(function(error){
                     var reqData = {};
-                    reqData[that.options.type] = parseInt(that.options.id, 10);
                     $.when(that.makePackery(reqData)).then(function(){
                     }).progress(function() {
                         //console.log("adding thumbnails to packery");
@@ -706,6 +708,22 @@ $(document).ready(function () {
     var videoCategory = 0;
     var videoGenre = 0;
 
+    // explore hashtag
+    if(location.hash !== ''){
+        var hash = location.hash;
+        hash = window.location.hash.slice(1).toLowerCase().split('_');
+        console.log(hash)
+        /*
+        setTimeout(function(){
+            $('[data-entity-type="'+ hash[0] +'"][data-entity-id="'+ hash[1] +'"]').click();
+        }, 2500)
+        */
+        //return;
+        type = hash[0];
+        id = hash[1];
+        $(".filter-home").find('.active').removeClass('active');
+        $('[data-entity-type="'+ hash[0] +'"][data-entity-id="'+ hash[1] +'"]').addClass('active');
+    }
     // Video Packery Gallery
     $('section.highlights').fwHomePackery({
         videoCategory: videoCategory,
