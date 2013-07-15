@@ -32,9 +32,24 @@ class HomeController extends SiteController
     {
         $checkfbreq = $this->checkFacebookRequest();
         if ($checkfbreq) return $checkfbreq;
-
+        
+        $genreRepo = $this->getRepository('Genre');
+        $categories = $this->getRepository('VideoCategory')->findAll();
+        $categoriesArray = array();
+        foreach ($categories as $vc) {
+            $categoriesArray[] = array(
+                'id' => $vc->getId(),
+                'title' => $vc->getTitle(),
+                'genres' => $genreRepo->byVideoCategory($vc->getId())
+            );
+            
+            /*$categoriesArray['id'] = $vc->getId(),;
+            $categoriesArray['title'] = $vc->getTitle();
+            $categoriesArray['genres'] = $genreRepo->byVideoCategory($vc->getId()); */
+        }
+ 
         return array(
-            'categories' => $this->getRepository('VideoCategory')->findAll(),
+            'categories' => $categoriesArray,
             'genres' => $this->getRepository('Genre')->getParents()
         );
     }

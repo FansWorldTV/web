@@ -127,13 +127,16 @@ $(document).ready(function () {
 
             that.options.container = document.querySelector(that.options.selector);
 
-            that.options.onFilterChange = function (type, id){
+            that.options.onFilterChange = function (type, id, vc){
                 id = parseInt(id, 10);
+                vc = parseInt(vc, 10);
                 var reqData = {};
                 if(!isNaN(id)) {
                     that.options.type = type;
                     that.options.id = id;
+                    that.options.vc = vc;
                     reqData[that.options.type] = that.options.id;
+                    reqData['vc'] = that.options.vc;
                 }
                 $.when(that.removeAll()).then(function(){
                     that.hide();
@@ -174,8 +177,7 @@ $(document).ready(function () {
             var queue = null;
             var deferred = new jQuery.Deferred();
             var itemElements = that.options.packery.getItemElements();
-            console.log('makePackery()')
-            console.log(data)
+
             var onAdd = function(pckryInstance, laidOutItems) {
                 var items = pckryInstance.getItemElements();
                 deferred.notify(laidOutItems);
@@ -202,6 +204,9 @@ $(document).ready(function () {
                 }
             });
             queue.pause();
+            
+            console.log('makePackery()')
+            console.log("videocategory: " + data.vc);
             $.ajax({
                 url: that.options.videoFeed,
                 data: data || {
@@ -796,10 +801,11 @@ $(document).ready(function () {
         $(event.target).addClass('active');
         var type = $(event.target).attr('data-entity-type');
         var id = parseInt($(event.target).attr('data-entity-id'), 10);
+        var vc = $(event.target).attr('data-video-category');
         ///////////////////////////////////////////////////////////////////////
         // Decoupled EventTrigger                                            //
         ///////////////////////////////////////////////////////////////////////
-        window.fansWorldEvents.emitEvent('onFilterChange', [type, id]);
+        window.fansWorldEvents.emitEvent('onFilterChange', [type, id, vc]);
     });
     $(".filter-home > li:not('[data-override]')").on('click', function(){
         if($(this).hasClass('active')) {
@@ -809,6 +815,21 @@ $(document).ready(function () {
         $(this).addClass('active');
         var type = $(this).attr('data-entity-type');
         var id = parseInt($(this).attr('data-entity-id'), 10);
+        var vc = $(this).attr('data-video-category');
+
+        $('.category-menu').find('ul').each(function(){
+            if(parseInt($(this).attr('data-parent-entity-id'), 10) == id) {
+                $(this).show();
+                $(this).removeClass('hidden');
+                $(this).find('li').each(function(){
+                    $(this).removeClass('active');
+                });
+            } else {
+                $(this).hide();
+                $(this).addClass('hidden');
+            }
+        });
+        $('.category-menu').show();
 
         ///////////////////////////////////////////////////////////////////////
         // Decoupled EventTrigger                                            //

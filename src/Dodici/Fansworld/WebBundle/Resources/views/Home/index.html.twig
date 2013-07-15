@@ -31,11 +31,18 @@
         <div class="category-menu row-fluid">
           <h4 class="">Categorias</h4>
             {% for genre in genres %}
-                <ul class="subfilter-home" data-genre-title="{{ genre.title }}" data-genre-id="{{ genre.id }}">            
+                <ul class="subfilter-home hidden" data-parent-entity-genre-title="{{ genre.title }}" data-parent-entity-id="{{ genre.id }}">            
                     {% for child in genre.children %}
                         <li data-entity-type="genre" data-entity-id="{{ child.id}}">{{ child.title }}</li>
                     {% endfor %}
                 </ul>                
+            {% endfor %}
+            {% for category in categories %}
+                <ul class="subfilter-home hidden" data-parent-entity-title="{{ category.title }}" data-parent-entity-id="{{ category.id }}">
+                {% for genre in category.genres %}
+                    <li data-entity-type="genre" data-entity-id="{{ genre.id }}" data-video-category="{{ category.id }}">{{ genre.title }}</li>
+                {% endfor %}
+                </ul>
             {% endfor %}
 
         </div>
