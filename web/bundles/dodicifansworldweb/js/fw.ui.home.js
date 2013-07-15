@@ -130,7 +130,7 @@ $(document).ready(function () {
             that.options.onFilterChange = function (type, id){
                 id = parseInt(id, 10);
                 var reqData = {};
-                if(isNaN(id)) {
+                if(!isNaN(id)) {
                     that.options.type = type;
                     that.options.id = id;
                     reqData[that.options.type] = that.options.id;
