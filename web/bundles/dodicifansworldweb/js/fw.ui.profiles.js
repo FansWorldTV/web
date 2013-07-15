@@ -30,6 +30,7 @@
 /*jslint devel: true */                         /* Assume console, alert, ... */
 /*jslint windows: true */               /* Assume window object (for browsers)*/
 
+// v1.2
 
 /*******************************************************************************
  * Class dependencies:                                                         *
