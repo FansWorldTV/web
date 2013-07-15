@@ -36,7 +36,9 @@
                                 <a href="{{ path('user_land', {username: video.author.username}) }}">
                                     {% thumbnail video.author.image, 'mini_square' %}
                                 </a>
-                                <button class="btn btn-success add-fan" data-friendship-add="true" data-user-id="{{video.author.id}}">+</button>
+                                {% if appstate.canFriend(video.author) %}
+                                    <button class="btn btn_friendship btn-success add-fan" data-friendship-add="true" data-user-id="{{video.author.id}}">+</button>
+                                {% endif %}
                             </figure>
                         {% endif %}
                         <a class="name" href="{{ path('user_land', {username: video.author.username}) }}">
