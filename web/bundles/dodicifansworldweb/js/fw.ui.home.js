@@ -130,7 +130,7 @@ $(document).ready(function () {
             that.options.onFilterChange = function (type, id){
                 id = parseInt(id, 10);
                 var reqData = {};
-                if(isNaN(id)) {
+                if(!isNaN(id)) {
                     that.options.type = type;
                     that.options.id = id;
                     reqData[that.options.type] = that.options.id;
@@ -174,6 +174,8 @@ $(document).ready(function () {
             var queue = null;
             var deferred = new jQuery.Deferred();
             var itemElements = that.options.packery.getItemElements();
+            console.log('makePackery()')
+            console.log(data)
             var onAdd = function(pckryInstance, laidOutItems) {
                 var items = pckryInstance.getItemElements();
                 deferred.notify(laidOutItems);
