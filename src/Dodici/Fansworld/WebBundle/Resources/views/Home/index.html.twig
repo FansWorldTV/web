@@ -31,9 +31,9 @@
         <div class="category-menu row-fluid">
           <h4 class="">Categorias</h4>
             {% for genre in genres %}
-                <ul data-genre-title="{{ genre.title }}" data-genre-id="{{ genre.id }}">            
+                <ul class="subfilter-home" data-genre-title="{{ genre.title }}" data-genre-id="{{ genre.id }}">            
                     {% for child in genre.children %}
-                        <li data-subgenre-id="{{ child.id}}">{{ child.title }}</li>
+                        <li data-entity-type="genre" data-entity-id="{{ child.id}}">{{ child.title }}</li>
                     {% endfor %}
                 </ul>                
             {% endfor %}

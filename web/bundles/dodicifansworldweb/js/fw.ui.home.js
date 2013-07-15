@@ -787,6 +787,20 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
+    $('body').on('click', '.subfilter-home', function(event){
+        if($(event.target).hasClass('active')) {
+            return;
+        }
+        console.log(event.target)
+        $(event.target).parent().find('.active').removeClass('active');
+        $(event.target).addClass('active');
+        var type = $(event.target).attr('data-entity-type');
+        var id = parseInt($(event.target).attr('data-entity-id'), 10);
+        ///////////////////////////////////////////////////////////////////////
+        // Decoupled EventTrigger                                            //
+        ///////////////////////////////////////////////////////////////////////
+        window.fansWorldEvents.emitEvent('onFilterChange', [type, id]);
+    });
     $(".filter-home > li:not('[data-override]')").on('click', function(){
         if($(this).hasClass('active')) {
             return;
