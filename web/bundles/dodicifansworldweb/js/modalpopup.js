@@ -65,6 +65,17 @@
                         selector:'[rel="tooltip"]'
                     });
 
+                    $(".report").fwModalDialog({
+                        modal: {
+                            backdrop: false, 
+                            width: 290
+                        }
+                    });
+                    $("[data-edit='video']").fwModalDialog({
+                        modal: {
+                            'deleteButton': true
+                        }
+                    });
                     self.settings.onload(self.settings);
 
                     // Bind play prev~next video arrows

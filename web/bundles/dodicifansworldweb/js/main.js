@@ -72,12 +72,20 @@ var site = {
         });
 
         if (isLoggedIn) {
+            /*
             $('.report').colorbox({
                 href: this.href,
                 innerWidth: 350,
                 innerHeight: 250,
                 onComplete: function() {
                     //resizePopup();
+                }
+            });
+            */
+            $('.report').fwModalDialog({
+                modal: {
+                    backdrop: false, 
+                    width: 290
                 }
             });
         }
@@ -156,6 +164,18 @@ var site = {
             }
         });
 
+        /*
+        $('body').on('click', "[data-edit='video']", function(event){
+            event.preventDefault();
+            console.log(event)
+
+            $('#modal').fadeOut(function() {
+                $('#modal-content').html('');
+                $(document).unbind('keydown');
+                $("[data-edit='video']").click(event);
+            });            
+        });
+        */
         // Edit Video-info
         $("[data-edit='video']").fwModalDialog({
             modal: {

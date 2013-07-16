@@ -39,7 +39,7 @@
                     <i></i>
                 </a>
             {% else %}
-                <a class="btn report" data-login-required href="{{ path('complaint_formPage', {'entityId': entity.id, 'entityType': type}) }}" rel="tooltip" data-placement="bottom" title="Reportar">
+                <a class="btn report" data-login-required href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}" rel="tooltip" data-placement="bottom" title="Reportar">
                     <i></i>
                 </a>
             {% endif %}
