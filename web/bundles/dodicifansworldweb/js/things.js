@@ -6,14 +6,14 @@ things.albums = {};
 things.fans = {};
 
 things.init = function(){
-    console.log("things.init()")
+    /*console.log("things.init()")
     things.matchs.init();
-    /*things.videos.init();*/
+    *//*things.videos.init();*//*
     things.photos.init();
 
     if($(".my-things").hasClass('fans')) {
         things.fans.init();
-    }
+    }*/
 };
 
 
