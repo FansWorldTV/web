@@ -129,30 +129,32 @@ $(document).ready(function () {
 
             that.options.onFilterChange = function (type, id){
                 id = parseInt(id, 10);
-                if($.isNumeric(id)) {
+                var reqData = {};
+                if(!isNaN(id)) {
                     that.options.type = type;
                     that.options.id = id;
-                    $.when(that.removeAll()).then(function(){
-                        that.hide();
-                        var reqData = {};
-                        reqData[that.options.type] = parseInt(that.options.id, 10);
-                        $.when(that.makePackery(reqData)).then(function(){
-                        }).progress(function() {
-                            //console.log("adding thumbnails to packery");
-                        }).fail(function(error){
-                            that.hide();
-                        });
-                    }).fail(function(error){
-                        var reqData = {};
-                        reqData[that.options.type] = parseInt(that.options.id, 10);
-                        $.when(that.makePackery(reqData)).then(function(){
-                        }).progress(function() {
-                            //console.log("adding thumbnails to packery");
-                        }).fail(function(error){
-                            that.hide();
-                        });
-                    });
+                    reqData[that.options.type] = that.options.id;
+                } else {
+                    that.options.type = "";
+                    that.options.id = "";
                 }
+                $.when(that.removeAll()).then(function(){
+                    that.hide();
+                    $.when(that.makePackery(reqData)).then(function(){
+                    }).progress(function() {
+                        //console.log("adding thumbnails to packery");
+                    }).fail(function(error){
+                        that.hide();
+                    });
+                }).fail(function(error){
+                    var reqData = {};
+                    $.when(that.makePackery(reqData)).then(function(){
+                    }).progress(function() {
+                        //console.log("adding thumbnails to packery");
+                    }).fail(function(error){
+                        that.hide();
+                    });
+                });
             };
             window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
             that.options.packery = new Packery(that.options.container, {

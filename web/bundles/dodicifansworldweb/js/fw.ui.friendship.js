@@ -44,8 +44,12 @@ $(document).ready(function () {
         addFriend: function(event) {
             var that = this;
             var self = $(this);
-            console.log("addFriend")
-            $(event.srcElement).off();      // remove event listeners
+            event.preventDefault();
+            if (!window.isLoggedIn) {
+                $('[data-login-btn]').click();
+                return false;
+            }
+            $(this).off();      // remove event listeners
             var plugin = $(event.srcElement).data(pluginName);
             plugin.toggleFriendship($(event.srcElement).attr('data-user-id'));
         },
@@ -57,7 +61,7 @@ $(document).ready(function () {
             $("ul.friendgroupsList li input:checkbox:checked").each(function(k, el){
                 friendgroups[k] = $(el).val();
             });
-
+            self.addClass('disabled');
             //self.addClass('loading-small');
             ajax.genericAction(
                 'friendship_ajaxaddfriend',
@@ -72,10 +76,12 @@ $(document).ready(function () {
                         }
                     }
                     //self.removeClass('loading-small');
+                    self.removeClass('disabled');
                 },
                 function(error) {
                     window.error(error.responseText);
                     //self.removeClass('loading-small');
+                    self.removeClass('disabled');
                     return that.options.onError(error);
                 });
         },
@@ -115,10 +121,11 @@ $(document).ready(function () {
 //Attach plugin to all matching element
 $(document).ready(function () {
     "use strict";
-    $(".btn_friendship.add:not('.loading-small')").fwFriendship({
+    //$(".btn_friendship.add:not('.loading-small')").fwFriendship({
+    $("[data-friendship-add]:not('[data-override]')").fwFriendship({
         onAddFriend: function(plugin, data) {
             var self = $(plugin.element);
-            self.addClass('disabled');
+            self.hide();
             self.removeClass('add');
             self.text(data.buttontext);
             window.notice(data.message);

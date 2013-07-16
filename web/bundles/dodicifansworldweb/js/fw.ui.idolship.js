@@ -36,13 +36,13 @@ $(document).ready(function () {
             self.on('click', that.addIdol);
         },
         addIdol: function(event) {
+            var that = this;
+            var self = $(this);
+            event.preventDefault();
             if (!window.isLoggedIn) {
                 $('[data-login-btn]').click();
                 return false;
-            }
-
-            var that = this;
-            var self = $(this);
+            }            
             $(this).off();      // remove event listeners
             var plugin = $(this).data('fwIdolship');
             plugin.toggleIdolship($(this).attr('data-idol-id'));
@@ -51,6 +51,7 @@ $(document).ready(function () {
             var that = this;
             var self = $(that.element);
             //self.addClass('loading-small');
+            self.addClass('disabled');
             ajax.genericAction(
                 'idolship_ajaxtoggle',
                 { 'idol-id': idolId },
@@ -63,10 +64,12 @@ $(document).ready(function () {
                         }
                     }
                     //self.removeClass('loading-small');
+                    self.removeClass('disabled');
                 },
                 function(error) {
                     window.error(error.responseText);
                     //self.removeClass('loading-small');
+                    self.removeClass('disabled');
                     return that.options.onError(error);
                 });
         },

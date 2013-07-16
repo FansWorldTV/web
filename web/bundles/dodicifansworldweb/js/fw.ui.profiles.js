@@ -30,6 +30,7 @@
 /*jslint devel: true */                         /* Assume console, alert, ... */
 /*jslint windows: true */               /* Assume window object (for browsers)*/
 
+// v1.2
 
 /*******************************************************************************
  * Class dependencies:                                                         *
@@ -90,31 +91,35 @@ $(document).ready(function () {
             that.options.container = document.querySelector(that.options.selector);
 
             that.options.onFilterChange = function (type, id){
-                id = parseInt(id, 10);
-                if($.isNumeric(id)) {
+                id = parseInt(id, 10)
+                var reqData = {};
+                if(!isNaN(id)) {
                     that.options.type = type;
                     that.options.id = id;
-                    $.when(that.removeAll()).then(function(){
+                    reqData[that.options.type] = that.options.id;
+                } else {
+                    that.options.type = "";
+                    that.options.id = "";
+                }
+                $.when(that.removeAll()).then(function(){
+                    that.hide();
+                    $.when(that.makePackery(reqData)).then(function(){
+                    }).progress(function() {
+                        //console.log("adding thumbnails to packery");
+                    }).fail(function(error){
+                        //alert(error.message);
                         that.hide();
+                    });
+                }).fail(function(error){
                         var reqData = {};
-                        reqData[that.options.type] = parseInt(that.options.id, 10);
                         $.when(that.makePackery(reqData)).then(function(){
                         }).progress(function() {
-                            console.log("adding thumbnails to packery");
+                            //console.log("adding thumbnails to packery");
                         }).fail(function(error){
-                            alert(error.message);
+                            //alert(error.message);
+                            that.hide();
                         });
-                    }).fail(function(error){
-                            var reqData = {};
-                            reqData[that.options.type] = parseInt(that.options.id, 10);
-                            $.when(that.makePackery(reqData)).then(function(){
-                            }).progress(function() {
-                                console.log("adding thumbnails to packery");
-                            }).fail(function(error){
-                                alert(error.message);
-                            });
-                        });
-                }
+                    });
             };
             window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
             that.options.packery = new Packery(that.options.container, {
@@ -174,45 +179,46 @@ $(document).ready(function () {
                 }
             }).then(function(response) {
                     var i = 0;
-                    totalVideos = response.profiles.length;
-                    if(totalVideos <= 0) {
+                    if(typeof response.profiles === 'object' && Object.keys(response.profiles).length <= 0) {
+                        totalVideos  = Object.keys(response.profiles).length;
                         deferred.reject(new Error("Video category does not contain any video"));
-                    }
-                    for(var key in response.profiles) {
-                        if (response.profiles.hasOwnProperty(key)) {
-                            //console.log(response.profiles[key]);
-                            var profile = response.profiles[key];
-                            //console.log("profile.highlight: " + profile.highlight)
-
-                        }
+                    } else if(typeof response.profiles === "undefined") {
+                        deferred.reject(new Error("Bad response"));
                     }
                     function render_profile(profile) {
                         $.when(templateHelper.htmlTemplate('profile-home_element', profile))
                         .then(function(thumb){
                             var $thumb = $(thumb).clone();
                             $thumb.addClass('profile');
-                            $thumb.find("[data-idolship-add]").fwIdolship({
-                                onAddIdol: function(plugin, data) {
-                                    var self = $(plugin.element);
-                                    self.addClass('disabled');
-                                    self.removeClass('add');
-                                    self.text("-");
-                                },
-                                onRemoveIdol: function(plugin, data) {
-                                    //window.location.reload();
-                                }
-                            });
-                            $thumb.find('[data-teamship-add]').fwTeamship({
-                                onAddTeam: function(plugin, data) {
-                                    var self = $(plugin.element);
-                                    self.addClass('disabled');
-                                    self.removeClass('add');
-                                    self.text("-");
-                                },
-                                onRemoveTeam: function(plugin, data) {
-                                    //window.location.reload();
-                                }
-                            });
+                            if(!profile.isFan) {
+                                $thumb.find("[data-idolship-add]").fwIdolship({
+                                    onAddIdol: function(plugin, data) {
+                                        var self = $(plugin.element);
+                                        self.addClass('disabled');
+                                        self.removeClass('add');
+                                        self.hide();
+                                        window.success(data.message);
+                                    },
+                                    onRemoveIdol: function(plugin, data) {
+                                        //window.location.reload();
+                                    }
+                                });
+                                $thumb.find('[data-teamship-add]').fwTeamship({
+                                    onAddTeam: function(plugin, data) {
+                                        var self = $(plugin.element);
+                                        self.addClass('disabled');
+                                        self.removeClass('add');
+                                        self.hide();
+                                        window.success(data.message);
+                                    },
+                                    onRemoveTeam: function(plugin, data) {
+                                        //window.location.reload();
+                                    }
+                                });
+                            } else {
+                                $thumb.find("[data-idolship-add]").hide();
+                                $thumb.find('[data-teamship-add]').hide();
+                            }
                             if(profile.highlight) {
                                 $thumb.addClass('double');
                             }
@@ -319,6 +325,7 @@ $(document).ready(function () {
         type: null,
         id: null,
         videoFeed: Routing.generate(appLocale + '_profile_ajaxgetprofiles'),
+        limitProfilesHome: 20,  // Asoc. en ProfileController.php con LIMIT_PROFILES_HOME
         page: 1,
         block: null,
         newEvent: null,
@@ -408,51 +415,64 @@ $(document).ready(function () {
                 data: data
             }).then(function(response) {
                     var i = 0;
-                    if(response.profiles.length < 1) {
+                    var addMore = response.addMore || false;
+                    if(typeof response.profiles === 'object' && Object.keys(response.profiles).length < 1) {
                         $(that.element).parent().fadeOut('slow');
+                    } else if(typeof response.profiles === 'object' && Object.keys(response.profiles).length >= that.options.limitProfilesHome) {
+                        addMore = true;
+                        $(that.element).parent().find('.add-more').show();
+                    }
+                    function render_profile(profile) {
+                        $.when(templateHelper.htmlTemplate('profile-home_element', profile))
+                        .then(function(response){
+                            var $thumb = $(response).clone();
+                            if(!profile.isFan) {
+                                $thumb.find("[data-idolship-add]").fwIdolship({
+                                    onAddIdol: function(plugin, data) {
+                                        var self = $(plugin.element);
+                                        self.addClass('disabled');
+                                        self.removeClass('add');
+                                        self.hide();
+                                        window.success(data.message);
+                                    },
+                                    onRemoveIdol: function(plugin, data) {
+                                        //window.location.reload();
+                                    }
+                                });
+                                $thumb.find('[data-teamship-add]').fwTeamship({
+                                    onAddTeam: function(plugin, data) {
+                                        var self = $(plugin.element);
+                                        self.addClass('disabled');
+                                        self.removeClass('add');
+                                        self.hide();
+                                        window.success(data.message);
+                                    },
+                                    onRemoveTeam: function(plugin, data) {
+                                        //window.location.reload();
+                                    }
+                                });
+                            } else {
+                                $thumb.find("[data-idolship-add]").hide();
+                                $thumb.find('[data-teamship-add]').hide();
+                            }
+                            $thumb.find('img').load(function() {
+                                $(that.element).parent().find('.spinner').addClass('hidden');
+                                $(that.element).parent().find('.spinner').hide();
+                                $(that.element).parent().removeClass('hidden');
+                                $(that.element).parent().fadeIn('slow');
+                                if(addMore) {
+                                    $(that.element).parent().find('.add-more').show();
+                                } else {
+                                    $(that.element).parent().find('.add-more').hide();
+                                }
+                                $thumb.hide().appendTo(that.element).fadeIn('slow');
+                            });
+                        });
                     }
                     for(i in response.profiles) {
                         if (response.profiles.hasOwnProperty(i)) {
-                            var addMore = response.addMore;
                             var profile = response.profiles[i];
-                            $.when(templateHelper.htmlTemplate('profile-home_element', profile))
-                                .then(function(response){
-                                    var $thumb = $(response).clone();
-                                    $thumb.find("[data-idolship-add]").fwIdolship({
-                                        onAddIdol: function(plugin, data) {
-                                            var self = $(plugin.element);
-                                            self.addClass('disabled');
-                                            self.removeClass('add');
-                                            self.hide();
-                                        },
-                                        onRemoveIdol: function(plugin, data) {
-                                            //window.location.reload();
-                                        }
-                                    });
-                                    $thumb.find('[data-teamship-add]').fwTeamship({
-                                        onAddTeam: function(plugin, data) {
-                                            var self = $(plugin.element);
-                                            self.addClass('disabled');
-                                            self.removeClass('add');
-                                            self.hide();
-                                        },
-                                        onRemoveTeam: function(plugin, data) {
-                                            //window.location.reload();
-                                        }
-                                    });
-                                    $thumb.find('img').load(function() {
-                                        $(that.element).parent().find('.spinner').addClass('hidden');
-                                        $(that.element).parent().find('.spinner').hide();
-                                        $(that.element).parent().removeClass('hidden');
-                                        $(that.element).parent().fadeIn('slow');
-                                        if(addMore) {
-                                            $(that.element).parent().find('.add-more').show();
-                                        } else {
-                                            $(that.element).parent().find('.add-more').hide();
-                                        }
-                                        $thumb.hide().appendTo(that.element).fadeIn('slow');
-                                    });
-                                });
+                            render_profile(profile);
                         }
                     }
                     return response.videos;

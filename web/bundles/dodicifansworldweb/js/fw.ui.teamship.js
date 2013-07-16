@@ -51,6 +51,11 @@ $(document).ready(function () {
         addTeam: function(event) {
             var that = this;
             var self = $(this);
+            event.preventDefault();
+            if (!window.isLoggedIn) {
+                $('[data-login-btn]').click();
+                return false;
+            }
             $(this).off();      // remove event listeners
             var plugin = $(this).data(pluginName);
             plugin.toggleTeamship($(this).attr('data-team-id'));
