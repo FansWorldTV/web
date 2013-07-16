@@ -97,13 +97,10 @@ class HomeController extends SiteController
             );
             if($genre) {
                 $homeVideo = $this->getRepository('Video')->tempHomeByGenre($genre);
-            } else if($vc) {
-                $homeVideo = $this->getRepository('HomeVideo')->findOneBy(array('videocategory' => $vc));
-                if($homeVideo instanceof HomeVideo) {
-                    $homeVideo = $homeVideo->getVideo();
-                }
+            } elseif($vc) {
+                $homeVideo = $this->getRepository('Video')->tempHomeByCat($vc);
             } else {
-                $homeVideo = $this->getRepository('Video')->findOneBy(array('active' => true, 'highlight' => true));
+                $homeVideo = $this->getRepository('Video')->tempHomeByNone();
             }
             $response['home'] = $serializer->values($homeVideo, 'home_video_double');
             $limitWithTheHighlighted = (self::LIMIT_VIDEO - 3);
@@ -125,12 +122,11 @@ class HomeController extends SiteController
             $page = $paginate['page'];
             $offset = ($page - 1) * self::LIMIT_VIDEO;
             if($genre) {
-                $homeVideo = $this->getRepository('Video')->findOneBy(array('genre' => $genre, 'highlight' => true));
+                $homeVideo = $this->getRepository('Video')->tempHomeByGenre($genre);
+            } elseif($vc) {
+                $homeVideo = $this->getRepository('Video')->tempHomeByCat($vc);
             } else {
-                $homeVideo = $this->getRepository('HomeVideo')->findOneBy(array('videocategory' => $vc));
-                if($homeVideo instanceof HomeVideo) {
-                    $homeVideo = $homeVideo->getVideo();
-                }
+                $homeVideo = $this->getRepository('Video')->tempHomeByNone();
             }
             $response = array('videos' => array());
             switch ($block) {

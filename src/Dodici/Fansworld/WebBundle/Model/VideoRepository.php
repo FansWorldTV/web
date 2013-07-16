@@ -817,4 +817,39 @@ class VideoRepository extends CountBaseRepository
         if ($res) return $res[0];
         else return null;
     }
+
+    public function tempHomeByCat(VideoCategory $vc)
+    {
+        $query = $this->_em->createQuery('
+    	SELECT v
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
+    	WHERE
+    	v.active = true
+    	AND
+    	v.videocategory = :vc
+    	ORDER BY v.weight DESC
+    	')
+        ;
+        $query = $query->setParameter('vc', $vc->getId());
+        $query = $query->setMaxResults(1);
+        $res = $query->getResult();
+        if ($res) return $res[0];
+        else return null;
+    }
+
+    public function tempHomeByNone()
+    {
+        $query = $this->_em->createQuery('
+    	SELECT v
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
+    	WHERE
+    	v.active = true
+    	ORDER BY v.weight DESC
+    	')
+        ;
+        $query = $query->setMaxResults(1);
+        $res = $query->getResult();
+        if ($res) return $res[0];
+        else return null;
+    }
 }
