@@ -793,8 +793,12 @@ class VideoRepository extends CountBaseRepository
         return $this->search(null, null, $limit, $offset, null, null, null, null, null, null, $entity, null, null, null, 'desc');
     }
 
-    public function tempHomeByGenre(Genre $genre)
+    public function tempHomeByGenre($genre)
     {
+        if (!$genre instanceof Genre) {
+            $genre = $this->_em->getRepository('DodiciFansworldWebBundle:Genre')->find($genre);
+        }
+
         $isParent = false;
         if (!$genre->getParent()) $isParent = true;
         $query = $this->_em->createQuery('
@@ -818,7 +822,7 @@ class VideoRepository extends CountBaseRepository
         else return null;
     }
 
-    public function tempHomeByCat(VideoCategory $vc)
+    public function tempHomeByCat($vc)
     {
         $query = $this->_em->createQuery('
     	SELECT v
@@ -830,7 +834,7 @@ class VideoRepository extends CountBaseRepository
     	ORDER BY v.weight DESC
     	')
         ;
-        $query = $query->setParameter('vc', $vc->getId());
+        $query = $query->setParameter('vc', ($vc instanceof VideoCategory) ? $vc->getId() : $vc);
         $query = $query->setMaxResults(1);
         $res = $query->getResult();
         if ($res) return $res[0];
