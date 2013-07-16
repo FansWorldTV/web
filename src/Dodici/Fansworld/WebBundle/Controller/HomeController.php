@@ -96,7 +96,7 @@ class HomeController extends SiteController
                 'popular' => array()
             );
             if($genre) {
-                $homeVideo = $this->getRepository('Video')->findOneBy(array('genre' => $genre, 'highlight' => true));
+                $homeVideo = $this->getRepository('Video')->tempHomeByGenre($genre);
             } else if($vc) {
                 $homeVideo = $this->getRepository('HomeVideo')->findOneBy(array('videocategory' => $vc));
                 if($homeVideo instanceof HomeVideo) {

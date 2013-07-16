@@ -792,4 +792,29 @@ class VideoRepository extends CountBaseRepository
     {
         return $this->search(null, null, $limit, $offset, null, null, null, null, null, null, $entity, null, null, null, 'desc');
     }
+
+    public function tempHomeByGenre(Genre $genre)
+    {
+        $isParent = false;
+        if (!$genre->getParent()) $isParent = true;
+        $query = $this->_em->createQuery('
+    	SELECT v
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
+    	JOIN v.genre vg
+    	JOIN vg.parent vgp
+    	WHERE
+    	v.active = true
+    	AND
+    	'.
+        ($isParent ? 'vgp = :genre' : 'vg = :genre')
+        .'
+    	ORDER BY v.weight DESC
+    	')
+        ;
+        $query = $query->setParameter('genre', $genre->getId());
+        $query = $query->setMaxResults(1);
+        $res = $query->getResult();
+        if ($res) return $res[0];
+        else return null;
+    }
 }
