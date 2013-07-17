@@ -7,6 +7,8 @@ use Doctrine\DBAL\Types\Type;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
 use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * GenreRepository
@@ -51,6 +53,33 @@ class GenreRepository extends CountBaseRepository
             $query = $query->setMaxResults((int) $limit);
         if ($offset !== null)
             $query = $query->setFirstResult((int) $offset);
+        return $query->getResult();
+    }
+    public function byVideoCategory($vc, $limit=null, $offset=null)
+    {
+
+        if(!$vc) throw new \Exception('Video Category parameter is missing');
+
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('id', 'id');
+        $rsm->addScalarResult('title', 'title');
+        $sql = '
+            SELECT g.id as id, g.title as title FROM genre g
+                INNER JOIN video v ON v.genre_id = g.id
+                WHERE v.videocategory_id = :vc
+                GROUP BY g.id';
+        $query = $this->_em->createNativeQuery($sql .
+            (($limit !== null) ? ' LIMIT :limit ' : '') .
+            (($offset !== null) ? ' OFFSET :offset ' : ''), $rsm
+        );
+
+        $query = $query->setParameter('vc', $vc, Type::BIGINT);
+
+        if($limit !== null)
+            $query = $query->setParameter('limit', (int)$limit, Type::INTEGER);
+        if($offset !== null)
+            $query = $query->setParameter('offset', (int)$offset, Type::INTEGER);
+
         return $query->getResult();
     }
 }
