@@ -792,4 +792,68 @@ class VideoRepository extends CountBaseRepository
     {
         return $this->search(null, null, $limit, $offset, null, null, null, null, null, null, $entity, null, null, null, 'desc');
     }
+
+    public function tempHomeByGenre($genre)
+    {
+        if (!$genre instanceof Genre) {
+            $genre = $this->_em->getRepository('DodiciFansworldWebBundle:Genre')->find($genre);
+        }
+
+        $isParent = false;
+        if (!$genre->getParent()) $isParent = true;
+        $query = $this->_em->createQuery('
+    	SELECT v
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
+    	JOIN v.genre vg
+    	JOIN vg.parent vgp
+    	WHERE
+    	v.active = true
+    	AND
+    	'.
+        ($isParent ? 'vgp = :genre' : 'vg = :genre')
+        .'
+    	ORDER BY v.weight DESC
+    	')
+        ;
+        $query = $query->setParameter('genre', $genre->getId());
+        $query = $query->setMaxResults(1);
+        $res = $query->getResult();
+        if ($res) return $res[0];
+        else return null;
+    }
+
+    public function tempHomeByCat($vc)
+    {
+        $query = $this->_em->createQuery('
+    	SELECT v
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
+    	WHERE
+    	v.active = true
+    	AND
+    	v.videocategory = :vc
+    	ORDER BY v.weight DESC
+    	')
+        ;
+        $query = $query->setParameter('vc', ($vc instanceof VideoCategory) ? $vc->getId() : $vc);
+        $query = $query->setMaxResults(1);
+        $res = $query->getResult();
+        if ($res) return $res[0];
+        else return null;
+    }
+
+    public function tempHomeByNone()
+    {
+        $query = $this->_em->createQuery('
+    	SELECT v
+    	FROM \Dodici\Fansworld\WebBundle\Entity\Video v
+    	WHERE
+    	v.active = true
+    	ORDER BY v.weight DESC
+    	')
+        ;
+        $query = $query->setMaxResults(1);
+        $res = $query->getResult();
+        if ($res) return $res[0];
+        else return null;
+    }
 }

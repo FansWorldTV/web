@@ -28,7 +28,7 @@ use Imagine\Gd\Imagine;
 class ProfileController extends SiteController
 {
 
-    const LIMIT_PROFILES_HOME = 20;
+    const LIMIT_PROFILES_HOME = 40;
 
     /**
      * @Route("/profiles", name="profiles_index")

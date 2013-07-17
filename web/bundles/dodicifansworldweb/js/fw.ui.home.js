@@ -134,12 +134,15 @@ $(document).ready(function () {
                     that.options.type = type;
                     that.options.id = id;
                     reqData[that.options.type] = that.options.id;
-                }                
+                } else {
+                    that.options.type = "";
+                    that.options.id = "";
+                }
                 vc = parseInt(vc, 10);
                 if(!isNaN(vc)) {
                     that.options.vc = vc;
-                    reqData.vc = that.options.vc;
-                }                
+                    reqData.vc = that.options.vc;                
+                }
                 $.when(that.removeAll()).then(function(){
                     that.hide();
                     $.when(that.makePackery(reqData)).then(function(){
@@ -150,7 +153,6 @@ $(document).ready(function () {
                     });
                 }).fail(function(error){
                     var reqData = {};
-                    reqData[that.options.type] = parseInt(that.options.id, 10);
                     $.when(that.makePackery(reqData)).then(function(){
                     }).progress(function() {
                         //console.log("adding thumbnails to packery");
