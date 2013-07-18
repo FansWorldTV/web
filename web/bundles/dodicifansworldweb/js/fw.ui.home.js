@@ -290,16 +290,16 @@ $(document).ready(function () {
         hide: function() {
             var that = this;
             $(that.element).fadeOut(function() {
-                $(that.element).parent().find('.spinner').removeClass('hidden');
-                $(that.element).parent().find('.spinner').show();
+                $('.spinner').removeClass('hidden');
+                $('.spinner').show();
             });
         },
         show: function() {
             var that = this;
             $(that.element).removeClass('hidden');
             $(that.element).fadeIn(function() {
-                $(that.element).parent().find('.spinner').addClass('hidden');
-                $(that.element).parent().find('.spinner').hide();
+                $('.spinner').addClass('hidden');
+                $('.spinner').hide();
             });
         },
         destroy: function() {
@@ -441,6 +441,10 @@ $(document).ready(function () {
                 button.removeClass('rotate');
             });
         },
+        hideSpinner: function() {
+            $('.spinner').addClass('hidden');
+            $('.spinner').hide();
+        },
         insetThumbs: function(feed, data) {
             var that = this;
             var deferred = new jQuery.Deferred();
@@ -460,8 +464,7 @@ $(document).ready(function () {
                         .then(function(response){
                             var $thumb = $(response).clone();
                             $thumb.find('img').load(function() {
-                                $(that.element).parent().find('.spinner').addClass('hidden');
-                                $(that.element).parent().find('.spinner').hide();
+                                that.hideSpinner();
                                 $(that.element).parent().removeClass('hidden');
                                 $(that.element).parent().fadeIn('slow');
                                 if(addMore) {

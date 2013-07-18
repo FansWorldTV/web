@@ -720,9 +720,9 @@ var site = {
     },
     BindLoginWidget: function() {
         //fix triangle for firefox
-        if ($.browser.mozilla == true) {
-            $('header nav div#login-widget div.arrow-up-border').hide();
-        }
+        //if ($.browser.mozilla == true) {
+            //$('header nav div#login-widget div.arrow-up-border').hide();
+        //}
         $('header .header-ingresar').click(function() {
             $('header div#login-widget').toggle();
         });

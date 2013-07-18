@@ -53,7 +53,7 @@ share.autocomplete = function() {
 };
 
 share.it = function() {
-    $("#share_it:not('.disabled')").live('click', function() {
+    $("#share_it:not('.disabled')").on('click', function() {
         var self = $(this);
         var params = {};
 
