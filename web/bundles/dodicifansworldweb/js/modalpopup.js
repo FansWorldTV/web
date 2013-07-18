@@ -164,10 +164,10 @@
                     inlineStyle += 'height:' + self.settings.height + 'px;top:50%;margin-top:-' + Math.ceil(self.settings.height/2) + 'px;';
                 }
 
-                markup += '<div id="' + self.settings.container.replace('#', '') + '">';
-                markup += '  <div id="' + self.settings.overlay.replace('#', '') + '"></div>';
-                markup += '  <div id="' + self.settings.close.replace('#', '') + '"></div>';
-                markup += '  <div id="' + self.settings.content.replace('#', '') + '" style="' + inlineStyle + '"></div>';
+                markup += '<div id="modal">';
+                markup += '  <div id="modal-overlay"></div>';
+                markup += '  <div id="modal-close"></div>';
+                markup += '  <div id="modal-content" style="' + inlineStyle + '"></div>';
                 markup += '</div>';
                 $target.append(markup);
             }
