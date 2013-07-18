@@ -1073,3 +1073,68 @@ button.tw_button {
     clear:right;
   }
 }
+
+.confirmation-checkemail {
+	margin-top: 40px;
+	text-align: center;
+
+	h2 {
+		font-size: 50px;
+		font-weight: 400;
+		color: @orange;
+	}
+
+	.systemmessage {
+		font-weight: 300;
+		font-color: @black;
+		font-size: 20px;
+		margin-top: 30px;
+	}
+}
+
+.envelope {
+	display: block;
+	position: relative;
+	border-radius: 5px;
+	height: 200px;
+	width: 400px;
+	background-color: @white;
+	margin: 40px auto;
+	overflow: hidden;
+	z-index: 0;
+	border: 3px solid gray;
+
+	.top-flick {
+		border: 3px solid gray;
+		width: 400px;
+		height: 400px;
+		position: absolute;
+		.transform(rotate(45deg));
+		top: -290px;
+		right: -3px;
+		z-index: 9;
+		.box-shadow(1px 1px 40px gray);
+		.border-radius(40px);
+		background-color: @white;
+	}
+
+	.bottom-flick {
+		position: absolute;
+		bottom: 0;
+		width: 1px;
+		height: 1px;
+		border: solid 200px transparent;
+		border-bottom: solid 90px @white;
+		border-top: none;
+	}
+	.with-border {
+		position: absolute;
+		bottom: 0px;
+		left: -14px;
+		width: 1px;
+		height: 1px;
+		border: solid 214px transparent;
+		border-bottom: solid 94px gray;
+		border-top: none;
+	}
+}
