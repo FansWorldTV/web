@@ -36,6 +36,7 @@ class HomeController extends SiteController
         $genreRepo = $this->getRepository('Genre');
         $categories = $this->getRepository('VideoCategory')->findAll();
         $categoriesArray = array();
+
         foreach ($categories as $vc) {
             $categoriesArray[] = array(
                 'id' => $vc->getId(),
@@ -43,9 +44,11 @@ class HomeController extends SiteController
                 'genres' => $genreRepo->byVideoCategory($vc->getId())
             );
         }
+
         return array(
             'categories' => $categoriesArray,
-            'genres' => $this->getRepository('Genre')->getParents()
+            'genres' => $this->getRepository('Genre')->getParents(),
+            'confirmedModal' => $this->getRequest()->get('confirmedModal', false)
         );
     }
 
