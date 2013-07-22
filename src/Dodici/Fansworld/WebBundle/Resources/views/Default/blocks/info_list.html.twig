@@ -21,7 +21,7 @@
     {% endif %}
     
     <dl class="dl-vertical">
-        {% for data in personalData %}     
+        {% for data in personalData %}
             {% if  ( list_type != 'user' ) or ( appstate.canviewfield(entity, data) ) %} 
                 {% if data == 'username' %}
                     <dt>Usuario</dt>
@@ -39,8 +39,10 @@
                         {{ entity.foundedAt|date() }}
                     </dd>    
                 {% elseif data == 'sex' %}
+                {#
                         <dt>Género</dt>
                         <dd>{% if entity.sex == 'f' %}Mujer{% else %}Hombre{% endif %}</dd>
+                #}
                 {% elseif data == 'idolcareers' %}
                     <dt>Carrera</dt>
                     <dd>
@@ -57,7 +59,7 @@
                                 </li>
                             {% endfor %}
                         </ul>
-                    </dd>    
+                    </dd>
                 {% else %}
                     {% if attribute(entity, data) and data != 'content'  %}
                         <dt>{{ data|trans }}</dt>
