@@ -7,6 +7,9 @@ share.init = function() {
         $("[data-sharebox-gral]").toggle();
     });
 
+    $(".sharer-container .share-buttons [data-share-content]").fwModalDialog();
+
+/*
     $(".btn-checkbox").on('click', function() {
         $(this).toggleClass('active');
 
@@ -31,6 +34,7 @@ share.init = function() {
             }
         }
     });
+*/
     share.autocomplete();
     share.it();
 };
@@ -59,9 +63,9 @@ share.it = function() {
 
         $(self).addClass('disabled');
 
-        params['tw'] = $(".btn-checkbox.tw").hasClass('active');
-        params['fw'] = $(".btn-checkbox.fw").hasClass('active');
-        params['fb'] = $(".btn-checkbox.fb").hasClass('active');
+        /*params['tw'] = $(".btn-checkbox.tw").hasClass('active');
+        params['fb'] = $(".btn-checkbox.fb").hasClass('active');*/
+        params['fw'] = true;
 
         params['message'] = $("input.wywtsay").val();
         params['entity-type'] = $("[data-share-button]").attr('data-type');
@@ -96,11 +100,11 @@ share.it = function() {
          */
 
 
-        if (!$(".btn-checkbox").hasClass('active')) {
+        /*if (!$(".btn-checkbox").hasClass('active')) {
             error("Seleccione un canal para compartir.");
             self.removeClass('disabled');
             return false;
-        }
+        }*/
 
         console.log(params);
         console.log("before ajax call")
