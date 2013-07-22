@@ -1,7 +1,7 @@
 {% set fullwidth = true %}
 {% extends "DodiciFansworldWebBundle:Tv:base.html.twig" %}
 
-{% block title %}{{ parent() }} - Video detail{% endblock %}
+{% block title %}{{ parent() }} - {{ video.title }}{% endblock %}
 
 {% block metafbimage %}{{ appmedia.imageurl(video.image, 'small_square') }}{% endblock %}
 {% block metafbtype %}{{ appfacebook.type('video') }}{% endblock %}
