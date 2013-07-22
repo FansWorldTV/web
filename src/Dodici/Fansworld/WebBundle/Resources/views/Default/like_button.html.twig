@@ -32,6 +32,8 @@
                                 <i class="icon-star-empty"></i>
                             {% elseif candislike %}
                                 <i class="icon-star"></i>
+                            {% else %}
+                                <i class="icon-star-empty"></i>
                             {% endif %}
                             {% if entity.likecount is defined and showcount %}
                                 <span class="likecount">{{entity.likecount}}</span>
