@@ -1036,12 +1036,14 @@ button.tw_button {
 /* Menu customizable del home */
 .category-menu {
   border: 1px solid rgba(0, 0, 0, 0.87);
-  width: 100%;
+  border-radius: 2px;
+  width: 50%;
   margin-left: auto;
   margin-right: auto;
   background-color: #f1f1f1;
   display: none;
   h4 {
+    border-bottom: 1px solid rgba(73, 73, 73, 0.63);    
     margin-top: 0px;
     text-align: center;
     clear:left;
@@ -1057,11 +1059,14 @@ button.tw_button {
     font-weight: 600;
     color: black;
     .pull-left();
+    margin: 2px 2px 2px 2px;
     margin-right: 5px;
     cursor: pointer;
     position: relative;
     &.active {
       color: white;
+      border: 1px solid black;
+      margin: 2px 2px 2px 2px;
       background-color: @green;
       .border-radius(3px);
     }
