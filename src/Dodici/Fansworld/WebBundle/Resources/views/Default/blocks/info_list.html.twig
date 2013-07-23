@@ -28,16 +28,16 @@
                     <dd>
                         <strong>{{ entity.username }}</strong> ({{ path('user_land', {'username': entity.username}) }})
                     </dd>
-                {% elseif data == 'birthday' %}
+                {% elseif data == 'birthday' and entity.birthday %}
                     <dt>Fecha Nac.</dt>
                     <dd>
-                        {{ entity.birthday|date() }}
+                        {{ entity.birthday }}
                     </dd>
-                {% elseif data == 'foundedAt' %}
+                {% elseif data == 'foundedAt' and entity.foundedAt %}
                     <dt>Fecha fund.</dt>
                     <dd>
-                        {{ entity.foundedAt|date() }}
-                    </dd>    
+                        {{ entity.foundedAt }}
+                    </dd>
                 {% elseif data == 'sex' %}
                 {#
                         <dt>Género</dt>
