@@ -128,9 +128,9 @@ class CommentController extends BaseController
                     $team = $eventship->getTeam();
                 }
 
-                $this->get('commenter')->comment($user, $entity, $content, $privacy, $team);
+                $comment = $this->get('commenter')->comment($user, $entity, $content, $privacy, $team);
 
-                return $this->result(true);
+                return $this->result(array('id' => $comment->getId()));
             } else {
                 throw new HttpException(401, 'Invalid signature');
             }
