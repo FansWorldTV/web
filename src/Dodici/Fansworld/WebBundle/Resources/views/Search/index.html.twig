@@ -38,7 +38,7 @@
             </div>
 
             {% if videoCount > 0 %}
-                {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'video', 'title': 'videos'} %}
+                {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'video', 'title': 'videos', 'extra_classes': 'semantic-grid videos-container'} %}
                     {% block roller %}
                         {% include "DodiciFansworldWebBundle:Search:blocks/video_element_list.html.twig"  with { videos: videos } %}
                     {% endblock %}

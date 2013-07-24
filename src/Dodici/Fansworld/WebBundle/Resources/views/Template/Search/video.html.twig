@@ -1,20 +1,19 @@
 {% raw %}
-    <div class="video-std-block">
-        <a href="{{>url}}">
-            <img title="{{>title}}" src="{{>image}}" />
-            <i class="play-video"></i>
+<article class="video">
+    <div class="image">
+        <a class="title" href="{{>url}}">
+            <img src="{{>image}}" alt="{{>title}}" />
         </a>
-        <div class="title-and-user">
-            {{if author}}
-                {{if author.image}}
-                    <a href="{{>author.url}}">
-                        <img title="" src="{{>author.image}}" class="author-image" rel="tooltip" title="{{>author.title}}"/>
-                    </a>
-                {{/if}}
-            {{/if}}
-            <a href="{{>url}}">
-                <span class="title">{{>title}}</span>
-            </a>
-        </div>
+        <span class="duration">{{>duration}}</span>
+        <i class="ico-watchlater" data-login-required data-watch-later data-video-id="{{>id}}" data-later="false" rel="tooltip" title="Watch later"></i>
+        <a class="title" href="{{>url}}" data-modal-url="{{>modalUrl}}">
+            <i class="ico-channels" rel="tooltip" title="Quick view" data-placement="bottom"></i>
+        </a>
     </div>
+    <div class="info">
+        <a class="title" href="{{>url}}">{{>title}}</a>
+        <span class="author">de <a href="{{>author.url}}">{{>author.username}}</a></span>
+        <div class="clearfix"></div>
+    </div>
+</article>
 {% endraw %}
