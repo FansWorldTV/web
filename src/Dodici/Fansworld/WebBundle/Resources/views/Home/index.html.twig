@@ -48,12 +48,12 @@
         </div>
 
         <div class="highlights-container">
-            <section class="row-fluid gray highlights" id="home-gallery">
+            <section class="row-fluid gray highlights hidden" id="home-gallery">
                 <div class="grid-sizer"></div>
                 <div class="gutter-sizer"></div>
                 {% for video in highlighted%}
                     {% if loop.index == 2 %}
-                        {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_video_double' } %}
+                        {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_video_double', extra_classes: 'double'} %}
                     {% else %}
                         {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video } %}
                     {% endif %}
