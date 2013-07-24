@@ -100,15 +100,15 @@ class HomeController extends SiteController
         $videoRepo = $this->getRepository('Video');
 
         $flVideos = null;
-        $countVideos = 0;
-        $genre = null;
-        $vc = null;
+        $countVideos = 10;
+        //$genre = null;
+        //$vc = null;
 
         $homeVideo = $videoRepo->tempHomeByNone();
 
 
         if($user instanceof User) {
-            $flvideos = $videoRepo->searchHome($user, $genre, $vc, true, false, 'default', null, self::LIMIT_VIDEO, 0);
+            $flvideos = $videoRepo->searchHome($user, null, null, true, false, 'default', null, self::LIMIT_VIDEO, 0);
             // $countVideos = $videoRepo->countSearch(null, $user, $vc, false, null, null, null, null, $homeVideo, null, true, false, $genre);
         }
 
