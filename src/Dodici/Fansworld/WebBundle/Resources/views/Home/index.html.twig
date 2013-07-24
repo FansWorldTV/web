@@ -52,7 +52,11 @@
                 <div class="grid-sizer"></div>
                 <div class="gutter-sizer"></div>
                 {% for video in highlighted%}
-                    {% include "DodiciFansworldWebBundle:Search:blocks/video_element_list.html.twig"  with { videos: video } %}
+                    {% if loop.index == 2 %}
+                        {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_video_double' } %}
+                    {% else %}
+                        {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video } %}
+                    {% endif %}
                 {% endfor %}                
             </section>
             <a href="{{ path('home_fwlist') }}">Ver más</a>
