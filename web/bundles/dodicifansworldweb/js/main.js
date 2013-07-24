@@ -445,6 +445,10 @@ var site = {
     likeButtons: function() {
         $('.btn.like:not(.disabled)').on('click', function(e) {
             e.preventDefault();
+            if (!window.isLoggedIn) {
+                $('[data-login-btn]').click();
+                return false;
+            }            
             var el = $(this);
             var type = el.attr('data-type');
             var id = el.attr('data-id');
