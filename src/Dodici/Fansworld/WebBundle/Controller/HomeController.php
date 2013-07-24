@@ -139,7 +139,7 @@ class HomeController extends SiteController
 
 
         if($user instanceof User) {
-            $flvideos = $videoRepo->searchHome($user, $genre, $vc, true, false, 'default', $homeVideo, self::LIMIT_VIDEO, 0);
+            $flvideos = $videoRepo->searchHome($user, $genre, $vc, true, false, 'default', null, self::LIMIT_VIDEO, 0);
             // $countVideos = $videoRepo->countSearch(null, $user, $vc, false, null, null, null, null, $homeVideo, null, true, false, $genre);
         }
 
