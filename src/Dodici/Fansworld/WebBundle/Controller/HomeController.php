@@ -32,7 +32,7 @@ class HomeController extends SiteController
     {
         $checkfbreq = $this->checkFacebookRequest();
         if ($checkfbreq) return $checkfbreq;
-        
+
         $genreRepo = $this->getRepository('Genre');
         $categories = $this->getRepository('VideoCategory')->findAll();
         $categoriesArray = array();
@@ -85,6 +85,37 @@ class HomeController extends SiteController
             'videos' => $serializer->values($fwVideos, 'home_video'),
             'addMore' => $addMore
         ));
+    }
+
+
+    /**
+     * List videos from fansworld author
+     * @Route("/home/list/follow", name="home_followlist")
+     * @Template
+     */
+    public function followVideoListAction()
+    {
+
+        $user = $this->getUser();
+        $videoRepo = $this->getRepository('Video');
+
+        $flVideos = null;
+        $countVideos = 0;
+        $genre = null;
+        $vc = null;
+
+        $homeVideo = $videoRepo->tempHomeByNone();
+
+
+        if($user instanceof User) {
+            $flvideos = $videoRepo->searchHome($user, $genre, $vc, true, false, 'default', $homeVideo, self::LIMIT_VIDEO, 0);
+            // $countVideos = $videoRepo->countSearch(null, $user, $vc, false, null, null, null, null, $homeVideo, null, true, false, $genre);
+        }
+
+        return array(
+            'videos' => $flVideos,
+            'addMore' => $countVideos > self::FW_LIST_LIMIT ? true : false
+        );
     }
 
     /**
