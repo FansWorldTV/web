@@ -48,14 +48,17 @@
         </div>
 
         <div class="highlights-container">
-            <section class="row-fluid gray highlights hidden" id="home-gallery">
+            <section class="row-fluid gray highlights" id="home-gallery">
                 <div class="grid-sizer"></div>
                 <div class="gutter-sizer"></div>
+                {% for video in highlighted%}
+                    {% include "DodiciFansworldWebBundle:Search:blocks/video_element_list.html.twig"  with { videos: video } %}
+                {% endfor %}                
             </section>
             <a href="{{ path('home_fwlist') }}">Ver más</a>
         </div>
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            <section class="row-fluid followed hidden">
+            <section class="row-fluid followed">
                 <header class="clearfix">
                     <h3 class="pull-left">Sigues</h3>
                     <span class="cant pull-left"><span data-total-followed>{{ totals.followed }}</span> videos</span>
@@ -73,7 +76,7 @@
             </section>
         {% endif %}
 
-        <section class="row-fluid gray popular hidden">
+        <section class="row-fluid gray popular">
             <header class="clearfix">
                 <h3 class="pull-left">Popular</h3>
                 <span class="cant pull-left"><span data-total-popular>{{ totals.popular }}</span> videos</span>
@@ -90,7 +93,7 @@
             <div class="add-more">+</div>
         </section>
 
-        <div class="spinner"><div class="mask"></div></div>
+        <div class="spinner hidden"><div class="mask"></div></div>
     </div>
 
     {% if confirmedModal %}

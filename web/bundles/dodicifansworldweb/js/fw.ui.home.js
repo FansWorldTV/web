@@ -107,7 +107,7 @@ $(document).ready(function () {
         packery: null,
         container: null,
         queue: null,
-        queueDelay: 100,
+        queueDelay: 0,
         onVideoCategoryEvent: null
     };
     function Plugin(element, options) {
@@ -123,7 +123,7 @@ $(document).ready(function () {
             var self = $(that.element);
             self.bind("destroyed", $.proxy(that.teardown, that));
             self.addClass(that._name);
-            that.hide();
+            //that.hide();
 
             that.options.container = document.querySelector(that.options.selector);
 
@@ -165,8 +165,10 @@ $(document).ready(function () {
             that.options.packery = new Packery(that.options.container, {
                 itemSelector: '.video',
                 gutter: ".gutter-sizer",
-                columnWidth: ".grid-sizer"
+                columnWidth: ".grid-sizer",
+                transitionDuration: '0.1s'
             });
+            return;
             var reqData = {};
             reqData[that.options.type] = parseInt(that.options.id, 10);
             that.makePackery(reqData);
@@ -743,6 +745,8 @@ $(document).ready(function () {
         type: type,
         id: id
     });
+    return;
+
     // Video Grid
     $('section.popular > .videos-container').fwHomeThumbs({
         videoCategory: videoCategory,
