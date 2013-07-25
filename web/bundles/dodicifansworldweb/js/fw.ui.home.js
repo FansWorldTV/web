@@ -797,7 +797,7 @@ $(document).ready(function () {
         var vc = $(this).attr('data-video-category');
 
         $('.category-menu').find('ul').each(function(){
-            if(parseInt($(this).attr('data-parent-entity-id'), 10) == id) {
+            if((parseInt($(this).attr('data-parent-entity-id'), 10) == id) && $(this).attr('data-entity-type') === type){
                 $(this).show();
                 $(this).removeClass('hidden');
                 $(this).find('li').each(function(){
