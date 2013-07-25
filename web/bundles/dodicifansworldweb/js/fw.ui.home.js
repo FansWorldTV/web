@@ -42,54 +42,6 @@ $(document).ready(function () {
     window.fansWorldEvents = window.fansWorldEvents || new EventEmitter();
 });
 
-$(document).ready(function () {
-    "use strict";
-    var pluginName = "fwHomeGallery";
-    var defaults = {
-        videoCategory: null,
-    };
-    function Plugin(element, options) {
-        this.element = element;
-        this.options = $.extend({}, defaults, options);
-        this._defaults = defaults;
-        this._name = pluginName;
-        this.init();
-    }
-    Plugin.prototype = {
-        init: function () {
-            var that = this;
-            var self = $(that.element);
-            self.bind("destroyed", $.proxy(that.teardown, that));
-            self.addClass(that._name);
-
-            return true;
-        },
-        destroy: function() {
-            var that = this;
-            $(that.element).unbind("destroyed", that.teardown);
-            that.teardown();
-            return true;
-        },
-        teardown: function() {
-            var that = this;
-            $.removeData($(that.element)[0], that._name);
-            $(that.element).removeClass(that._name);
-            that.unbind();
-            that.element = null;
-            return that.element;
-        },
-        bind: function() { },
-        unbind: function() { }
-    };
-    $.fn[pluginName] = function (options) {
-        return this.each(function () {
-            if (!$.data(this, pluginName)) {
-                $.data(this, pluginName, new Plugin(this, options));
-            }
-        });
-    };
-});
-
 ///////////////////////////////////////////////////////////////////////////////
 // Plugin wrapper para galerias packery                                      //
 ///////////////////////////////////////////////////////////////////////////////
@@ -466,8 +418,9 @@ $(document).ready(function () {
                 data: data
             }).then(function(response) {
                 var i = 0;
+                // If no more videos then hide the addMore button
                 if(response.videos.length < 1) {
-                    $(that.element).parent().fadeOut('slow');
+                    $(that.element).parent().find('.add-more').hide();
                 }
                 for(i in response.videos) {
                     if (response.videos.hasOwnProperty(i)) {
