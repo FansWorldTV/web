@@ -17,28 +17,7 @@
         <section class="row-fluid">
             <div class="videos-container clearfix">
                 {% for video in videos %}
-                    <article class="video">
-                        <div class="image">
-                            <a class="title" href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
-                                {% thumbnail video.image, 'home_video' with {'title': video.title} %}
-                            </a>
-                            <span class="duration">{{ video.duration|date("i:s") }}</span>
-                            <i class="ico-watchlater" data-login-required data-watch-later
-                               data-video-id="{{ video.id }}" data-later="false" rel="tooltip" title="Watch later"></i>
-                            <a class="title" href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}"
-                               data-modal-url="{{ path('modal_media', {'type':'video', 'id': video.id}) }}">
-                                <i class="ico-channels" rel="tooltip" title="Quick view" data-placement="bottom"></i>
-                            </a>
-                        </div>
-                        <div class="info">
-                            <a class="title"
-                               href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}"">{{ video.title }}</a>
-                            <span class="author">de <a
-                                        href="{{ path('user_land', {'username': video.author.username}) }}">{{ video.author.username }}</a></span>
-
-                            <div class="clearfix"></div>
-                        </div>
-                    </article>
+                    {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video } %}
                 {% endfor %}
             </div>
             {% if addMore %}

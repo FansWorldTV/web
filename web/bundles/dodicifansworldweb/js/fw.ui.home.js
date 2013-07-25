@@ -107,7 +107,7 @@ $(document).ready(function () {
         packery: null,
         container: null,
         queue: null,
-        queueDelay: 100,
+        queueDelay: 0,
         onVideoCategoryEvent: null
     };
     function Plugin(element, options) {
@@ -162,11 +162,25 @@ $(document).ready(function () {
                 });
             };
             window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
-            that.options.packery = new Packery(that.options.container, {
-                itemSelector: '.video',
-                gutter: ".gutter-sizer",
-                columnWidth: ".grid-sizer"
+
+            var il = new ImagesLoaded(that.options.container);       
+            il.done(function () {
+                console.log("ImagesLoaded");
+                that.show();
+                that.options.packery = new Packery(that.options.container, {
+                    itemSelector: '.video',
+                    gutter: ".gutter-sizer",
+                    columnWidth: ".grid-sizer",
+                    transitionDuration: '0.1s'
+                });
+
+                that.options.packery.layout();
             });
+            il.progress(function (image, isBroken) {
+                console.log("image loaded !")
+            });
+            return;
+            // Below load images disabled (home is now preloaded with data)
             var reqData = {};
             reqData[that.options.type] = parseInt(that.options.id, 10);
             that.makePackery(reqData);
@@ -359,7 +373,6 @@ $(document).ready(function () {
             var self = $(that.element);
             self.bind("destroyed", $.proxy(that.teardown, that));
             self.addClass(that._name);
-            that.clearThumbs();
             that.options.getFilter = function() {
                 var filter = {
                     paginate: {
@@ -370,7 +383,11 @@ $(document).ready(function () {
                 filter.paginate[that.options.type] = parseInt(that.options.id, 10);
                 return filter;
             };
+            // Disable - Enable preload 
+            /*
+            that.clearThumbs();
             that.insetThumbs(Routing.generate(appLocale + '_home_ajaxfilter'), that.options.getFilter());
+            */
 
             that.options.onFindVideosByTag = function(tag, filter){
                 if(filter === that.options.block) {
@@ -459,6 +476,8 @@ $(document).ready(function () {
                         $.when(templateHelper.htmlTemplate('video-home_element', video))
                         .then(function(response){
                             var $thumb = $(response).clone();
+                            $thumb.hide().appendTo(that.element).fadeIn('slow');
+                            /*
                             $thumb.find('img').load(function() {
                                 $(that.element).parent().find('.spinner').addClass('hidden');
                                 $(that.element).parent().find('.spinner').hide();
@@ -471,6 +490,7 @@ $(document).ready(function () {
                                 }
                                 $thumb.hide().appendTo(that.element).fadeIn('slow');
                             });
+                            */
                         });
                     }
                 }

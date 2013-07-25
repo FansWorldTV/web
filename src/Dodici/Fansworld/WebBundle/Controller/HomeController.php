@@ -33,6 +33,8 @@ class HomeController extends SiteController
         $checkfbreq = $this->checkFacebookRequest();
         if ($checkfbreq) return $checkfbreq;
 
+        $user = $this->getUser();
+
         $genreRepo = $this->getRepository('Genre');
         $categories = $this->getRepository('VideoCategory')->findAll();
         $categoriesArray = array();
@@ -45,11 +47,40 @@ class HomeController extends SiteController
             );
         }
 
-        return array(
+        $response = array(
+            'home' => null,
+            'highlighted' => array(),
+            'followed' => array(),
+            'popular' => array(),
             'categories' => $categoriesArray,
             'genres' => $this->getRepository('Genre')->getParents(),
             'confirmedModal' => $this->getRequest()->get('confirmedModal', false)
         );
+
+        $vc = null;
+        $genre = null;
+
+        $videoRepo = $this->getRepository('Video');
+
+        $homeVideo = $videoRepo->tempHomeByCat($vc);
+
+        $limitWithTheHighlighted = (self::LIMIT_VIDEO - 3);
+
+        $videos = $videoRepo->searchHome(null, $genre, $vc, null, true, null, $homeVideo, $limitWithTheHighlighted, 0);
+        $response['highlighted'] = $videos;
+        //$response['highlighted'][1] = $homeVideo;
+
+        if($user instanceof User) {
+            $videos = $videoRepo->searchHome($user, $genre, $vc, true, false, 'default', $homeVideo, self::LIMIT_VIDEO, 0);
+            $response['followed'] = $videos;
+            $response['totals']['followed'] = $videoRepo->countSearch(null, $user, $vc, false, null, null, null, null, $homeVideo, null, true, false, $genre);
+        }
+
+        $videos = $videoRepo->searchHome(null, $genre, $vc, null, false, null, null, self::LIMIT_VIDEO, 0);
+        $response['popular'] = $videos;
+        $response['totals']['popular'] = $videoRepo->countSearch(null, null, $vc, false, null, null, null, null, $homeVideo, null, null, null, $genre);;
+
+        return $response;
     }
 
     /**
