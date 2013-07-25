@@ -461,6 +461,91 @@
 }
 
 .video-std-block {
+	div.image {
+		position: relative;
+
+		img {
+			width: 100%;
+		}
+
+		&:hover {
+			i.ico-channels, i.ico-watchlater {
+				display: block;
+				.transition(opacity .15s ease-in-out);
+			}
+		}
+
+		span.duration {
+			position: absolute;
+			right: 5px;
+			bottom: 5px;
+			color: @white;
+			text-shadow: 1px 1px 10px black;
+			font-size: 11px;
+			font-weight: 500;
+		}
+
+		i.ico-channels, i.ico-watchlater {
+			@size: 32px;
+			position: absolute;
+			right: 5px;
+			.square(@size);
+			background-size: @size;
+			display: none;
+			opacity: 0.5 !important;
+
+			&:hover {
+				opacity: 1 !important;
+			}
+
+			&.ico-channels {
+				top: 40px;
+				background-image: url('../images/ico-qv-channels.png');
+			}
+
+			&.ico-watchlater {
+				cursor: pointer;
+				top: 5px;
+				background-image: url('../images/ico-watchlater-channels.png');
+			}
+		}
+	}
+
+	div.info {
+		display: block;
+		text-align: left;
+		padding-top: 3px;
+
+		a.title {
+			color: @black;
+			font-size: 14px;
+			font-weight: 600;
+			width: 100%;
+			.size(39px, 100%);
+			.pull-left();
+			overflow: hidden;
+			display: block;
+
+			&:hover {
+				color: @orange;
+			}
+		}
+
+		span.author {
+			.pull-left();
+			color: @grayDark;
+			font-size: 11px;
+			font-weight: 300;
+
+			strong, a {
+				color: @grayDarker;
+				font-weight: 600;
+			}
+		}
+	}
+}
+
+/*.video-std-block {
     display: block;
     position: relative;
     .border-radius(3px);
@@ -543,7 +628,7 @@
             line-height: normal !important;
         }
     }
-}
+}*/
 
 #header {
     .navbar-inner {
@@ -1036,12 +1121,14 @@ button.tw_button {
 /* Menu customizable del home */
 .category-menu {
   border: 1px solid rgba(0, 0, 0, 0.87);
-  width: 100%;
+  border-radius: 2px;
+  width: 50%;
   margin-left: auto;
   margin-right: auto;
   background-color: #f1f1f1;
   display: none;
   h4 {
+    border-bottom: 1px solid rgba(73, 73, 73, 0.63);    
     margin-top: 0px;
     text-align: center;
     clear:left;
@@ -1057,11 +1144,14 @@ button.tw_button {
     font-weight: 600;
     color: black;
     .pull-left();
+    margin: 2px 2px 2px 2px;
     margin-right: 5px;
     cursor: pointer;
     position: relative;
     &.active {
       color: white;
+      border: 1px solid black;
+      margin: 2px 2px 2px 2px;
       background-color: @green;
       .border-radius(3px);
     }

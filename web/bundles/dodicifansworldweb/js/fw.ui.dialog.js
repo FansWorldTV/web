@@ -1,5 +1,5 @@
 
-/*global ExposeTranslation, $, jQuery, alert, FormData, FileReader, escape, console, error, success, endless, ajax, templateHelper, qq, Routing, appLocale, exports, module, require, define*/
+/*global ExposeTrans    lation, $, jQuery, alert, FormData, FileReader, escape, console, error, success, endless, ajax, templateHelper, qq, Routing, appLocale, exports, module, require, define*/
 /*jslint nomen: true */ /* Tolerate dangling _ in identifiers */
 /*jslint vars: true */ /* Tolerate many var statements per function */
 /*jslint white: true */
@@ -100,7 +100,7 @@ $(document).ready(function () {
                     if(that.options.modal.deleteButton){
                         dialog.find("#modal-btn-delete").removeClass('hidden');
                         dialog.find("#modal-btn-delete").click(function(){
-                            var confirmText = 'Esta seguro de querer eliminar este comentario?';
+                            var confirmText = 'Esta seguro de querer eliminar?';
                             if(!confirm(confirmText)) {
                                 return false;
                             }

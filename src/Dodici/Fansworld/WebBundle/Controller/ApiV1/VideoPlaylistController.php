@@ -106,7 +106,9 @@ class VideoPlaylistController extends BaseController
                     $this->get('video.playlist')->remove($video, $user);
                 }
 
-                return $this->result(true);
+                $count = $this->get('video.playlist')->getCount($user);
+
+                return $this->result(array('count' => $count));
             } else {
                 throw new HttpException(401, 'Invalid signature');
             }

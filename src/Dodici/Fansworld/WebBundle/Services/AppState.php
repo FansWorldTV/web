@@ -233,7 +233,7 @@ class AppState
             if ($entity->getComment()) {
                 return true;
             } else {
-                if ($entity->getTarget() == $user) {
+                if ($entity->getTarget() == $user || $entity->getAuthor() == $user) {
                     return true;
                 }
             }

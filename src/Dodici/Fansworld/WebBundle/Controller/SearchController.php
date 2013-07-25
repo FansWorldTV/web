@@ -389,7 +389,7 @@ class SearchController extends SiteController
                 }
                 
                 if (array_key_exists('duration', $el)) {
-                    $response['search'][$key]['duration'] = date('i:s', $el['duration']);
+                    $response['search'][$key]['duration'] = $el['duration'];
                 }
 
                 $entity = $this->getRepository(ucfirst($type))->find($el['id']);

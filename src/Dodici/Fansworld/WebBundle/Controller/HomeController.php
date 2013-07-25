@@ -32,7 +32,9 @@ class HomeController extends SiteController
     {
         $checkfbreq = $this->checkFacebookRequest();
         if ($checkfbreq) return $checkfbreq;
-        
+
+        $user = $this->getUser();
+
         $genreRepo = $this->getRepository('Genre');
         $categories = $this->getRepository('VideoCategory')->findAll();
         $categoriesArray = array();
@@ -45,11 +47,40 @@ class HomeController extends SiteController
             );
         }
 
-        return array(
+        $response = array(
+            'home' => null,
+            'highlighted' => array(),
+            'followed' => array(),
+            'popular' => array(),
             'categories' => $categoriesArray,
             'genres' => $this->getRepository('Genre')->getParents(),
             'confirmedModal' => $this->getRequest()->get('confirmedModal', false)
         );
+
+        $vc = null;
+        $genre = null;
+
+        $videoRepo = $this->getRepository('Video');
+
+        $homeVideo = $videoRepo->tempHomeByCat($vc);
+
+        $limitWithTheHighlighted = (self::LIMIT_VIDEO - 3);
+
+        $videos = $videoRepo->searchHome(null, $genre, $vc, null, true, null, $homeVideo, $limitWithTheHighlighted, 0);
+        $response['highlighted'] = $videos;
+        //$response['highlighted'][1] = $homeVideo;
+
+        if($user instanceof User) {
+            $videos = $videoRepo->searchHome($user, $genre, $vc, true, false, 'default', $homeVideo, self::LIMIT_VIDEO, 0);
+            $response['followed'] = $videos;
+            $response['totals']['followed'] = $videoRepo->countSearch(null, $user, $vc, false, null, null, null, null, $homeVideo, null, true, false, $genre);
+        }
+
+        $videos = $videoRepo->searchHome(null, $genre, $vc, null, false, null, null, self::LIMIT_VIDEO, 0);
+        $response['popular'] = $videos;
+        $response['totals']['popular'] = $videoRepo->countSearch(null, null, $vc, false, null, null, null, null, $homeVideo, null, null, null, $genre);;
+
+        return $response;
     }
 
     /**
@@ -85,6 +116,37 @@ class HomeController extends SiteController
             'videos' => $serializer->values($fwVideos, 'home_video'),
             'addMore' => $addMore
         ));
+    }
+
+
+    /**
+     * List videos from fansworld author
+     * @Route("/home/list/follow", name="home_followlist")
+     * @Template
+     */
+    public function followVideoListAction()
+    {
+
+        $user = $this->getUser();
+        $videoRepo = $this->getRepository('Video');
+
+        $flVideos = null;
+        $countVideos = 10;
+        //$genre = null;
+        //$vc = null;
+
+        $homeVideo = $videoRepo->tempHomeByNone();
+
+
+        if($user instanceof User) {
+            $flVideos = $videoRepo->searchHome($user, null, null, true, false, 'default', null, self::LIMIT_VIDEO, 0);
+            // $countVideos = $videoRepo->countSearch(null, $user, $vc, false, null, null, null, null, $homeVideo, null, true, false, $genre);
+        }
+
+        return array(
+            'videos' => $flVideos,
+            'addMore' => $countVideos > self::FW_LIST_LIMIT ? true : false
+        );
     }
 
     /**

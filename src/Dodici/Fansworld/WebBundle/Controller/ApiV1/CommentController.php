@@ -128,59 +128,12 @@ class CommentController extends BaseController
                     $team = $eventship->getTeam();
                 }
 
-                $this->get('commenter')->comment($user, $entity, $content, $privacy, $team);
+                $comment = $this->get('commenter')->comment($user, $entity, $content, $privacy, $team);
 
-                return $this->result(true);
+                return $this->result(array('id' => $comment->getId()));
             } else {
                 throw new HttpException(401, 'Invalid signature');
             }
-        } catch (\Exception $e) {
-            return $this->plainException($e);
-        }
-    }
-
-        /**
-     * [signed] Add comment 2
-     *
-     * @Route("/{entitytype}/{id}/comments/add2", name="api_v1_entity_add_comment2", requirements = {"entitytype" = "team|idol|video|photo|user|comment|event", "id" = "\d+"})
-     * @Method({"POST"})
-     *
-     * Get params:
-     * - user_id: int
-     * - [user token]
-     * - content: string
-     * - <optional> privacy: int
-     * - [signature params]
-     */
-    public function addAction2($entitytype, $id)
-    {
-        try {
-            //if ($this->hasValidSignature()) {
-                $request = $this->getRequest();
-                $userid = $request->get('user_id');
-                $user = $this->getRepository('User')->find($userid);
-                //$user = $this->checkUserToken($userid, $request->get('user_token'));
-
-                $entity = $this->getRepository(ucfirst($entitytype))->find($id);
-                if (!$entity) throw new HttpException(404, ucfirst($entitytype) . ' not found');
-
-                $privacy = $request->get('privacy', Privacy::EVERYONE);
-                $content = $request->get('content');
-                if (!$content) throw new HttpException(400, 'Invalid content');
-
-                $team = null;
-                if ($entitytype == 'event') {
-                    $eventship = $this->getRepository('Eventship')->findOneBy(array('author' => $userid, 'event' => $id));
-                    if (!$eventship) throw new HttpException(401, 'User has not checked into event');
-                    $team = $eventship->getTeam();
-                }
-
-                $this->get('commenter')->comment($user, $entity, $content, $privacy, $team);
-
-                return $this->result(true);
-           // } else {
-             //   throw new HttpException(401, 'Invalid signature');
-            //}
         } catch (\Exception $e) {
             return $this->plainException($e);
         }
