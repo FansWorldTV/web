@@ -1,23 +1,21 @@
 {% raw %}
-<div id="{{>id}}" class="post item" data-element-type="{{>type}}" data-element-date="{{>date}}">
-    <div class="cosas">
-        <div class="overlay"></div>
-        <div class="title-and-user">
-            {{if authorImage}}
-                <a href="{{>authorHref}}"><img class="author-image" src="{{>authorImage}}" alt="{{>author}}" rel="tooltip" title="{{>author}}" /></a>
-            {{/if}}
-            <a id="{{>id}}" href="{{>href}}" data-modal-url="{{>hrefModal}}" data-thumb-id="{{>number}}">
-                <span class="title">{{>title}}</span>
-            </a>
-        </div>
-        <a id="{{>id}}" href="{{>href}}" data-modal-url="{{>hrefModal}}">
-            <img class="image" src="{{>image}}" style="width:100%;" alt="{{>slug}}">
+<article id="{{>id}}"  class="post item video-std-block" data-element-type="{{>type}}" data-element-date="{{>date}}">
+    <div class="image">
+        <a class="title" href="{{>href}}">
+            <img src="{{>image}}" alt="{{>title}}"/>
         </a>
-        {{if type=='video'}}
-            <a id="{{>id}}" href="{{>href}}" data-modal-url="{{>hrefModal}}">
-                <i class="play-video"></i>
-            </a>
-        {{/if}}
+        <span class="duration">{{>duration}}</span>
+        <i class="ico-watchlater" data-login-required data-watch-later data-video-id="{{>id}}" data-later="false"
+           rel="tooltip" title="Watch later"></i>
+        <a class="title" href="{{>href}}" data-modal-url="{{>hrefModal}}">
+            <i class="ico-channels" rel="tooltip" title="Quick view" data-placement="bottom"></i>
+        </a>
     </div>
-</div>
+    <div class="info">
+        <a class="title" href="{{>href}}">{{>title}}</a>
+        <span class="author">de <a href="{{>authorHref}}">{{>author}}</a></span>
+
+        <div class="clearfix"></div>
+    </div>
+</article>
 {% endraw %}
