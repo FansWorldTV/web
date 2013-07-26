@@ -174,7 +174,7 @@ class UserController extends SiteController
         $following = array(
             'ulClass' => 'following',
             'containerClass' => 'idol-container',
-            'list' => $this->getRepository('User')->fans($user, false)
+            'list' => $this->getRepository('Profile')->followingProfiles($user)
         );
 
         $return = array(
