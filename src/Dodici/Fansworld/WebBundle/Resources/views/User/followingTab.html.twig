@@ -1,0 +1,14 @@
+{% extends "DodiciFansworldWebBundle:User:base.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ 'Following'|trans }}{% endblock %}
+
+
+{% block profile_tabs %}
+	{% set active_tab = 'folloing' %}
+	{{ parent() }}
+{% endblock %}
+
+
+{% block profile_body %}
+    {% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { avatars: following, type: 'following' } %}
+{% endblock %}

@@ -158,6 +158,35 @@ class UserController extends SiteController
     }
 
     /**
+     * @Route("/u/{username}/following", name="user_following")
+     * @Template
+     * @Secure(roles="ROLE_USER")
+     */
+    public function followingTabAction($username)
+    {
+        $user = $this->getRepository('User')->findOneByUsername($username);
+
+        if (!$user) {
+            throw new HttpException(404, "No existe el usuario");
+        } else
+            $this->get('visitator')->visit($user);
+
+        $following = array(
+            'ulClass' => 'following',
+            'containerClass' => 'idol-container',
+            'list' => $this->getRepository('User')->fans($user, false)
+        );
+
+        $return = array(
+            'following' => $following,
+            //'addMore' => $idolshipsCount > self::LIMIT_LIST_IDOLS ? true : false,
+            'user' => $user
+        );
+
+        return $return;
+    }
+
+    /**
      * @Template
      */
     public function registerAction()
