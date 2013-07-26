@@ -43,6 +43,8 @@ class HomeController extends SiteController
         $userCategories = $prefService->get('categoriesHomeMenu');
         $userGenres = $prefService->get('genresHomeMenu');
 
+
+
         foreach ($categories as $vc) {
             $categoriesArray[] = array(
                 'id' => $vc->getId(),
@@ -58,10 +60,19 @@ class HomeController extends SiteController
             'popular' => array(),
             'categories' => $categoriesArray,
             'genres' => $this->getRepository('Genre')->getParents(),
-            'userCategories' => $userCategories,
-            'userGenres' => $userGenres,
+            'userCategories' => array(),
+            'userGenres' => array(),
             'confirmedModal' => $this->getRequest()->get('confirmedModal', false)
         );
+
+        foreach($userCategories as $id){
+            $entity = $this->getRepository('VideoCategory')->find($id);
+            array_push($response['userCategories'], $entity);
+        }
+        foreach($userGenres as $id){
+            $entity = $this->getRepository('Genre')->find($id);
+            array_push($response['userGenres'], $entity);
+        }
 
         $vc = null;
         $genre = null;
