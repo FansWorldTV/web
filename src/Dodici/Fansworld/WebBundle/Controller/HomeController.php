@@ -35,9 +35,13 @@ class HomeController extends SiteController
 
         $user = $this->getUser();
 
+        $prefService = $this->get('preferences');
         $genreRepo = $this->getRepository('Genre');
         $categories = $this->getRepository('VideoCategory')->findAll();
         $categoriesArray = array();
+
+        $userCategories = $prefService->get('categoriesHomeMenu');
+        $userGenres = $prefService->get('genresHomeMenu');
 
         foreach ($categories as $vc) {
             $categoriesArray[] = array(
@@ -54,6 +58,8 @@ class HomeController extends SiteController
             'popular' => array(),
             'categories' => $categoriesArray,
             'genres' => $this->getRepository('Genre')->getParents(),
+            'userCategories' => $userCategories,
+            'userGenres' => $userGenres,
             'confirmedModal' => $this->getRequest()->get('confirmedModal', false)
         );
 
@@ -362,6 +368,18 @@ class HomeController extends SiteController
         $maxDate = $request->get('date', false);
         $results = $userFeed->popular(10, array('photo', 'video'), $maxDate, null, $user, true, 'big');
         return $this->jsonResponse($results);
+    }
+
+    /**
+     *  @Route("home/ajax/setconfig-menu", name="home_ajaxsetmenuconfig")
+    */
+    public function ajaxSetMenuConfig()
+    {
+        $request = $this->getRequest();
+        $type = $request->get('type');
+        $values = $request->get('values');
+        $prefService = $this->get('preferences');
+        return $prefService->set($type.'HomeMenu', array($values));
     }
 
     private function checkFacebookRequest()

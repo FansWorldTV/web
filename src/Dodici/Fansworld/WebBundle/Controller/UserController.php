@@ -171,10 +171,19 @@ class UserController extends SiteController
         } else
             $this->get('visitator')->visit($user);
 
+
+        $ids = $this->getRepository('Profile')->followingProfiles($user);
+
+        $list = array();
+
+        foreach ($ids as $id) {
+            $list[] = $this->getRepository(ucfirst($id['type']))->find($id['target']);
+        }
+
         $following = array(
             'ulClass' => 'following',
             'containerClass' => 'idol-container',
-            'list' => $this->getRepository('Profile')->followingProfiles($user)
+            'list' => $list
         );
 
         $return = array(
