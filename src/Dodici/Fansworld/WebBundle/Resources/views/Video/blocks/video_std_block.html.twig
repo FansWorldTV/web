@@ -5,7 +5,7 @@
     {% set extra_classes = '' %}
 {% endif %}
 {% set videoUrl = path('video_show', {'id': video.id, 'slug': video.slug}) %}
-<article class="video {{ extra_classes }}">
+<article class="video video-std-block {{ extra_classes }}">
     <div class="image">
         <a class="title" href="{{ videoUrl }}">
             {% thumbnail video.image, image_size with {'title': video.title} %}
