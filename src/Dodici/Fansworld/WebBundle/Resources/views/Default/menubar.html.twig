@@ -34,7 +34,7 @@
                     <a title="Perfil" href="{{ path('user_land', { username: user.username }) }}" class="btn-widget"><i class="icon-user icon-white"></i></a>
                 {% endif %}
             </nav>
-            <form class="navbar-search" name="search" method="post" action="{{ path('search_home') }}">
+            <form class="navbar-search" name="search" method="get" action="{{ path('search_home') }}">
                 <input name="query" type="text"/>
                 <button type="submit" class="search-little-button icon-search"></button>
             </form>

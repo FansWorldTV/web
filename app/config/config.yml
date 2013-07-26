@@ -260,7 +260,9 @@ fos_elastica:
                 team:
                     mappings:
                         title: { boost: 5 }
-                        nicknames: { boost: 5 }
+                        shortname: { boost: 5 }
+                        nicknames: { boost: 4 }
+                        stadium: { boost: 3 }
                         id: ~
 
                     persistence:
