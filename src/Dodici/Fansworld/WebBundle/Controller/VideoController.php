@@ -405,7 +405,7 @@ class VideoController extends SiteController
         $response['addMore'] = $countAll > self::cantVideos ? true : false;
 
         foreach ($videos as $video) {
-            $response['elements'][] = $this->get('serializer')->values($video, 'big');
+            $response['elements'][] = $this->get('serializer')->values($video, 'huge_square');
             /*
             array(
                 'id' => $video->getId(),
@@ -480,7 +480,7 @@ class VideoController extends SiteController
         $response['elements'] = array();
 
         foreach ($videos as $video) {
-            $response['elements'][] = $this->get('serializer')->values($video , 'big');
+            $response['elements'][] = $this->get('serializer')->values($video , 'huge_square');
             /*
             array(
                 'id' => $video->getId(),
@@ -542,7 +542,7 @@ class VideoController extends SiteController
         $response['elements'] = array();
 
         foreach ($videos as $video) {
-            $response['elements'][] = $this->get('serializer')->values($video, 'big');
+            $response['elements'][] = $this->get('serializer')->values($video, 'huge_square');
             /*
                 array(
                     'id' => $video->getId(),

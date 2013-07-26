@@ -207,7 +207,7 @@ class ThingsController extends SiteController
                 break;
         }
 
-        $response['videos'] = $serializer->values($videos, 'medium');
+        $response['videos'] = $serializer->values($videos, 'huge_square');
 
         return $this->jsonResponse($response);
     }
