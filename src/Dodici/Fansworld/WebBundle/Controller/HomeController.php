@@ -65,13 +65,17 @@ class HomeController extends SiteController
             'confirmedModal' => $this->getRequest()->get('confirmedModal', false)
         );
 
-        foreach($userCategories as $id){
-            $entity = $this->getRepository('VideoCategory')->find($id);
-            array_push($response['userCategories'], $entity);
+        if(!is_null($userCategories)) {
+            foreach ($userCategories as $id) {
+                $entity = $this->getRepository('VideoCategory')->find($id);
+                array_push($response['userCategories'], $entity);
+            }
         }
-        foreach($userGenres as $id){
-            $entity = $this->getRepository('Genre')->find($id);
-            array_push($response['userGenres'], $entity);
+        if(!is_null($userGenres)) {
+            foreach ($userGenres as $id) {
+                $entity = $this->getRepository('Genre')->find($id);
+                array_push($response['userGenres'], $entity);
+            }
         }
 
         $vc = null;
