@@ -117,16 +117,17 @@ $(document).ready(function () {
 
             var il = new ImagesLoaded(that.options.container);       
             il.done(function () {
-                console.log("ImagesLoaded");
                 that.show();
-                that.options.packery = new Packery(that.options.container, {
-                    itemSelector: '.video',
-                    gutter: ".gutter-sizer",
-                    columnWidth: ".grid-sizer",
-                    transitionDuration: '0.1s'
-                });
-
-                that.options.packery.layout();
+                setTimeout(function() {
+                    that.options.packery = new Packery(that.options.container, {
+                        itemSelector: '.video',
+                        gutter: ".gutter-sizer",
+                        columnWidth: ".grid-sizer",
+                        transitionDuration: '0.1s'
+                    });
+                }, 500
+                );
+                setTimeout(function() { that.options.packery.layout(); }, 500)
             });
             il.progress(function (image, isBroken) {
                 console.log("image loaded !")
@@ -772,6 +773,7 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
+    /*
     $('body').on('click', '.subfilter-home', function(event){
         if($(event.target).hasClass('active')) {
             return;
@@ -786,6 +788,8 @@ $(document).ready(function () {
         ///////////////////////////////////////////////////////////////////////
         window.fansWorldEvents.emitEvent('onFilterChange', [type, id, vc]);
     });
+    */
+    /*
     $(".filter-home > li:not('[data-override]')").on('click', function(){
         if($(this).hasClass('active')) {
             return;
@@ -809,6 +813,294 @@ $(document).ready(function () {
             }
         });
         $('.category-menu').show();
+
+        ///////////////////////////////////////////////////////////////////////
+        // Decoupled EventTrigger                                            //
+        ///////////////////////////////////////////////////////////////////////
+        window.fansWorldEvents.emitEvent('onFilterChange', [type, id]);
+    });
+    */
+});
+
+///////////////////////////////////////////////////////////////////////////////
+// Hero Editable Menu                                                        //
+///////////////////////////////////////////////////////////////////////////////
+$(document).ready(function () {
+    ///////////////////////////////////////////////////////////////////////////////
+    // Add a remove button to all menu elements                                  //
+    ///////////////////////////////////////////////////////////////////////////////
+    $('.filter-home').find('li').each(function(){
+        //$(this).append("<i class='remove icon-remove-sign'></i>");
+    });
+    ///////////////////////////////////////////////////////////////////////////////
+    // Preselect all matching hero menu elements in filter editor                //
+    ///////////////////////////////////////////////////////////////////////////////    
+    $('.filter-home').find('li').each(function(){
+        //$(this).append("<i class='remove icon-remove-sign'></i>");
+    });    
+    ///////////////////////////////////////////////////////////////////////////////
+    // Bind remove event                                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+    $('body').on('click', "#sortable1 .remove", function(event){
+        // Disable Bubbling
+        event.preventDefault();
+        // Get real target
+        var self = $($(this).parent()[0]);
+        // Get source attributes
+        var type = self.attr('data-entity-type');
+        var id = parseInt(self.attr('data-entity-id'), 10);
+        // Get surce screen offset
+        var orgOffset = self.offset();
+        // Clone surce element
+        var elem = self.clone();
+        // Make a temporal div which will use to provide visual feedback
+        var tempItem = $("<div style='position: absolute; opacity: 0.5' class='tempItem'>" + elem.text() + "</div>");
+        // Translate object to surce screen coordinates
+        tempItem.offset(orgOffset);
+        // Make surce invisible
+        self.css('opacity', 0.25);
+        // Append visual helper
+        $('body').append(tempItem)
+        // Calculate destination offset
+        var destOffset = $('.filter-menu.editing li:last').offset();
+        // If surce exists on target then fly there else append as new
+        if(!isNaN(id) && $('#sortable2 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').length > 0) {
+            // Matched target
+            destOffset = $('#sortable2 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').offset();
+        } else {
+            // Append new target
+            $('.filter-menu.editing').append("<li style='opacity: 0'><i class='option unchecked'></i>" + elem.text() + "</li>");
+            // Calculate offset
+            destOffset = $('.filter-menu.editing li:last').offset();
+        }
+        // Translate the helper        
+        $(tempItem).css('-webkit-transform', 'translate('+ (destOffset.left - orgOffset.left) +'px, '+ (destOffset.top - orgOffset.top) +'px)');
+        // Wait till animation stops
+        $(tempItem).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(event){
+            if(!isNaN(id) && $('#sortable2 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').length > 0) {
+                $('#sortable2 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').removeClass('selected').find('i').removeClass().addClass("option unchecked");
+                $('#sortable2 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').draggable( "option", "disabled", false );
+            } else {
+                $('.filter-menu.editing li:last').css('opacity', 1);
+            }
+            tempItem.remove();
+            $(self).hide(250, function () {
+                $(this).remove();
+            });                
+        })
+    });
+    ///////////////////////////////////////////////////////////////////////////////
+    // Add Element                                                               //
+    ///////////////////////////////////////////////////////////////////////////////
+    $('body').on('click', ".filter-container.editing ul.filter-menu:not('.inUse') li:not('.selected')", function(event) {
+        var self = $(this);
+        var type = self.attr('data-entity-type');
+        var id = parseInt(self.attr('data-entity-id'), 10);            
+        var orgOffset = {};
+        var destOffset = {};
+
+        event.preventDefault();
+        self.addClass("selected");
+        self.parent().addClass('inUse');
+
+        var div = document.createElement('div');
+        div.textContent = self.text();
+        div.classList.add("tempItem");
+        var tempItem = $(div);
+
+        var a = $('#sortable1').append("<li style='opacity: 0.25'>" + $(this).text() + "</li>");
+        $('#sortable1 li:last').attr('data-entity-type', type);
+        $('#sortable1 li:last').attr('data-entity-id', id);
+        var orgOffset = $(this).offset();
+        destOffset = $('#sortable1 li:last').offset();
+        tempItem.offset(orgOffset);
+        $('body').append(tempItem);
+        var xPos = orgOffset.left > destOffset.left ? -(orgOffset.left - destOffset.left) : (destOffset.left - orgOffset.left);
+        var yPos = orgOffset.top > destOffset.top ? -(orgOffset.top - destOffset.top) : (destOffset.top - orgOffset.top);
+
+        // Disable item & change icon
+        self.draggable( "option", "disabled", true );
+        self.find('i').removeClass('unchecked').addClass("checked");
+        // Bug in transitions
+        setTimeout(function() {
+            tempItem.css('transform', 'translate(' + xPos + 'px, ' + yPos + 'px)');
+        }, 15);
+
+        $(tempItem).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(event){
+            $('#sortable1 li:last').css('opacity', 1).append("<i class='remove icon-remove-sign'></i>");
+            tempItem.remove();                
+            self.parent().removeClass('inUse');                
+        });
+    });
+    ///////////////////////////////////////////////////////////////////////////////
+    // Remove element                                                            //
+    ///////////////////////////////////////////////////////////////////////////////
+    $('body').on('click', ".filter-container.editing ul.filter-menu:not('.inUse') li.selected", function(event) {
+        // Get the real target
+        var self = $($(this).parent()[0]);
+        var self = $(this);
+        // Get source attributes
+        var type = self.attr('data-entity-type');
+        var id = parseInt(self.attr('data-entity-id'), 10);
+        // Prevent event bubbling
+        event.preventDefault();
+        // Get surce screen offset
+        var destOffset = self.offset();
+        // Calculate destination offset
+        var orgOffset = $('#sortable1 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').offset();            
+        // Clone surce element
+        var elem = self.clone();
+        // Make a temporal div which will use to provide visual feedback
+        var tempItem = $("<div style='position: absolute; opacity: 0.5' class='tempItem'>" + elem.text() + "</div>");
+        // Translate object to surce screen coordinates
+        tempItem.offset(orgOffset);            
+        // Make surce invisible
+        $('#sortable1 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').css('opacity', 0.25);
+        // Append visual helper
+        $('body').append(tempItem);
+        // Translate the helper        
+        var xPos = orgOffset.left > destOffset.left ? -(orgOffset.left - destOffset.left) : (destOffset.left - orgOffset.left);
+        var yPos = orgOffset.top > destOffset.top ? -(orgOffset.top - destOffset.top) : (destOffset.top - orgOffset.top);
+
+        // Bug in transitions
+        setTimeout(function() {
+            tempItem.css('transform', 'translate(' + xPos + 'px, ' + yPos + 'px)');
+        }, 15)
+        // Wait till animation stops
+        $(tempItem).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(event){
+            if(!isNaN(id) && $('#sortable2 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').length > 0) {
+                $('#sortable2 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').removeClass('selected').find('i').removeClass().addClass("option unchecked");
+                $('#sortable2 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').draggable( "option", "disabled", false );
+            }
+            $('#sortable1 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').hide(250, function () {
+                $(this).remove();
+            });
+            tempItem.remove();
+        })
+    });
+    ///////////////////////////////////////////////////////////////////////////////
+    //
+    ///////////////////////////////////////////////////////////////////////////////
+    $("#sortable1 li").each(function(index, element){
+        var type = $(this).attr('data-entity-type');
+        var id = parseInt($(this).attr('data-entity-id'), 10);
+        $('.filter-menu [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').addClass("selected").find('i').removeClass('unchecked').addClass("checked");
+    });
+    ///////////////////////////////////////////////////////////////////////////////
+    // Edit button                                                               //
+    ///////////////////////////////////////////////////////////////////////////////
+    $(".edit-filters").on('click', function(event) {
+        if($(this).hasClass('active')) {
+        //if($(".edit-filters").hasClass('active')){
+            console.log("is Active")
+            $(this).removeClass('active');                
+            $(this).find('i').removeClass('icon-white');
+            $(".filter-menu li i.option").hide();
+            $(".filter-container").removeClass('editing');
+            $(".filter-menu.editing li").draggable("destroy");
+            //$(".filter-container").removeClass('editing').find(".filter-menu").removeClass('editing').find("li").draggable("destroy").find("i.option").removeClass('hidden').show();
+            $("#sortable1").removeClass('editing').sortable("destroy").find('i.remove').remove();
+            return;
+        }
+
+        console.log("is not active")
+        $(this).addClass('active');
+        $(this).find('i').addClass('icon-white');
+        //$(".filter-menu li i.option").removeClass('hidden').show();
+        $(".filter-container").addClass('editing').find(".filter-menu.active").addClass('editing').find("li i.option").removeClass('hidden').show();
+        if(!$(".filter-container").is(':visible')) {
+            $(".filter-container").slideDown();
+        }
+        
+        // Make dragable items
+        $(".filter-menu.editing li").draggable({ 
+            connectToSortable: "#sortable1",
+            cursor: "move",
+            opacity: 0.75,
+            revert: "invalid", 
+            helper: function( event ) {
+                var helper = $(this).clone();
+                helper.removeClass().addClass("dragging").find('i').removeClass();
+                return helper;
+            }           
+        });
+        // Make main menu sortable (accepts draggable elements too)
+        $("#sortable1").sortable({
+            connectWith: ".connectedSortable",
+            //Custom placeholder HACKY
+            placeholder: {
+                element: function(currentItem) {
+                    return $("<li class='placeholder'><i class='icon-arrow-down'></i><i class='icon-arrow-up'></i></li>")[0];
+                },
+                update: function(container, p) {
+                    return;
+                }
+            },    
+            receive: function(event, ui) {
+                ui.item.addClass("active").find('i').removeClass('unchecked').addClass("checked");
+                ui.item.draggable( "option", "disabled", true );
+            },
+            stop: function(event, ui) {
+                ui.item.css({border: '0', 'border-radius': '2px'}).find('i').remove();
+                ui.item.append("<i class='remove icon-remove-sign'></i>");
+            }
+        }).addClass('editing').find('li').append("<i class='remove icon-remove-sign'></i>");
+
+        $("#sortable1 li").each(function(index, element){
+            var type = $(this).attr('data-entity-type');
+            var id = parseInt($(this).attr('data-entity-id'), 10);
+            $('.filter-menu [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').addClass("selected").find('i').removeClass('unchecked').addClass("checked");
+            $('.filter-menu [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').draggable( "option", "disabled", true );
+        });
+    });
+    ///////////////////////////////////////////////////////////////////////////////
+    // Hanlde filter menu selection when not editing                             //
+    ///////////////////////////////////////////////////////////////////////////////
+    $('body').on('click', ".filter-container:not('.editing') .filter-menu li", function(event){
+        if($(this).hasClass('active')) {
+            return;
+        }
+        // remove previous button
+        $(this).parent().find('.active').removeClass('active');
+        $(this).addClass('active');
+        var type = $(this).attr('data-entity-type');
+        var id = parseInt($(this).attr('data-entity-id'), 10);
+        var vc = $(this).attr('data-video-category');
+        var vc = $(this).attr('data-video-category');
+
+        console.log("filter menu: type: %s, id: %s, vc: %s", type, id, vc);
+
+        ///////////////////////////////////////////////////////////////////////
+        // Decoupled EventTrigger                                            //
+        ///////////////////////////////////////////////////////////////////////
+        window.fansWorldEvents.emitEvent('onFilterChange', [type, id, vc]);        
+    });
+    ///////////////////////////////////////////////////////////////////////////////
+    // Hanlde hero menu selection                                                 //
+    ///////////////////////////////////////////////////////////////////////////////
+    $('body').on("click", ".filter-home:not('.editing') > li:not('[data-override]')", function(event){
+        if($(this).hasClass('active')) {
+            return;
+        }
+        $(this).parent().find('.active').removeClass('active');
+        $(this).addClass('active');
+        var type = $(this).attr('data-entity-type');
+        var id = parseInt($(this).attr('data-entity-id'), 10);
+        var vc = $(this).attr('data-video-category');
+
+        $('.filter-container').find('ul').each(function(){
+            if(parseInt($(this).attr('data-parent-entity-id'), 10) == id) {
+                if(!$(".filter-container").is(':visible')) {
+                    $(".filter-container").slideDown();
+                }
+                $(this).addClass('active').removeClass('hidden');
+            } else {
+                $(this).removeClass('active').addClass('hidden');
+            }
+        });
+        if($(".filter-container [data-parent-entity-id="+ id +"]").length < 1) {
+            $(".filter-container").slideUp();
+        }
 
         ///////////////////////////////////////////////////////////////////////
         // Decoupled EventTrigger                                            //

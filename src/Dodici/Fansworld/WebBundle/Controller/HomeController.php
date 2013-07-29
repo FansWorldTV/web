@@ -391,10 +391,10 @@ class HomeController extends SiteController
     public function ajaxSetMenuConfig()
     {
         $request = $this->getRequest();
-        $type = $request->get('type');
+        //$type = $request->get('type');
         $values = $request->get('values');
         $prefService = $this->get('preferences');
-        return $prefService->set($type.'HomeMenu', array($values));
+        return $prefService->set('HomeMenu', array($values));
     }
 
     private function checkFacebookRequest()
