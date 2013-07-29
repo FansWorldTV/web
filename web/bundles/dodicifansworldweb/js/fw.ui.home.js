@@ -826,6 +826,9 @@ $(document).ready(function () {
 // Hero Editable Menu                                                        //
 ///////////////////////////////////////////////////////////////////////////////
 $(document).ready(function () {
+
+    var heroMenu = '.filter-home';
+    var heroEdit = '.hero-menu-editor';
     ///////////////////////////////////////////////////////////////////////////////
     // Add a remove button to all menu elements                                  //
     ///////////////////////////////////////////////////////////////////////////////
@@ -841,7 +844,7 @@ $(document).ready(function () {
     ///////////////////////////////////////////////////////////////////////////////
     // Bind remove event                                                         //
     ///////////////////////////////////////////////////////////////////////////////
-    $('body').on('click', "#sortable1 .remove", function(event){
+    $('body').on('click', heroMenu +" .remove", function(event){
         // Disable Bubbling
         event.preventDefault();
         // Get real target
@@ -862,26 +865,26 @@ $(document).ready(function () {
         // Append visual helper
         $('body').append(tempItem)
         // Calculate destination offset
-        var destOffset = $('.filter-menu.editing li:last').offset();
+        var destOffset = $(heroEdit + '.editing li:last').offset();
         // If surce exists on target then fly there else append as new
-        if(!isNaN(id) && $('#sortable2 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').length > 0) {
+        if(!isNaN(id) && $(heroEdit + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').length > 0) {
             // Matched target
-            destOffset = $('#sortable2 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').offset();
+            destOffset = $(heroEdit + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').offset();
         } else {
             // Append new target
-            $('.filter-menu.editing').append("<li style='opacity: 0'><i class='option unchecked'></i>" + elem.text() + "</li>");
+            $(heroMenu + '.editing').append("<li style='opacity: 0'><i class='option unchecked'></i>" + elem.text() + "</li>");
             // Calculate offset
-            destOffset = $('.filter-menu.editing li:last').offset();
+            destOffset = $(heroMenu + '.editing li:last').offset();
         }
         // Translate the helper        
         $(tempItem).css('-webkit-transform', 'translate('+ (destOffset.left - orgOffset.left) +'px, '+ (destOffset.top - orgOffset.top) +'px)');
         // Wait till animation stops
         $(tempItem).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(event){
             if(!isNaN(id) && $('#sortable2 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').length > 0) {
-                $('#sortable2 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').removeClass('selected').find('i').removeClass().addClass("option unchecked");
-                $('#sortable2 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').draggable( "option", "disabled", false );
+                $(heroEdit + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').removeClass('selected').find('i').removeClass().addClass("option unchecked");
+                $(heroEdit + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').draggable( "option", "disabled", false );
             } else {
-                $('.filter-menu.editing li:last').css('opacity', 1);
+                $(heroMenu + '.editing li:last').css('opacity', 1);
             }
             tempItem.remove();
             $(self).hide(250, function () {
@@ -892,7 +895,7 @@ $(document).ready(function () {
     ///////////////////////////////////////////////////////////////////////////////
     // Add Element                                                               //
     ///////////////////////////////////////////////////////////////////////////////
-    $('body').on('click', ".filter-container.editing ul.filter-menu:not('.inUse') li:not('.selected')", function(event) {
+    $('body').on('click', ".filter-container.editing ul" + heroEdit + ":not('.inUse') li:not('.selected')", function(event) {
         var self = $(this);
         var type = self.attr('data-entity-type');
         var id = parseInt(self.attr('data-entity-id'), 10);            
@@ -908,11 +911,11 @@ $(document).ready(function () {
         div.classList.add("tempItem");
         var tempItem = $(div);
 
-        var a = $('#sortable1').append("<li style='opacity: 0.25'>" + $(this).text() + "</li>");
-        $('#sortable1 li:last').attr('data-entity-type', type);
-        $('#sortable1 li:last').attr('data-entity-id', id);
+        $(heroMenu).append("<li style='opacity: 0.25'>" + $(this).text() + "</li>");
+        $(heroMenu + ' li:last').attr('data-entity-type', type);
+        $(heroMenu + ' li:last').attr('data-entity-id', id);
         var orgOffset = $(this).offset();
-        destOffset = $('#sortable1 li:last').offset();
+        destOffset = $(heroMenu + ' li:last').offset();
         tempItem.offset(orgOffset);
         $('body').append(tempItem);
         var xPos = orgOffset.left > destOffset.left ? -(orgOffset.left - destOffset.left) : (destOffset.left - orgOffset.left);
@@ -927,7 +930,7 @@ $(document).ready(function () {
         }, 15);
 
         $(tempItem).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(event){
-            $('#sortable1 li:last').css('opacity', 1).append("<i class='remove icon-remove-sign'></i>");
+            $(heroMenu + ' li:last').css('opacity', 1).append("<i class='remove icon-remove-sign'></i>");
             tempItem.remove();                
             self.parent().removeClass('inUse');                
         });
@@ -935,7 +938,7 @@ $(document).ready(function () {
     ///////////////////////////////////////////////////////////////////////////////
     // Remove element                                                            //
     ///////////////////////////////////////////////////////////////////////////////
-    $('body').on('click', ".filter-container.editing ul.filter-menu:not('.inUse') li.selected", function(event) {
+    $('body').on('click', ".filter-container.editing ul" + heroEdit + ":not('.inUse') li.selected", function(event) {
         // Get the real target
         var self = $($(this).parent()[0]);
         var self = $(this);
@@ -947,7 +950,7 @@ $(document).ready(function () {
         // Get surce screen offset
         var destOffset = self.offset();
         // Calculate destination offset
-        var orgOffset = $('#sortable1 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').offset();            
+        var orgOffset = $(heroMenu + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').offset();            
         // Clone surce element
         var elem = self.clone();
         // Make a temporal div which will use to provide visual feedback
@@ -955,7 +958,7 @@ $(document).ready(function () {
         // Translate object to surce screen coordinates
         tempItem.offset(orgOffset);            
         // Make surce invisible
-        $('#sortable1 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').css('opacity', 0.25);
+        $(heroMenu + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').css('opacity', 0.25);
         // Append visual helper
         $('body').append(tempItem);
         // Translate the helper        
@@ -968,11 +971,11 @@ $(document).ready(function () {
         }, 15)
         // Wait till animation stops
         $(tempItem).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(event){
-            if(!isNaN(id) && $('#sortable2 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').length > 0) {
-                $('#sortable2 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').removeClass('selected').find('i').removeClass().addClass("option unchecked");
-                $('#sortable2 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').draggable( "option", "disabled", false );
+            if(!isNaN(id) && $(heroEdit + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').length > 0) {
+                $(heroMenu + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').removeClass('selected').find('i').removeClass().addClass("option unchecked");
+                $(heroMenu + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').draggable( "option", "disabled", false );
             }
-            $('#sortable1 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').hide(250, function () {
+            $(heroMenu +' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').hide(250, function () {
                 $(this).remove();
             });
             tempItem.remove();
@@ -981,39 +984,38 @@ $(document).ready(function () {
     ///////////////////////////////////////////////////////////////////////////////
     //
     ///////////////////////////////////////////////////////////////////////////////
-    $("#sortable1 li").each(function(index, element){
+    $(heroMenu + " li").each(function(index, element){
         var type = $(this).attr('data-entity-type');
         var id = parseInt($(this).attr('data-entity-id'), 10);
-        $('.filter-menu [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').addClass("selected").find('i').removeClass('unchecked').addClass("checked");
+        $(heroEdit + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').addClass("selected").find('i').removeClass('unchecked').addClass("checked");
     });
     ///////////////////////////////////////////////////////////////////////////////
     // Edit button                                                               //
     ///////////////////////////////////////////////////////////////////////////////
     $(".edit-filters").on('click', function(event) {
         if($(this).hasClass('active')) {
-        //if($(".edit-filters").hasClass('active')){
-            console.log("is Active")
-            $(this).removeClass('active');                
+            $(this).removeClass('active');          
             $(this).find('i').removeClass('icon-white');
-            $(".filter-menu li i.option").hide();
+            $(heroEdit + " li i.option").hide();
             $(".filter-container").removeClass('editing');
-            $(".filter-menu.editing li").draggable("destroy");
+            $(heroEdit + ".editing li").draggable("destroy");
             //$(".filter-container").removeClass('editing').find(".filter-menu").removeClass('editing').find("li").draggable("destroy").find("i.option").removeClass('hidden').show();
-            $("#sortable1").removeClass('editing').sortable("destroy").find('i.remove').remove();
+            $(heroMenu).removeClass('editing').sortable("destroy").find('i.remove').remove();
+            if($(heroEdit).is(':visible')) {
+                $(heroEdit).slideUp().addClass('hidden');
+            }
             return;
         }
-
-        console.log("is not active")
         $(this).addClass('active');
         $(this).find('i').addClass('icon-white');
         //$(".filter-menu li i.option").removeClass('hidden').show();
-        $(".filter-container").addClass('editing').find(".filter-menu.active").addClass('editing').find("li i.option").removeClass('hidden').show();
-        if(!$(".filter-container").is(':visible')) {
-            $(".filter-container").slideDown();
+        $(".filter-container").addClass('editing').find(heroEdit + ".active").addClass('editing').find("li i.option").removeClass('hidden').show();
+        if(!$(heroEdit).is(':visible')) {
+            $(heroEdit).removeClass('hidden').slideDown();
         }
         
         // Make dragable items
-        $(".filter-menu.editing li").draggable({ 
+        $(heroEdit + ".editing li").draggable({ 
             connectToSortable: "#sortable1",
             cursor: "move",
             opacity: 0.75,
@@ -1025,7 +1027,7 @@ $(document).ready(function () {
             }           
         });
         // Make main menu sortable (accepts draggable elements too)
-        $("#sortable1").sortable({
+        $(heroMenu).sortable({
             connectWith: ".connectedSortable",
             //Custom placeholder HACKY
             placeholder: {
@@ -1056,7 +1058,7 @@ $(document).ready(function () {
     ///////////////////////////////////////////////////////////////////////////////
     // Hanlde filter menu selection when not editing                             //
     ///////////////////////////////////////////////////////////////////////////////
-    $('body').on('click', ".filter-container:not('.editing') .filter-menu li", function(event){
+    $('body').on('click', ".filter-container:not('.editing') " + heroEdit + " li", function(event){
         if($(this).hasClass('active')) {
             return;
         }
@@ -1078,7 +1080,7 @@ $(document).ready(function () {
     ///////////////////////////////////////////////////////////////////////////////
     // Hanlde hero menu selection                                                 //
     ///////////////////////////////////////////////////////////////////////////////
-    $('body').on("click", ".filter-home:not('.editing') > li:not('[data-override]')", function(event){
+    $('body').on("click", heroMenu + ":not('.editing') > li:not('[data-override]')", function(event){
         if($(this).hasClass('active')) {
             return;
         }
