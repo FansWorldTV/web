@@ -9,7 +9,7 @@ use Gedmo\Translatable\Translatable;
 
 /**
  * Dodici\Fansworld\WebBundle\Entity\VideoCategory
- * 
+ *
  * Video categories defined by FW.
  *
  * @ORM\Table(name="videocategory")
@@ -33,21 +33,21 @@ class VideoCategory implements Translatable
      * @ORM\Column(name="title", type="string", length=100, nullable=false)
      */
     private $title;
-    
+
     /**
      * @Gedmo\Slug(fields={"title"}, unique=false)
      * @Gedmo\Translatable
      * @ORM\Column(length=128)
      */
     private $slug;
-    
+
 	/**
 	 * @Gedmo\Locale
 	 * Used locale to override Translation listener`s locale
 	 * this is not a mapped field of entity metadata, just a simple property
 	 */
 	private $locale;
-	
+
 	public function setTranslatableLocale($locale)
 	{
 	    $this->locale = $locale;
@@ -58,12 +58,12 @@ class VideoCategory implements Translatable
      * @ORM\OneToMany(targetEntity="Video", mappedBy="videocategory", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $videos;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="VideoCategorySubscription", mappedBy="videocategory", cascade={"remove", "persist"}, orphanRemoval="true")
      */
     protected $videocategorysubscriptions;
-    
+
     public function __construct()
     {
         $this->videos = new ArrayCollection();
@@ -74,12 +74,12 @@ class VideoCategory implements Translatable
     {
     	return $this->getTitle();
     }
-    
+
 
     /**
      * Get id
      *
-     * @return bigint 
+     * @return bigint
      */
     public function getId()
     {
@@ -99,7 +99,7 @@ class VideoCategory implements Translatable
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -119,7 +119,7 @@ class VideoCategory implements Translatable
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
@@ -139,7 +139,7 @@ class VideoCategory implements Translatable
     /**
      * Get videos
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getVideos()
     {
@@ -159,11 +159,21 @@ class VideoCategory implements Translatable
     /**
      * Get videocategorysubscriptions
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getVideocategorysubscriptions()
     {
         return $this->videocategorysubscriptions;
     }
-    
+
+    /**
+     * Get type of entity
+     *
+     * @return string
+     */
+    public function getClass()
+    {
+        return 'vc';
+    }
+
 }
