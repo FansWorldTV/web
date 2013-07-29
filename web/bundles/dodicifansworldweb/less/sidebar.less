@@ -40,8 +40,6 @@
 	position: relative;
 	display: block;
 	box-sizing: border-box;
-	border: 1px solid #2f3344;
-	height: 170px;
 	margin: 5px 0 5px 0;
 
 	img {
@@ -77,6 +75,41 @@
 		&[data-section-type="idols"], &[data-section-type="fans"], &[data-section-type="teams"] {
 			img {
 				width: 58px;
+			}
+		}
+
+		&[data-section-type="fans"] {
+			ul {
+				li {
+					.avatar {
+						float: left;
+					}
+					.info {
+						float: left;
+						.square(auto);
+						margin-left: 2px;
+						margin-top: 10px;
+						text-overflow: ellipsis;
+						overflow: hidden;
+
+						.name {
+							font-size: 15px;
+							font-weight: 600;
+							text-overflow: ellipsis;
+							overflow: hidden;
+						}
+
+						.quantities {
+							font-size: 12px;
+							font-weight: 300;
+						}
+					}
+					.btn {
+						float: right;
+						margin-top: 14px;
+						margin-right: 5px;
+					}
+				}
 			}
 		}
 

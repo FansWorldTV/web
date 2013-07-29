@@ -22,6 +22,7 @@
 
         <!-- TEAMS -->
         {% if teams|length > 0 %}
+            <div class="title_section"><span>EQUIPOS y BANDAS</span></div>
             <div class="content_section" data-section-type="teams">
                 {% for team in teams %}
                     <a href="{{ path('team_land', {slug: team.slug}) }}" rel="tooltip" title="{{ team.title }}">
@@ -34,17 +35,45 @@
 
     <!-- FANS -->
     {% if topfans|length > 0 %}
-        <div class="title_section"><span>FANS</span></div>
+        <div class="title_section"><span>Conoces a estos fans?</span></div>
         <div class="content_section" data-section-type="fans">
-            {% for fan in topfans %}
-                <a href="{{ path('user_land', {username: fan.username}) }}" rel="tooltip" title="{{ fan.firstname ~ ' ' ~ fan.lastname }}">
-                    {% thumbnail fan.image, 'mini_square' with {title: fan.firstname ~ ' ' ~ fan.lastname} %}
-                </a>
-            {% endfor %}
+            <ul>
+                {% for fan in topfans %}
+                    <li>
+                        <a href="{{ path('user_land', {username: fan.username}) }}" rel="tooltip" title="{{ fan.firstname ~ ' ' ~ fan.lastname }}" class="avatar">
+                            {% thumbnail fan.image, 'mini_square' with {title: fan.firstname ~ ' ' ~ fan.lastname} %}
+                        </a>
+
+                        <div class="info">
+                            <a href="{{ path('user_land', {username: fan.username}) }}" class="name">{{ fan }}</a>
+
+                            <br/>
+
+                            {% if fan.fanCount > 0 %}
+                                {% set txtHaveFans =  fan.fanCount ~ ' Fans' %}
+                            {% else %}
+                                {% set txtHaveFans =  null %}
+                            {% endif %}
+
+                            {% if fan.videoCount > 0 %}
+                                {% set txtHaveVids = fan.videoCount  ~ ' Videos' %}
+                            {% else %}
+                                {% set txtHaveVids = null %}
+                            {% endif %}
+
+                            <span class="quantities">{{ [txtHaveFans, txtHaveVids]|join(' y ') }}</span>
+                        </div>
+
+                        {% if appstate.canFriend(fan) %}
+                            <button class="btn btn-success">Ser fan</button>
+                        {% else %}
+                            <a href="{{ path('user_land', {'username': fan.username}) }}" class="btn btn-success">Ver perfil</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     {% endif %}
-
-
 
     <!-- MATCHS -->
     {# EVENT_REM
