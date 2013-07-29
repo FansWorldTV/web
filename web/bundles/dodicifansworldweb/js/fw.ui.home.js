@@ -828,7 +828,7 @@ $(document).ready(function () {
 $(document).ready(function () {
 
     var heroMenu = '.filter-home';
-    var heroEdit = '.hero-menu-editor';
+    var heroEdit = '.hero-editor';
     ///////////////////////////////////////////////////////////////////////////////
     // Add a remove button to all menu elements                                  //
     ///////////////////////////////////////////////////////////////////////////////
@@ -844,7 +844,7 @@ $(document).ready(function () {
     ///////////////////////////////////////////////////////////////////////////////
     // Bind remove event                                                         //
     ///////////////////////////////////////////////////////////////////////////////
-    $('body').on('click', heroMenu +" .remove", function(event){
+    $('body').on('click', heroMenu + " .remove", function(event){
         // Disable Bubbling
         event.preventDefault();
         // Get real target
@@ -880,7 +880,7 @@ $(document).ready(function () {
         $(tempItem).css('-webkit-transform', 'translate('+ (destOffset.left - orgOffset.left) +'px, '+ (destOffset.top - orgOffset.top) +'px)');
         // Wait till animation stops
         $(tempItem).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(event){
-            if(!isNaN(id) && $('#sortable2 [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').length > 0) {
+            if(!isNaN(id) && $(heroEdit + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').length > 0) {
                 $(heroEdit + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').removeClass('selected').find('i').removeClass().addClass("option unchecked");
                 $(heroEdit + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').draggable( "option", "disabled", false );
             } else {
@@ -972,8 +972,8 @@ $(document).ready(function () {
         // Wait till animation stops
         $(tempItem).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(event){
             if(!isNaN(id) && $(heroEdit + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').length > 0) {
-                $(heroMenu + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').removeClass('selected').find('i').removeClass().addClass("option unchecked");
-                $(heroMenu + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').draggable( "option", "disabled", false );
+                $(heroEdit + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').removeClass('selected').find('i').removeClass().addClass("option unchecked");
+                $(heroEdit + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').draggable( "option", "disabled", false );
             }
             $(heroMenu +' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').hide(250, function () {
                 $(this).remove();
@@ -989,6 +989,23 @@ $(document).ready(function () {
         var id = parseInt($(this).attr('data-entity-id'), 10);
         $(heroEdit + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').addClass("selected").find('i').removeClass('unchecked').addClass("checked");
     });
+
+    function saveMenu() {
+        var values = [];
+        $(heroMenu).find('li').each(function(index, element){
+            var type = $(this).attr('data-entity-type');
+            var id = parseInt($(this).attr('data-entity-id'), 10);
+            values.push({'id': id, 'type': type});
+        });
+        $.ajax({
+            url: Routing.generate(appLocale + '_home_ajaxsetmenuconfig'), 
+            data: {
+                values: values
+            }
+        }).then(function(r){
+            console.log(r)
+        });
+    }
     ///////////////////////////////////////////////////////////////////////////////
     // Edit button                                                               //
     ///////////////////////////////////////////////////////////////////////////////
@@ -998,11 +1015,13 @@ $(document).ready(function () {
             $(this).find('i').removeClass('icon-white');
             $(heroEdit + " li i.option").hide();
             $(".filter-container").removeClass('editing');
+            console.log("call method of draggable destroy")
             $(heroEdit + ".editing li").draggable("destroy");
             //$(".filter-container").removeClass('editing').find(".filter-menu").removeClass('editing').find("li").draggable("destroy").find("i.option").removeClass('hidden').show();
             $(heroMenu).removeClass('editing').sortable("destroy").find('i.remove').remove();
             if($(heroEdit).is(':visible')) {
                 $(heroEdit).slideUp().addClass('hidden');
+                saveMenu();
             }
             return;
         }
@@ -1015,6 +1034,7 @@ $(document).ready(function () {
         }
         
         // Make dragable items
+        console.log("edit call method of draggable")
         $(heroEdit + ".editing li").draggable({ 
             connectToSortable: "#sortable1",
             cursor: "move",
@@ -1048,11 +1068,12 @@ $(document).ready(function () {
             }
         }).addClass('editing').find('li').append("<i class='remove icon-remove-sign'></i>");
 
-        $("#sortable1 li").each(function(index, element){
+        $(heroMenu + " li:not('.fixed')").each(function(index, element){
             var type = $(this).attr('data-entity-type');
             var id = parseInt($(this).attr('data-entity-id'), 10);
-            $('.filter-menu [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').addClass("selected").find('i').removeClass('unchecked').addClass("checked");
-            $('.filter-menu [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').draggable( "option", "disabled", true );
+            console.log("preset: id: %s, type: %s ", id, type);
+            $(heroEdit + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').addClass("selected").find('i').removeClass('hidden unchecked').addClass("checked");
+            $(heroEdit + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').draggable( "option", "disabled", true );
         });
     });
     ///////////////////////////////////////////////////////////////////////////////
@@ -1086,11 +1107,12 @@ $(document).ready(function () {
         }
         $(this).parent().find('.active').removeClass('active');
         $(this).addClass('active');
+
         var type = $(this).attr('data-entity-type');
         var id = parseInt($(this).attr('data-entity-id'), 10);
         var vc = $(this).attr('data-video-category');
 
-        $('.filter-container').find('ul').each(function(){
+        $('.filter-container ul.hero-submenu').each(function(){
             if(parseInt($(this).attr('data-parent-entity-id'), 10) == id) {
                 if(!$(".filter-container").is(':visible')) {
                     $(".filter-container").slideDown();

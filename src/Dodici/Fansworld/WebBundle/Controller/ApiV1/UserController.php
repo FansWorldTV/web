@@ -447,4 +447,27 @@ class UserController extends BaseController
         }
     }
 
+
+    /**
+     * User menu
+     *
+     * @Route("/user/menu", name="api_v1_user_menu")
+     * @Method({"GET"})
+     * rocio
+     */
+    public function menuListAction()
+    {
+        try {
+            $prefService = $this->get('preferences');
+            $userMenuItems = $prefService->get('homeMenu');
+
+            
+
+            return $this->result($userMenuItems);
+        } catch (\Exception $e) {
+            return $this->plainException($e);
+        }
+    }
+
+
 }
