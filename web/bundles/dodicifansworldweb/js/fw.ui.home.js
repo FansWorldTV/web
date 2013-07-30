@@ -982,14 +982,13 @@ $(document).ready(function () {
         })
     });
     ///////////////////////////////////////////////////////////////////////////////
-    //
+    // 
     ///////////////////////////////////////////////////////////////////////////////
     $(heroMenu + " li").each(function(index, element){
         var type = $(this).attr('data-entity-type');
         var id = parseInt($(this).attr('data-entity-id'), 10);
         $(heroEdit + ' [data-entity-type="' + type + '"][data-entity-id="' + id + '"]').addClass("selected").find('i').removeClass('unchecked').addClass("checked");
     });
-
     function saveMenu() {
         var values = [];
         $(heroMenu).find('li').each(function(index, element){
@@ -1014,7 +1013,7 @@ $(document).ready(function () {
             $(this).removeClass('active');          
             $(this).find('i').removeClass('icon-white');
             $(heroEdit + " li i.option").hide();
-            $(".filter-container").removeClass('editing');
+            $(".filter-container").removeClass('editing').addClass('hidden');
             console.log("call method of draggable destroy")
             $(heroEdit + ".editing li").draggable("destroy");
             //$(".filter-container").removeClass('editing').find(".filter-menu").removeClass('editing').find("li").draggable("destroy").find("i.option").removeClass('hidden').show();
@@ -1028,7 +1027,7 @@ $(document).ready(function () {
         $(this).addClass('active');
         $(this).find('i').addClass('icon-white');
         //$(".filter-menu li i.option").removeClass('hidden').show();
-        $(".filter-container").addClass('editing').find(heroEdit + ".active").addClass('editing').find("li i.option").removeClass('hidden').show();
+        $(".filter-container").removeClass('hidden').addClass('editing').find(heroEdit + ".active").addClass('editing').find("li i.option").removeClass('hidden').show();
         if(!$(heroEdit).is(':visible')) {
             $(heroEdit).removeClass('hidden').slideDown();
         }
@@ -1077,27 +1076,24 @@ $(document).ready(function () {
         });
     });
     ///////////////////////////////////////////////////////////////////////////////
-    // Hanlde filter menu selection when not editing                             //
+    // Hanlde sub-filter menu selection when not editing                         //
     ///////////////////////////////////////////////////////////////////////////////
-    $('body').on('click', ".filter-container:not('.editing') " + heroEdit + " li", function(event){
+    $('body').on('click', '.hero-submenu.active li', function(event){
         if($(this).hasClass('active')) {
             return;
         }
-        // remove previous button
         $(this).parent().find('.active').removeClass('active');
         $(this).addClass('active');
         var type = $(this).attr('data-entity-type');
         var id = parseInt($(this).attr('data-entity-id'), 10);
         var vc = $(this).attr('data-video-category');
-        var vc = $(this).attr('data-video-category');
 
-        console.log("filter menu: type: %s, id: %s, vc: %s", type, id, vc);
-
+        console.log("sub filter menu: type: %s, id: %s, vc: %s", type, id, vc);
         ///////////////////////////////////////////////////////////////////////
         // Decoupled EventTrigger                                            //
         ///////////////////////////////////////////////////////////////////////
-        window.fansWorldEvents.emitEvent('onFilterChange', [type, id, vc]);        
-    });
+        window.fansWorldEvents.emitEvent('onFilterChange', [type, id, vc]);
+    });    
     ///////////////////////////////////////////////////////////////////////////////
     // Hanlde hero menu selection                                                 //
     ///////////////////////////////////////////////////////////////////////////////
@@ -1122,6 +1118,8 @@ $(document).ready(function () {
                 $(this).removeClass('active').addClass('hidden');
             }
         });
+        $('.filter-container').removeClass('hidden').slideDown().find(heroEdit).addClass('hidden');
+
         if($(".filter-container [data-parent-entity-id="+ id +"]").length < 1) {
             $(".filter-container").slideUp();
         }

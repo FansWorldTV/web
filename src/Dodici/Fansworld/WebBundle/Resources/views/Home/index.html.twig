@@ -17,7 +17,7 @@
 
 {% block main_content %}
     <div class="home-content">
-        {% if userMenuItems|length >=1 %}
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and userMenuItems|length >=1 %}
             <ul id="sortable1" class="filter-home connectedSortable">
                 <li class="active fixed" data-entity-type="null" data-entity-id="null">TODOS</li>
                 {% for item in userMenuItems %}
@@ -36,9 +36,11 @@
         </ul>
         {% endif %}
 
-        <button class="edit-filters" data-original-title="Editar"><i class="icon-cog"></i></button>
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <button class="edit-filters" data-original-title="Editar"><i class="icon-cog"></i></button>
+        {% endif %}
 
-        <div class="filter-container">
+        <div class="filter-container hidden">
           <div class="center"><h4 class="menu-title">CATEGORIAS</h4></div>
             {% for genre in genres %}
                 <ul class="hero-submenu hidden" data-entity-type="genre" data-parent-entity-genre-title="{{ genre.title }}" data-parent-entity-id="{{ genre.id }}">            
@@ -55,22 +57,22 @@
                 </ul>
             {% endfor %}
 
-
-            <ul id="sortable2" class="hero-menu-editor hero-editor connectedSortable active hidden">            
-            {% for genre in genres %}
-                <li data-entity-type="genre" data-entity-id = "{{ genre.id }}"><i class="option unchecked hidden"></i>{{ genre.title }}</li>   
-                {% for child in genre.children %}
-                    <li data-entity-type="genre" data-entity-id="{{ child.id }}"><i class="option unchecked hidden"></i>{{ child.title }}</li>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <ul id="sortable2" class="hero-menu-editor hero-editor connectedSortable active hidden">            
+                {% for genre in genres %}
+                    <li data-entity-type="genre" data-entity-id = "{{ genre.id }}"><i class="option unchecked hidden"></i>{{ genre.title }}</li>   
+                    {% for child in genre.children %}
+                        <li data-entity-type="genre" data-entity-id="{{ child.id }}"><i class="option unchecked hidden"></i>{{ child.title }}</li>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
-            {% for category in categories %}
-                <li data-entity-type="vc" data-entity-id = "{{ category.id }}"><i class="option unchecked hidden"></i>{{ category.title }}</li>
-                {% for genre in category.genres %}
-                    <li data-entity-type="vc" data-entity-id="{{ genre.id }}" data-video-category="{{ category.id }}"><i class="option unchecked hidden"></i>{{ genre.title }}</li>
+                {% for category in categories %}
+                    <li data-entity-type="vc" data-entity-id = "{{ category.id }}"><i class="option unchecked hidden"></i>{{ category.title }}</li>
+                    {% for genre in category.genres %}
+                        <li data-entity-type="vc" data-entity-id="{{ genre.id }}" data-video-category="{{ category.id }}"><i class="option unchecked hidden"></i>{{ genre.title }}</li>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
-            </ul>
-
+                </ul>
+            {% endif %}
 
         </div>
 
