@@ -64,9 +64,9 @@ class HomeController extends SiteController
         if(!is_null($userMenuItems)) {
             foreach ($userMenuItems as $item) {
                 if ('genre' == $item['type']) {
-                    $entity = $this->getRepository('VideoCategory')->find($item['id']);
-                } else {
                     $entity = $this->getRepository('Genre')->find($item['id']);
+                } else {
+                    $entity = $this->getRepository('VideoCategory')->find($item['id']);
                 }
                 if ($entity) array_push($response['userMenuItems'], $entity);
             }
