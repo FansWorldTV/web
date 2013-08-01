@@ -1109,7 +1109,7 @@ $(document).ready(function () {
         var vc = $(this).attr('data-video-category');
 
         $('.filter-container ul.hero-submenu').each(function(){
-            if(parseInt($(this).attr('data-parent-entity-id'), 10) == id) {
+            if(parseInt($(this).attr('data-parent-entity-id'), 10) == id && $(this).attr('data-entity-type') == type) {
                 if(!$(".filter-container").is(':visible')) {
                     $(".filter-container").slideDown();
                 }
@@ -1120,7 +1120,7 @@ $(document).ready(function () {
         });
         $('.filter-container').removeClass('hidden').slideDown().find(heroEdit).addClass('hidden');
 
-        if($(".filter-container [data-parent-entity-id="+ id +"]").length < 1) {
+        if($(".filter-container [data-parent-entity-id="+ id +"][data-entity-type=" + type + "]").length < 1) {
             $(".filter-container").slideUp();
         }
 
