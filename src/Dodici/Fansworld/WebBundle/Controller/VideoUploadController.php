@@ -280,6 +280,134 @@ class VideoUploadController extends SiteController
     }
 
     /**
+     * @Route("/kalturaid", name="video_kalturaid")
+     * @Secure(roles="ROLE_ADMIN")
+     * @Template
+     */
+    public function kalturaIdAction()
+    {
+        $request = $this->getRequest();
+        $user = $this->getUser();
+
+        $video = new Video();
+
+        $privacies = Privacy::getOptions();
+
+        $videoCategories = $this->getRepository('VideoCategory')->findAll();
+        $categoriesChoices = array();
+
+        foreach ($videoCategories as $ab)
+            $categoriesChoices[$ab->getId()] = $ab->getTitle();
+
+        $genres = $this->getRepository('Genre')->findAll();
+        $genrechoises = array();
+
+        foreach ($genres as $gen)
+            $genrechoises[$gen->getId()] = $gen->getTitle();
+
+        $defaultData = array();
+        $collectionConstraint = new Collection(array(
+            'title' => array(new NotBlank(), new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 250))),
+            'categories' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($categoriesChoices))),
+            'content' => new \Symfony\Component\Validator\Constraints\MaxLength(array('limit' => 400)),
+            'privacy' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($privacies))),
+            'tagtext' => array(),
+            'tagidol' => array(),
+            'tagteam' => array(),
+            'taguser' => array(),
+            'shareteam' => array(),
+            'shareidol' => array(),
+            'shareuser' => array(),
+            'fb' => array(),
+            'tw' => array(),
+            'fw' => array(),
+            'kalturaid' => array(),
+            'genre' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($genrechoises)))
+        ));
+
+        if ($request->getMethod() == 'GET') {
+            $videoToken = $request->get('id', false);
+        
+            $video->setAuthor($user);
+            $video->setTitle($videoToken);
+            $video->setStream($videoToken);
+            $video->setProcessed(false);
+            $video->setActive(false);
+
+            $defaultData['kalturaid'] = $request->get('id', false);
+        }
+
+        $formVideo = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
+            ->add('title', 'text', array('required' => true, 'label' => 'Título'))
+            ->add('categories', 'choice', array('required' => true, 'choices' => $categoriesChoices, 'label' => 'Categoria'))
+            ->add('content', 'textarea', array('required' => false,'label' => 'Descripción'))
+            ->add('privacy', 'choice', array('required' => true, 'choices' => $privacies, 'label' => 'Privacidad'))
+            ->add('tagtext', 'hidden', array('required' => false))
+            ->add('tagidol', 'hidden', array('required' => false))
+            ->add('tagteam', 'hidden', array('required' => false))
+            ->add('taguser', 'hidden', array('required' => false))
+            ->add('shareteam', 'hidden', array('required' => false))
+            ->add('shareidol', 'hidden', array('required' => false))
+            ->add('shareuser', 'hidden', array('required' => false))
+            ->add('fb', 'hidden', array('required' => false))
+            ->add('tw', 'hidden', array('required' => false))
+            ->add('fw', 'hidden', array('required' => false))
+            ->add('kalturaid', 'hidden', array('required' => true))
+            ->add('genre', 'choice', array('required' => true, 'choices' => $genrechoises, 'label' => 'Genero'))
+            ->getForm();
+
+        if ($request->getMethod() == 'POST') {
+            $formVideo->bindRequest($request);
+            $data = $formVideo->getData();
+
+            if ($formVideo->isValid()) {
+                $video->setAuthor($user);
+                $video->setTitle($data['title']);
+                $video->setContent($data['content']);
+
+                $video->setProcessed(false);
+                $video->setActive(false);
+
+                $video->setPrivacy($data['privacy']);
+
+                $videoCategory = $this->getRepository('VideoCategory')->find($data['categories']);
+                $video->setVideocategory($videoCategory);
+
+                $genre = $this->getRepository('Genre')->find($data['genre']);
+                $video->setGenre($genre);
+
+                $video->setStream($data['kalturaid']);
+
+                $videoImage = $this->getImageUrl($video->getImage());
+
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($video);
+                $em->flush();
+
+                $tagtexts = explode(',', $data['tagtext']);
+                $tagidols = explode(',', $data['tagidol']);
+                $tagteams = explode(',', $data['tagteam']);
+                $tagusers = explode(',', $data['taguser']);
+                $tagitems = $this->_tagEntity($tagtexts, $tagidols, $tagteams, $tagusers, $user, $video);
+
+                function toBoolean(&$var) {$var = $var == 'true' ? true : false;}
+                $shareEntities = array(
+                    "idols" => $data['shareidol'],
+                    "teams" => $data['shareteam'],
+                    "users" => $data['shareuser']
+                );
+                $this->_shareVideo($video, toBoolean($data['fb']), toBoolean($data['tw']), toBoolean($data['fw']), $data['title'], $shareEntities);
+
+                return $this->forward('DodiciFansworldWebBundle:VideoUpload:fileMeta',
+                    array('entryid' => $data['kalturaid'], 'title' => $data['title'],
+                            'category' => $data['categories'], 'fromuploader' => true));
+            }
+        }
+
+        return array('form' => $formVideo->createView());
+    }
+
+    /**
      * @Route("/youtubeupload", name="video_youtubeupload")
      * @Secure(roles="ROLE_USER")
      * @Template
