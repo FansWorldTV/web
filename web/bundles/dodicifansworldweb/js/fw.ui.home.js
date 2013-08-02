@@ -876,7 +876,7 @@ $(document).ready(function () {
             // Calculate offset
             destOffset = $(heroMenu + '.editing li:last').offset();
         }
-        // Translate the helper        
+        // Translate the helper
         $(tempItem).css('-webkit-transform', 'translate('+ (destOffset.left - orgOffset.left) +'px, '+ (destOffset.top - orgOffset.top) +'px)');
         // Wait till animation stops
         $(tempItem).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(event){
@@ -889,7 +889,7 @@ $(document).ready(function () {
             tempItem.remove();
             $(self).hide(250, function () {
                 $(this).remove();
-            });                
+            });
         })
     });
     ///////////////////////////////////////////////////////////////////////////////
@@ -1020,8 +1020,8 @@ $(document).ready(function () {
             $(heroMenu).removeClass('editing').sortable("destroy").find('i.remove').remove();
             if($(heroEdit).is(':visible')) {
                 $(heroEdit).slideUp().addClass('hidden');
-                saveMenu();
             }
+            saveMenu();
             return;
         }
         $(this).addClass('active');
