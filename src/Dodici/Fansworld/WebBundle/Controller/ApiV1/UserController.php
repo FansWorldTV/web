@@ -436,7 +436,6 @@ class UserController extends BaseController
             foreach ($followingProfiles as $fp) {
                 $entity = $this->getRepository(ucwords($fp['type']))->find($fp['target']);
                 $return[$fp['type']][] = $this->get('Serializer')->values($entity, $this->getImageFormat(), $this->getImageFormat('splash'), 'object');
-
             }
 
             $pagination['count'] = count($followingProfiles);
@@ -447,4 +446,46 @@ class UserController extends BaseController
         }
     }
 
+
+
+    /**
+     * [signed] User Notifications
+     *
+     * @Route("/user/{id}/notifications", name="api_v1_user_notifications", requirements = {"id" = "\d+"})
+     * @Method({"GET"})
+     *
+     * Get params:
+     * - target_id: int
+     * - [user_token]
+     * - <optional> readed: boolean (default false)
+     * - <optional> limit: int (amount of entities to return, default: LIMIT_DEFAULT)
+     * - <optional> offset/page: int (amount of entities to skip/page number, default: none)
+     * - [signature params]
+     *
+     * @return
+     * array (Serializer of notification entity)
+     *
+     */
+    public function notificationsListAction($id)
+    {
+        try {
+                if ($this->hasValidSignature()) {
+                    $request = $this->getRequest();
+                    $readed = $request->get('readed');
+                    $notificationRead = false; if ($readed == 'true') $notificationRead = true;
+                    $user = $this->checkUserToken($id, $request->get('user_token'));
+                    //$user = $this->getRepository('User')->find($id);
+                    if (!$user) throw new HttpException(404, 'User not found');
+                    $pagination = $this->pagination();
+                    $notiRepo = $this->getRepository('Notification');
+                    $notifications = $notiRepo->findBy(array('target' => $user->getId(), 'readed' => $notificationRead, 'active' => true), array('createdAt' => 'DESC'), $pagination['limit'], $pagination['offset']);
+                    $return = $this->get('serializer')->values($notifications);
+                    return $this->result($return, $pagination);
+                } else {
+                    throw new HttpException(401, 'Invalid signature');
+                }
+            } catch (\Exception $e) {
+                return $this->plainException($e);
+            }
+    }
 }
