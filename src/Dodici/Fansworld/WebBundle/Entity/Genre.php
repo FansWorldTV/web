@@ -174,4 +174,14 @@ class Genre implements Translatable
     {
         return $this->children;
     }
+
+    /**
+     * Get type of entity
+     *
+     * @return string
+     */
+    public function getClass()
+    {
+        return 'genre';
+    }
 }

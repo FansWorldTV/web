@@ -40,10 +40,7 @@ class HomeController extends SiteController
         $categories = $this->getRepository('VideoCategory')->findAll();
         $categoriesArray = array();
 
-        $userCategories = $prefService->get('categoriesHomeMenu');
-        $userGenres = $prefService->get('genresHomeMenu');
-
-
+        $userMenuItems = $prefService->get('homeMenu');
 
         foreach ($categories as $vc) {
             $categoriesArray[] = array(
@@ -60,21 +57,18 @@ class HomeController extends SiteController
             'popular' => array(),
             'categories' => $categoriesArray,
             'genres' => $this->getRepository('Genre')->getParents(),
-            'userCategories' => array(),
-            'userGenres' => array(),
+            'userMenuItems' => array(),
             'confirmedModal' => $this->getRequest()->get('confirmedModal', false)
         );
 
-        if(!is_null($userCategories)) {
-            foreach ($userCategories as $id) {
-                $entity = $this->getRepository('VideoCategory')->find($id);
-                array_push($response['userCategories'], $entity);
-            }
-        }
-        if(!is_null($userGenres)) {
-            foreach ($userGenres as $id) {
-                $entity = $this->getRepository('Genre')->find($id);
-                array_push($response['userGenres'], $entity);
+        if(!is_null($userMenuItems)) {
+            foreach ($userMenuItems as $item) {
+                if ('genre' == $item['type']) {
+                    $entity = $this->getRepository('Genre')->find($item['id']);
+                } else {
+                    $entity = $this->getRepository('VideoCategory')->find($item['id']);
+                }
+                if ($entity) array_push($response['userMenuItems'], $entity);
             }
         }
 
@@ -391,10 +385,10 @@ class HomeController extends SiteController
     public function ajaxSetMenuConfig()
     {
         $request = $this->getRequest();
-        $type = $request->get('type');
         $values = $request->get('values');
         $prefService = $this->get('preferences');
-        return $prefService->set($type.'HomeMenu', array($values));
+        $prefService->set('homeMenu', $values);
+        return $this->jsonResponse(true);
     }
 
     private function checkFacebookRequest()
