@@ -75,7 +75,7 @@
                     </li>
                     {% if entityType == 'user' and entity.username != 'fansworld' %}
                         <li class="item">{% include "DodiciFansworldWebBundle:Default:blocks/puntos.html.twig" with { score: entity.score } %}
-                            <br/><span class="item-type">PTS</span>
+                            <br/><span class="item-type">PUNTOS</span>
                         </li>
                     {% endif %}
                     <li class="item">{% if entity.fanCount > 0 %}
