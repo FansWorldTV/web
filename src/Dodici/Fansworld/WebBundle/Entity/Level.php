@@ -15,7 +15,7 @@ use Gedmo\Translatable\Translatable;
  * @ORM\Table(name="level")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\LevelRepository")
  */
-class Level implements Translatable
+class Level //implements Translatable
 {
     /**
      * @var bigint $id
@@ -28,7 +28,7 @@ class Level implements Translatable
 
     /**
      * @var string $title
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="title", type="string", length=100, nullable=false)
      */
@@ -36,7 +36,7 @@ class Level implements Translatable
 
     /**
      * @var text $content
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="content", type="text", nullable=true)
      */

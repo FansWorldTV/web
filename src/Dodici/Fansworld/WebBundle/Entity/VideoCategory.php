@@ -15,7 +15,7 @@ use Gedmo\Translatable\Translatable;
  * @ORM\Table(name="videocategory")
  * @ORM\Entity
  */
-class VideoCategory implements Translatable
+class VideoCategory //implements Translatable
 {
     /**
      * @var bigint $id
@@ -28,7 +28,7 @@ class VideoCategory implements Translatable
 
     /**
      * @var string $title
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="title", type="string", length=100, nullable=false)
      */
@@ -36,7 +36,7 @@ class VideoCategory implements Translatable
 
     /**
      * @Gedmo\Slug(fields={"title"}, unique=false)
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      * @ORM\Column(length=128)
      */
     private $slug;

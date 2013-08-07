@@ -12,7 +12,7 @@ use Gedmo\Translatable\Translatable;
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\GenreRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Genre implements Translatable
+class Genre //implements Translatable
 {
     /**
      * @var bigint $id

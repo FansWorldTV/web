@@ -16,7 +16,7 @@ use Gedmo\Translatable\Translatable;
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\ContestRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Contest implements Translatable
+class Contest //implements Translatable
 {
     // No input other than clicking on a button are required to participate
 
@@ -37,7 +37,7 @@ class Contest implements Translatable
 
     /**
      * @var string $title
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="title", type="string", length=100, nullable=false)
      */
@@ -45,7 +45,7 @@ class Contest implements Translatable
 
     /**
      * @var text $content
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="content", type="text", nullable=true)
      */
@@ -53,7 +53,7 @@ class Contest implements Translatable
 
     /**
      * @var text $data
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="data", type="text", nullable=true)
      */
@@ -110,13 +110,13 @@ class Contest implements Translatable
 
     /**
      * @Gedmo\Slug(fields={"title"}, unique=false)
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      * @ORM\Column(length=128)
      */
     private $slug;
 
     /**
-     * @Gedmo\Locale
+     * Gedmo\Locale
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property
      */
