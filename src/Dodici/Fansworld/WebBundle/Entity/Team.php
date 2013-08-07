@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\TeamRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Team implements Translatable, SearchableInterface, VisitableInterface
+class Team implements SearchableInterface, VisitableInterface
 {
     /**
      * @var bigint $id
@@ -35,7 +35,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
 
     /**
      * @var string $title
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="title", type="string", length=100, nullable=false)
      */
@@ -43,7 +43,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
 
     /**
      * @var string $shortname
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="shortname", type="string", length=100, nullable=true)
      */
@@ -51,7 +51,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
 
     /**
      * @var string $letters
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="letters", type="string", length=100, nullable=true)
      */
@@ -59,7 +59,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
 
     /**
      * @var string $stadium
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="stadium", type="string", length=100, nullable=true)
      */
@@ -74,7 +74,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
 
     /**
      * @var text $content
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="content", type="text", nullable=true)
      */
@@ -89,7 +89,7 @@ class Team implements Translatable, SearchableInterface, VisitableInterface
 
     /**
      * @var text $nicknames
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="nicknames", type="text", nullable=true)
      */

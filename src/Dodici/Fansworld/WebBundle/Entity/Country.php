@@ -27,7 +27,7 @@ class Country
 
     /**
      * @var string $title
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */

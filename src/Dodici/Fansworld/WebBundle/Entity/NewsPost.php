@@ -14,7 +14,7 @@ use Gedmo\Translatable\Translatable;
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\NewsPostRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class NewsPost implements Translatable
+class NewsPost //implements Translatable
 {
     /**
      * @var bigint $id
@@ -27,7 +27,7 @@ class NewsPost implements Translatable
 
     /**
      * @var string $title
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="title", type="string", length=100, nullable=false)
      */
@@ -35,7 +35,7 @@ class NewsPost implements Translatable
 
     /**
      * @var text $content
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="content", type="text", nullable=true)
      */
@@ -113,7 +113,7 @@ class NewsPost implements Translatable
     
     /**
      * @Gedmo\Slug(fields={"title"}, unique=false)
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      * @ORM\Column(length=128)
      */
     private $slug;

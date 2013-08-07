@@ -16,7 +16,7 @@ use Gedmo\Translatable\Translatable;
  * @ORM\Table(name="badge")
  * @ORM\Entity
  */
-class Badge implements Translatable
+class Badge // implements Translatable
 {
     // Adds a certain amount of idols
     const TYPE_IDOLSHIP = 1;
@@ -66,7 +66,7 @@ class Badge implements Translatable
 
     /**
      * @var string $title
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="title", type="string", length=100, nullable=false)
      */
@@ -74,7 +74,7 @@ class Badge implements Translatable
 
     /**
      * @var text $content
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="content", type="text", nullable=true)
      */

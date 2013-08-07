@@ -13,7 +13,7 @@ use Gedmo\Translatable\Translatable;
  * @ORM\Table(name="newscategory")
  * @ORM\Entity
  */
-class NewsCategory implements Translatable
+class NewsCategory //implements Translatable
 {
     /**
      * @var bigint $id
@@ -26,7 +26,7 @@ class NewsCategory implements Translatable
 
     /**
      * @var string $title
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="title", type="string", length=100, nullable=false)
      */
@@ -34,7 +34,7 @@ class NewsCategory implements Translatable
         
     /**
      * @Gedmo\Slug(fields={"title"}, unique=false)
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      * @ORM\Column(length=128)
      */
     private $slug;

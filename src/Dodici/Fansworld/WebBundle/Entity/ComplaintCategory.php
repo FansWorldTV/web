@@ -15,7 +15,7 @@ use Gedmo\Translatable\Translatable;
  * @ORM\Table(name="complaintcategory")
  * @ORM\Entity
  */
-class ComplaintCategory implements Translatable
+class ComplaintCategory //implements Translatable
 {
     /**
      * @var bigint $id
@@ -28,7 +28,7 @@ class ComplaintCategory implements Translatable
 
     /**
      * @var string $title
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="title", type="string", length=100, nullable=false)
      */

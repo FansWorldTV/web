@@ -604,8 +604,7 @@ $(document).ready(function () {
                         $(this).remove();
                     }).on('shown', function() {
                         if (roleAdmin) {
-                            $('.kalturaId').show();
-
+                            $('.kaltura_id').removeClass('hidden');
                             boot.find("#modal-btn-save").removeAttr("disabled");
                         }
                         

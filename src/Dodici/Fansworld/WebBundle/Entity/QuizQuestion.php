@@ -13,7 +13,7 @@ use Gedmo\Translatable\Translatable;
  * @ORM\Table(name="quizquestion")
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\QuizQuestionRepository")
  */
-class QuizQuestion implements Translatable
+class QuizQuestion //implements Translatable
 {
     /**
      * @var bigint $id
@@ -26,7 +26,7 @@ class QuizQuestion implements Translatable
 
     /**
      * @var string $title
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="title", type="string", length=100, nullable=false)
      */
@@ -34,7 +34,7 @@ class QuizQuestion implements Translatable
 
     /**
      * @var text $content
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="content", type="text", nullable=true)
      */

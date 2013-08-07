@@ -16,7 +16,7 @@ use Gedmo\Translatable\Translatable;
  * @ORM\Entity(repositoryClass="Dodici\Fansworld\WebBundle\Model\ForumThreadRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class ForumThread implements Translatable, SearchableInterface
+class ForumThread implements SearchableInterface
 {
     /**
      * @var bigint $id
@@ -39,7 +39,7 @@ class ForumThread implements Translatable, SearchableInterface
     
     /**
      * @var string $title
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="title", type="string", length=100, nullable=false)
      */
@@ -47,7 +47,7 @@ class ForumThread implements Translatable, SearchableInterface
 
     /**
      * @var text $content
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="content", type="text", nullable=true)
      */
@@ -96,7 +96,7 @@ class ForumThread implements Translatable, SearchableInterface
         
 	/**
      * @Gedmo\Slug(fields={"title"}, unique=false)
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      * @ORM\Column(length=128)
      */
     private $slug;

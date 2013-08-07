@@ -16,7 +16,7 @@ use Gedmo\Translatable\Translatable;
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
-class IdolCareer implements Translatable
+class IdolCareer //implements Translatable
 {
     /**
      * @var bigint $id
@@ -50,7 +50,7 @@ class IdolCareer implements Translatable
     /**
      * @var string $teamname
      * override
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="teamname", type="string", length=250, nullable=true)
      */
@@ -58,7 +58,7 @@ class IdolCareer implements Translatable
     
     /**
      * @var string $position
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="position", type="string", length=250, nullable=true)
      */
@@ -66,7 +66,7 @@ class IdolCareer implements Translatable
 
     /**
      * @var text $content
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="content", type="text", nullable=true)
      */

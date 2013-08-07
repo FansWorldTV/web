@@ -13,7 +13,7 @@ use Gedmo\Translatable\Translatable;
  * @ORM\Table(name="interestcategory")
  * @ORM\Entity
  */
-class InterestCategory implements Translatable
+class InterestCategory //implements Translatable
 {
     /**
      * @var bigint $id
@@ -26,7 +26,7 @@ class InterestCategory implements Translatable
 
     /**
      * @var string $title
-     * @Gedmo\Translatable
+     * Gedmo\Translatable
      *
      * @ORM\Column(name="title", type="string", length=100, nullable=false)
      */
