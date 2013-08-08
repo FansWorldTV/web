@@ -1052,7 +1052,15 @@ class UserController extends SiteController
         $response = array();
         $photos = $album->getPhotos();
 
-        $response['photos'] = $this->get('serializer')->values($photos, 'big');
+        $photos2 = array();
+        
+        foreach ($photos as $photo) {
+          if ($photo->getActive()) {
+            $photos2[] = $photo;
+          }
+        }
+
+        $response['photos'] = $this->get('serializer')->values($photos2, 'big');
         return $this->jsonResponse($response);
     }
 
