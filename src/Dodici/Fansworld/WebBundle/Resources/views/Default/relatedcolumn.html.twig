@@ -49,19 +49,7 @@
 
                             <br/>
 
-                            {% if fan.fanCount > 0 %}
-                                {% set txtHaveFans =  fan.fanCount ~ ' Fans' %}
-                            {% else %}
-                                {% set txtHaveFans =  null %}
-                            {% endif %}
-
-                            {% if fan.videoCount > 0 %}
-                                {% set txtHaveVids = fan.videoCount  ~ ' Videos' %}
-                            {% else %}
-                                {% set txtHaveVids = null %}
-                            {% endif %}
-
-                            <span class="quantities">{{ [txtHaveFans, txtHaveVids]|join(' y ') }}</span>
+                            <span class="quantities">{% if fan.fanCount > 0 %}{{ fan.fanCount }} Fans{% endif %}{% if fan.fanCount > 0 and fan.videoCount > 0 %} y {% endif %}{% if fan.videoCount > 0 %}{{ fan.videoCount }} Videos{% endif %}</span>
                         </div>
 
                         {% if appstate.canFriend(fan) %}
