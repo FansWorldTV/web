@@ -45,10 +45,13 @@
             </ul>
         </span>
     {% else %}
-        {% if app.user != entity and entity.username != 'fansworld'%}
-            <div class="addFriend"  data-add-fan>
-                <button class="btn {{ buttonSize }} btn_{{ btnType }} add btn-success" data-{{ fType }}ship-add="true" data-{{ fType }}-id="{{ entity.id }}" data-login-required > {{ 'add_idol'|trans }}</button>
-            </div>
+        {% if app.user != entity %}
+            {% if fType == 'user' and entity.username == 'fansworld' %}
+            {% else %}
+                <div class="addFriend"  data-add-fan>
+                    <button class="btn {{ buttonSize }} btn_{{ btnType }} add btn-success" data-{{ fType }}ship-add="true" data-{{ fType }}-id="{{ entity.id }}" data-login-required > {{ 'add_idol'|trans }}</button>
+                </div>
+            {% endif %}
         {% endif %}
     {% endif %}
 {% endif %}
