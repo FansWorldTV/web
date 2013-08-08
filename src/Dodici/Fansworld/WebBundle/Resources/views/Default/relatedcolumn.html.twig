@@ -39,7 +39,7 @@
         <div class="content_section" data-section-type="fans">
             <ul>
                 {% for fan in topfans %}
-                    <li>
+                    <li class="clearfix">
                         <a href="{{ path('user_land', {username: fan.username}) }}" rel="tooltip" title="{{ fan.firstname ~ ' ' ~ fan.lastname }}" class="avatar">
                             {% thumbnail fan.image, 'mini_square' with {title: fan.firstname ~ ' ' ~ fan.lastname} %}
                         </a>
