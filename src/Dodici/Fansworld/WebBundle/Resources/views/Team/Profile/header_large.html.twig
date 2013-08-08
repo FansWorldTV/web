@@ -1,9 +1,7 @@
 {% extends 'DodiciFansworldWebBundle:Profile:header_large_base.html.twig' %}
 			
 {% block splash_container %}  
-	{% if highlights is defined and highlights is not null and highlights|length > 0%}
-        {% include 'DodiciFansworldWebBundle:Default/blocks:carousel.html.twig' with {carouselitems: highlights, showCaption: false} %}
-	{% elseif entity.splash %}
+	{% if entity.splash %}
 		{% thumbnail entity.splash, 'splash' %}        
     {% else %}
         <img src="{{ asset('bundles/dodicifansworldweb/images/profile_cover_no_image.jpg' )}}" />
