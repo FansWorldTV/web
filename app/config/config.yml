@@ -597,3 +597,6 @@ services:
     serializer.genre:
         class: Dodici\Fansworld\WebBundle\Serializer\Genre
         arguments: [@serializer]
+    serializer.notification:
+        class: Dodici\Fansworld\WebBundle\Serializer\Notification
+        arguments: [@serializer]

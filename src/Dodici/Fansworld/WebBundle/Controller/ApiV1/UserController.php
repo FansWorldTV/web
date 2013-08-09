@@ -483,7 +483,7 @@ class UserController extends BaseController
                     return $this->result($return, $pagination);
                 } else {
                     throw new HttpException(401, 'Invalid signature');
-                }
+               }
             } catch (\Exception $e) {
                 return $this->plainException($e);
             }
