@@ -15,20 +15,24 @@
             {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: album} %}
         </div>
     </header>
-    <!-- <div class="isotope_container" data-album-id="{{album.id}}" data-feed-source="getphotosfrom_album"></div> -->
-    {# % include 'DodiciFansworldWebBundle:Photo:blocks/video_grid.html.twig' with {photos: album.photos,thumbnailSize: 'medium'} % #}
     <div class="semantic-grid videos-container">
         {% if album.photos|length>0 %}
             {% for photo in album.photos %}
-                {# % include 'DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig' with {'video': photo} % #}
-                <article class="video-std-block">
+                <article class="video video-std-block">
+                    <div class="image">
+                        <a class="title" href="{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}">
                             {% thumbnail photo.image, image_size with {'title': photo.title} %}
+                        </a>
+                    </div>
+                    <div class="info">
+                        <a class="title" href="{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}">{{ photo.title }}</a>
+                        <div class="clearfix"></div>
+                    </div>                        
                 </article>
             {% endfor %}    
         {% endif %}
     </div>
     <div class="add-more">+</div>
-
     <div class="content">
         <p>{{ album.content }}</p>
     </div>
