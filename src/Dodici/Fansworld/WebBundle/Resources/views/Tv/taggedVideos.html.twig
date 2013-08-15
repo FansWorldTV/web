@@ -25,7 +25,7 @@
         {% block inner_content %}
             {% include "DodiciFansworldWebBundle:Tv:blocks/breadcrumb.html.twig"  with { type: 'tag', term: term} %}
                 <div data-ima-dummy="DEADBEEF"></div>
-            {% include "DodiciFansworldWebBundle:Video:blocks/montage.html.twig"  with { 'feedSource': 'teve_ajaxexplore', videos: videos } %}
+            {% include "DodiciFansworldWebBundle:Video:blocks/video_grid.html.twig"  with { 'feedSource': 'teve_ajaxexplore', videos: videos } %}
         {% endblock %}
     {% endembed %}
 {% endblock %}

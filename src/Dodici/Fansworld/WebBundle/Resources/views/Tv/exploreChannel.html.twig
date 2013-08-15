@@ -6,7 +6,7 @@
         {% block inner_content %}
             {% include "DodiciFansworldWebBundle:Tv:blocks/breadcrumb.html.twig"  with { type: 'channel', activeChannel: activeChannel, channels: channels} %}
             <section class='videoexplorer-container'>
-                {% include "DodiciFansworldWebBundle:Video:blocks/montage.html.twig"  with { videos: videos } %}
+                {% include "DodiciFansworldWebBundle:Video:blocks/video_grid.html.twig"  with { videos: videos } %}
             </section>
             <script>
                 $(function(){
