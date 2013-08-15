@@ -1,0 +1,10 @@
+<div class="row-fluid">
+    <div class="semantic-grid videos-container">
+        {% if videos|length>0 %}
+            {% for video in videos %}
+                {% include 'DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig' with {'video': video} %}
+            {% endfor %}    
+        {% endif %}
+    </div>
+    <div class="add-more">+</div>
+</div>
