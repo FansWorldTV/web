@@ -27,7 +27,7 @@
                 </div>
                 <div class="clearfix" style="height: 35px;"></div>
                 <div class="videos-container">
-                    {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with {'listWithModal': true} %}
+                    {% include 'DodiciFansworldWebBundle:Video:blocks/video_grid.html.twig' with {'listWithModal': true} %}
                 </div>
             {% else %}
                 <div data-list="video" data-entity-type="user" data-entity-id="{{ user.id }}">
@@ -43,7 +43,7 @@
                     </div>
 
 
-                    {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with {'entityId': user.id, 'entityType': 'user', 'listWithModal': true} %}
+                    {% include 'DodiciFansworldWebBundle:Video:blocks/video_grid.html.twig' with {'entityId': user.id, 'entityType': 'user', 'listWithModal': true} %}
                 </div>
             {% endif %}
     {#    {% endblock %}

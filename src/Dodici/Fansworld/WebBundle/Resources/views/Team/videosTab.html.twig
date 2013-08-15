@@ -14,7 +14,7 @@
             <div data-list="video" data-entity-type="team" data-entity-id="{{team.id}}">
                 {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %}
         
-                {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with {'entityId': team.id, 'entityType': 'team', 'listWithModal': true} %}
+                {% include 'DodiciFansworldWebBundle:Video:blocks/video_grid.html.twig' with {'entityId': team.id, 'entityType': 'team', 'listWithModal': true} %}
             </div>
         {% endblock %}
     {% endembed %}		
