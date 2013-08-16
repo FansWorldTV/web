@@ -1,0 +1,19 @@
+{% if image_size is not defined %}
+    {% set image_size = 'home_video' %}
+{% endif %}
+{% if extra_classes is not defined %}
+    {% set extra_classes = '' %}
+{% endif %}
+{% set photoUrl = path('photo_show', {'id': photo.id, 'slug': photo.slug}) %}
+<article class="photo photo-std-block {{ extra_classes }}">
+    <div class="image">
+        <a href="{{ photoUrl }}">
+            {% thumbnail photo.image, image_size with {'title': photo.title} %}
+        </a>
+    </div>
+    <div class="info">
+        <a class="title" href="{{ photoUrl }}">{{ photo.title }}</a>
+        <span class="author">de <a href="{{ path('user_wall', {'username': photo.author.username}) }}">{{ photo.author.username }}</a></span>
+        <div class="clearfix"></div>
+    </div>
+</article>
