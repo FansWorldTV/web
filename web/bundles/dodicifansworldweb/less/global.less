@@ -460,6 +460,48 @@
 
 }
 
+.photo-std-block {
+	div.image {
+		position: relative;
+
+		img {
+			width: 100%;
+		}
+	}
+
+	div.info {
+		display: block;
+		text-align: left;
+		padding-top: 3px;
+
+		a.title {
+			color: @black;
+			font-size: 14px;
+			font-weight: 600;
+			width: 100%;
+			.size(39px, 100%);
+			.pull-left();
+			overflow: hidden;
+			display: block;
+
+			&:hover {
+				color: @orange;
+			}
+		}
+
+		span.author {
+			.pull-left();
+			color: @grayDark;
+			font-size: 11px;
+			font-weight: 300;
+
+			strong, a {
+				color: @grayDarker;
+				font-weight: 600;
+			}
+		}
+	}
+}
 .video-std-block {
 	div.image {
 		position: relative;
