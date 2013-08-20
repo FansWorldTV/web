@@ -58,25 +58,6 @@ class TeamController extends SiteController
     }
 
     /**
-     * @Route("/list/{categorySlug}", name= "team_list", defaults = {"categorySlug" = null})
-     * @Template()
-     */
-    public function listAction($categorySlug)
-    {
-        $categories = $this->getRepository('TeamCategory')->findBy(array(), array('title' => 'desc'));
-        $videoHighlights = $this->getRepository('Video')->findBy(array('highlight' => true), array('createdAt' => 'desc'), 4);
-        $popularTeams = $this->getRepository('Team')->findBy(array(), array('fanCount' => 'desc'), 3);
-        $countAll = $this->getRepository('Team')->countBy(array('active' => true));
-
-        return array(
-            'categories' => $categories,
-            'videoHighlights' => $videoHighlights,
-            'popularTeams' => $popularTeams,
-            'gotMore' => $countAll > self::LIMIT_ITEMS ? true : false
-        );
-    }
-
-    /**
      *  @Route("/ajax/get", name = "team_get")
      */
     public function ajaxGetTeams()
