@@ -112,40 +112,7 @@
 		}
 
 		.add-more {
-			.hexagono(30px, 20px, @orange);
-			color: white;
-			font-size: 22px;
-			font-weight: 500;
-			margin: 0 auto;
-			line-height: 27px;
-			cursor: pointer;
-			opacity: 0.6;
-			.transition(opacity 0.5s ease);
-			margin-top: 40px;
-
-			&:hover {
-				opacity: 1;
-			}
-
-			&.rotate {
-				.animation(add-more-loading 0.7s infinite linear);
-			}
-
-			@-webkit-keyframes add-more-loading {
-				to { -webkit-transform: rotate(360deg); }
-			}
-
-			@-moz-keyframes add-more-loading {
-				to { -moz-transform: rotate(360deg); }
-			}
-
-			@-ms-keyframes add-more-loading {
-				to { -ms-transform: rotate(360deg); }
-			}
-
-			@keyframes add-more-loading {
-				to { transform: rotate(360deg); }
-			}
+			.std-add-more;
 		}
 
 		&.gray { background-color: #f1f1f1; }

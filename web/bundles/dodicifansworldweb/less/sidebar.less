@@ -35,18 +35,29 @@
 	}
 }
 
-.sidebar-videos .video-std-block {
-	overflow: hidden;
-	position: relative;
-	display: block;
-	box-sizing: border-box;
-	margin: 5px 0 5px 0;
+.sidebar-videos {
+	h4 {
+		font-size: 23px;
+		font-weight: 300;
+		line-height: 32px;
+		margin-bottom: 10px;
 
-	img {
-		width: 100%;
+		i {
+			margin-right: 11px;
+		}
+	}
+	.video-std-block {
+		overflow: hidden;
+		position: relative;
+		display: block;
+		box-sizing: border-box;
+		margin: 5px 0 5px 0;
+
+		img {
+			width: 100%;
+		}
 	}
 }
-
 .relatedsidebar {
 	/*.rounded-corners (@radius: 5px) {
 		-webkit-border-radius: @radius;
@@ -91,6 +102,7 @@
 						margin-top: 10px;
 						text-overflow: ellipsis;
 						overflow: hidden;
+						max-width: 164px;
 
 						.name {
 							font-size: 15px;
