@@ -17,6 +17,7 @@
 
 {% block main_content %}
     <div class="home-content">
+        {#
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and userMenuItems|length >=1 %}
             <ul id="sortable1" class="filter-home connectedSortable">
                 <li class="active fixed" data-entity-type="null" data-entity-id="null">TODOS</li>
@@ -35,11 +36,13 @@
             {% endfor %}
         </ul>
         {% endif %}
+        #}
 
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <button class="edit-filters" data-original-title="Editar"><i class="icon-cog"></i></button>
         {% endif %}
 
+        {#
         <div class="filter-container hidden">
           <div class="center"><h4 class="menu-title">CATEGORIAS</h4></div>
             {% for genre in genres %}
@@ -75,7 +78,8 @@
             {% endif %}
 
         </div>
-
+        #}
+        
         <div class="highlights-container">
             <section class="row-fluid gray highlights hidden" id="home-gallery">
                 <div class="grid-sizer"></div>
