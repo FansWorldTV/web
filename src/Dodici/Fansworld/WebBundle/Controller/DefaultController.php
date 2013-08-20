@@ -250,29 +250,42 @@ class DefaultController extends SiteController
      */
     public function sidebarvideosAction($entity)
     {
-        $loggedUser = $this->getUser();
+        $loggedUser  = $this->getUser();
         $numOfResult = 4;
+        $watchlater = false;
+        $videos = array();
 
-        if ($entity instanceof User) {
-            $entitySearch = null;
+        if($entity == $loggedUser) {
+            $watchlater = true;
+            $playlist = $this->get('video.playlist');
+            $wlList = $playlist->get();
+            foreach($wlList as $element){
+                array_push($videos, $element->getVideo());
+            }
         } else {
-            $entitySearch = $entity;
+            if($entity instanceof User) {
+                $entitySearch = null;
+            } else {
+                $entitySearch = $entity;
+            }
+
+            $videos = $this->getRepository('Video')->search(
+                null,
+                $loggedUser,
+                $numOfResult,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                $entitySearch
+            );
         }
 
-        $videos = $this->getRepository('Video')->search(
-            null,
-            $loggedUser,
-            $numOfResult,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            $entitySearch
-        );
-        return array('videos' => $videos);
+
+        return array('videos' => $videos, 'watchlater' => $watchlater);
     }
 
 }

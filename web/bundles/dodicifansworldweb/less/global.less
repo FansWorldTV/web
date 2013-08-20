@@ -460,6 +460,22 @@
 
 }
 
+i.ico-channels, i.ico-watchlater {
+	@size: 32px;
+	position: relative;
+	.square(@size);
+	background-size: @size;
+	display: block;
+
+	&.ico-channels {
+		background-image: url('../images/ico-qv-channels.png');
+	}
+
+	&.ico-watchlater {
+		background-image: url('../images/ico-watchlater-channels.png');
+	}
+}
+
 .photo-std-block {
 	div.image {
 		position: relative;
@@ -505,6 +521,7 @@
 		}
 	}
 }
+
 .video-std-block {
 	div.image {
 		position: relative;
@@ -534,8 +551,6 @@
 			@size: 32px;
 			position: absolute;
 			right: 5px;
-			.square(@size);
-			background-size: @size;
 			display: none;
 			opacity: 0.5 !important;
 
@@ -545,13 +560,11 @@
 
 			&.ico-channels {
 				top: 40px;
-				background-image: url('../images/ico-qv-channels.png');
 			}
 
 			&.ico-watchlater {
 				cursor: pointer;
 				top: 5px;
-				background-image: url('../images/ico-watchlater-channels.png');
 			}
 		}
 	}
@@ -1190,5 +1203,42 @@ button.tw_button {
 		border: solid 214px transparent;
 		border-bottom: solid 94px gray;
 		border-top: none;
+	}
+}
+
+.std-add-more {
+	.hexagono(30px, 20px, @orange);
+	color: white;
+	font-size: 22px;
+	font-weight: 500;
+	margin: 0 auto;
+	line-height: 27px;
+	cursor: pointer;
+	opacity: 0.6;
+	.transition(opacity 0.5s ease);
+	margin-top: 40px;
+
+	&:hover {
+		opacity: 1;
+	}
+
+	&.rotate {
+		.animation(add-more-loading 0.7s infinite linear);
+	}
+
+	@-webkit-keyframes add-more-loading {
+		to { -webkit-transform: rotate(360deg); }
+	}
+
+	@-moz-keyframes add-more-loading {
+		to { -moz-transform: rotate(360deg); }
+	}
+
+	@-ms-keyframes add-more-loading {
+		to { -ms-transform: rotate(360deg); }
+	}
+
+	@keyframes add-more-loading {
+		to { transform: rotate(360deg); }
 	}
 }

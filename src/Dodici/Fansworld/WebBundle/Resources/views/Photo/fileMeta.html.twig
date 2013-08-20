@@ -2,115 +2,88 @@
 
 {% form_theme form 'DodiciFansworldWebBundle::form.html.twig' %}
 
-{% block javascripts %}
-    {% if redirectColorBox != true %}
-    {% endif %}
-{% endblock %}
-
 {% block content %}
-    {% if redirectColorBox %}
-        <script type="text/javascript">
-            if(window.contest != undefined){
-                var photoUploaded = {% if photo %}{{ photo.id }} {% else %} false {% endif %};
+    <script src="{{ asset('bundles/dodicifansworldweb/js/jcrop/jquery.Jcrop.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/dodicifansworldweb/js/fw.ui.metadata.js') }}" type="text/javascript"></script>
 
-                ajax.contestParticipateAction(contest.id, false, photoUploaded, false, function(r){
-                    if(r){
-                        $("a.contestParticipate").parent().html('{{ 'Already participating'|trans }}');
-                        $.colorbox.close();
-                    }
-                });
-            }else{
-                location.href = "{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}";
-            }
-        </script>
+    <script type="text/javascript">
+        var jcrop_api;
+        var jcrop_state = true;
+        $(function(){$('#cropbox').Jcrop({
+            onSelect: updateCoords,
+            boxWidth: 300,
+            boxHeight: 300,
+            onRelease: function(){
+                $('#form_x').val(0);
+                $('#form_y').val(0);
+                $('#form_w').val(0);
+                $('#form_h').val(0);
+            },
+            trueSize: [{{realWidth}},{{realHeight}}]
+        },function(){jcrop_api = this;});});
+        function updateCoords(c) { $('#form_x').val(c.x); $('#form_y').val(c.y); $('#form_w').val(c.w); $('#form_h').val(c.h);};
+        function checkCoords() {
+            if (parseInt($('#form_w').val())) return true;
+            alert('Please select a crop region then press submit.');
+            return false;
+        };
 
-    {% else %}
+        //shareEngine.init();
+        //tagEngine.bindTokenizer();
+        $("#form_tagtextac").fwTagify({action: 'tag'});
+        $("#share_input").fwTagify({action: 'share'});
+        $(".btn-checkbox").fwSharify({});
+        $('#share_it').click(function() {$('#submitPhoto').click();});
+    </script>
+    <div class="greybox">
+        <div class="uploadPhotoVideoForm">
+            <form action="{{ path('photo_filemeta', {'originalFile': originalFile, 'tempFile': tempFile }) }}" method="post" enctype="multipart/form-data" class="bigform upload-photo" name="frmUpload">
 
-        <script src="{{ asset('bundles/dodicifansworldweb/js/jcrop/jquery.Jcrop.min.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('bundles/dodicifansworldweb/js/shareTag_UploadPhoto.js') }}" type="text/javascript"></script>
-	<script src="{{ asset('bundles/dodicifansworldweb/js/fw.ui.metadata.js') }}" type="text/javascript"></script>
+                <!-- div class="title-upload">Subir foto</div -->
 
-        <script type="text/javascript">
+                <div class="row-fluid">
+                    <section class="span2">
+                        <img src="{{ path('media_temp', {tempfile: tempFile, hash: appmedia.temphash(tempFile) } )}}" id="cropbox" />
+                    </section>
+                </div>
 
-            var jcrop_api;
-            var jcrop_state = true;
-            $(function(){$('#cropbox').Jcrop({
-                onSelect: updateCoords,
-                boxWidth: 300,
-                boxHeight: 300,
-                onRelease: function(){
-                    $('#form_x').val(0);
-                    $('#form_y').val(0);
-                    $('#form_w').val(0);
-                    $('#form_h').val(0);
-                },
-                trueSize: [{{realWidth}},{{realHeight}}]
-            },function(){jcrop_api = this;});});
-            function updateCoords(c) { $('#form_x').val(c.x); $('#form_y').val(c.y); $('#form_w').val(c.w); $('#form_h').val(c.h);};
-            function checkCoords() {
-                if (parseInt($('#form_w').val())) return true;
-                alert('Please select a crop region then press submit.');
-                return false;
-            };
+                    <p class="filename"><small></small></p>
+                        {{ form_errors(form) }}
+                        <div class="row-fluid">
+                            <section class="span7">
+                                {{ form_row(form.title) }}
+                                <p class="helpMessage"><small>Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.</small></p>
 
-            //shareEngine.init();
-            //tagEngine.bindTokenizer();
-            $("#form_tagtextac").fwTagify({action: 'tag'});
-            $("#share_input").fwTagify({action: 'share'});
-            $(".btn-checkbox").fwSharify({});
-            $('#share_it').click(function() {$('#submitPhoto').click();});
-        </script>
-
-        <div class="greybox">
-            <div class="uploadPhotoVideoForm">
-                <form action="{{ path('photo_filemeta', {'originalFile': originalFile, 'tempFile': tempFile }) }}" method="post" enctype="multipart/form-data" class="bigform upload-photo" name="frmUpload">
-
-                    <!-- div class="title-upload">Subir foto</div -->
-
-                    <div class="row-fluid">
-                        <section class="span2">
-                            <img src="{{ path('media_temp', {tempfile: tempFile, hash: appmedia.temphash(tempFile) } )}}" id="cropbox" />
-                        </section>
-                    </div>
-
-                        <p class="filename"><small></small></p>
-                            {{ form_errors(form) }}
-                            <div class="row-fluid">
-                                <section class="span7">
-                                    {{ form_row(form.title) }}
-                                    <p class="helpMessage"><small>Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.</small></p>
-
-                                    {{ form_row(form.privacy) }}
-                                    <p class="helpMessage"><small>Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.</small></p>
-                                </section>
-                                <aside class="span3">
-                                    {{ form_row(form.album) }}
-                                        <li class="clearfix">
-                                            <label for="form_tagtext">Tags</label>
-                                            <div class="control-group">
-                                                <input class="completer" type="text" id="form_tagtextac" data-route="_tag_ajaxmatch" data-action="tag" data-field="form_tagtext" />
-                                                <p class="helpMessage"><small>Separado con comas ","</small></p>
-                                                <ul class="selectedtags"></ul>
-                                            </div>
-                                        </li>
-                                </aside>
-                            </div>
-                            {{ form_rest(form) }}
-                             <input type="submit" value="{{ 'share'|trans }}" id="submitPhoto" class="btn btn-primary" style="display:none;"/>
-                </form>
-                    <span class="pull-left">
-                        <button class="btn-checkbox fb"></button>
-                        <button class="btn-checkbox tw"></button>
-                        <button class="btn-checkbox fw active"></button>
-                    </span>
-                    <div class="sharewith" >
-                        <input data-token-input="" type="text" id="share_input" data-route="_share_ajaxwith" data-action="share" placeholder="Con quien lo queres compartir..." />
-                        <input type="submit" name="submit" value="{{ 'share'|trans }}" id="share_it" class="btn btn-primary"/>
-                    </div>
-            </div>
+                                {{ form_row(form.privacy) }}
+                                <p class="helpMessage"><small>Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.</small></p>
+                            </section>
+                            <aside class="span3">
+                                {{ form_row(form.album) }}
+                                    <li class="clearfix">
+                                        <label for="form_tagtext">Tags</label>
+                                        <div class="control-group">
+                                            <input class="completer" type="text" id="form_tagtextac" data-route="_tag_ajaxmatch" data-action="tag" data-field="form_tagtext" />
+                                            <p class="helpMessage"><small>Separado con comas ","</small></p>
+                                            <ul class="selectedtags"></ul>
+                                        </div>
+                                    </li>
+                            </aside>
+                        </div>
+                        {{ form_rest(form) }}
+                         <input type="submit" value="{{ 'share'|trans }}" id="submitPhoto" class="btn btn-primary" style="display:none;"/>
+            </form>
+                <span class="pull-left">
+                    <button class="btn-checkbox fb"></button>
+                    <button class="btn-checkbox tw"></button>
+                    <button class="btn-checkbox fw active"></button>
+                </span>
+                <div class="sharewith" >
+                    <input data-token-input="" type="text" id="share_input" data-route="_share_ajaxwith" data-action="share" placeholder="Con quien lo queres compartir..." />
+                    <input type="submit" name="submit" value="{{ 'share'|trans }}" id="share_it" class="btn btn-primary"/>
+                </div>
         </div>
-        <div class="templateFieldAlbumName hidden">
-            <div class="control-group" style="display:none;"><input type="text" name="album_new_name" required="required" placeholder="Título del album" /></div>
-        </div>
-    {% endif %}
+    </div>
+    <div class="templateFieldAlbumName hidden">
+        <div class="control-group" style="display:none;"><input type="text" name="album_new_name" required="required" placeholder="Título del album" /></div>
+    </div>
 {% endblock %}

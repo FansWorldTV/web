@@ -30,34 +30,6 @@ class InviteController extends SiteController
     }
 
     /**
-     * @Route("/ajax/import", name="invite_ajaximport")
-     */
-    public function ajaxImportAction()
-    {
-        $request = $this->getRequest();
-        $mail = $request->get('mail', false);
-        $password = $request->get('password', false);
-        $provider = $request->get('provider', false);
-
-        $response = array(
-            'error' => true,
-            'contacts' => null
-        );
-
-        if ($mail && $password && $provider) {
-            $importer = $this->get('contact.importer');
-            $importer instanceof ContactImporter;
-
-            $response['contacts'] = $importer->import($mail, $password, $provider);
-            $response['error'] = false;
-        } else {
-            $response['error'] = 'Mail o contraseña invalido';
-        }
-
-        return $this->jsonResponse($response);
-    }
-
-    /**
      * @Route("/ajax/generate-invitation", name="invite_generateInvitation")
      */
     public function ajaxGenerateInvitation()
