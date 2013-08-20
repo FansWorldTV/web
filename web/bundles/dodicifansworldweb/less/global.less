@@ -494,6 +494,9 @@
 			color: @grayDark;
 			font-size: 11px;
 			font-weight: 300;
+			word-wrap: break-word;
+			overflow: hidden;
+			text-overflow: ellipsis;
 
 			strong, a {
 				color: @grayDarker;
@@ -578,6 +581,10 @@
 			color: @grayDark;
 			font-size: 11px;
 			font-weight: 300;
+			height: 17px;
+			word-wrap: break-word;
+			overflow: hidden;
+			text-overflow: ellipsis;
 
 			strong, a {
 				color: @grayDarker;
@@ -586,91 +593,6 @@
 		}
 	}
 }
-
-/*.video-std-block {
-    display: block;
-    position: relative;
-    .border-radius(3px);
-    background-color: transparent;
-
-    &:hover {
-        i.play-video {
-            opacity: 1;
-        }
-    }
-
-    i.play-video {
-        background-image: url('../images/play-icon.png');
-        background-size: 25px;
-        .square(25px);
-        position: absolute;
-        left: 10px;
-        top: 10px;
-        opacity: 0.5;
-
-        &:hover{
-            opacity: 1;
-        }
-    }
-
-    img.back-thumb {
-        width: 100% !important;
-        height: auto !important;
-        .border-radius(3px);
-    }
-
-    img.image {
-        .border-radius(3px);
-    }
-
-    .title-and-user {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: auto;
-        background: url('../images/ui/pix80trans.png');
-        background-repeat: repeat;
-        padding: 10px;
-        margin: 0;
-
-        .title {
-            position: relative;
-            color: white;
-            font-weight: 600;
-            font-size: 12px;
-            display: block;
-            line-height: normal !important;
-            text-overflow: ellipsis;
-            height: auto;
-            overflow: hidden;
-            margin-left: 10px;
-            .pull-left();
-            width: 70%;
-            max-height: 33px;
-
-        }
-
-        .author-image {
-            position: relative;
-            .pull-left();
-            width: 30px !important;
-            border: 1px solid grey;
-        }
-
-        .user {
-            display: block;
-            position: relative;
-            width: 100%;
-            color: @green;
-            margin-top: 5px;
-            margin-left: 20px;
-            font-size: 15px;
-            font-weight: 300;
-            line-height: normal !important;
-        }
-    }
-}*/
 
 #header {
     .navbar-inner {
