@@ -127,26 +127,6 @@ var site = {
             }
         });
         */
-        $.datepicker.setDefaults($.datepicker.regional[appLocale]);
-
-        $('.datepicker').datepicker({
-            dateFormat: 'dd/mm/yy',
-            changeMonth: true,
-            changeYear: true,
-            yearRange: '-80'
-        });
-
-        $('.datetimepicker').datetimepicker({
-            dateFormat: 'dd/mm/yy',
-            timeFormat: 'hh:mm'
-        });
-
-        $('.timepicker').datetimepicker({
-            timeFormat: 'hhmm',
-            timeOnly: true,
-            stepMinute: 5
-        });
-
         if ($('[data-video-now-watching]').length) {
             $('[data-video-now-watching]').videoAudience({
                 ajaxUrl: Routing.generate(appLocale + '_teve_getaudience'),
