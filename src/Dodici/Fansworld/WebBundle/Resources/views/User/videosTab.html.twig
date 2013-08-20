@@ -9,11 +9,6 @@
     {{ parent() }}
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('bundles/dodicifansworldweb/js/things.js') }}" type="text/javascript"></script>
-{% endblock %}
-
 {% block profile_body %}
     {#{% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_fullwidth.html.twig" %}
         {% block inner_content %}#}
