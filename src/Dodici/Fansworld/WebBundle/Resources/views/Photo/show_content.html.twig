@@ -4,7 +4,7 @@
         <div class="row-fluid">
             <div class="media_content">
                 <i class="fullscreen"></i>
-                <a class="media_img colorbox" href="{% path photo.image, 'huge' %}">{% thumbnail photo.image, 'big' %}</a>
+                <a class="media_img" href="{% path photo.image, 'huge' %}">{% thumbnail photo.image, 'big' %}</a>
             </div>
         </div>
         <div class="detail-photo row-fluid">
@@ -18,7 +18,3 @@
     </div>
 </div>
 {% include 'DodiciFansworldWebBundle:Comment:blocks/box.html.twig' with {entity: photo} %}
-
-<script type="text/javascript">
-    $("div.media_content a.colorbox").colorbox();
-</script>
