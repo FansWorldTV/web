@@ -33,15 +33,14 @@ class AppKernel extends Kernel
             new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
             new Dodici\Fansworld\WebBundle\DodiciFansworldWebBundle(),
             new Dodici\Fansworld\AdminBundle\DodiciFansworldAdminBundle(),
-            new Flumotion\APIBundle\FlumotionAPIBundle(),
             new Symfony\Bundle\DoctrineFixturesBundle\DoctrineFixturesBundle(),
             new FOS\FacebookBundle\FOSFacebookBundle(),
-            new Artseld\OpeninviterBundle\ArtseldOpeninviterBundle(),
             new FOS\TwitterBundle\FOSTwitterBundle(),
             new DataFactory\FeedBundle\DataFactoryFeedBundle(),
             new Bazinga\ExposeTranslationBundle\BazingaExposeTranslationBundle(),
             new Kaltura\APIBundle\KalturaAPIBundle(),
             new FOS\ElasticaBundle\FOSElasticaBundle(),
+            //new Snc\RedisBundle\SncRedisBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

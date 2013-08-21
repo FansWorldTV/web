@@ -26,12 +26,13 @@ $loader->registerNamespaces(array(
     'Gedmo' => __DIR__.'/../vendor/gedmo-doctrine-extensions/lib',
     'Gaufrette'     => __DIR__.'/../vendor/gaufrette/src',
 	'Dodici'   		   => __DIR__.'/../src',
-	'Flumotion'   	   => __DIR__.'/../src',
 	'DataFactory'   	   => __DIR__.'/../src',
 	'BaseFacebook'     => __DIR__.'/../vendor/facebook/src',
 	'Artseld' => __DIR__.'/../vendor/bundles',
 	'Bazinga' => __DIR__.'/../vendor/bundles',
     'Kaltura' => __DIR__.'/../src',
+    'Snc' => __DIR__.'/../vendor/bundles',    
+    //'Predis' => __DIR__.'/../vendor/predis/lib',
 ));
 $loader->registerPrefixes(array(
     'Twig_Extensions_' => __DIR__.'/../vendor/twig-extensions/lib',

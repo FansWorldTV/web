@@ -168,22 +168,6 @@ fos_twitter:
     consumer_key: %twitter.app_key%
     consumer_secret: %twitter.app_secret%
 
-artseld_openinviter:
-    username: "fansworld"
-    private_key: "6c0b090b7bf71fa484ab40de80beb21a"
-    plugins_cache_time: "1800"
-    plugins_cache_file: "oi_plugins.php"
-    cookie_path: "../web/uploads"
-    local_debug: "on_error"
-    remote_debug: ""
-    hosted: ""
-    proxies: []
-    stats: ""
-    stats_user: ""
-    stats_password: ""
-    update_files: "1"
-    transport: "curl"
-
 fos_elastica:
     clients:
         default: { host: %fos_elastica_host%, port: %fos_elastica_port% }
@@ -270,6 +254,40 @@ fos_elastica:
                         model: Dodici\Fansworld\WebBundle\Entity\Team
                         provider: ~
                         # listener: # by default, listens to "insert", "update" and "delete"
+
+#snc_redis:
+#    clients:
+#        default:
+#            type: predis
+#            alias: default
+#            dsn: redis://localhost
+#            logging: %kernel.debug%
+#        cache:
+#            type: predis
+#            alias: cache
+#            dsn: redis://localhost/1
+#            logging: true
+#    session:
+#        client: default
+#        prefix: foo
+#        use_as_default: true
+#    doctrine:
+#        metadata_cache:
+#            client: cache
+#            entity_manager: default
+#            document_manager: default
+#        result_cache:
+#            client: cache
+#            entity_manager: default
+#            document_manager: default
+#            namespace: "dcrc:"
+#        query_cache:
+#            client: cache
+#            entity_manager: default
+#    swiftmailer:
+#        client: default
+#        key: swiftmailer
+
 parameters:
     sonata.user.admin.user.class: Application\Sonata\UserBundle\Admin\Entity\UserAdmin
     sonata.media.resizer.simple.class: Application\Sonata\MediaBundle\Media\SimpleResizer
