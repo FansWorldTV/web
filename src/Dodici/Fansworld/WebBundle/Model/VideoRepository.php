@@ -272,8 +272,6 @@ class VideoRepository extends CountBaseRepository
         if ($offset !== null)
             $query = $query->setFirstResult((int) $offset);
 
-        $query->useResultCache(true);
-
         $res = $query->getResult();
 
         if ($related || $recommended) {
@@ -498,8 +496,6 @@ class VideoRepository extends CountBaseRepository
 
         if ($tag)
             $query = $query->setParameter('tag', ($tag instanceof Tag) ? $tag->getId() : $tag);
-
-        $query->useResultCache(true);
 
         return $query->getSingleScalarResult();
     }
@@ -840,9 +836,7 @@ class VideoRepository extends CountBaseRepository
         ;
         $query = $query->setParameter('vc', ($vc instanceof VideoCategory) ? $vc->getId() : $vc);
         $query = $query->setMaxResults(1);
-
         $res = $query->getResult();
-
         if ($res) return $res[0];
         else return null;
     }
