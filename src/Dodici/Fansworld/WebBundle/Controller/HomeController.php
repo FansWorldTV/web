@@ -34,7 +34,7 @@ class HomeController extends SiteController
         if ($checkfbreq) return $checkfbreq;
 
         $user = $this->getUser();
-        /*
+        
         $prefService = $this->get('preferences');
         $genreRepo = $this->getRepository('Genre');
         $categories = $this->getRepository('VideoCategory')->findAll();
@@ -48,29 +48,17 @@ class HomeController extends SiteController
                 'title' => $vc->getTitle(),
                 'genres' => $genreRepo->byVideoCategory($vc->getId())
             );
-        }*/
+        }
 
         $response = array(
             'home' => null,
             'highlighted' => array(),
             'followed' => array(),
             'popular' => array(),
-            //'categories' => $categoriesArray,
-            //'genres' => $this->getRepository('Genre')->getParents(),
-            //'userMenuItems' => array(),
+            'categories' => $categoriesArray,
+            'genres' => $this->getRepository('Genre')->getParents(),
             'confirmedModal' => $this->getRequest()->get('confirmedModal', false)
         );
-
-        /*if(!is_null($userMenuItems)) {
-            foreach ($userMenuItems as $item) {
-                if ('genre' == $item['type']) {
-                    $entity = $this->getRepository('Genre')->find($item['id']);
-                } else {
-                    $entity = $this->getRepository('VideoCategory')->find($item['id']);
-                }
-                if ($entity) array_push($response['userMenuItems'], $entity);
-            }
-        }*/
 
         $vc = null;
         $genre = null;
