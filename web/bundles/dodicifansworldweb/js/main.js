@@ -208,7 +208,6 @@ var site = {
         site.expander();
         site.showCommentForm();
         site.BindLoginWidget();
-        albums.init();
 
         $('[data-wall]').wall();
         site.bindCarousel();
