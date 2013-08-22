@@ -292,6 +292,7 @@ $(document).ready(function () {
                             })
                             .then(function(response){
                                 location.href = Routing.generate(appLocale + '_things_videos');
+                                Routing.generate(appLocale + '_user_videos', {username: window.Application.usernme});
                             });
                             return false;
                         });

@@ -529,6 +529,11 @@ services:
       arguments: [@appmedia]
       tags:
           - { name: twig.extension }
+    twig.extension.serializer:
+      class: Dodici\Fansworld\WebBundle\Extensions\SerializerExtension
+      arguments: [@serializer]
+      tags:
+            - { name: twig.extension }
     twig.extension.appfacebook:
       class: Dodici\Fansworld\WebBundle\Extensions\AppFacebookExtension
       arguments: [@app.facebook]
