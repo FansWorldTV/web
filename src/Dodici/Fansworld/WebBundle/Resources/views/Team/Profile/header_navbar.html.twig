@@ -30,17 +30,6 @@
             <li {% if active_tab == 'fans' %}class="active"{% endif %}>
                 <a href="{{ path('team_fans', {slug: entity.slug}) }}">Fans</a>
             </li>
-            
-            {# EVENT_REM
-            <li {% if active_tab == 'eventos' %}class="active"{% endif %}>
-                <a href="{{ path('team_eventos', {slug: entity.slug}) }}">Eventos</a>
-            </li>
-            END EVENT_REM #}
-            
-            {# <li {% if active_tab == 'idols' %}class="active"{% endif %}>
-                <a href="{{ path('team_idols', {slug: entity.slug}) }}">Idolos</a>
-            </li> #}
-            
         </ul>
     </nav>
 {% endblock %}
