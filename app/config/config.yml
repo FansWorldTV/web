@@ -255,39 +255,6 @@ fos_elastica:
                         provider: ~
                         # listener: # by default, listens to "insert", "update" and "delete"
 
-#snc_redis:
-#    clients:
-#        default:
-#            type: predis
-#            alias: default
-#            dsn: redis://localhost
-#            logging: %kernel.debug%
-#        cache:
-#            type: predis
-#            alias: cache
-#            dsn: redis://localhost/1
-#            logging: true
-#    session:
-#        client: default
-#        prefix: foo
-#        use_as_default: true
-#    doctrine:
-#        metadata_cache:
-#            client: cache
-#            entity_manager: default
-#            document_manager: default
-#        result_cache:
-#            client: cache
-#            entity_manager: default
-#            document_manager: default
-#            namespace: "dcrc:"
-#        query_cache:
-#            client: cache
-#            entity_manager: default
-#    swiftmailer:
-#        client: default
-#        key: swiftmailer
-
 parameters:
     sonata.user.admin.user.class: Application\Sonata\UserBundle\Admin\Entity\UserAdmin
     sonata.media.resizer.simple.class: Application\Sonata\MediaBundle\Media\SimpleResizer
