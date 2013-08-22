@@ -20,7 +20,7 @@
     <div class="am-container">
         {% for photo in album.photos %}
                 {% if appstate.canview(photo) %}
-                        <a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">{% thumbnail photo.image, 'medium' %}</a>
+                    <a href="{{ path('photo_show', {'id': photo.id, 'slug': photo.slug}) }}">{% thumbnail photo.image, 'medium' %}</a>
                 {% endif %}
         {% endfor %}
     </div>
@@ -38,10 +38,4 @@
 
 {% include 'DodiciFansworldWebBundle:Comment:blocks/box.html.twig' with {entity: album} %}
 
-<script type="text/javascript">
-    site.startMosaic($('.am-container'), {margin : 0});
-    $(document).ready(function(){
-        //albums.init();
-    });
-</script>
 {% endblock %}
