@@ -29,7 +29,7 @@ snc_redis:
         default:
             type: predis
             alias: default
-            dsn: { host: %snc_redis_dsn% }
+            dsn: "%snc_redis_dsn%"
             logging: %kernel.debug%
     session:
         client: default
