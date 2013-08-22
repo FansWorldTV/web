@@ -1065,6 +1065,55 @@ class UserController extends SiteController
     }
 
     /**
+     * Videos filters
+     * @Route("/videos/filter/ajax", name="user_filtervideosajax")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function filterVideosAjaxAction()
+    {
+        $user = $this->getUser();
+        $request = $this->getRequest();
+        $type = $request->get('type', 0);
+        $type = (int) $type;
+        $serializer = $this->get('serializer');
+
+        $response = array(
+            'videos' => array(),
+            'error' => false
+        );
+
+        switch ($type) {
+            case 0:
+                $videos = $this->getRepository('Video')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'desc'));
+                break;
+
+            case 1:
+                $videos = $this->getRepository('Video')->commonIdols($user);
+                break;
+
+            case 2:
+                $videos = $this->getRepository('Video')->commonTeams($user);
+                break;
+
+            case 3:
+                $videos = $this->getRepository('Video')->commonCategories($user);
+                break;
+
+            case 4:
+                $playlist = $this->get('video.playlist');
+                $videosPlaylist = $playlist->get($user);
+                
+                foreach ($videosPlaylist as $video) {
+                    $videos[] = $video->getVideo();
+                }
+                break;
+        }
+
+        $response['videos'] = $serializer->values($videos, 'huge_square');
+
+        return $this->jsonResponse($response);
+    }
+    /**
      *  @Route("/ajax/getactivity-feed", name="getactivity_feed")
      */
     public function ajaxGetActivityFeed()
