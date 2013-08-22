@@ -205,7 +205,6 @@ var site = {
         site.watchLaterButtons();
         site.globalCommentButtons();
         site.globalDeleteButtons();
-        site.expander();
         site.showCommentForm();
         site.BindLoginWidget();
 
@@ -604,19 +603,6 @@ var site = {
                     }
                 });
             }
-        });
-    },
-    expander: function() {
-        $("[data-expandable]").each(function(index, element) {
-            var slicePoint = 100;
-            if ($(this).attr('data-slice-point') !== 'undefined') {
-                slicePoint = $(this).attr('data-slice-point');
-            }
-            $(this).expander({
-                slicePoint: slicePoint,
-                expandText: 'más',
-                userCollapseText: 'ocultar'
-            });
         });
     },
     BindLoginWidget: function() {
