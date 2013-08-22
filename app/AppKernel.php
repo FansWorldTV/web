@@ -40,7 +40,7 @@ class AppKernel extends Kernel
             new Bazinga\ExposeTranslationBundle\BazingaExposeTranslationBundle(),
             new Kaltura\APIBundle\KalturaAPIBundle(),
             new FOS\ElasticaBundle\FOSElasticaBundle(),
-            //new Snc\RedisBundle\SncRedisBundle()
+            new Snc\RedisBundle\SncRedisBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
@@ -57,13 +57,13 @@ class AppKernel extends Kernel
     {
         $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
     }
-    
+
     protected function getContainerBaseClass()
     {
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
             return '\JMS\DebuggingBundle\DependencyInjection\TraceableContainer';
         }
-    
+
         return parent::getContainerBaseClass();
     }
 }
