@@ -49,8 +49,8 @@
                 <script type="text/javascript">
                     var appLocale = '{{ app.request.locale }}';
                     var Application = {
-                      locale: '{{ app.request.locale }}',
-                      usernme: '{{ app.user.username }}'
+                        locale: '{{ app.request.locale }}',
+                        user: {{ serializer.values(app.user)|json_encode()|raw() }}
                     };
                     var isLoggedIn = {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} true {% else %} false {% endif %};
                     var roleAdmin = {% if is_granted("ROLE_ADMIN") %} true {% else %} false {% endif %};
