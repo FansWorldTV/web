@@ -80,11 +80,20 @@ var site = {
             });
         }
         // Invite modal popup
+        $('body').on('click', '[data-invite-modal]', function(event){
+            $("[data-invite-modal]").modalPopup({
+                'href': Routing.generate(appLocale + '_modal_invite', {}),
+                'width': 1000,
+            });
+            $(this).trigger('click');
+        });
+
+        /*
         $("[data-invite-modal]").modalPopup({
             'href': Routing.generate(appLocale + '_modal_invite', {}),
             'width': 1000,
         });
-
+        */
 
         // fw upload plugin
         // Video
