@@ -43,6 +43,8 @@ class SearchController extends SiteController
         $userType = $this->get('fos_elastica.index.website.user');
         $idolType = $this->get('fos_elastica.index.website.idol');
         $teamType = $this->get('fos_elastica.index.website.team');
+        $photoType = $this->get('fos_elastica.index.website.photo');
+        $videoType = $this->get('fos_elastica.index.website.video');
 
         $searchTerm = trim($request->query->get('query'));
 
@@ -60,13 +62,13 @@ class SearchController extends SiteController
         $search = new Elastica_Search($client);
 
         // Configure and execute the search
-        $types = array($userType, $idolType, $teamType);
+        $types = array($userType, $idolType, $teamType, $photoType, $videoType);
         //$types = array($searchHistoryType, $userType, $idolType, $teamType);
 
         $search = $search->addTypes($types);
 
         /*$index = $this->get('fos_elastica.index');
-        
+
         $search->addIndex($index);*/
 
         $resultSet = $search->search('*' . $searchTerm . '*');
@@ -134,7 +136,6 @@ class SearchController extends SiteController
                     $photo = $this->getRepository('Photo')->find($id);
 
                     $photos[] = $photo;
-
                     //$photos[] = array('value' => $data['username'], 'tokens' => $data['username'] . ', ' . $data['firstName'] . ', ' . $data['lastName']);
 
                     break;
@@ -387,7 +388,7 @@ class SearchController extends SiteController
                 if(!isset($el['id'])){
                     continue;
                 }
-                
+
                 if (array_key_exists('duration', $el)) {
                     $response['search'][$key]['duration'] = $el['duration'];
                 }
@@ -494,7 +495,7 @@ class SearchController extends SiteController
         $search->addTypes($types);
 
         $index = $this->get('fos_elastica.index');
-        
+
         $search->addIndex($index);
 
         $resultSet = $search->search($query);  // Configure and execute the search
@@ -547,7 +548,7 @@ class SearchController extends SiteController
         $search = $search->addTypes($types);
 
         /*$index = $this->get('fos_elastica.index');
-        
+
         $search->addIndex($index);*/
 
         $resultSet = $search->search('*' . $searchTerm . '*');
