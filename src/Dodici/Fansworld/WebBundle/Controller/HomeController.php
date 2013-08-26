@@ -15,6 +15,7 @@ use Dodici\Fansworld\WebBundle\Controller\SiteController;
 use Application\Sonata\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dodici\Fansworld\WebBundle\Serializer\Serializer;
+use Predis;
 
 /**
  * Home controller.
@@ -26,15 +27,22 @@ class HomeController extends SiteController
 
     /**
      * Site's home
-     * @Template
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $user = $this->getUser();
+        $query = $this->getRequest()->getUri();
+
+        if (!$user) {
+          $redis = new Predis\Client();
+          $value = $redis->get($query);
+
+          if ($value) return new Response($value);
+        }
+
         $checkfbreq = $this->checkFacebookRequest();
         if ($checkfbreq) return $checkfbreq;
 
-        $user = $this->getUser();
-        
         $prefService = $this->get('preferences');
         $genreRepo = $this->getRepository('Genre');
         $categories = $this->getRepository('VideoCategory')->findAll();
@@ -83,7 +91,20 @@ class HomeController extends SiteController
         $response['popular'] = $videos;
         $response['totals']['popular'] = $videoRepo->countSearch(null, null, $vc, false, null, null, null, null, $homeVideo, null, null, null, $genre);;
 
-        return $response;
+        if ($user) {
+          $content = $response;
+        }
+        else {
+          $content = $this->renderView(
+              'DodiciFansworldWebBundle:Home:index.html.twig',
+              $response
+          );
+
+          $redis = new Predis\Client();
+          $redis->set($query, $content);
+        }
+
+        return new Response($content);
     }
 
     /**
