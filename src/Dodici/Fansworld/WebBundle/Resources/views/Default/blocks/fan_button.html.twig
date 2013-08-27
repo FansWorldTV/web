@@ -35,11 +35,9 @@
             <ul class="dropdown-menu" role="menu" aria-labelledby="drop4">
                 <li>
                     {% if fType == 'user' %}
-                        <a tabindex="-1" href="#" class="btn_friendship remove" data-{{ fType }}ship-remove="true" data-{{ fType }}-id="{{ entity.id }}">Dejar de ser fan</a>
-                    {% elseif fType == 'idol' %}
-                        <a tabindex="-1" href="#" class="btn_idolship remove" data-{{ fType }}ship-remove="true" data-{{ fType }}-id="{{ entity.id }}">Dejar de ser fan</a>
-                    {% elseif fType == 'team' %}
-                        <a tabindex="-1" href="#" class="btn_teamship remove" data-{{ fType }}ship-remove="true" data-{{ fType }}-id="{{ entity.id }}">Dejar de ser fan</a>
+                        <a tabindex="-1" href="#" class="btn_friendship remove" data-friendship-remove="true" data-{{ fType }}-id="{{ entity.id }}">Dejar de ser fan</a>
+                    {% else %}
+                        <a tabindex="-1" href="#" class="btn_{{ fType }}ship remove" data-{{ fType }}ship-remove="true" data-{{ fType }}-id="{{ entity.id }}">Dejar de ser fan</a>
                     {% endif %}
                 </li>
             </ul>
@@ -49,7 +47,6 @@
             {% if fType == 'user' and entity.username == 'fansworld' %}
             {% else %}
                 <div class="addFriend"  data-add-fan>
-
                     <button class="btn {{ buttonSize }} btn_{{ btnType }} add btn-success" data-{% if fType == 'user' %}friend{% else %}{{ fType }}{% endif %}ship-add="true" data-{{ fType }}-id="{{ entity.id }}" data-login-required > {{ 'add_idol'|trans }}</button>
                 </div>
             {% endif %}
