@@ -274,16 +274,16 @@ $(document).ready(function () {
         hide: function() {
             var that = this;
             $(that.element).fadeOut(function() {
-                $(that.element).parent().find('.spinner').removeClass('hidden');
-                $(that.element).parent().find('.spinner').show();
+                $('body').find('.spinner').removeClass('hidden');
+                $('body').find('.spinner').show();
             });
         },
         show: function() {
             var that = this;
             $(that.element).removeClass('hidden');
             $(that.element).fadeIn(function() {
-                $(that.element).parent().find('.spinner').addClass('hidden');
-                $(that.element).parent().find('.spinner').hide();
+                $('body').find('.spinner').addClass('hidden');
+                $('body').find('.spinner').hide();
             });
         },
         destroy: function() {
@@ -472,6 +472,8 @@ $(document).ready(function () {
                     for(i in response.profiles) {
                         if (response.profiles.hasOwnProperty(i)) {
                             var profile = response.profiles[i];
+                            // Check Assets
+                            if(profile.splash)
                             render_profile(profile);
                         }
                     }

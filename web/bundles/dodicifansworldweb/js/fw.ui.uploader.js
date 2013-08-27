@@ -291,7 +291,7 @@ $(document).ready(function () {
                                 type: method
                             })
                             .then(function(response){
-                                location.href = Routing.generate(appLocale + '_user_videos', {username: window.Application.user.usernme});
+                                location.href = Routing.generate(appLocale + '_user_videos', {username: window.Application.user.username});
                             });
                             return false;
                         });

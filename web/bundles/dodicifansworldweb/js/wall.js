@@ -21,7 +21,6 @@ SUBCOMMENTS_TO_SHOW = 5;
                         usejson: true
                     },
                     function(r) {
-                        $('body').find('.spinner').addClass('hidden');
                     $('body').find('.spinner').hide();
                         callbackAction(r,wallel);
                     },
@@ -37,9 +36,8 @@ SUBCOMMENTS_TO_SHOW = 5;
   
   
     $.fn.wallUpdate = function() {
-        //window.endlessScrollPaused = true;
-        $('body').find('.spinner').removeClass('hidden');
-        $('body').find('.spinner').show();
+        // Rotate spinner
+        $('.std-add-more').addClass('rotate');
         return this.each(function() {
             var wallel = $(this);
             var wallid = wallel.attr('data-wall');
@@ -80,9 +78,8 @@ SUBCOMMENTS_TO_SHOW = 5;
                         $('.comment-loading').hide();
                         //window.endlessScrollPaused = true;
                     }
-
-                    $('body').find('.spinner').addClass('hidden');
-                    $('body').find('.spinner').hide();
+                    // Stop spinner
+                    $('.std-add-more').removeClass('rotate');
                 },
                 function() {
                     
