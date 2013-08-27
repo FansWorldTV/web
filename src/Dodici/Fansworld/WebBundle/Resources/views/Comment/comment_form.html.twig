@@ -19,25 +19,9 @@
     <div class="update commentform">
         <span class="deco"></span>
         <div class="upd">
-            <div class='cam-container'>
-                <div class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <img alt="compartir" class='comment-cam' src="{{ asset('bundles/dodicifansworldweb/images/ico/cam.png' )}}">
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ path('photo_fileupload') }}" data-upload="photo">Subir Fotos</a></li>
-                        <li><a href="{{ path('video_fileupload') }}" data-upload="video">Subir Videos</a></li>
-                    </ul>
-                </div>
-            </div>
-
             <textarea cols="" rows="3" class="comment_message" data-type="{{ type }}" data-id="{{ entity.id }}"></textarea>
         </div>
         <div class="bottom clearfix row-fluid">
-            <div class='span2 icons-container'>
-                <img class='comment-facebook' src="{{ asset('bundles/dodicifansworldweb/images/ico/facebook.png' )}}" />
-                <img class='comment-twitter'  src="{{ asset('bundles/dodicifansworldweb/images/ico/twitter.png' )}}" />
-            </div>
             <div class='span8 who-container'>
                 <input type="text" class='' value="" placeholder="Con quien lo quieres compartir?"/>
             </div>
