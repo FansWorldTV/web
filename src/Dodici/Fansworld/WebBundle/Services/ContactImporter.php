@@ -21,7 +21,7 @@ class ContactImporter
     {
         $this->request = Request::createFromGlobals();
         $this->container = $container;
-        $this->inviter = new ArtseldOpeninviter( $this->container );
+        /*$this->inviter = new ArtseldOpeninviter( $this->container );*/
     }
       
     /**

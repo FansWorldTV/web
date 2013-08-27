@@ -9,68 +9,53 @@
     <div class="row-fluid search-home">
         <div class="span10">
             <h1>Búsqueda de <strong>"{{ query }}"</strong> ({{ todoCount }})</h1>
-            <div class="btn-group" data-toggle="buttons-radio">
-                <button type="button" class="btn active" data-filter-type="all">Todo <span class="badge badge-inverse">{{ todoCount }}</span></button>
-                
-                {% if videoCount > 0 %}
-                    <button type="button" class="btn" data-filter-type="video">Tv <span class="badge badge-inverse">{{ videoCount }}</span></button>
-                {% endif %}
-                    
-                {% if idolCount > 0 %}
-                    <button type="button" class="btn" data-filter-type="idol">Idolos <span class="badge badge-inverse">{{ idolCount }}</span></button>
-                {% endif %}
-                    
-                {% if fanCount > 0 %}
-                    <button type="button" class="btn" data-filter-type="user">Fans <span class="badge badge-inverse">{{ fanCount }}</span></button>
-                {% endif %}
-                    
-                {% if teamCount > 0 %}
-                    <button type="button" class="btn" data-filter-type="team">Equipos <span class="badge badge-inverse">{{ teamCount }}</span></button>
-                {% endif %}
-                    
-                {% if photoCount > 0 %}
-                    <button type="button" class="btn" data-filter-type="photo">Fotos <span class="badge badge-inverse">{{ photoCount }}</span></button>
-                {% endif %}
-                    
-                {# EVENT_REM 
-                <button type="button" class="btn" data-filter-type="event">Partidos <span class="badge badge-inverse">{{ eventCount }}</span></button>
-                 END EVENT_REM #}
-            </div>
 
             {% if videoCount > 0 %}
-                {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'video', 'title': 'videos', 'extra_classes': 'semantic-grid videos-container'} %}
+                {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'count': videoCount,'entityType': 'video', 'title': 'videos', 'extra_classes': 'semantic-grid videos-container'} %}
                     {% block roller %}
                         {% include "DodiciFansworldWebBundle:Search:blocks/video_element_list.html.twig"  with { videos: videos } %}
                     {% endblock %}
                 {% endembed %}
+                {% if videoCount > limit.video %}
+                    <div class="std-add-more" data-add-more="video" data-page="1">+</div>
+                {% endif %}
             {% endif %}
 
             {% if idolCount > 0 %}
-                {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'idol', 'title': 'idolos'} %}
+                {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'idol', 'title': 'idolos', 'count': idolCount} %}
                     {% block roller %}
                         {% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { avatars: idols, type: 'idols' } %}
                     {% endblock %}
                 {% endembed %}
+                {% if idolCount > limit.idol %}
+                    <div class="std-add-more" data-add-more="idol" data-page="1">+</div>
+                {% endif %}
             {% endif %}
 
             {% if fanCount > 0 %}
-                {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'user', 'title': 'fans'} %}
+                {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'user', 'title': 'fans', 'count': fanCount} %}
                     {% block roller %}
                         {% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { avatars: fans, type: 'fans' } %}
                     {% endblock %}
                 {% endembed %}
+                {% if fanCount > limit.fan %}
+                    <div class="std-add-more" data-add-more="user" data-page="1">+</div>
+                {% endif %}
             {% endif %}
 
             {% if teamCount > 0 %}
-                {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'team', 'title': 'equipos'} %}
+                {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'team', 'title': 'equipos', 'count': teamCount} %}
                     {% block roller %}
                         {% include "DodiciFansworldWebBundle:Default:blocks/avatar_grid.html.twig" with { avatars: teams, type: 'teams'} %}
                     {% endblock %}
                 {% endembed %}
+                {% if teamCount > limit.team %}
+                    <div class="std-add-more" data-add-more="team" data-page="1">+</div>
+                {% endif %}
             {% endif %}
                 
             {% if photoCount > 0 %}
-                {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'photo', 'title': 'fotos'} %}
+                {% embed "DodiciFansworldWebBundle:Search/blocks:section_search_roller.html.twig" with {'entityType': 'photo', 'title': 'fotos', 'count': photoCount} %}
                     {% block roller %}
                         <div class="semantic-grid photos-container">
                             {% if photos|length>0 %}
@@ -81,6 +66,9 @@
                         </div>
                     {% endblock %}
                 {% endembed %}
+                {% if photoCount > limit.photo %}
+                    <div class="std-add-more" data-add-more="photo" data-page="1">+</div>
+                {% endif %}
             {% endif %}
         </div>
         <div class="span2 trending-sidebar">
