@@ -274,16 +274,16 @@ $(document).ready(function () {
         hide: function() {
             var that = this;
             $(that.element).fadeOut(function() {
-                $(that.element).parent().find('.spinner').removeClass('hidden');
-                $(that.element).parent().find('.spinner').show();
+                $('body').find('.spinner').removeClass('hidden');
+                $('body').find('.spinner').show();
             });
         },
         show: function() {
             var that = this;
             $(that.element).removeClass('hidden');
             $(that.element).fadeIn(function() {
-                $(that.element).parent().find('.spinner').addClass('hidden');
-                $(that.element).parent().find('.spinner').hide();
+                $('body').find('.spinner').addClass('hidden');
+                $('body').find('.spinner').hide();
             });
         },
         destroy: function() {
@@ -392,9 +392,9 @@ $(document).ready(function () {
             var that = this;
             $(that.element).parent().fadeOut(function() {
                 $(that.element).empty();
-                $(that.element).parent().find('.spinner').removeClass('hidden');
+                $('body').find('.spinner').removeClass('hidden');
                 $(that.element).parent().find('.add-more').hide();
-                $(that.element).parent().find('.spinner').show();
+                $('body').find('.spinner').show();
             });
         },
         addMoreThumbs: function(event) {
@@ -456,8 +456,8 @@ $(document).ready(function () {
                                 $thumb.find('[data-teamship-add]').hide();
                             }
                             $thumb.find('img').load(function() {
-                                $(that.element).parent().find('.spinner').addClass('hidden');
-                                $(that.element).parent().find('.spinner').hide();
+                                $('body').find('.spinner').addClass('hidden');
+                                $('body').find('.spinner').hide();
                                 $(that.element).parent().removeClass('hidden');
                                 $(that.element).parent().fadeIn('slow');
                                 if(addMore) {
@@ -472,6 +472,8 @@ $(document).ready(function () {
                     for(i in response.profiles) {
                         if (response.profiles.hasOwnProperty(i)) {
                             var profile = response.profiles[i];
+                            // Check Assets
+                            if(profile.splash)
                             render_profile(profile);
                         }
                     }
@@ -523,13 +525,14 @@ $(document).ready(function () {
     var id = parseInt($(".filter-home").find('.active').attr('data-entity-id'), 10);
 
     // Video Packery Gallery
+    /*
     $('section.most-recent').fwHomePackery({
         type: type,
         id: id,
         selector: 'section.most-recent',
         block: 'activity'
     });
-
+    */
     // Video Grid
     $('section.popular > .profiles-container').fwHomeThumbs({
         type: type,
