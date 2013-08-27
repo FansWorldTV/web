@@ -18,15 +18,8 @@
     <div class="update commentform">
     <span class="deco"></span>
     <div class="upd">
-
-        <div class="btn-group select-league">
-            <textarea cols="" rows="3" class="comment_message" data-type="{{ type }}" data-id="{{ entity.id }}"></textarea>
-        </div>
-        <div class="bottom clearfix row-fluid">
-            <div class='span2'>
-                <button class='btn btn-success comment_button'>Compartir</button>
-            </div>
-
-        </div>
+        <textarea cols="" rows="3" class="comment_message" data-type="{{ type }}" data-id="{{ entity.id }}" placeholder="¿ Que deseas decir ?"></textarea>
+        <button class='btn btn-success comment_button pull-right'>Compartir</button>
+        <div class="clearfix"></div>
     </div>
 {% endif %}
