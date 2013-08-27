@@ -544,7 +544,6 @@ var site = {
                 if (ispin) {
                     $('.masonbricks').isotope().resize();
                 }
-                site.expander();
                 textAreaElement.removeClass('loading-small');
                 textAreaElement.removeAttr('disabled');
             },
