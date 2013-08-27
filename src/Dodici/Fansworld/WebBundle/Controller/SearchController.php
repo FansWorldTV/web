@@ -238,102 +238,20 @@ class SearchController extends SiteController
             'idolCount' => $idolsCount,
             'fanCount' => $usersCount,
             'photoCount' => $photosCount,
-            /*'eventCount' => $eventCount,*/
             'teamCount' => $teamsCount,
+            'limit' => array(
+                'video' => self::LIMIT_SEARCH_VIDEO,
+                'idol' => self::LIMIT_SEARCH_IDOL,
+                'fan' => self::LIMIT_SEARCH_USER,
+                'photo' => self::LIMIT_SEARCH_PHOTO,
+                'team' => self::LIMIT_SEARCH_TEAM
+            ),
             'idols' => $idols,
-            /*'events' => $eventSearch,*/
             'photos' => $photos,
             'fans' => $fans,
             'videos' => $videos,
             'teams' => $teams,
             'query' => $searchTerm,
-            'trending' => $trending,
-            'videosHighlighted' => $videosHighlighted
-        );
-    }
-
-    /**
-     * @Route("/search2", name = "search2_home")
-     * @Template()
-     */
-    public function index2Action()
-    {
-        $user = $this->getUser();
-        $request = $this->getRequest();
-        $query = $request->get('query', null);
-        $ip = $this->getRequest()->server->get("REMOTE_ADDR");
-
-        // Log search
-        $searchLog = $this->get('search')->log($query, $user, $ip, 'web');
-
-        $videoRepo = $this->getRepository('Video');
-        $idolRepo = $this->getRepository('Idol');
-        $fanRepo = $this->getRepository('User');
-        $photoRepo = $this->getRepository('Photo');
-        $eventRepo = $this->getRepository('Event');
-        $teamRepo = $this->getRepository('Team');
-
-        $videoSearch = $videoRepo->search($query, $user, self::LIMIT_SEARCH_VIDEO);
-        $videoCount = $videoRepo->countSearch($query);
-
-        $idolSearch = $idolRepo->search($query, null, self::LIMIT_SEARCH_IDOL);
-        $idolCount = $idolRepo->countSearch($query);
-
-        $fanSearch = $fanRepo->search($query, null, self::LIMIT_SEARCH_USER);
-        $fanCount = $fanRepo->countSearch($query);
-
-        $photoSearch = $photoRepo->search($query, null, self::LIMIT_SEARCH_PHOTO);
-        $photoCount = $photoRepo->countSearch($query);
-
-        $eventSearch = $eventRepo->search($query, null, self::LIMIT_SEARCH_EVENT);
-        $eventCount = $eventRepo->countSearch($query);
-
-        $teamSearch = $teamRepo->search($query, null, self::LIMIT_SEARCH_TEAM);
-        $teamCount = $teamRepo->countSearch($query);
-
-        $todo = $videoCount + $idolCount + $fanCount + $photoCount + $eventCount;
-
-        $idols = array(
-            'ulClass' => 'idols',
-            'containerClass' => 'idol-container',
-            'list' => $idolSearch
-        );
-
-        $fans = array(
-            'ulClass' => 'fans',
-            'containerClass' => 'fan-container',
-            'list' => array()
-        );
-
-        $teams = array(
-            'ulClass' => 'teams',
-            'containerClass' => 'team-container',
-            'list' => $teamSearch
-        );
-
-        foreach ($fanSearch as $fan) {
-            $fans['list'][] = $fan[0];
-        }
-
-        $trending = $this->get('tagger')->trending();
-
-        $videosHighlighted = $this->getRepository('Video')->findBy(array('highlight' => true, 'active' => true), array('weight' => 'desc'), 2);
-
-        return array(
-            'todoCount' => $todo,
-            'videoCount' => $videoCount,
-            'idolCount' => $idolCount,
-            'fanCount' => $fanCount,
-            'photoCount' => $photoCount,
-            /*'eventCount' => $eventCount,*/
-            'teamCount' => $teamCount,
-            'idols' => $idols,
-            /*'events' => $eventSearch,*/
-            'photos' => $photoSearch,
-            'fans' => $fans,
-            'videos' => $videoSearch,
-            'teams' => $teams,
-            'query' => $query,
             'trending' => $trending,
             'videosHighlighted' => $videosHighlighted
         );
@@ -396,23 +314,6 @@ class SearchController extends SiteController
                 $entity = $this->getRepository(ucfirst($type))->find($el['id']);
 
                 switch ($type) {
-                    case 'event':
-                        if ($this->getUser() instanceof User) {
-                            $response['search'][$key]['checked'] = $this->getRepository('Eventship')->findOneBy(array('author' => $this->getUser()->getId(), 'event' => $el['id'])) ? true : false;
-                        } else {
-                            $response['search'][$key]['checked'] = null;
-                        }
-                        $now = new \DateTime();
-                        $started = ($entity->getFromtime() <= $now);
-
-                        $response['search'][$key]['text'] = $this->get('appstate')->getEventText($el['id']);
-                        $response['search'][$key]['date'] = $entity->getFromtime()->format('d-m-Y');
-                        $response['search'][$key]['showdate'] = $entity->getFromtime()->format('d/m/Y H:i');
-                        $response['search'][$key]['url'] = $this->generateUrl('event_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()));
-                        $response['search'][$key]['started'] = $started;
-
-                        break;
-
                     case 'video':
                         $response['search'][$key]['url'] = $this->generateUrl('video_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()));
                         break;
