@@ -80,6 +80,7 @@ $(document).ready(function () {
         onRemoveIdol: function(data){
             var that = this;
             var self = $(that.element);
+            window.notice(data.message);
             console.log("onRemoveIdol: " + JSON.stringify(data));
             return that.options.onRemoveIdol(data);
         },
@@ -137,7 +138,7 @@ $(document).ready(function () {
 
     $(".btn_idolship.remove").fwIdolship({
         onRemoveIdol: function(plugin, data) {
-            //window.location.reload();
+            window.location.reload();
         }
     });
 });

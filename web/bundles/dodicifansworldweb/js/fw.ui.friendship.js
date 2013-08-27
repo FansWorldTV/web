@@ -92,6 +92,7 @@ $(document).ready(function () {
         onRemoveFriend: function(data){
             var that = this;
             var self = $(that.element);
+            window.notice(data.message);
             console.log("onRemoveFriend: " + JSON.stringify(data))
             return that.options.onRemoveFriend(data);
         },
@@ -125,10 +126,18 @@ $(document).ready(function () {
     $("[data-friendship-add]:not('[data-override]')").fwFriendship({
         onAddFriend: function(plugin, data) {
             var self = $(plugin.element);
-            self.hide();
-            self.removeClass('add');
             self.text(data.buttontext);
             window.notice(data.message);
+
+            self.addClass('disabled');
+            self.removeClass('add');
+            self.text("YA ERES FAN");
+        }
+    });
+
+    $("[data-friendship-remove]:not('[data-override]')").fwFriendship({
+        onRemoveFriend: function(plugin, data) {
+            window.location.reload();
         }
     });
 });

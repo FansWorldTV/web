@@ -92,7 +92,7 @@ $(document).ready(function () {
         onRemoveTeam: function(data){
             var that = this;
             var self = $(that.element);
-            notice(data.message);
+            window.notice(data.message);
             console.log("onRemoveTeam: " + JSON.stringify(data));
             return that.options.onRemoveTeam(data);
         },
@@ -136,7 +136,7 @@ $(document).ready(function () {
     });
     $("[data-teamship-remove]:not('[data-override]')").fwTeamship({
         onRemoveTeam: function(){
-            //window.location.reload();
+            window.location.reload();
         }
     });
 });

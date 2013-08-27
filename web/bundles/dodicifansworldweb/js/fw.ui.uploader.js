@@ -285,13 +285,15 @@ $(document).ready(function () {
                             var action = $(this).attr('action');
                             var method = $(this).attr('method');
                             boot.find('form').find('input[type="submit"]').addClass('loading-small');
+                            console.log("posting video: " + action + " data: " + JSON.stringify(data) + " method: " + method);
                             $.ajax({
                                 url: this.getAttribute('action'),
                                 data: data,
                                 type: method
                             })
                             .then(function(response){
-                                location.href = Routing.generate(appLocale + '_user_videos', {username: window.Application.user.username});
+                                console.log(response)
+                                //location.href = Routing.generate(appLocale + '_user_videos', {username: window.Application.user.username});
                             });
                             return false;
                         });
@@ -438,7 +440,7 @@ $(document).ready(function () {
                             // No more forms ? ok then we're done
                             dialog.find("#modal-btn-save").one("click", null, null, function(){
                                 $(this).addClass('loading-small');
-                                location.href = Routing.generate(appLocale + '_things_videos');
+                                location.href = Routing.generate(appLocale + '_user_videos', {username: window.Application.user.username});
                             })
                         }
                     });
