@@ -21,6 +21,8 @@ SUBCOMMENTS_TO_SHOW = 5;
                         usejson: true
                     },
                     function(r) {
+                        $('body').find('.spinner').addClass('hidden');
+                    $('body').find('.spinner').hide();
                         callbackAction(r,wallel);
                     },
                     function() {
@@ -35,7 +37,9 @@ SUBCOMMENTS_TO_SHOW = 5;
   
   
     $.fn.wallUpdate = function() {
-        window.endlessScrollPaused = true;
+        //window.endlessScrollPaused = true;
+        $('body').find('.spinner').removeClass('hidden');
+        $('body').find('.spinner').show();
         return this.each(function() {
             var wallel = $(this);
             var wallid = wallel.attr('data-wall');
@@ -51,7 +55,6 @@ SUBCOMMENTS_TO_SHOW = 5;
                     usejson: true
                 },
                 function(r) {
-                    console.log(r);
                     if(r && r.length > 0) {
                         console.log('entro');
                         var c = 1;
@@ -63,7 +66,7 @@ SUBCOMMENTS_TO_SHOW = 5;
                                     //wallel.removeClass('loading');
                                     $('.comment-loading').hide();
                                     wallel.attr('data-wall-loaded', 1);
-                                    window.endlessScrollPaused = false;
+                                    //window.endlessScrollPaused = false;
                                 }
                                 c++;
                             });
@@ -75,8 +78,11 @@ SUBCOMMENTS_TO_SHOW = 5;
                         }
                     }else{
                         $('.comment-loading').hide();
-                        window.endlessScrollPaused = true;
+                        //window.endlessScrollPaused = true;
                     }
+
+                    $('body').find('.spinner').addClass('hidden');
+                    $('body').find('.spinner').hide();
                 },
                 function() {
                     
@@ -193,18 +199,10 @@ SUBCOMMENTS_TO_SHOW = 5;
 })( jQuery );
 
 function bindWallUpdate(wallel){
-    $(window).endlessScroll({
-        fireOnce: true,
-        enableScrollTop: false,
-        inflowPixels: 100,
-        fireDelay: 250,
-        intervalFrequency: 2000,
-        ceaseFireOnEmpty: false,
-        loader: 'cargando',
-        callback: function(i, p, d) {
-            if(!window.endlessScrollPaused){
-                wallel.wallUpdate();
-            }
-        }
+
+    $('body').on('click', '.std-add-more', function(event) {
+        wallel.wallUpdate();
     });
+
+    return;
 }
