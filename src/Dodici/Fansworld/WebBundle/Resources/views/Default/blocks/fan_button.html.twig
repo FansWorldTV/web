@@ -49,7 +49,8 @@
             {% if fType == 'user' and entity.username == 'fansworld' %}
             {% else %}
                 <div class="addFriend"  data-add-fan>
-                    <button class="btn {{ buttonSize }} btn_{{ btnType }} add btn-success" data-{{ fType }}ship-add="true" data-{{ fType }}-id="{{ entity.id }}" data-login-required > {{ 'add_idol'|trans }}</button>
+
+                    <button class="btn {{ buttonSize }} btn_{{ btnType }} add btn-success" data-{% if fType == 'user' %}friend{% else %}{{ fType }}{% endif %}ship-add="true" data-{{ fType }}-id="{{ entity.id }}" data-login-required > {{ 'add_idol'|trans }}</button>
                 </div>
             {% endif %}
         {% endif %}
