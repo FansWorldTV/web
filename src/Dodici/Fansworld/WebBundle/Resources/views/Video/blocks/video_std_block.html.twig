@@ -12,9 +12,6 @@
         </a>
         <span class="duration">{{ video.duration|date('i:s') }}</span>
         <i class="ico-watchlater" data-login-required data-watch-later data-video-id="{{ video.id }}" data-later="false" rel="tooltip" title="Ver Después"></i>
-        {#<a class="title" href="{{ videoUrl }}" data-modal-url="{{ path('modal_media', {'type': 'video', 'id': video.id}) }}">
-            <i class="ico-channels" rel="tooltip" title="Quick view" data-placement="bottom"></i>
-        </a>#}
     </div>
     <div class="info">
         <a class="title" href="{{ videoUrl }}">{{ video.title }}</a>

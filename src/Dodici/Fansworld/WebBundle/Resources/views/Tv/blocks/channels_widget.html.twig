@@ -23,7 +23,7 @@
                 {% for video in videosDestacadosFW %}
                     {% if video.image is not null %}
                         <div class="video {% if counter == 3 %} last-element-row {% endif %}">
-                            <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}" data-modal-url="{{ path('modal_media', {'type': 'video', 'id': video.id}) }}">
+                            <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
                                 {% thumbnail video.image, 'huge_square' with {'class': 'thumb'} %}
                                 <i class="play-video"></i>
                             </a>
@@ -33,7 +33,7 @@
                                         <a href="{{ path('user_wall', {'username': video.author.username}) }}">{% thumbnail video.author.image, 'small_square' with { 'rel': 'tooltip', 'class': 'author-image', 'title': video.author} %}</a>
                                     {% endif %}
                                 {% endif %}
-                                <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}" data-modal-url="{{ path('modal_media', {'type': 'video', 'id': video.id}) }}">
+                                <a href="{{ path('video_show', {'id': video.id, 'slug': video.slug}) }}">
                                     <span class="title">{{ video.title }}</span>
                                 </a>
                             </div>

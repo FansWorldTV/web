@@ -13,5 +13,5 @@
 		{% set media_href = path('video_show', {'id': activity.media.video.id, 'slug': activity.media.video.slug}) %}
 		{% set media_modal_url = path('modal_media', {'type': 'video', 'id': activity.media.video.id}) %}
 	{% endif %}
-	<span class="notice-text">A <a class="notice-link" href="{{ path('user_land', {username: activity.target.username }) }}">{{activity.target.username}}</a> le gustó <a href="{{ media_href }}" data-modal-url="{{ media_modal_url }}">{{media_type}}</a></span>
+	<span class="notice-text">A <a class="notice-link" href="{{ path('user_land', {username: activity.target.username }) }}">{{activity.target.username}}</a> le gustó <a href="{{ media_href }}">{{media_type}}</a></span>
 {% endblock %}
