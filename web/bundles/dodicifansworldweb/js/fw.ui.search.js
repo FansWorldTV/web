@@ -13,6 +13,8 @@ search.init = function (query) {
     $("[data-add-more]").on('click', function (e) {
         var $self = $(this);
 
+        console.log()
+
         if (!search.running) {
             search.it($self);
         }
@@ -31,19 +33,23 @@ search.it = function ($ele) {
             'type': type
         };
 
+    $ele.attr('data-page', page + 1);
+
     ajax.genericAction('search_ajaxsearch', params, function (r) {
         if (r) {
             var callback = function () {
             };
             var pointerLoop = 0;
 
+            if (!r.addMore) {
+                $ele.remove();
+                search.running = false;
+            }
+
             for (var i in r.search) {
                 pointerLoop++;
                 var entity = r.search[i];
                 var destiny = null;
-
-                console.log('ENTIDAD');
-                console.log(entity);
 
                 switch (type) {
                     case 'video':
@@ -71,6 +77,18 @@ search.it = function ($ele) {
                         search.running = false;
                     };
                 }
+
+                switch (type) {
+                    case 'user':
+                        entity = entity[0];
+                        break;
+
+                    case '':
+                        break;
+                }
+
+                console.log('ENTIDAD');
+                console.log(entity);
 
                 templateHelper.renderTemplate('search-' + type, entity, destiny, false, callback);
             }
