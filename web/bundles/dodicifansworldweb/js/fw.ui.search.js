@@ -13,6 +13,8 @@ search.init = function (query) {
     $("[data-add-more]").on('click', function (e) {
         var $self = $(this);
 
+        console.log()
+
         if (!search.running) {
             search.it($self);
         }
@@ -31,11 +33,18 @@ search.it = function ($ele) {
             'type': type
         };
 
+    $ele.attr('data-page', page + 1);
+
     ajax.genericAction('search_ajaxsearch', params, function (r) {
         if (r) {
             var callback = function () {
             };
             var pointerLoop = 0;
+
+            if (!r.addMore) {
+                $ele.remove();
+                search.running = false;
+            }
 
             for (var i in r.search) {
                 pointerLoop++;
