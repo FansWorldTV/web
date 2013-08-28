@@ -51,9 +51,6 @@ search.it = function ($ele) {
                 var entity = r.search[i];
                 var destiny = null;
 
-                console.log('ENTIDAD');
-                console.log(entity);
-
                 switch (type) {
                     case 'video':
                         destiny = 'section.search.video .roller';
@@ -80,6 +77,18 @@ search.it = function ($ele) {
                         search.running = false;
                     };
                 }
+
+                switch (type) {
+                    case 'user':
+                        entity = entity[0];
+                        break;
+
+                    case '':
+                        break;
+                }
+
+                console.log('ENTIDAD');
+                console.log(entity);
 
                 templateHelper.renderTemplate('search-' + type, entity, destiny, false, callback);
             }
