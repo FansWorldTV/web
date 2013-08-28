@@ -151,240 +151,39 @@ $(document).ready(function () {
     };
 });
 
-var megaVideoTest = {
-    "videos": [
-        {
-            "id": "2714",
-            "slug": "nina-simone-ne-me-quitte-pas",
-            "title": "Nina Simone - Ne Me Quitte Pas",
-            "image": "http://www2.fansworld.tv/uploads/media/default/0001/06/thumb_5391_default_huge_square_2bb421cb7aa3a4af4a214fa5466c8441e7c14b95.jpg",
-            "createdAt": "1376413602",
-            "author": {
-                "id": 2,
-                "title": "Juan Pérez",
-                "image": "http://www2.fansworld.tv/uploads/media/default/0001/01/thumb_3_default_small_square_8bae296af3f629b07f0ef5e933549e7c103c5004.jpg",
-                "createdAt": "1373426526",
-                "firstname": "Juan",
-                "lastname": "Pérez",
-                "fanCount": 5,
-                "splash": null,
-                "sex": null,
-                "username": "juan.perez",
-                "url": "/app_dev.php/u/juan.perez/wall",
-                "location": null,
-                "canFriend": false
-            },
-            "content": ":)\nEnjoy",
-            "likeCount": 0,
-            "visitCount": 8,
-            "commentCount": 0,
-            "videocategory": 1,
-            "genre_id": 1,
-            "genreparent_id": null,
-            "weight": 3187,
-            "duration": "03:36",
-            "url": "/app_dev.php/tv/2714/nina-simone-ne-me-quitte-pas",
-            "modalUrl": "/app_dev.php/modal/video/show/2714"
-        },
-        {
-            "id": "2690",
-            "slug": "ttt",
-            "title": "Ttt",
-            "image": "http://www2.fansworld.tv/uploads/media/default/0001/06/thumb_5261_default_huge_square_fc81fb00352f55fa7718854464cdcb556dd6c9f8.jpg",
-            "createdAt": "1374592619",
-            "author": {
-                "id": 2,
-                "title": "Juan Pérez",
-                "image": "http://www2.fansworld.tv/uploads/media/default/0001/01/thumb_3_default_small_square_8bae296af3f629b07f0ef5e933549e7c103c5004.jpg",
-                "createdAt": "1373426526",
-                "firstname": "Juan",
-                "lastname": "Pérez",
-                "fanCount": 5,
-                "splash": null,
-                "sex": null,
-                "username": "juan.perez",
-                "url": "/app_dev.php/u/juan.perez/wall",
-                "location": null,
-                "canFriend": false
-            },
-            "content": "Ttt",
-            "likeCount": 1,
-            "visitCount": 7,
-            "commentCount": 0,
-            "videocategory": 3,
-            "genre_id": 2,
-            "genreparent_id": 1,
-            "weight": 3183,
-            "duration": "00:03",
-            "url": "/app_dev.php/tv/2690/ttt",
-            "modalUrl": "/app_dev.php/modal/video/show/2690"
-        },
-        {
-            "id": "2689",
-            "slug": "y",
-            "title": "Y",
-            "image": "http://www2.fansworld.tv/uploads/media/default/0001/06/thumb_5241_default_huge_square_b730b961eaea0f536db8b2c4c1cf848803a7502c.jpg",
-            "createdAt": "1374160615",
-            "author": {
-                "id": 2,
-                "title": "Juan Pérez",
-                "image": "http://www2.fansworld.tv/uploads/media/default/0001/01/thumb_3_default_small_square_8bae296af3f629b07f0ef5e933549e7c103c5004.jpg",
-                "createdAt": "1373426526",
-                "firstname": "Juan",
-                "lastname": "Pérez",
-                "fanCount": 5,
-                "splash": null,
-                "sex": null,
-                "username": "juan.perez",
-                "url": "/app_dev.php/u/juan.perez/wall",
-                "location": null,
-                "canFriend": false
-            },
-            "content": "B",
-            "likeCount": 0,
-            "visitCount": 0,
-            "commentCount": 0,
-            "videocategory": 3,
-            "genre_id": 2,
-            "genreparent_id": 1,
-            "weight": 3181,
-            "duration": "00:02",
-            "url": "/app_dev.php/tv/2689/y",
-            "modalUrl": "/app_dev.php/modal/video/show/2689"
-        },
-        {
-            "id": "2687",
-            "slug": "tjb",
-            "title": "Tjb",
-            "image": "http://www2.fansworld.tv/uploads/media/default/0001/06/thumb_5239_default_huge_square_b611d7a5f37a29a5307791c9f089dd789cc453a1.jpg",
-            "createdAt": "1374160421",
-            "author": {
-                "id": 2,
-                "title": "Juan Pérez",
-                "image": "http://www2.fansworld.tv/uploads/media/default/0001/01/thumb_3_default_small_square_8bae296af3f629b07f0ef5e933549e7c103c5004.jpg",
-                "createdAt": "1373426526",
-                "firstname": "Juan",
-                "lastname": "Pérez",
-                "fanCount": 5,
-                "splash": null,
-                "sex": null,
-                "username": "juan.perez",
-                "url": "/app_dev.php/u/juan.perez/wall",
-                "location": null,
-                "canFriend": false
-            },
-            "content": "Hjvh",
-            "likeCount": 0,
-            "visitCount": 0,
-            "commentCount": 0,
-            "videocategory": 3,
-            "genre_id": 2,
-            "genreparent_id": 1,
-            "weight": 3181,
-            "duration": "00:02",
-            "url": "/app_dev.php/tv/2687/tjb",
-            "modalUrl": "/app_dev.php/modal/video/show/2687"
-        },
-        {
-            "id": "2675",
-            "slug": "tuh",
-            "title": "Tuh",
-            "image": "http://www2.fansworld.tv/uploads/media/default/0001/06/thumb_5203_default_huge_square_b26958cd27c78d19c3967bd0d30a58244d5a00ae.jpg",
-            "createdAt": "1373996442",
-            "author": {
-                "id": 2,
-                "title": "Juan Pérez",
-                "image": "http://www2.fansworld.tv/uploads/media/default/0001/01/thumb_3_default_small_square_8bae296af3f629b07f0ef5e933549e7c103c5004.jpg",
-                "createdAt": "1373426526",
-                "firstname": "Juan",
-                "lastname": "Pérez",
-                "fanCount": 5,
-                "splash": null,
-                "sex": null,
-                "username": "juan.perez",
-                "url": "/app_dev.php/u/juan.perez/wall",
-                "location": null,
-                "canFriend": false
-            },
-            "content": "Thu",
-            "likeCount": 1,
-            "visitCount": 2,
-            "commentCount": 2,
-            "videocategory": 1,
-            "genre_id": 11,
-            "genreparent_id": 8,
-            "weight": 3181,
-            "duration": "00:07",
-            "url": "/app_dev.php/tv/2675/tuh",
-            "modalUrl": "/app_dev.php/modal/video/show/2675"
-        },
-        {
-            "id": "2671",
-            "slug": "tru",
-            "title": "Tru",
-            "image": "http://www2.fansworld.tv/uploads/media/default/0001/06/thumb_5178_default_huge_square_73635281126f6a70b5a8a0f8e4a42d991d80f709.jpg",
-            "createdAt": "1373922100",
-            "author": {
-                "id": 2,
-                "title": "Juan Pérez",
-                "image": "http://www2.fansworld.tv/uploads/media/default/0001/01/thumb_3_default_small_square_8bae296af3f629b07f0ef5e933549e7c103c5004.jpg",
-                "createdAt": "1373426526",
-                "firstname": "Juan",
-                "lastname": "Pérez",
-                "fanCount": 5,
-                "splash": null,
-                "sex": null,
-                "username": "juan.perez",
-                "url": "/app_dev.php/u/juan.perez/wall",
-                "location": null,
-                "canFriend": false
-            },
-            "content": "Tru",
-            "likeCount": 0,
-            "visitCount": 7,
-            "commentCount": 0,
-            "videocategory": 3,
-            "genre_id": 2,
-            "genreparent_id": 1,
-            "weight": 3181,
-            "duration": "00:06",
-            "url": "/app_dev.php/tv/2671/tru",
-            "modalUrl": "/app_dev.php/modal/video/show/2671"
-        }
-    ],
-    "error": false
-}
-
-$("[data-filter-videos] button").on('click', function() {
-    var type = $(this).attr('data-type');
-    var params = {};
-    var service = "_user_filtervideosajax";
-    var i = 0;
-    console.log("filter: " + type)
-    params['type'] = type;
-    $.ajax({
-        url: Routing.generate(appLocale + service), 
-        data: params
-    })
-    .then(function(response){
-        console.log("response");
-        console.log(response)
-        if(typeof response.videos === 'object' && Object.keys(response.videos).length < 1) {
-            $('.semantic-grid').empty();
-        }
-        function render_video(video) {
-            $.when(templateHelper.htmlTemplate('video-home_element', video))
-            .then(function(response){
-                var $thumb = $(response).clone();
-                $('.semantic-grid').append($thumb);
-            });
-        }
-        for(i in response.videos) {
-            if (response.videos.hasOwnProperty(i)) {
-                var video = response.videos[i];
-                render_video(video);
+$(document).ready(function () {
+    console.log("making filter buttons")
+    $("[data-filter-videos] button").on('click', function() {
+        var type = $(this).attr('data-type');
+        var params = {};
+        var service = "_user_filtervideosajax";
+        var i = 0;
+        console.log("filter: " + type)
+        params['type'] = type;
+        $.ajax({
+            url: Routing.generate(appLocale + service), 
+            data: params
+        })
+        .then(function(response){
+            console.log("response");
+            console.log(response)
+            if(typeof response.videos === 'object' && Object.keys(response.videos).length < 1) {
+                $('.semantic-grid').empty();
             }
-        }
+            function render_video(video) {
+                $.when(templateHelper.htmlTemplate('video-home_element', video))
+                .then(function(response){
+                    var $thumb = $(response).clone();
+                    $('.semantic-grid').append($thumb);
+                });
+            }
+            for(i in response.videos) {
+                if (response.videos.hasOwnProperty(i)) {
+                    var video = response.videos[i];
+                    render_video(video);
+                }
+            }
+        });
     });
 });
 
@@ -395,7 +194,7 @@ function create_filters() {
     var entityId = $("[data-list]").attr('data-entity-id');
     var criteria = 'popular';
     var params = {};
-    var dataList = $("[data-list]").attr('data-list');
+    var dataList = $("[data-list]").attr('data-list') || 'video';
     var route = dataList + "_popular";
     route = Routing.generate(appLocale + '_' + route);
 
@@ -517,4 +316,6 @@ function create_filters() {
     });
 
 }
-create_filters()
+$(document).ready(function () {
+    create_filters()
+});
