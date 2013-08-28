@@ -164,6 +164,7 @@ var site = {
             $(this).modalPopup({'href': urlModal});
         });
 
+        /*
         var typeaheadTemplate = '<a href="$url"><div class="image-container"><img width="32px" height="32px" class="image" src="$image"/></div><span class="name">$value</span></a>';
         var typeaheadTemplate2 = '<a href="$url" class="search-history-term"><p>$value</span></p></a>';
 
@@ -202,6 +203,7 @@ var site = {
            $('.tt-dropdown-menu .search-button').text('Buscar "' + $(this).val() + '"');
         });
 
+        */
 
         site.parseTimes();
         site.denyFriendRequest();
