@@ -269,7 +269,6 @@ $(document).ready(function () {
                         formHtml = $(response).clone();
                         formHtml.find('input[type="submit"]').hide();
                         boot.find('.modal-body').html(formHtml);
-
                         //boot.find("#modal-btn-save").removeAttr("disabled");
                         // Set default title
                         boot.find("#form_title").val(name);
@@ -308,6 +307,25 @@ $(document).ready(function () {
                     boot.find('.modal-body').prepend('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Aviso: </strong> su video se ha subido con éxito !</div>');
 
                     boot.find('#form_entryid').val(entryId);
+//                    boot.find("#modal-btn-save").one("click", null, null, function(){
+//                        $(this).addClass('loading-small');
+//                        boot.find('form').find('input[type="submit"]').click();
+//                    });
+//                    boot.find('form').submit(function() {
+//                        var data = $(this).serializeArray();
+//                        var action = $(this).attr('action');
+//                        var method = $(this).attr('method');
+//                        boot.find('form').find('input[type="submit"]').addClass('loading-small');
+//                        $.ajax({
+//                            url: this.getAttribute('action'),
+//                            data: data,
+//                            type: method
+//                        })
+//                            .then(function(response){
+//                                location.reload();
+//                            });
+//                        return false;
+//                    });
                     // Enable saving
                     boot.find("#modal-btn-save").removeAttr("disabled");
                     return;
@@ -518,39 +536,6 @@ $(document).ready(function () {
                     return false;
                 });
 
-                boot.find('.kalturaId').on('click', function() {
-                    var self = $(this);
-                    self.addClass('loading-small');
-                    var kaltura_id = $('[data-kalturaid]').val();
-                    $('[data-kalturaid]').val('');
-
-                    var link = Routing.generate(appLocale + '_video_kalturaid', {id: kaltura_id});
-                    console.log(link);
-                    $.ajax({url: link, type: 'GET'}).
-                        then(function(response) {
-                            self.removeClass('loading-small');
-
-                            var formHtml = $(response).clone();
-                            formHtml.find('input[type="submit"]').hide();
-
-                            boot.find('.modal-body').html(formHtml);
-
-                            hookForm(boot);
-                            return;
-                        });
-
-                    function shareStatusUpdate(text, color) {
-                        $('[data-sharestatus-text]').html(text);
-                        $('[data-sharestatus-text]').attr('style', 'color:' + color);
-                    }
-
-                    function checkYoutubeUrl(url) {
-                        var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-                        return (url.match(p)) ? true : false;
-                    }
-                    return false;
-                });
-
                 boot.find('input[type="file"]').on('change', function(event) {
                     var i;
                     var files = event.target.files; // FileList object
@@ -590,7 +575,6 @@ $(document).ready(function () {
                     uploader.stopAll();
                     videoUploader.stopAll();
                 });
-
                 boot.modal({
                     backdrop: true
                 }).css({
@@ -602,12 +586,6 @@ $(document).ready(function () {
                         $('.modal-backdrop').remove();
                         $(this).data('modal', null);
                         $(this).remove();
-                    }).on('shown', function() {
-                        if (roleAdmin) {
-                            $('.kaltura_id').removeClass('hidden');
-                            boot.find("#modal-btn-save").removeAttr("disabled");
-                        }
-                        
                     });
             });
             return false;
@@ -885,7 +863,7 @@ $(document).ready(function () {
         bind: function() { },
         unbind: function() { }
     };
- 
+
     // A really lightweight plugin wrapper around the constructor,
     // preventing against multiple instantiations
     $.fn[pluginName] = function (options) {
