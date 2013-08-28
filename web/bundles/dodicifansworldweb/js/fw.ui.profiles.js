@@ -360,11 +360,12 @@ $(document).ready(function () {
             });
 
             that.options.onFilterChange = function(type, id) {
+
                 id = parseInt(id, 10);
                 that.options.type = type;
                 that.options.id = id;
                 that.options.page = 1;
-                that.options.videoFeed = Routing.generate(appLocale + '_home_ajaxfilter');
+                that.options.videoFeed = Routing.generate(appLocale + '_profile_ajaxgetprofiles');
                 that.options.getFilter = function() {
                     var filter = {
                         paginate: {
@@ -423,6 +424,8 @@ $(document).ready(function () {
                         $(that.element).parent().find('.add-more').show();
                     }
                     function render_profile(profile) {
+                        console.log("render_profile");
+                        console.log(profile);
                         $.when(templateHelper.htmlTemplate('profile-home_element', profile))
                         .then(function(response){
                             var $thumb = $(response).clone();
