@@ -7,7 +7,7 @@
 
 {% block main_content %}
     <div class="row-fluid search-home">
-        <div class="span10">
+        <div class="span10" style="width: 100%!important;">
             <h1>Búsqueda de <strong>"{{ query }}"</strong> ({{ todoCount }})</h1>
 
             {% if videoCount > 0 %}
@@ -17,7 +17,7 @@
                     {% endblock %}
                 {% endembed %}
                 {% if videoCount > limit.video %}
-                    <div class="std-add-more" data-add-more="video" data-page="2">+</div>
+                    <div class="std-add-more search" data-add-more-search="video" data-page="2">+</div>
                 {% endif %}
             {% endif %}
 
@@ -28,7 +28,7 @@
                     {% endblock %}
                 {% endembed %}
                 {% if idolCount > limit.idol %}
-                    <div class="std-add-more" data-add-more="idol" data-page="2">+</div>
+                    <div class="std-add-more" data-add-more-search="idol" data-page="2">+</div>
                 {% endif %}
             {% endif %}
 
@@ -39,7 +39,7 @@
                     {% endblock %}
                 {% endembed %}
                 {% if fanCount > limit.fan %}
-                    <div class="std-add-more" data-add-more="user" data-page="2">+</div>
+                    <div class="std-add-more" data-add-more-search="user" data-page="2">+</div>
                 {% endif %}
             {% endif %}
 
@@ -50,7 +50,7 @@
                     {% endblock %}
                 {% endembed %}
                 {% if teamCount > limit.team %}
-                    <div class="std-add-more" data-add-more="team" data-page="2">+</div>
+                    <div class="std-add-more" data-add-more-search="team" data-page="2">+</div>
                 {% endif %}
             {% endif %}
                 
@@ -67,11 +67,11 @@
                     {% endblock %}
                 {% endembed %}
                 {% if photoCount > limit.photo %}
-                    <div class="std-add-more" data-add-more="photo" data-page="2">+</div>
+                    <div class="std-add-more" data-add-more-search="photo" data-page="2">+</div>
                 {% endif %}
             {% endif %}
         </div>
-        <div class="span2 trending-sidebar">
+        {#<div class="span2 trending-sidebar">
             <h4>DESTACADOS DE FANSWORLD</h4>
             <section class="search video">
                 {% include "DodiciFansworldWebBundle:Search:blocks/video_element_list.html.twig"  with { videos: videosHighlighted } %}
@@ -79,13 +79,13 @@
             <h4>#TRENDY</h4>
             <ul id="wordcloud">
             </ul>
-        </div>
+        </div>#}
     </div>
 
     <script type="text/javascript">
-        $(document).ready(function(){
-            var word_array = [
-                    {% for tag in trending %}
+        /*$(document).ready(function(){
+         *//*var word_array = [
+        {% for tag in trending %}
                         {% set link = '' %}
                         {% if tag.type == 'team' or tag.type == 'idol' %}
                             {% set link = path( tag.type ~ '_wall', {'slug': tag.slug}) %}
@@ -97,16 +97,17 @@
                             {% set link = path('search_home', {'query': tag.title, 'tag': true}) %}
                         {% endif %}
 
-                        {text: "{{ tag.title }}", weight: {{ tag.count }}, link: "{{ link }}", type: "{{ tag.type }}"},
-                    {% endfor %}
-            ];
+         {text: "{{ tag.title }}", weight: {{ tag.count }}, link: "{{ link }}", type: "{{ tag.type }}"},
+        {% endfor %}
+         ];
 
-            $("#wordcloud").wordcloud(word_array, {});
+         $("#wordcloud").wordcloud(word_array, {});*//*
 
-            {% if query is not null %}
-                search.query = '{{ query }}';
-            {% endif %}
-            search.init();
-        });
+        {% if query is not null %}
+         search.query = '{{ query }}';
+        {% endif %}
+         search.init();
+         });*/
     </script>
+
 {% endblock %}
