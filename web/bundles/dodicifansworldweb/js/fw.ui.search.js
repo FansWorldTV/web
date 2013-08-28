@@ -10,7 +10,7 @@ search.init = function (query) {
             .val(search.query);
     }
 
-    $("[data-add-more]").on('click', function (e) {
+    $("[data-add-more-search]").on('click', function (e) {
         var $self = $(this);
 
         console.log()
@@ -25,7 +25,7 @@ search.it = function ($ele) {
     search.running = true;
     $ele.addClass('rotate');
 
-    var type = $ele.attr('data-add-more'),
+    var type = $ele.attr('data-add-more-search'),
         page = $ele.attr('data-page'),
         params = {
             'query': search.query,
