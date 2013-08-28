@@ -36,9 +36,8 @@
                     {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig' %}
                 </span>
                     </div>
-
-
                     {% include 'DodiciFansworldWebBundle:Video:blocks/video_grid.html.twig' with {'entityId': user.id, 'entityType': 'user', 'listWithModal': true} %}
+                    <div class="std-add-more">+</div>
                 </div>
             {% endif %}
     {#    {% endblock %}
