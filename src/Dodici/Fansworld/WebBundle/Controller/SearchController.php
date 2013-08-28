@@ -155,7 +155,7 @@ class SearchController extends SiteController
 
         switch ($type) {
             case 'video':
-                $imageSize = "huge_square";
+                $imageSize = "home_video";
                 break;
             default :
                 $imageSize = "medium";

@@ -39,7 +39,7 @@ class AppKernel extends Kernel
             new DataFactory\FeedBundle\DataFactoryFeedBundle(),
             new Bazinga\ExposeTranslationBundle\BazingaExposeTranslationBundle(),
             new Kaltura\APIBundle\KalturaAPIBundle(),
-            new FOS\ElasticaBundle\FOSElasticaBundle(),
+            /*new FOS\ElasticaBundle\FOSElasticaBundle(),*/
             //new Snc\RedisBundle\SncRedisBundle()
         );
 
