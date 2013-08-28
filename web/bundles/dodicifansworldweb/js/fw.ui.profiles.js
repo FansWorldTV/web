@@ -364,7 +364,7 @@ $(document).ready(function () {
                 that.options.type = type;
                 that.options.id = id;
                 that.options.page = 1;
-                that.options.videoFeed = Routing.generate(appLocale + '_home_ajaxfilter');
+                that.options.videoFeed = Routing.generate(appLocale + '_profile_ajaxgetprofiles');
                 that.options.getFilter = function() {
                     var filter = {
                         paginate: {
