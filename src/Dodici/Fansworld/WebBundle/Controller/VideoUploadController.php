@@ -322,12 +322,12 @@ class VideoUploadController extends SiteController
             'tw' => array(),
             'fw' => array(),
             'kalturaid' => array(),
-            'genre' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($genrechoises)))
+            'genre' => array()
         ));
 
         if ($request->getMethod() == 'GET') {
             $videoToken = $request->get('id', false);
-        
+
             $video->setAuthor($user);
             $video->setTitle($videoToken);
             $video->setStream($videoToken);
@@ -526,7 +526,7 @@ class VideoUploadController extends SiteController
             'tw' => array(),
             'fw' => array(),
             'entryid' => array(),
-            'genre' => array(new \Symfony\Component\Validator\Constraints\Choice(array_keys($genrechoises)))
+            'genre' => array()
         ));
 
         $formVideo = $this->createFormBuilder($defaultData, array('validation_constraint' => $collectionConstraint))
