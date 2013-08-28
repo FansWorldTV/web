@@ -234,7 +234,7 @@ function create_filters() {
         });
     }
 
-    $('.std-add-more').on('click', function(event) {
+    $('[data-list="video"] > .std-add-more').on('click', function(event) {
         $(".std-add-more").addClass('rotate');
         page += 1;
         $("[data-list]").attr('data-page', page);
