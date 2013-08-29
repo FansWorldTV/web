@@ -414,6 +414,7 @@ $(document).ready(function () {
         insetThumbs: function(feed, data) {
             var that = this;
             var deferred = new jQuery.Deferred();
+            console.log("inserting")
             $.ajax({
                 url: feed,
                 data: data
@@ -431,10 +432,9 @@ $(document).ready(function () {
                         .then(function(response){
                             var $thumb = $(response).clone();
                             $thumb.hide().appendTo(that.element).fadeIn('slow');
-                            /*
                             $thumb.find('img').load(function() {
-                                $(that.element).parent().find('.spinner').addClass('hidden');
-                                $(that.element).parent().find('.spinner').hide();
+                                $('body').find('.spinner').addClass('hidden');
+                                $('body').find('.spinner').hide();
                                 $(that.element).parent().removeClass('hidden');
                                 $(that.element).parent().fadeIn('slow');
                                 if(addMore) {
@@ -444,7 +444,6 @@ $(document).ready(function () {
                                 }
                                 $thumb.hide().appendTo(that.element).fadeIn('slow');
                             });
-                            */
                         });
                     }
                 }
