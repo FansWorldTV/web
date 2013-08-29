@@ -1245,6 +1245,7 @@ button.tw_button {
 }
 
 button.register-facebook {
+	@backgroundColor: #435495;
 	background-color: #435495;
 	border: 0;
 	.border-radius(3px);
@@ -1253,6 +1254,9 @@ button.register-facebook {
 	color: white;
 	display: block;
 	.box-sizing(border-box);
+	position: relative;
+	.transition(top 0.1s ease);
+	.transition(background-color 0.1s ease);
 
 	i {
 		background-image: url('../images/ico-facebook-registro.png');
@@ -1271,5 +1275,10 @@ button.register-facebook {
 		text-align: center;
 		border-left: 1px solid white;
 		padding: 0 15px 0 15px;
+	}
+
+	&:hover {
+		top: 3px;
+		background-color: lighten(@backgroundColor, 15%);
 	}
 }
