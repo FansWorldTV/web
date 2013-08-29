@@ -143,7 +143,10 @@ function success (message, callback) {
 }
 
 function createNotify (options) {
-    $('.notifications.top-right').notify(options).show();
+    //$('.notifications.top-right').notify(options).show();
+    $('.notifications.top-right').fwNotify(options);
+    var notification = $('.notifications.top-right').data('fwNotify');
+    notification.show();
 }
 
 $(document).ready(function(){
