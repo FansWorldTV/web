@@ -27,7 +27,7 @@
                             <span class="likecount">{{entity.likecount}}</span>
                     {% endif %}
                 {% else %}
-                        <button class="social_action like {% if candislike %}dislike{% endif %}" data-id="{{ entity.id }}" data-type="{{ type }}" data-login-required data-placement="bottom" title="Me gusta" rel="tooltip">
+                        <button class="social_action like {% if candislike %}dislike{% endif %}" data-entity-id="{{ entity.id }}" data-login-required data-like-action='{{ type }}' data-placement="bottom" title="Me gusta" rel="tooltip">
                             <i></i>
                             {% if entity.likecount is defined and showcount %}
                                 <span class="likecount">{{entity.likecount}}</span>

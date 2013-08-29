@@ -364,37 +364,38 @@ var site = {
         });
     },
     likeButtons: function() {
-        $('.btn.like:not(.disabled)').on('click', function(e) {
+        $('[data-like-action]:not(.disabled)').on('click', function (e) {
+            console.log('a');
             e.preventDefault();
             if (!window.isLoggedIn) {
                 $('[data-login-btn]').click();
                 return false;
-            }            
-            var el = $(this);
-            var type = el.attr('data-type');
-            var id = el.attr('data-id');
-            el.addClass('disabled');
+            }
+            var $el = $(this),
+                type = $el.attr('data-like-action'),
+                id = $el.attr('data-entity-id');
+
+            $el.addClass('disabled');
+
             ajax.genericAction({
                 route: 'like_ajaxtoggle',
                 params: {
                     'id': id,
                     'type': type
                 },
-                callback: function(response) {
-                    el.removeClass('disabled');
-                    el.find('.likecount').text(response.likecount);
-                    el.siblings('.likecount:first').text(response.likecount);
+                callback: function (response) {
+                    $el.removeClass('disabled');
+                    //$el.find('.likecount').text(response.likecount);
+                    //$el.siblings('.likecount:first').text(response.likecount);
                     success(response.message);
                     if (response.liked) {
-                        el.find('i').attr('class', '');
-                        el.find('i').addClass('icon-star');
+                        $el.addClass('dislike');
                     } else {
-                        el.find('i').attr('class', '');
-                        el.find('i').addClass('icon-star-empty');
+                        $el.removeClass('dislike');
                     }
                 },
-                errorCallback: function(responsetext) {
-                    el.removeClass('disabled');
+                errorCallback: function (responsetext) {
+                    $el.removeClass('disabled');
                     error(responsetext);
                 }
             });
