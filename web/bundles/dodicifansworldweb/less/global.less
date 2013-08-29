@@ -1260,7 +1260,6 @@ button.social_action {
 
 	&.share {
 		.gradient-green();
-
 		width: 121px;
 		border: 0;
 		padding: 5px 10px 5px 10px;
@@ -1289,12 +1288,11 @@ button.social_action {
 
 	&.like {
 		i {
-			background-image: url('../images/ico/icon_like.png') !important;
-			background-position: 0 !important;
+			background-image: url('../images/ico/icon_like.png');
+		}
 
-			&.icon-star {
-				background-color: @green !important;
-			}
+		&.dislike {
+			background-color: @green;
 		}
 
 		&:hover {
