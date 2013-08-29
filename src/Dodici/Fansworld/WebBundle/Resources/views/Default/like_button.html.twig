@@ -5,7 +5,7 @@
 {% set candislike = appstate.candislike(entity) %}
 
 {% if 'video' == type %}
-    <button class="btn watchlater" data-login-required data-watch-later data-video-id="{{ entity.id }}"rel="tooltip" title="Add to playlist" data-later="false" data-placement="bottom">
+    <button class="watchlater" data-login-required data-watch-later data-video-id="{{ entity.id }}"rel="tooltip" title="Add to playlist" data-later="false" data-placement="bottom">
         <i></i>
     </button>
 {% endif %}
@@ -27,7 +27,7 @@
                             <span class="likecount">{{entity.likecount}}</span>
                     {% endif %}
                 {% else %}
-                        <a class="btn like" data-id="{{ entity.id }}" data-type="{{ type }}" data-login-required>
+                        <button class="social_action like" data-id="{{ entity.id }}" data-type="{{ type }}" data-login-required>
                             {% if canlike %}
                                 <i class="icon-star-empty"></i>
                             {% elseif candislike %}
@@ -38,7 +38,7 @@
                             {% if entity.likecount is defined and showcount %}
                                 <span class="likecount">{{entity.likecount}}</span>
                             {% endif %}
-                        </a>
+                        </button>
                 {% endif %}
 {% endif %}
 

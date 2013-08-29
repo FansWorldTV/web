@@ -126,21 +126,7 @@
 	}
 }
 
-.btn.watchlater {
-	i {
-		background-image: url('../images/bt-watch-later.png');
-		.square(30px);
-		display: inline-block;
-		float: left;
-	}
 
-	&.added {
-		.btn-success;
-		i {
-			background-image: url('../images/bt-watch-later-active.png');
-		}
-	}
-}
 
 .btn.report {
 	i {
@@ -154,62 +140,12 @@
 .share_content {
 	.btn.watchlater, .btn.like, .btn.report, .btn.edit {
 		display: inline-block;
-		height: 32px;
-		padding: 0;
-	}
-
-	.btn.like, .btn.report, .btn.edit {
-		height: 30px;
-	}
-
-	.btn.like {
-		height: 30px;
-		line-height: 30px;
-		padding-right: 5px;
-		padding-left: 5px;
-		i {
-			background-size: 30px;
-			display: inline-block;
-			.square(30px);
-			float: left;
-			background-position: 0 0;
-			background-repeat: initial;
-
-			&.icon-star-empty {
-				background-image: url('../images/bt-like-default.png') !important;
-			}
-
-			&.icon-star {
-				background-image: url('../images/bt-like.png') !important;
-			}
-		}
 	}
 
 	.sharer-container {
 		position: relative;
 		display: inline-block;
 		.square(auto);
-
-		button.share {
-			.gradient-green();
-			.border-radius(3px);
-			.size(32px, 121px);
-			color: white;
-			font-weight: 700;
-			font-size: 12px;
-			border: 0;
-			text-shadow: 0px 1px 1px black;
-			padding: 3px 15px 3px 15px;
-			.box-sizing(border-box);
-
-			i {
-				background-image: url('../images/ico/icon_share.png');
-				.square(23px);
-				display: inline-block;
-				float: left;
-				margin-right: 7px;
-			}
-		}
 
 		.share-box {
 			.size(auto, 505px);
@@ -1299,5 +1235,69 @@ button.register-facebook {
 	&:hover {
 		top: 3px;
 		background-color: lighten(@backgroundColor, 15%);
+	}
+}
+
+
+button.social_action {
+	background-color: #adadad;
+	border: 0;
+	width: 32px;
+	padding: 5px;
+	color: white;
+	font-weight: 700;
+	font-size: 12px;
+	text-shadow: 0px 1px 1px black;
+	height: 32px;
+	.box-sizing(border-box);
+	.border-radius(3px);
+	.transition(all 0.3s ease);
+
+	&.share {
+		.gradient-green();
+
+		width: 121px;
+		border: 0;
+		padding: 5px 10px 5px 10px;
+		line-height: 22px;
+
+		i {
+			background-image: url('../images/ico/icon_share.png');
+			.square(23px);
+			display: inline-block;
+			float: left;
+			margin-right: 7px;
+		}
+	}
+
+	&.watchlater {
+		i {
+			background-image: url('../images/ico/icon_later.png');
+			.square(23px);
+			display: inline-block;
+		}
+
+		&.added {
+			background-color: @green;
+		}
+
+		&:hover {
+			background-color: lighten(#adadad, 15%);
+		}
+	}
+
+	&.like {
+		i {
+			display: inline-block;
+			.square(23px);
+
+			&.icon-star-empty {
+				background-image: url('../images/ico/icon_like.png') !important;
+			}
+
+			&.icon-star {
+				background-color: @green !important;
+			}
+		}
 	}
 }

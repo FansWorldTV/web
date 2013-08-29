@@ -29,19 +29,19 @@
         {% endif %}
             
         {% if likebutton %}
-            {% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {entity: entity, buttonmode: true} %}
+            {% include 'DodiciFansworldWebBundle:Default:like_button.html.twig' with {entity: entity, buttonmode: true, showcount: false} %}
         {% endif %}
         
         {% if (type == 'photo' or type == 'video' ) %}
 
             {% if reportbutton %}
-                <a class="btn report" data-login-required href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}" rel="tooltip" data-placement="bottom" title="Reportar">
+                <button class="social_action report" data-login-required href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}" rel="tooltip" data-placement="bottom" title="Reportar">
                     <i></i>
-                </a>
+                </button>
             {% else %}
-                <a class="btn report" data-login-required href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}" rel="tooltip" data-placement="bottom" title="Reportar">
+                <button class="social_action report" data-login-required href="{{ path('complaint_form', {'entityId': entity.id, 'entityType': type}) }}" rel="tooltip" data-placement="bottom" title="Reportar">
                     <i></i>
-                </a>
+                </button>
             {% endif %}
 
 
@@ -49,7 +49,6 @@
 
         {% if (type == 'photo' or type == 'video' or type == 'album') and entity.author == app.user and editbutton %}
                 {% include 'DodiciFansworldWebBundle:Default:edit_button.html.twig' with {entity: entity, type: type} %}
-                {#{% include 'DodiciFansworldWebBundle:Default:delete_button.html.twig' with {entity: entity, type: type} %}#}
         {% endif %}
     </div>
 </div>
