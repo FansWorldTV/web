@@ -440,4 +440,17 @@ class AppState
 
         return $videos;
     }
+
+    public function beInPlaylist($video) {
+        if (!($this->user instanceof User))
+            return false;
+        $user = $this->user;
+  
+        $playlistService = $this->get('video.playlist');
+        if ($playlistService->isInPlaylist($video, $user)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

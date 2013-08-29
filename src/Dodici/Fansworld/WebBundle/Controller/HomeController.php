@@ -62,7 +62,7 @@ class HomeController extends SiteController
         $limitWithTheHighlighted = (self::LIMIT_VIDEO - 3);
         $videos = $videoRepo->searchHome(null, $genre, $vc, null, true, null, $homeVideo, $limitWithTheHighlighted, 0);
         $response['highlighted'] = $videos;
-        //$response['highlighted'][1] = $homeVideo;
+        // $response['highlighted'][1] = $homeVideo;
 
         if ($user instanceof User) {
             $videos = $videoRepo->searchHome($user, $genre, $vc, true, false, 'default', $homeVideo, self::LIMIT_VIDEO, 0);
@@ -71,7 +71,7 @@ class HomeController extends SiteController
 
         $videos = $videoRepo->searchHome(null, $genre, $vc, null, false, null, null, self::LIMIT_VIDEO, 0);
         $response['popular'] = $videos;
-    
+
         return $response;
     }
 
