@@ -49,8 +49,7 @@ $(document).ready(function () {
                 $('[data-login-btn]').click();
                 return false;
             }
-            $(this).off();      // remove event listeners
-            var plugin = $(event.srcElement).data(pluginName);
+            var plugin = $(this).data('fwFriendship');
             plugin.toggleFriendship($(event.srcElement).attr('data-user-id'));
         },
         toggleFriendship: function(userId) {
@@ -61,8 +60,6 @@ $(document).ready(function () {
             $("ul.friendgroupsList li input:checkbox:checked").each(function(k, el){
                 friendgroups[k] = $(el).val();
             });
-            self.addClass('disabled');
-            //self.addClass('loading-small');
             ajax.genericAction(
                 'friendship_ajaxaddfriend',
                 {
@@ -70,31 +67,31 @@ $(document).ready(function () {
                     'friendgroups': friendGroups
                 },
                 function(responseJSON) {
+                    if(responseJSON.error) {
+                        window.error(data.message);
+                        return that.options.onError(error);
+                    }
                     if(responseJSON) {
                         if(responseJSON.friendship) {
                             that.onAddFriend(responseJSON);
                         }
                     }
-                    //self.removeClass('loading-small');
-                    self.removeClass('disabled');
                 },
                 function(error) {
                     window.error(error.responseText);
-                    //self.removeClass('loading-small');
-                    self.removeClass('disabled');
+                    window.notice(data.message);
                     return that.options.onError(error);
                 });
         },
         onAddFriend: function(data) {
             var that = this;
+            window.notice(data.message);
             return that.options.onAddFriend(that, data);
         },
         onRemoveFriend: function(data){
             var that = this;
-            var self = $(that.element);
             window.notice(data.message);
-            console.log("onRemoveFriend: " + JSON.stringify(data))
-            return that.options.onRemoveFriend(data);
+            return that.options.onRemoveFriend(that, data);
         },
         destroy: function() {
             var that = this;
@@ -126,12 +123,15 @@ $(document).ready(function () {
     $("[data-friendship-add]:not('[data-override]')").fwFriendship({
         onAddFriend: function(plugin, data) {
             var self = $(plugin.element);
-            self.text(data.buttontext);
-            window.notice(data.message);
-
-            self.addClass('disabled');
-            self.removeClass('add');
-            self.text("YA ERES FAN");
+            self.addClass('unfan');
+            self.removeClass('befun');
+            self.get(0).lastChild.nodeValue = "Eres Fan";
+        },
+        onRemoveFriend: function(plugin, data) {
+            var self = $(plugin.element);
+            self.addClass('befun');
+            self.removeClass('unfan');
+            self.get(0).lastChild.nodeValue = "Ser Fan";
         }
     });
 
