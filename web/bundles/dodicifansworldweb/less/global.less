@@ -117,26 +117,6 @@ social.fullwidth {
 	box-shadow: 0px 1px 1px rgba(255, 255, 255, 1);
 }
 
-.btn.edit {
-	i {
-		background-image: url('../images/bt-edit.png');
-		.square(30px);
-		display: inline-block;
-		float: left;
-	}
-}
-
-
-
-.btn.report {
-	i {
-		background-image: url('../images/bt-denunciar.png');
-		.square(30px);
-		display: inline-block;
-		float: left;
-	}
-}
-
 .share_content {
 	.btn.watchlater, .btn.like, .btn.report, .btn.edit {
 		display: inline-block;
@@ -1289,10 +1269,15 @@ button.social_action {
 	&.like {
 		i {
 			background-image: url('../images/ico/icon_like.png');
+			.transition(all 0.3s ease);
 		}
 
 		&.dislike {
 			background-color: @green;
+
+			i {
+				.transform(rotate(180deg));
+			}
 		}
 
 		&:hover {
