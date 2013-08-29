@@ -1255,14 +1255,19 @@ button.social_action {
 	&.watchlater {
 		i {
 			background-image: url('../images/ico/icon_later.png');
+			.transition(all 1s ease);
 		}
 
 		&.added {
-			background-color: @green;
+			.gradient-gray();
 		}
 
 		&:hover {
 			background-color: lighten(#adadad, 15%);
+
+			i {
+				//.transform(rotate(180deg));
+			}
 		}
 	}
 
