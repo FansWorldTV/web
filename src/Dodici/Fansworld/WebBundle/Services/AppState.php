@@ -9,6 +9,7 @@ use Dodici\Fansworld\WebBundle\Entity\Photo;
 use Dodici\Fansworld\WebBundle\Entity\Comment;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
 use Dodici\Fansworld\WebBundle\Entity\Event;
+use Dodici\Fansworld\WebBundle\Entity\Video;
 use Dodici\Fansworld\WebBundle\Entity\EventIncident;
 use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Component\Security\Core\SecurityContext;
