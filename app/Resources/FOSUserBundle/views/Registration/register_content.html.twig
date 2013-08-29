@@ -3,57 +3,66 @@
     <div class='top'>
         <h1>Registrate en FansWorld.tv</h1>
         <h4>Conectate con tus idolos y clubes, demostrado tu pasion y compartiendo experiencias con amigos</h4>
-        
+
         {% if inviter %}
-        <div class="well invited-by">
-            {% if inviter.image %}
-                {% thumbnail inviter.image, 'avatar' %}
-            {% endif %}
-            Completa tu registro para hacerte fan de {{ inviter }}.
-        </div>
+            <div class="well invited-by">
+                {% if inviter.image %}
+                    {% thumbnail inviter.image, 'avatar' %}
+                {% endif %}
+                Completa tu registro para hacerte fan de {{ inviter }}.
+            </div>
         {% endif %}
-        
+
         <button class="register-facebook" data-facebook-login>
             <i></i>
             <span>Registrarse con Facebook</span>
         </button>
     </div>
-	<div class='bottom'>
-            <h2>
-                <span class="circular circular-success">1</span>
-                Llena los campos con tus datos
-            </h2>
-            <div class="form-register fieldcontainer ">
-                
-                    <form action="" method="post" class="fos_user_registration_register form-2column">    
-                        
-                            <div class="errors">
-                                {{ form_errors(form) }}
+    <div class='bottom'>
+        <h2>
+            <span class="circular circular-success">1</span>
+            Llena los campos con tus datos
+        </h2>
+
+        <div class="form-register fieldcontainer ">
+
+            <form action="" method="post" class="fos_user_registration_register form-2column">
+
+                <div class="errors">
+                    {{ form_errors(form) }}
+                </div>
+
+                <div class="fields row-fluid">
+                    <div class='span6'>
+                        {{ form_row(form.firstname) }}
+                        {{ form_row(form.lastname) }}
+                        {{ form_row(form.email) }}
+                    </div>
+
+                    <div class='span6'>
+                        {{ form_row(form.plainPassword) }}
+                        <div class="control-group ">
+                            <label class="control-label" for="fos_user_registration_form_accept_toc">
+                                <a href="{{ path('about_terms') }}">Acepto los terminos y condiciones de Fansworld.tv</a>
+                            </label>
+                            <div class="controls">
+                                {{ form_widget(form.accept_toc) }}
                             </div>
-                        
-                            <div class="fields row-fluid">
-                                <div class='span6'>
-                                    {{ form_row(form.firstname) }}
-                                    {{ form_row(form.lastname) }}
-                                    {{ form_row(form.email) }}
-                                </div>
-                                
-                                <div class='span6'>
-                                    {{ form_row(form.plainPassword) }}
-                                    {{ form_row(form.accept_toc) }}
-                                </div>
-                                
-                            </div>
-                        
-                        <div class="actions clearfix">
-                            <button id='submitRegister' name='submit' class='btn' type='submit' disabled='disabled'>Registrate</button>
                         </div>
-                        {{ form_row(form.username) }}
-                        {{ form_rest(form) }}
-                    </form>
-                
-            </div>
-        
-	</div>
-	
+                    </div>
+
+                </div>
+
+                <div class="actions clearfix">
+                    <button id='submitRegister' name='submit' class='btn' type='submit' disabled='disabled'>Registrate
+                    </button>
+                </div>
+                {{ form_row(form.username) }}
+                {{ form_rest(form) }}
+            </form>
+
+        </div>
+
+    </div>
+
 </div>
