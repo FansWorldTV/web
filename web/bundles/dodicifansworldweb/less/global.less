@@ -1,4 +1,4 @@
-.fullwidth {
+social.fullwidth {
 	width: 100% !important;
 }
 
@@ -1298,6 +1298,54 @@ button.social_action {
 			&.icon-star {
 				background-color: @green !important;
 			}
+		}
+	}
+
+	&.befun {
+		.gradient-green();
+		.border-radius(3px);
+		.size(32px, 121px);
+		color: white;
+		font-weight: 700;
+		font-size: 12px;
+		border: 0;
+		text-shadow: 0px 1px 1px black;
+		padding: 3px 15px 3px 15px;
+		.box-sizing(border-box);
+
+		i {
+			background-image: url('../images/ico/icon_fw+.png');
+			.square(21px);
+			display: inline-block;
+			float: left;
+			margin-right: 7px;
+		}
+		&:hover {
+			background-color: lighten(#adadad, 15%);
+		}
+	}
+
+	&.unfan {
+		.gradient-gray();
+		.border-radius(3px);
+		.size(32px, 121px);
+		color: white;
+		font-weight: 700;
+		font-size: 12px;
+		border: 0;
+		text-shadow: 0px 1px 1px black;
+		padding: 3px 15px 3px 15px;
+		.box-sizing(border-box);
+
+		i {
+			background-image: url('../images/ico/icon_fw.png');
+			.square(21px);
+			display: inline-block;
+			float: left;
+			margin-right: 7px;
+		}
+		&:hover {
+			background-color: lighten(#adadad, 15%);
 		}
 	}
 }
