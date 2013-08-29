@@ -1253,6 +1253,11 @@ button.social_action {
 	.border-radius(3px);
 	.transition(all 0.3s ease);
 
+	i {
+		display: inline-block;
+		.square(23px);
+	}
+
 	&.share {
 		.gradient-green();
 
@@ -1263,8 +1268,6 @@ button.social_action {
 
 		i {
 			background-image: url('../images/ico/icon_share.png');
-			.square(23px);
-			display: inline-block;
 			float: left;
 			margin-right: 7px;
 		}
@@ -1273,8 +1276,6 @@ button.social_action {
 	&.watchlater {
 		i {
 			background-image: url('../images/ico/icon_later.png');
-			.square(23px);
-			display: inline-block;
 		}
 
 		&.added {
@@ -1288,16 +1289,26 @@ button.social_action {
 
 	&.like {
 		i {
-			display: inline-block;
-			.square(23px);
-
-			&.icon-star-empty {
-				background-image: url('../images/ico/icon_like.png') !important;
-			}
+			background-image: url('../images/ico/icon_like.png') !important;
+			background-position: 0 !important;
 
 			&.icon-star {
 				background-color: @green !important;
 			}
+		}
+
+		&:hover {
+			background-color: lighten(#adadad, 15%);
+		}
+	}
+
+	&.report {
+		i {
+			background-image: url('../images/ico/icon_flag.png');
+		}
+
+		&:hover {
+			background-color: lighten(#adadad, 15%);
 		}
 	}
 }
