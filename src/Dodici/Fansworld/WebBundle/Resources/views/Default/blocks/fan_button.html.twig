@@ -27,6 +27,10 @@
 
 {% if fship is defined %}
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and (fship) %}
+        <div class="addFriend" data-add-fan>
+            <button class="social_action unfan {{ buttonSize }} btn_{{ btnType }}" data-{% if fType == 'user' %}friend{% else %}{{ fType }}{% endif %}ship-add="true" data-{{ fType }}-id="{{ entity.id }}" data-login-required > <i></i>Eres Fan</button>
+        </div>
+        {#
         <span class="dropdown i-am-fan">
             <button class="btn dropdown-toggle" role="button" data-toggle="dropdown" >Ya soy fan
                 <icon class="caret"></icon>
@@ -42,12 +46,13 @@
                 </li>
             </ul>
         </span>
+        #}
     {% else %}
         {% if app.user != entity %}
             {% if fType == 'user' and entity.username == 'fansworld' %}
             {% else %}
                 <div class="addFriend"  data-add-fan>
-                    <button class="btn {{ buttonSize }} btn_{{ btnType }} add btn-success" data-{% if fType == 'user' %}friend{% else %}{{ fType }}{% endif %}ship-add="true" data-{{ fType }}-id="{{ entity.id }}" data-login-required > {{ 'add_idol'|trans }}</button>
+                    <button class="social_action befun {{ buttonSize }} btn_{{ btnType }} add btn-success" data-{% if fType == 'user' %}friend{% else %}{{ fType }}{% endif %}ship-add="true" data-{{ fType }}-id="{{ entity.id }}" data-login-required > <i></i> {{ 'add_idol'|trans }}</button>
                 </div>
             {% endif %}
         {% endif %}
