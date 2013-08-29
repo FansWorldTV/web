@@ -1253,9 +1253,10 @@ button.social_action {
 	}
 
 	&.watchlater {
+		.transition(all 1s ease);
+
 		i {
 			background-image: url('../images/ico/icon_later.png');
-			.transition(all 1s ease);
 		}
 
 		&.added {
@@ -1272,13 +1273,15 @@ button.social_action {
 	}
 
 	&.like {
+		.transition(all 0.3s ease);
+
 		i {
 			background-image: url('../images/ico/icon_like.png');
 			.transition(all 0.3s ease);
 		}
 
 		&.dislike {
-			background-color: @green;
+			.gradient-gray();
 
 			i {
 				.transform(rotate(180deg));
