@@ -1243,3 +1243,42 @@ button.tw_button {
 		to { transform: rotate(360deg); }
 	}
 }
+
+button.register-facebook {
+	@backgroundColor: #435495;
+	background-color: #435495;
+	border: 0;
+	.border-radius(3px);
+	.clearfix;
+	.size(44px, auto);
+	color: white;
+	display: block;
+	.box-sizing(border-box);
+	position: relative;
+	.transition(top 0.1s ease);
+	.transition(background-color 0.1s ease);
+
+	i {
+		background-image: url('../images/ico-facebook-registro.png');
+		background-color: transparent;
+		background-position: center center;
+		float: left;
+		.square(44px);
+	}
+
+	span {
+		float: left;
+		font-weight: 600;
+		font-size: 20px;
+		line-height: 42px;
+		.size(44px, auto);
+		text-align: center;
+		border-left: 1px solid white;
+		padding: 0 15px 0 15px;
+	}
+
+	&:hover {
+		top: 3px;
+		background-color: lighten(@backgroundColor, 15%);
+	}
+}
