@@ -32,21 +32,14 @@ class HomeController extends SiteController
     {
         $checkfbreq = $this->checkFacebookRequest();
         if ($checkfbreq) return $checkfbreq;
-
         $user = $this->getUser();
         
-        $prefService = $this->get('preferences');
-        $genreRepo = $this->getRepository('Genre');
         $categories = $this->getRepository('VideoCategory')->findAll();
-        $categoriesArray = array();
-
-        $userMenuItems = $prefService->get('homeMenu');
-
+        $categoriesList = array();
         foreach ($categories as $vc) {
-            $categoriesArray[] = array(
+            $categoriesList[] = array(
                 'id' => $vc->getId(),
-                'title' => $vc->getTitle(),
-                'genres' => $genreRepo->byVideoCategory($vc->getId())
+                'title' => $vc->getTitle()
             );
         }
 
@@ -55,7 +48,7 @@ class HomeController extends SiteController
             'highlighted' => array(),
             'followed' => array(),
             'popular' => array(),
-            'categories' => $categoriesArray,
+            'categories' => $categoriesList,
             'genres' => $this->getRepository('Genre')->getParents(),
             'confirmedModal' => $this->getRequest()->get('confirmedModal', false)
         );
@@ -64,25 +57,21 @@ class HomeController extends SiteController
         $genre = null;
 
         $videoRepo = $this->getRepository('Video');
-
         $homeVideo = $videoRepo->tempHomeByCat($vc);
 
         $limitWithTheHighlighted = (self::LIMIT_VIDEO - 3);
-
         $videos = $videoRepo->searchHome(null, $genre, $vc, null, true, null, $homeVideo, $limitWithTheHighlighted, 0);
         $response['highlighted'] = $videos;
         //$response['highlighted'][1] = $homeVideo;
 
-        if($user instanceof User) {
+        if ($user instanceof User) {
             $videos = $videoRepo->searchHome($user, $genre, $vc, true, false, 'default', $homeVideo, self::LIMIT_VIDEO, 0);
             $response['followed'] = $videos;
-            $response['totals']['followed'] = $videoRepo->countSearch(null, $user, $vc, false, null, null, null, null, $homeVideo, null, true, false, $genre);
         }
 
         $videos = $videoRepo->searchHome(null, $genre, $vc, null, false, null, null, self::LIMIT_VIDEO, 0);
         $response['popular'] = $videos;
-        $response['totals']['popular'] = $videoRepo->countSearch(null, null, $vc, false, null, null, null, null, $homeVideo, null, null, null, $genre);;
-
+    
         return $response;
     }
 

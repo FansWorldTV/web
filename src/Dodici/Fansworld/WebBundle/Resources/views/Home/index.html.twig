@@ -40,11 +40,11 @@
             </section>
             <a href="{{ path('home_fwlist') }}">Ver más</a>
         </div>
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and totals.followed >= 1 %}
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <section class="row-fluid followed">
                 <header class="clearfix">
                     <h3 class="pull-left">Sigues</h3>
-                    <span class="cant pull-left"><span data-total-followed>{{ totals.followed }}</span> videos</span>
+                    <span class="cant pull-left"><span data-total-followed></span> </span>
 
                     <section class="pull-right followed-tags topics">
                         <ul class="pull-right"></ul>
@@ -62,7 +62,7 @@
         <section class="row-fluid gray popular">
             <header class="clearfix">
                 <h3 class="pull-left">Popular</h3>
-                <span class="cant pull-left"><span data-total-popular>{{ totals.popular }}</span> videos</span>
+                <span class="cant pull-left"><span data-total-popular></span> </span>
 
                 <section class="pull-right popular-tags topics">
                     <ul class="pull-right"></ul>
