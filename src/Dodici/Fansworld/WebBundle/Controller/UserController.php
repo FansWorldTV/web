@@ -944,13 +944,10 @@ class UserController extends SiteController
             $this->get('visitator')->visit($author);
 
         $user = $this->getUser();
-
         $videoRepo = $this->getRepository('Video');
 
-        $videos = $videoRepo->search(null, $user, self::LIMIT_VIDEOS, null, null, null, $author, null, null, null, null);
-        //$videos = $videoRepo->search(null, null, self::LIMIT_VIDEOS, null, null, null, null, null, null);
+        $videos = $videoRepo->videosOfUser($author, $user, self::LIMIT_VIDEOS);
         $countAll = $videoRepo->countSearch(null, $user, null, null, $author, null, null, $author);
-
         $addMore = $countAll > self::LIMIT_VIDEOS ? true : false;
 
         $sorts = array(

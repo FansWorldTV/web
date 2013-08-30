@@ -30,6 +30,7 @@ use Dodici\Fansworld\WebBundle\Entity\Notification;
  */
 class VideoUploadController extends SiteController
 {
+    const DEFAULT_VIDEO_FILE_PATH = '../DataFixtures/Files/users/fansworld.jpg';
 
     /**
      * @Route("/test/ks", name="video_test_ks")
@@ -228,6 +229,7 @@ class VideoUploadController extends SiteController
                     $video->setPrivacy($data['privacy']);
                     $video->setVideocategory($videoCategory);
                     $video->setGenre($genre);
+                    $video->setImage($this->_getDefaultImage());
                     $video->setActive(false);
                     $em->persist($video);
                     $em->flush();
@@ -701,6 +703,14 @@ class VideoUploadController extends SiteController
                 }
             }
         }
+    }
+
+    private function _getDefaultImage() {
+        $imgpath = __DIR__ . '/' .  self::DEFAULT_VIDEO_FILE_PATH;
+        $imagecontent = file_get_contents($imgpath);
+        $appmedia = $this->container->get('appmedia');
+        $image = $appmedia->createImageFromBinary($imagecontent);
+        return $image;
     }
 
     /**
