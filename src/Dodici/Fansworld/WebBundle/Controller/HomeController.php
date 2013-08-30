@@ -82,9 +82,8 @@ class HomeController extends SiteController
      */
     public function fwVideoListAction()
     {
-        $fwVideos = $this->getRepository('Video')->findBy(array('highlight' => true, 'active' => true), array('createdAt' => 'desc'), self::FW_LIST_LIMIT);
-        $countVideos = $this->getRepository('Video')->countBy(array('highlight' => true, 'active' => true));
-
+        $fwVideos = $this->getRepository('Video')->findBy(array('highlight' => true, 'active' => true, 'author' => 1), array('createdAt' => 'desc'), self::FW_LIST_LIMIT);
+        $countVideos = $this->getRepository('Video')->countBy(array('highlight' => true, 'active' => true, 'author' => 1));
         return array(
             'videos' => $fwVideos,
             'addMore' => $countVideos > self::FW_LIST_LIMIT ? true : false
@@ -92,33 +91,12 @@ class HomeController extends SiteController
     }
 
     /**
-     * ajax list videos from fansworld
-     * @Route("/home/ajax/list/fansworld", name="home_ajaxfwlist")
-     */
-    public function ajaxFwVideoListAction()
-    {
-        $request = $this->getRequest();
-        $serializer = $this->get('serializer');
-        $page = $request->get('page', 1);
-        $offset = ($page - 1) * self::FW_LIST_LIMIT;
-        $fwVideos = $this->getRepository('Video')->findBy(array('highlight' => true, 'active' => true), array('createdAt' => 'desc'), self::FW_LIST_LIMIT, $offset);
-        $countVideos = $this->getRepository('Video')->countBy(array('highlight' => true, 'active' => true));
-        $addMore = $countVideos > ($page * self::FW_LIST_LIMIT) ? true : false;
-        return $this->jsonResponse(array(
-            'videos' => $serializer->values($fwVideos, 'home_video'),
-            'addMore' => $addMore
-        ));
-    }
-
-
-    /**
-     * List videos from fansworld author
+     * List videos who user follow
      * @Route("/home/list/follow", name="home_followlist")
      * @Template
      */
     public function followVideoListAction()
     {
-
         $user = $this->getUser();
         $videoRepo = $this->getRepository('Video');
 
@@ -128,7 +106,6 @@ class HomeController extends SiteController
         //$vc = null;
 
         $homeVideo = $videoRepo->tempHomeByNone();
-
 
         if($user instanceof User) {
             $flVideos = $videoRepo->searchHome($user, null, null, true, false, 'default', null, self::LIMIT_VIDEO, 0);
