@@ -30,23 +30,6 @@
         <div class="addFriend" data-add-fan>
             <button class="social_action unfan {{ buttonSize }} btn_{{ btnType }}" data-{% if fType == 'user' %}friend{% else %}{{ fType }}{% endif %}ship-add="true" data-{{ fType }}-id="{{ entity.id }}" data-login-required > <i></i>Eres Fan</button>
         </div>
-        {#
-        <span class="dropdown i-am-fan">
-            <button class="btn dropdown-toggle" role="button" data-toggle="dropdown" >Ya soy fan
-                <icon class="caret"></icon>
-                <div class="spinner ten-pixels hidden"><div class="mask"></div></div>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="drop4">
-                <li>
-                    {% if fType == 'user' %}
-                        <a tabindex="-1" href="#" class="btn_friendship remove" data-friendship-remove="true" data-{{ fType }}-id="{{ entity.id }}">Dejar de ser fan</a>
-                    {% else %}
-                        <a tabindex="-1" href="#" class="btn_{{ fType }}ship remove" data-{{ fType }}ship-remove="true" data-{{ fType }}-id="{{ entity.id }}">Dejar de ser fan</a>
-                    {% endif %}
-                </li>
-            </ul>
-        </span>
-        #}
     {% else %}
         {% if app.user != entity %}
             {% if fType == 'user' and entity.username == 'fansworld' %}
