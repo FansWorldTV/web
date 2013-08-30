@@ -1,7 +1,7 @@
 {% raw %}
-<article id="{{>id}}"  class="post item video-std-block" data-element-type="{{>type}}" data-element-date="{{>date}}">
+<article class="video">
     <div class="image">
-        <a class="title" href="{{>href}}">
+        <a class="title" href="{{>url}}">
             <img src="{{>image}}" alt="{{>title}}"/>
         </a>
         <span class="duration">{{>duration}}</span>
@@ -9,8 +9,8 @@
            rel="tooltip" title="Watch later"></i>
     </div>
     <div class="info">
-        <a class="title" href="{{>href}}">{{>title}}</a>
-        <span class="author">de <a href="{{>authorHref}}">{{>author}}</a></span>
+        <a class="title" href="{{>url}}">{{>title}}</a>
+        <span class="author">de <a href="{{>author.url}}">{{>author.username}}</a></span>
 
         <div class="clearfix"></div>
     </div>

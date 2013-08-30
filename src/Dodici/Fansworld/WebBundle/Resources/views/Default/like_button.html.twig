@@ -1,38 +1,35 @@
 {% if type is not defined %}
-	{% set type = appstate.type(entity) %}
+    {% set type = appstate.type(entity) %}
 {% endif %}
 {% set canlike = appstate.canlike(entity) %}
 {% set candislike = appstate.candislike(entity) %}
 
-{% if 'video' == type %}
-    <button class="social_action watchlater" data-login-required data-watch-later data-video-id="{{ entity.id }}" rel="tooltip" title="Ver Después" data-later="false" data-placement="bottom">
-        <i></i>
-    </button>
-{% endif %}
-
 {% if canlike or candislike or not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-	{% if showcount is not defined %}
-		{% set showcount = true %}
-	{% endif %}
+    {% if showcount is not defined %}
+        {% set showcount = true %}
+    {% endif %}
 
-                  {% if buttonmode is not defined %}
-                    <a class="likebutton{% if extraclasses is defined %} {{ extraclasses|join(' ') }}{% endif %}" data-id="{{ entity.id }}" data-type="{{ type }}">
-                            {% if canlike %}
-                                    {{ 'like'|trans }}
-                            {% elseif candislike %}
-                                    {{ 'unlike'|trans }}
-                            {% endif %}
-                    </a>
-                    {% if entity.likecount is defined and showcount %}
-                            <span class="likecount">{{entity.likecount}}</span>
-                    {% endif %}
-                {% else %}
-                        <button class="social_action like {% if candislike %}dislike{% endif %}" data-entity-id="{{ entity.id }}" data-login-required data-like-action='{{ type }}' data-placement="bottom" title="Me gusta" rel="tooltip">
-                            <i></i>
-                            {% if entity.likecount is defined and showcount %}
-                                <span class="likecount">{{entity.likecount}}</span>
-                            {% endif %}
-                        </button>
-                {% endif %}
+    {% if buttonmode is not defined %}
+        <a class="likebutton{% if extraclasses is defined %} {{ extraclasses|join(' ') }}{% endif %}"
+           data-id="{{ entity.id }}" data-type="{{ type }}">
+            {% if canlike %}
+                {{ 'like'|trans }}
+            {% elseif candislike %}
+                {{ 'unlike'|trans }}
+            {% endif %}
+        </a>
+        {% if entity.likecount is defined and showcount %}
+            <span class="likecount">{{ entity.likecount }}</span>
+        {% endif %}
+    {% else %}
+        <button class="social_action like {% if candislike %}dislike{% endif %}" data-entity-id="{{ entity.id }}"
+                data-login-required data-like-action='{{ type }}' data-placement="bottom" title="Me gusta"
+                rel="tooltip">
+            <i></i>
+            {% if entity.likecount is defined and showcount %}
+                <span class="likecount">{{ entity.likecount }}</span>
+            {% endif %}
+        </button>
+    {% endif %}
 {% endif %}
 
