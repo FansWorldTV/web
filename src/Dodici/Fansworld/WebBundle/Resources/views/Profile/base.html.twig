@@ -27,10 +27,12 @@
                 {% include 'DodiciFansworldWebBundle:' ~ entity_type ~ '/Profile:header_navbar.html.twig' %}
             {% endblock %}
 
-            <div class="navigate-entity">
-                <a href="{{ path(appstate.getType(entity) ~ '_previous', {'id': entity.id}) }}"><i class="icon-chevron-left pull-left" rel="tooltip" title="Previous"></i></a>
-                <a href="{{ path(appstate.getType(entity) ~ '_next', {'id': entity.id}) }}"><i class="icon-chevron-right pull-left" rel="tooltip" title="Next"></i></a>
-            </div>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <div class="navigate-entity">
+                    <a href="{{ path(appstate.getType(entity) ~ '_previous', {'id': entity.id}) }}"><i class="icon-chevron-left pull-left" rel="tooltip" title="Previous"></i></a>
+                    <a href="{{ path(appstate.getType(entity) ~ '_next', {'id': entity.id}) }}"><i class="icon-chevron-right pull-left" rel="tooltip" title="Next"></i></a>
+                </div>
+            {% endif %}
     	</header>
 	{% endblock %}
 
