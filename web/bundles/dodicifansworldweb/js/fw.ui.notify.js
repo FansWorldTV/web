@@ -58,7 +58,7 @@ $(document).ready(function () {
                 this.note.prepend($('<a class="close pull-right" data-dismiss="alert" href="#">&times;</a>'))
 
 
-            this.note = this.create(this.options.type, this.options.message.html, "hace 2 dias");
+            this.note = this.create(this.options.type, this.options.message.html, "");
             return this;
         },
         create: function(title, message, time) {
