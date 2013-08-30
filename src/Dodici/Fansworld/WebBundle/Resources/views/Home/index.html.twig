@@ -26,17 +26,34 @@
                 <li data-entity-type="vc" data-entity-id = "{{ category.id }}">{{ category.title }}</li>
             {% endfor %}
         </ul>
+            <section class="row-fluid highlighteds new" >
+                <div class="span2">
+                    {% for video in highlighted%}
+                        {% if loop.index0 < 2 %}
+                            {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_video' } %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="highlighted span4">
+                    {% for video in highlighted%}
+                        {% if loop.index0 == 2 %}
+                            {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_video_double'} %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="span6">
+                    {% for video in highlighted%}
+                        {% if loop.index0 > 2 %}
+                            {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_video'} %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </section>
         <div class="highlights-container">
             <section class="row-fluid gray highlights hidden" id="home-gallery">
                 <div class="grid-sizer"></div>
                 <div class="gutter-sizer"></div>
-                {% for video in highlighted%}
-                    {% if loop.index == 2 %}
-                        {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_video_double', extra_classes: 'double'} %}
-                    {% else %}
-                        {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video } %}
-                    {% endif %}
-                {% endfor %}                
+
             </section>
             <a href="{{ path('home_fwlist') }}">Ver más</a>
         </div>

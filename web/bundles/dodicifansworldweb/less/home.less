@@ -116,8 +116,30 @@
 		}
 
 		&.gray { background-color: #f1f1f1; }
-		&.highlights {
-			.video {}
+
+		&.highlighteds.new {
+			display: block;
+			height: 300px;
+			.video {
+				display: block;
+				height: 150px;
+			}
+
+			.span2 {
+				height: 100%;
+				.column-count(1);
+			}
+			.span4 {
+				.video {
+					height: 300px;
+				}
+				height: 100%;
+				.column-count(1);
+			}
+			.span6 {
+				height: 100%;
+				.column-count(3);
+			}
 		}
 	}
 }
