@@ -1,7 +1,7 @@
 {% raw %}
 <article class="video">
     <div class="image">
-        <a class="title" href="{{>url}}">
+        <a class="title" {{if active}}href="{{>url}}"{{/if}}>
             <img src="{{>image}}" alt="{{>title}}"/>
         </a>
         <span class="duration">{{>duration}}</span>
@@ -11,7 +11,7 @@
         {{/if}}
     </div>
     <div class="info">
-        <a class="title" href="{{>url}}">{{>title}}</a>
+        <a class="title" {{if active}}href="{{>url}}"{{/if}}>{{>title}}</a>
         <span class="author">de <a href="{{>author.url}}">{{>author.username}}</a></span>
 
         <div class="clearfix"></div>
