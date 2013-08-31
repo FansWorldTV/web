@@ -46,7 +46,7 @@
                 <div class="span6">
                     {% for video in highlighted %}
                         {% if loop.index0 > 2 %}
-                            {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_highlight} %}
+                            {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_highlight'} %}
                         {% endif %}
                     {% endfor %}
                 </div>
