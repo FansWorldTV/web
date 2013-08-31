@@ -23,6 +23,7 @@ class HomeController extends SiteController
 {
     const LIMIT_VIDEO = 12;
     const FW_LIST_LIMIT = 30;
+    const LIMIT_HIGHLIGHTED = 9;
 
     /**
      * Site's home
@@ -34,17 +35,8 @@ class HomeController extends SiteController
         if ($checkfbreq) return $checkfbreq;
         $user = $this->getUser();
         
-        $categories = $this->getRepository('VideoCategory')->findAll();
-        $categoriesList = array();
-        foreach ($categories as $vc) {
-            $categoriesList[] = array(
-                'id' => $vc->getId(),
-                'title' => $vc->getTitle()
-            );
-        }
-
         $response = array(
-            'categories' => $categoriesList,
+            'categories' => $this->getRepository('VideoCategory')->findAll(),
             'genres' => $this->getRepository('Genre')->findBy(array('parent' => null)),
             'confirmedModal' => $this->getRequest()->get('confirmedModal', false),
             'highlighted' => array(),

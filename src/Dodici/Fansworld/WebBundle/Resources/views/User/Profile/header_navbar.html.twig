@@ -7,14 +7,14 @@
             <li {% if active_tab == 'wall' %}class="active"{% endif %}>
                 <a  href="{{ path('user_wall', {username: user.username}) }}">Muro</a>
             </li>
-            <li {% if active_tab == 'detail' %}class="active"{% endif %}>
-                <a  href="{{ path('user_detail', {username: user.username}) }}">Info</a>
-            </li>
             <li {% if active_tab == 'videos' %}class="active"{% endif %}>
                 <a  href="{{ path('user_videos', {username: user.username}) }}">Videos</a>
             </li>
             <li {% if active_tab == 'photos' %}class="active"{% endif %}>
                 <a href="{{ path('user_photos', {username: user.username}) }}">{{ 'Photos'|trans }}</a>
+            </li>
+            <li {% if active_tab == 'detail' %}class="active"{% endif %}>
+                <a  href="{{ path('user_detail', {username: user.username}) }}">Info</a>
             </li>
             <li {% if active_tab == 'fans' %}class="active"{% endif %}>
                 <a href="{{ path('user_fans', {'username': user.username}) }}">Fans</a>
