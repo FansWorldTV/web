@@ -38,7 +38,7 @@ class ProfileController extends SiteController
     {
         return array(
             'genres'   => $this->getRepository('Genre')->findBy(array('parent' => null)),
-            'profiles' => $this->getRepository('Idol')->findBy(array(), null, 30)
+            'profiles' => $this->getRepository('Idol')->findBy(array(), null, self::LIMIT_PROFILES_HOME)
         );
     }
 
