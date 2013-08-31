@@ -32,21 +32,21 @@
                 <div class="span2">
                     {% for video in highlighted %}
                         {% if loop.index0 < 2 %}
-                            {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_video' } %}
+                            {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_video_highlight' } %}
                         {% endif %}
                     {% endfor %}
                 </div>
                 <div class="highlighted span4">
                     {% for video in highlighted %}
                         {% if loop.index0 == 2 %}
-                            {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_video_double'} %}
+                            {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_video_highlight_double'} %}
                         {% endif %}
                     {% endfor %}
                 </div>
                 <div class="span6">
                     {% for video in highlighted %}
                         {% if loop.index0 > 2 %}
-                            {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_video'} %}
+                            {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_video_highlight'} %}
                         {% endif %}
                     {% endfor %}
                 </div>
