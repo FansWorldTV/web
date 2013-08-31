@@ -34,17 +34,8 @@ class HomeController extends SiteController
         if ($checkfbreq) return $checkfbreq;
         $user = $this->getUser();
         
-        $categories = $this->getRepository('VideoCategory')->findAll();
-        $categoriesList = array();
-        foreach ($categories as $vc) {
-            $categoriesList[] = array(
-                'id' => $vc->getId(),
-                'title' => $vc->getTitle()
-            );
-        }
-
         $response = array(
-            'categories' => $categoriesList,
+            'categories' => $this->getRepository('VideoCategory')->findAll(),
             'genres' => $this->getRepository('Genre')->findBy(array('parent' => null)),
             'confirmedModal' => $this->getRequest()->get('confirmedModal', false),
             'highlighted' => array(),
