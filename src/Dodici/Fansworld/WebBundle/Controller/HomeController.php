@@ -23,6 +23,7 @@ class HomeController extends SiteController
 {
     const LIMIT_VIDEO = 12;
     const FW_LIST_LIMIT = 30;
+    const LIMIT_HIGHLIGHTED = 9;
 
     /**
      * Site's home
@@ -34,35 +35,24 @@ class HomeController extends SiteController
         if ($checkfbreq) return $checkfbreq;
         $user = $this->getUser();
         
-        $categories = $this->getRepository('VideoCategory')->findAll();
-        $categoriesList = array();
-        foreach ($categories as $vc) {
-            $categoriesList[] = array(
-                'id' => $vc->getId(),
-                'title' => $vc->getTitle()
-            );
-        }
-
         $response = array(
-            'home' => null,
+            'categories' => $this->getRepository('VideoCategory')->findAll(),
+            'genres' => $this->getRepository('Genre')->findBy(array('parent' => null)),
+            'confirmedModal' => $this->getRequest()->get('confirmedModal', false),
             'highlighted' => array(),
             'followed' => array(),
             'popular' => array(),
-            'categories' => $categoriesList,
-            'genres' => $this->getRepository('Genre')->getParents(),
-            'confirmedModal' => $this->getRequest()->get('confirmedModal', false)
         );
 
         $vc = null;
-        $genre = null;
+        $genre = 1;
+        $homeVideo = null;
 
         $videoRepo = $this->getRepository('Video');
-        $homeVideo = $videoRepo->tempHomeByCat($vc);
 
         $limitWithTheHighlighted = (self::LIMIT_VIDEO - 3);
         $videos = $videoRepo->searchHome(null, $genre, $vc, null, true, null, $homeVideo, $limitWithTheHighlighted, 0);
         $response['highlighted'] = $videos;
-        // $response['highlighted'][1] = $homeVideo;
 
         if ($user instanceof User) {
             $videos = $videoRepo->searchHome($user, $genre, $vc, true, false, 'default', $homeVideo, self::LIMIT_VIDEO, 0);
@@ -86,34 +76,6 @@ class HomeController extends SiteController
         $countVideos = $this->getRepository('Video')->countBy(array('highlight' => true, 'active' => true, 'author' => 1));
         return array(
             'videos' => $fwVideos,
-            'addMore' => $countVideos > self::FW_LIST_LIMIT ? true : false
-        );
-    }
-
-    /**
-     * List videos who user follow
-     * @Route("/home/list/follow", name="home_followlist")
-     * @Template
-     */
-    public function followVideoListAction()
-    {
-        $user = $this->getUser();
-        $videoRepo = $this->getRepository('Video');
-
-        $flVideos = null;
-        $countVideos = 10;
-        //$genre = null;
-        //$vc = null;
-
-        $homeVideo = $videoRepo->tempHomeByNone();
-
-        if($user instanceof User) {
-            $flVideos = $videoRepo->searchHome($user, null, null, true, false, 'default', null, self::LIMIT_VIDEO, 0);
-            // $countVideos = $videoRepo->countSearch(null, $user, $vc, false, null, null, null, null, $homeVideo, null, true, false, $genre);
-        }
-
-        return array(
-            'videos' => $flVideos,
             'addMore' => $countVideos > self::FW_LIST_LIMIT ? true : false
         );
     }

@@ -468,8 +468,9 @@ $(document).ready(function () {
                                 } else {
                                     $(that.element).parent().find('.add-more').hide();
                                 }
-                                $thumb.hide().appendTo(that.element).fadeIn('slow');
+                                
                             });
+                            $(that.element).append($thumb);
                         });
                     }
                     for(i in response.profiles) {
