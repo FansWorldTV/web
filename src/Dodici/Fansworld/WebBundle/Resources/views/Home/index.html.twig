@@ -20,26 +20,40 @@
         <ul id="sortable1" class="filter-home connectedSortable">
             <li class="active" data-entity-type="null" data-entity-id="null">TODOS</li>
             {% for genre in genres %}
-                <li data-entity-type="genre" data-entity-id = "{{ genre.id }}">{{ genre.title }}</li>
+                <li data-entity-type="genre" data-entity-id="{{ genre.id }}">{{ genre.title }}</li>
             {% endfor %}
             {% for category in categories %}
-                <li data-entity-type="vc" data-entity-id = "{{ category.id }}">{{ category.title }}</li>
+                <li data-entity-type="vc" data-entity-id="{{ category.id }}">{{ category.title }}</li>
             {% endfor %}
         </ul>
+
         <div class="highlights-container">
-            <section class="row-fluid gray highlights hidden" id="home-gallery">
-                <div class="grid-sizer"></div>
-                <div class="gutter-sizer"></div>
-                {% for video in highlighted%}
-                    {% if loop.index == 2 %}
-                        {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_video_double', extra_classes: 'double'} %}
-                    {% else %}
-                        {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video } %}
-                    {% endif %}
-                {% endfor %}                
+            <section class="row-fluid highlighteds new">
+                <div class="span2">
+                    {% for video in highlighted %}
+                        {% if loop.index0 < 2 %}
+                            {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_video' } %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="highlighted span4">
+                    {% for video in highlighted %}
+                        {% if loop.index0 == 2 %}
+                            {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_video_double'} %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="span6">
+                    {% for video in highlighted %}
+                        {% if loop.index0 > 2 %}
+                            {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_video'} %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </section>
             <a href="{{ path('home_fwlist') }}">Ver más</a>
         </div>
+
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <section class="row-fluid followed">
                 <header class="clearfix">
@@ -76,7 +90,9 @@
             <div class="add-more">+</div>
         </section>
 
-        <div class="spinner hidden"><div class="mask"></div></div>
+        <div class="spinner hidden">
+            <div class="mask"></div>
+        </div>
     </div>
 
     {% if confirmedModal %}
@@ -87,6 +103,7 @@
             </div>
             <div class="modal-body">
                 <p class="systemmessage">{{ 'registration.confirmed'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</p>
+
                 <p>Ya podes empezar a disfrutar y conectarte con fanáticos como vos.</p>
             </div>
             <div class="modal-footer">
@@ -95,7 +112,7 @@
         </div>
 
         <script type="text/javascript">
-            $(document).ready(function(){
+            $(document).ready(function () {
                 $("#confirmedModal").modal('show');
             });
         </script>
