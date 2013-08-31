@@ -44,20 +44,19 @@ class HomeController extends SiteController
         }
 
         $response = array(
-            'home' => null,
+            'categories' => $categoriesList,
+            'genres' => $this->getRepository('Genre')->findBy(array('parent' => null)),
+            'confirmedModal' => $this->getRequest()->get('confirmedModal', false),
             'highlighted' => array(),
             'followed' => array(),
             'popular' => array(),
-            'categories' => $categoriesList,
-            'genres' => $this->getRepository('Genre')->getParents(),
-            'confirmedModal' => $this->getRequest()->get('confirmedModal', false)
         );
 
         $vc = null;
-        $genre = null;
+        $genre = 1;
+        $homeVideo = null;
 
         $videoRepo = $this->getRepository('Video');
-        $homeVideo = $videoRepo->tempHomeByCat($vc);
 
         $limitWithTheHighlighted = (self::LIMIT_VIDEO - 3);
         $videos = $videoRepo->searchHome(null, $genre, $vc, null, true, null, $homeVideo, $limitWithTheHighlighted, 0);

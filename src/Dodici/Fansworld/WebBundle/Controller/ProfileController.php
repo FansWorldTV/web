@@ -28,7 +28,7 @@ use Imagine\Gd\Imagine;
 class ProfileController extends SiteController
 {
 
-    const LIMIT_PROFILES_HOME = 40;
+    const LIMIT_PROFILES_HOME = 30;
 
     /**
      * @Route("/profiles", name="profiles_index")
@@ -37,7 +37,7 @@ class ProfileController extends SiteController
     public function listAction()
     {
         return array(
-            'genres'   => $this->getRepository('Genre')->getParents(),
+            'genres'   => $this->getRepository('Genre')->findBy(array('parent' => null)),
             'profiles' => $this->getRepository('Idol')->findBy(array(), null, 30)
         );
     }
