@@ -23,6 +23,7 @@ class HomeController extends SiteController
 {
     const LIMIT_VIDEO = 12;
     const FW_LIST_LIMIT = 30;
+    const LIMIT_HIGHLIGHTED = 9;
 
     /**
      * Site's home
