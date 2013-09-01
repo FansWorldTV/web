@@ -2,18 +2,39 @@
 #leftcolumn-sidebar {
 	padding-left: 15px;
 
-	h3 {
-		font-size: 25px;
-		color: #8cc63f;
-		font-weight: 400;
-		margin-top: 40px;
+	h2 {
+		font-size: 17px;
+		font-weight: 600;
+		color: @green;
 	}
-
 	p {
-		color: #808080;
-		font-size: 15px;
-		margin-top: 7px;
-		font-weight: 300;
+		font-size: 12px;
+		font-weight: 400;
+		color: @grayDark;
+	}
+	ul {
+		li {
+			&:first-child {
+				margin-top: 15px;
+			}
+
+			margin-bottom: 15px;
+			position: relative;
+			img {
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			div {
+				padding-left: 40px;
+
+				span {
+					color: @black;
+					font-size: 13px;
+					font-weight: 600;
+				}
+			}
+		}
 	}
 }
 

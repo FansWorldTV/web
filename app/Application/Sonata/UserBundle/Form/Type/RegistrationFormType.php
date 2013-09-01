@@ -29,8 +29,6 @@ class RegistrationFormType extends BaseType
             ->add('username','hidden', array('max_length' => 30))
             ->add('email', 'email')
             ->add('plainPassword', 'repeated', array('type' => 'password'))
-            ->add('accept_toc', 'checkbox', array('property_path' => false,
-    'required'  => false))
 			//->add('address',null,array('label'=>'Dirección','required'=>false))
 			
 			

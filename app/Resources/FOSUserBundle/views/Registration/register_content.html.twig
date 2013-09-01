@@ -1,7 +1,7 @@
 {% form_theme form theme %}
 <div class="register">
     <div class='top'>
-        <h1>Registrate en FansWorld.tv</h1>
+        <h1>Crear nueva cuenta en FansWorld.tv</h1>
         <h4>Conectate con tus idolos y clubes, demostrado tu pasion y compartiendo experiencias con amigos</h4>
 
         {% if inviter %}
@@ -15,14 +15,14 @@
 
         <button class="register-facebook" data-facebook-login>
             <i></i>
-            <span>Registrarse con Facebook</span>
+            <span>Conectar con Facebook</span>
         </button>
+
+
+        <span class="divider-else">o sino...</span>
     </div>
     <div class='bottom'>
-        <h2>
-            <span class="circular circular-success">1</span>
-            Llena los campos con tus datos
-        </h2>
+        <h2>Llená los siguientes campos con tus datos</h2>
 
         <div class="form-register fieldcontainer ">
 
@@ -41,21 +41,14 @@
 
                     <div class='span6'>
                         {{ form_row(form.plainPassword) }}
-                        <div class="control-group">
-                            <label class="control-label" for="fos_user_registration_form_accept_toc">
-                                <a href="{{ path('about_terms') }}">Acepto los terminos y condiciones de Fansworld.tv</a>
-                            </label>
-                            <div class="controls">
-                                {{ form_widget(form.accept_toc) }}
-                            </div>
-                        </div>
                     </div>
 
                 </div>
 
+                <span class="terms-description">Al hacer click en "Crear cuenta", muestras tu conformidad con nuestros <a href="{{ path('about_terms') }}">Términos y condiciones</a></span>
+
                 <div class="actions clearfix">
-                    <button id='submitRegister' name='submit' class='btn' type='submit' disabled='disabled'>Registrate
-                    </button>
+                    <button id='submitRegister' name='submit' type='submit' disabled='disabled'>Crear cuenta</button>
                 </div>
                 {{ form_row(form.username) }}
                 {{ form_rest(form) }}
