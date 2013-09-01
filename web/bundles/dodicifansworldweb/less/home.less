@@ -119,13 +119,15 @@
 
 		&.highlighteds.new {
 			display: block;
-			height: 400px;
+			height: 340px;
 			.box-sizing(border-box);
 			padding: 0 20px 0 20px;
 
 			.video {
 				display: block;
 				height: 160px;
+				position: relative;
+				margin-bottom: 10px;
 			}
 
 			.span2 {
@@ -134,7 +136,14 @@
 			}
 			.span4 {
 				.video {
-					height: 400px;
+					height: 330px;
+					margin: 0;
+					.info {
+						background-color: black;
+						* {
+							color: white;
+						}
+					}
 				}
 				height: 100%;
 				.column-count(1);
