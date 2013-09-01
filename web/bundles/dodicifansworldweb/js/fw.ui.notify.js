@@ -62,7 +62,7 @@ $(document).ready(function () {
             return this;
         },
         create: function(title, message, time) {
-            return $('<div class="popup white swing"><span class="title">'+title+'</span><p>' + message + '<br /> '+ time +'</p><a href="#" class="close">Close</a></div>');
+            return $('<div class="popup white swing"><span class="title">'+title+'</span><p>' + message + '<br /> '+ time +'</p><a href="#" class="close">X</a></div>');
         },
         show: function () {
             var self = this;
