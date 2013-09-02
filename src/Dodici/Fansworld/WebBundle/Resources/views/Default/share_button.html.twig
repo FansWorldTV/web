@@ -4,7 +4,51 @@
         <i></i>
         Compartir
     </button>
-    <div class="share-box hide" data-sharebox-gral>
+    <div id="share-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="share-modal" aria-hidden="true" style="overflow:hidden;">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="share-modal" style="text-align: left;">Compartir</h3>
+        </div>
+        <div class="modal-body">
+            <figure class="thumbnail">
+                {% thumbnail entity.image, 'medium' %}
+                <label class="title">{{ entity.title }}</label>
+                <span class="author">de {{ entity.author }}</span>
+            </figure>
+            <div class="data">
+                <label>Tu comentario</label>
+                <textarea placeholder="Escribe aquí tu comentario" data-share-msg></textarea>
+
+                <p>Primero comparte en</p>
+                <ul class="list-social-network">
+                    <li>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ url(type~'_show', {'id': entity.id,'slug': entity.slug}) }}" data-share-content>
+                            <i class="facebook"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://www.twitter.com/share?url={{ url(type~'_show', {'id': entity.id, 'slug': entity.slug}) }}" data-share-content>
+                            <i class="twitter"></i>
+                        </a>
+                    </li>
+                    {#<li>
+                        <a href="" data-share-content>
+                            <i class="gplus"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" data-share-content>
+                            <i class="pinterest"></i>
+                        </a>
+                    </li>#}
+                </ul>
+                <p>y ahora</p>
+
+                <button id="share_it">Compartir en FansWorld</button>
+            </div>
+        </div>
+    </div>
+    {#<div class="share-box hide" data-sharebox-gral>
         <img class="arrow" src="{{ asset('bundles/dodicifansworldweb/images/arrow_nav.png') }}"/>
 
         <div class="top">
@@ -34,5 +78,5 @@
             </div>
         </div>
         <div class="clearfix"></div>
-    </div>
+    </div>#}
 </div>

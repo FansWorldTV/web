@@ -16,11 +16,6 @@ social.fullwidth {
 .internal_buttons {
 	position: relative;
 	text-align: right;
-
-	.share-box {
-		left: -162px;
-		top: 37px;
-	}
 }
 
 .spinner {
@@ -126,6 +121,126 @@ social.fullwidth {
 		position: relative;
 		display: inline-block;
 		.square(auto);
+
+		#share-modal {
+			.modal-body {
+				figure.thumbnail {
+					border: 1px dashed gray;
+					.border-radius(3px);
+					.size(160px, 170px);
+					margin: 0;
+					padding: 10px;
+					float: left;
+
+					label.title {
+						text-align: left;
+						font-weight: 600;
+						font-size: 14px;
+						margin-top: 5px;
+						color: black;
+					}
+
+					span.author {
+						text-align: left;
+						color: @grayDark;
+						font-size: 12px;
+						font-weight: 300;
+					}
+				}
+				div.data {
+					float: right;
+					width: 310px;
+					padding-right: 10px;
+					display: block;
+					.box-sizing(border-box);
+
+					label {
+						text-align: left;
+						color: @grayDark;
+						font-weight: 300;
+						font-size: 22px;
+						margin-bottom: 15px;
+					}
+
+					textarea {
+						.box-sizing(border-box);
+						width: 100%;
+						padding: 10px;
+					}
+
+					p {
+						color: @grayDark;
+						font-weight: 600;
+						font-size: 13px;
+					}
+
+					ul.list-social-network {
+						display: block;
+						.size(30px, 100%);
+						margin-bottom: 10px;
+
+						li {
+							display: block;
+							float: right;
+
+							i {
+								.border-radius(3px);
+								.square(30px);
+								display: block;
+								background-repeat: no-repeat;
+								margin-right: 5px;
+								.transition(all 0.3s ease);
+
+								&:hover {
+									position: relative;
+									top: 2px;
+							    }
+
+								&.facebook {
+									background: url('../images/ico/icon_fb.png');
+									background-position: right;
+									background-color: #334e8d;
+								}
+
+								&.twitter {
+									background: url('../images/ico/icon_tw.png');
+									background-position: center;
+									background-color: #009eea;
+								}
+
+								&.gplus {
+									background: url('../images/ico/icon_g+.png');
+									background-position: center;
+									background-color: #e71a24;
+								}
+
+								&.pinterest {
+									background: url('../images/ico/icon_pinterest.png');
+									background-position: center;
+									background-color: #e71a25;
+								}
+							}
+						}
+					}
+
+					#share_it {
+						margin-top: 20px;
+						.gradient-green();
+						border: 0;
+						.border-radius(3px);
+						.size(50px, 250px);
+						font-size: 16px;
+						font-weight: 600;
+						text-shadow: 0 1px 0 black;
+						color: white;
+
+						&.disabled {
+							.gradient-gray();
+						}
+					}
+				}
+			}
+		}
 
 		.share-box {
 			.size(auto, 505px);

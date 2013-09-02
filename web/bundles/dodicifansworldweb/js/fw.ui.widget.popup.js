@@ -555,6 +555,13 @@ $(document).ready(function () {
                 }
             });
             window.fansWorldEvents.addListener(that._name + '_toggle', function(button, event) {
+                $.ajax({url: Routing.generate('es_ajax_readallnotification'), data: {}}).then(function(response){
+                    if(response) {
+                        $(that.options.toggleButton.label).animate({
+                            opacity: 0
+                        });
+                    }
+                });
                 that.toggle(button, event);
             });
             window.fansWorldEvents.addListener(that._name + '_togglebutton', function(plugin, button) {
