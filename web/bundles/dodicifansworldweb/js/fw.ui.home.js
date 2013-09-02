@@ -131,6 +131,7 @@ $(document).ready(function () {
         },
         insetThumbs: function(feed, data) {
             var that = this;
+            that.hide();
             var deferred = new jQuery.Deferred();
             $.ajax({
                 url: feed,
@@ -141,9 +142,10 @@ $(document).ready(function () {
                 // If no more videos then hide the addMore button
                 if(total < that.options.maxVideos) {
                     console.log("hay pocos videos: " + response.highlighted.length)
+                    that.show();
                     return;
                 }
-                console.log(total)
+                
                 var leftMax = 1; //$(that.element).find('.span2').length;
                 $(that.element).find('.span2').empty();
                 for(i = 0; i <= leftMax; i += 1) {
@@ -183,6 +185,19 @@ $(document).ready(function () {
                         });
                     }
                 }
+                
+                var il = new ImagesLoaded(that.element);
+                il.done(function () {
+                    console.log("All images loaded !")
+                    that.show();
+                });
+                il.progress(function (image, isBroken) {
+                    console.log("image loaded !")
+                });
+                il.fail(function(instance){
+                    console.log('FAIL - all images loaded, at least one is broken');
+                    that.show();
+                });
 
                 return response.highlighted;
             }).done(function(highlighted){
@@ -194,18 +209,14 @@ $(document).ready(function () {
         },
         hide: function() {
             var that = this;
-            $(that.element).fadeOut(function() {
-                $(that.element).parent().find('.spinner').removeClass('hidden');
-                $(that.element).parent().find('.spinner').show();
-            });
+            //$(that.element).parent().fadeOut(function() {});
+            window.fansWorldEvents.emitEvent('onContenNeedsLoad', [that]);
         },
         show: function() {
             var that = this;
-            $(that.element).removeClass('hidden');
-            $(that.element).fadeIn(function() {
-                $(that.element).parent().find('.spinner').addClass('hidden');
-                $(that.element).parent().find('.spinner').hide();
-            });
+            //$(that.element).removeClass('hidden');
+            //$(that.element).parent().fadeIn(function() {});
+            window.fansWorldEvents.emitEvent('onContentLoaded', [that]);
         },
         destroy: function() {
             var that = this;
@@ -351,6 +362,7 @@ $(document).ready(function () {
         },
         insetThumbs: function(feed, data) {
             var that = this;
+            that.hide();
             var deferred = new jQuery.Deferred();
             $.ajax({
                 url: feed,
@@ -360,6 +372,7 @@ $(document).ready(function () {
                 // If no more videos then hide the addMore button
                 if(response.videos.length < 1) {
                     $(that.element).parent().find('.add-more').hide();
+                    that.show();
                 }
                 for(i in response.videos) {
                     if (response.videos.hasOwnProperty(i)) {
@@ -379,11 +392,24 @@ $(document).ready(function () {
                                 } else {
                                     $(that.element).parent().find('.add-more').hide();
                                 }
-                                $thumb.hide().appendTo(that.element).fadeIn('slow');
+                                $(that.element).append($thumb);
                             });
                         });
                     }
                 }
+                var il = new ImagesLoaded(that.element);
+                il.done(function () {
+                    console.log("All images loaded !")
+                    that.show();
+                });
+                il.progress(function (image, isBroken) {
+                    console.log("image loaded !")
+                });
+                il.fail(function(instance){
+                    console.log('FAIL - all images loaded, at least one is broken');
+                    that.show();
+                });
+
                 return response.videos;
             }).done(function(videos){
                 deferred.resolve(videos);
@@ -391,6 +417,17 @@ $(document).ready(function () {
                 deferred.reject(new Error(error));
             });
             return deferred.promise();
+        },
+        hide: function() {
+            var that = this;
+            //$(that.element).fadeOut(function() {});
+            window.fansWorldEvents.emitEvent('onContenNeedsLoad', [that]);
+        },
+        show: function() {
+            var that = this;
+            //$(that.element).removeClass('hidden');
+            //$(that.element).fadeIn(function() {});
+            window.fansWorldEvents.emitEvent('onContentLoaded', [that]);
         },
         destroy: function() {
             var that = this;
@@ -472,7 +509,7 @@ $(document).ready(function () {
             var that = this;
             var queue = $.jqmq({
                 // Queue items will be processed every queueDelay milliseconds.
-                delay: 125,
+                delay: 0,
                 // Process queue items one-at-a-time.
                 batch: 1,
                 // For each queue item, execute this function.
@@ -491,7 +528,7 @@ $(document).ready(function () {
                         $(this).addClass('active');
                         window.fansWorldEvents.emitEvent('onFindVideosByTag', [videoTag, that.options.filter]);
                     });
-                    $(tag).hide().appendTo(that.element).fadeIn('slow');
+                    $(that.element).append(tag);
                 },
                 // When the queue completes naturally, execute this function.
                 complete: function(){
@@ -514,6 +551,14 @@ $(document).ready(function () {
                 }
             });
         },
+        hide: function() {
+            var that = this;
+            window.fansWorldEvents.emitEvent('onContenNeedsLoad', [that]);
+        },
+        show: function() {
+            var that = this;
+            window.fansWorldEvents.emitEvent('onContentLoaded', [that]);
+        },        
         destroy: function() {
             var that = this;
             $(that.element).unbind("destroyed", that.teardown);
@@ -540,83 +585,6 @@ $(document).ready(function () {
     };
 });
 
-///////////////////////////////////////////////////////////////////////////////
-// Show count plugins                                                        //
-///////////////////////////////////////////////////////////////////////////////
-$(document).ready(function () {
-    "use strict";
-    var pluginName = "fwShowCount";
-    var defaults = {
-        filter: null,
-        type: null,
-        id: null,
-        feed: Routing.generate(appLocale + '_home_ajaxfilter')
-    };
-    function Plugin(element, options) {
-        this.element = element;
-        this.options = $.extend({}, defaults, options);
-        this._defaults = defaults;
-        this._name = pluginName;
-        this.init();
-    }
-    Plugin.prototype = {
-        init: function () {
-            var that = this;
-            var self = $(that.element);
-            self.bind("destroyed", $.proxy(that.teardown, that));
-            self.addClass(that._name);
-
-            that.options.onFilterChange = function(type, id) {
-                that.options.type = type;
-                that.options.id = id;
-                var reqData = {};
-                reqData[that.options.type] = parseInt(that.options.id, 10);
-                that.getTotal(that.options.feed, reqData);
-                return;
-            };
-            window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
-            var reqData = {};
-            reqData[that.options.type] = parseInt(that.options.id, 10);
-            that.getTotal(that.options.feed, reqData);
-            return true;
-        },
-        getTotal: function(feed, data) {
-            var that  = this;
-            $.ajax({
-                url: feed,
-                data: data
-            }).then(function(response) {
-                var total = response.totals[that.options.filter];
-                $(that.element).fadeOut(function() {
-                    $(this).text(total);
-                }).fadeIn();
-            });
-        },
-        destroy: function() {
-            var that = this;
-            $(that.element).unbind("destroyed", that.teardown);
-            that.teardown();
-            return true;
-        },
-        teardown: function() {
-            var that = this;
-            $.removeData($(that.element)[0], that._name);
-            $(that.element).removeClass(that._name);
-            that.unbind();
-            that.element = null;
-            return that.element;
-        },
-        bind: function() { },
-        unbind: function() { }
-    };
-    $.fn[pluginName] = function (options) {
-        return this.each(function () {
-            if (!$.data(this, pluginName)) {
-                $.data(this, pluginName, new Plugin(this, options));
-            }
-        });
-    };
-});
 
 ///////////////////////////////////////////////////////////////////////////////
 // Attach plugin to all matching element                                     //
@@ -745,6 +713,13 @@ $(document).ready(function () {
             $(".filter-container").slideUp();
         }
 
+        /*
+        // Video Packery Gallery
+        $('section.highlighteds').
+        // Video Grid
+        $('section.popular > .videos-container').
+        $('section.followed > .videos-container').
+        */
         ///////////////////////////////////////////////////////////////////////
         // Decoupled EventTrigger //
         ///////////////////////////////////////////////////////////////////////
@@ -752,3 +727,40 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function () {
+    "use strict";
+    var max = 0;
+    var total = 0;
+    function onContenNeedsLoad() {
+        max += 1;
+        console.log("onContenNeedsLoad(): " + max);
+    }
+    function onContentLoaded() {
+        if(total == max - 1) {
+
+            $('.highlights-container').removeClass('hidden');
+            
+            if($('section.followed > .videos-container').find('.video').length > 0)
+                $('section.followed').removeClass('hidden');
+            if($('section.popular > .videos-container').find('.video').length > 0)
+                $('section.popular').removeClass('hidden');
+
+            $('.spinner').addClass('hidden').hide();
+            console.log("Listo para mostrar");    
+        }
+        console.log("contenido cargado: " + total + " max: " + max);
+        total += 1;
+    }
+    function onFilterChange() {
+        total = max = 0;
+
+        $('section.popular').addClass('hidden');
+        $('section.followed').addClass('hidden');
+        $('.highlights-container').addClass('hidden');
+        $('.spinner').removeClass('hidden').show();
+        console.log("onFilterChange(): " + total);
+    }
+    window.fansWorldEvents.addListener('onContenNeedsLoad', onContenNeedsLoad);
+    window.fansWorldEvents.addListener('onContentLoaded', onContentLoaded);
+    window.fansWorldEvents.addListener('onFilterChange', onFilterChange);
+});
