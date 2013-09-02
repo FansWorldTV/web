@@ -37,7 +37,7 @@ class HomeController extends SiteController
         $videoRepo = $this->getRepository('Video');
 
         $defaultCategory = null;
-        $defaultGenre = 1;
+        $defaultGenre = 14;
         $defaultAuthor = $this->getRepository('User')->findOneBy(array('username' => 'fansworld'));
         
         $response = array(
