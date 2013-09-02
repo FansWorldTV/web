@@ -22,6 +22,17 @@
 	display: block;
 	z-index: 1;
 
+	.link-to-more {
+		position: relative;
+		font-size: 16px;
+		font-weight: 300;
+		.transition(all 0.3s ease);
+
+		&:hover {
+			border-bottom: 2px solid @green;
+		}
+	}
+
 	.spinner {
 		.spinnerize(20px);
 		margin: 14% auto 10px;

@@ -51,7 +51,8 @@
                     {% endfor %}
                 </div>
             </section>
-            <a href="{{ path('home_fwlist') }}">Ver más</a>
+            <div class="clearfix"></div>
+            <a href="{{ path('home_fwlist') }}" class="link-to-more">Ver más destacados</a>
         </div>
 
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
