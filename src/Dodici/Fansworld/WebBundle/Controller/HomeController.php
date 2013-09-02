@@ -38,7 +38,7 @@ class HomeController extends SiteController
 
         $defaultCategory = null;
         $defaultGenre = $this->getRepository('Genre')->findOneBy(array('slug' => 'sports'));
-        $defaultAuthor = $this->getRepository('User')->findOneBy(array('username' => 'fansworld'));
+        $defaultAuthor = null;
         
         $response = array(
             'categories' => $this->getRepository('VideoCategory')->findAll(),
@@ -64,9 +64,8 @@ class HomeController extends SiteController
      */
     public function fwVideoListAction()
     {
-        $defaultAuthorId = $this->getRepository('User')->findOneBy(array('username' => 'fansworld'))->getId();
-        $fwVideos = $this->getRepository('Video')->findBy(array('highlight' => true, 'active' => true, 'author' => $defaultAuthorId), array('createdAt' => 'desc', 'weight' => 'DESC'), self::FW_LIST_LIMIT);
-        $countVideos = $this->getRepository('Video')->countBy(array('highlight' => true, 'active' => true, 'author' => $defaultAuthorId));
+        $fwVideos = $this->getRepository('Video')->findBy(array('highlight' => true, 'active' => true), array('createdAt' => 'desc', 'weight' => 'DESC'), self::FW_LIST_LIMIT);
+        $countVideos = $this->getRepository('Video')->countBy(array('highlight' => true, 'active' => true));
         return array(
             'videos' => $fwVideos,
             'addMore' => $countVideos > self::FW_LIST_LIMIT ? true : false
