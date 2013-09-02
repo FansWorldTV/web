@@ -19,8 +19,10 @@ share.it = function () {
 
         $(self).addClass('disabled');
 
+        $("#share-modal .spinner-overlay").toggleClass('hide');
+
         params['fw'] = true;
-        params['message'] = $("input.wywtsay").val();
+        params['message'] = $("[data-share-msg]").val();
         params['entity-type'] = $("[data-share-button]").attr('data-type');
         params['entity-id'] = $("[data-share-button]").attr('data-id');
         params['share-list'] = {};
@@ -33,14 +35,17 @@ share.it = function () {
                 if (r.error) {
                     console.log(r.msg);
                 } else {
+                    $("#share-modal").modal('hide');
                     success("Contenido compartido!");
                     $("[data-share-button]").toggleClass('active');
                 }
             }
             self.removeClass('disabled');
+            $("#share-modal .spinner-overlay").toggleClass('hide');
         }, function (msg) {
             error(msg);
             self.removeClass('disabled');
+            $("#share-modal .spinner-overlay").toggleClass('hide');
         });
     });
 };

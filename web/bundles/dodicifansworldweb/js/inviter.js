@@ -160,7 +160,7 @@ inviter.tabs.email = function() {
     $container.find('form').submit(function() {
         var mailList = $("div.invite-modal div.content-modal[data-type='email'] input").tagit("assignedTags");
         var msg = $container.find('textarea.msg').val();
-        
+
         var submitBtn = $(this).find('.btn-success').addClass('loading-small');
 
         ajax.genericAction('invite_generateInvitation', {'users': mailList, 'msg': msg}, function(r) {
@@ -179,7 +179,7 @@ inviter.tabs.email = function() {
 
 inviter.tabs.twitter = function() {
     var $container = $("div.content-modal[data-type ='twitter']");
-    $container.find('textarea').html('¡ Los invito a Fansworld.TV ! ' + inviter.url.short);
+    $container.find('textarea').html('¡Los invito a Fansworld.TV! ' + inviter.url.short);
     if(inviter.linktwitter){
         $container.find('.is-logged').show();
     }else{

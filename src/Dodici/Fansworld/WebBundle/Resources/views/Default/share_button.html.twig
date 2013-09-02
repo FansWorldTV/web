@@ -10,6 +10,10 @@
             <h3 id="share-modal" style="text-align: left;">Compartir</h3>
         </div>
         <div class="modal-body">
+            <div class="spinner-overlay hide">
+                <div class="spinner"><div class="mask"></div></div>
+                <span class="legend">Compartiendo</span>
+            </div>
             <figure class="thumbnail">
                 {% thumbnail entity.image, 'medium' %}
                 <label class="title">{{ entity.title }}</label>
@@ -17,7 +21,7 @@
             </figure>
             <div class="data">
                 <label>Tu comentario</label>
-                <textarea placeholder="Escribe aquí tu comentario"></textarea>
+                <textarea placeholder="Escribe aquí tu comentario" data-share-msg></textarea>
 
                 <p>Primero comparte en</p>
                 <ul class="list-social-network">
@@ -32,15 +36,17 @@
                         </a>
                     </li>
                     <li>
-                        <a href="" data-share-content>
+                        <a href="https://plus.google.com/share?url={{ url(type~'_show', {'id': entity.id, 'slug': entity.slug}) }}" data-share-content>
                             <i class="gplus"></i>
                         </a>
                     </li>
+                    {#
                     <li>
                         <a href="" data-share-content>
                             <i class="pinterest"></i>
                         </a>
                     </li>
+                    #}
                 </ul>
                 <p>y ahora</p>
 
