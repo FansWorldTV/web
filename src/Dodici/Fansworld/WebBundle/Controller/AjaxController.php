@@ -18,6 +18,7 @@ use Dodici\Fansworld\WebBundle\Serializer\Serializer;
 class AjaxController extends SiteController
 {
     const FW_VIDEO_LIST_LIMIT = 30;
+
     /**
      * Ajax list videos from fansworld
      * @Route("ajax/list/fansworld", name="home_ajaxfwlist")
@@ -35,5 +36,28 @@ class AjaxController extends SiteController
             'videos' => $serializer->values($fwVideos, 'home_video'),
             'addMore' => $addMore
         ));
+    }
+
+    /**
+     * Ajax read all notifications for user
+     *  @Route("/ajax/read-all-notification", name="ajax_readallnotification")
+     */
+    public function ajaxReadAllNotification()
+    {
+        $user = $this->getUser();
+        $response = false;
+        if ($user) {
+            $notifications = $this->getRepository('Notification')->findBy(array('target' => $user->getId(), 'readed' => false, 'active' => true));
+            if (count($notifications) > 0) {
+                $em = $this->getDoctrine()->getEntityManager();
+                foreach ($notifications as $notification) {
+                    $notification->setReaded(true);
+                    $em->persist($notification);
+                    $em->flush();
+                }
+            }   
+        }
+        $response = true;
+        return $this->jsonResponse($response);
     }
 }
