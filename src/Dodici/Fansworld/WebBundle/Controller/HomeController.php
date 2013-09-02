@@ -65,7 +65,7 @@ class HomeController extends SiteController
     public function fwVideoListAction()
     {
         $defaultAuthorId = $this->getRepository('User')->findOneBy(array('username' => 'fansworld'))->getId();
-        $fwVideos = $this->getRepository('Video')->findBy(array('highlight' => true, 'active' => true, 'author' => $defaultAuthorId), array('createdAt' => 'desc'), self::FW_LIST_LIMIT);
+        $fwVideos = $this->getRepository('Video')->findBy(array('highlight' => true, 'active' => true, 'author' => $defaultAuthorId), array('createdAt' => 'desc', 'weight' => 'DESC'), self::FW_LIST_LIMIT);
         $countVideos = $this->getRepository('Video')->countBy(array('highlight' => true, 'active' => true, 'author' => $defaultAuthorId));
         return array(
             'videos' => $fwVideos,
