@@ -504,13 +504,13 @@ var site = {
                         $('.watchlaterText:first').html('Marcar como visto');
                         el.addClass('added');
                         el.attr('data-later', 'true');
-                        success('Added to playlist');
+                        success("Agregado a la lista de 'Ver Después'");
                     } else {
                         el.find('i').attr('class', '');
                         $('.watchlaterText:first').html('Mirar luego');
                         el.removeClass('added');
                         el.attr('data-later', 'false');
-                        success('Removed from playlist');
+                        success("Borrado de la lista de 'Ver Después'");
                     }
                 },
                 errorCallback: function(responsetext) {

@@ -124,38 +124,10 @@ social.fullwidth {
 
 		#share-modal {
 			.modal-body {
-				.spinner-overlay {
-					position: absolute;
-					top: 45px;
-					left: 0;
-					width: 100%;
-					height: 100%;
-					background-color: black;
-					opacity: 0.8;
-					.transition(opacity 0.3s ease);
-
-					&.hide {
-						opacity: 0;
-					}
-					.spinner {
-						position: absolute;
-						top: 25%;
-						left: 46%;
-						display: block !important;
-					}
-					.legend {
-						color: white;
-						font-weight: 600;
-						font-size: 14px;
-						position: absolute;
-						top: 44%;
-						left: 41%;
-					}
-				}
 				figure.thumbnail {
 					border: 1px dashed gray;
 					.border-radius(3px);
-					.size(160px, 170px);
+					.size(auto, 170px);
 					margin: 0;
 					padding: 10px;
 					float: left;
@@ -1397,7 +1369,6 @@ button.social_action {
 	}
 }
 
-
 .spinner-overlay {
 	position: absolute;
 	top: 45px;
@@ -1406,11 +1377,13 @@ button.social_action {
 	height: 100%;
 	background-color: black;
 	opacity: 0.8;
-	.transition(opacity 0.3s ease);
+	.transition(all 0.3s ease);
 
 	&.hide {
 		opacity: 0;
+		.transition(all 0.3s ease);
 	}
+
 	.spinner {
 		position: absolute;
 		top: 25%;
