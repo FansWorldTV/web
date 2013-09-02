@@ -34,33 +34,25 @@ class HomeController extends SiteController
         $checkfbreq = $this->checkFacebookRequest();
         if ($checkfbreq) return $checkfbreq;
         $user = $this->getUser();
+        $videoRepo = $this->getRepository('Video');
+
+        $defaultCategory = null;
+        $defaultGenre = 1;
+        $defaultAuthor = $this->getRepository('User')->findOneBy(array('username' => 'fansworld'));
         
         $response = array(
             'categories' => $this->getRepository('VideoCategory')->findAll(),
             'genres' => $this->getRepository('Genre')->findBy(array('parent' => null)),
             'confirmedModal' => $this->getRequest()->get('confirmedModal', false),
-            'highlighted' => array(),
+            'highlighted' => $videoRepo->highlight($defaultGenre, $defaultCategory, $defaultAuthor, self::LIMIT_VIDEO - 3, 0),
+            'popular' => $videoRepo->popular($defaultGenre, $defaultCategory, null, self::LIMIT_VIDEO, 0),
             'followed' => array(),
-            'popular' => array(),
+            'confirmedModal' => $this->getRequest()->get('confirmedModal', false)
         );
 
-        $vc = null;
-        $genre = 1;
-        $homeVideo = null;
-
-        $videoRepo = $this->getRepository('Video');
-
-        $limitWithTheHighlighted = (self::LIMIT_VIDEO - 3);
-        $videos = $videoRepo->searchHome(null, $genre, $vc, null, true, null, $homeVideo, $limitWithTheHighlighted, 0);
-        $response['highlighted'] = $videos;
-
         if ($user instanceof User) {
-            $videos = $videoRepo->searchHome($user, $genre, $vc, true, false, 'default', $homeVideo, self::LIMIT_VIDEO, 0);
-            $response['followed'] = $videos;
+            $response['followed'] = $videoRepo->follow($user, $defaultGenre, $defaultCategory, self::LIMIT_VIDEO, 0);
         }
-
-        $videos = $videoRepo->searchHome(null, $genre, $vc, null, false, null, null, self::LIMIT_VIDEO, 0);
-        $response['popular'] = $videos;
 
         return $response;
     }
@@ -72,8 +64,9 @@ class HomeController extends SiteController
      */
     public function fwVideoListAction()
     {
-        $fwVideos = $this->getRepository('Video')->findBy(array('highlight' => true, 'active' => true, 'author' => 1), array('createdAt' => 'desc'), self::FW_LIST_LIMIT);
-        $countVideos = $this->getRepository('Video')->countBy(array('highlight' => true, 'active' => true, 'author' => 1));
+        $defaultAuthorId = $this->getRepository('User')->findOneBy(array('username' => 'fansworld'))->getId();
+        $fwVideos = $this->getRepository('Video')->findBy(array('highlight' => true, 'active' => true, 'author' => $defaultAuthorId), array('createdAt' => 'desc'), self::FW_LIST_LIMIT);
+        $countVideos = $this->getRepository('Video')->countBy(array('highlight' => true, 'active' => true, 'author' => $defaultAuthorId));
         return array(
             'videos' => $fwVideos,
             'addMore' => $countVideos > self::FW_LIST_LIMIT ? true : false
@@ -111,15 +104,18 @@ class HomeController extends SiteController
             }
             $response['home'] = $serializer->values($homeVideo, 'home_video_double');
             $limitWithTheHighlighted = (self::LIMIT_VIDEO - 3);
-            $videos = $videoRepo->searchHome(null, $genre, $vc, null, true, null, $homeVideo, $limitWithTheHighlighted, 0);
+            $videos = $videoRepo->highlight($genre, $vc , null, $limitWithTheHighlighted, 0);
+            // $videos = $videoRepo->searchHome(null, $genre, $vc, null, true, null, $homeVideo, $limitWithTheHighlighted, 0);
             $response['highlighted'] = $serializer->values($videos, 'home_video');
             $response['highlighted'][1] = $serializer->values($homeVideo, 'home_video_double');
             if($user instanceof User) {
-                $videos = $videoRepo->searchHome($user, $genre, $vc, true, false, 'default', $homeVideo, self::LIMIT_VIDEO, 0);
+                $videos = $videoRepo->follow($user, $genre, $vc, self::LIMIT_VIDEO, 0);
+                // $videos = $videoRepo->searchHome($user, $genre, $vc, true, false, 'default', $homeVideo, self::LIMIT_VIDEO, 0);
                 $response['followed'] = $serializer->values($videos, 'home_video');
                 $response['totals']['followed'] = $videoRepo->countSearch(null, $user, $vc, false, null, null, null, null, $homeVideo, null, true, false, $genre);
             }
-            $videos = $videoRepo->searchHome(null, $genre, $vc, null, false, null, null, self::LIMIT_VIDEO, 0);
+            $videos = $videoRepo->popular($genre, $vc, null, self::LIMIT_VIDEO, 0);
+            // $videos = $videoRepo->searchHome(null, $genre, $vc, null, false, null, null, self::LIMIT_VIDEO, 0);
             $response['popular'] = $serializer->values($videos, 'home_video');
             $response['totals']['popular'] = $videoRepo->countSearch(null, null, $vc, false, null, null, null, null, $homeVideo, null, null, null, $genre);;
         } else {
@@ -138,12 +134,14 @@ class HomeController extends SiteController
             $response = array('videos' => array());
             switch ($block) {
                 case 'followed':
-                    $videos = $videoRepo->searchHome($user, $genre, $vc, true, false, 'default', $homeVideo, self::LIMIT_VIDEO, $offset);
+                    $videos = $videoRepo->follow($user, $genre, $vc, self::LIMIT_VIDEO, $offset);
+                    // $videos = $videoRepo->searchHome($user, $genre, $vc, true, false, 'default', $homeVideo, self::LIMIT_VIDEO, $offset);
                     $response['videos'] = $serializer->values($videos, 'home_video');
                     $videosCount = $videoRepo->countSearch(null, $user, $vc, false, null, null, null, null, $homeVideo, null, null, true, $genre);
                     break;
                 case 'popular':
-                    $videos = $videoRepo->searchHome(null, $genre, $vc, null, false, 'default', $homeVideo, self::LIMIT_VIDEO, $offset);
+                    $videos = $videoRepo->popular($genre, $vc, null, self::LIMIT_VIDEO, $offset);
+                    // $videos = $videoRepo->searchHome(null, $genre, $vc, null, false, 'default', $homeVideo, self::LIMIT_VIDEO, $offset);
                     $response['videos'] = $serializer->values($videos, 'home_video');
                     $videosCount = $videoRepo->countSearch(null, null, $vc, false, null, null, null, null, $homeVideo, null, null, null, $genre);
                     break;

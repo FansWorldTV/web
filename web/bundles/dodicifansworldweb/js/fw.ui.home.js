@@ -486,7 +486,9 @@ $(document).ready(function () {
         filter: 'followed'
     });
 
-    // Video Counters
+    /*
+    // Comentado por juan, no mas total counts!!
+
     $('[data-total-followed]').fwShowCount({
         type: type,
         id: id,
@@ -498,6 +500,8 @@ $(document).ready(function () {
         id: id,
         filter: 'popular'
     });
+
+    */
 
     $('[data-menu-edit="true"]').on('click', function(event){
         if($(this).hasClass('active')) {
