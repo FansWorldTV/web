@@ -19,6 +19,8 @@ share.it = function () {
 
         $(self).addClass('disabled');
 
+        $("#share-modal .spinner-overlay").toggleClass('hide');
+
         params['fw'] = true;
         params['message'] = $("[data-share-msg]").val();
         params['entity-type'] = $("[data-share-button]").attr('data-type');
@@ -39,9 +41,11 @@ share.it = function () {
                 }
             }
             self.removeClass('disabled');
+            $("#share-modal .spinner-overlay").toggleClass('hide');
         }, function (msg) {
             error(msg);
             self.removeClass('disabled');
+            $("#share-modal .spinner-overlay").toggleClass('hide');
         });
     });
 };
