@@ -1,3 +1,13 @@
+.home-gray-bar {
+	height: 408px;
+	position: absolute;
+	width: 100%;
+	top: 101px;
+	left: 0;
+	z-index: 0;
+	background-color: #f1f1f1;
+}
+
 .home-content {
 	@import "third-plugins/grid.less";
 	@columns: 12;
@@ -7,6 +17,10 @@
 
 	text-align: center;
 	padding-top: 10px;
+	max-width: 1024px;
+	margin: 0 auto;
+	display: block;
+	z-index: 1;
 
 	.spinner {
 		.spinnerize(20px);
@@ -23,23 +37,32 @@
 	}
 
 	.filter-home {
-		display: inline-block;
-		margin: 0 auto;
+		.box-sizing(border-box);
+		display: block;
+		margin-bottom: -4px;
+		margin-top: 15px;
+		width: 100%;
+		.column-count(12);
+		height: 40px;
+
 		li {
-			padding: 2px 5px 2px 5px;
+			height: 34px;
 			text-transform: uppercase;
 			font-size: 12px;
-			font-weight: 600;
+			font-weight: 500;
 			color: black;
 			.pull-left();
-			margin-right: 5px;
 			cursor: pointer;
 			position: relative;
+			display: block;
+
+			&[data-entity-type='genre'] {
+				font-weight: 600;
+			}
 
 			&.active {
-				color: white;
-				background-color: @green;
-				.border-radius(3px);
+				color: @green;
+				border-bottom: 2px solid @green;
 			}
 
 			// add the close button
@@ -67,7 +90,6 @@
 	}
 
 	section.row-fluid {
-		margin-top: 15px;
 		padding-top: 30px;
 		padding-bottom: 30px;
 
@@ -119,9 +141,9 @@
 
 		&.highlighteds.new {
 			display: block;
-			height: 340px;
+			height: 390px;
 			.box-sizing(border-box);
-			padding: 0 20px 0 20px;
+			padding: 25px 0 25px 0;
 
 			.video {
 				display: block;

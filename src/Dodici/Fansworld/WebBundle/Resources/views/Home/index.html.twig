@@ -16,11 +16,11 @@
 {% endblock %}
 
 {% block main_content %}
+    <div class="home-gray-bar"></div>
     <div class="home-content">
-        <ul id="sortable1" class="filter-home connectedSortable">
-            <li class="active" data-entity-type="null" data-entity-id="null">TODOS</li>
+        <ul class="filter-home">
             {% for genre in genres %}
-                <li data-entity-type="genre" data-entity-id="{{ genre.id }}">{{ genre.title }}</li>
+                <li data-entity-type="genre" data-entity-id="{{ genre.id }}" {% if loop.first %} class="active" {% endif %}>{{ genre.title }}</li>
             {% endfor %}
             {% for category in categories %}
                 <li data-entity-type="vc" data-entity-id="{{ category.id }}">{{ category.title }}</li>
