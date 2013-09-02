@@ -54,8 +54,6 @@ class HomeController extends SiteController
             $response['followed'] = $videoRepo->follow($user, $defaultGenre, $defaultCategory, self::LIMIT_VIDEO, 0);
         }
 
-        echo "test"; exit();
-
         return $response;
     }
 
