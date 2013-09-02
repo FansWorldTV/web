@@ -56,44 +56,47 @@
         </div>
 
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            <section class="row-fluid followed">
-                <header class="clearfix">
-                    <h3 class="pull-left">Sigues</h3>
-                    <span class="cant pull-left"><span data-total-followed></span> </span>
+            {% if followed %} 
+                <section class="row-fluid followed">
+                    <header class="clearfix">
+                        <h3 class="pull-left">Sigues</h3>
+                        <span class="cant pull-left"><span data-total-followed></span> </span>
 
-                    <section class="pull-right followed-tags topics">
+                        <section class="pull-right followed-tags topics">
+                            <ul class="pull-right"></ul>
+                            <h3 class="pull-right">Temas</h3>
+                        </section>
+                    </header>
+                    <div class="semantic-grid videos-container">
+                        {% include "DodiciFansworldWebBundle:Search:blocks/video_element_list.html.twig"  with { videos: followed } %}
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="add-more">+</div>
+                </section>
+            {% endif %}
+        {% endif %}
+
+        {% if popular %} 
+            <section class="row-fluid popular">
+                <header class="clearfix">
+                    <h3 class="pull-left">Popular</h3>
+                    <span class="cant pull-left"><span data-total-popular></span> </span>
+
+                    <section class="pull-right popular-tags topics">
                         <ul class="pull-right"></ul>
                         <h3 class="pull-right">Temas</h3>
                     </section>
                 </header>
                 <div class="semantic-grid videos-container">
-                    {% include "DodiciFansworldWebBundle:Search:blocks/video_element_list.html.twig"  with { videos: followed } %}
+                    {% include "DodiciFansworldWebBundle:Search:blocks/video_element_list.html.twig"  with { videos: popular } %}
                 </div>
                 <div class="clearfix"></div>
                 <div class="add-more">+</div>
             </section>
-        {% endif %}
-
-        <section class="row-fluid popular">
-            <header class="clearfix">
-                <h3 class="pull-left">Popular</h3>
-                <span class="cant pull-left"><span data-total-popular></span> </span>
-
-                <section class="pull-right popular-tags topics">
-                    <ul class="pull-right"></ul>
-                    <h3 class="pull-right">Temas</h3>
-                </section>
-            </header>
-            <div class="semantic-grid videos-container">
-                {% include "DodiciFansworldWebBundle:Search:blocks/video_element_list.html.twig"  with { videos: popular } %}
+            <div class="spinner hidden">
+                <div class="mask"></div>
             </div>
-            <div class="clearfix"></div>
-            <div class="add-more">+</div>
-        </section>
-
-        <div class="spinner hidden">
-            <div class="mask"></div>
-        </div>
+        {% endif %}
     </div>
 
     {% if confirmedModal %}
