@@ -29,8 +29,8 @@ class AjaxController extends SiteController
         $serializer = $this->get('serializer');
         $page = $request->get('page', 1);
         $offset = ($page - 1) * self::FW_VIDEO_LIST_LIMIT;
-        $fwVideos = $this->getRepository('Video')->findBy(array('highlight' => true, 'active' => true, 'author' => 1), array('createdAt' => 'desc'), self::FW_VIDEO_LIST_LIMIT, $offset);
-        $countVideos = $this->getRepository('Video')->countBy(array('highlight' => true, 'active' => true, 'author' => 1));
+        $fwVideos = $this->getRepository('Video')->findBy(array('highlight' => true, 'active' => true), array('createdAt' => 'desc', 'weight' => 'DESC'), self::FW_VIDEO_LIST_LIMIT, $offset);
+        $countVideos = $this->getRepository('Video')->countBy(array('highlight' => true, 'active' => true));
         $addMore = $countVideos > ($page * self::FW_VIDEO_LIST_LIMIT) ? true : false;
         return $this->jsonResponse(array(
             'videos' => $serializer->values($fwVideos, 'home_video'),
