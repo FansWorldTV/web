@@ -24,30 +24,30 @@ swiftmailer:
         type: file
         path: "%kernel.root_dir%/spool"
 
-snc_redis:
-    clients:
-        default:
-            type: predis
-            alias: default
-            dsn: { host: %snc_redis_dsn% }
-            logging: %kernel.debug%
-    session:
-        client: default
-        prefix: foo
-        use_as_default: true
-    doctrine:
-        metadata_cache:
-            client: cache
-            entity_manager: default
-            document_manager: default
-        result_cache:
-            client: cache
-            entity_manager: default
-            document_manager: default
-            namespace: "dcrc:"
-        query_cache:
-            client: cache
-            entity_manager: default
-    swiftmailer:
-        client: default
-        key: swiftmailer
+#snc_redis:
+#    clients:
+#        default:
+#            type: predis
+#            alias: default
+#            dsn: { host: %snc_redis_dsn% }
+#            logging: %kernel.debug%
+#    session:
+#        client: default
+#        prefix: foo
+#        use_as_default: true
+#    doctrine:
+#        metadata_cache:
+#            client: cache
+#            entity_manager: default
+#            document_manager: default
+#        result_cache:
+#            client: cache
+#            entity_manager: default
+#            document_manager: default
+#            namespace: "dcrc:"
+#        query_cache:
+#            client: cache
+#            entity_manager: default
+#    swiftmailer:
+#        client: default
+#        key: swiftmailer

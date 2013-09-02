@@ -15,11 +15,18 @@ use Dodici\Fansworld\WebBundle\Services\Search;
 use Symfony\Component\HttpFoundation\Request;
 use Application\Sonata\UserBundle\Entity\User;
 use Dodici\Fansworld\WebBundle\Entity\SearchHistory;
+use Elastica_Search;
+use Elastica_Query;
+use Elastica_Query_Term;
+use Elastica_Query_QueryString;
+use Elastica_Facet_Terms;
+use Elastica_Type_Mapping;
+use Elastica_Searchable;
 
 class SearchController extends SiteController
 {
 
-    const LIMIT_SEARCH_VIDEO = 14;
+    const LIMIT_SEARCH_VIDEO = 3;
     const LIMIT_SEARCH_IDOL = 9;
     const LIMIT_SEARCH_USER = 9;
     const LIMIT_SEARCH_PHOTO = 10;
@@ -32,46 +39,111 @@ class SearchController extends SiteController
      */
     public function indexAction()
     {
-        $user = $this->getUser();
         $request = $this->getRequest();
-        $query = $request->get('query', null);
-        $ip = $this->getRequest()->server->get("REMOTE_ADDR");
 
-        // Log search
-        $searchLog = $this->get('search')->log($query, $user, $ip, 'web');
+        $searchTerm = trim($request->query->get('query'));
 
-        $videoRepo = $this->getRepository('Video');
-        $idolRepo = $this->getRepository('Idol');
-        $fanRepo = $this->getRepository('User');
-        $photoRepo = $this->getRepository('Photo');
-        $eventRepo = $this->getRepository('Event');
-        $teamRepo = $this->getRepository('Team');
+        $searchHistoryType = $this->get('fos_elastica.index.website.search_history');
+        $userType = $this->get('fos_elastica.index.website.user');
+        $idolType = $this->get('fos_elastica.index.website.idol');
+        $teamType = $this->get('fos_elastica.index.website.team');
+        $photoType = $this->get('fos_elastica.index.website.photo');
+        $videoType = $this->get('fos_elastica.index.website.video');
 
-        $videoSearch = $videoRepo->search($query, $user, self::LIMIT_SEARCH_VIDEO);
-        $videoCount = $videoRepo->countSearch($query);
+        $em = $this->container->get('sonata.media.entity_manager');
+        $log = new SearchHistory();
+        $log->setTerm($searchTerm);
+        $log->setAuthor($this->getUser());
+        $log->setIp($request->getClientIp());
+        $log->setDevice('web');
+        $em->persist($log);
+        $em->flush();
 
-        $idolSearch = $idolRepo->search($query, null, self::LIMIT_SEARCH_IDOL);
-        $idolCount = $idolRepo->countSearch($query);
+        $client = $this->get('fos_elastica.client');
+        $search = new Elastica_Search($client);
 
-        $fanSearch = $fanRepo->search($query, null, self::LIMIT_SEARCH_USER);
-        $fanCount = $fanRepo->countSearch($query);
+        $types = array($userType, $idolType, $teamType, $photoType, $videoType); //$searchHistoryType
+        $search = $search->addTypes($types);
+        $resultSet = $search->search('*' . $searchTerm . '*');
 
-        $photoSearch = $photoRepo->search($query, null, self::LIMIT_SEARCH_PHOTO);
-        $photoCount = $photoRepo->countSearch($query);
+        $countAll = $resultSet->getTotalHits();
 
-        $eventSearch = $eventRepo->search($query, null, self::LIMIT_SEARCH_EVENT);
-        $eventCount = $eventRepo->countSearch($query);
+        $limit = 30;
+        $search = $search->addTypes($types);
 
-        $teamSearch = $teamRepo->search($query, null, self::LIMIT_SEARCH_TEAM);
-        $teamCount = $teamRepo->countSearch($query);
+        $query = new Elastica_Query();
+        //$query->setSize($limit)->setFrom($limit * $page);
+        $queryString = new Elastica_Query_QueryString();
+        $queryString->setQuery('*' . $searchTerm . '*');
+        $query->setQuery($queryString);
 
-        $todo = $videoCount + $idolCount + $fanCount + $photoCount + $eventCount;
+        $resultSet = $search->search($query);
 
-        $idols = array(
-            'ulClass' => 'idols',
-            'containerClass' => 'idol-container',
-            'list' => $idolSearch
-        );
+        var_dump($query);
+
+        $usersSearch = new Elastica_Search($client);
+        $photosSearch = new Elastica_Search($client);
+        $videosSearch = new Elastica_Search($client);
+        $idolsSearch = new Elastica_Search($client);
+        $teamsSearch = new Elastica_Search($client);
+
+        $usersCount = $usersSearch->addType($userType)->search('*' . $searchTerm . '*')->getTotalHits();
+        $photosCount = $photosSearch->addType($photoType)->search('*' . $searchTerm . '*')->getTotalHits();
+        $videosCount = $videosSearch->addType($videoType)->search('*' . $searchTerm . '*')->getTotalHits();
+        $idolsCount = $idolsSearch->addType($idolType)->search('*' . $searchTerm . '*')->getTotalHits();
+        $teamsCount = $teamsSearch->addType($teamType)->search('*' . $searchTerm . '*')->getTotalHits();
+
+        $users = array();
+        $photos = array();
+        $videos = array();
+        $idols = array();
+        $teams = array();
+
+        foreach($resultSet as $result){
+            $data = $result->getData();
+            $type = $result->getType();
+            $score = $result->getScore();
+
+            switch ($type) {
+                case 'user':
+                    $id = $data['id'];
+                    $users[] = $this->getRepository('User')->find($id);
+
+                    break;
+
+                case 'photo':
+                    $id = $data['id'];
+                    $photos[] = $this->getRepository('Photo')->find($id);
+
+                    break;
+
+                case 'video':
+                    $id = $data['id'];
+                    $videos[] = $this->getRepository('Video')->find($id);
+
+                    break;
+
+                case 'idol':
+                    $id =   $data['id'];
+                    $idols[] = $this->getRepository('Idol')->find($id);
+
+                    break;
+
+                case 'team':
+                    $id = $data['id'];
+                    $teams[] = $this->getRepository('Team')->find($id);
+
+                    break;
+            }
+        }
+
+        if ($idols) {
+            $idols = array(
+                'ulClass' => 'idols',
+                'containerClass' => 'idol-container',
+                'list' => $idols
+            );
+        }
 
         $fans = array(
             'ulClass' => 'fans',
@@ -79,14 +151,18 @@ class SearchController extends SiteController
             'list' => array()
         );
 
-        $teams = array(
-            'ulClass' => 'teams',
-            'containerClass' => 'team-container',
-            'list' => $teamSearch
-        );
+        if ($users) {
+            foreach ($users as $user) {
+                $fans['list'][] = $user;
+            }
+        }
 
-        foreach ($fanSearch as $fan) {
-            $fans['list'][] = $fan[0];
+        if ($teams) {
+            $teams = array(
+                'ulClass' => 'teams',
+                'containerClass' => 'team-container',
+                'list' => $teams
+            );
         }
 
         $trending = $this->get('tagger')->trending();
@@ -94,13 +170,12 @@ class SearchController extends SiteController
         $videosHighlighted = $this->getRepository('Video')->findBy(array('highlight' => true, 'active' => true), array('weight' => 'desc'), 2);
 
         return array(
-            'todoCount' => $todo,
-            'videoCount' => $videoCount,
-            'idolCount' => $idolCount,
-            'fanCount' => $fanCount,
-            'photoCount' => $photoCount,
-            /*'eventCount' => $eventCount,*/
-            'teamCount' => $teamCount,
+            'todoCount' => $countAll,
+            'videoCount' => $videosCount,
+            'idolCount' => $idolsCount,
+            'fanCount' => $usersCount,
+            'photoCount' => $photosCount,
+            'teamCount' => $teamsCount,
             'limit' => array(
                 'video' => self::LIMIT_SEARCH_VIDEO,
                 'idol' => self::LIMIT_SEARCH_IDOL,
@@ -109,12 +184,11 @@ class SearchController extends SiteController
                 'team' => self::LIMIT_SEARCH_TEAM
             ),
             'idols' => $idols,
-            /*'events' => $eventSearch,*/
-            'photos' => $photoSearch,
+            'photos' => $photos,
             'fans' => $fans,
-            'videos' => $videoSearch,
+            'videos' => $videos,
             'teams' => $teams,
-            'query' => $query,
+            'query' => $searchTerm,
             'trending' => $trending,
             'videosHighlighted' => $videosHighlighted
         );
@@ -124,6 +198,93 @@ class SearchController extends SiteController
      *  @Route("/ajax/search", name="search_ajaxsearch")
      */
     public function ajaxSearchAction()
+    {
+        $request = $this->getRequest();
+
+        $searchTerm = trim($request->query->get('query'));
+        $page = $request->query->get('page');
+        $type = $request->query->get('type');
+
+        $searchHistoryType = $this->get('fos_elastica.index.website.search_history');
+        $searchType = $this->get('fos_elastica.index.website.' . $type);
+        $limit = constant('self::LIMIT_SEARCH_' . strtoupper($type));
+
+        $client = $this->get('fos_elastica.client');
+
+        $search = new Elastica_Search($client);
+        $query = new Elastica_Query();
+        //$query->setSize($limit)->setFrom($limit * $page);
+
+        $queryString = new Elastica_Query_QueryString();
+        $queryString->setQuery('*' . $searchTerm . '*');
+
+        $query->setQuery($queryString);
+//var_dump($query); die;
+        $totalHits = new Elastica_Search($client);
+        $countAll = $totalHits->addType($type)->search($query)->getTotalHits();
+
+        $search = $search->addType($searchType);
+
+        switch ($searchType) {
+            case 'video':
+                $imageSize = "small";
+                break;
+            default :
+                $imageSize = "small";
+                break;
+        }
+
+        $resultSet = $search->search($query);
+
+        $serializer = $this->get('serializer');
+
+        foreach($resultSet as $key => $result){
+            $data = $result->getData();
+            $type = $result->getType();
+
+            $id = $data['id'];
+            $entity = $this->getRepository(ucfirst($type))->find($id);
+
+            $response['search'][] = $serializer->values($entity, $imageSize);
+
+            switch ($type) {
+                case 'user':
+                    $response['search'][$key]['url'] = $this->generateUrl('user_land', array('slug' => $entity->getUsername()));
+
+                    break;
+
+                case 'photo':
+                    $response['search'][$key]['url'] = $this->generateUrl('photo_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()));
+
+                    break;
+
+                case 'video':
+                    $response['search'][$key]['url'] = $this->generateUrl('video_show', array('id' => $id, 'slug' => $entity->getSlug()));
+
+                    break;
+
+                case 'idol':
+                    $response['search'][$key]['url'] = $this->generateUrl('idol_land', array('slug' => $entity->getSlug()));
+
+                    break;
+
+                case 'team':
+                    $response['search'][$key]['url'] = $this->generateUrl('team_land', array('slug' => $entity->getSlug()));
+
+                    break;
+            }
+        }
+
+        $response['addMore'] = $countAll > ($limit * $page) ? true : false;
+
+        return $this->jsonResponse($response);
+    }
+
+
+    /**
+     *  @Route("/ajax/search", name="search_ajax2search")
+     */
+    public function ajaxSearch2Action()
     {
         $request = $this->getRequest();
 
@@ -155,7 +316,7 @@ class SearchController extends SiteController
 
         switch ($type) {
             case 'video':
-                $imageSize = "home_video";
+                $imageSize = "medium";
                 break;
             default :
                 $imageSize = "medium";
@@ -169,7 +330,7 @@ class SearchController extends SiteController
                 if(!isset($el['id'])){
                     continue;
                 }
-                
+
                 if (array_key_exists('duration', $el)) {
                     $response['search'][$key]['duration'] = $el['duration'];
                 }
@@ -177,23 +338,6 @@ class SearchController extends SiteController
                 $entity = $this->getRepository(ucfirst($type))->find($el['id']);
 
                 switch ($type) {
-                    case 'event':
-                        if ($this->getUser() instanceof User) {
-                            $response['search'][$key]['checked'] = $this->getRepository('Eventship')->findOneBy(array('author' => $this->getUser()->getId(), 'event' => $el['id'])) ? true : false;
-                        } else {
-                            $response['search'][$key]['checked'] = null;
-                        }
-                        $now = new \DateTime();
-                        $started = ($entity->getFromtime() <= $now);
-
-                        $response['search'][$key]['text'] = $this->get('appstate')->getEventText($el['id']);
-                        $response['search'][$key]['date'] = $entity->getFromtime()->format('d-m-Y');
-                        $response['search'][$key]['showdate'] = $entity->getFromtime()->format('d/m/Y H:i');
-                        $response['search'][$key]['url'] = $this->generateUrl('event_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()));
-                        $response['search'][$key]['started'] = $started;
-
-                        break;
-
                     case 'video':
                         $response['search'][$key]['url'] = $this->generateUrl('video_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug()));
                         break;
@@ -228,31 +372,20 @@ class SearchController extends SiteController
      */
     public function ajaxSearchAutocompleteAction(Request $request) {
         $request = $this->getRequest();
+        $searchTerm = trim($request->query->get('q'));
 
         $searchHistoryType = $this->get('fos_elastica.index.website.search_history');
         $userType = $this->get('fos_elastica.index.website.user');
         $idolType = $this->get('fos_elastica.index.website.idol');
         $teamType = $this->get('fos_elastica.index.website.team');
 
-        $searchTerm = trim($request->query->get('q'));
-
         $em = $this->container->get('sonata.media.entity_manager');
-
-        /*$log = new SearchHistory();
-        $log->setTerm($searchTerm);
-        $log->setAuthor($this->getUser());
-        $log->setIp($request->getClientIp());
-        $log->setDevice('web');
-        $em->persist($log);
-        $em->flush();
-        */
 
         $client = $this->get('fos_elastica.client');
         $search = new Elastica_Search($client);
 
         // Configure and execute the search
-        $types = array($userType, $idolType, $teamType);
-        //$types = array($searchHistoryType, $userType, $idolType, $teamType);
+        $types = array($userType, $idolType, $teamType); //$searchHistoryType
 
         $search = $search->addTypes($types);
 
@@ -278,9 +411,9 @@ class SearchController extends SiteController
 
                         $response['search_history'][] = array(
                             'value' => $data['term']
-                        , 'tokens' => $data['term']
-                        , 'type' => $type
-                        , 'score' => $score
+                            , 'tokens' => $data['term']
+                            , 'type' => $type
+                            , 'score' => $score
                         );
                     }
 
@@ -295,21 +428,14 @@ class SearchController extends SiteController
 
                     $response['suggestions'][] = array(
                         'value' => $data['firstName'] . ' ' . $data['lastName']
-                    , 'tokens' => $data['username'] . ', ' . $data['firstName'] . ', ' . $data['lastName']
-                    , 'type' => $type
-                    , 'score' => $score
-                    , 'image' => $image
-                    , 'url' => $url
+                        , 'tokens' => $data['username'] . ', ' . $data['firstName'] . ', ' . $data['lastName']
+                        , 'type' => $type
+                        , 'score' => $score
+                        , 'image' => $image
+                        , 'url' => $url
                     );
 
                     break;
-
-                //case 'photo':
-                //    $response[] = array('value' => $data['username'], 'tokens' => $data['username'] . ', ' . $data['firstName'] . ', ' . $data['lastName']);
-                //    break;
-                //case 'video':
-                //    $response[] = array('value' => $data, 'tokens' => $data);
-                //    break;
 
                 case 'idol':
                     $id =   $data['id'];
@@ -320,11 +446,11 @@ class SearchController extends SiteController
 
                     $response['suggestions'][] = array(
                         'value' => $data['firstName'] . ' ' . $data['lastName']
-                    , 'tokens' => $data['firstName'] . ', ' . $data['lastName']
-                    , 'type' => $type
-                    , 'score' => $score
-                    , 'image' => $image
-                    , 'url' => $url
+                        , 'tokens' => $data['firstName'] . ', ' . $data['lastName']
+                        , 'type' => $type
+                        , 'score' => $score
+                        , 'image' => $image
+                        , 'url' => $url
                     );
 
                     break;
@@ -338,11 +464,11 @@ class SearchController extends SiteController
 
                     $response['suggestions'][] = array(
                         'value' => $data['title']
-                    , 'tokens' => $data['title'] . ', ' . $data['nicknames']
-                    , 'type' => $type
-                    , 'score' => $score
-                    , 'image' => $image
-                    , 'url' => $url
+                        , 'tokens' => $data['title'] . ', ' . $data['nicknames']
+                        , 'type' => $type
+                        , 'score' => $score
+                        , 'image' => $image
+                        , 'url' => $url
                     );
 
                     break;
@@ -353,4 +479,5 @@ class SearchController extends SiteController
 
         return $this->jsonResponse($response);
     }
+
 }

@@ -93,6 +93,8 @@ search.it = function ($ele) {
                 templateHelper.renderTemplate('search-' + type, entity, destiny, false, callback);
             }
         }
+
+        $ele.attr('data-page', parseInt(params.page) + 1);
     }, function (r) {
         console.log(r);
     }, 'get');

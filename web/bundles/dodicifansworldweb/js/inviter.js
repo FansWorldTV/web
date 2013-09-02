@@ -77,7 +77,7 @@ inviter.tabs.facebook = function() {
                             $.when(templateHelper.htmlTemplate('fans-invite_element', this))
                                     .then(function(htmlTemplate) {
                                 $(htmlTemplate).appendTo($inviteBlock.find('.fan-friends ul'));
-                            })
+                            });
                         });
 
                         $inviteBlock.find('.fan-friends').removeClass('loading');
@@ -115,7 +115,7 @@ inviter.tabs.facebook = function() {
                             $.when(templateHelper.htmlTemplate('fans-invite_element', jsonData))
                                     .then(function(htmlTemplate) {
                                 $(htmlTemplate).appendTo($inviteBlock.find('.invite-friends ul'));
-                            })
+                            });
                         });
 
                         $inviteBlock.find('.invite-friends').removeClass('loading');
@@ -160,7 +160,7 @@ inviter.tabs.email = function() {
     $container.find('form').submit(function() {
         var mailList = $("div.invite-modal div.content-modal[data-type='email'] input").tagit("assignedTags");
         var msg = $container.find('textarea.msg').val();
-        
+
         var submitBtn = $(this).find('.btn-success').addClass('loading-small');
 
         ajax.genericAction('invite_generateInvitation', {'users': mailList, 'msg': msg}, function(r) {

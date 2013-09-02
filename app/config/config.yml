@@ -168,6 +168,101 @@ fos_twitter:
     consumer_key: %twitter.app_key%
     consumer_secret: %twitter.app_secret%
 
+fos_elastica:
+    clients:
+        default: { host: %fos_elastica_host%, port: %fos_elastica_port% }
+    #serializer:
+    #    callback_class: FOS\ElasticaBundle\Serializer\Callback
+    #    serializer: serializer
+    indexes:
+        website:
+            client: default
+            settings:
+                index:
+                    analysis:
+                        analyzer:
+                            default:
+                                language: spanish
+                                tokenizer : nonutf8letter
+                                filter : [standard, lowercase, asciifolding]
+                        tokenizer:
+                            nonutf8letter:
+                                type: pattern
+                                pattern: '[^\pL\pM\p{Nd}\p{Nl}\p{Pc}[\p{InEnclosedAlphanumerics}&&\p{So}]]+'
+
+            types:
+                search_history:
+                    mappings:
+                        term: { boost: 5 }
+                    persistence:
+                        driver: orm # orm, mongodb, propel are available
+                        model: Dodici\Fansworld\WebBundle\Entity\SearchHistory
+                        provider: ~
+                        listener: ~
+                        finder: ~
+                user:
+                    mappings:
+                        username: { boost: 5 }
+                        firstName: { boost: 3 }
+                        lastName: { boost: 3 }
+                        id: ~
+
+                    persistence:
+                        driver: orm # orm, mongodb, propel are available
+                        model: Application\Sonata\UserBundle\Entity\User
+                        provider: ~
+                        listener: ~
+                        finder: ~
+                photo:
+                    mappings:
+                        title: { boost: 5 }
+                        #content: { boost: 3 }
+                        id: ~
+
+                    persistence:
+                        driver: orm # orm, mongodb, propel are available
+                        model: Dodici\Fansworld\WebBundle\Entity\Photo
+                        provider: ~
+                        listener: ~
+                        finder: ~
+                video:
+                    mappings:
+                        title: { boost: 5 }
+                        #content: { boost: 3 }
+                        id: ~
+
+                    persistence:
+                        driver: orm # orm, mongodb, propel are available
+                        model: Dodici\Fansworld\WebBundle\Entity\Video
+                        provider: ~
+                        listener: ~
+                        finder: ~
+                idol:
+                    mappings:
+                        firstName: { boost: 5 }
+                        lastName: { boost: 5 }
+                        id: ~
+
+                    persistence:
+                        driver: orm # orm, mongodb, propel are available
+                        model: Dodici\Fansworld\WebBundle\Entity\Idol
+                        provider: ~
+                        listener: ~
+                        finder: ~
+                team:
+                    mappings:
+                        title: { boost: 5 }
+                        shortname: { boost: 5 }
+                        nicknames: { boost: 4 }
+                        stadium: { boost: 3 }
+                        id: ~
+
+                    persistence:
+                        driver: orm # orm, mongodb, propel are available
+                        model: Dodici\Fansworld\WebBundle\Entity\Team
+                        provider: ~
+                        listener: ~
+                        finder: ~
 
 parameters:
     sonata.user.admin.user.class: Application\Sonata\UserBundle\Admin\Entity\UserAdmin

@@ -31,7 +31,7 @@ $loader->registerNamespaces(array(
 	'Artseld' => __DIR__.'/../vendor/bundles',
 	'Bazinga' => __DIR__.'/../vendor/bundles',
     'Kaltura' => __DIR__.'/../src',
-    'Snc' => __DIR__.'/../vendor/bundles',    
+    'Snc' => __DIR__.'/../vendor/bundles',
     //'Predis' => __DIR__.'/../vendor/predis/lib',
 ));
 $loader->registerPrefixes(array(

@@ -204,6 +204,9 @@ class Elastica_Search
                         case 'limit' :
                             $query->setLimit($value);
                             break;
+                        case 'from':
+                            $query->setFrom($value);
+                            break;
                         case 'routing' :
                             $params['routing'] = $value;
                             break;
