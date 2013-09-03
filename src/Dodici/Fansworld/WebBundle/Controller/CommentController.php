@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dodici\Fansworld\WebBundle\Controller\SiteController;
 use Dodici\Fansworld\WebBundle\Entity\Comment;
 use Symfony\Component\HttpFoundation\Request;
+use Dodici\Fansworld\WebBundle\Entity\Video;
 
 /**
  * Comment controller.
@@ -45,7 +46,6 @@ class CommentController extends SiteController
     public function ajaxPostAction()
     {
         try {
-
             $request = $this->getRequest();
             $id = intval($request->get('id'));
             $type = $request->get('type');
@@ -54,6 +54,7 @@ class CommentController extends SiteController
             $ispin = $request->get('ispin') == 'true';
             $translator = $this->get('translator');
             $appstate = $this->get('appstate');
+            $videoShare = false;
 
             if (!in_array($type, array('newspost', 'photo', 'video', 'album', 'contest', 'comment', 'user', 'team', 'idol')))
                 throw new \Exception('Invalid type');
@@ -73,20 +74,27 @@ class CommentController extends SiteController
             $user = $this->getUser();
             $em = $this->getDoctrine()->getEntityManager();
 
-            $comment = $this->get('commenter')->comment($user, $entity, $content, $privacy);
-
-            if ($entity instanceof Comment) {
-                $message = $translator->trans('You have replied to a comment');
+            $isYoutubeUrl = $this->_isYoutubeUrl($content);
+            if ($isYoutubeUrl) {
+                $this->_createAndShareVideo($content);
+                $jsonComment = "";
+                $videoShare = true;
+                $message = "Video compartido con exito";
             } else {
-                $message = $translator->trans('You have commented on') . ' ' . (string) $entity;
+                $comment = $this->get('commenter')->comment($user, $entity, $content, $privacy);
+                if ($entity instanceof Comment) {
+                    $message = $translator->trans('You have replied to a comment');
+                } else {
+                    $message = $translator->trans('You have commented on') . ' ' . (string) $entity;
+                }
+                $templatename = ($ispin ? 'pin_comment.html.twig' : 'comment.html.twig');
+                $jsonComment = $this->jsonComment($comment, 'true');
             }
-
-            $templatename = ($ispin ? 'pin_comment.html.twig' : 'comment.html.twig');
-            $jsonComment = $this->jsonComment($comment, 'true');
 
             return $this->jsonResponse(array(
                         'jsonComment' => $jsonComment,
                         'message' => $message,
+                        'videoShare' => $videoShare,
                         'authorAvatarUrl' => $this->getImageUrl($user->getImage(), 'small'),
                         'authorProfileUrl' => $this->generateUrl('user_land', array('username' => $user->getUsername()))
                     ));
@@ -308,4 +316,27 @@ class CommentController extends SiteController
         return $tag;
     }
 
+    private function _createAndShareVideo($content) {
+        $video = $this->get('video.uploader')->createVideoFromUrl($content, $this->getUser());
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->persist($video);
+        $em->flush();
+        $this->get('sharer')->share($video, $this->getUser(), $video->getTitle(), $this->getUser());
+    }
+
+    private function _isYoutubeUrl($youtube)
+    {
+        if ((strpos($youtube, 'youtube.com') !== false) || (strpos($youtube, 'youtu.be') !== false)) {
+            $youtube = str_replace(
+            array('http://','www.','youtube.com/watch?v=','youtu.be/','youtube.com/v/'), 
+            array('','','','',''), 
+            $youtube);
+            if (strpos($youtube, '&') !== false) {
+                $youtube = substr($youtube, 0, strpos($youtube, '&'));
+            }
+            return trim($youtube);
+        } else {
+            return null;
+        }
+    }
 }

@@ -174,7 +174,46 @@ class VideoUploader
             throw new \Exception('Could not parse URL');
         }
     }
-    
+
+
+    public function isValidYoutubeUrl($url)
+    {
+        if ((strpos($url, 'youtube.com') !== false) || (strpos($url, 'youtu.be') !== false)) {
+            $url = str_replace(
+            array('http://','www.','youtube.com/watch?v=','youtu.be/','youtube.com/v/'), 
+            array('','','','',''), 
+            $url);
+            if (strpos($url, '&') !== false) {
+                $url = substr($url, 0, strpos($url, '&'));
+            }
+            return trim($url);
+        } else {
+            return null;
+        }
+    }
+
+    public function getYoutubeMeta($id)
+    {
+        if (!$id) {
+            return null;
+        }
+
+        $url = sprintf('https://gdata.youtube.com/feeds/api/videos/%s?alt=json', $id);
+        $metadata = @file_get_contents($url);
+
+        if (!$metadata) {
+            throw new \RuntimeException('Unable to retrieve youtube video information for :' . $url);
+        }
+
+        $metadata = json_decode($metadata, true);
+
+        if (!$metadata || !isset($metadata['entry'])) {
+            throw new \RuntimeException('Unable to decode youtube video information for :' . $url);
+        }
+
+        return $metadata['entry'];
+    }
+
 	/**
      * @throws \RuntimeException
      * @param string $id
