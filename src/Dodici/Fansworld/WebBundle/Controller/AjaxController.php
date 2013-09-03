@@ -60,4 +60,31 @@ class AjaxController extends SiteController
         $response = true;
         return $this->jsonResponse($response);
     }
+
+    /**
+     *  Ajax get youtube data from url
+     *  @Route("/ajax/get-youtube-data", name="ajax_getyoutubedata")
+     */
+    public function ajaxGetYoutubeData()
+    {
+        $request = $this->getRequest();
+        $url = $request->get('url');
+        $isValid = $this->get('video.uploader')->isValidYoutubeUrl($url);
+        $validUrl = false;
+        $metaData = "";
+
+        if ($isValid) {
+            $metaData = $this->get('video.uploader')->getYoutubeMeta($isValid);
+            $validUrl = true;
+        }
+
+        $response =  array(
+            'metadata'   => $metaData,
+            'validurl' => $validUrl
+        );
+
+        return $this->jsonResponse($response);
+    }
+
+
 }
