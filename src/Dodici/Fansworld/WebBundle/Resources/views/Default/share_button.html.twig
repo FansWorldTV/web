@@ -40,13 +40,6 @@
                             <i class="gplus"></i>
                         </a>
                     </li>
-                    {#
-                    <li>
-                        <a href="" data-share-content>
-                            <i class="pinterest"></i>
-                        </a>
-                    </li>
-                    #}
                 </ul>
                 <p>y ahora</p>
 
@@ -54,35 +47,4 @@
             </div>
         </div>
     </div>
-    {#<div class="share-box hide" data-sharebox-gral>
-        <img class="arrow" src="{{ asset('bundles/dodicifansworldweb/images/arrow_nav.png') }}"/>
-
-        <div class="top">
-            <i class="close-share"></i>
-            <input name="message" type="text" placeholder="Que quieres decir..." class="wywtsay"/>
-        </div>
-        <div class="bottom">
-            <div class="sharewith">
-                <input data-token-input data-route="_share_ajaxwith" data-action="tag" type="text"
-                       placeholder="Con quien lo queres compartir..."/>
-            </div>
-
-            <div class="share-buttons">
-                <span class="pull-left">
-                    <button class="btn-checkbox fb"
-                            href="https://www.facebook.com/sharer/sharer.php?u={{ url(type~'_show', {'id': entity.id,'slug': entity.slug}) }}"
-                            data-share-content></button>
-                    <button class="btn-checkbox tw"
-                            href="http://www.twitter.com/share?url={{ url(type~'_show', {'id': entity.id, 'slug': entity.slug}) }}"
-                            data-share-content></button>
-                    <button class="btn-checkbox fw active"></button>
-                </span>
-
-                <span class="pull-right">
-                    <button id="share_it" class="btn btn-primary">Compartir</button>
-                </span>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-    </div>#}
 </div>

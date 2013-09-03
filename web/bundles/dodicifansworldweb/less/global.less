@@ -1421,3 +1421,170 @@ button.social_action {
 		left: 41%;
 	}
 }
+
+#upload-modal {
+	.modal-body {
+		form {
+			section.drop-zone {
+				border: 1px dashed @grayDark;
+				display: block;
+				width: 100%;
+				.border-radius(4px);
+				padding: 10px;
+				.box-sizing(border-box);
+				margin-bottom: 13px;
+
+				p.drop-legend {
+					margin-top: 5px;
+					font-size: 18px;
+					font-weight: 400;
+					font-style: italic;
+					color: @grayDark;
+					text-align: center;
+					line-height: 35px;
+
+					span {
+						font-size: 15px;
+						font-weight: 700;
+						font-style: normal;
+						color: @green;
+					}
+				}
+
+				.youtube-input {
+					display: block;
+					.size(50px, 100%);
+					border: 1px solid #cccccc;
+					.box-sizing(border-box);
+					.border-radius(5px);
+					overflow: hidden;
+
+					figure {
+						height: 50px;
+						.box-sizing(border-box);
+						background-color: #e6e6e6;
+						margin: 0;
+						display: inline-block;
+						padding: 10px 20px 10px 20px;
+						float: left;
+						border-right: 1px solid #cccccc;
+					}
+					input {
+						width: 360px;
+						float: left;
+						height: 50px;
+						height: 50px;
+						border: 0;
+						margin: 0;
+						padding: 0 0 0 7px;
+						font-size: 14px;
+					}
+				}
+			}
+
+			.row {
+				margin-left: 0;
+			}
+
+			section.form-rest {
+				.row {
+					margin-top: 10px;
+
+					&.fifty-fifty {
+						.component {
+							width: 50%;
+							float: left;
+							&:first-child {
+								padding-right: 10px;
+							}
+
+							.btn-group {
+								height: 50px;
+
+								button {
+									height: 50px;
+									width: 50%;
+								}
+							}
+
+							a.btn.dropdown-toggle {
+								height: 50px;
+								box-sizing: border-box;
+								width: 100%;
+								padding-top: 13px;
+								text-align: left;
+							}
+						}
+					}
+
+					.component {
+						.box-sizing(border-box);
+						label {
+							font-size: 16px;
+							font-weight: 300;
+							margin-bottom: 5px;
+							width: 100%;
+							display: block;
+						}
+
+						input, textarea {
+							width: 100%;
+							.box-sizing(border-box);
+							font-size: 14px;
+							font-weight: 400;
+							color: @black;
+						}
+
+						input {
+							height: 50px;
+							padding-left: 12px;
+						}
+
+						textarea {
+							height: 100px;
+						}
+					}
+				}
+			}
+
+			.button-submit-action {
+				.gradient-green();
+				.size(50px, 250px);
+				text-shadow: 0 1px 1px black;
+				color: white;
+				font-size: 14px;
+				border: 0;
+				border-radius: 5px;
+				font-weight: 700;
+				margin-top: 15px;
+			}
+
+			.progress {
+				.clearfix;
+				margin-top: 15px;
+				display: block;
+				position: relative;
+				.size(50px, 100%);
+				border: 1px solid rgba(100, 100, 100, 0.2);
+
+				.percent-value {
+					position: absolute;
+					top: 0;
+					left: 0;
+					padding-top: 12px;
+					.size(50px, 100%);
+					text-align: center;
+					font-size: 22px;
+					font-weight: 600;
+					text-shadow: 0px 1px 7px black;
+				}
+
+				.bar {
+					.size(50px, 100%);
+					.gradient-green;
+					.box-shadow(0px 0 10px black);
+				}
+			}
+		}
+	}
+}
