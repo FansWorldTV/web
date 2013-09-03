@@ -75,9 +75,17 @@ class TemplateController extends SiteController
         $request = $this->getRequest();
         $type = $request->get('type');
 
-        return array(
-            'typename' => $type
-        );
+        $response = array('typename' => $type);
+
+        if($type == 'ultraupload_modal') {
+            $genres = $this->getRepository('Genre')->findBy(array('parent' => null));
+            $videoCategories = $this->getRepository('VideoCategory')->findAll();
+
+            $response['genres'] = $genres;
+            $response['videoCategories'] = $videoCategories;
+        }
+
+        return $response;
     }
 
     /**
