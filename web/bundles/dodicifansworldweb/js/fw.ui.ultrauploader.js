@@ -281,6 +281,7 @@ $(document).ready(function () {
             return;     
         },
         processFiles: function(files) {
+            var that = this;
             var i = 0;
             for(i = 0; i < files.length; i += 1) {
 
@@ -298,12 +299,13 @@ $(document).ready(function () {
                     $.when(that.getKalturaHanlder(file))
                     .then(function (metadata){
                         that.uploader.addFile(file, metadata);
-                        videoUploader.start();
+                        that.uploader.start();
                     })
                 }
             }
         },
         getKalturaHanlder: function(file) {
+            var that = this;
             var deferred = new jQuery.Deferred();
 
             $.when(that.getKs())
