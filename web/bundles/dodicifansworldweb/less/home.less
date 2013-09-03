@@ -9,8 +9,7 @@
 }
 
 .home-content {
-	@import "third-plugins/grid.less";
-	@columns: 12;
+@import "third-plugins/grid.less"; @columns: 12;
 	@column-width: 60;
 	@gutter-width: 10;
 	@total-width: 100%;
@@ -80,7 +79,7 @@
 			// add the close button
 			&.can-close {
 				&:after {
-					content:"x";
+					content: "x";
 					.square(15px);
 					.border-radius(15px);
 					background-color: black;
@@ -121,7 +120,10 @@
 			}
 
 			.topics {
-				h3 {  margin-right: 15px; font-size: 13px; }
+				h3 {
+					margin-right: 15px;
+					font-size: 13px;
+				}
 				ul {
 					li {
 						.pull-right();
@@ -149,7 +151,9 @@
 			.std-add-more;
 		}
 
-		&.gray { background-color: #f1f1f1; }
+		&.gray {
+			background-color: #f1f1f1;
+		}
 
 		&.highlighteds.new {
 			display: block;
@@ -177,7 +181,7 @@
 						padding: 7px;
 
 						.title {
-						    font-size: 16px;
+							font-size: 16px;
 							font-weight: 400;
 						}
 
