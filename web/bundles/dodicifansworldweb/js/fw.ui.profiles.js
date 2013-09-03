@@ -52,266 +52,6 @@ $(document).ready(function () {
     window.fansWorldEvents = window.fansWorldEvents || new EventEmitter();
 });
 
-///////////////////////////////////////////////////////////////////////////////
-// Plugin wrapper para galerias packery                                      //
-///////////////////////////////////////////////////////////////////////////////
-$(document).ready(function () {
-    "use strict";
-    var pluginName = "fwHomePackery";
-    var defaults = {
-        videoCategory: null,
-        videoGenre: null,
-        type: null,
-        id: null,
-        block: null,
-        videoFeed: Routing.generate(appLocale + '_profile_ajaxgetprofiles'),
-        selector: 'section.most-recent',
-        itemSelector: '.profile',
-        packery: null,
-        container: null,
-        queue: null,
-        queueDelay: 10,
-        onVideoCategoryEvent: null
-    };
-    function Plugin(element, options) {
-        this.element = element;
-        this.options = $.extend({}, defaults, options);
-        this._defaults = defaults;
-        this._name = pluginName;
-        this.init();
-    }
-    Plugin.prototype = {
-        init: function () {
-            var that = this;
-            var self = $(that.element);
-            self.bind("destroyed", $.proxy(that.teardown, that));
-            self.addClass(that._name);
-            that.hide();
-
-            that.options.container = document.querySelector(that.options.selector);
-
-            that.options.onFilterChange = function (type, id){
-                id = parseInt(id, 10)
-                var reqData = {};
-                if(!isNaN(id)) {
-                    that.options.type = type;
-                    that.options.id = id;
-                    reqData[that.options.type] = that.options.id;
-                } else {
-                    that.options.type = "";
-                    that.options.id = "";
-                }
-                $.when(that.removeAll()).then(function(){
-                    that.hide();
-                    $.when(that.makePackery(reqData)).then(function(){
-                    }).progress(function() {
-                        //console.log("adding thumbnails to packery");
-                    }).fail(function(error){
-                        //alert(error.message);
-                        that.hide();
-                    });
-                }).fail(function(error){
-                        var reqData = {};
-                        $.when(that.makePackery(reqData)).then(function(){
-                        }).progress(function() {
-                            //console.log("adding thumbnails to packery");
-                        }).fail(function(error){
-                            //alert(error.message);
-                            that.hide();
-                        });
-                    });
-            };
-            window.fansWorldEvents.addListener('onFilterChange', that.options.onFilterChange);
-            that.options.packery = new Packery(that.options.container, {
-                itemSelector: '.profile',
-                gutter: ".gutter-sizer",
-                columnWidth: ".grid-sizer"
-            });
-            var reqData =  {
-                type: 'all',
-                page: that.options.page,
-                filterby: that.options.block
-            };
-            if(!isNaN(that.options.id)) {
-                reqData.genre = that.options.id;
-            }
-            that.makePackery(reqData);
-
-            return true;
-        },
-        makePackery: function(data) {
-            var that = this;
-            var i = 0;
-            var cnt = 0;
-            var totalVideos = 0;
-            var queue = null;
-            var deferred = new jQuery.Deferred();
-            var itemElements = that.options.packery.getItemElements();
-            var onAdd = function(pckryInstance, laidOutItems) {
-                var items = pckryInstance.getItemElements();
-                deferred.notify(laidOutItems);
-                if(0 === queue.size() && totalVideos === laidOutItems.length) {
-                    deferred.resolve();
-                    pckryInstance.off('layoutComplete', onAdd);
-                }
-                that.show();
-            };
-            that.options.packery.on('layoutComplete', onAdd);
-            queue = $.jqmq({
-                // Queue items will be processed every queueDelay milliseconds.
-                delay: that.options.queueDelay,
-                // Process queue items one-at-a-time.
-                batch: 1,
-                // For each queue item, execute this function.
-                callback: function( thumb ) {
-                    $(that.options.selector).append(thumb);
-                    that.options.packery.appended(thumb);
-                    that.options.packery.layout();
-                },
-                // When the queue completes naturally, execute this function.
-                complete: function(){
-                }
-            });
-            $.ajax({
-                url: that.options.videoFeed,
-                data: data || {
-                    'vc': that.options.videoCategory
-                }
-            }).then(function(response) {
-                    var i = 0;
-                    if(typeof response.profiles === 'object' && Object.keys(response.profiles).length <= 0) {
-                        totalVideos  = Object.keys(response.profiles).length;
-                        deferred.reject(new Error("Video category does not contain any video"));
-                    } else if(typeof response.profiles === "undefined") {
-                        deferred.reject(new Error("Bad response"));
-                    }
-                    function render_profile(profile) {
-                        $.when(templateHelper.htmlTemplate('profile-home_element', profile))
-                        .then(function(thumb){
-                            var $thumb = $(thumb).clone();
-                            $thumb.addClass('profile');
-                            if(!profile.isFan) {
-                                $thumb.find("[data-idolship-add]").fwIdolship({
-                                    onAddIdol: function(plugin, data) {
-                                        var self = $(plugin.element);
-                                        self.addClass('disabled');
-                                        self.removeClass('add');
-                                        self.hide();
-                                        window.success(data.message);
-                                    },
-                                    onRemoveIdol: function(plugin, data) {
-                                        //window.location.reload();
-                                    }
-                                });
-                                $thumb.find('[data-teamship-add]').fwTeamship({
-                                    onAddTeam: function(plugin, data) {
-                                        var self = $(plugin.element);
-                                        self.addClass('disabled');
-                                        self.removeClass('add');
-                                        self.hide();
-                                        window.success(data.message);
-                                    },
-                                    onRemoveTeam: function(plugin, data) {
-                                        //window.location.reload();
-                                    }
-                                });
-                            } else {
-                                $thumb.find("[data-idolship-add]").hide();
-                                $thumb.find('[data-teamship-add]').hide();
-                            }
-                            if(profile.highlight) {
-                                $thumb.addClass('double');
-                            }
-                            queue.add($thumb);
-                        });
-                    }
-                    for(i in response.profiles) {
-                        if (response.profiles.hasOwnProperty(i)) {
-                            var profile = response.profiles[i];
-                            render_profile(profile);
-                        }
-                    }
-                });
-            return deferred.promise();
-        },
-        removeAll: function() {
-            var that = this;
-            var deferred = new jQuery.Deferred();
-            var itemElements = that.options.packery.getItemElements();
-            var onRemove = function(pckryInstance, removedItems) {
-                var items = pckryInstance.getItemElements();
-                deferred.notify(removedItems);
-                if(items.length <= 0) {
-                    pckryInstance.off('removeComplete', onRemove);
-                    deferred.resolve();
-                }
-            };
-            that.options.packery.on('removeComplete', onRemove);
-            var queue = $.jqmq({
-                // Queue items will be processed every queueDelay milliseconds.
-                delay: that.options.queueDelay,
-                // Process queue items one-at-a-time.
-                batch: 1,
-                // For each queue item, execute this function.
-                callback: function( thumb ) {
-                    that.options.packery.remove(thumb);
-                },
-                // When the queue completes naturally, execute this function.
-                complete: function(){
-
-                }
-            });
-            var videos = $(that.options.selector).find('.profile');
-            if(videos.length > 0) {
-                videos.each(function(elem){
-                    queue.add($(this));
-                });
-            } else {
-                deferred.reject(new Error("Video container is empty !"));
-            }
-            return deferred.promise();
-        },
-        hide: function() {
-            var that = this;
-            $(that.element).fadeOut(function() {
-                $('body').find('.spinner').removeClass('hidden');
-                $('body').find('.spinner').show();
-            });
-        },
-        show: function() {
-            var that = this;
-            $(that.element).removeClass('hidden');
-            $(that.element).fadeIn(function() {
-                $('body').find('.spinner').addClass('hidden');
-                $('body').find('.spinner').hide();
-            });
-        },
-        destroy: function() {
-            var that = this;
-            $(that.element).unbind("destroyed", that.teardown);
-            that.teardown();
-            return true;
-        },
-        teardown: function() {
-            var that = this;
-            window.fansWorldEvents.removeListener('onFilterChange', that.options.onFilterChange);
-            $.removeData($(that.element)[0], that._name);
-            $(that.element).removeClass(that._name);
-            that.unbind();
-            that.element = null;
-            return that.element;
-        },
-        bind: function() { },
-        unbind: function() { }
-    };
-    $.fn[pluginName] = function (options) {
-        return this.each(function () {
-            if (!$.data(this, pluginName)) {
-                $.data(this, pluginName, new Plugin(this, options));
-            }
-        });
-    };
-});
 
 ///////////////////////////////////////////////////////////////////////////////
 // Plugin wrapper para galerias semantic grid                                //
@@ -421,55 +161,50 @@ $(document).ready(function () {
                         $(that.element).parent().fadeOut('slow');
                     } else if(typeof response.profiles === 'object' && Object.keys(response.profiles).length >= that.options.limitProfilesHome) {
                         addMore = true;
-                        $(that.element).parent().find('.add-more').show();
                     }
                     function render_profile(profile) {
-                        console.log("render_profile");
-                        console.log(profile);
                         $.when(templateHelper.htmlTemplate('profile-home_element', profile))
                         .then(function(response){
                             var $thumb = $(response).clone();
+                            var fanBtnClass = null;
                             if(!profile.isFan) {
+                                fanBtnClass = "befun-small";
+                                $thumb.find("[data-idolship-add]").addClass(fanBtnClass);
+                                $thumb.find('[data-teamship-add]').addClass(fanBtnClass);
+                            } else {
+                                fanBtnClass = "unfan-small";                                
+                                $thumb.find("[data-idolship-add]").addClass(fanBtnClass);
+                                $thumb.find('[data-teamship-add]').addClass(fanBtnClass);
+                            }
                                 $thumb.find("[data-idolship-add]").fwIdolship({
                                     onAddIdol: function(plugin, data) {
                                         var self = $(plugin.element);
-                                        self.addClass('disabled');
-                                        self.removeClass('add');
-                                        self.hide();
-                                        window.success(data.message);
+                                        self.addClass('unfan-small');
+                                        self.removeClass('befun-small');
+                                        self.get(0).lastChild.nodeValue = "";
                                     },
                                     onRemoveIdol: function(plugin, data) {
-                                        //window.location.reload();
+                                        var self = $(plugin.element);
+                                        self.addClass('befun-small');
+                                        self.removeClass('unfan-small');
+                                        self.get(0).lastChild.nodeValue = "";
                                     }
                                 });
                                 $thumb.find('[data-teamship-add]').fwTeamship({
-                                    onAddTeam: function(plugin, data) {
+                                    onAddIdol: function(plugin, data) {
+                                        console.log("eres refann`")
                                         var self = $(plugin.element);
-                                        self.addClass('disabled');
-                                        self.removeClass('add');
-                                        self.hide();
-                                        window.success(data.message);
+                                        self.addClass('unfan-small');
+                                        self.removeClass('befun-small');
+                                        self.get(0).lastChild.nodeValue = "";
                                     },
-                                    onRemoveTeam: function(plugin, data) {
-                                        //window.location.reload();
+                                    onRemoveIdol: function(plugin, data) {
+                                        var self = $(plugin.element);
+                                        self.addClass('befun-small');
+                                        self.removeClass('unfan-small');
+                                        self.get(0).lastChild.nodeValue = "";
                                     }
                                 });
-                            } else {
-                                $thumb.find("[data-idolship-add]").hide();
-                                $thumb.find('[data-teamship-add]').hide();
-                            }
-                            $thumb.find('img').load(function() {
-                                $('body').find('.spinner').addClass('hidden');
-                                $('body').find('.spinner').hide();
-                                $(that.element).parent().removeClass('hidden');
-                                $(that.element).parent().fadeIn('slow');
-                                if(addMore) {
-                                    $(that.element).parent().find('.add-more').show();
-                                } else {
-                                    $(that.element).parent().find('.add-more').hide();
-                                }
-                                
-                            });
                             $(that.element).append($thumb);
                         });
                     }
@@ -481,6 +216,34 @@ $(document).ready(function () {
                             render_profile(profile);
                         }
                     }
+                    var il = new ImagesLoaded(that.element);
+                    il.done(function () {
+                        $('body').find('.spinner').addClass('hidden');
+                        $('body').find('.spinner').hide();                        
+                        $(that.element).parent().removeClass('hidden');
+                        $(that.element).parent().fadeIn('slow', function() {
+                            if(addMore) {
+                                $(that.element).parent().find('.add-more').fadeIn('slow');
+                            } else {
+                                $(that.element).parent().find('.add-more').hide();
+                            }                              
+                        });
+                    });
+                    il.progress(function (image, isBroken) {
+                        console.log("image loaded !")
+                    });
+                    il.fail(function(instance){
+                        $('body').find('.spinner').addClass('hidden');
+                        $('body').find('.spinner').hide();                           
+                        $(that.element).parent().removeClass('hidden');
+                        $(that.element).parent().fadeIn('slow', function() {
+                            if(addMore) {
+                                $(that.element).parent().find('.add-more').fadeIn('slow');
+                            } else {
+                                $(that.element).parent().find('.add-more').hide();
+                            }                              
+                        });                                        
+                    });
                     return response.videos;
                 }).done(function(videos){
                     deferred.resolve(videos);
@@ -528,15 +291,6 @@ $(document).ready(function () {
     var type = $(".filter-home").find('.active').attr('data-entity-type');
     var id = parseInt($(".filter-home").find('.active').attr('data-entity-id'), 10);
 
-    // Video Packery Gallery
-    /*
-    $('section.most-recent').fwHomePackery({
-        type: type,
-        id: id,
-        selector: 'section.most-recent',
-        block: 'activity'
-    });
-    */
     // Video Grid
     $('section.popular > .profiles-container').fwHomeThumbs({
         type: type,
