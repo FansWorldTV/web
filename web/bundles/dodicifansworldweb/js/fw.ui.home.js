@@ -383,10 +383,6 @@ $(document).ready(function () {
                             var $thumb = $(response).clone();
                             $thumb.hide().appendTo(that.element).fadeIn('slow');
                             $thumb.find('img').load(function() {
-                                $('body').find('.spinner').addClass('hidden');
-                                $('body').find('.spinner').hide();
-                                $(that.element).parent().removeClass('hidden');
-                                $(that.element).parent().fadeIn('slow');
                                 if(addMore) {
                                     $(that.element).parent().find('.add-more').show();
                                 } else {
@@ -733,23 +729,30 @@ $(document).ready(function () {
     var total = 0;
     function onContenNeedsLoad() {
         max += 1;
+        total += 1;
         console.log("onContenNeedsLoad(): " + max);
     }
     function onContentLoaded() {
-        if(total == max - 1) {
+        total -= 1;
+        if(total == 0) {
 
             $('.highlights-container').removeClass('hidden');
-            
-            if($('section.followed > .videos-container').find('.video').length > 0)
-                $('section.followed').removeClass('hidden');
-            if($('section.popular > .videos-container').find('.video').length > 0)
-                $('section.popular').removeClass('hidden');
+            console.log("show highlighteds")
+            setTimeout(function(){       
+                if($('section.followed > .videos-container').find('.video').length > 0) {
+                    $('section.followed').removeClass('hidden');
+                    console.log("show followed");
+                }
+                if($('section.popular > .videos-container').find('.video').length > 0) {
+                    $('section.popular').removeClass('hidden');
+                    console.log("show popular");
+                }
 
-            $('.spinner').addClass('hidden').hide();
-            console.log("Listo para mostrar");    
+                $('.spinner').addClass('hidden').hide();
+                console.log("Listo para mostrar");    
+            }, 10);
         }
         console.log("contenido cargado: " + total + " max: " + max);
-        total += 1;
     }
     function onFilterChange() {
         total = max = 0;
