@@ -122,6 +122,12 @@ $(document).ready(function () {
                 action: that.options.action[that.options.mediaType],
                 maxConnections: 1,
                 allowedExtensions: that.options.mediaExtensions.all,
+                onProgress: function(event) {
+                    var percentComplete = parseInt(((event.source.loaded / event.source.total) * 100), 10);
+                    that.modal.find('.progress > .bar').css({width: percentComplete + '%'});
+                    that.modal.find('.progress > .percent-value').text(percentComplete + '%');
+                    return;
+                },
             });
 
             that.uploader.addListener('onprogress', that.onProgress);
@@ -129,15 +135,14 @@ $(document).ready(function () {
 
             // Create the modal
             $.when(templateHelper.htmlTemplate('general-ultraupload_modal', modal)).then(function(html) {
-                boot = $(html).clone();
-                that.handleModal(boot);
+                that.modal = boot = $(html).clone();
+                that.handleModal(that.modal);
             });
         },
         onProgress: function(event) {
             var percentComplete = parseInt(((event.source.loaded / event.source.total) * 100), 10);
-            console.log(percentComplete);
-            //boot.find('.progress .bar').css('width', percentComplete + '%');
-            //$('progress').val(percentComplete);
+            //that.modal.find('.progress > .bar').css({width: percentComplete + '%'});
+            //that.modal.find('.progress > .percent-value').text(percentComplete + '%');
         },
         handleModal: function(modal) {
             var that = this;
@@ -291,7 +296,7 @@ $(document).ready(function () {
                 var file = files[i];
                 if(!that.isAllowedExtension(file.name)) {
                     alert("Archivo de extensión inválida");
-                    boot.find('#drop_zone').animate({ 'background-color': 'transparent', 'border-color': '#bbb' } );
+                    that.modal.find('#drop_zone').animate({ 'background-color': 'transparent', 'border-color': '#bbb' } );
                     return false;
                 }
                 if (file.type.match('image.*')) {
@@ -300,6 +305,8 @@ $(document).ready(function () {
                     .then(function (metadata){
                         that.uploader.addFile(file, metadata);
                         that.uploader.start();
+                        that.modal.find('.button-submit-action').addClass('hidden');
+                        that.modal.find('.progress').removeClass('hidden');
                     })
                 }
             }
