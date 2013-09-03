@@ -17,17 +17,21 @@ use Symfony\Component\HttpFoundation\Request;
 class AboutController extends SiteController
 {
     /**
-     * terms and condition's view
+     * terms and conditions view
      * @Route("/terms/{format}", name="about_terms", defaults = {"format" = null})
      * @Template
      */
     public function termsAction($format = null)
     {
-		if ($format == 'text') {
-		    return $this->render('DodiciFansworldWebBundle:About:terms_mobile.html.twig');
-		} else {
-		    return array();
-		}
+        switch($format){
+            case 'text':
+                    return $this->render('DodiciFansworldWebBundle:About:terms_mobile.html.twig');
+                break;
+            case 'beta':
+                    return $this->render('DodiciFansworldWebBundle:About:terms_beta.html.twig');
+                break;
+            default:
+                return array();
+        }
     }
-    
 }
