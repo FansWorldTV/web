@@ -158,8 +158,11 @@ $(document).ready(function () {
                         url: url
                     }
                 }).then(function(response){
-                     modal.find('.spinner-overlay').addClass('hide');
-                    console.log(response);
+                    if(response.metadata) {
+                        modal.find('[data-title]').val(response.metadata.title.$t);
+                        modal.find('[data-description]').val(response.metadata.content.$t);
+                    }
+                    modal.find('.spinner-overlay').addClass('hide');
                 }).done(function(){
                      modal.find('.spinner-overlay').addClass('hide');
                 }).fail(function(error){
