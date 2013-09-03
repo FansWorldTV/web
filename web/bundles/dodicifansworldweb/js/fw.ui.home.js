@@ -383,10 +383,6 @@ $(document).ready(function () {
                             var $thumb = $(response).clone();
                             $thumb.hide().appendTo(that.element).fadeIn('slow');
                             $thumb.find('img').load(function() {
-                                $('body').find('.spinner').addClass('hidden');
-                                $('body').find('.spinner').hide();
-                                $(that.element).parent().removeClass('hidden');
-                                $(that.element).parent().fadeIn('slow');
                                 if(addMore) {
                                     $(that.element).parent().find('.add-more').show();
                                 } else {
@@ -739,14 +735,20 @@ $(document).ready(function () {
         if(total == max - 1) {
 
             $('.highlights-container').removeClass('hidden');
-            
-            if($('section.followed > .videos-container').find('.video').length > 0)
-                $('section.followed').removeClass('hidden');
-            if($('section.popular > .videos-container').find('.video').length > 0)
-                $('section.popular').removeClass('hidden');
+            console.log("show highlighteds")
+            setTimeout(function(){       
+                if($('section.followed > .videos-container').find('.video').length > 0) {
+                    $('section.followed').removeClass('hidden');
+                    console.log("show followed");
+                }
+                if($('section.popular > .videos-container').find('.video').length > 0) {
+                    $('section.popular').removeClass('hidden');
+                    console.log("show popular");
+                }
 
-            $('.spinner').addClass('hidden').hide();
-            console.log("Listo para mostrar");    
+                $('.spinner').addClass('hidden').hide();
+                console.log("Listo para mostrar");    
+            }, 10);
         }
         console.log("contenido cargado: " + total + " max: " + max);
         total += 1;
