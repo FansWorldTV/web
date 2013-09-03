@@ -729,10 +729,12 @@ $(document).ready(function () {
     var total = 0;
     function onContenNeedsLoad() {
         max += 1;
+        total += 1;
         console.log("onContenNeedsLoad(): " + max);
     }
     function onContentLoaded() {
-        if(total == max - 1) {
+        total -= 1;
+        if(total == 0) {
 
             $('.highlights-container').removeClass('hidden');
             console.log("show highlighteds")
@@ -751,7 +753,6 @@ $(document).ready(function () {
             }, 10);
         }
         console.log("contenido cargado: " + total + " max: " + max);
-        total += 1;
     }
     function onFilterChange() {
         total = max = 0;
