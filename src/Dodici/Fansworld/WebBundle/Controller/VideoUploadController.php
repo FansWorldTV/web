@@ -486,6 +486,73 @@ class VideoUploadController extends SiteController
         return array('form' => $form->createView());
     }
 
+    /**
+     * Ajax upload video (kaltura / youtube )
+     * @Route("/ajax/uploadvideo", name="video_ajaxuploadvideo")
+     */
+    public function uploadVideoAction()
+    {
+        $request = $this->getRequest();
+        $video = null;
+
+        $user = $this->getUser();
+        $genre = $request->get('genre');
+        $categories = $request->get('category');
+        $content = $request->get('content');
+        $title = $request->get('title');
+        $entryid = $request->get('entryid');
+        $youtube = $request->get('youtube');
+        $defaultImage = $this->_getDefaultImage();
+     
+        $videoCategory = $this->getRepository('VideoCategory')->find($categories);
+        $genre = $this->getRepository('Genre')->find($genre);
+
+        if ($entryid) {
+            $video = new Video();
+            $video->setAuthor($user);
+            $video->setTitle($title);
+            $video->setContent($content);
+            $video->setStream($entryid);
+            $video->setImage($defaultImage);
+            $video->setActive(false);
+        } else {
+            $video = $this->get('video.uploader')->createVideoFromUrl($youtube, $user);
+        }
+
+        $video->setPrivacy(Privacy::EVERYONE);
+        $video->setVideocategory($videoCategory);
+        $video->setGenre($genre);
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->persist($video);
+        $em->flush();
+
+        if (!($video->getId()))
+            throw new \Exception('Error al crear video');
+
+        $tagtexts = explode(',', $request->get('tagtext'));
+        $tagidols = explode(',', $request->get('tagidol'));
+        $tagteams = explode(',', $request->get('tagteam'));
+        $tagusers = explode(',', $request->get('taguser'));
+        $tagitems = $this->_tagEntity($tagtexts, $tagidols, $tagteams, $tagusers, $user, $video);
+
+        if ($entryid) {
+            // Set data on Kaltura
+            try {
+                $entrydata = array('name' => $video->getTitle(), 'description' => $video->getContent());
+                $tagsintext = array();
+                foreach ($tagitems as $ti) $tagsintext[] = (string)$ti;
+                if ($tagsintext) $entrydata['tags'] = implode(', ', $tagsintext);
+                $this->get('kaltura')->updateEntry($video->getStream(), $entrydata);
+            } catch (\Exception $e) {
+                // error updating entry, ignore for now
+            }
+        }
+        
+        return $this->jsonResponse(array('response' => true));
+    }
+
+
 
     private function _createVideoForm ($userId) {
         $privacies = Privacy::getOptions();
