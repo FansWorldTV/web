@@ -187,14 +187,14 @@ $(document).ready(function () {
                                     }
                                 });
                                 $thumb.find('[data-teamship-add]').fwTeamship({
-                                    onAddIdol: function(plugin, data) {
+                                    onAddTeam: function(plugin, data) {
                                         console.log("eres refann`")
                                         var self = $(plugin.element);
                                         self.addClass('unfan-small');
                                         self.removeClass('befun-small');
                                         self.get(0).lastChild.nodeValue = "";
                                     },
-                                    onRemoveIdol: function(plugin, data) {
+                                    onRemoveTeam: function(plugin, data) {
                                         var self = $(plugin.element);
                                         self.addClass('befun-small');
                                         self.removeClass('unfan-small');
