@@ -28,9 +28,8 @@ class AppState
     protected $user;
     protected $repos;
     protected $shortener_api;
-    protected $tracking;
 
-    function __construct(SecurityContext $security_context, EntityManager $em, $shortener_api, $tracking)
+    function __construct(SecurityContext $security_context, EntityManager $em, $shortener_api)
     {
         $this->security_context = $security_context;
         $this->request = Request::createFromGlobals();
@@ -38,7 +37,6 @@ class AppState
         $this->user = $security_context->getToken() ? $security_context->getToken()->getUser() : null;
         $this->repos = array();
         $this->shortener_api = $shortener_api;
-        $this->tracking = $tracking;
     }
     
     public function getShortenerApi(){
