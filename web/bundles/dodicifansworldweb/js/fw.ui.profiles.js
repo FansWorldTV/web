@@ -107,10 +107,7 @@ $(document).ready(function () {
                 that.options.videoFeed = Routing.generate(appLocale + '_profile_ajaxgetprofiles');
                 that.options.getFilter = function() {
                     var filter = {
-                        paginate: {
-                            page: that.options.page,
-                            block: that.options.block
-                        }
+                        page: that.options.page,
                     };
                     filter[that.options.type] = that.options.id;
                     return filter;
