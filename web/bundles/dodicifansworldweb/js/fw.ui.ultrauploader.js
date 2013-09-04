@@ -295,7 +295,7 @@ $(document).ready(function () {
                 var category = modal.find('[data-category] option:selected').attr('data-vc-id');
                 var url = modal.find('[data-youtubelink]').val();
                 
-                if((category > 0) && (title.length > 0) && (content.length > 0)) {
+                if((category > 0) && (genre) && (title.length > 0) && (content.length > 0)) {
                 modal.find('.spinner-overlay').removeClass('hide');
                  $.ajax({
                         url: Routing.generate(appLocale + '_video_ajaxuploadvideo'), 
