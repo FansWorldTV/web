@@ -18,6 +18,7 @@ use Dodici\Fansworld\WebBundle\Serializer\Serializer;
 class AjaxController extends SiteController
 {
     const FW_VIDEO_LIST_LIMIT = 30;
+    const LIMIT_VIDEO = 12;
 
     /**
      * Ajax list videos from fansworld
@@ -85,6 +86,45 @@ class AjaxController extends SiteController
 
         return $this->jsonResponse($response);
     }
+
+    /**
+     * Ajax new home filter
+     * @Route("ajax/homefilter", name="ajax_newhomefilter")
+     */
+    public function ajaxFilterAction()
+    {
+        $user = $this->getUser();
+        $request = $this->getRequest();
+        $serializer = $this->get('serializer');
+        $videoRepo = $this->getRepository('Video');
+
+        if(!($user instanceof User)) $user = null;
+        $vc = $request->get('vc', null);
+        $genre = $request->get('genre', null);
+        $page = 1;
+        $offset = ($page - 1) * self::LIMIT_VIDEO;
+
+        $response = array('highlighted' => array(), 'follow' => array(), 'popular' => array(), 'followAddMore' => false, 'popularAddMore' => false);
+
+        $limitWithTheHighlighted = (self::LIMIT_VIDEO - 3);
+        $videos = $videoRepo->highlight($genre, $vc , null, $limitWithTheHighlighted, 0);
+        $response['highlighted'] = $serializer->values($videos, 'home_video');
+
+        if ($user instanceof User) {
+            $videos = $videoRepo->follow($user, $genre, $vc, self::LIMIT_VIDEO, $offset);
+            $response['follow'] = $serializer->values($videos, 'home_video');
+            $videosCount = $videoRepo->countSearch(null, $user, $vc, false, null, null, null, null, null, null, null, true, $genre);
+            $response['followAddMore'] = $videosCount > (($page) * self::LIMIT_VIDEO) ? true : false;
+        }
+  
+        $videos = $videoRepo->popular($genre, $vc, null, self::LIMIT_VIDEO, $offset);
+        $response['popular'] = $serializer->values($videos, 'home_video');
+        $videosCount = $videoRepo->countSearch(null, null, $vc, false, null, null, null, null, null, null, null, null, $genre);
+        $response['popularAddMore'] = $videosCount > (($page) * self::LIMIT_VIDEO) ? true : false;
+      
+        return $this->jsonResponse($response);
+    }
+
 
 
 }
