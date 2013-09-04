@@ -55,6 +55,7 @@ class GenreRepository extends CountBaseRepository
             $query = $query->setFirstResult((int) $offset);
         return $query->getResult();
     }
+    
     public function byVideoCategory($vc, $limit=null, $offset=null)
     {
 

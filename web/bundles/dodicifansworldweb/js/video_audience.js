@@ -112,11 +112,12 @@
         function subscribe(callback) {
             if (typeof Meteor == 'undefined') {
                 throw 'Meteor could not be found.'
+            }else{
+                Meteor.registerEventCallback("process", handleData);
+                Meteor.joinChannel(meteorChannel);
+                Meteor.connect();
             }
-            Meteor.registerEventCallback("process", handleData);
-            Meteor.joinChannel(meteorChannel);
-            Meteor.connect();
-            
+
             if(typeof callback != "undefined") {
                 callback();
             }

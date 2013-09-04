@@ -1,0 +1,86 @@
+<div id="upload-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="upload-modal"
+     aria-hidden="true" style="overflow:hidden;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="share-modal" style="text-align: left;">Subir video</h3>
+    </div>
+    <div class="modal-body">
+        <div class="spinner-overlay hide" style="z-index: 99999">
+            <div class="spinner">
+                <div class="mask"></div>
+            </div>
+            <span class="legend">...</span>
+        </div>
+        <form>
+            <section id="drop_zone" class="drop-zone">
+                <p class="drop-legend">
+                    <span>Arrastra tu video aquí ó <button class="btn btn-success" style="position:relative">
+                            Examinar<input type="file" name="file"
+                                           style="position: absolute; right: 0px; top: 0px; font-family: Arial; cursor: pointer; opacity: 0;width: 100%;"/>
+                        </button></span>
+                    <br/>
+                    sino
+                </p>
+                <div class="youtube-input">
+                    <figure>
+                        <img src="{{ asset('bundles/dodicifansworldweb/images/ico/yt-icon-pop.png') }}"/>
+                    </figure>
+                    <input type="text" type="url" placeholder="Link de Youtube" name="youtube-link" data-youtubelink/>
+                    <button data-youtube-validate="true" class="btn youtube-validate"><i class="icon-search"></i>
+                    </button>
+                </div>
+            </section>
+            <section class="form-rest">
+                <div class="row fifty-fifty">
+                    <div class="component category">
+                        <label>Categoría<sup>*</sup></label>
+                        
+                        <div class="btn-group" data-toggle="buttons-radio">
+                            {% for genre in genres %}
+                                <button type="button" class="btn" data-genre-id="{{ genre.id }}">{{ genre.title }}</button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="component channel">
+                        <label>Canales</label>
+
+                        <div class="dropdown">
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                Selecciona un canal
+                                <span class="caret pull-right"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                {% for vc in videoCategories %}
+                                    <li role="presentation" data-vc-id="{{ vc.id }}">
+                                        <a role="menuitem" tabindex="-1" href="#">{{ vc.title }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="component title">
+                        <label>Título<sup>*</sup></label>
+                        <input type="text" data-title required maxlength="64" />
+                    </div>
+                </div>
+                <div class="row fifty-fifty">
+                    <div class="component description">
+                        <label>Descripción</label>
+                        <textarea placeholder="Cuéntanos más sobre este video." data-description required maxlength="400"></textarea>
+                    </div>
+                    <div class="component tags">
+                        <label>Tags</label>
+                        <textarea placeholder="Separados con comas. ( Ej. Messi, gol )" data-tags></textarea>
+                    </div>
+                </div>
+            </section>
+            <input type="submit" class="button-submit-action pull-right" value="Subir Video" />
+            <div class="progress hidden">
+                <div class="bar" style="width: 60%;"></div>
+                <span class="percent-value">60%</span>
+            </div>
+        </form>
+    </div>
+</div>

@@ -143,7 +143,10 @@ function success (message, callback) {
 }
 
 function createNotify (options) {
-    $('.notifications.top-right').notify(options).show();
+    //$('.notifications.top-right').notify(options).show();
+    $('.notifications.bottom-right').fwNotify(options);
+    var notification = $('.notifications.bottom-right').data('fwNotify');
+    notification.show();
 }
 
 $(document).ready(function(){
@@ -164,6 +167,6 @@ $(document).ready(function(){
 });
 
 $(function(){
-   var notifydiv = $('<div>').addClass('notifications top-right');
+   var notifydiv = $('<div>').addClass('notifications bottom-right');
    $('body').append(notifydiv);
 });

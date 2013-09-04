@@ -21,24 +21,9 @@ class ContactImporter
     {
         $this->request = Request::createFromGlobals();
         $this->container = $container;
-        $this->inviter = new ArtseldOpeninviter( $this->container );
+        /*$this->inviter = new ArtseldOpeninviter( $this->container );*/
     }
-
-    /**
-     * Get contacts from OpenInviter
-     * @param string $username
-     * @param string $password
-     * @param string $provider
-     */
-    public function import($username, $password, $provider)
-    {
-        $this->inviter->getPlugins();
-        $this->inviter->startPlugin($provider);
-        $this->inviter->login($username, $password);
-        return $this->inviter->getMyContacts(); 
-        exit;
-    }    
-    
+      
     /**
      * Generate a token for the invite users url
      * @param User $user

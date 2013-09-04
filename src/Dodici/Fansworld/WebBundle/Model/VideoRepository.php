@@ -856,4 +856,174 @@ class VideoRepository extends CountBaseRepository
         if ($res) return $res[0];
         else return null;
     }
+
+    /**
+     * Search videos of user
+     * @param User|$author
+     * @param User|null $viewerUser
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function videosOfUser($authorUser, $viewerUser=null, $limit = null, $offset = null)
+    {
+        if (!$authorUser) throw new \Exception('You must provide author of video');
+
+        $dql = '
+            SELECT v
+            FROM \Dodici\Fansworld\WebBundle\Entity\Video v
+            WHERE
+            (
+                (v.privacy = :everyone)
+                OR
+                (v.privacy = :friendsonly AND (:user IS NOT NULL) AND (
+                    (:user = v.author) OR
+                    ((SELECT COUNT(f.id) FROM \Dodici\Fansworld\WebBundle\Entity\Friendship f WHERE (f.target = v.author AND f.author = :user) AND f.active=true) >= 1)
+                ))
+            ) 
+            AND 
+                v.author = :author 
+            ORDER BY v.createdAt DESC';
+
+        $query = $this->_em->createQuery($dql)
+            ->setParameter('everyone', Privacy::EVERYONE)
+            ->setParameter('friendsonly', Privacy::FRIENDS_ONLY)
+            ->setParameter('author', ($authorUser instanceof User) ? $authorUser->getId() : $authorUser);
+        if ($viewerUser !== null)
+            $query = $query->setParameter('user', ($viewerUser instanceof User) ? $viewerUser->getId() : $viewerUser);
+        if ($limit !== null) 
+            $query = $query->setMaxResults((int) $limit);
+        if ($offset !== null) 
+            $query = $query->setFirstResult((int) $offset);
+        return $query->getResult();
+    }
+
+
+    /**
+     * Search highlight videos
+     * @param Genre | null | $genre
+     * @param VideoCategory|null $category
+     * @param User|false|null $author
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function highlight($genre = null, $category = null, $author = null, $limit = null, $offset = null)
+    {
+        $dql = '
+            SELECT v FROM \Dodici\Fansworld\WebBundle\Entity\Video v 
+            LEFT JOIN v.genre vg
+            WHERE v.active = true AND v.processed = true
+            AND
+            (
+                (:category IS NULL OR
+                    (
+                        (:category = false AND v.videocategory IS NULL)
+                        OR
+                        (:category <> false AND v.videocategory = :category)
+                    )
+                )
+            )
+            AND (v.highlight = true)
+            AND (v.privacy = :everyone)
+            AND
+            (
+                (:genre IS NULL OR
+                    (
+                        (:genre <> false AND
+                            (vg = :genre OR vg.parent = :genre)
+                        )
+                    )
+                )
+            )'.
+            (($author !== null) ?
+            (
+                ' AND ' .
+                (($author === false) ? ' v.author IS NULL ' :
+                ' v.author = :author ')
+            ) : '').'
+            ORDER BY v.createdAt DESC, v.weight DESC';
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('everyone', Privacy::EVERYONE)
+                ->setParameter('genre', ($genre instanceof Genre) ? $genre->getId() : $genre)
+                ->setParameter('category', ($category instanceof VideoCategory) ? $category->getId() : $category);
+        if ($author)
+            $query = $query->setParameter('author', ($author instanceof User) ? $author->getId() : $author);
+        if ($limit !== null)
+            $query = $query->setMaxResults((int) $limit);
+        if ($offset !== null)
+            $query = $query->setFirstResult((int) $offset);
+        return $query->getResult();
+    }
+
+    /**
+     * Search popular videos
+     * @param Genre | null | $genre
+     * @param VideoCategory|null $category
+     * @param User|false|null $author
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function popular($genre = null, $category = null, $author = null, $limit = null, $offset = null)
+    {
+        $dql = '
+            SELECT v FROM \Dodici\Fansworld\WebBundle\Entity\Video v 
+            LEFT JOIN v.genre vg
+            WHERE v.active = true AND v.processed = true
+            AND
+            (
+                (:category IS NULL OR
+                    (
+                        (:category = false AND v.videocategory IS NULL)
+                        OR
+                        (:category <> false AND v.videocategory = :category)
+                    )
+                )
+            )
+            AND (v.privacy = :everyone)
+            AND
+            (
+                (:genre IS NULL OR
+                    (
+                        (:genre <> false AND
+                            (vg = :genre OR vg.parent = :genre)
+                        )
+                    )
+                )
+            )'.
+            (($author !== null) ?
+            (
+                ' AND ' .
+                (($author === false) ? ' v.author IS NULL ' :
+                ' v.author = :author ')
+            ) : '').'
+            ORDER BY v.weight DESC, v.viewCount DESC, v.likeCount DESC';
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('everyone', Privacy::EVERYONE)
+                ->setParameter('genre', ($genre instanceof Genre) ? $genre->getId() : $genre)
+                ->setParameter('category', ($category instanceof VideoCategory) ? $category->getId() : $category);
+        if ($author)
+            $query = $query->setParameter('author', ($author instanceof User) ? $author->getId() : $author);
+        if ($limit !== null)
+            $query = $query->setMaxResults((int) $limit);
+        if ($offset !== null)
+            $query = $query->setFirstResult((int) $offset);
+        return $query->getResult();
+    }
+
+    /**
+     * Search videos of user follow idols/teams/users
+     *
+     * @param User|null $user
+     * @param Genre | null | $genre
+     * @param VideoCategory|null $category
+     * @param int|null $limit
+     * @param int|null $offset
+     */
+    public function follow($user, $genre = null, $category = null, $limit = null, $offset = null)
+    {
+        if (!$user) throw new \Exception('You must provide a user to get follow videos');
+        return $this->search(null, $user, $limit, $offset, $category, null, null, null, null, null, null, null, null, true, null, null, $genre);
+    }
+
 }

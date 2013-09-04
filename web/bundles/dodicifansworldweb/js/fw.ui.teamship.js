@@ -56,15 +56,12 @@ $(document).ready(function () {
                 $('[data-login-btn]').click();
                 return false;
             }
-            $(this).off();      // remove event listeners
             var plugin = $(this).data(pluginName);
             plugin.toggleTeamship($(this).attr('data-team-id'));
         },
         toggleTeamship: function(teamId) {
             var that = this;
             var self = $(that.element);
-            //self.addClass('loading-small');
-            self.addClass('disabled');
             ajax.genericAction(
                 'teamship_ajaxtoggle',
                 { 'team': teamId },
@@ -76,25 +73,21 @@ $(document).ready(function () {
                             that.onRemoveTeam(responseJSON);
                         }
                     }
-                    //self.removeClass('loading-small');
-                    self.removeClass('disabled');
                 },
                 function(error) {
                     window.error(error.responseText);
-                    self.removeClass('disabled');
                     return that.options.onError(error);
                 });
         },
         onAddTeam: function(data) {
             var that = this;
+            window.notice(data.message);
             return that.options.onAddTeam(this, data);
         },
         onRemoveTeam: function(data){
             var that = this;
-            var self = $(that.element);
-            notice(data.message);
-            console.log("onRemoveTeam: " + JSON.stringify(data));
-            return that.options.onRemoveTeam(data);
+            window.notice(data.message);
+            return that.options.onRemoveTeam(this, data);
         },
         destroy: function() {
             var that = this;
@@ -122,21 +115,24 @@ $(document).ready(function () {
 //Attach plugin to all matching element
 $(document).ready(function () {
     "use strict";
-    /*
-    $(".btn_teamship.add:not('.loading-small')").fwTeamship();
-    $(".btn_teamship.remove:not('.loading-small')").fwTeamship();
-    */
+
     $("[data-teamship-add]:not('[data-override]')").fwTeamship({
         onAddTeam: function(plugin, data) {
             var self = $(plugin.element);
-            self.addClass('disabled');
-            self.removeClass('add');
-            self.text("YA ERES FAN");
+            self.addClass('unfan');
+            self.removeClass('befun');
+            self.get(0).lastChild.nodeValue = "Eres Fan";
+        },
+        onRemoveTeam: function(plugin, data) {
+            var self = $(plugin.element);
+            self.addClass('befun');
+            self.removeClass('unfan');
+            self.get(0).lastChild.nodeValue = "Ser Fan";
         }
     });
     $("[data-teamship-remove]:not('[data-override]')").fwTeamship({
         onRemoveTeam: function(){
-            //window.location.reload();
+            window.location.reload();
         }
     });
 });

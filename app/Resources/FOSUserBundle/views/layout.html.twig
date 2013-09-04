@@ -1,23 +1,72 @@
-{% extends 'DodiciFansworldWebBundle:Layout:three_column.html.twig' %}
+{% extends "DodiciFansworldWebBundle:Layout:base.html.twig" %}
 
 {% block title %}{{ parent() }} - Usuario{% endblock %}
 
-{% block content %}
-    {% block fos_user_content %}{% endblock %}
-{% endblock %}
+{% block main %}
+    <div id="main-content-frame" class="container-fluid three-column" style="padding: 15px 40px 15px 40px">
+        <div class='row-fluid'>
+            {% block maincontent %}
+                {# Content of action #}
+                <section id="content" class="span8"> <!--provisorio el span-->
+                    {% block fos_user_content %}
+                    {% endblock %}
+                </section>
 
-{% block relatedcolumn %}
-    <section id='leftcolumn-sidebar'>
-        <h3>ELIGE</h3>
-        <p>Tus primeros pasos, Bienvenido a Fansworld.tv</p>
-        
-        <h3>SUBE</h3>
-        <p>Completa tu perfil y selecciona a tus ídolos y equipos para recibir los más exclusivos contenidos relacionados a ellos.</p>
-        
-        <h3>EXPLORA</h3>
-        <p>Comienza a compartir fotos y videos con tus amigos para demostrar tu fanatismo</p>
+                {# TODO RELATEDCOLUMN #}
+                <aside id='relatedcolumn' class='span3'>
+                    {% block relatedcolumn %}
+                        <section id='leftcolumn-sidebar'>
+                            <h2>¿Porqué crear una cuenta?</h2>
+                            <p>Una vez registrado, en FansWorld TV tendrás la posibilidad de:</p>
 
-        <h3>PARTICIPA</h3>
-        <p>Visita los canales de videos que tenemos para ti: Estilo de vida, Fans, Clubes, Trucos, Entrevistas</p>
-    </section>
+                            <ul>
+                                <li>
+                                    <img src="{{ asset('bundles/dodicifansworldweb/images/ico/icon_reg_face.png') }}" />
+                                    <div>
+                                        <span>Disfrutar</span>
+                                        <p>Acceder a Canales con videos exclusivos de tus ídolos de la música y el deporte, y personalizar tu experiencia de acuerdo a tus intereses.</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <img src="{{ asset('bundles/dodicifansworldweb/images/ico/icon_reg_fan.png') }}" />
+                                    <div>
+                                        <span>Hacerte Fan</span>
+                                        <p>En los perfiles de tus ídolos favoritos y seguir de cerca el contenido relacionado y compartirlo con otros fanáticos.</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <img src="{{ asset('bundles/dodicifansworldweb/images/ico/icon_reg_up.png') }}" />
+                                    <div>
+                                        <span>Subir videos</span>
+                                        <p>Si tienes material sobre tus ídolos, equipos y bandas que quieres que todo el mundo vea, ¡aprovecha la oportunidad para mostrarlo!</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <img src="{{ asset('bundles/dodicifansworldweb/images/ico/icon_reg_share.png') }}" />
+                                    <div>
+                                        <span>Compartir</span>
+                                        <p>Muéstrale a tus amigos lo que están haciendo tus ídolos compartiéndo contenido en FansWorld TV o en Facebook, Twitter, Google+ y mucho más.</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <img src="{{ asset('bundles/dodicifansworldweb/images/ico/icon_reg_connect.png') }}" />
+                                    <div>
+                                        <span>Conectarte</span>
+                                        <p>Comparte tu pasión! En FansWorld TV puedes conectarte con otros fanáticos.</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <img src="{{ asset('bundles/dodicifansworldweb/images/ico/icon_reg_event.png') }}" />
+                                    <div>
+                                        <span>Participar en Eventos</span>
+                                        <p>Accede a entrevistas exclusivas a tus ídolos, eventos y a nuestros programas en vivo.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </section>
+                    {% endblock %}
+                </aside>
+            {% endblock %}
+        </div>
+    </div>
 {% endblock %}

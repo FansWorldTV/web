@@ -9,11 +9,6 @@
     {{ parent() }}
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('bundles/dodicifansworldweb/js/things.js') }}" type="text/javascript"></script>
-{% endblock %}
-
 {% block profile_body %}
     {#{% embed "DodiciFansworldWebBundle:Layout/Embed:profile_inner_fullwidth.html.twig" %}
         {% block inner_content %}#}
@@ -23,11 +18,11 @@
                     <button type="button" class="btn" data-type="1">Mis idolos</button>
                     <button type="button" class="btn" data-type="2">Mis clubes</button>
                     <button type="button" class="btn" data-type="3">Mis canales</button>
-                    <button type="button" class="btn" data-type="4">Watch later list</button>
+                    <button type="button" class="btn btn-warning" data-type="4">Ver Después</button>
                 </div>
                 <div class="clearfix" style="height: 35px;"></div>
                 <div class="videos-container">
-                    {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with {'listWithModal': true} %}
+                    {% include 'DodiciFansworldWebBundle:Video:blocks/video_grid.html.twig' with {'listWithModal': true} %}
                 </div>
             {% else %}
                 <div data-list="video" data-entity-type="user" data-entity-id="{{ user.id }}">
@@ -41,9 +36,8 @@
                     {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig' %}
                 </span>
                     </div>
-
-
-                    {% include 'DodiciFansworldWebBundle:Video:blocks/montage.html.twig' with {'entityId': user.id, 'entityType': 'user', 'listWithModal': true} %}
+                    {% include 'DodiciFansworldWebBundle:Video:blocks/video_grid.html.twig' with {'entityId': user.id, 'entityType': 'user', 'listWithModal': true} %}
+                    <div class="std-add-more">+</div>
                 </div>
             {% endif %}
     {#    {% endblock %}

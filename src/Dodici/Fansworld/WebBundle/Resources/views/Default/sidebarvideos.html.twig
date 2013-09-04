@@ -1,6 +1,11 @@
 <div class="sidebar-videos">
-    <h4>Últimos Videos!</h4>
-        {% for video in videos %}
-            {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video } %}
-        {% endfor %}
+    {% if watchlater %}
+        <h4 class="clearfix"><i class="ico-watchlater pull-left"></i> Ver Después</h4>
+    {% else %}
+        <h4 class="clearfix">Últimos videos!</h4>
+    {% endif %}
+
+    {% for video in videos %}
+        {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video } %}
+    {% endfor %}
 </div>

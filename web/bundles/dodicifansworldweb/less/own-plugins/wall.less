@@ -47,20 +47,14 @@ div.shortcommentform{
     .upd{
         position: relative;
         padding-right: 1%;
-        border: 1px solid @gray;
+        padding-left: 1%;
         .border-radius(5px);
 
-        div.cam-container{
-	        position: absolute;
-	        top: 5px;
-	        right: 1.7%;
-        }
-
         textarea{
-            border: none;
-            width:99%;
-            margin-bottom: 0;
-            resize: none;
+	        border: 1px solid @gray;
+            margin-bottom: 3px;
+	        width: 98.3%;
+	        resize: none;
         }
         .comment_message.loading-small {
             background-position: center center !important;
@@ -69,15 +63,6 @@ div.shortcommentform{
 
     .bottom{
         padding-top: 10px;
-        div.icons-container{
-            padding-left: 15px;
-        }
-        div.who-container{
-            input{
-	            .box-sizing(border-box);
-	            .size(25px, 100%);
-            }
-        }
         border-top: 1px solid #ebebeb;
 
         button{
@@ -303,61 +288,6 @@ div.actualizacion{
         cursor:pointer;
     }
 }
-
-//Estilos de badge tab
-.badges-container{
-    ul.badges{
-        li{
-            margin-bottom: 5px;
-            padding: 10px;
-            .badge-label{
-                color: #1e1e1e;
-                font-size: 20px;
-            }
-            .badge-content{
-                color: #a7a7a7;
-            }
-        }
-
-    }
-}
-
-.badges-sidebar{
-    h3{
-        color: #808080;
-    }
-}
-
-.badges-ranking {
-    height: 28px;
-    background-color: black;
-    color: white;
-    margin-bottom: 20px;
-}
-
-.badges-ranking-container{
-    ul.badges{
-        li{
-            margin-bottom: 5px;
-            padding: 10px;
-            .badge-label{
-                color: #1e1e1e;
-                font-size: 20px;
-            }
-            .badge-content{
-                color: #a7a7a7;
-            }
-        }
-
-    }
-}
-
-.badges-sidebar{
-    h3{
-        color: #808080;
-    }
-}
-
 
 
 // Estilo del bloque que contiene tanto los tags de la entidad como los comentarios

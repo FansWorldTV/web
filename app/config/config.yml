@@ -130,7 +130,8 @@ sonata_media:
                 wall: { width: 800 , quality: 90, constraint: false }
                 huge:   { width: 1024 , quality: 90, constraint: false}
                 home_video: { width: 400, height: 249, quality: 100 }
-                home_video_double: { width: 600, height: 400, quality: 100 }
+                home_highlight: { height: 90, width: 200, quality: 100 }
+                home_highlight_double: { height: 240, width: 400, quality: 100 }
                 mobile_320x208: { width: 640, height: 416 }
                 mobile_150x150 : { width: 300, height: 300 }
                 mobile_65x65 : { width: 130, height: 130 }
@@ -168,108 +169,7 @@ fos_twitter:
     consumer_key: %twitter.app_key%
     consumer_secret: %twitter.app_secret%
 
-artseld_openinviter:
-    username: "fansworld"
-    private_key: "6c0b090b7bf71fa484ab40de80beb21a"
-    plugins_cache_time: "1800"
-    plugins_cache_file: "oi_plugins.php"
-    cookie_path: "../web/uploads"
-    local_debug: "on_error"
-    remote_debug: ""
-    hosted: ""
-    proxies: []
-    stats: ""
-    stats_user: ""
-    stats_password: ""
-    update_files: "1"
-    transport: "curl"
 
-fos_elastica:
-    clients:
-        default: { host: %fos_elastica_host%, port: %fos_elastica_port% }
-    indexes:
-        website:
-            client: default
-            settings:
-                index:
-                    analysis:
-                        analyzer:
-                            default:
-                                language: spanish
-                                tokenizer : nonutf8letter
-                                filter : [standard, lowercase, asciifolding]
-                        tokenizer:
-                            nonutf8letter:
-                                type: pattern
-                                pattern: '[^\pL\pM\p{Nd}\p{Nl}\p{Pc}[\p{InEnclosedAlphanumerics}&&\p{So}]]+'
-
-            types:
-                search_history:
-                    mappings:
-                        term: { boost: 5 }
-                    persistence:
-                        driver: orm # orm, mongodb, propel are available
-                        model: Dodici\Fansworld\WebBundle\Entity\SearchHistory
-                        provider: ~
-                        # listener: # by default, listens to "insert", "update" and "delete"
-                user:
-                    mappings:
-                        username: { boost: 5 }
-                        firstName: { boost: 3 }
-                        lastName: { boost: 3 }
-                        id: ~
-
-                    persistence:
-                        driver: orm # orm, mongodb, propel are available
-                        model: Application\Sonata\UserBundle\Entity\User
-                        provider: ~
-                        # listener: # by default, listens to "insert", "update" and "delete"
-                photo:
-                    mappings:
-                        title: { boost: 5 }
-                        content: { boost: 3 }
-                        id: ~
-
-                    persistence:
-                        driver: orm # orm, mongodb, propel are available
-                        model: Dodici\Fansworld\WebBundle\Entity\Photo
-                        provider: ~
-                        # listener: # by default, listens to "insert", "update" and "delete"
-                video:
-                    mappings:
-                        title: { boost: 5 }
-                        content: { boost: 3 }
-                        id: ~
-
-                    persistence:
-                        driver: orm # orm, mongodb, propel are available
-                        model: Dodici\Fansworld\WebBundle\Entity\Video
-                        provider: ~
-                        # listener: # by default, listens to "insert", "update" and "delete"
-                idol:
-                    mappings:
-                        firstName: { boost: 5 }
-                        lastName: { boost: 5 }
-                        id: ~
-
-                    persistence:
-                        driver: orm # orm, mongodb, propel are available
-                        model: Dodici\Fansworld\WebBundle\Entity\Idol
-                        provider: ~
-                        # listener: # by default, listens to "insert", "update" and "delete"
-                team:
-                    mappings:
-                        title: { boost: 5 }
-                        shortname: { boost: 5 }
-                        nicknames: { boost: 4 }
-                        stadium: { boost: 3 }
-                        id: ~
-
-                    persistence:
-                        driver: orm # orm, mongodb, propel are available
-                        model: Dodici\Fansworld\WebBundle\Entity\Team
-                        provider: ~
-                        # listener: # by default, listens to "insert", "update" and "delete"
 parameters:
     sonata.user.admin.user.class: Application\Sonata\UserBundle\Admin\Entity\UserAdmin
     sonata.media.resizer.simple.class: Application\Sonata\MediaBundle\Media\SimpleResizer
@@ -544,6 +444,11 @@ services:
       arguments: [@appmedia]
       tags:
           - { name: twig.extension }
+    twig.extension.serializer:
+      class: Dodici\Fansworld\WebBundle\Extensions\SerializerExtension
+      arguments: [@serializer]
+      tags:
+            - { name: twig.extension }
     twig.extension.appfacebook:
       class: Dodici\Fansworld\WebBundle\Extensions\AppFacebookExtension
       arguments: [@app.facebook]

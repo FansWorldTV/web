@@ -16,117 +16,87 @@
 {% endblock %}
 
 {% block main_content %}
+    <div class="home-gray-bar"></div>
     <div class="home-content">
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and userMenuItems|length >=1 %}
-            <ul id="sortable1" class="filter-home connectedSortable">
-                <li class="active fixed" data-entity-type="null" data-entity-id="null">TODOS</li>
-                {% for item in userMenuItems %}
-                    <li data-entity-type="{{ item.class }}" data-entity-id = "{{ item.id }}">{{ item.title }}</li>                
-                {% endfor %}
-            </ul>
-        {% else %}            
-        <ul id="sortable1" class="filter-home connectedSortable">
-            <li class="active" data-entity-type="null" data-entity-id="null">TODOS</li>
+        <ul class="filter-home">
             {% for genre in genres %}
-                <li data-entity-type="genre" data-entity-id = "{{ genre.id }}">{{ genre.title }}</li>
+                <li data-entity-type="genre" data-entity-id="{{ genre.id }}" {% if loop.first %} class="active" {% endif %}>{{ genre.title }}</li>
             {% endfor %}
             {% for category in categories %}
-                <li data-entity-type="vc" data-entity-id = "{{ category.id }}">{{ category.title }}</li>
+                <li data-entity-type="vc" data-entity-id="{{ category.id }}">{{ category.title }}</li>
             {% endfor %}
         </ul>
-        {% endif %}
-
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            <button class="edit-filters" data-original-title="Editar"><i class="icon-cog"></i></button>
-        {% endif %}
-
-        <div class="filter-container hidden">
-          <div class="center"><h4 class="menu-title">CATEGORIAS</h4></div>
-            {% for genre in genres %}
-                <ul class="hero-submenu hidden" data-entity-type="genre" data-parent-entity-genre-title="{{ genre.title }}" data-parent-entity-id="{{ genre.id }}">            
-                    {% for child in genre.children %}
-                        <li data-entity-type="genre" data-entity-id="{{ child.id }}"><i class="option unchecked hidden"></i>{{ child.title }}</li>
-                    {% endfor %}
-                </ul>                
-            {% endfor %}
-            {% for category in categories %}
-                <ul class="hero-submenu hidden" data-entity-type="vc" data-parent-entity-title="{{ category.title }}" data-parent-entity-id="{{ category.id }}">
-                {% for genre in category.genres %}
-                    <li data-entity-type="genre" data-entity-id="{{ genre.id }}" data-video-category="{{ category.id }}"><i class="option unchecked hidden"></i>{{ genre.title }}</li>
-                {% endfor %}
-                </ul>
-            {% endfor %}
-
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                <ul id="sortable2" class="hero-menu-editor hero-editor connectedSortable active hidden">            
-                {% for genre in genres %}
-                    <li data-entity-type="genre" data-entity-id = "{{ genre.id }}"><i class="option unchecked hidden"></i>{{ genre.title }}</li>   
-                    {% for child in genre.children %}
-                        <li data-entity-type="genre" data-entity-id="{{ child.id }}"><i class="option unchecked hidden"></i>{{ child.title }}</li>
-                    {% endfor %}
-                {% endfor %}
-                {% for category in categories %}
-                    <li data-entity-type="vc" data-entity-id = "{{ category.id }}"><i class="option unchecked hidden"></i>{{ category.title }}</li>
-                    {% for genre in category.genres %}
-                        <li data-entity-type="vc" data-entity-id="{{ genre.id }}" data-video-category="{{ category.id }}"><i class="option unchecked hidden"></i>{{ genre.title }}</li>
-                    {% endfor %}
-                {% endfor %}
-                </ul>
-            {% endif %}
-
-        </div>
 
         <div class="highlights-container">
-            <section class="row-fluid gray highlights hidden" id="home-gallery">
-                <div class="grid-sizer"></div>
-                <div class="gutter-sizer"></div>
-                {% for video in highlighted%}
-                    {% if loop.index == 2 %}
-                        {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_video_double', extra_classes: 'double'} %}
-                    {% else %}
-                        {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video } %}
-                    {% endif %}
-                {% endfor %}                
+            <section class="row-fluid gray highlighteds new">
+                <div class="span2">
+                    {% for video in highlighted %}
+                        {% if loop.index0 < 2 %}
+                            {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_highlight' } %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="highlighted span4">
+                    {% for video in highlighted %}
+                        {% if loop.index0 == 2 %}
+                            {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_highlight_double'} %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="span6">
+                    {% for video in highlighted %}
+                        {% if loop.index0 > 2 %}
+                            {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, 'image_size': 'home_highlight'} %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </section>
-            <a href="{{ path('home_fwlist') }}">Ver más</a>
+            <div class="clearfix"></div>
+            <a href="{{ path('home_fwlist') }}" class="link-to-more">Ver más destacados</a>
         </div>
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and totals.followed >= 1 %}
-            <section class="row-fluid followed">
-                <header class="clearfix">
-                    <h3 class="pull-left">Sigues</h3>
-                    <span class="cant pull-left"><span data-total-followed>{{ totals.followed }}</span> videos</span>
 
-                    <section class="pull-right followed-tags topics">
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            {% if followed %} 
+                <section class="row-fluid followed">
+                    <header class="clearfix">
+                        <h3 class="pull-left">Sigues</h3>
+                        <span class="cant pull-left"><span data-total-followed></span> </span>
+
+                        <section class="pull-right followed-tags topics">
+                            <ul class="pull-right"></ul>
+                            <h3 class="pull-right">Temas</h3>
+                        </section>
+                    </header>
+                    <div class="semantic-grid videos-container">
+                        {% include "DodiciFansworldWebBundle:Search:blocks/video_element_list.html.twig"  with { videos: followed } %}
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="add-more">+</div>
+                </section>
+            {% endif %}
+        {% endif %}
+
+        {% if popular %} 
+            <section class="row-fluid popular">
+                <header class="clearfix">
+                    <h3 class="pull-left">Popular</h3>
+                    <span class="cant pull-left"><span data-total-popular></span> </span>
+
+                    <section class="pull-right popular-tags topics">
                         <ul class="pull-right"></ul>
                         <h3 class="pull-right">Temas</h3>
                     </section>
                 </header>
                 <div class="semantic-grid videos-container">
-                    {% include "DodiciFansworldWebBundle:Search:blocks/video_element_list.html.twig"  with { videos: followed } %}
+                    {% include "DodiciFansworldWebBundle:Search:blocks/video_element_list.html.twig"  with { videos: popular } %}
                 </div>
                 <div class="clearfix"></div>
                 <div class="add-more">+</div>
             </section>
-        {% endif %}
-
-        <section class="row-fluid gray popular">
-            <header class="clearfix">
-                <h3 class="pull-left">Popular</h3>
-                <span class="cant pull-left"><span data-total-popular>{{ totals.popular }}</span> videos</span>
-
-                <section class="pull-right popular-tags topics">
-                    <ul class="pull-right"></ul>
-                    <h3 class="pull-right">Temas</h3>
-                </section>
-            </header>
-            <div class="semantic-grid videos-container">
-                {% include "DodiciFansworldWebBundle:Search:blocks/video_element_list.html.twig"  with { videos: popular } %}
+            <div class="spinner hidden">
+                <div class="mask"></div>
             </div>
-            <div class="clearfix"></div>
-            <div class="add-more">+</div>
-        </section>
-
-        <div class="spinner hidden"><div class="mask"></div></div>
+        {% endif %}
     </div>
 
     {% if confirmedModal %}
@@ -137,6 +107,7 @@
             </div>
             <div class="modal-body">
                 <p class="systemmessage">{{ 'registration.confirmed'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</p>
+
                 <p>Ya podes empezar a disfrutar y conectarte con fanáticos como vos.</p>
             </div>
             <div class="modal-footer">
@@ -145,7 +116,7 @@
         </div>
 
         <script type="text/javascript">
-            $(document).ready(function(){
+            $(document).ready(function () {
                 $("#confirmedModal").modal('show');
             });
         </script>

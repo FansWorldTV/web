@@ -33,37 +33,34 @@ class LikeController extends SiteController
 	    	$id = intval($request->get('id'));
 	        $type = $request->get('type');
 	        $translator = $this->get('translator');
-	        $appstate = $this->get('appstate');
-	        
+
 	        if (!in_array($type, array('newspost','photo','video','album','contest','comment','proposal')))
 	        throw new \Exception('Invalid type');
 	        
 	        $repo = $this->getRepository($type);
 	        $entity = $repo->find($id);
-	        $likecount = $entity->getLikeCount(); 
-	        $buttontext = null; 
+	        //$likecount = $entity->getLikeCount();
+	        $buttontext = null;
 	        $message = null;
-	        $user = $this->getUser();
-	        $em = $this->getDoctrine()->getEntityManager();
 	        $liker = $this->get('liker');
 	        
 	        if ($liker->isLiking($entity)) {
 	        	$liker->unlike($entity);
 	        	$message = $translator->trans('You no longer like') . ' "' . (string)$entity.'"';
 	        	$buttontext = $translator->trans('like');
-	        	$likecount--;
+	        	//$likecount--;
 	        	$liked = false;
 	        } else {
 	        	$liker->like($entity);
 	        	$message = $translator->trans('You now like') . ' "' . (string)$entity.'"';
 	        	$buttontext = $translator->trans('unlike');
-	        	$likecount++;
+	        	//$likecount++;
 	        	$liked = true;
 	        }
 	
 	        $response = new Response(json_encode(array(
 	        	'buttontext'	=> $buttontext,
-	        	'likecount' 	=> $likecount,
+	        	//'likecount' 	=> $likecount,
 	        	'message' 		=> $message,
 	        	'liked'			=> $liked,
 	        )));

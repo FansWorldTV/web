@@ -22,10 +22,9 @@ use Dodici\Fansworld\WebBundle\Services\VideoAudienceManager;
  */
 class TvController extends SiteController
 {
-
-    const LIMIT_VIDEOS = 6;
+    const LIMIT_VIDEOS        = 6;
     const LIMIT_SEARCH_VIDEOS = 10;
-    const LIMIT_HOME_VIDEOS = 15;
+    const LIMIT_HOME_VIDEOS   = 15;
 
     /**
      * @Route("", name="teve_home")
@@ -34,46 +33,35 @@ class TvController extends SiteController
     public function homeAction()
     {
         $user = $this->getUser();
-
-        $videoRepo = $this->getRepository('Video');
+        $videoRepo     = $this->getRepository('Video');
         $homeVideoRepo = $this->getRepository('HomeVideo');
-
         $videosDestacadosFW = $videoRepo->search(null, $this->getUser(), 10, 1);
-
         $videoDestacadoMain = $videoRepo->search(null, $this->getUser(), 1);
         foreach ($videoDestacadoMain as $v) {
             $videoDestacadoMain = $v;
         }
-
         $tags = $this->get('tagger')->usedInVideos('popular');
-
-
         $videoCategories = $this->getRepository('VideoCategory')->findBy(array());
-
         $channels = array();
-
         foreach ($videoCategories as $key => $videoCategory) {
             $search = $videoRepo->search(null, null, 1, null, $videoCategory, null, null, null, null);
             $cvideo = $search ? $search[0] : null;
-
-
             $channels[$key] = array(
                 //'video' => $videoCategory->getVideos(),
-                'video' => $cvideo,
-                'channelName' => $videoCategory->getTitle(),
-                'slug' => $videoCategory->getSlug(),
-                'id' => $videoCategory->getId(),
+                'video'         => $cvideo,
+                'channelName'   => $videoCategory->getTitle(),
+                'slug'          => $videoCategory->getSlug(),
+                'id'            => $videoCategory->getId(),
                 'channelEntity' => $videoCategory
             );
         }
 
-
         return array(
-            'user' => $user,
-            'channels' => $channels,
+            'user'               => $user,
+            'channels'           => $channels,
             'videoDestacadoMain' => $videoDestacadoMain,
             'videosDestacadosFW' => $videosDestacadosFW,
-            'tags' => $tags,
+            'tags'               => $tags,
         );
     }
 
@@ -84,40 +72,36 @@ class TvController extends SiteController
     public function videoDetailAction($id, $slug)
     {
         $video = $this->getRepository('Video')->find($id);
-
-        if(!$video->getActive()){
+        if(!$video->getActive()) {
             throw new HttpException(404, 'Video not found');
         }
-
         $genre = $video->getGenre();
-
-        $user = $this->getUser();
-        $videosRelated = $this->getRepository('Video')->related($video, $user, self::LIMIT_VIDEOS);
+        $user              = $this->getUser();
+        $videosRelated     = $this->getRepository('Video')->related($video, $user, self::LIMIT_VIDEOS);
         $videosRecommended = $this->getRepository('Video')->recommended($user, $video, self::LIMIT_VIDEOS, null, $genre);
-
         $sorts = array(
-            'id' => 'toggle-video-types',
+            'id'    => 'toggle-video-types',
             'class' => 'sort-videos',
-            'list' => array(
+            'list'  => array(
                 array(
-                    'name' => 'Relacionados',
+                    'name'     => 'Relacionados',
                     'dataType' => 0,
-                    'class' => 'active',
+                    'class'    => 'active',
                 ),
                 array(
-                    'name' => $video->getAuthor() ? 'Más de ' . (string) $video->getAuthor() : 'Más de Fansword',
+                    'name'     => $video->getAuthor() ? 'Más de ' . (string) $video->getAuthor() : 'Más de Fansword',
                     'dataType' => 1,
-                    'class' => '',
+                    'class'    => '',
                 )
             )
         );
 
         return array(
-            'video' => $video,
-            'user' => $user,
-            'videosRelated' => $videosRelated,
+            'video'             => $video,
+            'user'              => $user,
+            'videosRelated'     => $videosRelated,
             'videosRecommended' => $videosRecommended,
-            'sorts' => $sorts
+            'sorts'             => $sorts
         );
     }
 
@@ -127,34 +111,33 @@ class TvController extends SiteController
      */
     public function videoDetailModalAction($id, $slug)
     {
-        $video = $this->getRepository('Video')->find($id);
-        $user = $this->getUser();
-        $videosRelated = $this->getRepository('Video')->related($video, $user, self::LIMIT_VIDEOS);
+        $video             = $this->getRepository('Video')->find($id);
+        $user              = $this->getUser();
+        $videosRelated     = $this->getRepository('Video')->related($video, $user, self::LIMIT_VIDEOS);
         $videosRecommended = $this->getRepository('Video')->recommended($user, $video, self::LIMIT_VIDEOS);
-
         $sorts = array(
-            'id' => 'toggle-video-types',
+            'id'    => 'toggle-video-types',
             'class' => 'sort-videos',
-            'list' => array(
+            'list'  => array(
                 array(
-                    'name' => 'Relacionados',
+                    'name'     => 'Relacionados',
                     'dataType' => 0,
-                    'class' => 'active',
+                    'class'    => 'active',
                 ),
                 array(
-                    'name' => 'Más del usuario',
+                    'name'     => 'Más del usuario',
                     'dataType' => 1,
-                    'class' => '',
+                    'class'    => '',
                 )
             )
         );
 
         return array(
-            'video' => $video,
-            'user' => $user,
-            'videosRelated' => $videosRelated,
+            'video'             => $video,
+            'user'              => $user,
+            'videosRelated'     => $videosRelated,
             'videosRecommended' => $videosRecommended,
-            'sorts' => $sorts
+            'sorts'             => $sorts
         );
     }
 
@@ -164,22 +147,19 @@ class TvController extends SiteController
     public function getVideoAudience()
     {
         $manager = $this->get('video.audience');
-
         $request = $this->getRequest();
         $videoId = $request->get('video', false);
-        $video = $this->getRepository('Video')->find($videoId);
-        $user = $this->getUser();
+        $video   = $this->getRepository('Video')->find($videoId);
+        $user    = $this->getUser();
         $manager->join($video, $user);
         $videoAudience = $this->getRepository('VideoAudience')->watching($video);
-
         $response = array();
-
         foreach ($videoAudience as $viewer) {
             array_push($response, array(
-                'id' => $viewer->getId(),
+                'id'       => $viewer->getId(),
                 'username' => (string) $viewer,
-                'wall' => $this->generateUrl('user_land', array('username' => $viewer->getUsername())),
-                'image' => $this->getImageUrl($viewer->getImage(), 'micro_square')
+                'wall'     => $this->generateUrl('user_land', array('username' => $viewer->getUsername())),
+                'image'    => $this->getImageUrl($viewer->getImage(), 'micro_square')
             ));
         }
 
@@ -192,12 +172,10 @@ class TvController extends SiteController
     public function keepAlive()
     {
         $manager = $this->get('video.audience');
-
         $request = $this->getRequest();
         $videoId = $request->get('video', false);
-        $video = $this->getRepository('Video')->find($videoId);
-        $user = $this->getUser();
-
+        $video   = $this->getRepository('Video')->find($videoId);
+        $user    = $this->getUser();
         $alive = $manager->keepalive($video, $user);
 
         return $this->jsonResponse($alive);
@@ -208,16 +186,13 @@ class TvController extends SiteController
      */
     public function videoDetailSort()
     {
-        $request = $this->getRequest();
-        $videoId = $request->get('video', false);
+        $request  = $this->getRequest();
+        $videoId  = $request->get('video', false);
         $sortType = $request->get('sort', 0);
-        $viewer = $this->getUser();
-
+        $viewer   = $this->getUser();
         $videoRelated = $this->getRepository('Video')->find($videoId);
-
         $response = array('videos' => array());
-
-        if ($videoRelated) {
+        if($videoRelated) {
             switch ($sortType) {
                 case 0:
                     $videos = $this->getRepository('Video')->related($videoRelated, $viewer, self::LIMIT_VIDEOS);
@@ -226,14 +201,13 @@ class TvController extends SiteController
                     $videos = $this->getRepository('Video')->moreFromUser($videoRelated->getAuthor(), $videoRelated, $viewer, self::LIMIT_VIDEOS);
             }
         }
-
         foreach ($videos as $video) {
             $response['videos'][] = array(
-                'id' => $video->getId(),
-                'slug' => $video->getSlug(),
-                'title' => $video->getTitle(),
-                'content' => substr($video->getContent(), 0, 52) . "...",
-                'image' => $this->getImageUrl($video->getImage(), 'medium'),
+                'id'       => $video->getId(),
+                'slug'     => $video->getSlug(),
+                'title'    => $video->getTitle(),
+                'content'  => substr($video->getContent(), 0, 52) . "...",
+                'image'    => $this->getImageUrl($video->getImage(), 'medium'),
                 'duration' => date("i:s", $video->getDuration())
             );
         }
@@ -247,15 +221,15 @@ class TvController extends SiteController
      */
     public function taggedVideosAction($term)
     {
-        $user = $this->getUser();
+        $user      = $this->getUser();
         $videoRepo = $this->getRepository('Video');
-
         $videos = $videoRepo->search($term, null, self::LIMIT_SEARCH_VIDEOS, null, null, null, null, null, null);
 
         return array(
-            'user' => $user,
-            'videos' => $videos,
-            'term' => $term,
+            'user'    => $user,
+            'videos'  => $videos,
+            'term'    => $term,
+            'addMore' => false
         );
     }
 
@@ -265,16 +239,15 @@ class TvController extends SiteController
      */
     public function teamVideosAction($term)
     {
-        $user = $this->getUser();
+        $user      = $this->getUser();
         $videoRepo = $this->getRepository('Video');
-        $team = $this->getRepository('Team')->findOneBy(array('slug' => $term, 'active' => true));
-
+        $team      = $this->getRepository('Team')->findOneBy(array('slug' => $term, 'active' => true));
         $videos = $videoRepo->search(null, null, self::LIMIT_SEARCH_VIDEOS, null, null, null, $team, null, null);
 
         return array(
-            'user' => $user,
+            'user'   => $user,
             'videos' => $videos,
-            'term' => $term,
+            'term'   => $term,
         );
     }
 
@@ -284,16 +257,15 @@ class TvController extends SiteController
      */
     public function idolVideosAction($term)
     {
-        $user = $this->getUser();
+        $user      = $this->getUser();
         $videoRepo = $this->getRepository('Video');
-        $idol = $this->getRepository('Idol')->findOneBy(array('slug' => $term, 'active' => true));
-
+        $idol      = $this->getRepository('Idol')->findOneBy(array('slug' => $term, 'active' => true));
         $videos = $videoRepo->search(null, null, self::LIMIT_SEARCH_VIDEOS, null, null, null, $idol, null, null);
 
         return array(
-            'user' => $user,
+            'user'   => $user,
             'videos' => $videos,
-            'term' => $term,
+            'term'   => $term,
         );
     }
 
@@ -303,22 +275,19 @@ class TvController extends SiteController
      */
     public function exploreChannelAction($id)
     {
-        $user = $this->getUser();
-        $videoRepo = $this->getRepository('Video');
+        $user           = $this->getUser();
+        $videoRepo      = $this->getRepository('Video');
         $activeCategory = $this->getRepository('VideoCategory')->find($id);
-
-        if (!$activeCategory) {
+        if(!$activeCategory) {
             throw new HttpException(404, "No existe el canal id $id");
         }
-
-        $videos = $videoRepo->search(null, null, self::LIMIT_SEARCH_VIDEOS, null, $activeCategory, null, null, null, null);
+        $videos          = $videoRepo->search(null, null, self::LIMIT_SEARCH_VIDEOS, null, $activeCategory, null, null, null, null);
         $videoCategories = $this->getRepository('VideoCategory')->findBy(array());
 
-
         return array(
-            'user' => $user,
-            'videos' => $videos,
-            'channels' => $videoCategories,
+            'user'          => $user,
+            'videos'        => $videos,
+            'channels'      => $videoCategories,
             'activeChannel' => $activeCategory,
         );
     }
@@ -329,41 +298,33 @@ class TvController extends SiteController
     public function ajaxToggleAction()
     {
         try {
-            $request = $this->getRequest();
+            $request    = $this->getRequest();
             $idvideocat = intval($request->get('channel'));
-            $user = $this->getUser();
-
+            $user       = $this->getUser();
             $t = $this->get('translator');
-
-            if (!$user instanceof User)
+            if(!$user instanceof User)
                 throw new \Exception($t->trans('must_login'));
-
             $videocategory = $this->getRepository('VideoCategory')->find($idvideocat);
-            if (!$videocategory)
+            if(!$videocategory)
                 throw new \Exception($t->trans('channel_not_found'));
-
             $subscriptions = $this->get('subscriptions');
-
-            if ($subscriptions->isSubscribed($videocategory)) {
+            if($subscriptions->isSubscribed($videocategory)) {
                 $state = $subscriptions->unsubscribe($videocategory) ? false : null;
-
-                $message = $t->trans('unsubscribed_to_channel') . ' "' . (string) $videocategory . '"';
+                $message    = $t->trans('unsubscribed_to_channel') . ' "' . (string) $videocategory . '"';
                 $buttontext = $t->trans('subscribe');
             } else {
                 $state = $subscriptions->subscribe($videocategory) ? true : null;
-
                 $this->get('app.facebook')->subscribe($videocategory, $user);
-
-                $message = $t->trans('subscribed_to_channel') . ' "' . (string) $videocategory . '"';
+                $message    = $t->trans('subscribed_to_channel') . ' "' . (string) $videocategory . '"';
                 $buttontext = $t->trans('unsubscribe');
             }
-
             $response = new Response(json_encode(array(
-                                'buttontext' => $buttontext,
-                                'message' => $message,
-                                'state' => $state
-                            )));
+                'buttontext' => $buttontext,
+                'message'    => $message,
+                'state'      => $state
+            )));
             $response->headers->set('Content-Type', 'application/json');
+
             return $response;
         } catch (\Exception $e) {
             return new Response($e->getMessage(), 400);
@@ -376,21 +337,17 @@ class TvController extends SiteController
      */
     public function ajaxExploreAction()
     {
-        $serializer = $this->get('serializer');
-        $user = $this->getUser();
-        $request = $this->getRequest();
+        $serializer  = $this->get('serializer');
+        $user        = $this->getUser();
+        $request     = $this->getRequest();
         $channelType = $request->get('channel', null);
-        $filterType = $request->get('filter', false);
-        $page = $request->get('page', 1);
-
-        $offset = ( $page - 1 ) * self::LIMIT_HOME_VIDEOS;
-
+        $filterType  = $request->get('filter', false);
+        $page        = $request->get('page', 1);
+        $offset = ($page - 1) * self::LIMIT_HOME_VIDEOS;
         $videoRepo = $this->getRepository('Video');
-        $category = $this->getRepository('VideoCategory')->find($channelType);
-
+        $category  = $this->getRepository('VideoCategory')->find($channelType);
         $datefrom = null;
-        $dateto = null;
-
+        $dateto   = null;
         switch ($filterType) {
             default:
                 $sortCriteria = 'default';
@@ -406,24 +363,23 @@ class TvController extends SiteController
                 break;
             case 'day':
                 $sortCriteria = "views";
-                $date = new \DateTime();
-                $datefrom = new \DateTime("-1 day");
+                $date         = new \DateTime();
+                $datefrom     = new \DateTime("-1 day");
                 break;
             case 'week':
                 $sortCriteria = "views";
-                $datefrom= new \DateTime("-1 week");
+                $datefrom     = new \DateTime("-1 week");
                 break;
             case 'month':
                 $sortCriteria = "views";
-                $datefrom = new \DateTime("-1 month");
+                $datefrom     = new \DateTime("-1 month");
                 break;
         }
-
         $search = $videoRepo->search(null, $user, self::LIMIT_HOME_VIDEOS, $offset, $category, null, null, $datefrom, $dateto, $sortCriteria);
 
         return $this->jsonResponse(array(
-                    'videos' => $serializer->values($search, 'big'),
-                ));
+            'videos' => $serializer->values($search, 'big'),
+        ));
     }
 
 }
