@@ -142,6 +142,10 @@ inviter.tabs.facebook = function() {
                     });
                 });
 
+                $("[data-invite-all]").on('click', function () {
+                    $(".invite-checkbox").toggleClass('active');
+                });
+
             } else {
                 $container.removeClass('loading');
                 $container.find('.not-logged').show();
