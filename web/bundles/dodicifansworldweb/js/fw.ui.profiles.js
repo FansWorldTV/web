@@ -100,10 +100,9 @@ $(document).ready(function () {
             });
 
             that.options.onFilterChange = function(type, id) {
-
-                id = parseInt(id, 10);
-                that.options.type = type;
-                that.options.id = id;
+                console.log(id)
+                that.options.type = type == 'null' ? 'type' : type;
+                that.options.id = id == 'null' ? 'all' : id;
                 that.options.page = 1;
                 that.options.videoFeed = Routing.generate(appLocale + '_profile_ajaxgetprofiles');
                 that.options.getFilter = function() {
@@ -113,7 +112,7 @@ $(document).ready(function () {
                             block: that.options.block
                         }
                     };
-                    filter.paginate[type] = parseInt(id, 10);
+                    filter[that.options.type] = that.options.id;
                     return filter;
                 };
                 that.clearThumbs();
@@ -172,7 +171,7 @@ $(document).ready(function () {
                                 $thumb.find("[data-idolship-add]").addClass(fanBtnClass);
                                 $thumb.find('[data-teamship-add]').addClass(fanBtnClass);
                             } else {
-                                fanBtnClass = "unfan-small";                                
+                                fanBtnClass = "unfan-small";
                                 $thumb.find("[data-idolship-add]").addClass(fanBtnClass);
                                 $thumb.find('[data-teamship-add]').addClass(fanBtnClass);
                             }
@@ -219,14 +218,14 @@ $(document).ready(function () {
                     var il = new ImagesLoaded(that.element);
                     il.done(function () {
                         $('body').find('.spinner').addClass('hidden');
-                        $('body').find('.spinner').hide();                        
+                        $('body').find('.spinner').hide();
                         $(that.element).parent().removeClass('hidden');
                         $(that.element).parent().fadeIn('slow', function() {
                             if(addMore) {
                                 $(that.element).parent().find('.add-more').fadeIn('slow');
                             } else {
                                 $(that.element).parent().find('.add-more').hide();
-                            }                              
+                            }
                         });
                     });
                     il.progress(function (image, isBroken) {
@@ -234,15 +233,15 @@ $(document).ready(function () {
                     });
                     il.fail(function(instance){
                         $('body').find('.spinner').addClass('hidden');
-                        $('body').find('.spinner').hide();                           
+                        $('body').find('.spinner').hide();
                         $(that.element).parent().removeClass('hidden');
                         $(that.element).parent().fadeIn('slow', function() {
                             if(addMore) {
                                 $(that.element).parent().find('.add-more').fadeIn('slow');
                             } else {
                                 $(that.element).parent().find('.add-more').hide();
-                            }                              
-                        });                                        
+                            }
+                        });
                     });
                     return response.videos;
                 }).done(function(videos){
@@ -289,7 +288,7 @@ $(document).ready(function () {
 
     // Packery
     var type = $(".filter-home").find('.active').attr('data-entity-type');
-    var id = parseInt($(".filter-home").find('.active').attr('data-entity-id'), 10);
+    var id = $(".filter-home").find('.active').attr('data-entity-id');
 
     // Video Grid
     $('section.popular > .profiles-container').fwHomeThumbs({
@@ -307,7 +306,7 @@ $(document).ready(function () {
         $(this).parent().find('.active').removeClass('active');
         $(this).addClass('active');
         var type = $(this).attr('data-entity-type');
-        var id = parseInt($(this).attr('data-entity-id'), 10);
+        var id = $(this).attr('data-entity-id');
 
         ///////////////////////////////////////////////////////////////////////
         // Decoupled EventTrigger                                            //
