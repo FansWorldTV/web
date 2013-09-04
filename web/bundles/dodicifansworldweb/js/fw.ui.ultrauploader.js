@@ -117,22 +117,49 @@ $(document).ready(function () {
             };
             that.uploader = new window.UPLOADER({
                 element: $(that.options.uploaderSelector)[0],
+                autoUpload: true,
                 multiple: false,
-                autoUpload: false,
-                action: that.options.action[that.options.mediaType],
+                forceMultipart: true,
+                normalHeaders: false,
+                responsePassthrough: true,
+                action: that.options.action.video,
                 maxConnections: 1,
+                inputName: 'resource:fileData',
                 allowedExtensions: that.options.mediaExtensions.all,
+                onLoadStart: function(event) {
+                    that.modal.find('.button-submit-action').addClass('hidden');
+                    that.modal.find('.progress').removeClass('hidden');
+                    return;
+                },
                 onProgress: function(event) {
                     var percentComplete = parseInt(((event.source.loaded / event.source.total) * 100), 10);
                     that.modal.find('.progress > .bar').css({width: percentComplete + '%'});
                     that.modal.find('.progress > .percent-value').text(percentComplete + '%');
                     return;
                 },
+                onComplete: function(event) {
+                    var xhr = event.target.xhr;
+                    var name = $(xhr.responseText).find('name').text();
+                    var entryId = $(xhr.responseText).find('id').text();
+                    
+                    that.modal.find('.button-submit-action').removeClass('hidden');
+                    that.modal.find('.progress').addClass('hidden');
+                    return;
+                    $.ajax({
+                        url: Routing.generate(appLocale + '_video_ajaxuploadvideo'), 
+                        data: {
+                            entryid: entryId, 
+                            title: "hello", 
+                            content: "descr", 
+                            genre: 1, 
+                            category: 1
+                        }
+                    }).then(function(response){
+                        console.log(response);
+                    });
+                    return;
+                }
             });
-
-            that.uploader.addListener('onprogress', that.onProgress);
-            that.uploader.addListener('oncomplete', that.onVideoUploadComplete);
-
             // Create the modal
             $.when(templateHelper.htmlTemplate('general-ultraupload_modal', modal)).then(function(html) {
                 that.modal = boot = $(html).clone();
@@ -252,23 +279,37 @@ $(document).ready(function () {
                     return;
                 }
             });
-            modal.find('form').submit(function(event) {
+            modal.find('form').on('submit', function(event) {
                 event.stopPropagation();
                 event.preventDefault();
 
-                return false;
-
-                var data = $(this).serializeArray();
-                var action = $(this).attr('action');
-                var method = $(this).attr('method');
-                $.ajax({
-                    url: this.getAttribute('action'),
-                    data: data,
-                    type: method
-                })
-                .then(function(response){
-                    console.log(response);
-                });
+                console.log(event);
+                var category = $('[data-genre-id].active').attr('data-genre-id');
+                var title = $('[data-title]').val();
+                var content = $('[data-description]').val();
+                
+                
+                if((category > 0) && (title.length > 0) && (content.length > 0)) {
+                 $.ajax({
+                        url: Routing.generate(appLocale + '_video_ajaxuploadvideo'), 
+                        data: {
+                            entryid: that.options.entryId, 
+                            title: title, 
+                            content: content, 
+                            genre: 1, 
+                            category: category
+                        }
+                    }).then(function(response){
+                        if(response.response) {
+                            that.modal.find('.button-submit-action').addClass('loading-small');
+                            location.href = Routing.generate(appLocale + '_user_videos', {username: window.Application.user.username});
+                        } else {
+                            window.error("Hubo un error");
+                        }
+                    });   
+                } else {
+                    alert("No completo todos los campos !")
+                }
                 return false;
             });
             modal.modal({
@@ -299,14 +340,13 @@ $(document).ready(function () {
                     that.modal.find('#drop_zone').animate({ 'background-color': 'transparent', 'border-color': '#bbb' } );
                     return false;
                 }
+                that.modal.find('[data-title]').val(file.name);
                 if (file.type.match('image.*')) {
                 } else if (file.type.match('video.*')) {
                     $.when(that.getKalturaHanlder(file))
                     .then(function (metadata){
                         that.uploader.addFile(file, metadata);
                         that.uploader.start();
-                        that.modal.find('.button-submit-action').addClass('hidden');
-                        that.modal.find('.progress').removeClass('hidden');
                     })
                 }
             }

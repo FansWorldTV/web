@@ -26,7 +26,7 @@
                         <img src="{{ asset('bundles/dodicifansworldweb/images/ico/yt-icon-pop.png') }}"/>
                     </figure>
                     <input type="text" type="url" placeholder="Link de Youtube" name="youtube-link" data-youtubelink/>
-                    <button data-youtube-validate="true" class="youtube-validate"><i class="icon-search icon-white"></i>
+                    <button data-youtube-validate="true" class="btn youtube-validate"><i class="icon-search"></i>
                     </button>
                 </div>
             </section>
@@ -34,7 +34,7 @@
                 <div class="row fifty-fifty">
                     <div class="component category">
                         <label>Categoría<sup>*</sup></label>
-
+                        
                         <div class="btn-group" data-toggle="buttons-radio">
                             {% for genre in genres %}
                                 <button type="button" class="btn" data-genre-id="{{ genre.id }}">{{ genre.title }}</button>
@@ -62,13 +62,13 @@
                 <div class="row">
                     <div class="component title">
                         <label>Título<sup>*</sup></label>
-                        <input type="text" data-title/>
+                        <input type="text" data-title required maxlength="64" />
                     </div>
                 </div>
                 <div class="row fifty-fifty">
                     <div class="component description">
                         <label>Descripción</label>
-                        <textarea placeholder="Cuéntanos más sobre este video." data-description></textarea>
+                        <textarea placeholder="Cuéntanos más sobre este video." data-description required maxlength="400"></textarea>
                     </div>
                     <div class="component tags">
                         <label>Tags</label>
@@ -76,7 +76,7 @@
                     </div>
                 </div>
             </section>
-            <button class="button-submit-action pull-right">Subir Video</button>
+            <input type="submit" class="button-submit-action pull-right" value="Subir Video" />
             <div class="progress hidden">
                 <div class="bar" style="width: 60%;"></div>
                 <span class="percent-value">60%</span>
