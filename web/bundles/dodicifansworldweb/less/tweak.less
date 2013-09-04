@@ -26,7 +26,16 @@ input {
 }
 
 .btn-success {
-    background-image: -moz-linear-gradient(center top , #8FCA48, #79C41E);
+    border: 0;
+	.border-radius(3px);
+	.gradient-green;
+	cursor: pointer;
+	.transition(top 0.3s ease);
+
+	&:hover {
+		background-position: center;
+		top: 2px;
+	}
 }
 
 //loading styles
