@@ -2,11 +2,6 @@
 
 {% block title %}{{ parent() }} - {{ 'Photos'|trans }}{% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('bundles/dodicifansworldweb/js/albums.js') }}" type="text/javascript"></script>
-{% endblock %}
-
 {% block profile_tabs %}
 	{% set active_tab = 'photos' %}
 	{{ parent() }}
@@ -44,15 +39,6 @@
                     </span>
                 </a>
             </div>
-
-            <script type="text/javascript">
-                /**
-                 * @todo benja
-                 * hay que cambiar esto del montage
-                 */
-               montageHelper.doMontage($(".am-container.albums"), {minw: null, liquid: null, fillLastRow:false});
-                montageHelper.doMontage($(".am-container.other-photos"), {minw: null, liquid: null, fillLastRow:false});
-            </script>
         {% endblock %}
     {% endembed %}		
 {% endblock %}

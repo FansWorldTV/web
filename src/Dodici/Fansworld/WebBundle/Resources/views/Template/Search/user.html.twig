@@ -1,5 +1,5 @@
 {% raw %}
-    <li data-added-element>
+    <li>
         <div class='fan-container'>
             <div class="avatar">
                 {{if image}}
@@ -13,12 +13,13 @@
                 {{/if}}
             </div>
             <span class="name"><a href="{{>url}}">{{>title}}</a></span>
+
             {{if fanCount>0}}
                 <span class="friendCount">{{>fanCount}}</span>
             {{/if}}
 
-            <div class="addFriend" data-add-fan="" data-login-required="">
-                <button class="btn btn_friendship add btn-success" data-friendship-add="true" data-user-id="{{>id}}"> Ser fan</button>
+            <div class="addFriend" data-add-fan>
+                <button class="social_action befun btn_friendship" data-login-required="" data-friendship-add="true" data-user-id="{{>id}}"><i></i> Ser fan</button>
             </div>
         </div>
     </li>

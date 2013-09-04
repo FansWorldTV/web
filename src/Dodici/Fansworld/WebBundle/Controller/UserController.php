@@ -37,8 +37,6 @@ class UserController extends SiteController
     {
         $user = $this->getRepository('User')->find($id);
         $next = $this->getRepository('User')->next($user);
-
-
         return $this->forward('DodiciFansworldWebBundle:User:videosTab', array('username'=> $next->getUsername()));
     }
 
@@ -49,7 +47,6 @@ class UserController extends SiteController
     {
         $user = $this->getRepository('User')->find($id);
         $previous = $this->getRepository('User')->previous($user);
-
         return $this->forward('DodiciFansworldWebBundle:User:videosTab', array('username'=> $previous->getUsername()));
     }
 
@@ -69,7 +66,6 @@ class UserController extends SiteController
 
         $loggedUser = $this->getUser();
         $friendGroups = $this->getRepository('FriendGroup')->findBy(array('author' => $loggedUser->getId()));
-
 
         return array(
             'user' => $user,
@@ -123,7 +119,6 @@ class UserController extends SiteController
         $interests = array();
         foreach ($categories as $category) {
             $interestsRepo = $this->getRepository('Interest')->matching($category->getId(), null, $user->getId());
-
             $interests[$category->getId()]['category'] = $category->getTitle();
             foreach ($interestsRepo as $element) {
                 $interests[$category->getId()]['interest'][] = array(
@@ -171,9 +166,7 @@ class UserController extends SiteController
         } else
             $this->get('visitator')->visit($user);
 
-
         $ids = $this->getRepository('Profile')->followingProfiles($user);
-
         $list = array();
 
         foreach ($ids as $id) {
@@ -250,7 +243,6 @@ class UserController extends SiteController
         $user = $this->getUser();
         $notiRepo = $this->getRepository('Notification');
         $number = $notiRepo->countLatest($user, false);
-
         return $this->jsonResponse(array('number' => $number));
     }
 
@@ -303,7 +295,6 @@ class UserController extends SiteController
         $request = $this->getRequest();
         $notificationId = $request->get('id', false);
         $user = $this->getUser();
-
         $response = false;
 
         if ($notificationId) {
@@ -316,11 +307,9 @@ class UserController extends SiteController
                     throw new \Exception('Wrong user');
 
                 $notification->setReaded(true);
-
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($notification);
                 $em->flush();
-
                 $response = true;
             } catch (\Exception $exc) {
                 $response = $exc->getMessage();
@@ -336,13 +325,11 @@ class UserController extends SiteController
     public function ajaxNumberOfPendingRequests()
     {
         $friendRepo = $this->getRepository('Friendship');
-
         $response = false;
-
         $user = $this->getUser();
+
         if ($user instanceof User) {
             $countTotal = $friendRepo->countPending($user);
-
             $response = array('number' => $countTotal);
         }
 
@@ -385,7 +372,6 @@ class UserController extends SiteController
                 }
             }
         }
-
         return $this->jsonResponse($response);
     }
 
@@ -706,7 +692,6 @@ class UserController extends SiteController
     {
         $user = $this->getUser();
         $media = $user->getImage();
-
         return array('media' => $media, 'user' => $user);
     }
 
@@ -873,31 +858,6 @@ class UserController extends SiteController
     }
 
     /**
-     * @Route("/u/{username}/badges", name="user_badges")
-     * @Template
-     * @Secure(roles="ROLE_USER")
-     */
-    public function badgeTabAction($username)
-    {
-        $user = $this->getRepository('User')->findOneByUsername($username);
-        if (!$user) {
-            throw new HttpException(404, "No existe el usuario");
-        }else
-            $this->get('visitator')->visit($user);
-
-        $badges = $this->getRepository('BadgeStep')->byUser($user);
-        //$idolshipsCount = $this->getRepository('Idolship')->countBy(array('author' => $user->getId()));
-
-        $return = array(
-            'badges' => $badges,
-            //'addMore' => $idolshipsCount > self::LIMIT_LIST_IDOLS ? true : false,
-            'user' => $user
-        );
-
-        return $return;
-    }
-
-    /**
      * @Route("/u/{username}/fans", name="user_fans")
      * @Template
      * @Secure(roles="ROLE_USER")
@@ -944,13 +904,10 @@ class UserController extends SiteController
             $this->get('visitator')->visit($author);
 
         $user = $this->getUser();
-
         $videoRepo = $this->getRepository('Video');
 
-        $videos = $videoRepo->search(null, $user, self::LIMIT_VIDEOS, null, null, null, $author, null, null, null, null);
-        //$videos = $videoRepo->search(null, null, self::LIMIT_VIDEOS, null, null, null, null, null, null);
+        $videos = $videoRepo->videosOfUser($author, $user, self::LIMIT_VIDEOS);
         $countAll = $videoRepo->countSearch(null, $user, null, null, $author, null, null, $author);
-
         $addMore = $countAll > self::LIMIT_VIDEOS ? true : false;
 
         $sorts = array(
@@ -999,17 +956,6 @@ class UserController extends SiteController
         //return $this->jsonResponse(array('number' => $number));
 
         return $this->jsonResponse($response);
-    }
-
-    /**
-     *  @Route("/ajax/notification-setfake", name="notification_setfake")
-     */
-    public function ajaxSetNotificationFake()
-    {
-        $request = $this->getRequest();
-        $type = $request->get('type', false);
-        $notification = $this->getRepository('Notification')->findOneBy(array('type' => $type));
-        $this->get('meteor')->push($notification);
     }
 
     /**
@@ -1064,6 +1010,55 @@ class UserController extends SiteController
         return $this->jsonResponse($response);
     }
 
+    /**
+     * Videos filters
+     * @Route("/videos/filter/ajax", name="user_filtervideosajax")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function filterVideosAjaxAction()
+    {
+        $user = $this->getUser();
+        $request = $this->getRequest();
+        $type = $request->get('type', 0);
+        $type = (int) $type;
+        $serializer = $this->get('serializer');
+
+        $response = array(
+            'videos' => array(),
+            'error' => false
+        );
+
+        switch ($type) {
+            case 0:
+                $videos = $this->getRepository('Video')->findBy(array('author' => $user->getId(), 'active' => true), array('createdAt' => 'desc'));
+                break;
+
+            case 1:
+                $videos = $this->getRepository('Video')->commonIdols($user);
+                break;
+
+            case 2:
+                $videos = $this->getRepository('Video')->commonTeams($user);
+                break;
+
+            case 3:
+                $videos = $this->getRepository('Video')->commonCategories($user);
+                break;
+
+            case 4:
+                $playlist = $this->get('video.playlist');
+                $videosPlaylist = $playlist->get($user);
+                
+                foreach ($videosPlaylist as $video) {
+                    $videos[] = $video->getVideo();
+                }
+                break;
+        }
+
+        $response['videos'] = $serializer->values($videos, 'huge_square');
+
+        return $this->jsonResponse($response);
+    }
     /**
      *  @Route("/ajax/getactivity-feed", name="getactivity_feed")
      */

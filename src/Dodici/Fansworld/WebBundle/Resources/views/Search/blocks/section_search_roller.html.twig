@@ -1,10 +1,9 @@
 {% if extra_classes is not defined %}
     {% set extra_classes = '' %}
 {% endif %}
-<section class="row-fluid search {{ entityType }} endless">
+<section class="row-fluid search {{ entityType }}">
     <div class="topBar">
-        <span class="entity-title">{{ title }}</span>
-        <!--span class="see-all">Ver todos</span-->
+        <span class="entity-title">{{ count }} {{ title }}</span>
     </div>
     <div class="roller {{ extra_classes }}">
         {% block roller %}

@@ -2,26 +2,7 @@
 
 {% form_theme form 'DodiciFansworldWebBundle::form.html.twig' %}
 
-
 {% block content %}
-	{% if photo %}
-		<script type="text/javascript">
-                if(window.top.redirectColorbox){
-                        window.top.location.href = "{{ path('photo_show', {id: photo.id, slug: photo.slug}) }}";
-                }
-
-                var photoUploaded = {% if photo %}{{ photo.id }} {% else %} false {% endif %};
-
-                if(photoUploaded){
-                    ajax.contestParticipateAction(window.top.contest.id, false, photoUploaded, false, function(r){
-                        if(r){
-                            window.top.$("a.contestParticipate").parent().html('{{ 'Already participating'|trans }}');
-                            window.top.$.colorbox.close();
-                        }
-                    });
-                }
-		</script>
-	{% else %}
 	<div class="greybox">
 		<form action="{{ path('photo_upload') }}" method="post" enctype="multipart/form-data" class="bigform upload-photo">
 			<div class="form-upload fieldcontainer">
@@ -58,5 +39,4 @@
 	<div class="templateFieldAlbumName hidden">
 		<div class="field" style="display:none;"><input type="text" name="album_new_name" placeholder="Título del album"/></div>
 	</div>
-	{% endif %}
 {% endblock %}

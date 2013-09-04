@@ -15,6 +15,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dodici\Fansworld\WebBundle\Controller\ApiV1\BaseController;
 use Dodici\Fansworld\WebBundle\Services\Search;
+use Dodici\Fansworld\WebBundle\Entity\SearchHistory;
+use Elastica_Search;
+use Elastica_Query;
+use Elastica_Query_Term;
+use Elastica_Facet_Terms;
+use Elastica_Type_Mapping;
 
 /**
  * API controller - Search

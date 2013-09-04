@@ -10,25 +10,6 @@
 {% endblock %}
         
 {% block content %}
-	{% if video %}
-		<script type="text/javascript">
-                                                     if(window.top.redirectColorbox){
-                                                         window.top.location.href = "{{ path('video_show', {id: video.id, slug: video.slug}) }}";
-                                                    }
-                                                    
-                                                    
-                                                    var videoUploaded = {% if video %}{{ video.id }} {% else %} false {% endif %};
-                                                    if(videoUploaded){
-                                                        ajax.contestParticipateAction(window.top.contest.id, false, false, videoUploaded, function(r){
-                                                            if(r){
-                                                                window.top.$("a.contestParticipate").parent().html('Ya estas participando');
-                                                                window.top.$.colorbox.close();
-                                                            }
-                                                        });
-                                                    }
-                                                    
-		</script>
-	{% else %}
 	<div class="greybox">
 		<form action="{{ path('video_upload') }}" method="post" enctype="multipart/form-data" class="bigform upload-video">
 			<div class="form-upload fieldcontainer">
@@ -61,11 +42,9 @@
 	<div class="templateFieldAlbumName hidden">
 		<div class="field" style="display:none;"><input type="text" name="album_new_name" placeholder="Título del album"/></div>
 	</div>
-	{% endif %}
-                
-<script type="text/javascript">
-    $(document).ready(function(){
-        videos.init();
-    });
-</script>
+	<script type="text/javascript">
+	    $(document).ready(function(){
+	        videos.init();
+	    });
+	</script>
 {% endblock %}

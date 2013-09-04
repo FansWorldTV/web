@@ -226,8 +226,12 @@ div.loginformbig {
 	padding: 20px 0 0 20px;
 
 	.top {
+		position: relative;
+
 		h1 {
-			font-weight: 600;
+			letter-spacing: 1px;
+			font-weight: 700;
+			color: @black;
 		}
 		h4 {
 			font-weight: 400;
@@ -240,12 +244,24 @@ div.loginformbig {
 		.register-facebook {
 			margin-top: 30px;
 		}
-	}
 
+		.divider-else {
+			position: absolute;
+			bottom: -13px;
+			left: 45%;
+			background-color: white;
+			padding: 0 20px 0 20px;
+			font-size: 17px;
+			font-weight: 600;
+			font-style: italic;
+			color: @green;
+		}
+	}
 	.bottom {
 		h2 {
-			font-weight: 400;
-			font-size: 21px;
+			color: black;
+			font-weight: 600;
+			font-size: 17px;
 			margin-bottom: 30px;
 		}
 		.circular {
@@ -255,18 +271,52 @@ div.loginformbig {
 
 		form {
 			label {
-				font-weight: 300;
-				font-size: 12px;
-				color: @black;
+				font-weight: 400;
+				font-size: 16px;
+				margin-bottom: 15px;
+				color: @grayDark;
+			}
+
+			.controls {
+				width: 100% !important;
 			}
 
 			input {
+				height: 40px;
 				font-weight: 400;
 				color: @black;
 			}
 
 			input:-webkit-autofill {
 				background-color: intial !important;
+			}
+
+			.terms-description {
+				display: block;
+				font-size: 14px;
+				font-weight: 400;
+				color: gray;
+				margin-bottom: 30px;
+				margin-top: 10px;
+
+
+				a {
+					color: @green;
+				}
+			}
+
+			.actions {
+				padding: 0;
+				#submitRegister {
+					color: white;
+					text-shadow: 1px 1px 1 black;
+					border: 0;
+					.gradient-green();
+					.size(60px, 270px);
+					.border-radius(3px);
+					font-size: 16px;
+					font-weight: 600;
+				}
 			}
 		}
 	}

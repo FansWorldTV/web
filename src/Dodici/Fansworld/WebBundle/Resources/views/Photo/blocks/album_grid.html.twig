@@ -1,0 +1,25 @@
+{% if album is not defined %}
+    {% set album = false %}
+{% endif %}
+<div class="row-fluid album-detail">
+    <header class="row-fluid">
+        <div class='span6'>
+            <span class="title">
+                <h4>{{ album.title }} ({{ album.photos|length }})</h4>
+            </span>
+        </div>
+        <div class="span6">
+            {# {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: album} %} #}
+        </div>
+    </header>
+    <div class="semantic-grid photos-container clearfix">
+        {% if album.photos|length>0 %}
+            {% for photo in album.photos %}
+                {% include 'DodiciFansworldWebBundle:Photo:blocks/photo_std_block.html.twig' with {'photo': photo} %}
+            {% endfor %}    
+        {% endif %}
+    </div>
+    <div class="content">
+        <p>{{ album.content }}</p>
+    </div>
+</div>

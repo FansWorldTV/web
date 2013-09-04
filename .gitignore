@@ -15,3 +15,11 @@ web/bundles/dodicifansworldweb/css/base.css
 
 #trash
 web/bundles/dodicifansworldweb/js/compiled/*
+.bash_history
+.c9revisions/
+.joe_state/
+.ssh/
+.gitconfig
+.joe_state
+nohup.out
+.viminfo

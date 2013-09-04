@@ -9,6 +9,7 @@ use Dodici\Fansworld\WebBundle\Entity\Photo;
 use Dodici\Fansworld\WebBundle\Entity\Comment;
 use Dodici\Fansworld\WebBundle\Entity\Privacy;
 use Dodici\Fansworld\WebBundle\Entity\Event;
+use Dodici\Fansworld\WebBundle\Entity\Video;
 use Dodici\Fansworld\WebBundle\Entity\EventIncident;
 use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Component\Security\Core\SecurityContext;
@@ -443,8 +444,16 @@ class AppState
         return $videos;
     }
 
-    public function isTracking()
-    {
-        return $this->tracking;
+    public function beInPlaylist($video) {
+        if (!($this->user instanceof User))
+            return false;
+        $user = $this->user;
+  
+        $playlistService = $this->get('video.playlist');
+        if ($playlistService->isInPlaylist($video, $user)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

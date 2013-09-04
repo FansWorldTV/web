@@ -42,16 +42,13 @@ $(document).ready(function () {
             if (!window.isLoggedIn) {
                 $('[data-login-btn]').click();
                 return false;
-            }            
-            $(this).off();      // remove event listeners
+            }
             var plugin = $(this).data('fwIdolship');
             plugin.toggleIdolship($(this).attr('data-idol-id'));
         },
         toggleIdolship: function(idolId) {
             var that = this;
             var self = $(that.element);
-            //self.addClass('loading-small');
-            self.addClass('disabled');
             ajax.genericAction(
                 'idolship_ajaxtoggle',
                 { 'idol-id': idolId },
@@ -63,25 +60,21 @@ $(document).ready(function () {
                             that.onRemoveIdol(responseJSON);
                         }
                     }
-                    //self.removeClass('loading-small');
-                    self.removeClass('disabled');
                 },
                 function(error) {
                     window.error(error.responseText);
-                    //self.removeClass('loading-small');
-                    self.removeClass('disabled');
                     return that.options.onError(error);
                 });
         },
         onAddIdol: function(data) {
             var that = this;
+            window.notice(data.message);
             return that.options.onAddIdol(this, data);
         },
         onRemoveIdol: function(data){
             var that = this;
-            var self = $(that.element);
-            console.log("onRemoveIdol: " + JSON.stringify(data));
-            return that.options.onRemoveIdol(data);
+            window.notice(data.message);
+            return that.options.onRemoveIdol(this, data);
         },
         destroy: function() {
             var that = this;
@@ -112,19 +105,15 @@ $(document).ready(function () {
     $("[data-idolship-add]:not('[data-override]')").fwIdolship({
         onAddIdol: function(plugin, data) {
             var self = $(plugin.element);
-            self.addClass('disabled');
-            self.removeClass('add');
-            self.text("YA ERES FAN");
-            var number = 0;
-
-            if ($('.numbers-info .fans-info .numero') == []) {
-                number = Number($('.numbers-info .fans-info .numero').text()) + 1;
-                $('.numbers-info .fans-info .numero').text(number);
-            }
-            else {
-                number = Number(self.prev().text()) + 1;
-                self.prev().text(number);
-            }
+            self.addClass('unfan');
+            self.removeClass('befun');
+            self.get(0).lastChild.nodeValue = "Eres Fan";
+        },
+        onRemoveIdol: function(plugin, data) {
+            var self = $(plugin.element);
+            self.addClass('befun');
+            self.removeClass('unfan');
+            self.get(0).lastChild.nodeValue = "Ser Fan";
         }
     });
 
@@ -137,7 +126,7 @@ $(document).ready(function () {
 
     $(".btn_idolship.remove").fwIdolship({
         onRemoveIdol: function(plugin, data) {
-            //window.location.reload();
+            window.location.reload();
         }
     });
 });

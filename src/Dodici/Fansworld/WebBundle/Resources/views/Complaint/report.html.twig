@@ -1,9 +1,5 @@
 {# {% extends "DodiciFansworldWebBundle::popup.html.twig" %} #}
 
-{% block javascripts %}
-	{# <script src="{{ asset('bundles/dodicifansworldweb/js/base.js') }}" type="text/javascript"></script> #}
-{% endblock %}
-
 {% block content %}
     {% if not reported%}
         <div id="report">
@@ -32,7 +28,6 @@
                     },
                     function(response){
                         console.log(response);
-                        window.top.$.colorbox.close();
                     },
                     function(error){
                         console.error(error);

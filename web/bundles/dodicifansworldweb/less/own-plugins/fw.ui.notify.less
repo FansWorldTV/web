@@ -1,0 +1,98 @@
+.notifications > .popup {
+  position: relative;
+  margin: 30px auto;
+  width: 288px;
+  height: 56px;
+  padding: 6px;
+  line-height: 18px;
+  font-size: 11px;
+  color: rgba(204, 204, 204, 0.9);
+  text-shadow: 0 -1px black;
+  background: rgba(17, 17, 17, 0.5);
+  /* Don't let the background bleed underneath our semi-transparent (rgba) border. */
+  background-clip: padding-box;
+  border: 1px solid;
+  border-color: rgba(17, 17, 17, 0.6) rgba(17, 17, 17, 0.7) rgba(17, 17, 17, 0.9);
+  border-radius: 5px;
+  /*background-image: linear-gradient(top bottom, rgba(242, 242, 242, 0.3), rgba(221, 221, 221, 0.01) 70%, rgba(0, 0, 0, 0.12) 100%, rgba(0, 0, 0, 0.3));*/
+  background-color: #fff;
+  box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
+  p {
+    margin: 0;
+  }
+  a {
+    font-weight: bold;
+    color: rgba(221, 221, 221, 0.9);
+    text-decoration: none;
+  }
+  .title {
+    margin: 0;
+    line-height: 22px;
+    font-size: 13px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.95);
+  }
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 2px 2px 0 0;
+    padding: 4px;
+    width: 10px;
+    height: 10px;
+    background: #8acd2c;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+    font: 0/0 serif;
+    text-shadow: none;
+    color: transparent;
+    background-image: linear-gradient(top bottom, #8fca48, #75c811);
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.15);
+    &:hover {
+      background-image: linear-gradient(top, #8fca48, #45c811);
+    }
+    &:before {
+      content: 'X';
+      display: block;
+      width: 10px;
+      height: 10px;
+      /*background: url("http://s3.cssflow.com/snippets/31-growl-notifications/img/close.png");*/
+    }
+  }
+  &:before {
+    content: '';
+    float: left;
+    margin: -6px 14px -6px 5px;
+    width: 42px;
+    height: 74px;
+    background: rgba(0, 0, 0, 0.1) url("../images/ico/info-48.png") center no-repeat;
+    background-size: 100%;
+    /* border-right: 1px solid rgba(0, 0, 0, 1); */
+    border-radius: 5px 0 0 5px;
+    box-shadow: 1px 0 rgba(255, 255, 255, 0.05);
+  }
+}
+
+
+.notifications > .white {
+  color: rgba(51, 51, 51, 0.9);
+  text-shadow: 0 1px rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 1);
+  border-color: rgba(68, 68, 68, 0.6) rgba(68, 68, 68, 0.7) rgba(68, 68, 68, 0.8);
+  box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.7), 0 1px 2px rgba(0, 0, 0, 0.2);
+  a {
+    color: rgba(40, 40, 40, 0.9);
+  }
+  .title {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  .close {
+    opacity: 2.75 !important;
+    background-color: #373737;
+  }
+  &:before {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-right-color: rgba(51, 51, 51, 0.3);
+      box-shadow: 1px 0 rgba(255, 255, 255, 0.15);
+  }
+}

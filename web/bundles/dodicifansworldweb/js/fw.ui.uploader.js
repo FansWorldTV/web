@@ -285,13 +285,18 @@ $(document).ready(function () {
                             var action = $(this).attr('action');
                             var method = $(this).attr('method');
                             boot.find('form').find('input[type="submit"]').addClass('loading-small');
+                            console.log("posting video: " + action + " data: " + JSON.stringify(data) + " method: " + method);
                             $.ajax({
                                 url: this.getAttribute('action'),
                                 data: data,
                                 type: method
                             })
                             .then(function(response){
-                                location.href = Routing.generate(appLocale + '_things_videos');
+                                console.log(response);
+                                var formHtml = $(response).clone();
+                                boot.find('.modal-body').html(formHtml);
+                                hookForm(boot);
+                                //location.href = Routing.generate(appLocale + '_user_videos', {username: window.Application.user.username});
                             });
                             return false;
                         });
@@ -409,11 +414,22 @@ $(document).ready(function () {
                 dialog.find("#modal-btn-save").removeAttr("disabled");
                 // Hide dialog submit
                 dialog.find('input[type="submit"]').hide();
-                // Passthrough
-                dialog.find("#modal-btn-save").one("click", null, null, function(){
-                    $(this).addClass('loading-small');
-                    dialog.find('form').find('input[type="submit"]').click();
-                });
+
+                $("#modal-btn-save").text('continuar');
+
+                if(dialog.find('form').length <= 0) {
+                    // Passthrough
+                    dialog.find("#modal-btn-save").one("click", null, null, function(){
+                        $(this).addClass('loading-small');
+                        location.href = Routing.generate(appLocale + '_user_videos', {username: window.Application.user.username});
+                    });
+                } else {
+                    // Passthrough
+                    dialog.find("#modal-btn-save").one("click", null, null, function(){
+                        $(this).addClass('loading-small');
+                        dialog.find('form').find('input[type="submit"]').click();
+                    });                    
+                }
                 dialog.find('form').submit(function(event) {
                     event.preventDefault();
                     var data = $(this).serializeArray();
@@ -438,7 +454,7 @@ $(document).ready(function () {
                             // No more forms ? ok then we're done
                             dialog.find("#modal-btn-save").one("click", null, null, function(){
                                 $(this).addClass('loading-small');
-                                location.href = Routing.generate(appLocale + '_things_videos');
+                                location.href = Routing.generate(appLocale + '_user_videos', {username: window.Application.user.username});
                             })
                         }
                     });

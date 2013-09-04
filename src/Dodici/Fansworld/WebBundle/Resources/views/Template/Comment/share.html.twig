@@ -23,7 +23,7 @@
 	{% raw %}
 		{{if shareImage}}
 			<div class="{{>shareType}}">
-				<a href="{{>shareUrl}}" {{if shareType == 'video'}} data-modal-paramid="{{>shareId}}" data-modal-type="video" data-modal-route="modal_media"{{/if}}>
+				<a href="{{>shareUrl}}">
 					<img src='{{>shareImage}}' alt='{{>shareTitle}}'/>
 					{{if shareType == 'video'}} <i class="play-video"></i> {{/if}}
 				</a>

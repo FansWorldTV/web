@@ -29,31 +29,6 @@ class AlbumController extends SiteController
     const LIMIT_ALBUMS = 8;
 
     /**
-     * @Route("/{id}/{slug}", name= "album_show", requirements = {"id" = "\d+"}, defaults = {"slug" = null})
-     * @Template()
-     */
-    public function showAction($id)
-    {
-        $album = $this->getRepository('Album')->findOneBy(array('id' => $id, 'active' => true));
-
-        $this->securityCheck($album);
-
-        return array(
-            'album' => $album,
-            'user' => $album->getAuthor()
-        );
-    }
-
-    /**
-     * @Route("/{id}", name= "album_comments", requirements = {"id" = "\d+"})
-     */
-    public function commentsAction($id)
-    {
-        // TODO
-        return new Response('ok');
-    }
-
-    /**
      * @Route("/create", name="album_create")
      * @Secure(roles="ROLE_USER")
      * @Template
@@ -105,40 +80,4 @@ class AlbumController extends SiteController
 
         return array('album' => $album, 'form' => $form->createView(), 'refresh' => $refresh);
     }
-
-    /**
-     *  @Route("/ajax/get", name = "album_get")
-     */
-    public function ajaxGetAlbums()
-    {
-        $request = $this->getRequest();
-        $userId = $request->get('userId');
-        $page = (int) $request->get('page');
-
-        $page--;
-        $offset = $page * self::LIMIT_ALBUMS;
-
-        $albums = $this->getRepository('Album')->findBy(array('author' => $userId, 'active' => true), array('createdAt' => 'DESC'), self::LIMIT_ALBUMS, $offset);
-
-        $response = array();
-        foreach ($albums as $album) {
-            $response['albums'][] = array(
-                'image' => $this->getImageUrl($album->getImage(), 'medium'),
-                'id' => $album->getId(),
-                'title' => $album->getTitle(),
-                'countImages' => $album->getPhotoCount(),
-                'comments' => $album->getCommentCount()
-            );
-        }
-
-        $countTotal = $this->getRepository('Album')->countBy(array('author' => $userId));
-        if ($countTotal > (($page+1) * self::LIMIT_ALBUMS)) {
-            $response['gotMore'] = true;
-        } else {
-            $response['gotMore'] = false;
-        }
-
-        return $this->jsonResponse($response);
-    }
-
 }
