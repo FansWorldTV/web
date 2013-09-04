@@ -85,7 +85,7 @@ $(document).ready(function () {
                 vc = parseInt(vc, 10);
                 that.options.videoFeed = Routing.generate(appLocale + '_home_ajaxfilter');
                 that.options.getFilter = function() {
-                    id = parseInt(id, 10);                
+                    id = parseInt(id, 10);
                     var reqData = {};
                     if(!isNaN(id)) {
                         that.options.type = type;
@@ -98,7 +98,7 @@ $(document).ready(function () {
                     vc = parseInt(vc, 10);
                     if(!isNaN(vc)) {
                         that.options.vc = vc;
-                        reqData.vc = that.options.vc;                
+                        reqData.vc = that.options.vc;
                     }
                     return reqData;
                 };
@@ -145,7 +145,7 @@ $(document).ready(function () {
                     that.show();
                     return;
                 }
-                
+
                 var leftMax = 1; //$(that.element).find('.span2').length;
                 $(that.element).find('.span2').empty();
                 for(i = 0; i <= leftMax; i += 1) {
@@ -160,9 +160,10 @@ $(document).ready(function () {
                         });
                     }
                 }
-                
-                
-                $.when(templateHelper.htmlTemplate('video-home_element', response.highlighted[leftMax+1]))
+
+                leftMax += 1;
+
+                $.when(templateHelper.htmlTemplate('video-home_element', response.highlighted[leftMax]))
                 .then(function(response){
                     console.log("appending to span4")
                     $(that.element).find('.span4').empty();
@@ -171,7 +172,9 @@ $(document).ready(function () {
                     $(that.element).find('.span4').append($thumb);
                 });
 
-                var rightMax = 5; //$(that.element).find('.span6').length;
+                leftMax += 1;
+
+                var rightMax = 5;
                 $(that.element).find('.span6').empty();
                 for(i = 0; i <= rightMax; i += 1) {
                     if (response.highlighted.hasOwnProperty(i)) {
@@ -185,7 +188,7 @@ $(document).ready(function () {
                         });
                     }
                 }
-                
+
                 var il = new ImagesLoaded(that.element);
                 il.done(function () {
                     console.log("All images loaded !")
@@ -285,7 +288,7 @@ $(document).ready(function () {
                 filter.paginate[that.options.type] = parseInt(that.options.id, 10);
                 return filter;
             };
-            // Disable - Enable preload 
+            // Disable - Enable preload
             /*
             that.clearThumbs();
             that.insetThumbs(Routing.generate(appLocale + '_home_ajaxfilter'), that.options.getFilter());
@@ -554,7 +557,7 @@ $(document).ready(function () {
         show: function() {
             var that = this;
             window.fansWorldEvents.emitEvent('onContentLoaded', [that]);
-        },        
+        },
         destroy: function() {
             var that = this;
             $(that.element).unbind("destroyed", that.teardown);
@@ -738,7 +741,7 @@ $(document).ready(function () {
 
             $('.highlights-container').removeClass('hidden');
             console.log("show highlighteds")
-            setTimeout(function(){       
+            setTimeout(function(){
                 if($('section.followed > .videos-container').find('.video').length > 0) {
                     $('section.followed').removeClass('hidden');
                     console.log("show followed");
@@ -749,7 +752,7 @@ $(document).ready(function () {
                 }
 
                 $('.spinner').addClass('hidden').hide();
-                console.log("Listo para mostrar");    
+                console.log("Listo para mostrar");
             }, 10);
         }
         console.log("contenido cargado: " + total + " max: " + max);
