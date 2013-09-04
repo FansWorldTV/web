@@ -456,4 +456,9 @@ class AppState
             return false;
         }
     }
+
+    public function isTracking()
+    {
+        return $this->tracking;
+    }
 }
