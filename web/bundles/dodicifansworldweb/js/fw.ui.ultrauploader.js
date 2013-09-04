@@ -185,7 +185,6 @@ $(document).ready(function () {
                 event.stopPropagation();
                 event.preventDefault();
                 var url = modal.find('[data-youtubelink]').val();
-                modal.find('.spinner-overlay').removeClass('hide');
                 $.ajax({
                     url: Routing.generate(appLocale + '_ajax_getyoutubedata'),
                     data: {
@@ -282,6 +281,7 @@ $(document).ready(function () {
                     that.processFiles(files);
                     return;
                 }
+                return false;
             });
             // Submit
             modal.find('form').on('submit', function(event) {
@@ -306,7 +306,6 @@ $(document).ready(function () {
                             content: content, 
                             genre: genre, 
                             category: category,
-
                         }
                     }).then(function(response){
                         if(response.response) {

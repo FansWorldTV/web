@@ -449,6 +449,8 @@
         createTag: function(value, additionalClass, duringInitialization, extraData) {
             var that = this;
 
+            extraData = extraData || {};
+            
             value = $.trim(value);
 
             if (value === '') {
@@ -475,6 +477,7 @@
 
             var label = $(this.options.onTagClicked ? '<a class="tagit-label"></a>' : '<span class="tagit-label"></span>').text(value);
 
+            if(extraData)
             extraData.image = extraData.image || '';
             var avatar = $("<img class='ui-corner-all ui-avatar-icon' src='"+ extraData.image +"'>")
             // Create tag.
