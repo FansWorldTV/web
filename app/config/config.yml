@@ -130,8 +130,7 @@ sonata_media:
                 wall: { width: 800 , quality: 90, constraint: false }
                 huge:   { width: 1024 , quality: 90, constraint: false}
                 home_video: { width: 400, height: 249, quality: 100 }
-                home_highlight: { height: 90, width: 200, quality: 100 }
-                home_highlight_double: { height: 240, width: 400, quality: 100 }
+                home_highlight_double: { height: 250, width: 325, quality: 100 }
                 mobile_320x208: { width: 640, height: 416 }
                 mobile_150x150 : { width: 300, height: 300 }
                 mobile_65x65 : { width: 130, height: 130 }
@@ -307,7 +306,7 @@ services:
             container: "@service_container"
     appstate:
       class: Dodici\Fansworld\WebBundle\Services\AppState
-      arguments: [@security.context, @doctrine.orm.entity_manager, %google.shortener.apikey%]
+      arguments: [@security.context, @doctrine.orm.entity_manager, %google.shortener.apikey%, %fansworld.externaltracking%]
     cutter:
       class: Dodici\Fansworld\WebBundle\Services\Cutter
       arguments: [@appmedia]

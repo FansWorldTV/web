@@ -4,13 +4,13 @@
         <div class="pull-left">
             <span class="name">{{>title}}</span>
             <br/>
-            <span class="location">{{>location}}</span>
+            <span class="location" style="width: 167px;overflow: hidden;text-overflow: ellipsis;line-height: 130%;">{{>location}}</span>
         </div>
         {{if canFriend}}
-            <button class="btn btn-small btn-success pull-right btn_friendship add" data-friendship-add="true" data-user-id="{{>id}}">SER FAN</button>
+            <button class="btn btn-small btn-success pull-right btn_friendship add" data-friendship-add="true" data-user-id="{{>id}}"><i><i>SER FAN</button>
         {{/if}}
         {{if canInvite}}
-            <button type="button" class="btn btn-primary invite-checkbox" data-toggle="button" data-invite-user="{{>id}}"><i class="icon-plus-sign icon-white"></i></button>
+            <button type="button" class="btn btn-success invite-checkbox social_action befun" style="padding: 0;width: 34px;" data-toggle="button" data-invite-user="{{>id}}"><i style="margin: 0 auto;position: relative;display: block;left: 20%;"><i></button>
         {{/if}}
     </li>
 {% endraw %}
