@@ -37,7 +37,7 @@
                         
                         <div class="btn-group" data-toggle="buttons-radio">
                             {% for genre in genres %}
-                                <button type="button" class="btn" data-genre-id="{{ genre.id }}">{{ genre.title }}</button>
+                                <button type="button" class="btn" data-genre-id="{{ genre.id }}">{{ genre.title }}<iput type="radio" name="genre" style="visibility:hidden;" /></button>
                             {% endfor %}
                         </div>
                     </div>
@@ -73,8 +73,8 @@
             </section>
             <input type="submit" class="button-submit-action pull-right" value="Subir Video" />
             <div class="progress hidden">
-                <div class="bar" style="width: 60%;"></div>
-                <span class="percent-value">60%</span>
+                <div class="bar" style="width: 0%;"></div>
+                <span class="percent-value">0%</span>
             </div>
         </form>
     </div>

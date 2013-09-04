@@ -1505,14 +1505,12 @@ button.social_action {
 						font-size: 14px;
 					}
 					button {
-					       .gradient-green();
-					       width: 48px;
-					       height: 50px;
-					       border: 0px;
-					       float: right;
-					       &:hover {
-					               background-color: lighten(#adadad, 15%);
-					       }
+						width: 48px;
+						height: 50px;
+						border: 0px;
+						float: right;
+						border-left: 1px solid #ddd;
+						border-radius: 0px;
 					}
 				}
 			}
@@ -1621,6 +1619,28 @@ button.social_action {
 					.box-shadow(0px 0 10px black);
 				}
 			}
+
+			select.btn {
+				 border-radius: 4px;
+				 height: 50px;
+				 width: 100%;
+			}
+		}
+
+		@media screen and (max-width: 480px) {
+			max-height: 400px;
+		}
+
+		@media screen and (min-width: 481px) and (max-width: 767px) {
+			max-height: 400px;
+		}
+
+		@media screen and (min-width: 768px) and (max-width: 980px) {
+			max-height: 400px;
+		}
+
+		@media screen and (min-width: 1470px) {
+			max-height: 600px;
 		}
 	}
 }
