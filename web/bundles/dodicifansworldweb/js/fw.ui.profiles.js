@@ -188,7 +188,6 @@ $(document).ready(function () {
                                 });
                                 $thumb.find('[data-teamship-add]').fwTeamship({
                                     onAddTeam: function(plugin, data) {
-                                        console.log("eres refann`")
                                         var self = $(plugin.element);
                                         self.addClass('unfan-small');
                                         self.removeClass('befun-small');
