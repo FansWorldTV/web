@@ -306,7 +306,10 @@ $(document).ready(function () {
                         };
                     };
                     that.clearThumbs();
-                    that.insetThumbs(that.options.videoFeed, that.options.getFilter());
+                    $.when(that.insetThumbs(that.options.videoFeed, that.options.getFilter()))
+                    .then(function(response){
+                        $(that.element).removeClass('hidden');
+                    });
                 }
             };
             that.options.onFilterChange = function(type, id, vc) {
@@ -346,12 +349,10 @@ $(document).ready(function () {
         },
         clearThumbs: function() {
             var that = this;
-            $(that.element).parent().fadeOut(function() {
-                $(that.element).empty();
-                $(that.element).parent().find('.spinner').removeClass('hidden');
-                $(that.element).parent().find('.add-more').hide();
-                $(that.element).parent().find('.spinner').show();
-            });
+            $(that.element).empty();
+            $(that.element).parent().find('.spinner').removeClass('hidden');
+            $(that.element).parent().find('.add-more').hide();
+            $(that.element).parent().find('.spinner').show();
         },
         addMoreThumbs: function(event) {
             var that = this;
@@ -740,19 +741,17 @@ $(document).ready(function () {
         if(total == 0) {
 
             $('.highlights-container').removeClass('hidden');
-            console.log("show highlighteds")
+            $('.highlights-container').show();
             setTimeout(function(){
                 if($('section.followed > .videos-container').find('.video').length > 0) {
                     $('section.followed').removeClass('hidden');
-                    console.log("show followed");
+                    $('section.popular').show();
                 }
                 if($('section.popular > .videos-container').find('.video').length > 0) {
                     $('section.popular').removeClass('hidden');
-                    console.log("show popular");
+                    $('section.popular').show();
                 }
-
                 $('.spinner').addClass('hidden').hide();
-                console.log("Listo para mostrar");
             }, 10);
         }
         console.log("contenido cargado: " + total + " max: " + max);
@@ -769,4 +768,6 @@ $(document).ready(function () {
     window.fansWorldEvents.addListener('onContenNeedsLoad', onContenNeedsLoad);
     window.fansWorldEvents.addListener('onContentLoaded', onContentLoaded);
     window.fansWorldEvents.addListener('onFilterChange', onFilterChange);
+    //window.fansWorldEvents.addListener('onFindVideosByTag', onFilterChange);
+
 });
