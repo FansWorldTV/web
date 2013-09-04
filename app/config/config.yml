@@ -307,7 +307,7 @@ services:
             container: "@service_container"
     appstate:
       class: Dodici\Fansworld\WebBundle\Services\AppState
-      arguments: [@security.context, @doctrine.orm.entity_manager, %google.shortener.apikey%]
+      arguments: [@security.context, @doctrine.orm.entity_manager, %google.shortener.apikey%, %fansworld.externaltracking%]
     cutter:
       class: Dodici\Fansworld\WebBundle\Services\Cutter
       arguments: [@appmedia]
