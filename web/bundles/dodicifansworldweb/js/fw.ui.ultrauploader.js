@@ -127,6 +127,7 @@ $(document).ready(function () {
                 inputName: 'resource:fileData',
                 allowedExtensions: that.options.mediaExtensions.all,
                 onLoadStart: function(event) {
+                    that.modal.find('.youtube-input').addClass('hidden');
                     that.modal.find('.button-submit-action').addClass('hidden');
                     that.modal.find('.progress').removeClass('hidden');
                     return;
@@ -174,6 +175,7 @@ $(document).ready(function () {
         handleModal: function(modal) {
             var that = this;
 
+            // Youtube Share
             modal.find('[data-youtubelink]').on('change', function(event){
                 event.stopPropagation();
                 event.preventDefault();
@@ -183,7 +185,7 @@ $(document).ready(function () {
                 event.stopPropagation();
                 event.preventDefault();
                 var url = modal.find('[data-youtubelink]').val();
-                $('.spinner-overlay').removeClass('hide');
+                modal.find('.spinner-overlay').removeClass('hide');
                 $.ajax({
                     url: Routing.generate(appLocale + '_ajax_getyoutubedata'),
                     data: {
@@ -194,11 +196,11 @@ $(document).ready(function () {
                         modal.find('[data-title]').val(response.metadata.title.$t);
                         modal.find('[data-description]').val(response.metadata.content.$t);
                     }
-                    modal.find('.spinner-overlay').addClass('hide');
                 }).done(function(){
-                     modal.find('.spinner-overlay').addClass('hide');
+                    modal.find('.spinner-overlay').addClass('hide');
+                    that.modal.find('.drop-legend').addClass('hidden');
                 }).fail(function(error){
-                     modal.find('.spinner-overlay').addClass('hide');
+                    modal.find('.spinner-overlay').addClass('hide');
                 });
                 return false;
             });
@@ -247,6 +249,8 @@ $(document).ready(function () {
                 }
                 return false;
             });
+            //
+            modal.find("[data-tags]").fwTagify({action: 'tag'});
             // Input Field
             modal.find('input[type="file"]').on('change', function(event) {
                 var i;
@@ -279,6 +283,7 @@ $(document).ready(function () {
                     return;
                 }
             });
+            // Submit
             modal.find('form').on('submit', function(event) {
                 event.stopPropagation();
                 event.preventDefault();
@@ -288,18 +293,20 @@ $(document).ready(function () {
                 var title = $('[data-title]').val();
                 var content = $('[data-description]').val();
                 var category = modal.find('[data-category] option:selected').attr('data-vc-id');
-                
+                var url = modal.find('[data-youtubelink]').val();
                 
                 if((category > 0) && (title.length > 0) && (content.length > 0)) {
-                modal.find('.spinner-overlay').addClass('hide');
+                modal.find('.spinner-overlay').removeClass('hide');
                  $.ajax({
                         url: Routing.generate(appLocale + '_video_ajaxuploadvideo'), 
                         data: {
+                            youtube: url,
                             entryid: that.options.entryId, 
                             title: title, 
                             content: content, 
                             genre: genre, 
-                            category: category
+                            category: category,
+
                         }
                     }).then(function(response){
                         if(response.response) {
@@ -314,6 +321,7 @@ $(document).ready(function () {
                 }
                 return false;
             });
+            // Open
             modal.modal({
                 backdrop: true
             }).css({
@@ -503,6 +511,49 @@ $(document).ready(function () {
             $(input).on('change', function(event) {
                 uploader.addFiles(event.target.files);
             });
+        },
+        createInput: function(){
+            var that = this;
+            var input = document.createElement("input");
+
+            if (that.options.multiple){
+                input.setAttribute("multiple", "multiple");
+            }
+
+            if (that.options.acceptFiles) {
+                input.setAttribute("accept", that.options.acceptFiles);
+            }
+
+            input.setAttribute("type", "file");
+            input.setAttribute("name", that.options.name);
+
+            $(input).css({
+                position: 'absolute',
+                // in Opera only 'browse' button
+                // is clickable and it is located at
+                // the right side of the input
+                right: 0,
+                top: 0,
+                fontFamily: 'Arial',
+                // 4 persons reported this, the max values that worked for them were 243, 236, 236, 118
+                fontSize: '118px',
+                margin: 0,
+                padding: 0,
+                cursor: 'pointer',
+                opacity: 0
+            });
+
+            //$(that.options.uploaderSelector)[0].appendChild(input);
+            $(that.element).append(input);
+
+            // IE and Opera, unfortunately have 2 tab stops on file input
+            // which is unacceptable in our case, disable keyboard access
+            if (window.attachEvent){
+                // it is IE or Opera
+                input.setAttribute('tabIndex', "-1");
+            }
+
+            return input;
         },
         getUploadToken: function (fileName, ks) {
             var that = this;
