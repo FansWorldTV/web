@@ -127,6 +127,7 @@ $(document).ready(function () {
                 inputName: 'resource:fileData',
                 allowedExtensions: that.options.mediaExtensions.all,
                 onLoadStart: function(event) {
+                    that.modal.find('.youtube-input').addClass('hidden');
                     that.modal.find('.button-submit-action').addClass('hidden');
                     that.modal.find('.progress').removeClass('hidden');
                     return;
@@ -174,6 +175,7 @@ $(document).ready(function () {
         handleModal: function(modal) {
             var that = this;
 
+            // Youtube Share
             modal.find('[data-youtubelink]').on('change', function(event){
                 event.stopPropagation();
                 event.preventDefault();
@@ -183,7 +185,7 @@ $(document).ready(function () {
                 event.stopPropagation();
                 event.preventDefault();
                 var url = modal.find('[data-youtubelink]').val();
-                $('.spinner-overlay').removeClass('hide');
+                modal.find('.spinner-overlay').removeClass('hide');
                 $.ajax({
                     url: Routing.generate(appLocale + '_ajax_getyoutubedata'),
                     data: {
@@ -194,11 +196,11 @@ $(document).ready(function () {
                         modal.find('[data-title]').val(response.metadata.title.$t);
                         modal.find('[data-description]').val(response.metadata.content.$t);
                     }
-                    modal.find('.spinner-overlay').addClass('hide');
                 }).done(function(){
-                     modal.find('.spinner-overlay').addClass('hide');
+                    modal.find('.spinner-overlay').addClass('hide');
+                    that.modal.find('.drop-legend').addClass('hidden');
                 }).fail(function(error){
-                     modal.find('.spinner-overlay').addClass('hide');
+                    modal.find('.spinner-overlay').addClass('hide');
                 });
                 return false;
             });
@@ -247,6 +249,8 @@ $(document).ready(function () {
                 }
                 return false;
             });
+            //
+            modal.find("[data-tags]").fwTagify({action: 'tag'});
             // Input Field
             modal.find('input[type="file"]').on('change', function(event) {
                 var i;
@@ -279,25 +283,30 @@ $(document).ready(function () {
                     return;
                 }
             });
+            // Submit
             modal.find('form').on('submit', function(event) {
                 event.stopPropagation();
                 event.preventDefault();
 
                 console.log(event);
-                var category = $('[data-genre-id].active').attr('data-genre-id');
+                var genre = $('[data-genre-id].active').attr('data-genre-id');
                 var title = $('[data-title]').val();
                 var content = $('[data-description]').val();
+                var category = modal.find('[data-category] option:selected').attr('data-vc-id');
+                var url = modal.find('[data-youtubelink]').val();
                 
-                
-                if((category > 0) && (title.length > 0) && (content.length > 0)) {
+                if((category > 0) && (genre) && (title.length > 0) && (content.length > 0)) {
+                modal.find('.spinner-overlay').removeClass('hide');
                  $.ajax({
                         url: Routing.generate(appLocale + '_video_ajaxuploadvideo'), 
                         data: {
+                            youtube: url,
                             entryid: that.options.entryId, 
                             title: title, 
                             content: content, 
-                            genre: 1, 
-                            category: category
+                            genre: genre, 
+                            category: category,
+
                         }
                     }).then(function(response){
                         if(response.response) {
@@ -312,6 +321,7 @@ $(document).ready(function () {
                 }
                 return false;
             });
+            // Open
             modal.modal({
                 backdrop: true
             }).css({
@@ -390,6 +400,160 @@ $(document).ready(function () {
         checkYoutubeUrl: function(url) {
             var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
             return (url.match(p)) ? true : false;
+        },
+        createWithBootstrap: function() {
+            var that = this;
+            var input = that.createInput();
+            var boot = null;
+
+            console.log("createWithBootstrap()");
+
+            var uploader = new window.UPLOADER({
+                element: $(that.options.uploaderSelector)[0],
+                multiple: false,
+                autoUpload: true,
+                action: that.options.action[that.options.mediaType],
+                maxConnections: 1,
+                allowedExtensions: that.options.mediaExtensions[that.options.mediaType],
+                onLoadStart: function(event) {
+                    var id = parseInt((Math.random() * 1000), 10);
+                    var modal = {
+                        modalId: id,
+                        modalLabel: 'label',
+                        modalTitle: 'Upload Photo',
+                        modalBody: 'Uploader'
+                    };
+
+                    $.when(templateHelper.htmlTemplate('general-progress_modal', modal))
+                        .then(function(html) {
+                            boot = $(html).clone();
+                            boot.find("#modal-btn-close").one("click", null, null, function(){
+                                boot.modal('hide');
+                                $('body').removeClass('modal-open');
+                                $('.modal-backdrop').remove();
+                                uploader.stopAll();
+                            });
+                            boot.modal({
+                                //backdrop: false
+                            })
+                                .css({
+                                    width: '700px',
+                                    'margin-left': '-350px'
+                                })
+                                .on('hide', function() {
+                                    console.log("modal hide");
+                                    $('.modal-backdrop').remove();
+                                    $(this).data('modal', null);
+                                    $(this).remove();
+                                });
+                        });
+                },
+                onProgress: function(event) {
+                    var percentComplete = parseInt(((event.source.loaded / event.source.total) * 100), 10);
+                    $('progress').val(percentComplete);
+                    console.log("progress: " + percentComplete + "%");
+                },
+                onComplete: function(event) {
+                    var xhr = event.target.xhr;
+                    var data = JSON.parse(xhr.responseText);
+                    var formHtml = null;
+                    var entity = $(that.element).attr('data-entity-type');
+                    var route = null;
+                    var ajaxData = {
+                        'originalFile': data.originalFile,
+                        'tempFile':data.tempFile,
+                        'width': data.width,
+                        'type': that.options.imageType,
+                        'height': data.height
+                    };
+                    switch(entity) {
+                        case 'idol':
+                            route = '_idol_change_imageSave';
+                            ajaxData.idol = $(that.element).attr('data-entity-id');
+                            break;
+                        case 'team':
+                            route = '_team_change_imageSave';
+                            ajaxData.team = $(that.element).attr('data-entity-id');
+                            break;
+                        case 'user':
+                            route = '_user_change_imageSave';
+                            break;
+                    }
+                    var href = Routing.generate(appLocale + route, ajaxData);
+                    $.ajax({url: href, type: 'GET'}).then(function(response){
+                        formHtml = $(response).clone();
+                        boot.find('.modal-body').html(formHtml);
+                        boot.find("#modal-btn-save").one("click", null, null, function(){
+                            $(this).addClass('loading-small');
+                            boot.find('form').find('input[type="submit"]').click();
+                        });
+                        boot.find('form').submit(function() {
+                            var data = $(this).serializeArray();
+                            var action = $(this).attr('action');
+                            console.log("onsubmit");
+                            console.log(this.getAttribute('action'));
+                            boot.find('form').find('input[type="submit"]').addClass('loading-small');
+                            $.ajax({
+                                url: this.getAttribute('action'),
+                                data: data,
+                                type: 'POST'
+                            })
+                                .then(function(response){
+                                    location.reload();
+                                });
+                            return false;
+                        });
+                    });
+                }
+            });
+
+            // Attach file browsing event
+            $(input).on('change', function(event) {
+                uploader.addFiles(event.target.files);
+            });
+        },
+        createInput: function(){
+            var that = this;
+            var input = document.createElement("input");
+
+            if (that.options.multiple){
+                input.setAttribute("multiple", "multiple");
+            }
+
+            if (that.options.acceptFiles) {
+                input.setAttribute("accept", that.options.acceptFiles);
+            }
+
+            input.setAttribute("type", "file");
+            input.setAttribute("name", that.options.name);
+
+            $(input).css({
+                position: 'absolute',
+                // in Opera only 'browse' button
+                // is clickable and it is located at
+                // the right side of the input
+                right: 0,
+                top: 0,
+                fontFamily: 'Arial',
+                // 4 persons reported this, the max values that worked for them were 243, 236, 236, 118
+                fontSize: '118px',
+                margin: 0,
+                padding: 0,
+                cursor: 'pointer',
+                opacity: 0
+            });
+
+            //$(that.options.uploaderSelector)[0].appendChild(input);
+            $(that.element).append(input);
+
+            // IE and Opera, unfortunately have 2 tab stops on file input
+            // which is unacceptable in our case, disable keyboard access
+            if (window.attachEvent){
+                // it is IE or Opera
+                input.setAttribute('tabIndex', "-1");
+            }
+
+            return input;
         },
         getUploadToken: function (fileName, ks) {
             var that = this;

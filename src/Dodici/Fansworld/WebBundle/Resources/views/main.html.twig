@@ -56,6 +56,9 @@
                     var roleAdmin = {% if is_granted("ROLE_ADMIN") %} true {% else %} false {% endif %};
                     var FBperms = '{{ appfacebook.scope|join(',') }}';
                     var shortenerApi = '{{ appstate.shortenerApi() }}';
+
+                    // chartbeat
+                    var _sf_startpt=(new Date()).getTime();
                 </script>
 
                 <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
@@ -77,7 +80,7 @@
                            'bundles/dodicifansworldweb/js/wall.js'
                            'bundles/dodicifansworldweb/js/modalpopup.js'
                            'bundles/dodicifansworldweb/js/fw.core.uploader.js'
-                           'bundles/dodicifansworldweb/js/fw.ui.uploader.js'
+                           'bundles/dodicifansworldweb/js/fw.ui.ultrauploader.js'
                            'bundles/dodicifansworldweb/js/fw.ui.idolship.js'
                            'bundles/dodicifansworldweb/js/fw.ui.metadata.js'
                            'bundles/dodicifansworldweb/js/fw.ui.widget.popup.js'
@@ -123,5 +126,9 @@
     </head>
     <body data-user-is-logged="{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}true{% else %}false{% endif %}"><body>
         {% block body %}{% endblock %}
+
+        {% if (appstate.tracking) %}
+            {% include "DodiciFansworldWebBundle:Tracking:postbody.html.twig" %}
+        {% endif %}
     </body>
 </html>
