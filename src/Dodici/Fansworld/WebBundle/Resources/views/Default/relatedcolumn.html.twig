@@ -52,11 +52,11 @@
                             <span class="quantities">{% if fan.fanCount > 0 %}{{ fan.fanCount }} Fans{% endif %}{% if fan.fanCount > 0 and fan.videoCount > 0 %} y {% endif %}{% if fan.videoCount > 0 %}{{ fan.videoCount }} Videos{% endif %}</span>
                         </div>
 
-                        {% if appstate.canFriend(fan) %}
+                        {#{% if appstate.canFriend(fan) %}
                             <button class="btn btn-success">Ser fan</button>
-                        {% else %}
-                            <a href="{{ path('user_land', {'username': fan.username}) }}" class="btn btn-success">Ver perfil</a>
-                        {% endif %}
+                        {% else %}#}
+                        <a href="{{ path('user_land', {'username': fan.username}) }}" class="btn btn-success">Ver perfil</a>
+                        {#{% endif %}#}
                     </li>
                 {% endfor %}
             </ul>
