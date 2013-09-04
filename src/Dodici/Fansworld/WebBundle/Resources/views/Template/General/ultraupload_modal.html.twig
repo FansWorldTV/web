@@ -45,17 +45,12 @@
                         <label>Canales</label>
 
                         <div class="dropdown">
-                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                                Selecciona un canal
-                                <span class="caret pull-right"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <select class="btn" data-category required>
+                                <option value="">Selecciona un canal</option>
                                 {% for vc in videoCategories %}
-                                    <li role="presentation" data-vc-id="{{ vc.id }}">
-                                        <a role="menuitem" tabindex="-1" href="#">{{ vc.title }}</a>
-                                    </li>
+                                    <option value="{{ vc.id }}" data-vc-id="{{ vc.id }}">{{ vc.title }}</option>
                                 {% endfor %}
-                            </ul>
+                            </select>
                         </div>
                     </div>
                 </div>
