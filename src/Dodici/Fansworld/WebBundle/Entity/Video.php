@@ -143,6 +143,13 @@ class Video implements SearchableInterface, VisitableInterface
     private $likeCount;
 
     /**
+     * @var integer $processingTries
+     *
+     * @ORM\Column(name="processingtries", type="integer", nullable=false)
+     */
+    private $processingTries;
+
+    /**
      * @var integer $commentCount
      *
      * @ORM\Column(name="commentcount", type="integer", nullable=false)
@@ -366,6 +373,7 @@ class Video implements SearchableInterface, VisitableInterface
         $this->hasusers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->processed = false;
         $this->privacy = Privacy::EVERYONE;
+        $this->processingTries = 0;
     }
 
 	public function likeUp()
@@ -818,6 +826,26 @@ class Video implements SearchableInterface, VisitableInterface
     public function getLikeCount()
     {
         return $this->likeCount;
+    }
+
+    /**
+     * Set processingTries
+     *
+     * @param integer $processingTries
+     */
+    public function setProcessingTries($processingTries)
+    {
+        $this->processingTries = $processingTries;
+    }
+
+    /**
+     * Get processingTries
+     *
+     * @return integer
+     */
+    public function getProcessingTries()
+    {
+        return $this->processingTries;
     }
 
     /**

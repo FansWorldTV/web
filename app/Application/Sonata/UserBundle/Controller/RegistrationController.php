@@ -92,12 +92,13 @@ class RegistrationController extends BaseController
      */
     public function confirmAction($token)
     {
+
         $user = $this->container->get('fos_user.user_manager')->findUserByConfirmationToken($token);
 
         if (null === $user) {
             throw new NotFoundHttpException(sprintf('The user with confirmation token "%s" does not exist', $token));
         }
-
+        
         $user->setConfirmationToken(null);
         $user->setEnabled(true);
         $user->setLastLogin(new \DateTime());
@@ -107,9 +108,9 @@ class RegistrationController extends BaseController
 
         $this->container->get('fos_user.user_manager')->updateUser($user);
         $this->authenticateUser($user);
+   
+        // $this->container->get('fansworldmailer')->sendWelcome($user); ignore for now
 
-        $this->container->get('fansworldmailer')->sendWelcome($user);
-
-        return new RedirectResponse($this->container->get('router')->generate('fos_user_registration_confirmed'));
+        return new RedirectResponse($this->container->get('router')->generate('homepage'));
     }
 }
