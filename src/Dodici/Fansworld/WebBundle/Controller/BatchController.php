@@ -148,7 +148,7 @@ class BatchController extends SiteController
             } catch (\Exception $e) {
                 // entry doesn't exist or something went wrong, do nothing for now
             }
-            $video->setProcessingTries($video->getTries()+1);
+            $video->setProcessingTries($video->getProcessingTries()+1);
             $em->persist($video);
             $em->flush();
         }
