@@ -142,17 +142,17 @@ $(document).ready(function () {
                     var xhr = event.target.xhr;
                     var name = $(xhr.responseText).find('name').text();
                     var entryId = $(xhr.responseText).find('id').text();
-                    
+
                     that.modal.find('.button-submit-action').removeClass('hidden');
                     that.modal.find('.progress').addClass('hidden');
                     return;
                     $.ajax({
-                        url: Routing.generate(appLocale + '_video_ajaxuploadvideo'), 
+                        url: Routing.generate(appLocale + '_video_ajaxuploadvideo'),
                         data: {
-                            entryid: entryId, 
-                            title: "hello", 
-                            content: "descr", 
-                            genre: 1, 
+                            entryid: entryId,
+                            title: "hello",
+                            content: "descr",
+                            genre: 1,
                             category: 1
                         }
                     }).then(function(response){
@@ -256,7 +256,7 @@ $(document).ready(function () {
                 var files = event.target.files; // FileList object
                 that.processFiles(files);
             });
-            // Drag & Drop 
+            // Drag & Drop
             modal.find('#drop_zone')
             .on('dragenter', function(event) {
                 if(event.target === this) {
@@ -288,23 +288,22 @@ $(document).ready(function () {
                 event.stopPropagation();
                 event.preventDefault();
 
-                console.log(event);
-                var genre = $('[data-genre-id].active').attr('data-genre-id');
-                var title = $('[data-title]').val();
-                var content = $('[data-description]').val();
+                var genre = modal.find('[data-genre-id].active').attr('data-genre-id');
+                var title = modal.find('[data-title]').val();
+                var content = modal.find('[data-description]').val();
                 var category = modal.find('[data-category] option:selected').attr('data-vc-id');
                 var url = modal.find('[data-youtubelink]').val();
-                
+
                 if((category > 0) && (genre) && (title.length > 0) && (content.length > 0)) {
                 modal.find('.spinner-overlay').removeClass('hide');
                  $.ajax({
-                        url: Routing.generate(appLocale + '_video_ajaxuploadvideo'), 
+                        url: Routing.generate(appLocale + '_video_ajaxuploadvideo'),
                         data: {
                             youtube: url,
-                            entryid: that.options.entryId, 
-                            title: title, 
-                            content: content, 
-                            genre: genre, 
+                            entryid: that.options.entryId,
+                            title: title,
+                            content: content,
+                            genre: genre,
                             category: category,
                         }
                     }).then(function(response){
@@ -314,7 +313,7 @@ $(document).ready(function () {
                         } else {
                             window.error("Hubo un error");
                         }
-                    });   
+                    });
                 } else {
                     alert("No completo todos los campos !")
                 }
@@ -333,7 +332,7 @@ $(document).ready(function () {
                 $(this).remove();
             })
 
-            return;     
+            return;
         },
         processFiles: function(files) {
             var that = this;
@@ -666,7 +665,7 @@ $(document).ready(function () {
         bind: function() { },
         unbind: function() { }
     };
- 
+
     // A really lightweight plugin wrapper around the constructor,
     // preventing against multiple instantiations
     $.fn[pluginName] = function (options) {
