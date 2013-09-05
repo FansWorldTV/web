@@ -587,7 +587,7 @@ var site = {
             }
         });
 
-        $('.deletecomment:not(.loading)').on('click', function(e) {
+        $('body').on('click', '.deletecomment:not(.loading)', function(e) {
             e.preventDefault();
 
             var el = $(this);
