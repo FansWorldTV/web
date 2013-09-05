@@ -99,20 +99,18 @@ class RegistrationController extends BaseController
             throw new NotFoundHttpException(sprintf('The user with confirmation token "%s" does not exist', $token));
         }
         
-        /*
-            $user->setConfirmationToken(null);
-            $user->setEnabled(true);
-            $user->setLastLogin(new \DateTime());
+        $user->setConfirmationToken(null);
+        $user->setEnabled(true);
+        $user->setLastLogin(new \DateTime());
 
-            // override: set expiresat = null
-            $user->removeExpireDate();
+        // override: set expiresat = null
+        $user->removeExpireDate();
 
-            $this->container->get('fos_user.user_manager')->updateUser($user);
-            $this->authenticateUser($user);
-       
-            $this->container->get('fansworldmailer')->sendWelcome($user);
-        */
-            
+        $this->container->get('fos_user.user_manager')->updateUser($user);
+        $this->authenticateUser($user);
+   
+        // $this->container->get('fansworldmailer')->sendWelcome($user); ignore for now
+
         return new RedirectResponse($this->container->get('router')->generate('homepage'));
     }
 }
