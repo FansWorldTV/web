@@ -135,6 +135,7 @@ class BatchController extends SiteController
         $videos = $this->getRepository('Video')->pendingProcessing(10);
         $uploader = $this->get('video.uploader');
         $kaltura = $this->get('kaltura');
+        $em = $this->getDoctrine()->getEntityManager();
 
         foreach ($videos as $video) {
             try {
@@ -147,6 +148,9 @@ class BatchController extends SiteController
             } catch (\Exception $e) {
                 // entry doesn't exist or something went wrong, do nothing for now
             }
+            $video->setProcessingTries($video->getTries()+1);
+            $em->persist($video);
+            $em->flush();
         }
 
         return new Response('Ok');

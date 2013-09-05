@@ -514,7 +514,7 @@ class VideoRepository extends CountBaseRepository
     	v.processed = false
     	AND
     	v.stream IS NOT NULL
-    	ORDER BY v.createdAt ASC
+    	ORDER BY v.processingTries ASC, v.createdAt ASC
     	');
 
         if ($limit !== null)
