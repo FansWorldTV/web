@@ -62,7 +62,7 @@ var site = {
         if (isLoggedIn) {
             $('.report').fwModalDialog({
                 modal: {
-                    backdrop: false, 
+                    backdrop: false,
                     width: 290
                 }
             });
@@ -454,7 +454,7 @@ var site = {
             return false;
         });
 
-        $('textarea.comment_message:not(.loading)').on('keydown', function(e) {
+        $('body').on('keydown', 'textarea.comment_message:not(.loading)', function(e) {
             if (e.keyCode == 13) {
                 var textAreaElement = $(this),
                         type = textAreaElement.attr('data-type'),
@@ -683,6 +683,6 @@ if (!Object.keys) {
             }
         }
         return keys;
-    };  
+    };
 }
 
