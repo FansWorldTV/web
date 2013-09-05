@@ -68,7 +68,7 @@ $(document).ready(function () {
                 },
                 function(responseJSON) {
                     if(responseJSON.error) {
-                        window.error(data.message);
+                        window.error(responseJSON.message);
                         return that.options.onError(error);
                     }
                     if(responseJSON) {
