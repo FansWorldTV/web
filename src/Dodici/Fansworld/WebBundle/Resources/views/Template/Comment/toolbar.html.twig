@@ -1,7 +1,7 @@
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
     {% raw %}
         {{if canDelete }}
-            <a class="delete" ajax-delete data-entity-type="{{>entityType}}" data-entity-id="{{>id}}" title="Borrar Comentario"></a>
+            <a class="delete deletecomment" ajax-delete data-entity-type="{{>entityType}}" data-entity-id="{{>id}}" title="Borrar Comentario"></a>
         {{/if}}
     {% endraw %}
 {% endif %}
