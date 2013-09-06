@@ -873,6 +873,8 @@ class VideoRepository extends CountBaseRepository
             FROM \Dodici\Fansworld\WebBundle\Entity\Video v
             WHERE
             (
+                ((v.active = true) OR (v.active = false AND v.processed = false AND v.stream IS NOT null))
+                AND
                 (v.privacy = :everyone)
                 OR
                 (v.privacy = :friendsonly AND (:user IS NOT NULL) AND (
@@ -881,7 +883,7 @@ class VideoRepository extends CountBaseRepository
                 ))
             ) 
             AND 
-                v.author = :author 
+                v.author = :author
             ORDER BY v.createdAt DESC';
 
         $query = $this->_em->createQuery($dql)
