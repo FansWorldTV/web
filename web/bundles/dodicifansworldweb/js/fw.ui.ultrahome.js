@@ -20,7 +20,17 @@ $(document).ready(function () {
     var followedTags = 'section.followed-tags > ul';
     var popular = 'section.popular > .videos-container';
     var popularTags = 'section.popular-tags > ul';
-    
+
+    var containers = {
+        sections: {
+            popular: 'section.popular > .videos-container',
+            followed: 'section.followed > .videos-container'
+        },
+        tags: {
+            popular: 'section.followed-tags > ul',
+            followed: 'section.popular-tags > ul'
+        }
+    }    
 
     function fillMain(element, videos) {
         $.when(fillGrid(element, videos))
@@ -39,24 +49,19 @@ $(document).ready(function () {
             .append(videos[16]);
         });
     }
-    function fillFollowed(element, videos) {
+    function fillContainer (element, videos, block) {
+        console.log("fill: " + element)
         var deferred = new jQuery.Deferred();
-        var follow = [];
-        for (var key in videos.follow) {
+        var thumbs = [];
+        for (var key in videos[block]) {
             if($.isNumeric(key)) {
-                follow.push(videos.follow[key])
+                thumbs.push(videos[block][key])
             };
         }
-        fillTags(followedTags, videos.follow.tags);
-        $.when(fillGrid(element, follow))
+        $.when(fillGrid(element, thumbs))
         .then(function(html){
+            console.log(html)
             $(element).append(html);
-            console.log("addMore: " + videos.follow.addMore)
-            if(videos.follow.addMore) {
-                $(element).parent().find('.add-more').show();
-            } else {
-                $(element).parent().find('.add-more').hide();
-            }
             deferred.resolve(html);
         })
         .fail(function(error){
@@ -64,30 +69,14 @@ $(document).ready(function () {
         });
         return deferred.promise();
     }
-    function fillPopular(element, videos) {
-        var deferred = new jQuery.Deferred();
-        var popular = [];
-        for (var key in videos.popular) {
-            if($.isNumeric(key)) {
-                popular.push(videos.popular[key])
-            };
+    function setAddMore(element, addMore) {
+        console.log("ele: " + element + " addMore: " + addMore)
+        if(addMore) {
+            $(element).parent().find('.add-more').attr('data-page', 2);
+            $(element).parent().find('.add-more').show();
+        } else {
+            $(element).parent().find('.add-more').hide();
         }
-        fillTags(popularTags, videos.popular.tags);
-        $.when(fillGrid(element, popular))
-        .then(function(html){
-            $(element).append(html);
-            console.log("addMore: " + videos.popular.addMore)
-            if(videos.popular.addMore) {
-                $(element).parent().find('.add-more').show();
-            } else {
-                $(element).parent().find('.add-more').hide();
-            }            
-            deferred.resolve(html);
-        })
-        .fail(function(error){
-            deferred.reject(new Error(error));
-        });
-        return deferred.promise();
     }
     function fillGrid(grid, videos) {
         var deferred = new jQuery.Deferred();
@@ -104,12 +93,21 @@ $(document).ready(function () {
         return deferred.promise();
     }
     function fillTags(element, tags) {
+        console.log(tags)
         for (var tag in tags) {
             var tagElement = document.createElement('li');
             tagElement.innerText = tags[tag].title;
             tagElement.setAttribute('id', tags[tag].id);
             tagElement.setAttribute('data-list-filter-type', tags[tag].type);
             tagElement.setAttribute('data-id', tags[tag].id);
+            $(tagElement).on('click', function(event){
+                if($(this).hasClass('active')) {
+                    return;
+                }
+                $(this).parent().find('.active').removeClass('active');
+                $(this).addClass('active');
+                window.fansWorldEvents.emitEvent('onFindVideosByTag', [tag, tagElement]);
+            });
             $(element).append(tagElement);
         }
     }
@@ -135,13 +133,36 @@ $(document).ready(function () {
         });
         return deferred.promise();
     }
+    function getMoreVideos(type, id, block, page) {
+        var data = {
+            paginate: {
+                page: page,
+                block: block
+            }
+        };
+        data.paginate[type] = id;
+
+        $.ajax({
+            url: Routing.generate(appLocale + '_home_ajaxfilter'),
+            data: data
+        }).then(function(response) {
+            var videos = {};
+            videos[block] = response.videos;
+            videos.addMore = response.addMore;
+            fillContainer(containers.sections[block], videos, block);
+        });
+    }
     function reloadAllVideos(type, id) {
         emptyAll();
         $.when(getVideos(type, id))
         .then(function(data){
             fillMain(highlighteds, data.highlighted),
-            fillFollowed(followed, data),
-            fillPopular(popular, data)
+            fillContainer(containers.sections.followed, data, 'follow');
+            fillTags(containers.tags.followed, data.follow.tags, 'follow');
+            setAddMore(containers.sections.followed, data['follow'].addMore);
+            fillContainer(containers.sections.popular, data, 'popular');
+            fillTags(containers.tags.popular, data.popular.tags, 'follow');
+            setAddMore(containers.sections.popular, data['popular'].addMore);
         }).fail(function(error){
  
         });
@@ -169,8 +190,18 @@ $(document).ready(function () {
 
     $('body').on("click", '.add-more', function(event) {
         var section = $(this).attr('data-addmore');
+        var page = parseInt($(this).attr('data-page'), 10);
+
         $(this).addClass('rotate');
-        console.log(section)
+
+        var type = $(heroMenu).attr('data-entity-type');
+        var id = $(heroMenu).attr('data-entity-id');
+
+        getMoreVideos(type, id, section, page);
+
+        page += 1;
+        $(this).attr('data-page', page);
+
     });
 
 });
