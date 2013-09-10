@@ -36,6 +36,7 @@ class IdolController extends SiteController
 
     /**
      * @Route("", name="idol_home")
+     * @Secure(roles="ROLE_USER")
      * @Template
      */
     public function homeAction()
@@ -123,6 +124,7 @@ class IdolController extends SiteController
 
     /**
      * @Route("/{slug}/photos", name="idol_photos")
+     * @Secure(roles="ROLE_USER")
      * @Template
      */
     public function photosTabAction($slug)
@@ -152,6 +154,7 @@ class IdolController extends SiteController
      *
      *  @Route("/{slug}", name="idol_land")
      *  @Route("/{slug}/videos", name="idol_videos")
+      * @Secure(roles="ROLE_USER")
      *  @Template()
      */
     public function videosTabAction($slug)
@@ -211,6 +214,7 @@ class IdolController extends SiteController
 
     /**
      *  @Route("/{slug}/biography", name="idol_biography")
+     * @Secure(roles="ROLE_USER")
      *  @Template()
      */
     public function infoTabAction($slug)
@@ -245,6 +249,7 @@ class IdolController extends SiteController
 
     /**
      * @Route("/{slug}/fans", name="idol_fans")
+     * @Secure(roles="ROLE_USER")
      * @Template
      */
     public function fansTabAction($slug)

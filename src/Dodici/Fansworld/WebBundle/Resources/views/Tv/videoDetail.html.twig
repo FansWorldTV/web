@@ -9,7 +9,10 @@
 {% block tv_body %}
     {% embed "DodiciFansworldWebBundle:Layout/Embed:tv_videodetail.html.twig" %}
         {% block breadcrumb %}
-            <span class="nav-bar tv">TV {% if video.videocategory %}<span class="bar">|</span> <a class="channel" href="{{ path('homepage') }}#vc_{{ video.videocategory.id }}">{{ video.videocategory.title }}</a>{% endif %} <span class="bar">|</span> {{ video.title }} {% include 'DodiciFansworldWebBundle:Tv:blocks/button_subscribe.html.twig' with {channel: video.videoCategory} %}</span>
+            <span class="nav-bar tv">TV {% if video.videocategory %}<span class="bar">|</span> <a class="channel" href="{{ path('homepage') }}#vc_{{ video.videocategory.id }}">{{ video.videocategory.title }}</a>{% endif %} <span class="bar">|</span> {{ video.title }} 
+            {% if user or preRegisterMode == false %} 
+                {% include 'DodiciFansworldWebBundle:Tv:blocks/button_subscribe.html.twig' with {channel: video.videoCategory} %}</span>
+            {% endif %}
         {% endblock %}
         
         {% block top_left_content %}
@@ -17,58 +20,65 @@
         {% endblock %}
         
         {% block top_right_content %}
-            {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %}
-            
-            {% include 'DodiciFansworldWebBundle:Video:blocks/grid.html.twig' with {videos: videosRelated, sectionId:'videos-related-sort',dataGridRelatedId: video.id} %}
+            {% if user or preRegisterMode == false %}
+                {% include 'DodiciFansworldWebBundle:Default:blocks/button_group.html.twig'  %}
+                
+                {% include 'DodiciFansworldWebBundle:Video:blocks/grid.html.twig' with {videos: videosRelated, sectionId:'videos-related-sort',dataGridRelatedId: video.id} %}
 
-            <div class="spinner hidden"><div class="mask"></div></div>
+                <div class="spinner hidden"><div class="mask"></div></div>
+            {% endif %}
         {% endblock %}
         
         {% block bottom_left_content %}
             <div class="video-detail-wall">
-                
-                {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video, sharebutton: true, likebutton: true} %}
-                
-                {% if video.author %}
-                    <div class="user-info">
-                        {% if video.author.image %}
-                            <figure class="avatar">
-                                <a href="{{ path('user_land', {username: video.author.username}) }}">
-                                    {% thumbnail video.author.image, 'mini_square' %}
-                                </a>
-                                {% if appstate.canFriend(video.author) %}
-                                    <button class="btn btn_friendship btn-success add-fan" data-friendship-add="true" data-user-id="{{video.author.id}}">+</button>
-                                {% endif %}
-                            </figure>
-                        {% endif %}
-                        <a class="name" href="{{ path('user_land', {username: video.author.username}) }}">
-                            {{ video.author }}
-                        </a>
-                        {% if video.author.city or video.author.country %}
-                          {% set location = [video.author.city, video.author.country]|join(', ') %}
-                          <span class="location">{{ location }}</span>
-                        {% endif %}
-                        <a class="videoCount" href="{{ path('user_land', {username: video.author.username}) }}">
-                          {{ video.author.videoCount }} videos
-                        </a>
-                    </div>
+                {% if user or preRegisterMode == false %}
+                    {% include 'DodiciFansworldWebBundle:Default:share.html.twig' with {entity: video, sharebutton: true, likebutton: true} %}
+                    {% if video.author %}
+                        <div class="user-info">
+                            {% if video.author.image %}
+                                <figure class="avatar">
+                                    <a href="{{ path('user_land', {username: video.author.username}) }}">
+                                        {% thumbnail video.author.image, 'mini_square' %}
+                                    </a>
+                                    {% if appstate.canFriend(video.author) %}
+                                        <button class="btn btn_friendship btn-success add-fan" data-friendship-add="true" data-user-id="{{video.author.id}}">+</button>
+                                    {% endif %}
+                                </figure>
+                            {% endif %}
+                            <a class="name" href="{{ path('user_land', {username: video.author.username}) }}">
+                                {{ video.author }}
+                            </a>
+                            {% if video.author.city or video.author.country %}
+                              {% set location = [video.author.city, video.author.country]|join(', ') %}
+                              <span class="location">{{ location }}</span>
+                            {% endif %}
+                            <a class="videoCount" href="{{ path('user_land', {username: video.author.username}) }}">
+                              {{ video.author.videoCount }} videos
+                            </a>
+                        </div>
+                    {% endif %}
+                      
+                    {% include 'DodiciFansworldWebBundle:Tv:blocks/now-watching.html.twig' with {entity: video} %}
+
                 {% endif %}
-                  
-                {% include 'DodiciFansworldWebBundle:Tv:blocks/now-watching.html.twig' with {entity: video} %}
-            
+
                 <div class="content">
                     {% if video.content %}
                         <p data-expandable data-slice-point="300">{{ video.content|striptags|nl2br }}</p>
                     {% endif %}
                 </div>
 
-                {% include 'DodiciFansworldWebBundle:Comment:blocks/box.html.twig' with {entity: video} %}
+                 {% if user or preRegisterMode == false %} 
+                    {% include 'DodiciFansworldWebBundle:Comment:blocks/box.html.twig' with {entity: video} %}  
+                {% endif %}
             </div>
         {% endblock %}
             
         {% block bottom_right_content %}
-            <h3>Fans que sigues</h3>
-            {% include 'DodiciFansworldWebBundle:Video:blocks/grid.html.twig' with {videos: videosRecommended, sectionId:'videos-related'} %}
+            {% if user or preRegisterMode == false %}
+                <h3>Fans que sigues</h3>
+                {% include 'DodiciFansworldWebBundle:Video:blocks/grid.html.twig' with {videos: videosRecommended, sectionId:'videos-related'} %}
+            {% endif %}
         {% endblock %}
     {% endembed %}		
 {% endblock %}

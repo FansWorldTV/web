@@ -25,6 +25,7 @@ class TvController extends SiteController
     const LIMIT_VIDEOS        = 6;
     const LIMIT_SEARCH_VIDEOS = 10;
     const LIMIT_HOME_VIDEOS   = 15;
+    const PRE_REGISTER_MODE = true;
 
     /**
      * @Route("", name="teve_home")
@@ -61,7 +62,7 @@ class TvController extends SiteController
             'channels'           => $channels,
             'videoDestacadoMain' => $videoDestacadoMain,
             'videosDestacadosFW' => $videosDestacadosFW,
-            'tags'               => $tags,
+            'tags'               => $tags
         );
     }
 
@@ -101,7 +102,8 @@ class TvController extends SiteController
             'user'              => $user,
             'videosRelated'     => $videosRelated,
             'videosRecommended' => $videosRecommended,
-            'sorts'             => $sorts
+            'sorts'             => $sorts,
+            'preRegisterMode' => self::PRE_REGISTER_MODE
         );
     }
 

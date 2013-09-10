@@ -32,6 +32,7 @@ class ProfileController extends SiteController
 
     /**
      * @Route("/profiles", name="profiles_index")
+     * @Secure(roles="ROLE_USER")
      * @Template()
      */
     public function listAction()

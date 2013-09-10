@@ -15,6 +15,7 @@ use Dodici\Fansworld\WebBundle\Controller\SiteController;
 use Application\Sonata\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dodici\Fansworld\WebBundle\Serializer\Serializer;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 /**
  * Home controller.
@@ -28,6 +29,7 @@ class HomeController extends SiteController
     /**
      * Site's home
      * @Template
+     * @Secure(roles="ROLE_USER")
      */
     public function indexAction()
     {
@@ -60,6 +62,7 @@ class HomeController extends SiteController
     /**
      * List videos from fansworld author
      * @Route("/home/list/fansworld", name="home_fwlist")
+     * @Secure(roles="ROLE_USER")
      * @Template
      */
     public function fwVideoListAction()
