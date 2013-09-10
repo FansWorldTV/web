@@ -28,6 +28,7 @@ class SearchController extends SiteController
 
     /**
      * @Route("/search", name = "search_home")
+     * @Secure(roles="ROLE_USER")
      * @Template()
      */
     public function indexAction()

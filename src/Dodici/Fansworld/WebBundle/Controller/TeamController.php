@@ -313,6 +313,7 @@ class TeamController extends SiteController
 
     /**
      * @Route("/{slug}/photos", name= "team_photos")
+     * @Secure(roles="ROLE_USER")
      * @Template()
      */
     public function photosTabAction($slug)
@@ -340,6 +341,7 @@ class TeamController extends SiteController
      * team videos
      * @Route("/{slug}", name="team_land")
      * @Route("/{slug}/videos", name="team_videos")
+     * @Secure(roles="ROLE_USER")
      * @Template()
      */
     public function videosTabAction($slug)
@@ -400,6 +402,7 @@ class TeamController extends SiteController
 
     /**
      *  @Route("/{slug}/info", name="team_info")
+     * @Secure(roles="ROLE_USER")
      *  @Template()
      */
     public function infoTabAction($slug)
@@ -504,6 +507,7 @@ class TeamController extends SiteController
 
     /**
      * @Route("/{slug}/wall", name= "team_wall")
+     * @Secure(roles="ROLE_USER")
      * @Template()
      */
     public function wallTabAction($slug)
