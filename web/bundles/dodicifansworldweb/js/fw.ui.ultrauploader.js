@@ -248,6 +248,8 @@ $(document).ready(function () {
                 }
                 return false;
             });
+
+            //$('#tagger').fwTagify();
             //
             modal.find("[data-tags]").fwTagify({action: 'tag'});
             // Input Field
