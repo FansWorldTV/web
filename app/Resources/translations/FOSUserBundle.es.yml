@@ -30,7 +30,7 @@ fos_user.firstname.blank: Ingrese un nombre
 fos_user.firstname.long: El nombre es muy largo
 fos_user.lastname.blank: Ingrese un apellido
 fos_user.lastname.long: El apellido es muy largo
-fos_user_registration_form_accept_toc: "Acepto los terminos y condiciones de Fansworld.tv"
+fos_user_registration_form_accept_toc: "Acepto los terminos y condiciones de FansWorld TV"
 security:
     login:
         username: "Usuario:"

@@ -68,7 +68,7 @@ class FansworldMailer
 
       $html = $this->templating->render('DodiciFansworldWebBundle:Mail:welcome.html.twig', array('targetUser' => $user));
       
-      $subject = $this->translator->trans('Bienvenido a Fansworld.tv');
+      $subject = $this->translator->trans('Bienvenido a FansWorld TV');
 
       return $this->send($sendTo, $subject, $html);
   }  

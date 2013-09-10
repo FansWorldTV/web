@@ -183,7 +183,7 @@ inviter.tabs.email = function() {
 
 inviter.tabs.twitter = function() {
     var $container = $("div.content-modal[data-type ='twitter']");
-    $container.find('textarea').html('¡Los invito a Fansworld.TV! ' + inviter.url.short);
+    $container.find('textarea').html('¡Los invito a FansWorld TV! ' + inviter.url.short);
     if(inviter.linktwitter){
         $container.find('.is-logged').show();
     }else{
