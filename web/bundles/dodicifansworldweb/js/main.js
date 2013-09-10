@@ -440,13 +440,13 @@ var site = {
                     id = textAreaElement.attr('data-id'),
                     ispin = (textAreaElement.attr('data-pin') == 'true'),
                     content = textAreaElement.val();
-            privacy = textAreaElement.parents('.commentform,.shortcommentform').find('.post_privacidad').val() || 1,
+                    privacy = textAreaElement.parent('.commentform,.shortcommentform').find('.post_privacidad').val() || 1,
                     elDestination = '[data-wall]';
 
 
             var prepend = true;
             if (textAreaElement.attr('is-subcomment')) {
-                elDestination = textAreaElement.parents('.comments, .comments-and-tags').find('.subcomments-container');
+                elDestination = textAreaElement.parent('.comments, .comments-and-tags').find('.subcomments-container');
                 prepend = false;
             }
 
@@ -461,12 +461,14 @@ var site = {
                         id = textAreaElement.attr('data-id'),
                         ispin = (textAreaElement.attr('data-pin') == 'true'),
                         content = textAreaElement.val(),
-                        privacy = textAreaElement.parents('.commentform,.shortcommentform').find('.post_privacidad').val() || 1,
+                        privacy = textAreaElement.parent().find('.post_privacidad').val() || 1,
                         elDestination = '[data-wall]';
 
                 var prepend = true;
                 if (textAreaElement.attr('is-subcomment')) {
-                    elDestination = textAreaElement.parents('.comments, .comments-and-tags').find('.subcomments-container');
+                    elDestination = $('body').find('[data-subcomments="' + id + '"]');
+                    console.log("elDestination: ")
+                    console.log(elDestination)
                     prepend = false;
                 }
                 site.postComment(textAreaElement, type, id, ispin, content, privacy, elDestination, prepend);

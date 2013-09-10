@@ -150,9 +150,9 @@ $(document).ready(function () {
         that.options.selected = null;
         that.addEntityItem({label: item.label, result: item.result});
         if(item.result.image) {
-          var tag = $('<li class="idol" id="' + item.result.id + '"></li>').append('<div class="thumb"><img src="'+ item.result.image +'" /><div class="info"><a href="/idol/roger-federer"><span class="title">'+item.label+'</span></a><br /><i class="icon-heart"></i> 33</div></div><div class="close"><i class="icon-remove"></i></div>');
+          var tag = $('<li class="idol" id="' + item.result.id + '"></li>').append('<div class="thumb"><img src="'+ item.result.image +'" /><div class="info"><a href="/idol/roger-federer"><span class="title">'+item.label+'</span></a><br /><i class="icon-heart"></i> 33</div></div><div class="close"><i class="icon-remove icon-white"></i></div>');
         } else {
-          var tag = $('<li class="idol" id="' + item.result.id + '"></li>').append('<div class="thumb"><i class="icon-tag custom-tag"></i><div class="info"><a href="#"><span class="title">'+item.label+'</span></a></div></div><div class="close"><i class="icon-remove"></i></div>');
+          var tag = $('<li class="idol" id="' + item.result.id + '"></li>').append('<div class="thumb"><i class="icon-tag custom-tag"></i><div class="info"><a href="#"><span class="title">'+item.label+'</span></a></div></div><div class="close"><i class="icon-remove icon-white"></i></div>');
         }
         tag.data('tag', item);
         
@@ -187,10 +187,6 @@ $(document).ready(function () {
         if(childrenWidth > that.options.tagsWidth) {
           $(that.element).find('.scroll.right').removeClass('hidden');
         }
-      },
-      movTo: function(x, y, z) {
-        var idols = $(that.element).find('.idols');
-        idols.css({'-webkit-transform': 'translate3d(-' + x + 'px,' + y + 'px,' + z + 'px)'});
       },
       swipe: function() {
         var that = this;
@@ -234,21 +230,17 @@ $(document).ready(function () {
       },
       addEntityItem: function (item) {
         var that = this;
-        item.result.type = item.result.type || 'text'; // override to custom tag 'text'
-        that.options.tags[item.result.id] = item;
-        console.log(that.options.tags);
-        that.updateOutput(that.options.tags)
-        //var a = that.options[that.options.magic];
-        //a[item.result.type].selected.push(item);
-        //that.updateInput('#form_' + that.options.action + item.result.type, a[item.result.type].selected);
-        //console.log("will add: " + JSON.stringify(item) + " to: #form_" + that.options.action + item.result.type);
+        item.result.type = item.result.type || 'tag'; // override to custom tag 'text'
+        that.options.tags[item.result.type] = that.options.tags[item.result.type] || [];
+        that.options.tags[item.result.type][item.result.id] = item;
+        //that.updateOutput(that.options.tags)
       },
       deleteEntityItem: function(item) {
         var that = this;
-        //console.log(item)
-        item.result.type = item.result.type || 'text'; // override to custom tag 'text'
-        delete that.options.tags[item.result.id];
-        that.updateOutput(that.options.tags)
+        item.result.type = item.result.type || 'tag'; // override to custom tag 'text'
+        delete that.options.tags[item.result.type][item.result.id];
+        delete that.options.tags[item.result.type];
+        //that.updateOutput(that.options.tags)
       },
       updateOutput: function(list) {
         var that = this;
@@ -256,7 +248,7 @@ $(document).ready(function () {
         for (i in list) {
           if (list.hasOwnProperty(i)) {
             // TODO add hasProperty check
-            if(list[i].result.type === 'text') {
+            if(list[i].result.type === 'tag') {
               str += list[i].label + ',';
             } else {
               str += list[i].result.id + ',';
