@@ -26,26 +26,17 @@
                 <p>Primero comparte en</p>
                 <ul class="list-social-network">
                     <li>
-                        {#<a href="https://www.facebook.com/sharer/sharer.php?u={{ url(type~'_show', {'id': entity.id,'slug': entity.slug}) }}" data-share-content>
-                            <i class="facebook"></i>
-                        </a>#}
-                        <a onclick="alert('DESHABILITADO');return false;">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ url(type~'_show', {'id': entity.id,'slug': entity.slug}) }}" data-share-content>
                             <i class="facebook"></i>
                         </a>
                     </li>
                     <li>
-                        {#<a href="http://www.twitter.com/share?url={{ url(type~'_show', {'id': entity.id, 'slug': entity.slug}) }}" data-share-content>
-                            <i class="twitter"></i>
-                        </a>#}
-                        <a onclick="alert('DESHABILITADO');return false;">
+                        <a href="http://www.twitter.com/share?url={{ url(type~'_show', {'id': entity.id, 'slug': entity.slug}) }}" data-share-content>
                             <i class="twitter"></i>
                         </a>
                     </li>
                     <li>
-                        {#<a href="https://plus.google.com/share?url={{ url(type~'_show', {'id': entity.id, 'slug': entity.slug}) }}" data-share-content onclick="alert('DESHABILITADO');return false;">
-                            <i class="gplus"></i>
-                        </a>#}
-                        <a onclick="alert('DESHABILITADO');return false;">
+                        <a href="https://plus.google.com/share?url={{ url(type~'_show', {'id': entity.id, 'slug': entity.slug}) }}" data-share-content onclick="alert('DESHABILITADO');return false;">
                             <i class="gplus"></i>
                         </a>
                     </li>
