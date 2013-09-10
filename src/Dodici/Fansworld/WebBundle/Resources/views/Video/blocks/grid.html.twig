@@ -6,7 +6,7 @@
 
 <section id="{{ sectionId }}" {{ dataGrid }}>
     {% for video in videos %}
-        {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video } %}
+        {% include "DodiciFansworldWebBundle:Video:blocks/video_std_block.html.twig"  with { video: video, image_size: 'big_square' } %}
     {% endfor %}
 </section>
 
