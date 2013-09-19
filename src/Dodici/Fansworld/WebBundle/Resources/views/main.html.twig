@@ -5,14 +5,14 @@
     <head>
         {% block head %}
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-            <title>{% block title %}Fansworld - Comparte tu pasión{% endblock %}</title>
+            <title>{% block title %}FansWorld TV - Comparte tu pasión{% endblock %}</title>
 
             {% block metatags %}
                 <meta property="og:image" content="{% block metafbimage %}http://{{ app.request.host ~ asset('bundles/dodicifansworldweb/images/logo.png') }}{% endblock %}"/>
                 <meta property="og:url" content="http://{{ app.request.host ~ app.request.requesturi }}"/>
                 <meta property="og:title" content="{{ block('title') }}"/>
                 <meta property="og:description" content="{{ block('metadescription') }}"/>
-                <meta property="og:site_name" content="Fansworld"/>
+                <meta property="og:site_name" content="FansWorld TV"/>
                 <meta property="og:type" content="{%block metafbtype %}article{% endblock %}"/>
 
                 <meta name="keywords" content="{% block metakeywords %}{% endblock %}"/>
